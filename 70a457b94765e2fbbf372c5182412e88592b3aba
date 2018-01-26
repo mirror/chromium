@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58cd879c_0dc0f1d7",
+        "filename": "services/shape_detection/face_detection_impl_mac.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-26T16:11:51Z",
+      "side": 1,
+      "message": "Probably not needed.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 52
+      },
+      "revId": "70a457b94765e2fbbf372c5182412e88592b3aba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "558681a3_6bc6ffad",
+        "filename": "services/shape_detection/face_detection_provider_mac.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-26T16:11:51Z",
+      "side": 1,
+      "message": "\"FaceDetectionProviderMac class is a provider that binds\" ?",
+      "range": {
+        "startLine": 17,
+        "startChar": 3,
+        "endLine": 17,
+        "endChar": 62
+      },
+      "revId": "70a457b94765e2fbbf372c5182412e88592b3aba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfbda81d_e26a3342",
+        "filename": "services/shape_detection/face_detection_provider_mac.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-26T16:11:51Z",
+      "side": 1,
+      "message": "nit: empty line between l.11-12.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 64
+      },
+      "revId": "70a457b94765e2fbbf372c5182412e88592b3aba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38855841_86247044",
+        "filename": "services/shape_detection/shape_detection_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-26T16:11:51Z",
+      "side": 1,
+      "message": "These two guys are the same for OS_WIN, OS_MAC and the rest.\nCould we bundled them together somehow? It might look uglier\nthan what it is right now, if so never mind.",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 65
+      },
+      "revId": "70a457b94765e2fbbf372c5182412e88592b3aba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
