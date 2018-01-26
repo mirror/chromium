@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a6c9c389_796ca4f2",
+        "filename": "components/cronet/cronet_url_request_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-26T21:56:41Z",
+      "side": 1,
+      "message": "When is this null?  Can this be null in Cronet?",
+      "range": {
+        "startLine": 462,
+        "startChar": 35,
+        "endLine": 462,
+        "endChar": 37
+      },
+      "revId": "ea6ee6341fcd9c7962f8c77dcbfbcf5b4a9c9d81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec1b8d77_3d09cd45",
         "filename": "components/cronet/url_request_context_config.cc",
         "patchSetId": 4
