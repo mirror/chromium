@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55a34ccb_2ddadeea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-26T08:06:18Z",
+      "side": 1,
+      "message": "nit: html (same below)",
+      "range": {
+        "startLine": 22,
+        "startChar": 22,
+        "endLine": 22,
+        "endChar": 26
+      },
+      "revId": "6c8461d52a7fe9334dc6c1e254d61cb4a7b98287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c4e8eae_bfaa2325",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-26T08:06:18Z",
+      "side": 1,
+      "message": "nit: and when it is received by the renderer process.",
+      "range": {
+        "startLine": 60,
+        "startChar": 48,
+        "endLine": 60,
+        "endChar": 51
+      },
+      "revId": "6c8461d52a7fe9334dc6c1e254d61cb4a7b98287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08e2151b_e5dfe289",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-26T08:06:18Z",
+      "side": 1,
+      "message": "nit: between when",
+      "range": {
+        "startLine": 60,
+        "startChar": 5,
+        "endLine": 60,
+        "endChar": 10
+      },
+      "revId": "6c8461d52a7fe9334dc6c1e254d61cb4a7b98287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb986171_d0e1c570",
+        "filename": "content/browser/browser_side_navigation_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 833,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-26T08:06:18Z",
+      "side": 1,
+      "message": "Is the remaining race possible here, making the test potentially flaky?  The renderer could start the frame navigation, then later send pushState after the CommitNavigation IPC is on the way.\n\nI wonder if TestNavigationManager could suspend the simple_page.html navigation while we wait for the DidCommit from the pushState?",
+      "revId": "6c8461d52a7fe9334dc6c1e254d61cb4a7b98287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ce773d5_82b5c19b",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1249,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-26T08:06:18Z",
+      "side": 1,
+      "message": "The alternative is proactively telling any current NavigationRequests about the history offset/length change when a commit happens.  I suppose we just don\u0027t have an easy way to know all the NavigationRequests that need upating?",
+      "revId": "6c8461d52a7fe9334dc6c1e254d61cb4a7b98287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fad9ccd7_abb51662",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-26T08:06:18Z",
+      "side": 1,
+      "message": "nit: I\u0027m not sure synchronously is the right word here?  We\u0027re talking about state across two different processes, and no sync IPC, so presumably it\u0027s async.",
+      "range": {
+        "startLine": 299,
+        "startChar": 52,
+        "endLine": 299,
+        "endChar": 65
+      },
+      "revId": "6c8461d52a7fe9334dc6c1e254d61cb4a7b98287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

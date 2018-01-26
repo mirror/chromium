@@ -22,6 +22,30 @@
       "revId": "206454eb0bc1e2e2886293abf2b205a32099ba50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e78682d3_4af335b3",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 6658,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-26T08:06:18Z",
+      "side": 0,
+      "message": "\u003e These CHECKs need to be removed, they are wrong now. I am explaining why:\n\u003e \n\u003e |current_history_list_{offset, length}| is now the history state of the browser when it sent CommitNavigation().\n\u003e It was previously the history state of the renderer when it sent BeginNavigation().\n\u003e \n\u003e |should_clear_history_list| is about THIS navigation, |current_history_list_{offset, length)| is about the last known navigation from the browser point of view. We are not always talking about the same navigation, that\u0027s why we can\u0027t perform these CHECKs.\n\nIt seems like this is due to overzealously setting the history offset and length in CommitNavigation, even in cases where the outcome should be clearing the history list.  If we skipped that step in the should_clear_history_list case, could these CHECKs stay?  It seems like that\u0027s more in the spirit of should_clear_history_list (which I think was for tests, though I\u0027m having trouble finding where it gets used now...?).\n\nIf it\u0027s not used anymore, cleaning it up entirely would be the nicest option.  :)",
+      "parentUuid": "a1a90033_a7b68610",
+      "range": {
+        "startLine": 6658,
+        "startChar": 3,
+        "endLine": 6658,
+        "endChar": 0
+      },
+      "revId": "206454eb0bc1e2e2886293abf2b205a32099ba50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
