@@ -52,6 +52,24 @@
       "revId": "f13f30fa969f2d2d92e18086d7974c1c1a7c4c2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6920ee5_4f47edf0",
+        "filename": "cc/benchmarks/micro_benchmark.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-26T16:25:27Z",
+      "side": 1,
+      "message": "I got curious so: https://cs.chromium.org/chromium/src/base/callback.h?rcl\u003dba12dcb89c18e461ec3963543c349260e620969c\u0026l\u003d58\n\n  R Run(Args... args) \u0026\u0026 {\n    // Move the callback instance into a local variable before the invocation,\n    // that ensures the internal state is cleared after the invocation.\n    // It\u0027s not safe to touch |this| after the invocation, since running the\n    // bound function may destroy |this|.\n    OnceCallback cb \u003d std::move(*this);\n    PolymorphicInvoke f \u003d\n        reinterpret_cast\u003cPolymorphicInvoke\u003e(cb.polymorphic_invoke());\n    return f(cb.bind_state_.get(), std::forward\u003cArgs\u003e(args)...);\n  }\n\nThe rvalue-qualified run also makes the callback null before it runs it.",
+      "parentUuid": "33188e68_8ddc8809",
+      "revId": "f13f30fa969f2d2d92e18086d7974c1c1a7c4c2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
