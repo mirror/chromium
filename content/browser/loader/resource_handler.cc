@@ -52,6 +52,14 @@ void ResourceHandler::OutOfBandCancel(int error_code, bool tell_renderer) {
   delegate_->OutOfBandCancel(error_code, tell_renderer);
 }
 
+void ResourceHandler::PauseReadingBodyFromNet() {
+  delegate_->PauseReadingBodyFromNet();
+}
+
+void ResourceHandler::ResumeReadingBodyFromNet() {
+  delegate_->ResumeReadingBodyFromNet();
+}
+
 void ResourceHandler::GetNumericArg(const std::string& name, int* result) {
   const std::string& value =
       base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(name);
