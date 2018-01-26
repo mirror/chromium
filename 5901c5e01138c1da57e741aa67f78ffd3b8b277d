@@ -22,6 +22,30 @@
       "revId": "5901c5e01138c1da57e741aa67f78ffd3b8b277d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1289651_038918b4",
+        "filename": "ui/webui/resources/cr_elements/shared_style_css.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-26T20:14:15Z",
+      "side": 1,
+      "message": "I think .action-button is used outside of dialog for the blue background styling. Perhaps worth doing a code-search and make sure they all look right still\n\nsee some examples:\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/md_extensions/item.html?type\u003dcs\u0026q\u003d%22action-button%22\u0026sq\u003dpackage:chromium\u0026l\u003d329\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/md_extensions/error_page.html?type\u003dcs\u0026q\u003d%22action-button%22\u0026sq\u003dpackage:chromium\u0026l\u003d244",
+      "parentUuid": "00f18c46_77922e92",
+      "range": {
+        "startLine": 11,
+        "startChar": 6,
+        "endLine": 11,
+        "endChar": 22
+      },
+      "revId": "5901c5e01138c1da57e741aa67f78ffd3b8b277d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
