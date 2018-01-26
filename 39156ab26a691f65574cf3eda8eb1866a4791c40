@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5493eaf_e7eb6338",
+        "filename": "ui/message_center/public/cpp/notification_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-26T18:34:54Z",
+      "side": 1,
+      "message": "Out of curiosity, why does NotificationDelegate have to move to public? It seems like an in-process kind of class. Do you need the same sort of in-process delegate on both browser and ash for CrOS? Is this because of Linux/Windows? Just because Notification isn\u0027t a pure-data class?",
+      "revId": "39156ab26a691f65574cf3eda8eb1866a4791c40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
