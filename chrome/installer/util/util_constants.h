@@ -212,8 +212,9 @@ extern const wchar_t kUninstallDisplayNameField[];
 extern const wchar_t kUninstallInstallationDate[];
 extern const char kUninstallMetricsName[];
 extern const wchar_t kUninstallStringField[];
+extern const wchar_t kWinNotificationHelperExe[];
 
-// Google Update installer result API
+// Google Update installer result API.
 extern const wchar_t kInstallerError[];
 extern const wchar_t kInstallerExtraCode1[];
 extern const wchar_t kInstallerResult[];

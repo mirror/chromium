@@ -208,6 +208,7 @@ if (!is_android && !is_mac) {
           "//sandbox",
           "//third_party/breakpad:breakpad_handler",
           "//third_party/breakpad:breakpad_sender",
+          "//win_notification_helper",
         ]
         data_deps = [
           "//chrome/app/version_assembly:version_assembly_manifest",
