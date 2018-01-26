@@ -16,6 +16,24 @@
       "revId": "c6cbbbcdd19efb313bf1128331f075fdac3c3342",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e77480ac_9c993efb",
+        "filename": "content/browser/renderer_host/browser_compositor_view_mac.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2018-01-26T20:48:35Z",
+      "side": 1,
+      "message": "If we immediately resize the ui::Compositor, then the ui::Compositor will produce a frame with the new size immediately. But this frame will have resize gutters because the renderer still hasn\u0027t produced a frame of the expected size -- Here\u0027s a video of what happens if we do that:\nhttps://drive.google.com/file/d/13ru_jEHGul-7P2g4qvMm7wQQofoQqVVa/view?usp\u003dsharing\n\nSo it\u0027s true that we\u0027re drawing more frames, but we\u0027re drawing frames that we actively do not want to see. What we want (what happens with this patch) is this sort of resize:\nhttps://drive.google.com/file/d/1_vGcBr3uLy-13xftuCQL2OpDPhNBrXG3/view?usp\u003dsharing\n\nI suspect that doing the resize at SubmitCompositorFrame didn\u0027t guarantee the lock-step resize (rather, it just worked most of the time).",
+      "parentUuid": "c1c62b45_8dd09750",
+      "revId": "c6cbbbcdd19efb313bf1128331f075fdac3c3342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
