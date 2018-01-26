@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64d88304_51db4981",
+        "filename": "chrome/browser/vr/model/color_scheme.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-26T21:05:53Z",
+      "side": 1,
+      "message": "This doesn\u0027t look right.  2.0 is higher than 1.1, but this check will disagree, right?  You could build a local Version and use it\u0027s compare operator instead.",
+      "revId": "52bcaab2dc66dc4fcd2df1c93412270669dd7d72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
