@@ -1632,6 +1632,7 @@ void WaitForChildFrameSurfaceReady(content::RenderFrameHost* child_frame) {
 TitleWatcher::TitleWatcher(WebContents* web_contents,
                            const base::string16& expected_title)
     : WebContentsObserver(web_contents) {
+  LOG(ERROR) << expected_title;
   expected_titles_.push_back(expected_title);
 }
 
@@ -1662,6 +1663,7 @@ void TitleWatcher::TitleWasSet(NavigationEntry* entry) {
 
 void TitleWatcher::TestTitle() {
   const base::string16& current_title = web_contents()->GetTitle();
+  LOG(ERROR) << current_title;
   if (base::ContainsValue(expected_titles_, current_title)) {
     observed_title_ = current_title;
     run_loop_.Quit();
