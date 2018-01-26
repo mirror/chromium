@@ -22,6 +22,30 @@
       "revId": "4297b80e0c62a0311ae184b30bdaa0372e8855c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb50e182_c1dcbf6c",
+        "filename": "chrome/browser/chromeos/policy/upload_job_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2018-01-26T13:57:26Z",
+      "side": 1,
+      "message": "Implementation doesn\u0027t have const, and it\u0027s not a reference, so pointer copied anyway.",
+      "parentUuid": "7cdc9d3f_be592387",
+      "range": {
+        "startLine": 66,
+        "startChar": 16,
+        "endLine": 66,
+        "endChar": 29
+      },
+      "revId": "4297b80e0c62a0311ae184b30bdaa0372e8855c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
