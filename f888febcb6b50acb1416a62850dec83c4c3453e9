@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "526e1550_fd8f939b",
+        "filename": "docs/testing/web_platform_tests.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2018-01-26T17:00:38Z",
+      "side": 1,
+      "message": "Wrong Markdown syntax. Please switch URL and text.",
+      "revId": "f888febcb6b50acb1416a62850dec83c4c3453e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cea9c33_71b7e2d0",
+        "filename": "docs/testing/web_platform_tests.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2018-01-26T17:00:38Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "f888febcb6b50acb1416a62850dec83c4c3453e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
