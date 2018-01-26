@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "211f7a9d_ec7c0092",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-26T18:48:34Z",
+      "side": 1,
+      "message": "optional nit: I prefer assigning the global in the constructor, so doing something like KSV* view \u003d new KeyboardShortcutView() here. Doing it that way means every set and clear of the global pointer is either in constructor or destructor, which I think makes it easier to reason about.\n\n(This would require an early exit in the if() above, but that seems OK to me.)",
+      "revId": "f0e6a60308b685f4cd172ac846cdfb00ea9f3223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "373cb36e_c84443c4",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-26T18:48:34Z",
+      "side": 1,
+      "message": "nit: I would not make |context| optional. Making it non-optional forces the caller to reason about which display the window will appear on.",
+      "revId": "f0e6a60308b685f4cd172ac846cdfb00ea9f3223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "329b2176_44cc541e",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-26T18:48:34Z",
+      "side": 1,
+      "message": "super nit: I usually put the header for the file under test at line 5 followed by a blank line",
+      "revId": "f0e6a60308b685f4cd172ac846cdfb00ea9f3223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fb1bf54_f9ffd0fd",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-26T18:48:34Z",
+      "side": 1,
+      "message": "nit: You can put the whole test file in namespace keyboard_shortcut_viewer.",
+      "revId": "f0e6a60308b685f4cd172ac846cdfb00ea9f3223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
