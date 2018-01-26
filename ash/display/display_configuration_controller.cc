@@ -7,6 +7,7 @@
 #include "ash/display/display_animator.h"
 #include "ash/display/display_animator_chromeos.h"
 #include "ash/display/display_util.h"
+#include "ash/display/persistent_window_controller.h"
 #include "ash/display/window_tree_host_manager.h"
 #include "ash/rotator/screen_rotation_animator.h"
 #include "ash/shell.h"
@@ -17,6 +18,7 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/display/display_layout.h"
 #include "ui/display/manager/display_manager.h"
+#include "ui/display/screen.h"
 
 DEFINE_UI_CLASS_PROPERTY_TYPE(ash::ScreenRotationAnimator*);
 
