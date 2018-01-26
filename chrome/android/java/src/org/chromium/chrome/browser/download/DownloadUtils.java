@@ -144,7 +144,7 @@ public class DownloadUtils {
 
         Context appContext = ContextUtils.getApplicationContext();
 
-        if (DeviceFormFactor.isTablet()) {
+        if (DeviceFormFactor.isTablet(activity)) {
             // Download Home shows up as a tab on tablets.
             LoadUrlParams params = new LoadUrlParams(UrlConstants.DOWNLOADS_URL);
             if (tab == null || !tab.isInitialized()) {
