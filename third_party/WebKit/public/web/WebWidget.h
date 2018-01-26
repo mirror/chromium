@@ -105,10 +105,16 @@ class WebWidget {
   // changes are made to the WebWidget (e.g., once events are
   // processed, it should be assumed that another call to layout is
   // warranted before painting again).
+  //
+  // Before calling paint(), you must call UpdateLfecycle(LifecycleUpdate::All):
+  // this method assumes the lifecycle is clean.
   virtual void Paint(WebCanvas*, const WebRect& view_port) {}
 
   // Similar to paint() but ignores compositing decisions, squashing all
   // contents of the WebWidget into the output given to the WebCanvas.
+  //
+  // Before calling paint(), you must call UpdateLfecycle(LifecycleUpdate::All):
+  // this method assumes the lifecycle is clean.
   virtual void PaintIgnoringCompositing(WebCanvas*, const WebRect&) {}
 
   // Run layout and paint of all pending document changes asynchronously.
