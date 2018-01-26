@@ -16,6 +16,24 @@
       "revId": "6f47eeaeb02917a1f7c3391896162d21e51fc00b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaf88ae3_63edbd9d",
+        "filename": "net/proxy_resolution/dhcp_pac_file_fetcher_win.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-26T20:51:37Z",
+      "side": 0,
+      "message": "Done https://chromium-review.googlesource.com/c/chromium/src/+/881273/17/net/proxy_resolution/dhcp_pac_file_fetcher_win.cc#143",
+      "parentUuid": "f537a023_f7fcc973",
+      "revId": "6f47eeaeb02917a1f7c3391896162d21e51fc00b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

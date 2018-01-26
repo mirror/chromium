@@ -33,6 +33,24 @@
       "revId": "c9c812f9af1d798c9532dbb747ce64aace141a8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "161f1394_192f3593",
+        "filename": "net/proxy_resolution/dhcp_pac_file_fetcher_win.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-26T20:51:37Z",
+      "side": 1,
+      "message": "Added ScopedBlockingCall around this call.\n\nTaskScheduler is initialized with a maximum number of threads derived from the number of cores. When a MAY_BLOCK ScopedBlockingCall has been on the stack for some time, the maximum number of threads is incremented. The consequence of not using ScopedBlockingCall is that the maximum number of threads stays constant and Chrome may not use all available resources to process tasks.\n\nMayBlock() is used for 2 purposes:\n- Enforce that blocking calls are made only in contexts where they are expected.\n- TaskScheduler allows more MayBlock() tasks to run concurrently than non-MayBlock() tasks. Now that we have ScopedBlockingCall and that we know that MayBlock() tasks don\u0027t block as much as we expected :|, we may revisit this decision.\n\n\"Pretty much any windows library call network code does on other threads may block\" These calls should be made in the scope of a ScopedBlockingCall if we don\u0027t expect them to use too much CPU and we want to let other tasks use the CPU while they are running.",
+      "parentUuid": "34690019_e68c4102",
+      "revId": "c9c812f9af1d798c9532dbb747ce64aace141a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
