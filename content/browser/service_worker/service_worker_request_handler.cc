@@ -264,6 +264,7 @@ void ServiceWorkerRequestHandler::MaybeCreateLoader(
     const network::ResourceRequest& request,
     ResourceContext* resource_context,
     LoaderCallback callback) {
+  LOG(ERROR) << __PRETTY_FUNCTION__;
   NOTREACHED();
   std::move(callback).Run(StartLoaderCallback());
 }

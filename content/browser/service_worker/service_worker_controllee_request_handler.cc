@@ -199,11 +199,13 @@ void ServiceWorkerControlleeRequestHandler::MaybeCreateLoader(
     const network::ResourceRequest& resource_request,
     ResourceContext* resource_context,
     LoaderCallback callback) {
+  LOG(ERROR) << __PRETTY_FUNCTION__;
   DCHECK(ServiceWorkerUtils::IsServicificationEnabled());
   DCHECK(is_main_resource_load_);
   ClearJob();
 
   if (!context_ || !provider_host_) {
+    LOG(ERROR) << __PRETTY_FUNCTION__ << " doesn't create";
     // We can't do anything other than to fall back to network.
     std::move(callback).Run(StartLoaderCallback());
     return;
@@ -235,12 +237,14 @@ void ServiceWorkerControlleeRequestHandler::MaybeCreateLoader(
   if (url_job_->ShouldFallbackToNetwork()) {
     // We're falling back to the next URLLoaderRequestHandler, forward
     // the request and clear job now.
+    LOG(ERROR) << __PRETTY_FUNCTION__ << " fallbacking...";
     url_job_->FallbackToNetwork();
     ClearJob();
     return;
   }
 
   // We will asynchronously continue on DidLookupRegistrationForMainResource.
+    LOG(ERROR) << __PRETTY_FUNCTION__ << " look up hoge...";
 }
 
 base::Optional<SubresourceLoaderParams>

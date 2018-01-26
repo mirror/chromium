@@ -481,6 +481,7 @@ void AppCacheRequestHandler::RunLoaderCallbackForMainResource(
   // for handling the main resource.
   if (start_loader_callback)
     should_create_subresource_loader_ = true;
+  LOG(ERROR) << __PRETTY_FUNCTION__;
   std::move(callback).Run(std::move(start_loader_callback));
 }
 
@@ -584,6 +585,7 @@ void AppCacheRequestHandler::MaybeCreateLoader(
     const network::ResourceRequest& resource_request,
     ResourceContext* resource_context,
     LoaderCallback callback) {
+  LOG(ERROR) << __PRETTY_FUNCTION__;
   loader_callback_ =
       base::BindOnce(&AppCacheRequestHandler::RunLoaderCallbackForMainResource,
                      weak_factory_.GetWeakPtr(), std::move(callback));

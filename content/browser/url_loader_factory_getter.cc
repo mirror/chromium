@@ -7,6 +7,7 @@
 #include "base/bind.h"
 #include "base/lazy_instance.h"
 #include "content/browser/storage_partition_impl.h"
+#include "content/public/common/content_features.h"
 #include "services/network/public/interfaces/network_service.mojom.h"
 
 namespace content {
@@ -23,7 +24,10 @@ void URLLoaderFactoryGetter::Initialize(StoragePartitionImpl* partition) {
   partition_ = partition;
 
   network::mojom::URLLoaderFactoryPtr network_factory;
-  HandleNetworkFactoryRequestOnUIThread(MakeRequest(&network_factory));
+  // If kNetworkService is disabled, the |network_factory| will be bound at the
+  // first call of GetNetworkFactory().
+  if (base::FeatureList::IsEnabled(features::kNetworkService))
+    HandleNetworkFactoryRequestOnUIThread(MakeRequest(&network_factory));
 
   network::mojom::URLLoaderFactoryPtr blob_factory;
   partition_->GetBlobURLLoaderFactory()->HandleRequest(
