@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "105e130a_c43d6050",
+        "filename": "docs/callback.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2018-01-26T05:33:00Z",
+      "side": 1,
+      "message": "We don\u0027t have the positional parameter IIUC. Is this a feature request?",
+      "range": {
+        "startLine": 485,
+        "startChar": 17,
+        "endLine": 485,
+        "endChar": 19
+      },
+      "revId": "cb918e1a182767b3f04b63e40228755985ae77b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
