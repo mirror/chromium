@@ -28,7 +28,7 @@ import org.chromium.chrome.browser.partnercustomizations.HomepageManager;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.util.AccessibilityUtil;
 import org.chromium.chrome.browser.widget.TintedImageButton;
-import org.chromium.ui.base.DeviceFormFactor;
+import org.chromium.ui.display.DisplayAndroid;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -583,7 +583,7 @@ public class ToolbarTablet
         // moved into the menu so that the location bar is usable. The buttons must be shown
         // in onMeasure() so that the location bar gets measured and laid out correctly.
         setToolbarButtonsVisible(MeasureSpec.getSize(widthMeasureSpec)
-                >= DeviceFormFactor.getMinimumTabletWidthPx(getContext()));
+                >= DisplayAndroid.getNonMultiDisplay(getContext()).getMinimumTabletWidthPx());
 
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }

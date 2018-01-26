@@ -17,7 +17,7 @@ import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.NativePage;
 import org.chromium.chrome.browser.tab.Tab;
-import org.chromium.ui.base.DeviceFormFactor;
+import org.chromium.ui.display.DisplayAndroid;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,8 +110,9 @@ public class TabContentManager {
 
         float thumbnailScale = 1.f;
         boolean useApproximationThumbnails;
-        float deviceDensity = mContext.getResources().getDisplayMetrics().density;
-        if (DeviceFormFactor.isTablet()) {
+        DisplayAndroid display = DisplayAndroid.getNonMultiDisplay(mContext);
+        float deviceDensity = display.getDipScale();
+        if (display.isTablet()) {
             // Scale all tablets to MDPI.
             thumbnailScale = 1.f / deviceDensity;
             useApproximationThumbnails = false;

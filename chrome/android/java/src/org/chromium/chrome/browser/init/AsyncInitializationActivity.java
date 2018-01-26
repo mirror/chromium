@@ -29,6 +29,7 @@ import android.view.ViewTreeObserver.OnPreDrawListener;
 import android.view.WindowManager;
 
 import org.chromium.base.ApiCompatibilityUtils;
+import org.chromium.base.JavaExceptionReporter;
 import org.chromium.base.StrictModeContext;
 import org.chromium.base.TraceEvent;
 import org.chromium.base.VisibleForTesting;
@@ -46,8 +47,8 @@ import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.tabmodel.DocumentModeAssassin;
 import org.chromium.chrome.browser.upgrade.UpgradeActivity;
 import org.chromium.ui.base.ActivityWindowAndroid;
-import org.chromium.ui.base.DeviceFormFactor;
 import org.chromium.ui.base.WindowAndroid;
+import org.chromium.ui.display.DisplayAndroid;
 
 import java.lang.reflect.Field;
 
@@ -107,33 +108,38 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(newBase);
 
+        DisplayAndroid display = DisplayAndroid.getNonMultiDisplay(newBase);
+        mIsTablet = display.isTablet();
+
         // On N+, Chrome should always retain the tab strip layout on tablets. Normally in
         // multi-window, if Chrome is launched into a smaller screen Android will load the tab
         // switcher resources. Overriding the smallestScreenWidthDp in the Configuration ensures
-        // Android will load the tab strip resources. See crbug.com/588838.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            int smallestDeviceWidthDp = DeviceFormFactor.getSmallestDeviceWidthDp();
-
-            if (smallestDeviceWidthDp >= DeviceFormFactor.MINIMUM_TABLET_WIDTH_DP) {
-                Configuration overrideConfiguration = new Configuration();
-                overrideConfiguration.smallestScreenWidthDp = smallestDeviceWidthDp;
-                applyOverrideConfiguration(overrideConfiguration);
-            }
+        // Android will load the tab strip resources.
+        // See crbug.com/588838, crbug.com/662338, crbug.com/780593.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            Configuration overrideConfiguration = new Configuration();
+            // Force the activity's ResourceManager's concept of isTablet() to match DisplayAndroid.
+            overrideConfiguration.smallestScreenWidthDp =
+                    (int) (display.getSmallestWidth() / display.getDipScale() + 0.5f);
+            applyOverrideConfiguration(overrideConfiguration);
         }
     }
 
     @CallSuper
     @Override
     public void preInflationStartup() {
-        mHadWarmStart = LibraryLoader.isInitialized();
+        boolean loadedTabletResources =
+                getResources().getInteger(R.integer.min_screen_width_bucket) > 1;
         // On some devices, OEM modifications have been made to the resource loader that cause the
         // DeviceFormFactor calculation of whether a device is using tablet resources to be
         // incorrect. Check which resources were actually loaded and set the DeviceFormFactor
         // values. See crbug.com/662338.
-        boolean isTablet = getResources().getBoolean(R.bool.is_tablet);
-        boolean isLargeTablet = getResources().getBoolean(R.bool.is_large_tablet);
-        DeviceFormFactor.setIsTablet(isTablet, isLargeTablet);
-        mIsTablet = isTablet;
+        if (loadedTabletResources != mIsTablet) {
+            mIsTablet = loadedTabletResources;
+            // TODO(agrieve): Remove this exception reporting before M66 stable.
+            JavaExceptionReporter.reportStackTrace(new RuntimeException("isTablet mismatch"));
+        }
+        mHadWarmStart = LibraryLoader.isInitialized();
     }
 
     @Override
