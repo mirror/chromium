@@ -41,7 +41,7 @@ class AppearanceHandler : public SettingsPageUIHandler {
 #endif
 
 #if defined(OS_CHROMEOS)
-  // Whether should show the wallpaper setting row.
+  // Whether the wallpaper setting row should be shown.
   void IsWallpaperSettingVisible(const base::ListValue* args);
 
   // Whether the wallpaper is policy controlled.
@@ -49,6 +49,9 @@ class AppearanceHandler : public SettingsPageUIHandler {
 
   // Open the wallpaper manager app.
   void HandleOpenWallpaperManager(const base::ListValue* args);
+
+  // Helper function to resolve the Javascript callback.
+  void ResolveCallback(const base::Value& callback_id, bool result);
 #endif
 
   Profile* profile_;  // Weak pointer.
