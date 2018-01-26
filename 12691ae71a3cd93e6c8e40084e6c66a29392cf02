@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec59eed8_bc327c8f",
+        "filename": "net/spdy/platform/api/spdy_flags.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1222405
+      },
+      "writtenOn": "2018-01-26T15:59:02Z",
+      "side": 1,
+      "message": "I just realized that I goofed the review of the original CL - this should probably be in a namespace. Would it be alright to add that here? Thanks! I\u0027ll send you the backport for this on the server side.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 67
+      },
+      "revId": "12691ae71a3cd93e6c8e40084e6c66a29392cf02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
