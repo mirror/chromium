@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "6b69c934_f8f23f31",
+        "filename": "chrome/browser/extensions/api/desktop_capture/desktop_capture_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2018-01-26T01:17:59Z",
+      "side": 1,
+      "message": "/* system_modal */",
+      "range": {
+        "startLine": 210,
+        "startChar": 56,
+        "endLine": 210,
+        "endChar": 62
+      },
+      "revId": "8a156e82fa4c8e71273967a73d062da8269620d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1f65e208_f0a638e0",
         "filename": "chrome/browser/media/webrtc/desktop_media_picker.h",
         "patchSetId": 3
@@ -110,6 +133,29 @@
         "startChar": 19,
         "endLine": 46,
         "endChar": 38
+      },
+      "revId": "8a156e82fa4c8e71273967a73d062da8269620d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc66d289_7b960ae5",
+        "filename": "chrome/browser/media/webrtc/desktop_media_picker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2018-01-26T01:17:59Z",
+      "side": 1,
+      "message": "What\u0027s the meaning of |system_modal|, whether the ARC bridge should be used? I have not seen an example of true in this change.\n\nThe length of the parameter list is out of control, I suggest to change it into a structure.",
+      "range": {
+        "startLine": 46,
+        "startChar": 20,
+        "endLine": 46,
+        "endChar": 37
       },
       "revId": "8a156e82fa4c8e71273967a73d062da8269620d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
