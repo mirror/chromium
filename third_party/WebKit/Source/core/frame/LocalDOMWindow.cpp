@@ -1160,6 +1160,14 @@ void LocalDOMWindow::scrollBy(double x,
   if (!page)
     return;
 
+  if (GetFrame()->Loader().GetDocumentLoader()) {
+    GetFrame()
+        ->Loader()
+        .GetDocumentLoader()
+        ->GetInitialScrollState()
+        .was_scrolled_by_js = true;
+  }
+
   x = ScrollableArea::NormalizeNonFiniteScroll(x);
   y = ScrollableArea::NormalizeNonFiniteScroll(y);
 
@@ -1196,6 +1204,14 @@ void LocalDOMWindow::scrollTo(double x, double y) const {
   Page* page = GetFrame()->GetPage();
   if (!page)
     return;
+
+  if (GetFrame()->Loader().GetDocumentLoader()) {
+    GetFrame()
+        ->Loader()
+        .GetDocumentLoader()
+        ->GetInitialScrollState()
+        .was_scrolled_by_js = true;
+  }
 
   x = ScrollableArea::NormalizeNonFiniteScroll(x);
   y = ScrollableArea::NormalizeNonFiniteScroll(y);
