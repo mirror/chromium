@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "427f1185_5460ed13",
+        "filename": "components/gcm_driver/gcm_client_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-26T16:52:05Z",
+      "side": 1,
+      "message": "Personally I would move this into the branch on line 903. Even if the token is stale, we still \"matched\" it didn\u0027t we?",
+      "revId": "437acd20bc8caca8454868f53d6fbfbb90c312e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62111d31_56ab7492",
+        "filename": "components/gcm_driver/gcm_client_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 995,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-26T16:52:05Z",
+      "side": 1,
+      "message": "Is this for your own testing?\n\nGiven that this is external input, we shouldn\u0027t DCHECK this in a production build as the behaviour is out of our control. My rule of thumb is to use DCHECK when we own all the input and data, or failure bail-out if we don\u0027t.)\n\nIn practice GCM *will* send us a different registration_id if the server-side registration was invalidated, so this is a real case we need to handle.",
+      "revId": "437acd20bc8caca8454868f53d6fbfbb90c312e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9bfa65b_6a5f0509",
+        "filename": "components/gcm_driver/registration_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-26T16:52:05Z",
+      "side": 1,
+      "message": "Is the \u003d\u003d operator the best approach here? We\u0027re not comparing |options| and scope for example, so maybe a method like SameAppAs() with a better name might be clearer?",
+      "revId": "437acd20bc8caca8454868f53d6fbfbb90c312e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "317a1919_f83a033b",
+        "filename": "components/gcm_driver/registration_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-26T16:52:05Z",
+      "side": 1,
+      "message": "We should consider using base::StringPrintf given that each +\u003d (potentially) causes an allocation.",
+      "revId": "437acd20bc8caca8454868f53d6fbfbb90c312e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e07d992_dc85cbe1",
+        "filename": "components/gcm_driver/registration_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-26T16:52:05Z",
+      "side": 1,
+      "message": "This is causing a bunch of allocations too. It\u0027d be more efficient if we could change the std::strings to base::StringPiece instances, which point to the original string\u0027s memory rather than its own.",
+      "revId": "437acd20bc8caca8454868f53d6fbfbb90c312e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
