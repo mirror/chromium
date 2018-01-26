@@ -1,0 +1,346 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4714d489_f4f13219",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-26T10:30:19Z",
+      "side": 1,
+      "message": "That\u0027s a very small tittle. Can you be more descriptive? Also add a description with more details about what\u0027s being added such as Feature Policy, attributes, etc. If it\u0027s everything, just say everything. Maybe also mention that the API isn\u0027t actually working and this is mostly implementing the shell.",
+      "revId": "4d45095120b36ca181d931bd22f56b7c2d37d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2847f55d_eda337df",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-26T10:30:19Z",
+      "side": 1,
+      "message": "Can you create an chromestatus entry and send an Intent to Implement too? It\u0027s common practice to add the link to the intent to implement in the first CL.",
+      "revId": "4d45095120b36ca181d931bd22f56b7c2d37d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c9cd5dd_676e5e5b",
+        "filename": "third_party/WebKit/LayoutTests/media/picture-in-picture/not-processing-user-gesture.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-26T10:30:19Z",
+      "side": 1,
+      "message": "I would suggest to drop this as the W3C test runner will use document.title as the test name if there is no name for the specific unit test. You could merge all your tests into one file in which case, having a description would help.",
+      "range": {
+        "startLine": 10,
+        "startChar": 4,
+        "endLine": 10,
+        "endChar": 27
+      },
+      "revId": "4d45095120b36ca181d931bd22f56b7c2d37d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7f7fdff_f091087b",
+        "filename": "third_party/WebKit/LayoutTests/media/picture-in-picture/request-picture-in-picture.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-26T10:30:19Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 13,
+        "startChar": 4,
+        "endLine": 13,
+        "endChar": 30
+      },
+      "revId": "4d45095120b36ca181d931bd22f56b7c2d37d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "553ed051_f73c5518",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/DocumentPictureInPicture.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-26T10:30:19Z",
+      "side": 1,
+      "message": "Can you do `TODO(BUG_NUMBER)`?",
+      "revId": "4d45095120b36ca181d931bd22f56b7c2d37d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0063e746_d0ad5b3e",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/DocumentPictureInPicture.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-26T10:30:19Z",
+      "side": 1,
+      "message": "I think we might want to reject with NOT_IMPLEMENTED error instead as it\u0027s a more common pattern.",
+      "revId": "4d45095120b36ca181d931bd22f56b7c2d37d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cab2aa37_d0eed274",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/HTMLVideoElementPictureInPicture.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-26T10:30:19Z",
+      "side": 1,
+      "message": "style: empty line between the two `namespace`",
+      "revId": "4d45095120b36ca181d931bd22f56b7c2d37d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f1f21b7_8cde14dd",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/HTMLVideoElementPictureInPicture.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-26T10:30:19Z",
+      "side": 1,
+      "message": "You end up checking for the Feature Policy twice. I wonder if instead, you couldn\u0027t have the controller return an enum for \"enabled\" (maybe could be called \"status\" instead?). The enum could be something like:\n```\nenum class PictureInPictureStatus {\n  kEnabled,\n  kDisabledByFeaturePolicy,\n  kDisabledByAttribute,\n  kDisabledBySystem,\n};\n```\n\nThat way, you can easily check for enable with `status \u003d\u003d PictureInPictureStatus::kEnabled` and you could change the code above to a switch.",
+      "range": {
+        "startLine": 43,
+        "startChar": 7,
+        "endLine": 43,
+        "endChar": 75
+      },
+      "revId": "4d45095120b36ca181d931bd22f56b7c2d37d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a4d3625_b4fb97eb",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/HTMLVideoElementPictureInPicture.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-26T10:30:19Z",
+      "side": 1,
+      "message": "Link the TODO with a bug.",
+      "range": {
+        "startLine": 59,
+        "startChar": 5,
+        "endLine": 59,
+        "endChar": 9
+      },
+      "revId": "4d45095120b36ca181d931bd22f56b7c2d37d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0c39c0c_12069674",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/HTMLVideoElementPictureInPicture.idl",
+        "patchSetId": 12
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-26T10:30:19Z",
+      "side": 1,
+      "message": "Should we add a TODO mentionning that it\u0027s not returning a PIPWindow even though it should per spec?",
+      "revId": "4d45095120b36ca181d931bd22f56b7c2d37d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "599717d3_7c9f694d",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/HTMLVideoElementPictureInPicture.idl",
+        "patchSetId": 12
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-26T10:30:19Z",
+      "side": 1,
+      "message": "Can you maybe add a TODO() with a bug number to track the implementation?",
+      "revId": "4d45095120b36ca181d931bd22f56b7c2d37d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "303203fb_a425c5d3",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-26T10:30:19Z",
+      "side": 1,
+      "message": "`Document::GetFrame()` warns that it can return `null`. I believe this might happen when the frame is detached. We should null-check the frame here to avoid crashes. Can you either add this in the `if` below or add it before. (Returning `false` in that case is fine. We usually don\u0027t care about being correct as no frame is a rare edge case linked to end of lifecycle.)",
+      "revId": "4d45095120b36ca181d931bd22f56b7c2d37d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70394f07_024204c4",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-26T10:30:19Z",
+      "side": 1,
+      "message": "As above and below: TODO should have a bug number.",
+      "range": {
+        "startLine": 50,
+        "startChar": 5,
+        "endLine": 50,
+        "endChar": 9
+      },
+      "revId": "4d45095120b36ca181d931bd22f56b7c2d37d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "517482d4_1f1bfbbd",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-26T10:30:19Z",
+      "side": 1,
+      "message": "nit: `override` instead?",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 9
+      },
+      "revId": "4d45095120b36ca181d931bd22f56b7c2d37d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3cce31b_7880aa19",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-26T10:30:19Z",
+      "side": 1,
+      "message": "Any chance this could be `const`?",
+      "revId": "4d45095120b36ca181d931bd22f56b7c2d37d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28f99ee1_a04a4591",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-26T10:30:19Z",
+      "side": 1,
+      "message": "In-class initialization is the new trend: `bool picture_in_picture_enabled_ \u003d true;` and you can drop the ctor init.",
+      "revId": "4d45095120b36ca181d931bd22f56b7c2d37d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9771c37_e1331922",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureTest.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-26T10:30:19Z",
+      "side": 1,
+      "message": "Can you create blocks in the test above. It\u0027s so condensed, it\u0027s really hard to read :(",
+      "revId": "4d45095120b36ca181d931bd22f56b7c2d37d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "722c7dbf_2210ae45",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureTest.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-26T10:30:19Z",
+      "side": 1,
+      "message": "style: leave an empty line above.",
+      "revId": "4d45095120b36ca181d931bd22f56b7c2d37d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
