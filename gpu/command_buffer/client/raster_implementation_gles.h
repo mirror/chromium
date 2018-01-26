@@ -143,7 +143,8 @@ class RASTER_EXPORT RasterImplementationGLES : public RasterInterface {
                       const gfx::Vector2d& translate,
                       const gfx::Rect& playback_rect,
                       const gfx::Vector2dF& post_translate,
-                      GLfloat post_scale) override;
+                      GLfloat post_scale,
+                      bool requires_clear) override;
   void EndRasterCHROMIUM() override;
 
   // Raster via GrContext.

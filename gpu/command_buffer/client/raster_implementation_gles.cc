@@ -398,7 +398,8 @@ void RasterImplementationGLES::RasterCHROMIUM(
     const gfx::Vector2d& translate,
     const gfx::Rect& playback_rect,
     const gfx::Vector2dF& post_translate,
-    GLfloat post_scale) {
+    GLfloat post_scale,
+    bool requires_clear) {
   if (std::abs(post_scale) < std::numeric_limits<float>::epsilon())
     return;
 
@@ -420,6 +421,7 @@ void RasterImplementationGLES::RasterCHROMIUM(
   preamble.playback_rect = gfx::RectF(playback_rect);
   preamble.post_translation = post_translate;
   preamble.post_scale = gfx::SizeF(post_scale, post_scale);
+  preamble.requires_clear = requires_clear;
 
   // Wrap the provided provider in a stashing provider so that we can delay
   // unrefing images until we have serialized dependent commands.
