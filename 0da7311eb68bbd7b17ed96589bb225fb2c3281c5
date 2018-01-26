@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd4069d6_07a2e6c9",
+        "filename": "components/exo/pointer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-26T15:24:35Z",
+      "side": 1,
+      "message": "should this be changed too?",
+      "revId": "0da7311eb68bbd7b17ed96589bb225fb2c3281c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40cff521_9be5ab3b",
+        "filename": "components/exo/pointer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-26T15:24:35Z",
+      "side": 1,
+      "message": "Can we use operator\u003d\u003d of ui:Cursor here instead? Something like:\n\nif (cursor_ !\u003d ui::CursorType::kNull \u0026\u0026 cursor_client-\u003eGetCursor() \u003d\u003d cursor_)\n  UpdateCursor();",
+      "range": {
+        "startLine": 320,
+        "startChar": 6,
+        "endLine": 321,
+        "endChar": 65
+      },
+      "revId": "0da7311eb68bbd7b17ed96589bb225fb2c3281c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24d278bf_b9e80045",
+        "filename": "components/exo/pointer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-26T15:24:35Z",
+      "side": 1,
+      "message": "Can you add a comment here to explain why we want to update the cursor here even when focus_window_ is not set?\n\nMore generally, should we adjust the aura cursor code somehow to handle these scale adjustments automatically?",
+      "revId": "0da7311eb68bbd7b17ed96589bb225fb2c3281c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
