@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cf8de557_bf74497e",
+        "filename": "base/deferred_sequenced_task_runner.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-26T00:43:25Z",
+      "side": 1,
+      "message": "I went with the bool to make consumers of this constructor understand what they are creating (primarily that this bool maps to RunsTasksInCurrentSequence()). I could certainly remove this constructor and either add a no arg constructor that gives the behavior I have here (assuming does_tarter-task_runner_run_tasks_in_sequence \u003d true), or make the SequencedTaskRunner optional to the constructor on line 30. I think requiring the taskrunner to STart() is mildly odd for code that is already supplying the task runner.\n\nAnother option is to remove the constructor on line 29 and keep this constructor. Existing users of constructor on 29 would change to\nnew DeferredSequencedTaskRunner(task_runner-\u003eRunsTasksInCurrentSequence()) and then the task runner on 53 would not need to be optional.\n\nI\u0027m happy to do any of these, let me know what you prefer.",
+      "parentUuid": "b7e0f421_4b91073e",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "670ac4be_042c25f0",
         "filename": "chrome/browser/browser_process_impl.cc",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5d268f40_b9964307",
+        "filename": "chrome/browser/browser_process_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-26T00:43:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "670ac4be_042c25f0",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24501d77_575682ad",
         "filename": "chrome/browser/browser_process_impl.cc",
         "patchSetId": 8
@@ -50,6 +86,24 @@
       "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad8e302e_0db0c1c6",
+        "filename": "chrome/browser/browser_process_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-26T00:43:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24501d77_575682ad",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "c1824094_83a01e60",
+        "filename": "chrome/browser/browser_process_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-26T00:43:25Z",
+      "side": 1,
+      "message": "GetApplicationLocale() DCHECKs that the locale is not empty.",
+      "parentUuid": "df583529_3e753d2b",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d92fca0_4457bec5",
         "filename": "chrome/browser/browser_process_impl.cc",
         "patchSetId": 8
@@ -102,6 +174,24 @@
       "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef4fa77b_98c17319",
+        "filename": "chrome/browser/browser_process_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-26T00:43:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d92fca0_4457bec5",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "0cac1f06_82dfe904",
+        "filename": "chrome/browser/browser_process_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-26T00:43:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbb1bde5_dacd8025",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62424e42_1072f2b7",
         "filename": "chrome/browser/browser_process_impl.h",
         "patchSetId": 8
@@ -136,6 +244,24 @@
       "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "178772aa_70af18ed",
+        "filename": "chrome/browser/browser_process_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-26T00:43:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62424e42_1072f2b7",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +282,24 @@
     },
     {
       "key": {
+        "uuid": "248c8e4b_4832b569",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-26T00:43:25Z",
+      "side": 1,
+      "message": "I moved the comment up, so that clang does the right thing.",
+      "parentUuid": "c984707b_e675589d",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc97fe25_9dd363d7",
         "filename": "chrome/browser/chrome_browser_main.cc",
         "patchSetId": 8
@@ -173,6 +317,24 @@
     },
     {
       "key": {
+        "uuid": "eeacf6c0_0d1994a9",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-26T00:43:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc97fe25_9dd363d7",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b3270c0_b32fa845",
         "filename": "chrome/browser/policy/chrome_browser_policy_connector.h",
         "patchSetId": 8
@@ -187,6 +349,24 @@
       "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "763a2130_1adf91eb",
+        "filename": "chrome/browser/policy/chrome_browser_policy_connector.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-26T00:43:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b3270c0_b32fa845",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
