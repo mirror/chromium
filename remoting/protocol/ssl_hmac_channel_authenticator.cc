@@ -364,12 +364,32 @@ void SslHmacChannelAuthenticator::OnConnected(int result) {
 void SslHmacChannelAuthenticator::WriteAuthenticationBytes(
     bool* callback_called) {
   while (true) {
-    // TODO(crbug.com/656607): Add proper network traffic annotation.
+    net::NetworkTrafficAnnotationTag traffic_annotation =
+        net::DefineNetworkTrafficAnnotation("...", R"(
+        semantics {
+          sender: "..."
+          description: "..."
+          trigger: "..."
+          data: "..."
+          destination: WEBSITE/GOOGLE_OWNED_SERVICE/OTHER/LOCAL
+        }
+        policy {
+          cookies_allowed: YES/NO
+          cookies_store: "..."
+          setting: "..."
+          chrome_policy {
+            [POLICY_NAME] {
+              [POLICY_NAME]: ... //(value to disable it)
+            }
+          }
+          policy_exception_justification: "..."
+        })");
+
     int result = socket_->Write(
         auth_write_buf_.get(), auth_write_buf_->BytesRemaining(),
         base::Bind(&SslHmacChannelAuthenticator::OnAuthBytesWritten,
                    base::Unretained(this)),
-        NO_TRAFFIC_ANNOTATION_BUG_656607);
+        traffic_annotation);
     if (result == net::ERR_IO_PENDING)
       break;
     if (!HandleAuthBytesWritten(result, callback_called))
