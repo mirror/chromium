@@ -22,7 +22,7 @@ import org.chromium.chrome.browser.media.router.cast.CastSession;
 import org.chromium.chrome.browser.media.router.cast.CastSessionInfo;
 import org.chromium.chrome.browser.media.router.cast.CastSessionUtil;
 import org.chromium.chrome.browser.media.router.cast.ChromeCastSessionManager;
-import org.chromium.chrome.browser.media.router.cast.MediaSource;
+import org.chromium.chrome.browser.media.router.MediaSource;
 import org.chromium.chrome.browser.media.ui.MediaNotificationInfo;
 import org.chromium.chrome.browser.media.ui.MediaNotificationListener;
 import org.chromium.chrome.browser.media.ui.MediaNotificationManager;

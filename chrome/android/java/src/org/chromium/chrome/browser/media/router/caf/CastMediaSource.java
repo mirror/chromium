@@ -2,14 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-package org.chromium.chrome.browser.media.router.cast;
+package org.chromium.chrome.browser.media.router.caf;
 
 import android.net.Uri;
 import android.support.v7.media.MediaRouteSelector;
 
-import com.google.android.gms.cast.CastMediaControlIntent;
-
 import org.chromium.chrome.browser.media.router.MediaSource;
+import com.google.android.gms.cast.CastMediaControlIntent;
 
 import java.util.Arrays;
 import java.util.List;
