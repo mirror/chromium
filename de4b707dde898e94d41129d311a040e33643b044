@@ -16,6 +16,23 @@
       "revId": "de4b707dde898e94d41129d311a040e33643b044",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34167889_b5c610e4",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/DocumentPictureInPicture.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-26T02:29:09Z",
+      "side": 1,
+      "message": "A partial interface should be implemented as a SATIC_ONLY class.\n\nNo one will instantiate DocumentPictureInPicture, right?",
+      "revId": "de4b707dde898e94d41129d311a040e33643b044",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
