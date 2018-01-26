@@ -279,6 +279,16 @@ static constexpr int kControllerLabelTransitionDurationMs = 700;
 static constexpr float kSkyDistance = 1000.0f;
 static constexpr float kGridOpacity = 0.5f;
 
+static constexpr float kContentQuadRepositionButtonDiameter =
+    0.75f * kCloseButtonDiameter;
+static constexpr float kContentQuadRepositionButtonMinOpacity = 0.001f;
+static constexpr float kContentQuadRepositionButtonMidOpacity = 0.3f;
+static constexpr float kContentQuadRepositionButtonMaxOpacity = 1.0f;
+static constexpr float kContentQuadRepositionButtonXOffset = kIndicatorGap;
+static constexpr float kContentQuadRepositionButtonYOffset =
+    0.5f * kIndicatorGap;
+static constexpr int kContentQuadRepositionButtonTransitionDurationMs = 750;
+
 }  // namespace vr
 
 #endif  // CHROME_BROWSER_VR_UI_SCENE_CONSTANTS_H_

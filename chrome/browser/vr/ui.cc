@@ -262,6 +262,11 @@ void Ui::OnAppButtonClicked() {
     return;
   }
 
+  if (model_->reposition_window_enabled()) {
+    model_->pop_mode(kModeRepositionWindow);
+    return;
+  }
+
   // App button click exits the WebVR presentation and fullscreen.
   browser_->ExitPresent();
   browser_->ExitFullscreen();

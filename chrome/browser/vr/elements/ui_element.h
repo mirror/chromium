@@ -261,24 +261,16 @@ class UiElement : public cc::AnimationTarget {
   }
 
   LayoutAlignment x_anchoring() const { return x_anchoring_; }
-  void set_x_anchoring(LayoutAlignment x_anchoring) {
-    x_anchoring_ = x_anchoring;
-  }
+  void set_x_anchoring(LayoutAlignment x_anchoring);
 
   LayoutAlignment y_anchoring() const { return y_anchoring_; }
-  void set_y_anchoring(LayoutAlignment y_anchoring) {
-    y_anchoring_ = y_anchoring;
-  }
+  void set_y_anchoring(LayoutAlignment y_anchoring);
 
   LayoutAlignment x_centering() const { return x_centering_; }
-  void set_x_centering(LayoutAlignment x_centering) {
-    x_centering_ = x_centering;
-  }
+  void set_x_centering(LayoutAlignment x_centering);
 
   LayoutAlignment y_centering() const { return y_centering_; }
-  void set_y_centering(LayoutAlignment y_centering) {
-    y_centering_ = y_centering;
-  }
+  void set_y_centering(LayoutAlignment y_centering);
 
   bool bounds_contain_children() const { return bounds_contain_children_; }
   void set_bounds_contain_children(bool bounds_contain_children) {
