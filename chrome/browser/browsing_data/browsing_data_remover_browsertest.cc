@@ -10,6 +10,7 @@
 #include "base/files/file_path.h"
 #include "base/path_service.h"
 #include "base/run_loop.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/threading/thread_restrictions.h"
 #include "chrome/browser/browsing_data/browsing_data_helper.h"
 #include "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.h"
@@ -25,6 +26,7 @@
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/ui_test_utils.h"
 #include "components/browsing_data/core/browsing_data_utils.h"
+#include "components/browsing_data/core/features.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/browser_context.h"
@@ -54,6 +56,8 @@ class BrowsingDataRemoverBrowserTest : public InProcessBrowserTest {
   BrowsingDataRemoverBrowserTest() {}
 
   void SetUpOnMainThread() override {
+    feature_list_.InitWithFeatures(
+        {browsing_data::features::kRemoveNavigationHistory}, {});
     base::FilePath path;
     PathService::Get(content::DIR_TEST_DATA, &path);
     host_resolver()->AddRule(kExampleHost, "127.0.0.1");
@@ -233,6 +237,8 @@ class BrowsingDataRemoverBrowserTest : public InProcessBrowserTest {
     *out_count = count;
     run_loop->Quit();
   }
+
+  base::test::ScopedFeatureList feature_list_;
 };
 
 // Test BrowsingDataRemover for downloads.
@@ -403,6 +409,23 @@ IN_PROC_BROWSER_TEST_F(BrowsingDataRemoverBrowserTest,
   RemoveAndWait(ChromeBrowsingDataRemoverDelegate::DATA_TYPE_SITE_DATA);
   block_state = ExternalProtocolHandler::GetBlockState("tel", profile);
   ASSERT_EQ(ExternalProtocolHandler::UNKNOWN, block_state);
+}
+
+IN_PROC_BROWSER_TEST_F(BrowsingDataRemoverBrowserTest, HistoryDeletion) {
+  std::string type = "History";
+  GURL url = embedded_test_server()->GetURL("/browsing_data/site_data.html");
+  ui_test_utils::NavigateToURL(browser(), url);
+  EXPECT_FALSE(HasDataForType(type));
+  SetDataForType(type);
+  EXPECT_TRUE(HasDataForType(type));
+  // Remove history from navigation to site_data.html.
+  RemoveAndWait(ChromeBrowsingDataRemoverDelegate::DATA_TYPE_HISTORY);
+  EXPECT_FALSE(HasDataForType(type));
+  SetDataForType(type);
+  EXPECT_TRUE(HasDataForType(type));
+  // Remove history from previous pushState() call in setHistory().
+  RemoveAndWait(ChromeBrowsingDataRemoverDelegate::DATA_TYPE_HISTORY);
+  EXPECT_FALSE(HasDataForType(type));
 }
 
 IN_PROC_BROWSER_TEST_F(BrowsingDataRemoverBrowserTest, CookieDeletion) {
