@@ -840,6 +840,8 @@ enum InfoBarButtonPosition { ON_FIRST_LINE, CENTER, LEFT, RIGHT };
                     target:(id)target
                     action:(SEL)action {
   MDCFlatButton* button = [[MDCFlatButton alloc] init];
+  if (IsUIRefreshPhase1InfoBarEnabled())
+    button.layer.cornerRadius = 11.0;
   button.inkColor = [[palette tint300] colorWithAlphaComponent:0.5f];
   [button setBackgroundColor:[palette tint500] forState:UIControlStateNormal];
   [button setBackgroundColor:[UIColor colorWithWhite:0.8f alpha:1.0f]
