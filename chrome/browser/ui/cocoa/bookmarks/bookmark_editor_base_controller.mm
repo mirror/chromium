@@ -230,13 +230,14 @@ class BookmarkEditorBaseControllerBridge
 @synthesize initialName = initialName_;
 @synthesize displayName = displayName_;
 
-- (id)initWithParentWindow:(NSWindow*)parentWindow
-                   nibName:(NSString*)nibName
-                   profile:(Profile*)profile
-                    parent:(const BookmarkNode*)parent
-                       url:(const GURL&)url
-                     title:(const base::string16&)title
-             configuration:(BookmarkEditor::Configuration)configuration {
+- (instancetype)initWithParentWindow:(NSWindow*)parentWindow
+                             nibName:(NSString*)nibName
+                             profile:(Profile*)profile
+                              parent:(const BookmarkNode*)parent
+                                 url:(const GURL&)url
+                               title:(const base::string16&)title
+                       configuration:
+                           (BookmarkEditor::Configuration)configuration {
   NSString* nibpath = [base::mac::FrameworkBundle()
                         pathForResource:nibName
                                  ofType:@"nib"];
@@ -433,7 +434,7 @@ NSString* const kOkEnabledName = @"okEnabled";
   BookmarkFolderInfo* item = nil;
   NSArray* treeNode = [self folderTreeArray];
   for (NSUInteger i = 0; i < pathCount; ++i) {
-    item = [treeNode objectAtIndex:[indexPath indexAtPosition:i]];
+    item = treeNode[[indexPath indexAtPosition:i]];
     treeNode = [item children];
   }
   return item;
@@ -444,7 +445,7 @@ NSString* const kOkEnabledName = @"okEnabled";
   NSArray* selections = [self tableSelectionPaths];
   if ([selections count]) {
     DCHECK([selections count] == 1);  // Should be exactly one selection.
-    selectedIndexPath = [selections objectAtIndex:0];
+    selectedIndexPath = selections[0];
   }
   return selectedIndexPath;
 }
@@ -528,7 +529,7 @@ NSString* const kOkEnabledName = @"okEnabled";
 }
 
 - (void)setTableSelectionPath:(NSIndexPath*)tableSelectionPath {
-  [self setTableSelectionPaths:[NSArray arrayWithObject:tableSelectionPath]];
+  [self setTableSelectionPaths:@[ tableSelectionPath ]];
 }
 
 - (void)setTableSelectionPaths:(NSArray*)tableSelectionPaths {
@@ -743,9 +744,9 @@ NSString* const kOkEnabledName = @"okEnabled";
 @synthesize children = children_;
 @synthesize newFolder = newFolder_;
 
-+ (id)bookmarkFolderInfoWithFolderName:(NSString*)folderName
-                            folderNode:(const BookmarkNode*)folderNode
-                              children:(NSMutableArray*)children {
++ (instancetype)bookmarkFolderInfoWithFolderName:(NSString*)folderName
+                                      folderNode:(const BookmarkNode*)folderNode
+                                        children:(NSMutableArray*)children {
   return [[[BookmarkFolderInfo alloc] initWithFolderName:folderName
                                               folderNode:folderNode
                                                 children:children
@@ -753,7 +754,7 @@ NSString* const kOkEnabledName = @"okEnabled";
           autorelease];
 }
 
-+ (id)bookmarkFolderInfoWithFolderName:(NSString*)folderName {
++ (instancetype)bookmarkFolderInfoWithFolderName:(NSString*)folderName {
   return [[[BookmarkFolderInfo alloc] initWithFolderName:folderName
                                               folderNode:NULL
                                                 children:nil
@@ -761,10 +762,10 @@ NSString* const kOkEnabledName = @"okEnabled";
           autorelease];
 }
 
-- (id)initWithFolderName:(NSString*)folderName
-              folderNode:(const BookmarkNode*)folderNode
-                children:(NSMutableArray*)children
-               newFolder:(BOOL)newFolder {
+- (instancetype)initWithFolderName:(NSString*)folderName
+                        folderNode:(const BookmarkNode*)folderNode
+                          children:(NSMutableArray*)children
+                         newFolder:(BOOL)newFolder {
   if ((self = [super init])) {
     // A folderName is always required, and if newFolder is NO then there
     // should be a folderNode.  Children is optional.
@@ -783,7 +784,7 @@ NSString* const kOkEnabledName = @"okEnabled";
   return self;
 }
 
-- (id)init {
+- (instancetype)init {
   NOTREACHED();  // Should never be called.
   return [self initWithFolderName:nil folderNode:nil children:nil newFolder:NO];
 }

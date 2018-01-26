@@ -20,7 +20,7 @@ class ThemeProvider;
 // view's) to one of the constants below (ButtonType).
 
 // Set this as the cell's tag.
-enum {
+typedef NS_ENUM(NSInteger, ButtonType) {
   kLeftButtonType = -1,
   kLeftButtonWithShadowType = -2,
   kStandardButtonType = 0,
@@ -33,7 +33,6 @@ enum {
   kMaterialStandardButtonTypeWithLimitedClickFeedback = 4,
   kMaterialMenuButtonTypeWithLimitedClickFeedback = 5,
 };
-typedef NSInteger ButtonType;
 
 namespace gradient_button_cell {
 
@@ -99,7 +98,7 @@ typedef enum {
 - (void)setPulseIsStuckOn:(BOOL)continuous;
 
 // Returns continuous pulse state.
-- (BOOL)isPulseStuckOn;
+@property(nonatomic, getter=isPulseStuckOn, readonly) BOOL pulseStuckOn;
 
 // Safely stop continuous pulsing by turning off all timers.
 // May leave the cell in an odd state.
@@ -107,28 +106,29 @@ typedef enum {
 - (void)safelyStopPulsing;
 
 // Actually fetches current mouse position and does a hit test.
-- (BOOL)isMouseReallyInside;
+@property(nonatomic, getter=isMouseReallyInside, readonly)
+    BOOL mouseReallyInside;
 
 // Defines the top offset of text within the cell. Used by drawTitle and can
 // be overriden by objects that inherit this class for placement of text.
-- (int)verticalTextOffset;
+@property(nonatomic, readonly) int verticalTextOffset;
 
 // The amount by which the gradient button cell should nudge the path used to
 // draw the hover (and pressed) state background path.
 - (CGFloat)hoverBackgroundVerticalOffsetInControlView:(NSView*)controlView;
 
 // Returns YES if the cell's tag indicates a Material Design button type.
-- (BOOL)isMaterialDesignButtonType;
+@property(nonatomic, getter=isMaterialDesignButtonType, readonly)
+    BOOL materialDesignButtonType;
 
 @property(assign, nonatomic) CGFloat hoverAlpha;
 
 @end
 
 @interface GradientButtonCell(TestingAPI)
-- (BOOL)isMouseInside;
-- (BOOL)pulsing;
-- (gradient_button_cell::PulseState)pulseState;
-- (void)setPulseState:(gradient_button_cell::PulseState)pstate;
+@property(nonatomic, getter=isMouseInside, readonly) BOOL mouseInside;
+@property(nonatomic, readonly) BOOL pulsing;
+@property(nonatomic) gradient_button_cell::PulseState pulseState;
 - (void)updateTrackingAreas;
 @end
 

@@ -22,7 +22,7 @@
 
 // Initialize the given view, which must implement the |URLDropTarget| (below),
 // to accept drops of URLs.
-- (id)initWithView:(NSView<URLDropTarget>*)view;
+- (instancetype)initWithView:(NSView<URLDropTarget>*)view;
 
 // The owner view should implement the following methods by calling the
 // |URLDropTargetHandler|'s version, and leave the others to the default
@@ -39,7 +39,8 @@
 @protocol URLDropTarget
 
 // Returns the controller which handles the drop.
-- (id<URLDropTargetController>)urlDropController;
+@property(nonatomic, readonly, strong) id<URLDropTargetController>
+    urlDropController;
 
 // The following, which come from |NSDraggingDestination|, must be implemented
 // by calling the |URLDropTargetHandler|'s implementations.

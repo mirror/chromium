@@ -17,7 +17,7 @@ class WDTypedResult;
 //
 // Result types for WebDataService.
 //
-typedef enum {
+typedef NS_ENUM(unsigned int, WDResultType) {
   BOOL_RESULT = 1,              // WDResult<bool>
   KEYWORDS_RESULT,              // WDResult<WDKeywordsResult>
   INT64_RESULT,                 // WDResult<int64_t>
@@ -39,7 +39,7 @@ typedef enum {
                              //     mojom::WebAppManifestSectionPtr>>
   PAYMENT_METHOD_MANIFEST,   // WDResult<std::vector<std::string>>
 #endif
-} WDResultType;
+};
 
 //
 // The top level class for a result.

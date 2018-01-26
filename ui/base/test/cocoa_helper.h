@@ -47,10 +47,10 @@
 @property(nonatomic, readonly) NSArray<NSView*>* validKeyViews;
 
 // Init a borderless non-deferred window with a backing store.
-- (id)initWithContentRect:(NSRect)contentRect;
+- (instancetype)initWithContentRect:(NSRect)contentRect;
 
 // Init with a default frame.
-- (id)init;
+- (instancetype)init;
 
 // Sets the responder passed in as first responder, and sets the window
 // so that it will return "YES" if asked if it key window. It does not actually
@@ -61,9 +61,9 @@
 // to being non-key.
 - (void)clearPretendKeyWindowAndFirstResponder;
 
-- (BOOL)isKeyWindow;
+@property(nonatomic, getter=isKeyWindow, readonly) BOOL keyWindow;
 
-- (NSWindowOcclusionState)occlusionState;
+@property(nonatomic, readonly) NSWindowOcclusionState occlusionState;
 
 @end
 

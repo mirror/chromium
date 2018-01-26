@@ -43,10 +43,10 @@ class BookmarkNode;
 // visibility before starting.  For example, dragging a bookmark button should
 // not lock the overlay if the bookmark bar is currently showing in detached
 // mode on the NTP.
-- (BOOL)dragShouldLockBarVisibility;
+@property(nonatomic, readonly) BOOL dragShouldLockBarVisibility;
 
 // Returns the top-level window for this button.
-- (NSWindow*)browserWindow;
+@property(nonatomic, readonly, strong) NSWindow* browserWindow;
 
 // Returns YES if the bookmark button can be dragged to the trash, NO otherwise.
 - (BOOL)canDragBookmarkButtonToTrash:(BookmarkButton*)button;
@@ -85,7 +85,8 @@ class BookmarkNode;
 - (void)closeBookmarkFolder:(id)sender;
 
 // Return the bookmark model for this controller.
-- (bookmarks::BookmarkModel*)bookmarkModel;
+@property(nonatomic, readonly)
+    bookmarks::BookmarkModel* bookmarkModel NS_RETURNS_INNER_POINTER;
 
 // Perform drag enter/exit operations, such as hover-open and hover-close.
 - (BOOL)draggingAllowed:(id<NSDraggingInfo>)info;
@@ -96,7 +97,7 @@ class BookmarkNode;
 // visibility before starting.  For example, dragging a bookmark button should
 // not lock the overlay if the bookmark bar is currently showing in detached
 // mode on the NTP.
-- (BOOL)dragShouldLockBarVisibility;
+@property(nonatomic, readonly) BOOL dragShouldLockBarVisibility;
 
 // Perform the actual DnD of a bookmark or bookmark button.
 
@@ -116,7 +117,8 @@ class BookmarkNode;
 // Determine if the drag pasteboard has any drag data of type
 // kBookmarkDictionaryListPboardType and, if so, return those elements
 // otherwise return an empty vector.
-- (std::vector<const bookmarks::BookmarkNode*>)retrieveBookmarkNodeData;
+@property(nonatomic, readonly) std::vector<const bookmarks::BookmarkNode*>
+    retrieveBookmarkNodeData;
 
 // Return YES if we should show the drop indicator, else NO.  In some
 // cases (e.g. hover open) we don't want to show the drop indicator.
@@ -140,7 +142,7 @@ class BookmarkNode;
 - (void)clearDropInsertionPos;
 
 // Return the profile associated with this browser window.
-- (Profile*)profile;
+@property(nonatomic, readonly) Profile* profile NS_RETURNS_INNER_POINTER;
 
 // Called just before a child folder puts itself on screen.
 - (void)childFolderWillShow:(id<BookmarkButtonControllerProtocol>)child;
@@ -149,7 +151,8 @@ class BookmarkNode;
 - (void)childFolderWillClose:(id<BookmarkButtonControllerProtocol>)child;
 
 // Return a controller's folder controller for a subfolder, or nil.
-- (BookmarkBarFolderController*)folderController;
+@property(nonatomic, readonly, strong)
+    BookmarkBarFolderController* folderController;
 
 // Add a new folder controller as triggered by the given folder button.
 // If there is a current folder controller, close it.
@@ -225,10 +228,11 @@ class BookmarkNode;
 @property(retain, nonatomic) NSColor* backgroundColor;
 
 // Return the bookmark node associated with this button, or NULL.
-- (const bookmarks::BookmarkNode*)bookmarkNode;
+@property(nonatomic, readonly)
+    const bookmarks::BookmarkNode* bookmarkNode NS_RETURNS_INNER_POINTER;
 
 // Return YES if this is a folder button (the node has subnodes).
-- (BOOL)isFolder;
+@property(nonatomic, getter=isFolder, readonly) BOOL folder;
 
 - (void)mouseDragged:(NSEvent*)theEvent;
 
@@ -240,18 +244,18 @@ class BookmarkNode;
 // TODO(jrg): improve; things work but are slightly ugly since "empty"
 // and "one disabled button" are not the same thing.
 // http://crbug.com/35967
-- (BOOL)isEmpty;
+@property(nonatomic, getter=isEmpty, readonly) BOOL empty;
 
 // Stick or unstick the pulse of a bookmark button.
 // Triggered by the bookmark bubble.
 - (void)setPulseIsStuckOn:(BOOL)flag;
 
 // Return pulse sticky state.
-- (BOOL)isPulseStuckOn;
+@property(nonatomic, getter=isPulseStuckOn, readonly) BOOL pulseStuckOn;
 
 // Return the location in screen coordinates where the remove animation should
 // be displayed.
-- (NSPoint)screenLocationForRemoveAnimation;
+@property(nonatomic, readonly) NSPoint screenLocationForRemoveAnimation;
 
 // The BookmarkButton which is currently being dragged, if any.
 + (BookmarkButton*)draggedButton;

@@ -13,13 +13,12 @@ class ThemeProvider;
 using ui::ThemeProvider;
 
 // Bit flags; mix-and-match as necessary.
-enum {
-  THEMED_NORMAL    = 0,
+typedef NS_OPTIONS(NSUInteger, ThemedWindowStyle) {
+  THEMED_NORMAL = 0,
   THEMED_INCOGNITO = 1 << 0,
-  THEMED_POPUP     = 1 << 1,
-  THEMED_DEVTOOLS  = 1 << 2
+  THEMED_POPUP = 1 << 1,
+  THEMED_DEVTOOLS = 1 << 2
 };
-typedef NSUInteger ThemedWindowStyle;
 
 // Indicates how the theme image should be aligned.
 enum ThemeImageAlignment {
@@ -33,14 +32,15 @@ enum ThemeImageAlignment {
 
 // Implemented by windows that support theming.
 @interface NSWindow (ThemeProvider)
-- (const ThemeProvider*)themeProvider;
-- (ThemedWindowStyle)themedWindowStyle;
-- (BOOL)inIncognitoMode;
+@property(nonatomic, readonly)
+    const ui::ThemeProvider* themeProvider NS_RETURNS_INNER_POINTER;
+@property(nonatomic, readonly) ThemedWindowStyle themedWindowStyle;
+@property(nonatomic, readonly) BOOL inIncognitoMode;
 // Return YES if using the system (i.e. non-custom) theme and Incognito mode.
-- (BOOL)inIncognitoModeWithSystemTheme;
+@property(nonatomic, readonly) BOOL inIncognitoModeWithSystemTheme;
 // Return YES if Incongnito, or a custom theme with a dark toolbar color or
 // light tab text.
-- (BOOL)hasDarkTheme;
+@property(nonatomic, readonly) BOOL hasDarkTheme;
 
 // Returns the position in window coordinates that the top left of a theme
 // image with |alignment| should be painted at. The result of this method can

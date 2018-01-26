@@ -28,7 +28,8 @@ class Browser;
         browserWindowController:(BrowserWindowController*)bwc;
 
 // Creates and returns a touch bar for the browser window.
-- (NSTouchBar*)makeTouchBar API_AVAILABLE(macos(10.12.2));
+@property(nonatomic, readonly, strong)
+    NSTouchBar* makeTouchBar API_AVAILABLE(macos(10.12.2));
 
 // Updates the back/forward button. Called when creating the touch bar or when
 // the back and forward commands have changed.
@@ -44,11 +45,11 @@ class Browser;
 - (void)updateReloadStopButton;
 
 // Returns the reload/stop button on the touch bar. Creates it if it's null.
-- (NSButton*)reloadStopButton;
+@property(nonatomic, readonly, strong) NSButton* reloadStopButton;
 
 // Returns the back/forward segmented control on the touch bar. Creates it if
 // it's null.
-- (NSSegmentedControl*)backForwardControl;
+@property(nonatomic, readonly, strong) NSSegmentedControl* backForwardControl;
 
 @end
 

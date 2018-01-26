@@ -155,13 +155,14 @@ const CGFloat kBookmarkBottomVerticalPadding = 0.0;
 }
 
 // Designated initializer.
-- (id)initWithParentButton:(BookmarkButton*)button
-          parentController:(BookmarkBarFolderController*)parentController
-             barController:(BookmarkBarController*)barController
-                   profile:(Profile*)profile;
+- (instancetype)initWithParentButton:(BookmarkButton*)button
+                    parentController:
+                        (BookmarkBarFolderController*)parentController
+                       barController:(BookmarkBarController*)barController
+                             profile:(Profile*)profile;
 
 // Return the parent button that owns the bookmark folder we represent.
-- (BookmarkButton*)parentButton;
+@property(nonatomic, readonly, strong) BookmarkButton* parentButton;
 
 // Text typed by user, for type-select and arrow key support.
 // Returns YES if the menu should be closed now.
@@ -199,24 +200,25 @@ const CGFloat kBookmarkBottomVerticalPadding = 0.0;
 @interface BookmarkBarFolderController(TestingAPI)
 - (NSPoint)windowTopLeftForWidth:(int)windowWidth
                           height:(int)windowHeight;
-- (NSArray*)buttons;
-- (BookmarkBarFolderController*)folderController;
-- (id)folderTarget;
+@property(nonatomic, readonly, copy) NSArray* buttons;
+@property(nonatomic, readonly, strong)
+    BookmarkBarFolderController* folderController;
+@property(nonatomic, readonly, strong) id folderTarget;
 - (void)configureWindowLevel;
 - (void)performOneScroll:(CGFloat)delta
     updateMouseSelection:(BOOL)updateMouseSelection;
-- (BookmarkButton*)buttonThatMouseIsIn;
+@property(nonatomic, readonly, strong) BookmarkButton* buttonThatMouseIsIn;
 // Set to YES in order to prevent animations.
 - (void)setIgnoreAnimations:(BOOL)ignore;
 
 // Return YES if the scroll-up or scroll-down arrows are showing.
-- (BOOL)canScrollUp;
-- (BOOL)canScrollDown;
-- (BOOL)isScrolling;
-- (CGFloat)verticalScrollArrowHeight;
-- (NSView*)visibleView;
-- (NSScrollView*)scrollView;
-- (NSView*)folderView;
+@property(nonatomic, readonly) BOOL canScrollUp;
+@property(nonatomic, readonly) BOOL canScrollDown;
+@property(nonatomic, getter=isScrolling, readonly) BOOL scrolling;
+@property(nonatomic, readonly) CGFloat verticalScrollArrowHeight;
+@property(nonatomic, readonly, strong) NSView* visibleView;
+@property(nonatomic, readonly, strong) NSScrollView* scrollView;
+@property(nonatomic, readonly, strong) NSView* folderView;
 
 - (IBAction)openBookmarkFolderFromButton:(id)sender;
 

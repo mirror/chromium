@@ -10,10 +10,11 @@ using bookmarks::BookmarkNode;
 
 @implementation BookmarkBarFolderButtonCell
 
-+ (id)buttonCellForNode:(const BookmarkNode*)node
-                   text:(NSString*)text
-                  image:(NSImage*)image
-         menuController:(BookmarkContextMenuCocoaController*)menuController {
++ (instancetype)buttonCellForNode:(const BookmarkNode*)node
+                             text:(NSString*)text
+                            image:(NSImage*)image
+                   menuController:
+                       (BookmarkContextMenuCocoaController*)menuController {
   id buttonCell =
       [[[BookmarkBarFolderButtonCell alloc] initForNode:node
                                                    text:text

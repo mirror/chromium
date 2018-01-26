@@ -35,10 +35,9 @@
 // Gets the current height of the view.  If an animation is currently running,
 // this will give the current height at the time of the call, not the target
 // height at the end of the animation.
-- (CGFloat)height;
+@property(nonatomic) CGFloat height;
 
 // Sets the height of the view immediately.  Cancels any running animations.
-- (void)setHeight:(CGFloat)newHeight;
 
 // Starts a new animation to the given |newHeight| for the given |duration|.
 // Cancels any running animations.
@@ -50,7 +49,7 @@
 - (void)stopAnimation;
 
 // Gets the progress of any current animation.
-- (NSAnimationProgress)currentAnimationProgress;
+@property(nonatomic, readonly) NSAnimationProgress currentAnimationProgress;
 
 @end
 

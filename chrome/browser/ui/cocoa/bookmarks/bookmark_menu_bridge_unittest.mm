@@ -180,8 +180,7 @@ TEST_F(BookmarkMenuBridgeTest, TestAddNodeToMenu) {
   EXPECT_EQ((NSInteger)(prev_count + 3), [menu_ numberOfItems]);
 
   // Verify the 1st one is there with the right action.
-  NSMenuItem* item =
-      [menu_ itemWithTitle:[NSString stringWithUTF8String:short_url]];
+  NSMenuItem* item = [menu_ itemWithTitle:@(short_url)];
   EXPECT_TRUE(item);
   EXPECT_EQ(@selector(openBookmarkMenuItem:), [item action]);
   EXPECT_EQ(NO, [item hasSubmenu]);
@@ -206,7 +205,7 @@ TEST_F(BookmarkMenuBridgeTest, TestAddNodeToMenu) {
 
   // Make sure a short title looks fine
   NSString* s = [short_item title];
-  EXPECT_NSEQ([NSString stringWithUTF8String:short_url], s);
+  EXPECT_NSEQ(@(short_url), s);
 
   // Make sure a super-long title gets trimmed
   s = [long_item title];

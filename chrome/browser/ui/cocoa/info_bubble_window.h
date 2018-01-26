@@ -53,12 +53,12 @@ typedef NSUInteger AllowedAnimations;
 @property(nonatomic) BOOL allowShareParentKeyState;
 
 // Superclass override.
-- (BOOL)canBecomeKeyWindow;
+@property(nonatomic, readonly) BOOL canBecomeKeyWindow;
 
 // Returns YES if the window is in the process of closing.
 // Can't use "windowWillClose" notification because that will be sent
 // after the closing animation has completed.
-- (BOOL)isClosing;
+@property(nonatomic, getter=isClosing, readonly) BOOL closing;
 
 @end
 

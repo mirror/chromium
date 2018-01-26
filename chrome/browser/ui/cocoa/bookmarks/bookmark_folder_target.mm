@@ -22,8 +22,9 @@ NSString* kBookmarkButtonDragType = @"com.google.chrome.BookmarkButtonDrag";
 
 @implementation BookmarkFolderTarget
 
-- (id)initWithController:(id<BookmarkButtonControllerProtocol>)controller
-                 profile:(Profile*)profile {
+- (instancetype)initWithController:
+                    (id<BookmarkButtonControllerProtocol>)controller
+                           profile:(Profile*)profile {
   if ((self = [super init])) {
     controller_ = controller;
     profile_ = profile;

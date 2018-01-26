@@ -73,27 +73,25 @@ class TabStripModelObserverBridge;
 // bubble visible. It will autorelease itself when the user dismisses the
 // bubble.
 // This is the designated initializer.
-- (id)initWithWindowNibPath:(NSString*)nibPath
-               parentWindow:(NSWindow*)parentWindow
-                 anchoredAt:(NSPoint)anchoredAt;
-
+- (instancetype)initWithWindowNibPath:(NSString*)nibPath
+                         parentWindow:(NSWindow*)parentWindow
+                           anchoredAt:(NSPoint)anchoredAt;
 
 // Creates a bubble. |nibPath| is just the basename, e.g. @"FirstRunBubble".
 // |view| must be in a window. The bubble will point at |offset| relative to
 // |view|'s lower left corner. You need to call -showWindow: to make the
 // bubble visible. It will autorelease itself when the user dismisses the
 // bubble.
-- (id)initWithWindowNibPath:(NSString*)nibPath
-             relativeToView:(NSView*)view
-                     offset:(NSPoint)offset;
-
+- (instancetype)initWithWindowNibPath:(NSString*)nibPath
+                       relativeToView:(NSView*)view
+                               offset:(NSPoint)offset;
 
 // For subclasses that do not load from a XIB, this will simply set the instance
 // variables appropriately. This will also replace the |-[self window]|'s
 // contentView with an instance of InfoBubbleView.
-- (id)initWithWindow:(NSWindow*)theWindow
-        parentWindow:(NSWindow*)parentWindow
-          anchoredAt:(NSPoint)anchoredAt;
+- (instancetype)initWithWindow:(NSWindow*)theWindow
+                  parentWindow:(NSWindow*)parentWindow
+                    anchoredAt:(NSPoint)anchoredAt;
 
 // Closes the bubble with BUBBLE_CLOSE_CANCELED.
 - (IBAction)cancel:(id)sender;

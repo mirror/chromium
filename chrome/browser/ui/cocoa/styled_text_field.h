@@ -23,12 +23,12 @@
 // Returns the amount of the field's width which is not being taken up
 // by the text contents.  May be negative if the contents are large
 // enough to scroll.
-- (CGFloat)availableDecorationWidth;
+@property(nonatomic, readonly) CGFloat availableDecorationWidth;
 
 @end
 
 @interface StyledTextField (ExposedForTesting)
-- (StyledTextFieldCell*)styledTextFieldCell;
+@property(nonatomic, readonly, strong) StyledTextFieldCell* styledTextFieldCell;
 @end
 
 #endif  // CHROME_BROWSER_UI_COCOA_STYLED_TEXT_FIELD_H_

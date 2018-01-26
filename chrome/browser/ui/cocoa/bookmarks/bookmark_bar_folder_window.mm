@@ -24,16 +24,16 @@ const CGFloat kMDFolderWindowBackgroundColor = 237. / 255.;
 
 @interface BookmarkBarFolderWindow (Accessibility)
 
-- (NSString*)accessibilityTitle;
+@property(nonatomic, readonly, copy) NSString* accessibilityTitle;
 
 @end
 
 @implementation BookmarkBarFolderWindow
 
-- (id)initWithContentRect:(NSRect)contentRect
-                styleMask:(NSUInteger)windowStyle
-                  backing:(NSBackingStoreType)bufferingType
-                    defer:(BOOL)deferCreation {
+- (instancetype)initWithContentRect:(NSRect)contentRect
+                          styleMask:(NSUInteger)windowStyle
+                            backing:(NSBackingStoreType)bufferingType
+                              defer:(BOOL)deferCreation {
   if ((self = [super initWithContentRect:contentRect
                                styleMask:NSBorderlessWindowMask // override
                                  backing:bufferingType

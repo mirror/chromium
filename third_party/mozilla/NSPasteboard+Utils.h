@@ -65,6 +65,6 @@ MOZILLA_EXPORT extern NSString* const kWebURLsWithTitlesPboardType;
 
 // Returns the HTML converted from RTF data on the pasteboard. If there is
 // none, returns an empty string.
-- (NSString*)htmlFromRtf;
+@property(nonatomic, readonly, copy) NSString* htmlFromRtf;
 
 @end

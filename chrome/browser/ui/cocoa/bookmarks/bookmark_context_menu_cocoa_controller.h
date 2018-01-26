@@ -48,7 +48,8 @@ class BookmarkNode;
 
 // Initializes the BookmarkContextMenuCocoaController for the given bookmark
 // bar |controller|.
-- (id)initWithBookmarkBarController:(BookmarkBarController*)controller;
+- (instancetype)initWithBookmarkBarController:(BookmarkBarController*)controller
+    NS_DESIGNATED_INITIALIZER;
 
 // Returns an NSMenu customized for |node|. Works under the assumption that
 // only one menu should ever be shown at a time, and thus caches the last
@@ -57,7 +58,7 @@ class BookmarkNode;
 - (NSMenu*)menuForBookmarkNode:(const bookmarks::BookmarkNode*)node;
 
 // Returns an NSMenu customized for the bookmark bar.
-- (NSMenu*)menuForBookmarkBar;
+@property(nonatomic, readonly, copy) NSMenu* menuForBookmarkBar;
 
 // Closes the menu, if it's currently open.
 - (void)cancelTracking;

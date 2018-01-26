@@ -26,18 +26,19 @@
 
 @property(nonatomic, copy) NSString* displayURL;
 
-- (id)initWithParentWindow:(NSWindow*)parentWindow
-                   profile:(Profile*)profile
-                    parent:(const bookmarks::BookmarkNode*)parent
-                      node:(const bookmarks::BookmarkNode*)node
-                       url:(const GURL&)url
-                     title:(const base::string16&)title
-             configuration:(BookmarkEditor::Configuration)configuration;
+- (instancetype)initWithParentWindow:(NSWindow*)parentWindow
+                             profile:(Profile*)profile
+                              parent:(const bookmarks::BookmarkNode*)parent
+                                node:(const bookmarks::BookmarkNode*)node
+                                 url:(const GURL&)url
+                               title:(const base::string16&)title
+                       configuration:
+                           (BookmarkEditor::Configuration)configuration;
 
 @end
 
 @interface BookmarkEditorController (UnitTesting)
-- (NSColor *)urlFieldColor;
+@property(nonatomic, readonly, copy) NSColor* urlFieldColor;
 @end
 
 #endif  // CHROME_BROWSER_UI_COCOA_BOOKMARKS_BOOKMARK_EDITOR_CONTROLLER_H_

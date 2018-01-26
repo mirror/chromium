@@ -257,9 +257,9 @@ bool operator!=(const BookmarkBarLayout& lhs, const BookmarkBarLayout& rhs) {
 @synthesize stateAnimationsEnabled = stateAnimationsEnabled_;
 @synthesize innerContentAnimationsEnabled = innerContentAnimationsEnabled_;
 
-- (id)initWithBrowser:(Browser*)browser
-         initialWidth:(CGFloat)initialWidth
-             delegate:(id<BookmarkBarControllerDelegate>)delegate {
+- (instancetype)initWithBrowser:(Browser*)browser
+                   initialWidth:(CGFloat)initialWidth
+                       delegate:(id<BookmarkBarControllerDelegate>)delegate {
   if ((self = [super initWithNibName:nil bundle:nil])) {
     currentState_ = BookmarkBar::HIDDEN;
     lastState_ = BookmarkBar::HIDDEN;
@@ -1359,8 +1359,7 @@ bool operator!=(const BookmarkBarLayout& lhs, const BookmarkBarLayout& rhs) {
   if (parentType == BookmarkNode::BOOKMARK_BAR) {
     int index = parent->GetIndexOf(node);
     if ((index >= 0) && (static_cast<NSUInteger>(index) < [buttons_ count])) {
-      NSButton* button =
-          [buttons_ objectAtIndex:static_cast<NSUInteger>(index)];
+      NSButton* button = buttons_[static_cast<NSUInteger>(index)];
       if ([button showsBorderOnlyWhileMouseInside]) {
         [button setShowsBorderOnlyWhileMouseInside:NO];
         [button setShowsBorderOnlyWhileMouseInside:YES];
@@ -1618,7 +1617,7 @@ static BOOL ValueInRangeInclusive(CGFloat low, CGFloat value, CGFloat high) {
 
   BOOL isRTL = cocoa_l10n_util::ShouldDoExperimentalRTLLayout();
   for (size_t i = 0; i < layout_.VisibleButtonCount(); i++) {
-    BookmarkButton* button = [buttons_ objectAtIndex:i];
+    BookmarkButton* button = buttons_[i];
     CGFloat midpoint = NSMidX([button frame]);
     if (isRTL ? dropLocation.x >= midpoint : dropLocation.x <= midpoint) {
       return i;
@@ -2338,10 +2337,10 @@ static BOOL ValueInRangeInclusive(CGFloat low, CGFloat value, CGFloat high) {
     DCHECK([[hoverButton_ target]
             respondsToSelector:@selector(openBookmarkFolderFromButton:)]);
     [[hoverButton_ target]
-     performSelector:@selector(openBookmarkFolderFromButton:)
-     withObject:hoverButton_
-     afterDelay:bookmarks::kDragHoverOpenDelay
-     inModes:[NSArray arrayWithObject:NSRunLoopCommonModes]];
+        performSelector:@selector(openBookmarkFolderFromButton:)
+             withObject:hoverButton_
+             afterDelay:bookmarks::kDragHoverOpenDelay
+                inModes:@[ NSRunLoopCommonModes ]];
   }
   if (!button) {
     if (hoverButton_) {
@@ -2551,17 +2550,14 @@ static BOOL ValueInRangeInclusive(CGFloat low, CGFloat value, CGFloat high) {
     size_t urlCount = [urls count];
     for (size_t i = 0; i < urlCount; ++i) {
       GURL gurl;
-      const char* string = [[urls objectAtIndex:i] UTF8String];
+      const char* string = [urls[i] UTF8String];
       if (string)
         gurl = GURL(string);
       // We only expect to receive valid URLs.
       DCHECK(gurl.is_valid());
       if (gurl.is_valid()) {
-        bookmarkModel_->AddURL(destParent,
-                               destIndex++,
-                               base::SysNSStringToUTF16(
-                                  [titles objectAtIndex:i]),
-                               gurl);
+        bookmarkModel_->AddURL(destParent, destIndex++,
+                               base::SysNSStringToUTF16(titles[i]), gurl);
         nodesWereAdded = YES;
       }
     }

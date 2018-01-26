@@ -21,12 +21,13 @@ using content::WebContents;
 
 @implementation BookmarkAllTabsController
 
-- (id)initWithParentWindow:(NSWindow*)parentWindow
-                   profile:(Profile*)profile
-                    parent:(const BookmarkNode*)parent
-                       url:(const GURL&)url
-                     title:(const base::string16&)title
-             configuration:(BookmarkEditor::Configuration)configuration {
+- (instancetype)initWithParentWindow:(NSWindow*)parentWindow
+                             profile:(Profile*)profile
+                              parent:(const BookmarkNode*)parent
+                                 url:(const GURL&)url
+                               title:(const base::string16&)title
+                       configuration:
+                           (BookmarkEditor::Configuration)configuration {
   NSString* nibName = @"BookmarkAllTabs";
   if ((self = [super initWithParentWindow:parentWindow
                                   nibName:nibName
@@ -64,7 +65,7 @@ using content::WebContents;
 - (NSNumber*)didCommit {
   const BookmarkNode* newParentNode = [self selectedNode];
   if (!newParentNode)
-    return [NSNumber numberWithBool:NO];
+    return @NO;
   int newIndex = newParentNode->child_count();
   // Create the new folder which will contain all of the tab URLs.
   NSString* newFolderName = [self displayName];
@@ -81,7 +82,7 @@ using content::WebContents;
        it != activeTabPairsVector_.end(); ++it, ++i) {
     model->AddURL(newFolder, i, it->first, it->second);
   }
-  return [NSNumber numberWithBool:YES];
+  return @YES;
 }
 
 - (ActiveTabsNameURLPairVector*)activeTabPairsVector {

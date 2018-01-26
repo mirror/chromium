@@ -34,10 +34,10 @@ class Browser;
 
 @property(nonatomic, readonly) CGFloat borderWidth;
 
-- (id)initWithBrowser:(Browser*)browser
-        promoStringId:(int)promoStringId
-         linkStringId:(int)linkStringId
-          accessPoint:(signin_metrics::AccessPoint)accessPoint;
+- (instancetype)initWithBrowser:(Browser*)browser
+                  promoStringId:(int)promoStringId
+                   linkStringId:(int)linkStringId
+                    accessPoint:(signin_metrics::AccessPoint)accessPoint;
 
 // Preferred height of the sync promo view for a given width. The border is
 // is included in the provided width and in the returned height.

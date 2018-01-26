@@ -474,7 +474,7 @@ TEST_F(BookmarkBubbleControllerTest, TestMenuIndentation) {
   NSArray* items = [[controller folderPopUpButton] itemArray];
   ASSERT_GE([items count], 6U);
   for(int itemNo = 0; itemNo < 6; itemNo++) {
-    NSMenuItem* item = [items objectAtIndex:itemNo];
+    NSMenuItem* item = items[itemNo];
     EXPECT_EQ(kExpectedIndent[itemNo], [item indentationLevel])
         << "Unexpected indent for menu item #" << itemNo;
   }

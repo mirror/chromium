@@ -21,12 +21,12 @@ using bookmarks::BookmarkNode;
   const BookmarkNode* nodes_[2];
   BOOL opened_[2];
 }
-- (id)initWithProfile:(Profile*)profile;
+- (instancetype)initWithProfile:(Profile*)profile NS_DESIGNATED_INITIALIZER;
 @end
 
 @implementation FakeBookmarkMenuController
 
-- (id)initWithProfile:(Profile*)profile {
+- (instancetype)initWithProfile:(Profile*)profile {
   if ((self = [super init])) {
     base::string16 empty;
     BookmarkModel* model = BookmarkModelFactory::GetForBrowserContext(profile);

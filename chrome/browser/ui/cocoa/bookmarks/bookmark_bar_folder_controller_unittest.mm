@@ -211,7 +211,7 @@ class BookmarkBarFolderControllerTest : public CocoaProfileTest {
 
   // Return a simple BookmarkBarFolderController.
   BookmarkBarFolderControllerPong* SimpleBookmarkBarFolderController() {
-    BookmarkButton* parentButton = [[bar_ buttons] objectAtIndex:0];
+    BookmarkButton* parentButton = [bar_ buttons][0];
     BookmarkBarFolderControllerPong* c =
       [[BookmarkBarFolderControllerPong alloc]
                initWithParentButton:parentButton
@@ -232,8 +232,7 @@ TEST_F(BookmarkBarFolderControllerTest, InitCreateAndDelete) {
   NSArray* buttons = [bbfc buttons];
   EXPECT_TRUE([buttons count]);
   for (unsigned int i = 0; i < ([buttons count]-1); i++) {
-    EXPECT_FALSE(NSContainsRect([[buttons objectAtIndex:i] frame],
-                              [[buttons objectAtIndex:i+1] frame]));
+    EXPECT_FALSE(NSContainsRect([buttons[i] frame], [buttons[i + 1] frame]));
   }
   Class cellClass = [BookmarkBarFolderButtonCell class];
   for (BookmarkButton* button in buttons) {
@@ -257,7 +256,7 @@ TEST_F(BookmarkBarFolderControllerTest, ReleaseOnClose) {
 }
 
 TEST_F(BookmarkBarFolderControllerTest, BasicPosition) {
-  BookmarkButton* parentButton = [[bar_ buttons] objectAtIndex:0];
+  BookmarkButton* parentButton = [bar_ buttons][0];
   EXPECT_TRUE(parentButton);
 
   // If parent is a BookmarkBarController, grow down.
@@ -288,10 +287,10 @@ TEST_F(BookmarkBarFolderControllerTest, BasicPosition) {
   // If parent is a BookmarkBarFolderController, grow right.
   base::scoped_nsobject<BookmarkBarFolderController> bbfc2;
   bbfc2.reset([[BookmarkBarFolderController alloc]
-                initWithParentButton:[[bbfc buttons] objectAtIndex:0]
-                    parentController:bbfc.get()
-                       barController:bar_
-                             profile:profile()]);
+      initWithParentButton:[bbfc buttons][0]
+          parentController:bbfc.get()
+             barController:bar_
+                   profile:profile()]);
   [bbfc2 window];
   pt = [bbfc2 windowTopLeftForWidth:0 height:100];
   // We're now overlapping the window a bit.
@@ -315,7 +314,7 @@ TEST_F(BookmarkBarFolderControllerTest, PositionRightLeftRight) {
 
   // Setup initial state for opening all folders.
   folder = parent;
-  BookmarkButton* parentButton = [[bar_ buttons] objectAtIndex:0];
+  BookmarkButton* parentButton = [bar_ buttons][0];
   BookmarkBarFolderController* parentController = nil;
   EXPECT_TRUE(parentButton);
 
@@ -333,14 +332,13 @@ TEST_F(BookmarkBarFolderControllerTest, PositionRightLeftRight) {
     [bbfcl autorelease];
     [bbfcl window];
     parentController = bbfcl;
-    parentButton = [[bbfcl buttons] objectAtIndex:0];
+    parentButton = [bbfcl buttons][0];
   }
 
   // Make vector of all x positions.
   std::vector<CGFloat> leftPositions;
   for (i=0; i<count; i++) {
-    CGFloat x = [[[folder_controller_array objectAtIndex:i] window]
-                  frame].origin.x;
+    CGFloat x = [[folder_controller_array[i] window] frame].origin.x;
     leftPositions.push_back(x);
   }
 
@@ -406,18 +404,18 @@ TEST_F(BookmarkBarFolderControllerTest, OpenFolder) {
   EXPECT_TRUE(bbfc.get());
 
   EXPECT_FALSE([bbfc folderController]);
-  BookmarkButton* button = [[bbfc buttons] objectAtIndex:0];
+  BookmarkButton* button = [bbfc buttons][0];
   [bbfc openBookmarkFolderFromButton:button];
   id controller = [bbfc folderController];
   EXPECT_TRUE(controller);
   EXPECT_EQ([controller parentButton], button);
 
   // Click the same one --> it gets closed.
-  [bbfc openBookmarkFolderFromButton:[[bbfc buttons] objectAtIndex:0]];
+  [bbfc openBookmarkFolderFromButton:[bbfc buttons][0]];
   EXPECT_FALSE([bbfc folderController]);
 
   // Open a new one --> change.
-  [bbfc openBookmarkFolderFromButton:[[bbfc buttons] objectAtIndex:1]];
+  [bbfc openBookmarkFolderFromButton:[bbfc buttons][1]];
   EXPECT_NE(controller, [bbfc folderController]);
   EXPECT_NE([[bbfc folderController] parentButton], button);
 
@@ -432,7 +430,7 @@ TEST_F(BookmarkBarFolderControllerTest, DeleteOpenFolder) {
 
   // Open a folder.
   EXPECT_FALSE([parent_controller folderController]);
-  BookmarkButton* button = [[parent_controller buttons] objectAtIndex:0];
+  BookmarkButton* button = [parent_controller buttons][0];
   [parent_controller openBookmarkFolderFromButton:button];
   EXPECT_EQ([[parent_controller folderController] parentButton], button);
 
@@ -448,7 +446,7 @@ TEST_F(BookmarkBarFolderControllerTest, ChildFolderCallbacks) {
   [bar_ setChildFolderDelegate:bbfc.get()];
 
   EXPECT_FALSE([bbfc childFolderWillShow]);
-  [bbfc openBookmarkFolderFromButton:[[bbfc buttons] objectAtIndex:0]];
+  [bbfc openBookmarkFolderFromButton:[bbfc buttons][0]];
   EXPECT_TRUE([bbfc childFolderWillShow]);
 
   EXPECT_FALSE([bbfc childFolderWillClose]);
@@ -491,13 +489,13 @@ TEST_F(BookmarkBarFolderControllerTest, ScrollingBehaviorAndMouseMovement){
   BookmarkButton* currentButton = [bbfc buttonThatMouseIsIn];
   // Mouse cursor is not pointing to any button.
   EXPECT_FALSE(currentButton);
-  BookmarkButton* firstButton = [buttons objectAtIndex:0];
+  BookmarkButton* firstButton = buttons[0];
   [bbfc mouseEnteredButton:firstButton event:nil];
   // Mouse cursor should be over the first button.
   EXPECT_EQ(firstButton, [bbfc buttonThatMouseIsIn]);
   while ([bbfc canScrollUp]) {
     [bbfc performOneScroll:200 updateMouseSelection:NO];
-    [bbfc mouseEnteredButton:[buttons objectAtIndex:2] event:nil];
+    [bbfc mouseEnteredButton:buttons[2] event:nil];
     // -buttonThatMouseIsIn: must return firstButton because we
     // are still scrolling. i.e. should not be changed when
     // -mouseEnteredButton: is called.
@@ -615,7 +613,7 @@ TEST_F(BookmarkBarFolderControllerTest, MenuPlacementWhileScrollingDeleting) {
   // Before scrolling any, delete a bookmark and make sure the window top has
   // not moved. Pick a button which is near the top and visible.
   CGFloat oldTop = [menuWindow frame].origin.y + NSHeight([menuWindow frame]);
-  BookmarkButton* button = [buttons objectAtIndex:3];
+  BookmarkButton* button = buttons[3];
   DeleteBookmark(button, profile());
   CGFloat newTop = [menuWindow frame].origin.y + NSHeight([menuWindow frame]);
   EXPECT_CGFLOAT_EQ(oldTop, newTop);
@@ -637,7 +635,7 @@ TEST_F(BookmarkBarFolderControllerTest, MenuPlacementWhileScrollingDeleting) {
   newTop = [menuWindow frame].origin.y + NSHeight([menuWindow frame]);
   EXPECT_NE(oldTop, newTop);
   oldTop = newTop;
-  button = [buttons objectAtIndex:buttonCounter + 3];
+  button = buttons[buttonCounter + 3];
   DeleteBookmark(button, profile());
   newTop = [menuWindow frame].origin.y + NSHeight([menuWindow frame]);
   EXPECT_CGFLOAT_EQ(oldTop, newTop);
@@ -649,7 +647,7 @@ TEST_F(BookmarkBarFolderControllerTest, MenuPlacementWhileScrollingDeleting) {
     [bbfc performOneScroll:-scrollOneBookmark updateMouseSelection:NO];
     --buttonCounter;
   }
-  button = [buttons objectAtIndex:buttonCounter + 3];
+  button = buttons[buttonCounter + 3];
   DeleteBookmark(button, profile());
   newTop = [menuWindow frame].origin.y + NSHeight([menuWindow frame]);
   EXPECT_CGFLOAT_EQ(oldTop - bookmarks::kScrollWindowVerticalMargin, newTop);
@@ -675,7 +673,7 @@ TEST_F(BookmarkBarFolderControllerTest, BrowserWindow) {
 
 @synthesize dropLocation = dropLocation_;
 
-- (id)init {
+- (instancetype)init {
   if ((self = [super init])) {
     dropLocation_ = NSZeroPoint;
     sourceMask_ = NSDragOperationMove;
@@ -1157,39 +1155,39 @@ TEST_F(BookmarkBarFolderControllerMenuTest, MoveRemoveAddButtons) {
 
   // Move a button around a bit.
   [folder moveButtonFromIndex:0 toIndex:2];
-  EXPECT_NSEQ(@"2f2b", [[buttons objectAtIndex:0] title]);
-  EXPECT_NSEQ(@"2f3b", [[buttons objectAtIndex:1] title]);
-  EXPECT_NSEQ(@"2f1b", [[buttons objectAtIndex:2] title]);
+  EXPECT_NSEQ(@"2f2b", [buttons[0] title]);
+  EXPECT_NSEQ(@"2f3b", [buttons[1] title]);
+  EXPECT_NSEQ(@"2f1b", [buttons[2] title]);
   EXPECT_EQ(oldDisplayedButtons, [buttons count]);
   [folder moveButtonFromIndex:2 toIndex:0];
-  EXPECT_NSEQ(@"2f1b", [[buttons objectAtIndex:0] title]);
-  EXPECT_NSEQ(@"2f2b", [[buttons objectAtIndex:1] title]);
-  EXPECT_NSEQ(@"2f3b", [[buttons objectAtIndex:2] title]);
+  EXPECT_NSEQ(@"2f1b", [buttons[0] title]);
+  EXPECT_NSEQ(@"2f2b", [buttons[1] title]);
+  EXPECT_NSEQ(@"2f3b", [buttons[2] title]);
   EXPECT_EQ(oldDisplayedButtons, [buttons count]);
 
   // Add a couple of buttons.
   const BookmarkNode* node = root->GetChild(2); // Purloin an existing node.
   [folder addButtonForNode:node atIndex:0];
-  EXPECT_NSEQ(@"3b", [[buttons objectAtIndex:0] title]);
-  EXPECT_NSEQ(@"2f1b", [[buttons objectAtIndex:1] title]);
-  EXPECT_NSEQ(@"2f2b", [[buttons objectAtIndex:2] title]);
-  EXPECT_NSEQ(@"2f3b", [[buttons objectAtIndex:3] title]);
+  EXPECT_NSEQ(@"3b", [buttons[0] title]);
+  EXPECT_NSEQ(@"2f1b", [buttons[1] title]);
+  EXPECT_NSEQ(@"2f2b", [buttons[2] title]);
+  EXPECT_NSEQ(@"2f3b", [buttons[3] title]);
   EXPECT_EQ(oldDisplayedButtons + 1, [buttons count]);
   node = root->GetChild(3);
   [folder addButtonForNode:node atIndex:-1];
-  EXPECT_NSEQ(@"3b", [[buttons objectAtIndex:0] title]);
-  EXPECT_NSEQ(@"2f1b", [[buttons objectAtIndex:1] title]);
-  EXPECT_NSEQ(@"2f2b", [[buttons objectAtIndex:2] title]);
-  EXPECT_NSEQ(@"2f3b", [[buttons objectAtIndex:3] title]);
-  EXPECT_NSEQ(@"4b", [[buttons objectAtIndex:4] title]);
+  EXPECT_NSEQ(@"3b", [buttons[0] title]);
+  EXPECT_NSEQ(@"2f1b", [buttons[1] title]);
+  EXPECT_NSEQ(@"2f2b", [buttons[2] title]);
+  EXPECT_NSEQ(@"2f3b", [buttons[3] title]);
+  EXPECT_NSEQ(@"4b", [buttons[4] title]);
   EXPECT_EQ(oldDisplayedButtons + 2, [buttons count]);
 
   // Remove a couple of buttons.
   [folder removeButton:4 animate:NO];
   [folder removeButton:1 animate:NO];
-  EXPECT_NSEQ(@"3b", [[buttons objectAtIndex:0] title]);
-  EXPECT_NSEQ(@"2f2b", [[buttons objectAtIndex:1] title]);
-  EXPECT_NSEQ(@"2f3b", [[buttons objectAtIndex:2] title]);
+  EXPECT_NSEQ(@"3b", [buttons[0] title]);
+  EXPECT_NSEQ(@"2f2b", [buttons[1] title]);
+  EXPECT_NSEQ(@"2f3b", [buttons[2] title]);
   EXPECT_EQ(oldDisplayedButtons, [buttons count]);
 
   // Check button spacing.
@@ -1383,7 +1381,7 @@ TEST_F(BookmarkBarFolderControllerMenuTest, HoverThenDeleteBookmark) {
   NSArray* buttons = [bbfc buttons];
 
   // Hover over a button and verify that it is now known.
-  button = [buttons objectAtIndex:3];
+  button = buttons[3];
   BookmarkButton* buttonThatMouseIsIn = [bbfc buttonThatMouseIsIn];
   EXPECT_FALSE(buttonThatMouseIsIn);
   [bbfc mouseEnteredButton:button event:nil];
@@ -1413,7 +1411,7 @@ TEST_F(BookmarkBarFolderControllerMenuTest, ActOnEmptyMenu) {
   NSArray* buttons = [bbfc buttons];
   ASSERT_EQ(1u, [buttons count]);
 
-  button = [buttons objectAtIndex:0];
+  button = buttons[0];
   EXPECT_TRUE([button isEmpty]);
 
   [bbfc mouseEnteredButton:button event:nil];
@@ -1431,10 +1429,11 @@ TEST_F(BookmarkBarFolderControllerMenuTest, ActOnEmptyMenu) {
 
 @implementation BookmarkBarFolderControllerDragData
 
-- (id)initWithParentButton:(BookmarkButton*)button
-          parentController:(BookmarkBarFolderController*)parentController
-             barController:(BookmarkBarController*)barController
-                   profile:(Profile*)profile {
+- (instancetype)initWithParentButton:(BookmarkButton*)button
+                    parentController:
+                        (BookmarkBarFolderController*)parentController
+                       barController:(BookmarkBarController*)barController
+                             profile:(Profile*)profile {
   if ((self = [super initWithParentButton:button
                          parentController:parentController
                             barController:barController
@@ -1590,9 +1589,8 @@ TEST_F(BookmarkBarFolderControllerMenuTest, AddURLs) {
       [folderController buttonWithTitleEqualTo:@"2f1b"];
   ASSERT_TRUE(targetButton);
 
-  NSArray* urls = [NSArray arrayWithObjects: @"http://www.a.com/",
-                   @"http://www.b.com/", nil];
-  NSArray* titles = [NSArray arrayWithObjects: @"SiteA", @"SiteB", nil];
+  NSArray* urls = @[ @"http://www.a.com/", @"http://www.b.com/" ];
+  NSArray* titles = @[ @"SiteA", @"SiteB" ];
   [folderController addURLs:urls withTitles:titles at:[targetButton top]];
 
   // There should two more buttons in the folder.
