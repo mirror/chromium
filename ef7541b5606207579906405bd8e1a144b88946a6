@@ -46,6 +46,30 @@
       "revId": "ef7541b5606207579906405bd8e1a144b88946a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94cf71ab_c864796d",
+        "filename": "base/time/time.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-26T07:20:01Z",
+      "side": 1,
+      "message": "constexpr has to be inline so moving to time.cc isn\u0027t an option.\n\nAs to why constexpr: I was in fact just trying to write some constants that were based on computations from the seconds of a TimeDelta, that\u0027s why I wrote this CL, so there sure are use cases.",
+      "parentUuid": "f94bcf36_f16f5463",
+      "range": {
+        "startLine": 783,
+        "startChar": 0,
+        "endLine": 863,
+        "endChar": 0
+      },
+      "revId": "ef7541b5606207579906405bd8e1a144b88946a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
