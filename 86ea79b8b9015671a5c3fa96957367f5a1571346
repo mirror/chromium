@@ -49,6 +49,115 @@
     },
     {
       "key": {
+        "uuid": "44116c84_d3471109",
+        "filename": "chrome/browser/ui/ash/ksv/keyboard_shortcut_viewer_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-26T04:11:53Z",
+      "side": 1,
+      "message": "I\u0027m fine either way. chrome/DEPS already has a +ui (kind of broad IMHO) so c/b/ui/webui probably doesn\u0027t require an explicit DEPS entry or owners approval.",
+      "parentUuid": "82709c6a_a930558c",
+      "range": {
+        "startLine": 11,
+        "startChar": 5,
+        "endLine": 11,
+        "endChar": 31
+      },
+      "revId": "86ea79b8b9015671a5c3fa96957367f5a1571346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1392ea26_50b9a488",
+        "filename": "ui/chromeos/ksv/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-26T04:11:53Z",
+      "side": 1,
+      "message": "nit: just \"//ui/views\"",
+      "revId": "86ea79b8b9015671a5c3fa96957367f5a1571346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41af8883_cef61c90",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-26T04:11:53Z",
+      "side": 1,
+      "message": "Is it possible to check for item_list.empty() instead of a separate is_initialized variable?",
+      "revId": "86ea79b8b9015671a5c3fa96957367f5a1571346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69bd2087_4a5f024d",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-26T04:11:53Z",
+      "side": 1,
+      "message": "This is an unusual pattern. I would recommend something like:\n\nKSV::KSV() {\n  DCHECK_EQ(g_ksv_view, nullptr);\n  ...\n}\n\nKSV::~KSV() {\n  DCHECK_EQ(g_ksv_view, this);\n  g_ksv_view \u003d nullptr;\n}\n\nand the logic you have in Show() for activation. I find it clearer when instance management is in the constructor/destructor.",
+      "revId": "86ea79b8b9015671a5c3fa96957367f5a1571346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7188c3b0_6b1c91f7",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-26T04:11:53Z",
+      "side": 1,
+      "message": "Please add a trivial unit test that opens and closes the widget. It will force you to flesh out the build files and give you a place to add future tests.",
+      "revId": "86ea79b8b9015671a5c3fa96957367f5a1571346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11ad2166_7dc1ff76",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-26T04:11:53Z",
+      "side": 1,
+      "message": "Not needed (don\u0027t need forward decls of types used in overridden base classes)",
+      "revId": "86ea79b8b9015671a5c3fa96957367f5a1571346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aafd3791_767e467d",
         "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.h",
         "patchSetId": 3
@@ -66,6 +175,23 @@
         "endLine": 16,
         "endChar": 26
       },
+      "revId": "86ea79b8b9015671a5c3fa96957367f5a1571346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9965ee3_8de39fd2",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-26T04:11:53Z",
+      "side": 1,
+      "message": "#include \"base/macro.h\"",
       "revId": "86ea79b8b9015671a5c3fa96957367f5a1571346",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
