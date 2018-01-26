@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<link rel="help" href="https://drafts.css-houdini.org/css-layout-api/#valdef-display-layout">
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<style>
+#test {
+  content: 'fail';
+}
+
+@supports (display: layout(foo)) {
+  #test {
+    content: 'pass';
+  }
+}
+</style>
+<div id="test"></div>
+<script>
+test(function() {
+  const element = document.getElementById('test');
+  assert_equals(getComputedStyle(element).content, '"pass"');
+});
+</script>
