@@ -67,6 +67,46 @@
       "revId": "b9b05f36f5a680e0595e22928c93644fbf04d16b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7f90284_e8755d6f",
+        "filename": "base/threading/thread_local_storage.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-26T11:21:02Z",
+      "side": 1,
+      "message": "Add default initialization of this variable to \u003d 0;\n\nThen ThreadLocalStorage::StaticSlot::Initialize() doesn\u0027t need to set it to 0 and initialization is non-racy anymore.",
+      "range": {
+        "startLine": 133,
+        "startChar": 39,
+        "endLine": 133,
+        "endChar": 40
+      },
+      "revId": "b9b05f36f5a680e0595e22928c93644fbf04d16b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a26bd57_32856554",
+        "filename": "base/threading/thread_local_storage.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-26T11:21:02Z",
+      "side": 1,
+      "message": "Also, I believe these members can be made private for realz now with C++11 (with a constexpr default constructor and inline POD member initialization). I did that recently for LazyInstance and it didn\u0027t generate static initializers.",
+      "revId": "b9b05f36f5a680e0595e22928c93644fbf04d16b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
