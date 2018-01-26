@@ -99,6 +99,24 @@
       "revId": "0398abcddf5c6f86768593dbf7591b40f86eaa93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78677b89_5f6e42ce",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2018-01-26T18:35:05Z",
+      "side": 1,
+      "message": "On implementing this, there is an include dependency error because SubresourceFilter is a core/loader class and we would then need to access it in platform/loader/ResourceFetcher and platform/loader/ResourceLoader, which is not allowed.",
+      "parentUuid": "10475871_ae6a749f",
+      "revId": "0398abcddf5c6f86768593dbf7591b40f86eaa93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
