@@ -22,6 +22,30 @@
       "revId": "b0b31bf8f54c8ed577938c5d32725ad2784f2f5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b06ade3_16b57285",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-26T18:36:18Z",
+      "side": 1,
+      "message": "You right, reverted that. I wanted to add a test but it\u0027s a bunch of pain for no gain as I\u0027m deleting this function in the next patch.. so yeah.",
+      "parentUuid": "e5297fb4_b778b88b",
+      "range": {
+        "startLine": 412,
+        "startChar": 8,
+        "endLine": 412,
+        "endChar": 41
+      },
+      "revId": "b0b31bf8f54c8ed577938c5d32725ad2784f2f5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
