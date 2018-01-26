@@ -64,6 +64,10 @@ bool IsUIRefreshPhase1Enabled() {
   return base::FeatureList::IsEnabled(kUIRefreshPhase1);
 }
 
+bool IsUIRefreshPhase1InfoBarEnabled() {
+  return IsUIRefreshPhase1Enabled();
+}
+
 bool IsSafeAreaCompatibleToolbarEnabled() {
   return (IsIPhoneX() &&
           base::FeatureList::IsEnabled(kSafeAreaCompatibleToolbar)) ||
