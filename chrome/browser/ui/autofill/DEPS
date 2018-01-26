@@ -1,4 +1,5 @@
 include_rules = [
+  '+chrome/browser/ui/views/autofill/autofill_popup_view_views.h',
   '+third_party/libaddressinput/chromium/addressinput_util.h',
   '+third_party/libaddressinput/chromium/chrome_address_validator.h',
   '+third_party/libaddressinput/chromium/chrome_metadata_source.h',
