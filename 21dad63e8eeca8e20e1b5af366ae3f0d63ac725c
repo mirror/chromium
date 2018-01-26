@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "5e0da232_7f7b3148",
+        "filename": "base/deferred_sequenced_task_runner.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-26T03:14:50Z",
+      "side": 1,
+      "message": "How about leave what is here and once landed remove the other constructor?",
+      "parentUuid": "bb28dfe1_440e11a9",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "670ac4be_042c25f0",
         "filename": "chrome/browser/browser_process_impl.cc",
         "patchSetId": 8
@@ -300,6 +318,24 @@
     },
     {
       "key": {
+        "uuid": "9d00ef17_5a1082ae",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-26T03:14:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3dbd44a2_39e12897",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fff49e62_a423d895",
         "filename": "chrome/browser/chrome_browser_main.cc",
         "patchSetId": 8
@@ -314,6 +350,24 @@
       "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54b4dd71_871988a6",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-26T03:14:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fff49e62_a423d895",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -337,6 +391,30 @@
       "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbf25fec_08f550fd",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-26T03:14:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bd17f4b_42c70a06",
+      "range": {
+        "startLine": 662,
+        "startChar": 12,
+        "endLine": 662,
+        "endChar": 39
+      },
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -392,6 +470,24 @@
     },
     {
       "key": {
+        "uuid": "5cde9b6a_88f74a46",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-26T03:14:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf6e9b12_296afd52",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a662837_5feacb87",
         "filename": "chrome/browser/chrome_browser_main.cc",
         "patchSetId": 8
@@ -409,6 +505,24 @@
     },
     {
       "key": {
+        "uuid": "6d0877e6_47f19591",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-26T03:14:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a662837_5feacb87",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63a880aa_3be710c8",
         "filename": "chrome/browser/chrome_browser_main.cc",
         "patchSetId": 8
@@ -420,6 +534,24 @@
       "writtenOn": "2018-01-26T00:47:06Z",
       "side": 1,
       "message": "I only see one caller to AdvanceToNextState(). How does this class ever transition to the |kMessageLookRunning| state?",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9ecbb47_28b6883f",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-26T03:14:50Z",
+      "side": 1,
+      "message": "Wow! That is embarrassing, and I\u0027m quite surprised that didn\u0027t impact any browser_tests. I\u0027m guessing that is because we schedule very little to the deferring task runner (a timer was the one I hit that forced me to add it). Second call is in PreCreateThreadsImpl().",
+      "parentUuid": "63a880aa_3be710c8",
       "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -478,6 +610,24 @@
     },
     {
       "key": {
+        "uuid": "437b1114_f418e0e8",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-26T03:14:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5b417d4_4a48062d",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76b01c62_23fd1b35",
         "filename": "chrome/browser/chrome_browser_main.cc",
         "patchSetId": 8
@@ -495,6 +645,24 @@
     },
     {
       "key": {
+        "uuid": "09199656_9b2859da",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-26T03:14:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76b01c62_23fd1b35",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d380aec5_335c4bcd",
         "filename": "chrome/browser/chrome_browser_main.cc",
         "patchSetId": 8
@@ -509,6 +677,24 @@
       "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "699bc21f_3c5e7543",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-26T03:14:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d380aec5_335c4bcd",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -535,6 +721,30 @@
     },
     {
       "key": {
+        "uuid": "fb65aa10_22ae7a1e",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-26T03:14:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6915843_ac5cfd5f",
+      "range": {
+        "startLine": 841,
+        "startChar": 25,
+        "endLine": 841,
+        "endChar": 28
+      },
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66054f17_7e19aff3",
         "filename": "chrome/browser/chrome_browser_main.cc",
         "patchSetId": 8
@@ -552,6 +762,24 @@
     },
     {
       "key": {
+        "uuid": "e1049e40_482c7b10",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-26T03:14:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66054f17_7e19aff3",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f44a4f0_ce1ab168",
         "filename": "chrome/browser/chrome_browser_main.cc",
         "patchSetId": 8
@@ -563,6 +791,24 @@
       "writtenOn": "2018-01-26T00:47:06Z",
       "side": 1,
       "message": "Does this ever evaluate to false?",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "478a8097_bfacc2c9",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1050,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-26T03:14:50Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "9f44a4f0_ce1ab168",
       "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -586,6 +832,24 @@
     },
     {
       "key": {
+        "uuid": "afd477f3_32515c11",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1231,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-26T03:14:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc6e1a5c_abb19608",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd5537a8_f432add5",
         "filename": "chrome/browser/chrome_browser_main.cc",
         "patchSetId": 8
@@ -603,6 +867,24 @@
     },
     {
       "key": {
+        "uuid": "788db5ac_7b044668",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1320,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-26T03:14:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd5537a8_f432add5",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c47f36a_9a865ca0",
         "filename": "chrome/browser/chrome_browser_main.cc",
         "patchSetId": 8
@@ -614,6 +896,24 @@
       "writtenOn": "2018-01-26T00:47:06Z",
       "side": 1,
       "message": "Can you mention why these have to be here, and not in SetupFieldTrials()?",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9b8c8fe_1fc0283f",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1350,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-26T03:14:50Z",
+      "side": 1,
+      "message": "Neither of these effect state needed for field trials, so they can stay here. I\u0027m not sure what comment to add. Seems weird to mention why the code is here and not some where else, which is true of a lot code in many functions in ChromeBrowserMainParts.",
+      "parentUuid": "0c47f36a_9a865ca0",
       "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
