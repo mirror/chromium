@@ -57,8 +57,7 @@ void WebView::SetWebContents(content::WebContents* replacement) {
   DetachWebContents();
   WebContentsObserver::Observe(replacement);
   // web_contents() now returns |replacement| from here onwards.
-  SetFocusBehavior(web_contents() ? FocusBehavior::ALWAYS
-                                  : FocusBehavior::NEVER);
+  UpdateFocusBehavior();
   if (wc_owner_.get() != replacement)
     wc_owner_.reset();
   if (embed_fullscreen_widget_mode_enabled_) {
@@ -181,12 +180,12 @@ bool WebView::OnMousePressed(const ui::MouseEvent& event) {
 }
 
 void WebView::OnFocus() {
-  if (web_contents())
+  if (web_contents() && !web_contents()->IsCrashed())
     web_contents()->Focus();
 }
 
 void WebView::AboutToRequestFocusFromTabTraversal(bool reverse) {
-  if (web_contents())
+  if (web_contents() && !web_contents()->IsCrashed())
     web_contents()->FocusThroughTabTraversal(reverse);
 }
 
@@ -195,7 +194,7 @@ void WebView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
 }
 
 gfx::NativeViewAccessible WebView::GetNativeViewAccessible() {
-  if (web_contents()) {
+  if (web_contents() && !web_contents()->IsCrashed()) {
     content::RenderWidgetHostView* host_view =
         web_contents()->GetRenderWidgetHostView();
     if (host_view)
@@ -216,10 +215,12 @@ bool WebView::EmbedsFullscreenWidget() const {
 // WebView, content::WebContentsObserver implementation:
 
 void WebView::RenderViewReady() {
+  UpdateFocusBehavior();
   NotifyAccessibilityWebContentsChanged();
 }
 
 void WebView::RenderViewDeleted(content::RenderViewHost* render_view_host) {
+  UpdateFocusBehavior();
   NotifyAccessibilityWebContentsChanged();
 }
 
@@ -264,6 +265,7 @@ void WebView::OnWebContentsFocused(
 }
 
 void WebView::RenderProcessGone(base::TerminationStatus status) {
+  UpdateFocusBehavior();
   NotifyAccessibilityWebContentsChanged();
 }
 
@@ -315,6 +317,12 @@ void WebView::ReattachForFullscreenChange(bool enter_fullscreen) {
     OnBoundsChanged(bounds());
   }
   NotifyAccessibilityWebContentsChanged();
+}
+
+void WebView::UpdateFocusBehavior() {
+  SetFocusBehavior(web_contents() && !web_contents()->IsCrashed()
+                       ? FocusBehavior::ALWAYS
+                       : FocusBehavior::NEVER);
 }
 
 void WebView::NotifyAccessibilityWebContentsChanged() {
