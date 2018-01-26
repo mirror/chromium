@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9be49af3_e560eead",
+        "filename": "content/public/common/use_zoom_for_dsf_policy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-26T15:02:27Z",
+      "side": 1,
+      "message": "I don\u0027t think the policy should be adjusted in this CL. Only fixing the test case no?",
+      "revId": "6861e9fd05bb943ef1d17fdececb647bb65d9610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
