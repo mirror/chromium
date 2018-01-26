@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "4ac5368b_4eb93af4",
+        "filename": "content/browser/android/synchronous_compositor_host_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-26T22:09:50Z",
+      "side": 1,
+      "message": "\u003e It should hold here.. because remote_closed_ is true until the filter is actually attached.\n\noh, good point :)",
+      "parentUuid": "d0c86625_a3c40f02",
+      "revId": "fd944c715e0a0d8e904f48dac9e0250e908a2001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f3f8042_1c7bbeef",
         "filename": "content/browser/android/synchronous_compositor_host_bridge.cc",
         "patchSetId": 4
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Why would something like a frame future be used after the view that produced that is ultimately destroyed that seems really odd and is ultimately a race anyways.  Because if you told something to draw and then destroy the thing doing the drawing you don\u0027t know when it is going to return.",
       "parentUuid": "2f3f8042_1c7bbeef",
+      "revId": "fd944c715e0a0d8e904f48dac9e0250e908a2001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3f567e5_482d99b8",
+        "filename": "content/browser/android/synchronous_compositor_host_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-26T22:09:50Z",
+      "side": 1,
+      "message": "\u003e Why would something like a frame future be used after the view that produced that is ultimately destroyed that seems really odd and is ultimately a race anyways.  Because if you told something to draw and then destroy the thing doing the drawing you don\u0027t know when it is going to return.\n\nUhh, webview teardown here is actually async on the UI thread. Meaning the frame might actually still be used, even after Host is deleted on the UI thread.\n\nBut that\u0027s not the important point here. The important point is that this race can cause the renderer thread to be killed incorrectly, which is a way bigger deal than displaying an empty frame during teardown.",
+      "parentUuid": "b93664a9_598be649",
       "revId": "fd944c715e0a0d8e904f48dac9e0250e908a2001",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
