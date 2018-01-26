@@ -106,6 +106,10 @@ BookmarkBubbleView::~BookmarkBubbleView() {
     if (node)
       model->Remove(node);
   }
+  // When showing a promotion bookmark_contents_view_ is no longer owned by the
+  // bubble and must be deleted manually.
+  if (is_showing_ios_promotion_)
+    delete bookmark_contents_view_;
 }
 
 // ui::DialogModel -------------------------------------------------------------
@@ -397,9 +401,11 @@ void BookmarkBubbleView::ShowIOSPromotion(
     desktop_ios_promotion::PromotionEntryPoint entry_point) {
   DCHECK(!is_showing_ios_promotion_);
   edit_button_->SetVisible(false);
-  // Hide the contents, but don't delete. Its child views are accessed in the
-  // destructor if there are edits to apply.
-  bookmark_contents_view_->SetVisible(false);
+  // Remove content, but don't delete |bookmark_contents_view_|. Its child views
+  // are accessed in the destructor if there are edits to apply. It needs to be
+  // removed for the bubble to resize to the promo content instead of the size
+  // of the invisible previous content.
+  RemoveChildView(bookmark_contents_view_);
   delete footnote_view_;
   footnote_view_ = nullptr;
   is_showing_ios_promotion_ = true;
