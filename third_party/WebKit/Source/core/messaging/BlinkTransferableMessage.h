@@ -8,8 +8,10 @@
 #include "base/macros.h"
 #include "bindings/core/v8/serialization/SerializedScriptValue.h"
 #include "core/CoreExport.h"
+#include "core/imagebitmap/ImageBitmap.h"
 #include "core/messaging/BlinkCloneableMessage.h"
 #include "third_party/WebKit/common/message_port/message_port_channel.h"
+#include "third_party/skia/include/core/SkBitmap.h"
 
 namespace blink {
 
