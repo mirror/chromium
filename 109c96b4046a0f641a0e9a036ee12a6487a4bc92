@@ -69,6 +69,30 @@
       "revId": "109c96b4046a0f641a0e9a036ee12a6487a4bc92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fd3e035_02a4d5c3",
+        "filename": "jingle/glue/xmpp_client_socket_factory.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-26T01:42:35Z",
+      "side": 1,
+      "message": "It\u0027s still not clear to me. Maybe worth adding more details in the comment. In any case the problem here is that this comment contradicts the code. request_context_getter_ will outlive proxy_resolving_socket_factory_ because proxy_resolving_socket_factory_ is declared after request_context_getter_.",
+      "parentUuid": "6b93359e_565d32c7",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 78
+      },
+      "revId": "109c96b4046a0f641a0e9a036ee12a6487a4bc92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
