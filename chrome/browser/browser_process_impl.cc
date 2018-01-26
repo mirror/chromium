@@ -184,6 +184,10 @@
 #include "chrome/browser/gpu/gpu_driver_info_manager_android.h"
 #endif
 
+#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+#include "components/linux/mpris_client.h"
+#endif
+
 #if (defined(OS_WIN) || defined(OS_LINUX)) && !defined(OS_CHROMEOS)
 // How often to check if the persistent instance of Chrome needs to restart
 // to install an update.
@@ -370,6 +374,10 @@ void BrowserProcessImpl::StartTearDown() {
   // Cancel any uploads to release the system url request context references.
   if (webrtc_log_uploader_)
     webrtc_log_uploader_->StartShutdown();
+#endif
+
+#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+  mpris_client_.reset();
 #endif
 
   if (local_state_)
@@ -1150,6 +1158,13 @@ void BrowserProcessImpl::PreMainMessageLoopRun() {
 
 #if !defined(OS_ANDROID)
   storage_monitor::StorageMonitor::Create();
+#endif
+
+#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kEnableMprisClient)) {
+    mpris_client_ = std::make_unique<MprisClient>();
+  }
 #endif
 
   child_process_watcher_ = base::MakeUnique<ChromeChildProcessWatcher>();

@@ -36,6 +36,7 @@ class ChromeChildProcessWatcher;
 class ChromeDeviceClient;
 class ChromeResourceDispatcherHostDelegate;
 class DevToolsAutoOpener;
+class MprisClient;
 class RemoteDebuggingServer;
 class PrefRegistrySimple;
 
@@ -345,6 +346,10 @@ class BrowserProcessImpl : public BrowserProcess,
 #if BUILDFLAG(ENABLE_WEBRTC)
   // Lazily initialized.
   std::unique_ptr<WebRtcLogUploader> webrtc_log_uploader_;
+#endif
+
+#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+  std::unique_ptr<MprisClient> mpris_client_;
 #endif
 
   std::unique_ptr<network_time::NetworkTimeTracker> network_time_tracker_;

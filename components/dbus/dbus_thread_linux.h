@@ -2,12 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_DBUS_DBUS_THREAD_LINUX_H_
-#define CHROME_BROWSER_DBUS_DBUS_THREAD_LINUX_H_
+#ifndef COMPONENTS_DBUS_DBUS_THREAD_LINUX_H_
+#define COMPONENTS_DBUS_DBUS_THREAD_LINUX_H_
 
 #include "base/memory/ref_counted.h"
 #include "base/single_thread_task_runner.h"
 #include "build/build_config.h"
+#include "components/dbus/dbus_export.h"
 
 // Many APIs in ::dbus are required to be called from the same thread
 // (https://crbug.com/130984). Therefore, a SingleThreadedTaskRunner is
@@ -18,10 +19,11 @@
 #error On ChromeOS, use DBusThreadManager instead.
 #endif
 
-namespace chrome {
+namespace dbus_thread_linux {
 
-scoped_refptr<base::SingleThreadTaskRunner> GetDBusTaskRunner();
+COMPONENTS_DBUS_EXPORT scoped_refptr<base::SingleThreadTaskRunner>
+GetDBusTaskRunner();
 
-}  // namespace chrome
+}  // namespace dbus_thread_linux
 
-#endif  // CHROME_BROWSER_DBUS_DBUS_THREAD_LINUX_H_
+#endif  // COMPONENTS_DBUS_DBUS_THREAD_LINUX_H_
