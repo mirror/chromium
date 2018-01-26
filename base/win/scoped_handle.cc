@@ -68,11 +68,17 @@ class AutoNativeLock {
   NativeLock& lock_;
   DISALLOW_COPY_AND_ASSIGN(AutoNativeLock);
 };
+}  // namespace
 
+namespace base {
+namespace internal {
 // Implements the actual object that is verifying handles for this process.
 // The active instance is shared across the module boundary but there is no
 // way to delete this object from the wrong side of it (or any side, actually).
-class ActiveVerifier {
+// Because instances of this class are shared across module boundaries, we
+// annotate the class with LTO_VISIBILITY_PUBLIC to inform whole program
+// analysis that it cannot see all uses.
+class LTO_VISIBILITY_PUBLIC ActiveVerifier {
  public:
   explicit ActiveVerifier(bool enabled) : enabled_(enabled), lock_(GetLock()) {}
 
@@ -254,15 +260,16 @@ void ActiveVerifier::OnHandleBeingClosed(HANDLE handle) {
 HMODULE ActiveVerifier::GetModule() const {
   return CURRENT_MODULE();
 }
-
-}  // namespace
+}  // namespace internal
+}  // namespace base
 
 void* GetHandleVerifier() {
-  return ActiveVerifier::Get();
+  return base::internal::ActiveVerifier::Get();
 }
 
 namespace base {
 namespace win {
+using base::internal::ActiveVerifier;
 
 // Static.
 bool HandleTraits::CloseHandle(HANDLE handle) {
@@ -290,7 +297,7 @@ void OnHandleBeingClosed(HANDLE handle) {
 }
 
 HMODULE GetHandleVerifierModuleForTesting() {
-  return g_active_verifier->GetModule();
+  return internal::g_active_verifier->GetModule();
 }
 
 }  // namespace win

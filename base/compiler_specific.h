@@ -213,6 +213,24 @@
 #endif  // defined(COMPILER_GCC)
 #endif  // !defined(LIKELY)
 
+// MSVC emits warning C4067 on clang::lto_visibility_public, so disable
+// that warning temporarily before we get to that code.
+#ifdef COMPILER_MSVC
+#pragma warning(push)
+#pragma warning(disable : 4067)
+#endif
+#ifdef __has_cpp_attribute
+#if __has_cpp_attribute(clang::lto_visibility_public)
+#define LTO_VISIBILITY_PUBLIC [[clang::lto_visibility_public]]
+#endif
+#endif
+#ifndef LTO_VISIBILITY_PUBLIC
+#define LTO_VISIBILITY_PUBLIC
+#endif
+#ifdef COMPILER_MSVC
+#pragma warning(pop)
+#endif
+
 // Compiler feature-detection.
 // clang.llvm.org/docs/LanguageExtensions.html#has-feature-and-has-extension
 #if defined(__has_feature)
