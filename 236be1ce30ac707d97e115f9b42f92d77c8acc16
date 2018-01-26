@@ -46,6 +46,30 @@
       "revId": "236be1ce30ac707d97e115f9b42f92d77c8acc16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22f1e2de_fd5e3bd6",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1456,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2018-01-26T10:28:53Z",
+      "side": 1,
+      "message": "\u003e Could you draw a picture of the overlapping rectangles? :)\n\nPlease refer to:\nhttps://docs.google.com/document/d/e/2PACX-1vSrEh7UVEabgv8ra7VEXp1_eb9x8gVwpYNe52_8jaKsSBB2Anu7MgejqwSTfkAyQGsTvz8hz3cse_28/pub\n\n\u003e How about this:\n\nDo you mean:\nif focused element is visible:\n  use focused element\u0027s visible rect\nelse if focused element is not visible AND the container is visible:\n  use container\u0027s visible rect [A]\nelse // focused element is not visible AND the container is not visible:\n  use frame\u0027s visual viewport\n?\n\nI agree. Just I want to use that I suggested in condition [A] :)",
+      "parentUuid": "4582c96e_b96559b7",
+      "range": {
+        "startLine": 1455,
+        "startChar": 0,
+        "endLine": 1456,
+        "endChar": 73
+      },
+      "revId": "236be1ce30ac707d97e115f9b42f92d77c8acc16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
