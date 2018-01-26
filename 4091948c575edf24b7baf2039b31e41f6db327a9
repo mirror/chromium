@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "26505550_a06b328a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/default_params.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-26T11:32:19Z",
+      "side": 1,
+      "message": "mojom::PageVisibilityState is core/-level concept. Also at the moment scheduler does not support \"prerender\" visibility option, so I created scheduler-internal enum for now.\n\nWe might consider supporting prerender state in the scheduler, but it\u0027s definitely out of scope for the current patch.",
+      "parentUuid": "8f47de94_9aa7d07d",
+      "revId": "4091948c575edf24b7baf2039b31e41f6db327a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d15a8fc0_87efb3e8",
         "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "4091948c575edf24b7baf2039b31e41f6db327a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3990dbdd_3cb4d396",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-26T11:32:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d15a8fc0_87efb3e8",
+      "revId": "4091948c575edf24b7baf2039b31e41f6db327a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6051116b_c679cfd0",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-26T11:32:19Z",
+      "side": 1,
+      "message": "Unfortunately some tests don\u0027t call Shutdown. :(",
+      "parentUuid": "53c113cb_bf67dd16",
+      "revId": "4091948c575edf24b7baf2039b31e41f6db327a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a28aa5a_f379d7f5",
         "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_proxy.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "4091948c575edf24b7baf2039b31e41f6db327a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "451b2510_28f9008a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-26T11:32:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a28aa5a_f379d7f5",
+      "revId": "4091948c575edf24b7baf2039b31e41f6db327a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1342e7bd_0f317ed6",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-26T11:32:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2f9c84a_22d051bd",
+      "revId": "4091948c575edf24b7baf2039b31e41f6db327a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48831394_3408a398",
         "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_proxy.h",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "4091948c575edf24b7baf2039b31e41f6db327a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92332a46_9639e8a8",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-26T11:32:19Z",
+      "side": 1,
+      "message": "Quite. Added a TODO here to make it clear.",
+      "parentUuid": "48831394_3408a398",
+      "revId": "4091948c575edf24b7baf2039b31e41f6db327a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "8f1a96f3_666983af",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-26T11:32:19Z",
+      "side": 1,
+      "message": "PageVisibilityState done.\n\nThe immediate plans include plumbing the state of the frame -- is it main thread/same origin/cross origin.\n\nPlease also see my top-level response to haraken@\u0027s comment.",
+      "parentUuid": "81441a76_4a4c155f",
+      "revId": "4091948c575edf24b7baf2039b31e41f6db327a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e8aa120_6fbd02ca",
         "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_proxy_handle.cc",
         "patchSetId": 3
@@ -170,6 +296,24 @@
       "revId": "4091948c575edf24b7baf2039b31e41f6db327a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ff677d6_eef80ea4",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_proxy_handle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-26T11:32:19Z",
+      "side": 1,
+      "message": "Ack, please see my comment in the header file",
+      "parentUuid": "4e8aa120_6fbd02ca",
+      "revId": "4091948c575edf24b7baf2039b31e41f6db327a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -190,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "16424cc0_ac44d31b",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_proxy_handle.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-26T11:32:19Z",
+      "side": 1,
+      "message": "This handle is useful for enforcing layering -- WorkerSchedulerProxy should not be exposed to the rest of the scheduler (only WorkerSchedulerImpl / WebFrameSchedulerImpl should be aware of the details).",
+      "parentUuid": "3f00ec9f_3d9fd7c6",
+      "revId": "4091948c575edf24b7baf2039b31e41f6db327a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09293d96_2b48386a",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.cc",
         "patchSetId": 3
@@ -204,6 +366,24 @@
       "revId": "4091948c575edf24b7baf2039b31e41f6db327a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b6696fe_f968236c",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-26T11:32:19Z",
+      "side": 1,
+      "message": "We have only one control task queue per process. I don\u0027t think we need more, given that the usage of it is extremely limited (only internally in the scheduler).",
+      "parentUuid": "09293d96_2b48386a",
+      "revId": "4091948c575edf24b7baf2039b31e41f6db327a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -224,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "69b25160_fceff62c",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-26T11:32:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdc7047b_71ab8bc3",
+      "revId": "4091948c575edf24b7baf2039b31e41f6db327a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70ab0b4f_b9668107",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.cc",
         "patchSetId": 3
@@ -238,6 +436,24 @@
       "revId": "4091948c575edf24b7baf2039b31e41f6db327a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c00f75bd_137a2974",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-26T11:32:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70ab0b4f_b9668107",
+      "revId": "4091948c575edf24b7baf2039b31e41f6db327a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -258,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "2644dfaa_9f99d15b",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-26T11:32:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "455e348c_dbb17dcd",
+      "revId": "4091948c575edf24b7baf2039b31e41f6db327a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa76559b_7da9b7f8",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.h",
         "patchSetId": 3
@@ -272,6 +506,24 @@
       "revId": "4091948c575edf24b7baf2039b31e41f6db327a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aed648f_39a95daa",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-26T11:32:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa76559b_7da9b7f8",
+      "revId": "4091948c575edf24b7baf2039b31e41f6db327a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
