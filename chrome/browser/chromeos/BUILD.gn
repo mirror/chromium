@@ -1577,6 +1577,8 @@ source_set("chromeos") {
     "upgrade_detector_chromeos.h",
 
     # Extension API implementations.
+    "extensions/auth_private/auth_private_api.cc",
+    "extensions/auth_private/auth_private_api.h",
     "extensions/echo_private_api.cc",
     "extensions/echo_private_api.h",
     "extensions/file_manager/device_event_router.cc",

@@ -108,6 +108,11 @@
     "dependencies": ["manifest:automation"],
     "contexts": ["blessed_extension"]
   },
+  "authPrivate": {
+    "dependencies": ["permission:authPrivate"],
+    "contexts": ["blessed_extension"],
+    "platforms": ["chromeos"]
+  },
   "autotestPrivate": {
     "dependencies": ["permission:autotestPrivate"],
     "contexts": ["blessed_extension"]
