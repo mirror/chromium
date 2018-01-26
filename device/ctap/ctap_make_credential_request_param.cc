@@ -8,6 +8,7 @@
 
 #include "base/numerics/safe_conversions.h"
 #include "components/cbor/cbor_writer.h"
+#include "crypto/sha2.h"
 #include "device/ctap/ctap_constants.h"
 
 namespace device {
@@ -24,9 +25,12 @@ CTAPMakeCredentialRequestParam::CTAPMakeCredentialRequestParam(
 
 CTAPMakeCredentialRequestParam::CTAPMakeCredentialRequestParam(
     CTAPMakeCredentialRequestParam&& that) = default;
-
+CTAPMakeCredentialRequestParam::CTAPMakeCredentialRequestParam(
+    const CTAPMakeCredentialRequestParam& that) = default;
 CTAPMakeCredentialRequestParam& CTAPMakeCredentialRequestParam::operator=(
-    CTAPMakeCredentialRequestParam&& that) = default;
+    CTAPMakeCredentialRequestParam&& other) = default;
+CTAPMakeCredentialRequestParam& CTAPMakeCredentialRequestParam::operator=(
+    const CTAPMakeCredentialRequestParam& other) = default;
 
 CTAPMakeCredentialRequestParam::~CTAPMakeCredentialRequestParam() = default;
 
@@ -53,12 +57,12 @@ base::Optional<std::vector<uint8_t>> CTAPMakeCredentialRequestParam::Encode()
     cbor_map[cbor::CBORValue(9)] = cbor::CBORValue(*pin_protocol_);
   }
 
-  cbor::CBORValue::MapValue option_map;
-  option_map[cbor::CBORValue(kResidentKeyMapKey)] =
-      cbor::CBORValue(resident_key_);
-  option_map[cbor::CBORValue(kUserVerificationMapKey)] =
-      cbor::CBORValue(user_verification_required_);
-  cbor_map[cbor::CBORValue(7)] = cbor::CBORValue(std::move(option_map));
+  // cbor::CBORValue::MapValue option_map;
+  // option_map[cbor::CBORValue(kResidentKeyMapKey)] =
+  //     cbor::CBORValue(resident_key_);
+  // option_map[cbor::CBORValue(kUserVerificationMapKey)] =
+  //     cbor::CBORValue(user_verification_required_);
+  // cbor_map[cbor::CBORValue(7)] = cbor::CBORValue(std::move(option_map));
 
   auto serialized_param =
       cbor::CBORWriter::Write(cbor::CBORValue(std::move(cbor_map)));
@@ -70,7 +74,45 @@ base::Optional<std::vector<uint8_t>> CTAPMakeCredentialRequestParam::Encode()
       CTAPRequestCommand::kAuthenticatorMakeCredential)});
   cbor_request.insert(cbor_request.end(), serialized_param->begin(),
                       serialized_param->end());
+
   return cbor_request;
+}
+
+bool CTAPMakeCredentialRequestParam::CheckU2fInteropCriteria() const {
+  if (user_verification_required_ || resident_key_)
+    return false;
+
+  for (const auto& credential :
+       public_key_credentials_.public_key_credential_params()) {
+    if (std::get<1>(credential) == -7) {
+      return true;
+    }
+  }
+  return false;
+}
+
+std::vector<uint8_t>
+CTAPMakeCredentialRequestParam::GetU2FApplicationParameter() const {
+  std::vector<uint8_t> application_param(crypto::kSHA256Length);
+  crypto::SHA256HashString(rp_.rp_id(), application_param.data(),
+                           application_param.size());
+  return application_param;
+}
+
+std::vector<std::vector<uint8_t>>
+CTAPMakeCredentialRequestParam::GetU2FRegisteredKeysParameter() const {
+  std::vector<std::vector<uint8_t>> registered_keys;
+  if (exclude_list_) {
+    for (const auto& credential : *exclude_list_) {
+      registered_keys.push_back(credential.id());
+    }
+  }
+  return registered_keys;
+}
+
+std::vector<uint8_t> CTAPMakeCredentialRequestParam::GetU2FChallengeParameter()
+    const {
+  return client_data_hash_;
 }
 
 CTAPMakeCredentialRequestParam&

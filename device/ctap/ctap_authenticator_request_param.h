@@ -1,4 +1,4 @@
-// Copyright 2018 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -6,7 +6,6 @@
 #define DEVICE_CTAP_CTAP_AUTHENTICATOR_REQUEST_PARAM_H_
 
 #include <stdint.h>
-
 #include <string>
 #include <vector>
 
@@ -21,21 +20,21 @@ namespace device {
 // AuthenticatorGetNextAssertion commands.
 class CTAPAuthenticatorRequestParam : public CTAPRequestParam {
  public:
-  static CTAPAuthenticatorRequestParam CreateGetInfoParam();
-  static CTAPAuthenticatorRequestParam CreateGetNextAssertionParam();
-  static CTAPAuthenticatorRequestParam CreateResetParam();
-  static CTAPAuthenticatorRequestParam CreateCancelParam();
+  static CTAPAuthenticatorRequestParam CreateAuthenticatorGetInfoParam();
+  static CTAPAuthenticatorRequestParam
+  CreateAuthenticatorGetNextAssertionParam();
+  static CTAPAuthenticatorRequestParam CreateAuthenticatorResetParam();
+  static CTAPAuthenticatorRequestParam CreateAuthenticatorCancelParam();
 
   CTAPAuthenticatorRequestParam(CTAPAuthenticatorRequestParam&& that);
   CTAPAuthenticatorRequestParam& operator=(
-      CTAPAuthenticatorRequestParam&& that);
+      CTAPAuthenticatorRequestParam&& other);
   ~CTAPAuthenticatorRequestParam() override;
 
   base::Optional<std::vector<uint8_t>> Encode() const override;
 
  private:
   explicit CTAPAuthenticatorRequestParam(CTAPRequestCommand cmd);
-
   CTAPRequestCommand cmd_;
 
   DISALLOW_COPY_AND_ASSIGN(CTAPAuthenticatorRequestParam);

@@ -15,8 +15,14 @@ PublicKeyCredentialParams::PublicKeyCredentialParams(
 PublicKeyCredentialParams::PublicKeyCredentialParams(
     PublicKeyCredentialParams&& other) = default;
 
+PublicKeyCredentialParams::PublicKeyCredentialParams(
+    const PublicKeyCredentialParams& other) = default;
+
 PublicKeyCredentialParams& PublicKeyCredentialParams::operator=(
     PublicKeyCredentialParams&& other) = default;
+
+PublicKeyCredentialParams& PublicKeyCredentialParams::operator=(
+    const PublicKeyCredentialParams& other) = default;
 
 PublicKeyCredentialParams::~PublicKeyCredentialParams() = default;
 

@@ -9,12 +9,9 @@
 namespace device {
 
 AuthenticatorGetInfoResponse::AuthenticatorGetInfoResponse(
-    CTAPDeviceResponseCode response_code,
     std::vector<std::string> versions,
     std::vector<uint8_t> aaguid)
-    : response_code_(response_code),
-      versions_(std::move(versions)),
-      aaguid_(std::move(aaguid)) {}
+    : versions_(std::move(versions)), aaguid_(std::move(aaguid)) {}
 
 AuthenticatorGetInfoResponse::AuthenticatorGetInfoResponse(
     AuthenticatorGetInfoResponse&& that) = default;
@@ -25,7 +22,7 @@ AuthenticatorGetInfoResponse& AuthenticatorGetInfoResponse::operator=(
 AuthenticatorGetInfoResponse::~AuthenticatorGetInfoResponse() = default;
 
 AuthenticatorGetInfoResponse& AuthenticatorGetInfoResponse::SetMaxMsgSize(
-    uint8_t max_msg_size) {
+    int64_t max_msg_size) {
   max_msg_size_ = max_msg_size;
   return *this;
 }
