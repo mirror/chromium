@@ -14420,6 +14420,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>Whether Chrome was the default browser when it started up.</summary>
 </histogram>
 
+<histogram name="DefaultBrowser.Win10ChooserInvoked" enum="BooleanSuccess">
+  <owner>pmonette@chromium.org</owner>
+  <summary>
+    Records whether the browser chooser was successfully invoked.
+  </summary>
+</histogram>
+
 <histogram name="DefaultBrowserWarning.DontSetAsDefault" enum="BooleanHit">
   <obsolete>
     Deprecated 2015/11. The same information is available as the value Failure
