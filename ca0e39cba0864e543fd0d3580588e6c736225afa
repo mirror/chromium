@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8a127c7_f241681f",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_buffer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-01-26T21:31:12Z",
+      "side": 1,
+      "message": "If you prefer, you could use planes.front().modifier",
+      "revId": "ca0e39cba0864e543fd0d3580588e6c736225afa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
