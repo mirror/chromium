@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "12dece62_a5ae4dfd",
+        "filename": "build/fuchsia/runner_v2/__init__.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-26T17:42:03Z",
+      "side": 1,
+      "message": "It\u0027s necessary to be able to import modules from this directory as runner_v2.foo. Without this file Python doesn\u0027t recognize runner_v2 as a module. Alternative is to add runner_v2 to module_path",
+      "parentUuid": "b3489500_016fdf67",
+      "revId": "a9cbce3c25e8048f43ce2c9ae937e912850eba2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5afc4a6c_b3f15972",
         "filename": "build/fuchsia/runner_v2/qemu_target.py",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "a9cbce3c25e8048f43ce2c9ae937e912850eba2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54715715_475b390a",
+        "filename": "build/fuchsia/runner_v2/qemu_target.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-26T17:42:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5afc4a6c_b3f15972",
+      "revId": "a9cbce3c25e8048f43ce2c9ae937e912850eba2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "bb98b201_167c31a1",
+        "filename": "build/fuchsia/runner_v2/qemu_target.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-26T17:42:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15be68eb_81504aba",
+      "revId": "a9cbce3c25e8048f43ce2c9ae937e912850eba2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "955f9015_8e0bf7f9",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/fuchsia.py",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "de41f2e2_a05d4427",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/fuchsia.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-26T17:42:03Z",
+      "side": 1,
+      "message": "I don\u0027t think we can use \u0027with\u0027 expression here because layout test runner creates multiple instances of FuchsiaPort and FuchsiaDriver and then calls them to start tests (on multiple threads) see third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/manager.py.\nYou are right that qemu wasn\u0027t always killed properly. Added cleanup_test_run() to fix this.\nAlso I think we need this class as a wrapper for Target class to keep the current state of the target machine. In particularly this class currently creates _proxy which is used to proxy all TCP connections. In future it may be useful for other purposes (e.g. to keep the list of the files copied to the device, so they can be cleaned up at the end).",
+      "parentUuid": "955f9015_8e0bf7f9",
+      "revId": "a9cbce3c25e8048f43ce2c9ae937e912850eba2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45208def_38981221",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/fuchsia.py",
         "patchSetId": 2
@@ -81,6 +153,24 @@
       "writtenOn": "2018-01-24T00:56:25Z",
       "side": 1,
       "message": "Recommend adding a cleanup step in \"finally\" if this code might eventually target devices, otherwise tmpfs gets clogged. See https://chromium-review.googlesource.com/c/chromium/src/+/882441/2/build/fuchsia/runner_v2/deploy_util.py .",
+      "revId": "a9cbce3c25e8048f43ce2c9ae937e912850eba2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de26bbe1_518f9d71",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/fuchsia.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-26T17:42:03Z",
+      "side": 1,
+      "message": "Added FuchsiaPort.cleanup_test_run(). test runner calls it from finally block.\nCurrently it just kills qemu. I\u0027ve added TODO about FS cleanup.",
+      "parentUuid": "45208def_38981221",
       "revId": "a9cbce3c25e8048f43ce2c9ae937e912850eba2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -246,6 +336,24 @@
     },
     {
       "key": {
+        "uuid": "0cb84798_3eca04a6",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/fuchsia.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-26T17:42:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0e8ea32_1b715529",
+      "revId": "a9cbce3c25e8048f43ce2c9ae937e912850eba2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "087682d8_3180fe3a",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/fuchsia.py",
         "patchSetId": 2
@@ -260,6 +368,24 @@
       "revId": "a9cbce3c25e8048f43ce2c9ae937e912850eba2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "720debb9_cf3a73d9",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/fuchsia.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-26T17:42:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "087682d8_3180fe3a",
+      "revId": "a9cbce3c25e8048f43ce2c9ae937e912850eba2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
