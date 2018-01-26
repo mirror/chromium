@@ -18,7 +18,7 @@ if (is_android || current_cpu == "mipsel" || current_cpu == "mips64el" ||
 # against the debug CRT with "is_nacl=false".
 if ((is_linux || is_android || is_mac ||
      (is_win && !is_component_build && !is_debug)) && !is_asan && !is_lsan &&
-    !is_tsan && !is_msan) {
+    !is_tsan && !is_msan && !is_syzyasan) {
   _default_use_allocator_shim = true
 } else {
   _default_use_allocator_shim = false
