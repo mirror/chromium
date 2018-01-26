@@ -16,6 +16,24 @@
       "revId": "50b1364a71be883c25b2234ea4fc33c6a04d70e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6cf58ca_043945c1",
+        "filename": "content/browser/renderer_host/media/media_devices_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-26T12:37:29Z",
+      "side": 1,
+      "message": "The loop is to cover the following case:\nSuppose you have a device that exposes one video-input device and two audio-input devices and both audio-input devices have the same group ID because they are in the same device.\n\nIf you have two of those installed in the system there would be 4 audio inputs that match |video_label|, but two group IDs. If we have an if instead of a loop, we might see only one group ID and incorrectly conclude that it is the right group ID for the video device.",
+      "parentUuid": "6640a74f_a98bcc7e",
+      "revId": "50b1364a71be883c25b2234ea4fc33c6a04d70e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
