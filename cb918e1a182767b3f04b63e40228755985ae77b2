@@ -22,6 +22,30 @@
       "revId": "cb918e1a182767b3f04b63e40228755985ae77b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07f934c5_47727f4e",
+        "filename": "docs/callback.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1116265
+      },
+      "writtenOn": "2018-01-26T15:01:07Z",
+      "side": 1,
+      "message": "I came across of a case when this would have been useful, but it is not that important. \nThats why I am just documenting this case under missing functionaly. It is not a feature request.",
+      "parentUuid": "105e130a_c43d6050",
+      "range": {
+        "startLine": 485,
+        "startChar": 17,
+        "endLine": 485,
+        "endChar": 19
+      },
+      "revId": "cb918e1a182767b3f04b63e40228755985ae77b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
