@@ -10,7 +10,8 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/memory/free_deleter.h"
-#include "base/threading/sequenced_worker_pool.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/threading/scoped_blocking_call.h"
 #include "net/base/net_errors.h"
 #include "net/proxy_resolution/dhcp_pac_file_adapter_fetcher_win.h"
 
@@ -18,27 +19,6 @@
 #include <iphlpapi.h>
 
 namespace {
-
-// How many threads to use at maximum to do DHCP lookups. This is
-// chosen based on the following UMA data:
-// - When OnWaitTimer fires, ~99.8% of users have 6 or fewer network
-//   adapters enabled for DHCP in total.
-// - At the same measurement point, ~99.7% of users have 3 or fewer pending
-//   DHCP adapter lookups.
-// - There is however a very long and thin tail of users who have
-//   systems reporting up to 100+ adapters (this must be some very weird
-//   OS bug (?), probably the cause of http://crbug.com/240034).
-//
-// The maximum number of threads is chosen such that even systems that
-// report a huge number of network adapters should not run out of
-// memory from this number of threads, while giving a good chance of
-// getting back results for any responsive adapters.
-//
-// The ~99.8% of systems that have 6 or fewer network adapters will
-// not grow the thread pool to its maximum size (rather, they will
-// grow it to 6 or fewer threads) so setting the limit lower would not
-// improve performance or memory usage on those systems.
-const int kMaxDhcpLookupThreads = 12;
 
 // How long to wait at maximum after we get results (a PAC file or
 // knowledge that no PAC file is configured) from whichever network
@@ -56,17 +36,12 @@ DhcpProxyScriptFetcherWin::DhcpProxyScriptFetcherWin(
       destination_string_(NULL),
       url_request_context_(url_request_context) {
   DCHECK(url_request_context_);
-
-  worker_pool_ = new base::SequencedWorkerPool(
-      kMaxDhcpLookupThreads, "PacDhcpLookup", base::TaskPriority::USER_VISIBLE);
 }
 
 DhcpProxyScriptFetcherWin::~DhcpProxyScriptFetcherWin() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   // Count as user-initiated if we are not yet in STATE_DONE.
   Cancel();
-
-  worker_pool_->Shutdown();
 }
 
 int DhcpProxyScriptFetcherWin::Fetch(base::string16* utf16_text,
@@ -85,15 +60,14 @@ int DhcpProxyScriptFetcherWin::Fetch(base::string16* utf16_text,
   destination_string_ = utf16_text;
 
   last_query_ = ImplCreateAdapterQuery();
-  GetTaskRunner()->PostTaskAndReply(
+  base::PostTaskWithTraitsAndReply(
       FROM_HERE,
-      base::Bind(
+      {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
+      base::BindOnce(
           &DhcpProxyScriptFetcherWin::AdapterQuery::GetCandidateAdapterNames,
           last_query_.get()),
-      base::Bind(
-          &DhcpProxyScriptFetcherWin::OnGetCandidateAdapterNamesDone,
-          AsWeakPtr(),
-          last_query_));
+      base::BindOnce(&DhcpProxyScriptFetcherWin::OnGetCandidateAdapterNamesDone,
+                     AsWeakPtr(), last_query_));
 
   return ERR_IO_PENDING;
 }
@@ -166,6 +140,17 @@ void DhcpProxyScriptFetcherWin::OnGetCandidateAdapterNamesDone(
     return;
   }
 
+  // How many fetch tasks will be started concurrently? From UMA data:
+  // - When OnWaitTimer fires, ~99.8% of users have 6 or fewer network
+  //   adapters enabled for DHCP in total.
+  // - At the same measurement point, ~99.7% of users have 3 or fewer pending
+  //   DHCP adapter lookups.
+  // - There is however a very long and thin tail of users who have
+  //   systems reporting up to 100+ adapters (this must be some very weird
+  //   OS bug (?), probably the cause of http://crbug.com/240034).
+  // Note that it is expected that TaskScheduler will maintain a reasonable
+  // number of threads in the process even if hundreds of fetch tasks are posted
+  // concurrently.
   for (std::set<std::string>::const_iterator it = adapter_names.begin();
        it != adapter_names.end();
        ++it) {
@@ -283,15 +268,9 @@ URLRequestContext* DhcpProxyScriptFetcherWin::url_request_context() const {
   return url_request_context_;
 }
 
-scoped_refptr<base::TaskRunner> DhcpProxyScriptFetcherWin::GetTaskRunner() {
-  return worker_pool_->GetTaskRunnerWithShutdownBehavior(
-      base::SequencedWorkerPool::CONTINUE_ON_SHUTDOWN);
-}
-
 DhcpProxyScriptAdapterFetcher*
     DhcpProxyScriptFetcherWin::ImplCreateAdapterFetcher() {
-  return new DhcpProxyScriptAdapterFetcher(url_request_context_,
-                                           GetTaskRunner());
+  return new DhcpProxyScriptAdapterFetcher(url_request_context_);
 }
 
 DhcpProxyScriptFetcherWin::AdapterQuery*
@@ -318,6 +297,8 @@ bool DhcpProxyScriptFetcherWin::GetCandidateAdapterNames(
   do {
     adapters.reset(static_cast<IP_ADAPTER_ADDRESSES*>(malloc(adapters_size)));
     // Return only unicast addresses, and skip information we do not need.
+    base::ScopedBlockingCall scoped_blocking_call(
+        base::BlockingType::MAY_BLOCK);
     error = GetAdaptersAddresses(AF_UNSPEC,
                                  GAA_FLAG_SKIP_ANYCAST |
                                  GAA_FLAG_SKIP_MULTICAST |
