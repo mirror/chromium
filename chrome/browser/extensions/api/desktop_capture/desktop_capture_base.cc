@@ -207,7 +207,7 @@ bool DesktopCaptureChooseDesktopMediaFunctionBase::Execute(
 
   picker_->Show(web_contents, parent_window, parent_window,
                 base::UTF8ToUTF16(GetCallerDisplayName()), target_name,
-                std::move(source_lists), request_audio, callback);
+                std::move(source_lists), request_audio, false, callback);
   origin_ = origin;
   return true;
 }
