@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "41261a45_6a9b7a59",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-26T22:27:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84de085c_ddeefc1f",
+      "range": {
+        "startLine": 13,
+        "startChar": 4,
+        "endLine": 13,
+        "endChar": 12
+      },
+      "revId": "c06f352ab2763919f0ea8623f6fbfbe41936fcd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42dbaab4_224635ad",
         "filename": "ash/wm/workspace/multi_window_resize_controller_unittest.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "c06f352ab2763919f0ea8623f6fbfbe41936fcd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "883ff6f4_231868c9",
+        "filename": "ash/wm/workspace/multi_window_resize_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-26T22:27:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42dbaab4_224635ad",
+      "range": {
+        "startLine": 445,
+        "startChar": 2,
+        "endLine": 445,
+        "endChar": 13
+      },
+      "revId": "c06f352ab2763919f0ea8623f6fbfbe41936fcd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
