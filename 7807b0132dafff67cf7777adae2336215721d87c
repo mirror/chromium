@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cae5f6f3_8f6fb926",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T17:34:47Z",
+      "side": 1,
+      "message": "nit: maybe just set_type()?",
+      "revId": "7807b0132dafff67cf7777adae2336215721d87c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
