@@ -16,6 +16,24 @@
       "revId": "293acda2dec1d87678328a16ec7d6ebde296fea7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1594e0f_d241c0e6",
+        "filename": "components/assist_ranker/example_preprocessing.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1249076
+      },
+      "writtenOn": "2018-01-26T09:58:12Z",
+      "side": 1,
+      "message": "This is actually a very good idea.\n\nHowever inside the class, I can only use Map \u003d a specific Map Type, not a templated type.\n\nAlso inside the .cc the Map is used at other classes which is still need to be declared.\n\nLastly this CL is kind of urgent.\n\nSo I\u0027ll make another CL later on to address this issue properly.",
+      "parentUuid": "31cb25e1_aab367b5",
+      "revId": "293acda2dec1d87678328a16ec7d6ebde296fea7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
