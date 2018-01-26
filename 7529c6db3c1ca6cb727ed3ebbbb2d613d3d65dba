@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2ecb8bf_d752460a",
+        "filename": "content/public/test/browser_test_utils.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1635,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2018-01-26T01:53:06Z",
+      "side": 1,
+      "message": "Did you intend to leave these in? (here and elsewhere)",
+      "revId": "7529c6db3c1ca6cb727ed3ebbbb2d613d3d65dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd5170c8_7705f312",
+        "filename": "net/base/mime_sniffer.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2018-01-26T01:53:06Z",
+      "side": 1,
+      "message": "Update?",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 40
+      },
+      "revId": "7529c6db3c1ca6cb727ed3ebbbb2d613d3d65dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
