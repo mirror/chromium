@@ -299,7 +299,6 @@ metrics::OmniboxInputType AutocompleteInput::Parse(
           canonicalized_url->host(),
           net::registry_controlled_domains::EXCLUDE_UNKNOWN_REGISTRIES,
           net::registry_controlled_domains::EXCLUDE_PRIVATE_REGISTRIES);
-  DCHECK_NE(std::string::npos, registry_length);
   const bool has_known_tld = registry_length != 0;
 
   // See if the hostname is valid.  While IE and GURL allow hostnames to contain
