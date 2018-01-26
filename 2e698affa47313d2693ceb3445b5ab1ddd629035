@@ -232,6 +232,24 @@
     },
     {
       "key": {
+        "uuid": "72916d9e_53a68d38",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 13
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-26T19:43:11Z",
+      "side": 1,
+      "message": "Okay, one last comment, I swear. :D\n(Maybe)\n\nThat code I posted looks good to me. But it doesn\u0027t address the issue of \"These won\u0027t be defined when building for old kernels and glibc\". THAT seems to be why all these other libraries define them themselves. They seem to all say \"We copied these bits from hwcap.h\".\n\n\nSo I am okay with either:\n- Using #include \u003casm/hwcap.h\u003e and these defines, or\n- Defining our own values and saying they came from asm/hwcap.h.\n\n\nIf we use our own defines, we\u0027ll have the broadest range of support. So that is probably the route we should take.\n\nBut we still want to have the separate code paths for AArch32 and AArch64.",
+      "parentUuid": "302e4160_5524a96d",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "659b95fa_586f305a",
         "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
         "patchSetId": 13
