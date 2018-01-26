@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e3f505f2_ef8b6c8b",
+        "filename": "extensions/renderer/bindings/api_binding_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T18:31:34Z",
+      "side": 1,
+      "message": "Ah, okay.  Makes sense.",
+      "parentUuid": "395a8853_90218d38",
+      "revId": "605ee054f7edffb03e20a9e8642e36c3c732b63a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47355ba8_de3d2811",
         "filename": "extensions/renderer/native_extension_bindings_system_unittest.cc",
         "patchSetId": 3
@@ -69,6 +87,24 @@
       "revId": "605ee054f7edffb03e20a9e8642e36c3c732b63a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cead383b_948b772a",
+        "filename": "extensions/renderer/native_extension_bindings_system_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T18:31:34Z",
+      "side": 1,
+      "message": "I have no strong opinions. :)  I\u0027m fine with this as-is.",
+      "parentUuid": "e93a5a6f_983a66d8",
+      "revId": "605ee054f7edffb03e20a9e8642e36c3c732b63a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
