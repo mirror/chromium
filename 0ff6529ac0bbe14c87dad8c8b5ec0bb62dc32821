@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f7207cd3_5a93f535",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-26T14:17:55Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "bd2e257a_631370f1",
+      "revId": "0ff6529ac0bbe14c87dad8c8b5ec0bb62dc32821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54fe19cc_3d73231a",
         "filename": "components/omnibox/browser/omnibox_edit_model.h",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-25T23:38:57Z",
       "side": 1,
       "message": "This is confusing.  If this is the function that notifies observers, why does it need to return whether the state changed \"to avoid unnecessary notifications\".  This is the function that does the notifications, at least so the comment implies.\n\nI\u0027d suggest a different interface:\n  // Sets the state of user_input_in_progress_.  Returns whether the state changed.  If so, the caller should call NotifyObserversInputInProgress().\n  bool SetInputInProgress(bool in_progress);\n\nP.S.  No need to mention \"records time\".",
+      "revId": "0ff6529ac0bbe14c87dad8c8b5ec0bb62dc32821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e92daf38_c4ee45e7",
+        "filename": "components/omnibox/browser/omnibox_edit_model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-26T14:17:55Z",
+      "side": 1,
+      "message": "Re-written.",
+      "parentUuid": "54fe19cc_3d73231a",
       "revId": "0ff6529ac0bbe14c87dad8c8b5ec0bb62dc32821",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
