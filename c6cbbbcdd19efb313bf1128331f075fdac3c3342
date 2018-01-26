@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1c62b45_8dd09750",
+        "filename": "content/browser/renderer_host/browser_compositor_view_mac.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-26T13:03:53Z",
+      "side": 1,
+      "message": "In this approach, the ui::Compositor is always at least a frame behind the renderer. Given that the ui::Compositor doesn\u0027t actually have visuals (is that right?) then maybe that doesn\u0027t matter on Mac at the moment.\n\nHowever, surface synchronization allows us to embed the renderer sooner. In other words, when the renderer is resized and we allocate a new surface ID, we immediately also resize the ui::Compositor. WDYT? We don\u0027t have to wait until first surface activation.",
+      "revId": "c6cbbbcdd19efb313bf1128331f075fdac3c3342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
