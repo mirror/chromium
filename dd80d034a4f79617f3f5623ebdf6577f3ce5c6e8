@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "93d17d5b_f647671d",
+        "filename": "content/public/common/content_features.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-26T22:00:16Z",
+      "side": 1,
+      "message": "Renamed to IsVideoCaptureServiceEnabledForOutOfProcess() to match ServiceManagerContext terminology.",
+      "parentUuid": "a2e74b71_f12f9277",
+      "revId": "dd80d034a4f79617f3f5623ebdf6577f3ce5c6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f4a4f3e_3c8c27ed",
         "filename": "services/video_capture/service_impl.cc",
         "patchSetId": 14
@@ -39,6 +57,30 @@
       "revId": "dd80d034a4f79617f3f5623ebdf6577f3ce5c6e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44945dbb_a447ab8e",
+        "filename": "services/video_capture/service_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-26T22:00:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f4a4f3e_3c8c27ed",
+      "range": {
+        "startLine": 26,
+        "startChar": 9,
+        "endLine": 26,
+        "endChar": 25
+      },
+      "revId": "dd80d034a4f79617f3f5623ebdf6577f3ce5c6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
