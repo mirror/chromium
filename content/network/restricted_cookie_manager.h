@@ -7,6 +7,7 @@
 
 #include <string>
 
+#include "base/containers/flat_map.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
@@ -50,6 +51,11 @@ class CONTENT_EXPORT RestrictedCookieManager
                           const GURL& site_for_cookies,
                           SetCanonicalCookieCallback callback) override;
 
+  void AddChangeListener(
+      const GURL& url,
+      const GURL& site_for_cookies,
+      network::mojom::RestrictedCookieChangeListenerPtr listener) override;
+
  private:
   // Feeds a net::CookieList to a GetAllForUrl() callback.
   void CookieListToGetAllForUrlCallback(
@@ -59,9 +65,16 @@ class CONTENT_EXPORT RestrictedCookieManager
       GetAllForUrlCallback callback,
       const net::CookieList& cookie_list);
 
+  // Called when the Mojo pipe associated with a listener is closed.
+  void RemoveChangeListener(uint64_t listener_id);
+
   net::CookieStore* cookie_store_;
   const int render_process_id_;
   const int render_frame_id_;
+
+  base::flat_map<uint64_t, network::mojom::RestrictedCookieChangeListenerPtr>
+      listeners_;
+  uint64_t next_listener_id_ = 0;
 
   base::WeakPtrFactory<RestrictedCookieManager> weak_ptr_factory_;
 

@@ -10,9 +10,11 @@
 #include "core/dom/DOMException.h"
 #include "core/dom/Document.h"
 #include "core/dom/ExceptionCode.h"
+#include "core/event_type_names.h"
 #include "modules/cookie_store/CookieListItem.h"
 #include "modules/cookie_store/CookieStoreGetOptions.h"
 #include "modules/cookie_store/CookieStoreSetOptions.h"
+#include "modules/event_target_modules_names.h"
 #include "modules/serviceworkers/ServiceWorkerGlobalScope.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/heap/Handle.h"
@@ -271,14 +273,50 @@ ScriptPromise CookieStore::Delete(ScriptState* script_state,
 }
 
 void CookieStore::ContextDestroyed(ExecutionContext* execution_context) {
+  StopObserving();
   backend_.reset();
+}
+
+const AtomicString& CookieStore::InterfaceName() const {
+  return EventTargetNames::CookieStore;
+}
+
+ExecutionContext* CookieStore::GetExecutionContext() const {
+  return ContextLifecycleObserver::GetExecutionContext();
+}
+
+void CookieStore::RemoveAllEventListeners() {
+  EventTargetWithInlineData::RemoveAllEventListeners();
+  DCHECK(!HasEventListeners());
+  StopObserving();
+}
+
+void CookieStore::OnCookiesChanged(
+    WTF::Vector<::network::mojom::blink::CanonicalCookiePtr> cookies) {}
+
+void CookieStore::AddedEventListener(
+    const AtomicString& event_type,
+    RegisteredEventListener& registered_listener) {
+  EventTargetWithInlineData::AddedEventListener(event_type,
+                                                registered_listener);
+  StartObserving();
+}
+
+void CookieStore::RemovedEventListener(
+    const AtomicString& event_type,
+    const RegisteredEventListener& registered_listener) {
+  EventTargetWithInlineData::RemovedEventListener(event_type,
+                                                  registered_listener);
+  if (!HasEventListeners())
+    StopObserving();
 }
 
 CookieStore::CookieStore(
     ExecutionContext* execution_context,
     network::mojom::blink::RestrictedCookieManagerPtr backend)
     : ContextLifecycleObserver(execution_context),
-      backend_(std::move(backend)) {
+      backend_(std::move(backend)),
+      change_listener_binding_(this) {
   DCHECK(backend_);
 }
 
@@ -403,6 +441,21 @@ void CookieStore::OnSetCanonicalCookieResult(ScriptPromiseResolver* resolver,
     return;
   }
   resolver->Resolve();
+}
+
+void CookieStore::StartObserving() {
+  if (change_listener_binding_.is_bound() || !backend_)
+    return;
+
+  network::mojom::blink::RestrictedCookieChangeListenerPtr change_listener;
+  change_listener_binding_.Bind(mojo::MakeRequest(&change_listener));
+  backend_->AddChangeListener(change_listener);
+}
+
+void CookieStore::StopObserving() {
+  if (!change_listener_binding_.is_bound())
+    return;
+  change_listener_binding_.Close();
 }
 
 }  // namespace blink

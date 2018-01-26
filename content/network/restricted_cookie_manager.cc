@@ -128,4 +128,21 @@ void RestrictedCookieManager::SetCanonicalCookie(
                                          std::move(callback));
 }
 
+void RestrictedCookieManager::AddChangeListener(
+    const GURL& url,
+    const GURL& site_for_cookies,
+    network::mojom::RestrictedCookieChangeListenerPtr listener) {
+  uint64_t listener_id = ++next_listener_id_;
+
+  listener.set_connection_error_handler(
+      base::BindOnce(&RestrictedCookieManager::RemoveChangeListener,
+                     weak_ptr_factory_.GetWeakPtr(), listener_id));
+
+  listeners_.emplace(std::move(listener_id), std::move(listener));
+}
+
+void RestrictedCookieManager::RemoveChangeListener(uint64_t listener_id) {
+  listeners_.erase(listener_id);
+}
+
 }  // namespace content
