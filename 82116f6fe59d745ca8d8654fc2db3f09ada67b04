@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3637d70_04e5827f",
+        "filename": "chromeos/dbus/proto/media_perception.proto",
+        "patchSetId": 8
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-26T02:00:58Z",
+      "side": 1,
+      "message": "can you update comments here, too?",
+      "revId": "82116f6fe59d745ca8d8654fc2db3f09ada67b04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49fcad2a_b0c67392",
+        "filename": "extensions/browser/api/media_perception_private/conversion_utils.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-26T02:00:58Z",
+      "side": 1,
+      "message": "you seem to wrap the results here in unique_ptr - I\u0027d suggest returning an unique_ptr directly.",
+      "revId": "82116f6fe59d745ca8d8654fc2db3f09ada67b04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20aa158b_a8e1283b",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 8
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-26T02:00:58Z",
+      "side": 1,
+      "message": "out this in \u003ccode\u003e\u003c/code\u003e\n\nI assume that the size of the array is not set - if it is you might want to mention that too.",
+      "range": {
+        "startLine": 258,
+        "startChar": 16,
+        "endLine": 258,
+        "endChar": 52
+      },
+      "revId": "82116f6fe59d745ca8d8654fc2db3f09ada67b04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
