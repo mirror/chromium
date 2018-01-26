@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28c1bc04_a0018c1a",
+        "filename": "content/browser/renderer_host/p2p/socket_host_tcp.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-26T01:27:20Z",
+      "side": 1,
+      "message": "Move it to P2PSocketDispatcherHost? The dispatcher always outlives the sockets.",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 78
+      },
+      "revId": "109c96b4046a0f641a0e9a036ee12a6487a4bc92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7965d517_3b552c4a",
+        "filename": "jingle/glue/xmpp_client_socket_factory.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-26T01:27:20Z",
+      "side": 1,
+      "message": "It\u0027s the other way around, but request_context_getter_ is ref-counted, so I\u0027m not sure you need to mention it here.",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 78
+      },
+      "revId": "109c96b4046a0f641a0e9a036ee12a6487a4bc92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
