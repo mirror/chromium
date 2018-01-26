@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8d387f88_01818edb",
+        "filename": "chrome/browser/ui/webui/settings/browser_lifetime_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-26T00:43:04Z",
+      "side": 1,
+      "message": "Oops, you\u0027re right.",
+      "parentUuid": "a8a5691c_2c9df427",
+      "range": {
+        "startLine": 63,
+        "startChar": 2,
+        "endLine": 63,
+        "endChar": 31
+      },
+      "revId": "e2e12f57bef4b1e2c27e4ac714b5171c246abcb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "212e78b0_bee8f2c7",
         "filename": "chrome/browser/ui/webui/settings/browser_lifetime_handler.cc",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2018-01-25T22:58:09Z",
       "side": 1,
       "message": "Similar comment here. Looking elsewhere this is usually done as follows:\n\nbool tpm_firmware_update_requested \u003d false;\nCHECK(args-\u003eGetBoolean(1, \u0026tpm_firmware_update_requested));\n\nIs the CHECK useful here? Would it have prevented the problem in the first place?",
+      "revId": "e2e12f57bef4b1e2c27e4ac714b5171c246abcb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4cca514_5a9ff01a",
+        "filename": "chrome/browser/ui/webui/settings/browser_lifetime_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-26T00:43:04Z",
+      "side": 1,
+      "message": "GetBoolean is deprecated:\nhttps://cs.chromium.org/chromium/src/base/values.h?q\u003dvalue\u0026sq\u003dpackage:chromium\u0026l\u003d636\n\nGetBool() has a built-in CHECK.",
+      "parentUuid": "212e78b0_bee8f2c7",
       "revId": "e2e12f57bef4b1e2c27e4ac714b5171c246abcb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
