@@ -232,4 +232,12 @@ void WebDocumentLoaderImpl::Trace(blink::Visitor* visitor) {
   DocumentLoader::Trace(visitor);
 }
 
+void WebDocumentLoaderImpl::BlockParser() {
+  DocumentLoader::BlockParser();
+}
+
+void WebDocumentLoaderImpl::ResumeParser() {
+  DocumentLoader::ResumeParser();
+}
+
 }  // namespace blink
