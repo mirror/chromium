@@ -2,6 +2,10 @@ include_rules = [
   "+components/about_handler",
   "+components/cookie_config",
   "+components/user_manager",
+
+  # TODO(hiroshige): Fix these violations.
+  "+content/common/permafill",
+  "+content/browser/permafill",
 ]
 
 specific_include_rules = {
