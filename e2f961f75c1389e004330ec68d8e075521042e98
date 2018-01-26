@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba3b4b34_422853c2",
+        "filename": "ash/login/login_screen_controller_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-26T04:32:47Z",
+      "side": 1,
+      "message": "nit: since the integers matter, I would explicitly list kPrimary \u003d 0 (and maybe kSecondary \u003d 1).",
+      "revId": "e2f961f75c1389e004330ec68d8e075521042e98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5e48bbb_0a59b8c1",
+        "filename": "ash/login/login_screen_controller_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-26T04:32:47Z",
+      "side": 1,
+      "message": "I\u0027m confused about why you are manually poking the system tray visibility at test startup. I would expect tests to start up ash without login (e.g. using NoSessionAshTestBase or set_start_session(false) ), make assertions about the system tray state, then simulate login, then make more assertions about system tray state. This seems rather artificial.",
+      "revId": "e2f961f75c1389e004330ec68d8e075521042e98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0883071e_4592edea",
+        "filename": "ash/shelf/shelf.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-26T04:32:47Z",
+      "side": 1,
+      "message": "nit: match order in header file, as much as possible",
+      "revId": "e2f961f75c1389e004330ec68d8e075521042e98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edf4cfb6_7c26f6f4",
+        "filename": "ash/shelf/shelf.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-26T04:32:47Z",
+      "side": 1,
+      "message": "optional: This might be slightly clearer with an early exit, like\n\nif (Primary()-\u003eshelf() \u003d\u003d this)\n  return false;\n\nreturn state !\u003d ACTIVE;",
+      "revId": "e2f961f75c1389e004330ec68d8e075521042e98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92456411_cd26a09e",
+        "filename": "ash/shelf/shelf.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-26T04:32:47Z",
+      "side": 1,
+      "message": "nit: put this above the *Testing() methods.",
+      "revId": "e2f961f75c1389e004330ec68d8e075521042e98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8693f6f_190e2f1b",
+        "filename": "ash/shelf/shelf_widget_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-26T04:32:47Z",
+      "side": 1,
+      "message": "Is this used?",
+      "revId": "e2f961f75c1389e004330ec68d8e075521042e98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05d33d19_65230f61",
+        "filename": "ash/shelf/shelf_widget_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-26T04:32:47Z",
+      "side": 1,
+      "message": "init these to null",
+      "revId": "e2f961f75c1389e004330ec68d8e075521042e98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
