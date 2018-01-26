@@ -104,7 +104,7 @@ public final class DownloadNotificationFactory {
                         downloadUpdate.getContentId(), downloadUpdate.getIsOffTheRecord());
 
                 builder.setOngoing(true)
-                        .setPriority(Notification.PRIORITY_HIGH)
+                        .setPriorityImportance(NotificationConstants.PRIORITY_IMPORTANCE_HIGH)
                         .setAutoCancel(false)
                         .setLargeIcon(downloadUpdate.getIcon())
                         .addAction(R.drawable.ic_pause_white_24dp,
