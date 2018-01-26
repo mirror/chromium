@@ -13,7 +13,6 @@
 
 # ChromeVoxPanel directly calls into ash to set panel height.
 # http://crbug.com/628655
--AccessibilityFeatureaApiTestInstantiatePermission/AccessibilityFeaturesApiTest.Set*
 -AccessibilityManagerTest.*
 -ChromeOSInfoPrivateTest.TestGetAndSet
 -PolicyTest.ScreenMagnifierTypeFull
