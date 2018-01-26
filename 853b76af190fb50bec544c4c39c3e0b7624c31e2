@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54c7a1e7_b0252450",
+        "filename": "ui/message_center/views/notification_view_md_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2018-01-26T06:16:22Z",
+      "side": 1,
+      "message": "nice!",
+      "revId": "853b76af190fb50bec544c4c39c3e0b7624c31e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
