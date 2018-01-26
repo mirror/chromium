@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f934b8fe_c7e44f26",
+        "filename": "chrome/browser/resources/chromeos/chromevox/testing/common.js",
+        "patchSetId": 20
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-01-26T21:33:19Z",
+      "side": 1,
+      "message": "Hah, no it doesn\u0027t work. I am bad at javascript, and at running tests. Whoops. Fixed.",
+      "parentUuid": "de273f41_c08f7836",
+      "revId": "1df077fc73834727e3e81401888366fc45c54ed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e41f2177_83c922dd",
         "filename": "content/browser/renderer_host/render_widget_host_view_browsertest.cc",
         "patchSetId": 20
@@ -39,6 +57,30 @@
       "revId": "1df077fc73834727e3e81401888366fc45c54ed3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7c1d05e_b33078bb",
+        "filename": "content/browser/renderer_host/render_widget_host_view_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-01-26T21:33:19Z",
+      "side": 1,
+      "message": "Its in a StringPrintf.",
+      "parentUuid": "e41f2177_83c922dd",
+      "range": {
+        "startLine": 611,
+        "startChar": 29,
+        "endLine": 611,
+        "endChar": 33
+      },
+      "revId": "1df077fc73834727e3e81401888366fc45c54ed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
