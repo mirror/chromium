@@ -16,6 +16,24 @@
       "revId": "b904d3f4f17fb63bb316abb0f1ad3b70261ae684",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca8973c0_93b9c846",
+        "filename": "third_party/WebKit/Source/core/frame/History.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2018-01-26T22:10:59Z",
+      "side": 1,
+      "message": "I\u0027ll change the message to not mention the command line flag.\n\nSince it\u0027s an exception now, and not a warning, I think it makes sense to throw it every time it\u0027s triggered. A \u0027first time only\u0027 exception seems weird.",
+      "parentUuid": "922afd48_56a4efec",
+      "revId": "b904d3f4f17fb63bb316abb0f1ad3b70261ae684",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
