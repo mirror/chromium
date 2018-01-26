@@ -157,6 +157,7 @@ class CC_EXPORT GpuImageDecodeCache
   void SetImageDecodingFailedForTesting(const DrawImage& image);
   bool DiscardableIsLockedForTesting(const DrawImage& image);
   bool IsInInUseCacheForTesting(const DrawImage& image) const;
+  sk_sp<SkImage> GetSWImageDecodeForTesting(const DrawImage& image);
 
  private:
   enum class DecodedDataMode { kGpu, kCpu, kTransferCache };
@@ -212,6 +213,9 @@ class CC_EXPORT GpuImageDecodeCache
       DCHECK(is_locked());
       return image_;
     }
+
+    // Test-only functions.
+    sk_sp<SkImage> ImageForTesting() const { return image_; }
 
     bool decode_failure = false;
     // Similar to |task|, but only is generated if there is no associated upload
@@ -371,8 +375,10 @@ class CC_EXPORT GpuImageDecodeCache
 
   scoped_refptr<GpuImageDecodeCache::ImageData> CreateImageData(
       const DrawImage& image);
-  SkImageInfo CreateImageInfoForDrawImage(const DrawImage& draw_image,
-                                          int upload_scale_mip_level) const;
+  SkImageInfo CreateImageInfoForDrawImage(
+      const DrawImage& draw_image,
+      int upload_scale_mip_level,
+      bool convert_to_target_color_space) const;
 
   // Finds the ImageData that should be used for the given DrawImage. Looks
   // first in the |in_use_cache_|, and then in the |persistent_cache_|.
