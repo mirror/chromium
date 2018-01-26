@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "b5f4c3c5_9683712e",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 13
+      },
+      "lineNbr": 4709,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-26T01:38:33Z",
+      "side": 1,
+      "message": "this \"saved\" should be capitalized",
+      "range": {
+        "startLine": 4709,
+        "startChar": 19,
+        "endLine": 4709,
+        "endChar": 24
+      },
+      "revId": "441e2deb41a71af9cc5db830f8661d845238f23d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e3b080f_bb9240a9",
         "filename": "chrome/app/generated_resources.grd",
         "patchSetId": 13
@@ -133,6 +156,52 @@
         "startChar": 10,
         "endLine": 480,
         "endChar": 56
+      },
+      "revId": "441e2deb41a71af9cc5db830f8661d845238f23d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcea78fe_36d5bddf",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_pending_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-26T01:38:33Z",
+      "side": 1,
+      "message": "Can you deduplicate this block with the else block above? Perhaps:\n\nbool dice_promo_shown \u003d false;\n#if BUILDFLAG(ENABLE_DICE_SUPPORT)\nif (AccountConsistencyModeManager::IsDiceEnabledForProfile(profile)) {\n  [etc etc]\n  dice_promo_shown \u003d true;\n}\n#endif\nif (!dice_promo_shown) {\n  [show existing promo]\n}",
+      "range": {
+        "startLine": 487,
+        "startChar": 4,
+        "endLine": 487,
+        "endChar": 18
+      },
+      "revId": "441e2deb41a71af9cc5db830f8661d845238f23d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f72846be_2e8ae914",
+        "filename": "chrome/browser/ui/views/sync/dice_bubble_sync_promo_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-26T01:38:33Z",
+      "side": 1,
+      "message": "This fixes the text/button margin, but the bottom edge is still right only by accident. You should run this code on the parent dialog (ManagePasswordPendingView):\n\nconst gfx::Insets content_insets \u003d GetDialogInsetsForContentType(views::TEXT, views::TEXT);\nset_margins(gfx::Insets(content_insets.top(), content_insets.left(), GetInsetsMetric(INSETS_DIALOG).bottom(), content_insets.right()));",
+      "range": {
+        "startLine": 38,
+        "startChar": 6,
+        "endLine": 38,
+        "endChar": 26
       },
       "revId": "441e2deb41a71af9cc5db830f8661d845238f23d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
