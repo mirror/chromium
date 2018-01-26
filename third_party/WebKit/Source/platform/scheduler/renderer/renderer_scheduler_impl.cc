@@ -368,6 +368,11 @@ RendererSchedulerImpl::MainThreadOnly::MainThreadOnly(
                             renderer_scheduler_impl,
                             &renderer_scheduler_impl->tracing_controller_,
                             BackgroundStateToString),
+      keep_alive_fetch_or_worker(false,
+                                 "RendererScheduler.RendererKeepAlive",
+                                 renderer_scheduler_impl,
+                                 &renderer_scheduler_impl->tracing_controller_,
+                                 YesNoStateToString),
       stopping_when_backgrounded_enabled(
           false,
           "RendererScheduler.StoppingWhenBackgroundedEnabled",
@@ -904,6 +909,13 @@ void RendererSchedulerImpl::SetRendererBackgrounded(bool backgrounded) {
   }
 }
 
+void RendererSchedulerImpl::SetSchedulerKeepAlive(bool keep_alive) {
+  if (main_thread_only().keep_alive_fetch_or_worker == keep_alive)
+    return;
+  main_thread_only().keep_alive_fetch_or_worker = keep_alive;
+  UpdatePolicy();
+}
+
 #if defined(OS_ANDROID)
 void RendererSchedulerImpl::PauseTimersForAndroidWebView() {
   main_thread_only().pause_timers_for_webview = true;
@@ -1341,7 +1353,8 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
       main_thread_only().stopped_when_backgrounded;
   bool newly_stopped = false;
   if (main_thread_only().renderer_backgrounded &&
-      main_thread_only().stopping_when_backgrounded_enabled) {
+      main_thread_only().stopping_when_backgrounded_enabled &&
+      !main_thread_only().keep_alive_fetch_or_worker) {
     base::TimeTicks stop_at = main_thread_only().background_status_changed_at +
                               delay_for_background_tab_stopping_;
 
@@ -2004,6 +2017,8 @@ RendererSchedulerImpl::AsValueLocked(base::TimeTicks optional_now) const {
       main_thread_only().have_reported_blocking_intervention_since_navigation);
   state->SetBoolean("renderer_backgrounded",
                     main_thread_only().renderer_backgrounded);
+  state->SetBoolean("keep_alive_fetch_or_worker",
+                    main_thread_only().keep_alive_fetch_or_worker);
   state->SetBoolean("stopped_when_backgrounded",
                     main_thread_only().stopped_when_backgrounded);
   state->SetDouble("now", (optional_now - base::TimeTicks()).InMillisecondsF());

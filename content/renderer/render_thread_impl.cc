@@ -1719,6 +1719,10 @@ bool RenderThreadImpl::OnControlMessageReceived(const IPC::Message& msg) {
   return false;
 }
 
+void RenderThreadImpl::SetSchedulerKeepAlive(bool keep_alive) {
+  renderer_scheduler_->SetSchedulerKeepAlive(keep_alive);
+}
+
 void RenderThreadImpl::SetProcessBackgrounded(bool backgrounded) {
   // Set timer slack to maximum on main thread when in background.
   base::TimerSlack timer_slack = base::TIMER_SLACK_NONE;
