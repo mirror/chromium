@@ -850,8 +850,9 @@ WebLayer* DrawingBuffer::PlatformLayer() {
     // If premultiplied_alpha_false_texture_ exists, then premultiplied_alpha_
     // has already been handled via CopySubTextureCHROMIUM, and does not need
     // to be handled by the compositor.
-    layer_->SetPremultipliedAlpha(premultiplied_alpha_ &&
-                                  !premultiplied_alpha_false_texture_);
+    DCHECK(!premultiplied_alpha_ || !premultiplied_alpha_false_texture_);
+    layer_->SetPremultipliedAlpha(premultiplied_alpha_ ||
+                                  premultiplied_alpha_false_texture_);
     layer_->SetNearestNeighbor(filter_quality_ == kNone_SkFilterQuality);
     GraphicsLayer::RegisterContentsLayer(layer_->Layer());
   }
