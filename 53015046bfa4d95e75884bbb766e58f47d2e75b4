@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69e5f31d_fedc67aa",
+        "filename": "ipc/ipc.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-26T17:51:00Z",
+      "side": 1,
+      "message": "optional: please consider moving this type to be above interface Channel. (I understand the current code compiles, but it feels more natural to order the types that way for C++ people. :))\n\nPlease add a comment talking about the duplication and possible solutions to remove this duplication in the future.",
+      "revId": "53015046bfa4d95e75884bbb766e58f47d2e75b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
