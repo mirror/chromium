@@ -266,6 +266,12 @@ class PLATFORM_EXPORT FetchContext
   // Returns a "detached" fetch context which can be null.
   virtual FetchContext* Detach() { return nullptr; }
 
+  virtual bool GetIsAdForLastCheckedResource(
+      const KURL& resource_url,
+      WebURLRequest::RequestContext request_context) const {
+    return false;
+  }
+
  protected:
   FetchContext();
 
