@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c135b29e_a3b0ea26",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 3664,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-26T23:22:42Z",
+      "side": 1,
+      "message": "What\u0027s the benefit of exposing this in chrome://flags?\n\nThis seems like a very much internal-only flag and not something we want users to be able to specify and persist.",
+      "range": {
+        "startLine": 3662,
+        "startChar": 0,
+        "endLine": 3664,
+        "endChar": 59
+      },
+      "revId": "20e0389451fe2695381e22b82d1c6e76afeb27f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
