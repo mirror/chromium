@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "149feddc_843b8b63",
+        "filename": "ui/shell_dialogs/select_file_dialog_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2018-01-26T19:33:59Z",
+      "side": 1,
+      "message": "Should be able to use ScopedJavaLocalRef\u003cjstring\u003e",
+      "range": {
+        "startLine": 66,
+        "startChar": 23,
+        "endLine": 66,
+        "endChar": 30
+      },
+      "revId": "7e0df8c71af0b05c768f5131fa2903c65e10d179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35d6305e_6ec9a5a8",
+        "filename": "ui/shell_dialogs/select_file_dialog_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2018-01-26T19:33:59Z",
+      "side": 1,
+      "message": "why didn\u0027t you do this one? It\u0027s the exact same issue you\u0027re just making it so you need 2x as many selected items before it crashes",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 76
+      },
+      "revId": "7e0df8c71af0b05c768f5131fa2903c65e10d179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
