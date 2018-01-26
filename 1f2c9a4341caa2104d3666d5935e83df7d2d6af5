@@ -34,6 +34,24 @@
       "revId": "1f2c9a4341caa2104d3666d5935e83df7d2d6af5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "086c3ccd_b99cd2a2",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-26T02:55:37Z",
+      "side": 1,
+      "message": "Great! If the arg isn\u0027t needed in the .gni, it\u0027s better to be in just the .gn file (to restrict the scope).",
+      "parentUuid": "8db42bfc_7a90db01",
+      "revId": "1f2c9a4341caa2104d3666d5935e83df7d2d6af5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
