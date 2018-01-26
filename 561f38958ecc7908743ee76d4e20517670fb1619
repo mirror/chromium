@@ -22,6 +22,30 @@
       "revId": "561f38958ecc7908743ee76d4e20517670fb1619",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "341ffc06_205fb646",
+        "filename": "media/audio/audio_debug_recording_session_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2018-01-26T15:02:33Z",
+      "side": 1,
+      "message": "Oh, nevermind, I got it now :D.",
+      "parentUuid": "8e0d79b2_0ba66f19",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 39
+      },
+      "revId": "561f38958ecc7908743ee76d4e20517670fb1619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
