@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "f0ab9807_0b8cb393",
+        "filename": "chrome/browser/media/webrtc/audio_debug_recordings_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-26T10:56:06Z",
+      "side": 1,
+      "message": "Done by returning if !audio_debug_recording_session_ at the beginning of the function.",
+      "parentUuid": "8235da33_2abe95d2",
+      "revId": "37cdc062df25a8f395d5c44d3a05195b147a7374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f300c80_381fb360",
         "filename": "chrome/browser/media/webrtc/audio_debug_recordings_handler.cc",
         "patchSetId": 4

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "28fc22d1_34eef10e",
+        "filename": "chrome/browser/media/webrtc/audio_debug_recordings_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-26T10:56:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d87dcb29_eef65d01",
+      "revId": "af0cb0782fe08302995e6e717526339c1f611cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "607aaf95_0980085f",
         "filename": "content/browser/webrtc/webrtc_internals.h",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "af0cb0782fe08302995e6e717526339c1f611cab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a46eff1e_2d60086c",
+        "filename": "content/browser/webrtc/webrtc_internals.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-26T10:56:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "607aaf95_0980085f",
+      "revId": "af0cb0782fe08302995e6e717526339c1f611cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d7c51819_d6f40dcb",
+        "filename": "media/audio/audio_debug_recording_session.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-26T10:56:06Z",
+      "side": 1,
+      "message": "Done, git cl format didn\u0027t add it though.",
+      "parentUuid": "fd1b5158_de5c682b",
+      "revId": "af0cb0782fe08302995e6e717526339c1f611cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54b8e802_bed53718",
         "filename": "media/audio/audio_debug_recording_session.h",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "af0cb0782fe08302995e6e717526339c1f611cab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d630078d_a91cb0e2",
+        "filename": "media/audio/audio_debug_recording_session.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-26T10:56:06Z",
+      "side": 1,
+      "message": "Done, I added a self explanatory variable name.",
+      "parentUuid": "54b8e802_bed53718",
+      "revId": "af0cb0782fe08302995e6e717526339c1f611cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b39ad147_88278a15",
+        "filename": "media/audio/audio_debug_recording_session.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-26T10:56:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ae30121_e8d28f80",
+      "revId": "af0cb0782fe08302995e6e717526339c1f611cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c90a6466_dacbc7d3",
         "filename": "media/audio/audio_debug_recording_session_impl.cc",
         "patchSetId": 7
@@ -101,6 +191,24 @@
       "revId": "af0cb0782fe08302995e6e717526339c1f611cab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48d66803_77ba5b91",
+        "filename": "media/audio/audio_debug_recording_session_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-26T10:56:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c90a6466_dacbc7d3",
+      "revId": "af0cb0782fe08302995e6e717526339c1f611cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "1b443ccf_e4298b4b",
+        "filename": "media/audio/audio_debug_recording_session_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-26T10:56:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ad22d33_ab346189",
+      "revId": "af0cb0782fe08302995e6e717526339c1f611cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "201346c6_c3810030",
         "filename": "media/audio/audio_debug_recording_session_impl.h",
         "patchSetId": 7
@@ -135,6 +261,24 @@
       "revId": "af0cb0782fe08302995e6e717526339c1f611cab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0813e29f_105a7cc2",
+        "filename": "media/audio/audio_debug_recording_session_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-26T10:56:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "201346c6_c3810030",
+      "revId": "af0cb0782fe08302995e6e717526339c1f611cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "e76c502b_c0b7337c",
+        "filename": "media/audio/audio_debug_recording_session_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-26T10:56:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b05429a_f1392bb7",
+      "revId": "af0cb0782fe08302995e6e717526339c1f611cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56af7e1a_5e05edb4",
         "filename": "media/audio/audio_debug_recording_session_impl_unittest.cc",
         "patchSetId": 7
@@ -166,6 +328,24 @@
       "writtenOn": "2018-01-26T08:59:19Z",
       "side": 1,
       "message": "You may also want to check that Get() returns |mock_audio_manager_|",
+      "revId": "af0cb0782fe08302995e6e717526339c1f611cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0141be0_cf21b97e",
+        "filename": "media/audio/audio_debug_recording_session_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-26T10:56:06Z",
+      "side": 1,
+      "message": "I think that\u0027s covered by setting expectations on |mock_audio_manager_|, right?",
+      "parentUuid": "56af7e1a_5e05edb4",
       "revId": "af0cb0782fe08302995e6e717526339c1f611cab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "3c0be70f_461c0f91",
+        "filename": "media/audio/audio_debug_recording_session_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-26T10:56:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f954fa5e_8881d0cc",
+      "revId": "af0cb0782fe08302995e6e717526339c1f611cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77a7defd_5db15e35",
         "filename": "media/audio/audio_debug_recording_session_impl_unittest.cc",
         "patchSetId": 7
@@ -203,6 +401,24 @@
       "revId": "af0cb0782fe08302995e6e717526339c1f611cab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f34ecd62_54d73007",
+        "filename": "media/audio/audio_debug_recording_session_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-26T10:56:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77a7defd_5db15e35",
+      "revId": "af0cb0782fe08302995e6e717526339c1f611cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
