@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d1fb0e0_c30aef49",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 64
+      },
+      "lineNbr": 2005,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-26T00:14:35Z",
+      "side": 1,
+      "message": "Nit: Maybe gcc has the same behavior and you don\u0027t need the `\u0026\u0026 is_clang`?\n\nCan you add a comment about why the sanitizer needs -g1?\n\nI would rewrite the comment on line 2006-2011 to something like:\n\n  minimal_symbols needs to only produce valid stack traces, and -g0 does that, even though\n  you might think it\u0027d produce no symbols at all. Not using -g1 allows us to speed up link\n  time and save disk space.\n\ni.e., I don\u0027t think you need to mention buildbot, large binaries, etc.",
+      "revId": "c1db8867fbcfb5d303f63dc01c772fbe2bfebd85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
