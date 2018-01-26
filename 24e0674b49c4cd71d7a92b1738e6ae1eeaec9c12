@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e43e078_f7f6a3c3",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferencesTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 993,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-26T19:29:54Z",
+      "side": 1,
+      "message": "Friedrich -- I tried to complete the sentence in the comment (and also got rid of the \"we\" -- go/avoidwe). If that\u0027s not what the comment should say, please let me know and I\u0027ll upload a follow-up fix.",
+      "range": {
+        "startLine": 992,
+        "startChar": 76,
+        "endLine": 993,
+        "endChar": 38
+      },
+      "revId": "24e0674b49c4cd71d7a92b1738e6ae1eeaec9c12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
