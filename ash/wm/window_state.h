@@ -6,6 +6,8 @@
 #define ASH_WM_WINDOW_STATE_H_
 
 #include <memory>
+#include <stdint.h>
+#include <utility>
 
 #include "ash/ash_export.h"
 #include "ash/public/interfaces/window_state_type.mojom.h"
@@ -255,6 +257,12 @@ class ASH_EXPORT WindowState : public aura::WindowObserver {
   }
   void SetPreAddedToWorkspaceWindowBounds(const gfx::Rect& bounds);
 
+  base::Optional<std::pair<gfx::Rect, int64_t>> persistent_window_bounds()
+      const {
+    return persistent_window_bounds_;
+  }
+  void SetPersistentWindowBounds(const std::pair<gfx::Rect, int64_t>& bounds);
+
   // Layout related properties
 
   void AddObserver(WindowStateObserver* observer);
@@ -429,6 +437,8 @@ class ASH_EXPORT WindowState : public aura::WindowObserver {
   // A property which resets when bounds is changed by user and sets when it is
   // nullptr, and window is removing from a workspace.
   base::Optional<gfx::Rect> pre_added_to_workspace_window_bounds_;
+
+  base::Optional<std::pair<gfx::Rect, int64_t>> persistent_window_bounds_;
 
   base::ObserverList<WindowStateObserver> observer_list_;
 
