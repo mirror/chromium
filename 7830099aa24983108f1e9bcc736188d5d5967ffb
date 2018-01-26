@@ -1,0 +1,423 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3284c27e_bbd2f2f4",
+        "filename": "components/cronet/android/java/src/org/chromium/net/impl/CronetLibraryLoader.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-26T02:10:51Z",
+      "side": 1,
+      "message": "can we revert this whitespace diff?",
+      "revId": "7830099aa24983108f1e9bcc736188d5d5967ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5748c8c6_c762f21a",
+        "filename": "components/cronet/android/java/src/org/chromium/net/impl/CronetLibraryLoader.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-26T02:10:51Z",
+      "side": 1,
+      "message": "ditto?",
+      "revId": "7830099aa24983108f1e9bcc736188d5d5967ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dafb327a_f5942c8a",
+        "filename": "components/cronet/android/java/src/org/chromium/net/impl/CronetLibraryLoader.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-26T02:10:51Z",
+      "side": 1,
+      "message": "nit: I wonder if this method doesn\u0027t really belong in some native API specific Java file; it doesn\u0027t seem to have anything to do with cronet library loading...",
+      "range": {
+        "startLine": 129,
+        "startChar": 19,
+        "endLine": 129,
+        "endChar": 0
+      },
+      "revId": "7830099aa24983108f1e9bcc736188d5d5967ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "392786e0_4e986e6e",
+        "filename": "components/cronet/android/java/src/org/chromium/net/impl/CronetLibraryLoader.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-26T02:10:51Z",
+      "side": 1,
+      "message": "This function and getDefaultUserAgent() need comments, esp related to what threads they are called on.  This function needs a comment also mentioning that ContextUtils.initApplicationContext() was called already either by some testing framework or an embedder constructing a CronetUrlRequestContext and we should add a TODO saying that long term this should be changed to some API with lower overhead like CronetEngine.Builder.loadNativeCronet().",
+      "revId": "7830099aa24983108f1e9bcc736188d5d5967ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ac0b8ed_2dce0b27",
+        "filename": "components/cronet/ios/cronet_global_state_ios.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-26T02:10:51Z",
+      "side": 1,
+      "message": "// namespace\nand add a newline before",
+      "range": {
+        "startLine": 39,
+        "startChar": 1,
+        "endLine": 39,
+        "endChar": 0
+      },
+      "revId": "7830099aa24983108f1e9bcc736188d5d5967ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b2e1981_60a5698f",
+        "filename": "components/cronet/ios/cronet_global_state_ios.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-26T02:10:51Z",
+      "side": 1,
+      "message": "do we need a ProxyConfigService if we don\u0027t have a ProxyResolutionService?",
+      "range": {
+        "startLine": 75,
+        "startChar": 22,
+        "endLine": 75,
+        "endChar": 0
+      },
+      "revId": "7830099aa24983108f1e9bcc736188d5d5967ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6822dcd2_f1446910",
+        "filename": "components/cronet/native/cronet.idl",
+        "patchSetId": 10
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-26T02:10:51Z",
+      "side": 1,
+      "message": "might want to clarify crash to a SIGABRT or CHECK failure",
+      "range": {
+        "startLine": 179,
+        "startChar": 10,
+        "endLine": 179,
+        "endChar": 15
+      },
+      "revId": "7830099aa24983108f1e9bcc736188d5d5967ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96b5351d_5d5a1c50",
+        "filename": "components/cronet/native/engine.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-26T02:10:51Z",
+      "side": 1,
+      "message": "nit: is an anonymous namespace necessary if it only contains a file scoped class?",
+      "range": {
+        "startLine": 25,
+        "startChar": 11,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "7830099aa24983108f1e9bcc736188d5d5967ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b74b46f1_2c597abb",
+        "filename": "components/cronet/native/engine.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-26T02:10:51Z",
+      "side": 1,
+      "message": "these functions could all use comments, esp:\n1. what the return value of MarkStoragePathInUse indicates\n2. GetDefaultUserAgent() can only be called once ContextUtils.initApplicationContext() is called",
+      "range": {
+        "startLine": 31,
+        "startChar": 62,
+        "endLine": 31,
+        "endChar": 0
+      },
+      "revId": "7830099aa24983108f1e9bcc736188d5d5967ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c189f45a_01f3e13b",
+        "filename": "components/cronet/native/engine.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-26T02:10:51Z",
+      "side": 1,
+      "message": "nit: this could be done without locking if you change default_user_agent_ to a CharString:\nif (default_user_agent_ \u003d\u003d nullptr)\n  default_user_agent_ \u003d strdup(cronet::CreateDefaultUserAgent(CRONET_VERSION));\nreturn default_user_agent_;\n\nanother alternative is to set default_user_agent_ in the constructor.",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 39
+      },
+      "revId": "7830099aa24983108f1e9bcc736188d5d5967ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea8eabe7_7f39f645",
+        "filename": "components/cronet/native/engine.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-26T02:10:51Z",
+      "side": 1,
+      "message": "else return CheckResult(blah)",
+      "range": {
+        "startLine": 143,
+        "startChar": 44,
+        "endLine": 143,
+        "endChar": 0
+      },
+      "revId": "7830099aa24983108f1e9bcc736188d5d5967ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2fdbb82_0e610452",
+        "filename": "components/cronet/native/engine.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-26T02:10:51Z",
+      "side": 1,
+      "message": "what\u0027s this code for?",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 155,
+        "endChar": 62
+      },
+      "revId": "7830099aa24983108f1e9bcc736188d5d5967ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a58a38e4_9666afbc",
+        "filename": "components/cronet/native/engine.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-26T02:10:51Z",
+      "side": 1,
+      "message": "should CronetURLRequestContext() do this?",
+      "range": {
+        "startLine": 159,
+        "startChar": 0,
+        "endLine": 163,
+        "endChar": 56
+      },
+      "revId": "7830099aa24983108f1e9bcc736188d5d5967ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f885acd5_c62ef93d",
+        "filename": "components/cronet/native/engine.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-26T02:10:51Z",
+      "side": 1,
+      "message": "is this \"if\" check necessary?  I thought reset() didn\u0027t have an effect if already reset.",
+      "range": {
+        "startLine": 218,
+        "startChar": 17,
+        "endLine": 218,
+        "endChar": 0
+      },
+      "revId": "7830099aa24983108f1e9bcc736188d5d5967ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4725340d_07d2602a",
+        "filename": "components/cronet/native/engine.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-26T02:10:51Z",
+      "side": 1,
+      "message": "nit: I might recommend CheckResult(Cronet_RESULT_SUCCESS) in case it ever got changed in the future.",
+      "range": {
+        "startLine": 221,
+        "startChar": 31,
+        "endLine": 221,
+        "endChar": 0
+      },
+      "revId": "7830099aa24983108f1e9bcc736188d5d5967ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "829347b1_a0f25818",
+        "filename": "components/cronet/native/engine.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-26T02:10:51Z",
+      "side": 1,
+      "message": "the-\u003ethis",
+      "range": {
+        "startLine": 260,
+        "startChar": 45,
+        "endLine": 260,
+        "endChar": 48
+      },
+      "revId": "7830099aa24983108f1e9bcc736188d5d5967ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a695eb5f_fc82a6cb",
+        "filename": "components/cronet/native/engine.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-26T02:10:51Z",
+      "side": 1,
+      "message": "we\u0027ll crash on the prior line, so we should either remove this or move it above the previous line",
+      "range": {
+        "startLine": 325,
+        "startChar": 17,
+        "endLine": 325,
+        "endChar": 0
+      },
+      "revId": "7830099aa24983108f1e9bcc736188d5d5967ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b31e0160_17a91e5e",
+        "filename": "components/cronet/native/engine.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-26T02:10:51Z",
+      "side": 1,
+      "message": "static",
+      "range": {
+        "startLine": 39,
+        "startChar": 50,
+        "endLine": 39,
+        "endChar": 0
+      },
+      "revId": "7830099aa24983108f1e9bcc736188d5d5967ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f92e584_def8a87f",
+        "filename": "components/cronet/native/engine.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-26T02:10:51Z",
+      "side": 1,
+      "message": "can we move this above context_ as it looks like it\u0027s used to lock context_?",
+      "range": {
+        "startLine": 49,
+        "startChar": 19,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "7830099aa24983108f1e9bcc736188d5d5967ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
