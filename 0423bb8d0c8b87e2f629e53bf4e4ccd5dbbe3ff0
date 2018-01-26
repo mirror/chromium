@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "46dfd0dd_2fe6ffba",
+        "filename": "tools/battor_agent/battor_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1210374
+      },
+      "writtenOn": "2018-01-26T12:19:58Z",
+      "side": 1,
+      "message": "Done. However, I had to use a more specific Action name (\"POST_CONNECT_FLUSH\").",
+      "parentUuid": "9985ca4b_401abfd7",
+      "range": {
+        "startLine": 157,
+        "startChar": 2,
+        "endLine": 157,
+        "endChar": 23
+      },
+      "revId": "0423bb8d0c8b87e2f629e53bf4e4ccd5dbbe3ff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d0a343a_2baa8344",
         "filename": "tools/battor_agent/battor_agent.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4972742e_e807cdef",
+        "filename": "tools/battor_agent/battor_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1210374
+      },
+      "writtenOn": "2018-01-26T12:19:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d0a343a_2baa8344",
+      "range": {
+        "startLine": 186,
+        "startChar": 4,
+        "endLine": 186,
+        "endChar": 14
+      },
+      "revId": "0423bb8d0c8b87e2f629e53bf4e4ccd5dbbe3ff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9febb9ce_cee65faf",
         "filename": "tools/battor_agent/battor_connection_impl_unittest.cc",
         "patchSetId": 1
@@ -62,6 +110,24 @@
       "revId": "0423bb8d0c8b87e2f629e53bf4e4ccd5dbbe3ff0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3c627b4_aaee0c32",
+        "filename": "tools/battor_agent/battor_connection_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1210374
+      },
+      "writtenOn": "2018-01-26T12:19:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9febb9ce_cee65faf",
+      "revId": "0423bb8d0c8b87e2f629e53bf4e4ccd5dbbe3ff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "1a51cc81_b0aaae1b",
+        "filename": "tools/battor_agent/battor_connection_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1210374
+      },
+      "writtenOn": "2018-01-26T12:19:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae81e87f_d66d9a7e",
+      "range": {
+        "startLine": 252,
+        "startChar": 7,
+        "endLine": 252,
+        "endChar": 54
+      },
+      "revId": "0423bb8d0c8b87e2f629e53bf4e4ccd5dbbe3ff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91736ae2_4f94e680",
         "filename": "tools/battor_agent/battor_connection_impl_unittest.cc",
         "patchSetId": 1
@@ -99,6 +189,30 @@
       "writtenOn": "2018-01-16T19:42:11Z",
       "side": 1,
       "message": "Is this passing? I\u0027d expect us to need to add a FlushConnection() call in here, because this is basically testing that data that\u0027s flushed doesn\u0027t count towards future reads",
+      "range": {
+        "startLine": 274,
+        "startChar": 33,
+        "endLine": 274,
+        "endChar": 73
+      },
+      "revId": "0423bb8d0c8b87e2f629e53bf4e4ccd5dbbe3ff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "248cee04_9cf78de3",
+        "filename": "tools/battor_agent/battor_connection_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1210374
+      },
+      "writtenOn": "2018-01-26T12:19:58Z",
+      "side": 1,
+      "message": "Indeed this test does pass. It does actually test something, which is that the massive buffer of bytes built up in the io handler by all of the SendBytesRaw calls is flushed when the connection is closed. This does work because we delete the io handler when we close the connection, so in some sense, this test does actually test if we are deleting the io handler when we close the connection.\n\nI suspect it\u0027s not testing what we thought it was though. If we were looking to test and see if we could build up a huge buffer of pending \"to read\" bytes in the BattOr connection object and make sure we throw them away with a Flush, that actually could be done, but we would have to change the ReadMessage to be of the SAMPLES type, otherwise the ReadMessage call will only read a maximum of 13 bytes for the CONTROL message. I\u0027m not sure how that would be too different from what \"FlushConnectionFlushesAlreadyReadBuffer\" does though.",
+      "parentUuid": "91736ae2_4f94e680",
       "range": {
         "startLine": 274,
         "startChar": 33,
