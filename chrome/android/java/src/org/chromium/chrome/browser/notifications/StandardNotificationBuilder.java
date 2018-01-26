@@ -55,7 +55,7 @@ public class StandardNotificationBuilder extends NotificationBuilderBase {
         if (mSettingsAction != null) {
             addActionToBuilder(builder, mSettingsAction);
         }
-        builder.setPriority(mPriority);
+        builder.setPriorityImportance(mPriority);
         builder.setDefaults(mDefaults);
         if (mVibratePattern != null) builder.setVibrate(mVibratePattern);
         builder.setWhen(mTimestamp);
