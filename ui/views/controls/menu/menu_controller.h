@@ -89,7 +89,8 @@ class VIEWS_EXPORT MenuController
            const gfx::Rect& bounds,
            MenuAnchorPosition position,
            bool context_menu,
-           bool is_nested_drag);
+           bool is_nested_drag,
+           views::Widget* sibling);
 
   // Whether or not Run blocks.
   bool IsBlockingRun() const { return blocking_run_; }
@@ -109,6 +110,15 @@ class VIEWS_EXPORT MenuController
 
   void set_send_gesture_events_to_owner(bool send_gesture_events_to_owner) {
     send_gesture_events_to_owner_ = send_gesture_events_to_owner;
+  }
+
+  // TODO!
+  // set the pretarget handler to sibling. This means we will need to pass
+  // sibling. or find where events are getting redirected and link them to
+  // sibling
+
+  void set_send_events_to_sibling(bool send_events_to_sibling) {
+    send_events_to_sibling_ = send_events_to_sibling;
   }
 
   // Returns the owner of child windows.
@@ -677,6 +687,14 @@ class VIEWS_EXPORT MenuController
   // forward the gesture events to |owner_| until no |ET_GESTURE_END| event is
   // captured.
   bool send_gesture_events_to_owner_ = false;
+
+  // Whether the menu has a sibling. When set to true, MenuController will try
+  // events on |sibling_| before itself. NEWCOMER: Why not add pretarget handler
+  // in this case after ET_GESTURE_END or on show if
+  // !send_gesture_events_to_owner_.
+  bool send_events_to_sibling_ = false;
+
+  views::Widget* sibling_ = nullptr;
 
   // Set to true if the menu item was selected by touch.
   bool item_selected_by_touch_ = false;

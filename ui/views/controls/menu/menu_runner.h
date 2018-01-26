@@ -95,6 +95,12 @@ class VIEWS_EXPORT MenuRunner {
     // shelf uses the flag to continue dragging an item without lifting the
     // finger after the context menu of the item is opened.
     SEND_GESTURE_EVENTS_TO_OWNER = 1 << 7,
+
+    // The menu could have a sibling which handles events while the context menu
+    // is open. For example, Chrome OS's app notification window uses this flag
+    // to allow users to interact with notifications while context menus are
+    // open.
+    SEND_EVENTS_TO_SIBLING = 1 << 8,
   };
 
   // Creates a new MenuRunner, which may use a native menu if available.
@@ -104,7 +110,8 @@ class VIEWS_EXPORT MenuRunner {
   // may be ignored. See http://crbug.com/682544.
   MenuRunner(ui::MenuModel* menu_model,
              int32_t run_types,
-             const base::Closure& on_menu_closed_callback = base::Closure());
+             const base::Closure& on_menu_closed_callback = base::Closure(),
+             views::Widget* sibling = nullptr);
 
   // Creates a runner for a custom-created toolkit-views menu.
   MenuRunner(MenuItemView* menu, int32_t run_types);
@@ -138,6 +145,9 @@ class VIEWS_EXPORT MenuRunner {
 
   // We own this. No scoped_ptr because it is destroyed by calling Release().
   internal::MenuRunnerImplInterface* impl_;
+
+  // Owned by caller.
+  views::Widget* sibling_;
 
   // An implementation of RunMenuAt. This is usually NULL and ignored. If this
   // is not NULL, this implementation will be used.

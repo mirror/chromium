@@ -194,6 +194,13 @@ void ReflectItemStatus(const ShelfItem& item, ShelfButton* button) {
       button->AddState(ShelfButton::STATE_ATTENTION);
       break;
   }
+
+  if (app_list::features::IsTouchableAppContextMenuEnabled()) {
+    if (item.has_notification)
+      button->AddState(ShelfButton::STATE_NOTIFICATION);
+    else
+      button->ClearState(ShelfButton::STATE_NOTIFICATION);
+  }
 }
 
 // Returns the id of the display on which |view| is shown.
@@ -1879,14 +1886,25 @@ void ShelfView::ShowMenu(std::unique_ptr<ui::MenuModel> menu_model,
 
   // Only selected shelf items with context menu opened can be dragged.
   const ShelfItem* item = ShelfItemForView(source);
-  if (context_menu && item && ShelfButtonIsInDrag(item->type, source) &&
-      source_type == ui::MenuSourceType::MENU_SOURCE_TOUCH) {
-    run_types |= views::MenuRunner::SEND_GESTURE_EVENTS_TO_OWNER;
+  if (context_menu && item) {
+    if (ShelfButtonIsInDrag(item->type, source) &&
+        source_type == ui::MenuSourceType::MENU_SOURCE_TOUCH) {
+      run_types |= views::MenuRunner::SEND_GESTURE_EVENTS_TO_OWNER;
+    }
+    // Why not pass the item?
+    gfx::Point anchor_point = source->bounds().origin();
+    views::View::ConvertPointToScreen(source, &anchor_point);
+    notification_widget_.reset(
+        shelf_->ShowNotificationsForAppId(item->id.app_id, anchor_point));
+    if (notification_widget_) {
+      run_types |= views::MenuRunner::SEND_EVENTS_TO_SIBLING;
+    }
   }
 
   launcher_menu_runner_ = std::make_unique<views::MenuRunner>(
       menu_model_.get(), run_types,
-      base::Bind(&ShelfView::OnMenuClosed, base::Unretained(this), ink_drop));
+      base::Bind(&ShelfView::OnMenuClosed, base::Unretained(this), ink_drop),
+      notification_widget_.get());
 
   views::MenuAnchorPosition menu_alignment = views::MENU_ANCHOR_TOPLEFT;
   gfx::Rect anchor = gfx::Rect(click_point, gfx::Size());
@@ -1926,9 +1944,22 @@ void ShelfView::ShowMenu(std::unique_ptr<ui::MenuModel> menu_model,
       menu_alignment = views::MENU_ANCHOR_FIXED_SIDECENTER;
   }
 
+  ShowNotifications(source, click_point);
+
   // NOTE: if you convert to HAS_MNEMONICS be sure to update menu building code.
   launcher_menu_runner_->RunMenuAt(GetWidget(), nullptr, anchor, menu_alignment,
                                    source_type);
+}
+
+void ShelfView::ShowNotifications(views::View* source,
+                                  const gfx::Point& click_point) {
+  // For now, just show the notification at the click point.
+  const ShelfItem* item = ShelfItemForView(source);
+  if (!item)
+    return;
+
+  // if widget, observe me for close and close the menu then.
+  // Maybe this should be handled by a runner like MenuItemView.
 }
 
 void ShelfView::OnMenuClosed(views::InkDrop* ink_drop) {
@@ -1941,6 +1972,10 @@ void ShelfView::OnMenuClosed(views::InkDrop* ink_drop) {
 
   launcher_menu_runner_.reset();
   menu_model_.reset();
+
+  if (notification_widget_ && notification_widget_->IsActive())
+    notification_widget_->Deactivate();
+  notification_widget_.reset();
 
   // Auto-hide or alignment might have changed, but only for this shelf.
   shelf_->UpdateVisibilityState();
