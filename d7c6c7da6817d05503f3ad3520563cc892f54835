@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7862b927_9034fab1",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobDataForward.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-26T19:58:13Z",
+      "side": 1,
+      "message": "I don\u0027t really like having to have this file, but I\u0027m not sure what other options I have... in the typemap I need to specify a file that makes scoped_refptr\u003cBlobDataHandle\u003e available, but I can\u0027t make it include BlobData.h, since BlobData.h includes blob.mojom.h, and the mojom bindings generator insists on including all the type mapping related headers in blob.mojom.h even though nothing in there strictly depends on the type mapping (it just happens to define the type that is typemapped when used in other structs/interfaces), which would result in circular includes.\n\nSo having just a header that forward declares BlobDataHandle seemed the simplest solution...",
+      "revId": "d7c6c7da6817d05503f3ad3520563cc892f54835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
