@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a869c3f_bbd20fce",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 10969,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2018-01-26T17:47:54Z",
+      "side": 1,
+      "message": "Maybe I\u0027m missing something here. Since there is no control exposed to chrome://settings, Is there anohter way user can control the corresponding preference?",
+      "parentUuid": "53ddc961_81a0dc5e",
+      "revId": "7e7b90a8b7eadf5fcce4926ed818541869de34d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a57819f_e7c398ef",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 5
