@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "17eff8db_8bf8d772",
+        "filename": "components/omnibox/browser/in_memory_url_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2018-01-26T23:31:46Z",
+      "side": 1,
+      "message": "If |scheme_whitelist_| and |private_data_| can be accessed on current thread than this code is fine.\nIf the data must be accessed in the |task_runner_|\nThis should be RegisterDumpProviderWithSequencedTaskRunner\nand pass task_runner_ below.\n\nI have not looked into the threading of this class..",
+      "range": {
+        "startLine": 104,
+        "startChar": 55,
+        "endLine": 104,
+        "endChar": 75
+      },
+      "revId": "e78f9720d6852261345bb3d91a47e8057a80b34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b222cbe_1699ed32",
         "filename": "components/omnibox/browser/in_memory_url_index.cc",
         "patchSetId": 1
@@ -59,6 +82,47 @@
     },
     {
       "key": {
+        "uuid": "45ed120c_2990e384",
+        "filename": "components/omnibox/browser/in_memory_url_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2018-01-26T23:31:46Z",
+      "side": 1,
+      "message": "nit: base::trace_event::EstimateMemoryUsage. base::trace_event is very generic",
+      "parentUuid": "33a3c2f4_533602ba",
+      "revId": "e78f9720d6852261345bb3d91a47e8057a80b34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f570cbbe_8930a370",
+        "filename": "components/omnibox/browser/in_memory_url_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2018-01-26T23:31:46Z",
+      "side": 1,
+      "message": "just CreateAllocatorDump.\nGetOrCreate might mean the dump already exists, which is not the case here.",
+      "range": {
+        "startLine": 224,
+        "startChar": 36,
+        "endLine": 224,
+        "endChar": 60
+      },
+      "revId": "e78f9720d6852261345bb3d91a47e8057a80b34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc46b720_108fac1c",
         "filename": "components/omnibox/browser/in_memory_url_index.cc",
         "patchSetId": 1
@@ -70,6 +134,24 @@
       "writtenOn": "2018-01-26T17:55:15Z",
       "side": 1,
       "message": "I\u0027d prefer omnibox/in_memory_url_index unless you have some specific motivation for referring to this as autocomplete here.",
+      "revId": "e78f9720d6852261345bb3d91a47e8057a80b34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "822efd72_64bc1e9d",
+        "filename": "components/omnibox/browser/in_memory_url_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2018-01-26T23:31:46Z",
+      "side": 1,
+      "message": "+1 for omnibox.\nA component name \"omnibox\" feels better than attributing memory to autocomplete. Also tiny bit of confusion with \"autofill\", omnibox would make it clear.",
+      "parentUuid": "bc46b720_108fac1c",
       "revId": "e78f9720d6852261345bb3d91a47e8057a80b34c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
