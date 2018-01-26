@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d46e44c_6abc16a2",
+        "filename": "chrome/renderer/page_load_metrics/metrics_render_frame_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2018-01-26T20:23:13Z",
+      "side": 1,
+      "message": "let\u0027s remove this log line",
+      "revId": "ba75ff1d7fdeb63f70147b72c066429a57ca17de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "752e85fe_dd1e54f3",
+        "filename": "third_party/WebKit/Source/core/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2018-01-26T20:23:13Z",
+      "side": 1,
+      "message": "unless it\u0027s convention, let\u0027s change \u0027legal\u0027 to \u0027allowed\u0027 - for some reason I read legal in the lawyer sense here \u0026 was confused.",
+      "revId": "ba75ff1d7fdeb63f70147b72c066429a57ca17de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "548b671c_c63d0001",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2018-01-26T20:23:13Z",
+      "side": 1,
+      "message": "can this ever be reported before e.g. first paint? does it make sense to either DCHECK that FP is non-zero here, or to ignore input events that arrive before we\u0027ve painted?",
+      "revId": "ba75ff1d7fdeb63f70147b72c066429a57ca17de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e64845e6_d86c0469",
+        "filename": "third_party/WebKit/Source/core/page/PageWidgetDelegate.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2018-01-26T20:23:13Z",
+      "side": 1,
+      "message": "revert this bit?",
+      "revId": "ba75ff1d7fdeb63f70147b72c066429a57ca17de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
