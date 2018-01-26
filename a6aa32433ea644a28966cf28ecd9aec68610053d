@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "685857b1_44e33f71",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers_browser_proxy.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-26T01:26:47Z",
+      "side": 1,
+      "message": "This no longer returns just the path. Should it also be renamed?",
+      "range": {
+        "startLine": 126,
+        "startChar": 21,
+        "endLine": 126,
+        "endChar": 25
+      },
+      "revId": "a6aa32433ea644a28966cf28ecd9aec68610053d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58e4ed64_a724ef91",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_set_manufacturer_model_behavior.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-26T01:26:47Z",
+      "side": 1,
+      "message": "Indent off.",
+      "range": {
+        "startLine": 90,
+        "startChar": 5,
+        "endLine": 90,
+        "endChar": 15
+      },
+      "revId": "a6aa32433ea644a28966cf28ecd9aec68610053d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56faabcb_7ef1ee2c",
         "filename": "chrome/browser/resources/settings/printing_page/cups_set_manufacturer_model_behavior.js",
         "patchSetId": 2
@@ -48,6 +94,24 @@
       "writtenOn": "2018-01-26T01:11:53Z",
       "side": 1,
       "message": "nit: no need of {} in if-else since it\u0027s only 1-line code for if-else",
+      "revId": "a6aa32433ea644a28966cf28ecd9aec68610053d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de0c6b2b_8e6afa82",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_set_manufacturer_model_behavior.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-26T01:26:47Z",
+      "side": 1,
+      "message": "Or you can do it all in a single line as follows.\n\nthis.set(\u0027activePrinter.printerPPDPath\u0027, ppdInfo.valid ? ppdInfo.path : \u0027\u0027);",
+      "parentUuid": "4c2150f0_48d956a2",
       "revId": "a6aa32433ea644a28966cf28ecd9aec68610053d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
