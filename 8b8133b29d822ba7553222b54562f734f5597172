@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2ae2f8f_8df11dd2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/help/Help.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-26T16:28:54Z",
+      "side": 1,
+      "message": "This is equal to Help._showReleaseNoteIfNeeded().",
+      "revId": "8b8133b29d822ba7553222b54562f734f5597172",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c72ec4df_23ce628a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/main/Main.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-26T16:28:54Z",
+      "side": 1,
+      "message": "We can migrate this one to \u0027late-initialization\u0027 as well. Should be a single dependency from main to extensions I think.",
+      "revId": "8b8133b29d822ba7553222b54562f734f5597172",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
