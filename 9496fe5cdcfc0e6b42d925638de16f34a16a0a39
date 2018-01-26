@@ -16,6 +16,24 @@
       "revId": "9496fe5cdcfc0e6b42d925638de16f34a16a0a39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94ec439b_6a65fabd",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/feature-policy-experimental-features/unsized-video.php",
+        "patchSetId": 27
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2018-01-26T20:14:02Z",
+      "side": 1,
+      "message": "Because width and height for \"video elements must reflect the respective content attributes of the same name\". \nhttps://html.spec.whatwg.org/#dom-dim-width\n\"The corresponding IDL attributes for img and input elements are defined in those respective elements\u0027 sections, as they are slightly more specific to those elements\u0027 other behaviors.\"\n\nDo you know a way to get the layout width and height? I tried different things like width and height videoWidth and videoHeight. None of them are doing what I need. \n\nI\u0027d be totally down to rewrite tests in wpt if there\u0027s a way to get the layout width and height for HTMLVideoElement",
+      "parentUuid": "b5656a2b_e47dc1fc",
+      "revId": "9496fe5cdcfc0e6b42d925638de16f34a16a0a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
