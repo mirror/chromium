@@ -1,0 +1,28 @@
+Tests tagging IndexedDB object store data
+New database
+42 => (no tag)
+Array(4) => (no tag)
+ArrayBuffer(4) => (no tag)
+Lazy fox jumped => (no tag)
+Wed Dec 31 1969 16:00:00 GMT-0800 (PST) => (no tag)
+
+Data unchanged
+42 => (no tag)
+Array(4) => 200
+ArrayBuffer(4) => 0
+Lazy fox jumped => (no tag)
+Wed Dec 31 1969 16:00:00 GMT-0800 (PST) => 100
+
+Removed integer key
+Array(4) => 200
+ArrayBuffer(4) => 0
+Lazy fox jumped => (no tag)
+Wed Dec 31 1969 16:00:00 GMT-0800 (PST) => 100
+
+Removed date key
+Array(4) => 200
+ArrayBuffer(4) => 0
+Lazy fox jumped => (no tag)
+
+Remaining databases: 0
+
