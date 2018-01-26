@@ -46,6 +46,30 @@
       "revId": "ed64637586719e017163361adca115173ac8d09f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4175f94c_9d5bf005",
+        "filename": "base/task_scheduler/task_scheduler_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-26T07:16:57Z",
+      "side": 1,
+      "message": "Right, std::move just makes it an r-value. The move constructor (if it were called) would take the value. I figured this was a cheap way to write on this side of the equation \"we\u0027re done with the string at this point and would like to do everything we can to avoid a copy\", having this work (without fixing all callers) if the signature of the call happens to change is nice IMO.\n\nAnd PS: that\u0027s why I would desperately like the style-guide to allow r-value parameters (std::string\u0026\u0026 my_str), that way you can enforce that callers give you an r-value. Today we just have to eye-ball it and hope callers/method definitions match... :(\n\nEither way this was immediately removed in follow-up CL @ https://chromium-review.googlesource.com/c/chromium/src/+/870390/12.",
+      "parentUuid": "f5067fec_c7e56e98",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 46
+      },
+      "revId": "ed64637586719e017163361adca115173ac8d09f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
