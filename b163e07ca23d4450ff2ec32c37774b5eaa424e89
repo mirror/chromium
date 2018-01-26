@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "196e155e_cb8e5eae",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1016,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-26T05:51:46Z",
+      "side": 1,
+      "message": "check for zero / out of bounds child_surface dimensions?  does anything else in viz validate the child surface size, or are they copied from the (untrusted) client process?  wouldn\u0027t want a 0 size to shut down viz on a sigfpe.",
+      "revId": "b163e07ca23d4450ff2ec32c37774b5eaa424e89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
