@@ -157,6 +157,24 @@
       "revId": "fc4613e980f7e2af2c049fc1f22aeeef1ca64e26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e03ea103_b706be47",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSummaryElement.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-26T22:49:58Z",
+      "side": 1,
+      "message": "I\u0027m not sure either, I can revert this, and file a bug to investigate at a later date if you like?",
+      "parentUuid": "dc2f6447_a0c9bc32",
+      "revId": "fc4613e980f7e2af2c049fc1f22aeeef1ca64e26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
