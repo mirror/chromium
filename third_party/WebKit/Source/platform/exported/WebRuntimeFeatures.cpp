@@ -502,4 +502,8 @@ void WebRuntimeFeatures::EnableDoubleTapToJumpOnVideo(bool enable) {
   RuntimeEnabledFeatures::SetDoubleTapToJumpOnVideoEnabled(enable);
 }
 
+void WebRuntimeFeatures::EnableSignedHTTPExchange(bool enable) {
+  RuntimeEnabledFeatures::SetSignedHTTPExchangeEnabled(enable);
+}
+
 }  // namespace blink
