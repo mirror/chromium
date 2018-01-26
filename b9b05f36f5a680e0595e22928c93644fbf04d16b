@@ -153,6 +153,30 @@
     },
     {
       "key": {
+        "uuid": "184095b2_211000c9",
+        "filename": "base/threading/thread_local_storage.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-26T13:03:42Z",
+      "side": 1,
+      "message": "My bad, wrong line, also default initialize slot_ \u003d kInvalidSlotValue;\n\nThen it goes from kInvalidSlotValue -\u003e initialized value under the lock and is const thereafter (assuming synchronization around Free()\u0027s which are hopefully not done while multiple threads are up -- unwinding only when down to main thread on shutdown is typical of other //base constructs so that\u0027s okay IMO)",
+      "parentUuid": "d0be510c_3da8c83a",
+      "range": {
+        "startLine": 133,
+        "startChar": 39,
+        "endLine": 133,
+        "endChar": 40
+      },
+      "revId": "b9b05f36f5a680e0595e22928c93644fbf04d16b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a26bd57_32856554",
         "filename": "base/threading/thread_local_storage.h",
         "patchSetId": 1
