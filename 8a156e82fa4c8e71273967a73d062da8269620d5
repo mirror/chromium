@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0a5717a9_363efd1d",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-26T19:53:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52d6390c_279d7efd",
+      "range": {
+        "startLine": 64,
+        "startChar": 1,
+        "endLine": 67,
+        "endChar": 49
+      },
+      "revId": "8a156e82fa4c8e71273967a73d062da8269620d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c40db3b_73d40a86",
         "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_bridge.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "8a156e82fa4c8e71273967a73d062da8269620d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "661c53f4_fee71845",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-26T19:53:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c40db3b_73d40a86",
+      "range": {
+        "startLine": 72,
+        "startChar": 28,
+        "endLine": 73,
+        "endChar": 37
+      },
+      "revId": "8a156e82fa4c8e71273967a73d062da8269620d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6871e937_033b745b",
+        "filename": "chrome/browser/extensions/api/desktop_capture/desktop_capture_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-26T19:53:13Z",
+      "side": 1,
+      "message": "Changing to struct instead.",
+      "parentUuid": "6b69c934_f8f23f31",
+      "range": {
+        "startLine": 210,
+        "startChar": 56,
+        "endLine": 210,
+        "endChar": 62
+      },
+      "revId": "8a156e82fa4c8e71273967a73d062da8269620d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f65e208_f0a638e0",
         "filename": "chrome/browser/media/webrtc/desktop_media_picker.h",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "8a156e82fa4c8e71273967a73d062da8269620d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10c94157_4f29e4fe",
+        "filename": "chrome/browser/media/webrtc/desktop_media_picker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-26T19:53:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f65e208_f0a638e0",
+      "range": {
+        "startLine": 22,
+        "startChar": 51,
+        "endLine": 23,
+        "endChar": 49
+      },
+      "revId": "8a156e82fa4c8e71273967a73d062da8269620d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -160,6 +256,78 @@
       "revId": "8a156e82fa4c8e71273967a73d062da8269620d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6091b77_6dfbd9b1",
+        "filename": "chrome/browser/media/webrtc/desktop_media_picker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-26T19:53:13Z",
+      "side": 1,
+      "message": "OK, I\u0027ll change it to by ModalType, that gives it more flexibility for future use.",
+      "parentUuid": "ffc954ec_fc109793",
+      "range": {
+        "startLine": 46,
+        "startChar": 20,
+        "endLine": 46,
+        "endChar": 38
+      },
+      "revId": "8a156e82fa4c8e71273967a73d062da8269620d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "78df5321_ec09b89c",
+        "filename": "chrome/browser/media/webrtc/desktop_media_picker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-26T19:53:13Z",
+      "side": 1,
+      "message": "system_modal means that the dialog should be modal at the system level. It\u0027s currently being used in code in this CL here:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/887642/3/chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_bridge.cc#74\n\nI agree the parameter list is out of control...I will change it to a struct.",
+      "parentUuid": "fc66d289_7b960ae5",
+      "range": {
+        "startLine": 46,
+        "startChar": 20,
+        "endLine": 46,
+        "endChar": 37
+      },
+      "revId": "8a156e82fa4c8e71273967a73d062da8269620d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63828d9d_d191ef40",
+        "filename": "chrome/browser/media/webrtc/desktop_media_picker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-26T19:53:13Z",
+      "side": 1,
+      "message": "Yes, if it\u0027s not then for this specific usage of it you can bring the Android window that is requesting screen capture permissions back on top above the permissions dialog...which is contrary to how the normal behavior is in Android (i.e. non-ARC).",
+      "parentUuid": "a01e1acb_d6885f52",
+      "range": {
+        "startLine": 46,
+        "startChar": 19,
+        "endLine": 46,
+        "endChar": 38
+      },
+      "revId": "8a156e82fa4c8e71273967a73d062da8269620d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
