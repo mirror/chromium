@@ -1,6 +1,15 @@
 // Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
+//
+// WARNING: When modifying these tests, ensure that corresponding internal tests
+// in .../memlog/* are updated.
+//
+// This class contains end-to-end client tests for heap profiling, from
+// profiling start [dynamic or by command line flag], all the way through
+// verifying the contents of the trace. The traces are uploaded and processed on
+// the server. Test failures due to changes in the trace format will also cause
+// problems with the server tests and functionality.
 
 #ifndef CHROME_BROWSER_PROFILING_HOST_PROFILING_TEST_DRIVER_H_
 #define CHROME_BROWSER_PROFILING_HOST_PROFILING_TEST_DRIVER_H_
