@@ -46,6 +46,30 @@
       "revId": "8f8a3cccb07926af9a75012884d42e5b7cc3439b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80bad135_2df21c53",
+        "filename": "components/password_manager/core/browser/password_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-26T14:08:04Z",
+      "side": 1,
+      "message": "I think you can just pass whatever you need as a parameter to the function.",
+      "parentUuid": "cd09f341_4f614efd",
+      "range": {
+        "startLine": 851,
+        "startChar": 7,
+        "endLine": 851,
+        "endChar": 65
+      },
+      "revId": "8f8a3cccb07926af9a75012884d42e5b7cc3439b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
