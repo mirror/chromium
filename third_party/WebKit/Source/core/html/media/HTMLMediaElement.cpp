@@ -2583,6 +2583,8 @@ void HTMLMediaElement::pictureInPicture() {
 // every "15 to 250ms", we choose the slowest frequency
 static const TimeDelta kMaxTimeupdateEventFrequency =
     TimeDelta::FromMilliseconds(250);
+static const TimeDelta kMinTimeupdateEventFrequency =
+    TimeDelta::FromMilliseconds(15);
 
 void HTMLMediaElement::StartPlaybackProgressTimer() {
   if (playback_progress_timer_.IsActive())
@@ -2621,7 +2623,7 @@ void HTMLMediaElement::ScheduleTimeupdateEvent(bool periodic_event) {
   TimeTicks now = CurrentTimeTicks();
 
   bool have_not_recently_fired_timeupdate =
-      (now - last_time_update_event_wall_time_) >= kMaxTimeupdateEventFrequency;
+      (now - last_time_update_event_wall_time_) >= kMinTimeupdateEventFrequency;
   bool media_time_has_progressed =
       media_time != last_time_update_event_media_time_;
 
