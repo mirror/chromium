@@ -13,6 +13,8 @@
 #include "content/public/common/content_client.h"
 #include "content/public/renderer/content_renderer_client.h"
 #include "content/renderer/media/audio_device_factory.h"
+#include "content/renderer/media/intercepting_media_player.h"
+#include "content/renderer/media/media_resource_scheduler.h"
 #include "content/renderer/media/media_stream_renderer_factory_impl.h"
 #include "content/renderer/media/render_media_log.h"
 #include "content/renderer/media/renderer_webmediaplayer_delegate.h"
@@ -325,10 +327,18 @@ blink::WebMediaPlayer* MediaFactory::CreateMediaPlayer(
       std::make_unique<media::VideoFrameCompositor>(
           params->video_frame_compositor_task_runner(), std::move(submitter));
 
-  media::WebMediaPlayerImpl* media_player = new media::WebMediaPlayerImpl(
-      web_frame, client, encrypted_client, GetWebMediaPlayerDelegate(),
-      std::move(factory_selector), url_index_.get(), std::move(vfc),
-      std::move(params));
+  // Create a resource-aware player wrapping a WMPI instance.
+  std::unique_ptr<InterceptingMediaPlayerDelegate> delegate =
+      MediaResourceScheduler::Get().CreateDelegate(client);
+  blink::WebMediaPlayerClient* client_from_delegate = delegate->GetClient();
+
+  // TODO(liberato): we (and RFC) should return a unique_ptr.
+  InterceptingMediaPlayer<media::WebMediaPlayerImpl>* media_player =
+      new InterceptingMediaPlayer<media::WebMediaPlayerImpl>(
+          std::move(delegate), web_frame, client_from_delegate,
+          encrypted_client, GetWebMediaPlayerDelegate(),
+          std::move(factory_selector), url_index_.get(), std::move(vfc),
+          std::move(params));
 
 #if defined(OS_ANDROID)  // WMPI_CAST
   media_player->SetMediaPlayerManager(GetMediaPlayerManager());
