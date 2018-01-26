@@ -2,6 +2,9 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+# Non-op changes.
+# Non-op changes to create the second patch.
+
 # Intermediate target grouping the android tools needed to run native
 # unittests and instrumentation test apks.
 group("android_tools") {
