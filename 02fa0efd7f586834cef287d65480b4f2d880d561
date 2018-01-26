@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf8b9bb6_08cc24ef",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-26T23:24:36Z",
+      "side": 1,
+      "message": "Do we understand why the AppMenuButton is sometimes not available? That seems like a real bug.",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 24
+      },
+      "revId": "02fa0efd7f586834cef287d65480b4f2d880d561",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bfa4d0c_1cd4ec4d",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-26T23:24:36Z",
+      "side": 1,
+      "message": "Nit, this is generally expressed as an early return in Chrome...\n\nauto* app_menu_button \u003d GetAppMenuButon();\nif (!app_menu_button)\n  return;",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 24
+      },
+      "revId": "02fa0efd7f586834cef287d65480b4f2d880d561",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
