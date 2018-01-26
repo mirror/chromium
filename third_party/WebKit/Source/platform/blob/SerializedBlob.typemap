@@ -1,0 +1,14 @@
+# Copyright 2018 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+mojom = "//third_party/WebKit/common/blob/blob.mojom"
+public_headers =
+    [ "//third_party/WebKit/Source/platform/blob/BlobDataForward.h" ]
+traits_headers =
+    [ "//third_party/WebKit/Source/platform/blob/SerializedBlobStructTraits.h" ]
+
+deps = [
+  "//mojo/public/cpp/bindings",
+]
+type_mappings = [ "blink.mojom.SerializedBlob=scoped_refptr<::blink::BlobDataHandle>[nullable_is_same_type]" ]
