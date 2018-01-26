@@ -4277,8 +4277,9 @@ registerLoadRequestForURL:(const GURL&)requestURL
     }
     int64_t contentLength = navigationResponse.response.expectedContentLength;
     web::BrowserState* browserState = self.webState->GetBrowserState();
-    web::NavigationContext* context =
+    web::NavigationContextImpl* context =
         [self contextForPendingNavigationWithURL:responseURL];
+    context->SetIsDownload(true);
     web::DownloadController::FromBrowserState(browserState)
         ->CreateDownloadTask(_webStateImpl, [NSUUID UUID].UUIDString,
                              responseURL, contentDisposition, contentLength,
@@ -4501,6 +4502,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
   // |context| will be nil if this navigation has been already committed and
   // finished.
   if (context) {
+    context->SetHasCommitted(committedNavigation);
     context->SetResponseHeaders(_webStateImpl->GetHttpResponseHeaders());
   }
 

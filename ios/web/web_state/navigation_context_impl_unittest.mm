@@ -48,6 +48,8 @@ TEST_F(NavigationContextImplTest, NavigationContext) {
       ui::PageTransition::PAGE_TRANSITION_FORWARD_BACK));
   EXPECT_EQ(url_, context->GetUrl());
   EXPECT_FALSE(context->IsSameDocument());
+  EXPECT_FALSE(context->HasCommitted());
+  EXPECT_FALSE(context->IsDownload());
   EXPECT_FALSE(context->GetError());
   EXPECT_FALSE(context->GetResponseHeaders());
   EXPECT_TRUE(context->IsRendererInitiated());
@@ -63,6 +65,8 @@ TEST_F(NavigationContextImplTest, Setters) {
 
   EXPECT_EQ(url_, context->GetUrl());
   ASSERT_FALSE(context->IsSameDocument());
+  EXPECT_FALSE(context->HasCommitted());
+  EXPECT_FALSE(context->IsDownload());
   ASSERT_FALSE(context->IsPost());
   ASSERT_FALSE(context->GetError());
   ASSERT_FALSE(context->IsRendererInitiated());
@@ -74,6 +78,8 @@ TEST_F(NavigationContextImplTest, Setters) {
   context->SetUrl(new_url);
   EXPECT_EQ(new_url, context->GetUrl());
   EXPECT_FALSE(context->IsSameDocument());
+  EXPECT_FALSE(context->HasCommitted());
+  EXPECT_FALSE(context->IsDownload());
   ASSERT_FALSE(context->IsPost());
   EXPECT_FALSE(context->GetError());
   EXPECT_FALSE(context->IsRendererInitiated());
@@ -85,6 +91,34 @@ TEST_F(NavigationContextImplTest, Setters) {
   context->SetIsSameDocument(true);
   EXPECT_EQ(new_url, context->GetUrl());
   EXPECT_TRUE(context->IsSameDocument());
+  EXPECT_FALSE(context->HasCommitted());
+  EXPECT_FALSE(context->IsDownload());
+  ASSERT_FALSE(context->IsPost());
+  EXPECT_FALSE(context->GetError());
+  EXPECT_FALSE(context->IsRendererInitiated());
+  EXPECT_NE(response_headers_.get(), context->GetResponseHeaders());
+  EXPECT_EQ(WKNavigationTypeOther, context->GetWKNavigationType());
+  EXPECT_EQ(WKNavigationTypeOther, context->GetWKNavigationType());
+
+  // SetHasCommitted
+  context->SetHasCommitted(true);
+  EXPECT_EQ(new_url, context->GetUrl());
+  EXPECT_TRUE(context->IsSameDocument());
+  EXPECT_TRUE(context->HasCommitted());
+  EXPECT_FALSE(context->IsDownload());
+  ASSERT_FALSE(context->IsPost());
+  EXPECT_FALSE(context->GetError());
+  EXPECT_FALSE(context->IsRendererInitiated());
+  EXPECT_NE(response_headers_.get(), context->GetResponseHeaders());
+  EXPECT_EQ(WKNavigationTypeOther, context->GetWKNavigationType());
+  EXPECT_EQ(WKNavigationTypeOther, context->GetWKNavigationType());
+
+  // SetIsDownload
+  context->SetIsDownload(true);
+  EXPECT_EQ(new_url, context->GetUrl());
+  EXPECT_TRUE(context->IsSameDocument());
+  EXPECT_TRUE(context->HasCommitted());
+  EXPECT_TRUE(context->IsDownload());
   ASSERT_FALSE(context->IsPost());
   EXPECT_FALSE(context->GetError());
   EXPECT_FALSE(context->IsRendererInitiated());
@@ -96,6 +130,8 @@ TEST_F(NavigationContextImplTest, Setters) {
   context->SetIsPost(true);
   EXPECT_EQ(new_url, context->GetUrl());
   EXPECT_TRUE(context->IsSameDocument());
+  EXPECT_TRUE(context->HasCommitted());
+  EXPECT_TRUE(context->IsDownload());
   ASSERT_TRUE(context->IsPost());
   EXPECT_FALSE(context->GetError());
   EXPECT_FALSE(context->IsRendererInitiated());
@@ -107,6 +143,8 @@ TEST_F(NavigationContextImplTest, Setters) {
   context->SetError(error);
   EXPECT_EQ(new_url, context->GetUrl());
   EXPECT_TRUE(context->IsSameDocument());
+  EXPECT_TRUE(context->HasCommitted());
+  EXPECT_TRUE(context->IsDownload());
   ASSERT_TRUE(context->IsPost());
   EXPECT_EQ(error, context->GetError());
   EXPECT_FALSE(context->IsRendererInitiated());
@@ -117,6 +155,8 @@ TEST_F(NavigationContextImplTest, Setters) {
   context->SetResponseHeaders(response_headers_);
   EXPECT_EQ(new_url, context->GetUrl());
   EXPECT_TRUE(context->IsSameDocument());
+  EXPECT_TRUE(context->HasCommitted());
+  EXPECT_TRUE(context->IsDownload());
   ASSERT_TRUE(context->IsPost());
   EXPECT_EQ(error, context->GetError());
   EXPECT_FALSE(context->IsRendererInitiated());
@@ -127,6 +167,8 @@ TEST_F(NavigationContextImplTest, Setters) {
   context->SetIsRendererInitiated(true);
   EXPECT_EQ(new_url, context->GetUrl());
   EXPECT_TRUE(context->IsSameDocument());
+  EXPECT_TRUE(context->HasCommitted());
+  EXPECT_TRUE(context->IsDownload());
   ASSERT_TRUE(context->IsPost());
   EXPECT_EQ(error, context->GetError());
   EXPECT_TRUE(context->IsRendererInitiated());
@@ -137,6 +179,8 @@ TEST_F(NavigationContextImplTest, Setters) {
   context->SetWKNavigationType(WKNavigationTypeBackForward);
   EXPECT_EQ(new_url, context->GetUrl());
   EXPECT_TRUE(context->IsSameDocument());
+  EXPECT_TRUE(context->HasCommitted());
+  EXPECT_TRUE(context->IsDownload());
   ASSERT_TRUE(context->IsPost());
   EXPECT_EQ(error, context->GetError());
   EXPECT_TRUE(context->IsRendererInitiated());
