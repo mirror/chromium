@@ -157,6 +157,7 @@ class CC_EXPORT GpuImageDecodeCache
   void SetImageDecodingFailedForTesting(const DrawImage& image);
   bool DiscardableIsLockedForTesting(const DrawImage& image);
   bool IsInInUseCacheForTesting(const DrawImage& image) const;
+  sk_sp<SkImage> GetSWImageDecodeForTesting(const DrawImage& image);
 
  private:
   enum class DecodedDataMode { kGpu, kCpu, kTransferCache };
