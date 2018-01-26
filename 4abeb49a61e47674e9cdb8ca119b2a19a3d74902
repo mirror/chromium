@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9eadd68_d0fe707d",
+        "filename": "components/metrics/clean_exit_beacon.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-01-26T14:52:41Z",
+      "side": 1,
+      "message": "explain what this is measuring",
+      "revId": "4abeb49a61e47674e9cdb8ca119b2a19a3d74902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fee596ef_7a3a076c",
+        "filename": "components/metrics/metrics_pref_names.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-01-26T14:52:41Z",
+      "side": 1,
+      "message": "should you mention what triggers this to be recorded? Poissbly too much detail, up to you",
+      "revId": "4abeb49a61e47674e9cdb8ca119b2a19a3d74902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "062ecc04_7ce0825b",
+        "filename": "components/metrics/metrics_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-01-26T14:52:41Z",
+      "side": 1,
+      "message": "was this intended to just be used in the test.. ? I think you didn\u0027t want to use UpdateLastLive directly there? Could you instead just use it and read the initial timestamp?",
+      "revId": "4abeb49a61e47674e9cdb8ca119b2a19a3d74902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f23c7e72_a2a68684",
+        "filename": "components/metrics/metrics_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-01-26T14:52:41Z",
+      "side": 1,
+      "message": "By clearing the queue twice we should be getting two updates - is this neccessary? I\u0027d think a single execution of the task queue should update the timestamp",
+      "revId": "4abeb49a61e47674e9cdb8ca119b2a19a3d74902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b90f38e_5c334860",
+        "filename": "components/metrics/metrics_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-01-26T14:52:41Z",
+      "side": 1,
+      "message": "I\u0027m assuming not if you\u0027re using RunPendingTasts and you\u0027re seeing it update for the test",
+      "range": {
+        "startLine": 423,
+        "startChar": 24,
+        "endLine": 423,
+        "endChar": 33
+      },
+      "revId": "4abeb49a61e47674e9cdb8ca119b2a19a3d74902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05a6df7c_5741e8d0",
+        "filename": "components/metrics/metrics_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-01-26T14:52:41Z",
+      "side": 1,
+      "message": "nit, maybe verify the current time is higher",
+      "revId": "4abeb49a61e47674e9cdb8ca119b2a19a3d74902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
