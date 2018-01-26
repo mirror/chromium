@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0d1898a6_e3d8e9c7",
+        "filename": "third_party/WebKit/Source/core/dom/ContainerNode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 987,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2018-01-26T21:10:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "524ee6cd_2b3c51fc",
+      "range": {
+        "startLine": 987,
+        "startChar": 36,
+        "endLine": 987,
+        "endChar": 53
+      },
+      "revId": "68d1433df3772436bfccd2c6053682c1f28da846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4a939bb_15eed5fd",
         "filename": "third_party/WebKit/Source/core/dom/ContainerNode.cpp",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-22T18:22:21Z",
       "side": 1,
       "message": "I find the spec reads ambiguously on how transforms are to be handled:\n\n\"The scroll snap area is the rectangular bounding box of the transformed border box, plus the specified outsets, axis-aligned in the scroll container’s coordinate space.\"\n\nDoes that mean \"transform the border box, then add the specified outsets\", or \"add the specified outsets to the border box and transform the result\"? The code currently does the latter. Could you please confirm that\u0027s the intention and perhaps file a bug to clarify the spec language?",
+      "range": {
+        "startLine": 1113,
+        "startChar": 6,
+        "endLine": 1113,
+        "endChar": 29
+      },
+      "revId": "68d1433df3772436bfccd2c6053682c1f28da846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ebc1111_82561f00",
+        "filename": "third_party/WebKit/Source/core/dom/ContainerNode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2018-01-26T21:10:57Z",
+      "side": 1,
+      "message": "Sorry I didn\u0027t really paid attention at this part. Now I read it as transform the border box, then add the specified outsets, and Majid agrees as well. However, I haven\u0027t received any clarification from the spec yet.",
+      "parentUuid": "d4a939bb_15eed5fd",
       "range": {
         "startLine": 1113,
         "startChar": 6,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b3774cf8_1872790d",
+        "filename": "third_party/WebKit/Source/core/dom/ContainerNode.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2018-01-26T21:10:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f57ab6b_6653c48f",
+      "range": {
+        "startLine": 149,
+        "startChar": 13,
+        "endLine": 149,
+        "endChar": 24
+      },
+      "revId": "68d1433df3772436bfccd2c6053682c1f28da846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8468f945_bf72230f",
         "filename": "third_party/WebKit/Source/core/dom/Node.cpp",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "ee4f24ad_25d6a3e4",
+        "filename": "third_party/WebKit/Source/core/dom/Node.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2018-01-26T21:10:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8468f945_bf72230f",
+      "range": {
+        "startLine": 697,
+        "startChar": 0,
+        "endLine": 697,
+        "endChar": 6
+      },
+      "revId": "68d1433df3772436bfccd2c6053682c1f28da846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c6fc1a8_d2a00505",
         "filename": "third_party/WebKit/Source/core/dom/Node.cpp",
         "patchSetId": 3
@@ -105,6 +201,30 @@
       "writtenOn": "2018-01-22T18:22:21Z",
       "side": 1,
       "message": "Is this method ever used? i.e. is this ever used on Nodes that aren\u0027t ContainerNodes? CodeSearch says that\u0027s just: Attr, CharacterData, and DocumentType. I would assume none of these have any geometry/LayoutObject. Perhaps BoundingBox should be moved to LayoutObject? (also found crbug.com/248354).",
+      "range": {
+        "startLine": 709,
+        "startChar": 11,
+        "endLine": 709,
+        "endChar": 28
+      },
+      "revId": "68d1433df3772436bfccd2c6053682c1f28da846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "162e7bd9_bab21f5c",
+        "filename": "third_party/WebKit/Source/core/dom/Node.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2018-01-26T21:10:57Z",
+      "side": 1,
+      "message": "Yes it is used in WebViewImpl::ComputeScaleAndScrollForFocusedNode(). Actually this is just a wrapper of LayoutObject::AbsoluteBoundingBoxRect() in case it doesn\u0027t has a LayoutObject.\nI\u0027ve moved the logic to LayoutBox, but still keeping the wrappers in Node and ContainerNode so that we can less affect those calling this BoundingBox.",
+      "parentUuid": "4c6fc1a8_d2a00505",
       "range": {
         "startLine": 709,
         "startChar": 11,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "d220f965_7624646a",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollIntoViewTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2018-01-26T21:10:57Z",
+      "side": 1,
+      "message": "I\u0027ve moved all tests to wpt.",
+      "parentUuid": "3bee5757_4b0722fd",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 6
+      },
+      "revId": "68d1433df3772436bfccd2c6053682c1f28da846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b48d825b_b535fc71",
         "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollIntoViewTest.cpp",
         "patchSetId": 3
@@ -160,6 +304,30 @@
       "revId": "68d1433df3772436bfccd2c6053682c1f28da846",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b134188_bac0d9c7",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollIntoViewTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2018-01-26T21:10:57Z",
+      "side": 1,
+      "message": "ditto.",
+      "parentUuid": "b48d825b_b535fc71",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 11
+      },
+      "revId": "68d1433df3772436bfccd2c6053682c1f28da846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
