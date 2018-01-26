@@ -40,6 +40,7 @@ DropData::Metadata DropData::Metadata::CreateForFileSystemUrl(
   return metadata;
 }
 
+// static
 DropData::Metadata::Metadata(const DropData::Metadata& other) = default;
 
 DropData::Metadata::~Metadata() {}
@@ -69,6 +70,50 @@ base::Optional<base::FilePath> DropData::GetSafeFilenameForImageFileContents()
     return file_name.ReplaceExtension(file_contents_filename_extension);
   }
   return base::nullopt;
+}
+
+// static
+void DropData::FileSystemFileInfo::WriteFileSystemFilesToPickle(
+    const std::vector<FileSystemFileInfo>& file_system_files,
+    base::Pickle* pickle) {
+  pickle->WriteUInt32(file_system_files.size());
+  for (size_t i = 0; i < file_system_files.size(); ++i) {
+    pickle->WriteString(file_system_files[i].url.spec());
+    pickle->WriteInt64(file_system_files[i].size);
+    pickle->WriteString(file_system_files[i].filesystem_id);
+  }
+}
+
+// static
+bool DropData::FileSystemFileInfo::ReadFileSystemFilesFromPickle(
+    const base::Pickle& pickle,
+    std::vector<FileSystemFileInfo>* file_system_files) {
+  base::PickleIterator iter(pickle);
+
+  uint32_t num_files = 0;
+  if (!iter.ReadUInt32(&num_files))
+    return false;
+  file_system_files->resize(num_files);
+
+  for (uint32_t i = 0; i < num_files; ++i) {
+    std::string url_string;
+    int64_t size = 0;
+    std::string filesystem_id;
+    if (!iter.ReadString(&url_string) || !iter.ReadInt64(&size) ||
+        !iter.ReadString(&filesystem_id)) {
+      return false;
+    }
+
+    GURL url(url_string);
+    if (!url.is_valid()) {
+      return false;
+    }
+
+    (*file_system_files)[i].url = url;
+    (*file_system_files)[i].size = size;
+    (*file_system_files)[i].filesystem_id = filesystem_id;
+  }
+  return true;
 }
 
 }  // namespace content
