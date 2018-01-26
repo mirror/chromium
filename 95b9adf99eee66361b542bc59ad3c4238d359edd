@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3acc6e0_7f81e0b0",
+        "filename": "components/variations/service/safe_seed_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-26T20:19:23Z",
+      "side": 1,
+      "message": "Nit: {}",
+      "range": {
+        "startLine": 56,
+        "startChar": 41,
+        "endLine": 56,
+        "endChar": 0
+      },
+      "revId": "95b9adf99eee66361b542bc59ad3c4238d359edd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
