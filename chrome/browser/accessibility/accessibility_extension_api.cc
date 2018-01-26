@@ -27,10 +27,13 @@
 #include "extensions/common/error_utils.h"
 #include "extensions/common/image_util.h"
 #include "extensions/common/manifest_handlers/background_info.h"
+#include "ui/aura/window_tree_host.h"
+#include "ui/events/event_sink.h"
 #include "ui/events/keycodes/keyboard_codes.h"
 
 #if defined(OS_CHROMEOS)
 #include "ash/accessibility/accessibility_focus_ring_controller.h"
+#include "ash/shell.h"
 #include "chrome/browser/chromeos/accessibility/accessibility_manager.h"
 #include "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.h"
 
@@ -42,6 +45,7 @@ namespace accessibility_private = extensions::api::accessibility_private;
 namespace {
 
 const char kErrorNotSupported[] = "This API is not supported on this platform.";
+
 }  // namespace
 
 ExtensionFunction::ResponseAction
@@ -216,6 +220,30 @@ AccessibilityPrivateSetNativeChromeVoxArcSupportForCurrentAppFunction::Run() {
     EXTENSION_FUNCTION_VALIDATE(args_->GetBoolean(0, &enabled));
     bridge->SetNativeChromeVoxArcSupport(enabled);
   }
+  return RespondNow(NoArguments());
+}
+
+ExtensionFunction::ResponseAction
+AccessibilityPrivateSendSyntheticKeyEventFunction::Run() {
+  std::unique_ptr<accessibility_private::SendSyntheticKeyEvent::Params> params =
+      accessibility_private::SendSyntheticKeyEvent::Params::Create(*args_);
+  EXTENSION_FUNCTION_VALIDATE(params);
+  accessibility_private::SyntheticKeyboardEvent* key_data = &params->key_event;
+
+  ui::KeyEvent synthetic_key_event(
+      key_data->type ==
+              accessibility_private::SYNTHETIC_KEYBOARD_EVENT_TYPE_KEYUP
+          ? ui::ET_KEY_RELEASED
+          : ui::ET_KEY_PRESSED,
+      static_cast<ui::KeyboardCode>(key_data->key_code),
+      static_cast<ui::DomCode>(0),
+      key_data->modifiers.get() ? *(key_data->modifiers) : 0);
+
+  ui::EventSink* sink =
+      ash::Shell::GetPrimaryRootWindow()->GetHost()->event_sink();
+  if (sink->OnEventFromSource(&synthetic_key_event).dispatcher_destroyed)
+    return RespondNow(Error("Unable to dispatch key "));
+
   return RespondNow(NoArguments());
 }
 
