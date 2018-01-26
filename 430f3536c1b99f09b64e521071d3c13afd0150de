@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "687b7ad1_15a97aa8",
+        "filename": "third_party/WebKit/Source/core/loader/BaseFetchContext.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-26T21:32:21Z",
+      "side": 1,
+      "message": "I think this could just be IsAdResource(KURL, RequestContext), and the \"last checked\" is just an implementation detail of the single element cache. If the URL is not in the cache we can just do another lookup.\n\nIf you are worried about it being misused, can always document that it is backed by a single element cache so it should only really be used after CanRequest",
+      "revId": "430f3536c1b99f09b64e521071d3c13afd0150de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
