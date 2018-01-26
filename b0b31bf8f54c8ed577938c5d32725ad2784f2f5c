@@ -46,6 +46,30 @@
       "revId": "b0b31bf8f54c8ed577938c5d32725ad2784f2f5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c841e414_3e14712a",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-26T18:37:52Z",
+      "side": 1,
+      "message": "No probs. I shouldn\u0027t have nitted anyway, since the function is on its way out.",
+      "parentUuid": "8b06ade3_16b57285",
+      "range": {
+        "startLine": 412,
+        "startChar": 8,
+        "endLine": 412,
+        "endChar": 41
+      },
+      "revId": "b0b31bf8f54c8ed577938c5d32725ad2784f2f5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
