@@ -17,7 +17,10 @@ namespace testing {
 
 // Creates a blacklist URL rule which targets subresources of any type such that
 // the resource URL ends with |suffix|.
-url_pattern_index::proto::UrlRule CreateSuffixRule(base::StringPiece suffix);
+url_pattern_index::proto::UrlRule CreateSuffixRule(
+    base::StringPiece suffix,
+    url_pattern_index::proto::RuleSemantics semantics =
+        url_pattern_index::proto::RULE_SEMANTICS_BLACKLIST);
 
 // Same as CreateUrlRule(pattern, proto::URL_PATTERN_TYPE_WILDCARDED), but the
 // rule applies to the specified |activation_types|, and to no element types.
