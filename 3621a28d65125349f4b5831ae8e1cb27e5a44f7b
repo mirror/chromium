@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5600ba9_2601a3d2",
+        "filename": "content/common/renderer.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-26T05:47:27Z",
+      "side": 1,
+      "message": "nit: double space between after which",
+      "revId": "3621a28d65125349f4b5831ae8e1cb27e5a44f7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7aa73f5_ff8432bf",
+        "filename": "content/common/renderer.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-26T05:47:27Z",
+      "side": 1,
+      "message": "Sorry, still wasn\u0027t sure if \u0027keepalive\u0027 makes sense here or not.\n\nGiven what we do with this flag wdyt if we simply call this, say, SetCanFreeze(bool can_freeze)?",
+      "revId": "3621a28d65125349f4b5831ae8e1cb27e5a44f7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
