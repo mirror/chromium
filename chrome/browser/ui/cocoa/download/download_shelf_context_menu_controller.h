@@ -22,8 +22,8 @@
 
 // Initializes the MenuControllerCocoa using [itemController contextMenuModel].
 // menuDelegate will be sent a menuDidClose message when the menu closes.
-- (id)initWithItemController:(DownloadItemController*)itemController
-                withDelegate:(id<NSMenuDelegate>)menuDelegate;
+- (instancetype)initWithItemController:(DownloadItemController*)itemController
+                          withDelegate:(id<NSMenuDelegate>)menuDelegate;
 
 - (void)menuDidClose:(NSMenu*)menu;
 @end

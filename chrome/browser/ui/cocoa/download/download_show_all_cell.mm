@@ -40,7 +40,7 @@ const CGFloat kOuterStrokeWidth = 1;
 
 @interface DownloadShowAllCell(Private)
 - (const ui::ThemeProvider*)backgroundThemeWrappingProvider:
-    (const ui::ThemeProvider*)provider;
+    (const ui::ThemeProvider*)provider NS_RETURNS_INNER_POINTER;
 - (BOOL)pressedWithDefaultTheme;
 - (NSColor*)titleColor;
 @end
@@ -53,7 +53,7 @@ const CGFloat kOuterStrokeWidth = 1;
 }
 
 // For nib instantiations
-- (id)initWithCoder:(NSCoder*)decoder {
+- (instancetype)initWithCoder:(NSCoder*)decoder {
   if ((self = [super initWithCoder:decoder])) {
     [self setInitialState];
   }
@@ -61,7 +61,7 @@ const CGFloat kOuterStrokeWidth = 1;
 }
 
 // For programmatic instantiations.
-- (id)initTextCell:(NSString*)string {
+- (instancetype)initTextCell:(NSString*)string {
   if ((self = [super initTextCell:string])) {
     [self setInitialState];
   }
@@ -148,10 +148,10 @@ const CGFloat kOuterStrokeWidth = 1;
 }
 
 - (NSDictionary*)textAttributes {
-  return [NSDictionary dictionaryWithObjectsAndKeys:
-      [self titleColor], NSForegroundColorAttributeName,
-      [self font], NSFontAttributeName,
-      nil];
+  return @{
+    NSForegroundColorAttributeName : [self titleColor],
+    NSFontAttributeName : [self font]
+  };
 }
 
 - (void)drawInteriorWithFrame:(NSRect)cellFrame inView:(NSView*)controlView {

@@ -99,8 +99,8 @@ class DownloadShelfContextMenuMac : public DownloadShelfContextMenu {
 
 @synthesize shelf = shelf_;
 
-- (id)initWithDownload:(DownloadItem*)downloadItem
-             navigator:(content::PageNavigator*)navigator {
+- (instancetype)initWithDownload:(DownloadItem*)downloadItem
+                       navigator:(content::PageNavigator*)navigator {
   if ((self = [super initWithNibName:@"DownloadItem"
                               bundle:base::mac::FrameworkBundle()])) {
     // Must be called before [self view], so that bridge_ is set in awakeFromNib

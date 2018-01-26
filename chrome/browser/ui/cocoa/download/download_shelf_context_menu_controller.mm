@@ -8,8 +8,8 @@
 
 @implementation DownloadShelfContextMenuController
 
-- (id)initWithItemController:(DownloadItemController*)itemController
-                withDelegate:(id<NSMenuDelegate>)menuDelegate {
+- (instancetype)initWithItemController:(DownloadItemController*)itemController
+                          withDelegate:(id<NSMenuDelegate>)menuDelegate {
   if ((self = [super initWithModel:[itemController contextMenuModel]
                      useWithPopUpButtonCell:NO])) {
     // Retain itemController since the lifetime of the ui::MenuModel is bound to

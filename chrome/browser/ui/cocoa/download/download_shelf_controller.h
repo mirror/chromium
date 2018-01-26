@@ -89,8 +89,8 @@ class PageNavigator;
   content::PageNavigator* navigator_;
 };
 
-- (id)initWithBrowser:(Browser*)browser
-       resizeDelegate:(id<ViewResizer>)resizeDelegate;
+- (instancetype)initWithBrowser:(Browser*)browser
+                 resizeDelegate:(id<ViewResizer>)resizeDelegate;
 
 // Run when the user clicks the 'Show All' button.
 - (IBAction)showDownloadsTab:(id)sender;
@@ -111,7 +111,7 @@ class PageNavigator;
 // Returns our view cast as an AnimatableView.
 - (AnimatableView*)animatableView;
 
-- (DownloadShelf*)bridge;
+- (DownloadShelf*)bridge NS_RETURNS_INNER_POINTER;
 - (BOOL)isVisible;
 
 // Add a new download item to the leftmost position of the download shelf. The

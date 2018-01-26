@@ -20,10 +20,9 @@ BackgroundTheme::BackgroundTheme(const ui::ThemeProvider* provider)
 
   borderColor_.reset(
       [[NSColor colorWithCalibratedWhite:0 alpha:36/255.0] retain]);
-  buttonGradient_.reset([[NSGradient alloc]
-      initWithColors:[NSArray arrayWithObject:bgColor]]);
-  buttonPressedGradient_.reset([[NSGradient alloc]
-      initWithColors:[NSArray arrayWithObject:clickedColor]]);
+  buttonGradient_.reset([[NSGradient alloc] initWithColors:@[ bgColor ]]);
+  buttonPressedGradient_.reset(
+      [[NSGradient alloc] initWithColors:@[ clickedColor ]]);
 }
 
 BackgroundTheme::~BackgroundTheme() {}

@@ -87,9 +87,9 @@ using content::DownloadItem;
  @private
   DownloadItemCell* cell_;
 }
-- (id)initWithDownloadItemCell:(DownloadItemCell*)cell
-                      duration:(NSTimeInterval)duration
-                animationCurve:(NSAnimationCurve)animationCurve;
+- (instancetype)initWithDownloadItemCell:(DownloadItemCell*)cell
+                                duration:(NSTimeInterval)duration
+                          animationCurve:(NSAnimationCurve)animationCurve;
 
 @end
 
@@ -103,7 +103,8 @@ using content::DownloadItem;
   base::scoped_nsobject<NSTimer> timer_;
 }
 
-- (id)initWithDownloadItemCell:(DownloadItemCell*)cell;
+- (instancetype)initWithDownloadItemCell:(DownloadItemCell*)cell
+    NS_DESIGNATED_INITIALIZER;
 - (void)invalidate;
 
 @end
@@ -120,7 +121,7 @@ using content::DownloadItem;
 - (NSString*)elideTitle:(int)availableWidth;
 - (NSString*)elideStatus:(int)availableWidth;
 - (const ui::ThemeProvider*)backgroundThemeWrappingProvider:
-    (const ui::ThemeProvider*)provider;
+    (const ui::ThemeProvider*)provider NS_RETURNS_INNER_POINTER;
 - (BOOL)pressedWithDefaultThemeOnPart:(DownloadItemMousePosition)part;
 - (NSColor*)titleColorForPart:(DownloadItemMousePosition)part;
 - (void)drawSecondaryTitleInRect:(NSRect)innerFrame;
@@ -151,7 +152,7 @@ using content::DownloadItem;
 }
 
 // For nib instantiations
-- (id)initWithCoder:(NSCoder*)decoder {
+- (instancetype)initWithCoder:(NSCoder*)decoder {
   if ((self = [super initWithCoder:decoder])) {
     [self setInitialState];
   }
@@ -159,7 +160,7 @@ using content::DownloadItem;
 }
 
 // For programmatic instantiations.
-- (id)initTextCell:(NSString *)string {
+- (instancetype)initTextCell:(NSString*)string {
   if ((self = [super initTextCell:string])) {
     [self setInitialState];
   }
@@ -427,11 +428,10 @@ using content::DownloadItem;
   if (![secondaryColor gtm_isDarkColor])
     secondaryColor = [secondaryColor gtm_colorByAdjustingLuminance:-0.2];
 
-  NSDictionary* secondaryTextAttributes =
-      [NSDictionary dictionaryWithObjectsAndKeys:
-          secondaryColor, NSForegroundColorAttributeName,
-          [self secondaryFont], NSFontAttributeName,
-          nil];
+  NSDictionary* secondaryTextAttributes = @{
+    NSForegroundColorAttributeName : secondaryColor,
+    NSFontAttributeName : [self secondaryFont]
+  };
   NSPoint secondaryPos =
       NSMakePoint(innerFrame.origin.x + kTextPosLeft, kSecondaryTextPosTop);
 
@@ -531,11 +531,10 @@ using content::DownloadItem;
   NSColor* color = [self titleColorForPart:kDownloadItemMouseOverButtonPart];
   NSString* primaryText = [self title];
 
-  NSDictionary* primaryTextAttributes =
-      [NSDictionary dictionaryWithObjectsAndKeys:
-          color, NSForegroundColorAttributeName,
-          [self font], NSFontAttributeName,
-          nil];
+  NSDictionary* primaryTextAttributes = @{
+    NSForegroundColorAttributeName : color,
+    NSFontAttributeName : [self font]
+  };
   NSPoint primaryPos = NSMakePoint(
       cellFrame.origin.x + kTextPosLeft,
       titleY_);
@@ -729,9 +728,9 @@ using content::DownloadItem;
 
 @implementation DownloadItemCellAnimation
 
-- (id)initWithDownloadItemCell:(DownloadItemCell*)cell
-                      duration:(NSTimeInterval)duration
-                animationCurve:(NSAnimationCurve)animationCurve {
+- (instancetype)initWithDownloadItemCell:(DownloadItemCell*)cell
+                                duration:(NSTimeInterval)duration
+                          animationCurve:(NSAnimationCurve)animationCurve {
   if ((self = [super gtm_initWithDuration:duration
                                 eventMask:NSLeftMouseDownMask
                            animationCurve:animationCurve])) {
@@ -750,7 +749,7 @@ using content::DownloadItem;
 
 @implementation IndeterminateProgressTimer
 
-- (id)initWithDownloadItemCell:(DownloadItemCell*)cell {
+- (instancetype)initWithDownloadItemCell:(DownloadItemCell*)cell {
   if ((self = [super init])) {
     cell_ = cell;
     timer_.reset([[NSTimer

@@ -31,7 +31,7 @@ constexpr CGFloat kMDShelfHeight = 44;
   return kMDShelfHeight;
 }
 
-- (id)initWithFrame:(NSRect)frameRect {
+- (instancetype)initWithFrame:(NSRect)frameRect {
   if ((self = [super initWithFrame:frameRect])) {
     self.dividerEdge = NSMaxYEdge;
   }
@@ -58,7 +58,7 @@ constexpr CGFloat kMDShelfHeight = 44;
 }
 
 // For nib instantiation (pre-MD design).
-- (id)initWithCoder:(NSCoder*)decoder {
+- (instancetype)initWithCoder:(NSCoder*)decoder {
   if ((self = [super initWithCoder:decoder])) {
     self.dividerEdge = NSMaxYEdge;
   }

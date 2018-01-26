@@ -40,14 +40,14 @@ TEST_F(DownloadUtilMacTest, AddFileToPasteboardTest) {
   download_util::AddFileToPasteboard(pasteboard(), testPath);
 
   // Test to see that the object type for dragging files is available.
-  NSArray* types =  [NSArray arrayWithObject:NSFilenamesPboardType];
+  NSArray* types = @[ NSFilenamesPboardType ];
   NSString* available = [pasteboard() availableTypeFromArray:types];
   EXPECT_TRUE(available != nil);
 
   // Ensure the path is what we expect.
   NSArray* files = [pasteboard() propertyListForType:NSFilenamesPboardType];
   ASSERT_TRUE(files != nil);
-  NSString* expectedPath = [files objectAtIndex:0];
+  NSString* expectedPath = files[0];
   NSString* realPath = base::SysUTF8ToNSString(testPath.value());
   EXPECT_NSEQ(expectedPath, realPath);
 }

@@ -125,8 +125,8 @@ const CGFloat kMDCloseButtonSize = 24;
 
 @implementation DownloadShelfController
 
-- (id)initWithBrowser:(Browser*)browser
-       resizeDelegate:(id<ViewResizer>)resizeDelegate {
+- (instancetype)initWithBrowser:(Browser*)browser
+                 resizeDelegate:(id<ViewResizer>)resizeDelegate {
   if ((self = [super initWithNibName:@"DownloadShelf"
                               bundle:base::mac::FrameworkBundle()])) {
     resizeDelegate_ = resizeDelegate;
@@ -337,7 +337,7 @@ const CGFloat kMDCloseButtonSize = 24;
   if (!show) {
     int numInProgress = 0;
     for (NSUInteger i = 0; i < [downloadItemControllers_ count]; ++i) {
-      DownloadItem* item = [[downloadItemControllers_ objectAtIndex:i]download];
+      DownloadItem* item = [downloadItemControllers_[i] download];
       if (item->GetState() == DownloadItem::IN_PROGRESS)
         ++numInProgress;
     }
@@ -511,8 +511,7 @@ const CGFloat kMDCloseButtonSize = 24;
     return;
   NSUInteger i = 0;
   while (i < [downloadItemControllers_ count]) {
-    DownloadItemController* itemController =
-        [downloadItemControllers_ objectAtIndex:i];
+    DownloadItemController* itemController = downloadItemControllers_[i];
     DownloadItem* download = [itemController download];
     DownloadItem::DownloadState state = download->GetState();
     bool isTransferDone = state == DownloadItem::COMPLETE ||
@@ -567,8 +566,7 @@ const CGFloat kMDCloseButtonSize = 24;
   // We can close the shelf automatically if all the downloads on the shelf have
   // been opened.
   for (NSUInteger i = 0; i < [downloadItemControllers_ count]; ++i) {
-    DownloadItemController* itemController =
-        [downloadItemControllers_ objectAtIndex:i];
+    DownloadItemController* itemController = downloadItemControllers_[i];
     if (![itemController download]->GetOpened())
       return;
   }

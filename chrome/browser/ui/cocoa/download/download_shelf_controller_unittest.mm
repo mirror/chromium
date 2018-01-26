@@ -31,13 +31,15 @@ using ::testing::AnyNumber;
  @private
   std::unique_ptr<content::MockDownloadItem> download_;
 }
-- (id)initWithMockDownload:(std::unique_ptr<content::MockDownloadItem>)download;
-- (content::DownloadItem*)download;
-- (content::MockDownloadItem*)mockDownload;
+- (instancetype)initWithMockDownload:
+    (std::unique_ptr<content::MockDownloadItem>)download
+    NS_DESIGNATED_INITIALIZER;
+- (content::DownloadItem*)download NS_RETURNS_INNER_POINTER;
+- (content::MockDownloadItem*)mockDownload NS_RETURNS_INNER_POINTER;
 @end
 
 @implementation WrappedMockDownloadItem
-- (id)initWithMockDownload:
+- (instancetype)initWithMockDownload:
     (std::unique_ptr<content::MockDownloadItem>)download {
   if ((self = [super init])) {
     download_ = std::move(download);
