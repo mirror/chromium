@@ -516,8 +516,11 @@ class CONTENT_EXPORT RenderWidget
   gfx::Size GetSizeForWebWidget() const;
   virtual void ResizeWebWidget();
 
-  // Close the underlying WebWidget.
+  // Close the underlying WebWidget and stop the compositor.
   virtual void Close();
+
+  // Just Close the WebWidget, in cases where the Close() will be deferred.
+  void CloseWebWidget();
 
   // Used to force the size of a window when running layout tests.
   void SetWindowRectSynchronously(const gfx::Rect& new_window_rect);
