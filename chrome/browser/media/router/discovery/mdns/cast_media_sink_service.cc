@@ -62,10 +62,12 @@ ErrorType CreateCastMediaSink(const DnsSdService& service,
   std::string unique_id = service_data["id"];
   if (unique_id.empty())
     return ErrorType::MISSING_ID;
+  std::string sink_id = MediaSinkInternal::GetSinkIdFromDeviceUUID(unique_id);
+
   std::string friendly_name = service_data["fn"];
   if (friendly_name.empty())
     return ErrorType::MISSING_FRIENDLY_NAME;
-  MediaSink sink(unique_id, friendly_name, SinkIconType::CAST,
+  MediaSink sink(sink_id, friendly_name, SinkIconType::CAST,
                  MediaRouteProviderId::EXTENSION);
 
   CastSinkExtraData extra_data;

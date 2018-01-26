@@ -105,6 +105,20 @@ bool MediaSinkInternal::IsValidSinkId(const std::string& sink_id) {
   return true;
 }
 
+// static
+std::string MediaSinkInternal::GetSinkIdFromDeviceUUID(
+    const std::string device_uuid) {
+  if (device_uuid.empty())
+    return std::string();
+
+  std::string result = device_uuid;
+  if (device_uuid.find("uuid:") == 0)
+    result = device_uuid.substr(5);
+
+  base::RemoveChars(result, "-", &result);
+  return base::ToLowerASCII(result);
+}
+
 void MediaSinkInternal::InternalCopyConstructFrom(
     const MediaSinkInternal& other) {
   sink_ = other.sink_;
