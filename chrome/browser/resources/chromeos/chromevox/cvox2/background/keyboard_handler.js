@@ -85,14 +85,12 @@ BackgroundKeyboardHandler.prototype = {
 BackgroundKeyboardHandler.sendKeyPress = function(keyCode, keyName, modifiers) {
   modifiers = modifiers || 0;
   var key = {
-    type: 'keydown',
+    type: chrome.accessibilityPrivate.SyntheticKeyboardEventType.KEYDOWN,
     keyCode: keyCode,
-    keyName: keyName,
-    charValue: keyCode,
     modifiers: modifiers
   };
-  chrome.virtualKeyboardPrivate.sendKeyEvent(key);
-  key['type'] = 'keyup';
-  chrome.virtualKeyboardPrivate.sendKeyEvent(key);
+  chrome.accessibilityPrivate.sendSyntheticKeyEvent(key);
+  key['type'] = chrome.accessibilityPrivate.SyntheticKeyboardEventType.KEYUP;
+  chrome.accessibilityPrivate.sendSyntheticKeyEvent(key);
   return true;
 };
