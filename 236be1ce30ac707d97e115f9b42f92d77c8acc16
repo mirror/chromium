@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85c47ea7_e6a4716d",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1456,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2018-01-26T08:05:05Z",
+      "side": 1,
+      "message": "How about add !HasOffscreenRect(container).\nAnd I think it will be better if we use container\u0027s virtual \u0026 visual rect with intersection of focused element.\nFor example, if we hit down key, starting rect will be\n(max(focused_element.left, virtual\u0026visual(container).left),  // \u003d\u003e A\n virtual\u0026visual(container).top,\n min(focused_element.(left + width), virtual\u0026visual(container).(left + width)) - A,\n 0)",
+      "range": {
+        "startLine": 1455,
+        "startChar": 0,
+        "endLine": 1456,
+        "endChar": 73
+      },
+      "revId": "236be1ce30ac707d97e115f9b42f92d77c8acc16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
