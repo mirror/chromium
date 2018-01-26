@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ebb60c36_f9e5f1ce",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2018-01-26T22:11:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bee3177_7e82a4f5",
+      "range": {
+        "startLine": 41,
+        "startChar": 12,
+        "endLine": 41,
+        "endChar": 33
+      },
+      "revId": "146ee63d7c76811054147aa180fb0ebed0e9d385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "462ff179_1734eb87",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
         "patchSetId": 15
@@ -45,6 +69,30 @@
       "revId": "146ee63d7c76811054147aa180fb0ebed0e9d385",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a5b13db_ed3bebfa",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2018-01-26T22:11:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "462ff179_1734eb87",
+      "range": {
+        "startLine": 59,
+        "startChar": 16,
+        "endLine": 60,
+        "endChar": 30
+      },
+      "revId": "146ee63d7c76811054147aa180fb0ebed0e9d385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "72f8073a_e53bae5a",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2018-01-26T22:11:38Z",
+      "side": 1,
+      "message": "Yes, that works. For the other snippet like this on line 93 below, we can\u0027t DCHECK, but I\u0027ve added a comment that justifies why we need to return early.",
+      "parentUuid": "5ef133c0_86d6d6b6",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 11
+      },
+      "revId": "146ee63d7c76811054147aa180fb0ebed0e9d385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd0c4f2e_bf2e0079",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
         "patchSetId": 15
@@ -91,6 +163,30 @@
       "revId": "146ee63d7c76811054147aa180fb0ebed0e9d385",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "305e8752_34c4c295",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2018-01-26T22:11:38Z",
+      "side": 1,
+      "message": "You\u0027re right, this is not necessary.",
+      "parentUuid": "cd0c4f2e_bf2e0079",
+      "range": {
+        "startLine": 216,
+        "startChar": 8,
+        "endLine": 216,
+        "endChar": 15
+      },
+      "revId": "146ee63d7c76811054147aa180fb0ebed0e9d385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "3c1973ea_7b44789e",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2018-01-26T22:11:38Z",
+      "side": 1,
+      "message": "Ahh, you\u0027re right. There was a bigger issue which was a missing call to CreateChildViews in OnSuggestionsChanged, which was masking this bug. I\u0027ve corrected that bug above, and added the appropriate call here.",
+      "parentUuid": "ab7a58f6_01313697",
+      "range": {
+        "startLine": 226,
+        "startChar": 2,
+        "endLine": 226,
+        "endChar": 21
+      },
+      "revId": "146ee63d7c76811054147aa180fb0ebed0e9d385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6908de6_5b6c6b5a",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
         "patchSetId": 15
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "778e2d6d_7af656a5",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2018-01-26T22:11:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6908de6_5b6c6b5a",
+      "range": {
+        "startLine": 228,
+        "startChar": 4,
+        "endLine": 228,
+        "endChar": 76
+      },
+      "revId": "146ee63d7c76811054147aa180fb0ebed0e9d385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1f53fc2_5f55e6ec",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
         "patchSetId": 15
@@ -160,6 +304,30 @@
       "revId": "146ee63d7c76811054147aa180fb0ebed0e9d385",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03f5325f_cbeed1cc",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2018-01-26T22:11:38Z",
+      "side": 1,
+      "message": "Yes, good call on using PreferredSize. This worked fine the first time, but the size did not update on subsequent calls--and, like the issue above with not clearing rows, this problem was masked by not properly redrawing when new suggestions were received.\n\nThanks for the structural suggestion as well; I agree that it\u0027s easier to read this way.",
+      "parentUuid": "f1f53fc2_5f55e6ec",
+      "range": {
+        "startLine": 237,
+        "startChar": 0,
+        "endLine": 241,
+        "endChar": 29
+      },
+      "revId": "146ee63d7c76811054147aa180fb0ebed0e9d385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "608495f6_b0379979",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2018-01-26T22:11:38Z",
+      "side": 1,
+      "message": "Resolving.",
+      "parentUuid": "3b5d5387_0f75176e",
+      "range": {
+        "startLine": 46,
+        "startChar": 10,
+        "endLine": 46,
+        "endChar": 31
+      },
+      "revId": "4059bfc5d23354b0487a9cc2231ce454681c1ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "baf1942c_d4b4eb40",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
         "patchSetId": 14
@@ -258,6 +282,30 @@
       "revId": "4059bfc5d23354b0487a9cc2231ce454681c1ffe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4f26a2c_070328d7",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2018-01-26T22:11:38Z",
+      "side": 1,
+      "message": "Yup, that works. It seems the case in the TODO would be relevant if we had more than one spacer, but it works as desired here.",
+      "parentUuid": "d922dfea_cc49543a",
+      "range": {
+        "startLine": 139,
+        "startChar": 4,
+        "endLine": 139,
+        "endChar": 44
+      },
+      "revId": "4059bfc5d23354b0487a9cc2231ce454681c1ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
