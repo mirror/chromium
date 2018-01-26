@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "176bed83_acb489c0",
+        "filename": "chrome/browser/browsing_data/navigation_entry_remover.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-26T15:08:15Z",
+      "side": 1,
+      "message": "Hm, that is a good question. I will remove this check because chrome:// urls could contain history related data like chrome://settings/cookies/detail?site\u003dgoogle.com.\n\nThat means that the Clear Browsing Data dialog can\u0027t navigate back anymore but that shouldn\u0027t be an issue as it will always come from chrome://settings anyway.",
+      "parentUuid": "56edfe32_ca01d45b",
+      "revId": "330c43fc91247489f837e08dd113965bedf460f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13da345e_b2ded627",
         "filename": "chrome/browser/browsing_data/navigation_entry_remover.cc",
         "patchSetId": 19
@@ -39,6 +57,30 @@
       "revId": "330c43fc91247489f837e08dd113965bedf460f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38adfd3e_d0127a3b",
+        "filename": "chrome/browser/browsing_data/navigation_entry_remover.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-26T15:08:15Z",
+      "side": 1,
+      "message": "Fixed",
+      "parentUuid": "13da345e_b2ded627",
+      "range": {
+        "startLine": 35,
+        "startChar": 5,
+        "endLine": 35,
+        "endChar": 18
+      },
+      "revId": "330c43fc91247489f837e08dd113965bedf460f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +118,24 @@
     },
     {
       "key": {
+        "uuid": "c3707986_4026e38c",
+        "filename": "chrome/browser/browsing_data/navigation_entry_remover.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-26T15:08:15Z",
+      "side": 1,
+      "message": "That sounds great. I added this call, thanks.\nI think there is still a case where last_committed_entry_index_ is -1, which would lead to CanPruneAllButLastCommitted() \u003d\u003d false. So I will leave the check here.",
+      "parentUuid": "fdb96965_a2930926",
+      "revId": "330c43fc91247489f837e08dd113965bedf460f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "770ffe53_6bd81695",
         "filename": "chrome/browser/sessions/session_service.cc",
         "patchSetId": 19
@@ -87,6 +147,24 @@
       "writtenOn": "2018-01-26T00:52:05Z",
       "side": 1,
       "message": "Don\u0027t forget about this.  :)",
+      "revId": "330c43fc91247489f837e08dd113965bedf460f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7be535c0_6a767557",
+        "filename": "chrome/browser/sessions/session_service.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-26T15:08:15Z",
+      "side": 1,
+      "message": "Yes, I still need to figure out how to update sessions correctly. I will add a TODO to the CL description to not forget about this.",
+      "parentUuid": "770ffe53_6bd81695",
       "revId": "330c43fc91247489f837e08dd113965bedf460f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -116,6 +194,30 @@
     },
     {
       "key": {
+        "uuid": "1995d5e9_e30678c8",
+        "filename": "components/browsing_data/core/features.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-26T15:08:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2435d444_ab4b85c3",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 18
+      },
+      "revId": "330c43fc91247489f837e08dd113965bedf460f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34527762_68235980",
         "filename": "content/browser/frame_host/navigation_controller_impl.cc",
         "patchSetId": 19
@@ -130,6 +232,24 @@
       "revId": "330c43fc91247489f837e08dd113965bedf460f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4b79215_bc03cdad",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1742,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-26T15:08:15Z",
+      "side": 1,
+      "message": "I renamed the variables and added a comment",
+      "parentUuid": "34527762_68235980",
+      "revId": "330c43fc91247489f837e08dd113965bedf460f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -150,6 +270,24 @@
     },
     {
       "key": {
+        "uuid": "424d5a4c_d13f2de5",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1753,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-26T15:08:15Z",
+      "side": 1,
+      "message": "I changed the below method to call SetHistoryOffsetAndLength() before NotifyPrunedEntries().",
+      "parentUuid": "86e4041d_ecf62ba1",
+      "revId": "330c43fc91247489f837e08dd113965bedf460f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be197e6a_0167cc8e",
         "filename": "content/public/browser/navigation_details.h",
         "patchSetId": 19
@@ -164,6 +302,24 @@
       "revId": "330c43fc91247489f837e08dd113965bedf460f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfc7c171_03832bce",
+        "filename": "content/public/browser/navigation_details.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-26T15:08:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be197e6a_0167cc8e",
+      "revId": "330c43fc91247489f837e08dd113965bedf460f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -190,6 +346,30 @@
     },
     {
       "key": {
+        "uuid": "3607863a_496e0a74",
+        "filename": "content/public/browser/navigation_details.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-26T15:08:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b154ad1_8ecd8f5c",
+      "range": {
+        "startLine": 85,
+        "startChar": 5,
+        "endLine": 85,
+        "endChar": 28
+      },
+      "revId": "330c43fc91247489f837e08dd113965bedf460f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "691e11e9_f963581c",
         "filename": "content/test/data/browsing_data/site_data.html",
         "patchSetId": 19
@@ -204,6 +384,24 @@
       "revId": "330c43fc91247489f837e08dd113965bedf460f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2408405d_586efeb9",
+        "filename": "content/test/data/browsing_data/site_data.html",
+        "patchSetId": 19
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-26T15:08:15Z",
+      "side": 1,
+      "message": "This function is called by BrowsingDataRemoverBrowserTest::SetDataForType(\"History\"), which is called from BrowsingDataRemoverBrowserTest.HistoryDeletion. \nI added a comment to this file as I agree, that is very difficult to find the place where this is called.",
+      "parentUuid": "691e11e9_f963581c",
+      "revId": "330c43fc91247489f837e08dd113965bedf460f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
