@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "b3ca1a83_5d3f07ab",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1170239
+      },
+      "writtenOn": "2018-01-26T01:20:36Z",
+      "side": 1,
+      "message": "nit: Create -\u003e Creates\n\nhttps://google.github.io/styleguide/cppguide.html#Function_Comments\n\nPlease check other places as well",
+      "range": {
+        "startLine": 37,
+        "startChar": 12,
+        "endLine": 37,
+        "endChar": 21
+      },
+      "revId": "49687d07bd0330a4645ba71fe03b0a162ef480eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f10828e_f28bd5c9",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1170239
+      },
+      "writtenOn": "2018-01-26T01:20:36Z",
+      "side": 1,
+      "message": "IIRC, PlatformFile is printable (just a number). Might be nice to include in the log?",
+      "revId": "49687d07bd0330a4645ba71fe03b0a162ef480eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "103e7e7f_1559eed4",
         "filename": "third_party/zlib/google/zip_reader.h",
         "patchSetId": 2
