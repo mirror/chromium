@@ -344,7 +344,7 @@ void SynchronousLayerTreeFrameSink::DidNotProduceFrame(
     const viz::BeginFrameAck& ack) {
   DCHECK(!ack.has_damage);
   DCHECK_LE(viz::BeginFrameArgs::kStartingFrameNumber, ack.sequence_number);
-  Send(new ViewHostMsg_DidNotProduceFrame(routing_id_, ack));
+  Send(new SyncCompositorHostMsg_DidNotProduceFrame(routing_id_, ack));
 }
 
 void SynchronousLayerTreeFrameSink::CancelFallbackTick() {
