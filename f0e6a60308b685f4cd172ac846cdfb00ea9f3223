@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2a53b1c6_369f5e08",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-26T19:29:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "211f7a9d_ec7c0092",
+      "revId": "f0e6a60308b685f4cd172ac846cdfb00ea9f3223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "373cb36e_c84443c4",
         "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "f0e6a60308b685f4cd172ac846cdfb00ea9f3223",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6061d87_0f9a5e36",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-26T19:29:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "373cb36e_c84443c4",
+      "revId": "f0e6a60308b685f4cd172ac846cdfb00ea9f3223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "450152da_cdc48168",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-26T19:29:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "329b2176_44cc541e",
+      "revId": "f0e6a60308b685f4cd172ac846cdfb00ea9f3223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fb1bf54_f9ffd0fd",
         "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view_unittest.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "f0e6a60308b685f4cd172ac846cdfb00ea9f3223",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95e7dc5b_84359367",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-26T19:29:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fb1bf54_f9ffd0fd",
+      "revId": "f0e6a60308b685f4cd172ac846cdfb00ea9f3223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
