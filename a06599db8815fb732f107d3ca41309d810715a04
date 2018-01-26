@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54436ca4_39cf41c9",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-26T15:34:17Z",
+      "side": 1,
+      "message": "Group these functions with the other overrides (both header and source).",
+      "revId": "a06599db8815fb732f107d3ca41309d810715a04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1555a0b8_986f93b7",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-26T15:34:17Z",
+      "side": 1,
+      "message": "What happens if this fails exactly? It seems like other member variables are going to be in a bad state.",
+      "revId": "a06599db8815fb732f107d3ca41309d810715a04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94b631d8_873154d1",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-26T15:34:17Z",
+      "side": 1,
+      "message": "This isn\u0027t so much a test version of CFSS as it\u0027s a class that owns a HitTestAggregator? It shouldn\u0027t really matter what owns the HitTestAggregator right? Is there a more appropriate name?",
+      "range": {
+        "startLine": 94,
+        "startChar": 6,
+        "endLine": 94,
+        "endChar": 36
+      },
+      "revId": "a06599db8815fb732f107d3ca41309d810715a04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "726ee7aa_7e5167f0",
+        "filename": "ui/message_center/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-26T15:34:17Z",
+      "side": 1,
+      "message": "I think it\u0027s //mojo/edk/system you need.",
+      "revId": "a06599db8815fb732f107d3ca41309d810715a04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
