@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f47a07d3_bb7e59c4",
+        "filename": "ios/chrome/browser/about_flags.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-01-26T23:21:21Z",
+      "side": 1,
+      "message": "Yes, the response in JS in not async now so that is where the new async part is being introduced as postMessage is explicitly asynchronous. However, I updated the name, PTAL.",
+      "parentUuid": "3edaa1f0_67470eb0",
+      "range": {
+        "startLine": 235,
+        "startChar": 19,
+        "endLine": 235,
+        "endChar": 24
+      },
+      "revId": "9889ab5ce09181ca7cd96997723b011f19e69529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90cb0bd7_b42593c0",
         "filename": "ios/web/web_state/js/resources/context_menu.js",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "9889ab5ce09181ca7cd96997723b011f19e69529",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee763bcc_8be45799",
+        "filename": "ios/web/web_state/js/resources/context_menu.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-01-26T23:21:21Z",
+      "side": 1,
+      "message": "Yes, great point. I\u0027ve added support for request ID.",
+      "parentUuid": "90cb0bd7_b42593c0",
+      "range": {
+        "startLine": 40,
+        "startChar": 12,
+        "endLine": 40,
+        "endChar": 30
+      },
+      "revId": "9889ab5ce09181ca7cd96997723b011f19e69529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "590a5d28_bf98331a",
+        "filename": "ios/web/web_state/js/resources/context_menu.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-01-26T23:21:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31e80be3_f55d4476",
+      "range": {
+        "startLine": 44,
+        "startChar": 29,
+        "endLine": 44,
+        "endChar": 35
+      },
+      "revId": "9889ab5ce09181ca7cd96997723b011f19e69529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc083681_f5b4c83a",
         "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "9889ab5ce09181ca7cd96997723b011f19e69529",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22dbd8d0_dc8896c5",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-01-26T23:21:21Z",
+      "side": 1,
+      "message": "I don\u0027t think we need multiple calls right now with current implementation of context menu gesture recognizer, but I agree that it would be better to wrap these values into an object so I did that and made this a collection as suggested.",
+      "parentUuid": "fc083681_f5b4c83a",
+      "range": {
+        "startLine": 66,
+        "startChar": 34,
+        "endLine": 66,
+        "endChar": 53
+      },
+      "revId": "9889ab5ce09181ca7cd96997723b011f19e69529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "d2e41f96_5f713cca",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-01-26T23:21:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "080d30ec_c433312e",
+      "range": {
+        "startLine": 117,
+        "startChar": 18,
+        "endLine": 117,
+        "endChar": 43
+      },
+      "revId": "9889ab5ce09181ca7cd96997723b011f19e69529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c15b403_b67b579c",
         "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
         "patchSetId": 5
@@ -137,6 +257,30 @@
       "revId": "9889ab5ce09181ca7cd96997723b011f19e69529",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddc92e59_2702bec7",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-01-26T23:21:21Z",
+      "side": 1,
+      "message": "Good point, no need for empty block. Done.",
+      "parentUuid": "8c15b403_b67b579c",
+      "range": {
+        "startLine": 374,
+        "startChar": 4,
+        "endLine": 374,
+        "endChar": 21
+      },
+      "revId": "9889ab5ce09181ca7cd96997723b011f19e69529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "2cb6b9f0_a60c2164",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-01-26T23:21:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3ea1288_fcb5a052",
+      "range": {
+        "startLine": 376,
+        "startChar": 32,
+        "endLine": 376,
+        "endChar": 39
+      },
+      "revId": "9889ab5ce09181ca7cd96997723b011f19e69529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a9f7cba_35bd662e",
         "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
         "patchSetId": 5
@@ -183,6 +351,30 @@
       "revId": "9889ab5ce09181ca7cd96997723b011f19e69529",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eac8fb9_c07aec57",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-01-26T23:21:21Z",
+      "side": 1,
+      "message": "I moved this to initialization.\n\nI don\u0027t think we need to remove the handler, all handlers are removed here:\nhttps://cs.chromium.org/chromium/src/ios/web/web_state/ui/crw_web_controller.mm?rcl\u003dd7cc06cf7fddbffe802be0e8637f2f93bb14cde3\u0026l\u003d3882\n\nand it actually DCHECKED when I tried to remove the handler in dealloc. (Maybe removing the handler isn\u0027t fully cleaning up everything?)",
+      "parentUuid": "7a9f7cba_35bd662e",
+      "range": {
+        "startLine": 385,
+        "startChar": 42,
+        "endLine": 385,
+        "endChar": 43
+      },
+      "revId": "9889ab5ce09181ca7cd96997723b011f19e69529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
