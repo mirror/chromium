@@ -16,6 +16,24 @@
       "revId": "c67646fb6096ac1d87b516b2eaf2eb9968d2da73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50d490b4_7923f319",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-26T21:11:08Z",
+      "side": 0,
+      "message": "I read through the bug, but my hope was that unconditionally calling applyOverrideConfiguration() would also work-around the OEM modifications. I certainly have my doubts, and so am hoping some time on canary will tell us.\n\nNote #1 - I had forgotten to call it unconditionally! I\u0027ve updated it now to call it for JB MR1 and above (where the method exists).\n\nNote #2 - I\u0027ve updated to be a bit more diligent and changed the would-be crash into a silent crash (while correcting mIsTablet).",
+      "parentUuid": "8e3e4ccb_53034188",
+      "revId": "c67646fb6096ac1d87b516b2eaf2eb9968d2da73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

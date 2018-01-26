@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0a661cb5_7377e5c0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-26T21:11:08Z",
+      "side": 1,
+      "message": "I think this is the cause of some bugs that I hope this change will address.\n\nUsing a regular context means that if your activity is running on an external display, you won\u0027t be properly querying if the device is a tablet (you\u0027d be checking if the external display is a tablet). This makes sense for \"DeviceFormFactor\", which is actually trying to identify the device itself. However, most code isn\u0027t actually curious about the device, but rather about the display relevant to an activity (and so shouldn\u0027t be using application context).",
+      "parentUuid": "fc74a658_73c6904b",
+      "range": {
+        "startLine": 110,
+        "startChar": 8,
+        "endLine": 110,
+        "endChar": 76
+      },
+      "revId": "a1b0c233489b9de6f023f0e012f41c347af83e1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebd52865_f9f8fee0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c4e935e4_84f7f93a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-26T21:11:08Z",
+      "side": 1,
+      "message": "It doesn\u0027t differ. This is just calculating it using the api DisplayAndroid provides.",
+      "parentUuid": "ebd52865_f9f8fee0",
+      "range": {
+        "startLine": 122,
+        "startChar": 20,
+        "endLine": 122,
+        "endChar": 86
+      },
+      "revId": "a1b0c233489b9de6f023f0e012f41c347af83e1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc94f1ea_0b41227f",
         "filename": "ui/android/java/src/org/chromium/ui/base/DeviceFormFactor.java",
         "patchSetId": 3
@@ -59,6 +107,24 @@
       "writtenOn": "2018-01-26T16:41:18Z",
       "side": 1,
       "message": "This class basically isn\u0027t doing anything anymore.. is it still needed or should everything be collapsed into DisplayAndroid? Or is this still needed to communicate with native?",
+      "revId": "a1b0c233489b9de6f023f0e012f41c347af83e1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a13165d2_da8c0e69",
+        "filename": "ui/android/java/src/org/chromium/ui/base/DeviceFormFactor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-26T21:11:08Z",
+      "side": 1,
+      "message": "It\u0027s needed because it\u0027s called by native, and also by downstream. If this sticks, it might make sense to refactor it away (probably by moving the isTablet(context) static to DisplayAndroid.",
+      "parentUuid": "bc94f1ea_0b41227f",
       "revId": "a1b0c233489b9de6f023f0e012f41c347af83e1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
