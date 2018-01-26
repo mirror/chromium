@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed5cbc38_3b456029",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-26T03:29:11Z",
+      "side": 1,
+      "message": "Why does this order need to change? Can you add a comment here documenting the ordering expectations in the api?",
+      "revId": "757acaa9a917a71d9953869d33b60759c9ffb6bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e878f73e_9464a148",
+        "filename": "components/viz/service/frame_sinks/direct_layer_tree_frame_sink.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-26T03:29:11Z",
+      "side": 1,
+      "message": "Can you put it in a place that can then be easily used from ClientLayerTreeFrameSink in the next version of viz-hit-test once gklassen@\u0027s CL [1] lands? Maybe in //components/viz/common/hit_test?\n\n[1] https://chromium-review.googlesource.com/c/chromium/src/+/806688",
+      "revId": "757acaa9a917a71d9953869d33b60759c9ffb6bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bb302eb_3a4f027d",
+        "filename": "components/viz/service/frame_sinks/direct_layer_tree_frame_sink_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-26T03:29:11Z",
+      "side": 1,
+      "message": "Instead of doing this override (and making the fn virtual), can you instead inspect the HitTestManager in the test?",
+      "revId": "757acaa9a917a71d9953869d33b60759c9ffb6bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
