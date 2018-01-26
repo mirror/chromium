@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ec10836c_fd5732df",
+        "filename": "third_party/WebKit/Source/core/messaging/BUILD.gn",
+        "patchSetId": 21
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1236784
+      },
+      "writtenOn": "2018-01-26T17:43:14Z",
+      "side": 1,
+      "message": "I haven\u0027t been able to find much, but it does seem like the thing to do. I\u0027ve added the configs back.",
+      "parentUuid": "115a3ea6_52a7a68f",
+      "revId": "7dda28163eac26c981ecd71a6318894b6867d3b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4535344e_b1403636",
         "filename": "third_party/WebKit/Source/core/messaging/BlinkTransferableMessage.h",
         "patchSetId": 21
@@ -105,6 +123,30 @@
       "revId": "7dda28163eac26c981ecd71a6318894b6867d3b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64034759_8edb6519",
+        "filename": "third_party/WebKit/Source/core/messaging/BlinkTransferableMessage.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1236784
+      },
+      "writtenOn": "2018-01-26T17:43:14Z",
+      "side": 1,
+      "message": "You\u0027re right, those fields aren\u0027t necessary. Done.",
+      "parentUuid": "bef92d08_a0ef8577",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 47
+      },
+      "revId": "7dda28163eac26c981ecd71a6318894b6867d3b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
