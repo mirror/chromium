@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44c78f90_1bf886cd",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-26T14:40:40Z",
+      "side": 1,
+      "message": "Should this say SingleDeviceCandidateSet::bool_sets_?",
+      "revId": "0d6f7f908f35c354257fe8525ce0977203862c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e5497e4_eec3e7d6",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-26T14:40:40Z",
+      "side": 1,
+      "message": "Some entries of bool_sets_ are in the map and some are outside. Would it make sense to DCHECK that all entries have been set and and no entries have been set twice (overwriting the old value)?\n\nWould it make sense to have different bool_sets_ for different categories of constraints?",
+      "revId": "0d6f7f908f35c354257fe8525ce0977203862c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "781e06fd_8c6bf3df",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-26T14:40:40Z",
+      "side": 1,
+      "message": "Would it make sense to have these part of the map above?",
+      "revId": "0d6f7f908f35c354257fe8525ce0977203862c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed740b32_abae1741",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-26T14:40:40Z",
+      "side": 1,
+      "message": "Would an enum make this more clear?",
+      "revId": "0d6f7f908f35c354257fe8525ce0977203862c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
