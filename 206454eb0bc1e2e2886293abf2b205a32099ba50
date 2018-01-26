@@ -46,6 +46,30 @@
       "revId": "206454eb0bc1e2e2886293abf2b205a32099ba50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4376885e_3fbf912d",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 6658,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-26T16:41:11Z",
+      "side": 0,
+      "message": "I am not sure to understand, so I here is what I am understanding:\n\nThe behavior after this CL will be:\nCommitNavigation: Set the current state.\nDidCommitNavigation: Update the current state.\n\nWhat you would like to do is:\nCommitNavigation: Maybe reset/clear the state.\nDidCommitNavigation: Update the current state.\n\nIs it correct?\n\nHow it works is still a bit unclear to me. If you want, after this CL, I can try to understand and clean all of this. I think it would be worth it.\nThere are already a few layout test in http/tests/history/ with an incorrect behavior.\nFor instance:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/http/tests/history/redirect-js-location-assign-2-seconds-expected.txt",
+      "parentUuid": "e78682d3_4af335b3",
+      "range": {
+        "startLine": 6658,
+        "startChar": 3,
+        "endLine": 6658,
+        "endChar": 0
+      },
+      "revId": "206454eb0bc1e2e2886293abf2b205a32099ba50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
