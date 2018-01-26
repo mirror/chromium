@@ -175,6 +175,24 @@
       "revId": "fc4613e980f7e2af2c049fc1f22aeeef1ca64e26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0da99e34_63356f91",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSummaryElement.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-26T23:22:32Z",
+      "side": 1,
+      "message": "Yeah, I think it makes most sense to leave it as it was for now. We are different from Gecko in styling summary in several ways fwiw.",
+      "parentUuid": "e03ea103_b706be47",
+      "revId": "fc4613e980f7e2af2c049fc1f22aeeef1ca64e26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
