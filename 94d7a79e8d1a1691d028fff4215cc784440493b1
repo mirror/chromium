@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a06c8e2_5a3dab3f",
+        "filename": "gpu/ipc/common/gpu_memory_buffer_support.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-01-26T21:21:58Z",
+      "side": 1,
+      "message": "YUV formats for SCANOUT might not make sense though, since you can write to them with the GPU.",
+      "revId": "94d7a79e8d1a1691d028fff4215cc784440493b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
