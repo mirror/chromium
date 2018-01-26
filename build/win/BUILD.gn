@@ -21,6 +21,7 @@ if (is_win) {
       script,
     ]
     outputs = [
+      "$root_out_dir/cdb/api-ms-win-eventing-provider-l1-1-0.dll",
       "$root_out_dir/cdb/cdb.exe",
       "$root_out_dir/cdb/dbgeng.dll",
       "$root_out_dir/cdb/dbghelp.dll",

@@ -83,6 +83,7 @@ def _CopyCDBToOutput(output_dir, target_arch):
   _ConditionalMkdir(dst_winxp_dir)
   # Note that the outputs from the "copy_cdb_to_output" target need to
   # be kept in sync with this list.
+  _CopyImpl('api-ms-win-eventing-provider-l1-1-0.dll', output_dir, src_dir)
   _CopyImpl('cdb.exe', output_dir, src_dir)
   _CopyImpl('dbgeng.dll', output_dir, src_dir)
   _CopyImpl('dbghelp.dll', output_dir, src_dir)
