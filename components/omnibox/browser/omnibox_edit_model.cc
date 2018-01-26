@@ -194,15 +194,15 @@ void OmniboxEditModel::RestoreState(const base::string16& url,
 AutocompleteMatch OmniboxEditModel::CurrentMatch(
     GURL* alternate_nav_url) const {
   // If we have a valid match use it. Otherwise get one for the current text.
-  AutocompleteMatch match = omnibox_controller_->current_match();
+  AutocompleteMatch* match = omnibox_controller_->nc_current_match();
 
-  if (!match.destination_url.is_valid()) {
-    GetInfoForCurrentText(&match, alternate_nav_url);
+  if (!match->destination_url.is_valid()) {
+    GetInfoForCurrentText(match, alternate_nav_url);
   } else if (alternate_nav_url) {
-    *alternate_nav_url = AutocompleteResult::ComputeAlternateNavUrl(
-        input_, match);
+    *alternate_nav_url =
+        AutocompleteResult::ComputeAlternateNavUrl(input_, *match);
   }
-  return match;
+  return *match;
 }
 
 bool OmniboxEditModel::SetPermanentText(const base::string16& text) {
