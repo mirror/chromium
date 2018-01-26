@@ -22,6 +22,7 @@
 
 // TODO(yukishiino): HTMLEmbedElement should not have [OverrideBuiltins].
 [
+    HTMLConstructor,
     OverrideBuiltins,
     ActiveScriptWrappable
 ] interface HTMLEmbedElement : HTMLElement {

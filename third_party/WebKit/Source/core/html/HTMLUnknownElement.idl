@@ -30,6 +30,7 @@
 // https://html.spec.whatwg.org/#elements-in-the-dom
 
 [
+    HTMLConstructor,
     Exposed=Window
 ] interface HTMLUnknownElement : HTMLElement {
 };
