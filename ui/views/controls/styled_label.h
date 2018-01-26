@@ -15,6 +15,7 @@
 #include "ui/gfx/font_list.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/gfx/range/range.h"
+#include "ui/gfx/text_constants.h"
 #include "ui/views/controls/link_listener.h"
 #include "ui/views/style/typography.h"
 #include "ui/views/view.h"
@@ -62,6 +63,10 @@ class VIEWS_EXPORT StyledLabel : public View, public LinkListener {
 
     // If set, the whole range will be put on a single line.
     bool disable_line_wrapping = false;
+
+    bool has_custom_view = false;
+    // Views must own themselves.
+    base::Optional<View*> custom_view;
   };
 
   // Note that any trailing whitespace in |text| will be trimmed.
@@ -125,6 +130,9 @@ class VIEWS_EXPORT StyledLabel : public View, public LinkListener {
   // LinkListener implementation:
   void LinkClicked(Link* source, int event_flags) override;
 
+  // Sets the horizontal alignment; the argument value is mirrored in RTL UI.
+  void SetHorizontalAlignment(gfx::HorizontalAlignment alignment);
+
  private:
   struct StyleRange {
     StyleRange(const gfx::Range& range,
@@ -155,6 +163,10 @@ class VIEWS_EXPORT StyledLabel : public View, public LinkListener {
   // |width_at_last_size_calculation_|. Returns the needed size.
   gfx::Size CalculateAndDoLayout(int width, bool dry_run);
 
+  int HorizontalAdjustment(int position, int width) const;
+
+  void AdjustViewsPosition(int x, int width, int max_line_height);
+
   // The text to display.
   base::string16 text_;
 
@@ -174,6 +186,9 @@ class VIEWS_EXPORT StyledLabel : public View, public LinkListener {
   // that correspond to ranges with is_link style set will be added to the map.
   std::map<View*, gfx::Range> link_targets_;
 
+  // Owns the views.
+  std::map<StyleRange, std::unique_ptr<View>> range_custom_view_;
+
   // This variable saves the result of the last GetHeightForWidth call in order
   // to avoid repeated calculation.
   mutable gfx::Size calculated_size_;
@@ -187,6 +202,13 @@ class VIEWS_EXPORT StyledLabel : public View, public LinkListener {
   // Controls whether the text is automatically re-colored to be readable on the
   // background.
   bool auto_color_readability_enabled_;
+
+  // Horizontal alignment of the views. The default is to align left if the
+  // application UI is LTR and right if RTL.
+  gfx::HorizontalAlignment horizontal_alignment_ = gfx::ALIGN_LEFT;
+
+  // Tempolarily references to the views in a row. For views alignments.
+  std::vector<View*> views_in_a_line_;
 
   DISALLOW_COPY_AND_ASSIGN(StyledLabel);
 };
