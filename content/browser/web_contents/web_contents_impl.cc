@@ -5418,27 +5418,31 @@ void WebContentsImpl::RendererUnresponsive(
   for (auto& observer : observers_)
     observer.OnRendererUnresponsive(hung_process);
 
-  // Don't show hung renderer dialog for a swapped out RVH.
-  if (render_widget_host != GetRenderViewHost()->GetWidget())
-    return;
-
   if (ShouldIgnoreUnresponsiveRenderer())
     return;
 
-  if (!GetRenderViewHost() || !GetRenderViewHost()->IsRenderViewLive())
+  RenderViewHostImpl* render_view_host =
+      RenderViewHostImpl::From(render_widget_host);
+  if (!render_view_host || !render_view_host->IsRenderViewLive() ||
+      !render_view_host->is_active())
     return;
 
   if (delegate_)
-    delegate_->RendererUnresponsive(this);
+    delegate_->RendererUnresponsive(this, hung_process);
 }
 
 void WebContentsImpl::RendererResponsive(
     RenderWidgetHostImpl* render_widget_host) {
-  if (render_widget_host != GetRenderViewHost()->GetWidget())
+  RenderProcessHost* hung_process = render_widget_host->GetProcess();
+
+  RenderViewHostImpl* render_view_host =
+      RenderViewHostImpl::From(render_widget_host);
+  if (!render_view_host || !render_view_host->IsRenderViewLive() ||
+      !render_view_host->is_active())
     return;
 
   if (delegate_)
-    delegate_->RendererResponsive(this);
+    delegate_->RendererResponsive(this, hung_process);
 }
 
 void WebContentsImpl::BeforeUnloadFiredFromRenderManager(
