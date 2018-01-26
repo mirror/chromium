@@ -129,11 +129,18 @@ gfx::Size CalculateSizeForMipLevel(const DrawImage& draw_image, int mip_level) {
 // draw/scale can be done directly, calls directly into PaintImage::Decode.
 // if not, decodes to a compatible temporary pixmap and then converts that into
 // the |target_pixmap|.
-bool DrawAndScaleImage(const DrawImage& draw_image, SkPixmap* target_pixmap) {
-  // We don't want to perform any color conversion here, so create a new pixmap
-  // with a null colorspace that shares |target_pixmap|'s memory.
+bool DrawAndScaleImage(const DrawImage& draw_image,
+                       SkPixmap* target_pixmap,
+                       bool convert_color_space) {
+  // We will pass color_space explicitly to PaintImage::Decode, so pull it out
+  // of the pixmap and populate a stand-alone value if conversion is desired.
+  // note: To pull colorspace out of the pixmap, we create a new pixmap with
+  // null colorspace but the same memory pointer.
   SkPixmap pixmap(target_pixmap->info().makeColorSpace(nullptr),
                   target_pixmap->writable_addr(), target_pixmap->rowBytes());
+  sk_sp<SkColorSpace> color_space =
+      convert_color_space ? draw_image.target_color_space().ToSkColorSpace()
+                          : nullptr;
 
   const PaintImage& paint_image = draw_image.paint_image();
   SkISize supported_size =
@@ -141,8 +148,15 @@ bool DrawAndScaleImage(const DrawImage& draw_image, SkPixmap* target_pixmap) {
 
   if (supported_size == pixmap.bounds().size()) {
     SkImageInfo info = pixmap.info();
-    return paint_image.Decode(pixmap.writable_addr(), &info, nullptr,
-                              draw_image.frame_index());
+    if (!paint_image.Decode(pixmap.writable_addr(), &info, color_space,
+                            draw_image.frame_index())) {
+      return false;
+    }
+
+    if (convert_color_space)
+      target_pixmap->setColorSpace(std::move(color_space));
+
+    return true;
   }
 
   // If we can't decode/scale directly, we will handle this in up to 3 steps.
@@ -154,8 +168,8 @@ bool DrawAndScaleImage(const DrawImage& draw_image, SkPixmap* target_pixmap) {
     return false;
   SkPixmap decode_pixmap(decode_bitmap.info(), decode_bitmap.getPixels(),
                          decode_bitmap.rowBytes());
-  if (!paint_image.Decode(decode_pixmap.writable_addr(), &decode_info, nullptr,
-                          draw_image.frame_index())) {
+  if (!paint_image.Decode(decode_pixmap.writable_addr(), &decode_info,
+                          color_space, draw_image.frame_index())) {
     return false;
   }
 
@@ -180,7 +194,13 @@ bool DrawAndScaleImage(const DrawImage& draw_image, SkPixmap* target_pixmap) {
   // Step 3: Copy the temporary scaled pixmap to |pixmap|, performing
   // color type conversion. We can't do the color conversion in step 1, as
   // the scale in step 2 must happen in kN32_SkColorType.
-  return scaled_pixmap.readPixels(pixmap);
+  if (!scaled_pixmap.readPixels(pixmap))
+    return false;
+
+  if (convert_color_space)
+    scaled_pixmap.setColorSpace(std::move(color_space));
+
+  return true;
 }
 
 // Returns the GL texture ID backing the given SkImage.
@@ -1311,7 +1331,10 @@ void GpuImageDecodeCache::DecodeImageIfNecessary(const DrawImage& draw_image,
         CreateImageInfoForDrawImage(draw_image, image_data->mip_level);
     SkPixmap pixmap(image_info, backing_memory->data(),
                     image_info.minRowBytes());
-    if (!DrawAndScaleImage(draw_image, &pixmap)) {
+    // If this is a kCpu image, we should color convert during decode. For kGPU
+    // or kTransferCache images this is handled during upload.
+    bool should_color_convert = image_data->mode == DecodedDataMode::kCpu;
+    if (!DrawAndScaleImage(draw_image, &pixmap, should_color_convert)) {
       DLOG(ERROR) << "DrawAndScaleImage failed.";
       backing_memory->Unlock();
       backing_memory.reset();
@@ -1384,26 +1407,27 @@ void GpuImageDecodeCache::UploadImageIfNecessary(const DrawImage& draw_image,
   } else {
     DCHECK(!use_transfer_cache_);
     sk_sp<SkImage> uploaded_image = image_data->decode.image();
+    image_data->decode.mark_used();
     if (image_data->mode == DecodedDataMode::kGpu) {
       base::AutoUnlock unlock(lock_);
       uploaded_image =
           uploaded_image->makeTextureImage(context_->GrContext(), nullptr);
-    }
-    image_data->decode.mark_used();
 
-    if (uploaded_image && SupportsColorSpaces() &&
-        draw_image.target_color_space().IsValid()) {
-      TRACE_EVENT0("cc", "GpuImageDecodeCache::UploadImage - color conversion");
-      sk_sp<SkImage> pre_converted_image = uploaded_image;
-      uploaded_image = uploaded_image->makeColorSpace(
-          draw_image.target_color_space().ToSkColorSpace(),
-          SkTransferFunctionBehavior::kIgnore);
+      if (uploaded_image && SupportsColorSpaces() &&
+          draw_image.target_color_space().IsValid()) {
+        TRACE_EVENT0("cc",
+                     "GpuImageDecodeCache::UploadImage - color conversion");
+        sk_sp<SkImage> pre_converted_image = uploaded_image;
+        uploaded_image = uploaded_image->makeColorSpace(
+            draw_image.target_color_space().ToSkColorSpace(),
+            SkTransferFunctionBehavior::kIgnore);
 
-      // If we created a new image while converting colorspace, we should
-      // destroy the previous image without caching it.
-      if (uploaded_image != pre_converted_image)
-        DeleteSkImageAndPreventCaching(context_,
-                                       std::move(pre_converted_image));
+        // If we created a new image while converting colorspace, we should
+        // destroy the previous image without caching it.
+        if (uploaded_image != pre_converted_image)
+          DeleteSkImageAndPreventCaching(context_,
+                                         std::move(pre_converted_image));
+      }
     }
 
     // At-raster may have decoded this while we were unlocked. If so, ignore our
@@ -1674,6 +1698,15 @@ bool GpuImageDecodeCache::IsInInUseCacheForTesting(
     const DrawImage& image) const {
   auto found = in_use_cache_.find(InUseCacheKey::FromDrawImage(image));
   return found != in_use_cache_.end();
+}
+
+sk_sp<SkImage> GpuImageDecodeCache::GetSWImageDecodeForTesting(
+    const DrawImage& image) {
+  base::AutoLock lock(lock_);
+  auto found = persistent_cache_.Peek(image.frame_key());
+  DCHECK(found != persistent_cache_.end());
+  ImageData* image_data = found->second.get();
+  return image_data->decode.image();
 }
 
 void GpuImageDecodeCache::OnMemoryStateChange(base::MemoryState state) {
