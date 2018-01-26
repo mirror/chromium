@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "9a2da145_4cd60252",
+        "filename": "chrome/browser/accessibility/accessibility_extension_api.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-26T23:19:55Z",
+      "side": 1,
+      "message": "nit: Consider adding a comment saying it\u0027s OK that this always goes to the primary monitor\u0027s event sink because this is a keyboard event. (I presume this works OK for multiple monitors?)",
+      "revId": "6bf013ba21f79a4f66eb87aa3f843561973bbc66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0336424f_9e04a0aa",
+        "filename": "chrome/browser/accessibility/accessibility_extension_api.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-26T23:19:55Z",
+      "side": 1,
+      "message": "dmazzoni FYI, it looks like mustash is going to need a way for extensions to inject arbitrary events into the window server. I commented in your doc.",
+      "revId": "6bf013ba21f79a4f66eb87aa3f843561973bbc66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0abbbaa3_29b2482e",
         "filename": "chrome/common/extensions/api/accessibility_private.json",
         "patchSetId": 6
