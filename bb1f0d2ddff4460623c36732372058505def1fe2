@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b706f713_92162f46",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1145,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-26T00:41:48Z",
+      "side": 1,
+      "message": "No; I walked through this code and am convicned that it\u0027s unnecessary. This only happens when a complete update is requested. Connection state transitions will always trigger UpdateNetworkServiceProperty. A sort will get triggered (line 1138), but we don\u0027t need to ensure cellular here.",
+      "parentUuid": "5d1c6fd3_32218802",
+      "revId": "bb1f0d2ddff4460623c36732372058505def1fe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9020c3c8_336240ad",
         "filename": "chromeos/network/network_state_handler.cc",
         "patchSetId": 2
@@ -50,6 +68,24 @@
       "revId": "bb1f0d2ddff4460623c36732372058505def1fe2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0433957d_3e2b1553",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1650,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-26T00:41:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d9b30da_0caf7505",
+      "revId": "bb1f0d2ddff4460623c36732372058505def1fe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
