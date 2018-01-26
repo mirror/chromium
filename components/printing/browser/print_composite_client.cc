@@ -28,12 +28,13 @@ void PrintCompositeClient::DoCompositePageToPdf(
     int document_cookie,
     uint64_t frame_guid,
     int page_num,
+    bool is_draft,
     base::SharedMemoryHandle handle,
     uint32_t data_size,
     const ContentToFrameMap& subframe_content_map,
     mojom::PdfCompositor::CompositePageToPdfCallback callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  auto& compositor = GetCompositeRequest(document_cookie, page_num);
+  auto& compositor = GetCompositeRequest(document_cookie, page_num, is_draft);
 
   DCHECK(data_size);
   mojo::ScopedSharedBufferHandle buffer_handle = mojo::WrapSharedMemoryHandle(
@@ -46,7 +47,7 @@ void PrintCompositeClient::DoCompositePageToPdf(
       frame_guid, page_num, std::move(buffer_handle), subframe_content_map,
       base::BindOnce(&PrintCompositeClient::OnDidCompositePageToPdf,
                      base::Unretained(this), page_num, document_cookie,
-                     std::move(callback)));
+                     is_draft, std::move(callback)));
 }
 
 void PrintCompositeClient::DoCompositeDocumentToPdf(
@@ -76,10 +77,12 @@ void PrintCompositeClient::DoCompositeDocumentToPdf(
 void PrintCompositeClient::OnDidCompositePageToPdf(
     int page_num,
     int document_cookie,
+    bool is_draft,
     printing::mojom::PdfCompositor::CompositePageToPdfCallback callback,
     printing::mojom::PdfCompositor::Status status,
     mojo::ScopedSharedBufferHandle handle) {
-  RemoveCompositeRequest(document_cookie, page_num);
+  if (!is_draft)
+    RemoveCompositeRequest(document_cookie, page_num);
   std::move(callback).Run(status, std::move(handle));
 }
 
@@ -94,9 +97,13 @@ void PrintCompositeClient::OnDidCompositeDocumentToPdf(
 
 mojom::PdfCompositorPtr& PrintCompositeClient::GetCompositeRequest(
     int cookie,
-    base::Optional<int> page_num) {
-  int page_no =
-      page_num == base::nullopt ? kPageNumForWholeDoc : page_num.value();
+    base::Optional<int> page_num,
+    bool for_draft) {
+  // When page_num is not provided, it is for the whole document.
+  // Also, in draft mode, reuse the document's instance since they share
+  // contents.
+  int page_no = page_num == base::nullopt || for_draft ? kPageNumForWholeDoc
+                                                       : page_num.value();
   std::pair<int, int> key = std::make_pair(cookie, page_no);
   auto iter = compositor_map_.find(key);
   if (iter != compositor_map_.end())
