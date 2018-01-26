@@ -18,6 +18,8 @@ import org.chromium.chrome.browser.webapps.WebApkServiceClient;
 @TargetApi(Build.VERSION_CODES.O)
 public class NotificationBuilderForO extends NotificationBuilder {
     private static final String TAG = "NotifBuilderForO";
+    private ChannelsInitializer mChannelsInitializer;
+    private String mChannelId;
 
     public NotificationBuilderForO(
             Context context, String channelId, ChannelsInitializer channelsInitializer) {
@@ -29,11 +31,19 @@ public class NotificationBuilderForO extends NotificationBuilder {
             return;
         }
 
+        mChannelsInitializer = channelsInitializer;
+        mChannelId = channelId;
+
         // If the channel ID matches {@link WebApkServiceClient#CHANNEL_ID_WEBAPKS}, we don't create
         // the channel in Chrome. Instead, the channel will be created in WebAPKs.
         if (!TextUtils.equals(channelId, WebApkServiceClient.CHANNEL_ID_WEBAPKS)) {
             channelsInitializer.ensureInitialized(channelId);
         }
         mBuilder.setChannelId(channelId);
+    }
+
+    public NotificationBuilderForO setPriorityImportance(int importance) {
+        mChannelsInitializer.setImportance(mChannelId, importance);
+        return this;
     }
 }

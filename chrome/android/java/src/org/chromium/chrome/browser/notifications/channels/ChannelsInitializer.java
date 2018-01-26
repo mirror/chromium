@@ -93,4 +93,8 @@ public class ChannelsInitializer {
         }
         mNotificationManager.createNotificationChannel(channel);
     }
+
+    public void setImportance(String channelId, int importance) {
+        mNotificationManager.getNotificationChannel(channelId).setImportance(importance);
+    }
 }
