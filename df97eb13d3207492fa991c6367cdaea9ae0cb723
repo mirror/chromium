@@ -308,6 +308,30 @@
     },
     {
       "key": {
+        "uuid": "d241b8fd_a4b73394",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-26T21:18:11Z",
+      "side": 1,
+      "message": "Thanks!  I\u0027m generally fine with either - I just always forget what is expected in our code.  :)",
+      "parentUuid": "89f9564a_96c8b0a8",
+      "range": {
+        "startLine": 248,
+        "startChar": 64,
+        "endLine": 248,
+        "endChar": 69
+      },
+      "revId": "df97eb13d3207492fa991c6367cdaea9ae0cb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1de93ab3_f5499bb7",
         "filename": "chrome_elf/whitelist/whitelist_log.cc",
         "patchSetId": 7

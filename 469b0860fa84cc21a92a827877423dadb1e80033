@@ -16,6 +16,24 @@
       "revId": "469b0860fa84cc21a92a827877423dadb1e80033",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ec149a9_10f46caa",
+        "filename": "chrome_elf/whitelist/whitelist_log_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-26T21:18:11Z",
+      "side": 1,
+      "message": "Yes - thanks. :)",
+      "parentUuid": "99ee4a67_d5b724d3",
+      "revId": "469b0860fa84cc21a92a827877423dadb1e80033",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

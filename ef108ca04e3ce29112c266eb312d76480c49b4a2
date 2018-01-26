@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ea2ac5b9_cc37ad9a",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-26T21:18:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4d2402b_bcfc9fdb",
+      "range": {
+        "startLine": 1,
+        "startChar": 16,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "ef108ca04e3ce29112c266eb312d76480c49b4a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dea04e99_64adcecd",
         "filename": "chrome_elf/whitelist/whitelist_log.cc",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1ebd91e1_41f54c9d",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-26T21:18:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dea04e99_64adcecd",
+      "range": {
+        "startLine": 7,
+        "startChar": 9,
+        "endLine": 7,
+        "endChar": 20
+      },
+      "revId": "ef108ca04e3ce29112c266eb312d76480c49b4a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ee233d3_c0668691",
         "filename": "chrome_elf/whitelist/whitelist_log.cc",
         "patchSetId": 9
@@ -62,6 +110,24 @@
       "revId": "ef108ca04e3ce29112c266eb312d76480c49b4a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5102a7ef_3022be28",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-26T21:18:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ee233d3_c0668691",
+      "revId": "ef108ca04e3ce29112c266eb312d76480c49b4a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "0889461d_dde80237",
+        "filename": "chrome_elf/whitelist/whitelist_log.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-26T21:18:11Z",
+      "side": 1,
+      "message": "Done.  Time passing too fast!",
+      "parentUuid": "92704880_96966e93",
+      "range": {
+        "startLine": 1,
+        "startChar": 16,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "ef108ca04e3ce29112c266eb312d76480c49b4a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d6b2768_774db2b3",
         "filename": "chrome_elf/whitelist/whitelist_log.h",
         "patchSetId": 9
@@ -102,6 +192,24 @@
       "revId": "ef108ca04e3ce29112c266eb312d76480c49b4a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bd48735_0fcc7954",
+        "filename": "chrome_elf/whitelist/whitelist_log.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-26T21:18:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d6b2768_774db2b3",
+      "revId": "ef108ca04e3ce29112c266eb312d76480c49b4a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "b3c76613_3427557f",
+        "filename": "chrome_elf/whitelist/whitelist_log_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-26T21:18:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d18204d4_0c1e5441",
+      "range": {
+        "startLine": 1,
+        "startChar": 16,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "ef108ca04e3ce29112c266eb312d76480c49b4a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b22c7124_2e72608b",
         "filename": "chrome_elf/whitelist/whitelist_log_unittest.cc",
         "patchSetId": 9
@@ -142,6 +274,24 @@
       "revId": "ef108ca04e3ce29112c266eb312d76480c49b4a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2b96301_3ee0990b",
+        "filename": "chrome_elf/whitelist/whitelist_log_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-26T21:18:11Z",
+      "side": 1,
+      "message": "Good one.  unique_ptr for scoped cleanup.",
+      "parentUuid": "b22c7124_2e72608b",
+      "revId": "ef108ca04e3ce29112c266eb312d76480c49b4a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -162,6 +312,24 @@
     },
     {
       "key": {
+        "uuid": "bd6db14d_1b700699",
+        "filename": "chrome_elf/whitelist/whitelist_log_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-26T21:18:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8bffcb6_d9910b20",
+      "revId": "ef108ca04e3ce29112c266eb312d76480c49b4a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b617457_2680dc26",
         "filename": "chrome_elf/whitelist/whitelist_log_unittest.cc",
         "patchSetId": 9
@@ -179,6 +347,24 @@
     },
     {
       "key": {
+        "uuid": "0c494cf2_bb18918d",
+        "filename": "chrome_elf/whitelist/whitelist_log_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-26T21:18:11Z",
+      "side": 1,
+      "message": "Ok, I\u0027ve created a NotificationHandlerParam struct that is passed to the thread as lpParam.\n\nI don\u0027t actually think adding this layer(s) of base/OO helps at all in platform-specific code (in fact it\u0027s a net negative) -\u003e but I know it\u0027s our coding standard to use base wherever possible.  Done!",
+      "parentUuid": "9b617457_2680dc26",
+      "revId": "ef108ca04e3ce29112c266eb312d76480c49b4a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27e04245_97d343b8",
         "filename": "chrome_elf/whitelist/whitelist_packed_format.h",
         "patchSetId": 9
@@ -193,6 +379,24 @@
       "revId": "ef108ca04e3ce29112c266eb312d76480c49b4a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c994ccb7_61815c36",
+        "filename": "chrome_elf/whitelist/whitelist_packed_format.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-26T21:18:11Z",
+      "side": 1,
+      "message": "I\u0027ve flipped order for consistency across my code.  windows.h at the top.",
+      "parentUuid": "27e04245_97d343b8",
+      "revId": "ef108ca04e3ce29112c266eb312d76480c49b4a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
