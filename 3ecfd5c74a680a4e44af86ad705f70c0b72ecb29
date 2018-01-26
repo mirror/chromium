@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15b4c090_36cedaec",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-26T21:32:36Z",
+      "side": 1,
+      "message": "nit: default value doesn\u0027t make sense when const",
+      "range": {
+        "startLine": 65,
+        "startChar": 23,
+        "endLine": 65,
+        "endChar": 26
+      },
+      "revId": "3ecfd5c74a680a4e44af86ad705f70c0b72ecb29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e5a5cf7_0cd31503",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-26T21:32:36Z",
+      "side": 1,
+      "message": "nit: default value for unique_ptr is already nullptr. also, \" \u003d nullptr;\" is preferred over \"{nullptr}\" in chromium code, I think.",
+      "range": {
+        "startLine": 67,
+        "startChar": 63,
+        "endLine": 67,
+        "endChar": 72
+      },
+      "revId": "3ecfd5c74a680a4e44af86ad705f70c0b72ecb29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50ad095c_9da39584",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-26T21:32:36Z",
+      "side": 1,
+      "message": "this will only be called when we\u0027re actively capturing the desktop, right? asking as we need to be sure that animation observers don\u0027t exist unnecessarily..",
+      "revId": "3ecfd5c74a680a4e44af86ad705f70c0b72ecb29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b40929e_13e35f32",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-26T21:32:36Z",
+      "side": 1,
+      "message": "nit: no need to repeat \"ERROR\" in the message",
+      "range": {
+        "startLine": 180,
+        "startChar": 19,
+        "endLine": 180,
+        "endChar": 24
+      },
+      "revId": "3ecfd5c74a680a4e44af86ad705f70c0b72ecb29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bab6021e_d488d0c5",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-26T21:32:36Z",
+      "side": 1,
+      "message": "is this scaling always needed? maybe leave a comment here about avoiding this copy from desktop texture to GMB texture and instead capture directly to GMB texture when no scaling is needed?",
+      "revId": "3ecfd5c74a680a4e44af86ad705f70c0b72ecb29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
