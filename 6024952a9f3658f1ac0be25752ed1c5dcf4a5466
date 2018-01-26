@@ -16,6 +16,24 @@
       "revId": "6024952a9f3658f1ac0be25752ed1c5dcf4a5466",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae0dc9d8_946a8f71",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-26T16:16:58Z",
+      "side": 1,
+      "message": "Putting lost first means I can lost || evict, I like that, I reordered the if/else. Its exclusive with the canlock so changing the order doesn\u0027t cause a problem.",
+      "parentUuid": "430fbff2_1fbc6964",
+      "revId": "6024952a9f3658f1ac0be25752ed1c5dcf4a5466",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
