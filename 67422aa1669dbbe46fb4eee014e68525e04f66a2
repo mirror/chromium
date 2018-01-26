@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "565825a1_343d3eac",
+        "filename": "chromeos/network/onc/onc_translator_onc_to_shill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1149149
+      },
+      "writtenOn": "2018-01-26T00:11:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14bab545_31cd0a96",
+      "revId": "67422aa1669dbbe46fb4eee014e68525e04f66a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78415a7f_0bbf185a",
         "filename": "chromeos/network/onc/onc_translator_onc_to_shill.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0ab0274e_4592c5a7",
+        "filename": "chromeos/network/onc/onc_translator_onc_to_shill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1149149
+      },
+      "writtenOn": "2018-01-26T00:11:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78415a7f_0bbf185a",
+      "revId": "67422aa1669dbbe46fb4eee014e68525e04f66a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "210fa283_23d86dd7",
         "filename": "chromeos/network/onc/onc_translator_shill_to_onc.cc",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-25T21:02:41Z",
       "side": 1,
       "message": "combine ifs",
+      "revId": "67422aa1669dbbe46fb4eee014e68525e04f66a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f5ae29d_c732115f",
+        "filename": "chromeos/network/onc/onc_translator_shill_to_onc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 1149149
+      },
+      "writtenOn": "2018-01-26T00:11:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "210fa283_23d86dd7",
       "revId": "67422aa1669dbbe46fb4eee014e68525e04f66a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
