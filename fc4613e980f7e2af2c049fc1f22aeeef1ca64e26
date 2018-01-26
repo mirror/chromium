@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6d3ab663_aa4b87a3",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/csslayout/at-supports-rule-insecure-context.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-26T19:13:57Z",
+      "side": 1,
+      "message": "Its not in WPT because the secure-context/insecure-context split isn\u0027t in the standard. I\u0027ve done this prematurely if we need to ship this on secure-context only. See css-paint-api:\nhttps://groups.google.com/a/chromium.org/d/msg/blink-dev/Jex3idOld48/VUYks4U4BAAJ",
+      "parentUuid": "12299eea_8cfd4057",
+      "revId": "fc4613e980f7e2af2c049fc1f22aeeef1ca64e26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37b5eb49_6d595102",
         "filename": "third_party/WebKit/LayoutTests/http/tests/csslayout/dynamic-parse-insecure-context.html",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-26T17:17:28Z",
       "side": 1,
       "message": "A description for the test would be good. We cannot dynamically insert layout() display types through CSSOM? Is this, or will it be part of a spec?",
+      "revId": "fc4613e980f7e2af2c049fc1f22aeeef1ca64e26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "240d27c6_166df833",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/csslayout/dynamic-parse-insecure-context.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-26T19:13:57Z",
+      "side": 1,
+      "message": "Secure-context/insecure-context split again. Checks that we shouldn\u0027t parse on an insecure context, (and that we\u0027ve correctly fed this information into all the different parser entry points).\n\nSee:\nhttps://groups.google.com/a/chromium.org/d/msg/blink-dev/Jex3idOld48/VUYks4U4BAAJ",
+      "parentUuid": "37b5eb49_6d595102",
       "revId": "fc4613e980f7e2af2c049fc1f22aeeef1ca64e26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3a6d9f58_67c9c9a7",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-26T19:13:57Z",
+      "side": 1,
+      "message": "That\u0027s correct, technically the new correct way of doing this is to change the parsing to:\n\n\"display: inline layout(foo);\"\n\nAnd filed crbug.com/804600 to track this.\n\n^ is a bit scary as also need to handle:\n\n\"display: inline flex;\" etc. to didn\u0027t want to attack that yet. Not clear to me if this is a good idea at the moment.",
+      "parentUuid": "f6ab9976_1ab05ab0",
+      "revId": "fc4613e980f7e2af2c049fc1f22aeeef1ca64e26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "88043156_020ab9bf",
         "filename": "third_party/WebKit/Source/core/html/HTMLSummaryElement.cpp",
         "patchSetId": 7
@@ -64,6 +118,24 @@
       "writtenOn": "2018-01-26T17:17:28Z",
       "side": 1,
       "message": "I don\u0027t understand why this particular list of display types are allowed for summary. Would be good with a comment here.",
+      "revId": "fc4613e980f7e2af2c049fc1f22aeeef1ca64e26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "117d5e4e_b3d3b7da",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSummaryElement.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-26T19:13:57Z",
+      "side": 1,
+      "message": "Done, PTAL.",
+      "parentUuid": "88043156_020ab9bf",
       "revId": "fc4613e980f7e2af2c049fc1f22aeeef1ca64e26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
