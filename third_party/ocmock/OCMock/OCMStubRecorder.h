@@ -26,7 +26,7 @@
 - (id)andPost:(NSNotification *)aNotification;
 - (id)andCall:(SEL)selector onObject:(id)anObject;
 - (id)andDo:(void (^)(NSInvocation *invocation))block;
-- (id)andForwardToRealObject;
+@property(nonatomic, readonly, strong) id andForwardToRealObject;
 
 @end
 

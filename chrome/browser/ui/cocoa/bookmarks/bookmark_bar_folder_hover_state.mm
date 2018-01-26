@@ -14,7 +14,7 @@
 
 @implementation BookmarkBarFolderHoverState
 
-- (id)init {
+- (instancetype)init {
   if ((self = [super init])) {
     hoverState_ = kHoverStateClosed;
   }
@@ -90,7 +90,7 @@
   [self performSelector:@selector(closeBookmarkFolderOnHoverButton:)
              withObject:hoverButton_
              afterDelay:bookmarks::kDragHoverCloseDelay
-                inModes:[NSArray arrayWithObject:NSRunLoopCommonModes]];
+                inModes:@[ NSRunLoopCommonModes ]];
 }
 
 // Cancel pending hover close.  Transition to kHoverStateOpen state.
@@ -110,7 +110,7 @@
   [self performSelector:@selector(openBookmarkFolderOnHoverButton:)
              withObject:hoverButton_
              afterDelay:bookmarks::kDragHoverOpenDelay
-                inModes:[NSArray arrayWithObject:NSRunLoopCommonModes]];
+                inModes:@[ NSRunLoopCommonModes ]];
 }
 
 // Cancel pending hover open.  Transition to kHoverStateClosed state.

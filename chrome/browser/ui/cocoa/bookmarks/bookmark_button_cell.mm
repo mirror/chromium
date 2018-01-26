@@ -46,7 +46,7 @@ const CGFloat kKernAmount = 0.2;
 // class instead of setting it externally.
 @interface OffTheSideButtonCell : BookmarkButtonCell
 
-- (NSString*)accessibilityTitle;
+@property(nonatomic, readonly, copy) NSString* accessibilityTitle;
 
 @end
 @implementation OffTheSideButtonCell
@@ -72,15 +72,16 @@ const CGFloat kKernAmount = 0.2;
 
 @interface BookmarkButtonCell (Private)
 // Returns YES if the cell is the offTheSide button cell.
-- (BOOL)isOffTheSideButtonCell;
+@property(nonatomic, getter=isOffTheSideButtonCell, readonly)
+    BOOL offTheSideButtonCell;
 - (void)configureBookmarkButtonCell;
 - (void)applyTextColor;
 // Returns the title the button cell displays. Note that a button cell can
 // have a title string assigned but it won't be visible if its image position
 // is NSImageOnly.
-- (NSString*)visibleTitle;
+@property(nonatomic, readonly, copy) NSString* visibleTitle;
 // Returns the dictionary of attributes to associate with the button title.
-- (NSDictionary*)titleTextAttributes;
+@property(nonatomic, readonly, copy) NSDictionary* titleTextAttributes;
 @end
 
 @implementation BookmarkButtonCell
@@ -93,10 +94,11 @@ const CGFloat kKernAmount = 0.2;
   return 0;
 }
 
-+ (id)buttonCellForNode:(const BookmarkNode*)node
-                   text:(NSString*)text
-                  image:(NSImage*)image
-         menuController:(BookmarkContextMenuCocoaController*)menuController {
++ (instancetype)buttonCellForNode:(const BookmarkNode*)node
+                             text:(NSString*)text
+                            image:(NSImage*)image
+                   menuController:
+                       (BookmarkContextMenuCocoaController*)menuController {
   id buttonCell =
       [[[BookmarkButtonCell alloc] initForNode:node
                                           text:text
@@ -106,9 +108,10 @@ const CGFloat kKernAmount = 0.2;
   return buttonCell;
 }
 
-+ (id)buttonCellWithText:(NSString*)text
-                   image:(NSImage*)image
-          menuController:(BookmarkContextMenuCocoaController*)menuController {
++ (instancetype)buttonCellWithText:(NSString*)text
+                             image:(NSImage*)image
+                    menuController:
+                        (BookmarkContextMenuCocoaController*)menuController {
   id buttonCell =
       [[[BookmarkButtonCell alloc] initWithText:text
                                           image:image
@@ -139,10 +142,11 @@ const CGFloat kKernAmount = 0.2;
   return width;
 }
 
-- (id)initForNode:(const BookmarkNode*)node
-             text:(NSString*)text
-            image:(NSImage*)image
-   menuController:(BookmarkContextMenuCocoaController*)menuController {
+- (instancetype)initForNode:(const BookmarkNode*)node
+                       text:(NSString*)text
+                      image:(NSImage*)image
+             menuController:
+                 (BookmarkContextMenuCocoaController*)menuController {
   if ((self = [super initTextCell:text])) {
     menuController_ = menuController;
     [self configureBookmarkButtonCell];
@@ -162,9 +166,10 @@ const CGFloat kKernAmount = 0.2;
   return self;
 }
 
-- (id)initWithText:(NSString*)text
-             image:(NSImage*)image
-    menuController:(BookmarkContextMenuCocoaController*)menuController {
+- (instancetype)initWithText:(NSString*)text
+                       image:(NSImage*)image
+              menuController:
+                  (BookmarkContextMenuCocoaController*)menuController {
   if ((self = [super initTextCell:text])) {
     menuController_ = menuController;
     [self configureBookmarkButtonCell];
@@ -179,7 +184,7 @@ const CGFloat kKernAmount = 0.2;
   return self;
 }
 
-- (id)initTextCell:(NSString*)string {
+- (instancetype)initTextCell:(NSString*)string {
   return [self initForNode:nil text:string image:nil menuController:nil];
 }
 

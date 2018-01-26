@@ -38,7 +38,7 @@
 
 + (OCMMacroState *)globalState;
 
-- (OCMRecorder *)recorder;
+@property(nonatomic, readonly, strong) OCMRecorder* recorder;
 
 - (void)switchToClassMethod;
 

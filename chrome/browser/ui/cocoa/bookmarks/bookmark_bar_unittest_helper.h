@@ -33,23 +33,23 @@
 
 // Return the center of the button in the base coordinate system of the
 // containing window. Useful for simulating mouse clicks or drags.
-- (NSPoint)center;
+@property(nonatomic, readonly) NSPoint center;
 
 // Return the top of the button in the base coordinate system of the
 // containing window.
-- (NSPoint)top;
+@property(nonatomic, readonly) NSPoint top;
 
 // Return the bottom of the button in the base coordinate system of the
 // containing window.
-- (NSPoint)bottom;
+@property(nonatomic, readonly) NSPoint bottom;
 
 // Return the center-left point of the button in the base coordinate system
 // of the containing window.
-- (NSPoint)left;
+@property(nonatomic, readonly) NSPoint left;
 
 // Return the center-right point of the button in the base coordinate system
 // of the containing window.
-- (NSPoint)right;
+@property(nonatomic, readonly) NSPoint right;
 
 @end
 

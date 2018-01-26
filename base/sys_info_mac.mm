@@ -65,7 +65,7 @@ void SysInfo::OperatingSystemVersionNumbers(int32_t* major_version,
   if ([processInfo respondsToSelector:@selector(operatingSystemVersion)]) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunguarded-availability"
-    NSOperatingSystemVersion version = [processInfo operatingSystemVersion];
+    NSOperatingSystemVersion version = processInfo.operatingSystemVersion;
 #pragma clang diagnostic pop
     *major_version = version.majorVersion;
     *minor_version = version.minorVersion;

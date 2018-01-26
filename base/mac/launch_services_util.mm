@@ -41,11 +41,11 @@ Process OpenApplicationWithPath(const base::FilePath& bundle_path,
                                               configuration:configuration
                                                       error:&launch_error];
   if (launch_error) {
-    LOG(ERROR) << base::SysNSStringToUTF8([launch_error localizedDescription]);
+    LOG(ERROR) << base::SysNSStringToUTF8(launch_error.localizedDescription);
     return Process();
   }
   DCHECK(app);
-  return Process([app processIdentifier]);
+  return Process(app.processIdentifier);
 }
 
 }  // namespace mac

@@ -51,7 +51,7 @@
 }
 
 // Designated initializer.
-- (id)init;
+- (instancetype)init;
 
 // The BookmarkBarFolderHoverState decides when it is appropriate to hide
 // and show the button that the BookmarkBarFolderController drags over.
@@ -76,8 +76,8 @@
 // Exposing these for unit testing purposes.  They are used only in tests.
 @interface BookmarkBarFolderHoverState(TestingAPI)
 // Accessors and setters for button and hover state.
-- (BookmarkButton*)hoverButton;
-- (HoverState)hoverState;
+@property(nonatomic, readonly, strong) BookmarkButton* hoverButton;
+@property(nonatomic, readonly) HoverState hoverState;
 @end
 
 #endif  // CHROME_BROWSER_UI_COCOA_BOOKMARKS_BOOKMARK_BAR_FOLDER_HOVER_STATE_H_

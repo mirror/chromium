@@ -52,7 +52,7 @@ UI_BASE_EXPORT
 @end
 
 @interface HyperlinkButtonCell (ExposedForTesting)
-- (NSDictionary*)linkAttributes;
+@property(nonatomic, readonly, copy) NSDictionary* linkAttributes;
 @end
 
 #endif  // UI_BASE_COCOA_CONTROLS_HYPERLINK_BUTTON_CELL_H_

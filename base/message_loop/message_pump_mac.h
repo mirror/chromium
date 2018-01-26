@@ -52,7 +52,8 @@
 // Must return true if -[NSApplication sendEvent:] is currently on the stack.
 // See the comment for |CreateAutoreleasePool()| in the cc file for why this is
 // necessary.
-- (BOOL)isHandlingSendEvent;
+@property(NS_NONATOMIC_IOSONLY, getter=isHandlingSendEvent, readonly)
+    BOOL handlingSendEvent;
 @end
 #endif  // !defined(OS_IOS)
 #endif  // defined(__OBJC__)

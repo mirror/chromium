@@ -350,18 +350,19 @@ willAnimateFromState:(BookmarkBar::State)oldState
 // To properly manage vertical resizing of the bookmark bar, the caller must
 // also call -setResizeDelegate on the -controlledView. This should be done once
 // the initializer returns, since it will trigger nib loading.
-- (id)initWithBrowser:(Browser*)browser
-         initialWidth:(CGFloat)initialWidth
-             delegate:(id<BookmarkBarControllerDelegate>)delegate;
+- (instancetype)initWithBrowser:(Browser*)browser
+                   initialWidth:(CGFloat)initialWidth
+                       delegate:(id<BookmarkBarControllerDelegate>)delegate;
 
 // The Browser corresponding to this BookmarkBarController.
-- (Browser*)browser;
+@property(nonatomic, readonly) Browser* browser NS_RETURNS_INNER_POINTER;
 
 // Strongly-typed version of [self view]. Note this may trigger nib loading.
-- (BookmarkBarToolbarView*)controlledView;
+@property(nonatomic, readonly, strong) BookmarkBarToolbarView* controlledView;
 
 // The controller for all bookmark bar context menus.
-- (BookmarkContextMenuCocoaController*)menuController;
+@property(nonatomic, readonly, strong)
+    BookmarkContextMenuCocoaController* menuController;
 
 // Pulses the given bookmark node, or the closest parent node that is visible.
 - (void)startPulsingBookmarkNode:(const bookmarks::BookmarkNode*)node;
@@ -390,11 +391,12 @@ willAnimateFromState:(BookmarkBar::State)oldState
 - (void)setBookmarkBarEnabled:(BOOL)enabled;
 
 // Returns the amount by which the toolbar above should be compressed.
-- (CGFloat)getDesiredToolbarHeightCompression;
+@property(nonatomic, getter=getDesiredToolbarHeightCompression, readonly)
+    CGFloat desiredToolbarHeightCompression;
 
 // Gets the appropriate opacity for the toolbar's divider; 0 means that it
 // shouldn't be shown.
-- (CGFloat)toolbarDividerOpacity;
+@property(nonatomic, readonly) CGFloat toolbarDividerOpacity;
 
 // Set the size of the view and perform layout.
 - (void)layoutToFrame:(NSRect)frame;
@@ -421,7 +423,7 @@ willAnimateFromState:(BookmarkBar::State)oldState
 - (BOOL)canEditBookmark:(const bookmarks::BookmarkNode*)node;
 
 // Checks if bookmark editing is enabled at all.
-- (BOOL)canEditBookmarks;
+@property(nonatomic, readonly) BOOL canEditBookmarks;
 
 // Actions for manipulating bookmarks.
 // Open a normal bookmark or folder from a button, ...
@@ -433,10 +435,10 @@ willAnimateFromState:(BookmarkBar::State)oldState
 - (void)importBookmarks:(id)sender;
 
 // Returns the app page shortcut button.
-- (NSButton*)appsPageShortcutButton;
+@property(nonatomic, readonly, strong) NSButton* appsPageShortcutButton;
 
 // Returns the "off the side" button (aka the chevron button).
-- (NSButton*)offTheSideButton;
+@property(nonatomic, readonly, strong) NSButton* offTheSideButton;
 
 // Returns the "off the side" button image.
 - (NSImage*)offTheSideButtonImage:(BOOL)forDarkMode;
@@ -467,19 +469,21 @@ willAnimateFromState:(BookmarkBar::State)oldState
 
 // These APIs should only be used by unit tests (or used internally).
 @interface BookmarkBarController(InternalOrTestingAPI)
-- (bookmarks::BookmarkBarLayout)layoutFromCurrentState;
+@property(nonatomic, readonly)
+    bookmarks::BookmarkBarLayout layoutFromCurrentState;
 - (void)applyLayout:(const bookmarks::BookmarkBarLayout&)layout
            animated:(BOOL)animated;
 - (void)rebuildLayoutWithAnimated:(BOOL)animated;
 - (void)openBookmarkFolder:(id)sender;
 - (void)openOrCloseBookmarkFolderForOffTheSideButton;
-- (BookmarkBarView*)buttonView;
-- (NSMutableArray*)buttons;
-- (BookmarkButton*)otherBookmarksButton;
-- (BookmarkButton*)managedBookmarksButton;
-- (BookmarkButton*)otherBookmarksButton;
-- (BookmarkBarFolderController*)folderController;
-- (id)folderTarget;
+@property(nonatomic, readonly, strong) BookmarkBarView* buttonView;
+@property(nonatomic, readonly, copy) NSMutableArray* buttons;
+@property(nonatomic, readonly, strong) BookmarkButton* otherBookmarksButton;
+@property(nonatomic, readonly, strong) BookmarkButton* managedBookmarksButton;
+@property(nonatomic, readonly, strong) BookmarkButton* otherBookmarksButton;
+@property(nonatomic, readonly, strong)
+    BookmarkBarFolderController* folderController;
+@property(nonatomic, readonly, strong) id folderTarget;
 - (void)openURL:(GURL)url disposition:(WindowOpenDisposition)disposition;
 - (void)clearBookmarkBar;
 - (BookmarkButtonCell*)cellForBookmarkNode:(const bookmarks::BookmarkNode*)node;

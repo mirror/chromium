@@ -178,24 +178,25 @@ class WebContents;
 // you have retained them.
 // |delegate| is the one listening to filtered TabStripModelObserverBridge's
 // events (see TabStripControllerDelegate for more details).
-- (id)initWithView:(TabStripView*)view
-        switchView:(NSView*)switchView
-           browser:(Browser*)browser
-          delegate:(id<TabStripControllerDelegate>)delegate;
+- (instancetype)initWithView:(TabStripView*)view
+                  switchView:(NSView*)switchView
+                     browser:(Browser*)browser
+                    delegate:(id<TabStripControllerDelegate>)delegate;
 
 // Returns the model behind this controller.
-- (TabStripModel*)tabStripModel;
+@property(nonatomic, readonly)
+    TabStripModel* tabStripModel NS_RETURNS_INNER_POINTER;
 
 // Returns all tab views.
-- (NSArray*)tabViews;
+@property(nonatomic, readonly, copy) NSArray* tabViews;
 
 // Return the view for the currently active tab.
-- (NSView*)activeTabView;
+@property(nonatomic, readonly, strong) NSView* activeTabView;
 
 // Find the model index based on the x coordinate of the placeholder. If there
 // is no placeholder, this returns the end of the tab strip. Closing tabs are
 // not considered in computing the index.
-- (int)indexOfPlaceholder;
+@property(nonatomic, readonly) int indexOfPlaceholder;
 
 // Set the frame of |tabView|, also updates the internal frame dict.
 - (void)setFrame:(NSRect)frame ofTabView:(NSView*)tabView;
@@ -226,7 +227,7 @@ class WebContents;
 - (NSInteger)modelIndexForTabView:(NSView*)view;
 
 // Returns all selected tab views.
-- (NSArray*)selectedViews;
+@property(nonatomic, readonly, copy) NSArray* selectedViews;
 
 // Return the view at a given index.
 - (NSView*)viewAtIndex:(NSUInteger)index;
@@ -234,14 +235,15 @@ class WebContents;
 // Return the number of tab views in the tab strip. It's same as number of tabs
 // in the model, except when a tab is closing, which will be counted in views
 // count, but no longer in the model.
-- (NSUInteger)viewsCount;
+@property(nonatomic, readonly) NSUInteger viewsCount;
 
 // Set the placeholder for a dragged tab, allowing the |frame| to be specified.
 // This causes this tab to be rendered in an arbitrary position.
 - (void)insertPlaceholderForTab:(TabView*)tab frame:(NSRect)frame;
 
 // Returns whether a tab is being dragged within the tab strip.
-- (BOOL)isDragSessionActive;
+@property(nonatomic, getter=isDragSessionActive, readonly)
+    BOOL dragSessionActive;
 
 // Returns whether or not |tab| can still be fully seen in the tab strip or if
 // its current position would cause it be obscured by things such as the edge
@@ -251,7 +253,7 @@ class WebContents;
 
 // Returns the right edge of the tab strip's tab area (i.e. the width of the
 // tab strip, less the right indent for controls).
-- (CGFloat)tabAreaRightEdge;
+@property(nonatomic, readonly) CGFloat tabAreaRightEdge;
 
 // Show or hide the new tab button. The button is hidden immediately, but
 // waits until the next call to |-layoutTabs| to show it again.
@@ -264,11 +266,11 @@ class WebContents;
 // Are we in rapid (tab) closure mode? I.e., is a full layout deferred (while
 // the user closes tabs)? Needed to overcome missing clicks during rapid tab
 // closure.
-- (BOOL)inRapidClosureMode;
+@property(nonatomic, readonly) BOOL inRapidClosureMode;
 
 // Returns YES if the user is allowed to drag tabs on the strip at this moment.
 // For example, this returns NO if there are any pending tab close animations.
-- (BOOL)tabDraggingAllowed;
+@property(nonatomic, readonly) BOOL tabDraggingAllowed;
 
 // Default height for tabs.
 + (CGFloat)defaultTabHeight;
@@ -280,7 +282,8 @@ class WebContents;
 + (CGFloat)tabOverlap;
 
 // Returns the currently active TabContentsController.
-- (TabContentsController*)activeTabContentsController;
+@property(nonatomic, readonly, strong)
+    TabContentsController* activeTabContentsController;
 
 // Adds custom traffic light buttons to the tab strip. Idempotent.
 - (void)addCustomWindowControls;

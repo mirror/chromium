@@ -36,8 +36,7 @@ class ScopedCAActionDisabler {
  public:
   ScopedCAActionDisabler() {
     [CATransaction begin];
-    [CATransaction setValue:[NSNumber numberWithBool:YES]
-                     forKey:kCATransactionDisableActions];
+    [CATransaction setValue:@YES forKey:kCATransactionDisableActions];
   }
 
   ~ScopedCAActionDisabler() {

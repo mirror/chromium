@@ -27,7 +27,7 @@ class BookmarkNode;
 // Make a relevant tooltip string for node.
 + (NSString*)tooltipForNode:(const bookmarks::BookmarkNode*)node;
 
-- (id)initWithBridge:(BookmarkMenuBridge*)bridge;
+- (instancetype)initWithBridge:(BookmarkMenuBridge*)bridge;
 
 // Called by any Bookmark menu item.
 // The menu item's tag is the bookmark ID.
@@ -37,7 +37,8 @@ class BookmarkNode;
 
 
 @interface BookmarkMenuCocoaController (ExposedForUnitTests)
-- (const bookmarks::BookmarkNode*)nodeForIdentifier:(int)identifier;
+- (const bookmarks::BookmarkNode*)nodeForIdentifier:(int)identifier
+    NS_RETURNS_INNER_POINTER;
 - (void)openURLForNode:(const bookmarks::BookmarkNode*)node;
 - (void)openAll:(NSInteger)tag
     withDisposition:(WindowOpenDisposition)disposition;

@@ -25,11 +25,14 @@
            forController:(TabController*)controller;
 
 // Returns a context menu model for a given controller. Caller owns the result.
-- (ui::SimpleMenuModel*)contextMenuModelForController:(TabController*)controller
-    menuDelegate:(ui::SimpleMenuModel::Delegate*)delegate;
+- (ui::SimpleMenuModel*)
+contextMenuModelForController:(TabController*)controller
+                 menuDelegate:(ui::SimpleMenuModel::Delegate*)delegate
+    NS_RETURNS_INNER_POINTER;
 
 // Returns a weak reference to the controller that manages dragging of tabs.
-- (id<TabDraggingEventTarget>)dragController;
+@property(nonatomic, readonly, strong) id<TabDraggingEventTarget>
+    dragController;
 
 @end
 

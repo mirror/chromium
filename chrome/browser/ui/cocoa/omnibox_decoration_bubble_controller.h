@@ -18,7 +18,8 @@ class LocationBarDecoration;
 
 // Returns the omnibox icon the bubble is anchored to.
 // Subclasses are expected to override this.
-- (LocationBarDecoration*)decorationForBubble;
+@property(nonatomic, readonly)
+    LocationBarDecoration* decorationForBubble NS_RETURNS_INNER_POINTER;
 
 @end
 

@@ -219,7 +219,7 @@ constexpr const gfx::Size kMinCocoaPopupWindowSize(100, 122);
 
 // Load the browser window nib and do any Cocoa-specific initialization.
 // Takes ownership of |browser|.
-- (id)initWithBrowser:(Browser*)browser;
+- (instancetype)initWithBrowser:(Browser*)browser;
 
 // Call to make the browser go away from other places in the cross-platform
 // code.
@@ -229,37 +229,44 @@ constexpr const gfx::Size kMinCocoaPopupWindowSize(100, 122);
 - (gfx::Rect)enforceMinWindowSize:(gfx::Rect)bounds;
 
 // Access the C++ bridge between the NSWindow and the rest of Chromium.
-- (BrowserWindow*)browserWindow;
+@property(nonatomic, readonly)
+    BrowserWindow* browserWindow NS_RETURNS_INNER_POINTER;
 
 // Return a weak pointer to the toolbar controller.
-- (ToolbarController*)toolbarController;
+@property(nonatomic, readonly, strong) ToolbarController* toolbarController;
 
 // Return a weak pointer to the tab strip controller.
-- (TabStripController*)tabStripController;
+@property(nonatomic, readonly, strong) TabStripController* tabStripController;
 
 // Return a weak pointer to the find bar controller.
-- (FindBarCocoaController*)findBarCocoaController;
+@property(nonatomic, readonly, strong)
+    FindBarCocoaController* findBarCocoaController;
 
 // Access the ObjC controller that contains the infobars.
-- (InfoBarContainerController*)infoBarContainerController;
+@property(nonatomic, readonly, strong)
+    InfoBarContainerController* infoBarContainerController;
 
 // Access the C++ bridge object representing the status bubble for the window.
-- (StatusBubbleMac*)statusBubble;
+@property(nonatomic, readonly)
+    StatusBubbleMac* statusBubble NS_RETURNS_INNER_POINTER;
 
 // Access the C++ bridge object representing the location bar.
-- (LocationBarViewMac*)locationBarBridge;
+@property(nonatomic, readonly)
+    LocationBarViewMac* locationBarBridge NS_RETURNS_INNER_POINTER;
 
 // Returns a weak pointer to the floating bar backing view;
-- (NSView*)floatingBarBackingView;
+@property(nonatomic, readonly, strong) NSView* floatingBarBackingView;
 
 // Returns a weak pointer to the overlayable contents controller.
-- (OverlayableContentsController*)overlayableContentsController;
+@property(nonatomic, readonly, strong)
+    OverlayableContentsController* overlayableContentsController;
 
 // Access the Profile object that backs this Browser.
-- (Profile*)profile;
+@property(nonatomic, readonly) Profile* profile NS_RETURNS_INNER_POINTER;
 
 // Access the avatar button controller.
-- (AvatarBaseController*)avatarButtonController;
+@property(nonatomic, readonly, strong)
+    AvatarBaseController* avatarButtonController;
 
 // Forces the toolbar (and transitively the location bar) to update its current
 // state.  If |tab| is non-NULL, we're switching (back?) to this tab and should
@@ -309,31 +316,35 @@ constexpr const gfx::Size kMinCocoaPopupWindowSize(100, 122);
 // Returns the frame of the regular (non-fullscreened) window (even if the
 // window is currently in fullscreen mode).  The frame is returned in Cocoa
 // coordinates (origin in bottom-left).
-- (NSRect)regularWindowFrame;
+@property(nonatomic, readonly) NSRect regularWindowFrame;
 
 // Whether or not to show the avatar, which is either the incognito icon or the
 // user's profile avatar.
-- (BOOL)shouldShowAvatar;
+@property(nonatomic, readonly) BOOL shouldShowAvatar;
 
 // Whether or not to show the new avatar button used by --new-profile-maagement.
-- (BOOL)shouldUseNewAvatarButton;
+@property(nonatomic, readonly) BOOL shouldUseNewAvatarButton;
 
-- (BOOL)isBookmarkBarVisible;
+@property(nonatomic, getter=isBookmarkBarVisible, readonly)
+    BOOL bookmarkBarVisible;
 
 // Returns YES if the bookmark bar is currently animating.
-- (BOOL)isBookmarkBarAnimating;
+@property(nonatomic, getter=isBookmarkBarAnimating, readonly)
+    BOOL bookmarkBarAnimating;
 
-- (BookmarkBarController*)bookmarkBarController;
+@property(nonatomic, readonly, strong)
+    BookmarkBarController* bookmarkBarController;
 
-- (DevToolsController*)devToolsController;
+@property(nonatomic, readonly, strong) DevToolsController* devToolsController;
 
-- (BOOL)isDownloadShelfVisible;
+@property(nonatomic, getter=isDownloadShelfVisible, readonly)
+    BOOL downloadShelfVisible;
 
 // Lazily creates the download shelf in visible state if it doesn't exist yet.
 - (void)createAndAddDownloadShelf;
 
 // Returns the download shelf controller, if it exists.
-- (DownloadShelfController*)downloadShelf;
+@property(nonatomic, readonly, strong) DownloadShelfController* downloadShelf;
 
 // Retains the given FindBarCocoaController and adds its view to this
 // browser window.  Must only be called once per
@@ -350,7 +361,7 @@ constexpr const gfx::Size kMinCocoaPopupWindowSize(100, 122);
     priority:(ui::AcceleratorManager::HandlerPriority)priority;
 
 // Delegate method for the status bubble to query its base frame.
-- (NSRect)statusBubbleBaseFrame;
+@property(nonatomic, readonly) NSRect statusBubbleBaseFrame;
 
 // Show the bookmark bubble (e.g. user just clicked on the STAR)
 - (void)showBookmarkBubbleForURL:(const GURL&)url
@@ -369,10 +380,11 @@ constexpr const gfx::Size kMinCocoaPopupWindowSize(100, 122);
 - (void)updateDevToolsForContents:(content::WebContents*)contents;
 
 // Gets the current theme provider.
-- (const ui::ThemeProvider*)themeProvider;
+@property(nonatomic, readonly)
+    const ui::ThemeProvider* themeProvider NS_RETURNS_INNER_POINTER;
 
 // Gets the window style.
-- (ThemedWindowStyle)themedWindowStyle;
+@property(nonatomic, readonly) ThemedWindowStyle themedWindowStyle;
 
 // Returns the position in window coordinates that the top left of a theme
 // image with |alignment| should be painted at. If the window does not have a
@@ -383,7 +395,7 @@ constexpr const gfx::Size kMinCocoaPopupWindowSize(100, 122);
 
 // Return the point to which a bubble window's arrow should point, in window
 // coordinates.
-- (NSPoint)bookmarkBubblePoint;
+@property(nonatomic, readonly) NSPoint bookmarkBubblePoint;
 
 // Called by BookmarkBubbleObserverCocoa when the bubble is closed.
 - (void)bookmarkBubbleClosed;
@@ -399,21 +411,21 @@ constexpr const gfx::Size kMinCocoaPopupWindowSize(100, 122);
 
 // Sets the alert state of the tab e.g. audio playing, media recording, etc.
 // See TabUtils::TabAlertState for a list of all possible alert states.
-- (void)setAlertState:(TabAlertState)alertState;
 
 // Returns current alert state, determined by the alert state of tabs, set by
 // UpdateAlertState.
-- (TabAlertState)alertState;
+@property(nonatomic) TabAlertState alertState;
 
 // Returns the BrowserWindowTouchBar object associated with the window.
-- (BrowserWindowTouchBar*)browserWindowTouchBar;
+@property(nonatomic, readonly, strong)
+    BrowserWindowTouchBar* browserWindowTouchBar;
 
 // Invalidates the browser's touch bar.
 - (void)invalidateTouchBar;
 
 // Indicates whether the toolbar is visible to the user. Toolbar is usually
 // triggered by moving mouse cursor to the top of the monitor.
-- (BOOL)isToolbarShowing;
+@property(nonatomic, getter=isToolbarShowing, readonly) BOOL toolbarShowing;
 
 @end  // @interface BrowserWindowController
 
@@ -430,33 +442,34 @@ constexpr const gfx::Size kMinCocoaPopupWindowSize(100, 122);
 
 // Called to check whether or not this window has a normal title bar (YES if it
 // does, NO otherwise). (E.g., normal browser windows do not, pop-ups do.)
-- (BOOL)hasTitleBar;
+@property(nonatomic, readonly) BOOL hasTitleBar;
 
 // Called to check whether or not this window has a toolbar (YES if it does, NO
 // otherwise). (E.g., normal browser windows do, pop-ups do not.)
-- (BOOL)hasToolbar;
+@property(nonatomic, readonly) BOOL hasToolbar;
 
 // Called to check whether or not this window has a location bar (YES if it
 // does, NO otherwise). (E.g., normal browser windows do, pop-ups may or may
 // not.)
-- (BOOL)hasLocationBar;
+@property(nonatomic, readonly) BOOL hasLocationBar;
 
 // Called to check whether or not this window can have bookmark bar (YES if it
 // does, NO otherwise). (E.g., normal browser windows may, pop-ups may not.)
-- (BOOL)supportsBookmarkBar;
+@property(nonatomic, readonly) BOOL supportsBookmarkBar;
 
 // Called to check if this controller's window is a tabbed window (e.g., not a
 // pop-up window). Returns YES if it is, NO otherwise.
 // Note: The |-has...| methods are usually preferred, so this method is largely
 // deprecated.
-- (BOOL)isTabbedWindow;
+@property(nonatomic, getter=isTabbedWindow, readonly) BOOL tabbedWindow;
 
 // Returns the size of the original (non-fullscreen) window.
-- (NSRect)savedRegularWindowFrame;
+@property(nonatomic, readonly) NSRect savedRegularWindowFrame;
 
 // Returns true if the browser is in the process of entering/exiting
 // fullscreen.
-- (BOOL)isFullscreenTransitionInProgress;
+@property(nonatomic, getter=isFullscreenTransitionInProgress, readonly)
+    BOOL fullscreenTransitionInProgress;
 
 @end  // @interface BrowserWindowController(WindowType)
 
@@ -532,7 +545,7 @@ constexpr const gfx::Size kMinCocoaPopupWindowSize(100, 122);
 
 // Exits extension fullscreen if we're currently in the mode. Returns YES
 // if we exited fullscreen.
-- (BOOL)exitExtensionFullscreenIfPossible;
+@property(nonatomic, readonly) BOOL exitExtensionFullscreenIfPossible;
 
 // Updates the contents of the fullscreen exit bubble with |url| and
 // |bubbleType|.
@@ -540,11 +553,13 @@ constexpr const gfx::Size kMinCocoaPopupWindowSize(100, 122);
 
 // Returns YES if the browser window is currently in or entering fullscreen via
 // the built-in immersive mechanism.
-- (BOOL)isInImmersiveFullscreen;
+@property(nonatomic, getter=isInImmersiveFullscreen, readonly)
+    BOOL inImmersiveFullscreen;
 
 // Returns YES if the browser window is currently in or entering fullscreen via
 // the AppKit Fullscreen API.
-- (BOOL)isInAppKitFullscreen;
+@property(nonatomic, getter=isInAppKitFullscreen, readonly)
+    BOOL inAppKitFullscreen;
 
 // Enters Immersive Fullscreen for the given URL.
 - (void)enterWebContentFullscreen;
@@ -576,13 +591,16 @@ constexpr const gfx::Size kMinCocoaPopupWindowSize(100, 122);
 - (void)releaseToolbarVisibilityForOwner:(id)owner withAnimation:(BOOL)animate;
 
 // Returns YES if any of the views in the floating bar currently has focus.
-- (BOOL)floatingBarHasFocus;
+@property(nonatomic, readonly) BOOL floatingBarHasFocus;
 
 // Returns YES if the fullscreen is for tab content or an extension.
-- (BOOL)isFullscreenForTabContentOrExtension;
+@property(nonatomic, getter=isFullscreenForTabContentOrExtension, readonly)
+    BOOL fullscreenForTabContentOrExtension;
 
 // Accessor for the controller managing fullscreen ExclusiveAccessContext.
-- (ExclusiveAccessController*)exclusiveAccessController;
+@property(nonatomic, readonly)
+    ExclusiveAccessController* exclusiveAccessController
+        NS_RETURNS_INNER_POINTER;
 
 @end  // @interface BrowserWindowController(Fullscreen)
 
@@ -595,7 +613,7 @@ constexpr const gfx::Size kMinCocoaPopupWindowSize(100, 122);
 - (void)installAvatar;
 
 // Allows us to initWithBrowser withOUT taking ownership of the browser.
-- (id)initWithBrowser:(Browser*)browser takeOwnership:(BOOL)ownIt;
+- (instancetype)initWithBrowser:(Browser*)browser takeOwnership:(BOOL)ownIt;
 
 // Adjusts the window height by the given amount.  If the window spans from the
 // top of the current workspace to the bottom of the current workspace, the
@@ -609,7 +627,7 @@ constexpr const gfx::Size kMinCocoaPopupWindowSize(100, 122);
 - (BOOL)adjustWindowHeightBy:(CGFloat)deltaH;
 
 // Return an autoreleased NSWindow suitable for fullscreen use.
-- (NSWindow*)createFullscreenWindow;
+@property(nonatomic, readonly, strong) NSWindow* createFullscreenWindow;
 
 // Resets any saved state about window growth (due to showing the bookmark bar
 // or the download shelf), so that future shrinking will occur from the bottom.
@@ -622,19 +640,22 @@ constexpr const gfx::Size kMinCocoaPopupWindowSize(100, 122);
 
 // Gets the rect, in window base coordinates, that the omnibox popup should be
 // positioned relative to.
-- (NSRect)omniboxPopupAnchorRect;
+@property(nonatomic, readonly) NSRect omniboxPopupAnchorRect;
 
 // Returns the flag |blockLayoutSubviews_|.
-- (BOOL)isLayoutSubviewsBlocked;
+@property(nonatomic, getter=isLayoutSubviewsBlocked, readonly)
+    BOOL layoutSubviewsBlocked;
 
 // Returns the active tab contents controller's |blockFullscreenResize_| flag.
-- (BOOL)isActiveTabContentsControllerResizeBlocked;
+@property(nonatomic,
+          getter=isActiveTabContentsControllerResizeBlocked,
+          readonly) BOOL activeTabContentsControllerResizeBlocked;
 
 // Returns the fullscreen toolbar controller.
-- (FullscreenToolbarController*)fullscreenToolbarController;
+@property(nonatomic, strong)
+    FullscreenToolbarController* fullscreenToolbarController;
 
 // Sets the fullscreen toolbar controller.
-- (void)setFullscreenToolbarController:(FullscreenToolbarController*)controller;
 
 // Sets |browserWindowTouchbar_|.
 - (void)setBrowserWindowTouchBar:(BrowserWindowTouchBar*)touchBar;

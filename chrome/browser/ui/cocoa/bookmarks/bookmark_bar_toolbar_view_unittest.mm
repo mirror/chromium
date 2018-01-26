@@ -34,13 +34,13 @@ using ::testing::SetArgPointee;
   BOOL isEmpty_;
 }
 @property (nonatomic, assign) int currentTabContentsHeight;
-@property (nonatomic, assign) Profile* profile;
+@property(nonatomic, assign) Profile* NS_RETURNS_INNER_POINTER profile;
 @property (nonatomic, assign) BookmarkBar::State state;
 @property (nonatomic, assign) BOOL isEmpty;
 
 // |BookmarkBarState| protocol:
-- (BOOL)isVisible;
-- (BOOL)isAnimationRunning;
+@property(nonatomic, getter=isVisible, readonly) BOOL visible;
+@property(nonatomic, getter=isAnimationRunning, readonly) BOOL animationRunning;
 - (BOOL)isInState:(BookmarkBar::State)state;
 - (BOOL)isAnimatingToState:(BookmarkBar::State)state;
 - (BOOL)isAnimatingFromState:(BookmarkBar::State)state;
@@ -48,7 +48,7 @@ using ::testing::SetArgPointee;
                      toState:(BookmarkBar::State)toState;
 - (BOOL)isAnimatingBetweenState:(BookmarkBar::State)fromState
                        andState:(BookmarkBar::State)toState;
-- (CGFloat)detachedMorphProgress;
+@property(nonatomic, readonly) CGFloat detachedMorphProgress;
 @end
 
 @implementation DrawDetachedBarFakeController
@@ -57,7 +57,7 @@ using ::testing::SetArgPointee;
 @synthesize state = state_;
 @synthesize isEmpty = isEmpty_;
 
-- (id)init {
+- (instancetype)init {
   if ((self = [super init])) {
     [self setState:BookmarkBar::HIDDEN];
   }

@@ -46,11 +46,11 @@
 
 - (void)setExpectationOrderMatters:(BOOL)flag;
 
-- (id)stub;
-- (id)expect;
-- (id)reject;
+@property(nonatomic, readonly, strong) id stub;
+@property(nonatomic, readonly, strong) id expect;
+@property(nonatomic, readonly, strong) id reject;
 
-- (id)verify;
+@property(nonatomic, readonly, strong) id verify;
 - (id)verifyAtLocation:(OCMLocation *)location;
 
 - (void)verifyWithDelay:(NSTimeInterval)delay;

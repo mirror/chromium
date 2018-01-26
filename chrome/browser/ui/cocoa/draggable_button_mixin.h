@@ -59,7 +59,7 @@ enum DraggableButtonResult {
 
 // Resets the draggable state of the button after dragging is finished. This is
 // called by DraggableButtonImpl when the beginDrag call returns.
-- (DraggableButtonResult)endDrag;
+@property(nonatomic, readonly) DraggableButtonResult endDrag;
 
 // Decides whether to treat the click as a cue to start dragging, or to instead
 // call the mouseDown/mouseUp handler as appropriate.  Implement if you want to
@@ -121,7 +121,7 @@ enum DraggableButtonResult {
 @property(nonatomic) BOOL actsOnMouseDown;
 
 // Designated initializer.
-- (id)initWithButton:(NSButton<DraggableButtonMixin>*)button;
+- (instancetype)initWithButton:(NSButton<DraggableButtonMixin>*)button;
 
 // NSResponder implementation. NSButton subclasses should invoke these methods
 // and only call super if the return value indicates such.

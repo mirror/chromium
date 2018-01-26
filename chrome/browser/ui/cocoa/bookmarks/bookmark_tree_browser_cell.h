@@ -39,8 +39,8 @@ class BookmarkNode;
 @property(nonatomic, assign) SEL action;
 #endif  // MAC_OS_X_VERSION_10_10
 
-- (const bookmarks::BookmarkNode*)bookmarkNode;
-- (void)setBookmarkNode:(const bookmarks::BookmarkNode*)bookmarkNode;
+@property(nonatomic)
+    const bookmarks::BookmarkNode* bookmarkNode NS_RETURNS_INNER_POINTER;
 
 @end
 

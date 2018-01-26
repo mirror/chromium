@@ -63,7 +63,7 @@ const NSPoint kPoint = {10, 10};
 @synthesize dragDataType = dragDataType_;
 @synthesize button = button_;
 
-- (id)init {
+- (instancetype)init {
   if ((self = [super init])) {
     dropIndicatorShown_ = YES;
   }

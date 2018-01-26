@@ -15,10 +15,10 @@
 
 // Returns YES if the bookmark bar is currently visible (as a normal toolbar or
 // as a detached bar on the NTP), NO otherwise.
-- (BOOL)isVisible;
+@property(nonatomic, getter=isVisible, readonly) BOOL visible;
 
 // Returns YES if an animation is currently running, NO otherwise.
-- (BOOL)isAnimationRunning;
+@property(nonatomic, getter=isAnimationRunning, readonly) BOOL animationRunning;
 
 // Returns YES if the bookmark bar is in the given state and not in an
 // animation, NO otherwise.
@@ -44,7 +44,7 @@
 
 // Returns how morphed into the detached bubble the bookmark bar should be (1 =
 // completely detached, 0 = normal).
-- (CGFloat)detachedMorphProgress;
+@property(nonatomic, readonly) CGFloat detachedMorphProgress;
 
 @end
 

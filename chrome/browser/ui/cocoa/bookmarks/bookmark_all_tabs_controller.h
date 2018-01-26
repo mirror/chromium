@@ -24,12 +24,13 @@ typedef std::vector<ActiveTabNameURLPair> ActiveTabsNameURLPairVector;
   ActiveTabsNameURLPairVector activeTabPairsVector_;
 }
 
-- (id)initWithParentWindow:(NSWindow*)parentWindow
-                   profile:(Profile*)profile
-                    parent:(const bookmarks::BookmarkNode*)parent
-                       url:(const GURL&)url
-                     title:(const base::string16&)title
-             configuration:(BookmarkEditor::Configuration)configuration;
+- (instancetype)initWithParentWindow:(NSWindow*)parentWindow
+                             profile:(Profile*)profile
+                              parent:(const bookmarks::BookmarkNode*)parent
+                                 url:(const GURL&)url
+                               title:(const base::string16&)title
+                       configuration:
+                           (BookmarkEditor::Configuration)configuration;
 
 @end
 
@@ -40,7 +41,8 @@ typedef std::vector<ActiveTabNameURLPair> ActiveTabsNameURLPairVector;
 - (void)UpdateActiveTabPairs;
 
 // Provides testing access to tab pairs list.
-- (ActiveTabsNameURLPairVector*)activeTabPairsVector;
+@property(nonatomic, readonly)
+    ActiveTabsNameURLPairVector* activeTabPairsVector NS_RETURNS_INNER_POINTER;
 
 @end
 

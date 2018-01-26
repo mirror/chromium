@@ -47,7 +47,8 @@ class BookmarkContextMenuDelegateBridge :
 
 @implementation BookmarkContextMenuCocoaController
 
-- (id)initWithBookmarkBarController:(BookmarkBarController*)controller {
+- (instancetype)initWithBookmarkBarController:
+    (BookmarkBarController*)controller {
   if ((self = [super init])) {
     bookmarkBarController_ = controller;
     bridge_.reset(new BookmarkContextMenuDelegateBridge(self));
