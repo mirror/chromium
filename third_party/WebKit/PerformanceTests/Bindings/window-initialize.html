@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<script src="../resources/runner.js"></script>
+<script>
+var num = 100;
+var count = 0;
+
+window.addEventListener('message', (e) => {
+  count++;
+  if (count >= num) {
+    window.testRunner.isDone = true;
+  }
+}, false);
+
+window.addEventListener('load', (e) => {
+  let html = '';
+  for (let i = 0; i < num; i++) {
+    html += '<iframe src="./resources/empty.html?' + i + '"></iframe>';
+  }
+  let root = document.getElementById('root');
+  root.innerHTML = html;
+}, false);
+</script>
+<div id="root"></div>
