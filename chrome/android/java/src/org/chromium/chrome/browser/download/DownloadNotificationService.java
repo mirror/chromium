@@ -777,7 +777,7 @@ public class DownloadNotificationService extends Service {
                                       : android.R.drawable.stat_sys_download;
         ChromeNotificationBuilder builder = buildNotification(resId, fileName, contentText);
         builder.setOngoing(true);
-        builder.setPriority(Notification.PRIORITY_HIGH);
+        builder.setPriorityImportance(NotificationConstants.PRIORITY_IMPORTANCE_HIGH);
 
         // Avoid animations while the download isn't progressing.
         if (!isDownloadPending) {
