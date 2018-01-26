@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a9d5911c_c4198c61",
+        "filename": "chrome/browser/page_load_metrics/observers/core_page_load_metrics_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-26T14:51:02Z",
+      "side": 1,
+      "message": "Thanks - we should measure this across the whole page.\n\nI\u0027ll land this bit first though.",
+      "parentUuid": "34af06db_166d19eb",
+      "revId": "b1ec3782979ba0e5062f53926a997cbdfc210f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6fd0adc_334afc96",
         "filename": "chrome/common/page_load_metrics/page_load_metrics.mojom",
         "patchSetId": 1
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "9528de1a_d2391930",
+        "filename": "chrome/common/page_load_metrics/page_load_metrics.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-26T14:51:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e480341a_a88d6498",
+      "revId": "b1ec3782979ba0e5062f53926a997cbdfc210f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b95afc30_c7710c76",
         "filename": "chrome/renderer/page_load_metrics/metrics_render_frame_observer.cc",
         "patchSetId": 1
@@ -86,6 +122,24 @@
       "revId": "b1ec3782979ba0e5062f53926a997cbdfc210f0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79ac797a_e41187c8",
+        "filename": "chrome/renderer/page_load_metrics/metrics_render_frame_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-26T14:51:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "781b1b62_f01b7e92",
+      "revId": "b1ec3782979ba0e5062f53926a997cbdfc210f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -136,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "7445aa77_1256cad4",
+        "filename": "third_party/WebKit/Source/core/dom/Document.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1138,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-26T14:51:02Z",
+      "side": 1,
+      "message": "No longer applicable.",
+      "parentUuid": "f2fc72a8_a21da679",
+      "range": {
+        "startLine": 1138,
+        "startChar": 62,
+        "endLine": 1138,
+        "endChar": 66
+      },
+      "revId": "b1ec3782979ba0e5062f53926a997cbdfc210f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2c526f1_99f5b69b",
         "filename": "third_party/WebKit/Source/core/page/PageWidgetDelegate.cpp",
         "patchSetId": 1
@@ -165,6 +243,24 @@
       "side": 1,
       "message": "Great point, will do.",
       "parentUuid": "f2c526f1_99f5b69b",
+      "revId": "b1ec3782979ba0e5062f53926a997cbdfc210f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e237b28f_cf8c34df",
+        "filename": "third_party/WebKit/Source/core/page/PageWidgetDelegate.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-26T14:51:02Z",
+      "side": 1,
+      "message": "Added a comment indicating that this isn\u0027t needed.",
+      "parentUuid": "6e8693dd_3b2de683",
       "revId": "b1ec3782979ba0e5062f53926a997cbdfc210f0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -254,6 +350,24 @@
       "side": 1,
       "message": "THanks for the details! It sounds like we understand how hardware-\u003emain thread delays affect the end to end delay. If it\u0027s painful to record both I am fine with just recording hardware as our start time, thanks!",
       "parentUuid": "2bd18cbe_fc679a02",
+      "revId": "b1ec3782979ba0e5062f53926a997cbdfc210f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c0de56c_dc7cdb27",
+        "filename": "third_party/WebKit/Source/core/page/PageWidgetDelegate.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-26T14:51:02Z",
+      "side": 1,
+      "message": "Wrote a test.",
+      "parentUuid": "12f59882_171fe892",
       "revId": "b1ec3782979ba0e5062f53926a997cbdfc210f0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
