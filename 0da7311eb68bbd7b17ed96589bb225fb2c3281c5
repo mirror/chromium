@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8955ebf4_e6c60934",
+        "filename": "components/exo/pointer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-26T18:31:09Z",
+      "side": 1,
+      "message": "It\u0027s not necessary but I can do it for consistency. This changes only when accessibility setting is changed. Please let me know if you want to make change.",
+      "parentUuid": "bd4069d6_07a2e6c9",
+      "revId": "0da7311eb68bbd7b17ed96589bb225fb2c3281c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40cff521_9be5ab3b",
         "filename": "components/exo/pointer.cc",
         "patchSetId": 10
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "3608d434_2fdd8e04",
+        "filename": "components/exo/pointer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-26T18:31:09Z",
+      "side": 1,
+      "message": "Changed to cursor \u003d\u003d kCustom \u0026\u0026 because we don\u0027t have to update if cursor is other types.",
+      "parentUuid": "40cff521_9be5ab3b",
+      "range": {
+        "startLine": 320,
+        "startChar": 6,
+        "endLine": 321,
+        "endChar": 65
+      },
+      "revId": "0da7311eb68bbd7b17ed96589bb225fb2c3281c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24d278bf_b9e80045",
         "filename": "components/exo/pointer.cc",
         "patchSetId": 10
@@ -53,6 +95,24 @@
       "writtenOn": "2018-01-26T15:24:35Z",
       "side": 1,
       "message": "Can you add a comment here to explain why we want to update the cursor here even when focus_window_ is not set?\n\nMore generally, should we adjust the aura cursor code somehow to handle these scale adjustments automatically?",
+      "revId": "0da7311eb68bbd7b17ed96589bb225fb2c3281c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2b3d490_eb4594bb",
+        "filename": "components/exo/pointer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-26T18:31:09Z",
+      "side": 1,
+      "message": "\u003e Can you add a comment here to explain why we want to update the cursor here\n\u003e even when focus_window_ is not set?\nDone\n\n\u003e More generally, should we adjust the aura cursor code somehow to handle these \u003e scale adjustments automatically?\n\nYes, I added TODO below (448).",
+      "parentUuid": "24d278bf_b9e80045",
       "revId": "0da7311eb68bbd7b17ed96589bb225fb2c3281c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
