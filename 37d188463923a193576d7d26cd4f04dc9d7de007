@@ -71,6 +71,47 @@
     },
     {
       "key": {
+        "uuid": "911e164f_ab573d8e",
+        "filename": "chrome/browser/chrome_service_worker_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-26T07:56:31Z",
+      "side": 1,
+      "message": "Yes this is the problem. register() resolves once the service worker is in the \u0027installing state\u0027; it might not be done with install and activate events yet. The .controller must be \u0027active\u0027 state.\n\nThe problem is the document doesn\u0027t get a controller unless the service worker was already activated before the document is created.\n\nI think the most foolproof method is:\n1) Register the service worker.\n2) Wait for it to activate (using .ready is convenient )\n3) Navigate to a new page and do a fetch from that.\n\n(If you don\u0027t want to make a new page, you can do some tricks with claim() to avoid creating a new page, but it\u0027s easy to do it wrong and end up with a flaky test.)\n\nSo I think this SetUp() should be like this:\n\nnavigator.serviceWorker.register(url)\n  .then(() \u003d\u003e {\n    return navigator.serviceWorker.ready;\n  })\n  .then(() \u003d\u003e {\n    domAutomationController.send(true);\n  }\n  .catch(e \u003d\u003e {\n    console.log(\u0027failure\u0027);\n    domAutomationController.send(false);\n  });\n\nThen the test itself (or SetUp()) should create a new tab/page where the script you have below runs in.",
+      "parentUuid": "bf5a591a_c4864c14",
+      "range": {
+        "startLine": 757,
+        "startChar": 34,
+        "endLine": 757,
+        "endChar": 68
+      },
+      "revId": "37d188463923a193576d7d26cd4f04dc9d7de007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45a09548_888f932e",
+        "filename": "chrome/browser/chrome_service_worker_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 780,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-26T07:56:31Z",
+      "side": 1,
+      "message": "This is printing null, so the fetch won\u0027t go to the service worker.",
+      "revId": "37d188463923a193576d7d26cd4f04dc9d7de007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f432de5_795b0e42",
         "filename": "chrome/browser/chrome_service_worker_browsertest.cc",
         "patchSetId": 6
@@ -82,6 +123,30 @@
       "writtenOn": "2018-01-25T22:21:21Z",
       "side": 1,
       "message": "This is how I expected to get an \u0027opaque\u0027 response (that should be cleared/blocked by XSDB).  Does this look reasonable?",
+      "range": {
+        "startLine": 782,
+        "startChar": 20,
+        "endLine": 782,
+        "endChar": 40
+      },
+      "revId": "37d188463923a193576d7d26cd4f04dc9d7de007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "809abf8b_f708cec6",
+        "filename": "chrome/browser/chrome_service_worker_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-26T07:56:31Z",
+      "side": 1,
+      "message": "Yes",
+      "parentUuid": "7f432de5_795b0e42",
       "range": {
         "startLine": 782,
         "startChar": 20,
