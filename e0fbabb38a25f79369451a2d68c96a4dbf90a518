@@ -22,6 +22,91 @@
       "revId": "e0fbabb38a25f79369451a2d68c96a4dbf90a518",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da3403d9_fadcf609",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-26T18:44:54Z",
+      "side": 1,
+      "message": "Unrelated question since this code is changing:  Does this work reliably with axis-angle?  Ie rotating ({1, 0, 0}, PI} is the same as {{PI, 0, 0}, 1}",
+      "revId": "e0fbabb38a25f79369451a2d68c96a4dbf90a518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d09af41_89c1dab5",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-26T18:44:54Z",
+      "side": 1,
+      "message": "This isn\u0027t safe against new alignment modes - I think they should be DCHECK(type \u003d\u003d LEFT || type \u003d\u003d RIGHT || type \u003d\u003d NONE).  WDYT?",
+      "revId": "e0fbabb38a25f79369451a2d68c96a4dbf90a518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ad362a0_7c9c502a",
+        "filename": "chrome/browser/vr/elements/ui_element.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-26T18:44:54Z",
+      "side": 1,
+      "message": "No need to change it, but I think the bodies could have stayed here.  The DCHECKs don\u0027t change the fact that they\u0027re simple setters, IMO.",
+      "revId": "e0fbabb38a25f79369451a2d68c96a4dbf90a518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc088e38_b78f983f",
+        "filename": "chrome/browser/vr/ui_scene_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-26T18:44:54Z",
+      "side": 1,
+      "message": "Why the non-zero value?",
+      "revId": "e0fbabb38a25f79369451a2d68c96a4dbf90a518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4643d639_815f490d",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1284,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-26T18:44:54Z",
+      "side": 1,
+      "message": "FTR, I don\u0027t think it\u0027s necessary to have the \"tree\" in as many element names.  This could be kRepositionButton, for example, if you wanted.",
+      "revId": "e0fbabb38a25f79369451a2d68c96a4dbf90a518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
