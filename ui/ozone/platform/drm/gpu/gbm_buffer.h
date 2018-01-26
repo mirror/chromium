@@ -40,9 +40,7 @@ class GbmBuffer : public ScanoutBuffer {
       const gfx::Size& size,
       std::vector<base::ScopedFD>&& fds,
       const std::vector<gfx::NativePixmapPlane>& planes);
-  uint32_t GetFormat() const { return format_; }
-  uint32_t GetFlags() const { return flags_; }
-  bool AreFdsValid() const;
+  uint32_t GetFormat() const;
   size_t GetFdCount() const;
   int GetFd(size_t plane) const;
   int GetStride(size_t plane) const;
@@ -66,19 +64,13 @@ class GbmBuffer : public ScanoutBuffer {
  private:
   GbmBuffer(const scoped_refptr<GbmDevice>& gbm,
             gbm_bo* bo,
-            uint32_t format,
             uint32_t flags,
-            uint64_t modifier,
-            std::vector<base::ScopedFD>&& fds,
-            const gfx::Size& size,
-            const std::vector<gfx::NativePixmapPlane>&& planes);
+            uint64_t modifier);
   ~GbmBuffer() override;
 
   static scoped_refptr<GbmBuffer> CreateBufferForBO(
       const scoped_refptr<GbmDevice>& gbm,
       gbm_bo* bo,
-      uint32_t format,
-      const gfx::Size& size,
       uint32_t flags,
       uint64_t modifier);
 
@@ -92,12 +84,6 @@ class GbmBuffer : public ScanoutBuffer {
   uint32_t opaque_framebuffer_ = 0;
   uint32_t opaque_framebuffer_pixel_format_ = 0;
   uint64_t format_modifier_ = 0;
-  uint32_t format_;
-  uint32_t flags_;
-  std::vector<base::ScopedFD> fds_;
-  gfx::Size size_;
-
-  std::vector<gfx::NativePixmapPlane> planes_;
 
   DISALLOW_COPY_AND_ASSIGN(GbmBuffer);
 };
