@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7579cf0c_da7eb36c",
+        "filename": "chrome/common/extensions/docs/examples/api/browserAction/set_icon_path/background.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T18:52:15Z",
+      "side": 1,
+      "message": "nit: newline after this",
+      "revId": "12c70edcb899f956316c6d83c4737a7bc346a5ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06189df3_60c94e43",
+        "filename": "chrome/common/extensions/docs/examples/api/browserAction/set_icon_path/background.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T18:52:15Z",
+      "side": 1,
+      "message": "nit: end line in a ;",
+      "revId": "12c70edcb899f956316c6d83c4737a7bc346a5ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
