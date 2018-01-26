@@ -70,6 +70,30 @@
       "revId": "236be1ce30ac707d97e115f9b42f92d77c8acc16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab373ba5_abc8e1a4",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1456,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-26T13:29:44Z",
+      "side": 1,
+      "message": "I thought:\n\n  container-\u003eGetLayoutObject()-\u003eAbsoluteVisualRect() \u003d\u003d container\u0027s visible rect\n\n\u003e Please refer to:\n\u003ehttps://docs.google.com/document/d/e/2PACX-1vSrEh7UVEabgv8ra7VEXp1_eb9x8gVwpYNe52_8jaKsSBB2Anu7MgejqwSTfkAyQGsTvz8hz3cse_28/pub\n\nI see in the picture that you\u0027ve projected the focused element onto the container\u0027s edge line?\n\nThat does make sense. But I wonder if we need such accuracy? :P We would then need logic to do projections in all 4 directions? Maybe this is enough:\n\n  if focused element is visible:\n    use focused element\u0027s AbsoluteVisualRect\n  else if focused element is not visible AND the container is visible:\n    use container\u0027s AbsoluteVisualRect\n  else // focused element is not visible AND the container is not visible:\n    use FindSearchStartPoint(frame)",
+      "parentUuid": "22f1e2de_fd5e3bd6",
+      "range": {
+        "startLine": 1455,
+        "startChar": 0,
+        "endLine": 1456,
+        "endChar": 73
+      },
+      "revId": "236be1ce30ac707d97e115f9b42f92d77c8acc16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
