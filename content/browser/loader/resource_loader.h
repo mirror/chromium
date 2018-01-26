@@ -59,6 +59,8 @@ class CONTENT_EXPORT ResourceLoader : public net::URLRequest::Delegate,
 
   // ResourceHandler::Delegate implementation:
   void OutOfBandCancel(int error_code, bool tell_renderer) override;
+  void PauseReadingBodyFromNet() override;
+  void ResumeReadingBodyFromNet() override;
 
  private:
   // ResourceController implementation for the ResourceLoader.
@@ -184,6 +186,23 @@ class CONTENT_EXPORT ResourceLoader : public net::URLRequest::Delegate,
 
   net::HttpRawRequestHeaders raw_request_headers_;
   scoped_refptr<const net::HttpResponseHeaders> raw_response_headers_;
+
+  bool should_pause_reading_body_ = false;
+  // The request is not deferred (i.e., DEFERRED_NONE) and is ready to ready
+  // more response body data. However, reading is paused because of
+  // PauseReadingBodyFromNet().
+  bool read_more_body_supressed_ = false;
+
+  // Whether to update |body_read_before_paused_| after the pending read is
+  // completed (or when this resource loader is destroyed).
+  bool update_body_read_before_paused_ = false;
+  // The number of bytes obtained by the reads initiated before the last
+  // PauseReadingBodyFromNet() call. -1 means the request hasn't been paused.
+  // The body may be read from cache or network. So even if this value is not
+  // -1, we still need to check whether it is from network before reporting it
+  // as BodyReadFromNetBeforePaused.
+  int64_t body_read_before_paused_ = -1;
+  int64_t total_body_read_bytes_ = 0;
 
   base::ThreadChecker thread_checker_;
 
