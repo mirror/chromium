@@ -168,8 +168,8 @@ bool V8ContextSnapshot::InstallConditionalFeatures(
     v8::Local<v8::Object> prototype = interface->Get(context, prototype_str)
                                           .ToLocalChecked()
                                           .As<v8::Object>();
-    V8Window::install_runtime_enabled_features_function_(
-        isolate, world, window_wrapper, prototype, interface);
+    V8Window::InstallRuntimeEnabledFeatures(isolate, world, window_wrapper,
+                                            prototype, interface);
     type->InstallConditionalFeatures(context, world, window_wrapper, prototype,
                                      interface,
                                      type->domTemplate(isolate, world));
@@ -251,9 +251,6 @@ void V8ContextSnapshot::EnsureInterfaceTemplates(v8::Isolate* isolate) {
   v8::HandleScope handle_scope(isolate);
   SnapshotInterface& snapshot_window = g_snapshot_interfaces[0];
   DCHECK(V8Window::wrapperTypeInfo.Equals(snapshot_window.wrapper_type_info));
-  // Update the install function for V8Window to work for partial interfaces.
-  snapshot_window.install_function =
-      V8Window::install_runtime_enabled_features_on_template_function_;
 
   EnsureInterfaceTemplatesForWorld(isolate, DOMWrapperWorld::MainWorld());
   // Any world types other than |kMain| are acceptable for this.

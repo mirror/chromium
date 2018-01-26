@@ -62,6 +62,7 @@ class V8TestInterfacePartial {
   static void partial4StaticVoidMethodMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info);
 
  private:
+
   static void installV8TestInterfaceTemplate(v8::Isolate*, const DOMWrapperWorld&, v8::Local<v8::FunctionTemplate> interfaceTemplate);
 };
 

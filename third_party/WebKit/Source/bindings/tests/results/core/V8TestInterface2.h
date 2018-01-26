@@ -90,6 +90,7 @@ class V8TestInterface2 {
   install_runtime_enabled_features_on_template_function_;
 
  private:
+
   static InstallTemplateFunction installV8TestInterface2TemplateFunction;
 };
 

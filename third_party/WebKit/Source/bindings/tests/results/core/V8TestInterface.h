@@ -244,6 +244,7 @@ class V8TestInterface {
   install_runtime_enabled_features_on_template_function_;
 
  private:
+
   static InstallTemplateFunction installV8TestInterfaceTemplateFunction;
 };
 
