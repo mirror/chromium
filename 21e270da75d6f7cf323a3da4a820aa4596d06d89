@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4c2d95a_5a565d5b",
+        "filename": "third_party/WebKit/Source/core/editing/RenderedPosition.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-26T07:20:15Z",
+      "side": 1,
+      "message": "nit: const LayotPoint\u0026",
+      "range": {
+        "startLine": 345,
+        "startChar": 22,
+        "endLine": 345,
+        "endChar": 33
+      },
+      "revId": "21e270da75d6f7cf323a3da4a820aa4596d06d89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d01dd3f_a8809a36",
+        "filename": "third_party/WebKit/Source/core/editing/RenderedPosition.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-26T07:20:15Z",
+      "side": 1,
+      "message": "nit: const LayotPoint\u0026",
+      "range": {
+        "startLine": 346,
+        "startChar": 22,
+        "endLine": 346,
+        "endChar": 33
+      },
+      "revId": "21e270da75d6f7cf323a3da4a820aa4596d06d89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a40cb82_28a38e14",
+        "filename": "third_party/WebKit/Source/core/editing/RenderedPosition.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-26T07:20:15Z",
+      "side": 1,
+      "message": "nit: We don\u0027t need to use if-statement here.\n\nreturn text_control_object-\u003eBorderBoxRect().Contains(position_in_input);\n\nis fine.",
+      "range": {
+        "startLine": 367,
+        "startChar": 0,
+        "endLine": 370,
+        "endChar": 15
+      },
+      "revId": "21e270da75d6f7cf323a3da4a820aa4596d06d89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
