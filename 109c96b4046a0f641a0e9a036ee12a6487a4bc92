@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "14ccca03_bf076709",
+        "filename": "content/browser/renderer_host/p2p/socket_host_tcp.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-26T18:04:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28c1bc04_a0018c1a",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 78
+      },
+      "revId": "109c96b4046a0f641a0e9a036ee12a6487a4bc92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7965d517_3b552c4a",
         "filename": "jingle/glue/xmpp_client_socket_factory.h",
         "patchSetId": 16
@@ -93,6 +117,30 @@
       "revId": "109c96b4046a0f641a0e9a036ee12a6487a4bc92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68c575c9_1186c19d",
+        "filename": "jingle/glue/xmpp_client_socket_factory.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-26T18:04:13Z",
+      "side": 1,
+      "message": "Done. Apologies. This comment is indeed written in the reverse. \nI added some details in the comment.",
+      "parentUuid": "6fd3e035_02a4d5c3",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 78
+      },
+      "revId": "109c96b4046a0f641a0e9a036ee12a6487a4bc92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
