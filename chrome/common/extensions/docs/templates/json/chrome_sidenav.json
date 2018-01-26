@@ -1,275 +1,185 @@
 [
+
   {
-    "title": "Devtools",
+    "title": "Extensions",
+    "href": "/extensions",
     "items": [
       {
         "title": "Learn Basics",
-        "href": "/devtools",
+        "href": "/extensions",
         "items": [
+          {
+            "title": "What are Extensions?",
+            "href": "/extensions"
+          },
+          {
+            "title": "Getting Started Tutorial",
+            "href": "/extensions/getstarted"
+          },
           {
             "title": "Overview",
-            "href": "/devtools"
+            "href": "/extensions/overview"
           },
           {
-            "title": "Development Workflow",
-            "href": "/devtools/docs/authoring-development-workflow"
+            "title": "Extension Quality Guidelines FAQ",
+            "href": "/extensions/single_purpose"
+          },
+
+          {
+            "title": "Event Pages",
+            "href": "/extensions/event_pages"
           },
           {
-            "title": "Using the Console",
-            "href": "/devtools/docs/console"
+            "title": "Content Scripts",
+            "href": "/extensions/content_scripts"
           },
           {
-            "title": "Tips & Tricks",
-            "href": "/devtools/docs/tips-and-tricks"
+            "title": "activeTab Permission",
+            "href": "/extensions/activeTab"
           },
           {
-            "title": "Additional Resources",
-            "href": "/devtools/docs/videos",
-            "items": [
-              {
-                "title": "Videos",
-                "href": "/devtools/docs/videos"
-              },
-              {
-                "title": "Blog Posts",
-                "href": "/devtools/docs/blog-posts"
-              },
-              {
-                "title": "Mailing List",
-                "href": "https://groups.google.com/forum/?fromgroups#!forum/google-chrome-developer-tools"
-              },
-              {
-                "title": "Contributing to DevTools",
-                "href": "/devtools/docs/contributing"
-              }
-            ]
+            "title": "What's New?",
+            "href": "/extensions/whats_new"
           }
         ]
       },
       {
-        "title": "Use Tools",
-        "href": "/devtools/docs/dom-and-styles",
+        "title": "Develop Extensions",
+        "href": "/extensions/devguide",
         "items": [
           {
-            "title": "Inspecting & Tweaking",
-            "href": "/devtools/docs/dom-and-styles",
-            "items": [
-              {
-                "title": "Editing Styles and the DOM",
-                "href": "/devtools/docs/dom-and-styles"
-              },
-              {
-                "title": "Working with CSS Preprocessors",
-                "href": "/devtools/docs/css-preprocessors"
-              },
-              {
-                "title": "Managing Application Storage",
-                "href": "/devtools/docs/resource-panel"
-              }
-            ]
+            "title": "Developer Guide",
+            "href": "/extensions/devguide"
           },
           {
-            "title": "Debugging JavaScript",
-            "href": "/devtools/docs/javascript-debugging"
+            "title": "Samples",
+            "href": "/extensions/samples"
           },
           {
-            "title": "Device Mode & Mobile Emulation",
-            "href": "/devtools/docs/device-mode"
+            "title": "Accessibility",
+            "href": "/extensions/a11y"
           },
           {
-            "title": "Remote Debugging on Android",
-            "href": "/devtools/docs/remote-debugging"
+            "title": "Content Security Policy",
+            "href": "/extensions/contentSecurityPolicy"
           },
           {
-            "title": "Saving Changes with Workspaces",
-            "href": "/devtools/docs/workspaces"
+            "title": "Cross-Origin XHR",
+            "href": "/extensions/xhr"
+          },
+          {
+            "title": "Debugging",
+            "href": "/extensions/tut_debugging"
+          },
+          {
+            "title": "Internationalization",
+            "href": "/extensions/i18n"
+          },
+          {
+            "title": "Message Passing",
+            "href": "/extensions/messaging"
+          },
+          {
+            "title": "Native Messaging",
+            "href": "/extensions/nativeMessaging"
+          },
+          {
+            "title": "Migrate to Manifest 2",
+            "href": "/extensions/tut_migration_to_manifest_v2"
+          },
+          {
+            "title": "OAuth",
+            "href": "/extensions/tut_oauth"
+          },
+          {
+            "title": "Options",
+            "href": "/extensions/options"
+          },
+          {
+            "title": "Options Version 2",
+            "href": "/extensions/optionsV2"
           }
         ]
       },
       {
-        "title": "Performance & Profiling",
-        "href": "/devtools/docs/network",
+        "title": "Distribute Extensions",
+        "href": "/extensions/hosting",
         "items": [
           {
-            "title": "Evaluating Network Performance",
-            "href": "/devtools/docs/network"
+            "title": "Hosting and Updating",
+            "href": "/extensions/hosting"
           },
           {
-            "title": "Using the Timeline",
-            "href": "/devtools/docs/timeline"
+            "title": "Hosting Policy Changes",
+            "href": "/extensions/hosting_changes"
           },
           {
-            "title": "Timeline Demo: Layout Thrashing",
-            "href": "/devtools/docs/demos/too-much-layout/index"
+            "title": "Packaging",
+            "href": "/extensions/packaging"
           },
           {
-            "title": "Profiling JavaScript Performance",
-            "href": "/devtools/docs/cpu-profiling"
+            "title": "One-Time Payments",
+            "href": "/webstore/one_time_payments"
           },
           {
-            "title": "JavaScript Memory Profiling",
-            "href": "/devtools/docs/javascript-memory-profiling",
-            "items": [
-              {
-                "title": "JavaScript Memory Profiling",
-                "href": "/devtools/docs/javascript-memory-profiling"
-              },
-              {
-                "title": "Demos",
-                "href": "/devtools/docs/heap-profiling-summary"
-              }
-            ]
+            "title": "Other Deployment Options",
+            "href": "/extensions/external_extensions"
+          },
+          {
+            "title": "Google Analytics",
+            "href": "/extensions/tut_analytics"
+          },
+          {
+            "title": "Publishing Themes",
+            "href": "/extensions/themes"
           }
         ]
       },
       {
-        "title": "Reference",
-        "href": "/devtools/docs/console-api",
+        "title": "Chrome Platform APIs",
+        "href": "/extensions/api_index",
         "items": [
           {
-            "title": "Console API Reference",
-            "href": "/devtools/docs/console-api"
+            "title": "JavaScript APIs",
+            "href": "/extensions/api_index"
           },
           {
-            "title": "Command Line API Reference",
-            "href": "/devtools/docs/commandline-api"
+            "title": "Manifest File Format",
+            "href": "/extensions/manifest"
           },
           {
-            "title": "Integrating with DevTools & Chrome",
-            "href": "/devtools/docs/integrating"
+            "title": "Web APIs",
+            "href": "/extensions/api_other"
           },
           {
-            "title": "DevTools Extensions API",
-            "href": "/extensions/devtools",
-            "items": [
-              {
-                "title": "Sample DevTools Extensions",
-                "href": "/devtools/docs/sample-extensions"
-              }
-            ]
+            "title": "Permission Warnings",
+            "href": "/extensions/permission_warnings"
           },
           {
-            "title": "Keyboard Shortcuts",
-            "href": "/devtools/docs/shortcuts"
+            "title": "Optional Permissions",
+            "href": "/extensions/permissions"
           },
           {
-            "title": "Settings",
-            "href": "/devtools/docs/settings"
-          },
-          {
-            "title": "Remote Debugging Protocol",
-            "href": "/devtools/docs/debugger-protocol",
-            "items": [
-              {
-                "title": "Showcase Debugging Protocol Clients",
-                "href": "/devtools/docs/debugging-clients"
-              },
-              {
-                "title": "Version 1.2 (Stable)",
-                "href": "https://chromedevtools.github.io/debugger-protocol-viewer/1-2/"
-              },
-              {
-                "title": "Tip-of-tree (Unstable)",
-                "href": "https://chromedevtools.github.io/debugger-protocol-viewer/tot/"
-              }
-            ]
+            "title": "Match Patterns",
+            "href": "/extensions/match_patterns"
           }
         ]
-      }
-    ]
-  },
-  {
-    "title": "Multi-device",
-    "items": [
+      },
       {
-        "title": "Getting Started",
-        "href": "/multidevice",
+        "title": "Help",
+        "href": "/extensions/faq",
         "items": [
-          {
-            "title": "Chrome for a Multi-Device World",
-            "href": "/multidevice"
-          },
-          {
-            "title": "Data Compression Proxy",
-            "href": "/multidevice/data-compression"
-          },
-          {
-            "title": "User Agents",
-            "href": "/multidevice/user-agent"
-          },
-          {
-            "title": "Mobile Emulation",
-            "href": "/devtools/docs/mobile-emulation"
-          },
-          {
-            "title": "Remote Debugging",
-            "href": "/devtools/docs/remote-debugging"
-          },
           {
             "title": "FAQ",
-            "href": "/multidevice/faq"
-          }
-        ]
-      },
-      {
-        "title": "Chrome for Android",
-        "href": "/multidevice/android/overview",
-        "items": [
-          {
-            "title": "Overview",
-            "href": "/multidevice/android/overview"
+            "href": "/extensions/faq"
           },
           {
-            "title": "Android Intents with Chrome",
-            "href": "/multidevice/android/intents"
+            "title": "Google Groups",
+            "href": "https://groups.google.com/a/chromium.org/forum/#!forum/chromium-extensions"
           },
           {
-            "title": "Add to Homescreen",
-            "href": "/multidevice/android/installtohomescreen"
-          },
-          {
-            "title": "Chrome Custom Tabs",
-            "href": "/multidevice/android/customtabs"
-          }
-        ]
-      },
-      {
-        "title": "Chrome WebView",
-        "href": "/multidevice/webview/overview",
-        "items": [
-          {
-            "title": "WebView for Android",
-            "href": "/multidevice/webview/overview"
-          },
-          {
-            "title": "Getting Started",
-            "href": "/multidevice/webview/gettingstarted"
-          },
-          {
-            "title": "Pixel-Perfect UI",
-            "href": "/multidevice/webview/pixelperfect"
-          },
-          {
-            "title": "WebView Workflow",
-            "href": "/multidevice/webview/workflow"
-          },
-          {
-            "title": "Tips & Tricks",
-            "href": "/multidevice/webview/tipsandtricks"
-          }
-        ]
-      },
-      {
-        "title": "Chrome for iOS",
-        "href": "/multidevice/ios/links",
-        "items": [
-          {
-            "title": "Opening Links in Chrome",
-            "href": "/multidevice/ios/links"
-          },
-          {
-            "title": "User Agent",
-            "href": "/multidevice/user-agent#chrome_for_ios_user_agent"
+            "title": "Stack Overflow",
+            "href": "http://stackoverflow.com/tags/google-chrome-extension/info"
           }
         ]
       }
@@ -517,183 +427,6 @@
               {
                 "title": "Stack Overflow",
                 "href": "http://stackoverflow.com/questions/tagged/google-chrome-app"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "title": "Extensions",
-        "href": "/extensions",
-        "items": [
-          {
-            "title": "Learn Basics",
-            "href": "/extensions",
-            "items": [
-              {
-                "title": "Overview",
-                "href": "/extensions/overview"
-              },
-              {
-                "title": "Extension Quality Guidelines FAQ",
-                "href": "/extensions/single_purpose"
-              },
-
-              {
-                "title": "Event Pages",
-                "href": "/extensions/event_pages"
-              },
-              {
-                "title": "Content Scripts",
-                "href": "/extensions/content_scripts"
-              },
-              {
-                "title": "activeTab Permission",
-                "href": "/extensions/activeTab"
-              },
-              {
-                "title": "What's New?",
-                "href": "/extensions/whats_new"
-              }
-            ]
-          },
-          {
-            "title": "Getting Started Tutorial",
-            "href": "/extensions/getstarted"
-          },
-          {
-            "title": "Samples",
-            "href": "/extensions/samples"
-          },
-          {
-            "title": "Develop Extensions",
-            "href": "/extensions/devguide",
-            "items": [
-              {
-                "title": "Accessibility",
-                "href": "/extensions/a11y"
-              },
-              {
-                "title": "Content Security Policy",
-                "href": "/extensions/contentSecurityPolicy"
-              },
-              {
-                "title": "Cross-Origin XHR",
-                "href": "/extensions/xhr"
-              },
-              {
-                "title": "Debugging",
-                "href": "/extensions/tut_debugging"
-              },
-              {
-                "title": "Internationalization",
-                "href": "/extensions/i18n"
-              },
-              {
-                "title": "Message Passing",
-                "href": "/extensions/messaging"
-              },
-              {
-                "title": "Native Messaging",
-                "href": "/extensions/nativeMessaging"
-              },
-              {
-                "title": "Migrate to Manifest 2",
-                "href": "/extensions/tut_migration_to_manifest_v2"
-              },
-              {
-                "title": "OAuth",
-                "href": "/extensions/tut_oauth"
-              },
-              {
-                "title": "Options",
-                "href": "/extensions/options"
-              },
-              {
-                "title": "Options Version 2",
-                "href": "/extensions/optionsV2"
-              }
-            ]
-          },
-          {
-            "title": "Distribute Extensions",
-            "href": "/extensions/hosting",
-            "items": [
-              {
-                "title": "Hosting and Updating",
-                "href": "/extensions/hosting"
-              },
-              {
-                "title": "Hosting Policy Changes",
-                "href": "/extensions/hosting_changes"
-              },
-              {
-                "title": "Packaging",
-                "href": "/extensions/packaging"
-              },
-              {
-                "title": "One-Time Payments",
-                "href": "/webstore/one_time_payments"
-              },
-              {
-                "title": "Other Deployment Options",
-                "href": "/extensions/external_extensions"
-              },
-              {
-                "title": "Google Analytics",
-                "href": "/extensions/tut_analytics"
-              },
-              {
-                "title": "Publishing Themes",
-                "href": "/extensions/themes"
-              }
-            ]
-          },
-          {
-            "title": "Chrome Platform APIs",
-            "href": "/extensions/api_index",
-            "items": [
-              {
-                "title": "JavaScript APIs",
-                "href": "/extensions/api_index"
-              },
-              {
-                "title": "Manifest File Format",
-                "href": "/extensions/manifest"
-              },
-              {
-                "title": "Web APIs",
-                "href": "/extensions/api_other"
-              },
-              {
-                "title": "Permission Warnings",
-                "href": "/extensions/permission_warnings"
-              },
-              {
-                "title": "Optional Permissions",
-                "href": "/extensions/permissions"
-              },
-              {
-                "title": "Match Patterns",
-                "href": "/extensions/match_patterns"
-              }
-            ]
-          },
-          {
-            "title": "Help",
-            "href": "/extensions/faq",
-            "items": [
-              {
-                "title": "FAQ",
-                "href": "/extensions/faq"
-              },
-              {
-                "title": "Google Groups",
-                "href": "https://groups.google.com/a/chromium.org/forum/#!forum/chromium-extensions"
-              },
-              {
-                "title": "Stack Overflow",
-                "href": "http://stackoverflow.com/tags/google-chrome-extension/info"
               }
             ]
           }
@@ -1054,6 +787,103 @@
                 "href": "/webstore/articles"
               }
             ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Multi-device",
+    "items": [
+      {
+        "title": "Getting Started",
+        "href": "/multidevice",
+        "items": [
+          {
+            "title": "Chrome for a Multi-Device World",
+            "href": "/multidevice"
+          },
+          {
+            "title": "Data Compression Proxy",
+            "href": "/multidevice/data-compression"
+          },
+          {
+            "title": "User Agents",
+            "href": "/multidevice/user-agent"
+          },
+          {
+            "title": "Mobile Emulation",
+            "href": "/devtools/docs/mobile-emulation"
+          },
+          {
+            "title": "Remote Debugging",
+            "href": "/devtools/docs/remote-debugging"
+          },
+          {
+            "title": "FAQ",
+            "href": "/multidevice/faq"
+          }
+        ]
+      },
+      {
+        "title": "Chrome for Android",
+        "href": "/multidevice/android/overview",
+        "items": [
+          {
+            "title": "Overview",
+            "href": "/multidevice/android/overview"
+          },
+          {
+            "title": "Android Intents with Chrome",
+            "href": "/multidevice/android/intents"
+          },
+          {
+            "title": "Add to Homescreen",
+            "href": "/multidevice/android/installtohomescreen"
+          },
+          {
+            "title": "Chrome Custom Tabs",
+            "href": "/multidevice/android/customtabs"
+          }
+        ]
+      },
+      {
+        "title": "Chrome WebView",
+        "href": "/multidevice/webview/overview",
+        "items": [
+          {
+            "title": "WebView for Android",
+            "href": "/multidevice/webview/overview"
+          },
+          {
+            "title": "Getting Started",
+            "href": "/multidevice/webview/gettingstarted"
+          },
+          {
+            "title": "Pixel-Perfect UI",
+            "href": "/multidevice/webview/pixelperfect"
+          },
+          {
+            "title": "WebView Workflow",
+            "href": "/multidevice/webview/workflow"
+          },
+          {
+            "title": "Tips & Tricks",
+            "href": "/multidevice/webview/tipsandtricks"
+          }
+        ]
+      },
+      {
+        "title": "Chrome for iOS",
+        "href": "/multidevice/ios/links",
+        "items": [
+          {
+            "title": "Opening Links in Chrome",
+            "href": "/multidevice/ios/links"
+          },
+          {
+            "title": "User Agent",
+            "href": "/multidevice/user-agent#chrome_for_ios_user_agent"
           }
         ]
       }
