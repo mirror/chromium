@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "6444cb36_d3fe1b65",
+        "filename": "media/gpu/dxva_video_decode_accelerator_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1928,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2018-01-26T00:28:03Z",
+      "side": 1,
+      "message": "I switched to the right thread, but the backtrace only had unknownexceptionfilter and unknownexceptionhandler, and some kernel32 stuff in it. Maybe I\u0027m doing it wrong..",
+      "parentUuid": "b28264a6_048bfd8f",
+      "revId": "51931301f06657957397345193f186628af0b1e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a55fd48c_ef4cd335",
         "filename": "media/gpu/dxva_video_decode_accelerator_win.cc",
         "patchSetId": 2
