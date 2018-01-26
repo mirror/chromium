@@ -93,6 +93,30 @@
       "revId": "994f891433a5b0af0e29b94c42ca085742b11aae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed3f5a4a_de506d6e",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1127279
+      },
+      "writtenOn": "2018-01-26T08:56:17Z",
+      "side": 1,
+      "message": "Yes, StorageAttached has been redefined.",
+      "parentUuid": "9bdba6c6_8312b529",
+      "range": {
+        "startLine": 382,
+        "startChar": 20,
+        "endLine": 382,
+        "endChar": 37
+      },
+      "revId": "994f891433a5b0af0e29b94c42ca085742b11aae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
