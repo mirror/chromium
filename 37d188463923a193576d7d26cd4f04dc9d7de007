@@ -274,6 +274,30 @@
     },
     {
       "key": {
+        "uuid": "14908178_43d20fb9",
+        "filename": "content/test/data/cross_site_document_blocking/service_worker.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-26T08:02:19Z",
+      "side": 1,
+      "message": "Also if you do the .ready + new page as suggested, you can remove install/activate entirely and just have a fetch event.",
+      "parentUuid": "971803cf_1fb035f0",
+      "range": {
+        "startLine": 10,
+        "startChar": 2,
+        "endLine": 10,
+        "endChar": 41
+      },
+      "revId": "37d188463923a193576d7d26cd4f04dc9d7de007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e312b179_7d74e66a",
         "filename": "content/test/data/cross_site_document_blocking/service_worker.js",
         "patchSetId": 6
