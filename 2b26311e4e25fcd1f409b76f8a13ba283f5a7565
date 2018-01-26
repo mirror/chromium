@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "d2755fe0_d0fd5dfd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-26T09:49:28Z",
+      "side": 1,
+      "message": "As a second thought, do I need to add IsRunningInMash for this case? This is not accessing Shell. Is there a bug for moving \u0027global\u0027 gesture provider? I may add a TODO for the bug.",
+      "parentUuid": "4b548e8a_ce93e9fb",
+      "revId": "2b26311e4e25fcd1f409b76f8a13ba283f5a7565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "452b6d81_e5b0a184",
         "filename": "/COMMIT_MSG",
         "patchSetId": 8
