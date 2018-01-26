@@ -32,6 +32,7 @@
 #define WebView_h
 
 #include "WebWidget.h"
+#include "base/time/time.h"
 #include "public/platform/WebColor.h"
 #include "public/platform/WebDisplayMode.h"
 #include "public/platform/WebDragOperation.h"
@@ -367,7 +368,7 @@ class WebView : protected WebWidget {
 
   // Generate a synthetic touch event applying the result of a tap
   // disambiguation popup.
-  virtual void ResolveTapDisambiguation(double timestamp_seconds,
+  virtual void ResolveTapDisambiguation(base::TimeTicks timestamp,
                                         WebPoint tap_viewport_offset,
                                         bool is_long_press) = 0;
 

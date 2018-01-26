@@ -454,7 +454,7 @@ IN_PROC_BROWSER_TEST_F(WebContentsViewAuraTest,
   blink::WebGestureEvent gesture_scroll_begin(
       blink::WebGestureEvent::kGestureScrollBegin,
       blink::WebInputEvent::kNoModifiers,
-      blink::WebInputEvent::kTimeStampForTesting);
+      blink::WebInputEvent::GetStaticTimeStampForTests());
   gesture_scroll_begin.source_device = blink::kWebGestureDeviceTouchscreen;
   gesture_scroll_begin.data.scroll_begin.delta_hint_units =
       blink::WebGestureEvent::ScrollUnits::kPrecisePixels;
@@ -465,7 +465,7 @@ IN_PROC_BROWSER_TEST_F(WebContentsViewAuraTest,
   blink::WebGestureEvent gesture_scroll_update(
       blink::WebGestureEvent::kGestureScrollUpdate,
       blink::WebInputEvent::kNoModifiers,
-      blink::WebInputEvent::kTimeStampForTesting);
+      blink::WebInputEvent::GetStaticTimeStampForTests());
   gesture_scroll_update.source_device = blink::kWebGestureDeviceTouchscreen;
   gesture_scroll_update.data.scroll_update.delta_units =
       blink::WebGestureEvent::ScrollUnits::kPrecisePixels;
@@ -1018,10 +1018,9 @@ IN_PROC_BROWSER_TEST_F(WebContentsViewAuraTest,
                                                             ui::LatencyInfo());
     WaitAFrame();
 
-    blink::WebGestureEvent scroll_end(
-        blink::WebInputEvent::kGestureScrollEnd,
-        blink::WebInputEvent::kNoModifiers,
-        ui::EventTimeStampToSeconds(ui::EventTimeForNow()));
+    blink::WebGestureEvent scroll_end(blink::WebInputEvent::kGestureScrollEnd,
+                                      blink::WebInputEvent::kNoModifiers,
+                                      ui::EventTimeForNow());
     GetRenderWidgetHost()->ForwardGestureEventWithLatencyInfo(
         scroll_end, ui::LatencyInfo());
     WaitAFrame();

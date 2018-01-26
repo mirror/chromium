@@ -118,7 +118,7 @@ class CORE_EXPORT WebViewImpl final
   void DidExitFullscreen() override;
 
   void SetSuppressFrameRequestsWorkaroundFor704763Only(bool) override;
-  void BeginFrame(double last_frame_time_monotonic) override;
+  void BeginFrame(base::TimeTicks last_frame_time) override;
 
   void UpdateLifecycle(LifecycleUpdate requested_update) override;
   void Paint(WebCanvas*, const WebRect&) override;
@@ -387,7 +387,7 @@ class CORE_EXPORT WebViewImpl final
 
   void AnimateDoubleTapZoom(const IntPoint&);
 
-  void ResolveTapDisambiguation(double timestamp_seconds,
+  void ResolveTapDisambiguation(base::TimeTicks timestamp,
                                 WebPoint tap_viewport_offset,
                                 bool is_long_press) override;
 

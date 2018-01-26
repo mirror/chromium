@@ -189,9 +189,9 @@ void NavigateNamedFrame(const ToRenderFrameHost& caller_frame,
 // mouse event is forwarded directly to the RenderWidgetHost without any
 // hit-testing.
 void SimulateMouseClick(RenderWidgetHost* rwh, int x, int y) {
-  blink::WebMouseEvent mouse_event(blink::WebInputEvent::kMouseDown,
-                                   blink::WebInputEvent::kNoModifiers,
-                                   blink::WebInputEvent::kTimeStampForTesting);
+  blink::WebMouseEvent mouse_event(
+      blink::WebInputEvent::kMouseDown, blink::WebInputEvent::kNoModifiers,
+      blink::WebInputEvent::GetStaticTimeStampForTests());
   mouse_event.button = blink::WebPointerProperties::Button::kLeft;
   mouse_event.SetPositionInWidget(x, y);
   rwh->ForwardMouseEvent(mouse_event);
@@ -907,7 +907,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, ViewBoundsInNestedFrameTest) {
   // correctly.
   blink::WebMouseWheelEvent scroll_event(
       blink::WebInputEvent::kMouseWheel, blink::WebInputEvent::kNoModifiers,
-      blink::WebInputEvent::kTimeStampForTesting);
+      blink::WebInputEvent::GetStaticTimeStampForTests());
 
   scroll_event.SetPositionInWidget(
       gfx::ToFlooredInt((bounds.x() - rwhv_root->GetViewBounds().x() - 5) *
@@ -965,7 +965,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
   blink::WebGestureEvent gesture_scroll_begin(
       blink::WebGestureEvent::kGestureScrollBegin,
       blink::WebInputEvent::kNoModifiers,
-      blink::WebInputEvent::kTimeStampForTesting);
+      blink::WebInputEvent::GetStaticTimeStampForTests());
   gesture_scroll_begin.source_device = blink::kWebGestureDeviceTouchscreen;
   gesture_scroll_begin.data.scroll_begin.delta_hint_units =
       blink::WebGestureEvent::ScrollUnits::kPrecisePixels;
@@ -977,7 +977,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
   blink::WebGestureEvent gesture_scroll_update(
       blink::WebGestureEvent::kGestureScrollUpdate,
       blink::WebInputEvent::kNoModifiers,
-      blink::WebInputEvent::kTimeStampForTesting);
+      blink::WebInputEvent::GetStaticTimeStampForTests());
   gesture_scroll_update.source_device = blink::kWebGestureDeviceTouchscreen;
   gesture_scroll_update.data.scroll_update.delta_units =
       blink::WebGestureEvent::ScrollUnits::kPrecisePixels;
@@ -990,7 +990,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
   blink::WebGestureEvent gesture_fling_start(
       blink::WebGestureEvent::kGestureFlingStart,
       blink::WebInputEvent::kNoModifiers,
-      blink::WebInputEvent::kTimeStampForTesting);
+      blink::WebInputEvent::GetStaticTimeStampForTests());
   gesture_fling_start.source_device = blink::kWebGestureDeviceTouchscreen;
   gesture_fling_start.data.fling_start.velocity_x = 0.f;
   gesture_fling_start.data.fling_start.velocity_y = 5.f;
@@ -1074,7 +1074,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, ScrollBubblingFromOOPIFTest) {
   // Scroll the parent frame downward.
   blink::WebMouseWheelEvent scroll_event(
       blink::WebInputEvent::kMouseWheel, blink::WebInputEvent::kNoModifiers,
-      blink::WebInputEvent::kTimeStampForTesting);
+      blink::WebInputEvent::GetStaticTimeStampForTests());
   scroll_event.SetPositionInWidget(1, 1);
   scroll_event.delta_x = 0.0f;
   scroll_event.delta_y = -5.0f;
@@ -1178,7 +1178,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, ScrollBubblingFromOOPIFTest) {
   blink::WebGestureEvent gesture_event(
       blink::WebGestureEvent::kGestureScrollBegin,
       blink::WebInputEvent::kNoModifiers,
-      blink::WebInputEvent::kTimeStampForTesting);
+      blink::WebInputEvent::GetStaticTimeStampForTests());
   gesture_event.source_device = blink::kWebGestureDeviceTouchpad;
   gesture_event.x = 1;
   gesture_event.y = 1;
@@ -1186,10 +1186,10 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, ScrollBubblingFromOOPIFTest) {
   gesture_event.data.scroll_begin.delta_y_hint = 6.0f;
   rwhv_nested->GetRenderWidgetHost()->ForwardGestureEvent(gesture_event);
 
-  gesture_event =
-      blink::WebGestureEvent(blink::WebGestureEvent::kGestureScrollUpdate,
-                             blink::WebInputEvent::kNoModifiers,
-                             blink::WebInputEvent::kTimeStampForTesting);
+  gesture_event = blink::WebGestureEvent(
+      blink::WebGestureEvent::kGestureScrollUpdate,
+      blink::WebInputEvent::kNoModifiers,
+      blink::WebInputEvent::GetStaticTimeStampForTests());
   gesture_event.source_device = blink::kWebGestureDeviceTouchpad;
   gesture_event.x = 1;
   gesture_event.y = 1;
@@ -1199,10 +1199,10 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, ScrollBubblingFromOOPIFTest) {
   gesture_event.data.scroll_update.velocity_y = 0;
   rwhv_nested->GetRenderWidgetHost()->ForwardGestureEvent(gesture_event);
 
-  gesture_event =
-      blink::WebGestureEvent(blink::WebGestureEvent::kGestureScrollEnd,
-                             blink::WebInputEvent::kNoModifiers,
-                             blink::WebInputEvent::kTimeStampForTesting);
+  gesture_event = blink::WebGestureEvent(
+      blink::WebGestureEvent::kGestureScrollEnd,
+      blink::WebInputEvent::kNoModifiers,
+      blink::WebInputEvent::GetStaticTimeStampForTests());
   gesture_event.source_device = blink::kWebGestureDeviceTouchpad;
   gesture_event.x = 1;
   gesture_event.y = 1;
@@ -1337,7 +1337,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
   // root.
   blink::WebMouseWheelEvent scroll_event(
       blink::WebInputEvent::kMouseWheel, blink::WebInputEvent::kNoModifiers,
-      blink::WebInputEvent::kTimeStampForTesting);
+      blink::WebInputEvent::GetStaticTimeStampForTests());
   gfx::Rect bounds = rwhv_nested->GetViewBounds();
   float scale_factor = GetPageScaleFactor(shell());
   scroll_event.SetPositionInWidget(
@@ -7152,9 +7152,9 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
   // at the focused node. This creates a popup widget in both processes.
   // Wait for and then drop the ViewHostMsg_ShowWidget messages, so that both
   // widgets are left in pending-but-not-shown state.
-  NativeWebKeyboardEvent event(blink::WebKeyboardEvent::kChar,
-                               blink::WebInputEvent::kNoModifiers,
-                               blink::WebInputEvent::kTimeStampForTesting);
+  NativeWebKeyboardEvent event(
+      blink::WebKeyboardEvent::kChar, blink::WebInputEvent::kNoModifiers,
+      blink::WebInputEvent::GetStaticTimeStampForTests());
   event.text[0] = ' ';
 
   scoped_refptr<PendingWidgetMessageFilter> filter1 =

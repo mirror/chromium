@@ -538,8 +538,7 @@ bool IsCompatibleScrollorPinch(const WebGestureEvent& new_event,
          new_event.GetType() == WebInputEvent::kGesturePinchUpdate)
       << "Invalid event type for pinch/scroll coalescing: "
       << WebInputEvent::GetName(new_event.GetType());
-  DLOG_IF(WARNING,
-          new_event.TimeStampSeconds() < event_in_queue.TimeStampSeconds())
+  DLOG_IF(WARNING, new_event.TimeStamp() < event_in_queue.TimeStamp())
       << "Event time not monotonic?\n";
   return (event_in_queue.GetType() == WebInputEvent::kGestureScrollUpdate ||
           event_in_queue.GetType() == WebInputEvent::kGesturePinchUpdate) &&
@@ -559,8 +558,7 @@ std::pair<WebGestureEvent, WebGestureEvent> CoalesceScrollAndPinch(
          IsCompatibleScrollorPinch(new_event, *second_last_event));
 
   WebGestureEvent scroll_event(WebInputEvent::kGestureScrollUpdate,
-                               new_event.GetModifiers(),
-                               new_event.TimeStampSeconds());
+                               new_event.GetModifiers(), new_event.TimeStamp());
   WebGestureEvent pinch_event;
   scroll_event.source_device = new_event.source_device;
   scroll_event.primary_pointer_type = new_event.primary_pointer_type;
@@ -604,10 +602,9 @@ blink::WebTouchEvent CreateWebTouchEventFromMotionEvent(
                     static_cast<int>(blink::WebTouchEvent::kTouchesLengthCap),
                 "inconsistent maximum number of active touch points");
 
-  blink::WebTouchEvent result(
-      ToWebTouchEventType(event.GetAction()),
-      EventFlagsToWebEventModifiers(event.GetFlags()),
-      ui::EventTimeStampToSeconds(event.GetEventTime()));
+  blink::WebTouchEvent result(ToWebTouchEventType(event.GetAction()),
+                              EventFlagsToWebEventModifiers(event.GetFlags()),
+                              event.GetEventTime());
   result.dispatch_type = result.GetType() == WebInputEvent::kTouchCancel
                              ? WebInputEvent::kEventNonBlocking
                              : WebInputEvent::kBlocking;
@@ -673,8 +670,7 @@ WebGestureEvent CreateWebGestureEvent(const GestureEventDetails& details,
                                       int flags,
                                       uint32_t unique_touch_event_id) {
   WebGestureEvent gesture(WebInputEvent::kUndefined,
-                          EventFlagsToWebEventModifiers(flags),
-                          ui::EventTimeStampToSeconds(timestamp));
+                          EventFlagsToWebEventModifiers(flags), timestamp);
   gesture.x = gfx::ToFlooredInt(location.x());
   gesture.y = gfx::ToFlooredInt(location.y());
   gesture.global_x = gfx::ToFlooredInt(raw_location.x());
@@ -1178,7 +1174,8 @@ std::unique_ptr<WebGestureEvent> CreateWebGestureEventFromGestureEventAndroid(
       return base::MakeUnique<WebGestureEvent>();
   }
   auto web_event = base::MakeUnique<WebGestureEvent>(
-      event_type, WebInputEvent::kNoModifiers, event.time() / 1000.0);
+      event_type, WebInputEvent::kNoModifiers,
+      base::TimeTicks() + base::TimeDelta::FromMilliseconds(event.time()));
   // NOTE: Source gesture events are synthetic ones that simulate
   // gesture from keyboard (zoom in/out) for now. Should populate Blink
   // event's fields better when extended to handle more cases.

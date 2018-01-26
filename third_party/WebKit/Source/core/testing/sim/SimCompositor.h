@@ -5,6 +5,7 @@
 #ifndef SimCompositor_h
 #define SimCompositor_h
 
+#include "base/time/time.h"
 #include "public/platform/WebLayerTreeView.h"
 
 namespace blink {
@@ -31,6 +32,7 @@ class SimCompositor final : public WebLayerTreeView {
   // Execute the BeginMainFrame processing steps, an approximation of what
   // cc::ThreadProxy::BeginMainFrame would do.
   // If time is not specified a 60Hz frame rate time progression is used.
+  // TODO(dcheng): This should take a base::TimeDelta.
   SimDisplayItemList BeginFrame(double time_delta_in_seconds = 0.016);
 
   bool NeedsBeginFrame() const { return needs_begin_frame_; }
@@ -54,7 +56,7 @@ class SimCompositor final : public WebLayerTreeView {
   bool defer_commits_;
   bool has_selection_;
   WebViewImpl* web_view_;
-  double last_frame_time_monotonic_;
+  base::TimeTicks last_frame_time_;
   WebColor background_color_;
 };
 
