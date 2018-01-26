@@ -2196,8 +2196,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   [_contentArea setFrame:contentFrame];
 
   if (initialLayout) {
-    // Adjust the infobar container to be either at the bottom of the screen
-    // (iPhone) or on the lower toolbar edge (iPad).
+    // Adjust the infobar container to be at the bottom of the content area.
     CGRect infoBarFrame = contentFrame;
     infoBarFrame.origin.y = CGRectGetMaxY(contentFrame);
     infoBarFrame.size.height = 0;
@@ -3129,15 +3128,12 @@ bubblePresenterForFeature:(const base::Feature&)feature
     // no _infoBarContainer instantiated yet.
     // Return offset outside of tab.
     return CGRectGetMaxY(self.view.frame);
-  } else if (IsIPadIdiom()) {
-    // The infobars on iPad are display at the top of a tab.
-    return CGRectGetMinY([[_model currentTab].webController visibleFrame]);
-  } else {
-    // The infobars on iPhone are displayed at the bottom of a tab.
-    CGRect visibleFrame = [[_model currentTab].webController visibleFrame];
-    return CGRectGetMaxY(visibleFrame) -
-           CGRectGetHeight(_infoBarContainer->view().frame);
   }
+  // InfoBar is displayed at the bottom of a tab, so find the Y position by
+  // offsetting by height of InfoBar from the bottom.
+  CGRect visibleFrame = [[_model currentTab].webController visibleFrame];
+  return CGRectGetMaxY(visibleFrame) -
+         CGRectGetHeight(_infoBarContainer->view().frame);
 }
 
 // Provides a view that encompasses the voice search bar if it's displayed or
