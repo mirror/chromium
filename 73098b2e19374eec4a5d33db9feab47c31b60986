@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3fd66170_aa0a1bcb",
+        "filename": "services/resource_coordinator/public/cpp/tracing/no_op_agent.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2018-01-26T19:46:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb6950e0_c5893d68",
+      "revId": "73098b2e19374eec4a5d33db9feab47c31b60986",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d05b590_b66e59b3",
         "filename": "services/resource_coordinator/public/cpp/tracing/no_op_agent.h",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-26T18:38:40Z",
       "side": 1,
       "message": "I get why you\u0027re calling this \"NoOpAgent\" but the naming still feels a bit odd to me. Both since it\u0027s not technically no-op (still runs callbacks etc) but also looks a bit counter-intuitive in the inheritance tree that you want to inherit from  a \"NoOpAgent\" to get some default behaviors.\n\nHow about \"BaseAgent\" or \"DefaultAgent\" or something instead, since this is something we want all tracing agents to inherit.",
+      "revId": "73098b2e19374eec4a5d33db9feab47c31b60986",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2703719_ebc0699b",
+        "filename": "services/resource_coordinator/public/cpp/tracing/no_op_agent.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2018-01-26T19:46:11Z",
+      "side": 1,
+      "message": ":)) This was DefaultAgent first; I changed it to NoOpAgent due to Charlies suggestion since he thgought NoOp is more descriptive than Default. Maybe Base is less strange than NoOp but more descriptive than Default?",
+      "parentUuid": "3d05b590_b66e59b3",
       "revId": "73098b2e19374eec4a5d33db9feab47c31b60986",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
