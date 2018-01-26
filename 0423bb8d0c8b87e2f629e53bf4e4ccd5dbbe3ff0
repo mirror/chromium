@@ -222,6 +222,30 @@
       "revId": "0423bb8d0c8b87e2f629e53bf4e4ccd5dbbe3ff0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62961174_652179f7",
+        "filename": "tools/battor_agent/battor_connection_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2018-01-26T16:10:33Z",
+      "side": 1,
+      "message": "So I think the idea here was that \"FlushConnectionFlushesAlreadyReadBuffer\" was supposed to focus on flushing data that was \"over-read\" in the past read - basically, we took it from the serial connection, but it turned out that we read more data than we needed to construct a single message. Because we can\u0027t just \"put it back\" on the top of the \"to-read\" stack on the wire, we instead store it in a buffer local to a BattOrConnection.\n\nThis test was supposed to be focused on the fact that we shouldn\u0027t just flush a single read\u0027s worth of data from the wire and then say that the flush is complete - if there\u0027s a crap ton of data there, we should flush it all before progressing. However, because the only way to flush before was to reopen the connection, we had to call CloseConnection() -\u003e OpenConnection() to make the flush happen. I think that all that needs to happen with this test is we need to replace the CloseConnection()... OpenConnect() with a FlushConnection() call, and it will be testing the right thing.",
+      "parentUuid": "248cee04_9cf78de3",
+      "range": {
+        "startLine": 274,
+        "startChar": 33,
+        "endLine": 274,
+        "endChar": 73
+      },
+      "revId": "0423bb8d0c8b87e2f629e53bf4e4ccd5dbbe3ff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
