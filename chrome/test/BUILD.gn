@@ -4625,6 +4625,7 @@ if (is_android) {
         "../browser/ui/views/menu_test_base.h",
         "../browser/ui/views/menu_view_drag_and_drop_test.cc",
         "../browser/ui/views/passwords/password_bubble_interactive_uitest.cc",
+        "../browser/ui/views/sad_tab_view_interactive_uitest.cc",
         "../browser/ui/views/status_icons/status_tray_state_changer_interactive_uitest_win.cc",
         "base/view_event_test_base.cc",
         "base/view_event_test_base.h",
