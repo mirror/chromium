@@ -86,6 +86,24 @@
       "revId": "0ff6529ac0bbe14c87dad8c8b5ec0bb62dc32821",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c08bab69_d2997fcb",
+        "filename": "components/omnibox/browser/omnibox_edit_model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-26T20:22:02Z",
+      "side": 1,
+      "message": "No comments about my suggested improvement to the interface?\n\nJustin\u0027s comments are worth thinking about too.",
+      "parentUuid": "e92daf38_c4ee45e7",
+      "revId": "0ff6529ac0bbe14c87dad8c8b5ec0bb62dc32821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
