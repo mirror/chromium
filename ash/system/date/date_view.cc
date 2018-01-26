@@ -219,7 +219,6 @@ void TimeView::UpdateTextInternal(const base::Time& now) {
   base::string16 current_time = base::TimeFormatTimeOfDayWithHourClockType(
       now, hour_type_, base::kDropAmPm);
   horizontal_label_->SetText(current_time);
-  horizontal_label_->SetTooltipText(base::TimeFormatFriendlyDate(now));
 
   // Calculate vertical clock layout labels.
   size_t colon_pos = current_time.find(base::ASCIIToUTF16(":"));
