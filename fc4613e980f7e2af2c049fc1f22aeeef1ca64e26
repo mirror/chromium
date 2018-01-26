@@ -139,6 +139,24 @@
       "revId": "fc4613e980f7e2af2c049fc1f22aeeef1ca64e26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc2f6447_a0c9bc32",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSummaryElement.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-26T22:39:06Z",
+      "side": 1,
+      "message": "I still don\u0027t understand what\u0027s special about allowing flex and grid and not things like table. Why would you allow custom layouts and not table? I couldn\u0027t see anything in the spec that should disallow any display type.",
+      "parentUuid": "117d5e4e_b3d3b7da",
+      "revId": "fc4613e980f7e2af2c049fc1f22aeeef1ca64e26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
