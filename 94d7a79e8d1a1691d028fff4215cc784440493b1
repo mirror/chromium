@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "eaa2fd0d_7a9ad5d2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-26T22:22:02Z",
+      "side": 1,
+      "message": "\"SCANOUT\" which implies SCANOUT_GPU_READ_WRITE can\u0027t be memory mapped",
+      "range": {
+        "startLine": 10,
+        "startChar": 65,
+        "endLine": 11,
+        "endChar": 43
+      },
+      "revId": "94d7a79e8d1a1691d028fff4215cc784440493b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5959ba51_1e50a9fe",
+        "filename": "gpu/ipc/common/gpu_memory_buffer_support.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-26T22:22:02Z",
+      "side": 1,
+      "message": "we should really rename this to SCANOUT_GPU_READ_WRITE at some point. maybe we can add a todo to buffer_types.h for now",
+      "range": {
+        "startLine": 42,
+        "startChar": 27,
+        "endLine": 42,
+        "endChar": 34
+      },
+      "revId": "94d7a79e8d1a1691d028fff4215cc784440493b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a06c8e2_5a3dab3f",
         "filename": "gpu/ipc/common/gpu_memory_buffer_support.cc",
         "patchSetId": 2
@@ -13,6 +59,24 @@
       "writtenOn": "2018-01-26T21:21:58Z",
       "side": 1,
       "message": "YUV formats for SCANOUT might not make sense though, since you can write to them with the GPU.",
+      "revId": "94d7a79e8d1a1691d028fff4215cc784440493b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9ab7bdc_3856b9d5",
+        "filename": "gpu/ipc/common/gpu_memory_buffer_support.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-26T22:22:02Z",
+      "side": 1,
+      "message": "can\u0027t write to them? yes, doesn\u0027t make much sense but also doesn\u0027t hurt.",
+      "parentUuid": "7a06c8e2_5a3dab3f",
       "revId": "94d7a79e8d1a1691d028fff4215cc784440493b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
