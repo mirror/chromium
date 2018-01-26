@@ -69,6 +69,24 @@
       "revId": "3621a28d65125349f4b5831ae8e1cb27e5a44f7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e521e713_67232427",
+        "filename": "content/common/renderer.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-26T23:19:22Z",
+      "side": 1,
+      "message": "Personally I\u0027m happy with KeepAlive. However a different approach might be considered:\n\ninstead of pushing the signal to the scheduler we could adopt pull-based strategy and allow callers to request a handle from RendererScheduler which disables freezing until handle is destroyed.\n\nWe already use this approach with pausing virtual time: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/WebFrameScheduler.h?type\u003dcs\u0026q\u003dCreateWebScopedVirtualTimePauser+package:%5Echromium$\u0026l\u003d131\n\nThat said, I\u0027m happy with KeepAlive.",
+      "parentUuid": "92675173_47c45993",
+      "revId": "3621a28d65125349f4b5831ae8e1cb27e5a44f7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
