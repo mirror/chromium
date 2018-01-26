@@ -394,4 +394,42 @@ TEST_F(MetricsServiceTest, SplitRotation) {
   EXPECT_EQ(1U, task_runner_->NumPendingTasks());
 }
 
+TEST_F(MetricsServiceTest, LastLiveTimestamp) {
+  TestMetricsServiceClient client;
+  TestMetricsService service(GetMetricsStateManager(), &client,
+                             GetLocalState());
+
+  base::Time initial_last_live_time =
+      GetLocalState()->GetTime(prefs::kStabilityBrowserLastLiveTimeStamp);
+
+  service.InitializeMetricsRecordingState();
+  service.Start();
+
+  task_runner_->RunPendingTasks();
+  size_t num_pending_tasks = task_runner_->NumPendingTasks();
+
+  service.StartUpdatingLastLiveTimestamp();
+
+  // Starting the update sequence should not write anything, but should
+  // set up for a later write.
+  EXPECT_EQ(
+      initial_last_live_time,
+      GetLocalState()->GetTime(prefs::kStabilityBrowserLastLiveTimeStamp));
+  EXPECT_EQ(num_pending_tasks + 1, task_runner_->NumPendingTasks());
+
+  // To avoid flakiness, idle until the current time has ticked over a
+  // couple of microseconds at least.
+  while (base::Time::Now() <=
+         initial_last_live_time + base::TimeDelta::FromMicroseconds(2)) {
+    base::PlatformThread::YieldCurrentThread();
+  }
+
+  task_runner_->RunPendingTasks();
+
+  // Verify that the time has updated in local state.
+  EXPECT_LT(
+      initial_last_live_time,
+      GetLocalState()->GetTime(prefs::kStabilityBrowserLastLiveTimeStamp));
+}
+
 }  // namespace metrics
