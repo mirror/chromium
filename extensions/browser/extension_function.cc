@@ -501,6 +501,20 @@ UIThreadExtensionFunction::~UIThreadExtensionFunction() {
   // tricky because checking IsShuttingDown has to be called from the UI thread.
   extensions::ExtensionsBrowserClient* browser_client =
       extensions::ExtensionsBrowserClient::Get();
+  LOG(INFO) << "!browser_client: " << !browser_client;
+  if (browser_client)
+    LOG(INFO) << "browser_client->IsShuttingDown(): "
+              << browser_client->IsShuttingDown();
+  LOG(INFO) << "did_respond(): " << did_respond();
+  LOG(INFO) << "ignore_all_did_respond_for_testing_do_not_use: "
+            << ignore_all_did_respond_for_testing_do_not_use;
+
+  bool d = (!browser_client || browser_client->IsShuttingDown() ||
+            did_respond() || ignore_all_did_respond_for_testing_do_not_use);
+  if (!d)
+    LOG(INFO) << "DECHK FAILED!!";
+  else
+    LOG(INFO) << "DCHECK passed!";
   DCHECK(!browser_client || browser_client->IsShuttingDown() || did_respond() ||
          ignore_all_did_respond_for_testing_do_not_use)
       << name();

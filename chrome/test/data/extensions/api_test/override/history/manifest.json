@@ -1,15 +1,9 @@
 {
-  "name": "History override test",
-  "version": "0.1",
-  "manifest_version": 2,
-  "description": "Test chrome://history/ override",
+  "name": "Context Menus Sample",
+  "description": "Shows some of the features of the Context Menus API",
+  "version": "0.6",
   "background": {
-    "scripts": ["background.js"]
+    "scripts": ["history.js"]
   },
-  "permissions": [ 
-    "history"
-  ],
-  "chrome_url_overrides": {
-    "history": "history.html"
-  }
+  "manifest_version": 2
 }

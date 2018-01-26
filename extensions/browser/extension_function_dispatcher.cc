@@ -562,6 +562,7 @@ bool ExtensionFunctionDispatcher::CheckPermissions(
     ExtensionFunction* function,
     const ExtensionHostMsg_Request_Params& params,
     const ExtensionFunction::ResponseCallback& callback) {
+  LOG(INFO) << "CHECK PERMISSIONS";
   if (!function->HasPermission()) {
     LOG(ERROR) << "Permission denied for " << params.name;
     SendAccessDenied(callback, function->histogram_value());

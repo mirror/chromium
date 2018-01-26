@@ -121,4 +121,22 @@ TEST_F(PermissionsAPIUnitTest, Contains) {
   EXPECT_EQ(expected_has_permission, has_permission);
 }
 
+TEST_F(PermissionsAPIUnitTest, Test) {
+  // 1. Since the extension does not have file:// origin access, expect it
+  // to return false;
+  scoped_refptr<const Extension> extension = ExtensionBuilder("Test").Build();
+  scoped_refptr<PermissionsContainsFunction> function(
+      new PermissionsContainsFunction());
+
+  function->set_extension(extension.get());
+  EXPECT_TRUE(browser());
+  bool run_result = extension_function_test_utils::RunFunction(
+      function.get(), "[{\"origins\":[\"file://*\"]}]", browser(),
+      extension_function_test_utils::NONE);
+
+  EXPECT_TRUE(run_result) << function->GetError();
+
+  EXPECT_FALSE(function->HasPermission());
+}
+
 }  // namespace extensions

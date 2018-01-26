@@ -67,4 +67,13 @@ IN_PROC_BROWSER_TEST_F(ExtensionWebUIBrowserTest,
   EXPECT_EQ(chrome::kChromeUIHistoryURL, GURL(location).spec());
 }
 
+IN_PROC_BROWSER_TEST_F(ExtensionWebUIBrowserTest, Bob2) {
+  const Extension* extension =
+      LoadExtension(test_data_dir_.AppendASCII("api_test")
+                        .AppendASCII("override")
+                        .AppendASCII("history"));
+  ASSERT_TRUE(extension);
+  std::string extension_id = extension->id();
+}
+
 }  // namespace extensions

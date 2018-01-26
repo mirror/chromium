@@ -278,6 +278,25 @@ TEST_F(ManagementApiUnitTest, ManagementEnableOrDisableBlacklisted) {
   }
 }
 
+TEST_F(ManagementApiUnitTest, Test) {
+  scoped_refptr<const Extension> extension = ExtensionBuilder("Test").Build();
+  service()->AddExtension(extension.get());
+
+  const std::string args =
+      base::StringPrintf("[\"%s\"]", extension->id().c_str());
+  scoped_refptr<UIThreadExtensionFunction> function;
+
+  // Initially the extension should show as enabled.
+  {
+    function = new ManagementGetFunction();
+    function->set_extension(extension);
+    std::unique_ptr<base::Value> value(
+        extension_function_test_utils::RunFunctionAndReturnSingleResult(
+            function.get(), args, browser()));
+    ASSERT_TRUE(value);
+  }
+}
+
 TEST_F(ManagementApiUnitTest, ExtensionInfo_MayEnable) {
   using ExtensionInfo = api::management::ExtensionInfo;
 
