@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c19d7601_6ce4d166",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2018-01-26T03:31:28Z",
+      "side": 1,
+      "message": "The first line of commit description is very important, and should provide as much information as possible without exceeding 50 to 60 characters or so. Here are some suggestions:\n* Disabling -\u003e Disable, which is shorter and provide the same information.\n* failing tests -\u003e headless mode test, to given some indication of what tests are disabled. The word \"failing\" is unnecessary, as we wouldn\u0027t disable a fully functional test.\n* for Android builds -\u003e on Android.\n\nIn many situations only the first line of the description is displayed, and the reader should be able to understand what the commit is for based on that line.",
+      "range": {
+        "startLine": 7,
+        "startChar": 15,
+        "endLine": 7,
+        "endChar": 57
+      },
+      "revId": "b312aafe87879bf2702a8beb7c544a818a66042c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d84b8215_6d4d6a9e",
+        "filename": "chrome/test/chromedriver/test/run_py_tests.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2018-01-26T03:31:28Z",
+      "side": 1,
+      "message": "The quotation marks in my original response were meant to delimit the information, not to be actually included in the code. None of the other comments in this section are surrounded by quotation marks.",
+      "range": {
+        "startLine": 198,
+        "startChar": 10,
+        "endLine": 198,
+        "endChar": 49
+      },
+      "revId": "b312aafe87879bf2702a8beb7c544a818a66042c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
