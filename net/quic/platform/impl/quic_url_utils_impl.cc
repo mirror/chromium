@@ -20,4 +20,21 @@ bool QuicUrlUtilsImpl::IsValidUrl(QuicStringPiece url) {
   return GURL(url).is_valid();
 }
 
+// static
+std::string QuicUrlUtilsImpl::CanonicalizeUrl(const std::string& url) {
+  url::Parsed parsed;
+  url::ParseStandardURL(url.data(), url.size(), &parsed);
+
+  std::string canon_url;
+  url::StdStringCanonOutput canon_output(&canon_url);
+  url::Parsed output_parsed;
+  bool success = url::CanonicalizeStandardURL(
+      url.data(), url.size(), parsed, nullptr, &canon_output, &output_parsed);
+  if (!success) {
+    return std::string();
+  }
+  canon_output.Complete();
+  return canon_url;
+}
+
 }  // namespace net
