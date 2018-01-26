@@ -16,6 +16,24 @@
       "revId": "2f53ecc86814efb142d38ac4b0323d8c8e6aa9c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f712dbb0_2a6dc734",
+        "filename": "ash/login/ui/scrollable_users_list_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-26T20:23:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1985cad6_5c3285e9",
+      "revId": "2f53ecc86814efb142d38ac4b0323d8c8e6aa9c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
