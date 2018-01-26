@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2d80093d_9ccbfc06",
+        "filename": "media/cdm/cdm_adapter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-26T00:28:45Z",
+      "side": 1,
+      "message": "Ack. I still don\u0027t like the current approach, but I\u0027ll take more time to think about it and leave that to a later CL.",
+      "parentUuid": "22dcfe74_fc635e0b",
+      "revId": "0105ddc61c35a2db2774b69c74fc783b82087a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29fb67c3_42030cf5",
         "filename": "media/mojo/services/mojo_cdm_proxy_service.cc",
         "patchSetId": 2
@@ -48,6 +66,30 @@
       "writtenOn": "2018-01-26T00:05:14Z",
       "side": 1,
       "message": "Since this is now passed to an object that may go away, does this callback need to be called if it goes away?",
+      "range": {
+        "startLine": 37,
+        "startChar": 55,
+        "endLine": 37,
+        "endChar": 74
+      },
+      "revId": "0105ddc61c35a2db2774b69c74fc783b82087a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a12f2115_a54128a4",
+        "filename": "media/mojo/services/mojo_cdm_proxy_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-26T00:28:45Z",
+      "side": 1,
+      "message": "If |this| is destroyed, the binding is closed and I guess it doesn\u0027t matter whether you call the callback or not. The weak ptr is only to prevent OnInitialized() to be called after |this| is destroyed.\n\nFor the same reason, the callback is other calls (e.g. Process) are also passed through without worrying about losing them.\n\nAlso, at the client side, MojoCdmProxy, we use ScopedCallbackRunner to make sure the client always get it\u0027s callback returned.",
+      "parentUuid": "29fb67c3_42030cf5",
       "range": {
         "startLine": 37,
         "startChar": 55,
