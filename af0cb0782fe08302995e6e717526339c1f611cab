@@ -352,6 +352,24 @@
     },
     {
       "key": {
+        "uuid": "5ec202fe_638a0b7b",
+        "filename": "media/audio/audio_debug_recording_session_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-26T11:34:57Z",
+      "side": 1,
+      "message": "Expectations there won\u0027t explain if a test failed because Get() does not return a pointer we expect, or because there is a bug in the session implementation.\nSo checking it here can potentially save 30 minutes of someone\u0027s life.",
+      "parentUuid": "f0141be0_cf21b97e",
+      "revId": "af0cb0782fe08302995e6e717526339c1f611cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f954fa5e_8881d0cc",
         "filename": "media/audio/audio_debug_recording_session_impl_unittest.cc",
         "patchSetId": 7
@@ -433,6 +451,24 @@
       "writtenOn": "2018-01-26T08:59:19Z",
       "side": 1,
       "message": "Not needed",
+      "revId": "af0cb0782fe08302995e6e717526339c1f611cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "274fd74f_c9cb0040",
+        "filename": "media/audio/mock_audio_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-26T11:34:57Z",
+      "side": 1,
+      "message": "What about this one?",
+      "parentUuid": "0e97aceb_e6154176",
       "revId": "af0cb0782fe08302995e6e717526339c1f611cab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
