@@ -4,6 +4,8 @@
 
 static_library("net") {
   sources = [
+    "variations_command_line.cc",
+    "variations_command_line.h",
     "variations_http_headers.cc",
     "variations_http_headers.h",
   ]
