@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "296a4329_2a8c4804",
+        "filename": "ash/login/ui/scrollable_users_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-26T19:44:23Z",
+      "side": 1,
+      "message": "views::BaseScrollBarThumb is enforcing this override [1].\n\n[1] https://cs.chromium.org/chromium/src/ui/views/controls/scrollbar/base_scroll_bar_thumb.h?rcl\u003d495668dec1b4bc3a38d6154c4736c018d758e738\u0026l\u003d48",
+      "parentUuid": "65de774b_277abd04",
+      "revId": "e72e3d2f6ae75453ba4902b66e7d1ab17b8b1e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67424e4b_8371087e",
         "filename": "ash/login/ui/scrollable_users_list_view.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "e72e3d2f6ae75453ba4902b66e7d1ab17b8b1e0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4cef2ff_a754a193",
+        "filename": "ash/login/ui/scrollable_users_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-26T19:44:23Z",
+      "side": 1,
+      "message": "We only need vertical scroll bar, but I set also horizontal for consistency.\nScrollView has a DCHECK to ensure some properties of both scroll bars are the same [1].\nRight now default matches our custom bar, so I could skip setting horizontal bar, but I think that change of default scroll bar should not break our code if it ever happens.\n\nIf you prefer to remove horizontal arg and skip setting horizontal bar anyway LMK.   \n\n[1] https://cs.chromium.org/chromium/src/ui/views/controls/scroll_view.cc?rcl\u003d79121dad5b628d8cdb3856dcda87117823c3d3f7\u0026l\u003d371",
+      "parentUuid": "67424e4b_8371087e",
+      "revId": "e72e3d2f6ae75453ba4902b66e7d1ab17b8b1e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a81eef80_e81cc71e",
+        "filename": "ash/login/ui/scrollable_users_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-26T19:44:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03eee1e0_f6c0b47d",
+      "revId": "e72e3d2f6ae75453ba4902b66e7d1ab17b8b1e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b05407f7_286c387e",
         "filename": "ash/login/ui/scrollable_users_list_view.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "e72e3d2f6ae75453ba4902b66e7d1ab17b8b1e0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cb8d10b_447cce3b",
+        "filename": "ash/login/ui/scrollable_users_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-26T19:44:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b05407f7_286c387e",
+      "revId": "e72e3d2f6ae75453ba4902b66e7d1ab17b8b1e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
