@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e0d79b2_0ba66f19",
+        "filename": "media/audio/audio_debug_recording_session_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2018-01-26T15:00:51Z",
+      "side": 1,
+      "message": "Sorry to barge in like this, but the base class/subclass hierarchy here doesn\u0027t seem to do anything, and should probably be removed.",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 39
+      },
+      "revId": "561f38958ecc7908743ee76d4e20517670fb1619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
