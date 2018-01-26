@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ae29920_bdce02e0",
+        "filename": "chrome/browser/resources/settings/people_page/people_page.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-26T01:21:56Z",
+      "side": 1,
+      "message": "The the fact that his \u003ctemplate\u003e spans multiple \"if expr\" statements makes the code very hard to decode/understand. Not sure I have a good suggestion, but I am just acknowledging that the mixing of CrOS and non-CrOS logic is worrisome to me.",
+      "range": {
+        "startLine": 118,
+        "startChar": 8,
+        "endLine": 118,
+        "endChar": 53
+      },
+      "revId": "93497f9ab9bac974ab8cbde84db987e19109c80f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2143f34_d858532e",
+        "filename": "chrome/browser/resources/settings/people_page/people_page.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-26T01:21:56Z",
+      "side": 1,
+      "message": "Where does this div close? (I see it but it is confusing). Could it be written as follows instead?\n\n\u003cdiv class\u003d\"middle two-line no-min-width\" actionable\n\u003cif expr\u003d\"not chromeos\"\u003e\n    on-tap\u003d\"onProfileTap_\"\n\u003c/if\u003e\n\u003cif expr\u003d\"chromeos\"\u003e\n    on-tap\u003d\"onPictureTap_\"\n\u003c/if\u003e\n   \u003e\n...\n\u003c/div\u003e\n\nOr, can we just use a single handler name instead of onPictureTap_ and onProfileTap_, and differentiate the logic in the JS file only?",
+      "range": {
+        "startLine": 127,
+        "startChar": 14,
+        "endLine": 127,
+        "endChar": 41
+      },
+      "revId": "93497f9ab9bac974ab8cbde84db987e19109c80f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccf16bc5_a6bd11c2",
+        "filename": "chrome/browser/resources/settings/people_page/people_page.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-26T01:21:56Z",
+      "side": 1,
+      "message": "\u003c/template\u003e \u003c!-- if\u003d\"[[!diceEnabled_]]\" --\u003e",
+      "range": {
+        "startLine": 188,
+        "startChar": 10,
+        "endLine": 188,
+        "endChar": 21
+      },
+      "revId": "93497f9ab9bac974ab8cbde84db987e19109c80f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
