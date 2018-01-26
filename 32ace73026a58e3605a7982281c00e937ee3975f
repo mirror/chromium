@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d82b6758_f8768ec7",
+        "filename": "chromeos/components/tether/ble_connection_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1128430
+      },
+      "writtenOn": "2018-01-26T19:57:41Z",
+      "side": 1,
+      "message": "Is this really necessary or accurate here? If a device goes from connecting -\u003e disconnected, do we hit this point? Does this always mean that old status was connected, authenticating, or authenticated? Can you describe how you\u0027ll use this value in the next CL?",
+      "range": {
+        "startLine": 193,
+        "startChar": 27,
+        "endLine": 193,
+        "endChar": 78
+      },
+      "revId": "32ace73026a58e3605a7982281c00e937ee3975f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae99278d_d76fe268",
+        "filename": "chromeos/components/tether/ble_connection_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1128430
+      },
+      "writtenOn": "2018-01-26T19:57:41Z",
+      "side": 1,
+      "message": "Can you add comments either here or on the callback to briefly describe what this is for?",
+      "range": {
+        "startLine": 67,
+        "startChar": 13,
+        "endLine": 67,
+        "endChar": 30
+      },
+      "revId": "32ace73026a58e3605a7982281c00e937ee3975f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
