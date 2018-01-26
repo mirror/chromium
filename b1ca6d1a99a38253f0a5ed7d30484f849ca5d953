@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27294c45_6762bd9b",
+        "filename": "components/viz/service/surfaces/surface_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-26T19:15:21Z",
+      "side": 1,
+      "message": "Maybe a comment on when the timer starts and stops?",
+      "revId": "b1ca6d1a99a38253f0a5ed7d30484f849ca5d953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
