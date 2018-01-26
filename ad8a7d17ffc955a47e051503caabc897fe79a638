@@ -34,6 +34,23 @@
       "revId": "ad8a7d17ffc955a47e051503caabc897fe79a638",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a6974d2_16dcc1e0",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_fragment_painter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2018-01-26T23:24:21Z",
+      "side": 1,
+      "message": "We might want to cache this on the paint fragment (or elsewhere). For now though would you mind breaking up this method into two?\n\nSomething like a ComputeDescendantOutlines method and a PaintDescendantOutlines one?",
+      "revId": "ad8a7d17ffc955a47e051503caabc897fe79a638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
