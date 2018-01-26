@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d502460f_a1776ebe",
+        "filename": "chrome/browser/site_per_process_interactive_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1470,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-26T17:14:40Z",
+      "side": 1,
+      "message": "Hmmm... this bug is marked as fixed...\n\nFWIW, I am cargo-culting the ctrl-click (or rather ctrl-enter) simulation from WebViewInteractiveTest.NewWindow_OpenInNewTab.  I think the coverage on Linux/Windows/ChromeOS is sufficient.",
+      "range": {
+        "startLine": 1470,
+        "startChar": 7,
+        "endLine": 1470,
+        "endChar": 30
+      },
+      "revId": "776dcd97cadd08ca02719f4387926178bbcc6702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c69a8aba_be60338d",
+        "filename": "chrome/browser/site_per_process_interactive_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1501,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-26T17:14:40Z",
+      "side": 1,
+      "message": "AFAICT it is currently not possible to simulate a ctrl-click using ui_test_utils (can simulate a mouse click, but not holding of the ctrl button).  I guess I could simulate a middle-click, but it would also be more complicated, because it would require calculating exact screen coordinates to click (based on frame offset, anchor offset and web contents bounding rect).\n\nFWIW, I checked that the test fails before my fix, so I think this is good enough for a regression test.",
+      "range": {
+        "startLine": 1501,
+        "startChar": 16,
+        "endLine": 1501,
+        "endChar": 55
+      },
+      "revId": "776dcd97cadd08ca02719f4387926178bbcc6702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
