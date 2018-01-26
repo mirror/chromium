@@ -80,6 +80,7 @@ class SVGScriptElement final : public SVGElement,
   String LanguageAttributeValue() const { return String(); }
   bool NomoduleAttributeValue() const { return false; }
   String SourceAttributeValue() const override;
+  String StdsrcAttributeValue() const override { return String(); }
   String TypeAttributeValue() const override;
   String TextFromChildren() override;
   bool HasSourceAttribute() const override;
