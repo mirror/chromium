@@ -360,6 +360,9 @@ class ASH_EXPORT ShelfView : public views::View,
                 ui::MenuSourceType source_type,
                 views::InkDrop* ink_drop);
 
+  // Show a notification for an app, if any notifications exist.
+  void ShowNotifications(views::View* source, const gfx::Point& click_point);
+
   // Callback for MenuRunner.
   void OnMenuClosed(views::InkDrop* ink_drop);
 
@@ -436,6 +439,9 @@ class ASH_EXPORT ShelfView : public views::View,
   std::unique_ptr<views::MenuRunner> launcher_menu_runner_;
   std::unique_ptr<ScopedRootWindowForNewWindows>
       scoped_root_window_for_new_windows_;
+
+  // Manages the notification view.
+  std::unique_ptr<views::Widget> notification_widget_;
 
   // True when an item being inserted or removed in the model cancels a drag.
   bool cancelling_drag_model_changed_ = false;

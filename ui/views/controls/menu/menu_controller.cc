@@ -413,7 +413,17 @@ void MenuController::Run(Widget* parent,
                          const gfx::Rect& bounds,
                          MenuAnchorPosition position,
                          bool context_menu,
-                         bool is_nested_drag) {
+                         bool is_nested_drag,
+                         views::Widget* sibling) {
+  /*
+   *
+   *
+   *
+   *
+   * this object is reused. where do we drop sibling?
+   *
+   *
+   */
   exit_type_ = EXIT_NONE;
   possible_drag_ = false;
   drag_in_progress_ = false;
@@ -421,6 +431,7 @@ void MenuController::Run(Widget* parent,
   closing_event_time_ = base::TimeTicks();
   menu_start_time_ = base::TimeTicks::Now();
   menu_start_mouse_press_loc_ = gfx::Point();
+  sibling_ = sibling;
 
   if (parent) {
     View* root_view = parent->GetRootView();
@@ -459,6 +470,11 @@ void MenuController::Run(Widget* parent,
     owner_ = parent;
     if (owner_)
       owner_->AddObserver(this);
+
+    // check for sibling_
+    if (!send_gesture_events_to_owner() && send_events_to_sibling_)
+      owner_->GetNativeWindow()->GetRootWindow()->AddPreTargetHandler(
+          sibling_->GetRootView());
 
 #if defined(USE_AURA)
     // Only create a MenuPreTargetHandler for non-nested menus. Nested menus
@@ -786,8 +802,13 @@ void MenuController::OnGestureEvent(SubmenuView* source,
 #endif  // defined(OS_MACOSX)
     owner()->OnGestureEvent(event);
     // Reset |send_gesture_events_to_owner_| when the first gesture ends.
-    if (event->type() == ui::ET_GESTURE_END)
+    if (event->type() == ui::ET_GESTURE_END) {
       send_gesture_events_to_owner_ = false;
+      // Make |sibling_| a pretarget handler, check that it already isnt?
+      if (send_events_to_sibling_ && sibling_)
+        owner_->GetNativeWindow()->GetRootWindow()->AddPreTargetHandler(
+            sibling_->GetRootView());
+    }
     return;
   }
 

@@ -38,7 +38,8 @@ class MenuRunnerImplInterface {
                          MenuButton* button,
                          const gfx::Rect& bounds,
                          MenuAnchorPosition anchor,
-                         int32_t run_types) = 0;
+                         int32_t run_types,
+                         views::Widget* sibling) = 0;
 
   // Hides and cancels the menu.
   virtual void Cancel() = 0;

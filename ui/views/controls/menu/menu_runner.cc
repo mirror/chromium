@@ -14,12 +14,13 @@ namespace views {
 
 MenuRunner::MenuRunner(ui::MenuModel* menu_model,
                        int32_t run_types,
-                       const base::Closure& on_menu_closed_callback)
+                       const base::Closure& on_menu_closed_callback,
+                       views::Widget* sibling)
     : run_types_(run_types),
-      impl_(
-          internal::MenuRunnerImplInterface::Create(menu_model,
-                                                    run_types,
-                                                    on_menu_closed_callback)) {}
+      impl_(internal::MenuRunnerImplInterface::Create(menu_model,
+                                                      run_types,
+                                                      on_menu_closed_callback)),
+      sibling_(sibling) {}
 
 MenuRunner::MenuRunner(MenuItemView* menu_view, int32_t run_types)
     : run_types_(run_types), impl_(new internal::MenuRunnerImpl(menu_view)) {}
@@ -69,7 +70,8 @@ void MenuRunner::RunMenuAt(Widget* parent,
     }
   }
 
-  impl_->RunMenuAt(parent, button, bounds, anchor, run_types_);
+  // add sibling here.
+  impl_->RunMenuAt(parent, button, bounds, anchor, run_types_, sibling_);
 }
 
 bool MenuRunner::IsRunning() const {

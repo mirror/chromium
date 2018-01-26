@@ -4,7 +4,9 @@
 
 #include "ash/shelf/shelf.h"
 
+#include <map>
 #include <memory>
+#include <string>
 
 #include "ash/public/cpp/config.h"
 #include "ash/public/cpp/shelf_item_delegate.h"
@@ -22,10 +24,91 @@
 #include "ui/display/types/display_constants.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/keyboard/keyboard_controller_observer.h"
+#include "ui/message_center/message_center.h"
+#include "ui/message_center/views/message_view.h"
+#include "ui/message_center/views/message_view_factory.h"
+#include "ui/message_center/views/notification_view.h"
+#include "ui/message_center/views/notification_view_md.h"
+#include "ui/views/widget/widget_delegate.h"
+
+#include "ui/gfx/geometry/point.h"
 
 namespace ash {
 
 namespace {
+
+class SingleNotificationView : public views::Widget,
+                               public message_center::MessageCenterObserver {
+ public:
+  SingleNotificationView(const std::string& notification_id,
+                         gfx::Point anchor_point)
+      : notification_id_(notification_id) {
+    /*
+     *
+     * TODO!
+     *  Make it so clicking the notification doesn't close the context menu
+     * here. - Give MenuItemView friends so it knows to just pass if the event
+     * is in their bounds. Basic notification operations. Make it show up
+     * under the context menu.
+     */
+
+    message_center::Notification* notification =
+        message_center::MessageCenter::Get()->FindVisibleNotificationById(
+            notification_id);
+    message_view_ =
+        message_center::MessageViewFactory::Create(*notification, true);
+    views::Widget::InitParams init_params;
+    // maybe not necessary.
+    init_params.ownership =
+        views::Widget::InitParams::WIDGET_OWNS_NATIVE_WIDGET;
+    init_params.type = views::Widget::InitParams::TYPE_POPUP;
+    init_params.accept_events = true;
+    init_params.parent = Shell::GetContainer(
+        Shell::Get()->GetPrimaryRootWindow(), kShellWindowId_MenuContainer);
+    // Set up the bounds.
+    gfx::Rect notification_bounds = gfx::Rect(anchor_point, gfx::Size());
+    notification_bounds.Offset(0, -100);
+    init_params.bounds = notification_bounds;
+    Init(init_params);
+    SetContentsView(message_view_);
+    SetSize(message_view_->GetPreferredSize());
+    Show();
+    widget_delegate()->set_can_activate(true);
+    // Activate();
+    message_center::MessageCenter::Get()->AddObserver(this);
+  }
+  ~SingleNotificationView() override {
+    message_center::MessageCenter::Get()->RemoveObserver(this);
+  }
+
+  // Overridden from MessageCenterObserver:
+  void OnNotificationRemoved(const std::string& notification_id,
+                             bool by_user) override {
+    if (notification_id.compare(notification_id_) != 0)
+      return;
+  }
+
+  void OnNotificationUpdated(const std::string& notification_id) override {
+    if (notification_id.compare(notification_id_) != 0)
+      return;
+  }
+
+  void OnNotificationButtonClicked(const std::string& notification_id,
+                                   int button_index) override {
+    if (notification_id.compare(notification_id_) != 0)
+      return;
+  }
+
+  void OnNotificationClicked(const std::string& notification_id) override {
+    if (notification_id.compare(notification_id_) != 0)
+      return;
+  }
+
+ private:
+  std::string notification_id_;
+
+  message_center::MessageView* message_view_;
+};
 
 // A callback that does nothing after shelf item selection handling.
 void NoopCallback(ShelfAction,
@@ -64,7 +147,9 @@ class Shelf::AutoHideEventHandler : public ui::EventHandler {
 
 // Shelf ---------------------------------------------------------------------
 
-Shelf::Shelf() : shelf_locking_manager_(this) {
+Shelf::Shelf()
+    : shelf_locking_manager_(this),
+      app_id_for_showing_notification_(std::string()) {
   // TODO: ShelfBezelEventHandler needs to work with mus too.
   // http://crbug.com/636647
   if (Shell::GetAshConfig() != Config::MASH)
@@ -259,6 +344,30 @@ void Shelf::ActivateShelfItemOnDisplay(int item_index, int64_t display_id) {
       ui::ET_KEY_RELEASED, ui::VKEY_UNKNOWN, ui::EF_NONE);
   item_delegate->ItemSelected(std::move(event), display_id, LAUNCH_FROM_UNKNOWN,
                               base::Bind(&NoopCallback));
+}
+
+views::Widget* Shelf::ShowNotificationsForAppId(const std::string& app_id,
+                                                const gfx::Point& origin) {
+  // why not let this live in shelf_view?
+  ShelfModel* shelf_model = Shell::Get()->shelf_model();
+  auto* app_to_notification_id_map = shelf_model->app_id_to_notification_id();
+  auto app_to_notification_id_iter = app_to_notification_id_map->find(app_id);
+  if (app_to_notification_id_iter == app_to_notification_id_map->end())
+    return nullptr;
+
+  auto notifications = app_to_notification_id_iter->second;
+  // use the first notification only.
+  SingleNotificationView* single_notification_view =
+      new SingleNotificationView(*notifications.begin(), origin);
+  single_notification_view->Activate();
+  // rethink who should activate and own me.
+  return single_notification_view;
+  // Get just one notifications.
+
+  // put views in crap widget.
+
+  // Hackily show them, as in Notification_view_md_unittest
+  // Eventually patch the delegate in.
 }
 
 bool Shelf::ProcessGestureEvent(const ui::GestureEvent& event) {
