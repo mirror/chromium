@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bfa899d_bbd35840",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_fragment_painter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-26T04:21:15Z",
+      "side": 1,
+      "message": "Yeah, we need this is a few more places, and I\u0027m thinking to store a map somewhere. In the meantime, having a separate class would be good.",
+      "revId": "ad8a7d17ffc955a47e051503caabc897fe79a638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
