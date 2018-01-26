@@ -93,6 +93,30 @@
     },
     {
       "key": {
+        "uuid": "d0be510c_3da8c83a",
+        "filename": "base/threading/thread_local_storage.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1146127
+      },
+      "writtenOn": "2018-01-26T12:24:43Z",
+      "side": 1,
+      "message": "I don\u0027t see how initialized_ default initialization helps with the race.\n\nAre you rather talking about slot_ initialization to -1? This looks like a possible solution to crash on CHECKs but there might still be incorrect work with g_tls_metadata when two threads race for inititialization (one lock protected section executing immediately after the other) unless initialized_ is set to 1 and checked within the lock scope.",
+      "parentUuid": "a7f90284_e8755d6f",
+      "range": {
+        "startLine": 133,
+        "startChar": 39,
+        "endLine": 133,
+        "endChar": 40
+      },
+      "revId": "b9b05f36f5a680e0595e22928c93644fbf04d16b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a26bd57_32856554",
         "filename": "base/threading/thread_local_storage.h",
         "patchSetId": 1
