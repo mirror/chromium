@@ -140,7 +140,8 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl
   // by value avoids this.
   void DestroyCompositorFrameSink(FrameSinkId frame_sink_id);
 
-  void SubmitHitTestRegionList(
+  // This method is virtual so the implementation can be modified in unit tests.
+  virtual void SubmitHitTestRegionList(
       const SurfaceId& surface_id,
       uint64_t frame_index,
       mojom::HitTestRegionListPtr hit_test_region_list);
