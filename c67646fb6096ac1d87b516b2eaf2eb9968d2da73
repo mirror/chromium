@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e3e4ccb_53034188",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-26T16:41:18Z",
+      "side": 0,
+      "message": "Unfortunately I don\u0027t think we can get rid of these, even if we\u0027re already overriding the configuration. Some OEMs load regular resources (non sw600dp) even when the smallest device width is greater than 600dp.",
+      "revId": "c67646fb6096ac1d87b516b2eaf2eb9968d2da73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

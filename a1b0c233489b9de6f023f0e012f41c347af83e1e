@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc74a658_73c6904b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-26T16:41:18Z",
+      "side": 1,
+      "message": "It looks like internally this method is returning:\n\nWindowManager windowManager \u003d\n                (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);\n        return windowManager.getDefaultDisplay();\n\n\nFrom DeviceFormFactor.java, we used the application context rather than the activity context because:\n\n// The Application Context must be used instead of the regular Context, because\n// in Android N multi-window calling Display.getRealMetrics() using the regular Context\n// returns the size of the current screen rather than the device.\n\n\nI think it may be okay to use the regular context based on my (stale) notes in crbug.com/608790, but we should test this really well.",
+      "range": {
+        "startLine": 110,
+        "startChar": 8,
+        "endLine": 110,
+        "endChar": 76
+      },
+      "revId": "a1b0c233489b9de6f023f0e012f41c347af83e1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebd52865_f9f8fee0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-26T16:41:18Z",
+      "side": 1,
+      "message": "How does this differ from smallestScreenWidthDp?",
+      "range": {
+        "startLine": 122,
+        "startChar": 20,
+        "endLine": 122,
+        "endChar": 86
+      },
+      "revId": "a1b0c233489b9de6f023f0e012f41c347af83e1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc94f1ea_0b41227f",
+        "filename": "ui/android/java/src/org/chromium/ui/base/DeviceFormFactor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-26T16:41:18Z",
+      "side": 1,
+      "message": "This class basically isn\u0027t doing anything anymore.. is it still needed or should everything be collapsed into DisplayAndroid? Or is this still needed to communicate with native?",
+      "revId": "a1b0c233489b9de6f023f0e012f41c347af83e1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
