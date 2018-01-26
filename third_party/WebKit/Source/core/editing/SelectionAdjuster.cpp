@@ -503,22 +503,59 @@ class EditingBoundaryAdjuster final {
  public:
   template <typename Strategy>
   static SelectionTemplate<Strategy> AdjustSelection(
-      const SelectionTemplate<Strategy>& shadow_adjusted_selection) {
-    // TODO(editing-dev): Refactor w/o EphemeralRange.
-    const EphemeralRangeTemplate<Strategy> shadow_adjusted_range =
-        shadow_adjusted_selection.ComputeRange();
+      const SelectionTemplate<Strategy>& selection) {
+    Node* const base_root = HighestEditableRoot(selection.Base());
+    Node* const extent_root = HighestEditableRoot(selection.Extent());
+    // The start and end are in the same region. No adjustment necessary.
+    if (base_root == extent_root)
+      return selection;
+
+    // Find same editable rooted position that is farest from base
+    // starting from extent.
+    Node* runner = selection.Extent().ComputeContainerNode();
+    // Node* last_same_editable = runner;
+    const bool base_is_editable = base_root;
+    const base::RepeatingCallback<Node*(const Node&)> func_next =
+        selection.IsBaseFirst()
+            ? WTF::BindRepeating<Node*(const Node&)>(
+                  [](const Node& node) { return Strategy::Previous(node); })
+            : WTF::BindRepeating<Node*(const Node&)>(&Strategy::Next);
+    Node* const base_node = selection.Base().ComputeContainerNode();
+    for (; runner && runner != base_node; runner = func_next.Run(*runner)) {
+      if (base_is_editable != HasEditableStyle(*runner))
+        continue;
+
+      if (!base_is_editable)
+        break;
+      Node* const runner_root =
+          HighestEditableRoot(PositionTemplate<Strategy>(runner, 0));
+      DCHECK(runner_root);
+      if (runner_root == base_root)
+        break;
+      // |runner| is inside another editable root. Skip the root.
+      runner = func_next.Run(*runner_root);
+    }
+    DCHECK(runner);
+    const PositionTemplate<Strategy>& adjusted_extent =
+        selection.IsBaseFirst()
+            ? PositionTemplate<Strategy>::LastPositionInNode(*runner)
+            : PositionTemplate<Strategy>::FirstPositionInNode(*runner);
+    DCHECK_EQ(base_root, HighestEditableRoot(adjusted_extent));
     const EphemeralRangeTemplate<Strategy> editing_adjusted_range =
-        AdjustSelectionToAvoidCrossingEditingBoundaries(
-            shadow_adjusted_range, shadow_adjusted_selection.Base());
+        selection.IsBaseFirst() ? EphemeralRangeTemplate<Strategy>(
+                                      selection.Base(), adjusted_extent)
+                                : EphemeralRangeTemplate<Strategy>(
+                                      adjusted_extent, selection.Base());
     typename SelectionTemplate<Strategy>::Builder builder;
     if (editing_adjusted_range.IsCollapsed())
       return builder.Collapse(editing_adjusted_range.StartPosition()).Build();
-    return shadow_adjusted_selection.IsBaseFirst()
-               ? builder.SetAsForwardSelection(editing_adjusted_range).Build()
-               : builder.SetAsBackwardSelection(editing_adjusted_range).Build();
+    if (selection.IsBaseFirst())
+      return builder.SetAsForwardSelection(editing_adjusted_range).Build();
+    return builder.SetAsBackwardSelection(editing_adjusted_range).Build();
   }
 
  private:
+  // TODO(editing-dev): Remove following unused functions.
   static Element* LowestEditableAncestor(Node* node) {
     while (node) {
       if (HasEditableStyle(*node))

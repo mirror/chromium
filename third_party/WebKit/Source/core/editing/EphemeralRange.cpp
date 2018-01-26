@@ -129,7 +129,7 @@ Node* EphemeralRangeTemplate<Strategy>::CommonAncestorContainer() const {
 template <typename Strategy>
 bool EphemeralRangeTemplate<Strategy>::IsCollapsed() const {
   DCHECK(IsValid());
-  return start_position_ == end_position_;
+  return start_position_.IsEquivalent(end_position_);
 }
 
 template <typename Strategy>

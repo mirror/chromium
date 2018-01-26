@@ -327,6 +327,7 @@ jumbo_source_set("unit_tests") {
     "PositionTest.cpp",
     "RelocatablePositionTest.cpp",
     "RenderedPositionTest.cpp",
+    "SelectionAdjusterTest.cpp",
     "SelectionControllerTest.cpp",
     "SelectionModifierTest.cpp",
     "SelectionTemplateTest.cpp",
