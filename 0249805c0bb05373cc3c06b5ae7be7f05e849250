@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6a3177a_f998f7ed",
+        "filename": "chrome/browser/io_thread.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-26T18:52:03Z",
+      "side": 1,
+      "message": "Matt: I\u0027d like your thoughts on this - and if you have a better suggestion. Offering static methods for testing makes me sad, as it usually highlights an opportunity to improve our hermeticism or testing - but I can also understand that we don\u0027t really have any way to plum the dependencies down.\n\nIn the context of a Servicified world, this seems untenable, so if there are iterative suggestions to be made now to improve it, that\u0027d be great. Alternatively, if you\u0027re comfortable with that being part of the Servification effort, rather than this, I can live with that.\n\n(Note: This is similar to the ProfileIOData method we have already, so further if there\u0027s a way you can see to combine these so we only have one method, that also seems desirable)",
+      "revId": "0249805c0bb05373cc3c06b5ae7be7f05e849250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "134a7fae_0c3d7c51",
+        "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-26T18:52:03Z",
+      "side": 1,
+      "message": "Document",
+      "revId": "0249805c0bb05373cc3c06b5ae7be7f05e849250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "698c0d73_a6f21ea3",
+        "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-26T18:52:03Z",
+      "side": 1,
+      "message": "Document",
+      "revId": "0249805c0bb05373cc3c06b5ae7be7f05e849250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d570b717_0a503c4e",
+        "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-26T18:52:03Z",
+      "side": 1,
+      "message": "Document",
+      "revId": "0249805c0bb05373cc3c06b5ae7be7f05e849250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2101bf42_3e188833",
+        "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-26T18:52:03Z",
+      "side": 1,
+      "message": "I\u0027m having trouble parsing the \u0027initiated by a profile request context\u0027, since it seems like in 119-123, you support the browser process as well",
+      "revId": "0249805c0bb05373cc3c06b5ae7be7f05e849250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19e402cf_ec177132",
+        "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-26T18:52:03Z",
+      "side": 1,
+      "message": "From a testing standpoint, this seems to introduce a dependency on the set of trusted logs we have, and a dependency on a Real Cert. Is there a way we can reduce those dependencies to fully hermetic copies?\n\nIf something goes wrong with these tests, or we want to build on them, I would have no idea on how to do that - hence the concern :)",
+      "revId": "0249805c0bb05373cc3c06b5ae7be7f05e849250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d650e3e7_c8092b98",
+        "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-26T18:52:03Z",
+      "side": 1,
+      "message": "Why is https://cs.chromium.org/chromium/src/content/public/test/browser_test_base.h?rcl\u003dc50b0d294e3252bf88e2780a2c4143e5442bbcf1\u0026l\u003d51 insufficient for this use case?",
+      "revId": "0249805c0bb05373cc3c06b5ae7be7f05e849250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4ac612c_a72dbe78",
+        "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-26T18:52:03Z",
+      "side": 1,
+      "message": "Matt: Could you review this for the Right Way?",
+      "revId": "0249805c0bb05373cc3c06b5ae7be7f05e849250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
