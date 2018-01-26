@@ -1572,6 +1572,7 @@ interface Document : Node
     getter onwebkitfullscreenerror
     getter onwheel
     getter origin
+    getter pictureInPictureEnabled
     getter plugins
     getter pointerLockElement
     getter policy
@@ -1627,6 +1628,7 @@ interface Document : Node
     method evaluate
     method execCommand
     method exitFullscreen
+    method exitPictureInPicture
     method exitPointerLock
     method getAnimations
     method getElementById
@@ -3638,6 +3640,7 @@ interface HTMLVideoElement : HTMLMediaElement
     getter width
     method constructor
     method getVideoPlaybackQuality
+    method requestPictureInPicture
     method webkitEnterFullScreen
     method webkitEnterFullscreen
     method webkitExitFullScreen
