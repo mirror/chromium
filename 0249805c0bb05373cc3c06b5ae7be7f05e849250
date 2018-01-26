@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c3505555_5eb4b1f7",
+        "filename": "chrome/browser/io_thread.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-26T19:34:33Z",
+      "side": 1,
+      "message": "Matt: That actually sounds like a really great idea! It also seems to fit with how I was thinking we might servificy some of this CT effort, which I\u0027ve been trying to dedicate background mental cycles to. If you decide to explore this route in the future as part of S13N, I\u0027d love to be a part of it - and if we (//net OWNERs) don\u0027t get to it before the April CT launch, I\u0027d love to revisit it and possibly drive that once I have more time. Naively, I think it\u0027d make a lot of my qualms about some of the testability of various cert-and-IO-thingies go away, which is why I\u0027m uncomfortably excited about the prospect - even with the NetworkContextParams limitations :)",
+      "parentUuid": "7ef7d69f_e3e91a70",
+      "revId": "0249805c0bb05373cc3c06b5ae7be7f05e849250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "134a7fae_0c3d7c51",
         "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
         "patchSetId": 13
