@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24ca938a_c5ac9128",
+        "filename": "components/cast_channel/cast_message_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-26T17:42:25Z",
+      "side": 1,
+      "message": "Can we use this one entry as a catch-all for all Cast V2 protocol messages (including virtual connection requests), for simplicity?",
+      "revId": "8edcfa85a7bf0b236f1f281186bc9427ee31d476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28d73189_76d8bec5",
+        "filename": "components/cast_channel/cast_message_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-26T17:42:25Z",
+      "side": 1,
+      "message": "Where are duplicate/overlapping app availability/virtual connection requests handled?  Is that the job of the caller?",
+      "revId": "8edcfa85a7bf0b236f1f281186bc9427ee31d476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1a6c19d_dd5d4147",
+        "filename": "components/cast_channel/cast_message_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-26T17:42:25Z",
+      "side": 1,
+      "message": "Since there is no checking of the message sent result, the caller won\u0027t know that a request failed until the timer fires?  Should we invoke the callback immediately on failure so the caller can retry sooner?",
+      "revId": "8edcfa85a7bf0b236f1f281186bc9427ee31d476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f15dd55_ce8edd07",
+        "filename": "components/cast_channel/cast_message_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-26T17:42:25Z",
+      "side": 1,
+      "message": "base::DictionaryValue?",
+      "revId": "8edcfa85a7bf0b236f1f281186bc9427ee31d476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab911f48_98c6eb1c",
+        "filename": "components/cast_channel/cast_message_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-26T17:42:25Z",
+      "side": 1,
+      "message": "Is a VirtualConnection bound to a socket or a device? What is the duration of the virtual connection and when does it have to be re-established?\n\nFor example, if a socket became disconnected and we established a new socket to the same device, do we need to automatically reestablish virtual connections to that device?",
+      "revId": "8edcfa85a7bf0b236f1f281186bc9427ee31d476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50f5b73c_a39b79b1",
+        "filename": "components/cast_channel/cast_message_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-26T17:42:25Z",
+      "side": 1,
+      "message": "Is the success rate for virtual connection attempts an interesting metric to keep track of?  Or do you think it just reflects the overall connection success rate for Cast sockets?",
+      "revId": "8edcfa85a7bf0b236f1f281186bc9427ee31d476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f47dbf45_9f82055e",
+        "filename": "components/cast_channel/cast_message_handler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-26T17:42:25Z",
+      "side": 1,
+      "message": "s/2017/2018/ here and elsewhere as needed",
+      "revId": "8edcfa85a7bf0b236f1f281186bc9427ee31d476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bae18447_895eafee",
+        "filename": "components/cast_channel/cast_message_handler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-26T17:42:25Z",
+      "side": 1,
+      "message": "Should this define operator\u003d\u003d as well?",
+      "revId": "8edcfa85a7bf0b236f1f281186bc9427ee31d476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "879b797f_ab95b361",
+        "filename": "components/cast_channel/cast_message_handler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-26T17:42:25Z",
+      "side": 1,
+      "message": "s/thread/sequence/",
+      "revId": "8edcfa85a7bf0b236f1f281186bc9427ee31d476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b8c6619_4a0b38a6",
+        "filename": "components/cast_channel/cast_message_handler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-26T17:42:25Z",
+      "side": 1,
+      "message": "This object seems to handle messages for all sockets, but the GetAppAvailability callback doesn\u0027t identify which device gave the result.\n\nAn alternative design would have a CastMessageHandler wrap a single CastSocket, then the caller could bind the callback with the (sink_id,app_id) or whatever else it needs to maintain app availability for a specific device.\n\nSince the virtual connections seem to be tied to the lifetime of a specific CastSocket, this seems a little cleaner.  But you\u0027d need to clean up the message handler when the socket is closed...",
+      "revId": "8edcfa85a7bf0b236f1f281186bc9427ee31d476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cb58795_2dde3c5c",
+        "filename": "components/cast_channel/cast_message_handler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-26T17:42:25Z",
+      "side": 1,
+      "message": "Consider making these protected to eliminate the trivial getters above - if the test fixture becomes more complicated, it\u0027s always possible to refactor to them later.",
+      "revId": "8edcfa85a7bf0b236f1f281186bc9427ee31d476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95edec79_86a8049f",
+        "filename": "components/cast_channel/cast_message_handler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-26T17:42:25Z",
+      "side": 1,
+      "message": "Nit: Add an expectation that OnMessageSent() is invoked here (and elsewhere as needed)",
+      "revId": "8edcfa85a7bf0b236f1f281186bc9427ee31d476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "928ae9a3_0ee6a454",
+        "filename": "components/cast_channel/cast_message_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-26T17:42:25Z",
+      "side": 1,
+      "message": "Delete this line?",
+      "revId": "8edcfa85a7bf0b236f1f281186bc9427ee31d476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08a3b7c4_483a3dae",
+        "filename": "components/cast_channel/cast_message_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-26T17:42:25Z",
+      "side": 1,
+      "message": "Why does this require a custom User-Agent string?\nCan you give an example string used here and the default for Chrome for comparison?",
+      "revId": "8edcfa85a7bf0b236f1f281186bc9427ee31d476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
