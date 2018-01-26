@@ -1,0 +1,209 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56edfe32_ca01d45b",
+        "filename": "chrome/browser/browsing_data/navigation_entry_remover.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-26T00:52:05Z",
+      "side": 1,
+      "message": "You might check whether this leaves blob, filesystem, and view-source URLs in history (e.g., blob:http://example.com/..., or view-source:http://example.com).  That would probably be unexpected.\n\nIs there a strong reason to leave chrome://, chrome-extension://, etc in the session history, or should we just clear anything that matches the time frame?",
+      "revId": "330c43fc91247489f837e08dd113965bedf460f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13da345e_b2ded627",
+        "filename": "chrome/browser/browsing_data/navigation_entry_remover.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-26T00:52:05Z",
+      "side": 1,
+      "message": "This name seems confusing if it\u0027s comparing full URLs rather than origins.",
+      "range": {
+        "startLine": 35,
+        "startChar": 5,
+        "endLine": 35,
+        "endChar": 18
+      },
+      "revId": "330c43fc91247489f837e08dd113965bedf460f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e174f7a0_b05b4b21",
+        "filename": "chrome/browser/browsing_data/navigation_entry_remover.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-26T00:52:05Z",
+      "side": 1,
+      "message": "I\u0027d suggest checking with an Android Chrome reviewer.  Maybe tedchoc@ would know.",
+      "revId": "330c43fc91247489f837e08dd113965bedf460f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdb96965_a2930926",
+        "filename": "chrome/browser/browsing_data/navigation_entry_remover.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-26T00:52:05Z",
+      "side": 1,
+      "message": "Did you try DiscardNonCommittedEntries?  That seems like it should address this TODO.",
+      "revId": "330c43fc91247489f837e08dd113965bedf460f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "770ffe53_6bd81695",
+        "filename": "chrome/browser/sessions/session_service.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-26T00:52:05Z",
+      "side": 1,
+      "message": "Don\u0027t forget about this.  :)",
+      "revId": "330c43fc91247489f837e08dd113965bedf460f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2435d444_ab4b85c3",
+        "filename": "components/browsing_data/core/features.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-26T00:52:05Z",
+      "side": 1,
+      "message": "nit: 2018, here and anywhere else",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 18
+      },
+      "revId": "330c43fc91247489f837e08dd113965bedf460f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34527762_68235980",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1742,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-26T00:52:05Z",
+      "side": 1,
+      "message": "It wasn\u0027t immediately clear what entries_front and entries_back meant.  Maybe entries_before and entries_after in this context, or something closer to entries_removed_from_{front,back}?",
+      "revId": "330c43fc91247489f837e08dd113965bedf460f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86e4041d_ecf62ba1",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1753,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-26T00:52:05Z",
+      "side": 1,
+      "message": "Should we do the notification before the SetHistoryOffsetAndLength call as in the new PruneNavigationEntries method below?  Or vice versa (i.e., notify after the SetHistoryOffsetAndLength call below)?\n\nThose would be more consistent, in case the notify methods were to send things to the renderer which might act differently whether or not the offset and length have been updated.",
+      "revId": "330c43fc91247489f837e08dd113965bedf460f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be197e6a_0167cc8e",
+        "filename": "content/public/browser/navigation_details.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-26T00:52:05Z",
+      "side": 1,
+      "message": "nit: Update comment.",
+      "revId": "330c43fc91247489f837e08dd113965bedf460f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b154ad1_8ecd8f5c",
+        "filename": "content/public/browser/navigation_details.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-26T00:52:05Z",
+      "side": 1,
+      "message": "nit: Add \"if |position| is BACK or FRONT,\"",
+      "range": {
+        "startLine": 85,
+        "startChar": 5,
+        "endLine": 85,
+        "endChar": 28
+      },
+      "revId": "330c43fc91247489f837e08dd113965bedf460f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "691e11e9_f963581c",
+        "filename": "content/test/data/browsing_data/site_data.html",
+        "patchSetId": 19
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-26T00:52:05Z",
+      "side": 1,
+      "message": "I might be missing something-- where\u0027s the call to this?",
+      "revId": "330c43fc91247489f837e08dd113965bedf460f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
