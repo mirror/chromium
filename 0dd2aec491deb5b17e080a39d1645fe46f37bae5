@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23103f54_dd8a5ed9",
+        "filename": "components/certificate_transparency/single_tree_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-26T21:16:26Z",
+      "side": 1,
+      "message": "IWYU: #include \"base/compiler_specific.h\"",
+      "revId": "0dd2aec491deb5b17e080a39d1645fe46f37bae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
