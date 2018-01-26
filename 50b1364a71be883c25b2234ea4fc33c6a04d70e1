@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6640a74f_a98bcc7e",
+        "filename": "content/browser/renderer_host/media/media_devices_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-26T12:20:44Z",
+      "side": 1,
+      "message": "This code looks a bit strange to me. why loop when you\u0027re never going to do it twice?\nYou\u0027re only interested in whether it appears or not in the rest of the array; wouldn\u0027t this:\n\nif (std::find_if(it_fist + 1, audio_infos.end(), equals_lambda) !\u003d audio_infos.end()) {\n\ndo the same thing?",
+      "revId": "50b1364a71be883c25b2234ea4fc33c6a04d70e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
