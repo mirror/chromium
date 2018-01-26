@@ -44,6 +44,10 @@ class PresentationReceiverWindowView final
   void Init();
 
  private:
+  friend class PresentationReceiverWindowViewBrowserTest;
+
+  LocationBarView* GetLocationBarViewForTest() { return location_bar_view_; }
+
   // PresentationReceiverWindow overrides.
   void Close() final;
   bool IsWindowActive() const final;
