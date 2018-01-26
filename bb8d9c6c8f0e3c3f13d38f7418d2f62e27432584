@@ -22,6 +22,30 @@
       "revId": "bb8d9c6c8f0e3c3f13d38f7418d2f62e27432584",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6388502f_e92e5b75",
+        "filename": "gpu/config/gpu_driver_bug_list.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 2746,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-26T22:44:13Z",
+      "side": 1,
+      "message": "Ah, thanks. Changed to the simpler form.",
+      "parentUuid": "54638b89_4181b7b8",
+      "range": {
+        "startLine": 2746,
+        "startChar": 18,
+        "endLine": 2746,
+        "endChar": 19
+      },
+      "revId": "bb8d9c6c8f0e3c3f13d38f7418d2f62e27432584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
