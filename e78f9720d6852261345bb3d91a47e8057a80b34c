@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b222cbe_1699ed32",
+        "filename": "components/omnibox/browser/in_memory_url_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-01-26T17:55:15Z",
+      "side": 1,
+      "message": "Should this be task_runner_? I ask mostly out of curiosity because I honestly have a weak understanding of how the task runner infrastructure works.",
+      "range": {
+        "startLine": 105,
+        "startChar": 32,
+        "endLine": 105,
+        "endChar": 67
+      },
+      "revId": "e78f9720d6852261345bb3d91a47e8057a80b34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adb2d47a_9ca9fd04",
+        "filename": "components/omnibox/browser/in_memory_url_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-01-26T17:55:15Z",
+      "side": 1,
+      "message": "I\u0027d prefer 0 to 0u here. To my eye, the use of 0u is distracting as it suggests that there\u0027s some reason I need to understand as a reader of the code why it was specified as unsigned.",
+      "revId": "e78f9720d6852261345bb3d91a47e8057a80b34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33a3c2f4_533602ba",
+        "filename": "components/omnibox/browser/in_memory_url_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-01-26T17:55:15Z",
+      "side": 1,
+      "message": "Add \u0027:\u0027 after \"TODO(dyaroshev)\" and capitalize \"add\".",
+      "revId": "e78f9720d6852261345bb3d91a47e8057a80b34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc46b720_108fac1c",
+        "filename": "components/omnibox/browser/in_memory_url_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-01-26T17:55:15Z",
+      "side": 1,
+      "message": "I\u0027d prefer omnibox/in_memory_url_index unless you have some specific motivation for referring to this as autocomplete here.",
+      "revId": "e78f9720d6852261345bb3d91a47e8057a80b34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66510b40_e9600c45",
+        "filename": "components/omnibox/browser/in_memory_url_index.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-01-26T17:55:15Z",
+      "side": 1,
+      "message": "For consistency with the override sections just above, this should simply be:\n\n// MemoryDumpProvider:",
+      "revId": "e78f9720d6852261345bb3d91a47e8057a80b34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5ce9acc_9154f0c8",
+        "filename": "components/omnibox/browser/in_memory_url_index_types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-01-26T17:55:15Z",
+      "side": 1,
+      "message": "Is the Time value inside VisitInfo currently estimated correctly?",
+      "revId": "e78f9720d6852261345bb3d91a47e8057a80b34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b6beb7d_c7dea4bc",
+        "filename": "components/omnibox/browser/in_memory_url_index_types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-01-26T17:55:15Z",
+      "side": 1,
+      "message": "Please add a method comment (here and the other locations this is declared).",
+      "revId": "e78f9720d6852261345bb3d91a47e8057a80b34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
