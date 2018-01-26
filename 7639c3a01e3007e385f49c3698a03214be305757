@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "118bc824_f7ecaf1b",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-26T00:16:51Z",
+      "side": 1,
+      "message": "Why do you need to invalidate on origin change or path change, but the old code\ndid not need to",
+      "revId": "7639c3a01e3007e385f49c3698a03214be305757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29d01c18_2052e618",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
         "patchSetId": 2
