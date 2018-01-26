@@ -16,6 +16,24 @@
       "revId": "71e4f2ec744472704e60c8d3f54e872ed87cada2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15da04e4_c9376e71",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 66
+      },
+      "lineNbr": 2007,
+      "author": {
+        "id": 1151126
+      },
+      "writtenOn": "2018-01-26T23:37:32Z",
+      "side": 1,
+      "message": "Sorry, I might not understand what you want to say completely here.\n\nIf we don\u0027t strip all symbols in no_symbols config, cflags and ldflags in no_symbols becomes the same with minimal_symbols. Adding -s to ldflags removes all symbols including function name in no_symbols.\nBut I want to keep symbol_level\u003d1 for buildbot\u0027s args.gn for representing we keep function symbols for stacktrace.",
+      "parentUuid": "092469dd_75fff939",
+      "revId": "71e4f2ec744472704e60c8d3f54e872ed87cada2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
