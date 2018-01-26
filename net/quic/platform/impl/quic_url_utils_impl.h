@@ -22,6 +22,8 @@ class QUIC_EXPORT_PRIVATE QuicUrlUtilsImpl {
   // (e.g. greater than 65535).
   static bool IsValidUrl(QuicStringPiece url);
 
+  static std::string CanonicalizeUrl(const std::string& url);
+
  private:
   DISALLOW_COPY_AND_ASSIGN(QuicUrlUtilsImpl);
 };
