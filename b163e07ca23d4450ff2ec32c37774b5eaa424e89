@@ -16,6 +16,24 @@
       "revId": "b163e07ca23d4450ff2ec32c37774b5eaa424e89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e610b9d_62bd6eb9",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1016,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-26T13:47:54Z",
+      "side": 1,
+      "message": "https://cs.chromium.org/chromium/src/components/viz/service/frame_sinks/compositor_frame_sink_support.cc?q\u003dcompositor_frame_sink_support.cc\u0026sq\u003dpackage:chromium\u0026l\u003d232\n\nWe reject CompositorFrames that have invalid SurfaceInfos (zero size).",
+      "parentUuid": "196e155e_cb8e5eae",
+      "revId": "b163e07ca23d4450ff2ec32c37774b5eaa424e89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
