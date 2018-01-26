@@ -22,6 +22,30 @@
       "revId": "de2d0ae25fd4e03c4c2831279742c640e03df4b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5312c41_603dbee7",
+        "filename": "content/public/common/content_features.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-26T22:45:43Z",
+      "side": 1,
+      "message": "By \"central media file\" do you mean somewhere in media/ or some media subfolder in content/ ?\n\nThese methods contain logic for deciding whether or not a certain logical feature is enabled/disabled depending on a combination of base::Feature values. In their usage, they serve a very similar purpose than the individual base::Features. I am concerned that moving them further away from here will increase the chance that this logic gets duplicated in the future, as seems to have already happened with many other logical features that depend on more than one base::Feature or switch, see for example [1].\n\nThere used to be a similar method right here at the time this CL started, which seemed to have the same idea, see [2].\n\nIf there is a better place for putting such logic, I am all for it, but I am currently not aware of any such place.\n\n[1] https://docs.google.com/document/d/1kydw6u7UwPG0WNdhRqVzEWr3rvEvTtYshTvD5CY0Z5c/edit#bookmark\u003did.f1we6vj5aer0\n[2] https://chromium-review.googlesource.com/c/chromium/src/+/862515/10/content/public/common/content_features.cc#b530",
+      "parentUuid": "737ddb09_95255576",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 146,
+        "endChar": 68
+      },
+      "revId": "de2d0ae25fd4e03c4c2831279742c640e03df4b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
