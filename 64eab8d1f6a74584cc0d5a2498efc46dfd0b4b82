@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e20d6dc8_01c4bac4",
+        "filename": "chrome/common/extensions/docs/examples/api/browserAction/print/manifest.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T18:55:27Z",
+      "side": 1,
+      "message": "activeTab should replace http://*/* and https://*/*.  The goal would be that we don\u0027t need to have the extension automatically have access to all sites.",
+      "revId": "64eab8d1f6a74584cc0d5a2498efc46dfd0b4b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
