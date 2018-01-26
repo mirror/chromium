@@ -5,12 +5,29 @@
 #ifndef DEVICE_CTAP_CTAP_CONSTANTS_H_
 #define DEVICE_CTAP_CTAP_CONSTANTS_H_
 
+#include <stddef.h>
 #include <stdint.h>
 
 #include <array>
 #include <vector>
 
+#include "base/time/time.h"
+
 namespace device {
+
+// List of protocols authenticators support.
+enum class ProtocolVersion {
+  kCtap,
+  kU2f,
+};
+
+// Return code
+enum class CTAPReturnCode : uint8_t {
+  kSuccess,
+  kNotAllowed,
+  kNotSupported,
+  kUnknownError
+};
 
 // CTAP protocol device response code, as specified in
 // https://fidoalliance.org/specs/fido-v2.0-rd-20170927/fido-client-to-authenticator-protocol-v2.0-rd-20170927.html#authenticator-api
@@ -60,7 +77,7 @@ enum class CTAPDeviceResponseCode : uint8_t {
   kCtap2ErrPinPolicyViolation = 0x37,
   kCtap2ErrPinTokenExpired = 0x38,
   kCtap2ErrRequestTooLarge = 0x39,
-  kCtap2ErrOther = 0x7F,
+  kCtap1ErrOther = 0x7F,
   kCtap2ErrSpecLast = 0xDF,
   kCtap2ErrExtensionFirst = 0xE0,
   kCtap2ErrExtensionLast = 0xEF,
@@ -94,7 +111,7 @@ enum class CTAPRequestCommand : uint8_t {
   kAuthenticatorReset = 0x07,
 };
 
-constexpr std::array<CTAPDeviceResponseCode, 51> GetCTAPResponseCodeList() {
+constexpr std::array<CTAPDeviceResponseCode, 51> GetResponseCodeList() {
   return {CTAPDeviceResponseCode::kSuccess,
           CTAPDeviceResponseCode::kCtap1ErrInvalidCommand,
           CTAPDeviceResponseCode::kCtap1ErrInvalidParameter,
@@ -140,7 +157,7 @@ constexpr std::array<CTAPDeviceResponseCode, 51> GetCTAPResponseCodeList() {
           CTAPDeviceResponseCode::kCtap2ErrPinPolicyViolation,
           CTAPDeviceResponseCode::kCtap2ErrPinTokenExpired,
           CTAPDeviceResponseCode::kCtap2ErrRequestTooLarge,
-          CTAPDeviceResponseCode::kCtap2ErrOther,
+          CTAPDeviceResponseCode::kCtap1ErrOther,
           CTAPDeviceResponseCode::kCtap2ErrSpecLast,
           CTAPDeviceResponseCode::kCtap2ErrExtensionFirst,
           CTAPDeviceResponseCode::kCtap2ErrExtensionLast,
@@ -151,6 +168,30 @@ constexpr std::array<CTAPDeviceResponseCode, 51> GetCTAPResponseCodeList() {
 extern const char kResidentKeyMapKey[];
 extern const char kUserVerificationMapKey[];
 extern const char kUserPresenceMapKey[];
+
+// Fake register parameters to send to authenticators to enforce user presence
+// check.
+extern const std::vector<uint8_t> kU2FBogusRegisterApplicationParam;
+extern const std::vector<uint8_t> kU2FBogusRegisterChallengeParam;
+
+// Wait time before retrying when KEEP_ALIVE message is received from
+// authenticator.
+extern const base::TimeDelta kDelayKeepAlive;
+
+// HID transport specific constants
+extern const size_t kPacketSize;
+extern const uint32_t kHIDBroadcastChannel;
+extern const size_t kInitPacketHeader;
+extern const size_t kContinuationPacketHeader;
+extern const size_t kMaxHidPacketSize;
+extern const size_t kInitPacketDataSize;
+extern const size_t kContinuationPacketDataSize;
+
+// Messages are limited to an init packet and 128 continuation packets
+extern const size_t kMaxMessageSize;
+extern const uint8_t kReportId;
+extern const uint8_t kWinkCapability;
+extern const uint8_t kLockCapability;
 
 }  // namespace device
 
