@@ -240,6 +240,12 @@ void ManifestVerifier::OnPaymentMethodManifestParsed(
   std::transform(supported_origins.begin(), supported_origins.end(),
                  supported_origin_strings.begin(),
                  [](const auto& origin) { return origin.Serialize(); });
+  // Note that default applications are not necessary from the same origin of
+  // the payment method.
+  for (const auto& default_app_url : default_applications) {
+    supported_origin_strings.emplace_back(
+        url::Origin::Create(default_app_url).Serialize());
+  }
 
   if (cached_manifest_urls_.find(method_manifest_url) ==
       cached_manifest_urls_.end()) {
