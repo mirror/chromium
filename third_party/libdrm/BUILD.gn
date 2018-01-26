@@ -11,6 +11,7 @@ declare_args() {
   # use the system version, but when building on dev workstations we
   # bundle it because Ubuntu doesn't ship a usable version.
   use_system_libdrm = false
+  use_intel_libdrm = false
 }
 
 if (!use_system_libdrm) {
@@ -21,9 +22,19 @@ if (!use_system_libdrm) {
       "src",
       "src/include",
       "src/include/drm",
+      "src/intel",
     ]
     if (is_clang) {
       cflags = [ "-Wno-enum-conversion" ]
+    }
+    if (use_intel_libdrm) {
+      defines += [ "HAVE_LIBDRM_ATOMIC_PRIMITIVES" ]
+    }
+  }
+
+  if (use_intel_libdrm) {
+    pkg_config("pciaccess_config") {
+      packages = [ "pciaccess" ]
     }
   }
 
@@ -35,10 +46,26 @@ if (!use_system_libdrm) {
       "src/xf86drmRandom.c",
     ]
 
+    if (use_intel_libdrm) {
+      sources += [
+        "src/intel/intel_bufmgr.c",
+        "src/intel/intel_bufmgr_fake.c",
+        "src/intel/intel_bufmgr_gem.c",
+        "src/intel/intel_decode.c",
+        "src/intel/mm.c",
+      ]
+    }
+
     include_dirs = [
       "src",
       "src/include",
     ]
+
+    if (use_intel_libdrm) {
+      include_dirs += [ "/usr/include" ]
+      lib_dirs = [ "/usr/lib" ]
+    }
+
     configs -= [ "//build/config/compiler:chromium_code" ]
     configs += [ "//build/config/compiler:no_chromium_code" ]
     cflags = [
@@ -49,6 +76,10 @@ if (!use_system_libdrm) {
     ]
 
     public_configs = [ ":libdrm_config" ]
+
+    if (use_intel_libdrm) {
+      public_configs += [ ":pciaccess_config" ]
+    }
   }
 }
 
