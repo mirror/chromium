@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "177d17c6_90520d09",
+        "filename": "gpu/config/gpu_info.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-26T01:02:26Z",
+      "side": 1,
+      "message": "nit: maybe leave this at the call site? There doesn\u0027t seem to be a lot of value in passing it to the function just to add it here.",
+      "revId": "32e6b79116182fed248510a1f3341eee15ec0fca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "618804d8_83009f1d",
+        "filename": "gpu/config/gpu_info.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-26T01:02:26Z",
+      "side": 1,
+      "message": "nit: as GPUInfo is a value type, I\u0027d suggest naming based on the value (e.g. HasCompleteInfo() ) rather than on the behavior of GpuDataManager.",
+      "revId": "32e6b79116182fed248510a1f3341eee15ec0fca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
