@@ -31,7 +31,7 @@ def main_run(args):
 
 
 def main_compile_targets(args):
-  json.dump(['chrome'], args.output)
+  json.dump(['chrome', 'remoting/host', 'remoting/client'], args.output)
 
 
 if __name__ == '__main__':
