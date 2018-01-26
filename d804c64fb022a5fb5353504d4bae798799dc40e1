@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "338ee959_672bb70f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-26T10:01:00Z",
+      "side": 1,
+      "message": "Can you list the nits in the description?",
+      "revId": "d804c64fb022a5fb5353504d4bae798799dc40e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74758900_adba2182",
+        "filename": "chrome/browser/resources/media/media_engagement.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-26T10:01:00Z",
+      "side": 1,
+      "message": "I assume this will not copy hidden rows when \"no playback\" isn\u0027t visible?",
+      "revId": "d804c64fb022a5fb5353504d4bae798799dc40e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
