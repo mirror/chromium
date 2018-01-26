@@ -12,6 +12,7 @@
 #include "ash/wm/client_controlled_state.h"
 #include "ash/wm/drag_details.h"
 #include "ash/wm/drag_window_resizer.h"
+#include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "ash/wm/toplevel_window_event_handler.h"
 #include "ash/wm/window_properties.h"
 #include "ash/wm/window_resizer.h"
@@ -253,11 +254,13 @@ ClientControlledShellSurface::ClientControlledShellSurface(Surface* surface,
           display::Screen::GetScreen()->GetPrimaryDisplay().id()) {
   WMHelper::GetInstance()->AddDisplayConfigurationObserver(this);
   display::Screen::GetScreen()->AddObserver(this);
+  ash::Shell::Get()->tablet_mode_controller()->AddObserver(this);
 }
 
 ClientControlledShellSurface::~ClientControlledShellSurface() {
   WMHelper::GetInstance()->RemoveDisplayConfigurationObserver(this);
   display::Screen::GetScreen()->RemoveObserver(this);
+  ash::Shell::Get()->tablet_mode_controller()->RemoveObserver(this);
 }
 
 void ClientControlledShellSurface::SetMaximized() {
@@ -557,6 +560,11 @@ ClientControlledShellSurface::CreateNonClientFrameView(views::Widget* widget) {
   client_controlled_state_ = state.get();
   window_state->SetStateObject(std::move(state));
   window_state->SetDelegate(std::move(window_delegate));
+
+  const bool is_tablet_mode = ash::Shell::Get()
+                                  ->tablet_mode_controller()
+                                  ->IsTabletModeWindowManagerEnabled();
+  window_state->set_can_be_dragged(is_tablet_mode ? false : true);
   return ShellSurfaceBase::CreateNonClientFrameView(widget);
 }
 
@@ -758,6 +766,16 @@ gfx::Point ClientControlledShellSurface::GetSurfaceOrigin() const {
   if (!geometry_changed_callback_.is_null())
     return gfx::Point();
   return gfx::Point() - GetWidgetOrigin().OffsetFromOrigin();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// ash::TabletModeObserver overrides:
+void ClientControlledShellSurface::OnTabletModeStarted() {
+  GetWindowState()->set_can_be_dragged(false);
+}
+
+void ClientControlledShellSurface::OnTabletModeEnded() {
+  GetWindowState()->set_can_be_dragged(true);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

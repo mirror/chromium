@@ -10,6 +10,7 @@
 
 #include "ash/display/window_tree_host_manager.h"
 #include "ash/wm/client_controlled_state.h"
+#include "ash/wm/tablet_mode/tablet_mode_observer.h"
 #include "base/callback.h"
 #include "base/macros.h"
 #include "components/exo/shell_surface_base.h"
@@ -36,7 +37,8 @@ class ClientControlledShellSurface
     : public ShellSurfaceBase,
       public display::DisplayObserver,
       public ash::WindowTreeHostManager::Observer,
-      public ui::CompositorLockClient {
+      public ui::CompositorLockClient,
+      public ash::TabletModeObserver {
  public:
   using GeometryChangedCallback =
       base::RepeatingCallback<void(const gfx::Rect& geometry)>;
@@ -231,6 +233,10 @@ class ClientControlledShellSurface
   bool OnMouseDragged(const ui::MouseEvent& event) override;
   gfx::Point GetWidgetOrigin() const override;
   gfx::Point GetSurfaceOrigin() const override;
+
+  // ash::TabletModeObserver:
+  void OnTabletModeStarted() override;
+  void OnTabletModeEnded() override;
 
   void UpdateBackdrop();
 
