@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 
+#include "base/containers/flat_map.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
@@ -84,6 +85,8 @@ class CHROMEOS_EXPORT ClientCertResolver : public NetworkStateHandlerObserver,
       base::DictionaryValue* shill_properties);
 
  private:
+  struct CertResolvingStatus;
+
   // NetworkStateHandlerObserver overrides
   void NetworkListChanged() override;
   void NetworkConnectionStateChanged(const NetworkState* network) override;
@@ -119,9 +122,16 @@ class CHROMEOS_EXPORT ClientCertResolver : public NetworkStateHandlerObserver,
 
   base::ObserverList<Observer, true> observers_;
 
-  // The set of networks that were checked/resolved in previous passes. These
-  // networks are skipped in the NetworkListChanged notification.
-  std::set<std::string> resolved_networks_;
+  // Stores the current client certificate resolution status for each network.
+  // The key is the network's service path. If a network is not present, it is
+  // not known yet (or disappeared from the list of known networks again).  If a
+  // network is present with |already_resolved| set to false, the network is
+  // planned for client certificate resolution, but has not been resolved yet.
+  // If a network is present with |already_resolved| set to true, client
+  // certificate resolution has completed for the network. |matching_cert| is
+  // then set to the last resolved certificate info. |matching_cert| is used to
+  // determine if re-resolving a network actually changed any settings.
+  base::flat_map<std::string, CertResolvingStatus> networks_status_;
 
   // The list of network paths that still have to be resolved.
   std::set<std::string> queued_networks_to_resolve_;
