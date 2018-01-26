@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aa0baf6_b525f50e",
+        "filename": "components/grpc_support/test/quic_test_server.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-01-26T23:33:42Z",
+      "side": 1,
+      "message": "Is it okay that these variables are not leaky? I wonder what will happen if a test doesn\u0027t stop the quic server properly. Can it happen that the global variables are destroyed with the quic server thread still running?",
+      "revId": "068b3a6fbe075a5ffc7cdbd052068ddcdb938afc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
