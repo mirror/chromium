@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52d6390c_279d7efd",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-26T01:14:02Z",
+      "side": 1,
+      "message": "source_lists.push_back(std::make_unique\u003cDesktopMediaListAsh\u003e(...));",
+      "range": {
+        "startLine": 64,
+        "startChar": 1,
+        "endLine": 67,
+        "endChar": 49
+      },
+      "revId": "8a156e82fa4c8e71273967a73d062da8269620d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c40db3b_73d40a86",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-26T01:14:02Z",
+      "side": 1,
+      "message": "The same string is being converted to UTF8 twice. Save the value in a local variable and pass it to both arguments.",
+      "range": {
+        "startLine": 72,
+        "startChar": 28,
+        "endLine": 73,
+        "endChar": 37
+      },
+      "revId": "8a156e82fa4c8e71273967a73d062da8269620d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f65e208_f0a638e0",
+        "filename": "chrome/browser/media/webrtc/desktop_media_picker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-26T01:14:02Z",
+      "side": 1,
+      "message": "Update this comment to make it clear that this interface is used for ARC APIs as well.",
+      "range": {
+        "startLine": 22,
+        "startChar": 51,
+        "endLine": 23,
+        "endChar": 49
+      },
+      "revId": "8a156e82fa4c8e71273967a73d062da8269620d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffc954ec_fc109793",
+        "filename": "chrome/browser/media/webrtc/desktop_media_picker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-26T01:14:02Z",
+      "side": 1,
+      "message": "may be use ui::ModalType instead of bool? I suggest moving it after parent argument",
+      "range": {
+        "startLine": 46,
+        "startChar": 20,
+        "endLine": 46,
+        "endChar": 38
+      },
+      "revId": "8a156e82fa4c8e71273967a73d062da8269620d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
