@@ -35,6 +35,7 @@ class MockScriptElementBase
   MOCK_CONST_METHOD0(LanguageAttributeValue, String());
   MOCK_CONST_METHOD0(NomoduleAttributeValue, bool());
   MOCK_CONST_METHOD0(SourceAttributeValue, String());
+  MOCK_CONST_METHOD0(StdsrcAttributeValue, String());
   MOCK_CONST_METHOD0(TypeAttributeValue, String());
 
   MOCK_METHOD0(TextFromChildren, String());

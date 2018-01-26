@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<title>Import inside Permafills (Syntax B)</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script>
+    window.log = [];
+</script>
+
+<script type="module" onload="log.push('load')" onerror="log.push('error')"
+    src="browser://test2"></script>
+
+<script type="module">
+    test(() => {
+        assert_array_equals(log, [
+          "browser://test2/sub.js", "browser://test2/", "load"
+        ]);
+      }, "Load permafill w/ import by a <script> element");
+</script>
