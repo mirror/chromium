@@ -34,6 +34,24 @@
       "revId": "52bcaab2dc66dc4fcd2df1c93412270669dd7d72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d5dd863_4a4c4ba0",
+        "filename": "chrome/browser/vr/model/color_scheme.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-26T21:47:03Z",
+      "side": 1,
+      "message": "Chris explained offline that I\u0027d totally misunderstood his comment :)\n\nThe logic here is busted. I\u0027ve updated this as well as another spot in the code where we use the same busted code.",
+      "parentUuid": "24be4025_51aae887",
+      "revId": "52bcaab2dc66dc4fcd2df1c93412270669dd7d72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
