@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "043a1d0a_7216a1f3",
+        "filename": "chrome/browser/resources/print_preview/new/destination_dialog.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-26T01:31:24Z",
+      "side": 1,
+      "message": "Can you take a look at https://cs.chromium.org/chromium/src/ui/webui/resources/cr_elements/cr_search_field/cr_search_field_behavior.js and see if it would be a good fit to re-use here? Presumably it has enough logic to support a simple checkbox (see comments in the file).",
+      "revId": "485ae6d0c13229dc29c1507e9fe26bc2b3076b1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "705290f0_c8c2a715",
+        "filename": "chrome/browser/resources/print_preview/new/destination_dialog.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-26T01:31:24Z",
+      "side": 1,
+      "message": "Nit: `(${safeQuery})`",
+      "range": {
+        "startLine": 131,
+        "startChar": 37,
+        "endLine": 131,
+        "endChar": 58
+      },
+      "revId": "485ae6d0c13229dc29c1507e9fe26bc2b3076b1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
