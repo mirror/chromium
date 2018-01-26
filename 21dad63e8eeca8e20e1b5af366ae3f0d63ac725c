@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "bb28dfe1_440e11a9",
+        "filename": "base/deferred_sequenced_task_runner.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-26T00:57:10Z",
+      "side": 1,
+      "message": "I like the latter option as it has the least amount of default parameters. There are only a few existing callers, but we probably want to make this change in a separate CL.",
+      "parentUuid": "cf8de557_bf74497e",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "670ac4be_042c25f0",
         "filename": "chrome/browser/browser_process_impl.cc",
         "patchSetId": 8
