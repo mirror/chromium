@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee14b131_57725064",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-26T07:09:42Z",
+      "side": 1,
+      "message": "Just clicking around the codes, it seems like when the Wallpaper picker is opened for the first time, the image grid will try to save thumbnail images to local disks (see https://cs.chromium.org/chromium/src/chrome/browser/resources/chromeos/wallpaper_manager/js/wallpaper_images_grid.js?rcl\u003dc67646fb6096ac1d87b516b2eaf2eb9968d2da73\u0026l\u003d143). It\u0027s possible that there is a race between here and setWallpaperAttribution_() function. When setWallpaperAttribution_() is called, chrome.wallpaperPrivate.saveThumbnail hasn\u0027t finished writing yet.",
+      "revId": "0259714c5308ab6d1e70cd9795efa8b63f0ba3eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7afe823b_a589dcb0",
+        "filename": "chrome/browser/resources/chromeos/wallpaper_manager/js/wallpaper_manager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-26T07:09:42Z",
+      "side": 1,
+      "message": "Emmmm... Theoretically it\u0027s not a fix:)\nCan you try to do the similar things as what I linked above (using XMLHttpRequest to get the data if data is not available for ONLINE wallpaper) to see if it works?",
+      "revId": "0259714c5308ab6d1e70cd9795efa8b63f0ba3eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
