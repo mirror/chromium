@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "899e2c19_78b3d21e",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-26T23:33:02Z",
+      "side": 1,
+      "message": "kMaxStableAngle already exists in line 46.",
+      "parentUuid": "2158c229_076bd0e6",
+      "revId": "aece28e532d15096180f095452a320ed643572a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0110258a_75b66e3f",
         "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-19T02:53:52Z",
       "side": 1,
       "message": "Only reset if we see an angle less than kExitTabletModeAngle or if the lid was opened recently. If the angle changes from 355 -\u003e 354 we don\u0027t need to reset the timer.",
+      "revId": "aece28e532d15096180f095452a320ed643572a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8972ce39_42e7c8ef",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-26T23:33:02Z",
+      "side": 1,
+      "message": "We can reset the timer when an angle is seen less than kExitTabletModeAngle.\n\nWhen opening the lid, the incorrect angle sequence will be like {357, 359, 2, 4, ....}, it only stay in [355, 360] for a short time, so that it will not trigger tablet mode. The timer starts when 357 is received, but will be reset when 2 is received, so we don\u0027t need to reset the timer based on last lid open time.",
+      "parentUuid": "0110258a_75b66e3f",
       "revId": "aece28e532d15096180f095452a320ed643572a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
