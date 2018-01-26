@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eaad0254_51df86da",
+        "filename": "content/renderer/service_worker/service_worker_network_provider.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-26T17:35:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1dcd6797_2ba546ab",
+      "revId": "35aa43ce9a931e995965b77712e930aa540efdba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c52aee3_69023467",
         "filename": "content/renderer/service_worker/service_worker_provider_context.h",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "71d88295_57f0b74d",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-26T17:35:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c52aee3_69023467",
+      "revId": "35aa43ce9a931e995965b77712e930aa540efdba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ecb5f9e_5e55d4a5",
         "filename": "content/renderer/service_worker/service_worker_subresource_loader.cc",
         "patchSetId": 10
@@ -50,6 +86,24 @@
       "revId": "35aa43ce9a931e995965b77712e930aa540efdba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a0fd4d4_997d9c83",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-26T17:35:44Z",
+      "side": 1,
+      "message": "Got it. I could remove that Constraints param in a follow up CL.\n\nThanks!",
+      "parentUuid": "6ecb5f9e_5e55d4a5",
+      "revId": "35aa43ce9a931e995965b77712e930aa540efdba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
