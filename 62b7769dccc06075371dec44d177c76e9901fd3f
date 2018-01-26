@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "561e7961_a0905ac8",
+        "filename": "third_party/WebKit/common/origin_trials/trial_token.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2018-01-26T18:27:44Z",
+      "side": 1,
+      "message": "Would it make sense to constexpr the actual calculation here? I don\u0027t actually expect it to change, but it *is* dependent on kMaxPayloadSize, and if we ever had to tweak that for some reason, it would be nice not to have to figure out what all of the \u0027other\u0027 bits that went into the original calculation were.",
+      "revId": "62b7769dccc06075371dec44d177c76e9901fd3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
