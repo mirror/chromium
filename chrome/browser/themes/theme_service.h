@@ -234,7 +234,9 @@ class ThemeService : public content::NotificationObserver, public KeyedService {
   // active tab (i.e. toolbar) color.  (It's too difficult to try to find colors
   // that will contrast with both of these as well as the background tab color,
   // and contrasting with the foreground tab is the most important).
-  static SkColor GetSeparatorColor(SkColor tab_color, SkColor frame_color);
+  static SkColor GetSeparatorColor(SkColor tab_color,
+                                   SkColor frame_color,
+                                   bool high_contrast);
 
   // virtual for testing.
   virtual void DoSetTheme(const extensions::Extension* extension,

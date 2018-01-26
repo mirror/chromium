@@ -186,10 +186,15 @@ void NewTabButton::PaintButtonContents(gfx::Canvas* canvas) {
                 0x70)
           : tab_strip_->GetToolbarTopSeparatorColor();
   const float alpha = SkColorGetA(stroke_color);
-  const SkAlpha shadow_alpha =
-      base::saturated_cast<SkAlpha>(std::round(2.1875f * alpha));
-  flags.setLooper(
-      CreateShadowDrawLooper(SkColorSetA(stroke_color, shadow_alpha)));
+  {
+    ui::NativeTheme* theme = ui::NativeTheme::GetInstanceForNativeUi();
+    if (!theme || !theme->UsesHighContrastColors()) {
+      const SkAlpha shadow_alpha =
+          base::saturated_cast<SkAlpha>(std::round(2.1875f * alpha));
+      flags.setLooper(
+          CreateShadowDrawLooper(SkColorSetA(stroke_color, shadow_alpha)));
+    }
+  }
   const SkAlpha path_alpha =
       static_cast<SkAlpha>(std::round((pressed ? 0.875f : 0.609375f) * alpha));
   const SkColor color = SkColorSetA(stroke_color, path_alpha);

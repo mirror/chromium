@@ -13,6 +13,7 @@
 #include "chrome/browser/themes/browser_theme_pack.h"
 #include "ui/base/material_design/material_design_controller.h"
 #include "ui/gfx/color_palette.h"
+#include "ui/native_theme/native_theme.h"
 
 #if defined(OS_WIN)
 #include <windows.h>
@@ -225,6 +226,14 @@ color_utils::HSL ThemeProperties::GetDefaultTint(int id, bool incognito) {
 
 // static
 SkColor ThemeProperties::GetDefaultColor(int id, bool incognito) {
+  ui::NativeTheme* native_theme = ui::NativeTheme::GetInstanceForNativeUi();
+  // Some colors need special treatment in high-contrast themes:
+  if (native_theme && native_theme->UsesHighContrastColors()) {
+    switch (id) {
+      case COLOR_TOOLBAR_BOTTOM_SEPARATOR:
+        return incognito ? SK_ColorWHITE : SK_ColorBLACK;
+    }
+  }
   switch (id) {
     // Properties stored in theme pack.
     case COLOR_FRAME:

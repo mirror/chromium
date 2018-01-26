@@ -420,21 +420,24 @@ bool ThemeService::ShouldInitWithSystemTheme() const {
 SkColor ThemeService::GetDefaultColor(int id, bool incognito) const {
   // For backward compat with older themes, some newer colors are generated from
   // older ones if they are missing.
+  ui::NativeTheme* native_theme = ui::NativeTheme::GetInstanceForNativeUi();
+  bool high_contrast = native_theme && native_theme->UsesHighContrastColors();
   const int kNtpText = ThemeProperties::COLOR_NTP_TEXT;
   const int kLabelBackground =
       ThemeProperties::COLOR_SUPERVISED_USER_LABEL_BACKGROUND;
+
   switch (id) {
     case ThemeProperties::COLOR_TOOLBAR_BUTTON_ICON:
       return color_utils::HSLShift(
-          gfx::kChromeIconGrey,
+          high_contrast ? SK_ColorBLACK : gfx::kChromeIconGrey,
           GetTint(ThemeProperties::TINT_BUTTONS, incognito));
     case ThemeProperties::COLOR_TOOLBAR_BUTTON_ICON_INACTIVE:
       // The active color is overridden in GtkUi.
       return SkColorSetA(
           GetColor(ThemeProperties::COLOR_TOOLBAR_BUTTON_ICON, incognito),
-          0x33);
+          high_contrast ? 0x66 : 0x33);
     case ThemeProperties::COLOR_LOCATION_BAR_BORDER:
-      return SkColorSetA(SK_ColorBLACK, 0x4D);
+      return SkColorSetA(SK_ColorBLACK, high_contrast ? 0xFF : 0x4D);
     case ThemeProperties::COLOR_TOOLBAR_TOP_SEPARATOR:
     case ThemeProperties::COLOR_TOOLBAR_TOP_SEPARATOR_INACTIVE: {
       const SkColor tab_color =
@@ -447,14 +450,15 @@ SkColor ThemeService::GetDefaultColor(int id, bool incognito) const {
       auto i = separator_color_cache_.find(key);
       if (i != separator_color_cache_.end())
         return i->second;
-      const SkColor separator_color = GetSeparatorColor(tab_color, frame_color);
+      const SkColor separator_color =
+          GetSeparatorColor(tab_color, frame_color, high_contrast);
       separator_color_cache_[key] = separator_color;
       return separator_color;
     }
     case ThemeProperties::COLOR_TOOLBAR_VERTICAL_SEPARATOR: {
       return SkColorSetA(
           GetColor(ThemeProperties::COLOR_TOOLBAR_BUTTON_ICON, incognito),
-          0x4D);
+          high_contrast ? 0xFF : 0x4D);
     }
     case ThemeProperties::COLOR_BACKGROUND_TAB: {
       // The tints here serve a different purpose than TINT_BACKGROUND_TAB.
@@ -628,9 +632,10 @@ bool ThemeService::HasCustomImage(int id) const {
 
 // static
 SkColor ThemeService::GetSeparatorColor(SkColor tab_color,
-                                        SkColor frame_color) {
+                                        SkColor frame_color,
+                                        bool high_contrast) {
   // We use this alpha value for the separator if possible.
-  const SkAlpha kAlpha = 0x40;
+  const SkAlpha kAlpha = high_contrast ? 0xFF : 0x40;
 
   // In most cases, if the tab is lighter than the frame, we darken the
   // frame; if the tab is darker than the frame, we lighten the frame.
