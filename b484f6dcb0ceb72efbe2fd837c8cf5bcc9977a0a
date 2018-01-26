@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c293b83_e416a61d",
+        "filename": "chrome/browser/chromeos/printing/synced_printers_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-26T00:52:15Z",
+      "side": 1,
+      "message": "Seems it\u0027s possible |external_printers_| might be deleted elsewhere (e.g. in ExternalPrintersFactory::RemoveForUserId()) which might result a null pointer dereference here?",
+      "revId": "b484f6dcb0ceb72efbe2fd837c8cf5bcc9977a0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
