@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eafbd6d6_d1465d18",
+        "filename": "cc/layers/surface_layer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-26T21:06:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a1457f4_f17730b8",
+      "revId": "3b96b1a4afce88f9e00a4192014d2756cc5e4668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8124fce6_c9a5731c",
         "filename": "cc/layers/surface_layer_impl.cc",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "b687ebab_d9752e3a",
+        "filename": "cc/layers/surface_layer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-26T21:06:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8124fce6_c9a5731c",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 31
+      },
+      "revId": "3b96b1a4afce88f9e00a4192014d2756cc5e4668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc44fba2_81217eee",
         "filename": "cc/layers/surface_layer_impl_unittest.cc",
         "patchSetId": 1
@@ -53,6 +95,24 @@
       "writtenOn": "2018-01-26T02:31:07Z",
       "side": 1,
       "message": "This comment looks half-done. It\u0027s not clear why you said it. Do you mean \"The primary SurfaceId hasn\u0027t changed but a new deadline was explicitly requested in SetShowPrimarySurface so we\u0027ll use it in the next CompositorFrame\" or something like this?",
+      "revId": "3b96b1a4afce88f9e00a4192014d2756cc5e4668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "177ca738_51a0abef",
+        "filename": "cc/layers/surface_layer_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-26T21:06:07Z",
+      "side": 1,
+      "message": "Yes! Thank you. Using that almost verbatim! :-)",
+      "parentUuid": "fc44fba2_81217eee",
       "revId": "3b96b1a4afce88f9e00a4192014d2756cc5e4668",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
