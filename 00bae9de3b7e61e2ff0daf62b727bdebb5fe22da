@@ -657,6 +657,30 @@
     },
     {
       "key": {
+        "uuid": "20844efc_091578f7",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-26T19:01:25Z",
+      "side": 1,
+      "message": "Sounds good. Let\u0027s add a comment here that says exporting has already started and we\u0027re showing the dialog? From looking at the code it\u0027s not obvious that we\u0027ve recovered from an error.",
+      "parentUuid": "9bab6a8f_37fad0f5",
+      "range": {
+        "startLine": 178,
+        "startChar": 10,
+        "endLine": 179,
+        "endChar": 34
+      },
+      "revId": "00bae9de3b7e61e2ff0daf62b727bdebb5fe22da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f47b131_5f6ded7c",
         "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.js",
         "patchSetId": 8
@@ -774,6 +798,30 @@
       "side": 1,
       "message": "The decoupling isn\u0027t possible afaict, because it would involve showing two dialogs, one on top of the other. The problem is that each dialog darkens its surroundings, which is something that stacks with more dialogs. Thanks for the thoughtful snippet though!",
       "parentUuid": "39d01d15_71dd6f4b",
+      "range": {
+        "startLine": 215,
+        "startChar": 0,
+        "endLine": 217,
+        "endChar": 40
+      },
+      "revId": "00bae9de3b7e61e2ff0daf62b727bdebb5fe22da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "608614c4_c4378c21",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_export_dialog.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-26T19:01:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bb1a3d9a_94b9934a",
       "range": {
         "startLine": 215,
         "startChar": 0,
