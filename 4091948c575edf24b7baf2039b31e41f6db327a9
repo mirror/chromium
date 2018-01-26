@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f47de94_9aa7d07d",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/default_params.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-26T05:02:21Z",
+      "side": 1,
+      "message": "We should consider using mojom::PageVisibilityState.\n\nAt the very least, introduce an enum class in WebKit/Source/platform/page/ rather than defining a boolean here.",
+      "revId": "4091948c575edf24b7baf2039b31e41f6db327a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53c113cb_bf67dd16",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-26T05:02:21Z",
+      "side": 1,
+      "message": "Do you need this?\n\nI was assuming that WorkerSchedulerImpl::Shutdown() gets called before WorkerSchedulerImpl gets destructed.",
+      "revId": "4091948c575edf24b7baf2039b31e41f6db327a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a28aa5a_f379d7f5",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-26T05:02:21Z",
+      "side": 1,
+      "message": "Instead of using main_thread_ref_ and worker_thread_ref_, you can use DCHECK(IsMainThread()).",
+      "revId": "4091948c575edf24b7baf2039b31e41f6db327a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "867feb52_30f52077",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-26T05:02:21Z",
+      "side": 1,
+      "message": "OnPageVisibilityChanged ?\n\nAs commented in the other place, replace the boolean with mojom::PageVisibilityState or define an enum class in platform/page/.",
+      "revId": "4091948c575edf24b7baf2039b31e41f6db327a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e8aa120_6fbd02ca",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_proxy_handle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-26T05:02:21Z",
+      "side": 1,
+      "message": "We could hook DedicateWorker::Shutdown and explicitly call proxy_-\u003eOnParentObjectDestroyed(). (Then I don\u0027t think this Handle is needed.)",
+      "revId": "4091948c575edf24b7baf2039b31e41f6db327a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f00ec9f_3d9fd7c6",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_proxy_handle.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-26T05:02:21Z",
+      "side": 1,
+      "message": "I\u0027m not sure how useful the handle would be. What about simply letting DedicatedWorker hold a raw pointer to WorkerSchedulerProxy?\n\n(A better option would be to make WorkerSchedulerProxy GarbageCollected and let DedicatedWorker hold CrossThreadPersistent.)",
+      "revId": "4091948c575edf24b7baf2039b31e41f6db327a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09293d96_2b48386a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-26T05:02:21Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this return parent_web_view_scheduler_-\u003eControlTaskQueue() ?",
+      "revId": "4091948c575edf24b7baf2039b31e41f6db327a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdc7047b_71ab8bc3",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-26T05:02:21Z",
+      "side": 1,
+      "message": "Add DCHECK(worker_proxies_.get(proxy)).",
+      "revId": "4091948c575edf24b7baf2039b31e41f6db327a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70ab0b4f_b9668107",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-26T05:02:21Z",
+      "side": 1,
+      "message": "Add DCHECK(!worker_proxies_.get(proxy)).",
+      "revId": "4091948c575edf24b7baf2039b31e41f6db327a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "455e348c_dbb17dcd",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-26T05:02:21Z",
+      "side": 1,
+      "message": "(Not related to this CL, if we introduce Oilpan, all weak pointers will be gone. They can just use Members.)",
+      "revId": "4091948c575edf24b7baf2039b31e41f6db327a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa76559b_7da9b7f8",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-26T05:02:21Z",
+      "side": 1,
+      "message": "std::set is not allowed in Blink. Use WTF::HashSet.",
+      "revId": "4091948c575edf24b7baf2039b31e41f6db327a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
