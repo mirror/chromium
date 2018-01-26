@@ -32,8 +32,9 @@ SurfaceId MakeSurfaceId(const FrameSinkId& frame_sink_id, uint32_t parent_id) {
 class TestHitTestAggregator final : public HitTestAggregator {
  public:
   TestHitTestAggregator(HitTestManager* manager,
-                        HitTestAggregatorDelegate* delegate)
-      : HitTestAggregator(manager, delegate) {}
+                        HitTestAggregatorDelegate* delegate,
+                        const FrameSinkId& frame_sink_id)
+      : HitTestAggregator(manager, delegate, frame_sink_id) {}
   ~TestHitTestAggregator() = default;
 
   int GetRegionCount() const {
@@ -46,7 +47,8 @@ class TestHitTestAggregator final : public HitTestAggregator {
   }
   int GetHitTestRegionListSize() { return read_size_; }
   void SwapHandles() {
-    delegate_->SwitchActiveAggregatedHitTestRegionList(active_handle_index_);
+    delegate_->SwitchActiveAggregatedHitTestRegionList(kDisplayFrameSink,
+                                                       active_handle_index_);
   }
 
   void Reset() {
@@ -89,25 +91,17 @@ class TestHitTestManager : public HitTestManager {
 
 namespace {
 
-class TestGpuRootCompositorFrameSink : public HitTestAggregatorDelegate {
+class TestCompositorFrameSinkSupport {
  public:
-  TestGpuRootCompositorFrameSink(TestHitTestManager* hit_test_manager,
+  TestCompositorFrameSinkSupport(TestHitTestManager* hit_test_manager,
                                  TestFrameSinkManagerImpl* frame_sink_manager,
                                  const FrameSinkId& frame_sink_id)
       : frame_sink_manager_(frame_sink_manager),
         frame_sink_id_(frame_sink_id),
-        aggregator_(
-            std::make_unique<TestHitTestAggregator>(hit_test_manager, this)) {}
-  ~TestGpuRootCompositorFrameSink() override = default;
-
-  // HitTestAggregatorDelegate:
-  void OnAggregatedHitTestRegionListUpdated(
-      mojo::ScopedSharedBufferHandle active_handle,
-      uint32_t active_handle_size,
-      mojo::ScopedSharedBufferHandle idle_handle,
-      uint32_t idle_handle_size) override;
-  void SwitchActiveAggregatedHitTestRegionList(
-      uint8_t active_handle_index) override;
+        aggregator_(std::make_unique<TestHitTestAggregator>(hit_test_manager,
+                                                            frame_sink_manager_,
+                                                            frame_sink_id_)) {}
+  ~TestCompositorFrameSinkSupport() = default;
 
   TestHitTestAggregator* aggregator() { return aggregator_.get(); }
 
@@ -116,7 +110,7 @@ class TestGpuRootCompositorFrameSink : public HitTestAggregatorDelegate {
   FrameSinkId frame_sink_id_;
   std::unique_ptr<TestHitTestAggregator> aggregator_;
 
-  DISALLOW_COPY_AND_ASSIGN(TestGpuRootCompositorFrameSink);
+  DISALLOW_COPY_AND_ASSIGN(TestCompositorFrameSinkSupport);
 };
 
 class TestHostFrameSinkManager : public HostFrameSinkManager {
@@ -172,7 +166,7 @@ class TestFrameSinkManagerImpl : public FrameSinkManagerImpl {
       mojo::ScopedSharedBufferHandle active_handle,
       uint32_t active_handle_size,
       mojo::ScopedSharedBufferHandle idle_handle,
-      uint32_t idle_handle_size) {
+      uint32_t idle_handle_size) override {
     // Do not check if it's on valid thread for tests.
     if (host_client_) {
       host_client_->OnAggregatedHitTestRegionListUpdated(
@@ -181,8 +175,9 @@ class TestFrameSinkManagerImpl : public FrameSinkManagerImpl {
     }
   }
 
-  void SwitchActiveAggregatedHitTestRegionList(const FrameSinkId& frame_sink_id,
-                                               uint8_t active_handle_index) {
+  void SwitchActiveAggregatedHitTestRegionList(
+      const FrameSinkId& frame_sink_id,
+      uint8_t active_handle_index) override {
     // Do not check if it's on valid thread for tests.
     if (host_client_) {
       host_client_->SwitchActiveAggregatedHitTestRegionList(
@@ -193,11 +188,11 @@ class TestFrameSinkManagerImpl : public FrameSinkManagerImpl {
   void CreateRootCompositorFrameSinkLocal(TestHitTestManager* hit_test_manager,
                                           const FrameSinkId& frame_sink_id) {
     compositor_frame_sinks_[frame_sink_id] =
-        std::make_unique<TestGpuRootCompositorFrameSink>(hit_test_manager, this,
+        std::make_unique<TestCompositorFrameSinkSupport>(hit_test_manager, this,
                                                          frame_sink_id);
   }
 
-  const std::map<FrameSinkId, std::unique_ptr<TestGpuRootCompositorFrameSink>>&
+  const std::map<FrameSinkId, std::unique_ptr<TestCompositorFrameSinkSupport>>&
   compositor_frame_sinks() {
     return compositor_frame_sinks_;
   }
@@ -207,28 +202,12 @@ class TestFrameSinkManagerImpl : public FrameSinkManagerImpl {
   }
 
  private:
-  std::map<FrameSinkId, std::unique_ptr<TestGpuRootCompositorFrameSink>>
+  std::map<FrameSinkId, std::unique_ptr<TestCompositorFrameSinkSupport>>
       compositor_frame_sinks_;
   TestHostFrameSinkManager* host_client_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(TestFrameSinkManagerImpl);
 };
-
-void TestGpuRootCompositorFrameSink::OnAggregatedHitTestRegionListUpdated(
-    mojo::ScopedSharedBufferHandle active_handle,
-    uint32_t active_handle_size,
-    mojo::ScopedSharedBufferHandle idle_handle,
-    uint32_t idle_handle_size) {
-  frame_sink_manager_->OnAggregatedHitTestRegionListUpdated(
-      frame_sink_id_, std::move(active_handle), active_handle_size,
-      std::move(idle_handle), idle_handle_size);
-}
-
-void TestGpuRootCompositorFrameSink::SwitchActiveAggregatedHitTestRegionList(
-    uint8_t active_handle_index) {
-  frame_sink_manager_->SwitchActiveAggregatedHitTestRegionList(
-      frame_sink_id_, active_handle_index);
-}
 
 }  // namespace
 

@@ -20,6 +20,7 @@
 #include "components/viz/service/frame_sinks/primary_begin_frame_source.h"
 #include "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_manager.h"
 #include "components/viz/service/frame_sinks/video_detector.h"
+#include "components/viz/service/hit_test/hit_test_aggregator_delegate.h"
 #include "components/viz/service/hit_test/hit_test_manager.h"
 #include "components/viz/service/surfaces/surface_manager.h"
 #include "components/viz/service/surfaces/surface_observer.h"
@@ -41,7 +42,8 @@ class DisplayProvider;
 class VIZ_SERVICE_EXPORT FrameSinkManagerImpl
     : public SurfaceObserver,
       public FrameSinkVideoCapturerManager,
-      public mojom::FrameSinkManager {
+      public mojom::FrameSinkManager,
+      public HitTestAggregatorDelegate {
  public:
   FrameSinkManagerImpl(uint32_t number_of_frames_to_activation_deadline = 4u,
                        DisplayProvider* display_provider = nullptr);
@@ -127,14 +129,16 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl
 
   void OnClientConnectionLost(const FrameSinkId& frame_sink_id);
 
+  // HitTestAggregatorDelegate:
   void OnAggregatedHitTestRegionListUpdated(
       const FrameSinkId& frame_sink_id,
       mojo::ScopedSharedBufferHandle active_handle,
       uint32_t active_handle_size,
       mojo::ScopedSharedBufferHandle idle_handle,
-      uint32_t idle_handle_size);
-  void SwitchActiveAggregatedHitTestRegionList(const FrameSinkId& frame_sink_id,
-                                               uint8_t active_handle_index);
+      uint32_t idle_handle_size) override;
+  void SwitchActiveAggregatedHitTestRegionList(
+      const FrameSinkId& frame_sink_id,
+      uint8_t active_handle_index) override;
 
   void SubmitHitTestRegionList(
       const SurfaceId& surface_id,
