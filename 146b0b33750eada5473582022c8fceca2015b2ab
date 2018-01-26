@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "85cd5ae5_032238cd",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3874,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2018-01-26T21:52:31Z",
+      "side": 1,
+      "message": "Done. (Thanks for the hint!)",
+      "parentUuid": "c5d021ed_c4c829ae",
+      "range": {
+        "startLine": 3874,
+        "startChar": 53,
+        "endLine": 3874,
+        "endChar": 60
+      },
+      "revId": "146b0b33750eada5473582022c8fceca2015b2ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "698b318b_df108f61",
         "filename": "device/u2f/u2f_apdu_command.h",
         "patchSetId": 2
@@ -69,6 +93,30 @@
       "revId": "146b0b33750eada5473582022c8fceca2015b2ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53bceb4a_a527690b",
+        "filename": "device/u2f/u2f_apdu_command.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2018-01-26T21:52:31Z",
+      "side": 1,
+      "message": "There is no spec. It\u0027s always been in U2F because we\u0027ve always done it (sadly, based on a magic \"if (google) {\" in the cryptotoken extension, which I\u0027m addressing.) Although we use it internally, it was never included in the spec.\n\nIn the cryptotoken extension, this is called \"INDIVIDUAL_KEY\", but that\u0027s just confusing since it\u0027s not a key. Dirk has raised an issue in CTAP2 to get make this official in the newer versions.",
+      "parentUuid": "698b318b_df108f61",
+      "range": {
+        "startLine": 102,
+        "startChar": 54,
+        "endLine": 102,
+        "endChar": 58
+      },
+      "revId": "146b0b33750eada5473582022c8fceca2015b2ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "2f97aed8_c90bdb6b",
+        "filename": "device/u2f/u2f_apdu_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2018-01-26T21:52:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "daab6094_3d21d341",
+      "range": {
+        "startLine": 221,
+        "startChar": 30,
+        "endLine": 221,
+        "endChar": 57
+      },
+      "revId": "146b0b33750eada5473582022c8fceca2015b2ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66b49eb2_bb8513d7",
         "filename": "device/u2f/u2f_register_unittest.cc",
         "patchSetId": 2
@@ -115,6 +187,30 @@
       "revId": "146b0b33750eada5473582022c8fceca2015b2ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c648d38_a6a6fe5a",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2018-01-26T21:52:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66b49eb2_bb8513d7",
+      "range": {
+        "startLine": 755,
+        "startChar": 16,
+        "endLine": 755,
+        "endChar": 29
+      },
+      "revId": "146b0b33750eada5473582022c8fceca2015b2ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
