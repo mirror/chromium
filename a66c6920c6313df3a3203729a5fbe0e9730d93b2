@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87787742_410131c2",
+        "filename": "chrome/browser/extensions/extension_protocols_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T17:04:14Z",
+      "side": 1,
+      "message": "could we instead reuse kJs here?  (FILE_PATH_LITERAL(kJs.c_str()))",
+      "range": {
+        "startLine": 474,
+        "startChar": 31,
+        "endLine": 474,
+        "endChar": 59
+      },
+      "revId": "a66c6920c6313df3a3203729a5fbe0e9730d93b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "214f2092_66240f18",
+        "filename": "chrome/browser/extensions/extension_protocols_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T17:04:14Z",
+      "side": 1,
+      "message": "maybe const base::FilePath kRelativePath?",
+      "revId": "a66c6920c6313df3a3203729a5fbe0e9730d93b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27ee0af2_2abd4489",
+        "filename": "chrome/browser/extensions/extension_protocols_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T17:04:14Z",
+      "side": 1,
+      "message": "So, when we find a hash mismatch, we\u0027d normally disable the extension for corruption.  When an extension is disabled, the extension protocols don\u0027t work (we only serve enabled extensions\u0027 files).  It looks like this test works, but can you explain why the extension isn\u0027t disabled after this step (which would make the next step invalid)?",
+      "range": {
+        "startLine": 490,
+        "startChar": 2,
+        "endLine": 497,
+        "endChar": 3
+      },
+      "revId": "a66c6920c6313df3a3203729a5fbe0e9730d93b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "617e0c08_3efee2f3",
+        "filename": "chrome/browser/extensions/extension_protocols_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T17:04:14Z",
+      "side": 1,
+      "message": "This sounds like a TODO? :)\n\nOut of curiosity, would making it unreadable cause a failure?",
+      "range": {
+        "startLine": 545,
+        "startChar": 57,
+        "endLine": 546,
+        "endChar": 42
+      },
+      "revId": "a66c6920c6313df3a3203729a5fbe0e9730d93b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18d717e6_0a8addf0",
+        "filename": "extensions/browser/content_verifier/test_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T17:04:14Z",
+      "side": 1,
+      "message": "Maybe EXPECT_FALSE(failure_reason_.has_value());?",
+      "revId": "a66c6920c6313df3a3203729a5fbe0e9730d93b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3b2b63b_40794347",
+        "filename": "extensions/browser/content_verifier/test_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T17:04:14Z",
+      "side": 1,
+      "message": "Would this make more sense to be:\nif (!zip::Unzip(extension_zip, unzip_dir)) {\n  ADD_FAILURE() \u003c\u003c \"Failed to unzip path.\";\n  return nullptr;\n}\n\nThat way, we don\u0027t end up failing again (or worse, crashing) when we try to call LoadExtension().",
+      "revId": "a66c6920c6313df3a3203729a5fbe0e9730d93b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3802b21_895bd0cd",
+        "filename": "extensions/browser/content_verifier/test_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T17:04:14Z",
+      "side": 1,
+      "message": "Maybe: I sometimes find having a deterministic option to be helpful, rather than only a \"Wait\" option.  This way, if you know that something *should* be finished at a certain time, you can assert it, which can help uncover bugs that would otherwise creep by.  It also sometimes helps mitigate our heavy-handed (but often necessary) use of run loops.  And, of course, if something *should* have finished but never will, an assertion results in a nice clean test failure, whereas a \"wait\" results in a harder-to-diagnose test timeout.  So in this case, this would just be adding something like:\n\nconst base::Optional\u003cContentVerifyJob::FailureReason\u003e failure_reason() const {\n  return failure_reason_;\n}\n\nWDYT?  Would that be useful, or would we almost always want to use the Wait version?",
+      "revId": "a66c6920c6313df3a3203729a5fbe0e9730d93b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa43fc36_f8d8fe06",
+        "filename": "extensions/browser/content_verifier/test_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T17:04:14Z",
+      "side": 1,
+      "message": "nit: in the meantime, can we wrap this in a namespace?  From the callsites, it\u0027s unclear where this function is coming from.",
+      "revId": "a66c6920c6313df3a3203729a5fbe0e9730d93b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3194d966_f3d9fbe3",
+        "filename": "extensions/browser/content_verify_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T17:04:14Z",
+      "side": 1,
+      "message": "Given this is now only used in the test bodies, I\u0027d prefer to just have each test allocate one on the stack, rather than introduce this protected member.",
+      "revId": "a66c6920c6313df3a3203729a5fbe0e9730d93b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
