@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "d922dfea_cc49543a",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-26T00:16:00Z",
+      "side": 1,
+      "message": "I might not understand exactly what that TODO is trying to say. I think you can just add a spacer view and assign it flex, like this[1]. (I don\u0027t know if setting the preferred size is actually necessary.)\n\n[1] https://cs.chromium.org/chromium/src/ui/message_center/views/notification_header_view.cc?rcl\u003dca112b210e77187e6d64158c3a3e5a2365f4231f\u0026l\u003d263",
+      "parentUuid": "12f4e65b_0cfe4afd",
+      "range": {
+        "startLine": 139,
+        "startChar": 4,
+        "endLine": 139,
+        "endChar": 44
+      },
+      "revId": "4059bfc5d23354b0487a9cc2231ce454681c1ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3179e14f_cf3b8a61",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
         "patchSetId": 14

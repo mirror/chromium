@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bee3177_7e82a4f5",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-26T00:16:00Z",
+      "side": 1,
+      "message": "nit: I\u0027d sooner see a protected delegate_ accessor",
+      "range": {
+        "startLine": 41,
+        "startChar": 12,
+        "endLine": 41,
+        "endChar": 33
+      },
+      "revId": "146ee63d7c76811054147aa180fb0ebed0e9d385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "462ff179_1734eb87",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-26T00:16:00Z",
+      "side": 1,
+      "message": "nit: inline the initial value at the declaration site",
+      "range": {
+        "startLine": 59,
+        "startChar": 16,
+        "endLine": 60,
+        "endChar": 30
+      },
+      "revId": "146ee63d7c76811054147aa180fb0ebed0e9d385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ef133c0_86d6d6b6",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-26T00:16:00Z",
+      "side": 1,
+      "message": "can this be a DCHECK?",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 11
+      },
+      "revId": "146ee63d7c76811054147aa180fb0ebed0e9d385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd0c4f2e_bf2e0079",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-26T00:16:00Z",
+      "side": 1,
+      "message": "how can this be null?",
+      "range": {
+        "startLine": 216,
+        "startChar": 8,
+        "endLine": 216,
+        "endChar": 15
+      },
+      "revId": "146ee63d7c76811054147aa180fb0ebed0e9d385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab7a58f6_01313697",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-26T00:16:00Z",
+      "side": 1,
+      "message": "I don\u0027t understand how you get away with not clearing rows_",
+      "range": {
+        "startLine": 226,
+        "startChar": 2,
+        "endLine": 226,
+        "endChar": 21
+      },
+      "revId": "146ee63d7c76811054147aa180fb0ebed0e9d385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6908de6_5b6c6b5a",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-26T00:16:00Z",
+      "side": 1,
+      "message": "nit:\n\n  rows_.push_back(new AutofillPopupRowView(controller_, i));\n  AddChildView(rows_.back());",
+      "range": {
+        "startLine": 228,
+        "startChar": 4,
+        "endLine": 228,
+        "endChar": 76
+      },
+      "revId": "146ee63d7c76811054147aa180fb0ebed0e9d385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1f53fc2_5f55e6ec",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-26T00:16:00Z",
+      "side": 1,
+      "message": "thanks for the comment. I still don\u0027t understand where the initial width and height are coming from, though. It would make more sense to use the width/height from GetPreferredSize().\n\nFor more self-documenting code, I\u0027d suggest:\n\n  gfx::Size size(RoundWidthToMultiple(width()), height());\n  SetSize(size);\n\n  gfx::Rect bounds(GetBoundsFromDelegate().origin(), size);\n  [...]",
+      "range": {
+        "startLine": 237,
+        "startChar": 0,
+        "endLine": 241,
+        "endChar": 29
+      },
+      "revId": "146ee63d7c76811054147aa180fb0ebed0e9d385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
