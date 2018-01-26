@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a0d0557_22ed8bba",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/get_started/background.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T20:25:38Z",
+      "side": 1,
+      "message": "nit: newline before this, after the copyright",
+      "revId": "5340c35fecef5e9fd555234d649b1f28887e8d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28e2e657_61a7452f",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/get_started/options.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T20:25:38Z",
+      "side": 1,
+      "message": "ditto: newline after this",
+      "revId": "5340c35fecef5e9fd555234d649b1f28887e8d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "497c9608_4af7268c",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/get_started/options.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T20:25:38Z",
+      "side": 1,
+      "message": "end line in a semicolon",
+      "revId": "5340c35fecef5e9fd555234d649b1f28887e8d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2220944c_bd477d52",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/get_started/options.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T20:25:38Z",
+      "side": 1,
+      "message": "We can use JS closures to avoid needing to set the id of the button here:\n\n  for (let item of kButtonColors) {\n    let button \u003d document.createElement(\u0027button\u0027);\n    button.style.backgroundColor \u003d item;\n    button.addEventListener(\u0027click\u0027, function() {\n      chrome.storage.sync.set({color: item}, function() {\n        console.log(\u0027color is \u0027 + item);\n      })\n    });\n    page.appendChild(button);\n  }",
+      "range": {
+        "startLine": 9,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 3
+      },
+      "revId": "5340c35fecef5e9fd555234d649b1f28887e8d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65659d5d_1c8cca31",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/get_started/popup.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T20:25:38Z",
+      "side": 1,
+      "message": "ditto here",
+      "revId": "5340c35fecef5e9fd555234d649b1f28887e8d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbad8528_6ac0b423",
+        "filename": "chrome/common/extensions/docs/templates/articles/getstarted.html",
+        "patchSetId": 18
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T20:25:38Z",
+      "side": 1,
+      "message": "It doesn\u0027t do this anymore, right?",
+      "range": {
+        "startLine": 18,
+        "startChar": 1,
+        "endLine": 19,
+        "endChar": 67
+      },
+      "revId": "5340c35fecef5e9fd555234d649b1f28887e8d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07f32896_952dece0",
+        "filename": "chrome/common/extensions/docs/templates/articles/getstarted.html",
+        "patchSetId": 18
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T20:25:38Z",
+      "side": 1,
+      "message": "Is this supposed to be in the background.js version that\u0027s downloadable, or no?",
+      "range": {
+        "startLine": 301,
+        "startChar": 4,
+        "endLine": 309,
+        "endChar": 11
+      },
+      "revId": "5340c35fecef5e9fd555234d649b1f28887e8d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
