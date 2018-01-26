@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5d39411_e9199417",
+        "filename": "build/util/lib/common/chrome_test_server_spawner.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-26T00:46:04Z",
+      "side": 1,
+      "message": "For OCSP we need to ensure that the certificate contains correct port number for OCSP server.  There are two ways to make it work:\n1. Pass self.host_ocsp_port instead of 0 for the first parameter. It\u0027s the port number on the target device. 0 means that it\u0027s allocated dynamically.\n\n2. Detect when OCSP is enabled from the command line, and forward the port first before starting testserver.py. Then pass self.forwarder_ocsp_device_port using --ocsp-proxy-port-number argument in the command_line.\n\nThe first solution may be flaky because it\u0027s not possible to guarantee that the port is available on device . (2) is slightly more complex but it would be more reliable.",
+      "range": {
+        "startLine": 260,
+        "startChar": 26,
+        "endLine": 260,
+        "endChar": 27
+      },
+      "revId": "e846d1b553c980c2a91a9b3c5e167b06b847b383",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

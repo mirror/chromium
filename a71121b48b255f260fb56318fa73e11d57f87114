@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27e2491d_8537db8d",
+        "filename": "net/test/spawned_test_server/remote_test_server.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-26T00:46:04Z",
+      "side": 0,
+      "message": "RemoteTestServer is used on Android and Fuchsia. But it works a bit differently on these platforms.\n\nOn Android config_.address() is set to localhost (127.0.0.1). testserver.py runs on the host Linux machine. There is no network connection between the host and the Android device. TCP connections are forwarded using ADB.\n\nOn Fuchsia the host and the test device have network connection (virtual net in QEMU). In this case config_.address() is no localhost. ocsp_proxy_ and test_server_proxy_ forward connections to the host\u0027s IP address.\n\nWith this patch the OCSP port is being forwarded by the ADB to the device, and then here ocsp_proxy_ forwards it from one localhost port to another. In other words TCP connection is forwarded twice. It looks more complex than necessary. I\u0027d prefer if all connections are forwarded only with ADB or only with TcpSocketProxy. It\u0027s easy to avoid the changes in this file. See my comment in build/util/lib/common/chrome_test_server_spawner.py",
+      "range": {
+        "startLine": 98,
+        "startChar": 6,
+        "endLine": 98,
+        "endChar": 53
+      },
+      "revId": "a71121b48b255f260fb56318fa73e11d57f87114",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
