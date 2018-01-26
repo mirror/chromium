@@ -318,6 +318,7 @@
             "title": "Overrides",
             "order": 4,
             "persistence": "permanent",
+            "condition": "hasNetwork",
             "className": "Sources.OverridesNavigatorView"
         },
         {
@@ -327,6 +328,7 @@
             "title": "Content scripts",
             "order": 5,
             "persistence": "permanent",
+            "condition": "hasBrowser",
             "className": "Sources.ContentScriptsNavigatorView"
         },
         {
@@ -351,6 +353,7 @@
         {
             "type": "@Sources.NavigatorView",
             "viewId": "navigator-overrides",
+            "condition": "hasNetwork",
             "className": "Sources.OverridesNavigatorView"
         },
         {

@@ -994,12 +994,16 @@ GURL DevToolsWindow::GetDevToolsURL(Profile* profile,
                                         : chrome::kChromeUIDevToolsURL);
   std::string url_string(url +
                          ((url.find("?") == std::string::npos) ? "?" : "&"));
+  std::string browser_capabilities =
+      "&hasBrowser=true&hasNetwork=true&hasTimeline=true&hasResources=true";
   switch (frontend_type) {
     case kFrontendRemote:
-      url_string += "&remoteFrontend=true";
+      url_string += browser_capabilities + "&remoteFrontend=true";
       break;
     case kFrontendWorker:
-      url_string += "&isSharedWorker=true";
+      url_string +=
+          "&hasNetwork=true&hasTimeline=true&hasResources=true&isSharedWorker="
+          "true";
       break;
     case kFrontendNode:
       url_string += "&nodeFrontend=true";
@@ -1008,6 +1012,7 @@ GURL DevToolsWindow::GetDevToolsURL(Profile* profile,
       url_string += "&v8only=true";
       break;
     case kFrontendDefault:
+      url_string += browser_capabilities;
     default:
       break;
   }

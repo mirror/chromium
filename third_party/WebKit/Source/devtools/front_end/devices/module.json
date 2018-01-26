@@ -8,7 +8,7 @@
             "persistence": "closeable",
             "order": 50,
             "className": "Devices.DevicesView",
-            "condition": "!v8only",
+            "condition": "hasBrowser",
             "tags": "usb, android, mobile"
         },
         {
