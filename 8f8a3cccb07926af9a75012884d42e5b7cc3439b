@@ -22,6 +22,30 @@
       "revId": "8f8a3cccb07926af9a75012884d42e5b7cc3439b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd09f341_4f614efd",
+        "filename": "components/password_manager/core/browser/password_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-26T14:05:35Z",
+      "side": 1,
+      "message": "The filter does not have access to the main frame URL (only its origin). I may be able to set a boolean is_gaia_chrome_sync_url in the PasswordForm if you prefer that (or maybe pass the entire main frame URL).",
+      "parentUuid": "14fc666d_145d3ca6",
+      "range": {
+        "startLine": 851,
+        "startChar": 7,
+        "endLine": 851,
+        "endChar": 65
+      },
+      "revId": "8f8a3cccb07926af9a75012884d42e5b7cc3439b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
