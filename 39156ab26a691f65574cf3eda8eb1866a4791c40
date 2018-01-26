@@ -16,6 +16,24 @@
       "revId": "39156ab26a691f65574cf3eda8eb1866a4791c40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "805f83ea_217d3ddc",
+        "filename": "ui/message_center/public/cpp/notification_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-26T19:51:15Z",
+      "side": 1,
+      "message": "It\u0027s true that it\u0027s in-process, but the interface it represents needs to exist in both processes. We could create a different interface in Chrome, but it would perfectly mirror this one. So what happens is Chrome-process notification sources have an in-process delegate and they also get a special delegate in the ash process that forwards the methods via mojo back to the Chrome process delegate. (To make it easier to be async I made sure all NotificationDelegate methods had void types.)",
+      "parentUuid": "b5493eaf_e7eb6338",
+      "revId": "39156ab26a691f65574cf3eda8eb1866a4791c40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
