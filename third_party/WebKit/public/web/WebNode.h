@@ -82,6 +82,7 @@ class BLINK_EXPORT WebNode {
   bool IsCommentNode() const;
   bool IsTextNode() const;
   bool IsFocusable() const;
+  void IsVisibleToUser() const;
   bool IsContentEditable() const;
   bool IsElementNode() const;
   void SimulateClick();

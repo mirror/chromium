@@ -1377,6 +1377,9 @@ void WebFormControlElementToFormField(
   base::string16 id = element.GetAttribute(kId).Utf16();
   if (id != field->name)
     field->id = id;
+  // LOG(ERROR) << "Parastoo: id -- " << field->id << " " << field->name <<
+  // "---" << IsWebElementVisible(element);
+  element.IsVisibleToUser(field);
 
   field->form_control_type = element.FormControlTypeForAutofill().Utf8();
   field->autocomplete_attribute = element.GetAttribute(kAutocomplete).Utf8();

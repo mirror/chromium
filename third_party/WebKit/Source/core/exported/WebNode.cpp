@@ -34,6 +34,7 @@
 #include "core/dom/AXObjectCache.h"
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
+#include "core/dom/ElementVisibilityObserver.h"
 #include "core/dom/Node.h"
 #include "core/dom/NodeList.h"
 #include "core/dom/StaticNodeList.h"
@@ -136,6 +137,26 @@ bool WebNode::IsFocusable() const {
     return false;
   private_->GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
   return ToElement(private_.Get())->IsFocusable();
+}
+
+void WebNode::IsVisibleToUser() const {
+  if (!private_->IsElementNode())
+    return;
+  private_->GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+  Element* target_element = ToElement(private_.Get());
+  if (!target_element)
+    return;
+  ElementVisibilityObserver* visibility_observer_ =
+      new ElementVisibilityObserver(
+          target_element, WTF::BindRepeating(
+                              [](Element* element, bool is_visible) {
+                                LOG(ERROR)
+                                    << "Parastoo: is_visible: " << is_visible
+                                    << "--" << element->computedName() << "-"
+                                    << element->tagName();
+                              },
+                              WrapWeakPersistent(target_element)));
+  visibility_observer_->Start();
 }
 
 bool WebNode::IsContentEditable() const {
