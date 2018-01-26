@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "d15a8fc0_87efb3e8",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-26T07:32:57Z",
+      "side": 1,
+      "message": "nit: nullptr /* proxy */",
+      "revId": "4091948c575edf24b7baf2039b31e41f6db327a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53c113cb_bf67dd16",
         "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_impl.cc",
         "patchSetId": 3
@@ -53,6 +70,40 @@
     },
     {
       "key": {
+        "uuid": "f2f9c84a_22d051bd",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-26T07:32:57Z",
+      "side": 1,
+      "message": "nit: uses it pass -\u003e uses it to pass ?",
+      "revId": "4091948c575edf24b7baf2039b31e41f6db327a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48831394_3408a398",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-26T07:32:57Z",
+      "side": 1,
+      "message": "This part of the code is not in this CL yet?",
+      "revId": "4091948c575edf24b7baf2039b31e41f6db327a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "867feb52_30f52077",
         "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_proxy.h",
         "patchSetId": 3
@@ -64,6 +115,23 @@
       "writtenOn": "2018-01-26T05:02:21Z",
       "side": 1,
       "message": "OnPageVisibilityChanged ?\n\nAs commented in the other place, replace the boolean with mojom::PageVisibilityState or define an enum class in platform/page/.",
+      "revId": "4091948c575edf24b7baf2039b31e41f6db327a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3b547d7_01d218ee",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-26T07:32:57Z",
+      "side": 1,
+      "message": "What else signals do we plan to plumb here? It\u0027s adding a lot of code if the primary purpose here is to plumb visibility signal from the main thread to dedicated workers (would other workers/worklets be targets too?). I can see that there\u0027s a value for having proxy infra for worker scheduling, while the question is if we want to plumb all these now.",
       "revId": "4091948c575edf24b7baf2039b31e41f6db327a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
