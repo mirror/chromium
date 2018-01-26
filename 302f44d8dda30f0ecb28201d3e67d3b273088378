@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb9361b4_c8e8462b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-01-26T19:29:06Z",
+      "side": 1,
+      "message": "Nit: I would remove the double negative. Maybe something like \"Only trivial changes were ...\"",
+      "revId": "302f44d8dda30f0ecb28201d3e67d3b273088378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
