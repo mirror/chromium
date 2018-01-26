@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d0e2774_be90d426",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-26T07:49:54Z",
+      "side": 1,
+      "message": "Maybe this can be set directly on the location bar view?\nI am not sure we have a case where we need to inset the layout margins from the safe area.",
+      "range": {
+        "startLine": 319,
+        "startChar": 0,
+        "endLine": 319,
+        "endChar": 67
+      },
+      "revId": "f58a3001135497fc9bd911ddd36e56774db97b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
