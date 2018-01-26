@@ -8,6 +8,7 @@
 
 #include "base/bind.h"
 #include "cc/trees/layer_tree_frame_sink_client.h"
+#include "components/viz/common/hit_test/hit_test_region_list_builder.h"
 #include "components/viz/common/quads/compositor_frame.h"
 #include "components/viz/common/surfaces/frame_sink_id.h"
 #include "components/viz/common/surfaces/parent_local_surface_id_allocator.h"
@@ -112,8 +113,10 @@ void DirectLayerTreeFrameSink::SubmitCompositorFrame(CompositorFrame frame) {
     display_->SetLocalSurfaceId(local_surface_id_, device_scale_factor_);
   }
 
-  bool result =
-      support_->SubmitCompositorFrame(local_surface_id_, std::move(frame));
+  auto hit_test_region_list =
+      HitTestRegionListBuilder::CreateHitTestData(frame);
+  bool result = support_->SubmitCompositorFrame(
+      local_surface_id_, std::move(frame), std::move(hit_test_region_list));
   DCHECK(result);
 }
 
