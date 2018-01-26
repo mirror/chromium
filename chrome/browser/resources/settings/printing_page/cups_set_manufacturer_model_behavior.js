@@ -86,11 +86,16 @@ const SetManufacturerModelBehavior = {
   },
 
   /**
-   * @param {string} path
+   * @param {PpdInfo} ppdInfo A simple dict which contains the path to the ppd
+   * and whether or not the ppd is valid
    * @private
    */
-  printerPPDPathChanged_: function(path) {
-    this.set('activePrinter.printerPPDPath', path);
+  printerPPDPathChanged_: function(ppdInfo) {
+    if (ppdInfo.valid) {
+      this.set('activePrinter.printerPPDPath', ppdInfo.path);
+    } else {
+      this.set('activePrinter.printerPPDPath', '');
+    }
   },
 
   /**
