@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "83ddbda0_1516d444",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/DrawingBuffer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-26T02:17:47Z",
+      "side": 1,
+      "message": "Per our in-person discussion, rewrote this comment to be more clear. I was also confused about this deceptively short logic statement.",
+      "parentUuid": "f7cae86f_339783fb",
+      "revId": "9928d00d8270ade86b9db6e421fa1209c3fd53e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc79f25b_6535d192",
         "filename": "third_party/WebKit/Source/platform/graphics/gpu/DrawingBuffer.cpp",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "9928d00d8270ade86b9db6e421fa1209c3fd53e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c18f99fc_29fc49df",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/DrawingBuffer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-26T02:17:47Z",
+      "side": 1,
+      "message": "Thanks, good suggestion. Done.",
+      "parentUuid": "bc79f25b_6535d192",
+      "revId": "9928d00d8270ade86b9db6e421fa1209c3fd53e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
