@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f6754b53_b7dae7e7",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 3907,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2018-01-26T22:59:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "320c1a90_950de76d",
+      "range": {
+        "startLine": 3907,
+        "startChar": 10,
+        "endLine": 3907,
+        "endChar": 22
+      },
+      "revId": "ae252de1fa6ac9fc819ac596f63e70b74bd59d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33a960c0_cd7a3591",
         "filename": "chrome/browser/chrome_content_browser_client.h",
         "patchSetId": 14
@@ -39,6 +63,24 @@
       "revId": "ae252de1fa6ac9fc819ac596f63e70b74bd59d71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cc9b430_2ad097fb",
+        "filename": "chrome/browser/chrome_content_browser_client.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2018-01-26T22:59:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33a960c0_cd7a3591",
+      "revId": "ae252de1fa6ac9fc819ac596f63e70b74bd59d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "6a3c8e17_ec813b26",
+        "filename": "chrome/browser/picture_in_picture/picture_in_picture_window_controller_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2018-01-26T22:59:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ced6a94_f9bce650",
+      "range": {
+        "startLine": 17,
+        "startChar": 48,
+        "endLine": 17,
+        "endChar": 50
+      },
+      "revId": "ae252de1fa6ac9fc819ac596f63e70b74bd59d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad08fe09_0c80d354",
         "filename": "chrome/browser/picture_in_picture/picture_in_picture_window_controller_browsertest.cc",
         "patchSetId": 14
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "e1a3dcbe_50c0f9ac",
+        "filename": "chrome/browser/picture_in_picture/picture_in_picture_window_controller_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2018-01-26T22:59:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad08fe09_0c80d354",
+      "revId": "ae252de1fa6ac9fc819ac596f63e70b74bd59d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f1194d1_56640240",
         "filename": "chrome/browser/picture_in_picture/picture_in_picture_window_controller_browsertest.cc",
         "patchSetId": 14
@@ -96,6 +180,24 @@
       "revId": "ae252de1fa6ac9fc819ac596f63e70b74bd59d71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d9bad9d_19c2be24",
+        "filename": "chrome/browser/picture_in_picture/picture_in_picture_window_controller_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2018-01-26T22:59:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f1194d1_56640240",
+      "revId": "ae252de1fa6ac9fc819ac596f63e70b74bd59d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "9d62d502_4868c63a",
+        "filename": "chrome/browser/picture_in_picture/picture_in_picture_window_controller_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2018-01-26T22:59:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "252aee58_ff237170",
+      "range": {
+        "startLine": 42,
+        "startChar": 37,
+        "endLine": 42,
+        "endChar": 41
+      },
+      "revId": "ae252de1fa6ac9fc819ac596f63e70b74bd59d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "575a944c_d49da202",
         "filename": "chrome/browser/picture_in_picture/picture_in_picture_window_controller_browsertest.cc",
         "patchSetId": 14
@@ -133,6 +259,24 @@
       "writtenOn": "2018-01-26T11:05:30Z",
       "side": 1,
       "message": "This test is the same as above and doesn\u0027t seem like the state would change. Maybe there is a reason I\u0027m missing. Though, would it make sense to check that the window is _not_ visible at this point so the test after demonstrates that `Show()` makes it visible.",
+      "revId": "ae252de1fa6ac9fc819ac596f63e70b74bd59d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a0400a1_4fd166ad",
+        "filename": "chrome/browser/picture_in_picture/picture_in_picture_window_controller_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2018-01-26T22:59:19Z",
+      "side": 1,
+      "message": "Good catch. It should check for visibility. Updated.",
+      "parentUuid": "575a944c_d49da202",
       "revId": "ae252de1fa6ac9fc819ac596f63e70b74bd59d71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -153,6 +297,24 @@
       "revId": "ae252de1fa6ac9fc819ac596f63e70b74bd59d71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97bbff20_1a0a60f1",
+        "filename": "chrome/browser/ui/overlay/overlay_surface_embedder.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2018-01-26T22:59:19Z",
+      "side": 1,
+      "message": "When the sizing is plumbed through (follow up CL), these won\u0027t be magically the same. Added a TODO.",
+      "parentUuid": "be2d0464_618cf1c5",
+      "revId": "ae252de1fa6ac9fc819ac596f63e70b74bd59d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -179,6 +341,30 @@
     },
     {
       "key": {
+        "uuid": "06a71824_086bbf4c",
+        "filename": "content/browser/media/media_web_contents_observer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2018-01-26T22:59:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d19bd101_f7cb871a",
+      "range": {
+        "startLine": 353,
+        "startChar": 6,
+        "endLine": 353,
+        "endChar": 20
+      },
+      "revId": "ae252de1fa6ac9fc819ac596f63e70b74bd59d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a46f291_9ef75d5c",
         "filename": "content/browser/media/media_web_contents_observer.cc",
         "patchSetId": 14
@@ -202,6 +388,30 @@
     },
     {
       "key": {
+        "uuid": "ec7b78c3_ab11da5b",
+        "filename": "content/browser/media/media_web_contents_observer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2018-01-26T22:59:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a46f291_9ef75d5c",
+      "range": {
+        "startLine": 355,
+        "startChar": 8,
+        "endLine": 355,
+        "endChar": 22
+      },
+      "revId": "ae252de1fa6ac9fc819ac596f63e70b74bd59d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5808474d_2c990f00",
         "filename": "content/common/media/media_player_delegate_messages.h",
         "patchSetId": 14
@@ -216,6 +426,24 @@
       "revId": "ae252de1fa6ac9fc819ac596f63e70b74bd59d71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9482ba8_14243fcd",
+        "filename": "content/common/media/media_player_delegate_messages.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2018-01-26T22:59:19Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "5808474d_2c990f00",
+      "revId": "ae252de1fa6ac9fc819ac596f63e70b74bd59d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -236,6 +464,24 @@
     },
     {
       "key": {
+        "uuid": "66a21607_854e7031",
+        "filename": "media/blink/webmediaplayer_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2018-01-26T22:59:19Z",
+      "side": 1,
+      "message": "Ack. I\u0027ll put thoughts in a design doc. We could place this in wmp with getters/setters.",
+      "parentUuid": "49abe907_22c255f8",
+      "revId": "ae252de1fa6ac9fc819ac596f63e70b74bd59d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70b89a45_d0270f0e",
         "filename": "third_party/WebKit/LayoutTests/media/controls/picture-in-picture-interstitial.html",
         "patchSetId": 14
@@ -250,6 +496,24 @@
       "revId": "ae252de1fa6ac9fc819ac596f63e70b74bd59d71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd10da30_90ffcd1a",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/picture-in-picture-interstitial.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2018-01-26T22:59:19Z",
+      "side": 1,
+      "message": "Yep.",
+      "parentUuid": "70b89a45_d0270f0e",
+      "revId": "ae252de1fa6ac9fc819ac596f63e70b74bd59d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -270,6 +534,24 @@
     },
     {
       "key": {
+        "uuid": "74be1698_290760b0",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImplTest.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2018-01-26T22:59:19Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "353e0668_9053a372",
+      "revId": "ae252de1fa6ac9fc819ac596f63e70b74bd59d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6029af3_32389835",
         "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImplTest.cpp",
         "patchSetId": 14
@@ -284,6 +566,24 @@
       "revId": "ae252de1fa6ac9fc819ac596f63e70b74bd59d71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3619cb1a_340b4e70",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImplTest.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2018-01-26T22:59:19Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "e6029af3_32389835",
+      "revId": "ae252de1fa6ac9fc819ac596f63e70b74bd59d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
