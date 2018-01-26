@@ -116,25 +116,25 @@ function initParametrizedTest(userInitiatedCleanupsEnabled) {
 function validateVisibleItemsList(
     originalItems, visibleItems, listCanBeShortened) {
   let visibleItemsList = visibleItems.querySelectorAll('.visible-item');
-  const moreItemsLInk = visibleItems.querySelector('#more-items-link');
+  const moreItemsLink = visibleItems.querySelector('#more-items-link');
 
   if (!listCanBeShortened ||
       originalItems.length <= settings.CHROME_CLEANUP_DEFAULT_ITEMS_TO_SHOW) {
     assertEquals(visibleItemsList.length, originalItems.length);
-    assertTrue(moreItemsLInk.hidden);
+    assertTrue(moreItemsLink.hidden);
   } else {
     assertEquals(
         visibleItemsList.length,
         settings.CHROME_CLEANUP_DEFAULT_ITEMS_TO_SHOW - 1);
-    assertFalse(moreItemsLInk.hidden);
+    assertFalse(moreItemsLink.hidden);
 
     // Tapping on the "show more" link should expand the list.
-    MockInteractions.tap(moreItemsLInk);
+    MockInteractions.tap(moreItemsLink);
     Polymer.dom.flush();
 
     visibleItemsList = visibleItems.querySelectorAll('.visible-item');
     assertEquals(visibleItemsList.length, originalItems.length);
-    assertTrue(moreItemsLInk.hidden);
+    assertTrue(moreItemsLink.hidden);
   }
 }
 
@@ -158,8 +158,7 @@ function startCleanupFromInfected(
   assertTrue(!!showItemsButton);
   MockInteractions.tap(showItemsButton);
 
-  const filesToRemoveList =
-      chromeCleanupPage.$$('#files-to-remove-list').$$('#list');
+  const filesToRemoveList = chromeCleanupPage.$$('#files-to-remove-list');
   assertTrue(!!filesToRemoveList);
   validateVisibleItemsList(
       files, filesToRemoveList,
@@ -169,7 +168,7 @@ function startCleanupFromInfected(
   assertTrue(!!registryKeysListContainer);
   if (userInitiatedCleanupsEnabled && registryKeys.length > 0) {
     assertFalse(registryKeysListContainer.hidden);
-    const registryKeysList = registryKeysListContainer.$$('#list');
+    const registryKeysList = registryKeysListContainer;
     assertTrue(!!registryKeysList);
     validateVisibleItemsList(
         registryKeys, registryKeysList,
