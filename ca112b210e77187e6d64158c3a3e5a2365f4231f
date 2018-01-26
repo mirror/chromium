@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd293a38_e8d1b8c9",
+        "filename": "components/exo/pointer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-26T04:49:38Z",
+      "side": 0,
+      "message": "This leaves one cursor image hanging even though it may not be used, but this should be small enough.\n\nWe should be able to remove this as a part of crbug.com/721601 (added TODO below)",
+      "revId": "ca112b210e77187e6d64158c3a3e5a2365f4231f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
