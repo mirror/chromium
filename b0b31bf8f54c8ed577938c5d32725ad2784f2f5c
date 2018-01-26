@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5297fb4_b778b88b",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-26T18:18:00Z",
+      "side": 1,
+      "message": "I don\u0027t think this works, since evict_busy can be set even if the resources are really busy, and it would delete them.",
+      "range": {
+        "startLine": 412,
+        "startChar": 8,
+        "endLine": 412,
+        "endChar": 41
+      },
+      "revId": "b0b31bf8f54c8ed577938c5d32725ad2784f2f5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
