@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c7323eb_befd469f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-26T06:26:17Z",
+      "side": 1,
+      "message": "\"splitview\" should be put before \"Change-Id\" line.",
+      "revId": "eec8ac0497b1fb5e46edee7a7855eecef4fdca8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60728479_1f6c0ca3",
+        "filename": "ash/wm/overview/fullscreen_window_animation_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-26T06:26:17Z",
+      "side": 1,
+      "message": "include \"base/macros.h\"",
+      "revId": "eec8ac0497b1fb5e46edee7a7855eecef4fdca8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cef74ab6_71673aac",
+        "filename": "ash/wm/overview/fullscreen_window_animation_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-26T06:26:17Z",
+      "side": 1,
+      "message": "Rename it to FullOrMaximizedWindowAnimationObserver to match your function name? Or for simplicity, just rename it to OverviewWindowAnimaitonObserver? Also, please add class description.",
+      "revId": "eec8ac0497b1fb5e46edee7a7855eecef4fdca8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c58c39af_aafd1871",
+        "filename": "ash/wm/overview/fullscreen_window_animation_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-26T06:26:17Z",
+      "side": 1,
+      "message": "Better to use the normal function name since it\u0027s not a inline function or a getter or setter.",
+      "revId": "eec8ac0497b1fb5e46edee7a7855eecef4fdca8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "986d428c_76a05032",
+        "filename": "ash/wm/overview/fullscreen_window_animation_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-26T06:26:17Z",
+      "side": 1,
+      "message": "const gfx::Transform\u0026",
+      "revId": "eec8ac0497b1fb5e46edee7a7855eecef4fdca8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75831904_945546ce",
+        "filename": "ash/wm/overview/overview_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-26T06:26:17Z",
+      "side": 1,
+      "message": "May need to use a better name to describe this function. And I don\u0027t understand why it will be considered as a fullscreen/maximized window if the |window| can be snapped?",
+      "revId": "eec8ac0497b1fb5e46edee7a7855eecef4fdca8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3cf5f91_88e3da25",
+        "filename": "ash/wm/overview/overview_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-26T06:26:17Z",
+      "side": 1,
+      "message": "You don\u0027t need the |split_view_controller| parameter, you can get it from Shell::Get()-\u003esplit_view_controller().",
+      "revId": "eec8ac0497b1fb5e46edee7a7855eecef4fdca8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "675c370d_19593cf8",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-26T06:26:17Z",
+      "side": 1,
+      "message": "also update the comments according to your change",
+      "revId": "eec8ac0497b1fb5e46edee7a7855eecef4fdca8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25dc0b66_198027b7",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-26T06:26:17Z",
+      "side": 1,
+      "message": "Seems to me that it will be easier to have a |deferred_transform_| member variable and a corresponding get_/set_ function.",
+      "revId": "eec8ac0497b1fb5e46edee7a7855eecef4fdca8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d7ed5c8_ac769953",
+        "filename": "ash/wm/overview/window_grid.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-26T06:26:17Z",
+      "side": 1,
+      "message": "only stop it when is_animating() returns true?",
+      "revId": "eec8ac0497b1fb5e46edee7a7855eecef4fdca8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b894375b_a15e7dc9",
+        "filename": "ash/wm/overview/window_selector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-26T06:26:17Z",
+      "side": 1,
+      "message": "The logic below is very complicated. Can you extract them to a separate function? And if possible, simplify it?",
+      "revId": "eec8ac0497b1fb5e46edee7a7855eecef4fdca8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64078065_83d7169c",
+        "filename": "ash/wm/overview/window_selector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-26T06:26:17Z",
+      "side": 1,
+      "message": "fullscreen or maximized",
+      "revId": "eec8ac0497b1fb5e46edee7a7855eecef4fdca8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
