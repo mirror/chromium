@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a8bd12a2_746429ba",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-26T00:22:06Z",
+      "side": 1,
+      "message": "oh, duh. ;-)",
+      "parentUuid": "4caa6bd2_15a842a9",
+      "range": {
+        "startLine": 244,
+        "startChar": 36,
+        "endLine": 244,
+        "endChar": 48
+      },
+      "revId": "df97eb13d3207492fa991c6367cdaea9ae0cb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e1c3c1a_83e2cb2b",
         "filename": "chrome_elf/whitelist/whitelist_log.cc",
         "patchSetId": 7
@@ -248,6 +272,30 @@
       "side": 1,
       "message": "Sure.  I\u0027ve received conflicting code review feedback on calls into system APIs.  I agree that FALSE is not the same as false.  I\u0027m often told to pass in \"nullptr\" instead of \"NULL\" (even though system APIs are documented to take in \"NULL\").  What is your full take on this Greg?",
       "parentUuid": "8e1c3c1a_83e2cb2b",
+      "range": {
+        "startLine": 248,
+        "startChar": 64,
+        "endLine": 248,
+        "endChar": 69
+      },
+      "revId": "df97eb13d3207492fa991c6367cdaea9ae0cb723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89f9564a_96c8b0a8",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-26T00:22:06Z",
+      "side": 1,
+      "message": "i\u0027m all for NULL -\u003e nullptr, but i tend to use TRUE/FALSE when it comes to BOOL. maybe i\u0027m inconsistent... it\u0027s not a big deal either way, i suppose.",
+      "parentUuid": "8d2c7070_5f4b7563",
       "range": {
         "startLine": 248,
         "startChar": 64,

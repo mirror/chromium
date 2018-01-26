@@ -1,0 +1,198 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4d2402b_bcfc9fdb",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-26T00:22:06Z",
+      "side": 1,
+      "message": "8",
+      "range": {
+        "startLine": 1,
+        "startChar": 16,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "ef108ca04e3ce29112c266eb312d76480c49b4a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dea04e99_64adcecd",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-26T00:22:06Z",
+      "side": 1,
+      "message": "\u003cwindows.h\u003e",
+      "range": {
+        "startLine": 7,
+        "startChar": 9,
+        "endLine": 7,
+        "endChar": 20
+      },
+      "revId": "ef108ca04e3ce29112c266eb312d76480c49b4a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ee233d3_c0668691",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-26T00:22:06Z",
+      "side": 1,
+      "message": "nit: move above vector",
+      "revId": "ef108ca04e3ce29112c266eb312d76480c49b4a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92704880_96966e93",
+        "filename": "chrome_elf/whitelist/whitelist_log.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-26T00:22:06Z",
+      "side": 1,
+      "message": "8 :-)",
+      "range": {
+        "startLine": 1,
+        "startChar": 16,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "ef108ca04e3ce29112c266eb312d76480c49b4a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d6b2768_774db2b3",
+        "filename": "chrome_elf/whitelist/whitelist_log.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-26T00:22:06Z",
+      "side": 1,
+      "message": "nit: c headers before c++ headers (https://google.github.io/styleguide/cppguide.html#Names_and_Order_of_Includes)",
+      "revId": "ef108ca04e3ce29112c266eb312d76480c49b4a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d18204d4_0c1e5441",
+        "filename": "chrome_elf/whitelist/whitelist_log_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-26T00:22:06Z",
+      "side": 1,
+      "message": "8",
+      "range": {
+        "startLine": 1,
+        "startChar": 16,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "ef108ca04e3ce29112c266eb312d76480c49b4a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b22c7124_2e72608b",
+        "filename": "chrome_elf/whitelist/whitelist_log_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-26T00:22:06Z",
+      "side": 1,
+      "message": "auto buffer \u003d std::unique_ptr\u003cuint8_t[]\u003e(new uint8_t[buffer_size]);\n\nand remove line 142",
+      "revId": "ef108ca04e3ce29112c266eb312d76480c49b4a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8bffcb6_d9910b20",
+        "filename": "chrome_elf/whitelist/whitelist_log_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-26T00:22:06Z",
+      "side": 1,
+      "message": "unique_ptr here, too",
+      "revId": "ef108ca04e3ce29112c266eb312d76480c49b4a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b617457_2680dc26",
+        "filename": "chrome_elf/whitelist/whitelist_log_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-26T00:22:06Z",
+      "side": 1,
+      "message": "can you use base::WaitableEvent and do away with the global by passing the handle to the other thread via LPARAM?",
+      "revId": "ef108ca04e3ce29112c266eb312d76480c49b4a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27e04245_97d343b8",
+        "filename": "chrome_elf/whitelist/whitelist_packed_format.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-26T00:22:06Z",
+      "side": 1,
+      "message": "nit: omit this blank line",
+      "revId": "ef108ca04e3ce29112c266eb312d76480c49b4a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
