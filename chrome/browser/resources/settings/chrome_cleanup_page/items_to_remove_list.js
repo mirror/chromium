@@ -75,7 +75,9 @@ Polymer({
      * it's the same as |itemsToShow|.
      * @private {?Array<string>}
      */
-    visibleItems_: Array,
+    initialItems_: Array,
+
+    remainingItems_: Array,
 
     /**
      * The text for the "show more" link available if not all files are visible
@@ -93,7 +95,6 @@ Polymer({
   /** @private */
   expandList_: function() {
     this.expanded_ = true;
-    this.visibleItems_ = this.itemsToShow;
     this.moreItemsLinkText_ = '';
   },
 
@@ -123,18 +124,19 @@ Polymer({
             settings.CHROME_CLEANUP_DEFAULT_ITEMS_TO_SHOW;
 
     if (this.expanded_) {
-      this.visibleItems_ = this.itemsToShow;
+      this.initialItems_ = this.itemsToShow;
+      this.remainingItems_ = [];
       this.moreItemsLinkText_ = '';
       return;
     }
 
-    this.visibleItems_ = this.itemsToShow.slice(
+    this.initialItems_ = this.itemsToShow.slice(
         0, settings.CHROME_CLEANUP_DEFAULT_ITEMS_TO_SHOW - 1);
+    this.remainingItems_ = this.itemsToShow.slice(
+        settings.CHROME_CLEANUP_DEFAULT_ITEMS_TO_SHOW - 1);
 
     const browserProxy = settings.ChromeCleanupProxyImpl.getInstance();
-    browserProxy
-        .getMoreItemsPluralString(
-            this.itemsToShow.length - this.visibleItems_.length)
+    browserProxy.getMoreItemsPluralString(this.remainingItems_.length)
         .then(linkText => {
           this.moreItemsLinkText_ = linkText;
         });

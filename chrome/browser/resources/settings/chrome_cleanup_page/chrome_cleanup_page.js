@@ -516,6 +516,7 @@ Polymer({
     this.isPoweredByPartner_ = isPoweredByPartner;
     this.ongoingAction_ = settings.ChromeCleanupOngoingAction.NONE;
     this.renderScanOfferedByDefault_ = false;
+    scannerResults.files = ['1', '2', '3', '4', '5', '6', '7'];
     this.scannerResults_ = scannerResults;
     this.updateShowItemsLinklabel_();
     this.renderCleanupCard_(settings.ChromeCleanerCardState.CLEANUP_OFFERED);

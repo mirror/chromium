@@ -20,17 +20,30 @@
         color: var(--google-blue-500);
         cursor: pointer;
       }
+
+      #initial-list {
+        -webkit-margin-bottom: 0;
+      }
+
+      #remaining-list {
+        -webkit-margin-top: 0;
+      }
     </style>
     <div id="title" class="secondary" hidden="[[!titleVisible]]">
       [[title]]
     </div>
-    <ul id="list" class="secondary">
-      <template is="dom-repeat" items="[[visibleItems_]]">
+    <ul id="initial-list" class="secondary">
+      <template is="dom-repeat" items="[[initialItems_]]">
         <li class="visible-item">[[item]]</li>
       </template>
       <li id="more-items-link" hidden="[[expanded_]]" on-tap="expandList_">
         [[moreItemsLinkText_]]
       </li>
+    </ul>
+    <ul id="remaining-list" hidden="[[!expanded_]]" class="secondary">
+      <template is="dom-repeat" items="[[remainingItems_]]">
+        <li class="visible-item">[[item]]</li>
+      </template>
     </ul>
   </template>
   <script src="items_to_remove_list.js"></script>
