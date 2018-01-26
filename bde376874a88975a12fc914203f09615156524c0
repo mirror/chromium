@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f221628a_502c82c9",
+        "filename": "content/renderer/media/media_stream_audio_processor_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2018-01-26T13:11:38Z",
+      "side": 1,
+      "message": "This fails. What\u0027s the right way to check if AEC3 is enabled/used?",
+      "revId": "bde376874a88975a12fc914203f09615156524c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
