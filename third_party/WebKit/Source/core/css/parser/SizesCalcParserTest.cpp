@@ -97,6 +97,7 @@ TEST(SizesCalcParserTest, Basic) {
       {"calc(100px @ 2)", 0, false, false},
       {"calc(1 flim 2)", 0, false, false},
       {"calc(1 flim (2))", 0, false, false},
+      {"calc((100vw - 2 * 40px - 2 * 30px) / 3)", 120, true, false},
       {nullptr, 0, true, false}  // Do not remove the terminator line.
   };
 

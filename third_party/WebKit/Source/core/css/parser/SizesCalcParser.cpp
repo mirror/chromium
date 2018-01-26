@@ -33,24 +33,28 @@ static bool OperatorPriority(UChar cc, bool& high_priority) {
 bool SizesCalcParser::HandleOperator(Vector<CSSParserToken>& stack,
                                      const CSSParserToken& token) {
   // If the token is an operator, o1, then:
+  bool incoming_operator_priority;
+  if (!OperatorPriority(token.Delimiter(), incoming_operator_priority))
+    return false;
+
   // while there is an operator token, o2, at the top of the stack, and
   // either o1 is left-associative and its precedence is equal to that of o2,
   // or o1 has precedence less than that of o2,
   // pop o2 off the stack, onto the output queue;
-  // push o1 onto the stack.
-  bool stack_operator_priority;
-  bool incoming_operator_priority;
-
-  if (!OperatorPriority(token.Delimiter(), incoming_operator_priority))
-    return false;
-  if (!stack.IsEmpty() && stack.back().GetType() == kDelimiterToken) {
-    if (!OperatorPriority(stack.back().Delimiter(), stack_operator_priority))
+  while (!stack.IsEmpty()) {
+    const CSSParserToken& top_of_stack = stack.back();
+    if (top_of_stack.GetType() != kDelimiterToken)
+      break;
+    bool stack_operator_priority;
+    if (!OperatorPriority(top_of_stack.Delimiter(), stack_operator_priority))
       return false;
-    if (!incoming_operator_priority || stack_operator_priority) {
-      AppendOperator(stack.back());
-      stack.pop_back();
-    }
+    // If the current ToS operator has lower precedence, then stop.
+    if (incoming_operator_priority && !stack_operator_priority)
+      break;
+    AppendOperator(top_of_stack);
+    stack.pop_back();
   }
+  // push o1 onto the stack.
   stack.push_back(token);
   return true;
 }
