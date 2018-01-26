@@ -1,0 +1,394 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5122fbbe_a685188b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T22:12:21Z",
+      "side": 1,
+      "message": "This tutorial needed some serious TLC!  I\u0027ve found four bugs related to it that we can link here.\n\n486948, 306867, 127559, and 126010\n\nCan you check that the new version doesn\u0027t have any of the issues outlined in those, and then link them in the description?  (And then we can close them out, woo!)",
+      "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd26adb2_fbbb3abd",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/oauth_starter/background.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T22:12:21Z",
+      "side": 1,
+      "message": "nit: newline after this",
+      "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f4b5045_6a95f332",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/oauth_starter/background.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T22:12:21Z",
+      "side": 1,
+      "message": "nit: newline after this\n\nso, with above, this should be\n// Copyright 2018 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\n\u0027use strict\u0027;\n\nchrome...",
+      "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa7d4cc0_6c67d569",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/oauth_starter/background.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T22:12:21Z",
+      "side": 1,
+      "message": "nit: space between ) and {",
+      "range": {
+        "startLine": 5,
+        "startChar": 52,
+        "endLine": 5,
+        "endChar": 54
+      },
+      "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "492521bf_fce10a8d",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/oauth_starter/background.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T22:12:21Z",
+      "side": 1,
+      "message": "just {url: \u0027index.html\u0027} (no quotes or spaces around url)",
+      "range": {
+        "startLine": 6,
+        "startChar": 24,
+        "endLine": 6,
+        "endChar": 31
+      },
+      "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24b7310c_97f7cb95",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/oauth_starter/index.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T22:12:21Z",
+      "side": 1,
+      "message": "Welcome to the future! :)",
+      "range": {
+        "startLine": 1,
+        "startChar": 15,
+        "endLine": 1,
+        "endChar": 20
+      },
+      "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d74cb28c_64debec0",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/oauth_starter/index.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T22:12:21Z",
+      "side": 1,
+      "message": "indent +2",
+      "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8afbaf01_d89c407b",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/oauth_starter/index.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T22:12:21Z",
+      "side": 1,
+      "message": "This file is missing?",
+      "range": {
+        "startLine": 7,
+        "startChar": 38,
+        "endLine": 7,
+        "endChar": 46
+      },
+      "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8eb6177_c53bab3b",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/oauth_starter/index.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T22:12:21Z",
+      "side": 1,
+      "message": "nit: let\u0027s put style in its own \u003cstyle\u003e tag",
+      "range": {
+        "startLine": 11,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 35
+      },
+      "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9253dad_54ca65c5",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/oauth_starter/manifest.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T22:12:21Z",
+      "side": 1,
+      "message": "I\u0027m a bit worried about the similarities between this and a certain social network :P Might be safer to name this something a bit more unique, just as a precaution.",
+      "range": {
+        "startLine": 2,
+        "startChar": 27,
+        "endLine": 2,
+        "endChar": 36
+      },
+      "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2d0c1a9_d9c94ad4",
+        "filename": "chrome/common/extensions/docs/templates/articles/tut_oauth.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T22:12:21Z",
+      "side": 1,
+      "message": "I don\u0027t know why, but this title sounds a bit weird.  Maybe something like \"First step: create an extension\"?  (feel free to wordsmith; I just think \"set up base extension\" could be improved)",
+      "range": {
+        "startLine": 17,
+        "startChar": 16,
+        "endLine": 17,
+        "endChar": 37
+      },
+      "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec279c95_c011fa28",
+        "filename": "chrome/common/extensions/docs/templates/articles/tut_oauth.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T22:12:21Z",
+      "side": 1,
+      "message": "manifest",
+      "range": {
+        "startLine": 24,
+        "startChar": 18,
+        "endLine": 24,
+        "endChar": 25
+      },
+      "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7847ec20_369971ab",
+        "filename": "chrome/common/extensions/docs/templates/articles/tut_oauth.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T22:12:21Z",
+      "side": 1,
+      "message": "same comments as in the script file",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 5
+      },
+      "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77d6a11e_875757a3",
+        "filename": "chrome/common/extensions/docs/templates/articles/tut_oauth.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T22:12:21Z",
+      "side": 1,
+      "message": "Hmm... this seems a bit contradictory, since the next step is about gathering the additional information",
+      "range": {
+        "startLine": 86,
+        "startChar": 4,
+        "endLine": 87,
+        "endChar": 39
+      },
+      "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6be2cc9d_710d8c99",
+        "filename": "chrome/common/extensions/docs/templates/articles/tut_oauth.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T22:12:21Z",
+      "side": 1,
+      "message": "Should this file be included?",
+      "range": {
+        "startLine": 185,
+        "startChar": 8,
+        "endLine": 185,
+        "endChar": 16
+      },
+      "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "667c6727_a05f70d6",
+        "filename": "chrome/common/extensions/docs/templates/articles/tut_oauth.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T22:12:21Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 238,
+        "startChar": 26,
+        "endLine": 238,
+        "endChar": 35
+      },
+      "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92bba9bf_9277c1bf",
+        "filename": "chrome/common/extensions/docs/templates/articles/tut_oauth.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T22:12:21Z",
+      "side": 1,
+      "message": "nit: prefer document.getElementById for getting elements by their ids.",
+      "range": {
+        "startLine": 271,
+        "startChar": 13,
+        "endLine": 271,
+        "endChar": 26
+      },
+      "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6cf3bcf_5627459a",
+        "filename": "chrome/common/extensions/docs/templates/articles/tut_oauth.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T22:12:21Z",
+      "side": 1,
+      "message": "nit: no need for quotes around keys in JS",
+      "range": {
+        "startLine": 272,
+        "startChar": 36,
+        "endLine": 272,
+        "endChar": 37
+      },
+      "revId": "7b88ae076ae8704beaf4a06e5f93c6001756b219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
