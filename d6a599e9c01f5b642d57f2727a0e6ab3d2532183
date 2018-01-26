@@ -34,6 +34,24 @@
       "revId": "d6a599e9c01f5b642d57f2727a0e6ab3d2532183",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03862211_2dfc6713",
+        "filename": "third_party/zlib/arm.c",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1174970
+      },
+      "writtenOn": "2018-01-26T00:11:01Z",
+      "side": 1,
+      "message": "FYI https://fuchsia-review.googlesource.com/c/zircon/+/115943",
+      "parentUuid": "fd8398dc_1c4f7e65",
+      "revId": "d6a599e9c01f5b642d57f2727a0e6ab3d2532183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
