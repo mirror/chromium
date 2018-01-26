@@ -508,7 +508,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
 
   // Applies background color without notifying the RenderWidget about
   // opaqueness changes.
-  void UpdateBackgroundColorFromRenderer(SkColor color);
+  void SetBackgroundColorInternal(SkColor color);
 
   // The model object.
   RenderWidgetHostImpl* const host_;
@@ -559,6 +559,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
 
   // The background color of the web content.
   SkColor background_color_;
+  bool did_receive_background_color_from_renderer_ = false;
 
   // Whether a request for begin frames has been issued.
   bool needs_begin_frames_;

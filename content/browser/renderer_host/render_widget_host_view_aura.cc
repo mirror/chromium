@@ -762,7 +762,10 @@ gfx::Rect RenderWidgetHostViewAura::GetViewBounds() const {
 void RenderWidgetHostViewAura::SetBackgroundColor(SkColor color) {
   // The renderer will feed its color back to us with the first CompositorFrame.
   // We short-cut here to show a sensible color before that happens.
-  UpdateBackgroundColorFromRenderer(color);
+  if (did_receive_background_color_from_renderer_)
+    return;
+
+  SetBackgroundColorInternal(color);
 
   DCHECK(SkColorGetA(color) == SK_AlphaOPAQUE ||
          SkColorGetA(color) == SK_AlphaTRANSPARENT);
@@ -773,8 +776,7 @@ SkColor RenderWidgetHostViewAura::background_color() const {
   return background_color_;
 }
 
-void RenderWidgetHostViewAura::UpdateBackgroundColorFromRenderer(
-    SkColor color) {
+void RenderWidgetHostViewAura::SetBackgroundColorInternal(SkColor color) {
   if (color == background_color())
     return;
   background_color_ = color;
@@ -954,7 +956,8 @@ void RenderWidgetHostViewAura::SubmitCompositorFrame(
   // This allows us to, when navigating to a new page, transfer this color to
   // that page. This allows us to pass this background color to new views on
   // navigation.
-  UpdateBackgroundColorFromRenderer(frame.metadata.root_background_color);
+  did_receive_background_color_from_renderer_ = true;
+  SetBackgroundColorInternal(frame.metadata.root_background_color);
 
   last_scroll_offset_ = frame.metadata.root_scroll_offset;
   if (IsUseZoomForDSFEnabled()) {
