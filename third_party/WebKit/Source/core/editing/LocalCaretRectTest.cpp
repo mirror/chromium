@@ -109,13 +109,67 @@ TEST_F(LocalCaretRectTest, RtlText) {
       LocalCaretRectOfPosition({Position(foo, 3), TextAffinity::kDownstream}));
 }
 
-TEST_F(LocalCaretRectTest, VerticalText) {
+TEST_F(LocalCaretRectTest, VerticalRLText) {
   // This test only records the current behavior. Future changes are allowed.
 
   LoadAhem();
   SetBodyContent(
-      "<div id=div style='writing-mode: vertical-rl; "
-      "font: 10px/10px Ahem; width: 30px'>Xpp</div>");
+      "<div id=div style='writing-mode: vertical-rl; word-break: break-all; "
+      "font: 10px/10px Ahem; width: 30px; height: 30px'>XXXYYYZZZ</div>");
+  const Node* foo = GetElementById("div")->firstChild();
+
+  // TODO(xiaochengh): In vertical-rl writing mode, the |X| property of
+  // LocalCaretRect's LayoutRect seems to refer to the distance to the right
+  // edge of the inline formatting context instead. Figure out if this is
+  // correct.
+
+  EXPECT_EQ(
+      LocalCaretRect(foo->GetLayoutObject(), LayoutRect(0, 0, 10, 1)),
+      LocalCaretRectOfPosition({Position(foo, 0), TextAffinity::kDownstream}));
+  EXPECT_EQ(
+      LocalCaretRect(foo->GetLayoutObject(), LayoutRect(0, 10, 10, 1)),
+      LocalCaretRectOfPosition({Position(foo, 1), TextAffinity::kDownstream}));
+  EXPECT_EQ(
+      LocalCaretRect(foo->GetLayoutObject(), LayoutRect(0, 20, 10, 1)),
+      LocalCaretRectOfPosition({Position(foo, 2), TextAffinity::kDownstream}));
+  EXPECT_EQ(
+      LocalCaretRect(foo->GetLayoutObject(), LayoutRect(0, 29, 10, 1)),
+      LocalCaretRectOfPosition({Position(foo, 3), TextAffinity::kUpstream}));
+
+  EXPECT_EQ(
+      LocalCaretRect(foo->GetLayoutObject(), LayoutRect(10, 0, 10, 1)),
+      LocalCaretRectOfPosition({Position(foo, 3), TextAffinity::kDownstream}));
+  EXPECT_EQ(
+      LocalCaretRect(foo->GetLayoutObject(), LayoutRect(10, 10, 10, 1)),
+      LocalCaretRectOfPosition({Position(foo, 4), TextAffinity::kDownstream}));
+  EXPECT_EQ(
+      LocalCaretRect(foo->GetLayoutObject(), LayoutRect(10, 20, 10, 1)),
+      LocalCaretRectOfPosition({Position(foo, 5), TextAffinity::kDownstream}));
+  EXPECT_EQ(
+      LocalCaretRect(foo->GetLayoutObject(), LayoutRect(10, 29, 10, 1)),
+      LocalCaretRectOfPosition({Position(foo, 6), TextAffinity::kUpstream}));
+
+  EXPECT_EQ(
+      LocalCaretRect(foo->GetLayoutObject(), LayoutRect(20, 0, 10, 1)),
+      LocalCaretRectOfPosition({Position(foo, 6), TextAffinity::kDownstream}));
+  EXPECT_EQ(
+      LocalCaretRect(foo->GetLayoutObject(), LayoutRect(20, 10, 10, 1)),
+      LocalCaretRectOfPosition({Position(foo, 7), TextAffinity::kDownstream}));
+  EXPECT_EQ(
+      LocalCaretRect(foo->GetLayoutObject(), LayoutRect(20, 20, 10, 1)),
+      LocalCaretRectOfPosition({Position(foo, 8), TextAffinity::kDownstream}));
+  EXPECT_EQ(
+      LocalCaretRect(foo->GetLayoutObject(), LayoutRect(20, 29, 10, 1)),
+      LocalCaretRectOfPosition({Position(foo, 9), TextAffinity::kDownstream}));
+}
+
+TEST_F(LocalCaretRectTest, VerticalLRText) {
+  // This test only records the current behavior. Future changes are allowed.
+
+  LoadAhem();
+  SetBodyContent(
+      "<div id=div style='writing-mode: vertical-lr; word-break: break-all; "
+      "font: 10px/10px Ahem; width: 30px; height: 30px'>XXXYYYZZZ</div>");
   const Node* foo = GetElementById("div")->firstChild();
 
   EXPECT_EQ(
@@ -129,7 +183,33 @@ TEST_F(LocalCaretRectTest, VerticalText) {
       LocalCaretRectOfPosition({Position(foo, 2), TextAffinity::kDownstream}));
   EXPECT_EQ(
       LocalCaretRect(foo->GetLayoutObject(), LayoutRect(0, 29, 10, 1)),
+      LocalCaretRectOfPosition({Position(foo, 3), TextAffinity::kUpstream}));
+
+  EXPECT_EQ(
+      LocalCaretRect(foo->GetLayoutObject(), LayoutRect(10, 0, 10, 1)),
       LocalCaretRectOfPosition({Position(foo, 3), TextAffinity::kDownstream}));
+  EXPECT_EQ(
+      LocalCaretRect(foo->GetLayoutObject(), LayoutRect(10, 10, 10, 1)),
+      LocalCaretRectOfPosition({Position(foo, 4), TextAffinity::kDownstream}));
+  EXPECT_EQ(
+      LocalCaretRect(foo->GetLayoutObject(), LayoutRect(10, 20, 10, 1)),
+      LocalCaretRectOfPosition({Position(foo, 5), TextAffinity::kDownstream}));
+  EXPECT_EQ(
+      LocalCaretRect(foo->GetLayoutObject(), LayoutRect(10, 29, 10, 1)),
+      LocalCaretRectOfPosition({Position(foo, 6), TextAffinity::kUpstream}));
+
+  EXPECT_EQ(
+      LocalCaretRect(foo->GetLayoutObject(), LayoutRect(20, 0, 10, 1)),
+      LocalCaretRectOfPosition({Position(foo, 6), TextAffinity::kDownstream}));
+  EXPECT_EQ(
+      LocalCaretRect(foo->GetLayoutObject(), LayoutRect(20, 10, 10, 1)),
+      LocalCaretRectOfPosition({Position(foo, 7), TextAffinity::kDownstream}));
+  EXPECT_EQ(
+      LocalCaretRect(foo->GetLayoutObject(), LayoutRect(20, 20, 10, 1)),
+      LocalCaretRectOfPosition({Position(foo, 8), TextAffinity::kDownstream}));
+  EXPECT_EQ(
+      LocalCaretRect(foo->GetLayoutObject(), LayoutRect(20, 29, 10, 1)),
+      LocalCaretRectOfPosition({Position(foo, 9), TextAffinity::kDownstream}));
 }
 
 TEST_F(LocalCaretRectTest, TwoLinesOfTextWithSoftWrap) {
