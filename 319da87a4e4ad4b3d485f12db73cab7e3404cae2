@@ -22,6 +22,30 @@
       "revId": "319da87a4e4ad4b3d485f12db73cab7e3404cae2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7af403ba_990d9b92",
+        "filename": "ash/display/cursor_window_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2018-01-26T00:56:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6d4d96e_07fa0370",
+      "range": {
+        "startLine": 117,
+        "startChar": 3,
+        "endLine": 117,
+        "endChar": 62
+      },
+      "revId": "319da87a4e4ad4b3d485f12db73cab7e3404cae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
