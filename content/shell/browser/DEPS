@@ -5,6 +5,10 @@ include_rules = [
   "+device/geolocation/public",
   "+services/service_manager/public/cpp",
   "+services/service_manager/sandbox",
+
+  # TODO(hiroshige): Fix these violations.
+  "+content/common/permafill",
+  "+content/browser/permafill",
 ]
 
 specific_include_rules = {

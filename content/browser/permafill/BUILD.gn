@@ -1,0 +1,50 @@
+# Copyright 2018 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("//tools/grit/grit_rule.gni")
+
+# generate_about_permafill puts its files in this directory
+permafill_gen_dir = "$root_gen_dir/content/browser/permafill"
+
+# The script just writes filename with no dirs to the .grd, so we always need
+# this file to be in the same directory as the inputs.
+permafill_grd = "$permafill_gen_dir/permafill_resources.grd"
+
+permafill_resources_h = "$permafill_gen_dir/resources.h"
+
+action("generate_permafill_grd") {
+  visibility = [ ":*" ]  # Depend on ":resources" to get this.
+  script = "generate_grd.py"
+
+  outputs = [
+    permafill_grd,
+  ]
+
+  args = [
+    rebase_path("resources", root_build_dir),
+    rebase_path("resources", permafill_gen_dir),
+    rebase_path(permafill_grd, root_build_dir),
+    rebase_path(permafill_resources_h, root_build_dir),
+  ]
+}
+
+grit("resources") {
+  source = permafill_grd
+  source_is_generated = true
+
+  outputs = [
+    "grit/permafill_resources.h",
+    "permafill_resources.pak",
+  ]
+
+  # resource_ids has an entry for our .grd file that looks like:
+  # "<(SHARED_INTERMEDIATE_DIR)/content/browser/permafill/permafill_resources.grd"
+  # and what we pass here should make that resolve to our .grd file.
+  defines =
+      [ "SHARED_INTERMEDIATE_DIR=" + rebase_path(root_gen_dir, root_build_dir) ]
+
+  deps = [
+    ":generate_permafill_grd",
+  ]
+}

@@ -28,6 +28,8 @@ _EXCLUDED_PATHS = (
     r"tools[\\\/]perf[\\\/]page_sets[\\\/]maps_perf_test.*",
     # Test pages for WebRTC telemetry tests.
     r"tools[\\\/]perf[\\\/]page_sets[\\\/]webrtc_cases.*",
+    # Permafill resources.
+    r"^content[\\\/]browser[\\\/]permafill[\\\/]resources[\\\/].*",
 )
 
 

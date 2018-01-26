@@ -244,6 +244,12 @@ bool ScriptLoader::IsScriptTypeSupported(LegacyTypeSupport support_legacy_types,
                                       support_legacy_types, out_script_type);
 }
 
+static bool IsImplementedPermafill(const String& permafill) {
+  if (permafill == "test")
+    return true;
+  return false;
+}
+
 // https://html.spec.whatwg.org/#prepare-a-script
 bool ScriptLoader::PrepareScript(const TextPosition& script_start_position,
                                  LegacyTypeSupport support_legacy_types) {
@@ -438,6 +444,37 @@ bool ScriptLoader::PrepareScript(const TextPosition& script_start_position,
 
       // Steps 14 and 18 are skipped because they are not used in module
       // scripts.
+
+      // [Permafill]
+      // If the element has a stdsrc attribute, then:
+      // Let stdsrc be the value of the element's stdsrc attribute.
+      // If stdsrc starts with "browser://", then:
+      //
+      // TODO(hiroshige): Currently I'm using "browser://<permafill-name>"
+      // instead of "browser:<permafill-name>".
+      const String stdsrc = element_->StdsrcAttributeValue();
+      const String browser_url_prefix("browser://");
+      if (!stdsrc.IsNull() && stdsrc.StartsWith(browser_url_prefix)) {
+        // Let permafill be the substring of stdsrc after "browser://".
+        const String permafill = stdsrc.Substring(browser_url_prefix.length());
+
+        // If the browser implements the permafill identified by permafill,
+        // then:
+        //
+        // TODO(hiroshige): This might be a kind of layering violation, i.e.
+        // this assumes both the browser process and the renderer processes
+        // should know what permafills are implemented. Alternatively, we might
+        // want to request the browser:// URL to the browser process anyway
+        // without checking here whether it is implemented, and when it failed
+        // request the fallback URL again. This might require plumbing fallback
+        // URLs in ModuleScriptLoader or ResourceLoader, which might be not
+        // super clean.
+        if (IsImplementedPermafill(permafill)) {
+          // Set the URL to stdsrc. URL parsing here must always succeed, as
+          // stdsrc must be in the form of browser://<permafill-name>.
+          url = KURL(stdsrc);
+        }
+      }
 
       Modulator* modulator = Modulator::From(
           ToScriptStateForMainWorld(context_document->GetFrame()));
