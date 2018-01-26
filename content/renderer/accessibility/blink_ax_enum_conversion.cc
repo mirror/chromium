@@ -585,4 +585,20 @@ ui::AXTextAffinity AXTextAffinityFromBlink(blink::WebAXTextAffinity affinity) {
   return ui::AX_TEXT_AFFINITY_DOWNSTREAM;
 }
 
+ui::AXAutoComplete AXAutoCompleteFromBlink(
+    blink::WebAXAutoComplete autocomplete) {
+  switch (autocomplete) {
+    case blink::WebAXAutoComplete::kWebAXAutoCompleteNone:
+      return ui::AX_AUTO_COMPLETE_NONE;
+    case blink::WebAXAutoComplete::kWebAXAutoCompleteInline:
+      return ui::AX_AUTO_COMPLETE_INLINE;
+    case blink::WebAXAutoComplete::kWebAXAutoCompleteList:
+      return ui::AX_AUTO_COMPLETE_LIST;
+    case blink::WebAXAutoComplete::kWebAXAutoCompleteBoth:
+      return ui::AX_AUTO_COMPLETE_BOTH;
+  }
+  NOTREACHED();
+  return ui::AX_AUTO_COMPLETE_NONE;
+}
+
 }  // namespace content.

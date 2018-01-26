@@ -331,6 +331,13 @@ enum WebAXTextAffinity {
   kWebAXTextAffinityDownstream
 };
 
+enum WebAXAutoComplete {
+  kWebAXAutoCompleteNone = -1,
+  kWebAXAutoCompleteInline = 0,
+  kWebAXAutoCompleteList,
+  kWebAXAutoCompleteBoth,
+};
+
 //
 // Sparse accessibility attributes
 //

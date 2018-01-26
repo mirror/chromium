@@ -269,6 +269,13 @@ enum AXDescriptionFrom {
   kAXDescriptionFromRelatedElement,
 };
 
+enum AXAutoComplete {
+  kAXAutoCompleteNone = -1,
+  kAXAutoCompleteInline = 0,
+  kAXAutoCompleteList,
+  kAXAutoCompleteBoth,
+};
+
 }  // namespace blink
 
 #endif  // AXEnums_h

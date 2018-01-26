@@ -609,7 +609,9 @@ class MODULES_EXPORT AXObject : public GarbageCollectedFinalized<AXObject> {
   AccessibilityRole DetermineAriaRoleAttribute() const;
   virtual AccessibilityRole AriaRoleAttribute() const;
   virtual AXObject* ActiveDescendant() { return nullptr; }
-  virtual String AriaAutoComplete() const { return String(); }
+  virtual AXAutoComplete AriaAutoComplete() const {
+    return kAXAutoCompleteNone;
+  }
   virtual void AriaOwnsElements(AXObjectVector& owns) const {}
   virtual void AriaDescribedbyElements(AXObjectVector&) const {}
   virtual bool AriaHasPopup() const { return false; }
