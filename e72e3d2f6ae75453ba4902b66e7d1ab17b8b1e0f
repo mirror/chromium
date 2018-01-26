@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65de774b_277abd04",
+        "filename": "ash/login/ui/scrollable_users_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-26T18:18:14Z",
+      "side": 1,
+      "message": "You may be able to call SetPreferredSize() in the ctor instead of adding an override.",
+      "revId": "e72e3d2f6ae75453ba4902b66e7d1ab17b8b1e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67424e4b_8371087e",
+        "filename": "ash/login/ui/scrollable_users_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-26T18:18:14Z",
+      "side": 1,
+      "message": "Inline horizontal, ie, make ScrollBar ctor take no arguments since we never configure it.",
+      "revId": "e72e3d2f6ae75453ba4902b66e7d1ab17b8b1e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03eee1e0_f6c0b47d",
+        "filename": "ash/login/ui/scrollable_users_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-26T18:18:14Z",
+      "side": 1,
+      "message": "Use a constant",
+      "revId": "e72e3d2f6ae75453ba4902b66e7d1ab17b8b1e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b05407f7_286c387e",
+        "filename": "ash/login/ui/scrollable_users_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-26T18:18:14Z",
+      "side": 1,
+      "message": "See ash/login/ui/hover_notifier.h if this does not work reliably.",
+      "revId": "e72e3d2f6ae75453ba4902b66e7d1ab17b8b1e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
