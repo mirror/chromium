@@ -1,0 +1,289 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "320c1a90_950de76d",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 3907,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-26T11:05:30Z",
+      "side": 1,
+      "message": "nit: you could replace this with `WebContents::FromRenderFrameHost(frame_host)`",
+      "range": {
+        "startLine": 3907,
+        "startChar": 10,
+        "endLine": 3907,
+        "endChar": 22
+      },
+      "revId": "ae252de1fa6ac9fc819ac596f63e70b74bd59d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33a960c0_cd7a3591",
+        "filename": "chrome/browser/chrome_content_browser_client.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-26T11:05:30Z",
+      "side": 1,
+      "message": "style: should this be after the `class` declarations. At least, that\u0027s what we do for #include: the ones that are per-platforms are in a block after.",
+      "revId": "ae252de1fa6ac9fc819ac596f63e70b74bd59d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ced6a94_f9bce650",
+        "filename": "chrome/browser/picture_in_picture/picture_in_picture_window_controller_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-26T11:05:30Z",
+      "side": 1,
+      "message": "\u003d default;",
+      "range": {
+        "startLine": 17,
+        "startChar": 48,
+        "endLine": 17,
+        "endChar": 50
+      },
+      "revId": "ae252de1fa6ac9fc819ac596f63e70b74bd59d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad08fe09_0c80d354",
+        "filename": "chrome/browser/picture_in_picture/picture_in_picture_window_controller_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-26T11:05:30Z",
+      "side": 1,
+      "message": "Maybe init to `nullptr` in class.",
+      "revId": "ae252de1fa6ac9fc819ac596f63e70b74bd59d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f1194d1_56640240",
+        "filename": "chrome/browser/picture_in_picture/picture_in_picture_window_controller_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-26T11:05:30Z",
+      "side": 1,
+      "message": "Wouldn\u0027t this work on CrOS too? Maybe this could be `#if defined(USE_AURA)`?",
+      "revId": "ae252de1fa6ac9fc819ac596f63e70b74bd59d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "252aee58_ff237170",
+        "filename": "chrome/browser/picture_in_picture/picture_in_picture_window_controller_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-26T11:05:30Z",
+      "side": 1,
+      "message": "s/NULL/nullptr/g",
+      "range": {
+        "startLine": 42,
+        "startChar": 37,
+        "endLine": 42,
+        "endChar": 41
+      },
+      "revId": "ae252de1fa6ac9fc819ac596f63e70b74bd59d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "575a944c_d49da202",
+        "filename": "chrome/browser/picture_in_picture/picture_in_picture_window_controller_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-26T11:05:30Z",
+      "side": 1,
+      "message": "This test is the same as above and doesn\u0027t seem like the state would change. Maybe there is a reason I\u0027m missing. Though, would it make sense to check that the window is _not_ visible at this point so the test after demonstrates that `Show()` makes it visible.",
+      "revId": "ae252de1fa6ac9fc819ac596f63e70b74bd59d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be2d0464_618cf1c5",
+        "filename": "chrome/browser/ui/overlay/overlay_surface_embedder.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-26T11:05:30Z",
+      "side": 1,
+      "message": "Pointing his out but probably nothing to do in this CL: we set the size here and in OverlayWindowViews. We shouldn\u0027t have two constants that end up magically the same :) We will set a non monolithic size at some point so we will have to worry about it then.",
+      "revId": "ae252de1fa6ac9fc819ac596f63e70b74bd59d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d19bd101_f7cb871a",
+        "filename": "content/browser/media/media_web_contents_observer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-26T11:05:30Z",
+      "side": 1,
+      "message": "style: I think doing early return here would greatly benefit clarity:\n```\nif (!content_client)\n  return;\n```",
+      "range": {
+        "startLine": 353,
+        "startChar": 6,
+        "endLine": 353,
+        "endChar": 20
+      },
+      "revId": "ae252de1fa6ac9fc819ac596f63e70b74bd59d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a46f291_9ef75d5c",
+        "filename": "content/browser/media/media_web_contents_observer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-26T11:05:30Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 355,
+        "startChar": 8,
+        "endLine": 355,
+        "endChar": 22
+      },
+      "revId": "ae252de1fa6ac9fc819ac596f63e70b74bd59d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5808474d_2c990f00",
+        "filename": "content/common/media/media_player_delegate_messages.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-26T11:05:30Z",
+      "side": 1,
+      "message": "I guess this is the reminiscence from other changes as you are only adding integers. Or is it needed for something else?",
+      "revId": "ae252de1fa6ac9fc819ac596f63e70b74bd59d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49abe907_22c255f8",
+        "filename": "media/blink/webmediaplayer_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-26T11:05:30Z",
+      "side": 1,
+      "message": "Not something to worry about now but it would be interested to think about how we would handle things when both WMPI and WMPMS allow PIP. Would we have this information duplicated?",
+      "revId": "ae252de1fa6ac9fc819ac596f63e70b74bd59d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70b89a45_d0270f0e",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/picture-in-picture-interstitial.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-26T11:05:30Z",
+      "side": 1,
+      "message": "Probably unintentional change? :)",
+      "revId": "ae252de1fa6ac9fc819ac596f63e70b74bd59d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "353e0668_9053a372",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImplTest.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-26T11:05:30Z",
+      "side": 1,
+      "message": "You can probably remove this. The \"cast overlay\" was using this because it\u0027s being shown when the controls are not present and hidding the controls via settings should still add it. I believe it was even a bug we had to fix, thus the specific test.",
+      "revId": "ae252de1fa6ac9fc819ac596f63e70b74bd59d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6029af3_32389835",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImplTest.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-26T11:05:30Z",
+      "side": 1,
+      "message": "With `SetMediaControlsEnabled(true)` above remove, these two lines could probably be dropped.",
+      "revId": "ae252de1fa6ac9fc819ac596f63e70b74bd59d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
