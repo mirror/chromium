@@ -141,8 +141,10 @@ void SharedWorkerServiceImpl::DestroyHost(SharedWorkerHost* host) {
   if (worker_hosts_.empty() && terminate_all_workers_callback_)
     std::move(terminate_all_workers_callback_).Run();
 
-  if (!IsShuttingDown(process_host))
+  if (!IsShuttingDown(process_host)) {
+    LOG(ERROR) << "DestroyHost in pid=" << process_host << ", decr keep alive";
     process_host->DecrementKeepAliveRefCount();
+  }
 }
 
 void SharedWorkerServiceImpl::CreateWorker(
@@ -161,6 +163,7 @@ void SharedWorkerServiceImpl::CreateWorker(
     return;
 
   // Keep the renderer process alive that will be hosting the shared worker.
+  LOG(ERROR) << "CreateWorker in pid=" << process_host << ", incr keep alive";
   process_host->IncrementKeepAliveRefCount();
 
   auto host = std::make_unique<SharedWorkerHost>(this, std::move(instance),
