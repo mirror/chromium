@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d0c86625_a3c40f02",
+        "filename": "content/browser/android/synchronous_compositor_host_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-26T21:11:49Z",
+      "side": 1,
+      "message": "It should hold here.. because remote_closed_ is true until the filter is actually attached.",
+      "parentUuid": "de02d22b_9cc5e56c",
+      "revId": "fd944c715e0a0d8e904f48dac9e0250e908a2001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f3f8042_1c7bbeef",
         "filename": "content/browser/android/synchronous_compositor_host_bridge.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-26T19:27:05Z",
       "side": 1,
       "message": "sorry, my suggestion on the last PS was wrong. the problem with UnregisterHost here is that if there is a legit reply UnregistereHost, the renderer is going to be incorrectly killed\n\nI think Bridge here needs to keep track of whether it has any pending replies, and only call UnregisterHost on the filter after all of them have been signals",
+      "revId": "fd944c715e0a0d8e904f48dac9e0250e908a2001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b93664a9_598be649",
+        "filename": "content/browser/android/synchronous_compositor_host_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-26T21:11:49Z",
+      "side": 1,
+      "message": "Why would something like a frame future be used after the view that produced that is ultimately destroyed that seems really odd and is ultimately a race anyways.  Because if you told something to draw and then destroy the thing doing the drawing you don\u0027t know when it is going to return.",
+      "parentUuid": "2f3f8042_1c7bbeef",
       "revId": "fd944c715e0a0d8e904f48dac9e0250e908a2001",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
