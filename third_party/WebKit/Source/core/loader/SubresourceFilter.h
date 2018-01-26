@@ -9,6 +9,7 @@
 
 #include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
+#include "platform/weborigin/KURL.h"
 #include "platform/weborigin/SecurityViolationReportingPolicy.h"
 #include "public/platform/WebDocumentSubresourceFilter.h"
 #include "public/platform/WebURLRequest.h"
@@ -34,6 +35,12 @@ class CORE_EXPORT SubresourceFilter final
                  SecurityViolationReportingPolicy);
   bool AllowWebSocketConnection(const KURL&);
 
+  // Returns if the last checked resource was an ad resource. Note that this
+  // will return false if the |resource_url| and type do not match the last
+  // resource that was checked in AllowLoad.
+  bool GetIsAdForLastCheckedResource(const KURL&,
+                                     WebURLRequest::RequestContext);
+
   virtual void Trace(blink::Visitor*);
 
  private:
@@ -45,6 +52,11 @@ class CORE_EXPORT SubresourceFilter final
 
   Member<ExecutionContext> execution_context_;
   std::unique_ptr<WebDocumentSubresourceFilter> subresource_filter_;
+
+  // Save the last resource check's result.
+  std::pair<std::pair<KURL, WebURLRequest::RequestContext>,
+            WebDocumentSubresourceFilter::LoadPolicy>
+      last_resource_check_result_;
 };
 
 }  // namespace blink

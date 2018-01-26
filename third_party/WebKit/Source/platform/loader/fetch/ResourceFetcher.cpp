@@ -604,11 +604,16 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
   network_instrumentation::ResourcePrioritySet(identifier,
                                                resource_request.Priority());
 
+  KURL url = MemoryCache::RemoveFragmentIdentifierIfNeeded(params.Url());
   blocked_reason = Context().CanRequest(
-      resource_type, resource_request,
-      MemoryCache::RemoveFragmentIdentifierIfNeeded(params.Url()), options,
-      reporting_policy, params.GetOriginRestriction(),
-      resource_request.GetRedirectStatus());
+      resource_type, resource_request, url, options, reporting_policy,
+      params.GetOriginRestriction(), resource_request.GetRedirectStatus());
+
+  if (Context().GetIsAdForLastCheckedResource(
+          url, resource_request.GetRequestContext())) {
+    resource_request.SetIsAdResource(true);
+  }
+
   if (blocked_reason != ResourceRequestBlockedReason::kNone)
     return kBlock;
 
@@ -1771,6 +1776,12 @@ void ResourceFetcher::EmulateLoadStartedForInspector(
                        SecurityViolationReportingPolicy::kReport,
                        params.GetOriginRestriction(),
                        resource->LastResourceRequest().GetRedirectStatus());
+
+  if (Context().GetIsAdForLastCheckedResource(
+          url, resource_request.GetRequestContext())) {
+    resource_request.SetIsAdResource(true);
+  }
+
   RequestLoadStarted(resource->Identifier(), resource, params, kUse);
 }
 
