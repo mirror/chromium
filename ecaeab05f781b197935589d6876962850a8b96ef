@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5caafc44_0325bf35",
+        "filename": "ios/chrome/browser/ui/location_bar/location_bar_coordinator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-26T13:27:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a56ba830_24f05558",
+      "range": {
+        "startLine": 23,
+        "startChar": 10,
+        "endLine": 23,
+        "endChar": 32
+      },
+      "revId": "ecaeab05f781b197935589d6876962850a8b96ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70f010b4_92ed2251",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.mm",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "ecaeab05f781b197935589d6876962850a8b96ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd0207e3_88899da4",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-26T13:27:03Z",
+      "side": 1,
+      "message": "This is the only thing we need from Autocomplete, specifically there\u0027s a call to AutocompleteInput::Parse in -loadURLForQuery:, and previously this was transitively included from omnibox_edit_model.h or location_bar_controller_impl.h. This should not be necessary after *next* CL.",
+      "parentUuid": "70f010b4_92ed2251",
+      "range": {
+        "startLine": 13,
+        "startChar": 37,
+        "endLine": 13,
+        "endChar": 55
+      },
+      "revId": "ecaeab05f781b197935589d6876962850a8b96ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

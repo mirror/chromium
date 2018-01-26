@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "12d4533c_7d7ae1a0",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-26T13:27:03Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "3d41bd4c_388d576f",
+      "range": {
+        "startLine": 11,
+        "startChar": 41,
+        "endLine": 11,
+        "endChar": 52
+      },
+      "revId": "a04b9b34b1c388c83e6562bc1e837a9488bbd976",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2fd7869_12c1c1ca",
         "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_coordinator.mm",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c61cec7d_7cada0a4",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-26T13:27:03Z",
+      "side": 0,
+      "message": "Done, although now I temporarily need OmniboxTextfieldIOS which was transitively included. This is not necessary after next CL.",
+      "parentUuid": "f2fd7869_12c1c1ca",
+      "range": {
+        "startLine": 13,
+        "startChar": 40,
+        "endLine": 13,
+        "endChar": 68
+      },
+      "revId": "a04b9b34b1c388c83e6562bc1e837a9488bbd976",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f5a95b2_dcb54844",
         "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_coordinator.mm",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "a04b9b34b1c388c83e6562bc1e837a9488bbd976",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4017ce48_dd8c70a0",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-26T13:27:03Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "1f5a95b2_dcb54844",
+      "range": {
+        "startLine": 14,
+        "startChar": 40,
+        "endLine": 14,
+        "endChar": 61
+      },
+      "revId": "a04b9b34b1c388c83e6562bc1e837a9488bbd976",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
