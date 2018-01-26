@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e252e65_58ccd3ee",
+        "filename": "ui/file_manager/image_loader/request.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2018-01-26T08:53:21Z",
+      "side": 1,
+      "message": "nit: can we omit the comment because the symbol name already says that?",
+      "range": {
+        "startLine": 120,
+        "startChar": 51,
+        "endLine": 120,
+        "endChar": 60
+      },
+      "revId": "a01e441abd323e9e985ed5cde0c767334a4e215e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
