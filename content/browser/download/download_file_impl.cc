@@ -221,6 +221,7 @@ DownloadFileImpl::DownloadFileImpl(
       bytes_seen_with_parallel_streams_(0),
       bytes_seen_without_parallel_streams_(0),
       is_paused_(false),
+      completed_(false),
       download_id_(download_id),
       observer_(observer),
       weak_factory_(this) {
@@ -288,6 +289,15 @@ void DownloadFileImpl::AddInputStream(
     int64_t offset,
     int64_t length) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
+  // UI thread may not be notified about completion and detach download file,
+  // clear up the network request.
+  if (completed_) {
+    CancelRequest(offset);
+    return;
+  }
+
+  LOG(ERROR) << "@@@ " << __func__ << " offset= " << offset;
 
   source_streams_[offset] =
       std::make_unique<SourceStream>(offset, length, std::move(stream));
@@ -483,6 +493,7 @@ void DownloadFileImpl::RenameWithRetryInternal(
 }
 
 void DownloadFileImpl::Detach() {
+  LOG(ERROR) << "@@@ " << __func__;
   file_.Detach();
 }
 
@@ -491,6 +502,7 @@ void DownloadFileImpl::Cancel() {
 }
 
 void DownloadFileImpl::SetPotentialFileLength(int64_t length) {
+  LOG(ERROR) << "@@@ SetPotentialFileLength , length = " << length;
   DCHECK(potential_file_length_ == length ||
          potential_file_length_ == kUnknownContentLength)
       << "Potential file length changed, the download might have updated.";
@@ -641,6 +653,13 @@ void DownloadFileImpl::NotifyObserver(SourceStream* source_stream,
                                       DownloadInterruptReason reason,
                                       SourceStream::StreamState stream_state,
                                       bool should_terminate) {
+  /*
+    LOG(ERROR) << "@@@ NotifyObserver , source_stream->offset = " <<
+    source_stream->offset()
+        << " , bytes_written = " << source_stream->bytes_written()
+        << " , should_terminate = " << should_terminate;
+  */
+
   if (reason != DOWNLOAD_INTERRUPT_REASON_NONE) {
     HandleStreamError(source_stream, reason);
   } else if (stream_state == SourceStream::COMPLETE || should_terminate) {
@@ -660,6 +679,8 @@ void DownloadFileImpl::NotifyObserver(SourceStream* source_stream,
 
     // All the stream reader are completed, shut down file IO processing.
     if (IsDownloadCompleted()) {
+      LOG(ERROR) << "@@@ DownloadComplete!";
+      completed_ = true;
       RecordFileBandwidth(bytes_seen_, disk_writes_time_,
                           base::TimeTicks::Now() - download_start_);
       if (record_stream_bandwidth_) {
@@ -750,13 +771,21 @@ void DownloadFileImpl::AddNewSlice(int64_t offset, int64_t length) {
 }
 
 bool DownloadFileImpl::IsDownloadCompleted() {
+  LOG(ERROR) << "@@@ IsDownloadCompleted";
   for (auto& stream : source_streams_) {
-    if (!stream.second->is_finished())
+    if (!stream.second->is_finished()) {
+      LOG(ERROR) << "@@@ offset = " << stream.second->offset()
+                 << " , len = " << stream.second->length()
+                 << " , written = " << stream.second->bytes_written();
+      LOG(ERROR) << "@@@ IsDownloadCompleted1111";
       return false;
+    }
   }
 
   if (!IsSparseFile())
     return true;
+
+  LOG(ERROR) << "@@@ IsDownloadCompleted222";
 
   // Verify that all the file slices have been downloaded.
   std::vector<DownloadItem::ReceivedSlice> slices_to_download =
@@ -764,8 +793,14 @@ bool DownloadFileImpl::IsDownloadCompleted() {
   if (slices_to_download.size() > 1) {
     // If there are 1 or more holes in the file, download is not finished.
     // Some streams might not have been added to |source_streams_| yet.
+    LOG(ERROR) << "@@@ IsDownloadCompleted333";
     return false;
   }
+
+  LOG(ERROR) << "@@@ IsDownloadCompleted444 << potential_file_length_ = "
+             << potential_file_length_;
+  ;
+
   return TotalBytesReceived() == potential_file_length_;
 }
 
@@ -779,47 +814,36 @@ void DownloadFileImpl::HandleStreamError(SourceStream* source_stream,
   bool can_recover_from_error = (source_stream->length() == kNoBytesToWrite);
 
   if (IsSparseFile() && !can_recover_from_error) {
-    // If a neighboring stream request is available, check if it can help
-    // download all the data left by |source stream| or has already done so. We
-    // want to avoid the situation that a server always fail additional requests
-    // from the client thus causing the initial request and the download going
-    // nowhere.
-    // TODO(qinmin): make all streams half open so that they can recover
-    // failures from their neighbors.
+    // See if the previous stream can download the full content.
+    // If the current stream has written some data, length of all preceding
+    // streams will be truncated.
+    LOG(ERROR) << "@@@ HandleStreamError111 , offset = "
+               << source_stream->offset() << " ,reason = " << (int)reason;
+
     SourceStream* preceding_neighbor = FindPrecedingNeighbor(source_stream);
-    while (preceding_neighbor) {
-      int64_t upper_range = source_stream->offset() + source_stream->length();
-      if ((!preceding_neighbor->is_finished() &&
-           (preceding_neighbor->length() ==
-                DownloadSaveInfo::kLengthFullContent ||
-            preceding_neighbor->offset() + preceding_neighbor->length() >=
-                upper_range)) ||
-          (preceding_neighbor->offset() + preceding_neighbor->bytes_written() >=
-           upper_range)) {
-        can_recover_from_error = true;
-        break;
-      }
-      // If the neighbor cannot recover the error and it has already created
-      // a slice, just interrupt the download.
-      if (preceding_neighbor->bytes_written() > 0)
-        break;
-      preceding_neighbor = FindPrecedingNeighbor(preceding_neighbor);
+
+    // Debug print.
+    if (preceding_neighbor) {
+      LOG(ERROR) << "@@@ preceding_neighbor, offset = "
+                 << preceding_neighbor->offset()
+                 << ",is_finished()  =  " << preceding_neighbor->is_finished()
+                 << ", ,length() = " << preceding_neighbor->length();
     }
 
-    if (can_recover_from_error) {
-      // Since the neighbor stream will download all data downloading from its
-      // offset to source_stream->offset(). Close all other streams in the
-      // middle.
-      for (auto& stream : source_streams_) {
-        if (stream.second->offset() < source_stream->offset() &&
-            stream.second->offset() > preceding_neighbor->offset()) {
-          DCHECK_EQ(stream.second->bytes_written(), 0);
-          stream.second->ClearDataReadyCallback();
-          stream.second->set_finished(true);
-          CancelRequest(stream.second->offset());
-          num_active_streams_--;
-        }
+    while (preceding_neighbor) {
+      if (!preceding_neighbor->is_finished() &&
+          (preceding_neighbor->length() ==
+           DownloadSaveInfo::kLengthFullContent)) {
+        can_recover_from_error = true;
+        LOG(ERROR) << "@@@ can recover!!! , offset = "
+                   << source_stream->offset();
+        break;
       }
+
+      // If the preceding stream can't recover, interrupt the download.
+      if (preceding_neighbor->length() > 0)
+        break;
+      preceding_neighbor = FindPrecedingNeighbor(preceding_neighbor);
     }
   }
 
@@ -829,6 +853,8 @@ void DownloadFileImpl::HandleStreamError(SourceStream* source_stream,
     // Error case for both upstream source and file write.
     // Shut down processing and signal an error to our observer.
     // Our observer will clean us up.
+
+    LOG(ERROR) << "@@@ DestinationError!  offset = " << source_stream->offset();
     weak_factory_.InvalidateWeakPtrs();
     std::unique_ptr<crypto::SecureHash> hash_state = file_.Finish();
     BrowserThread::PostTask(
@@ -871,7 +897,8 @@ void DownloadFileImpl::DebugStates() const {
     DVLOG(1) << "Source stream, offset = " << stream.second->offset()
              << " , bytes_written = " << stream.second->bytes_written()
              << " , is_finished = " << stream.second->is_finished()
-             << " , length = " << stream.second->length();
+             << " , length = " << stream.second->length()
+             << ", index = " << stream.second->index();
   }
 
   DebugSlicesInfo(received_slices_);
