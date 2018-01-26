@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "88337853_8170df22",
+        "filename": "device/geolocation/geolocation_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2018-01-26T02:04:28Z",
+      "side": 0,
+      "message": "This \"using RequestContextProducer\" is just for convenient usage inside Device Service.\nThe embedder doesn\u0027t use it. See https://cs.chromium.org/chromium/src/content/browser/service_manager/service_manager_context.cc?rcl\u003dc0b4ad77fee7160ae69d322f8e2b554b50ef1dc5\u0026l\u003d264\n\nDo you mean to make the embedder also use this RequestContextProducer explicitly?",
+      "parentUuid": "dde10833_c5fba4aa",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 62
+      },
+      "revId": "209ce8132527960ed6341cb42309b78ee1cec72d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7d47713_f32f63ef",
         "filename": "device/geolocation/geolocation_provider.h",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "81477e4e_9d67d3e8",
+        "filename": "device/geolocation/geolocation_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2018-01-26T02:04:28Z",
+      "side": 0,
+      "message": "Yes it\u0027s better to separate out this changes. Will do soon:)",
+      "parentUuid": "f7d47713_f32f63ef",
+      "range": {
+        "startLine": 60,
+        "startChar": 40,
+        "endLine": 60,
+        "endChar": 65
+      },
+      "revId": "209ce8132527960ed6341cb42309b78ee1cec72d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2bb207fe_b367327c",
         "filename": "device/geolocation/geolocation_provider.h",
         "patchSetId": 4
@@ -59,6 +107,24 @@
       "writtenOn": "2018-01-25T13:28:36Z",
       "side": 0,
       "message": "This is now the only remaining API for this class, it looks like? I assume that the followup plan is to remove this API, remove the GeolocationProvider interface entirely, and rename GeolocationProviderImpl to GeolocationProvider?",
+      "revId": "209ce8132527960ed6341cb42309b78ee1cec72d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74eeb225_1339a8ad",
+        "filename": "device/geolocation/geolocation_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2018-01-26T02:04:28Z",
+      "side": 0,
+      "message": "Yes, that\u0027s what we are doing. I have another CL(https://chromium-review.googlesource.com/c/chromium/src/+/880141), after that we can remove this OverrideLocationForTesting(), and remove and rename like you said.",
+      "parentUuid": "2bb207fe_b367327c",
       "revId": "209ce8132527960ed6341cb42309b78ee1cec72d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
