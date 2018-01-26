@@ -51,9 +51,12 @@ void IncognitoWindowTracker::OnIncognitoWindowOpened() {
 }
 
 void IncognitoWindowTracker::OnBrowsingDataCleared() {
-  const auto severity = GetAppMenuButton()->severity();
-  if (severity == AppMenuIconController::Severity::NONE && ShouldShowPromo())
-    ShowPromo();
+  auto* app_menu_button = GetAppMenuButton();
+  if (app_menu_button) {
+    const auto severity = GetAppMenuButton()->severity();
+    if (severity == AppMenuIconController::Severity::NONE && ShouldShowPromo())
+      ShowPromo();
+  }
 }
 
 void IncognitoWindowTracker::OnPromoClosed() {
