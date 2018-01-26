@@ -16,6 +16,23 @@
       "revId": "c9c812f9af1d798c9532dbb747ce64aace141a8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34690019_e68c4102",
+        "filename": "net/proxy_resolution/dhcp_pac_file_fetcher_win.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-26T17:15:01Z",
+      "side": 1,
+      "message": "This is also potentially extremely slow, and presumably needs ScopedBlockingCall.\n\nWhat is the consequence of *not* marking blocking code with that?\nPretty much any windows library call network code does on other threads may block.\nAnd it is a safe bet that other code may be slow as well.\n\nI would expect that any task posted to a MayBlock() task runner is understood to be potentially very slow without the need to explicitly annotate the parts of it that are thought to be slow.\n\nThanks",
+      "revId": "c9c812f9af1d798c9532dbb747ce64aace141a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

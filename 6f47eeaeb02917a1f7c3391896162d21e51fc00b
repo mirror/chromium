@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f537a023_f7fcc973",
+        "filename": "net/proxy_resolution/dhcp_pac_file_fetcher_win.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-26T17:15:01Z",
+      "side": 0,
+      "message": "Please keep some version of this comment, as the information on number of network adapters is still relevant.",
+      "revId": "6f47eeaeb02917a1f7c3391896162d21e51fc00b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
