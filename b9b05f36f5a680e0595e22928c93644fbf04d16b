@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "fcd065c5_51e55f13",
+        "filename": "base/threading/thread_local_storage.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1146127
+      },
+      "writtenOn": "2018-01-26T12:48:13Z",
+      "side": 1,
+      "message": "Actually this would also be racy, so DCHECK is not a good idea",
+      "parentUuid": "4c5edb03_4520fc90",
+      "revId": "b9b05f36f5a680e0595e22928c93644fbf04d16b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b709c01_db06ee62",
         "filename": "base/threading/thread_local_storage.cc",
         "patchSetId": 1
