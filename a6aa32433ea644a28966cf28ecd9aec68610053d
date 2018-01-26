@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56faabcb_7ef1ee2c",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_set_manufacturer_model_behavior.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2018-01-26T00:40:38Z",
+      "side": 1,
+      "message": "For now this function doesn\u0027t do much but once I get an update on what the error reported to the user should look like I\u0027ll add it here.",
+      "revId": "a6aa32433ea644a28966cf28ecd9aec68610053d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
