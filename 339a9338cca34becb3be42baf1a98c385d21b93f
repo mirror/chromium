@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9784a915_58fc461e",
+        "filename": "ui/file_manager/file_manager/background/js/background.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2018-01-26T07:20:47Z",
+      "side": 1,
+      "message": "In this case, can we stop instantiating DeviceHandler?",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 67
+      },
+      "revId": "339a9338cca34becb3be42baf1a98c385d21b93f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
