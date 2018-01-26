@@ -34,6 +34,24 @@
       "revId": "c6cbbbcdd19efb313bf1128331f075fdac3c3342",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd5894bf_df9988bb",
+        "filename": "content/browser/renderer_host/browser_compositor_view_mac.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-26T20:56:03Z",
+      "side": 1,
+      "message": "Ohh I see. You\u0027re using the existing waiting method for the ui::Compositor\u0027s CompositorFrame? Cool! I like this!",
+      "parentUuid": "e77480ac_9c993efb",
+      "revId": "c6cbbbcdd19efb313bf1128331f075fdac3c3342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
