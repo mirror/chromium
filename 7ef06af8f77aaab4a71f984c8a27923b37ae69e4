@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "818ff6ce_14ba9ec1",
+        "filename": "DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 1384,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-26T21:58:40Z",
+      "side": 1,
+      "message": "Does this actually work without conditions? What happens if the file doesn\u0027t exist?",
+      "revId": "7ef06af8f77aaab4a71f984c8a27923b37ae69e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
