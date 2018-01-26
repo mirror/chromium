@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12e5ec13_538f47ce",
+        "filename": "net/socket/socket_bio_adapter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-26T15:49:58Z",
+      "side": 1,
+      "message": "It also may correspond to Connect which appears to not take any sort of tag. The first few flights are the TLS handshake itself, before the socket has been associated with a request. (TCP sends handshake packets too, though that\u0027s all hidden behind the POSIX connect() API. TLS, naturally, will not be.)",
+      "revId": "3115755bb686d3d03151649622d3a88560c5b325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
