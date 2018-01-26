@@ -409,16 +409,15 @@ void ResourcePool::CheckBusyResources() {
   for (auto it = busy_resources_.begin(); it != busy_resources_.end();) {
     PoolResource* resource = it->get();
 
-    if (resource_provider_->CanLockForWrite(resource->resource_id())) {
-      DidFinishUsingResource(std::move(*it));
-      it = busy_resources_.erase(it);
-    } else if (resource_provider_->IsLost(resource->resource_id())) {
-      // Remove lost resources from pool.
+    if (evict_busy_resources_when_unused_ ||
+        resource_provider_->IsLost(resource->resource_id())) {
       DeleteResource(std::move(*it));
+      it = busy_resources_.erase(it);
+    } else if (resource_provider_->CanLockForWrite(resource->resource_id())) {
+      DidFinishUsingResource(std::move(*it));
       it = busy_resources_.erase(it);
     } else {
       ++it;
-    }
   }
 }
 
@@ -447,7 +446,7 @@ void ResourcePool::EvictExpiredResources() {
 
   EvictResourcesNotUsedSince(current_time - resource_expiration_delay_);
 
-  if (unused_resources_.empty() && busy_resources_.empty()) {
+  if (unused_resources_.empty()) {
     // If nothing is evictable, we have deleted one (and possibly more)
     // resources without any new activity. Flush to ensure these deletions are
     // processed.
@@ -471,17 +470,6 @@ void ResourcePool::EvictResourcesNotUsedSince(base::TimeTicks time_limit) {
       return;
 
     DeleteResource(PopBack(&unused_resources_));
-  }
-
-  // Also free busy resources older than the delay. With a sufficiently large
-  // delay, such as the 1 second used here, any "busy" resources which have
-  // expired are not likely to be busy. Additionally, freeing a "busy" resource
-  // has no downside other than incorrect accounting.
-  while (!busy_resources_.empty()) {
-    if (busy_resources_.back()->last_usage() > time_limit)
-      return;
-
-    DeleteResource(PopBack(&busy_resources_));
   }
 }
 
@@ -521,6 +509,12 @@ bool ResourcePool::OnMemoryDump(const base::trace_event::MemoryDumpArgs& args,
 void ResourcePool::OnPurgeMemory() {
   // Release all resources, regardless of how recently they were used.
   EvictResourcesNotUsedSince(base::TimeTicks() + base::TimeDelta::Max());
+}
+
+void ResourcePool::OnMemoryStateChange(base::MemoryState state) {
+  // While in a SUSPENDED state, we don't put resources back into the pool
+  // when they become available. Instead we free them immediately.
+  evict_busy_resources_when_unused_ = state == base::MemoryState::SUSPENDED;
 }
 
 ResourcePool::PoolResource::PoolResource(size_t unique_id,
