@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2ec186b_64f395de",
+        "filename": "third_party/WebKit/Source/core/layout/custom/LayoutWorklet.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2018-01-26T22:49:28Z",
+      "side": 1,
+      "message": "\"DocumentLayoutDefinition *const\" would make it more clear that it\u0027s a constant reference to a mutable DocumentLayoutDefinition object.",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 32
+      },
+      "revId": "9da8877ad1f537947ce7a82345598c83c09599c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff5651b4_217791bb",
+        "filename": "third_party/WebKit/Source/core/layout/custom/LayoutWorkletGlobalScope.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2018-01-26T22:49:28Z",
+      "side": 1,
+      "message": "This is camel-case as it is exported to JS? If so a comment explaining that might be helpful. Otherwise the mix of camelCase and CaptialCase looks like a mistake.",
+      "range": {
+        "startLine": 35,
+        "startChar": 7,
+        "endLine": 35,
+        "endChar": 21
+      },
+      "revId": "9da8877ad1f537947ce7a82345598c83c09599c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
