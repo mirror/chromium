@@ -177,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "03700683_d5555268",
+        "filename": "base/threading/thread_local_storage.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1146127
+      },
+      "writtenOn": "2018-01-26T13:28:34Z",
+      "side": 1,
+      "message": "ok, but still, looks like\nbase::subtle::Release_Store(\u0026initialized_, 1); \nshould go into the lock scope together with an initialized() check immediately after the AutoLock line. Otherwise its possible that racy Initialize will lead to the same StaticSlot attempting to occupy two slots in g_tls_metadata. Right?",
+      "parentUuid": "184095b2_211000c9",
+      "range": {
+        "startLine": 133,
+        "startChar": 39,
+        "endLine": 133,
+        "endChar": 40
+      },
+      "revId": "b9b05f36f5a680e0595e22928c93644fbf04d16b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a26bd57_32856554",
         "filename": "base/threading/thread_local_storage.h",
         "patchSetId": 1
