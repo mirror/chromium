@@ -30,7 +30,7 @@ class FIFOClient {
       : fifo_(fifo),
         bus_(AudioBus::Create(fifo->NumberOfChannels(), bus_length)),
         client_thread_(Platform::Current()->CreateThread(
-            WebThreadCreationParams("client thread"))),
+            WebThreadCreationParams(ThreadType::kFIFOClientThread))),
         done_event_(std::make_unique<WaitableEvent>()),
         jitter_range_ms_(jitter_range_ms) {}
 

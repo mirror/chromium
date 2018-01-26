@@ -78,7 +78,7 @@ class PLATFORM_EXPORT WebThreadSupportingGC final {
   }
 
  private:
-  WebThreadSupportingGC(const WebThreadCreationParams&, WebThread*);
+  WebThreadSupportingGC(const WebThreadCreationParams*, WebThread*);
 
   std::unique_ptr<GCTaskRunner> gc_task_runner_;
 

@@ -12,7 +12,7 @@
 #include "platform/scheduler/child/compositor_metrics_helper.h"
 #include "platform/scheduler/child/worker_scheduler.h"
 #include "platform/scheduler/util/task_duration_metric_reporter.h"
-#include "platform/scheduler/util/thread_type.h"
+#include "public/platform/ThreadType.h"
 #include "public/platform/scheduler/child/single_thread_idle_task_runner.h"
 
 namespace base {

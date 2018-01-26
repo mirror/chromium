@@ -388,6 +388,7 @@ jumbo_component("platform") {
     "Theme.cpp",
     "Theme.h",
     "ThemeTypes.h",
+    "ThreadType.cpp",
     "TimeClamper.cpp",
     "TimeClamper.h",
     "Timer.cpp",
