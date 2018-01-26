@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "ash/wm/overview/overview_utils.h"
+#include "ash/wm/overview/overview_window_mask.h"
 #include "ash/wm/overview/scoped_overview_animation_settings.h"
 #include "ash/wm/overview/window_selector_item.h"
 #include "ash/wm/splitview/split_view_controller.h"
@@ -22,8 +23,6 @@
 #include "ui/aura/window.h"
 #include "ui/compositor/layer.h"
 #include "ui/compositor/layer_observer.h"
-#include "ui/compositor/paint_recorder.h"
-#include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/safe_integer_conversions.h"
 #include "ui/gfx/transform_util.h"
 #include "ui/views/widget/widget.h"
@@ -40,9 +39,6 @@ bool immediate_close_for_tests = false;
 
 // Delay closing window to allow it to shrink and fade out.
 constexpr int kCloseWindowDelayInMilliseconds = 150;
-
-// The amount of rounding on window edges in overview mode.
-constexpr int kOverviewWindowRoundingDp = 4;
 
 aura::Window* GetTransientRoot(aura::Window* window) {
   while (window && ::wm::GetTransientParent(window))
@@ -216,59 +212,6 @@ class ScopedTransformOverviewWindow::LayerCachingAndFilteringObserver
   DISALLOW_COPY_AND_ASSIGN(LayerCachingAndFilteringObserver);
 };
 
-// WindowMask is applied to overview windows to give them rounded edges while
-// they are in overview mode.
-class ScopedTransformOverviewWindow::WindowMask : public ui::LayerDelegate {
- public:
-  explicit WindowMask(aura::Window* window)
-      : layer_(ui::LAYER_TEXTURED), window_(window) {
-    layer_.set_delegate(this);
-    layer_.SetFillsBoundsOpaquely(false);
-  }
-
-  ~WindowMask() override { layer_.set_delegate(nullptr); }
-
-  void set_top_inset(int top_inset) { top_inset_ = top_inset; }
-  ui::Layer* layer() { return &layer_; }
-
- private:
-  // ui::LayerDelegate:
-  void OnPaintLayer(const ui::PaintContext& context) override {
-    cc::PaintFlags flags;
-    flags.setAlpha(255);
-    flags.setAntiAlias(true);
-    flags.setStyle(cc::PaintFlags::kFill_Style);
-
-    // The amount of round applied on the mask gets scaled as |window_| gets
-    // transformed, so reverse the transform so the final scaled round matches
-    // |kOverviewWindowRoundingDp|.
-    const gfx::Vector2dF scale = window_->transform().Scale2d();
-    const SkScalar r_x =
-        SkIntToScalar(std::round(kOverviewWindowRoundingDp / scale.x()));
-    const SkScalar r_y =
-        SkIntToScalar(std::round(kOverviewWindowRoundingDp / scale.y()));
-
-    SkPath path;
-    SkScalar radii[8] = {r_x, r_y, r_x, r_y, r_x, r_y, r_x, r_y};
-    gfx::Rect bounds(layer()->size());
-    bounds.Inset(0, top_inset_, 0, 0);
-    path.addRoundRect(gfx::RectToSkRect(bounds), radii);
-
-    ui::PaintRecorder recorder(context, layer()->size());
-    recorder.canvas()->DrawPath(path, flags);
-  }
-
-  void OnDeviceScaleFactorChanged(float old_device_scale_factor,
-                                  float new_device_scale_factor) override {}
-
-  ui::Layer layer_;
-  int top_inset_ = 0;
-  // Pointer to the window of which this is a mask to.
-  aura::Window* window_;
-
-  DISALLOW_COPY_AND_ASSIGN(WindowMask);
-};
-
 ScopedTransformOverviewWindow::ScopedTransformOverviewWindow(
     WindowSelectorItem* selector_item,
     aura::Window* window)
@@ -319,9 +262,12 @@ void ScopedTransformOverviewWindow::BeginScopedAnimation(
     ScopedAnimationSettings* animation_settings) {
   // Remove the mask before animating because masks affect animation
   // performance. Observe the animation and add the mask after animating if the
-  // animation type is layouting selector items.
+  // animation type is layouting selector items. This also handles the
+  // visibility of the backdrop in WindowSelectorItem, which also has a mask
+  // which needs to be synced with this mask.
   if (IsNewOverviewUi()) {
     mask_.reset();
+    selector_item_->SetBackdropVisibilityIfNeeded(false, 0);
     if (window_->GetProperty(aura::client::kShowStateKey) !=
         ui::SHOW_STATE_MINIMIZED) {
       window_->layer()->SetMaskLayer(original_mask_layer_);
@@ -511,6 +457,7 @@ gfx::Rect ScopedTransformOverviewWindow::ShrinkRectToFitPreservingAspectRatio(
   gfx::Rect new_bounds(bounds.x() + horizontal_offset,
                        bounds.y() + vertical_offset, width, height);
 
+  last_calculated_top_offset_ = 0;
   if (!IsNewOverviewUi()) {
     DCHECK_EQ(ScopedTransformOverviewWindow::GridWindowFillMode::kNormal,
               type());
@@ -539,7 +486,8 @@ gfx::Rect ScopedTransformOverviewWindow::ShrinkRectToFitPreservingAspectRatio(
       // Extend |new_bounds| in the vertical direction to account for the header
       // that will be hidden.
       if (top_view_inset > 0)
-        new_bounds.Inset(0, -(scale * top_view_inset), 0, 0);
+        last_calculated_top_offset_ = scale * top_view_inset;
+      new_bounds.Inset(0, -last_calculated_top_offset_, 0, 0);
 
       // Save the original bounds minus the title into |window_selector_bounds_|
       // so a larger backdrop can be drawn behind the window after.
@@ -673,10 +621,13 @@ void ScopedTransformOverviewWindow::OnImplicitAnimationsCompleted() {
                          : window_->layer();
   if (!minimized_widget_)
     original_mask_layer_ = window_->layer()->layer_mask_layer();
-  mask_ = std::make_unique<WindowMask>(GetOverviewWindow());
+  mask_ = std::make_unique<OverviewWindowMask>(GetOverviewWindow(),
+                                               /*inverted=*/false);
   mask_->layer()->SetBounds(layer->bounds());
   mask_->set_top_inset(GetTopInset());
   layer->SetMaskLayer(mask_->layer());
+  selector_item_->SetBackdropVisibilityIfNeeded(true,
+                                                last_calculated_top_offset_);
 }
 
 aura::Window*
