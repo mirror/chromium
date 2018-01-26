@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "025e5ef4_dc8a9a8e",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-26T01:36:59Z",
+      "side": 1,
+      "message": "Good point! Changed FSMI to be the delegate and updated tests.",
+      "parentUuid": "174abd19_d1499484",
+      "revId": "72020727ca3609a3cc10303d3f9af997002d3f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4ecf970_24a1019c",
         "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.h",
         "patchSetId": 4
