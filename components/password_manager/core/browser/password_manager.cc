@@ -37,6 +37,7 @@
 #include "components/password_manager/core/common/password_manager_pref_names.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_service.h"
+#include "google_apis/gaia/gaia_auth_util.h"
 #include "net/base/registry_controlled_domains/registry_controlled_domain.h"
 
 #if defined(OS_WIN)
@@ -847,7 +848,8 @@ void PasswordManager::OnLoginSuccessful() {
   }
 
   DCHECK(provisional_save_manager_->submitted_form());
-  if (!client_->GetStoreResultFilter()->ShouldSave(
+  if (!gaia::IsGaiaChromeEnableSyncURL(client_->GetMainFrameURL()) &&
+      !client_->GetStoreResultFilter()->ShouldSave(
           *provisional_save_manager_->submitted_form())) {
 #if defined(SYNC_PASSWORD_REUSE_DETECTION_ENABLED)
     // When |username_value| is empty, it's not clear whether the submitted

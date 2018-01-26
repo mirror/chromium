@@ -15,6 +15,7 @@
 #include "base/strings/string_util.h"
 #include "base/values.h"
 #include "google_apis/gaia/gaia_urls.h"
+#include "net/base/url_util.h"
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_request.h"
 #include "url/gurl.h"
@@ -192,6 +193,13 @@ void MarkURLFetcherAsGaia(net::URLFetcher* fetcher) {
   DCHECK(fetcher);
   fetcher->SetURLRequestUserData(kURLRequestUserDataKey,
                                  base::Bind(&GaiaURLRequestUserData::Create));
+}
+
+bool IsGaiaChromeEnableSyncURL(const GURL& url) {
+  std::string gaia_flow_name;
+  if (!net::GetValueForKeyInQuery(url, "flowName", &gaia_flow_name))
+    return false;
+  return gaia_flow_name == "GlifDesktopChromeSync";
 }
 
 }  // namespace gaia

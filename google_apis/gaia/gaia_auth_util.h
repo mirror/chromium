@@ -54,6 +54,9 @@ std::string ExtractDomainName(const std::string& email);
 
 bool IsGaiaSignonRealm(const GURL& url);
 
+// Returns true if the URL is for th
+bool IsGaiaChromeEnableSyncURL(const GURL& url);
+
 // Parses JSON data returned by /ListAccounts call, returning a vector of
 // email/valid pairs.  An email addresses is considered valid if a passive
 // login would succeed (i.e. the user does not need to reauthenticate).
