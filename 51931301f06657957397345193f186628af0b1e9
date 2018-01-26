@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "74c296c1_1b0e542b",
+        "filename": "media/gpu/dxva_video_decode_accelerator_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1928,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-01-26T00:12:19Z",
+      "side": 1,
+      "message": "Hmm, you mean you changed to the thread that the crash is on in WinDbg and it didn\u0027t have any data? Or do you mean the crash opened to a different thread?",
+      "parentUuid": "6ce9022d_af88dfb4",
+      "revId": "51931301f06657957397345193f186628af0b1e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a55fd48c_ef4cd335",
         "filename": "media/gpu/dxva_video_decode_accelerator_win.cc",
         "patchSetId": 2
