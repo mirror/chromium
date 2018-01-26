@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1fad21fa_b4adc62a",
+        "filename": "chrome/browser/resources/settings/people_page/people_page.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-26T20:36:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2ae29920_bdce02e0",
+      "range": {
+        "startLine": 118,
+        "startChar": 8,
+        "endLine": 118,
+        "endChar": 53
+      },
+      "revId": "93497f9ab9bac974ab8cbde84db987e19109c80f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2143f34_d858532e",
         "filename": "chrome/browser/resources/settings/people_page/people_page.html",
         "patchSetId": 16
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2755448c_93ac50a1",
+        "filename": "chrome/browser/resources/settings/people_page/people_page.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-26T20:36:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2143f34_d858532e",
+      "range": {
+        "startLine": 127,
+        "startChar": 14,
+        "endLine": 127,
+        "endChar": 41
+      },
+      "revId": "93497f9ab9bac974ab8cbde84db987e19109c80f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccf16bc5_a6bd11c2",
         "filename": "chrome/browser/resources/settings/people_page/people_page.html",
         "patchSetId": 16
@@ -68,6 +116,30 @@
       "revId": "93497f9ab9bac974ab8cbde84db987e19109c80f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5950fbf_c94b012f",
+        "filename": "chrome/browser/resources/settings/people_page/people_page.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-26T20:36:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccf16bc5_a6bd11c2",
+      "range": {
+        "startLine": 188,
+        "startChar": 10,
+        "endLine": 188,
+        "endChar": 21
+      },
+      "revId": "93497f9ab9bac974ab8cbde84db987e19109c80f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
