@@ -11,7 +11,7 @@
 
 #include "base/macros.h"
 #include "base/optional.h"
-#include "device/ctap/ctap_constants.h"
+#include "device/ctap/ctap_authentication_response_data.h"
 #include "device/ctap/public_key_credential_descriptor.h"
 #include "device/ctap/public_key_credential_user_entity.h"
 
@@ -20,39 +20,39 @@ namespace device {
 // Represents response from authenticators for AuthenticatorGetAssertion and
 // AuthenticatorGetNextAssertion requests.
 // https://fidoalliance.org/specs/fido-v2.0-rd-20170927/fido-client-to-authenticator-protocol-v2.0-rd-20170927.html#authenticatorGetAssertion
-class AuthenticatorGetAssertionResponse {
+class AuthenticatorGetAssertionResponse
+    : public CTAPAuthenticationResponseData {
  public:
-  AuthenticatorGetAssertionResponse(CTAPDeviceResponseCode response_code,
+  AuthenticatorGetAssertionResponse(PublicKeyCredentialDescriptor credential,
                                     std::vector<uint8_t> auth_data,
-                                    std::vector<uint8_t> signature,
-                                    PublicKeyCredentialUserEntity user);
+                                    std::vector<uint8_t> signature);
   AuthenticatorGetAssertionResponse(AuthenticatorGetAssertionResponse&& that);
   AuthenticatorGetAssertionResponse& operator=(
       AuthenticatorGetAssertionResponse&& other);
   ~AuthenticatorGetAssertionResponse();
 
+  AuthenticatorGetAssertionResponse& SetUserEntity(
+      PublicKeyCredentialUserEntity user);
   AuthenticatorGetAssertionResponse& SetNumCredentials(uint8_t num_credentials);
-  AuthenticatorGetAssertionResponse& SetCredential(
-      PublicKeyCredentialDescriptor credential);
 
-  CTAPDeviceResponseCode response_code() const { return response_code_; }
+  const PublicKeyCredentialDescriptor& credential() const {
+    return credential_;
+  }
   const std::vector<uint8_t>& auth_data() const { return auth_data_; }
   const std::vector<uint8_t>& signature() const { return signature_; }
-  const PublicKeyCredentialUserEntity& user() const { return user_; }
+  const base::Optional<PublicKeyCredentialUserEntity>& user() const {
+    return user_;
+  }
   const base::Optional<uint8_t>& num_credentials() const {
     return num_credentials_;
   }
-  const base::Optional<PublicKeyCredentialDescriptor>& credential() const {
-    return credential_;
-  }
 
  private:
-  CTAPDeviceResponseCode response_code_;
+  PublicKeyCredentialDescriptor credential_;
   std::vector<uint8_t> auth_data_;
   std::vector<uint8_t> signature_;
-  PublicKeyCredentialUserEntity user_;
+  base::Optional<PublicKeyCredentialUserEntity> user_;
   base::Optional<uint8_t> num_credentials_;
-  base::Optional<PublicKeyCredentialDescriptor> credential_;
 
   DISALLOW_COPY_AND_ASSIGN(AuthenticatorGetAssertionResponse);
 };

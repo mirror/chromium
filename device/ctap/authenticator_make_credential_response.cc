@@ -9,9 +9,9 @@
 namespace device {
 
 AuthenticatorMakeCredentialResponse::AuthenticatorMakeCredentialResponse(
-    CTAPDeviceResponseCode response_code,
+    std::vector<uint8_t> credential_id,
     std::vector<uint8_t> attestation_object)
-    : response_code_(response_code),
+    : CTAPAuthenticationResponseData(std::move(credential_id)),
       attestation_object_(std::move(attestation_object)) {}
 
 AuthenticatorMakeCredentialResponse::AuthenticatorMakeCredentialResponse(

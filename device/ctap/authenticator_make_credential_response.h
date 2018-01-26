@@ -10,7 +10,7 @@
 #include <vector>
 
 #include "base/macros.h"
-#include "device/ctap/ctap_constants.h"
+#include "device/ctap/ctap_authentication_response_data.h"
 
 namespace device {
 
@@ -18,9 +18,10 @@ namespace device {
 // data, and attestation statement returned by the authenticator as a response
 // to MakeCredential request.
 // https://fidoalliance.org/specs/fido-v2.0-rd-20170927/fido-client-to-authenticator-protocol-v2.0-rd-20170927.html#authenticatorMakeCredential
-class AuthenticatorMakeCredentialResponse {
+class AuthenticatorMakeCredentialResponse
+    : public CTAPAuthenticationResponseData {
  public:
-  AuthenticatorMakeCredentialResponse(CTAPDeviceResponseCode response_code,
+  AuthenticatorMakeCredentialResponse(std::vector<uint8_t> credential_id,
                                       std::vector<uint8_t> attestation_object);
 
   AuthenticatorMakeCredentialResponse(
@@ -29,13 +30,11 @@ class AuthenticatorMakeCredentialResponse {
       AuthenticatorMakeCredentialResponse&& other);
   ~AuthenticatorMakeCredentialResponse();
 
-  CTAPDeviceResponseCode response_code() const { return response_code_; }
   const std::vector<uint8_t>& attestation_object() const {
     return attestation_object_;
   }
 
  private:
-  CTAPDeviceResponseCode response_code_;
   std::vector<uint8_t> attestation_object_;
 
   DISALLOW_COPY_AND_ASSIGN(AuthenticatorMakeCredentialResponse);
