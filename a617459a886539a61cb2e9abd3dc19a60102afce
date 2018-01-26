@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e1b6bf1_da3982af",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSParsingUtils.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2018-01-26T01:35:22Z",
+      "side": 1,
+      "message": "Sorry, but I don\u0027t quite understand the changes in this file.",
+      "revId": "a617459a886539a61cb2e9abd3dc19a60102afce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
