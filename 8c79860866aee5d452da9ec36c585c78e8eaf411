@@ -355,6 +355,24 @@
     },
     {
       "key": {
+        "uuid": "31ca6e1b_f624176d",
+        "filename": "build/fuchsia/runner_v2/deploy_util.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "Yes, you\u0027re both correct. I got the default behavior between the helper functions and the Popen() mixed up in my head.\n\nI believe this won\u0027t deadlock because stdout has already returned EOF in the readlines for-loop, so it can\u0027t return any more output at this point.",
+      "parentUuid": "f5b449bf_82182bd5",
+      "revId": "8c79860866aee5d452da9ec36c585c78e8eaf411",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42b45b79_708edc35",
         "filename": "build/fuchsia/runner_v2/device_target.py",
         "patchSetId": 4

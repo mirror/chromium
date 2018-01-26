@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "569bddfc_d2cf7dca",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "I don\u0027t intend to keep the \"v2\" around after the old scripts are deprecated, so it\u0027s basically a rewrite?",
+      "parentUuid": "d9750d2c_32d52710",
+      "range": {
+        "startLine": 7,
+        "startChar": 9,
+        "endLine": 7,
+        "endChar": 34
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "883de604_fef2480f",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "814bb381_6985c62e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "883de604_fef2480f",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 36
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5769ad94_20a577f9",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
@@ -68,6 +116,30 @@
       "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad1a3411_7f8dc6c2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5769ad94_20a577f9",
+      "range": {
+        "startLine": 13,
+        "startChar": 30,
+        "endLine": 13,
+        "endChar": 43
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "d68251fb_dd816386",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d647dc69_164040cd",
+      "range": {
+        "startLine": 15,
+        "startChar": 27,
+        "endLine": 15,
+        "endChar": 41
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "675b665e_cce19af8",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
@@ -163,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "60740638_d0857418",
+        "filename": "build/config/fuchsia/package.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "Something I chose, though now that you mention it I think I should adhere to the source directory structure that other gen rules use.\n\nSo now it writes to base/base_unittests.archive_manifest \u0026 base/base_unittests.far.",
+      "parentUuid": "da7d7718_d1078052",
+      "range": {
+        "startLine": 20,
+        "startChar": 38,
+        "endLine": 20,
+        "endChar": 45
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1eb000f0_8869fd5d",
         "filename": "build/config/fuchsia/package.gni",
         "patchSetId": 5
@@ -183,6 +303,30 @@
       "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3af26c2_3f6eaa9e",
+        "filename": "build/config/fuchsia/package.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1eb000f0_8869fd5d",
+      "range": {
+        "startLine": 25,
+        "startChar": 33,
+        "endLine": 25,
+        "endChar": 52
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +376,30 @@
     },
     {
       "key": {
+        "uuid": "841dd53b_dcb32339",
+        "filename": "build/config/fuchsia/rules.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85c77dc1_a24025d9",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 49
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3e333d0_a0a2fbd1",
         "filename": "build/config/fuchsia/rules.gni",
         "patchSetId": 5
@@ -252,6 +420,30 @@
       "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0baf6aa_6b82fdf2",
+        "filename": "build/config/fuchsia/rules.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3e333d0_a0a2fbd1",
+      "range": {
+        "startLine": 154,
+        "startChar": 4,
+        "endLine": 154,
+        "endChar": 11
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -278,6 +470,30 @@
     },
     {
       "key": {
+        "uuid": "04859390_9d7997e7",
+        "filename": "build/config/fuchsia/rules.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "380ed024_f022b8be",
+      "range": {
+        "startLine": 170,
+        "startChar": 0,
+        "endLine": 173,
+        "endChar": 5
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c119646_23ee5f02",
         "filename": "build/config/fuchsia/rules.gni",
         "patchSetId": 5
@@ -298,6 +514,30 @@
       "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5de656dd_d1dabfc4",
+        "filename": "build/config/fuchsia/rules.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "Builds a tarball. We might want to remove it when the old style runner scripts are deprecated, because the packages should suffice?",
+      "parentUuid": "9c119646_23ee5f02",
+      "range": {
+        "startLine": 264,
+        "startChar": 0,
+        "endLine": 280,
+        "endChar": 3
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -324,6 +564,30 @@
     },
     {
       "key": {
+        "uuid": "2ec30623_3b44ac64",
+        "filename": "build/fuchsia/runner_v2/boot_image.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "Standardized on boot_data for consistency with Fuchsia\u0027s bootdata.bin convention.",
+      "parentUuid": "a07772a4_c6ea3a37",
+      "range": {
+        "startLine": 81,
+        "startChar": 4,
+        "endLine": 81,
+        "endChar": 16
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8dc1a2f_92937217",
         "filename": "build/fuchsia/runner_v2/common_args.py",
         "patchSetId": 5
@@ -344,6 +608,30 @@
       "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "789de3a1_102647f7",
+        "filename": "build/fuchsia/runner_v2/common_args.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8dc1a2f_92937217",
+      "range": {
+        "startLine": 9,
+        "startChar": 4,
+        "endLine": 9,
+        "endChar": 16
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -370,6 +658,30 @@
     },
     {
       "key": {
+        "uuid": "66482cc6_fe7b518a",
+        "filename": "build/fuchsia/runner_v2/common_args.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a02ff9e1_af952ad8",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 36,
+        "endChar": 22
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8d45309_127704bf",
         "filename": "build/fuchsia/runner_v2/create_runner_script.py",
         "patchSetId": 5
@@ -390,6 +702,30 @@
       "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3d4cfe4_517e1d2f",
+        "filename": "build/fuchsia/runner_v2/create_runner_script.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8d45309_127704bf",
+      "range": {
+        "startLine": 81,
+        "startChar": 8,
+        "endLine": 81,
+        "endChar": 46
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -416,6 +752,30 @@
     },
     {
       "key": {
+        "uuid": "8fdbc3f0_19e087e8",
+        "filename": "build/fuchsia/runner_v2/create_runner_script.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e3c5384_73c44016",
+      "range": {
+        "startLine": 83,
+        "startChar": 36,
+        "endLine": 83,
+        "endChar": 40
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "551eea72_589c1931",
         "filename": "build/fuchsia/runner_v2/deploy_util.py",
         "patchSetId": 5
@@ -436,6 +796,30 @@
       "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "394beedb_870df42b",
+        "filename": "build/fuchsia/runner_v2/deploy_util.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "551eea72_589c1931",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 11
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -462,6 +846,30 @@
     },
     {
       "key": {
+        "uuid": "969fe631_288ca39f",
+        "filename": "build/fuchsia/runner_v2/deploy_util.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b980391_4b7e0275",
+      "range": {
+        "startLine": 15,
+        "startChar": 27,
+        "endLine": 15,
+        "endChar": 62
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fe63774_1ced2eb2",
         "filename": "build/fuchsia/runner_v2/deploy_util.py",
         "patchSetId": 5
@@ -485,6 +893,30 @@
     },
     {
       "key": {
+        "uuid": "52cce8ee_9d17aa61",
+        "filename": "build/fuchsia/runner_v2/deploy_util.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fe63774_1ced2eb2",
+      "range": {
+        "startLine": 23,
+        "startChar": 16,
+        "endLine": 23,
+        "endChar": 25
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f08cc0f1_ee211c26",
         "filename": "build/fuchsia/runner_v2/deploy_util.py",
         "patchSetId": 5
@@ -496,6 +928,30 @@
       "writtenOn": "2018-01-26T00:15:08Z",
       "side": 1,
       "message": "nit: Since we only run SymbolizeStream once using the filter, we could reasonably fold the two together, avoid the need for |symbolizer|, and then rename the symbolizer module, so this could become:\n\nimport symbolizer\n\nfor next_line in symbolizer.FilterStream(process.stdout, manifest_path, output_dir):\n  ...\n\nWDYT?",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 60
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aae2ef71_c1f8c56e",
+        "filename": "build/fuchsia/runner_v2/deploy_util.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "OK. I added a function for instantiating the class. I like having the symbolizer as an object because the object fields keep down parameter bloat and the code is complex enough that I want to keep things broken out as functions for readability.",
+      "parentUuid": "f08cc0f1_ee211c26",
       "range": {
         "startLine": 36,
         "startChar": 0,
@@ -531,6 +987,30 @@
     },
     {
       "key": {
+        "uuid": "f4e77da1_6e51fdae",
+        "filename": "build/fuchsia/runner_v2/device_target.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3bf1a02_291b9e36",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 15
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd6eecd4_55833a06",
         "filename": "build/fuchsia/runner_v2/device_target.py",
         "patchSetId": 5
@@ -551,6 +1031,30 @@
       "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05c3e73e_61ef6e69",
+        "filename": "build/fuchsia/runner_v2/device_target.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd6eecd4_55833a06",
+      "range": {
+        "startLine": 49,
+        "startChar": 6,
+        "endLine": 49,
+        "endChar": 15
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -577,6 +1081,30 @@
     },
     {
       "key": {
+        "uuid": "2e7e0e34_c420bcb3",
+        "filename": "build/fuchsia/runner_v2/qemu_target.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccf020dc_55ebf816",
+      "range": {
+        "startLine": 126,
+        "startChar": 13,
+        "endLine": 126,
+        "endChar": 22
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59c64c90_a4f025da",
         "filename": "build/fuchsia/runner_v2/remote_cmd.py",
         "patchSetId": 5
@@ -597,6 +1125,30 @@
       "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b06f87c_2f892ac1",
+        "filename": "build/fuchsia/runner_v2/remote_cmd.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59c64c90_a4f025da",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 38
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -623,6 +1175,30 @@
     },
     {
       "key": {
+        "uuid": "d6191fea_277e4d37",
+        "filename": "build/fuchsia/runner_v2/remote_cmd.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "ipaddress is not a Python 2.7 package.\n\nLooking for a colon instead. :\\",
+      "parentUuid": "1520be54_59d20e48",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 27
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74cbe548_623b56a3",
         "filename": "build/fuchsia/runner_v2/symbolizer_filter.py",
         "patchSetId": 5
@@ -643,6 +1219,30 @@
       "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5cb2856_b7b4500b",
+        "filename": "build/fuchsia/runner_v2/symbolizer_filter.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74cbe548_623b56a3",
+      "range": {
+        "startLine": 10,
+        "startChar": 14,
+        "endLine": 10,
+        "endChar": 23
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -669,6 +1269,30 @@
     },
     {
       "key": {
+        "uuid": "fb4c8f2a_ba400b00",
+        "filename": "build/fuchsia/runner_v2/symbolizer_filter.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "We can\u0027t; the manifest needs to be kept relative for isolated builds.",
+      "parentUuid": "1ec33844_22bdbfd1",
+      "range": {
+        "startLine": 25,
+        "startChar": 36,
+        "endLine": 25,
+        "endChar": 46
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa497b8a_f0c186cc",
         "filename": "build/fuchsia/runner_v2/symbolizer_filter.py",
         "patchSetId": 5
@@ -689,6 +1313,30 @@
       "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d429ead7_d36e4d77",
+        "filename": "build/fuchsia/runner_v2/symbolizer_filter.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "Done, the paths are now relative to cwd.",
+      "parentUuid": "fa497b8a_f0c186cc",
+      "range": {
+        "startLine": 75,
+        "startChar": 36,
+        "endLine": 75,
+        "endChar": 52
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -715,6 +1363,30 @@
     },
     {
       "key": {
+        "uuid": "0313e514_3d9823a0",
+        "filename": "build/fuchsia/runner_v2/symbolizer_filter.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "884f7115_5509dc6e",
+      "range": {
+        "startLine": 96,
+        "startChar": 72,
+        "endLine": 97,
+        "endChar": 11
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3937b3ce_7bcff917",
         "filename": "build/fuchsia/runner_v2/symbolizer_filter.py",
         "patchSetId": 5
@@ -735,6 +1407,30 @@
       "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9648f32e_7e9a9adb",
+        "filename": "build/fuchsia/runner_v2/symbolizer_filter.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3937b3ce_7bcff917",
+      "range": {
+        "startLine": 150,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 16
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -761,6 +1457,30 @@
     },
     {
       "key": {
+        "uuid": "18bc9db9_e4397181",
+        "filename": "build/fuchsia/runner_v2/target.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "SG, done",
+      "parentUuid": "9b563638_e7869f71",
+      "range": {
+        "startLine": 37,
+        "startChar": 37,
+        "endLine": 38,
+        "endChar": 67
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94b267e8_833a2e24",
         "filename": "build/fuchsia/runner_v2/target.py",
         "patchSetId": 5
@@ -781,6 +1501,30 @@
       "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e45d5816_8240e9a4",
+        "filename": "build/fuchsia/runner_v2/target.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "Switched to using arg packing, so no need to document them anymore.",
+      "parentUuid": "94b267e8_833a2e24",
+      "range": {
+        "startLine": 44,
+        "startChar": 27,
+        "endLine": 45,
+        "endChar": 71
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -807,6 +1551,30 @@
     },
     {
       "key": {
+        "uuid": "7afb3c70_a47f2078",
+        "filename": "build/fuchsia/runner_v2/target.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "6658428c_94751863",
+      "range": {
+        "startLine": 52,
+        "startChar": 19,
+        "endLine": 52,
+        "endChar": 23
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7897dcaa_8ca4d6be",
         "filename": "build/fuchsia/runner_v2/target.py",
         "patchSetId": 5
@@ -827,6 +1595,30 @@
       "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efd248e4_9012b768",
+        "filename": "build/fuchsia/runner_v2/target.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "Actually, this is never called. I originally wrote the QemuTarget to do an orderly shutdown, but later decided to just pull the plug on QEMU instead.\n\nRemoved.",
+      "parentUuid": "7897dcaa_8ca4d6be",
+      "range": {
+        "startLine": 92,
+        "startChar": 4,
+        "endLine": 92,
+        "endChar": 28
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -853,6 +1645,30 @@
     },
     {
       "key": {
+        "uuid": "1f8cd86f_b7d5ed01",
+        "filename": "build/fuchsia/runner_v2/target.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49fa1b8c_767bbe0e",
+      "range": {
+        "startLine": 100,
+        "startChar": 6,
+        "endLine": 100,
+        "endChar": 20
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "003c9f64_9bf4a38f",
         "filename": "build/fuchsia/runner_v2/target.py",
         "patchSetId": 5
@@ -864,6 +1680,30 @@
       "writtenOn": "2018-01-25T23:30:17Z",
       "side": 1,
       "message": "Can we give this a more descriptive name? e.g. _AttachToDevice or _AttachToRemote or _ConnectToRemote or _PingRemote?  \"Attach\" on its own doesn\u0027t convey what is being attached, or what attaching really means :)",
+      "range": {
+        "startLine": 103,
+        "startChar": 6,
+        "endLine": 103,
+        "endChar": 13
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "745274de_b5a009d2",
+        "filename": "build/fuchsia/runner_v2/target.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "It\u0027s really just checking for connectivity, and it\u0027s agnostic to the device type. So, Connect()?",
+      "parentUuid": "003c9f64_9bf4a38f",
       "range": {
         "startLine": 103,
         "startChar": 6,
@@ -899,6 +1739,30 @@
     },
     {
       "key": {
+        "uuid": "36f6c8e7_e1c1ee05",
+        "filename": "build/fuchsia/runner_v2/target_factory.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95a3ad2e_bd2f18e5",
+      "range": {
+        "startLine": 12,
+        "startChar": 9,
+        "endLine": 12,
+        "endChar": 20
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1dc2f1e2_90364668",
         "filename": "build/fuchsia/runner_v2/test_runner.py",
         "patchSetId": 5
@@ -919,6 +1783,30 @@
       "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "635b9b8e_b33275f2",
+        "filename": "build/fuchsia/runner_v2/test_runner.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1dc2f1e2_90364668",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 1
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -945,6 +1833,30 @@
     },
     {
       "key": {
+        "uuid": "9f3e9b86_8608aefb",
+        "filename": "build/fuchsia/runner_v2/test_runner.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "279799f9_459680fa",
+      "range": {
+        "startLine": 95,
+        "startChar": 43,
+        "endLine": 95,
+        "endChar": 50
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "857eaf2b_82bf5bc5",
         "filename": "build/fuchsia/runner_v2/test_runner.py",
         "patchSetId": 5
@@ -965,6 +1877,30 @@
       "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae67d09c_67d6c0ce",
+        "filename": "build/fuchsia/runner_v2/test_runner.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-26T21:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "857eaf2b_82bf5bc5",
+      "range": {
+        "startLine": 107,
+        "startChar": 8,
+        "endLine": 107,
+        "endChar": 24
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
