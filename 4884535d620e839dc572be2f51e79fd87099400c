@@ -22,6 +22,30 @@
       "revId": "4884535d620e839dc572be2f51e79fd87099400c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7fc2f1e_d3626c76",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2018-01-26T02:40:42Z",
+      "side": 1,
+      "message": "You\u0027re right about this. It was behaving poorly on official builds. Changed it to an if statement.",
+      "parentUuid": "097cc6a3_b16ab7bd",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 29
+      },
+      "revId": "4884535d620e839dc572be2f51e79fd87099400c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
