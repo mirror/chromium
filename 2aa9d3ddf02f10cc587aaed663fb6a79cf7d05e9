@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "672cb5f2_0ca26615",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/privacy/ClearBrowsingDataFetcher.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-26T10:54:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec530083_de7c9a3d",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 5
+      },
+      "revId": "2aa9d3ddf02f10cc587aaed663fb6a79cf7d05e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "763ac057_ac09cdaf",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/privacy/ClearBrowsingDataPreferences.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "2aa9d3ddf02f10cc587aaed663fb6a79cf7d05e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08c5ac4c_701976e5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/privacy/ClearBrowsingDataPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-26T10:54:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "763ac057_ac09cdaf",
+      "range": {
+        "startLine": 276,
+        "startChar": 5,
+        "endLine": 276,
+        "endChar": 67
+      },
+      "revId": "2aa9d3ddf02f10cc587aaed663fb6a79cf7d05e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
