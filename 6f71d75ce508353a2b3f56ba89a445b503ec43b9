@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "799c5e0f_f35aa352",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_atomic.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-01-26T02:29:37Z",
+      "side": 1,
+      "message": "This is the blob used to interface with the kernel. Floating point arithmetic is not used in the kernel.\nIt\u0027s a drm_color_ctm struct, each value of the matrix is a fixed point S31.32.\n\nIf you look at HardwareDisplayPlaneManagerAtomic::SetPlaneData you can see there is a conversion from double to fixed point.\n\nglScheduleOverlayPlaneCHROMIUM will end up taking doubles and pass them to OverlayPlane::color_transform that is a matrix of doubles, and will eventually be converted to drm_color_ctm before setting it to the plane.",
+      "parentUuid": "e5d07c8c_ea4eae7c",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 10
+      },
+      "revId": "6f71d75ce508353a2b3f56ba89a445b503ec43b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0dcca81_d21b26ec",
         "filename": "ui/ozone/platform/drm/gpu/overlay_plane.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "6f71d75ce508353a2b3f56ba89a445b503ec43b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e97f50a3_470864f3",
+        "filename": "ui/ozone/platform/drm/gpu/overlay_plane.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-01-26T02:29:37Z",
+      "side": 1,
+      "message": "Leftover to test that color_transform is actually making any difference.\nFixed in the latest patch.",
+      "parentUuid": "f0dcca81_d21b26ec",
+      "range": {
+        "startLine": 48,
+        "startChar": 59,
+        "endLine": 48,
+        "endChar": 62
+      },
+      "revId": "6f71d75ce508353a2b3f56ba89a445b503ec43b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
