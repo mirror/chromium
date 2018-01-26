@@ -22,6 +22,30 @@
       "revId": "3355fef3ad66a07deac294a957058fb460886401",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4576c59_57f609d2",
+        "filename": "components/startup_metric_utils/browser/startup_metric_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-26T16:29:20Z",
+      "side": 1,
+      "message": "Yep, they are leaked on shutdown - so should be fine.",
+      "parentUuid": "46a683d5_ca81b779",
+      "range": {
+        "startLine": 575,
+        "startChar": 69,
+        "endLine": 575,
+        "endChar": 70
+      },
+      "revId": "3355fef3ad66a07deac294a957058fb460886401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
