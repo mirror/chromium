@@ -35,6 +35,7 @@
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="*"/>
                 <data android:scheme="{{ APK_PACKAGE_NAME }}"/>
                 <data android:path="/oauthredirect/"/>
             </intent-filter>
