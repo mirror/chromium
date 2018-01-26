@@ -73,6 +73,200 @@
     },
     {
       "key": {
+        "uuid": "fb43c839_b112e369",
+        "filename": "ash/frame/caption_buttons/frame_caption_button_container_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-26T02:34:30Z",
+      "side": 1,
+      "message": "You likely want all such constants to live in https://cs.chromium.org/chromium/src/ui/views/layout/layout_provider.h , though sky would have a better idea.\n\nWe already have padding constants for various other things, and there might be one that\u0027s close to the meaning of whatever you\u0027re trying to do here.",
+      "parentUuid": "9946065c_23491ce4",
+      "range": {
+        "startLine": 35,
+        "startChar": 14,
+        "endLine": 35,
+        "endChar": 37
+      },
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7458b2fe_6ddfe38d",
+        "filename": "ash/frame/caption_buttons/frame_caption_button_container_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-26T02:34:30Z",
+      "side": 1,
+      "message": "I don\u0027t understand what this first sentence means.\n\nAre you trying to say that there are several types of window frames, and they normally lay out caption buttons differently, but in this case we\u0027ll lay them all out like we lay out \"regular Chrome\" windows?",
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5de5a209_d2ce2b92",
+        "filename": "ash/frame/caption_buttons/frame_caption_button_container_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-26T02:34:30Z",
+      "side": 1,
+      "message": "Nit: It seems a little unfortunate that the \"make_unique\u003cBoxLayout\u003e(kHorizontal)\" part is duplicated.  Maybe we should just have inset and spacing values separate for each switch arm and then a single layout manager creation call.",
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69a351ab_9f11dfe3",
+        "filename": "ash/frame/default_frame_header.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-26T02:34:30Z",
+      "side": 1,
+      "message": "It seems like wherever constants live, this should be shared with the other one you have, since we would never want the two to be out of sync.",
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d406f48c_e8b5195f",
+        "filename": "ash/frame/default_frame_header.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-26T02:34:30Z",
+      "side": 1,
+      "message": "This worries me because I think it breaks Fitts\u0027 Law in the maximized case?  You probably don\u0027t want to offset the back button but rather to insert extra padding inside it?",
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32ae7f99_967c3006",
+        "filename": "chrome/browser/ui/views/frame/browser_frame_header_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-26T02:34:30Z",
+      "side": 1,
+      "message": "Another constant that should be merged with the others",
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31a04afb_f6e5488a",
+        "filename": "chrome/browser/ui/views/frame/browser_frame_header_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-26T02:34:30Z",
+      "side": 1,
+      "message": "Where does this value come from?  Is it because we\u0027re chopping 3 px off the top when maximizing or something?  If so, we\u0027d want to make that value the constant instead, so that if the 8 px constant changed, this would automatically change to match.",
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc66dba0_2db74ce4",
+        "filename": "chrome/browser/ui/views/frame/browser_frame_header_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-26T02:34:30Z",
+      "side": 1,
+      "message": "We still show the caption buttons in the fullscreen case?",
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b2d6898_81003d88",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-26T02:34:30Z",
+      "side": 1,
+      "message": "Nit: I don\u0027t think we gain any clarity by making this an enum over using an \"enabled\" bool, below, and it costs a notable amount of verbosity.",
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f158d06b_2c0245d4",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-26T02:34:30Z",
+      "side": 1,
+      "message": "Nit: Simpler:\n\n  return (info.param \u003d\u003d TouchableChromeStatus::kEnabled)\n             ? \"TouchableChromeEnabled\"\n             : \"TouchableChromeDisabled\";",
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "203fb8ab_dea8fb0e",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-26T02:34:30Z",
+      "side": 1,
+      "message": "Nit: are -\u003e is",
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87f567d9_d82551d3",
         "filename": "ui/base/material_design/material_design_controller.cc",
         "patchSetId": 1
@@ -144,6 +338,47 @@
     },
     {
       "key": {
+        "uuid": "82e90c1c_6b1555b3",
+        "filename": "ui/base/material_design/material_design_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-26T02:34:30Z",
+      "side": 1,
+      "message": "Even if we need more complicated code in the feature code, it would be kinda nice to not have a feature that doesn\u0027t actually enable anything on non-CrOS.\n\nThis reminds me that the biggest complaints I hear about non-touch-friendliness have always been on Windows tablets -- but your changes in this CL will affect CrOS only.  I hope we\u0027re planning to bring a touch-optimized UI to Chrome on other platforms in the case when the user is actively using touch input (on a tablet device or whatever).",
+      "parentUuid": "844710c4_8c44fe83",
+      "range": {
+        "startLine": 122,
+        "startChar": 12,
+        "endLine": 122,
+        "endChar": 23
+      },
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e564224_9f176b92",
+        "filename": "ui/base/material_design/material_design_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-26T02:34:30Z",
+      "side": 1,
+      "message": "Nit: I\u0027m not a fan of the name \"touchable chrome\", because Chrome is \"touchable\" even when this isn\u0027t enabled -- this sounds as if we\u0027re enabling touch support, when instead this is about a more touch-friendly redesign.\n\nCan we call this (here and everywhere else) something less codenamey?  Maybe \"touch-optimized UI\" or something?",
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54ad0c59_5f598e4b",
         "filename": "ui/base/material_design/material_design_controller.h",
         "patchSetId": 1
@@ -179,6 +414,30 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "54ad0c59_5f598e4b",
+      "range": {
+        "startLine": 43,
+        "startChar": 14,
+        "endLine": 43,
+        "endChar": 41
+      },
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c4cb6f0c_9932234c",
+        "filename": "ui/base/material_design/material_design_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-26T02:34:30Z",
+      "side": 1,
+      "message": "Do we need to put this under a switch?  Can we just change the default behavior piecemeal?",
+      "parentUuid": "6985e57d_13538345",
       "range": {
         "startLine": 43,
         "startChar": 14,
