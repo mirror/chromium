@@ -142,6 +142,24 @@
       "revId": "3e654e2eb396d71683489344cf08b32a2b43625a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28a18555_a46edb3e",
+        "filename": "ipc/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1255169
+      },
+      "writtenOn": "2018-01-26T04:54:29Z",
+      "side": 1,
+      "message": "Given that decomposing public/cpp into two targets seems like it will require some non-trivial refactoring and I\u0027m only here for another month, I might go with duplicating SerializedHandle for now in the interests of un-blocking the conditional features implementation. However I do agree that the decomposition sounds like the best solution for the future. Thanks so much for your help! :)",
+      "parentUuid": "753a9839_7ffed946",
+      "revId": "3e654e2eb396d71683489344cf08b32a2b43625a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
