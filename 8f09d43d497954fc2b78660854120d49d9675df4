@@ -16,6 +16,24 @@
       "revId": "8f09d43d497954fc2b78660854120d49d9675df4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01a5177d_71fe13b8",
+        "filename": "content/public/common/drop_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1256179
+      },
+      "writtenOn": "2018-01-26T06:54:21Z",
+      "side": 1,
+      "message": "Sure. Done.",
+      "parentUuid": "b0ec6b3b_a7845e18",
+      "revId": "8f09d43d497954fc2b78660854120d49d9675df4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
