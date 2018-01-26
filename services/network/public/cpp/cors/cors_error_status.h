@@ -7,11 +7,12 @@
 
 #include "base/memory/scoped_refptr.h"
 #include "net/http/http_response_headers.h"
+#include "services/network/public/cpp/types_export.h"
 #include "services/network/public/interfaces/cors.mojom-shared.h"
 
 namespace network {
 
-struct CORSErrorStatus {
+struct SERVICES_NETWORK_TYPES_EXPORT CORSErrorStatus {
   // This constructor is used by generated IPC serialization code.
   // Should not use this explicitly.
   // TODO(toyoshim, yhirano): Exploring a way to make this private, and allows

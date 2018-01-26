@@ -20,6 +20,7 @@
 #include "base/logging.h"
 #include "base/time/time.h"
 #include "mojo/public/cpp/system/data_pipe.h"
+#include "services/network/public/cpp/types_export.h"
 #include "services/network/public/interfaces/data_pipe_getter.mojom.h"
 #include "url/gurl.h"
 
@@ -27,7 +28,7 @@ namespace network {
 
 // Represents a base Web data element. This could be either one of
 // bytes, file or blob data.
-class DataElement {
+class SERVICES_NETWORK_TYPES_EXPORT DataElement {
  public:
   static const uint64_t kUnknownSize = std::numeric_limits<uint64_t>::max();
 

@@ -14,14 +14,14 @@
 #include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "build/build_config.h"
 #include "services/network/public/cpp/data_element.h"
+#include "services/network/public/cpp/types_export.h"
 #include "url/gurl.h"
 
 namespace network {
 
 // ResourceRequestBody represents body (i.e. upload data) of a HTTP request.
-class ResourceRequestBody
+class SERVICES_NETWORK_TYPES_EXPORT ResourceRequestBody
     : public base::RefCountedThreadSafe<ResourceRequestBody> {
  public:
   ResourceRequestBody();

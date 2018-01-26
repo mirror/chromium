@@ -12,14 +12,15 @@
 
 #include "base/memory/ref_counted.h"
 #include "base/strings/string_split.h"
+#include "services/network/public/cpp/types_export.h"
 
 namespace network {
 
 // Note: when modifying this structure, also update DeepCopy in
 // http_raw_request_response_info.cc.
-struct HttpRawRequestResponseInfo
+struct SERVICES_NETWORK_TYPES_EXPORT HttpRawRequestResponseInfo
     : base::RefCounted<HttpRawRequestResponseInfo> {
-  typedef base::StringPairs HeadersVector;
+  using HeadersVector = base::StringPairs;
 
   HttpRawRequestResponseInfo();
 

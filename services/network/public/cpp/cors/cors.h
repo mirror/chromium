@@ -8,6 +8,7 @@
 #include <string>
 
 #include "base/optional.h"
+#include "services/network/public/cpp/export.h"
 #include "services/network/public/interfaces/cors.mojom-shared.h"
 #include "services/network/public/interfaces/fetch_api.mojom-shared.h"
 
@@ -22,14 +23,14 @@ namespace cors {
 
 namespace header_names {
 
-extern const char kAccessControlAllowCredentials[];
-extern const char kAccessControlAllowOrigin[];
-extern const char kAccessControlAllowSuborigin[];
+SERVICES_NETWORK_EXPORT extern const char kAccessControlAllowCredentials[];
+SERVICES_NETWORK_EXPORT extern const char kAccessControlAllowOrigin[];
+SERVICES_NETWORK_EXPORT extern const char kAccessControlAllowSuborigin[];
 
 }  // namespace header_names
 
 // Performs a CORS access check on the response parameters.
-base::Optional<mojom::CORSError> CheckAccess(
+SERVICES_NETWORK_EXPORT base::Optional<mojom::CORSError> CheckAccess(
     const GURL& response_url,
     const int response_status_code,
     const base::Optional<std::string>& allow_origin_header,
@@ -45,20 +46,23 @@ base::Optional<mojom::CORSError> CheckAccess(
 // TODO(toyoshim): Remove |skip_scheme_check| that is used when customized
 // scheme check runs in Blink side in the legacy mode.
 // See https://crbug.com/800669.
-base::Optional<mojom::CORSError> CheckRedirectLocation(const GURL& redirect_url,
-                                                       bool skip_scheme_check);
+SERVICES_NETWORK_EXPORT base::Optional<mojom::CORSError> CheckRedirectLocation(
+    const GURL& redirect_url,
+    bool skip_scheme_check);
 
 // Performs the required CORS checks on the response to a preflight request.
 // Returns |kPreflightSuccess| if preflight response was successful.
-base::Optional<mojom::CORSError> CheckPreflight(const int status_code);
+SERVICES_NETWORK_EXPORT base::Optional<mojom::CORSError> CheckPreflight(
+    const int status_code);
 
 // Checks errors for the currently experimental "Access-Control-Allow-External:"
 // header. Shares error conditions with standard preflight checking.
 // See https://crbug.com/590714.
-base::Optional<mojom::CORSError> CheckExternalPreflight(
+SERVICES_NETWORK_EXPORT base::Optional<mojom::CORSError> CheckExternalPreflight(
     const base::Optional<std::string>& allow_external);
 
-bool IsCORSEnabledRequestMode(mojom::FetchRequestMode mode);
+SERVICES_NETWORK_EXPORT bool IsCORSEnabledRequestMode(
+    mojom::FetchRequestMode mode);
 
 }  // namespace cors
 

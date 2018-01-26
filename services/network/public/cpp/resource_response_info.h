@@ -19,6 +19,7 @@
 #include "net/http/http_response_info.h"
 #include "net/nqe/effective_connection_type.h"
 #include "services/network/public/cpp/http_raw_request_response_info.h"
+#include "services/network/public/cpp/types_export.h"
 #include "services/network/public/interfaces/fetch_api.mojom-shared.h"
 #include "url/gurl.h"
 
@@ -26,7 +27,7 @@ namespace network {
 
 // NOTE: when modifying this structure, also update ResourceResponse::DeepCopy
 // in resource_response.cc.
-struct ResourceResponseInfo {
+struct SERVICES_NETWORK_TYPES_EXPORT ResourceResponseInfo {
   ResourceResponseInfo();
   ResourceResponseInfo(const ResourceResponseInfo& other);
   ~ResourceResponseInfo();
