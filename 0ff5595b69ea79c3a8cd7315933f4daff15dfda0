@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7e82d97_7d130479",
+        "filename": "ios/chrome/browser/ui/side_swipe/card_side_swipe_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-26T10:39:39Z",
+      "side": 1,
+      "message": "Since you are modernizing the file to Objective-C 2.0, please change this to \"instancetype\".",
+      "range": {
+        "startLine": 28,
+        "startChar": 3,
+        "endLine": 28,
+        "endChar": 5
+      },
+      "revId": "0ff5595b69ea79c3a8cd7315933f4daff15dfda0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03e1419f_4e115875",
+        "filename": "ios/chrome/browser/ui/side_swipe/card_side_swipe_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-26T10:39:39Z",
+      "side": 1,
+      "message": "nit: please move to @implementation (rationale: it would make it easier to move to separate file, and avoid having different rules for classes defined in .mm and in .h)",
+      "range": {
+        "startLine": 50,
+        "startChar": 30,
+        "endLine": 53,
+        "endChar": 1
+      },
+      "revId": "0ff5595b69ea79c3a8cd7315933f4daff15dfda0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "494ece80_f8a489c3",
+        "filename": "ios/chrome/browser/ui/side_swipe/card_side_swipe_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-26T10:39:39Z",
+      "side": 1,
+      "message": "ditto: instancetype",
+      "range": {
+        "startLine": 70,
+        "startChar": 3,
+        "endLine": 70,
+        "endChar": 5
+      },
+      "revId": "0ff5595b69ea79c3a8cd7315933f4daff15dfda0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e88da30_9557a66c",
+        "filename": "ios/chrome/browser/ui/side_swipe/card_side_swipe_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-26T10:39:39Z",
+      "side": 1,
+      "message": "ditto: to @implementation",
+      "revId": "0ff5595b69ea79c3a8cd7315933f4daff15dfda0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "481c0f3d_2c68ac54",
+        "filename": "ios/chrome/browser/ui/side_swipe/card_side_swipe_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-26T10:39:39Z",
+      "side": 1,
+      "message": "ditto: instancetype",
+      "range": {
+        "startLine": 198,
+        "startChar": 3,
+        "endLine": 198,
+        "endChar": 5
+      },
+      "revId": "0ff5595b69ea79c3a8cd7315933f4daff15dfda0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
