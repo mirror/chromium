@@ -16,6 +16,24 @@
       "revId": "cd6eb1d24666632445ea7ab32424fcc2dd1428bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5b68dfb_ebfde3f2",
+        "filename": "chrome/browser/page_load_metrics/observers/service_worker_page_load_metrics_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-26T06:01:23Z",
+      "side": 1,
+      "message": "Recording this information at this timing makes sense to me, while I do like to defer Bryan if having this code here looks fine or not / what histogram name should be used.",
+      "parentUuid": "f5e742e6_48336c1a",
+      "revId": "cd6eb1d24666632445ea7ab32424fcc2dd1428bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
