@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fb55cd0_d24f932c",
+        "filename": "third_party/WebKit/public/web/WebWidget.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-26T04:14:59Z",
+      "side": 1,
+      "message": "There is only one callsite to this method, and it is alread using it correctly according\nto the comment above. See:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/frame/LocalFrameView.cpp?q\u003dlocalframeview.cpp\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d3439",
+      "revId": "60e1c29408dbc8365318c4fa096fa379519b389e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
