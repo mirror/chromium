@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "350dbb9b_a3499088",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-26T03:38:38Z",
+      "side": 1,
+      "message": "When you say \u0027it is possible\u0027, can you clarify how/how often this can happen?\n\nIf the native WM is not sending a mouse-release event, then how does chrome know that the resize has ended? Or does it continue to think a resize is in progress?",
+      "revId": "0864f86cb06f731723a1da51290dcb7338950147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10a68cff_9bf5ae37",
         "filename": "ui/aura/env_input_state_controller.cc",
         "patchSetId": 3
