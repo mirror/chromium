@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d87dcb29_eef65d01",
+        "filename": "chrome/browser/media/webrtc/audio_debug_recordings_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-26T08:59:19Z",
+      "side": 1,
+      "message": "Actually, could you drop |is_audio_debug_recordings_in_progress_| altogether and just use a session?",
+      "revId": "af0cb0782fe08302995e6e717526339c1f611cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "607aaf95_0980085f",
+        "filename": "content/browser/webrtc/webrtc_internals.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-26T08:59:19Z",
+      "side": 1,
+      "message": "Remove it and use a session instead?",
+      "revId": "af0cb0782fe08302995e6e717526339c1f611cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd1b5158_de5c682b",
+        "filename": "media/audio/audio_debug_recording_session.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-26T08:59:19Z",
+      "side": 1,
+      "message": "Empty line before?",
+      "revId": "af0cb0782fe08302995e6e717526339c1f611cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54b8e802_bed53718",
+        "filename": "media/audio/audio_debug_recording_session.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-26T08:59:19Z",
+      "side": 1,
+      "message": "Could you add a comment on what file path is?",
+      "revId": "af0cb0782fe08302995e6e717526339c1f611cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ae30121_e8d28f80",
+        "filename": "media/audio/audio_debug_recording_session.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-26T08:59:19Z",
+      "side": 1,
+      "message": "private (have you taken a look at what this macro is?)",
+      "revId": "af0cb0782fe08302995e6e717526339c1f611cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c90a6466_dacbc7d3",
+        "filename": "media/audio/audio_debug_recording_session_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-26T08:59:19Z",
+      "side": 1,
+      "message": "Could you add a file-level comment on why Unretained is safe? (It\u0027s basically a rule: Unretained must have a comment)",
+      "revId": "af0cb0782fe08302995e6e717526339c1f611cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ad22d33_ab346189",
+        "filename": "media/audio/audio_debug_recording_session_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-26T08:59:19Z",
+      "side": 1,
+      "message": "Not needed",
+      "revId": "af0cb0782fe08302995e6e717526339c1f611cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "201346c6_c3810030",
+        "filename": "media/audio/audio_debug_recording_session_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-26T08:59:19Z",
+      "side": 1,
+      "message": "private",
+      "revId": "af0cb0782fe08302995e6e717526339c1f611cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b05429a_f1392bb7",
+        "filename": "media/audio/audio_debug_recording_session_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-26T08:59:19Z",
+      "side": 1,
+      "message": "It should be TestAudioThread, not the real one. The real one will run on the main thread on Mac.\nNote it has a bool in constructor to indicate if a real thread should be used.\nTaking into account my comment below, we may not need a real thread though.",
+      "revId": "af0cb0782fe08302995e6e717526339c1f611cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56af7e1a_5e05edb4",
+        "filename": "media/audio/audio_debug_recording_session_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-26T08:59:19Z",
+      "side": 1,
+      "message": "You may also want to check that Get() returns |mock_audio_manager_|",
+      "revId": "af0cb0782fe08302995e6e717526339c1f611cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f954fa5e_8881d0cc",
+        "filename": "media/audio/audio_debug_recording_session_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-26T08:59:19Z",
+      "side": 1,
+      "message": "Hmmm. Enable/Disable are supposed to be called on AM thread - according to AM contract. And Shutdown is supposed to stop those thread.\nNow I think we should drop the test (though it was my proposal) - it does not make much sense.\n(Also note that expecting something from another thread without a proper synchronization leads to flaky tests. The only reason the first test above works is because AM synchronously waits for all the tasks on the thread to complete. Please add a comment there explaining why expectations are supposed to work there).",
+      "revId": "af0cb0782fe08302995e6e717526339c1f611cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77a7defd_5db15e35",
+        "filename": "media/audio/audio_debug_recording_session_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-26T08:59:19Z",
+      "side": 1,
+      "message": "nit: empty line above",
+      "revId": "af0cb0782fe08302995e6e717526339c1f611cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e97aceb_e6154176",
+        "filename": "media/audio/mock_audio_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-26T08:59:19Z",
+      "side": 1,
+      "message": "Not needed",
+      "revId": "af0cb0782fe08302995e6e717526339c1f611cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
