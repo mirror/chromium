@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d7c7696_33561fa0",
+        "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-26T20:22:06Z",
+      "side": 1,
+      "message": "This needs to be a #else, otherwise you have two consecutive unconditional returns within the same function.",
+      "revId": "e76e0e99dc3b8b2b7ad502603331ea7104745a1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
