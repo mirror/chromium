@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ebf862f_335d3e28",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 956,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2018-01-26T02:46:39Z",
+      "side": 1,
+      "message": "Could we just use the base::Optional here directly?\n\nLike this: https://cs.chromium.org/chromium/src/content/shell/common/layout_test/layout_test_messages.h?rcl\u003dc0b4ad77fee7160ae69d322f8e2b554b50ef1dc5\u0026l\u003d31",
+      "revId": "f1d1114f2b0d768577cfa0b03651d3658a29b9b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
