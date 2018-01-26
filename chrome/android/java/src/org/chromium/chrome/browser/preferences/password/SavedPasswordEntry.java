@@ -4,6 +4,8 @@
 
 package org.chromium.chrome.browser.preferences.password;
 
+import org.chromium.chrome.browser.widget.prefeditor.EditableOption;
+
 /**
  * A class representing information about a saved password entry in Chrome's settngs.
  *
@@ -13,12 +15,13 @@ package org.chromium.chrome.browser.preferences.password;
  * would violate our presubmit checks, and https://crbug.com/424792 indicates that the preferred
  * solution is to move the nested class to top-level.
  */
-public final class SavedPasswordEntry {
+public final class SavedPasswordEntry extends EditableOption {
     private final String mUrl;
     private final String mName;
     private final String mPassword;
 
-    public SavedPasswordEntry(String url, String name, String password) {
+    public SavedPasswordEntry(String id, String url, String name, String password) {
+        super(id, url, name, password, null);
         mUrl = url;
         mName = name;
         mPassword = password;
