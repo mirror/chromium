@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "041fa72f_60eaf5bd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002525
+      },
+      "writtenOn": "2018-01-26T10:35:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "338ee959_672bb70f",
+      "revId": "d804c64fb022a5fb5353504d4bae798799dc40e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74758900_adba2182",
         "filename": "chrome/browser/resources/media/media_engagement.js",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "d804c64fb022a5fb5353504d4bae798799dc40e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e47cb633_cacecd2b",
+        "filename": "chrome/browser/resources/media/media_engagement.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002525
+      },
+      "writtenOn": "2018-01-26T10:35:40Z",
+      "side": 1,
+      "message": "Hidden rows are not technically hidden as they\u0027re not even inserted the DOM. See https://chromium-review.googlesource.com/c/chromium/src/+/886943",
+      "parentUuid": "74758900_adba2182",
+      "revId": "d804c64fb022a5fb5353504d4bae798799dc40e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
