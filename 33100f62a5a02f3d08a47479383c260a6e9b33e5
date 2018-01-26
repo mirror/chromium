@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "79c79c73_ad6e0c29",
+        "filename": "components/assist_ranker/generic_logistic_regression_inference.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1249076
+      },
+      "writtenOn": "2018-01-26T10:15:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a7e96c5_5ad69b31",
+      "range": {
+        "startLine": 71,
+        "startChar": 28,
+        "endLine": 71,
+        "endChar": 39
+      },
+      "revId": "33100f62a5a02f3d08a47479383c260a6e9b33e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2917678d_fc6b762d",
         "filename": "components/assist_ranker/generic_logistic_regression_inference_unittest.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "33100f62a5a02f3d08a47479383c260a6e9b33e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8b5ac8d_2197e350",
+        "filename": "components/assist_ranker/generic_logistic_regression_inference_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1249076
+      },
+      "writtenOn": "2018-01-26T10:15:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2917678d_fc6b762d",
+      "range": {
+        "startLine": 28,
+        "startChar": 62,
+        "endLine": 28,
+        "endChar": 75
+      },
+      "revId": "33100f62a5a02f3d08a47479383c260a6e9b33e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
