@@ -22,6 +22,30 @@
       "revId": "c47c427874b84aa8731915d0fee32db554bcb9bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1def919_5c3ce9b4",
+        "filename": "net/socket/socket_bio_adapter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-26T08:15:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e77dc6b_e3bc916d",
+      "range": {
+        "startLine": 46,
+        "startChar": 31,
+        "endLine": 46,
+        "endChar": 42
+      },
+      "revId": "c47c427874b84aa8731915d0fee32db554bcb9bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
