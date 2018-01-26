@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4fceae2_24f98bd8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2018-01-26T15:04:31Z",
+      "side": 1,
+      "message": "nit: typo",
+      "range": {
+        "startLine": 15,
+        "startChar": 44,
+        "endLine": 15,
+        "endChar": 52
+      },
+      "revId": "7f29a1bad538ffbe2cf7bcf3350fe6a5181318b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7594ca5_9ae0dacd",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2018-01-26T15:04:31Z",
+      "side": 1,
+      "message": "You can remove the forward declaration now that you are including it.",
+      "revId": "7f29a1bad538ffbe2cf7bcf3350fe6a5181318b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc69c117_c939a118",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1287,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2018-01-26T15:04:31Z",
+      "side": 1,
+      "message": "Would it be easier to make this a base::Optional\u003cgfx::Rect\u003e rather than having a separate bit? That could be done for many or all of the places where we are adding new bits.",
+      "revId": "7f29a1bad538ffbe2cf7bcf3350fe6a5181318b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43aa25aa_bb80e6a9",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 7365,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2018-01-26T15:04:31Z",
+      "side": 1,
+      "message": "Does this affect main frame\u0027s behavior at all, or does it just always get its size early because it is the content viewport?",
+      "revId": "7f29a1bad538ffbe2cf7bcf3350fe6a5181318b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
