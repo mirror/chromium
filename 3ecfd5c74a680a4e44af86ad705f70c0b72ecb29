@@ -210,6 +210,24 @@
       "revId": "3ecfd5c74a680a4e44af86ad705f70c0b72ecb29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "895dd583_c4d56c69",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-26T22:00:45Z",
+      "side": 1,
+      "message": "hm, maybe we can adjust the android side to not behave that way but current CL seems like a good start.",
+      "parentUuid": "a67a91bc_1783704f",
+      "revId": "3ecfd5c74a680a4e44af86ad705f70c0b72ecb29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
