@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00f18c46_77922e92",
+        "filename": "ui/webui/resources/cr_elements/shared_style_css.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-26T19:34:35Z",
+      "side": 1,
+      "message": "AFAIK, action-button is only used within dialogs. Perhaps we should change this rule to\n\n[slot\u003d\"button-container\"] .action-button {...}\nto ensure that (same for cancel-button below).",
+      "range": {
+        "startLine": 11,
+        "startChar": 6,
+        "endLine": 11,
+        "endChar": 22
+      },
+      "revId": "5901c5e01138c1da57e741aa67f78ffd3b8b277d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
