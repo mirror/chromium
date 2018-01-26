@@ -79,29 +79,29 @@ description('Test that setting and getting grid-column-gap and grid-row-gap work
 
 debug("Test getting grid-column-gap and grid-row-gap set through CSS");
 
-testGridGapDefinitionsValues("defaultGrid", "0px", "0px");
+testGridGapDefinitionsValues("defaultGrid", "normal", "normal");
 testGridGapDefinitionsValues("gridGap", "20px", "15px");
 testGridGapDefinitionsValues("gridPercentGap", "10%", "15%");
 testGridGapDefinitionsValues("gridSimpleGap", "25px", "25px");
 testGridGapDefinitionsValues("gridSimplePercentGap", "10%", "10%");
-testGridGapDefinitionsValues("gridColumnGap", "0px", "16px");
-testGridGapDefinitionsValues("gridRowGap", "32px", "0px");
+testGridGapDefinitionsValues("gridColumnGap", "normal", "16px");
+testGridGapDefinitionsValues("gridRowGap", "32px", "normal");
 testGridGapDefinitionsValues("gridCalcGaps", "13px", "10px");
 testGridGapDefinitionsValues("gridRowColumnGaps", "12px", "16px");
 testGridGapDefinitionsValues("gridRowColumnGaps", "12px", "16px");
 testGridGapDefinitionsValues("gridRowColumnPercentGaps", "10%", "15%");
 testGridGapDefinitionsValues("gridRowColumnInheritGaps", "25px", "25px");
-testGridGapDefinitionsValues("gridRowColumnInitialGaps", "0px", "0px");
+testGridGapDefinitionsValues("gridRowColumnInitialGaps", "normal", "normal");
 
 debug("");
 debug("Test getting wrong values for grid-column-gap and grid-row-gap set through CSS");
-testGridGapDefinitionsValues("gridInvalidRowGap", "0px", "0px");
-testGridGapDefinitionsValues("gridInvalidColumnGap", "0px", "0px");
-testGridGapDefinitionsValues("gridInvalidMultipleRowColumnGaps", "0px", "0px");
-testGridGapDefinitionsValues("gridInvalidGridGap", "0px", "0px");
-testGridGapDefinitionsValues("gridInvalidNoneGap", "0px", "0px");
-testGridGapDefinitionsValues("gridInvalidImplicitGridGap", "0px", "0px");
-testGridGapDefinitionsValues("gridInvalidLengthRowColumnGaps", "0px", "0px");
+testGridGapDefinitionsValues("gridInvalidRowGap", "normal", "normal");
+testGridGapDefinitionsValues("gridInvalidColumnGap", "normal", "normal");
+testGridGapDefinitionsValues("gridInvalidMultipleRowColumnGaps", "normal", "normal");
+testGridGapDefinitionsValues("gridInvalidGridGap", "normal", "normal");
+testGridGapDefinitionsValues("gridInvalidNoneGap", "normal", "normal");
+testGridGapDefinitionsValues("gridInvalidImplicitGridGap", "normal", "normal");
+testGridGapDefinitionsValues("gridInvalidLengthRowColumnGaps", "normal", "normal");
 
 </script>
 </body>
