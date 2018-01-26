@@ -16,6 +16,24 @@
       "revId": "c1db8867fbcfb5d303f63dc01c772fbe2bfebd85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28fd0131_19a7bbf8",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 64
+      },
+      "lineNbr": 2005,
+      "author": {
+        "id": 1151126
+      },
+      "writtenOn": "2018-01-26T02:37:10Z",
+      "side": 1,
+      "message": "Done, thanks.",
+      "parentUuid": "0d1fb0e0_c30aef49",
+      "revId": "c1db8867fbcfb5d303f63dc01c772fbe2bfebd85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
