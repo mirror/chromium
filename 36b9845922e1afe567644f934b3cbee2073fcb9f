@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04a3c5ce_8127e8cc",
+        "filename": "third_party/WebKit/Source/core/css/parser/SizesCalcParser.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2018-01-26T14:13:30Z",
+      "side": 1,
+      "message": "Nit: You could also modify the comment to \"early return\" (e.g. \"If the token is not an operator...\")",
+      "revId": "36b9845922e1afe567644f934b3cbee2073fcb9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e1eb7a0_4c8de3c6",
+        "filename": "third_party/WebKit/Source/core/css/parser/SizesCalcParser.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2018-01-26T14:13:30Z",
+      "side": 1,
+      "message": "Nit: you could \"spread\" this comment across the code (like you started, with a piece of the comment above)",
+      "range": {
+        "startLine": 40,
+        "startChar": 5,
+        "endLine": 40,
+        "endChar": 10
+      },
+      "revId": "36b9845922e1afe567644f934b3cbee2073fcb9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63abc0f9_aa6f4460",
+        "filename": "third_party/WebKit/Source/core/css/parser/SizesCalcParserTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2018-01-26T14:13:30Z",
+      "side": 1,
+      "message": "Would be good to add a few more tests here that test a mix of \"*\" and \"/\", to check left-associative operators are behaving as they should. (I checked, they do :D)\ne.g. \n```\n{\"calc((100vw - 2 / 2 * 40px - 2 * 30px) / 4)\", 100, true, false},\n{\"calc((100vw - 2 * 2 / 2 * 40px - 2 * 30px) / 3)\", 120, true, false},\n```",
+      "range": {
+        "startLine": 100,
+        "startChar": 6,
+        "endLine": 100,
+        "endChar": 68
+      },
+      "revId": "36b9845922e1afe567644f934b3cbee2073fcb9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

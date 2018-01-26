@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a157b58_7d67307b",
+        "filename": "third_party/WebKit/Source/core/css/parser/SizesCalcParser.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2018-01-26T14:13:30Z",
+      "side": 0,
+      "message": "OMG, can\u0027t believe this is an \"if\" :/ (not like the comment right above it didn\u0027t say \"while\")",
+      "range": {
+        "startLine": 44,
+        "startChar": 4,
+        "endLine": 44,
+        "endChar": 5
+      },
+      "revId": "c67646fb6096ac1d87b516b2eaf2eb9968d2da73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
