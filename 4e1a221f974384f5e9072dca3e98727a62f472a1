@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26a40b14_6afa38eb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browserservices/OriginVerifier.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-26T14:18:46Z",
+      "side": 1,
+      "message": "It didn\u0027t really succeed yet in this case, right?",
+      "range": {
+        "startLine": 220,
+        "startChar": 28,
+        "endLine": 220,
+        "endChar": 37
+      },
+      "revId": "4e1a221f974384f5e9072dca3e98727a62f472a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
