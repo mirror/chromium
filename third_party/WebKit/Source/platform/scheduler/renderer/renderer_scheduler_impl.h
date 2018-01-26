@@ -137,6 +137,7 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   void DidAnimateForInputOnCompositorThread() override;
   void SetRendererHidden(bool hidden) override;
   void SetRendererBackgrounded(bool backgrounded) override;
+  void SetSchedulerKeepAlive(bool keep_alive) override;
 #if defined(OS_ANDROID)
   void PauseTimersForAndroidWebView();
   void ResumeTimersForAndroidWebView();
@@ -660,6 +661,8 @@ class PLATFORM_EXPORT RendererSchedulerImpl
         rail_mode_for_tracing;  // Don't use except for tracing.
     TraceableState<bool, kTracingCategoryNameDebug> renderer_hidden;
     TraceableState<bool, kTracingCategoryNameDefault> renderer_backgrounded;
+    TraceableState<bool, kTracingCategoryNameDefault>
+        keep_alive_fetch_or_worker;
     TraceableState<bool, kTracingCategoryNameInfo>
         stopping_when_backgrounded_enabled;
     TraceableState<bool, kTracingCategoryNameInfo>
