@@ -199,6 +199,7 @@ extern const wchar_t kChromeChildDll[];
 extern const wchar_t kChromeExe[];
 extern const wchar_t kChromeNewExe[];
 extern const wchar_t kChromeOldExe[];
+extern const wchar_t kChromeServerExe[];
 extern const wchar_t kCmdOnOsUpgrade[];
 extern const wchar_t kEULASentinelFile[];
 extern const wchar_t kInstallBinaryDir[];
