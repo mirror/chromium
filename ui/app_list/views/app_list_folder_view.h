@@ -13,10 +13,13 @@
 #include "ui/app_list/views/apps_grid_view_folder_delegate.h"
 #include "ui/app_list/views/folder_header_view.h"
 #include "ui/app_list/views/folder_header_view_delegate.h"
-#include "ui/compositor/layer_animation_observer.h"
 #include "ui/views/controls/button/button.h"
 #include "ui/views/view.h"
 #include "ui/views/view_model.h"
+
+namespace gfx {
+class SlideAnimation;
+}  // namespace gfx
 
 namespace app_list {
 
@@ -27,12 +30,12 @@ class AppListItemView;
 class AppListMainView;
 class AppListModel;
 class FolderHeaderView;
+class TopIconAnimationObserver;
 class PageSwitcher;
 
 class APP_LIST_EXPORT AppListFolderView : public views::View,
                                           public FolderHeaderViewDelegate,
                                           public AppListModelObserver,
-                                          public ui::ImplicitAnimationObserver,
                                           public AppsGridViewFolderDelegate {
  public:
   AppListFolderView(AppsContainerView* container_view,
@@ -47,10 +50,6 @@ class APP_LIST_EXPORT AppListFolderView : public views::View,
   // animation is done unless |hide_for_reparent| is true.
   void ScheduleShowHideAnimation(bool show, bool hide_for_reparent);
 
-  // Gets icon image bounds of the item at |index|, relative to
-  // AppListFolderView.
-  gfx::Rect GetItemIconBoundsAt(int index);
-
   // Hides the view immediately without animation.
   void HideViewImmediately();
 
@@ -64,15 +63,34 @@ class APP_LIST_EXPORT AppListFolderView : public views::View,
   // AppListModelObserver
   void OnAppListItemWillBeDeleted(AppListItem* item) override;
 
-  // ui::ImplicitAnimationObserver
-  void OnImplicitAnimationsCompleted() override;
+  // Returns true if this view's child views are in animation for opening or
+  // closing the folder.
+  bool IsAnimationRunning() const;
 
   AppsGridView* items_grid_view() { return items_grid_view_; }
 
   FolderHeaderView* folder_header_view() { return folder_header_view_; }
 
+  views::View* background_view() { return background_view_; }
+
+  views::View* contents_container() { return contents_container_; }
+
+  AppListItemView* activated_folder_item_view() {
+    return activated_folder_item_view_;
+  }
+
+  const AppListFolderItem* folder_item() const { return folder_item_; }
+
+  gfx::Rect folder_item_icon_bounds() const { return folder_item_icon_bounds_; }
+
+  gfx::Rect preferred_bounds() const { return preferred_bounds_; }
+
  private:
   void CalculateIdealBounds();
+
+  // Updates preferred bounds of this view based on the activated folder item
+  // icon's bounds.
+  void UpdatePreferredBounds();
 
   // Starts setting up drag in root level apps grid view for re-parenting a
   // folder item.
@@ -104,20 +122,41 @@ class APP_LIST_EXPORT AppListFolderView : public views::View,
   bool IsOEMFolder() const override;
   void SetRootLevelDragViewVisible(bool visible) override;
 
-  AppsContainerView* container_view_;     // Not owned.
-  AppListMainView* app_list_main_view_;   // Not Owned.
-  FolderHeaderView* folder_header_view_;  // Owned by views hierarchy.
-  AppsGridView* items_grid_view_;         // Owned by the views hierarchy.
-  PageSwitcher* page_switcher_ = nullptr;  // Owned by the views hierarchy.
+  // Views below are not owned by views hierarchy.
+  AppsContainerView* container_view_;
+  AppListMainView* app_list_main_view_;
+  AppListItemView* activated_folder_item_view_ = nullptr;
+
+  // The view is used to draw a background with corner radius.
+  views::View* background_view_;  // Not owned.
+
+  // The view is used as a container for all following views.
+  views::View* contents_container_;  // Not owned.
+
+  FolderHeaderView* folder_header_view_;  // Not owned.
+  AppsGridView* items_grid_view_;         // Not owned.
+  PageSwitcher* page_switcher_;           // Not owned.
 
   std::unique_ptr<views::ViewModel> view_model_;
 
   AppListModel* model_;             // Not owned.
   AppListFolderItem* folder_item_;  // Not owned.
 
+  // The bounds of the activated folder item icon relative to this view.
+  gfx::Rect folder_item_icon_bounds_;
+
+  // The preferred bounds of this view relative to AppsContainerView.
+  gfx::Rect preferred_bounds_;
+
   bool hide_for_reparent_;
 
   base::string16 accessible_name_;
+
+  std::unique_ptr<gfx::SlideAnimation> background_animation_;
+  std::unique_ptr<gfx::SlideAnimation> folder_item_title_animation_;
+  std::unique_ptr<TopIconAnimationObserver> top_icon_animation_delegate_;
+  std::unique_ptr<ui::ImplicitAnimationObserver>
+      contents_container_animation_delegate_;
 
   DISALLOW_COPY_AND_ASSIGN(AppListFolderView);
 };
