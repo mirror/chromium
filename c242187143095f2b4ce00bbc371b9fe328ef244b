@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8868becb_dd4a84b8",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.h",
+        "patchSetId": 54
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-26T20:04:06Z",
+      "side": 1,
+      "message": "I\u0027m not sure I follow. It sounds like the ownership is described as \"A owns B and A owns C, thus B and C have the same lifetime\". Is there a risk of invalid access happening while one or the other is being destroyed?",
+      "revId": "c242187143095f2b4ce00bbc371b9fe328ef244b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e60edf68_599f17a1",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.h",
+        "patchSetId": 54
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-26T20:04:06Z",
+      "side": 1,
+      "message": "This is the task runner for...the worker backing thread, right?",
+      "revId": "c242187143095f2b4ce00bbc371b9fe328ef244b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dcc4918_3af54945",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.cpp",
+        "patchSetId": 54
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-26T20:04:06Z",
+      "side": 1,
+      "message": "When would this happen? In unit tests only? A comment would be nice.",
+      "revId": "c242187143095f2b4ce00bbc371b9fe328ef244b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e1d64d9_da8361e5",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.cpp",
+        "patchSetId": 54
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-26T20:04:06Z",
+      "side": 1,
+      "message": "nit: Is there a reason to clear this? The destructor will implicitly call ~HashSet.",
+      "revId": "c242187143095f2b4ce00bbc371b9fe328ef244b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76ef6ef9_6e105025",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.cpp",
+        "patchSetId": 54
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-26T20:04:06Z",
+      "side": 1,
+      "message": "Please do not use raw pointers for ownership. Instead, use std::make_unique here and move the unique_ptr into CompositorMutatorClient.",
+      "revId": "c242187143095f2b4ce00bbc371b9fe328ef244b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0b492f5_a4cc8704",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.cpp",
+        "patchSetId": 54
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-26T20:04:06Z",
+      "side": 1,
+      "message": "This is on the worklet thread, but CompositorMutatorImpl::Mutate is on the compositor thread, right? What prevents concurrent access to |outputs_|?\n\nIt *seems* to be AnimationWorkletProxyClientImpl using a WaitableEvent to block one thread for the duration that the other can access, but that\u0027s not very explicit here. Would explicit synchronization of some kind make this clearer?",
+      "revId": "c242187143095f2b4ce00bbc371b9fe328ef244b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "680b6f75_c3a991f9",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.h",
+        "patchSetId": 54
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-26T20:04:06Z",
+      "side": 1,
+      "message": "Are the compositor thread and mutator thread the same thing (constructor suggests they are)? Both terms are used, but I assume we don\u0027t have four threads involved here...",
+      "revId": "c242187143095f2b4ce00bbc371b9fe328ef244b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6f4a92a_0e92326c",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.h",
+        "patchSetId": 54
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-26T20:04:06Z",
+      "side": 1,
+      "message": "has no definition?",
+      "revId": "c242187143095f2b4ce00bbc371b9fe328ef244b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
