@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04a91cae_db5ccd0f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-26T18:24:00Z",
+      "side": 1,
+      "message": "Actually, could you make this a Javadoc @deprecated tag? That would give most of the benefits of machine-readable deprecation, without the build warnings.",
+      "range": {
+        "startLine": 168,
+        "startChar": 7,
+        "endLine": 168,
+        "endChar": 30
+      },
+      "revId": "90c72ebd65a22f06e6514c5a10e264119f1be364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
