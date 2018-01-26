@@ -202,6 +202,30 @@
     },
     {
       "key": {
+        "uuid": "3e1ad6bb_f47631bc",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-26T01:00:20Z",
+      "side": 1,
+      "message": "Yes, good point. :)",
+      "parentUuid": "d4616c81_39573c28",
+      "range": {
+        "startLine": 102,
+        "startChar": 38,
+        "endLine": 102,
+        "endChar": 55
+      },
+      "revId": "48bf2980458d22efec131f66a448339dbbfe2338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9a84bf9_69694b0a",
         "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_bridge.h",
         "patchSetId": 1
