@@ -343,6 +343,30 @@
     },
     {
       "key": {
+        "uuid": "c7447e45_6001f255",
+        "filename": "components/cronet/native/engine.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-26T16:35:25Z",
+      "side": 1,
+      "message": "I think this fixes the crash at least, so marking resolved.",
+      "parentUuid": "1371c640_8810639b",
+      "range": {
+        "startLine": 151,
+        "startChar": 33,
+        "endLine": 151,
+        "endChar": 0
+      },
+      "revId": "1cb3a711212092685173bdf4ca3deb635788538f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1ccf95a_7dc9ebe9",
         "filename": "components/cronet/native/engine.cc",
         "patchSetId": 7
