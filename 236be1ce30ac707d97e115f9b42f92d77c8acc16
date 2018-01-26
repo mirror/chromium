@@ -22,6 +22,30 @@
       "revId": "236be1ce30ac707d97e115f9b42f92d77c8acc16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4582c96e_b96559b7",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1456,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-26T09:54:25Z",
+      "side": 1,
+      "message": "I don\u0027t understand what you mean with:\n\n  virtual \u0026 visual\n\nCould you draw a picture of the overlapping rectangles? :)\n\n\u003e How about add !HasOffscreenRect(container).\n\nHow about this:\n\n  if focused element is not visible at all AND the container is (partially) visible:\n    use container\u0027s visible rect as starting_rect\n  else:\n    use the frame\u0027s visual viewport as starting_rect\n\n?",
+      "parentUuid": "85c47ea7_e6a4716d",
+      "range": {
+        "startLine": 1455,
+        "startChar": 0,
+        "endLine": 1456,
+        "endChar": 73
+      },
+      "revId": "236be1ce30ac707d97e115f9b42f92d77c8acc16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
