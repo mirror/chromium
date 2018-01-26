@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5c91f92_c85d93e0",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_paint_fragment.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2018-01-26T19:59:22Z",
+      "side": 1,
+      "message": "I am weary of methods that return different things depending on fragment types. This is one of the things that makes understanding LegacyLayout so tough. What do you think of:\nInlineOffsetToContainerBox, with DCHECK(isInline).",
+      "revId": "3946e27277c8f1ae02079f4cb07428c14be8d8e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
