@@ -553,8 +553,12 @@ void DelegatedFrameHost::OnBeginFramePausedChanged(bool paused) {
 
 void DelegatedFrameHost::OnFirstSurfaceActivation(
     const viz::SurfaceInfo& surface_info) {
+  // This is used by macOS' unique resize path.
+  client_->OnFirstSurfaceActivation(surface_info);
+
   gfx::Size frame_size_in_dip = gfx::ConvertSizeToDIP(
       surface_info.device_scale_factor(), surface_info.size_in_pixels());
+
   if (enable_surface_synchronization_) {
     // If this is the first Surface created after navigation, notify |client_|.
     // If the Surface was created before navigation, drop it.
