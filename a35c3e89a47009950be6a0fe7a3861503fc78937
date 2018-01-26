@@ -70,6 +70,23 @@
     },
     {
       "key": {
+        "uuid": "c99a3a41_3a91d8b0",
+        "filename": "chrome/common/media_router/discovery/media_sink_internal.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-26T23:31:19Z",
+      "side": 1,
+      "message": "I was thinking that Cast or DIAL sinks would add a prefix to the UUID, like cast-dial:\n\nThis way, if another MRP uses a UUID, there isn\u0027t a possibility of collision, and it becomes easy to tell which MRP generated the sink id.\n\nIdeally, each MRP would add a separate prefix (so we would have cast:\u003cuuid\u003e and dial:\u003cuuid\u003e); but does that make it harder to implement dual discovery?",
+      "revId": "a35c3e89a47009950be6a0fe7a3861503fc78937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e8e278d_05bac7a0",
         "filename": "chrome/common/media_router/discovery/media_sink_internal.h",
         "patchSetId": 1
