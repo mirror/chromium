@@ -8,8 +8,10 @@
 #include <string>
 
 #include "base/macros.h"
+#include "content/common/navigation.mojom.h"
 #include "content/common/navigation_params.h"
 #include "content/public/renderer/navigation_state.h"
+#include "mojo/public/cpp/bindings/binding.h"
 
 namespace content {
 
@@ -27,6 +29,7 @@ class CONTENT_EXPORT NavigationStateImpl : public NavigationState {
   ui::PageTransition GetTransitionType() override;
   bool WasWithinSameDocument() override;
   bool IsContentInitiated() override;
+  void UnBindNavigationClient() override;
 
   const CommonNavigationParams& common_params() const { return common_params_; }
   const RequestNavigationParams& request_params() const {
@@ -40,6 +43,12 @@ class CONTENT_EXPORT NavigationStateImpl : public NavigationState {
 
   void set_transition_type(ui::PageTransition transition) {
     common_params_.transition = transition;
+  }
+
+  void set_navigation_client_binding(
+      std::unique_ptr<mojo::Binding<mojom::NavigationClient>>
+          navigation_client_binding) {
+    navigation_client_binding_ = std::move(navigation_client_binding);
   }
 
  private:
@@ -67,6 +76,9 @@ class CONTENT_EXPORT NavigationStateImpl : public NavigationState {
   // FrameLoader has committedFirstRealDocumentLoad as a replacement. (Added for
   // http://crbug.com/178380).
   const RequestNavigationParams request_params_;
+
+  std::unique_ptr<mojo::Binding<mojom::NavigationClient>>
+      navigation_client_binding_;
 
   DISALLOW_COPY_AND_ASSIGN(NavigationStateImpl);
 };
