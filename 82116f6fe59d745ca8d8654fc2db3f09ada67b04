@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "67999616_a1931dbb",
+        "filename": "chromeos/dbus/proto/media_perception.proto",
+        "patchSetId": 8
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-26T17:55:26Z",
+      "side": 1,
+      "message": "yeah",
+      "parentUuid": "a9c45850_f7132a17",
+      "revId": "82116f6fe59d745ca8d8654fc2db3f09ada67b04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49fcad2a_b0c67392",
         "filename": "extensions/browser/api/media_perception_private/conversion_utils.cc",
         "patchSetId": 8
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Just AudioSpectrogram right?",
       "parentUuid": "49fcad2a_b0c67392",
+      "revId": "82116f6fe59d745ca8d8654fc2db3f09ada67b04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8f5d8010_1f0c62af",
+        "filename": "extensions/browser/api/media_perception_private/conversion_utils.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-26T17:55:26Z",
+      "side": 1,
+      "message": "and other places it makes sense..",
+      "parentUuid": "96528ab4_b2607f9c",
       "revId": "82116f6fe59d745ca8d8654fc2db3f09ada67b04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
