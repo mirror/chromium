@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16035da8_9b10375e",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ContextSnapshot.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-26T02:22:44Z",
+      "side": 1,
+      "message": "peria@: I don\u0027t fully understand this. When do we need to use InstallRuntimeEnabledFeatures and when do we need to use install_runtime_enabled_features_function_?\n\nEither way, can we land this change separately from this CL?",
+      "revId": "de4b707dde898e94d41129d311a040e33643b044",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
