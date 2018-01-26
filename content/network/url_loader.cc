@@ -15,6 +15,7 @@
 #include "content/network/data_pipe_element_reader.h"
 #include "content/network/network_context.h"
 #include "content/network/network_service_impl.h"
+#include "content/network/network_service_url_loader_factory.h"
 #include "mojo/public/cpp/system/simple_watcher.h"
 #include "net/base/elements_upload_data_stream.h"
 #include "net/base/mime_sniffer.h"
@@ -184,7 +185,8 @@ std::unique_ptr<net::UploadDataStream> CreateUploadDataStream(
 
 }  // namespace
 
-URLLoader::URLLoader(NetworkContext* context,
+URLLoader::URLLoader(NetworkServiceURLLoaderFactory* url_loader_factory,
+                     NetworkContext* context,
                      network::mojom::URLLoaderRequest url_loader_request,
                      int32_t options,
                      const network::ResourceRequest& request,
@@ -192,7 +194,8 @@ URLLoader::URLLoader(NetworkContext* context,
                      network::mojom::URLLoaderClientPtr url_loader_client,
                      const net::NetworkTrafficAnnotationTag& traffic_annotation,
                      uint32_t process_id)
-    : context_(context),
+    : url_loader_factory_(url_loader_factory),
+      context_(context),
       options_(options),
       resource_type_(request.resource_type),
       is_load_timing_enabled_(request.enable_load_timing),
@@ -207,7 +210,7 @@ URLLoader::URLLoader(NetworkContext* context,
                                   mojo::SimpleWatcher::ArmingPolicy::MANUAL),
       report_raw_headers_(report_raw_headers),
       weak_ptr_factory_(this) {
-  context_->RegisterURLLoader(this);
+  url_loader_factory_->RegisterURLLoader(this);
   binding_.set_connection_error_handler(
       base::BindOnce(&URLLoader::OnConnectionError, base::Unretained(this)));
 
@@ -256,7 +259,7 @@ URLLoader::URLLoader(NetworkContext* context,
 }
 
 URLLoader::~URLLoader() {
-  context_->DeregisterURLLoader(this);
+  url_loader_factory_->DeregisterURLLoader(this);
 
   if (update_body_read_before_paused_)
     UpdateBodyReadBeforePaused();
