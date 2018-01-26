@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5f319bb9_73312821",
+        "filename": "chromeos/components/tether/ble_connection_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-26T20:28:24Z",
+      "side": 1,
+      "message": "Yes, this is absolutely necessary. This is the enum value which informs observers that a GATT connection was actually attempted and differentiates this attempt from one in which there was no response from the remote device at all.\n\nHowever, you\u0027re right that wording is unclear here - this proves that a GATT connection was *attempted*, but not necessarily established (e.g., if there was an error creating the GATT connection). I\u0027ve changed the enum value to STATE_CHANGE_DETAIL_GATT_CONNECTION_WAS_ATTEMPTED for clarity. What we really want to track here is whether we actually tried a connection vs. received no response at all.",
+      "parentUuid": "d82b6758_f8768ec7",
+      "range": {
+        "startLine": 193,
+        "startChar": 27,
+        "endLine": 193,
+        "endChar": 78
+      },
+      "revId": "32ace73026a58e3605a7982281c00e937ee3975f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae99278d_d76fe268",
         "filename": "chromeos/components/tether/ble_connection_manager.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "32ace73026a58e3605a7982281c00e937ee3975f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "386dd568_eadbb84e",
+        "filename": "chromeos/components/tether/ble_connection_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-26T20:28:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae99278d_d76fe268",
+      "range": {
+        "startLine": 67,
+        "startChar": 13,
+        "endLine": 67,
+        "endChar": 30
+      },
+      "revId": "32ace73026a58e3605a7982281c00e937ee3975f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
