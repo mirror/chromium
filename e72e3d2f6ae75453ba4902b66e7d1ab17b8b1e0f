@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "8f9ed4b7_9308f247",
+        "filename": "ash/login/ui/scrollable_users_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-26T19:52:17Z",
+      "side": 1,
+      "message": "Oops, I missed that there were two calls to this ctor.",
+      "parentUuid": "a4cef2ff_a754a193",
+      "revId": "e72e3d2f6ae75453ba4902b66e7d1ab17b8b1e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03eee1e0_f6c0b47d",
         "filename": "ash/login/ui/scrollable_users_list_view.cc",
         "patchSetId": 1
