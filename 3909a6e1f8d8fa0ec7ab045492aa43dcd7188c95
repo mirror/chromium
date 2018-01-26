@@ -22,6 +22,76 @@
       "revId": "3909a6e1f8d8fa0ec7ab045492aa43dcd7188c95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bf0e5ea_a13b567e",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 4685,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-26T10:56:07Z",
+      "side": 1,
+      "message": "I\u0027m the wrong person to judge. sabineb@ or msarda@ should be more knowledgeable.\n\nHowever, is it title case?",
+      "parentUuid": "9a52ba0e_6326c4c0",
+      "range": {
+        "startLine": 4685,
+        "startChar": 21,
+        "endLine": 4685,
+        "endChar": 27
+      },
+      "revId": "3909a6e1f8d8fa0ec7ab045492aa43dcd7188c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bf0560a_4dafca9d",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 4692,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-26T10:56:07Z",
+      "side": 1,
+      "message": "We already have IDS_MANAGE_PASSWORDS_CONFIRM_GENERATED_TITLE. Do you want to reuse it? I\u0027m fine either way.",
+      "range": {
+        "startLine": 4690,
+        "startChar": 8,
+        "endLine": 4692,
+        "endChar": 18
+      },
+      "revId": "3909a6e1f8d8fa0ec7ab045492aa43dcd7188c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caa0f849_f8d908e0",
+        "filename": "chrome/browser/ui/views/passwords/password_sign_in_promo_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-01-26T10:56:07Z",
+      "side": 1,
+      "message": "This directly overlaps with another CL you are on. And I agree with msarda@ that this class as a view isn\u0027t particularly useful given that it just wraps a label.\nLet\u0027s make it operate on the parent\u0027s layout manager.",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 32
+      },
+      "revId": "3909a6e1f8d8fa0ec7ab045492aa43dcd7188c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
