@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "f880caf7_e8f82b83",
+        "filename": "chrome/browser/ui/ash/ksv/keyboard_shortcut_viewer_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-26T18:22:03Z",
+      "side": 1,
+      "message": "ACK. I will check the DEP when implementing opening KSV from the Settings and the decide which method to use.",
+      "parentUuid": "44116c84_d3471109",
+      "range": {
+        "startLine": 11,
+        "startChar": 5,
+        "endLine": 11,
+        "endChar": 31
+      },
+      "revId": "86ea79b8b9015671a5c3fa96957367f5a1571346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1392ea26_50b9a488",
         "filename": "ui/chromeos/ksv/BUILD.gn",
         "patchSetId": 3
@@ -87,6 +111,24 @@
       "revId": "86ea79b8b9015671a5c3fa96957367f5a1571346",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0f0fc4c_d569b33b",
+        "filename": "ui/chromeos/ksv/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-26T18:22:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1392ea26_50b9a488",
+      "revId": "86ea79b8b9015671a5c3fa96957367f5a1571346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -107,6 +149,24 @@
     },
     {
       "key": {
+        "uuid": "0d1df6be_2ab4416b",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-26T18:22:03Z",
+      "side": 1,
+      "message": "Here is to check the empty |shortcut_key_codes|, not the item_list itself.\nThe item_list is a static local and will not be empty.",
+      "parentUuid": "41af8883_cef61c90",
+      "revId": "86ea79b8b9015671a5c3fa96957367f5a1571346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69bd2087_4a5f024d",
         "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.cc",
         "patchSetId": 3
@@ -121,6 +181,24 @@
       "revId": "86ea79b8b9015671a5c3fa96957367f5a1571346",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf47860c_5e400a0d",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-26T18:22:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69bd2087_4a5f024d",
+      "revId": "86ea79b8b9015671a5c3fa96957367f5a1571346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -141,6 +219,24 @@
     },
     {
       "key": {
+        "uuid": "6a5632b7_b02b5f51",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-26T18:22:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7188c3b0_6b1c91f7",
+      "revId": "86ea79b8b9015671a5c3fa96957367f5a1571346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11ad2166_7dc1ff76",
         "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.h",
         "patchSetId": 3
@@ -155,6 +251,24 @@
       "revId": "86ea79b8b9015671a5c3fa96957367f5a1571346",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "100b9634_8c454c32",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-26T18:22:03Z",
+      "side": 1,
+      "message": "Ack. Modified the Show() to return the Widget*. I will need the widget to change bounds or other things in test. I can write the test api, but this is probably most efficient way. So will keep the fwd decl.",
+      "parentUuid": "11ad2166_7dc1ff76",
+      "revId": "86ea79b8b9015671a5c3fa96957367f5a1571346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -181,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "6eaa330b_0e3f9a6e",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-26T18:22:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aafd3791_767e467d",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 26
+      },
+      "revId": "86ea79b8b9015671a5c3fa96957367f5a1571346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9965ee3_8de39fd2",
         "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.h",
         "patchSetId": 3
@@ -195,6 +333,24 @@
       "revId": "86ea79b8b9015671a5c3fa96957367f5a1571346",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99b2fc01_2e10206e",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-26T18:22:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9965ee3_8de39fd2",
+      "revId": "86ea79b8b9015671a5c3fa96957367f5a1571346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
