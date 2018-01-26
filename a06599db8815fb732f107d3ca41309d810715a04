@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d986b803_51f675c7",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-26T21:33:42Z",
+      "side": 1,
+      "message": "Oh I didn\u0027t notice there\u0027s a OnClientConnectionLost between these functions and SurfaceObserver overrides. I moved both to be with mojom::FrameSinkManager overrides.",
+      "parentUuid": "54436ca4_39cf41c9",
+      "revId": "a06599db8815fb732f107d3ca41309d810715a04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1555a0b8_986f93b7",
         "filename": "components/viz/service/hit_test/hit_test_aggregator.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-26T15:34:17Z",
       "side": 1,
       "message": "What happens if this fails exactly? It seems like other member variables are going to be in a bad state.",
+      "revId": "a06599db8815fb732f107d3ca41309d810715a04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d01a197_cb316e46",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-26T21:33:42Z",
+      "side": 1,
+      "message": "Right, I think it makes sense to just change them to be DCHECKs? HTA is pretty much unusable if these failed.",
+      "parentUuid": "1555a0b8_986f93b7",
       "revId": "a06599db8815fb732f107d3ca41309d810715a04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "26e0d671_56292f7f",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-26T21:33:42Z",
+      "side": 1,
+      "message": "I changed TestFrameSinkManagerImpl to own a list of HitTestAggregator instead of HitTestAggregator, wdyt?",
+      "parentUuid": "94b631d8_873154d1",
+      "range": {
+        "startLine": 94,
+        "startChar": 6,
+        "endLine": 94,
+        "endChar": 36
+      },
+      "revId": "a06599db8815fb732f107d3ca41309d810715a04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "726ee7aa_7e5167f0",
         "filename": "ui/message_center/BUILD.gn",
         "patchSetId": 6
@@ -70,6 +130,24 @@
       "writtenOn": "2018-01-26T15:34:17Z",
       "side": 1,
       "message": "I think it\u0027s //mojo/edk/system you need.",
+      "revId": "a06599db8815fb732f107d3ca41309d810715a04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c9908c5_c006c7d9",
+        "filename": "ui/message_center/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-26T21:33:42Z",
+      "side": 1,
+      "message": "Done, and updated the run_all_unittests file you mentioned in the previous comment. These tests should run for win, mac, linux and chromeos according this line [1] tho - I don\u0027t understand why only win is failing.\n\n[1] https://cs.chromium.org/chromium/src/ui/base/ui_features.gni?type\u003dcs\u0026q\u003denable_message\u0026l\u003d18",
+      "parentUuid": "726ee7aa_7e5167f0",
       "revId": "a06599db8815fb732f107d3ca41309d810715a04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
