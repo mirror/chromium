@@ -76,7 +76,8 @@
     "tools/valgrind",
     "tools/vim",
     "tools/win",
-    "tools/xdisplaycheck"
+    "tools/xdisplaycheck",
+    "url"
   ],
   "enabled_refglobs": [
     "refs/heads/master",
