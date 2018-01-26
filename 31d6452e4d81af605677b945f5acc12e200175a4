@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5230bb92_522599b7",
+        "filename": "remoting/android/java/AndroidManifest.xml.jinja2",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2018-01-26T01:22:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3c68302_c8fcc2df",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 75
+      },
+      "revId": "31d6452e4d81af605677b945f5acc12e200175a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cdca0d7f_6ce4f18a",
         "filename": "remoting/android/java/AndroidManifest.xml.jinja2",
         "patchSetId": 1
@@ -60,6 +84,30 @@
       "writtenOn": "2018-01-26T00:08:20Z",
       "side": 1,
       "message": "I\u0027m not sure why this is needed, or what its value should be?\nGetting this wrong will break third-party authentication, and users will be unable to use the official Chrome Remote Desktop Android app to connect to Google Corp machines.\nI think this is a handler for an \"intent:...\" OAuth redirect-URL, so I don\u0027t know if \"host\" has any meaning here?\nTo test this end-to-end on Corp, the APK_PACKAGE_NAME needs to be \"com.google.chromeremotedesktop\" for the redirect-URL to be whitelisted. That will be the case for an official build of the Android app.\nYou could maybe land this CL speculatively, then wait for the official builders to produce a build, then test it by connecting to a Corp machine.",
+      "range": {
+        "startLine": 38,
+        "startChar": 40,
+        "endLine": 38,
+        "endChar": 0
+      },
+      "revId": "31d6452e4d81af605677b945f5acc12e200175a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f35c4f4c_8879b159",
+        "filename": "remoting/android/java/AndroidManifest.xml.jinja2",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2018-01-26T01:22:54Z",
+      "side": 1,
+      "message": "\u003e I\u0027m not sure why this is needed, or what its value should be?\n\nAndroidManifest.xml:37 At least one `host` must be specified: AppLinkUrlError [warning]\n                \u003cdata android:scheme\u003d\"org.chromium.chromoting\"/\u003e\n                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n\u003e Getting this wrong will break third-party authentication, and users will be unable to use the official Chrome Remote Desktop Android app to connect to Google Corp machines.\n\u003e I think this is a handler for an \"intent:...\" OAuth redirect-URL, so I don\u0027t know if \"host\" has any meaning here?\n\nhttps://developer.android.com/guide/topics/manifest/data-element.html\nI don\u0027t think it\u0027s required but for some reason the linter is requiring it...\n\nIf you specify the host then your intent URL will need to be:\nintent://HOST_NAME/oauthredirect/...\n\nI think the host name is only for redirecting request to the right app or intent. It\u0027s mostly just for string matching... \"*\" allows the HOST_NAME to be an empty string or anything...\n\n\u003e To test this end-to-end on Corp, the APK_PACKAGE_NAME needs to be \"com.google.chromeremotedesktop\" for the redirect-URL to be whitelisted. That will be the case for an official build of the Android app.\n\nI\u0027ve somehow verified that if you make an anchor with this href:\nintent:///oauthredirect/#Intent;package\u003dorg.chromium.chromoting;scheme\u003dorg.chromium.chromoting;end;\n\nand open it with Chrome, then it still opens our app, and ThirdPartyTokenFetcher$OAuthRedirectActivity.onStart() is still being called.\n\n\u003e You could maybe land this CL speculatively, then wait for the official builders to produce a build, then test it by connecting to a Corp machine.\n\nYeah.. That\u0027s probably the only way to clearly tell that third party auth flow still works...",
+      "parentUuid": "cdca0d7f_6ce4f18a",
       "range": {
         "startLine": 38,
         "startChar": 40,
