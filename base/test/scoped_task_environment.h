@@ -15,6 +15,7 @@ namespace base {
 class MessageLoop;
 class TaskScheduler;
 class TestMockTimeTaskRunner;
+class TickClock;
 
 namespace test {
 
@@ -107,6 +108,10 @@ class ScopedTaskEnvironment {
   // Only valid for instances with a MOCK_TIME MainThreadType.
   // Short for FastForwardBy(TimeDelta::Max()).
   void FastForwardUntilNoTasksRemain();
+
+  // Returns the TickClock used by the task runner, only valid for instances
+  // with a MOCK_TIME MainThreadType.
+  std::unique_ptr<TickClock> GetMockTickClock();
 
  private:
   class TestTaskTracker;

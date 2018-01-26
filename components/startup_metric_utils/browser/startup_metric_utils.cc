@@ -20,7 +20,6 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/sys_info.h"
 #include "base/task_scheduler/post_task.h"
-#include "base/task_scheduler/task_traits.h"
 #include "base/threading/platform_thread.h"
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
@@ -574,8 +573,8 @@ void RecordBrowserMainMessageLoopStart(base::TimeTicks ticks,
   // Record the hard page fault count in a background thread as this is quite
   // expensive to compute.
   base::PostTaskWithTraits(FROM_HERE,
-                           {base::TaskPriority::BACKGROUND,
-                            base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
+                           {base::TaskPriority::BACKGROUND ||
+                            TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
                            base::BindOnce(&RecordHardFaultHistogram));
 #endif
 
