@@ -525,10 +525,11 @@ void Widget::SetBoundsConstrained(const gfx::Rect& bounds) {
   if (work_area.IsEmpty()) {
     SetBounds(bounds);
   } else {
+    gfx::Rect new_bounds = bounds;
     // Inset the work area slightly.
     work_area.Inset(10, 10, 10, 10);
-    work_area.AdjustToFit(bounds);
-    SetBounds(work_area);
+    new_bounds.AdjustToFit(work_area);
+    SetBounds(new_bounds);
   }
 }
 
