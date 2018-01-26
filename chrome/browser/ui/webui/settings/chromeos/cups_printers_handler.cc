@@ -8,6 +8,7 @@
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
+#include "base/containers/flat_map.h"
 #include "base/files/file_util.h"
 #include "base/json/json_string_value_serializer.h"
 #include "base/logging.h"
@@ -32,6 +33,7 @@
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/debug_daemon_client.h"
 #include "chromeos/printing/ppd_cache.h"
+#include "chromeos/printing/ppd_line_reader.h"
 #include "chromeos/printing/ppd_provider.h"
 #include "chromeos/printing/printer_configuration.h"
 #include "chromeos/printing/printing_constants.h"
@@ -720,8 +722,22 @@ void CupsPrintersHandler::FileSelected(const base::FilePath& path,
                                        int index,
                                        void* params) {
   DCHECK(!webui_callback_id_.empty());
-  ResolveJavascriptCallback(base::Value(webui_callback_id_),
-                            base::Value(path.value()));
+
+  auto ValueDict = base::Value(base::Value::Type::DICTIONARY);
+  ValueDict.SetKey("path", base::Value(path.value()));
+  ValueDict.SetKey("valid", base::Value(false));
+
+  // Attempt to read the first line of the file to see if it contains the "magic
+  // number" string which is present in all PPD files.
+  std::string contents;
+  if (ReadFileToString(path, &contents) &&
+      PpdLineReader::ContainsHeaderString(contents, 255)) {
+    ValueDict.SetKey(
+        "valid", base::Value(base::StartsWith(line, kPPDMagicNumberString,
+                                              base::CompareCase::SENSITIVE)));
+  }
+
+  ResolveJavascriptCallback(base::Value(webui_callback_id_), ValueDict);
   webui_callback_id_.clear();
 }
 

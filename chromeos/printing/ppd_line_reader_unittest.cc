@@ -181,5 +181,19 @@ TEST(PpdLineReaderTest, CorruptGzipData) {
   EXPECT_TRUE(reader->Error());
 }
 
+TEST(PpdLineReaderTest, SimplePpdContainsHeaderString) {
+  EXPECT_TRUE(PpdLineReader::ContainsHeaderString(kTestPpd, 255));
+}
+
+TEST(PpdLineReaderTest, GzippedPpdContainsHeaderString) {
+  std::string gzipped_contents(kTestPpdGzipped, sizeof(kTestPpdGzipped));
+  EXPECT_TRUE(PpdLineReader::ContainsHeaderString(gzipped_contents, 255));
+}
+
+TEST(PpdLineReaderTest, InvalidPpdHeaderString) {
+  EXPECT_FALSE(PpdLineReader::ContainsHeaderString(
+      "*%%%% PPD file for HP PSC 900 Series with CUPS.", 255));
+}
+
 }  // namespace
 }  // namespace chromeos
