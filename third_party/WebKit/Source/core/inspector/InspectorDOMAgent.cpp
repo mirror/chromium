@@ -309,8 +309,7 @@ void InspectorDOMAgent::Unbind(Node* node, NodeToIdMap* nodes_map) {
       Unbind(content_document, nodes_map);
   }
 
-  for (ShadowRoot* root = node->YoungestShadowRoot(); root;
-       root = root->OlderShadowRoot())
+  if (ShadowRoot* root = node->GetShadowRoot())
     Unbind(root, nodes_map);
 
   if (node->IsElementNode()) {
@@ -943,8 +942,6 @@ static Node* NextNodeWithShadowDOMInMind(const Node& current,
       return nullptr;
     if (node->IsShadowRoot()) {
       const ShadowRoot* shadow_root = ToShadowRoot(node);
-      if (shadow_root->OlderShadowRoot())
-        return shadow_root->OlderShadowRoot();
       Element& host = shadow_root->host();
       if (host.HasChildren())
         return host.firstChild();
@@ -1983,8 +1980,7 @@ void InspectorDOMAgent::DidPerformElementShadowDistribution(
   if (!shadow_host_id)
     return;
 
-  for (ShadowRoot* root = shadow_host->YoungestShadowRoot(); root;
-       root = root->OlderShadowRoot()) {
+  if (ShadowRoot* root = shadow_host->GetShadowRoot()) {
     const HeapVector<Member<V0InsertionPoint>>& insertion_points =
         root->DescendantInsertionPoints();
     for (const auto& it : insertion_points) {
