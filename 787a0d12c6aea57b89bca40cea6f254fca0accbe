@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f9033e6_88fa68fb",
+        "filename": "cc/raster/zero_copy_raster_buffer_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-26T21:33:56Z",
+      "side": 1,
+      "message": "This block is from LayerTreeResourceProvider::ScopedWriteLockGpuMemoryBuffer::~ScopedWriteLockGpuMemoryBuffer() call to CreateAndBindImage(resource);",
+      "revId": "787a0d12c6aea57b89bca40cea6f254fca0accbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40a9a217_791a2899",
+        "filename": "cc/raster/zero_copy_raster_buffer_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-26T21:33:56Z",
+      "side": 1,
+      "message": "This too",
+      "revId": "787a0d12c6aea57b89bca40cea6f254fca0accbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bf30a44_3c486060",
+        "filename": "cc/raster/zero_copy_raster_buffer_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-26T21:33:56Z",
+      "side": 1,
+      "message": "This is from LayerTreeResourceProvider::PrepareSendToParent().\n\nHowever I now realize that ResourceProvider makes a single SyncToken for everything sent in a frame, whereas this would for every resource again, hm.\n\nBut then, if we do this stuff on the worker context, we\u0027ll need to insert the sync token from there not from ResourceProvider with its compositor context, hm.",
+      "revId": "787a0d12c6aea57b89bca40cea6f254fca0accbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59171213_ed382527",
+        "filename": "cc/raster/zero_copy_raster_buffer_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-26T21:33:56Z",
+      "side": 1,
+      "message": "This is from LayerTreeResourceProvider::ScopedWriteLockGpuMemoryBuffer::GetGpuMemoryBuffer()",
+      "revId": "787a0d12c6aea57b89bca40cea6f254fca0accbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
