@@ -265,6 +265,63 @@
     },
     {
       "key": {
+        "uuid": "3dbd44a2_39e12897",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-26T00:47:06Z",
+      "side": 1,
+      "message": "Can we enforce this with HasSharedInstance() DCHECKs?",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fff49e62_a423d895",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-26T00:47:06Z",
+      "side": 1,
+      "message": "Why don\u0027t we just change this to return a std::string, and let the one caller interpret an empty string as a failure?",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bd17f4b_42c70a06",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-26T00:47:06Z",
+      "side": 1,
+      "message": "Just: params.ui_task",
+      "range": {
+        "startLine": 662,
+        "startChar": 12,
+        "endLine": 662,
+        "endChar": 39
+      },
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c984707b_e675589d",
         "filename": "chrome/browser/chrome_browser_main.cc",
         "patchSetId": 8
@@ -300,6 +357,57 @@
     },
     {
       "key": {
+        "uuid": "bf6e9b12_296afd52",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-26T00:47:06Z",
+      "side": 1,
+      "message": "Can you consistently list the states? i.e.\n\n. kInstalled : This is the initial state. Tasks are ...",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a662837_5feacb87",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-26T00:47:06Z",
+      "side": 1,
+      "message": "indent",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63a880aa_3be710c8",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-26T00:47:06Z",
+      "side": 1,
+      "message": "I only see one caller to AdvanceToNextState(). How does this class ever transition to the |kMessageLookRunning| state?",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc97fe25_9dd363d7",
         "filename": "chrome/browser/chrome_browser_main.cc",
         "patchSetId": 8
@@ -332,6 +440,211 @@
       "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f5b417d4_4a48062d",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-26T00:47:06Z",
+      "side": 1,
+      "message": "No need for break after return. Ditto below.",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76b01c62_23fd1b35",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-26T00:47:06Z",
+      "side": 1,
+      "message": "NOTREACHED(); Ditto below.",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d380aec5_335c4bcd",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-26T00:47:06Z",
+      "side": 1,
+      "message": "Can you mention what |lock_| is protecting? (Everything below)",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6915843_ac5cfd5f",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-26T00:47:06Z",
+      "side": 1,
+      "message": "More base::MakeRefCounted.",
+      "range": {
+        "startLine": 841,
+        "startChar": 25,
+        "endLine": 841,
+        "endChar": 28
+      },
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66054f17_7e19aff3",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-26T00:47:06Z",
+      "side": 1,
+      "message": "Might as go with \"auto\" too.",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f44a4f0_ce1ab168",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1050,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-26T00:47:06Z",
+      "side": 1,
+      "message": "Does this ever evaluate to false?",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc6e1a5c_abb19608",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1231,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-26T00:47:06Z",
+      "side": 1,
+      "message": "Can you add a comment to explain why this is the right time to release the reference?",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd5537a8_f432add5",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1320,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-26T00:47:06Z",
+      "side": 1,
+      "message": "Add comment to match the #if.",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c47f36a_9a865ca0",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1350,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-26T00:47:06Z",
+      "side": 1,
+      "message": "Can you mention why these have to be here, and not in SetupFieldTrials()?",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6005b4b3_080642ab",
+        "filename": "chrome/browser/chrome_browser_main.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-26T00:47:06Z",
+      "side": 1,
+      "message": "Use the same \"Return value is an exit status\" phrase as ApplyFirstRunPrefs() below.",
+      "range": {
+        "startLine": 125,
+        "startChar": 66,
+        "endLine": 125,
+        "endChar": 72
+      },
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9637ebca_686e15a2",
+        "filename": "chrome/browser/chrome_browser_main.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-26T00:47:06Z",
+      "side": 1,
+      "message": "TODO(username/bug number)",
+      "range": {
+        "startLine": 145,
+        "startChar": 5,
+        "endLine": 145,
+        "endChar": 9
+      },
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
