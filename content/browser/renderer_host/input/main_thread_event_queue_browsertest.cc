@@ -15,11 +15,14 @@
 #include "content/browser/renderer_host/render_widget_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
 #include "content/browser/web_contents/web_contents_impl.h"
+#include "content/browser/web_contents/web_contents_view.h"
 #include "content/common/input/synthetic_web_input_event_builders.h"
 #include "content/common/input_messages.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/render_widget_host_view.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/common/screen_info.h"
+#include "content/public/common/use_zoom_for_dsf_policy.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/content_browser_test.h"
 #include "content/public/test/content_browser_test_utils.h"
@@ -107,6 +110,13 @@ class MainThreadEventQueueBrowserTest : public ContentBrowserTest {
     return value;
   }
 
+  double ExecuteScriptAndExtractDouble(const std::string& script) {
+    double value = 0;
+    EXPECT_TRUE(content::ExecuteScriptAndExtractDouble(
+        shell(), "domAutomationController.send(" + script + ")", &value));
+    return value;
+  }
+
   void DoMouseMove() {
     // Send a click event to cause some jankiness. This is done via a click
     // event as ExecuteScript is synchronous.
@@ -172,12 +182,26 @@ class MainThreadEventQueueBrowserTest : public ContentBrowserTest {
       touch_move_count = ExecuteScriptAndExtractInt("window.touchMoveCount");
     EXPECT_EQ(1, touch_move_count);
 
-    int last_touch_x = ExecuteScriptAndExtractInt(
+    double last_touch_x = ExecuteScriptAndExtractDouble(
         "window.lastTouchMoveEvent.touches[0].pageX");
-    int last_touch_y = ExecuteScriptAndExtractInt(
+    double last_touch_y = ExecuteScriptAndExtractDouble(
         "window.lastTouchMoveEvent.touches[0].pageY");
-    EXPECT_EQ(35, last_touch_x);
-    EXPECT_EQ(40, last_touch_y);
+    double expected_touch_x = 35;
+    double expected_touch_y = 40;
+    if (UseZoomForDSFEnabled()) {
+      WebContentsView* view =
+          static_cast<WebContentsImpl*>(shell()->web_contents())->GetView();
+      ScreenInfo screen_info;
+      view->GetScreenInfo(&screen_info);
+      expected_touch_x =
+          floor(screen_info.device_scale_factor * expected_touch_x) /
+          screen_info.device_scale_factor;
+      expected_touch_y =
+          floor(screen_info.device_scale_factor * expected_touch_y) /
+          screen_info.device_scale_factor;
+    }
+    EXPECT_FLOAT_EQ(expected_touch_x, last_touch_x);
+    EXPECT_FLOAT_EQ(expected_touch_y, last_touch_y);
   }
 
  private:
