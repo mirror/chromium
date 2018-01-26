@@ -35,7 +35,8 @@ VIZ_RESOURCE_FORMAT_EXPORT bool DoesResourceFormatSupportAlpha(
     ResourceFormat format);
 VIZ_RESOURCE_FORMAT_EXPORT unsigned int TextureStorageFormat(
     ResourceFormat format);
-VIZ_RESOURCE_FORMAT_EXPORT GrPixelConfig ToGrPixelConfig(ResourceFormat format);
+VIZ_RESOURCE_FORMAT_EXPORT unsigned int SizedInternalFormat(
+    ResourceFormat format);
 
 }  // namespace viz
 
