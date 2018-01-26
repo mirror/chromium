@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "288db4c4_0e4f57e5",
+        "filename": "base/threading/thread_local_storage.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-26T16:30:03Z",
+      "side": 1,
+      "message": "Right, DCHECK would be racey, but since callers already check initialized() before calling this, the early out here is really not going to be useful very much. I don\u0027t think it\u0027s worth the LOC because of that.",
+      "parentUuid": "fcd065c5_51e55f13",
+      "revId": "b9b05f36f5a680e0595e22928c93644fbf04d16b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b709c01_db06ee62",
         "filename": "base/threading/thread_local_storage.cc",
         "patchSetId": 1
