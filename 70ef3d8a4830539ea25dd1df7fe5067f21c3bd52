@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd9a843c_efc0a16f",
+        "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2018-01-26T19:42:14Z",
+      "side": 1,
+      "message": "Hello from the Windows peanut gallery. I wonder if you could talk a little about this unsandboxed process? I honestly did not know about this until seeing this CL. Why is this unsandboxed? How long has it been unsandboxed? Under what conditions does this need to run? What runs (e.g. parsers?) in the unsandboxed process? Is there a design doc or anything historical about this anywhere?\n\nThanks!",
+      "range": {
+        "startLine": 381,
+        "startChar": 22,
+        "endLine": 381,
+        "endChar": 50
+      },
+      "revId": "70ef3d8a4830539ea25dd1df7fe5067f21c3bd52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
