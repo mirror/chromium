@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53ddc961_81a0dc5e",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 10969,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2018-01-26T12:43:34Z",
+      "side": 1,
+      "message": "That\u0027s not quite correct. Setting the policy to PasswordProtectionWarningOff turns off the warning and locks down the setting. Leaving the policy unset turns off the warning... but lets the user choose a different option.",
+      "revId": "7e7b90a8b7eadf5fcce4926ed818541869de34d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a57819f_e7c398ef",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 11009,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2018-01-26T12:43:34Z",
+      "side": 1,
+      "message": "As above, there is a difference between that policy value and having the policy unset.",
+      "revId": "7e7b90a8b7eadf5fcce4926ed818541869de34d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
