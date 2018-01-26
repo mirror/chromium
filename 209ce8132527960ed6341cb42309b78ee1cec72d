@@ -170,6 +170,24 @@
       "revId": "209ce8132527960ed6341cb42309b78ee1cec72d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "560353ce_f85bcdc2",
+        "filename": "device/geolocation/geolocation_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2018-01-26T11:43:46Z",
+      "side": 0,
+      "message": "Make sense. I\u0027ll adjust soon. Thanks! Really appreciate your suggestion, like always:D",
+      "parentUuid": "00cc29ad_03e23d46",
+      "revId": "209ce8132527960ed6341cb42309b78ee1cec72d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
