@@ -37,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "4c2150f0_48d956a2",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_set_manufacturer_model_behavior.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-26T01:11:53Z",
+      "side": 1,
+      "message": "nit: no need of {} in if-else since it\u0027s only 1-line code for if-else",
+      "revId": "a6aa32433ea644a28966cf28ecd9aec68610053d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a91a95b5_8237b3c5",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
         "patchSetId": 2
@@ -71,6 +88,57 @@
         "endLine": 728,
         "endChar": 48
       },
+      "revId": "a6aa32433ea644a28966cf28ecd9aec68610053d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b111818_5cb52a52",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-26T01:11:53Z",
+      "side": 1,
+      "message": "If the file is very large (since the user can provide a wrong file or a wrong format), will it take a long time to read the entire file to the string? The UI might seems freeze while waiting for the reading result.",
+      "revId": "a6aa32433ea644a28966cf28ecd9aec68610053d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98132810_f414f4b5",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-26T01:11:53Z",
+      "side": 1,
+      "message": "extract \"255\" to a const?",
+      "revId": "a6aa32433ea644a28966cf28ecd9aec68610053d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e655354_0ec657e2",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-26T01:11:53Z",
+      "side": 1,
+      "message": "It seems you can\u0027t access kPPDMagicNumberString in this file.",
       "revId": "a6aa32433ea644a28966cf28ecd9aec68610053d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
