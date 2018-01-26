@@ -115,4 +115,11 @@ void ClientHintsPreferences::UpdatePersistentHintsFromHeaders(
   ParseAcceptChHeader(accept_ch_header_value, enabled_hints);
 }
 
+// static
+bool ClientHintsPreferences::IsClientHintsAllowed(const KURL& url) {
+  return (url.ProtocolIs("http") || url.ProtocolIs("https")) &&
+         (SecurityOrigin::IsSecure(url) ||
+          SecurityOrigin::Create(url)->IsLocalhost());
+}
+
 }  // namespace blink

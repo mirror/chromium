@@ -178,12 +178,6 @@ mojom::FetchCacheMode DetermineFrameCacheMode(Frame* frame,
                             ResourceType::kIsNotMainResource, load_type);
 }
 
-bool IsClientHintsAllowed(const KURL& url) {
-  return (url.ProtocolIs("http") || url.ProtocolIs("https")) &&
-         (SecurityOrigin::IsSecure(url) ||
-          SecurityOrigin::Create(url)->IsLocalhost());
-}
-
 }  // namespace
 
 struct FrameFetchContext::FrozenState final
@@ -859,8 +853,8 @@ void FrameFetchContext::AddClientHintsIfNecessary(
   // Check if |url| is allowed to run JavaScript. If not, client hints are not
   // attached to the requests that initiate on the render side.
   if (blink::RuntimeEnabledFeatures::ClientHintsPersistentEnabled() &&
-      IsClientHintsAllowed(request.Url()) && GetContentSettingsClient() &&
-      AllowScriptFromSource(request.Url())) {
+      ClientHintsPreferences::IsClientHintsAllowed(request.Url()) &&
+      GetContentSettingsClient() && AllowScriptFromSource(request.Url())) {
     // TODO(tbansal): crbug.com/735518 This code path is not executed for main
     // frame navigations when browser side navigation is enabled. For main
     // frame requests with browser side navigation enabled, the client hints
@@ -1187,7 +1181,7 @@ bool FrameFetchContext::ShouldSendClientHint(
 
 void FrameFetchContext::ParseAndPersistClientHints(
     const ResourceResponse& response) {
-  if (!IsClientHintsAllowed(response.Url()))
+  if (!ClientHintsPreferences::IsClientHintsAllowed(response.Url()))
     return;
 
   ClientHintsPreferences hints_preferences;
