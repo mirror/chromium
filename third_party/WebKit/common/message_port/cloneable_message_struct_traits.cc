@@ -11,6 +11,12 @@ namespace mojo {
 base::span<const uint8_t> StructTraits<
     blink::mojom::CloneableMessage::DataView,
     blink::CloneableMessage>::encoded_message(blink::CloneableMessage& input) {
+  // Treat null encoded_message as empty. It really doesn't matter what address
+  // is used for the empty span, but it can't simply be
+  // owned_encoded_message.data() since that would be null too with an empty
+  // vector
+  if (!input.encoded_message.data())
+    return base::make_span(reinterpret_cast<const uint8_t*>(&input), 0);
   return input.encoded_message;
 }
 

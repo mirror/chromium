@@ -10,7 +10,9 @@
 #include "ipc/ipc_mojo_message_helper.h"
 #include "ipc/ipc_mojo_param_traits.h"
 #include "net/base/ip_endpoint.h"
+#include "third_party/WebKit/common/message_port/message_port.mojom.h"
 #include "third_party/WebKit/common/message_port/message_port_channel.h"
+#include "third_party/WebKit/common/message_port/transferable_message.h"
 #include "ui/accessibility/ax_modes.h"
 #include "ui/events/blink/web_input_event_traits.h"
 
@@ -132,6 +134,75 @@ bool ParamTraits<scoped_refptr<storage::BlobHandle>>::Read(
 void ParamTraits<scoped_refptr<storage::BlobHandle>>::Log(const param_type& p,
                                                           std::string* l) {
   l->append("<storage::BlobHandle>");
+}
+
+void ParamTraits<scoped_refptr<base::RefCountedData<
+    blink::TransferableMessage>>>::Write(base::Pickle* m, const param_type& p) {
+  m->WriteData(reinterpret_cast<const char*>(p->data.encoded_message.data()),
+               p->data.encoded_message.length());
+  WriteParam(m, base::checked_cast<int>(p->data.blobs.size()));
+  for (auto& blob : p->data.blobs) {
+    WriteParam(m, blob->uuid);
+    WriteParam(m, blob->content_type);
+    WriteParam(m, blob->size);
+    WriteParam(m, blob->blob.PassHandle().release());
+  }
+  WriteParam(m, p->data.stack_trace_id);
+  WriteParam(m, p->data.stack_trace_debugger_id_first);
+  WriteParam(m, p->data.stack_trace_debugger_id_second);
+  WriteParam(m, base::checked_cast<int>(p->data.ports.size()));
+  for (auto& port : p->data.ports) {
+    WriteParam(m, port);
+  }
+}
+
+bool ParamTraits<
+    scoped_refptr<base::RefCountedData<blink::TransferableMessage>>>::
+    Read(const base::Pickle* m, base::PickleIterator* iter, param_type* r) {
+  *r = new base::RefCountedData<blink::TransferableMessage>();
+
+  const char* data;
+  int length;
+  if (!iter->ReadData(&data, &length))
+    return false;
+  // TODO(mek): Maybe copy?
+  (*r)->data.encoded_message =
+      base::make_span(reinterpret_cast<const uint8_t*>(data), length);
+  int blob_count;
+  if (!iter->ReadLength(&blob_count))
+    return false;
+  (*r)->data.blobs.resize(blob_count);
+  for (auto& blob : (*r)->data.blobs) {
+    blob = blink::mojom::SerializedBlob::New();
+    mojo::MessagePipeHandle handle;
+    if (!ReadParam(m, iter, &blob->uuid) ||
+        !ReadParam(m, iter, &blob->content_type) ||
+        !ReadParam(m, iter, &blob->size) || !ReadParam(m, iter, &handle)) {
+      return false;
+    }
+    blob->blob = blink::mojom::BlobPtrInfo(
+        mojo::ScopedMessagePipeHandle(handle), blink::mojom::Blob::Version_);
+  }
+  if (!ReadParam(m, iter, &(*r)->data.stack_trace_id) ||
+      !ReadParam(m, iter, &(*r)->data.stack_trace_debugger_id_first) ||
+      !ReadParam(m, iter, &(*r)->data.stack_trace_debugger_id_second)) {
+    return false;
+  }
+  int port_count;
+  if (!iter->ReadLength(&port_count))
+    return false;
+  (*r)->data.ports.resize(port_count);
+  for (auto& port : (*r)->data.ports) {
+    if (!ReadParam(m, iter, &port))
+      return false;
+  }
+  return true;
+}
+
+void ParamTraits<scoped_refptr<
+    base::RefCountedData<blink::TransferableMessage>>>::Log(const param_type& p,
+                                                            std::string* l) {
+  l->append("<blink::TransferableMessage>");
 }
 
 }  // namespace IPC

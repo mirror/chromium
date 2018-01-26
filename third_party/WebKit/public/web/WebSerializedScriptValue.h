@@ -31,6 +31,7 @@
 #ifndef WebSerializedScriptValue_h
 #define WebSerializedScriptValue_h
 
+#include "base/containers/span.h"
 #include "public/platform/WebCommon.h"
 #include "public/platform/WebPrivatePtr.h"
 
@@ -60,6 +61,8 @@ class WebSerializedScriptValue {
 
   // Creates a serialized script value from its wire format data.
   BLINK_EXPORT static WebSerializedScriptValue FromString(const WebString&);
+  BLINK_EXPORT static WebSerializedScriptValue FromData(
+      base::span<const uint8_t>);
 
   BLINK_EXPORT static WebSerializedScriptValue Serialize(v8::Isolate*,
                                                          v8::Local<v8::Value>);
@@ -74,6 +77,8 @@ class WebSerializedScriptValue {
 
   // Returns a string representation of the WebSerializedScriptValue.
   BLINK_EXPORT WebString ToString() const;
+
+  BLINK_EXPORT base::span<const uint8_t> GetWireData() const;
 
   // Convert the serialized value to a parsed v8 value.
   BLINK_EXPORT v8::Local<v8::Value> Deserialize(v8::Isolate*);
