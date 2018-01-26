@@ -226,7 +226,10 @@ id<GREYMatcher> TabWithTitle(const std::string& tab_title) {
   [ChromeEarlGrey waitForMainTabCount:2];
 
   // Verify the new tab was opened with the expected URL.
-  [[EarlGrey selectElementWithMatcher:OmniboxText(destinationURL.GetContent())]
+  const std::string destinationURLString =
+      destinationURL.GetContent() +
+      (destinationURL.has_ref() ? "#" + destinationURL.ref() : "");
+  [[EarlGrey selectElementWithMatcher:OmniboxText(destinationURLString)]
       assertWithMatcher:grey_notNil()];
 }
 

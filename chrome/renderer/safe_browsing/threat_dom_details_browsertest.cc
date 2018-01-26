@@ -74,7 +74,8 @@ TEST_F(ThreatDOMDetailsTest, Everything) {
     details->ExtractResources(&params);
     ASSERT_EQ(1u, params.size());
     auto& param = params[0];
-    EXPECT_EQ(GURL(urlprefix + html), param.url);
+    EXPECT_EQ(GURL(urlprefix + net::EscapeQueryParamValue(html, false)),
+              param.url);
     EXPECT_EQ(0, param.node_id);
     EXPECT_EQ(0, param.parent_node_id);
     EXPECT_TRUE(param.child_node_ids.empty());
@@ -91,7 +92,7 @@ TEST_F(ThreatDOMDetailsTest, Everything) {
     std::string html = "<html><head><script src=\"" + script1_url.spec() +
                        "\"></script><script src=\"" + script2_url.spec() +
                        "\"></script></head></html>";
-    GURL url(urlprefix + html);
+    GURL url(urlprefix + net::EscapeQueryParamValue(html, false));
 
     LoadHTML(html.c_str());
     std::vector<SafeBrowsingHostMsg_ThreatDOMDetails_Node> params;
@@ -148,7 +149,7 @@ TEST_F(ThreatDOMDetailsTest, Everything) {
         "<iframe src=\"" +
         net::EscapeForHTML(iframe1_url.spec()) +
         "\"></iframe></div></div></head></html>";
-    GURL url(urlprefix + html);
+    GURL url(urlprefix + net::EscapeQueryParamValue(html, false));
 
     LoadHTML(html.c_str());
     std::vector<SafeBrowsingHostMsg_ThreatDOMDetails_Node> params;
@@ -265,7 +266,7 @@ TEST_F(ThreatDOMDetailsTest, Everything) {
     std::vector<SafeBrowsingHostMsg_ThreatDOMDetails_Node> params;
     details->ExtractResources(&params);
 
-    GURL url = GURL(urlprefix + html);
+    GURL url = GURL(urlprefix + net::EscapeQueryParamValue(html, false));
     ASSERT_EQ(2u, params.size());
     auto& param = params[0];
     EXPECT_TRUE(param.url.is_empty());
@@ -325,7 +326,7 @@ TEST_F(ThreatDOMDetailsTest, DefaultTagAndAttributesList) {
       "<iframe id=baz><iframe src=\"" +
       net::EscapeForHTML(iframe2_url.spec()) +
       "\"></iframe></iframe></div></div></head></html>";
-  GURL url(urlprefix + html);
+  GURL url(urlprefix + net::EscapeQueryParamValue(html, false));
 
   LoadHTML(html.c_str());
   std::vector<SafeBrowsingHostMsg_ThreatDOMDetails_Node> params;
