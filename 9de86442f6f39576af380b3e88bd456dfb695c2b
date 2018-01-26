@@ -22,6 +22,30 @@
       "revId": "9de86442f6f39576af380b3e88bd456dfb695c2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60aab911_a4c36c8d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/PwaAmbientBadgeInfoBar.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-26T19:37:39Z",
+      "side": 1,
+      "message": "It doesn\u0027t look like there\u0027s any logic for this (which is surprising) so I think what you have is fine. I\u0027m going to try to dig up the infobar spec to confirm this is ok.",
+      "parentUuid": "e6381285_7c767e09",
+      "range": {
+        "startLine": 57,
+        "startChar": 8,
+        "endLine": 58,
+        "endChar": 58
+      },
+      "revId": "9de86442f6f39576af380b3e88bd456dfb695c2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
