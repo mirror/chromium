@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9c3754df_780aa07f",
+        "filename": "content/public/test/browser_test_utils.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1635,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-26T16:12:54Z",
+      "side": 1,
+      "message": "Oops.  Reverted this file.",
+      "parentUuid": "e2ecb8bf_d752460a",
+      "revId": "7529c6db3c1ca6cb727ed3ebbbb2d613d3d65dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd5170c8_7705f312",
         "filename": "net/base/mime_sniffer.h",
         "patchSetId": 22
@@ -39,6 +57,30 @@
       "revId": "7529c6db3c1ca6cb727ed3ebbbb2d613d3d65dba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "863ad4d6_5eb6cbdb",
+        "filename": "net/base/mime_sniffer.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-26T16:12:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd5170c8_7705f312",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 40
+      },
+      "revId": "7529c6db3c1ca6cb727ed3ebbbb2d613d3d65dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
