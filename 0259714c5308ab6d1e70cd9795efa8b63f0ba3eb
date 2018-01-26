@@ -33,6 +33,24 @@
       "revId": "0259714c5308ab6d1e70cd9795efa8b63f0ba3eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23798c56_b7d9d502",
+        "filename": "chrome/browser/resources/chromeos/wallpaper_manager/js/wallpaper_manager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-26T22:44:02Z",
+      "side": 1,
+      "message": "You\u0027re right. It works!",
+      "parentUuid": "7afe823b_a589dcb0",
+      "revId": "0259714c5308ab6d1e70cd9795efa8b63f0ba3eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
