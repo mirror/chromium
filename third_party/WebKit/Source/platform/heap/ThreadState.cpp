@@ -1431,4 +1431,8 @@ void ThreadState::CollectAllGarbage() {
   }
 }
 
+double ThreadState::MarkingSpeed() {
+  return 1.0 / Heap().HeapStats().EstimatedMarkingTimePerByte();
+}
+
 }  // namespace blink

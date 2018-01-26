@@ -104,6 +104,8 @@ class PLATFORM_EXPORT WebScheduler {
   // be based on a real or virtual time domain. Used by Timer.
   virtual base::TimeTicks MonotonicallyIncreasingVirtualTime() const = 0;
 
+  virtual base::TimeDelta MostRecentExpectedQueueingTime() const = 0;
+
   // Test helpers.
 
   // Return a reference to an underlying RendererScheduler object.

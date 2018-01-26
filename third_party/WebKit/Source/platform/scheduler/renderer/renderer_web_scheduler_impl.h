@@ -27,6 +27,7 @@ class PLATFORM_EXPORT RendererWebSchedulerImpl : public WebSchedulerImpl {
       WebViewScheduler::WebViewSchedulerDelegate* delegate) override;
 
   base::TimeTicks MonotonicallyIncreasingVirtualTime() const override;
+  base::TimeDelta MostRecentExpectedQueueingTime() const override;
 
   RendererScheduler* GetRendererSchedulerForTest() override;
 

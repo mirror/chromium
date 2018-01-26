@@ -53,6 +53,7 @@ class PLATFORM_EXPORT WebSchedulerImpl : public WebScheduler {
 
   // Returns TimeTicks::Now() by default.
   base::TimeTicks MonotonicallyIncreasingVirtualTime() const override;
+  base::TimeDelta MostRecentExpectedQueueingTime() const override;
 
  private:
   static void RunIdleTask(WebThread::IdleTask task, base::TimeTicks deadline);
