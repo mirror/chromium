@@ -4,7 +4,9 @@
 
 import("//mojo/public/tools/bindings/mojom.gni")
 
-static_library("cpp") {
+component("cpp") {
+  output_name = "services_network_public_cpp"
+
   sources = [
     "cors/cors.cc",
     "cors/cors.h",
@@ -32,9 +34,13 @@ static_library("cpp") {
     "//mojo/common",
     "//net",
   ]
+
+  defines = [ "IS_SERVICES_NETWORK_IMPL" ]
 }
 
-static_library("typemap_dependencies") {
+component("typemap_dependencies") {
+  output_name = "service_network_cpp_types"
+
   sources = [
     "cors/cors_error_status.cc",
     "cors/cors_error_status.h",
@@ -70,6 +76,7 @@ static_library("typemap_dependencies") {
     "//net",
     "//services/network/public/interfaces:interfaces_shared",
   ]
+  defines = [ "IS_SERVICES_NETWORK_TYPES_IMPL" ]
 }
 
 mojom("test_interfaces") {

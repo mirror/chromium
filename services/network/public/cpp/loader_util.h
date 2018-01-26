@@ -5,6 +5,7 @@
 #ifndef SERVICES_NETWORK_PUBLIC_CPP_LOADER_UTIL_H_
 #define SERVICES_NETWORK_PUBLIC_CPP_LOADER_UTIL_H_
 
+#include "base/component_export.h"
 #include "base/memory/ref_counted.h"
 
 class GURL;
@@ -23,29 +24,32 @@ struct HttpRawRequestResponseInfo;
 struct ResourceResponse;
 
 // The name of the "Accept" header.
-extern const char kAcceptHeader[];
+COMPONENT_EXPORT(SERVICES_NETWORK) extern const char kAcceptHeader[];
 
 // Accept header used for frame requests.
-extern const char kFrameAcceptHeader[];
+COMPONENT_EXPORT(SERVICES_NETWORK) extern const char kFrameAcceptHeader[];
 
 // The default Accept header value to use if none were specified.
-extern const char kDefaultAcceptHeader[];
+COMPONENT_EXPORT(SERVICES_NETWORK) extern const char kDefaultAcceptHeader[];
 
 // Helper utilities shared between network service and ResourceDispatcherHost
 // code paths.
 
 // Whether the response body should be sniffed in order to determine the MIME
 // type of the response.
+COMPONENT_EXPORT(SERVICES_NETWORK)
 bool ShouldSniffContent(net::URLRequest* url_request,
                         ResourceResponse* response);
 
 // Fill HttpRawRequestResponseInfo based on raw headers.
+COMPONENT_EXPORT(SERVICES_NETWORK)
 scoped_refptr<HttpRawRequestResponseInfo> BuildRawRequestResponseInfo(
     const net::URLRequest& request,
     const net::HttpRawRequestHeaders& raw_request_headers,
     const net::HttpResponseHeaders* raw_response_headers);
 
 // Returns the referrer based on the validity of the URL and command line flags.
+COMPONENT_EXPORT(SERVICES_NETWORK)
 std::string ComputeReferrer(const GURL& referrer);
 
 }  // namespace network
