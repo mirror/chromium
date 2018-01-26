@@ -1,0 +1,301 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba3e9cd4_57ae332b",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2018-01-26T00:12:30Z",
+      "side": 1,
+      "message": "nullptr /* param-name */,\n\nto be consistent with others?",
+      "range": {
+        "startLine": 69,
+        "startChar": 6,
+        "endLine": 69,
+        "endChar": 13
+      },
+      "revId": "48bf2980458d22efec131f66a448339dbbfe2338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cbd0d6e_84aba1c5",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2018-01-26T00:12:30Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 72,
+        "startChar": 6,
+        "endLine": 72,
+        "endChar": 13
+      },
+      "revId": "48bf2980458d22efec131f66a448339dbbfe2338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92ff7ac8_dc285777",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2018-01-26T00:12:30Z",
+      "side": 1,
+      "message": "This silently overwrites an existing entry when |package_name| is already in the map. Is that okay?",
+      "revId": "48bf2980458d22efec131f66a448339dbbfe2338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaceb1a7_2899094b",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2018-01-26T00:12:30Z",
+      "side": 1,
+      "message": "When is this necessary? When can the value be nullptr?",
+      "range": {
+        "startLine": 102,
+        "startChar": 38,
+        "endLine": 102,
+        "endChar": 55
+      },
+      "revId": "48bf2980458d22efec131f66a448339dbbfe2338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9a84bf9_69694b0a",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_bridge.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2018-01-26T00:12:30Z",
+      "side": 1,
+      "message": "nit: you don\u0027t really have to use a different name here. display_name(display_name) works just fine. It\u0027s up to you though.",
+      "range": {
+        "startLine": 48,
+        "startChar": 43,
+        "endLine": 48,
+        "endChar": 47
+      },
+      "revId": "48bf2980458d22efec131f66a448339dbbfe2338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9aefae6_1e0bc0f4",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_bridge.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2018-01-26T00:12:30Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 49,
+        "startChar": 49,
+        "endLine": 49,
+        "endChar": 56
+      },
+      "revId": "48bf2980458d22efec131f66a448339dbbfe2338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd6caaba_292cd1f8",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2018-01-26T00:12:30Z",
+      "side": 1,
+      "message": "unused?",
+      "revId": "48bf2980458d22efec131f66a448339dbbfe2338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25da5706_ffa1d942",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2018-01-26T00:12:30Z",
+      "side": 1,
+      "message": "Already included on the header side? Please remove if so.",
+      "revId": "48bf2980458d22efec131f66a448339dbbfe2338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8f68a1e_92c12665",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2018-01-26T00:12:30Z",
+      "side": 1,
+      "message": "same",
+      "revId": "48bf2980458d22efec131f66a448339dbbfe2338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5b17de0_e8a2094f",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2018-01-26T00:12:30Z",
+      "side": 1,
+      "message": "nit: can you elide {}? In most directories in c/b/c/arc/, we don\u0027t use {} for one-line if.",
+      "revId": "48bf2980458d22efec131f66a448339dbbfe2338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "071da49b_7eb570fe",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2018-01-26T00:12:30Z",
+      "side": 1,
+      "message": "\u003cstring\u003e is missing?",
+      "revId": "48bf2980458d22efec131f66a448339dbbfe2338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebcc92e1_778181a8",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2018-01-26T00:12:30Z",
+      "side": 1,
+      "message": "You can use a forward declaration instead of this:\n\n namespace aura {\n class Window;\n }  // namespace aura",
+      "revId": "48bf2980458d22efec131f66a448339dbbfe2338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed01f949_6371627a",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2018-01-26T00:12:30Z",
+      "side": 1,
+      "message": "move this to L12 please",
+      "revId": "48bf2980458d22efec131f66a448339dbbfe2338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0677a60_ca11f6ef",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2018-01-26T00:12:30Z",
+      "side": 1,
+      "message": "Can you include a forward declaration for this?",
+      "range": {
+        "startLine": 36,
+        "startChar": 12,
+        "endLine": 36,
+        "endChar": 21
+      },
+      "revId": "48bf2980458d22efec131f66a448339dbbfe2338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e74c2f2_318456e6",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2018-01-26T00:12:30Z",
+      "side": 1,
+      "message": "override; seems missing here.",
+      "range": {
+        "startLine": 53,
+        "startChar": 28,
+        "endLine": 53,
+        "endChar": 29
+      },
+      "revId": "48bf2980458d22efec131f66a448339dbbfe2338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
