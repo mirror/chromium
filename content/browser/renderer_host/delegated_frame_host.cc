@@ -556,6 +556,8 @@ void DelegatedFrameHost::OnFirstSurfaceActivation(
   gfx::Size frame_size_in_dip = gfx::ConvertSizeToDIP(
       surface_info.device_scale_factor(), surface_info.size_in_pixels());
 
+  client_->OnFirstSurfaceActivation(surface_info);
+
   if (enable_surface_synchronization_) {
     // If there's no primary surface, then we don't wish to display content at
     // this time (e.g. the view is hidden) and so we don't need a fallback
