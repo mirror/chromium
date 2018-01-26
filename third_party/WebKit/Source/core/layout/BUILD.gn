@@ -262,6 +262,8 @@ blink_core_sources("layout") {
     "api/SelectionState.h",
     "custom/CSSLayoutWorklet.cpp",
     "custom/CSSLayoutWorklet.h",
+    "custom/LayoutCustom.cpp",
+    "custom/LayoutCustom.h",
     "custom/LayoutWorklet.cpp",
     "custom/LayoutWorklet.h",
     "custom/LayoutWorkletGlobalScope.cpp",
