@@ -419,12 +419,18 @@ static bool IsAsyncTouchMove(
 }
 
 void MainThreadEventQueue::RafFallbackTimerFired() {
-  UMA_HISTOGRAM_BOOLEAN("Event.MainThreadEventQueue.FlushQueueNoBeginMainFrame",
-                        true);
-  DispatchRafAlignedInput(base::TimeTicks::Now());
+  DispatchRafAlignedInputImpl(base::TimeTicks::Now(), true);
 }
 
 void MainThreadEventQueue::DispatchRafAlignedInput(base::TimeTicks frame_time) {
+  DispatchRafAlignedInputImpl(frame_time, false);
+}
+
+void MainThreadEventQueue::DispatchRafAlignedInputImpl(
+    base::TimeTicks frame_time,
+    bool fallback_timer_fired) {
+  UMA_HISTOGRAM_BOOLEAN("Event.MainThreadEventQueue.FlushQueueNoBeginMainFrame",
+                        fallback_timer_fired);
   raf_fallback_timer_.Stop();
   size_t queue_size_at_start;
 

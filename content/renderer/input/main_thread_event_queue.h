@@ -114,6 +114,8 @@ class CONTENT_EXPORT MainThreadEventQueue
   void HandleEventOnMainThread(const blink::WebCoalescedInputEvent& event,
                                const ui::LatencyInfo& latency,
                                HandledEventCallback handled_callback);
+  void DispatchRafAlignedInputImpl(base::TimeTicks frame_time,
+                                   bool fallback_timer_fired);
 
   bool IsRafAlignedEvent(
       const std::unique_ptr<MainThreadEventQueueTask>& item) const;
