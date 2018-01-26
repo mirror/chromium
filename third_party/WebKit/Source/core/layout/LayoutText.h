@@ -368,6 +368,7 @@ class CORE_EXPORT LayoutText : public LayoutObject {
   // Read the LINE BOXES OWNERSHIP section in the class header comment.
   InlineTextBox* first_text_box_;
   InlineTextBox* last_text_box_;
+  // TODO(kojii): Do something similar.
 };
 
 inline UChar LayoutText::UncheckedCharacterAt(unsigned i) const {

@@ -337,9 +337,20 @@ class CORE_EXPORT LayoutInline : public LayoutBoxModelObject {
   LayoutBoxModelObject* ContinuationBefore(LayoutObject* before_child);
 
   LayoutObjectChildList children_;
-  // All of the line boxes created for this inline flow. For example,
-  // <i>Hello<br>world.</i> will have two <i> line boxes.
-  LineBoxList line_boxes_;
+  union {
+    // All of the line boxes created for this inline flow. For example,
+    // <i>Hello<br>world.</i> will have two <i> line boxes.
+    LineBoxList line_boxes_;
+
+    // All of the NGPaintFragments created for this inline flow.
+    struct {
+      // Safe guard to ensure line_boxes_.first_box_ is nullptr.
+      // Not sure we need this, maybe we can read_box_ first without checking
+      // runtime flag?
+      void* safe_guard_for_legacy_ = nullptr;
+      NGPaintFragment* first_fragment_;
+    };
+  };
 };
 
 DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutInline, IsLayoutInline());
