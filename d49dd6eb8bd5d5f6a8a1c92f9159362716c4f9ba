@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea072689_dbf4b601",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-26T02:09:04Z",
+      "side": 1,
+      "message": "Sorry I was wrong about shared workers as noted on the email thread (see https://chromium-review.googlesource.com/c/chromium/src/+/888098)\n\nSo now I would say it\u0027s \"true if there is a running service worker or shared worker, or unfinished fetch keep-alive.\"",
+      "revId": "d49dd6eb8bd5d5f6a8a1c92f9159362716c4f9ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
