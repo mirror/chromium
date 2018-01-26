@@ -1292,6 +1292,9 @@ class Vector
   template <typename VisitorDispatcher, typename A = Allocator>
   std::enable_if_t<A::kIsGarbageCollected> Trace(VisitorDispatcher);
 
+  template <typename A = Allocator>
+  std::enable_if_t<A::kIsGarbageCollected> FixGCInfoIndex();
+
   class GCForbiddenScope {
     STACK_ALLOCATED();
 
@@ -1959,8 +1962,7 @@ inline bool operator!=(const Vector<T, inlineCapacityA, Allocator>& a,
   return !(a == b);
 }
 
-// This is only defined if the allocator is a HeapAllocator. It is used when
-// visiting during a tracing GC.
+// Only defined for HeapAllocator. It is used when visiting during a tracing GC.
 template <typename T, size_t inlineCapacity, typename Allocator>
 template <typename VisitorDispatcher, typename A>
 std::enable_if_t<A::kIsGarbageCollected>
@@ -1970,23 +1972,30 @@ Vector<T, inlineCapacity, Allocator>::Trace(VisitorDispatcher visitor) {
   if (!Buffer())
     return;
   if (this->HasOutOfLineBuffer()) {
-    // This is a performance optimization for a case where the buffer has
-    // been already traced by somewhere. This can happen if the conservative
-    // scanning traced an on-stack (false-positive or real) pointer to the
-    // HeapVector, and then visitor->trace() traces the HeapVector.
-    if (Allocator::IsHeapObjectAlive(Buffer()))
-      return;
-    Allocator::MarkNoTracing(visitor, Buffer());
-    Allocator::RegisterBackingStoreReference(visitor, Base::BufferSlot());
+    Allocator::TraceVectorBacking(visitor, Buffer(), Base::BufferSlot());
+  } else {
+    // Inline buffer requires tracing immediately.
+    const T* buffer_begin = Buffer();
+    const T* buffer_end = Buffer() + size();
+    if (IsTraceableInCollectionTrait<VectorTraits<T>>::value) {
+      for (const T* buffer_entry = buffer_begin; buffer_entry != buffer_end;
+           buffer_entry++) {
+        Allocator::template Trace<VisitorDispatcher, T, VectorTraits<T>>(
+            visitor, *const_cast<T*>(buffer_entry));
+      }
+      CheckUnusedSlots(Buffer() + size(), Buffer() + capacity());
+    }
   }
-  const T* buffer_begin = Buffer();
-  const T* buffer_end = Buffer() + size();
-  if (IsTraceableInCollectionTrait<VectorTraits<T>>::value) {
-    for (const T* buffer_entry = buffer_begin; buffer_entry != buffer_end;
-         buffer_entry++)
-      Allocator::template Trace<VisitorDispatcher, T, VectorTraits<T>>(
-          visitor, *const_cast<T*>(buffer_entry));
-    CheckUnusedSlots(Buffer() + size(), Buffer() + capacity());
+}
+
+// Only defined for HeapAllocator. Used to fix up the GCInfo index of a
+// potential backing store.
+template <typename T, size_t inlineCapacity, typename Allocator>
+template <typename A>
+std::enable_if_t<A::kIsGarbageCollected>
+Vector<T, inlineCapacity, Allocator>::FixGCInfoIndex() {
+  if (Buffer() && this->HasOutOfLineBuffer()) {
+    Allocator::FixVectorBackingGCInfoIndex(Buffer());
   }
 }
 

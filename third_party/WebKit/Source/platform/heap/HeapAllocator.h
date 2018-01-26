@@ -279,6 +279,23 @@ class PLATFORM_EXPORT HeapAllocator {
 #endif  // BUILDFLAG(BLINK_HEAP_INCREMENTAL_MARKING)
   }
 
+  template <typename T, typename VisitorDispatcher>
+  static void TraceVectorBacking(VisitorDispatcher visitor,
+                                 T* backing,
+                                 T** backing_slot) {
+    HeapVectorBacking<T>* vector_backing =
+        reinterpret_cast<HeapVectorBacking<T>*>(backing);
+    visitor->RegisterBackingStoreReference(backing_slot);
+    visitor->Trace(vector_backing);
+  }
+
+  template <typename T>
+  static void FixVectorBackingGCInfoIndex(T* backing) {
+    size_t gc_info_index = GCInfoTrait<HeapVectorBacking<T>>::Index();
+    HeapObjectHeader* header = HeapObjectHeader::FromPayload(backing);
+    header->SetGcInfoIndex(gc_info_index);
+  }
+
  private:
   static void BackingFree(void*);
   static bool BackingExpand(void*, size_t);

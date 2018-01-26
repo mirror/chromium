@@ -209,6 +209,11 @@ class PLATFORM_EXPORT HeapObjectHeader {
     return (encoded_ & kHeaderGCInfoIndexMask) >> kHeaderGCInfoIndexShift;
   }
 
+  NO_SANITIZE_ADDRESS void SetGcInfoIndex(size_t index) {
+    encoded_ &= ~kHeaderGCInfoIndexMask;
+    encoded_ |= (index << kHeaderGCInfoIndexShift) & kHeaderGCInfoIndexMask;
+  }
+
   NO_SANITIZE_ADDRESS void SetSize(size_t size) {
     DCHECK_LT(size, kNonLargeObjectPageSizeMax);
     CheckHeader();
