@@ -152,7 +152,8 @@ class RasterInterface {
                               const gfx::Vector2d& translate,
                               const gfx::Rect& playback_rect,
                               const gfx::Vector2dF& post_translate,
-                              GLfloat post_scale) = 0;
+                              GLfloat post_scale,
+                              bool requires_clear) = 0;
   virtual void EndRasterCHROMIUM() = 0;
 
   // Raster via GrContext.

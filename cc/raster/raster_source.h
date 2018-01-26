@@ -115,6 +115,8 @@ class CC_EXPORT RasterSource : public base::RefCountedThreadSafe<RasterSource> {
 
   SkColor background_color() const { return background_color_; }
 
+  bool requires_clear() const { return requires_clear_; }
+
   base::flat_map<PaintImage::Id, PaintImage::DecodingMode>
   TakeDecodingModeMap();
 
