@@ -17,6 +17,7 @@
 #include "ui/views/controls/styled_label.h"
 #include "ui/views/focus/focus_manager.h"
 #include "ui/views/layout/grid_layout.h"
+#include "ui/views/widget/widget.h"
 
 namespace {
 
@@ -230,6 +231,10 @@ views::Button::KeyClickAction HoverButton::GetKeyClickActionForEvent(
 void HoverButton::StateChanged(ButtonState old_state) {
   LabelButton::StateChanged(old_state);
 
+  // If the hover button is not in the currently active window, don't request
+  // the focus.
+  if (!GetWidget() || !GetWidget()->IsActive())
+    return;
   // |HoverButtons| are designed for use in a list, so ensure only one button
   // can have a hover background at any time by requesting focus on hover.
   if (state() == STATE_HOVERED || state() == STATE_PRESSED) {
