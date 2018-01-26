@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de02d22b_9cc5e56c",
+        "filename": "content/browser/android/synchronous_compositor_host_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-26T19:27:05Z",
+      "side": 1,
+      "message": "hmm, actually this doesn\u0027t hold\n\nI meant it to DCHECK that these things are not called after HostDestroyedOnUIThread, which is ok. However, it may not hold if renderer takes a while to get launched or something, so WaitAfterVSyncOnUIThread or SetFrameFutureOnUIThread can be called before BindFilterOnUIThread actually succeeds.\n\nI think we need separate bools for these two different things. And maybe rename BindFilterOnUIThread to TryBindFilterOnUIThread, and make it return a bool? Whatever makes sense I guess",
+      "revId": "fd944c715e0a0d8e904f48dac9e0250e908a2001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f3f8042_1c7bbeef",
+        "filename": "content/browser/android/synchronous_compositor_host_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-26T19:27:05Z",
+      "side": 1,
+      "message": "sorry, my suggestion on the last PS was wrong. the problem with UnregisterHost here is that if there is a legit reply UnregistereHost, the renderer is going to be incorrectly killed\n\nI think Bridge here needs to keep track of whether it has any pending replies, and only call UnregisterHost on the filter after all of them have been signals",
+      "revId": "fd944c715e0a0d8e904f48dac9e0250e908a2001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
