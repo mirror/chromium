@@ -81,6 +81,7 @@ jumbo_source_set("browser") {
     "//content/public/common:zygote_features",
     "//crypto",
     "//device/bluetooth",
+    "//device/ctap",
     "//device/gamepad",
     "//device/geolocation",
     "//device/geolocation/public/cpp",

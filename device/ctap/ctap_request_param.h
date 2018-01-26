@@ -16,7 +16,13 @@ class CTAPRequestParam {
  public:
   CTAPRequestParam();
   virtual ~CTAPRequestParam();
-  virtual base::Optional<std::vector<uint8_t>> SerializeToCBOR() const = 0;
+  virtual base::Optional<std::vector<uint8_t>> Encode() const = 0;
+
+  virtual bool CheckU2fInteropCriteria() const;
+  virtual std::vector<uint8_t> GetU2FApplicationParameter() const;
+  virtual std::vector<uint8_t> GetU2FChallengeParameter() const;
+  virtual std::vector<std::vector<uint8_t>> GetU2FRegisteredKeysParameter()
+      const;
 };
 
 }  // namespace device

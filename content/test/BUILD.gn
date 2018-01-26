@@ -870,6 +870,7 @@ test("content_browsertests") {
     "//content/shell:pak",
     "//content/test:test_support",
     "//device/base/synchronization",
+    "//device/ctap",
     "//device/sensors",
     "//device/sensors/public/cpp:full",
     "//gin",

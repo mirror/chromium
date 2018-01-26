@@ -8,7 +8,8 @@
 
 #include "base/numerics/safe_conversions.h"
 #include "components/cbor/cbor_writer.h"
-#include "device/ctap/ctap_request_command.h"
+#include "crypto/sha2.h"
+#include "device/ctap/ctap_constants.h"
 
 namespace device {
 
@@ -21,13 +22,19 @@ CTAPGetAssertionRequestParam::CTAPGetAssertionRequestParam(
 CTAPGetAssertionRequestParam::CTAPGetAssertionRequestParam(
     CTAPGetAssertionRequestParam&& that) = default;
 
+CTAPGetAssertionRequestParam::CTAPGetAssertionRequestParam(
+    const CTAPGetAssertionRequestParam& that) = default;
+
 CTAPGetAssertionRequestParam& CTAPGetAssertionRequestParam::operator=(
     CTAPGetAssertionRequestParam&& other) = default;
 
+CTAPGetAssertionRequestParam& CTAPGetAssertionRequestParam::operator=(
+    const CTAPGetAssertionRequestParam& other) = default;
+
 CTAPGetAssertionRequestParam::~CTAPGetAssertionRequestParam() = default;
 
-base::Optional<std::vector<uint8_t>>
-CTAPGetAssertionRequestParam::SerializeToCBOR() const {
+base::Optional<std::vector<uint8_t>> CTAPGetAssertionRequestParam::Encode()
+    const {
   cbor::CBORValue::MapValue cbor_map;
   cbor_map[cbor::CBORValue(1)] = cbor::CBORValue(rp_id_);
   cbor_map[cbor::CBORValue(2)] = cbor::CBORValue(client_data_hash_);
@@ -48,17 +55,70 @@ CTAPGetAssertionRequestParam::SerializeToCBOR() const {
     cbor_map[cbor::CBORValue(7)] = cbor::CBORValue(*pin_protocol_);
   }
 
+  // cbor::CBORValue::MapValue option_map;
+  // option_map[cbor::CBORValue(kUserPresenceMapKey)] =
+  //     cbor::CBORValue(user_presence_required_);
+  // option_map[cbor::CBORValue(kUserVerificationMapKey)] =
+  //     cbor::CBORValue(user_verification_required_);
+  // cbor_map[cbor::CBORValue(7)] = cbor::CBORValue(std::move(option_map));
+
   auto serialized_param =
       cbor::CBORWriter::Write(cbor::CBORValue(std::move(cbor_map)));
-  if (!serialized_param) {
+  if (!serialized_param)
     return base::nullopt;
-  }
 
   std::vector<uint8_t> cbor_request({base::strict_cast<uint8_t>(
       CTAPRequestCommand::kAuthenticatorGetAssertion)});
   cbor_request.insert(cbor_request.end(), serialized_param->begin(),
                       serialized_param->end());
   return cbor_request;
+}
+
+bool CTAPGetAssertionRequestParam::CheckU2fInteropCriteria() const {
+  if (user_verification_required_ || !allow_list_ || allow_list_->empty())
+    return false;
+  return true;
+}
+
+std::vector<uint8_t> CTAPGetAssertionRequestParam::GetU2FApplicationParameter()
+    const {
+  // The application parameter is the SHA-256 hash of the UTF-8 encoding of
+  // the application identity (i.e. relying_party_id) of the application
+  // requesting the registration.
+  std::vector<uint8_t> application_param(crypto::kSHA256Length);
+  crypto::SHA256HashString(rp_id_, application_param.data(),
+                           application_param.size());
+  return application_param;
+}
+
+std::vector<uint8_t> CTAPGetAssertionRequestParam::GetU2FChallengeParameter()
+    const {
+  return client_data_hash_;
+}
+
+std::vector<std::vector<uint8_t>>
+CTAPGetAssertionRequestParam::GetU2FRegisteredKeysParameter() const {
+  std::vector<std::vector<uint8_t>> registered_keys;
+  if (allow_list_) {
+    for (const auto& credential : *allow_list_) {
+      registered_keys.push_back(credential.id());
+    }
+  }
+  return registered_keys;
+}
+
+CTAPGetAssertionRequestParam&
+CTAPGetAssertionRequestParam::SetUserVerificationRequired(
+    bool user_verification_required) {
+  user_verification_required_ = user_verification_required;
+  return *this;
+}
+
+CTAPGetAssertionRequestParam&
+CTAPGetAssertionRequestParam::SetUserPresenceRequired(
+    bool user_presence_required) {
+  user_presence_required_ = user_presence_required;
+  return *this;
 }
 
 CTAPGetAssertionRequestParam& CTAPGetAssertionRequestParam::SetAllowList(

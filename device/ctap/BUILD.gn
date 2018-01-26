@@ -3,18 +3,50 @@
 # found in the LICENSE file.
 
 import("//build/config/features.gni")
+import("//testing/libfuzzer/fuzzer_test.gni")
 
 source_set("ctap") {
   sources = [
-    "ctap_device_command.h",
+    "authenticator_get_assertion_response.cc",
+    "authenticator_get_assertion_response.h",
+    "authenticator_get_info_response.cc",
+    "authenticator_get_info_response.h",
+    "authenticator_make_credential_response.cc",
+    "authenticator_make_credential_response.h",
+    "authenticator_supported_options.cc",
+    "authenticator_supported_options.h",
+    "ctap_authentication_response_data.cc",
+    "ctap_authentication_response_data.h",
+    "ctap_authenticator_request_param.cc",
+    "ctap_authenticator_request_param.h",
+    "ctap_constants.cc",
+    "ctap_constants.h",
+    "ctap_discovery.cc",
+    "ctap_discovery.h",
+    "ctap_get_assertion.cc",
+    "ctap_get_assertion.h",
     "ctap_get_assertion_request_param.cc",
     "ctap_get_assertion_request_param.h",
+    "ctap_hid_discovery.cc",
+    "ctap_hid_discovery.h",
+    "ctap_make_credential.cc",
+    "ctap_make_credential.h",
     "ctap_make_credential_request_param.cc",
     "ctap_make_credential_request_param.h",
-    "ctap_request_command.h",
+    "ctap_request.cc",
+    "ctap_request.h",
     "ctap_request_param.cc",
     "ctap_request_param.h",
-    "ctap_response_code.h",
+    "device_response_converter.cc",
+    "device_response_converter.h",
+    "fido_device.cc",
+    "fido_device.h",
+    "fido_hid_device.cc",
+    "fido_hid_device.h",
+    "hid_message.cc",
+    "hid_message.h",
+    "hid_packet.cc",
+    "hid_packet.h",
     "public_key_credential_descriptor.cc",
     "public_key_credential_descriptor.h",
     "public_key_credential_params.cc",
@@ -23,13 +55,36 @@ source_set("ctap") {
     "public_key_credential_rp_entity.h",
     "public_key_credential_user_entity.cc",
     "public_key_credential_user_entity.h",
+    "u2f_device_request.cc",
+    "u2f_device_request.h",
+    "u2f_register_param.cc",
+    "u2f_register_param.h",
+    "u2f_register_request.cc",
+    "u2f_register_request.h",
+    "u2f_sign_param.cc",
+    "u2f_sign_param.h",
+    "u2f_sign_request.cc",
+    "u2f_sign_request.h",
   ]
 
   deps = [
     "//base",
     "//components/cbor",
+    "//crypto",
+    "//device/u2f",
     "//services/device/public/interfaces",
     "//services/service_manager/public/cpp",
     "//services/service_manager/public/interfaces",
   ]
+}
+
+fuzzer_test("ctap_response_fuzzer") {
+  sources = [
+    "ctap_response_fuzzer.cc",
+  ]
+  deps = [
+    ":ctap",
+  ]
+
+  libfuzzer_options = [ "max_len=65537" ]
 }
