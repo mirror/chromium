@@ -414,6 +414,11 @@ void SystemTray::CanSwitchAwayFromActiveUser(
       ->Show();
 }
 
+void SystemTray::SetTextToGivenTooltip(base::string16* tooltip) {
+  tooltip->assign(
+      l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_SYSTEM_TRAY_TOOLTIP));
+}
+
 // Private methods.
 
 bool SystemTray::HasSystemTrayType(SystemTrayView::SystemTrayType type) {
