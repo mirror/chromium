@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "cc5bea4d_28b3b7af",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-01-26T18:29:05Z",
+      "side": 1,
+      "message": "Drive-by comment: Could we have the model check its own has_focus() in SetInputInProgress() to decide whether to call the notify method instead of telling it not to and then separately asking it to notify here?\n\nMore generally, this method seems a little odd to me (even before this change but this exacerbates the issue). It implements a back-and-forth where the view asks the model questions about the model\u0027s state and then based on that tells the model to do things.\n\nI feel like we could change this method to consist of nothing but a single call to SetInputInProgress and let the model decide when and whether to notify. The logic depends on the selection range but that\u0027s accessible to the model via OmniboxView::GetSelectionBounds.\n\nIt\u0027s not quite that simple since there are other calls to SetInputInProgress that would be affected by the proposed change but I think they could be accommodated solely via changes within the model itself. An additional advantage to simplifying the method here is that OmniboxViewMac has a parallel method with the exact same logic. Simplifying it rather than making it more complex would reduce the maintenance burden and reduce the chance that we neglect to keep them in sync.\n\nI\u0027m not suggesting that this necessarily should be done by you or in this CL, but I\u0027m curious as to your thoughts.",
+      "revId": "0ff6529ac0bbe14c87dad8c8b5ec0bb62dc32821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd2e257a_631370f1",
         "filename": "components/omnibox/browser/omnibox_edit_model.cc",
         "patchSetId": 3
