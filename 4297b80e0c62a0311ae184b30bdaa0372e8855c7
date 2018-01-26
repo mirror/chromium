@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7cdc9d3f_be592387",
+        "filename": "chrome/browser/chromeos/policy/upload_job_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2018-01-26T13:53:25Z",
+      "side": 1,
+      "message": "Why not const anymore?",
+      "range": {
+        "startLine": 66,
+        "startChar": 16,
+        "endLine": 66,
+        "endChar": 29
+      },
+      "revId": "4297b80e0c62a0311ae184b30bdaa0372e8855c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
