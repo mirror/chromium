@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "856a9853_6288f624",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-26T18:43:49Z",
+      "side": 1,
+      "message": "Can we make these functions debug build only so we\u0027re not adding a bunch of random strings etc. to binary size?",
+      "range": {
+        "startLine": 54,
+        "startChar": 5,
+        "endLine": 54,
+        "endChar": 28
+      },
+      "revId": "e0fbabb38a25f79369451a2d68c96a4dbf90a518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
