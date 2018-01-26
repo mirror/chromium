@@ -16,6 +16,24 @@
       "revId": "bde376874a88975a12fc914203f09615156524c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9ff866a_3836cead",
+        "filename": "content/renderer/media/media_stream_audio_processor_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1253501
+      },
+      "writtenOn": "2018-01-26T14:36:27Z",
+      "side": 1,
+      "message": "Yes, echo_canceller3.enabled will be removed from the APM config, so that cannot be used.\n\nThe goal is to decouple AEC3 and APM, so that APM will have no knowledge of AEC3. APM will only use whichever EchoControl that is injected into it. This also means that APM will not know if it is running AEC3 or some other EchoControl. We could possibly open up some API to ask APM if it is running an EchoControl.\n\nAre these unit tests strictly needed? Or is it possible to rewrite the tests to make sure that the code which adds AEC3 to ap_builder is run when AEC3 is requested?",
+      "parentUuid": "f221628a_502c82c9",
+      "revId": "bde376874a88975a12fc914203f09615156524c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
