@@ -36,6 +36,7 @@ base::TimeTicks Navigator::GetCurrentLoadStart() {
 void Navigator::OnBeginNavigation(
     FrameTreeNode* frame_tree_node,
     const CommonNavigationParams& common_params,
-    mojom::BeginNavigationParamsPtr begin_params) {}
+    mojom::BeginNavigationParamsPtr begin_params,
+    mojom::NavigationClientPtr navigation_client) {}
 
 }  // namespace content

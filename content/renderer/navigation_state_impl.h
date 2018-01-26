@@ -10,6 +10,7 @@
 #include "base/macros.h"
 #include "content/common/navigation_params.h"
 #include "content/public/renderer/navigation_state.h"
+#include "content/renderer/navigation_client_impl.h"
 
 namespace content {
 
@@ -27,6 +28,7 @@ class CONTENT_EXPORT NavigationStateImpl : public NavigationState {
   ui::PageTransition GetTransitionType() override;
   bool WasWithinSameDocument() override;
   bool IsContentInitiated() override;
+  void UnBindNavigationClient() override;
 
   const CommonNavigationParams& common_params() const { return common_params_; }
   const RequestNavigationParams& request_params() const {
@@ -40,6 +42,11 @@ class CONTENT_EXPORT NavigationStateImpl : public NavigationState {
 
   void set_transition_type(ui::PageTransition transition) {
     common_params_.transition = transition;
+  }
+
+  void set_navigation_client(
+      std::unique_ptr<NavigationClientImpl> navigation_client) {
+    navigation_client_ = std::move(navigation_client);
   }
 
  private:
@@ -67,6 +74,8 @@ class CONTENT_EXPORT NavigationStateImpl : public NavigationState {
   // FrameLoader has committedFirstRealDocumentLoad as a replacement. (Added for
   // http://crbug.com/178380).
   const RequestNavigationParams request_params_;
+
+  std::unique_ptr<NavigationClientImpl> navigation_client_;
 
   DISALLOW_COPY_AND_ASSIGN(NavigationStateImpl);
 };
