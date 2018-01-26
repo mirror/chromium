@@ -12,6 +12,11 @@ namespace wallpaper_manager_util {
 extern const char kAndroidWallpapersAppPackage[];
 extern const char kAndroidWallpapersAppActivity[];
 
+// TODO(xdai|wzang): Clean this up. The project was cancelled.
+// Launches the Android Wallpapers App only if the current profile is the
+// primary profile && ARC service is enabled && the Android Wallpapers App has
+// been installed && the finch experiment or chrome flag is enabled. Otherwise
+// launches the Chrome OS Wallpaper Picker App.
 bool ShouldUseAndroidWallpapersApp(Profile* profile);
 
 // Opens wallpaper manager application.
