@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "dd756b1c_5446f043",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-26T05:33:18Z",
+      "side": 1,
+      "message": "I think the case you brought there (e.g. Window Client is already invalid if the window is already gone) is a valid case. And okay I see that this could call either code... ok, I\u0027m fine with the code as is. Sorry for blocking you.",
+      "parentUuid": "78dda979_0e7cc165",
+      "revId": "eaec408952fd00cbe38aa7d361d5316171d77607",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "722f28db_221f4812",
         "filename": "third_party/WebKit/common/service_worker/service_worker_registration.mojom",
         "patchSetId": 4
