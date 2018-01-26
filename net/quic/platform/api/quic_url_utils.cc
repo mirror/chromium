@@ -18,4 +18,9 @@ bool QuicUrlUtils::IsValidUrl(QuicStringPiece url) {
   return QuicUrlUtilsImpl::IsValidUrl(url);
 }
 
+// static
+std::string QuicUrlUtils::CanonicalizeUrl(QuicStringPiece url) {
+  return QuicUrlUtilsImpl::CanonicalizeUrl(url);
+}
+
 }  // namespace net
