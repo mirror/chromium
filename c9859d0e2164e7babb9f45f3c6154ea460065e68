@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd3c9efc_74350790",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-26T05:38:06Z",
+      "side": 1,
+      "message": "Or we can start using std::unique_ptr\u003cResourceRequest\u003e more broadly...",
+      "revId": "c9859d0e2164e7babb9f45f3c6154ea460065e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7de47f0f_98c6ce48",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/serviceworker/resources/fetch-request-body-file-test.php",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-26T05:38:06Z",
+      "side": 1,
+      "message": "Would it be tough to reuse the same file?",
+      "revId": "c9859d0e2164e7babb9f45f3c6154ea460065e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
