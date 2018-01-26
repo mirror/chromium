@@ -130,7 +130,7 @@ TEST_F(OmniboxEditModelTest, AdjustTextForCopy) {
   for (size_t i = 0; i < arraysize(input); ++i) {
     model()->SetPermanentText(base::ASCIIToUTF16(input[i].perm_text));
 
-    model()->SetInputInProgress(input[i].is_match_selected_in_popup);
+    model()->SetInputInProgress(input[i].is_match_selected_in_popup, true);
     model()->SetPopupIsOpen(input[i].is_match_selected_in_popup);
     AutocompleteMatch match;
     match.type = AutocompleteMatchType::NAVSUGGEST;

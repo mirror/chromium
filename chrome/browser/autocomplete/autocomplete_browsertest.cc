@@ -141,7 +141,7 @@ IN_PROC_BROWSER_TEST_F(AutocompleteBrowserTest, MAYBE_Autocomplete) {
   AutocompleteController* autocomplete_controller = GetAutocompleteController();
 
   {
-    omnibox_view->model()->SetInputInProgress(true);
+    omnibox_view->model()->SetInputInProgress(true, true);
     AutocompleteInput input(
         base::ASCIIToUTF16("chrome"), metrics::OmniboxEventProto::NTP,
         ChromeAutocompleteSchemeClassifier(browser()->profile()));
