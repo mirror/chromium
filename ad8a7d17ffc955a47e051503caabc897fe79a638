@@ -16,6 +16,24 @@
       "revId": "ad8a7d17ffc955a47e051503caabc897fe79a638",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2962a167_120527b3",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_fragment_painter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2018-01-26T06:50:50Z",
+      "side": 1,
+      "message": "Would you like me to move it to a separate header file right now?\n\nThis particular traversal only does one thing, find all non-self painting descendants.\nShould I change the method name to NotSelfPaintingDescendantsOf?",
+      "parentUuid": "7bfa899d_bbd35840",
+      "revId": "ad8a7d17ffc955a47e051503caabc897fe79a638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
