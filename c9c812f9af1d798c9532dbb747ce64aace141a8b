@@ -51,6 +51,24 @@
       "revId": "c9c812f9af1d798c9532dbb747ce64aace141a8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a456e3c_e0d28e6b",
+        "filename": "net/proxy_resolution/dhcp_pac_file_fetcher_win.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-26T22:28:49Z",
+      "side": 1,
+      "message": "How are I/O vs CPU bound tasks supposed to be submitted to the task scheduler? It seems we lose that intent in this translation.\n\nA general idiom for networking code\u0027s use of worker pools is to start operations that (might) do synchronous I/O. Such as the two places identified in this CL.\n\nI am surprised to see the ScopedBlockingCall() appearing within the executed task\u0027s code (rather than just being a property of the task itself). Does that imply that these I/O bound tasks may have to wait behind CPU hogs simply to get started with their I/O request?\n\nSomething else lost with in this translation is there is no longer a component-defined throttle for these tasks. Unfortunately the comment at the top of the file describes edge cases where there may be O(100) network adapters -- this in turn would result in posting hundreds of tasks for checking DHCP. In the old model, only 12 of these would at most run in parallel. Whereas now they are all dumped to the global scheduler and could overwhelm the scheduling of other tasks.\n\nDo we need to add our own form of throttling/queuing before submitting to the tasks scheduler in order to be better citizens? (And conversely, I wouldn\u0027t want these tasks to be stuck waiting for some other misbehaving component, since that can block our ability to load URLs).\n\nThanks",
+      "parentUuid": "161f1394_192f3593",
+      "revId": "c9c812f9af1d798c9532dbb747ce64aace141a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
