@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6020efe7_a2baaf98",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2018-01-26T23:07:18Z",
+      "side": 1,
+      "message": "I did some (premature perhaps) optimization with the old code, so that if the rounded rect is only a integer translation, we can get away without repainting by repositioning the layer.\n\nThe same can be done with clip path. Not quite sure if it will be helpful, but is not too expensive to implement either. Done in patchset 3.",
+      "parentUuid": "118bc824_f7ecaf1b",
+      "revId": "7639c3a01e3007e385f49c3698a03214be305757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29d01c18_2052e618",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-25T02:38:39Z",
       "side": 1,
       "message": "Can path_ be null?",
+      "revId": "7639c3a01e3007e385f49c3698a03214be305757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68f1bfd3_c1419722",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2018-01-26T23:07:18Z",
+      "side": 1,
+      "message": "Nice catch! I\u0027ll add a null check.",
+      "parentUuid": "29d01c18_2052e618",
       "revId": "7639c3a01e3007e385f49c3698a03214be305757",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "7639c3a01e3007e385f49c3698a03214be305757",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7372cf2_35b6b669",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/ClipPaintPropertyNode.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2018-01-26T23:07:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "806b7fa1_51a14f2d",
+      "revId": "7639c3a01e3007e385f49c3698a03214be305757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
