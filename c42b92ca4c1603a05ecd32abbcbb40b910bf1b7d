@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3f2cd57f_0f43f753",
+        "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-01-26T18:15:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39aa3bd7_a5a8fba8",
+      "revId": "c42b92ca4c1603a05ecd32abbcbb40b910bf1b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a10e615d_7c2b9b84",
         "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
         "patchSetId": 14
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "e9622917_00c3a159",
+        "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-01-26T18:15:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a10e615d_7c2b9b84",
+      "range": {
+        "startLine": 225,
+        "startChar": 7,
+        "endLine": 225,
+        "endChar": 24
+      },
+      "revId": "c42b92ca4c1603a05ecd32abbcbb40b910bf1b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c794499_97b4190f",
         "filename": "extensions/browser/extension_protocols.cc",
         "patchSetId": 14
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "6c790312_471a965c",
+        "filename": "extensions/browser/extension_protocols.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-01-26T18:15:13Z",
+      "side": 1,
+      "message": "Thanks - fixed.",
+      "parentUuid": "7c794499_97b4190f",
+      "revId": "c42b92ca4c1603a05ecd32abbcbb40b910bf1b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4fc9b07_63e758f8",
         "filename": "extensions/browser/extension_protocols.cc",
         "patchSetId": 14
@@ -73,6 +133,24 @@
       "revId": "c42b92ca4c1603a05ecd32abbcbb40b910bf1b7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19c7c957_dcfc2d0b",
+        "filename": "extensions/browser/extension_protocols.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-01-26T18:15:13Z",
+      "side": 1,
+      "message": "I decided to move the commend - as CreateJobFor does a DCHECK_CURRENTLY_ON.",
+      "parentUuid": "b4fc9b07_63e758f8",
+      "revId": "c42b92ca4c1603a05ecd32abbcbb40b910bf1b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
