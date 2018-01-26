@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "30286a00_c5c6b016",
+        "filename": "chrome/browser/extensions/api/preference/preference_apitest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-26T19:14:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab8225f7_5b561cfd",
+      "range": {
+        "startLine": 373,
+        "startChar": 36,
+        "endLine": 373,
+        "endChar": 59
+      },
+      "revId": "9eeb22c7fde58662b60622ff81c90079028a1e2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "144921c8_c3ba43b6",
         "filename": "chrome/browser/extensions/api/preference/preference_apitest.cc",
         "patchSetId": 4
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "324c3953_911e9f72",
+        "filename": "chrome/browser/extensions/api/preference/preference_apitest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-26T19:14:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "144921c8_c3ba43b6",
+      "revId": "9eeb22c7fde58662b60622ff81c90079028a1e2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a44268d_cda344eb",
         "filename": "chrome/browser/extensions/api/preference/preference_helpers.cc",
         "patchSetId": 4
@@ -56,6 +98,24 @@
       "revId": "9eeb22c7fde58662b60622ff81c90079028a1e2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42cc6f97_4633dea5",
+        "filename": "chrome/browser/extensions/api/preference/preference_helpers.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-26T19:14:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a44268d_cda344eb",
+      "revId": "9eeb22c7fde58662b60622ff81c90079028a1e2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "0310cb6a_f77af8e3",
+        "filename": "chrome/browser/extensions/api/preference/preference_helpers.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-26T19:14:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0fae0b5_94d56913",
+      "range": {
+        "startLine": 122,
+        "startChar": 20,
+        "endLine": 122,
+        "endChar": 30
+      },
+      "revId": "9eeb22c7fde58662b60622ff81c90079028a1e2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2380dda_3a37ba43",
         "filename": "chrome/test/data/extensions/api_test/preference/onchange_split_regular_only/test.js",
         "patchSetId": 4
@@ -93,6 +177,24 @@
       "writtenOn": "2018-01-26T18:13:55Z",
       "side": 1,
       "message": "nit: indentation",
+      "revId": "9eeb22c7fde58662b60622ff81c90079028a1e2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "189aaabd_ee2fbb7e",
+        "filename": "chrome/test/data/extensions/api_test/preference/onchange_split_regular_only/test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-26T19:14:37Z",
+      "side": 1,
+      "message": "...and missing trailing ; before this (which confused git cl format)\n\nFixed",
+      "parentUuid": "c2380dda_3a37ba43",
       "revId": "9eeb22c7fde58662b60622ff81c90079028a1e2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
