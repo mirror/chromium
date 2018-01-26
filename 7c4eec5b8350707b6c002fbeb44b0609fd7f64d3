@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea861812_822a78a9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-26T09:14:34Z",
+      "side": 1,
+      "message": "Please update description to reflect CL content :-)",
+      "revId": "7c4eec5b8350707b6c002fbeb44b0609fd7f64d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
