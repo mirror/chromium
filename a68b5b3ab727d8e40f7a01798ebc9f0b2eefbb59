@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "14fafce5_d084c328",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-26T22:54:47Z",
+      "side": 1,
+      "message": "The image info has the paint_image\u0027s colorspace, not the target one (see https://cs.chromium.org/chromium/src/cc/tiles/gpu_image_decode_cache.cc?rcl\u003d32ce3342a390e2e9e3268ea082896e76589f5ded\u0026l\u003d1547), so we need to set this (and hence why conversion works now).",
+      "parentUuid": "93babf62_8bd8e611",
+      "range": {
+        "startLine": 156,
+        "startChar": 4,
+        "endLine": 157,
+        "endChar": 59
+      },
+      "revId": "a68b5b3ab727d8e40f7a01798ebc9f0b2eefbb59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e3b86d1_8417c2cf",
         "filename": "cc/tiles/gpu_image_decode_cache.cc",
         "patchSetId": 6
@@ -68,6 +92,30 @@
       "revId": "a68b5b3ab727d8e40f7a01798ebc9f0b2eefbb59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e26194cb_6e83bf6a",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1411,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-26T22:54:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4440bbf0_86805055",
+      "range": {
+        "startLine": 1411,
+        "startChar": 45,
+        "endLine": 1411,
+        "endChar": 52
+      },
+      "revId": "a68b5b3ab727d8e40f7a01798ebc9f0b2eefbb59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
