@@ -15,7 +15,7 @@
             "title": "Profiler",
             "order": 65,
             "className": "Profiler.JSProfilerPanel",
-            "condition": "v8only"
+            "condition": "!hasTimeline"
         },
         {
             "type": "view",
@@ -25,7 +25,7 @@
             "persistence": "closeable",
             "order": 65,
             "className": "Profiler.JSProfilerPanel",
-            "condition": "!v8only"
+            "condition": "hasTimeline"
         },
         {
             "type": "@UI.ContextMenu.Provider",

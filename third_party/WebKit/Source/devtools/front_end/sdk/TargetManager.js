@@ -342,7 +342,7 @@ SDK.TargetManager = class extends Common.Object {
     if (Runtime.queryParam('isSharedWorker')) {
       capabilities = SDK.Target.Capability.Browser | SDK.Target.Capability.Log | SDK.Target.Capability.Network |
           SDK.Target.Capability.Target | SDK.Target.Capability.Inspector;
-    } else if (Runtime.queryParam('v8only')) {
+    } else if (Runtime.queryParam('nodeFrontend')) {
       capabilities = SDK.Target.Capability.JS;
       Host.userMetrics.actionTaken(Host.UserMetrics.Action.ConnectToNodeJSDirectly);
     }
