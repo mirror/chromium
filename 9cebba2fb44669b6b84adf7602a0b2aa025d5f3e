@@ -184,6 +184,24 @@
     },
     {
       "key": {
+        "uuid": "62fcde50_4b13da85",
+        "filename": "chrome_server/BUILD.gn",
+        "patchSetId": 29
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-26T00:44:27Z",
+      "side": 1,
+      "message": "Sure, I will use another CL to move those functions.",
+      "parentUuid": "86de0caf_6612c847",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9de82a29_252fe6bf",
         "filename": "chrome_server/BUILD.gn",
         "patchSetId": 29
@@ -339,6 +357,24 @@
       "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97113de3_76283b13",
+        "filename": "chrome_server/DEPS",
+        "patchSetId": 29
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-26T00:44:27Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "6dde2523_7ac8246c",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -827,6 +863,24 @@
     },
     {
       "key": {
+        "uuid": "374dc3da_874e995a",
+        "filename": "chrome_server/notification_activator.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-26T00:44:27Z",
+      "side": 1,
+      "message": "You are right. It worked because I have a messagebox pumped out which prevents the process from exiting. I\u0027ve fixed it using a waitable event.",
+      "parentUuid": "8d8c7f77_56002a46",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51aff7f1_0235e410",
         "filename": "chrome_server/notification_activator.h",
         "patchSetId": 29
@@ -880,6 +934,24 @@
     },
     {
       "key": {
+        "uuid": "fd26ecc3_7afbb5f5",
+        "filename": "chrome_server/notification_activator.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-26T00:44:27Z",
+      "side": 1,
+      "message": "Done. Defined __WRL_CLASSIC_COM_STRICT__ for optimization.",
+      "parentUuid": "224aadc5_09295fcd",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27188b08_4e24b26e",
         "filename": "chrome_server/notification_activator.h",
         "patchSetId": 29
@@ -930,6 +1002,24 @@
       "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a92a026_af0904e4",
+        "filename": "chrome_server/notification_activator.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-26T00:44:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0fbe639f_f2c227ca",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -1000,6 +1090,24 @@
       "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "995bae8a_12de6b6e",
+        "filename": "chrome_server/notification_activator.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-26T00:44:27Z",
+      "side": 1,
+      "message": "Done. Moved the implementation to the .cc file.",
+      "parentUuid": "7eaa4f06_4fb383ce",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -1156,6 +1264,30 @@
     },
     {
       "key": {
+        "uuid": "f78f3564_8321df51",
+        "filename": "chrome_server/notification_activator.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-26T00:44:27Z",
+      "side": 1,
+      "message": "Done. Removed CreatorMap are related.",
+      "parentUuid": "faa72252_3e478367",
+      "range": {
+        "startLine": 74,
+        "startChar": 37,
+        "endLine": 74,
+        "endChar": 43
+      },
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f109a493_35fd6000",
         "filename": "chrome_server/notification_activator.h",
         "patchSetId": 29
@@ -1276,6 +1408,24 @@
       "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bef4178b_ebbe14ea",
+        "filename": "chrome_server/notification_activator.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-26T00:44:27Z",
+      "side": 1,
+      "message": "Done. I\u0027ve added a waitable event to keep the process alive. I also supplied a callback in Module::Create to signal the event so that the process can exit once all instance objects of the module are released.",
+      "parentUuid": "0e0de4c6_e507c390",
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
