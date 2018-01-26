@@ -166,7 +166,7 @@ public class WebappActivity extends SingleTabActivity {
             // Split path from the url to get only the origin.
             Uri origin = new Uri.Builder()
                                  .scheme(mWebappInfo.uri().getScheme())
-                                 .authority(mWebappInfo.uri().getHost())
+                                 .encodedAuthority(mWebappInfo.uri().getAuthority())
                                  .build();
             mOriginVerifier.start(origin);
         }

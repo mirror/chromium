@@ -424,7 +424,9 @@ class ClientManager {
         if (!isAppAssociatedWithOrigin) return false;
 
         // Split path from the given Uri to get only the origin before web->native verification.
-        Uri origin = new Uri.Builder().scheme(url.getScheme()).authority(url.getHost()).build();
+        Uri origin = new Uri.Builder().scheme(url.getScheme())
+                                      .encodedAuthority(url.getAuthority())
+                                      .build();
         if (OriginVerifier.isValidOrigin(
                     packageName, origin, CustomTabsService.RELATION_HANDLE_ALL_URLS)) {
             return true;

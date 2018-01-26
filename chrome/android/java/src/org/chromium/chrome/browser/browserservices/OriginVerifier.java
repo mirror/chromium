@@ -14,6 +14,7 @@ import android.support.customtabs.CustomTabsService.Relation;
 import android.support.v4.util.Pair;
 import android.text.TextUtils;
 
+import org.chromium.base.CommandLine;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
@@ -21,6 +22,7 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.base.library_loader.LibraryProcessType;
+import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.IntentHandler;
 import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.browser.profiles.Profile;
@@ -168,15 +170,28 @@ public class OriginVerifier {
         ThreadUtils.assertOnUiThread();
         mOrigin = origin;
         String scheme = mOrigin.getScheme();
+
+        // Digital Asset Link verification can be skipped for a specific URL by passing a command
+        // line flag to ease development.
+        String disableDalUrl = CommandLine.getInstance()
+                .getSwitchValue(ChromeSwitches.DISABLE_DIGITAL_ASSET_LINK_VERIFICATION);
+        if (!TextUtils.isEmpty(disableDalUrl) && origin.toString().equals(disableDalUrl)) {
+            ThreadUtils.runOnUiThread(new VerifiedCallback(true));
+            Log.i(TAG, "Verification skipped for %s due to command line flag.", origin);
+            return;
+        }
+
         if (TextUtils.isEmpty(scheme)
                 || !UrlConstants.HTTPS_SCHEME.equals(scheme.toLowerCase(Locale.US))) {
             ThreadUtils.runOnUiThread(new VerifiedCallback(false));
+            Log.i(TAG, "Verification failed for %s as not https.", origin);
             return;
         }
 
         // If this origin is cached as verified already, use that.
         if (isValidOrigin(mPackageName, origin, mRelation)) {
             ThreadUtils.runOnUiThread(new VerifiedCallback(true));
+            Log.i(TAG, "Verification succeeded for %s, it was cached.", origin);
             return;
         }
         if (mNativeOriginVerifier != 0) cleanUp();
@@ -201,6 +216,8 @@ public class OriginVerifier {
         }
         boolean success = nativeVerifyOrigin(mNativeOriginVerifier, mPackageName,
                 mSignatureFingerprint, mOrigin.toString(), relationship);
+        Log.i(TAG, "Verification %s for %s after DAL check.",
+                (success ? "succeeded" : "failed"), origin);
         if (!success) ThreadUtils.runOnUiThread(new VerifiedCallback(false));
     }
 
