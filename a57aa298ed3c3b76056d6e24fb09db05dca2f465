@@ -16,6 +16,24 @@
       "revId": "a57aa298ed3c3b76056d6e24fb09db05dca2f465",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f1e270e_4a007424",
+        "filename": "media/gpu/vaapi/vaapi_wrapper.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1142,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2018-01-26T01:39:26Z",
+      "side": 1,
+      "message": "Ah, that was my mistake. Thanks for taking care of this, LGTM!\n\nNit: technically, this could have been a separate patch. ;)\n\nBut let\u0027s get this in, so we can move forward with libva 2.0.",
+      "parentUuid": "050c00f5_2933add3",
+      "revId": "a57aa298ed3c3b76056d6e24fb09db05dca2f465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
