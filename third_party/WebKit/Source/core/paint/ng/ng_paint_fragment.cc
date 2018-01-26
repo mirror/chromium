@@ -51,6 +51,7 @@ void NGPaintFragment::PopulateDescendants(bool stop_at_block_layout_root) {
   DCHECK(children_.IsEmpty());
   const NGPhysicalFragment& fragment = PhysicalFragment();
   // Recurse chlidren, except when this is a block layout root.
+  // TODO(kojii): Create a list per LayoutText/LayoutInline and store to them.
   if (fragment.IsContainer() &&
       !(fragment.IsBlockLayoutRoot() && stop_at_block_layout_root)) {
     const NGPhysicalContainerFragment& container =

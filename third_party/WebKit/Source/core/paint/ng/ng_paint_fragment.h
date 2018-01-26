@@ -43,6 +43,16 @@ class NGPaintFragment : public DisplayItemClient, public ImageResourceObserver {
     return children_;
   }
 
+  // When this is an inline fragment, returns offset to its container box.
+  // For block fragment, reutrns (0, 0).
+  const NGPhysicalOffset& OffsetToContainerBox() const {
+    return offset_to_container_box_;
+  }
+
+  // Next NGPaintFragment that was from the same Node/LayoutObject when it was
+  // fragmented into multiple NGPaintFragment.
+  NGPaintFragment* NextFragment() const { return next_fragment_; }
+
   // Update VisualRect() for this object and all its descendants from
   // LayoutObject. Corresponding LayoutObject::VisualRect() must be computed and
   // set beforehand.
@@ -95,6 +105,9 @@ class NGPaintFragment : public DisplayItemClient, public ImageResourceObserver {
   LayoutRect visual_rect_;
 
   Vector<std::unique_ptr<NGPaintFragment>> children_;
+
+  NGPaintFragment* next_fragment_;
+  NGPhysicalOffset offset_to_container_box_;
 };
 
 }  // namespace blink
