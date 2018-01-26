@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9eb3a04_0c89f27e",
+        "filename": "components/exo/pointer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-26T04:54:19Z",
+      "side": 1,
+      "message": "what is this for?",
+      "revId": "332521c2ac7c75046dc5ab60c990d92f96fd8b2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2629d45f_ca10352b",
+        "filename": "components/exo/pointer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2018-01-26T04:54:19Z",
+      "side": 1,
+      "message": "when will this be null? it would be nice if all conditions below that check if this is null could be removed..",
+      "revId": "332521c2ac7c75046dc5ab60c990d92f96fd8b2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
