@@ -269,6 +269,7 @@ void WebFrameWidgetImpl::BeginFrame(double last_frame_time_monotonic) {
       local_root_->GetFrame()->GetDocument()->Lifecycle());
   PageWidgetDelegate::Animate(*GetPage(), last_frame_time_monotonic);
   // Animate can cause the local frame to detach.
+  DCHECK(local_root_);
   if (local_root_)
     GetPage()->GetValidationMessageClient().LayoutOverlay();
 }
