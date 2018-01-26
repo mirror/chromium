@@ -14,12 +14,14 @@
 #include "base/memory/ref_counted.h"
 #include "net/url_request/url_request_status.h"
 #include "services/network/public/cpp/resource_response_info.h"
+#include "services/network/public/cpp/types_export.h"
 #include "url/gurl.h"
 
 namespace network {
 
 // Parameters for a resource response header.
-struct ResourceResponseHead : ResourceResponseInfo {
+struct SERVICES_NETWORK_TYPES_EXPORT ResourceResponseHead
+    : ResourceResponseInfo {
   // TimeTicks::Now() when the browser received the request from the renderer.
   base::TimeTicks request_start;
   // TimeTicks::Now() when the browser sent the response to the renderer.
@@ -28,7 +30,8 @@ struct ResourceResponseHead : ResourceResponseInfo {
 
 // Simple wrapper that refcounts ResourceResponseHead.
 // Inherited, rather than typedef'd, to allow forward declarations.
-struct ResourceResponse : public base::RefCountedThreadSafe<ResourceResponse> {
+struct SERVICES_NETWORK_TYPES_EXPORT ResourceResponse
+    : public base::RefCountedThreadSafe<ResourceResponse> {
  public:
   ResourceResponseHead head;
 

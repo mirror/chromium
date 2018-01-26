@@ -7,12 +7,14 @@
 
 #include "mojo/public/cpp/bindings/enum_traits.h"
 #include "net/base/request_priority.h"
+#include "services/network/public/cpp/types_export.h"
 #include "services/network/public/interfaces/url_loader.mojom-shared.h"
 
 namespace mojo {
 
 template <>
-struct EnumTraits<network::mojom::RequestPriority, net::RequestPriority> {
+struct SERVICES_NETWORK_TYPES_EXPORT
+    EnumTraits<network::mojom::RequestPriority, net::RequestPriority> {
   static network::mojom::RequestPriority ToMojom(net::RequestPriority priority);
   static bool FromMojom(network::mojom::RequestPriority in,
                         net::RequestPriority* out);

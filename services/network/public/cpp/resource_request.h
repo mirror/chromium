@@ -14,6 +14,7 @@
 #include "net/http/http_request_headers.h"
 #include "net/url_request/url_request.h"
 #include "services/network/public/cpp/resource_request_body.h"
+#include "services/network/public/cpp/types_export.h"
 #include "services/network/public/interfaces/cors.mojom-shared.h"
 #include "services/network/public/interfaces/fetch_api.mojom-shared.h"
 #include "services/network/public/interfaces/request_context_frame_type.mojom-shared.h"
@@ -22,7 +23,7 @@
 
 namespace network {
 
-struct ResourceRequest {
+struct SERVICES_NETWORK_TYPES_EXPORT ResourceRequest {
   ResourceRequest();
   ResourceRequest(const ResourceRequest& request);
   ~ResourceRequest();
