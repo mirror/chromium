@@ -34,9 +34,12 @@ class NavigationContextImpl : public NavigationContext {
 
   // NavigationContext overrides:
   WebState* GetWebState() override;
+  int64_t GetNavigationId() const override;
   const GURL& GetUrl() const override;
   ui::PageTransition GetPageTransition() const override;
   bool IsSameDocument() const override;
+  bool HasCommitted() const override;
+  bool IsDownload() const override;
   bool IsPost() const override;
   NSError* GetError() const override;
   net::HttpResponseHeaders* GetResponseHeaders() const override;
@@ -46,6 +49,8 @@ class NavigationContextImpl : public NavigationContext {
   // Setters for navigation context data members.
   void SetUrl(const GURL& url);
   void SetIsSameDocument(bool is_same_document);
+  void SetHasCommitted(bool has_committed);
+  void SetIsDownload(bool is_download);
   void SetIsPost(bool is_post);
   void SetError(NSError* error);
   void SetResponseHeaders(
@@ -67,9 +72,12 @@ class NavigationContextImpl : public NavigationContext {
                         bool is_renderer_initiated);
 
   WebState* web_state_ = nullptr;
+  int64_t navigation_id_;
   GURL url_;
   const ui::PageTransition page_transition_;
   bool is_same_document_ = false;
+  bool has_committed_ = false;
+  bool is_download_ = false;
   bool is_post_ = false;
   NSError* error_;
   scoped_refptr<net::HttpResponseHeaders> response_headers_;
