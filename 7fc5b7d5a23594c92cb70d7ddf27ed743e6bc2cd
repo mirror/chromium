@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "ac7ebe94_da59f60f",
+        "filename": "chrome/browser/browser_process_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-26T00:05:00Z",
+      "side": 0,
+      "message": "I like this code move. CreateLocalState() just creates the LocalState. Too logical.",
+      "revId": "7fc5b7d5a23594c92cb70d7ddf27ed743e6bc2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "668fd9c8_361f6b36",
         "filename": "chrome/browser/chrome_browser_main_mac.mm",
         "patchSetId": 8

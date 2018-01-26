@@ -2,6 +2,108 @@
   "comments": [
     {
       "key": {
+        "uuid": "b7e0f421_4b91073e",
+        "filename": "base/deferred_sequenced_task_runner.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-26T00:05:00Z",
+      "side": 1,
+      "message": "There\u0027s only a single caller, and it always passes in true. Do you want to remove this parameter, and make Start() require a |target_task_runner|?",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "670ac4be_042c25f0",
+        "filename": "chrome/browser/browser_process_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-26T00:05:00Z",
+      "side": 1,
+      "message": "nit: blank line below. (Above the #if, really)",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4a7503c_7383fc3f",
+        "filename": "chrome/browser/browser_process_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-26T00:05:00Z",
+      "side": 1,
+      "message": "Moving these set locale calls here leaves a gap between when SetApplicationLocale() gets called and when this gets called. How can we be sure no code is trying to read the locale in this gap?",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d92fca0_4457bec5",
+        "filename": "chrome/browser/browser_process_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-26T00:05:00Z",
+      "side": 1,
+      "message": "Mention \"in non-test environments\" ? ScopedBrowserLocale exists in as a test utility class.",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbb1bde5_dacd8025",
+        "filename": "chrome/browser/browser_process_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-26T00:05:00Z",
+      "side": 1,
+      "message": "This only has 1 caller, which is for ChromeMetricsServicesManagerClient::OnCrosSettingsCreated() right before calling Init(). Can we just remove this, and move the OnCrosSettingsCreated() call into Init()?",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62424e42_1072f2b7",
+        "filename": "chrome/browser/browser_process_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-26T00:05:00Z",
+      "side": 1,
+      "message": "Put this with |metrics_services_manager_| and mention |metrics_services_manager_| owns the client.",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c984707b_e675589d",
         "filename": "chrome/browser/chrome_browser_main.cc",
         "patchSetId": 8
@@ -13,6 +115,40 @@
       "writtenOn": "2018-01-25T16:36:23Z",
       "side": 1,
       "message": "Fix indent (overcome clang-format’s brain death).",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc97fe25_9dd363d7",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-26T00:05:00Z",
+      "side": 1,
+      "message": "base::MakeRefCounted\u003cbase::DeferredSequencedTaskRunner\u003e(...)",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b3270c0_b32fa845",
+        "filename": "chrome/browser/policy/chrome_browser_policy_connector.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-26T00:05:00Z",
+      "side": 1,
+      "message": "Can we move this above Init()? If I read the code correctly, the call order will be:\n\nOnResourceBundleCreated(); OnPreCreateThreads(); Init();",
       "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
