@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4b5b642a_2a4eb61e",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-26T20:29:50Z",
+      "side": 1,
+      "message": "Just to cover theoretical case when address is xxxx002 and offset of -4 will get us to another page. I know this is never happen in practice, but \u003c is not any slower than \u003d\u003d",
+      "parentUuid": "b1db7553_960f702d",
+      "revId": "cff1651bbe08c6c1f973679fc19f63cdb6a96da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a260b388_1da3a4c3",
         "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-26T20:17:59Z",
       "side": 1,
       "message": "Up to you but I\u0027d probably just check against 4k boundaries. That is more conservative but not wrong eve of your have 2mb pages",
+      "revId": "cff1651bbe08c6c1f973679fc19f63cdb6a96da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48a554ab_16336123",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-26T20:29:50Z",
+      "side": 1,
+      "message": "Good point. I\u0027ll hardcode 4K check instead.",
+      "parentUuid": "a260b388_1da3a4c3",
       "revId": "cff1651bbe08c6c1f973679fc19f63cdb6a96da5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
