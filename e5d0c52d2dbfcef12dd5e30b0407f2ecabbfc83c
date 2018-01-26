@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93ed5bec_f12bda6c",
+        "filename": "components/metrics/metrics_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-01-26T20:14:05Z",
+      "side": 1,
+      "message": "could consider changing to a call of  StartUpdatingLastLive then",
+      "revId": "e5d0c52d2dbfcef12dd5e30b0407f2ecabbfc83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
