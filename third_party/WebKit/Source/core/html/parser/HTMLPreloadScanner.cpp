@@ -719,6 +719,7 @@ void TokenPreloadScanner::ScanCommon(const Token& token,
                                      PreloadRequestStream& requests,
                                      ViewportDescriptionWrapper* viewport,
                                      bool* is_csp_meta_tag) {
+  //  LOG(WARNING)<<"xxx document_url_="<<document_url_.GetString();
   if (!document_parameters_->do_html_preload_scanning)
     return;
 
@@ -789,9 +790,13 @@ void TokenPreloadScanner::ScanCommon(const Token& token,
                                                  "accept-ch")) {
             const typename Token::Attribute* content_attribute =
                 token.GetAttributeItem(contentAttr);
-            if (content_attribute)
+            if (content_attribute &&
+                (!blink::RuntimeEnabledFeatures::
+                     ClientHintsPersistentEnabled() ||
+                 ClientHintsPreferences::IsClientHintsAllowed(document_url_))) {
               client_hints_preferences_.UpdateFromAcceptClientHintsHeader(
                   content_attribute->Value(), nullptr);
+            }
           }
           return;
         }
