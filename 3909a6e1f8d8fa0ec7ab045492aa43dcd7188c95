@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "32106200_eb62b8df",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 4685,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-01-26T21:01:43Z",
+      "side": 1,
+      "message": "Yep, title case and non-title-case is the same for both here, per multiple title case styles \"in the\" are lowercase here. I\u0027ll revert this to \"Sign In\" (FYI In is correct uppercase here because it\u0027s the last word) and ask bettes@ if we really care about changing this string.",
+      "parentUuid": "1bf0e5ea_a13b567e",
+      "range": {
+        "startLine": 4685,
+        "startChar": 21,
+        "endLine": 4685,
+        "endChar": 27
+      },
+      "revId": "3909a6e1f8d8fa0ec7ab045492aa43dcd7188c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bf0560a_4dafca9d",
         "filename": "chrome/app/generated_resources.grd",
         "patchSetId": 1
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "3de0ac4f_9839c453",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 4692,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-01-26T21:01:43Z",
+      "side": 1,
+      "message": "Reused and renamed to IDS_PASSWORD_MANAGER_CONFIRM_SAVED_TITLE with new description. I moved the definition here so it can reuse the existing use_titlecase ifs which makes this a bit shorter.",
+      "parentUuid": "4bf0560a_4dafca9d",
+      "range": {
+        "startLine": 4690,
+        "startChar": 8,
+        "endLine": 4692,
+        "endChar": 18
+      },
+      "revId": "3909a6e1f8d8fa0ec7ab045492aa43dcd7188c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "caa0f849_f8d908e0",
         "filename": "chrome/browser/ui/views/passwords/password_sign_in_promo_view.cc",
         "patchSetId": 1
@@ -92,6 +140,30 @@
       "revId": "3909a6e1f8d8fa0ec7ab045492aa43dcd7188c95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ea5926d_313eb55c",
+        "filename": "chrome/browser/ui/views/passwords/password_sign_in_promo_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-01-26T21:01:43Z",
+      "side": 1,
+      "message": "Per the other CL I think DICE is merging into here, in which case it makes sense to keep it.",
+      "parentUuid": "caa0f849_f8d908e0",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 32
+      },
+      "revId": "3909a6e1f8d8fa0ec7ab045492aa43dcd7188c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
