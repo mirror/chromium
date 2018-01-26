@@ -33,9 +33,7 @@ class MediaTransferProtocolManager {
   using GetStoragesCallback =
       base::OnceCallback<void(const std::vector<std::string>& storages)>;
 
-  // A callback to receive the result of GetStorageInfo().
-  // On success, the |storage_info| argument contains the storage metadata.
-  // Otherwise, |storage_info| is a nullptr.
+  // A callback to handle the result of GetStorageInfo.
   using GetStorageInfoCallback =
       base::OnceCallback<void(const mojom::MtpStorageInfo* storage_info)>;
 
@@ -99,9 +97,10 @@ class MediaTransferProtocolManager {
    public:
     virtual ~Observer() {}
 
-    // A function called after a MTP storage has been attached / detached.
-    virtual void StorageChanged(bool is_attached,
-                                const std::string& storage_name) = 0;
+    // Functions called after a MTP storage has been attached / detached.
+    virtual void StorageAttached(
+        const device::mojom::MtpStorageInfo& storage_info) = 0;
+    virtual void StorageDetached(const std::string& storage_name) = 0;
   };
 
   virtual ~MediaTransferProtocolManager() {}
@@ -115,7 +114,7 @@ class MediaTransferProtocolManager {
   // Gets all available MTP storages and runs |callback|.
   virtual void GetStorages(GetStoragesCallback callback) const = 0;
 
-  // Gets the metadata for |storage_name| and runs |callback| synchronously.
+  // Gets the metadata for |storage_name| and runs |callback|.
   virtual void GetStorageInfo(const std::string& storage_name,
                               GetStorageInfoCallback callback) const = 0;
 
