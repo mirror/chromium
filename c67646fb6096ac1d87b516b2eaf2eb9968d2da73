@@ -34,6 +34,24 @@
       "revId": "c67646fb6096ac1d87b516b2eaf2eb9968d2da73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "911bf0c7_7e96c432",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-26T21:51:09Z",
+      "side": 0,
+      "message": "\u003e I read through the bug, but my hope was that unconditionally calling applyOverrideConfiguration() would also work-around the OEM modifications.\n\nI suspect that the OEM modifications are in the resource loader, not the configuration, so I don\u0027t think applying a configuration override will side-step the modifications. On the devices in question, the smallest screen width in the configuration was reporting as greater than 600dp (tablet) but the OS was loading regular (phone) resources. The Huawei MediaPads, specifically, had this issue, so that would be the device to grab to test this out.",
+      "parentUuid": "50d490b4_7923f319",
+      "revId": "c67646fb6096ac1d87b516b2eaf2eb9968d2da73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
