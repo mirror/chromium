@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "6ce9022d_af88dfb4",
+        "filename": "media/gpu/dxva_video_decode_accelerator_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1928,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2018-01-26T00:09:54Z",
+      "side": 1,
+      "message": "Seems that NOTREACHED() messes up the stack.\nThe strack trace for the relevant thread has no chrome in it at all.",
+      "parentUuid": "5a6e97d0_111c4d15",
+      "revId": "51931301f06657957397345193f186628af0b1e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a55fd48c_ef4cd335",
         "filename": "media/gpu/dxva_video_decode_accelerator_win.cc",
         "patchSetId": 2
@@ -66,6 +84,24 @@
       "writtenOn": "2018-01-25T23:41:07Z",
       "side": 1,
       "message": "This variable isn\u0027t even used. StopDecoderThread() aliases some of the other globals, but since it\u0027s not we can probably just delete this (probably the other globals too), seem like debugging remanants.",
+      "revId": "51931301f06657957397345193f186628af0b1e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33636c38_15b2fce8",
+        "filename": "media/gpu/dxva_video_decode_accelerator_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1929,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2018-01-26T00:09:54Z",
+      "side": 1,
+      "message": "Just removing this one for now.",
+      "parentUuid": "a55fd48c_ef4cd335",
       "revId": "51931301f06657957397345193f186628af0b1e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
