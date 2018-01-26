@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "092469dd_75fff939",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 66
+      },
+      "lineNbr": 2007,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-26T13:17:11Z",
+      "side": 1,
+      "message": "This comment is confusing to me. -g0 is literally the same as not passing -g at all. It means you don\u0027t get debug info (you still get a symbol table). no_symbols now strings symbols, but again at link time, which is the same \"write too much, then remove it later\" thing we had up here earlier.",
+      "revId": "71e4f2ec744472704e60c8d3f54e872ed87cada2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
