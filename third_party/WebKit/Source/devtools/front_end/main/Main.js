@@ -182,7 +182,6 @@ Main.Main = class {
     Components.dockController = new Components.DockController(canDock);
     ConsoleModel.consoleModel = new ConsoleModel.ConsoleModel();
     SDK.multitargetNetworkManager = new SDK.MultitargetNetworkManager();
-    NetworkLog.networkLog = new NetworkLog.NetworkLog();
     SDK.domDebuggerManager = new SDK.DOMDebuggerManager();
     SDK.targetManager.addEventListener(
         SDK.TargetManager.Events.SuspendStateChanged, this._onSuspendStateChanged.bind(this));
@@ -298,8 +297,10 @@ Main.Main = class {
     console.timeStamp('Main._lateInitialization');
     this._registerShortcuts();
     Extensions.extensionServer.initializeExtensions();
-    if (!Host.isUnderTest())
-      Help.showReleaseNoteIfNeeded();
+    if (Host.isUnderTest())
+      return;
+    for (var extension of self.runtime.extensions('late-initialization'))
+      extension.instance().then(instance => (/** @type {!Common.Runnable} */ (instance)).run());
   }
 
   _registerForwardedShortcuts() {
@@ -679,9 +680,7 @@ Main.Main.MainMenuItem = class {
     }
 
     var helpSubMenu = contextMenu.footerSection().appendSubMenuItem(Common.UIString('Help'));
-    helpSubMenu.defaultSection().appendAction('settings.documentation');
-    helpSubMenu.defaultSection().appendItem(
-        'Release Notes', () => InspectorFrontendHost.openInNewTab(Help.latestReleaseNote().link));
+    helpSubMenu.appendItemsAtLocation('mainMenuHelp');
   }
 };
 
