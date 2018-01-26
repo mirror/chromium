@@ -257,6 +257,7 @@ scoped_refptr<blink::WebTaskRunner> WebFrameSchedulerImpl::GetTaskRunner(
     case TaskType::kIdleTask:
     case TaskType::kUnspecedTimer:
     case TaskType::kMiscPlatformAPI:
+    case TaskType::kPromise:
       // TODO(altimin): Move appropriate tasks to throttleable task queue.
       return WebTaskRunnerImpl::Create(DeferrableTaskQueue(), type);
     // PostedMessage can be used for navigation, so we shouldn't defer it
