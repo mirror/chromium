@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "837c6461_0eec6dcf",
+        "filename": "build/mac/should_use_hermetic_xcode.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-26T14:55:28Z",
+      "side": 1,
+      "message": "have you tested that this will correctly allows Developers to build both Chrome for iOS and Chrome for macOS?",
+      "range": {
+        "startLine": 31,
+        "startChar": 43,
+        "endLine": 31,
+        "endChar": 44
+      },
+      "revId": "82d981d5477e95c0ab70a407ea80873a149be9e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b919a780_4d103277",
+        "filename": "build/mac_toolchain.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-26T14:55:28Z",
+      "side": 1,
+      "message": "why are we revving the map toolchain?",
+      "revId": "82d981d5477e95c0ab70a407ea80873a149be9e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5a4fffe_55c6698d",
+        "filename": "build/mac_toolchain.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-26T14:55:28Z",
+      "side": 1,
+      "message": "I briefly glanced through https://chromium.googlesource.com/infra/infra/+/master/go/src/infra/cmd/mac_toolchain/.\n\nIt looks like this will probably call setXcodePath(), overriding the previous install of Xcode. This will break developer machines, where we want the Xcode that lives in /Applications/Xcode to continue to be the default Xcode, and the Xcode that lives in the chromium checkout to only be used for building Chrome.",
+      "revId": "82d981d5477e95c0ab70a407ea80873a149be9e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
