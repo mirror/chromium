@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eff4c00f_99fb823c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-01-26T02:43:03Z",
+      "side": 1,
+      "message": "nit: This would be kNoModifier now.",
+      "revId": "967f3ba1e736061846771124178a82df304bedd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c318d2c8_829ad451",
+        "filename": "ui/gfx/native_pixmap_handle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-01-26T02:43:03Z",
+      "side": 1,
+      "message": "nit: isn\u0027t this line too long? git cl format?",
+      "revId": "967f3ba1e736061846771124178a82df304bedd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53d376ea_63ee1583",
+        "filename": "ui/gfx/native_pixmap_handle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-01-26T02:43:03Z",
+      "side": 1,
+      "message": "Is this intentional? No problems with that if it is.",
+      "revId": "967f3ba1e736061846771124178a82df304bedd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
