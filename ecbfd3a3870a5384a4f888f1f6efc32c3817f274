@@ -117,6 +117,30 @@
       "revId": "ecbfd3a3870a5384a4f888f1f6efc32c3817f274",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9557d7ea_594a3d20",
+        "filename": "ui/android/java/src/org/chromium/ui/UiUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-26T20:04:42Z",
+      "side": 1,
+      "message": "We can do that where available. Since it seems we can get the status bar height reliably through the visible frame, we can use that to determine the height of the nav bar and whether it is at the bottom. We would be able to check the visible frame left/right to determine if the nav controls are on the sides. I\u0027ll update the patch when I have my machine back.",
+      "parentUuid": "4d56a579_8346b97c",
+      "range": {
+        "startLine": 229,
+        "startChar": 44,
+        "endLine": 229,
+        "endChar": 52
+      },
+      "revId": "ecbfd3a3870a5384a4f888f1f6efc32c3817f274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
