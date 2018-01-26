@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e9a70e9_8a3f94de",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-26T21:09:06Z",
+      "side": 1,
+      "message": "Please add a \"Test:\" line indicating how you tested this (for example, which automated test suite covers this code and/or any manual steps).",
+      "revId": "b9da3870aecbe1e290e0a2d82a346257a811eeec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70e99f75_6378ce74",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-26T21:09:06Z",
+      "side": 1,
+      "message": "Can you get the information you need for this out of UserManager and/or SessionControllerClient in //chrome?\n\nOr is this a wallpaper-specific policy controlled boolean? In that case it seems reasonable for ash to own this information. If so, I think it needs a better name and comment. IsUserWallpaperControlledByPolicy?",
+      "revId": "b9da3870aecbe1e290e0a2d82a346257a811eeec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "389e8cf8_241fed66",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-26T21:09:06Z",
+      "side": 1,
+      "message": "Just curious: Do you know why should it be stretch vs. tiled? For efficiency? It might be nice to put the reason in the comment.",
+      "revId": "b9da3870aecbe1e290e0a2d82a346257a811eeec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8484ce97_4a551a29",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-26T21:09:06Z",
+      "side": 1,
+      "message": "If this project was cancelled and this function will always return false I would prefer not to add this block of code (or the activation observer, etc.).",
+      "revId": "b9da3870aecbe1e290e0a2d82a346257a811eeec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

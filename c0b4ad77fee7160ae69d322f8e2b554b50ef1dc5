@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39c9ab81_76e7c9a9",
+        "filename": "ash/wallpaper/test_wallpaper_delegate.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-26T21:09:06Z",
+      "side": 0,
+      "message": "Hooray for less code!",
+      "revId": "c0b4ad77fee7160ae69d322f8e2b554b50ef1dc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9007cef_9f2de03f",
+        "filename": "ash/wallpaper/wallpaper_delegate.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-26T21:09:06Z",
+      "side": 0,
+      "message": "Hooray for fewer delegate methods!",
+      "revId": "c0b4ad77fee7160ae69d322f8e2b554b50ef1dc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
