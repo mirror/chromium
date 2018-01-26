@@ -423,17 +423,15 @@ class ClientManager {
         boolean isAppAssociatedWithOrigin = params.mLinkedUrls.contains(url);
         if (!isAppAssociatedWithOrigin) return false;
 
-        // Split path from the given Uri to get only the origin before web->native verification.
-        Uri origin = new Uri.Builder().scheme(url.getScheme()).authority(url.getHost()).build();
         if (OriginVerifier.isValidOrigin(
-                    packageName, origin, CustomTabsService.RELATION_HANDLE_ALL_URLS)) {
+                    packageName, url, CustomTabsService.RELATION_HANDLE_ALL_URLS)) {
             return true;
         }
         // This is an optimization to start the verification early. The launching Activity should
         // run and listen on this verification as well.
         params.originVerifier =
                 new OriginVerifier(null, packageName, CustomTabsService.RELATION_HANDLE_ALL_URLS);
-        params.originVerifier.start(origin);
+        params.originVerifier.start(url);
         return true;
     }
 

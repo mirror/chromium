@@ -164,11 +164,7 @@ public class WebappActivity extends SingleTabActivity {
             mOriginVerifier = new OriginVerifier(mTrustedWebContentProvider,
                     getNativeClientPackageName(), CustomTabsService.RELATION_HANDLE_ALL_URLS);
             // Split path from the url to get only the origin.
-            Uri origin = new Uri.Builder()
-                                 .scheme(mWebappInfo.uri().getScheme())
-                                 .authority(mWebappInfo.uri().getHost())
-                                 .build();
-            mOriginVerifier.start(origin);
+            mOriginVerifier.start(mWebappInfo.uri());
         }
 
         @Override
