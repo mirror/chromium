@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbc31dd6_56c47ee0",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2018-01-26T01:18:47Z",
+      "side": 1,
+      "message": "I\u0027m not fully clear on what happens if code !\u003d blink::mojom::QuotaStatusCode::kOk. Could ya help me understand that a bit (mostly looking for whether anything will leak or get stuck waiting for a reply).",
+      "revId": "e2825b5eb79c4fc5660cdf7d82ac79cf4f485c51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4514336_e6d476e3",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2018-01-26T01:18:47Z",
+      "side": 1,
+      "message": "Not a big deal, but maybe a comment about what the two steps are? Maybe\n// Call OnUsageCleared after both foo and bar have completed.\nOr maybe some other means of documenting what the \"2\" is on line 364.\n(I\u0027m flexible on what it is; just looking for something explaining the \"2\").",
+      "revId": "e2825b5eb79c4fc5660cdf7d82ac79cf4f485c51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
