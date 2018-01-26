@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5d07c8c_ea4eae7c",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_atomic.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-26T02:09:23Z",
+      "side": 1,
+      "message": "I expected the matrix to be of type `double[3][3]`. why uint64_t?",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 10
+      },
+      "revId": "6f71d75ce508353a2b3f56ba89a445b503ec43b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0dcca81_d21b26ec",
+        "filename": "ui/ozone/platform/drm/gpu/overlay_plane.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-26T02:09:23Z",
+      "side": 1,
+      "message": "1.9?",
+      "range": {
+        "startLine": 48,
+        "startChar": 59,
+        "endLine": 48,
+        "endChar": 62
+      },
+      "revId": "6f71d75ce508353a2b3f56ba89a445b503ec43b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
