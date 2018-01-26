@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1045607c_dd2b3731",
+        "filename": "DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 1352,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-01-26T01:12:00Z",
+      "side": 1,
+      "message": "This shouldn\u0027t land as-is. A second invocation to cipd_wrapper in hooks will clobber the first in checkouts that use both. (This was the android+fuchsia problem.)\n\nI\u0027m moving things over to gclient-native cipd in https://chromium-review.googlesource.com/c/chromium/src/+/879177. This should do the same.",
+      "revId": "da315962acdc4d8973154c063801a59882b91613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
