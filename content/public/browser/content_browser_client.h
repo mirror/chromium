@@ -121,6 +121,10 @@ namespace storage {
 class FileSystemBackend;
 }
 
+namespace viz {
+class FrameSinkId;
+}  // namespace viz
+
 namespace content {
 
 enum class PermissionType;
@@ -1002,6 +1006,10 @@ class CONTENT_EXPORT ContentBrowserClient {
   virtual bool ShouldForceDownloadResource(const GURL& url,
                                            const std::string& mime_type);
 
+  virtual void UpdatePictureInPictureSurfaceId(RenderFrameHost* frame_host,
+                                               viz::FrameSinkId frame_sink_id,
+                                               uint32_t parent_id,
+                                               base::UnguessableToken nonce);
   virtual void CreateUsbDeviceManager(
       RenderFrameHost* render_frame_host,
       device::mojom::UsbDeviceManagerRequest request);

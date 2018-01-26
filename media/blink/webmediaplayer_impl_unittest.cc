@@ -175,6 +175,13 @@ class MockWebMediaPlayerDelegate : public WebMediaPlayerDelegate {
     DCHECK_EQ(player_id_, delegate_id);
   }
 
+  void PictureInPictureSurfaceIdUpdated(int delegate_id,
+                                        viz::FrameSinkId frame_sink_id,
+                                        uint32_t parent_id,
+                                        base::UnguessableToken nonce) override {
+    DCHECK_EQ(player_id_, delegate_id);
+  }
+
   void ClearStaleFlag(int player_id) override {
     DCHECK_EQ(player_id_, player_id);
     is_stale_ = false;
