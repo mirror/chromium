@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7e9ea3cd_c6481180",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ContextSnapshot.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2018-01-26T02:56:47Z",
+      "side": 1,
+      "message": "As I commented in another mail thread,\n if an interface has no partial interfaces, we use InstallRuntimeEnabledFeatures\n if an interface has partial interfaces, we use install_runtime_enabled_features_function_\n\nThis CL introduces the partial interface of Document, so we cannot split this change.",
+      "parentUuid": "16035da8_9b10375e",
+      "revId": "de4b707dde898e94d41129d311a040e33643b044",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34167889_b5c610e4",
         "filename": "third_party/WebKit/Source/modules/picture_in_picture/DocumentPictureInPicture.h",
         "patchSetId": 11
