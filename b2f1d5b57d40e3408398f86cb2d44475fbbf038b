@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d38143ab_4d1a55f7",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-01-26T21:46:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2551b46e_c4874192",
+      "range": {
+        "startLine": 53,
+        "startChar": 21,
+        "endLine": 53,
+        "endChar": 43
+      },
+      "revId": "b2f1d5b57d40e3408398f86cb2d44475fbbf038b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ba0a059_86687601",
         "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
         "patchSetId": 15
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "eb64d158_06201f72",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-01-26T21:46:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ba0a059_86687601",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 58,
+        "endChar": 15
+      },
+      "revId": "b2f1d5b57d40e3408398f86cb2d44475fbbf038b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee92ddc9_6bc427de",
         "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
         "patchSetId": 15
@@ -68,6 +116,30 @@
       "revId": "b2f1d5b57d40e3408398f86cb2d44475fbbf038b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e57e5a2_815487b4",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-01-26T21:46:41Z",
+      "side": 1,
+      "message": "Really good point :), it works just fine like this.",
+      "parentUuid": "ee92ddc9_6bc427de",
+      "range": {
+        "startLine": 256,
+        "startChar": 0,
+        "endLine": 268,
+        "endChar": 1
+      },
+      "revId": "b2f1d5b57d40e3408398f86cb2d44475fbbf038b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
