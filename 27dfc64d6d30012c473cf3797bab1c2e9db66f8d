@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9326af33_1d934f73",
+        "filename": "net/quic/core/spdy_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-26T14:59:50Z",
+      "side": 1,
+      "message": "I thought the HTTP/2 RFC required the method be case-sensitive compared?\n\nIs there a reason not to adopt the same requirement as, say https://cs.chromium.org/chromium/src/net/quic/core/quic_client_promised_info.cc?rcl\u003dba12dcb89c18e461ec3963543c349260e620969c\u0026l\u003d51 ?",
+      "revId": "27dfc64d6d30012c473cf3797bab1c2e9db66f8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "581d39f8_eeb6fc44",
+        "filename": "net/quic/core/spdy_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-26T14:59:50Z",
+      "side": 1,
+      "message": "I don\u0027t think we\u0027d mention GFE in this code, but I could be wrong. \n\n\"As neither the client nor server implementations are intended to be such a proxy or gateway...\"",
+      "revId": "27dfc64d6d30012c473cf3797bab1c2e9db66f8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fefaba29_af13b7d8",
+        "filename": "net/quic/core/spdy_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-26T14:59:50Z",
+      "side": 1,
+      "message": "So, as an aside, we shouldn\u0027t use std::transform with the ::toupper/::tolower bits in Chromium code, particularly are they\u0027re locale dependent.\n\nIn the implementation I provided, I tried to show how to canonicalize the scheme first",
+      "revId": "27dfc64d6d30012c473cf3797bab1c2e9db66f8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05c48881_13c20481",
+        "filename": "net/quic/core/spdy_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-26T14:59:50Z",
+      "side": 1,
+      "message": "I am not comfortable with this approach. RFC 3986 is not what Chromium uses - it uses the URL spec. And we shouldn\u0027t be duplicating that URL logic elsewhere. This is why the (admittedly complex) URL parsing, which depends on Chromium code, so can\u0027t be a part of core\n\nMore concretely: We should not perform any concatenation of scheme, authority, or path in the common code. It should use the URL utilities available to the implementations to construct them safely and canonically.",
+      "revId": "27dfc64d6d30012c473cf3797bab1c2e9db66f8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6614fc7_1c15a7d1",
+        "filename": "net/quic/platform/impl/quic_url_utils_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-26T14:59:50Z",
+      "side": 1,
+      "message": "This should be using the GURL logic, rather than the components",
+      "revId": "27dfc64d6d30012c473cf3797bab1c2e9db66f8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
