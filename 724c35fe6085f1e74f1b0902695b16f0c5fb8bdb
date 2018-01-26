@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65069321_237a9b9a",
+        "filename": "content/public/test/test_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-26T11:07:05Z",
+      "side": 1,
+      "message": "That\u0027s not always true and in particular in unit tests it\u0027s never true (we blanket allow nested RunLoops in tests).",
+      "range": {
+        "startLine": 159,
+        "startChar": 38,
+        "endLine": 159,
+        "endChar": 76
+      },
+      "revId": "724c35fe6085f1e74f1b0902695b16f0c5fb8bdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c14a1b60_f374a63d",
+        "filename": "content/public/test/test_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-26T11:07:05Z",
+      "side": 1,
+      "message": "If you want to be safe here make this RunLoop explicitly allow nested application tasks?",
+      "range": {
+        "startLine": 172,
+        "startChar": 4,
+        "endLine": 172,
+        "endChar": 27
+      },
+      "revId": "724c35fe6085f1e74f1b0902695b16f0c5fb8bdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
