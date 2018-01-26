@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "d6d6524a_e79bb8b2",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 10969,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2018-01-26T19:30:31Z",
+      "side": 1,
+      "message": "Ah, I see! Thanks! And I also noticed another mistake in the description. If policy is unset, it should fallback to consumer PhishGuard, which is equivalent to PasswordProtectionWarningOnPhishingReuse (not \"off\").  Mistake fixed, and added a half sentence to indicate that user can still change it.",
+      "parentUuid": "3fc6f642_b1050e8d",
+      "revId": "7e7b90a8b7eadf5fcce4926ed818541869de34d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a57819f_e7c398ef",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 5
@@ -69,6 +87,24 @@
       "revId": "7e7b90a8b7eadf5fcce4926ed818541869de34d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac6ffdcf_5c079f65",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 11009,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2018-01-26T19:30:31Z",
+      "side": 1,
+      "message": "Same as above, fixed.",
+      "parentUuid": "0a57819f_e7c398ef",
+      "revId": "7e7b90a8b7eadf5fcce4926ed818541869de34d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
