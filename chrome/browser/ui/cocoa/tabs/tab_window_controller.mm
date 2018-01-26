@@ -26,14 +26,6 @@
 - (void)insertTabStripBackgroundViewIntoWindow:(NSWindow*)window
                                       titleBar:(BOOL)hasTitleBar;
 
-// Called when NSWindowWillEnterFullScreenNotification notification received.
-// Makes visual effects view hidden as it should not be displayed in fullscreen.
-- (void)windowWillEnterFullScreenNotification:(NSNotification*)notification;
-
-// Called when NSWindowWillExitFullScreenNotification notification received.
-// Makes visual effects view visible since it was hidden in fullscreen.
-- (void)windowWillExitFullScreenNotification:(NSNotification*)notification;
-
 @end
 
 @interface TabWindowOverlayWindow : NSWindow
@@ -133,29 +125,8 @@
                                        NSViewMinYMargin];
     if (hasTabStrip)
       [windowView addSubview:tabStripView_];
-
-    // |windowWillEnterFullScreen:| and |windowWillExitFullScreen:| are already
-    // called because self is a delegate for the window. However this class is
-    // designed for subclassing and can not implement NSWindowDelegate methods
-    // (because subclasses can do so as well and they should be able to).
-    // TODO(crbug.com/654656): Move |visualEffectView_| to subclass.
-    [[NSNotificationCenter defaultCenter]
-        addObserver:self
-           selector:@selector(windowWillEnterFullScreenNotification:)
-               name:NSWindowWillEnterFullScreenNotification
-             object:window];
-    [[NSNotificationCenter defaultCenter]
-        addObserver:self
-           selector:@selector(windowWillExitFullScreenNotification:)
-               name:NSWindowWillExitFullScreenNotification
-             object:window];
   }
   return self;
-}
-
-- (void)dealloc {
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
-  [super dealloc];
 }
 
 - (NSVisualEffectView*)visualEffectView {
@@ -430,6 +401,7 @@
     NSView* visualEffectWrapperView = [[[NSView alloc]
         initWithFrame:[tabStripBackgroundView_ frame]] autorelease];
 
+    // TODO(crbug.com/654656): Move |visualEffectView_| to subclass.
     visualEffectView_.reset([[NSVisualEffectView alloc]
         initWithFrame:visualEffectWrapperView.bounds]);
     DCHECK(visualEffectView_);
@@ -474,12 +446,12 @@
   NOTIMPLEMENTED();
 }
 
-- (void)windowWillEnterFullScreenNotification:(NSNotification*)notification {
+- (void)windowWillEnterFullScreen:(NSNotification*)notification {
   [(visualEffectView_ ? visualEffectView_.get()
                       : tabStripBackgroundView_.get()) setHidden:YES];
 }
 
-- (void)windowWillExitFullScreenNotification:(NSNotification*)notification {
+- (void)windowWillExitFullScreen:(NSNotification*)notification {
   [(visualEffectView_ ? visualEffectView_.get()
                       : tabStripBackgroundView_.get()) setHidden:NO];
 }

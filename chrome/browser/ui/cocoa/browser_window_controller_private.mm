@@ -567,6 +567,7 @@ willPositionSheet:(NSWindow*)sheet
 }
 
 - (void)windowWillEnterFullScreen:(NSNotification*)notification {
+  [super windowWillEnterFullScreen:notification];
   [self recordEnterFullscreenMetrics:CANONICAL_FULLSCREEN];
 
   if (notification)  // For System Fullscreen when non-nil.
@@ -676,6 +677,7 @@ willPositionSheet:(NSWindow*)sheet
 }
 
 - (void)windowWillExitFullScreen:(NSNotification*)notification {
+  [super windowWillExitFullScreen:notification];
   [tabStripController_ setVisualEffectsDisabledForFullscreen:NO];
 
   // macOS 10.12 and earlier have issues with exiting fullscreen while a window
