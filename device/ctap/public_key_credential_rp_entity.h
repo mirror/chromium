@@ -21,19 +21,25 @@ class PublicKeyCredentialRPEntity {
  public:
   explicit PublicKeyCredentialRPEntity(std::string rp_id);
   PublicKeyCredentialRPEntity(PublicKeyCredentialRPEntity&& other);
+  PublicKeyCredentialRPEntity(const PublicKeyCredentialRPEntity& other);
   PublicKeyCredentialRPEntity& operator=(PublicKeyCredentialRPEntity&& other);
+  PublicKeyCredentialRPEntity& operator=(
+      const PublicKeyCredentialRPEntity& other);
   ~PublicKeyCredentialRPEntity();
+
+  cbor::CBORValue ConvertToCBOR() const;
 
   PublicKeyCredentialRPEntity& SetRPName(std::string rp_name);
   PublicKeyCredentialRPEntity& SetRPIconUrl(GURL icon_url);
-  cbor::CBORValue ConvertToCBOR() const;
+
+  const std::string& rp_id() const { return rp_id_; }
+  const base::Optional<std::string>& rp_name() const { return rp_name_; }
+  const base::Optional<GURL>& rp_icon_url() const { return rp_icon_url_; }
 
  private:
   std::string rp_id_;
   base::Optional<std::string> rp_name_;
   base::Optional<GURL> rp_icon_url_;
-
-  DISALLOW_COPY_AND_ASSIGN(PublicKeyCredentialRPEntity);
 };
 
 }  // namespace device

@@ -62,10 +62,12 @@ CBORReader::~CBORReader() {}
 
 // static
 base::Optional<CBORValue> CBORReader::Read(base::span<uint8_t const> data,
+                                           DecoderOption option,
                                            DecoderError* error_code_out,
                                            int max_nesting_level) {
   CBORReader reader(data.cbegin(), data.cend());
-  base::Optional<CBORValue> decoded_cbor = reader.DecodeCBOR(max_nesting_level);
+  base::Optional<CBORValue> decoded_cbor =
+      reader.DecodeCBOR(option, max_nesting_level);
 
   if (decoded_cbor)
     reader.CheckExtraneousData();
@@ -77,7 +79,8 @@ base::Optional<CBORValue> CBORReader::Read(base::span<uint8_t const> data,
   return decoded_cbor;
 }
 
-base::Optional<CBORValue> CBORReader::DecodeCBOR(int max_nesting_level) {
+base::Optional<CBORValue> CBORReader::DecodeCBOR(DecoderOption option,
+                                                 int max_nesting_level) {
   if (max_nesting_level < 0 || max_nesting_level > kCBORMaxDepth) {
     error_code_ = DecoderError::TOO_MUCH_NESTING;
     return base::nullopt;
@@ -93,7 +96,7 @@ base::Optional<CBORValue> CBORReader::DecodeCBOR(int max_nesting_level) {
   const uint8_t additional_info = GetAdditionalInfo(initial_byte);
 
   uint64_t value;
-  if (!ReadVariadicLengthInteger(additional_info, &value))
+  if (!ReadVariadicLengthInteger(additional_info, &value, option))
     return base::nullopt;
 
   switch (major_type) {
@@ -106,9 +109,9 @@ base::Optional<CBORValue> CBORReader::DecodeCBOR(int max_nesting_level) {
     case CBORValue::Type::STRING:
       return ReadString(value);
     case CBORValue::Type::ARRAY:
-      return ReadCBORArray(value, max_nesting_level);
+      return ReadCBORArray(value, max_nesting_level, option);
     case CBORValue::Type::MAP:
-      return ReadCBORMap(value, max_nesting_level);
+      return ReadCBORMap(value, max_nesting_level, option);
     case CBORValue::Type::SIMPLE_VALUE:
       return ReadSimpleValue(additional_info, value);
     case CBORValue::Type::NONE:
@@ -120,7 +123,8 @@ base::Optional<CBORValue> CBORReader::DecodeCBOR(int max_nesting_level) {
 }
 
 bool CBORReader::ReadVariadicLengthInteger(uint8_t additional_info,
-                                           uint64_t* value) {
+                                           uint64_t* value,
+                                           DecoderOption option) {
   uint8_t additional_bytes = 0;
   if (additional_info < 24) {
     *value = additional_info;
@@ -150,7 +154,8 @@ bool CBORReader::ReadVariadicLengthInteger(uint8_t additional_info,
   }
 
   *value = int_data;
-  return CheckMinimalEncoding(additional_bytes, int_data);
+  return option != DecoderOption::STRICT_MODE ||
+         CheckMinimalEncoding(additional_bytes, int_data);
 }
 
 base::Optional<CBORValue> CBORReader::DecodeValueToNegative(uint64_t value) {
@@ -221,10 +226,12 @@ base::Optional<CBORValue> CBORReader::ReadBytes(uint64_t num_bytes) {
 }
 
 base::Optional<CBORValue> CBORReader::ReadCBORArray(uint64_t length,
-                                                    int max_nesting_level) {
+                                                    int max_nesting_level,
+                                                    DecoderOption option) {
   CBORValue::ArrayValue cbor_array;
   while (length-- > 0) {
-    base::Optional<CBORValue> cbor_element = DecodeCBOR(max_nesting_level - 1);
+    base::Optional<CBORValue> cbor_element =
+        DecodeCBOR(option, max_nesting_level - 1);
     if (!cbor_element.has_value())
       return base::nullopt;
     cbor_array.push_back(std::move(cbor_element.value()));
@@ -233,11 +240,12 @@ base::Optional<CBORValue> CBORReader::ReadCBORArray(uint64_t length,
 }
 
 base::Optional<CBORValue> CBORReader::ReadCBORMap(uint64_t length,
-                                                  int max_nesting_level) {
+                                                  int max_nesting_level,
+                                                  DecoderOption option) {
   CBORValue::MapValue cbor_map;
   while (length-- > 0) {
-    base::Optional<CBORValue> key = DecodeCBOR(max_nesting_level - 1);
-    base::Optional<CBORValue> value = DecodeCBOR(max_nesting_level - 1);
+    base::Optional<CBORValue> key = DecodeCBOR(option, max_nesting_level - 1);
+    base::Optional<CBORValue> value = DecodeCBOR(option, max_nesting_level - 1);
     if (!key.has_value() || !value.has_value())
       return base::nullopt;
 
@@ -248,7 +256,8 @@ base::Optional<CBORValue> CBORReader::ReadCBORMap(uint64_t length,
       return base::nullopt;
     }
     if (!CheckDuplicateKey(key.value(), &cbor_map) ||
-        !CheckOutOfOrderKey(key.value(), &cbor_map)) {
+        (option != DecoderOption::NON_CANONICAL_MODE &&
+         !CheckOutOfOrderKey(key.value(), &cbor_map))) {
       return base::nullopt;
     }
 
