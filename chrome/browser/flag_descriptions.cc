@@ -1374,6 +1374,13 @@ const char kSpellingFeedbackFieldTrialName[] = "Spelling Feedback Field Trial";
 const char kSpellingFeedbackFieldTrialDescription[] =
     "Enable the field trial for sending user feedback to spelling service.";
 
+const char kStackedTabStripName[] = "Stacked tabs";
+const char kStackedTabStripDescription[] =
+    "Enables dynamic tab sizing for touch users.";
+const char kStackedTabStripAlwaysName[] = "Force Stacked tabs";
+const char kStackedTabStripAlwaysDescription[] =
+    "Enables dynamic tab sizing always (permanently enabled).";
+
 const char kStopInBackgroundName[] = "Stop in background";
 const char kStopInBackgroundDescription[] =
     "Stop scheduler task queues, in the background, "

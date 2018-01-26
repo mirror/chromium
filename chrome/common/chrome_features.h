@@ -275,6 +275,10 @@ extern const base::Feature kNativeSmb;
 
 extern const base::Feature kSoundContentSetting;
 
+extern const base::Feature kStackedTabStrip;
+
+extern const base::Feature kStackedTabStripAlways;
+
 extern const base::Feature kSupervisedUserCreation;
 
 #if defined(OS_CHROMEOS)

@@ -35,6 +35,7 @@
 #include "chrome/browser/ui/views/tabs/tab_strip_layout.h"
 #include "chrome/browser/ui/views/tabs/tab_strip_observer.h"
 #include "chrome/browser/ui/views/touch_uma/touch_uma.h"
+#include "chrome/common/chrome_features.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/grit/theme_resources.h"
 #include "third_party/skia/include/core/SkColorFilter.h"
@@ -73,9 +74,6 @@
 
 #if defined(OS_WIN)
 #include "base/win/windows_version.h"
-#include "ui/display/win/screen_win.h"
-#include "ui/gfx/win/hwnd_util.h"
-#include "ui/views/win/hwnd_util.h"
 #endif
 
 using base::UserMetricsAction;
@@ -378,6 +376,10 @@ void TabStrip::UpdateLoadingAnimations() {
 }
 
 void TabStrip::SetStackedLayout(bool stacked_layout) {
+  if (base::FeatureList::IsEnabled(features::kStackedTabStripAlways)) {
+    stacked_layout = true;
+  }
+
   if (stacked_layout == stacked_layout_)
     return;
 
