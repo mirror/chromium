@@ -127,6 +127,24 @@
     },
     {
       "key": {
+        "uuid": "73cfdcb0_3c8ff5cd",
+        "filename": "media/gpu/dxva_video_decode_accelerator_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1928,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-01-26T00:58:46Z",
+      "side": 1,
+      "message": "Not sure what you did, but works for me:\n\n0:018\u003e kb\n...\n  *** Stack trace for last set context - .thread/.cxr resets it\n # ChildEBP RetAddr  Args to Child              \n00 (Inline) -------- -------- -------- -------- chrome_child!base::debug::BreakDebugger+0x9 [c:\\b\\c\\b\\win_asan\\src\\base\\debug\\debugger_win.cc @ 21]\n01 1782e060 128f0a8f 193fde68 19424ea0 00000000 chrome_child!logging::LogMessage::~LogMessage+0x3ba [c:\\b\\c\\b\\win_asan\\src\\base\\logging.cc @ 842]\n02 1782e634 128ef7f5 1782ead4 193fde68 19424e98 chrome_child!media::DXVAVideoDecodeAccelerator::DoDecode+0x423 [c:\\b\\c\\b\\win_asan\\src\\media\\gpu\\dxva_video_decode_accelerator_win.cc @ 1929]\n...\n0:018\u003e .frame 2\n0:018\u003e dv\n                                         this \u003d \u003cvalue unavailable\u003e\n                                  color_space \u003d 0x1782ead4\ntrace_event_unique_category_group_enabled1872 \u003d \u003cvalue unavailable\u003e\n                trace_event_unique_tracer1872 \u003d class trace_event_internal::ScopedTracer\n                                      retries \u003d 0n10\n                                        state \u003d \u003cvalue unavailable\u003e\n                                output_sample \u003d class Microsoft::WRL::ComPtr\u003cIMFSample\u003e\n                           output_data_buffer \u003d struct _MFT_OUTPUT_DATA_BUFFER\n                                           hr \u003d 0x80004005\n                                       status \u003d 0\n                                       events \u003d \u003cvalue unavailable\u003e\ntrace_event_unique_category_group_enabled1936 \u003d \u003cvalue unavailable\u003e\ntrace_event_unique_category_group_enabled1939 \u003d \u003cvalue unavailable\u003e\n                trace_event_unique_atomic1872 \u003d \u003cMemory access error\u003e\n                trace_event_unique_atomic1936 \u003d \u003cMemory access error\u003e\n                trace_event_unique_atomic1939 \u003d \u003cMemory access error\u003e\n\n\nWhich is just E_FAIL, https://msdn.microsoft.com/en-us/library/windows/desktop/aa378137(v\u003dvs.85).aspx",
+      "parentUuid": "6444cb36_d3fe1b65",
+      "revId": "51931301f06657957397345193f186628af0b1e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a55fd48c_ef4cd335",
         "filename": "media/gpu/dxva_video_decode_accelerator_win.cc",
         "patchSetId": 2
