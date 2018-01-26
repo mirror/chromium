@@ -11,6 +11,7 @@
 #include "base/macros.h"
 #include "base/strings/string16.h"
 #include "content/public/browser/desktop_media_id.h"
+#include "ui/base/ui_base_types.h"
 #include "ui/gfx/native_widget_types.h"
 
 class DesktopMediaList;
@@ -20,10 +21,21 @@ class WebContents;
 }
 
 // Abstract interface for desktop media picker UI. It's used by Desktop Media
-// API to let user choose a desktop media source.
+// API and by ARC to let user choose a desktop media source.
 class DesktopMediaPicker {
  public:
   typedef base::Callback<void(content::DesktopMediaID)> DoneCallback;
+  struct ShowParams {
+    ShowParams();
+    ~ShowParams();
+    content::WebContents* web_contents{nullptr};
+    gfx::NativeWindow context{nullptr};
+    gfx::NativeWindow parent{nullptr};
+    ui::ModalType modality{ui::ModalType::MODAL_TYPE_CHILD};
+    base::string16 app_name;
+    base::string16 target_name;
+    bool request_audio{false};
+  };
 
   // Creates default implementation of DesktopMediaPicker for the current
   // platform.
@@ -33,16 +45,11 @@ class DesktopMediaPicker {
   virtual ~DesktopMediaPicker() {}
 
   // Shows dialog with list of desktop media sources (screens, windows, tabs)
-  // provided by |screen_list|, |window_list| and |tab_list|.
+  // provided by |sources_lists|.
   // Dialog window will call |done_callback| when user chooses one of the
   // sources or closes the dialog.
-  virtual void Show(content::WebContents* web_contents,
-                    gfx::NativeWindow context,
-                    gfx::NativeWindow parent,
-                    const base::string16& app_name,
-                    const base::string16& target_name,
+  virtual void Show(const ShowParams& params,
                     std::vector<std::unique_ptr<DesktopMediaList>> source_lists,
-                    bool request_audio,
                     const DoneCallback& done_callback) = 0;
 
  private:
