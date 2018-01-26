@@ -133,7 +133,7 @@ OverflowButton* ShelfViewTestAPI::overflow_button() const {
   return shelf_view_->overflow_button_;
 }
 
-ShelfTooltipManager* ShelfViewTestAPI::tooltip_manager() {
+ShelfViewTooltipManager* ShelfViewTestAPI::tooltip_manager() {
   return &shelf_view_->tooltip_;
 }
 

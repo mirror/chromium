@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ash/shelf/shelf_tooltip_manager.h"
+#include "ash/shelf/shelf_view_tooltip_manager.h"
 
 #include <memory>
 
@@ -21,10 +21,10 @@
 
 namespace ash {
 
-class ShelfTooltipManagerTest : public AshTestBase {
+class ShelfViewTooltipManagerTest : public AshTestBase {
  public:
-  ShelfTooltipManagerTest() = default;
-  ~ShelfTooltipManagerTest() override = default;
+  ShelfViewTooltipManagerTest() = default;
+  ~ShelfViewTooltipManagerTest() override = default;
 
   void SetUp() override {
     AshTestBase::SetUp();
@@ -48,19 +48,19 @@ class ShelfTooltipManagerTest : public AshTestBase {
 
  protected:
   ShelfView* shelf_view_;
-  ShelfTooltipManager* tooltip_manager_;
+  ShelfViewTooltipManager* tooltip_manager_;
 
  private:
-  DISALLOW_COPY_AND_ASSIGN(ShelfTooltipManagerTest);
+  DISALLOW_COPY_AND_ASSIGN(ShelfViewTooltipManagerTest);
 };
 
-TEST_F(ShelfTooltipManagerTest, ShowTooltip) {
+TEST_F(ShelfViewTooltipManagerTest, ShowTooltip) {
   tooltip_manager_->ShowTooltip(shelf_view_->GetAppListButton());
   EXPECT_TRUE(tooltip_manager_->IsVisible());
   EXPECT_FALSE(IsTimerRunning());
 }
 
-TEST_F(ShelfTooltipManagerTest, ShowTooltipWithDelay) {
+TEST_F(ShelfViewTooltipManagerTest, ShowTooltipWithDelay) {
   // ShowTooltipWithDelay should start the timer instead of showing immediately.
   tooltip_manager_->ShowTooltipWithDelay(shelf_view_->GetAppListButton());
   EXPECT_FALSE(tooltip_manager_->IsVisible());
@@ -68,7 +68,7 @@ TEST_F(ShelfTooltipManagerTest, ShowTooltipWithDelay) {
   // TODO: Test that the delayed tooltip is shown, without flaky failures.
 }
 
-TEST_F(ShelfTooltipManagerTest, DoNotShowForInvalidView) {
+TEST_F(ShelfViewTooltipManagerTest, DoNotShowForInvalidView) {
   // The manager should not show or start the timer for a null view.
   tooltip_manager_->ShowTooltip(nullptr);
   EXPECT_FALSE(tooltip_manager_->IsVisible());
@@ -101,7 +101,7 @@ TEST_F(ShelfTooltipManagerTest, DoNotShowForInvalidView) {
   EXPECT_FALSE(tooltip_manager_->IsVisible());
 }
 
-TEST_F(ShelfTooltipManagerTest, HideWhenShelfIsHidden) {
+TEST_F(ShelfViewTooltipManagerTest, HideWhenShelfIsHidden) {
   tooltip_manager_->ShowTooltip(shelf_view_->GetAppListButton());
   ASSERT_TRUE(tooltip_manager_->IsVisible());
 
@@ -122,7 +122,7 @@ TEST_F(ShelfTooltipManagerTest, HideWhenShelfIsHidden) {
   EXPECT_FALSE(IsTimerRunning());
 }
 
-TEST_F(ShelfTooltipManagerTest, HideWhenShelfIsAutoHideHidden) {
+TEST_F(ShelfViewTooltipManagerTest, HideWhenShelfIsAutoHideHidden) {
   // Create a visible window so auto-hide behavior can actually hide the shelf.
   std::unique_ptr<views::Widget> widget = CreateTestWidget();
   tooltip_manager_->ShowTooltip(shelf_view_->GetAppListButton());
@@ -163,7 +163,7 @@ TEST_F(ShelfTooltipManagerTest, HideWhenShelfIsAutoHideHidden) {
   EXPECT_TRUE(IsTimerRunning());
 }
 
-TEST_F(ShelfTooltipManagerTest, HideForEvents) {
+TEST_F(ShelfViewTooltipManagerTest, HideForEvents) {
   // TODO: investigate failure in mash. http://crbug.com/695563.
   if (Shell::GetAshConfig() == Config::MASH)
     return;
@@ -199,7 +199,7 @@ TEST_F(ShelfTooltipManagerTest, HideForEvents) {
   EXPECT_FALSE(tooltip_manager_->IsVisible());
 }
 
-TEST_F(ShelfTooltipManagerTest, HideForExternalEvents) {
+TEST_F(ShelfViewTooltipManagerTest, HideForExternalEvents) {
   // TODO: investigate failure in mash. http://crbug.com/695563.
   if (Shell::GetAshConfig() == Config::MASH)
     return;
@@ -230,7 +230,7 @@ TEST_F(ShelfTooltipManagerTest, HideForExternalEvents) {
   EXPECT_FALSE(tooltip_manager_->IsVisible());
 }
 
-TEST_F(ShelfTooltipManagerTest, DoNotHideForKeyEvents) {
+TEST_F(ShelfViewTooltipManagerTest, DoNotHideForKeyEvents) {
   ui::test::EventGenerator& generator = GetEventGenerator();
 
   // Should not hide for key events.

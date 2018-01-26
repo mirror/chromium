@@ -716,6 +716,11 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   // NULL.
   virtual View* GetTooltipHandlerForPoint(const gfx::Point& point);
 
+  // Returns the deepest visible descendant that contains the specified point
+  // and sets the tooltip text. If the view does not contain the point, returns
+  // NULL.
+  virtual View* GetTooltipHandlerWithTextForPoint(const gfx::Point& point);
+
   // Return the cursor that should be used for this view or the default cursor.
   // The event location is in the receiver's coordinate system. The caller is
   // responsible for managing the lifetime of the returned object, though that
@@ -975,6 +980,9 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   virtual FocusTraversable* GetPaneFocusTraversable();
 
   // Tooltips ------------------------------------------------------------------
+
+  // Sets tooltip text to the given |tooltip|.
+  virtual void SetTextToGivenTooltip(base::string16* tooltip);
 
   // Gets the tooltip for this View. If the View does not have a tooltip,
   // return false. If the View does have a tooltip, copy the tooltip into

@@ -21,7 +21,7 @@ class OverflowBubble;
 class OverflowButton;
 class ShelfButton;
 class ShelfButtonPressedMetricTracker;
-class ShelfTooltipManager;
+class ShelfViewTooltipManager;
 class ShelfView;
 
 // Use the api in this class to test ShelfView.
@@ -78,7 +78,7 @@ class ShelfViewTestAPI {
   ShelfView* shelf_view() { return shelf_view_; }
 
   // An accessor for the shelf tooltip manager.
-  ShelfTooltipManager* tooltip_manager();
+  ShelfViewTooltipManager* tooltip_manager();
 
   // An accessor for overflow bubble.
   OverflowBubble* overflow_bubble();
