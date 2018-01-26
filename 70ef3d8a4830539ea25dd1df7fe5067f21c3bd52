@@ -81,6 +81,24 @@
       "revId": "70ef3d8a4830539ea25dd1df7fe5067f21c3bd52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c267b18_d3927c46",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1211,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2018-01-26T21:36:12Z",
+      "side": 1,
+      "message": "Actually even before this CL it\u0027s also updated on IO but queried on UI. So I think there has been a bug and this CL fixes it.",
+      "parentUuid": "0a07ee87_691942a0",
+      "revId": "70ef3d8a4830539ea25dd1df7fe5067f21c3bd52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
