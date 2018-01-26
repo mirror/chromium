@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b0e9722_3c415c08",
+        "filename": "chrome/test/chromedriver/test/run_py_tests.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2018-01-26T01:51:33Z",
+      "side": 1,
+      "message": "The doesn\u0027t give much information to the reader. Please write something like \"Android doesn\u0027t support headless mode\".",
+      "range": {
+        "startLine": 198,
+        "startChar": 10,
+        "endLine": 198,
+        "endChar": 25
+      },
+      "revId": "7f7d12a2eaffb61c22ad963e989d92804f59fc29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
