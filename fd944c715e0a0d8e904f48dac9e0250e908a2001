@@ -123,6 +123,24 @@
       "revId": "fd944c715e0a0d8e904f48dac9e0250e908a2001",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "677137b1_d07471fb",
+        "filename": "content/browser/android/synchronous_compositor_host_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-26T22:24:35Z",
+      "side": 1,
+      "message": "\u003e So what you are saying is that I shouldn\u0027t call UnregisterHost if frame_futures is non empty but wait until I get the channel error/closing message.\n\nOr a legit reply arrives (webview is limited to a single renderer process, so single webview shutting down doesn\u0027t mean renderer process is shutting down too)",
+      "parentUuid": "5bc378dd_80c92ea8",
+      "revId": "fd944c715e0a0d8e904f48dac9e0250e908a2001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
