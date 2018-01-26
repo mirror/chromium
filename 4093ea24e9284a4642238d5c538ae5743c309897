@@ -16,6 +16,23 @@
       "revId": "4093ea24e9284a4642238d5c538ae5743c309897",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "744ee3b4_6fecd91c",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-26T21:13:57Z",
+      "side": 1,
+      "message": "ya it does",
+      "revId": "4093ea24e9284a4642238d5c538ae5743c309897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
