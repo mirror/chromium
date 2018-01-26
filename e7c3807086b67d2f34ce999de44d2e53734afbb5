@@ -45,6 +45,30 @@
       "revId": "e7c3807086b67d2f34ce999de44d2e53734afbb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c3db758_6ec2f134",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-26T19:01:56Z",
+      "side": 1,
+      "message": "\u003e Hmm, I\u0027m a little unsure about using page scale factor - that\u0027s not the browser-zoom but pinch-zoom so it should be unrelated to the flag. In fact, I don\u0027t see (for e.g.) root_layer_size having the PSF applied to it in LayerTreeHostImpl either with or without the flag. Just to clarify, \"pinch-zoom/page scale\" is the zooming we do on pinch-zoom and doesn\u0027t in practice affect the CSS pixel size. You probably don\u0027t have to deal with it at all for this flag. \"browser zoom\" is the zooming on desktop we get with Ctrl+/- and this flag is reusing that machinery for DSF.\n\u003e \n\u003e I\u0027d be a little surprised if these were really meant to be CSS pixels (i.e. having browser zoom removed). It\u0027s a matter of terminology since Android doesn\u0027t have browser-zoom today but I suspect these should really be DIPs, i.e. physical / DSF, so are you sure this shouldn\u0027t be 1 / dip_scale?\n\u003e \n\u003e Also, Bo might know better, but do we generally use DIPs or Physical Pixels in UI code? Depending on that, it might make more sense to perform this conversion at the point of use in UI code.\n\nUI generally works with physical pixels I think. And I echo the same question, page zoom shouldn\u0027t be affected by --zoom-for-dsf?",
+      "parentUuid": "0829dfa5_73d039c6",
+      "range": {
+        "startLine": 1469,
+        "startChar": 40,
+        "endLine": 1469,
+        "endChar": 72
+      },
+      "revId": "e7c3807086b67d2f34ce999de44d2e53734afbb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
