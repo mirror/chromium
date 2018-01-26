@@ -33,11 +33,11 @@ namespace sandbox {
 
 namespace {
 
-// The global |g_am_zygote_or_renderer| is true iff we are in a zygote or
+// The global |g_am_zygote_or_descendant| is true iff we are in a zygote or
 // renderer process. It's set in ZygoteMain and inherited by the renderers when
 // they fork. (This means that it'll be incorrect for global constructor
 // functions and before ZygoteMain is called - beware).
-bool g_am_zygote_or_renderer = false;
+bool g_am_zygote_or_descendant = false;
 bool g_use_localtime_override = true;
 int g_backchannel_fd = -1;
 
@@ -237,7 +237,7 @@ __attribute__((__visibility__("default"))) struct tm* localtime_override(
 
 __attribute__((__visibility__("default"))) struct tm* localtime_override(
     const time_t* timep) {
-  if (g_am_zygote_or_renderer && g_use_localtime_override) {
+  if (g_am_zygote_or_descendant && g_use_localtime_override) {
     static struct tm time_struct;
     static char timezone_string[64];
     ProxyLocaltimeCallToBrowser(*timep, &time_struct, timezone_string,
@@ -263,7 +263,7 @@ __attribute__((__visibility__("default"))) struct tm* localtime64_override(
 
 __attribute__((__visibility__("default"))) struct tm* localtime64_override(
     const time_t* timep) {
-  if (g_am_zygote_or_renderer && g_use_localtime_override) {
+  if (g_am_zygote_or_descendant && g_use_localtime_override) {
     static struct tm time_struct;
     static char timezone_string[64];
     ProxyLocaltimeCallToBrowser(*timep, &time_struct, timezone_string,
@@ -290,7 +290,7 @@ __attribute__((__visibility__("default"))) struct tm* localtime_r_override(
 __attribute__((__visibility__("default"))) struct tm* localtime_r_override(
     const time_t* timep,
     struct tm* result) {
-  if (g_am_zygote_or_renderer && g_use_localtime_override) {
+  if (g_am_zygote_or_descendant && g_use_localtime_override) {
     ProxyLocaltimeCallToBrowser(*timep, result, nullptr, 0);
     return result;
   }
@@ -314,7 +314,7 @@ __attribute__((__visibility__("default"))) struct tm* localtime64_r_override(
 __attribute__((__visibility__("default"))) struct tm* localtime64_r_override(
     const time_t* timep,
     struct tm* result) {
-  if (g_am_zygote_or_renderer && g_use_localtime_override) {
+  if (g_am_zygote_or_descendant && g_use_localtime_override) {
     ProxyLocaltimeCallToBrowser(*timep, result, nullptr, 0);
     return result;
   }
@@ -335,8 +335,8 @@ void SetUseLocaltimeOverride(bool enable) {
   g_use_localtime_override = enable;
 }
 
-void SetAmZygoteOrRenderer(bool enable, int backchannel_fd) {
-  g_am_zygote_or_renderer = enable;
+void SetAmZygoteOrDescendant(bool enable, int backchannel_fd) {
+  g_am_zygote_or_descendant = enable;
   g_backchannel_fd = backchannel_fd;
 }
 
