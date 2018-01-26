@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b05b8342_1f29d7d4",
+        "filename": "android_webview/tools/automated_ui_tests/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1145829
+      },
+      "writtenOn": "2018-01-26T00:40:59Z",
+      "side": 1,
+      "message": "should we remove Yoland and Case from here?",
+      "revId": "7fc25470fd4a52961ed2336b8e1f6bed876d84bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bec6adb_9a9df9c2",
+        "filename": "third_party/espresso/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1145829
+      },
+      "writtenOn": "2018-01-26T00:40:59Z",
+      "side": 1,
+      "message": "Should we remove case from here too?",
+      "revId": "7fc25470fd4a52961ed2336b8e1f6bed876d84bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
