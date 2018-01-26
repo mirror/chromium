@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "103f1f35_88aa8172",
+        "filename": "components/exo/pointer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-26T20:42:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a37b3de0_f75dc8d3",
+      "range": {
+        "startLine": 323,
+        "startChar": 59,
+        "endLine": 323,
+        "endChar": 67
+      },
+      "revId": "0237b736ebdc081e79ab0dbf6dc4406c51e50aee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fb28496_05e13f79",
         "filename": "components/exo/pointer.cc",
         "patchSetId": 11
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-26T19:01:36Z",
       "side": 1,
       "message": "sounds good. maybe add a callback to ui::Cursor that can handle display changes?",
+      "range": {
+        "startLine": 450,
+        "startChar": 4,
+        "endLine": 451,
+        "endChar": 52
+      },
+      "revId": "0237b736ebdc081e79ab0dbf6dc4406c51e50aee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a5bb357_466d11b6",
+        "filename": "components/exo/pointer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-26T20:42:53Z",
+      "side": 1,
+      "message": "Something like that but it requires a bit more work because PlatformCursor is currently opaque type. I\u0027m hoping that we can do this either 66 or 67.",
+      "parentUuid": "2fb28496_05e13f79",
       "range": {
         "startLine": 450,
         "startChar": 4,
