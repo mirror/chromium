@@ -295,6 +295,7 @@ class GCMClientImplTest : public testing::Test,
   void VerifyPendingRequestFetcherDeleted();
 
   bool ExistsRegistration(const std::string& app_id) const;
+  bool ExistsFreshRegistration(const std::string& app_id) const;
   void AddRegistration(const std::string& app_id,
                        const std::vector<std::string>& sender_ids,
                        const std::string& registration_id);
@@ -551,6 +552,14 @@ bool GCMClientImplTest::ExistsRegistration(const std::string& app_id) const {
   return ExistsGCMRegistrationInMap(gcm_client_->registrations_, app_id);
 }
 
+bool GCMClientImplTest::ExistsFreshRegistration(
+    const std::string& app_id) const {
+  bool regn_is_fresh = false;
+  bool regn_exists = ExistsGCMRegistrationInMap(gcm_client_->registrations_,
+                                                app_id, &regn_is_fresh);
+  return (regn_exists && regn_is_fresh);
+}
+
 void GCMClientImplTest::AddRegistration(
     const std::string& app_id,
     const std::vector<std::string>& sender_ids,
@@ -772,6 +781,7 @@ TEST_F(GCMClientImplTest, DestroyStoreWhenNotNeeded) {
 
 TEST_F(GCMClientImplTest, RegisterApp) {
   EXPECT_FALSE(ExistsRegistration(kExtensionAppId));
+  EXPECT_FALSE(ExistsFreshRegistration(kExtensionAppId));
 
   std::vector<std::string> senders;
   senders.push_back("sender");
@@ -783,6 +793,7 @@ TEST_F(GCMClientImplTest, RegisterApp) {
   EXPECT_EQ("reg_id", last_registration_id());
   EXPECT_EQ(GCMClient::SUCCESS, last_result());
   EXPECT_TRUE(ExistsRegistration(kExtensionAppId));
+  EXPECT_TRUE(ExistsFreshRegistration(kExtensionAppId));
 }
 
 TEST_F(GCMClientImplTest, DISABLED_RegisterAppFromCache) {
@@ -793,6 +804,7 @@ TEST_F(GCMClientImplTest, DISABLED_RegisterAppFromCache) {
   Register(kExtensionAppId, senders);
   ASSERT_NO_FATAL_FAILURE(CompleteRegistration("reg_id"));
   EXPECT_TRUE(ExistsRegistration(kExtensionAppId));
+  EXPECT_TRUE(ExistsFreshRegistration(kExtensionAppId));
 
   EXPECT_EQ(kExtensionAppId, last_app_id());
   EXPECT_EQ("reg_id", last_registration_id());
@@ -805,6 +817,7 @@ TEST_F(GCMClientImplTest, DISABLED_RegisterAppFromCache) {
   StartGCMClient();
 
   EXPECT_TRUE(ExistsRegistration(kExtensionAppId));
+  EXPECT_TRUE(ExistsFreshRegistration(kExtensionAppId));
 }
 
 TEST_F(GCMClientImplTest, RegisterPreviousSenderAgain) {
@@ -821,6 +834,7 @@ TEST_F(GCMClientImplTest, RegisterPreviousSenderAgain) {
   EXPECT_EQ("reg_id", last_registration_id());
   EXPECT_EQ(GCMClient::SUCCESS, last_result());
   EXPECT_TRUE(ExistsRegistration(kExtensionAppId));
+  EXPECT_TRUE(ExistsFreshRegistration(kExtensionAppId));
 
   reset_last_event();
 
@@ -836,6 +850,7 @@ TEST_F(GCMClientImplTest, RegisterPreviousSenderAgain) {
   EXPECT_EQ("reg_id2", last_registration_id());
   EXPECT_EQ(GCMClient::SUCCESS, last_result());
   EXPECT_TRUE(ExistsRegistration(kExtensionAppId));
+  EXPECT_TRUE(ExistsFreshRegistration(kExtensionAppId));
 
   reset_last_event();
 
@@ -851,6 +866,7 @@ TEST_F(GCMClientImplTest, RegisterPreviousSenderAgain) {
   EXPECT_EQ("reg_id", last_registration_id());
   EXPECT_EQ(GCMClient::SUCCESS, last_result());
   EXPECT_TRUE(ExistsRegistration(kExtensionAppId));
+  EXPECT_TRUE(ExistsFreshRegistration(kExtensionAppId));
 }
 
 TEST_F(GCMClientImplTest, UnregisterApp) {

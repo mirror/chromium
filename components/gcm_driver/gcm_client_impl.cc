@@ -22,6 +22,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/default_clock.h"
+#include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "components/crx_file/id_util.h"
 #include "components/gcm_driver/crypto/gcm_decryption_result.h"
@@ -889,9 +890,17 @@ void GCMClientImpl::Register(
     }
 
     if (matched) {
-      delegate_->OnRegisterFinished(
-          registration_info, registrations_iter->second, SUCCESS);
-      return;
+      // Check also whether Token in Registration Info is fresh.
+      // This assumes we have stored
+      // last_validated time in registration info. If we haven't, then we assume
+      // that the info is stale.
+      auto last_validated_at = registrations_iter->first.get()->last_validated;
+      if (base::Time::Now() - last_validated_at <=
+          base::TimeDelta::FromDays(kTokenInvalidationDurationDays)) {
+        delegate_->OnRegisterFinished(registration_info,
+                                      registrations_iter->second, SUCCESS);
+        return;
+      }
     }
   }
 
@@ -976,13 +985,20 @@ void GCMClientImpl::OnRegisterCompleted(
     result = SUCCESS;
   }
 
+  auto registrations_iter = registrations_.find(registration_info);
+  if (registrations_iter != registrations_.end()) {
+    // TODO(nator) Add logic here to notify the user that the reg_id has
+    // changed.
+  }
+
   if (result == SUCCESS) {
     // Cache it.
     // Note that the existing cached record has to be removed first because
     // otherwise the key value in registrations_ will not be updated. For GCM
     // registrations, the key consists of pair of app_id and sender_ids though
-    // only app_id is used in the comparison.
+    // only app_id is used in the key comparison.
     registrations_.erase(registration_info);
+    registration_info->last_validated = base::Time::Now();
     registrations_[registration_info] = registration_id;
 
     // Save it in the persistent store.
