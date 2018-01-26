@@ -171,6 +171,24 @@
       "revId": "0249805c0bb05373cc3c06b5ae7be7f05e849250",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24bd5203_a42e5915",
+        "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-26T19:18:07Z",
+      "side": 1,
+      "message": "Matt: I wasn\u0027t sure if you were still commenting, but you may have missed this question :)",
+      "parentUuid": "b4ac612c_a72dbe78",
+      "revId": "0249805c0bb05373cc3c06b5ae7be7f05e849250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
