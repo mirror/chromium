@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93babf62_8bd8e611",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-26T22:49:39Z",
+      "side": 1,
+      "message": "Why do we need this? The target_pixmap should always have the cs set when its created. The SkImageInfo here has it: https://cs.chromium.org/chromium/src/cc/tiles/gpu_image_decode_cache.cc?type\u003dcs\u0026l\u003d1310\n\nActually, would that be a bug right now if we don\u0027t color convert in the cache? Because the info on the pixmap used to create the SkImage still uses the target color space?",
+      "range": {
+        "startLine": 156,
+        "startChar": 4,
+        "endLine": 157,
+        "endChar": 59
+      },
+      "revId": "a68b5b3ab727d8e40f7a01798ebc9f0b2eefbb59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e3b86d1_8417c2cf",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1408,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-26T22:49:39Z",
+      "side": 1,
+      "message": "Me like early return. :D",
+      "range": {
+        "startLine": 1408,
+        "startChar": 4,
+        "endLine": 1408,
+        "endChar": 11
+      },
+      "revId": "a68b5b3ab727d8e40f7a01798ebc9f0b2eefbb59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4440bbf0_86805055",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1411,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-26T22:49:39Z",
+      "side": 1,
+      "message": "CPU/GPU?",
+      "range": {
+        "startLine": 1411,
+        "startChar": 45,
+        "endLine": 1411,
+        "endChar": 52
+      },
+      "revId": "a68b5b3ab727d8e40f7a01798ebc9f0b2eefbb59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

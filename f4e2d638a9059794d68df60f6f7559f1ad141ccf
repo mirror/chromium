@@ -22,6 +22,30 @@
       "revId": "f4e2d638a9059794d68df60f6f7559f1ad141ccf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "522224df_d7383c5e",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1692,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-26T22:49:39Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "bc1cfacd_0177e60c",
+      "range": {
+        "startLine": 1692,
+        "startChar": 8,
+        "endLine": 1692,
+        "endChar": 22
+      },
+      "revId": "f4e2d638a9059794d68df60f6f7559f1ad141ccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
