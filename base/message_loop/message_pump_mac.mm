@@ -772,7 +772,7 @@ ScopedPumpMessagesInPrivateModes::ScopedPumpMessagesInPrivateModes() {
   DCHECK_EQ(kNSApplicationModalSafeModeMask, g_app_pump->GetModeMask());
   // Pumping events in private runloop modes is known to interact badly with
   // app modal windows like NSAlert.
-  if (![NSApp modalWindow])
+  if (!NSApp.modalWindow)
     g_app_pump->SetModeMask(kAllModesMask);
 }
 
@@ -809,7 +809,7 @@ void MessagePumpNSApplication::DoRun(Delegate* delegate) {
   // RegisterCrApp() or RegisterBrowserCrApp().
   CHECK(NSApp);
 
-  if (![NSApp isRunning]) {
+  if (!NSApp.running) {
     running_own_loop_ = false;
     // NSApplication manages autorelease pools itself when run this way.
     [NSApp run];

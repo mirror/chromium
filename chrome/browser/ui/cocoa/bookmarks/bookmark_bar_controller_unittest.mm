@@ -59,9 +59,9 @@ using bookmarks::BookmarkNode;
 
 @implementation BookmarkBarControllerTestable
 
-- (id)initWithBrowser:(Browser*)browser
-         initialWidth:(CGFloat)initialWidth
-             delegate:(id<BookmarkBarControllerDelegate>)delegate {
+- (instancetype)initWithBrowser:(Browser*)browser
+                   initialWidth:(CGFloat)initialWidth
+                       delegate:(id<BookmarkBarControllerDelegate>)delegate {
   if ((self = [super initWithBrowser:browser
                         initialWidth:initialWidth
                             delegate:delegate])) {
@@ -111,7 +111,7 @@ using bookmarks::BookmarkNode;
 
 @synthesize cellSize = cellSize_;
 
-- (id)initTextCell:(NSString*)string desiredSize:(NSSize)size {
+- (instancetype)initTextCell:(NSString*)string desiredSize:(NSSize)size {
   if ((self = [super initTextCell:string])) {
     cellSize_ = size;
   }
@@ -190,9 +190,9 @@ using bookmarks::BookmarkNode;
 
 @implementation BookmarkBarControllerDragData
 
-- (id)initWithBrowser:(Browser*)browser
-         initialWidth:(CGFloat)initialWidth
-             delegate:(id<BookmarkBarControllerDelegate>)delegate {
+- (instancetype)initWithBrowser:(Browser*)browser
+                   initialWidth:(CGFloat)initialWidth
+                       delegate:(id<BookmarkBarControllerDelegate>)delegate {
   if ((self = [super initWithBrowser:browser
                         initialWidth:initialWidth
                             delegate:delegate])) {
@@ -256,7 +256,7 @@ class FakeTheme : public ui::ThemeProvider {
 
 @synthesize dropLocation = dropLocation_;
 
-- (id)init {
+- (instancetype)init {
   if ((self = [super init])) {
     dropLocation_ = NSZeroPoint;
     sourceMask_ = NSDragOperationMove;
@@ -370,7 +370,7 @@ class BookmarkBarControllerTest : public BookmarkBarControllerTestBase {
     ASSERT_LE((int)[[bar_ buttons] count], node->child_count());
     int numButtons = [[bar_ buttons] count];
     for (int i = 0; i < numButtons; i++) {
-      EXPECT_NSEQ([[[bar_ buttons] objectAtIndex:i] title],
+      EXPECT_NSEQ([[bar_ buttons][i] title],
                   base::SysUTF16ToNSString(node->GetChild(i)->GetTitle()));
     }
   }
@@ -627,7 +627,7 @@ TEST_F(BookmarkBarControllerTest, ApplyLayoutBookmarkButtons) {
   CGFloat lastMax = 0;
   for (int i = 0; i < 3; i++) {
     const BookmarkNode* node = parentNode->GetChild(i);
-    BookmarkButton* button = [[bar_ buttons] objectAtIndex:i];
+    BookmarkButton* button = [bar_ buttons][i];
     EXPECT_EQ([button bookmarkNode], node);
     EXPECT_CGFLOAT_EQ(NSMinX([button frame]),
                       bookmarks::kDefaultBookmarkWidth * (i + 1));
@@ -1196,7 +1196,7 @@ TEST_F(BookmarkBarControllerTest, MiddleClick) {
   bookmarks::AddIfNotBookmarked(model, gurl1, title1);
 
   EXPECT_EQ(1U, [[bar_ buttons] count]);
-  NSButton* first = [[bar_ buttons] objectAtIndex:0];
+  NSButton* first = [bar_ buttons][0];
   EXPECT_TRUE(first);
 
   [first otherMouseUp:
@@ -1323,40 +1323,32 @@ TEST_F(BookmarkBarControllerTest, TestDragButton) {
     bookmarks::AddIfNotBookmarked(model, gurls[i], titles[i]);
 
   EXPECT_EQ([[bar_ buttons] count], arraysize(titles));
-  EXPECT_NSEQ(@"a", [[[bar_ buttons] objectAtIndex:0] title]);
+  EXPECT_NSEQ(@"a", [[bar_ buttons][0] title]);
 
-  [bar_ dragButton:[[bar_ buttons] objectAtIndex:2]
-                to:NSZeroPoint
-              copy:NO];
-  EXPECT_NSEQ(@"c", [[[bar_ buttons] objectAtIndex:0] title]);
+  [bar_ dragButton:[bar_ buttons][2] to:NSZeroPoint copy:NO];
+  EXPECT_NSEQ(@"c", [[bar_ buttons][0] title]);
   // Make sure a 'copy' did not happen.
   EXPECT_EQ([[bar_ buttons] count], arraysize(titles));
 
-  [bar_ dragButton:[[bar_ buttons] objectAtIndex:1]
-                to:NSMakePoint(1000, 0)
-              copy:NO];
-  EXPECT_NSEQ(@"c", [[[bar_ buttons] objectAtIndex:0] title]);
-  EXPECT_NSEQ(@"b", [[[bar_ buttons] objectAtIndex:1] title]);
-  EXPECT_NSEQ(@"a", [[[bar_ buttons] objectAtIndex:2] title]);
+  [bar_ dragButton:[bar_ buttons][1] to:NSMakePoint(1000, 0) copy:NO];
+  EXPECT_NSEQ(@"c", [[bar_ buttons][0] title]);
+  EXPECT_NSEQ(@"b", [[bar_ buttons][1] title]);
+  EXPECT_NSEQ(@"a", [[bar_ buttons][2] title]);
   EXPECT_EQ([[bar_ buttons] count], arraysize(titles));
 
   // A drop of the 1st between the next 2.
-  CGFloat x = NSMinX([[[bar_ buttons] objectAtIndex:2] frame]);
+  CGFloat x = NSMinX([[bar_ buttons][2] frame]);
   x += [[bar_ view] frame].origin.x;
-  [bar_ dragButton:[[bar_ buttons] objectAtIndex:0]
-                to:NSMakePoint(x, 0)
-              copy:NO];
-  EXPECT_NSEQ(@"b", [[[bar_ buttons] objectAtIndex:0] title]);
-  EXPECT_NSEQ(@"c", [[[bar_ buttons] objectAtIndex:1] title]);
-  EXPECT_NSEQ(@"a", [[[bar_ buttons] objectAtIndex:2] title]);
+  [bar_ dragButton:[bar_ buttons][0] to:NSMakePoint(x, 0) copy:NO];
+  EXPECT_NSEQ(@"b", [[bar_ buttons][0] title]);
+  EXPECT_NSEQ(@"c", [[bar_ buttons][1] title]);
+  EXPECT_NSEQ(@"a", [[bar_ buttons][2] title]);
   EXPECT_EQ([[bar_ buttons] count], arraysize(titles));
 
   // A drop on a non-folder button.  (Shouldn't try and go in it.)
-  x = NSMidX([[[bar_ buttons] objectAtIndex:0] frame]);
+  x = NSMidX([[bar_ buttons][0] frame]);
   x += [[bar_ view] frame].origin.x;
-  [bar_ dragButton:[[bar_ buttons] objectAtIndex:2]
-                to:NSMakePoint(x, 0)
-              copy:NO];
+  [bar_ dragButton:[bar_ buttons][2] to:NSMakePoint(x, 0) copy:NO];
   EXPECT_EQ(arraysize(titles), [[bar_ buttons] count]);
 
   // A drop on a folder button.
@@ -1367,13 +1359,10 @@ TEST_F(BookmarkBarControllerTest, TestDragButton) {
                 GURL("http://www.google.com"));
   EXPECT_EQ(arraysize(titles) + 1, [[bar_ buttons] count]);
   EXPECT_EQ(1, folder->child_count());
-  x = NSMidX([[[bar_ buttons] objectAtIndex:0] frame]);
+  x = NSMidX([[bar_ buttons][0] frame]);
   x += [[bar_ view] frame].origin.x;
-  base::string16 title =
-      [[[bar_ buttons] objectAtIndex:2] bookmarkNode]->GetTitle();
-  [bar_ dragButton:[[bar_ buttons] objectAtIndex:2]
-                to:NSMakePoint(x, 0)
-              copy:NO];
+  base::string16 title = [[bar_ buttons][2] bookmarkNode]->GetTitle();
+  [bar_ dragButton:[bar_ buttons][2] to:NSMakePoint(x, 0) copy:NO];
   // Gone from the bar
   EXPECT_EQ(arraysize(titles), [[bar_ buttons] count]);
   // In the folder
@@ -1395,18 +1384,16 @@ TEST_F(BookmarkBarControllerTest, TestCopyButton) {
     bookmarks::AddIfNotBookmarked(model, gurls[i], titles[i]);
 
   EXPECT_EQ([[bar_ buttons] count], arraysize(titles));
-  EXPECT_NSEQ(@"a", [[[bar_ buttons] objectAtIndex:0] title]);
+  EXPECT_NSEQ(@"a", [[bar_ buttons][0] title]);
 
   // Drag 'a' between 'b' and 'c'.
-  CGFloat x = NSMinX([[[bar_ buttons] objectAtIndex:2] frame]);
+  CGFloat x = NSMinX([[bar_ buttons][2] frame]);
   x += [[bar_ view] frame].origin.x;
-  [bar_ dragButton:[[bar_ buttons] objectAtIndex:0]
-                to:NSMakePoint(x, 0)
-              copy:YES];
-  EXPECT_NSEQ(@"a", [[[bar_ buttons] objectAtIndex:0] title]);
-  EXPECT_NSEQ(@"b", [[[bar_ buttons] objectAtIndex:1] title]);
-  EXPECT_NSEQ(@"a", [[[bar_ buttons] objectAtIndex:2] title]);
-  EXPECT_NSEQ(@"c", [[[bar_ buttons] objectAtIndex:3] title]);
+  [bar_ dragButton:[bar_ buttons][0] to:NSMakePoint(x, 0) copy:YES];
+  EXPECT_NSEQ(@"a", [[bar_ buttons][0] title]);
+  EXPECT_NSEQ(@"b", [[bar_ buttons][1] title]);
+  EXPECT_NSEQ(@"a", [[bar_ buttons][2] title]);
+  EXPECT_NSEQ(@"c", [[bar_ buttons][3] title]);
   EXPECT_EQ([[bar_ buttons] count], 4U);
 }
 
@@ -1416,12 +1403,10 @@ TEST_F(BookmarkBarControllerTest, TestThemedButton) {
   BookmarkModel* model = BookmarkModelFactory::GetForBrowserContext(profile());
   bookmarks::AddIfNotBookmarked(
       model, GURL("http://www.foo.com"), ASCIIToUTF16("small"));
-  BookmarkButton* button = [[bar_ buttons] objectAtIndex:0];
+  BookmarkButton* button = [bar_ buttons][0];
   EXPECT_TRUE(button);
 
-  NSArray* colors = [NSArray arrayWithObjects:[NSColor redColor],
-                                              [NSColor blueColor],
-                                              nil];
+  NSArray* colors = @[ [NSColor redColor], [NSColor blueColor] ];
   for (NSColor* color in colors) {
     FakeTheme theme(color);
     [bar_ updateTheme:&theme];
@@ -1430,8 +1415,7 @@ TEST_F(BookmarkBarControllerTest, TestThemedButton) {
     EXPECT_NSEQ(@"small", [astr string]);
     // Pick a char in the middle to test (index 3)
     NSDictionary* attributes = [astr attributesAtIndex:3 effectiveRange:NULL];
-    NSColor* newColor =
-        [attributes objectForKey:NSForegroundColorAttributeName];
+    NSColor* newColor = attributes[NSForegroundColorAttributeName];
     EXPECT_NSEQ(newColor, color);
   }
 }
@@ -1491,22 +1475,22 @@ TEST_F(BookmarkBarControllerTest, TestFolders) {
   // First confirm mouseEntered does nothing if "menus" aren't active.
   NSEvent* event =
       cocoa_test_event_utils::MouseEventWithType(NSOtherMouseUp, 0);
-  [bar_ mouseEnteredButton:[[bar_ buttons] objectAtIndex:0] event:event];
+  [bar_ mouseEnteredButton:[bar_ buttons][0] event:event];
   EXPECT_FALSE([bar_ folderController]);
 
   // Make one active.  Entering it is now a no-op.
-  [bar_ openBookmarkFolderFromButton:[[bar_ buttons] objectAtIndex:0]];
+  [bar_ openBookmarkFolderFromButton:[bar_ buttons][0]];
   BookmarkBarFolderController* bbfc = [bar_ folderController];
   EXPECT_TRUE(bbfc);
-  [bar_ mouseEnteredButton:[[bar_ buttons] objectAtIndex:0] event:event];
+  [bar_ mouseEnteredButton:[bar_ buttons][0] event:event];
   EXPECT_EQ(bbfc, [bar_ folderController]);
 
   // Enter a different one; a new folderController is active.
-  [bar_ mouseEnteredButton:[[bar_ buttons] objectAtIndex:1] event:event];
+  [bar_ mouseEnteredButton:[bar_ buttons][1] event:event];
   EXPECT_NE(bbfc, [bar_ folderController]);
 
   // Confirm exited is a no-op.
-  [bar_ mouseExitedButton:[[bar_ buttons] objectAtIndex:1] event:event];
+  [bar_ mouseExitedButton:[bar_ buttons][1] event:event];
   EXPECT_NE(bbfc, [bar_ folderController]);
 
   // Clean up.
@@ -1712,7 +1696,7 @@ TEST_F(BookmarkBarControllerTest, CloseFolderOnAnimate) {
   model->AddURL(folder, folder->child_count(),
       ASCIIToUTF16("title super duper long long whoa momma title you betcha"),
       GURL("http://www.google.com/b"));
-  BookmarkButton* button = [[bar_ buttons] objectAtIndex:0];
+  BookmarkButton* button = [bar_ buttons][0];
   EXPECT_FALSE([bar_ folderController]);
   [bar_ openBookmarkFolderFromButton:button];
   BookmarkBarFolderController* bbfc = [bar_ folderController];
@@ -1777,7 +1761,7 @@ public:
 
 // Command-click on a folder should open all the bookmarks in it.
 TEST_F(BookmarkBarControllerOpenAllTest, CommandClickOnFolder) {
-  NSButton* first = [[bar_ buttons] objectAtIndex:0];
+  NSButton* first = [bar_ buttons][0];
   EXPECT_TRUE(first);
 
   // Create the right kind of event; mock NSApp so [NSApp
@@ -1918,7 +1902,7 @@ TEST_F(BookmarkBarControllerDragDropTest, DragMoveBarBookmarkToOffTheSide) {
   ASSERT_TRUE(draggedButton);
   int oldOTSCount = (int)[[otsController buttons] count];
   EXPECT_EQ(oldOTSCount, oldChildCount - oldDisplayedButtons);
-  BookmarkButton* targetButton = [[otsController buttons] objectAtIndex:0];
+  BookmarkButton* targetButton = [otsController buttons][0];
   ASSERT_TRUE(targetButton);
   [otsController dragButton:draggedButton
                          to:[targetButton center]
@@ -2077,9 +2061,8 @@ TEST_F(BookmarkBarControllerDragDropTest, AddURLs) {
   BookmarkButton* targetButton = [bar_ buttonWithTitleEqualTo:@"3b"];
   ASSERT_TRUE(targetButton);
 
-  NSArray* urls = [NSArray arrayWithObjects: @"http://www.a.com/",
-                   @"http://www.b.com/", nil];
-  NSArray* titles = [NSArray arrayWithObjects: @"SiteA", @"SiteB", nil];
+  NSArray* urls = @[ @"http://www.a.com/", @"http://www.b.com/" ];
+  NSArray* titles = @[ @"SiteA", @"SiteB" ];
   [bar_ addURLs:urls withTitles:titles at:[targetButton center]];
 
   // There should two more nodes in the bar.
@@ -2154,7 +2137,7 @@ TEST_F(BookmarkBarControllerDragDropTest, PulseButton) {
   const BookmarkNode* node = model->AddURL(root, root->child_count(),
                                            ASCIIToUTF16("title"), gurl);
 
-  BookmarkButton* button = [[bar_ buttons] objectAtIndex:0];
+  BookmarkButton* button = [bar_ buttons][0];
   EXPECT_FALSE([button isPulseStuckOn]);
   [bar_ startPulsingBookmarkNode:node];
   EXPECT_TRUE([button isPulseStuckOn]);
@@ -2167,7 +2150,7 @@ TEST_F(BookmarkBarControllerDragDropTest, PulseButton) {
   const BookmarkNode* inner =
       model->AddURL(folder, folder->child_count(), ASCIIToUTF16("inner"), gurl);
 
-  BookmarkButton* folder_button = [[bar_ buttons] objectAtIndex:1];
+  BookmarkButton* folder_button = [bar_ buttons][1];
   EXPECT_FALSE([folder_button isPulseStuckOn]);
   [bar_ startPulsingBookmarkNode:inner];
   EXPECT_TRUE([folder_button isPulseStuckOn]);
@@ -2184,7 +2167,7 @@ TEST_F(BookmarkBarControllerDragDropTest, PulseButton) {
 
   // Removing a pulsing folder is allowed.
   [bar_ startPulsingBookmarkNode:inner];
-  BookmarkButton* folder2_button = [[bar_ buttons] objectAtIndex:2];
+  BookmarkButton* folder2_button = [bar_ buttons][2];
   EXPECT_TRUE([folder2_button isPulseStuckOn]);
   model->Remove(folder2);
   EXPECT_FALSE([folder2_button isPulseStuckOn]);

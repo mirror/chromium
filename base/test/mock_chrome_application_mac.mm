@@ -12,7 +12,7 @@
 + (NSApplication*)sharedApplication {
   NSApplication* app = [super sharedApplication];
   DCHECK([app conformsToProtocol:@protocol(CrAppControlProtocol)])
-      << "Existing NSApp (class " << [[app className] UTF8String]
+      << "Existing NSApp (class " << app.className.UTF8String
       << ") does not conform to required protocol.";
   DCHECK(base::MessagePumpMac::UsingCrApp())
       << "MessagePumpMac::Create() was called before "

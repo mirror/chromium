@@ -191,7 +191,7 @@ TEST_F(BookmarkEditorBaseControllerTest, CreateFolder) {
   [controller_ newFolder:nil];
   NSArray* selectionPaths = [controller_ tableSelectionPaths];
   EXPECT_EQ(1U, [selectionPaths count]);
-  NSIndexPath* selectionPath = [selectionPaths objectAtIndex:0];
+  NSIndexPath* selectionPath = selectionPaths[0];
   EXPECT_EQ(4U, [selectionPath length]);
   BookmarkFolderInfo* newFolderInfo = [controller_ selectedFolder];
   EXPECT_TRUE(newFolderInfo);

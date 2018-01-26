@@ -77,18 +77,18 @@
 + (TabWindowController*)tabWindowControllerForWindow:(NSWindow*)window;
 
 // This is the designated initializer for this class.
-- (id)initTabWindowControllerWithTabStrip:(BOOL)hasTabStrip
-                                 titleBar:(BOOL)hasTitleBar;
+- (instancetype)initTabWindowControllerWithTabStrip:(BOOL)hasTabStrip
+                                           titleBar:(BOOL)hasTitleBar;
 
 // Used during tab dragging to turn on/off the overlay window when a tab
 // is torn off. If -deferPerformClose (below) is used, -removeOverlay will
 // cause the controller to be autoreleased before returning.
 - (void)showOverlay;
 - (void)removeOverlay;
-- (NSWindow*)overlayWindow;
+@property(nonatomic, readonly, strong) NSWindow* overlayWindow;
 
 // Returns YES if it is ok to constrain the window's frame to fit the screen.
-- (BOOL)shouldConstrainFrameRect;
+@property(nonatomic, readonly) BOOL shouldConstrainFrameRect;
 
 // A collection of methods, stubbed out in this base class, that provide
 // the implementation of tab dragging based on whatever model is most
@@ -114,15 +114,16 @@
 - (void)removePlaceholder;
 
 // Returns whether one of the window's tabs is being dragged.
-- (BOOL)isDragSessionActive;
+@property(nonatomic, getter=isDragSessionActive, readonly)
+    BOOL dragSessionActive;
 
 // The follow return YES if tab dragging/tab tearing (off the tab strip)/window
 // movement is currently allowed. Any number of things can choose to disable it,
 // such as pending animations. The default implementations always return YES.
 // Subclasses should override as appropriate.
-- (BOOL)tabDraggingAllowed;
-- (BOOL)tabTearingAllowed;
-- (BOOL)windowMovementAllowed;
+@property(nonatomic, readonly) BOOL tabDraggingAllowed;
+@property(nonatomic, readonly) BOOL tabTearingAllowed;
+@property(nonatomic, readonly) BOOL windowMovementAllowed;
 
 // Show or hide the new tab button. The button is hidden immediately, but
 // waits until the next call to |-layoutTabs| to show it again.
@@ -156,41 +157,42 @@
 // Number of tabs in the tab strip. Useful, for example, to know if we're
 // dragging the only tab in the window. This includes pinned tabs (both live
 // and not).
-- (NSInteger)numberOfTabs;
+@property(nonatomic, readonly) NSInteger numberOfTabs;
 
 // YES if there are tabs in the tab strip which have content, allowing for
 // the notion of tabs in the tab strip that are placeholders but currently have
 // no content.
-- (BOOL)hasLiveTabs;
+@property(nonatomic, readonly) BOOL hasLiveTabs;
 
 // Returns all tab views.
-- (NSArray*)tabViews;
+@property(nonatomic, readonly, copy) NSArray* tabViews;
 
 // Return the view of the active tab.
-- (NSView*)activeTabView;
+@property(nonatomic, readonly, strong) NSView* activeTabView;
 
 // The title of the active tab.
-- (NSString*)activeTabTitle;
+@property(nonatomic, readonly, copy) NSString* activeTabTitle;
 
 // Called to check whether or not this controller's window has a tab strip (YES
 // if it does, NO otherwise). The default implementation returns YES.
-- (BOOL)hasTabStrip;
+@property(nonatomic, readonly) BOOL hasTabStrip;
 
 // Gets whether a particular tab is draggable between windows.
 - (BOOL)isTabDraggable:(NSView*)tabView;
 
 // In any fullscreen mode, the y offset to use for the content at the top of
 // the screen (tab strip, omnibox, bookmark bar, etc). Ranges from 0 to -22.
-- (CGFloat)menubarOffset;
+@property(nonatomic, readonly) CGFloat menubarOffset;
 
 // The height of the menubar.
-- (CGFloat)menubarHeight;
+@property(nonatomic, readonly) CGFloat menubarHeight;
 
 // Returns YES if the browser window is in or entering any fullscreen mode.
-- (BOOL)isInAnyFullscreenMode;
+@property(nonatomic, getter=isInAnyFullscreenMode, readonly)
+    BOOL inAnyFullscreenMode;
 
 // Returns the view of the avatar button.
-- (NSView*)avatarView;
+@property(nonatomic, readonly, strong) NSView* avatarView;
 
 // Tell the window that it needs to call performClose: as soon as the current
 // drag is complete. This prevents a window (and its overlay) from going away

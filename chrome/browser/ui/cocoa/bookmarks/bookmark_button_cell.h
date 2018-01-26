@@ -40,7 +40,7 @@ class BookmarkNode;
 }
 
 @property(nonatomic, readwrite, assign)
-    const bookmarks::BookmarkNode* bookmarkNode;
+    const bookmarks::BookmarkNode* NS_RETURNS_INNER_POINTER bookmarkNode;
 @property(nonatomic, readwrite, assign) int startingChildIndex;
 @property(nonatomic, readwrite, assign) BOOL drawFolderArrow;
 
@@ -52,36 +52,38 @@ class BookmarkNode;
                       image:(NSImage*)image;
 
 // Create a button cell which draws with a theme.
-+ (id)buttonCellForNode:(const bookmarks::BookmarkNode*)node
-                   text:(NSString*)text
-                  image:(NSImage*)image
-         menuController:(BookmarkContextMenuCocoaController*)menuController;
++ (instancetype)buttonCellForNode:(const bookmarks::BookmarkNode*)node
+                             text:(NSString*)text
+                            image:(NSImage*)image
+                   menuController:
+                       (BookmarkContextMenuCocoaController*)menuController;
 
 // Create a button cell not attached to any node which draws with a theme.
-+ (id)buttonCellWithText:(NSString*)text
-                   image:(NSImage*)image
-          menuController:(BookmarkContextMenuCocoaController*)menuController;
++ (instancetype)buttonCellWithText:(NSString*)text
+                             image:(NSImage*)image
+                    menuController:
+                        (BookmarkContextMenuCocoaController*)menuController;
 
 // Create an |OffTheSideButtonCell| (aka the overflow chevron.)
 + (id)offTheSideButtonCell;
 
 // Initialize a button cell which draws with a theme.
 // Designated initializer.
-- (id)initForNode:(const bookmarks::BookmarkNode*)node
-              text:(NSString*)text
-             image:(NSImage*)image
-    menuController:(BookmarkContextMenuCocoaController*)menuController;
+- (instancetype)initForNode:(const bookmarks::BookmarkNode*)node
+                       text:(NSString*)text
+                      image:(NSImage*)image
+             menuController:(BookmarkContextMenuCocoaController*)menuController;
 
 // Initialize a button cell not attached to any node which draws with a theme.
-- (id)initWithText:(NSString*)text
-             image:(NSImage*)image
-    menuController:(BookmarkContextMenuCocoaController*)menuController;
+- (instancetype)initWithText:(NSString*)text
+                       image:(NSImage*)image
+              menuController:
+                  (BookmarkContextMenuCocoaController*)menuController;
 
 // A button cell is considered empty if it is expected to be attached to a node
 // and this node is NULL. If the button was created with
 // buttonCellForContextMenu then no node is expected and empty is always NO.
-- (BOOL)empty;
-- (void)setEmpty:(BOOL)empty;
+@property(nonatomic) BOOL empty;
 
 // |-setBookmarkCellText:image:| is used to set the text and image of
 // a BookmarkButtonCell, and align the image to the left (NSImageLeft)
@@ -93,7 +95,7 @@ class BookmarkNode;
 // Set the color of text in this cell.
 - (void)setTextColor:(NSColor*)color;
 
-- (BOOL)isFolderButtonCell;
+@property(nonatomic, getter=isFolderButtonCell, readonly) BOOL folderButtonCell;
 - (void)setBookmarkNode:(const bookmarks::BookmarkNode*)node
                   image:(NSImage*)image;
 

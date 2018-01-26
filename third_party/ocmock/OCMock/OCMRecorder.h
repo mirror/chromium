@@ -31,9 +31,9 @@
 
 - (void)setMockObject:(OCMockObject *)aMockObject;
 
-- (OCMInvocationMatcher *)invocationMatcher;
+@property(nonatomic, readonly, strong) OCMInvocationMatcher* invocationMatcher;
 
-- (id)classMethod;
-- (id)ignoringNonObjectArgs;
+@property(nonatomic, readonly, strong) id classMethod;
+@property(nonatomic, readonly, strong) id ignoringNonObjectArgs;
 
 @end

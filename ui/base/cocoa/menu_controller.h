@@ -31,7 +31,7 @@ UI_BASE_EXPORT
   base::scoped_nsobject<NSMenu> menu_;
 }
 
-@property(nonatomic, assign) ui::MenuModel* model;
+@property(nonatomic, assign) ui::MenuModel* NS_RETURNS_INNER_POINTER model;
 
 // Whether to activate selected menu items via a posted task. This may allow the
 // selection to be handled earlier, whilst the menu is fading out. If the posted
@@ -49,25 +49,25 @@ UI_BASE_EXPORT
 // NIB-based initializer. This does not create a menu. Clients can set the
 // properties of the object and the menu will be created upon the first call to
 // |-menu|. Note that the menu will be immutable after creation.
-- (id)init;
+- (instancetype)init;
 
 // Builds a NSMenu from the pre-built model (must not be nil). Changes made
 // to the contents of the model after calling this will not be noticed. If
 // the menu will be displayed by a NSPopUpButtonCell, it needs to be of a
 // slightly different form (0th item is empty). Note this attribute of the menu
 // cannot be changed after it has been created.
-- (id)initWithModel:(ui::MenuModel*)model
-    useWithPopUpButtonCell:(BOOL)useWithCell;
+- (instancetype)initWithModel:(ui::MenuModel*)model
+       useWithPopUpButtonCell:(BOOL)useWithCell;
 
 // Programmatically close the constructed menu.
 - (void)cancel;
 
 // Access to the constructed menu if the complex initializer was used. If the
 // default initializer was used, then this will create the menu on first call.
-- (NSMenu*)menu;
+@property(nonatomic, readonly, copy) NSMenu* menu;
 
 // Whether the menu is currently open.
-- (BOOL)isMenuOpen;
+@property(nonatomic, getter=isMenuOpen, readonly) BOOL menuOpen;
 
 // NSMenuDelegate methods this class implements. Subclasses should call super
 // if extending the behavior.

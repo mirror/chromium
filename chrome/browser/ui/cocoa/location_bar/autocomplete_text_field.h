@@ -134,10 +134,11 @@ class AutocompleteTextFieldObserver {
   base::scoped_nsobject<NSViewAnimation> resizeAnimation_;
 }
 
-@property(nonatomic) AutocompleteTextFieldObserver* observer;
+@property(nonatomic)
+    AutocompleteTextFieldObserver* NS_RETURNS_INNER_POINTER observer;
 
 // Convenience method to return the cell, casted appropriately.
-- (AutocompleteTextFieldCell*)cell;
+@property(nonatomic, readonly, strong) AutocompleteTextFieldCell* cell;
 
 // Superclass aborts editing before changing the string, which causes
 // problems for undo.  This version modifies the field editor's

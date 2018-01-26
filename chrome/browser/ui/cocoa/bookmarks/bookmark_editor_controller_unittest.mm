@@ -212,9 +212,7 @@ class BookmarkEditorControllerYesNodeTest : public CocoaProfileTest {
 TEST_F(BookmarkEditorControllerYesNodeTest, YesNodeShowTree) {
   EXPECT_NSEQ(base::SysUTF16ToNSString(default_title_),
               [controller_ displayName]);
-  EXPECT_NSEQ([NSString stringWithCString:"www.zoom-baby-doo-da.com"
-                                 encoding:NSUTF8StringEncoding],
-              [controller_ displayURL]);
+  EXPECT_NSEQ(@"www.zoom-baby-doo-da.com", [controller_ displayURL]);
   [controller_ cancel:nil];
 }
 
@@ -253,9 +251,7 @@ class BookmarkEditorControllerUtf8NodeTest : public CocoaProfileTest {
 
 TEST_F(BookmarkEditorControllerUtf8NodeTest, DisplayUtf8Name) {
   // The "http://" prefix is trimmed, but the UTF-8 formatted characters remain.
-  EXPECT_NSEQ([NSString stringWithCString:"www.foobar.com/心得寫作"
-                                 encoding:NSUTF8StringEncoding],
-              [controller_ displayURL]);
+  EXPECT_NSEQ(@"www.foobar.com/心得寫作", [controller_ displayURL]);
   [controller_ cancel:nil];
 }
 

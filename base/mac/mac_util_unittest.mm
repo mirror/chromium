@@ -106,7 +106,7 @@ TEST_F(MacUtilTest, DISABLED_TestExcludeFileFromBackups) {
   ASSERT_EQ(static_cast<int>(arraysize(dummy_data)),
             WriteFile(dummy_file_path, dummy_data, arraysize(dummy_data)));
   NSString* fileURLString =
-      [NSString stringWithUTF8String:dummy_file_path.value().c_str()];
+      @(dummy_file_path.value().c_str());
   NSURL* fileURL = [NSURL URLWithString:fileURLString];
   // Initial state should be non-excluded.
   EXPECT_FALSE(CSBackupIsItemExcluded(base::mac::NSToCFCast(fileURL), NULL));

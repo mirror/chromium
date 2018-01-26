@@ -59,11 +59,10 @@ enum BubbleAlignment {
 @property(assign, nonatomic) info_bubble::CornerFlags cornerFlags;
 
 // Returns the point location in view coordinates of the tip of the arrow.
-- (NSPoint)arrowTip;
+@property(nonatomic, readonly) NSPoint arrowTip;
 
 // Gets and sets the bubble's background color.
-- (NSColor*)backgroundColor;
-- (void)setBackgroundColor:(NSColor*)backgroundColor;
+@property(nonatomic, copy) NSColor* backgroundColor;
 
 @end
 

@@ -49,7 +49,7 @@ BookmarkButton* gDraggedButton = nil; // Weak
     sourceOperationMaskForDraggingContext:(NSDraggingContext)context;
 
 // Make a drag image for the button.
-- (NSImage*)dragImage;
+@property(nonatomic, readonly, copy) NSImage* dragImage;
 
 - (void)installCustomTrackingArea;
 
@@ -61,7 +61,7 @@ BookmarkButton* gDraggedButton = nil; // Weak
 @synthesize acceptsTrackIn = acceptsTrackIn_;
 @synthesize backgroundColor = backgroundColor_;
 
-- (id)initWithFrame:(NSRect)frameRect {
+- (instancetype)initWithFrame:(NSRect)frameRect {
   // BookmarkButton's ViewID may be changed to VIEW_ID_OTHER_BOOKMARKS in
   // BookmarkBarController, so we can't just override -viewID method to return
   // it.

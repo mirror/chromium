@@ -22,7 +22,7 @@ using bookmarks::BookmarkNode;
 @interface BookmarkEditorController (Private)
 
 // Grab the url from the text field and convert.
-- (GURL)GURLFromUrlField;
+@property(nonatomic, readonly) GURL GURLFromUrlField;
 
 @end
 
@@ -34,13 +34,14 @@ using bookmarks::BookmarkNode;
   return [NSSet setWithObject:@"displayURL"];
 }
 
-- (id)initWithParentWindow:(NSWindow*)parentWindow
-                   profile:(Profile*)profile
-                    parent:(const BookmarkNode*)parent
-                      node:(const BookmarkNode*)node
-                       url:(const GURL&)url
-                     title:(const base::string16&)title
-             configuration:(BookmarkEditor::Configuration)configuration {
+- (instancetype)initWithParentWindow:(NSWindow*)parentWindow
+                             profile:(Profile*)profile
+                              parent:(const BookmarkNode*)parent
+                                node:(const BookmarkNode*)node
+                                 url:(const GURL&)url
+                               title:(const base::string16&)title
+                       configuration:
+                           (BookmarkEditor::Configuration)configuration {
   if ((self = [super initWithParentWindow:parentWindow
                                   nibName:@"BookmarkEditor"
                                   profile:profile
@@ -75,8 +76,7 @@ using bookmarks::BookmarkNode;
     GURL url = [self url];
     [self setInitialName:base::SysUTF16ToNSString([self title])];
     if (url.is_valid())
-      initialUrl_.reset([[NSString stringWithUTF8String:url.spec().c_str()]
-                          retain]);
+      initialUrl_.reset([@(url.spec().c_str()) retain]);
   }
   [self setDisplayURL:initialUrl_];
   [super awakeFromNib];
@@ -147,7 +147,7 @@ using bookmarks::BookmarkNode;
   if (!newURL.is_valid()) {
     // Shouldn't be reached -- OK button should be disabled if not valid!
     NOTREACHED();
-    return [NSNumber numberWithBool:NO];
+    return @NO;
   }
 
   // Determine where the new/replacement bookmark is to go.
@@ -172,7 +172,7 @@ using bookmarks::BookmarkNode;
   BookmarkExpandedStateTracker::Nodes expanded_nodes = [self getExpandedNodes];
   [self bookmarkModel]->expanded_state_tracker()->
       SetExpandedNodes(expanded_nodes);
-  return [NSNumber numberWithBool:YES];
+  return @YES;
 }
 
 - (NSColor *)urlFieldColor {

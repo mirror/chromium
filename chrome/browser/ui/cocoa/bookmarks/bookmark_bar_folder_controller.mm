@@ -148,7 +148,7 @@ NSRect GetFirstButtonFrameForHeight(CGFloat height) {
 // Return the screen to which the menu should be restricted. The screen list is
 // very volatile and can change with very short notice so it isn't worth
 // caching. http://crbug.com/463458
-- (NSScreen*)menuScreen;
+@property(nonatomic, readonly, strong) NSScreen* menuScreen;
 
 // Helper function to configureWindow which performs a basic layout of
 // the window subviews, in particular the menu buttons and the window width.
@@ -157,7 +157,7 @@ NSRect GetFirstButtonFrameForHeight(CGFloat height) {
 // Determine the best button width (which will be the widest button or the
 // maximum allowable button width, whichever is less) and resize all buttons.
 // Return the new width so that the window can be adjusted.
-- (CGFloat)adjustButtonWidths;
+@property(nonatomic, readonly) CGFloat adjustButtonWidths;
 
 // Returns the total menu height needed to display |buttonCount| buttons.
 // Does not do any fancy tricks like trimming the height to fit on the screen.
@@ -259,10 +259,11 @@ NSRect GetFirstButtonFrameForHeight(CGFloat height) {
 
 @synthesize subFolderGrowthToRight = subFolderGrowthToRight_;
 
-- (id)initWithParentButton:(BookmarkButton*)button
-          parentController:(BookmarkBarFolderController*)parentController
-             barController:(BookmarkBarController*)barController
-                   profile:(Profile*)profile {
+- (instancetype)initWithParentButton:(BookmarkButton*)button
+                    parentController:
+                        (BookmarkBarFolderController*)parentController
+                       barController:(BookmarkBarController*)barController
+                             profile:(Profile*)profile {
   NSString* nibPath =
       [base::mac::FrameworkBundle() pathForResource:@"BookmarkBarFolderWindow"
                                              ofType:@"nib"];
@@ -333,10 +334,10 @@ NSRect GetFirstButtonFrameForHeight(CGFloat height) {
 
   ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
   NSImage* image = rb.GetNativeImageNamed(IDR_MENU_OVERFLOW_DOWN).ToNSImage();
-  [[scrollUpArrowView_.subviews objectAtIndex:0] setImage:image];
+  [(scrollUpArrowView_.subviews)[0] setImage:image];
 
   image = rb.GetNativeImageNamed(IDR_MENU_OVERFLOW_UP).ToNSImage();
-  [[scrollDownArrowView_.subviews objectAtIndex:0] setImage:image];
+  [(scrollDownArrowView_.subviews)[0] setImage:image];
 }
 
 // Overriden from NSWindowController to call childFolderWillShow: before showing
@@ -950,7 +951,7 @@ NSRect GetFirstButtonFrameForHeight(CGFloat height) {
 - (BookmarkButton*)buttonAtIndex:(int)which {
   if (which < 0 || which >= [self buttonCount])
     return nil;
-  return [buttons_ objectAtIndex:which];
+  return buttons_[which];
 }
 
 // Private, called by performOneScroll only.
@@ -1428,7 +1429,7 @@ static BOOL ValueInRangeInclusive(CGFloat low, CGFloat value, CGFloat high) {
     [self performSelector:@selector(openBookmarkFolderFromButtonAndCloseOldOne:)
                withObject:button
                afterDelay:bookmarks::kHoverOpenDelay
-                  inModes:[NSArray arrayWithObject:NSRunLoopCommonModes]];
+                  inModes:@[ NSRunLoopCommonModes ]];
 }
 
 // Called from the BookmarkButton
@@ -1637,7 +1638,7 @@ static BOOL ValueInRangeInclusive(CGFloat low, CGFloat value, CGFloat high) {
 - (void)setStateOfButtonByIndex:(int)index
                           state:(bool)state {
   if (index >= 0 && index < [self buttonCount])
-    [[buttons_ objectAtIndex:index] highlight:state];
+    [buttons_[index] highlight:state];
 }
 
 // Selects the required button and deselects the previously selected one.
@@ -1646,7 +1647,7 @@ static BOOL ValueInRangeInclusive(CGFloat low, CGFloat value, CGFloat high) {
   if (index == selectedIndex_)
     return;
 
-  if (index >= 0 && [[buttons_ objectAtIndex:index] isEmpty])
+  if (index >= 0 && [buttons_[index] isEmpty])
     index = -1;
 
   [self setStateOfButtonByIndex:selectedIndex_ state:NO];
@@ -1672,7 +1673,7 @@ static BOOL ValueInRangeInclusive(CGFloat low, CGFloat value, CGFloat high) {
   int maxButtons = [buttons_ count];
   NSString* lowercasePrefix = [prefix lowercaseString];
   for (int i = 0 ; i < maxButtons ; ++i) {
-    BookmarkButton* button = [buttons_ objectAtIndex:i];
+    BookmarkButton* button = buttons_[i];
     if ([[[button title] lowercaseString] hasPrefix:lowercasePrefix])
       return i;
   }
@@ -1719,7 +1720,7 @@ static BOOL ValueInRangeInclusive(CGFloat low, CGFloat value, CGFloat high) {
       case NSCarriageReturnCharacter:
       case NSEnterCharacter:
         if (selectedIndex_ >= 0 && selectedIndex_ < [self buttonCount]) {
-          [barController_ openBookmark:[buttons_ objectAtIndex:selectedIndex_]];
+          [barController_ openBookmark:buttons_[selectedIndex_]];
           return NO; // NO because the selection-handling code will close later.
         } else {
           return YES; // Triggering with no selection closes the menu.
@@ -1788,8 +1789,7 @@ static BOOL ValueInRangeInclusive(CGFloat low, CGFloat value, CGFloat high) {
   // If it's a drop strictly between existing buttons or at the very beginning
   if (destIndex >= 0 && destIndex < numButtons) {
     // ... put the indicator right between the buttons.
-    BookmarkButton* button =
-        [buttons_ objectAtIndex:static_cast<NSUInteger>(destIndex)];
+    BookmarkButton* button = buttons_[static_cast<NSUInteger>(destIndex)];
     DCHECK(button);
     NSRect buttonFrame = [button frame];
     y = NSMaxY(buttonFrame) + 0.5 * bookmarks::kBookmarkTopVerticalPadding;
@@ -1799,8 +1799,7 @@ static BOOL ValueInRangeInclusive(CGFloat low, CGFloat value, CGFloat high) {
     // and if it's past the last button ...
     if (numButtons > 0) {
       // ... find the last button, and put the indicator below it.
-      BookmarkButton* button =
-          [buttons_ objectAtIndex:static_cast<NSUInteger>(destIndex - 1)];
+      BookmarkButton* button = buttons_[static_cast<NSUInteger>(destIndex - 1)];
       DCHECK(button);
       NSRect buttonFrame = [button frame];
       y = buttonFrame.origin.y -
@@ -1870,7 +1869,7 @@ static BOOL ValueInRangeInclusive(CGFloat low, CGFloat value, CGFloat high) {
   // Propose the frame for the new button. By default, this will be set to the
   // topmost button's frame (and there will always be one) offset upward in
   // anticipation of insertion.
-  NSRect newButtonFrame = [[buttons_ objectAtIndex:0] frame];
+  NSRect newButtonFrame = [buttons_[0] frame];
   newButtonFrame.origin.y += bookmarks::kBookmarkFolderButtonHeight;
   // When adding a button to an empty folder we must remove the 'empty'
   // placeholder button. This can be detected by checking for a parent
@@ -1890,7 +1889,7 @@ static BOOL ValueInRangeInclusive(CGFloat low, CGFloat value, CGFloat high) {
   // Offset upward by one button height all buttons above insertion location.
   BookmarkButton* button = nil;  // Remember so it can be de-highlighted.
   for (NSInteger i = 0; i < buttonIndex; ++i) {
-    button = [buttons_ objectAtIndex:i];
+    button = buttons_[i];
     // Remember this location in case it's the last button being moved
     // which is where the new button will be located.
     newButtonFrame = [button frame];
@@ -1941,16 +1940,14 @@ static BOOL ValueInRangeInclusive(CGFloat low, CGFloat value, CGFloat high) {
   size_t urlCount = [urls count];
   for (size_t i = 0; i < urlCount; ++i) {
     GURL gurl;
-    const char* string = [[urls objectAtIndex:i] UTF8String];
+    const char* string = [urls[i] UTF8String];
     if (string)
       gurl = GURL(string);
     // We only expect to receive valid URLs.
     DCHECK(gurl.is_valid());
     if (gurl.is_valid()) {
-      bookmarkModel->AddURL(destParent,
-                            destIndex++,
-                            base::SysNSStringToUTF16([titles objectAtIndex:i]),
-                            gurl);
+      bookmarkModel->AddURL(destParent, destIndex++,
+                            base::SysNSStringToUTF16(titles[i]), gurl);
       nodesWereAdded = YES;
     }
   }
@@ -1961,7 +1958,7 @@ static BOOL ValueInRangeInclusive(CGFloat low, CGFloat value, CGFloat high) {
   if (fromIndex != toIndex) {
     if (toIndex == -1)
       toIndex = [buttons_ count];
-    BookmarkButton* movedButton = [buttons_ objectAtIndex:fromIndex];
+    BookmarkButton* movedButton = buttons_[fromIndex];
     if (movedButton == buttonThatMouseIsIn_)
       buttonThatMouseIsIn_ = nil;
     [buttons_ removeObjectAtIndex:fromIndex];
@@ -1969,19 +1966,19 @@ static BOOL ValueInRangeInclusive(CGFloat low, CGFloat value, CGFloat high) {
     NSPoint toOrigin = movedFrame.origin;
     [movedButton setHidden:YES];
     if (fromIndex < toIndex) {
-      BookmarkButton* targetButton = [buttons_ objectAtIndex:toIndex - 1];
+      BookmarkButton* targetButton = buttons_[toIndex - 1];
       toOrigin = [targetButton frame].origin;
       for (NSInteger i = fromIndex; i < toIndex; ++i) {
-        BookmarkButton* button = [buttons_ objectAtIndex:i];
+        BookmarkButton* button = buttons_[i];
         NSRect frame = [button frame];
         frame.origin.y += bookmarks::kBookmarkFolderButtonHeight;
         [button setFrameOrigin:frame.origin];
       }
     } else {
-      BookmarkButton* targetButton = [buttons_ objectAtIndex:toIndex];
+      BookmarkButton* targetButton = buttons_[toIndex];
       toOrigin = [targetButton frame].origin;
       for (NSInteger i = fromIndex - 1; i >= toIndex; --i) {
-        BookmarkButton* button = [buttons_ objectAtIndex:i];
+        BookmarkButton* button = buttons_[i];
         NSRect buttonFrame = [button frame];
         buttonFrame.origin.y -= bookmarks::kBookmarkFolderButtonHeight;
         [button setFrameOrigin:buttonFrame.origin];
@@ -1996,7 +1993,7 @@ static BOOL ValueInRangeInclusive(CGFloat low, CGFloat value, CGFloat high) {
 // TODO(jrg): Refactor BookmarkBarFolder common code. http://crbug.com/35966
 - (void)removeButton:(NSInteger)buttonIndex animate:(BOOL)animate {
   // TODO(mrossetti): Get disappearing animation to work. http://crbug.com/42360
-  BookmarkButton* oldButton = [buttons_ objectAtIndex:buttonIndex];
+  BookmarkButton* oldButton = buttons_[buttonIndex];
   NSPoint poofPoint = [oldButton screenLocationForRemoveAnimation];
 
   // If this button has an open sub-folder, close it.
@@ -2027,7 +2024,7 @@ static BOOL ValueInRangeInclusive(CGFloat low, CGFloat value, CGFloat high) {
   [oldButton removeFromSuperview];
   [buttons_ removeObjectAtIndex:buttonIndex];
   for (NSInteger i = 0; i < buttonIndex; ++i) {
-    BookmarkButton* button = [buttons_ objectAtIndex:i];
+    BookmarkButton* button = buttons_[i];
     NSRect buttonFrame = [button frame];
     buttonFrame.origin.y -= bookmarks::kBookmarkFolderButtonHeight;
     [button setFrame:buttonFrame];

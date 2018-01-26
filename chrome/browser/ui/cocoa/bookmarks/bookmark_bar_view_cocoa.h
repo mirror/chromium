@@ -26,8 +26,8 @@ const CGFloat kInitialNoItemTextFieldXOrigin = 5;
   base::scoped_nsobject<NSTextField> noItemTextField_;
   base::scoped_nsobject<NSButton> importBookmarksButton_;
 }
-- (NSTextField*)noItemTextField;
-- (NSButton*)importBookmarksButton;
+@property(nonatomic, readonly, strong) NSTextField* noItemTextField;
+@property(nonatomic, readonly, strong) NSButton* importBookmarksButton;
 
 - (instancetype)initWithController:(BookmarkBarController*)controller
                              frame:(NSRect)frame;

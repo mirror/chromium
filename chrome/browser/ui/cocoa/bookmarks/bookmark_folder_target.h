@@ -24,8 +24,9 @@ class Profile;
   Profile* profile_;
 }
 
-- (id)initWithController:(id<BookmarkButtonControllerProtocol>)controller
-                 profile:(Profile*)profile;
+- (instancetype)initWithController:
+                    (id<BookmarkButtonControllerProtocol>)controller
+                           profile:(Profile*)profile;
 
 // Main IBAction for a button click.
 - (IBAction)openBookmarkFolderFromButton:(id)sender;

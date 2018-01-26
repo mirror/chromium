@@ -18,10 +18,10 @@ class Profile;
 // Displaying the bookmark toolbar background in bubble (floating) mode requires
 // the size of the currently selected tab to properly calculate where the
 // background image is joined.
-- (int)currentTabContentsHeight;
+@property(nonatomic, readonly) int currentTabContentsHeight;
 
 // Current profile.
-- (Profile*)profile;
+@property(nonatomic, readonly) Profile* profile NS_RETURNS_INNER_POINTER;
 
 @end
 

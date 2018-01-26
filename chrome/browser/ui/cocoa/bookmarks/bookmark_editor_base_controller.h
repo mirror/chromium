@@ -62,18 +62,20 @@ class BookmarkModel;
 
 // Designated initializer.  Derived classes should call through to this init.
 // |url| and |title| are only used for BookmarkNode::Type::NEW_URL.
-- (id)initWithParentWindow:(NSWindow*)parentWindow
-                   nibName:(NSString*)nibName
-                   profile:(Profile*)profile
-                    parent:(const bookmarks::BookmarkNode*)parent
-                       url:(const GURL&)url
-                     title:(const base::string16&)title
-             configuration:(BookmarkEditor::Configuration)configuration;
+- (instancetype)initWithParentWindow:(NSWindow*)parentWindow
+                             nibName:(NSString*)nibName
+                             profile:(Profile*)profile
+                              parent:(const bookmarks::BookmarkNode*)parent
+                                 url:(const GURL&)url
+                               title:(const base::string16&)title
+                       configuration:
+                           (BookmarkEditor::Configuration)configuration;
 
 - (void)windowWillClose:(NSNotification*)notification;
 
 // Override to customize the touch bar.
-- (NSTouchBar*)makeTouchBar API_AVAILABLE(macos(10.12.2));
+@property(nonatomic, readonly, strong)
+    NSTouchBar* makeTouchBar API_AVAILABLE(macos(10.12.2));
 
 // Run the bookmark editor as a modal sheet.  Does not block.
 - (void)runAsModalSheet;
@@ -106,14 +108,16 @@ class BookmarkModel;
 // in the bookmark tree view if the tree view is showing, otherwise returns
 // the original |parentNode_|.  If the tree view is showing but nothing is
 // selected then the root node is returned.
-- (const bookmarks::BookmarkNode*)selectedNode;
+@property(nonatomic, readonly)
+    const bookmarks::BookmarkNode* selectedNode NS_RETURNS_INNER_POINTER;
 
 // Expands the set of BookmarkNodes in |nodes|.
 - (void)expandNodes:(
     const bookmarks::BookmarkExpandedStateTracker::Nodes&)nodes;
 
 // Returns the set of expanded BookmarkNodes.
-- (bookmarks::BookmarkExpandedStateTracker::Nodes)getExpandedNodes;
+@property(nonatomic, getter=getExpandedNodes, readonly)
+    bookmarks::BookmarkExpandedStateTracker::Nodes expandedNodes;
 
 // Select/highlight the given node within the browser tree view.  If the
 // node is nil then select the bookmark bar node.  Exposed for unit test.
@@ -125,14 +129,16 @@ class BookmarkModel;
 - (void)modelChangedPreserveSelection:(BOOL)preserve;
 
 // Determines if the ok button should be enabled, can be overridden.
-- (BOOL)okEnabled;
+@property(nonatomic, readonly) BOOL okEnabled;
 
 // Accessors
-- (bookmarks::BookmarkModel*)bookmarkModel;
-- (Profile*)profile;
-- (const bookmarks::BookmarkNode*)parentNode;
-- (const GURL&)url;
-- (const base::string16&)title;
+@property(nonatomic, readonly)
+    bookmarks::BookmarkModel* bookmarkModel NS_RETURNS_INNER_POINTER;
+@property(nonatomic, readonly) Profile* profile NS_RETURNS_INNER_POINTER;
+@property(nonatomic, readonly)
+    const bookmarks::BookmarkNode* parentNode NS_RETURNS_INNER_POINTER;
+@property(nonatomic, readonly) const GURL& url;
+@property(nonatomic, readonly) const base::string16& title;
 
 @end
 
@@ -150,14 +156,15 @@ class BookmarkModel;
 }
 
 @property(nonatomic, copy) NSString* folderName;
-@property(nonatomic, assign) const bookmarks::BookmarkNode* folderNode;
+@property(nonatomic, assign)
+    const bookmarks::BookmarkNode* NS_RETURNS_INNER_POINTER folderNode;
 @property(nonatomic, retain) NSMutableArray* children;
 @property(nonatomic, assign) BOOL newFolder;
 
 // Convenience creator for adding a new folder to the editor's bookmark
 // structure.  This folder will be added to the bookmark model when the
 // user accepts the dialog. |folderName| must be provided.
-+ (id)bookmarkFolderInfoWithFolderName:(NSString*)folderName;
++ (instancetype)bookmarkFolderInfoWithFolderName:(NSString*)folderName;
 
 // Designated initializer.  |folderName| must be provided.  For folders which
 // already exist in the bookmark model, |folderNode| and |children| (if any
@@ -165,18 +172,18 @@ class BookmarkModel;
 // |newFolder| should be NO.  For folders which the user has added during
 // this session and which have not been committed yet, |newFolder| should be
 // YES and |folderNode| and |children| should be NULL/nil.
-- (id)initWithFolderName:(NSString*)folderName
-              folderNode:(const bookmarks::BookmarkNode*)folderNode
-                children:(NSMutableArray*)children
-               newFolder:(BOOL)newFolder;
+- (instancetype)initWithFolderName:(NSString*)folderName
+                        folderNode:(const bookmarks::BookmarkNode*)folderNode
+                          children:(NSMutableArray*)children
+                         newFolder:(BOOL)newFolder;
 
 // Convenience creator used during construction of the editor's bookmark
 // structure.  |folderName| and |folderNode| must be provided. |children|
 // is optional.  Private: exposed here for unit testing purposes.
-+ (id)bookmarkFolderInfoWithFolderName:(NSString*)folderName
-                            folderNode:
-                                (const bookmarks::BookmarkNode*)folderNode
-                              children:(NSMutableArray*)children;
++ (instancetype)
+bookmarkFolderInfoWithFolderName:(NSString*)folderName
+                      folderNode:(const bookmarks::BookmarkNode*)folderNode
+                        children:(NSMutableArray*)children;
 
 @end
 
@@ -193,7 +200,7 @@ class BookmarkModel;
 - (void)selectTestNodeInBrowser:(const bookmarks::BookmarkNode*)node;
 
 // Return the dictionary for the folder selected in the tree.
-- (BookmarkFolderInfo*)selectedFolder;
+@property(nonatomic, readonly, strong) BookmarkFolderInfo* selectedFolder;
 
 @end
 

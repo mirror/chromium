@@ -101,15 +101,16 @@ class NotificationBridge;
 // Initialize the toolbar and register for command updates. The profile is
 // needed for initializing the location bar. The browser is needed for
 // the toolbar model and back/forward menus.
-- (id)initWithCommands:(CommandUpdater*)commands
-               profile:(Profile*)profile
-               browser:(Browser*)browser;
+- (instancetype)initWithCommands:(CommandUpdater*)commands
+                         profile:(Profile*)profile
+                         browser:(Browser*)browser;
 
 // Strongly typed controlled view.
-- (ToolbarView*)toolbarView;
+@property(nonatomic, readonly, strong) ToolbarView* toolbarView;
 
 // Get the C++ bridge object representing the location bar for this tab.
-- (LocationBarViewMac*)locationBarBridge;
+@property(nonatomic, readonly)
+    LocationBarViewMac* locationBarBridge NS_RETURNS_INNER_POINTER;
 
 // Called by the Window delegate so we can provide a custom field editor if
 // needed.
@@ -121,7 +122,7 @@ class NotificationBridge;
 - (void)locationBarWasAddedToWindow;
 
 // Return YES if the location bar is the first responder.
-- (BOOL)locationBarHasFocus;
+@property(nonatomic, readonly) BOOL locationBarHasFocus;
 
 // Make the location bar the first responder, if possible.
 - (void)focusLocationBar:(BOOL)selectAll;
@@ -162,13 +163,13 @@ class NotificationBridge;
 
 // Point on the star icon for the bookmark bubble to be - in the
 // associated window's coordinate system.
-- (NSPoint)bookmarkBubblePoint;
+@property(nonatomic, readonly) NSPoint bookmarkBubblePoint;
 
 // Point on the save credit card icon for the save credit card bubble.
-- (NSPoint)saveCreditCardBubblePoint;
+@property(nonatomic, readonly) NSPoint saveCreditCardBubblePoint;
 
 // Point in the window's coordinate system for bubbles attached to the app menu.
-- (NSPoint)appMenuBubblePoint;
+@property(nonatomic, readonly) NSPoint appMenuBubblePoint;
 
 // Returns the desired toolbar height for the given compression factor.
 - (CGFloat)desiredHeightForCompression:(CGFloat)compressByHeight;
@@ -184,23 +185,25 @@ class NotificationBridge;
 - (void)updateVisibility:(BOOL)visible withAnimation:(BOOL)animate;
 
 // Return the BrowserActionsController for this toolbar.
-- (BrowserActionsController*)browserActionsController;
+@property(nonatomic, readonly, strong)
+    BrowserActionsController* browserActionsController;
 
 // Returns the app menu button.
-- (NSButton*)appMenuButton;
+@property(nonatomic, readonly, strong) NSButton* appMenuButton;
 
 // Returns the app menu controller.
-- (AppMenuController*)appMenuController;
+@property(nonatomic, readonly, strong) AppMenuController* appMenuController;
 
 // Returns true of the location bar is focused.
-- (BOOL)isLocationBarFocused;
+@property(nonatomic, getter=isLocationBarFocused, readonly)
+    BOOL locationBarFocused;
 
 @end
 
 // A set of private methods used by tests, in the absence of "friends" in ObjC.
 @interface ToolbarController(PrivateTestMethods)
 // Returns an array of views in the order of the outlets above.
-- (NSArray*)toolbarViews;
+@property(nonatomic, readonly, copy) NSArray* toolbarViews;
 - (void)showOptionalHomeButton;
 - (void)installAppMenu;
 // Return a hover button for the current event.

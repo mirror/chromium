@@ -47,22 +47,21 @@ class BookmarkNode;
 // Use the 2nd initializer for an "add folder" request.  If creating a
 // new folder |parent| and |newIndex| specify where to put the new
 // node.
-- (id)initWithParentWindow:(NSWindow*)window
-                   profile:(Profile*)profile
-                      node:(const bookmarks::BookmarkNode*)node;
-- (id)initWithParentWindow:(NSWindow*)window
-                   profile:(Profile*)profile
-                    parent:(const bookmarks::BookmarkNode*)parent
-                  newIndex:(int)newIndex;
+- (instancetype)initWithParentWindow:(NSWindow*)window
+                             profile:(Profile*)profile
+                                node:(const bookmarks::BookmarkNode*)node;
+- (instancetype)initWithParentWindow:(NSWindow*)window
+                             profile:(Profile*)profile
+                              parent:(const bookmarks::BookmarkNode*)parent
+                            newIndex:(int)newIndex;
 - (void)runAsModalSheet;
 - (IBAction)cancel:(id)sender;
 - (IBAction)ok:(id)sender;
 @end
 
 @interface BookmarkNameFolderController(TestingAPI)
-- (NSString*)folderName;
-- (void)setFolderName:(NSString*)name;
-- (NSButton*)okButton;
+@property(nonatomic, copy) NSString* folderName;
+@property(nonatomic, readonly, strong) NSButton* okButton;
 @end
 
 #endif  // CHROME_BROWSER_UI_COCOA_BOOKMARKS_BOOKMARK_NAME_FOLDER_CONTROLLER_H_

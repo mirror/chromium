@@ -112,7 +112,7 @@ class ScopedKeepAlive;
 }
 
 @property(readonly, nonatomic) BOOL startupComplete;
-@property(readonly, nonatomic) Profile* lastProfile;
+@property(readonly, nonatomic) Profile* NS_RETURNS_INNER_POINTER lastProfile;
 
 - (void)didEndMainMessageLoop;
 
@@ -130,7 +130,7 @@ class ScopedKeepAlive;
 // modal) blocking the active browser. Note that tab modal dialogs (HTTP auth
 // sheets) will not count as blocking the browser. But things like open/save
 // dialogs that are window modal will block the browser.
-- (BOOL)keyWindowIsModal;
+@property(nonatomic, readonly) BOOL keyWindowIsModal;
 
 // Called when the user picks a menu item when there are no key windows, or when
 // there is no foreground browser window. Calls through to the browser object to
@@ -154,10 +154,12 @@ class ScopedKeepAlive;
 - (NSMenu*)applicationDockMenu:(NSApplication*)sender;
 
 // Get the URLs that Launch Services expects the browser to open at startup.
-- (const std::vector<GURL>&)startupUrls;
+@property(nonatomic, readonly) const std::vector<GURL>& startupUrls;
 
-- (BookmarkMenuBridge*)bookmarkMenuBridge;
-- (HistoryMenuBridge*)historyMenuBridge;
+@property(nonatomic, readonly)
+    BookmarkMenuBridge* bookmarkMenuBridge NS_RETURNS_INNER_POINTER;
+@property(nonatomic, readonly)
+    HistoryMenuBridge* historyMenuBridge NS_RETURNS_INNER_POINTER;
 
 // Initializes the AppShimMenuController. This enables changing the menu bar for
 // apps.

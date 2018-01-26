@@ -56,7 +56,7 @@
 
 // Returns the rectangle that menus are anchored at. Can be overridden by
 // subclasses, returns -bounds by default.
-- (NSRect)menuRect;
+@property(nonatomic, readonly) NSRect menuRect;
 
 @end  // @interface MenuButton
 

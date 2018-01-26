@@ -27,9 +27,9 @@
 
 - (instancetype)initWithTestCase:(id)aTestCase file:(NSString *)aFile line:(NSUInteger)aLine;
 
-- (id)testCase;
-- (NSString *)file;
-- (NSUInteger)line;
+@property(nonatomic, readonly, strong) id testCase;
+@property(nonatomic, readonly, copy) NSString* file;
+@property(nonatomic, readonly) NSUInteger line;
 
 @end
 

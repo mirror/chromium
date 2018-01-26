@@ -64,7 +64,7 @@ NSMenuItem* GetItemWithSubmenu(NSMenu* submenu) {
   return cocoa_l10n_util::TooltipForURLAndTitle(url, title);
 }
 
-- (id)initWithBridge:(BookmarkMenuBridge*)bridge {
+- (instancetype)initWithBridge:(BookmarkMenuBridge*)bridge {
   if ((self = [super init])) {
     bridge_ = bridge;
     DCHECK(bridge_);

@@ -63,7 +63,8 @@ class ManagedBookmarkService;
   IBOutlet NSView* trailingButtonContainer_;
 }
 
-@property(readonly, nonatomic) const bookmarks::BookmarkNode* node;
+@property(readonly, nonatomic)
+    const bookmarks::BookmarkNode* NS_RETURNS_INNER_POINTER node;
 
 // |node| is the bookmark node we edit in this bubble.
 // |alreadyBookmarked| tells us if the node was bookmarked before the
@@ -71,12 +72,13 @@ class ManagedBookmarkService;
 // The owner of this object is responsible for showing the bubble if
 // it desires it to be visible on the screen.  It is not shown by the
 // init routine.  Closing of the window happens implicitly on dealloc.
-- (id)initWithParentWindow:(NSWindow*)parentWindow
-            bubbleObserver:(bookmarks::BookmarkBubbleObserver*)bubbleObserver
-                   managed:(bookmarks::ManagedBookmarkService*)managed
-                     model:(bookmarks::BookmarkModel*)model
-                      node:(const bookmarks::BookmarkNode*)node
-         alreadyBookmarked:(BOOL)alreadyBookmarked;
+- (instancetype)initWithParentWindow:(NSWindow*)parentWindow
+                      bubbleObserver:
+                          (bookmarks::BookmarkBubbleObserver*)bubbleObserver
+                             managed:(bookmarks::ManagedBookmarkService*)managed
+                               model:(bookmarks::BookmarkModel*)model
+                                node:(const bookmarks::BookmarkNode*)node
+                   alreadyBookmarked:(BOOL)alreadyBookmarked;
 
 // Actions for buttons in the dialog.
 - (IBAction)ok:(id)sender;
@@ -88,7 +90,8 @@ class ManagedBookmarkService;
 - (IBAction)folderChanged:(id)sender;
 
 // Overridden to customize the touch bar.
-- (NSTouchBar*)makeTouchBar API_AVAILABLE(macos(10.12.2));
+@property(nonatomic, readonly, strong)
+    NSTouchBar* makeTouchBar API_AVAILABLE(macos(10.12.2));
 
 @end
 
@@ -98,7 +101,8 @@ class ManagedBookmarkService;
 
 @property(nonatomic, readonly) NSView* syncPromoPlaceholder;
 @property(nonatomic, readonly)
-    bookmarks::BookmarkBubbleObserver* bookmarkBubbleObserver;
+    bookmarks::BookmarkBubbleObserver* NS_RETURNS_INNER_POINTER
+        bookmarkBubbleObserver;
 
 - (void)addFolderNodes:(const bookmarks::BookmarkNode*)parent
          toPopUpButton:(NSPopUpButton*)button
@@ -107,7 +111,7 @@ class ManagedBookmarkService;
     parentFolder:(const bookmarks::BookmarkNode*)parent;
 - (void)setParentFolderSelection:(const bookmarks::BookmarkNode*)parent;
 + (NSString*)chooseAnotherFolderString;
-- (NSPopUpButton*)folderPopUpButton;
+@property(nonatomic, readonly, strong) NSPopUpButton* folderPopUpButton;
 @end
 
 #endif  // CHROME_BROWSER_UI_COCOA_BOOKMARKS_BOOKMARK_BUBBLE_CONTROLLER_H_

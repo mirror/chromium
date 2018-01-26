@@ -67,12 +67,13 @@ NSString* const kDoneTouchBarId = @"DONE";
   return object;
 }
 
-- (id)initWithParentWindow:(NSWindow*)parentWindow
-            bubbleObserver:(bookmarks::BookmarkBubbleObserver*)bubbleObserver
-                   managed:(bookmarks::ManagedBookmarkService*)managed
-                     model:(BookmarkModel*)model
-                      node:(const BookmarkNode*)node
-         alreadyBookmarked:(BOOL)alreadyBookmarked {
+- (instancetype)initWithParentWindow:(NSWindow*)parentWindow
+                      bubbleObserver:
+                          (bookmarks::BookmarkBubbleObserver*)bubbleObserver
+                             managed:(bookmarks::ManagedBookmarkService*)managed
+                               model:(BookmarkModel*)model
+                                node:(const BookmarkNode*)node
+                   alreadyBookmarked:(BOOL)alreadyBookmarked {
   DCHECK(managed);
   DCHECK(node);
   if ((self = [super initWithWindowNibPath:@"BookmarkBubble"

@@ -38,7 +38,8 @@ enum class ToolbarButtonImageBackgroundStyle {
 // Whether or not to handle the mouse middle click events.
 @property(assign, nonatomic) BOOL handleMiddleClick;
 // Override point for subclasses to return their vector icon.
-- (const gfx::VectorIcon*)vectorIcon;
+@property(nonatomic, readonly)
+    const gfx::VectorIcon* vectorIcon NS_RETURNS_INNER_POINTER;
 // Override point for subclasses to return their vector icon color.
 - (SkColor)vectorIconColor:(BOOL)themeIsDark;
 // When in Material Design mode, sets the images for each of the ToolbarButton's

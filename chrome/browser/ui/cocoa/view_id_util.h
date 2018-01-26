@@ -44,7 +44,7 @@ NSView* GetView(NSWindow* window, ViewID viewID);
 // Returns the ViewID associated to the receiver. The default implementation
 // looks up the view's ViewID in the internal view to ViewID map. A subclass may
 // override this method to return its fixed ViewID.
-- (ViewID)viewID;
+@property(nonatomic, readonly) ViewID viewID;
 
 // Returns the ancestor view with a specific ViewID, or nil if no ancestor
 // view has that ViewID.

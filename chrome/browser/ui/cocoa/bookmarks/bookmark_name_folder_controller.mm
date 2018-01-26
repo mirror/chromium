@@ -19,11 +19,11 @@ using bookmarks::BookmarkNode;
 @implementation BookmarkNameFolderController
 
 // Common initializer (private).
-- (id)initWithParentWindow:(NSWindow*)window
-                   profile:(Profile*)profile
-                      node:(const BookmarkNode*)node
-                    parent:(const BookmarkNode*)parent
-                  newIndex:(int)newIndex {
+- (instancetype)initWithParentWindow:(NSWindow*)window
+                             profile:(Profile*)profile
+                                node:(const BookmarkNode*)node
+                              parent:(const BookmarkNode*)parent
+                            newIndex:(int)newIndex {
   NSString* nibpath = [base::mac::FrameworkBundle()
                         pathForResource:@"BookmarkNameFolder"
                         ofType:@"nib"];
@@ -47,9 +47,9 @@ using bookmarks::BookmarkNode;
   return self;
 }
 
-- (id)initWithParentWindow:(NSWindow*)window
-                   profile:(Profile*)profile
-                      node:(const BookmarkNode*)node {
+- (instancetype)initWithParentWindow:(NSWindow*)window
+                             profile:(Profile*)profile
+                                node:(const BookmarkNode*)node {
   DCHECK(node);
   return [self initWithParentWindow:window
                             profile:profile
@@ -58,10 +58,10 @@ using bookmarks::BookmarkNode;
                            newIndex:0];
 }
 
-- (id)initWithParentWindow:(NSWindow*)window
-                   profile:(Profile*)profile
-                    parent:(const BookmarkNode*)parent
-                  newIndex:(int)newIndex {
+- (instancetype)initWithParentWindow:(NSWindow*)window
+                             profile:(Profile*)profile
+                              parent:(const BookmarkNode*)parent
+                            newIndex:(int)newIndex {
   DCHECK(parent);
   return [self initWithParentWindow:window
                             profile:profile

@@ -10,10 +10,10 @@
 @interface NSView (ChromeAdditions)
 
 // Returns the line width that will generate a 1 pixel wide line.
-- (CGFloat)cr_lineWidth;
+@property(nonatomic, readonly) CGFloat cr_lineWidth;
 
 // Checks if the mouse is currently in this view.
-- (BOOL)cr_isMouseInView;
+@property(nonatomic, readonly) BOOL cr_isMouseInView;
 
 // Returns YES if this view is below |otherView|.
 - (BOOL)cr_isBelowView:(NSView*)otherView;
@@ -27,7 +27,7 @@
               relativeTo:(NSView *)otherView;
 
 // Return best color for keyboard focus ring.
-- (NSColor*)cr_keyboardFocusIndicatorColor;
+@property(nonatomic, readonly, copy) NSColor* cr_keyboardFocusIndicatorColor;
 
 // Invoke |block| on this view and all descendants.
 - (void)cr_recursivelyInvokeBlock:(void (^)(id view))block;
@@ -47,7 +47,7 @@
 
 // Used by ancestorView in the above draw call, to look up the child view that
 // it is actually drawing to.
-- (NSView*)cr_viewBeingDrawnTo;
+@property(nonatomic, readonly, strong) NSView* cr_viewBeingDrawnTo;
 
 // Set a view's accessibilityLabel in a way that's compatible with 10.9.
 - (void)cr_setAccessibilityLabel:(NSString*)label;
