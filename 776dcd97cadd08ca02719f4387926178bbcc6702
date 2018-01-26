@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "cd3ee138_7f184aa0",
+        "filename": "chrome/browser/site_per_process_interactive_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1486,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-26T23:49:32Z",
+      "side": 1,
+      "message": "nit: why LE and not EQ?",
+      "range": {
+        "startLine": 1486,
+        "startChar": 9,
+        "endLine": 1486,
+        "endChar": 11
+      },
+      "revId": "776dcd97cadd08ca02719f4387926178bbcc6702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c69a8aba_be60338d",
         "filename": "chrome/browser/site_per_process_interactive_browsertest.cc",
         "patchSetId": 2
@@ -69,6 +92,29 @@
       "revId": "776dcd97cadd08ca02719f4387926178bbcc6702",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "263c3b7e_711c402d",
+        "filename": "chrome/browser/site_per_process_interactive_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1519,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-26T23:49:32Z",
+      "side": 1,
+      "message": "Optional: a potentially simpler check here might just be EXPECT_EQ(old_contents, browser()-\u003etab_strip_model()-\u003eGetActiveWebContents())",
+      "range": {
+        "startLine": 1515,
+        "startChar": 0,
+        "endLine": 1519,
+        "endChar": 79
+      },
+      "revId": "776dcd97cadd08ca02719f4387926178bbcc6702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
