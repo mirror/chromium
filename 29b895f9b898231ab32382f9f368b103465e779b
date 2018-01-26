@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bb67464_4aa9cfcd",
+        "filename": "base/metrics/field_trial.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-26T16:01:30Z",
+      "side": 1,
+      "message": "Nit: You can combine this with the outer if via \u0026\u0026 !params.empty() and save one level of indentation.",
+      "range": {
+        "startLine": 695,
+        "startChar": 30,
+        "endLine": 695,
+        "endChar": 0
+      },
+      "revId": "29b895f9b898231ab32382f9f368b103465e779b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
