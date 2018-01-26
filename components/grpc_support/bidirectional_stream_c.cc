@@ -195,8 +195,9 @@ void BidirectionalStreamAdapter::DestroyAdapterForStream(
   // is valid until calling task is complete.
   adapter->bidirectional_stream_->Destroy();
   adapter->request_context_getter_->GetNetworkTaskRunner()->PostTask(
-      FROM_HERE, base::Bind(&BidirectionalStreamAdapter::DestroyOnNetworkThread,
-                            base::Unretained(adapter)));
+      FROM_HERE,
+      base::BindOnce(&BidirectionalStreamAdapter::DestroyOnNetworkThread,
+                     base::Unretained(adapter)));
 }
 
 void BidirectionalStreamAdapter::DestroyOnNetworkThread() {
