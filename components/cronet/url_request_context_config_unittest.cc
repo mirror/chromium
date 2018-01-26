@@ -42,6 +42,8 @@ TEST(URLRequestContextConfigTest, TestExperimentalOptionParsing) {
       false,
       // Storage path for http cache and cookie storage.
       "/data/data/org.chromium.net/app_cronet_test/test_storage",
+      // Accept-Language request header field.
+      "foreign-language",
       // User-Agent request header field.
       "fake agent",
       // JSON encoded experimental options.
@@ -137,6 +139,8 @@ TEST(URLRequestContextConfigTest, SetQuicConnectionMigrationOptions) {
       false,
       // Storage path for http cache and cookie storage.
       "/data/data/org.chromium.net/app_cronet_test/test_storage",
+      // Accept-Language request header field.
+      "foreign-language",
       // User-Agent request header field.
       "fake agent",
       // JSON encoded experimental options.
@@ -189,6 +193,8 @@ TEST(URLRequestContextConfigTest, SetQuicConnectionMigrationV2Options) {
       false,
       // Storage path for http cache and cookie storage.
       "/data/data/org.chromium.net/app_cronet_test/test_storage",
+      // Accept-Language request header field.
+      "foreign-language",
       // User-Agent request header field.
       "fake agent",
       // JSON encoded experimental options.
@@ -246,6 +252,8 @@ TEST(URLRequestContextConfigTest, SetQuicHostWhitelist) {
       false,
       // Storage path for http cache and cookie storage.
       "/data/data/org.chromium.net/app_cronet_test/test_storage",
+      // Accept-Language request header field.
+      "foreign-language",
       // User-Agent request header field.
       "fake agent",
       // JSON encoded experimental options.
@@ -298,6 +306,8 @@ TEST(URLRequestContextConfigTest, SetQuicMaxTimeBeforeCryptoHandshake) {
       false,
       // Storage path for http cache and cookie storage.
       "/data/data/org.chromium.net/app_cronet_test/test_storage",
+      // Accept-Language request header field.
+      "foreign-language",
       // User-Agent request header field.
       "fake agent",
       // JSON encoded experimental options.
@@ -349,6 +359,8 @@ TEST(URLURLRequestContextConfigTest, SetQuicConnectionOptions) {
       false,
       // Storage path for http cache and cookie storage.
       "/data/data/org.chromium.net/app_cronet_test/test_storage",
+      // Accept-Language request header field.
+      "foreign-language",
       // User-Agent request header field.
       "fake agent",
       // JSON encoded experimental options.
