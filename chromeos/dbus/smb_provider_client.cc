@@ -148,6 +148,39 @@ class SmbProviderClientImpl : public SmbProviderClient {
                &SmbProviderClientImpl::HandleCreateFileCallback, &callback);
   }
 
+  void Truncate(int32_t mount_id,
+                const base::FilePath& file_path,
+                int64_t length,
+                StatusCallback callback) override {
+    smbprovider::TruncateOptionsProto options;
+    options.set_mount_id(mount_id);
+    options.set_file_path(file_path.value());
+    options.set_length(length);
+    CallMethod(smbprovider::kTruncateMethod, options,
+               &SmbProviderClientImpl::HandleTruncateCallback, &callback);
+  }
+
+  void WriteFile(int32_t mount_id,
+                 int32_t file_id,
+                 int64_t offset,
+                 int32_t length,
+                 base::ScopedFD& temp_fd,
+                 StatusCallback callback) override {
+    smbprovider::WriteFileOptionsProto options;
+    options.set_mount_id(mount_id);
+    options.set_file_id(file_id);
+    options.set_offset(offset);
+    options.set_length(length);
+
+    dbus::MethodCall method_call(smbprovider::kSmbProviderInterface,
+                                 smbprovider::kWriteFileMethod);
+    dbus::MessageWriter writer(&method_call);
+    writer.AppendProtoAsArrayOfBytes(options);
+    writer.AppendFileDescriptor(temp_fd.release());
+    CallMethod(&method_call, &SmbProviderClientImpl::HandleTruncateCallback,
+               &callback);
+  }
+
  protected:
   // DBusClient override.
   void Init(dbus::Bus* bus) override {
@@ -169,7 +202,17 @@ class SmbProviderClientImpl : public SmbProviderClient {
     dbus::MethodCall method_call(smbprovider::kSmbProviderInterface, name);
     dbus::MessageWriter writer(&method_call);
     writer.AppendProtoAsArrayOfBytes(protobuf);
-    proxy_->CallMethod(&method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
+    CallMethod(&method_call, handler, callback);
+  }
+
+  // Calls the method specified in |method_call|. |handler| is the member
+  // function in this class that receives the response and then passes the
+  // processed response to |callback|.
+  template <typename CallbackHandler, typename Callback>
+  void CallMethod(dbus::MethodCall* method_call,
+                  CallbackHandler handler,
+                  Callback callback) {
+    proxy_->CallMethod(method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
                        base::BindOnce(handler, weak_ptr_factory_.GetWeakPtr(),
                                       base::Passed(callback)));
   }
@@ -281,6 +324,28 @@ class SmbProviderClientImpl : public SmbProviderClient {
                                 dbus::Response* response) {
     if (!response) {
       DLOG(ERROR) << "CreateFile: failed to call smbprovider";
+      std::move(callback).Run(smbprovider::ERROR_DBUS_PARSE_FAILED);
+    }
+    dbus::MessageReader reader(response);
+    std::move(callback).Run(GetErrorFromReader(&reader));
+  }
+
+  // Handles D-Bus callback for Truncate.
+  void HandleTruncateCallback(StatusCallback callback,
+                              dbus::Response* response) {
+    if (!response) {
+      DLOG(ERROR) << "Truncate: failed to call smbprovider";
+      std::move(callback).Run(smbprovider::ERROR_DBUS_PARSE_FAILED);
+    }
+    dbus::MessageReader reader(response);
+    std::move(callback).Run(GetErrorFromReader(&reader));
+  }
+
+  // Handles D-Bus callback for WriteFile.
+  void HandleWriteFileCallback(StatusCallback callback,
+                               dbus::Response* response) {
+    if (!response) {
+      DLOG(ERROR) << "WriteFile: failed to call smbprovider";
       std::move(callback).Run(smbprovider::ERROR_DBUS_PARSE_FAILED);
     }
     dbus::MessageReader reader(response);
