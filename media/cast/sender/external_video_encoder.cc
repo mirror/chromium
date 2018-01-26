@@ -688,6 +688,7 @@ void ExternalVideoEncoder::OnCreateVideoEncodeAccelerator(
     case CODEC_VIDEO_FAKE:
       NOTREACHED() << "Fake software video encoder cannot be external";
       // ...flow through to next case...
+      FALLTHROUGH;
     default:
       cast_environment_->PostTask(
         CastEnvironment::MAIN,
