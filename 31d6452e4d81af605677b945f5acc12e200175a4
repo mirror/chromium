@@ -117,6 +117,30 @@
       "revId": "31d6452e4d81af605677b945f5acc12e200175a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1286f19_dad93b6f",
+        "filename": "remoting/android/java/AndroidManifest.xml.jinja2",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2018-01-26T02:17:59Z",
+      "side": 1,
+      "message": "Yes, the allowed redirect-URL begins: intent:///oauthredirect/\nso it looks like it will work fine with your changes and the tests you did.",
+      "parentUuid": "f35c4f4c_8879b159",
+      "range": {
+        "startLine": 38,
+        "startChar": 40,
+        "endLine": 38,
+        "endChar": 0
+      },
+      "revId": "31d6452e4d81af605677b945f5acc12e200175a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
