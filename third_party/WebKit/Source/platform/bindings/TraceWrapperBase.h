@@ -5,10 +5,11 @@
 #ifndef TraceWrapperBase_h
 #define TraceWrapperBase_h
 
-#include "platform/bindings/ScriptWrappableVisitor.h"
 #include "platform/wtf/Noncopyable.h"
 
 namespace blink {
+
+class ScriptWrappableVisitor;
 
 class PLATFORM_EXPORT TraceWrapperBase {
   WTF_MAKE_NONCOPYABLE(TraceWrapperBase);
@@ -19,6 +20,8 @@ class PLATFORM_EXPORT TraceWrapperBase {
   virtual bool IsScriptWrappable() const { return false; }
 
   virtual void TraceWrappers(const ScriptWrappableVisitor*) const = 0;
+
+  virtual const char* NameForHeapSnapshot() const { return "UnknownNode"; }
 };
 
 }  // namespace blink

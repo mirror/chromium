@@ -123,85 +123,39 @@ class MinorGCUnmodifiedWrapperVisitor : public v8::PersistentHandleVisitor {
   v8::Isolate* isolate_;
 };
 
-// TODO(ulan): Refactor this class to derive from ScriptWrappableVisitor
-// and not rely on marking infrastructure.
-class HeapSnaphotWrapperVisitor : public ScriptWrappableMarkingVisitor,
+class HeapSnaphotWrapperVisitor : public ScriptWrappableVisitor,
                                   public v8::PersistentHandleVisitor {
  public:
-  explicit HeapSnaphotWrapperVisitor(v8::Isolate* isolate)
-      : ScriptWrappableMarkingVisitor(isolate),
+  using Traceable = const void*;
+  using Graph = v8::EmbedderGraph;
+
+  explicit HeapSnaphotWrapperVisitor(v8::Isolate* isolate, Graph* graph)
+      : ScriptWrappableVisitor(),
+        isolate_(isolate),
         current_parent_(nullptr),
-        only_trace_single_level_(false),
-        first_script_wrappable_traced_(false) {
-    DCHECK(IsMainThread());
+        graph_(graph) {}
+
+  void BuildEmbedderGraph() {
+    isolate_->VisitHandlesWithClassIds(this);
+    VisitPendingActivities();
+    VisitTransitiveClosure();
   }
 
-  // Collect interesting V8 roots for the heap snapshot. Currently these are
-  // DOM nodes.
-  void CollectV8Roots() { isolate()->VisitHandlesWithClassIds(this); }
-
+  // v8::PersistentHandleVisitor override.
   void VisitPersistentHandle(v8::Persistent<v8::Value>* value,
                              uint16_t class_id) override {
     if (class_id != WrapperTypeInfo::kNodeClassId)
       return;
 
     v8::Local<v8::Object> wrapper = v8::Local<v8::Object>::New(
-        isolate(), v8::Persistent<v8::Object>::Cast(*value));
-    DCHECK(V8Node::hasInstance(wrapper, isolate()));
+        isolate_, v8::Persistent<v8::Object>::Cast(*value));
+    DCHECK(V8Node::hasInstance(wrapper, isolate_));
     Node* node = V8Node::ToImpl(wrapper);
-    Node* root = V8GCController::OpaqueRootForGC(isolate(), node);
-    nodes_requiring_tracing_[root].push_back(node);
-  }
-
-  // Trace through the blink heap to find all V8 wrappers reachable from
-  // ActiveScriptWrappables. Also collect retainer edges on the way.
-  void TracePendingActivities() {
-    CHECK(found_v8_wrappers_.empty());
-    current_parent_ = nullptr;
-
-    TracePrologue();
-    ActiveScriptWrappableBase::TraceActiveScriptWrappables(isolate(), this);
-    AdvanceTracing(
-        0,
-        v8::EmbedderHeapTracer::AdvanceTracingActions(
-            v8::EmbedderHeapTracer::ForceCompletionAction::FORCE_COMPLETION));
-    // Abort instead of Epilogue as we want to finish synchronously.
-    AbortTracing();
-
-    groups_.push_back(
-        std::make_pair(new PausableObjectsInfo(found_v8_wrappers_.size()),
-                       std::move(found_v8_wrappers_)));
-  }
-
-  // Trace through the blink heap to find all V8 wrappers reachable from any
-  // of the collected roots. Also collect retainer edges on the way.
-  void TraceV8Roots() {
-    for (auto& group_pair : nodes_requiring_tracing_) {
-      v8::HeapProfiler::RetainerChildren group_children;
-      for (auto& node : group_pair.second) {
-        // Ignore the actual wrappers reachable as we only want to create
-        // groups of DOM nodes. The method is still used to collect edges
-        // though.
-        FindV8WrappersDirectlyReachableFrom(node);
-        group_children.insert(PersistentForWrappable(node));
-      }
-      groups_.push_back(std::make_pair(new RetainedDOMInfo(group_pair.first),
-                                       std::move(group_children)));
-    }
-  }
-
-  v8::HeapProfiler::RetainerEdges Edges() { return std::move(edges_); }
-  v8::HeapProfiler::RetainerGroups Groups() { return std::move(groups_); }
-
-  // ScriptWrappableVisitor overrides.
-
-  void DispatchTraceWrappers(const TraceWrapperBase* traceable) const final {
-    if (!only_trace_single_level_ || !traceable->IsScriptWrappable() ||
-        !reinterpret_cast<const ScriptWrappable*>(traceable)
-             ->ContainsWrapper() ||
-        !first_script_wrappable_traced_) {
-      first_script_wrappable_traced_ = true;
-      traceable->TraceWrappers(this);
+    if (node) {
+      Graph::Node* graph_node = GraphNode(node, node->NameForHeapSnapshot());
+      graph_->AddEdge(GraphNode(wrapper), graph_node);
+      ParentScope parent(this, graph_node);
+      DispatchTraceWrappers(node);
     }
   }
 
@@ -210,76 +164,118 @@ class HeapSnaphotWrapperVisitor : public ScriptWrappableMarkingVisitor,
   void Visit(
       const TraceWrapperV8Reference<v8::Value>& traced_wrapper) const final {
     const v8::PersistentBase<v8::Value>* value = &traced_wrapper.Get();
-    if (current_parent_ && current_parent_ != value)
-      edges_.push_back(std::make_pair(current_parent_, value));
-    found_v8_wrappers_.insert(value);
+    v8::Local<v8::Value> local = v8::Local<v8::Value>::New(isolate_, *value);
+    if (!local.IsEmpty()) {
+      graph_->AddEdge(current_parent_, GraphNode(local));
+    }
   }
 
-  void Visit(DOMWrapperMap<ScriptWrappable>*,
+  void Visit(const WrapperDescriptor& wrapper_descriptor) const final {
+    const void* traceable = wrapper_descriptor.traceable;
+    Graph::Node* node =
+        GraphNode(traceable, wrapper_descriptor.name_callback(traceable));
+    graph_->AddEdge(current_parent_, node);
+    if (!visited_.count(traceable)) {
+      visited_.insert(traceable);
+      worklist_.push(ToWorklistItem(node, wrapper_descriptor));
+    }
+  }
+
+  void Visit(DOMWrapperMap<ScriptWrappable>* wrapper_map,
              const ScriptWrappable* key) const final {
-    // The found_v8_wrappers are PersistentBase pointers. We only mark the
-    // main world wrapper as we cannot properly record DOMWrapperMap values.
-    // This means that edges from the isolated worlds are missing in the
-    // snapshot. This will be fixed with crbug.com/749490.
+    v8::Local<v8::Value> local =
+        wrapper_map->NewLocal(isolate_, const_cast<ScriptWrappable*>(key));
+    if (!local.IsEmpty()) {
+      graph_->AddEdge(current_parent_, GraphNode(local));
+    }
   }
 
  private:
-  inline v8::PersistentBase<v8::Value>* PersistentForWrappable(
-      ScriptWrappable* wrappable) {
-    return &v8::Persistent<v8::Value>::Cast(*wrappable->RawMainWorldWrapper());
+  class DomGraphNode : public Graph::EmbedderNode {
+   public:
+    DomGraphNode(const void* traceable, const char* label)
+        : traceable_(traceable), label_(label) {}
+
+    std::string Label() override { return label_; }
+
+    intptr_t SizeInBytes() override { return 1; }
+
+    const void* id() { return traceable_; }
+
+   private:
+    const void* traceable_;
+    const char* label_;
+  };
+
+  class ParentScope {
+   public:
+    ParentScope(HeapSnaphotWrapperVisitor* visitor, Graph::Node* parent)
+        : visitor_(visitor) {
+      DCHECK_EQ(visitor->current_parent_, nullptr);
+      visitor->current_parent_ = parent;
+    }
+    ~ParentScope() { visitor_->current_parent_ = nullptr; }
+
+   private:
+    HeapSnaphotWrapperVisitor* visitor_;
+  };
+
+  struct WorklistItem {
+    Graph::Node* node;
+    Traceable traceable;
+    TraceWrappersCallback trace_wrappers_callback;
+  };
+
+  WorklistItem ToWorklistItem(
+      Graph::Node* node,
+      const WrapperDescriptor& wrapper_descriptor) const {
+    return {node, wrapper_descriptor.traceable,
+            wrapper_descriptor.trace_wrappers_callback};
   }
 
-  v8::HeapProfiler::RetainerChildren FindV8WrappersDirectlyReachableFrom(
-      Node* traceable) {
-    CHECK(found_v8_wrappers_.empty());
-    WTF::AutoReset<bool> scope(&only_trace_single_level_, true);
-    first_script_wrappable_traced_ = false;
-    current_parent_ = PersistentForWrappable(traceable);
-
-    TracePrologue();
-    traceable->GetWrapperTypeInfo()->TraceWrappers(this, traceable);
-    AdvanceTracing(
-        0,
-        v8::EmbedderHeapTracer::AdvanceTracingActions(
-            v8::EmbedderHeapTracer::ForceCompletionAction::FORCE_COMPLETION));
-    // Abort instead of Epilogue as we want to finish synchronously.
-    AbortTracing();
-
-    return std::move(found_v8_wrappers_);
+  Graph::Node* GraphNode(const v8::Local<v8::Value>& value) const {
+    return graph_->V8Node(value);
   }
 
-  // Input obtained from |VisitPersistentHandle|.
-  std::unordered_map<Node*, std::vector<Node*>> nodes_requiring_tracing_;
+  Graph::Node* GraphNode(Traceable traceable, const char* label) const {
+    if (dom_graph_node_.count(traceable) == 0) {
+      dom_graph_node_[traceable] = new DomGraphNode(traceable, label);
+    }
+    return dom_graph_node_[traceable];
+  }
 
-  // Temporaries used for tracing a single Node.
-  const v8::PersistentBase<v8::Value>* current_parent_;
-  bool only_trace_single_level_;
-  mutable bool first_script_wrappable_traced_;
-  mutable v8::HeapProfiler::RetainerChildren found_v8_wrappers_;
+  void VisitPendingActivities() {
+    ParentScope parent(this, graph_->RootNode("PendingActivities"));
+    ActiveScriptWrappableBase::TraceActiveScriptWrappables(isolate_, this);
+  }
 
-  // Out variables
-  mutable v8::HeapProfiler::RetainerEdges edges_;
-  mutable v8::HeapProfiler::RetainerGroups groups_;
+  void VisitTransitiveClosure() {
+    while (!worklist_.empty()) {
+      auto item = worklist_.top();
+      worklist_.pop();
+      ParentScope parent(this, item.node);
+      item.trace_wrappers_callback(this, item.traceable);
+    }
+  }
+
+  v8::Isolate* isolate_;
+  Graph::Node* current_parent_;
+  mutable Graph* graph_;
+  mutable std::unordered_set<Traceable> visited_;
+  mutable std::unordered_map<Traceable, Graph::Node*> dom_graph_node_;
+  mutable std::stack<WorklistItem> worklist_;
 };
 
-// The function |getRetainerInfos| processing all handles on the blink heap,
-// logically grouping together DOM trees (attached and detached) and pending
-// activities, while at the same time finding parent to child relationships
-// for non-Node wrappers. Since we are processing *all* handles there is no
-// way we miss out on a handle. V8 will figure out the liveness information
-// for the provided information itself.
 v8::HeapProfiler::RetainerInfos V8GCController::GetRetainerInfos(
     v8::Isolate* isolate) {
-  V8PerIsolateData::TemporaryScriptWrappableVisitorScope scope(
-      isolate, std::unique_ptr<HeapSnaphotWrapperVisitor>(
-                   new HeapSnaphotWrapperVisitor(isolate)));
+  return v8::HeapProfiler::RetainerInfos{v8::HeapProfiler::RetainerGroups(),
+                                         v8::HeapProfiler::RetainerEdges()};
+}
 
-  HeapSnaphotWrapperVisitor* tracer =
-      reinterpret_cast<HeapSnaphotWrapperVisitor*>(scope.CurrentVisitor());
-  tracer->CollectV8Roots();
-  tracer->TraceV8Roots();
-  tracer->TracePendingActivities();
-  return v8::HeapProfiler::RetainerInfos{tracer->Groups(), tracer->Edges()};
+void V8GCController::BuildEmbedderGraph(v8::Isolate* isolate,
+                                        v8::EmbedderGraph* graph) {
+  HeapSnaphotWrapperVisitor visitor(isolate, graph);
+  visitor.BuildEmbedderGraph();
 }
 
 static unsigned long long UsedHeapSize(v8::Isolate* isolate) {
