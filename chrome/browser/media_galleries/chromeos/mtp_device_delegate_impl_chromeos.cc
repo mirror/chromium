@@ -18,7 +18,6 @@
 #include "base/containers/circular_deque.h"
 #include "base/files/file_util.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/numerics/safe_conversions.h"
 #include "base/posix/eintr_wrapper.h"
 #include "base/strings/string_number_conversions.h"
@@ -458,7 +457,7 @@ void MTPDeviceDelegateImplLinux::MTPFileNode::EnsureChildExists(
     return;
 
   children_[name] =
-      base::MakeUnique<MTPFileNode>(id, name, this, file_id_to_node_map_);
+      std::make_unique<MTPFileNode>(id, name, this, file_id_to_node_map_);
 }
 
 void MTPDeviceDelegateImplLinux::MTPFileNode::ClearNonexistentChildren(

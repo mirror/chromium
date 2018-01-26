@@ -13,7 +13,6 @@
 #include "base/callback.h"
 #include "base/i18n/time_formatting.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/path_service.h"
 #include "base/stl_util.h"
 #include "base/strings/string16.h"
@@ -284,7 +283,7 @@ bool PopulateGalleryPrefInfoFromDictionary(
 
 std::unique_ptr<base::DictionaryValue> CreateGalleryPrefInfoDictionary(
     const MediaGalleryPrefInfo& gallery) {
-  auto dict = base::MakeUnique<base::DictionaryValue>();
+  auto dict = std::make_unique<base::DictionaryValue>();
   dict->SetString(kMediaGalleriesPrefIdKey,
                   base::NumberToString(gallery.pref_id));
   dict->SetString(kMediaGalleriesDeviceIdKey, gallery.device_id);
