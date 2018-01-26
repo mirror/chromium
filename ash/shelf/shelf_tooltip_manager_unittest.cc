@@ -21,20 +21,14 @@
 
 namespace ash {
 
-class ShelfTooltipManagerTest : public AshTestBase {
+class ShelfTooltipBaseTest : public AshTestBase {
  public:
-  ShelfTooltipManagerTest() = default;
-  ~ShelfTooltipManagerTest() override = default;
+  ShelfTooltipBaseTest() = default;
+  ~ShelfTooltipBaseTest() override = default;
 
   void SetUp() override {
     AshTestBase::SetUp();
-    shelf_view_ = GetPrimaryShelf()->GetShelfViewForTesting();
-    tooltip_manager_ = ShelfViewTestAPI(shelf_view_).tooltip_manager();
-    tooltip_manager_->set_timer_delay_for_test(0);
   }
-
-  bool IsTimerRunning() { return tooltip_manager_->timer_.IsRunning(); }
-  views::Widget* GetTooltip() { return tooltip_manager_->bubble_->GetWidget(); }
 
   std::unique_ptr<views::Widget> CreateTestWidget() {
     std::unique_ptr<views::Widget> widget = std::make_unique<views::Widget>();
@@ -47,8 +41,29 @@ class ShelfTooltipManagerTest : public AshTestBase {
   }
 
  protected:
+  ShelfTooltipBase* tooltip_manager_;
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(ShelfTooltipBaseTest);
+};
+
+class ShelfTooltipManagerTest : public ShelfTooltipBaseTest {
+ public:
+  ShelfTooltipManagerTest() = default;
+  ~ShelfTooltipManagerTest() override = default;
+
+  void SetUp() override {
+    ShelfTooltipBaseTest::SetUp();
+    shelf_view_ = GetPrimaryShelf()->GetShelfViewForTesting();
+    tooltip_manager_ = ShelfViewTestAPI(shelf_view_).tooltip_manager();
+    tooltip_manager_->set_timer_delay_for_test(0);
+  }
+
+  bool IsTimerRunning() { return tooltip_manager_->timer_.IsRunning(); }
+  views::Widget* GetTooltip() { return tooltip_manager_->bubble_->GetWidget(); }
+
+ protected:
   ShelfView* shelf_view_;
-  ShelfTooltipManager* tooltip_manager_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(ShelfTooltipManagerTest);
