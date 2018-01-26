@@ -140,6 +140,7 @@
           "blink::mojom::NotificationService",
           "blink::mojom::PermissionService",
           "blink::mojom::PresentationService",
+          "blink::mojom::SignedExchangePrefetchService",
           "blink::mojom::TextSuggestionHost",
           "blink::mojom::WebBluetoothService",
           "blink::mojom::WebSocket",

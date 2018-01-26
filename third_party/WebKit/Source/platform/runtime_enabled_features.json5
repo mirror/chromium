@@ -997,6 +997,9 @@
       status: "experimental",
     },
     {
+      name: "SignedHTTPExchange",
+    },
+    {
       name: "SlimmingPaintV175",
       implied_by: ["SlimmingPaintV2", "LayoutNGPaintFragments"],
     },

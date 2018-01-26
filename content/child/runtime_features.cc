@@ -423,6 +423,9 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
 
   WebRuntimeFeatures::EnablePictureInPicture(
       base::FeatureList::IsEnabled(media::kPictureInPicture));
+
+  WebRuntimeFeatures::EnableSignedHTTPExchange(
+      base::FeatureList::IsEnabled(features::kSignedHTTPExchange));
 };
 
 }  // namespace content
