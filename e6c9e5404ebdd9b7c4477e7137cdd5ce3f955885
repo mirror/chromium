@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bfe13e5_95df1d0f",
+        "filename": "third_party/WebKit/Source/platform/bindings/TraceWrapperMember.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-26T14:05:56Z",
+      "side": 1,
+      "message": "This operation here is actually unsafe since in the case of out-of-line backingstore buffers we store a buffer HeapVectorBacking\u003cTraceWrapperMember\u003cT\u003e\u003e in a HeapVector\u003cMember\u003cT\u003e\u003e and vice-versa. Our verification mechanisms for GCInfo rightfully triggerd on this one.\n\nI remember this optimization was visible on benchmarks which is why I added a workaround instead of doing a 1-by-1 copy.",
+      "revId": "e6c9e5404ebdd9b7c4477e7137cdd5ce3f955885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
