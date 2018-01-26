@@ -16,6 +16,24 @@
       "revId": "dd43fde9ea117c423d3f86c0c07af8b0ae4b4aa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "529e8eaa_797953ec",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-26T16:19:54Z",
+      "side": 1,
+      "message": "Yes, you are right. I don\u0027t know why I didn\u0027t use widget-\u003eIsActive().\n\nI have to use the second version though, because the StateChanged function is called when the widget is being created and doesn\u0027t exist yet.",
+      "parentUuid": "b4767c70_c4d18f8a",
+      "revId": "dd43fde9ea117c423d3f86c0c07af8b0ae4b4aa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "59f021ed_4acb13dd",
+        "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-26T16:19:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d210ef48_05e36220",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c80c01b_f9b566cc",
         "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
         "patchSetId": 15
@@ -50,6 +68,24 @@
       "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "667d1229_bf836930",
+        "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-26T16:19:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c80c01b_f9b566cc",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "8293f2ce_9e1267cc",
+        "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-26T16:19:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a44c4272_82bf46d5",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acf14b66_57adc7a0",
         "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
         "patchSetId": 15
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "1f6586c9_29f921ed",
+        "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-26T16:19:54Z",
+      "side": 1,
+      "message": "Isn\u0027t this a unit test? Or is it a browser test because I deal with widgets?",
+      "parentUuid": "acf14b66_57adc7a0",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "025a6846_d433efa5",
         "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
         "patchSetId": 15
@@ -98,6 +170,24 @@
       "writtenOn": "2018-01-24T23:55:17Z",
       "side": 1,
       "message": "note this doesn\u0027t make \"authentic\" bubbles anywhere except ChromeOS. Switching to CreateNativeDesktopWidget() will probably expose Linux to the activation issues you\u0027re seeing on Mac.",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1794496_1f05064c",
+        "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-26T16:19:54Z",
+      "side": 1,
+      "message": "Yes you are right, with CreateNativeDesktopWidget the test fails",
+      "parentUuid": "025a6846_d433efa5",
       "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "608ce385_3b5f6772",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-26T16:19:54Z",
+      "side": 1,
+      "message": "Thanks. Forgot to remove the includes.",
+      "parentUuid": "3d4f5eb6_a516a894",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c513166_4f03ea44",
         "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
         "patchSetId": 15
@@ -135,6 +243,24 @@
       "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f01fe132_e9b9121a",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-26T16:19:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c513166_4f03ea44",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +287,30 @@
     },
     {
       "key": {
+        "uuid": "475ba3b8_ad7547e4",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-26T16:19:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8f93013_4ab725dd",
+      "range": {
+        "startLine": 32,
+        "startChar": 12,
+        "endLine": 32,
+        "endChar": 16
+      },
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be1e7819_916ae9f0",
         "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
         "patchSetId": 15
@@ -175,6 +325,24 @@
       "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7be1669d_a8d2a8d7",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-26T16:19:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be1e7819_916ae9f0",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -195,6 +363,24 @@
     },
     {
       "key": {
+        "uuid": "347b82ad_4d720c37",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-26T16:19:54Z",
+      "side": 1,
+      "message": "It does not happen in this implementation, but there should always only be one bubble.\nDo you think a DCHECK is better here?",
+      "parentUuid": "b3892af6_020c149b",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f4bd2bd_7ee6a1dd",
         "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
         "patchSetId": 15
@@ -209,6 +395,24 @@
       "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ec1ca0a_4e14415a",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-26T16:19:54Z",
+      "side": 1,
+      "message": "This has to be called after CreateBubble() otherwise it crashes. Apparently the widget has to exist at the point the method is called. Should I add a comment?",
+      "parentUuid": "1f4bd2bd_7ee6a1dd",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -229,6 +433,24 @@
     },
     {
       "key": {
+        "uuid": "d1c2e05e_ab2e8abd",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-26T16:19:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6c51837_3abe08e3",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c182a153_83910397",
         "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
         "patchSetId": 15
@@ -243,6 +465,24 @@
       "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "214ef946_2f39fed9",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-26T16:19:54Z",
+      "side": 1,
+      "message": "Usually this should only be called for DiceAccountsMenu because the observer gets removed from the parent when the DiceAccountsMenu bubble is destroyed.\nBut I added a check just in case.",
+      "parentUuid": "c182a153_83910397",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -263,6 +503,24 @@
     },
     {
       "key": {
+        "uuid": "b9fb00b1_0d17974f",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-26T16:19:54Z",
+      "side": 1,
+      "message": "The parent bubble only closes when it changes from active to inactive. (in this case it either changes from inactive to inactive or from inactive to active)\nSo it could listen for this itself, but I found it more convenient to do it in the DiceAccountsMenu bubble, when the widget is destroyed. It also makes it easier to install into other bubbles which is handy since it will not only be used in the ProfileChooserView, but also for the BookmarksBubble, ...",
+      "parentUuid": "f803f27b_5f9517dc",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ebc16be_53274416",
         "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
         "patchSetId": 15
@@ -280,6 +538,24 @@
     },
     {
       "key": {
+        "uuid": "7c9cecc0_48ef2ddb",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-26T16:19:54Z",
+      "side": 1,
+      "message": "I tested it a lot on both platforms and I never ran into problems.",
+      "parentUuid": "5ebc16be_53274416",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08f83249_c211f95a",
         "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
         "patchSetId": 15
@@ -294,6 +570,24 @@
       "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "505a84af_04b1fda4",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-26T16:19:54Z",
+      "side": 1,
+      "message": "No issues. But maybe it\u0027s only on my machine, I\u0027ll try it on others as well.",
+      "parentUuid": "08f83249_c211f95a",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -328,6 +622,24 @@
       "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a589b36f_0c20664e",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-26T16:19:54Z",
+      "side": 1,
+      "message": "I also need it for the tests, so I found this is the best option.",
+      "parentUuid": "8cdb5464_486530d9",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -375,6 +687,30 @@
       "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "006ea3db_5e438c49",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 15
+      },
+      "lineNbr": 4118,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-26T16:19:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecd4cda8_27763d4b",
+      "range": {
+        "startLine": 4118,
+        "startChar": 18,
+        "endLine": 4118,
+        "endChar": 0
+      },
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
