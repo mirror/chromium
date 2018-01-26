@@ -34,7 +34,6 @@
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/fileapi/FileError.h"
-#include "core/html/VoidCallback.h"
 #include "modules/filesystem/DirectoryEntry.h"
 #include "modules/filesystem/EntrySync.h"
 #include "modules/filesystem/FileEntry.h"
@@ -129,16 +128,8 @@ class SyncCallbackHelper final
   bool completed_;
 };
 
-struct EmptyType : public GarbageCollected<EmptyType> {
-  static EmptyType* Create(EmptyType*) { return nullptr; }
-
-  void Trace(blink::Visitor* visitor) {}
-};
-
 typedef SyncCallbackHelper<MetadataCallback, Metadata*, Metadata>
     MetadataSyncCallbackHelper;
-typedef SyncCallbackHelper<VoidCallback, EmptyType*, EmptyType>
-    VoidSyncCallbackHelper;
 
 // Helper class to support DOMFileSystemSync implementation.
 template <typename SuccessCallback, typename CallbackArg>
@@ -220,6 +211,10 @@ using EntryCallbacksSyncHelper =
 using FileSystemCallbacksSyncHelper = DOMFileSystemCallbacksSyncHelper<
     FileSystemCallbacks::OnDidOpenFileSystemCallback,
     DOMFileSystem>;
+
+using VoidCallbacksSyncHelper = DOMFileSystemCallbacksSyncHelper<
+    VoidCallbacks::OnDidSucceedCallback,
+    ExecutionContext /* dummy_arg_for_sync_helper */>;
 
 }  // namespace blink
 
