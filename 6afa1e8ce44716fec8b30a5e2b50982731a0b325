@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "224a044d_28281b90",
+        "filename": "remoting/protocol/ssl_hmac_channel_authenticator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-26T06:59:58Z",
+      "side": 1,
+      "message": "I\u0027m sorry I forgot to mention in the message.\nPlease suggest values for all \u0027...\u0027s.",
+      "parentUuid": "36ee650e_80f78fec",
+      "range": {
+        "startLine": 57,
+        "startChar": 28,
+        "endLine": 57,
+        "endChar": 0
+      },
+      "revId": "6afa1e8ce44716fec8b30a5e2b50982731a0b325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb01ad9c_1f84e32e",
         "filename": "remoting/protocol/ssl_hmac_channel_authenticator.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-25T23:40:47Z",
       "side": 1,
       "message": "I don\u0027t understand the meaning of this section. Can you explain (or point me at some documentation)?",
+      "range": {
+        "startLine": 69,
+        "startChar": 25,
+        "endLine": 69,
+        "endChar": 0
+      },
+      "revId": "6afa1e8ce44716fec8b30a5e2b50982731a0b325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40b01a36_c67085bb",
+        "filename": "remoting/protocol/ssl_hmac_channel_authenticator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-26T06:59:58Z",
+      "side": 1,
+      "message": "In this section we specify Chrome policies that will prevent this request.\n\nThe specified settings prevent becoming a host or a client from any address:\nhttp://dev.chromium.org/administrators/policy-list-3",
+      "parentUuid": "bb01ad9c_1f84e32e",
       "range": {
         "startLine": 69,
         "startChar": 25,
