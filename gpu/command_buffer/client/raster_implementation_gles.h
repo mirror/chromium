@@ -137,7 +137,7 @@ class RASTER_EXPORT RasterImplementationGLES : public RasterInterface {
                            GLuint msaa_sample_count,
                            GLboolean can_use_lcd_text,
                            GLboolean use_distance_field_text,
-                           GLint pixel_config) override;
+                           GLint color_type) override;
   void RasterCHROMIUM(const cc::DisplayItemList* list,
                       cc::ImageProvider* provider,
                       const gfx::Vector2d& translate,
