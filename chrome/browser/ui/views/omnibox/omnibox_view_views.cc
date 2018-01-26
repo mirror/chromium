@@ -460,13 +460,17 @@ bool OmniboxViewViews::DeleteAtEndPressed() {
 }
 
 void OmniboxViewViews::UpdatePopup() {
-  model()->SetInputInProgress(true);
-  if (!model()->has_focus())
+  bool changed = model()->SetInputInProgress(true, false);
+  if (!model()->has_focus()) {
+    if (changed)
+      model()->NotifyObserversInputInProgress(true);
     return;
-
+  }
   // Prevent inline autocomplete when the caret isn't at the end of the text.
   const gfx::Range sel = GetSelectedRange();
   model()->StartAutocomplete(!sel.is_empty(), sel.GetMax() < text().length());
+  if (changed)
+    model()->NotifyObserversInputInProgress(true);
 }
 
 void OmniboxViewViews::ApplyCaretVisibility() {
@@ -804,7 +808,7 @@ bool OmniboxViewViews::HandleAccessibleAction(
     SetUserText(action_data.value, true);
     return true;
   } else if (action_data.action == ui::AX_ACTION_REPLACE_SELECTED_TEXT) {
-    model()->SetInputInProgress(true);
+    model()->SetInputInProgress(true, true);
     if (saved_selection_for_focus_change_.IsValid()) {
       SelectRange(saved_selection_for_focus_change_);
       saved_selection_for_focus_change_ = gfx::Range::InvalidRange();

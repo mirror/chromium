@@ -41,13 +41,13 @@ class LocationIconViewBrowserTest : public InProcessBrowserTest {
 // Otherwise, it should be on.
 IN_PROC_BROWSER_TEST_F(LocationIconViewBrowserTest, InkDropMode) {
   OmniboxEditModel* model = location_bar()->GetOmniboxView()->model();
-  model->SetInputInProgress(true);
+  model->SetInputInProgress(true, true);
   icon_view()->Update();
 
   EXPECT_EQ(IconLabelBubbleView::InkDropMode::OFF,
             views::test::InkDropHostViewTestApi(icon_view()).ink_drop_mode());
 
-  model->SetInputInProgress(false);
+  model->SetInputInProgress(false, true);
   icon_view()->Update();
 
   EXPECT_EQ(IconLabelBubbleView::InkDropMode::ON,
