@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef4005df_3ca4ccca",
+        "filename": "extensions/renderer/bindings/api_binding_test.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T19:58:20Z",
+      "side": 1,
+      "message": "(because V8 expects context entry to be properly nested).",
+      "range": {
+        "startLine": 50,
+        "startChar": 45,
+        "endLine": 50,
+        "endChar": 47
+      },
+      "revId": "2709b0c58e39fd401211eaba68cd88bdfa98e69f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f57f1523_1bff6cc4",
+        "filename": "extensions/renderer/bindings/api_binding_test.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T19:58:20Z",
+      "side": 1,
+      "message": "// If you want to continue using the context after it has been disposed (to test edge cases that can occur when contexts are leaked), you will have to re-enter the main context. e.g.,\nDisposeContext(main_context);\n// Context leaked by lingering references, so it hasn\u0027t been freed.\nv8::Context::Scope context_scope(context);",
+      "revId": "2709b0c58e39fd401211eaba68cd88bdfa98e69f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
