@@ -74,10 +74,10 @@ void OpenUrlInChrome(int render_process_host_id,
   if (!web_contents)
     return;
 
-  // Use the PAGE_TRANSITION_FROM_API qualifier so that this nativation won't
+  // Use the PAGE_TRANSITION_FROM_ARC qualifier so that this nativation won't
   // end up showing the disambig dialog.
   const ui::PageTransition page_transition_type = ui::PageTransitionFromInt(
-      ui::PAGE_TRANSITION_LINK | ui::PAGE_TRANSITION_FROM_API);
+      ui::PAGE_TRANSITION_LINK | ui::PAGE_TRANSITION_FROM_ARC);
   constexpr bool kIsRendererInitiated = false;
   const content::OpenURLParams params(
       // TODO(yusukes): Send a non-empty referrer.
@@ -361,6 +361,7 @@ void OnAppIconsReceived(
   auto show_bubble_cb = base::Bind(ShowIntentPickerBubble());
   WebContents* web_contents =
       tab_util::GetWebContentsByID(render_process_host_id, routing_id);
+
   show_bubble_cb.Run(nullptr /* anchor_view */, web_contents, app_info,
                      !IsChromeAnAppCandidate(handlers),
                      base::Bind(OnIntentPickerClosed, render_process_host_id,
@@ -432,11 +433,11 @@ bool IsSafeToRedirectToArcWithoutUserConfirmation(
     ui::PageTransition page_transition,
     const GURL& last_url,
     ui::PageTransition last_page_transition) {
-  // Return "safe" unless both transition flags are FROM_API because the only
-  // unsafe situation we know is infinite tab creation loop with FROM_API
+  // Return "safe" unless both transition flags are FROM_ARC because the only
+  // unsafe situation we know is infinite tab creation loop with FROM_ARC
   // (b/30125340).
-  if (!(page_transition & ui::PAGE_TRANSITION_FROM_API) ||
-      !(last_page_transition & ui::PAGE_TRANSITION_FROM_API)) {
+  if (!(page_transition & ui::PAGE_TRANSITION_FROM_ARC) ||
+      !(last_page_transition & ui::PAGE_TRANSITION_FROM_ARC)) {
     return true;
   }
 
@@ -459,7 +460,7 @@ bool RunArcExternalProtocolDialog(const GURL& url,
   LOG_IF(WARNING, always_ask_user)
       << "RunArcExternalProtocolDialog: repeatedly handling external protocol "
       << "redirection to " << url
-      << " started from API: last_url=" << g_last_url.Get();
+      << " started from ARC: last_url=" << g_last_url.Get();
 
   // This function is called only on the UI thread. Updating g_last_* variables
   // without a lock is safe.
@@ -467,12 +468,12 @@ bool RunArcExternalProtocolDialog(const GURL& url,
   g_last_url.Get() = url;
   g_last_page_transition = page_transition;
 
-  // For external protocol navigation, always ignore the FROM_API qualifier.
-  // We sometimes do need to forward a request with FROM_API to ARC, or
+  // For external protocol navigation, always ignore the FROM_ARC qualifier.
+  // We sometimes do need to forward a request with FROM_ARC to ARC, or
   // AppAuth may not work (b/33208965). This is safe as long as we properly
   // use |always_ask_user|.
   const ui::PageTransition masked_page_transition =
-      MaskOutPageTransition(page_transition, ui::PAGE_TRANSITION_FROM_API);
+      MaskOutPageTransition(page_transition, ui::PAGE_TRANSITION_FROM_ARC);
 
   if (ShouldIgnoreNavigation(masked_page_transition,
                              true /* allow_form_submit */,
