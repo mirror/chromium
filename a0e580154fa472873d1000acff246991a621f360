@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4bc77445_dedb43e1",
+        "filename": ".vpython",
+        "patchSetId": 10
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-26T00:27:46Z",
+      "side": 1,
+      "message": "Yes, thanks, in the most recent patch set I\u0027ve added a commented-out section for pyobjc 2.5.1 with a TODO. It doesn\u0027t work with the currently deployed vpython.",
+      "parentUuid": "71ffbb39_9140bd01",
+      "range": {
+        "startLine": 130,
+        "startChar": 35,
+        "endLine": 131,
+        "endChar": 33
+      },
+      "revId": "a0e580154fa472873d1000acff246991a621f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57aeb19c_59c441c0",
         "filename": ".vpython",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "a0e580154fa472873d1000acff246991a621f360",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "475c2ff9_bc10e8ef",
+        "filename": ".vpython",
+        "patchSetId": 10
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-26T00:27:46Z",
+      "side": 1,
+      "message": "Thanks, tightened this up in the most recent patch set.",
+      "parentUuid": "57aeb19c_59c441c0",
+      "range": {
+        "startLine": 135,
+        "startChar": 14,
+        "endLine": 137,
+        "endChar": 2
+      },
+      "revId": "a0e580154fa472873d1000acff246991a621f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -80,6 +128,24 @@
       "revId": "a0e580154fa472873d1000acff246991a621f360",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e535fa1_7074cf0b",
+        "filename": "testing/scripts/run_gpu_integration_test_as_googletest.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-26T00:27:46Z",
+      "side": 1,
+      "message": "Switching this shebang line to vpython doesn\u0027t work for the way these scripts are invoked on the bots. They\u0027re invoked by the Chromium recipe with \"python\" as the root executable.\n\nIn order to switch that to \"vpython\" it would be necessary to plumb through the venv\u003dtrue flag to the Chromium src/testing/buildbot/ JSON files, because we simply can\u0027t flip the flag for all tests at once. iannucci@ has informed me that the plan is to switch the Swarmed bots to use vpython everywhere soon, and tests that don\u0027t work with vpython are being actively debugged, so it is not worth doing that work. However, I want to switch the GPU tests to vpython now, so am going this route.",
+      "parentUuid": "e6aae030_222dbb40",
+      "revId": "a0e580154fa472873d1000acff246991a621f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -151,6 +217,24 @@
       "revId": "a0e580154fa472873d1000acff246991a621f360",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0a2425d_73215281",
+        "filename": "testing/scripts/run_gpu_integration_test_as_googletest.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-26T00:27:46Z",
+      "side": 1,
+      "message": "Thanks everyone for your advice. I am going to leave this as is because I want the detection code for whether vpython is in use here, both to make it clear that this invocation site has to be updated and to serve as a way to determine whether vpython\u0027s already being used. In the future this will go back to sys.executable and Swarming will just be using \"vpython-as-python\".",
+      "parentUuid": "397e6c02_ec013284",
+      "revId": "a0e580154fa472873d1000acff246991a621f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
