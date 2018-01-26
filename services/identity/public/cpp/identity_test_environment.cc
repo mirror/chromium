@@ -11,6 +11,7 @@
 #include "components/signin/core/browser/profile_management_switches.h"
 #include "components/signin/core/browser/test_signin_client.h"
 #include "components/sync_preferences/testing_pref_service_syncable.h"
+#include "services/identity/public/cpp/identity_test_utils.h"
 
 #if defined(OS_CHROMEOS)
 using SigninManagerForTest = FakeSigninManagerBase;
@@ -100,8 +101,14 @@ void IdentityTestEnvironment::MakePrimaryAccountAvailable(
     std::string gaia_id,
     std::string email_address,
     std::string refresh_token) {
-  internals_->identity_manager()->SetPrimaryAccountSynchronouslyForTests(
-      gaia_id, email_address, refresh_token);
+  identity::MakePrimaryAccountAvailable(
+      internals_->signin_manager(), internals_->token_service(),
+      internals_->identity_manager(), refresh_token, gaia_id, email_address);
+}
+
+void IdentityTestEnvironment::ClearPrimaryAccount() {
+  identity::ClearPrimaryAccount(internals_->signin_manager(),
+                                internals_->identity_manager());
 }
 
 void IdentityTestEnvironment::SetAutomaticIssueOfAccessTokens(bool grant) {
