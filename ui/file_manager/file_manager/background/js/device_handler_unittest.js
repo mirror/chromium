@@ -56,7 +56,11 @@ function setUp() {
 
   setupChromeApis();
 
-  handler = new DeviceHandler();
+  handler = new DeviceHandler(true);
+}
+
+function setUpInIncognitoContext() {
+  handler = new DeviceHandler(false);
 }
 
 function testGoodDevice(callback) {
@@ -653,6 +657,36 @@ function testNotificationClicked(callback) {
       callback);
 }
 
+function testMiscMessagesInIncognito() {
+  setUpInIncognitoContext();
+  chrome.fileManagerPrivate.onDeviceChanged.dispatch(
+      {type: 'format_start', devicePath: '/device/path'});
+  // No notification sent by this instance in incognito context.
+  assertEquals(0, Object.keys(chrome.notifications.items).length);
+  assertFalse(chrome.notifications.resolver.settled);
+}
+
+function testMountCompleteInIncognito() {
+  setUpInIncognitoContext();
+  chrome.fileManagerPrivate.onMountCompleted.dispatch({
+    eventType: 'mount',
+    status: 'success',
+    volumeMetadata: {
+      isParentDevice: false,
+      deviceType: 'usb',
+      devicePath: '/device/path',
+      deviceLabel: 'label'
+    },
+    shouldNotify: true
+  });
+
+  assertEquals(0, Object.keys(chrome.notifications.items).length);
+  // TODO(yamaguchi): I think this test is incomplete.
+  // This looks as if notification is not generated yet because the promise
+  // is not settled yet. Same for testGoodDeviceNotNavigated.
+  assertFalse(chrome.notifications.resolver.settled);
+}
+
 /**
  * @param {!VolumeManagerCommon.VolumeType} volumeType
  * @param {string} volumeId
@@ -716,6 +750,9 @@ function setupChromeApis() {
         }
       },
       onClicked: {
+        dispatch: function() {
+          console.log('ignored as no handler');
+        },
         addListener: function(listener) {
           this.dispatch = listener;
         }
