@@ -196,6 +196,24 @@
     },
     {
       "key": {
+        "uuid": "d6ccbb3a_1c34cae1",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 13
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-26T19:00:20Z",
+      "side": 1,
+      "message": "I realized why my new-kernel-version link didn\u0027t have HWCAP_CRC32 and HWCAP_PMULL. I was looking in arch/arm and not arch/arm64. The correct link for AArch64 builds is:\nhttp://elixir.free-electrons.com/linux/latest/source/arch/arm64/include/uapi/asm/hwcap.h\n\nThe defines in there match the (1 \u003c\u003c 4) and (1 \u003c\u003c 7) we have here.\n\n\nI also found a bit more info explaining why this funky situation happened:\nhttps://sourceware.org/ml/libc-help/2017-08/msg00013.html\n\nEssentially, AArch32 ran out of bits in AT_HWCAP and needed more, so they added AT_HWCAP2.\nAArch64 is treated as a completely separate arch and doesn\u0027t reuse the old values/bits. They defined a new set. They eliminated a bunch and no longer needed the extra bits if AT_HWCAP2.\n\n\nI think this should look something like:\n#include \u003casm/hscap.h\u003e\n\n#if defined(ARMV8_OS_LINUX)\n  #if defined(__aarch64__)\n    flag_crc32 \u003d HWCAP_CRC32;\n    flag_pmull \u003d HWCAP_PMULL;\n    capabilities \u003d getauxval(AT_HWCAP);\n  #else // AArch32\n    flag_crc32 \u003d HWCAP2_CRC32;\n    flag_pmull \u003d HWCAP2_PMULL;\n    capabilities \u003d getauxval(AT_HWCAP2);\n  #endif\n#elif defined(ARMV8_OS_ANDROID)\n    flag_crc32 \u003d ANDROID_CPU_ARM_FEATURE_CRC32;\n    flag_pmull \u003d ANDROID_CPU_ARM_FEATURE_PMULL;\n    capabilities \u003d android_getCpuFeatures();\n#endif",
+      "parentUuid": "d8336680_07fd8a78",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "659b95fa_586f305a",
         "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
         "patchSetId": 13
