@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "241f718a_f92224bd",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2018-01-26T22:54:05Z",
+      "side": 1,
+      "message": "Note: this makes manual testing much easier. Will be removed for the final CL.",
+      "range": {
+        "startLine": 519,
+        "startChar": 63,
+        "endLine": 519,
+        "endChar": 0
+      },
+      "revId": "1f6af352d55426b7acc8a3fd18e57aab4105cbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bad3d03_8553733f",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/items_to_remove_list.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2018-01-26T22:54:05Z",
+      "side": 1,
+      "message": "This needs type annotations. Will be fixed once we agree on the solution.",
+      "range": {
+        "startLine": 80,
+        "startChar": 27,
+        "endLine": 80,
+        "endChar": 0
+      },
+      "revId": "1f6af352d55426b7acc8a3fd18e57aab4105cbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef2cc7c5_e2e30bc0",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/items_to_remove_list.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2018-01-26T22:54:05Z",
+      "side": 1,
+      "message": "This is breaking browser tests. They will be fixed once we agree on the solution.",
+      "revId": "1f6af352d55426b7acc8a3fd18e57aab4105cbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
