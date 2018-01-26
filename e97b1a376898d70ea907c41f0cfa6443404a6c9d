@@ -22,6 +22,30 @@
       "revId": "e97b1a376898d70ea907c41f0cfa6443404a6c9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7a4df50_e8f6c818",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-26T23:22:49Z",
+      "side": 1,
+      "message": "target_pixmap now always has the colorspace we expect. I didn\u0027t update PaintImage::Decode yet, as I want to scope this change for merge, but I\u0027ll do that in a follow up.",
+      "parentUuid": "e6db4d15_505f4611",
+      "range": {
+        "startLine": 133,
+        "startChar": 23,
+        "endLine": 133,
+        "endChar": 46
+      },
+      "revId": "e97b1a376898d70ea907c41f0cfa6443404a6c9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
