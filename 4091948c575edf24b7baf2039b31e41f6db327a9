@@ -138,6 +138,24 @@
     },
     {
       "key": {
+        "uuid": "81441a76_4a4c155f",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-26T08:42:42Z",
+      "side": 1,
+      "message": "I mean, it looks it\u0027s also possible to plumb this utilizing existing mechanisms, like haraken@\u0027s question above. For example we can associate the frame scheduler with new workers when we a Worker object is created, then the frame scheduler can store its ThreadedMessagingProxy in it, then the notification can go through the proxy and be propagated to the worker scheduler via the worker thread. If we want we can still introduce something like WorkerSchedulerProxy for the scheduler specific signal plumbing in that way too (while we could also wait until we start having one more signaling method), but the proxy lifetime can be tied with one of existing cross-thread objects (like existing Proxy one or WorkerThread) so that this patch doesn\u0027t need to care too much about the destruction sequence. There can be some pros/cons in each approach, but wdyt about some of these ideas?",
+      "parentUuid": "c3b547d7_01d218ee",
+      "revId": "4091948c575edf24b7baf2039b31e41f6db327a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e8aa120_6fbd02ca",
         "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_proxy_handle.cc",
         "patchSetId": 3
