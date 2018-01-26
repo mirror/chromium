@@ -107,7 +107,7 @@ BASE_EXPORT extern NSString* const NSAppearanceNameVibrantLight;
 @end
 
 @interface CBUUID (YosemiteSDK)
-- (NSString*)UUIDString;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *UUIDString;
 @end
 
 @interface NSViewController (YosemiteSDK)

@@ -41,7 +41,7 @@ int g_full_screen_requests[kNumFullScreenModes] = { 0 };
 // presentation option is already set, does nothing.
 void SetUIMode() {
   NSApplicationPresentationOptions current_options =
-      [NSApp presentationOptions];
+      NSApp.presentationOptions;
 
   // Determine which mode should be active, based on which requests are
   // currently outstanding.  More permissive requests take precedence.  For
@@ -75,7 +75,7 @@ void SetUIMode() {
   }
 
   if (current_options != desired_options)
-    [NSApp setPresentationOptions:desired_options];
+    NSApp.presentationOptions = desired_options;
 }
 
 // Looks into Shared File Lists corresponding to Login Items for the item
@@ -93,11 +93,11 @@ LSSharedFileListItemRef GetLoginItemForApp() {
   base::scoped_nsobject<NSArray> login_items_array(
       CFToNSCast(LSSharedFileListCopySnapshot(login_items, NULL)));
 
-  NSURL* url = [NSURL fileURLWithPath:[base::mac::MainBundle() bundlePath]];
+  NSURL* url = [NSURL fileURLWithPath:base::mac::MainBundle().bundlePath];
 
-  for(NSUInteger i = 0; i < [login_items_array count]; ++i) {
+  for(NSUInteger i = 0; i < login_items_array.count; ++i) {
     LSSharedFileListItemRef item = reinterpret_cast<LSSharedFileListItemRef>(
-        [login_items_array objectAtIndex:i]);
+        login_items_array[i]);
     CFURLRef item_url_ref = NULL;
 
     // It seems that LSSharedFileListItemResolve() can return NULL in
@@ -211,7 +211,7 @@ void SwitchFullScreenModes(FullScreenMode from_mode, FullScreenMode to_mode) {
 
 bool SetFileBackupExclusion(const FilePath& file_path) {
   NSString* file_path_ns =
-      [NSString stringWithUTF8String:file_path.value().c_str()];
+      @(file_path.value().c_str());
   NSURL* file_url = [NSURL fileURLWithPath:file_path_ns];
 
   // When excludeByPath is true the application must be running with root
@@ -260,13 +260,11 @@ void AddToLoginItems(bool hide_on_startup) {
     LSSharedFileListItemRemove(login_items, item);
   }
 
-  NSURL* url = [NSURL fileURLWithPath:[base::mac::MainBundle() bundlePath]];
+  NSURL* url = [NSURL fileURLWithPath:base::mac::MainBundle().bundlePath];
 
   BOOL hide = hide_on_startup ? YES : NO;
   NSDictionary* properties =
-      [NSDictionary
-        dictionaryWithObject:[NSNumber numberWithBool:hide]
-                      forKey:(NSString*)kLSSharedFileListLoginItemHidden];
+      @{(NSString*)kLSSharedFileListLoginItemHidden: @(hide)};
 
   ScopedCFTypeRef<LSSharedFileListItemRef> new_item;
   new_item.reset(LSSharedFileListInsertItemURL(

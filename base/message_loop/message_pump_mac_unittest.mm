@@ -218,7 +218,7 @@ TEST(MessagePumpMacTest, ScopedPumpMessagesAttemptWithModalDialog) {
     EXPECT_EQ(kNSApplicationModalSafeModeMask,
               allow_private.GetModeMaskForTest());
   }
-  [[alert buttons][0] performClick:nil];
+  [alert.buttons[0] performClick:nil];
 }
 
 @end

@@ -22,7 +22,7 @@ NSBundle* MainBundle() {
 
 FilePath MainBundlePath() {
   NSBundle* bundle = MainBundle();
-  return NSStringToFilePath([bundle bundlePath]);
+  return NSStringToFilePath(bundle.bundlePath);
 }
 
 NSBundle* OuterBundle() {
@@ -33,7 +33,7 @@ NSBundle* OuterBundle() {
 
 FilePath OuterBundlePath() {
   NSBundle* bundle = OuterBundle();
-  return NSStringToFilePath([bundle bundlePath]);
+  return NSStringToFilePath(bundle.bundlePath);
 }
 
 NSBundle* FrameworkBundle() {
@@ -44,7 +44,7 @@ NSBundle* FrameworkBundle() {
 
 FilePath FrameworkBundlePath() {
   NSBundle* bundle = FrameworkBundle();
-  return NSStringToFilePath([bundle bundlePath]);
+  return NSStringToFilePath(bundle.bundlePath);
 }
 
 static void AssignOverrideBundle(NSBundle* new_bundle,

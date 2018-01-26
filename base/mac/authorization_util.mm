@@ -48,13 +48,13 @@ AuthorizationRef GetAuthorizationRightsWithPrompt(
   NSString* icon_path =
       [base::mac::FrameworkBundle() pathForResource:@"product_logo_32"
                                              ofType:@"png"];
-  const char* icon_path_c = [icon_path fileSystemRepresentation];
+  const char* icon_path_c = icon_path.fileSystemRepresentation;
   size_t icon_path_length = icon_path_c ? strlen(icon_path_c) : 0;
 
   // The OS will dispay |prompt| along with a sentence asking the user to type
   // the "password to allow this."
   NSString* prompt_ns = base::mac::CFToNSCast(prompt);
-  const char* prompt_c = [prompt_ns UTF8String];
+  const char* prompt_c = prompt_ns.UTF8String;
   size_t prompt_length = prompt_c ? strlen(prompt_c) : 0;
 
   AuthorizationItem environment_items[] = {

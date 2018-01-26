@@ -9,14 +9,14 @@
 
 @interface ObjCClassSwizzlerTestOne : NSObject
 + (NSInteger)function;
-- (NSInteger)method;
-- (NSInteger)modifier;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger method;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger modifier;
 @end
 
 @interface ObjCClassSwizzlerTestTwo : NSObject
 + (NSInteger)function;
-- (NSInteger)method;
-- (NSInteger)modifier;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger method;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger modifier;
 @end
 
 @implementation ObjCClassSwizzlerTestOne : NSObject
@@ -54,7 +54,7 @@
 @end
 
 @interface ObjCClassSwizzlerTestOne (AlternateCategory)
-- (NSInteger)alternate;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger alternate;
 @end
 
 @implementation ObjCClassSwizzlerTestOne (AlternateCategory)
@@ -64,7 +64,7 @@
 @end
 
 @interface ObjCClassSwizzlerTestOneChild : ObjCClassSwizzlerTestOne
-- (NSInteger)childAlternate;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger childAlternate;
 @end
 
 @implementation ObjCClassSwizzlerTestOneChild
