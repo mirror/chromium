@@ -41,6 +41,8 @@ class CoordinationUnitBase {
   void RemoveObserver(CoordinationUnitGraphObserver* observer);
   bool GetProperty(const mojom::PropertyType property_type,
                    int64_t* result) const;
+  int64_t GetPropertyOrDefault(const mojom::PropertyType property_type,
+                               int64_t default_value) const;
 
   const CoordinationUnitID& id() const { return id_; }
   const base::ObserverList<CoordinationUnitGraphObserver>& observers() const {
@@ -141,6 +143,16 @@ class CoordinationUnitInterface : public CoordinationUnitBase,
 
   DISALLOW_COPY_AND_ASSIGN(CoordinationUnitInterface);
 };
+
+// Helper functions for getting property values. These are convenience
+// accessors that will accept a void value for |cu|, allowing much more
+// compact queries.
+bool GetProperty(const CoordinationUnitBase* cu,
+                 const mojom::PropertyType property_type,
+                 int64_t* result);
+int64_t GetPropertyOrDefault(const CoordinationUnitBase* cu,
+                             const mojom::PropertyType property_type,
+                             int64_t default_value);
 
 }  // namespace resource_coordinator
 
