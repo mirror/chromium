@@ -61,7 +61,10 @@
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/fetch_initiator_type_names.h"
 #include "platform/network/mime/MIMETypeRegistry.h"
+#include "platform/wtf/Functional.h"
 #include "public/platform/WebPrerender.h"
+#include "public/platform/modules/htxg/signed_exchange_prefetch_service.mojom-blink.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace blink {
 
@@ -122,6 +125,75 @@ class LinkLoader::FinishObserver final
  private:
   Member<LinkLoader> loader_;
   Member<Resource> resource_;
+};
+
+class LinkLoader::SignedExchangePrefetcher final
+    : public GarbageCollectedFinalized<SignedExchangePrefetcher>,
+      public ContextLifecycleObserver {
+  USING_GARBAGE_COLLECTED_MIXIN(SignedExchangePrefetcher);
+  USING_PRE_FINALIZER(SignedExchangePrefetcher, Dispose);
+
+ public:
+  static SignedExchangePrefetcher* CreateIfNeeded(
+      const LinkRelAttribute& rel_attribute,
+      const KURL& href,
+      Document* document,
+      const String& as) {
+    if (!rel_attribute.IsLinkPrefetch())
+      return nullptr;
+    if (!href.IsValid() || href.IsEmpty())
+      return nullptr;
+    if (as != "htxg")
+      return nullptr;
+    if (!document->GetFrame())
+      return nullptr;
+
+    return new SignedExchangePrefetcher(document, href);
+  }
+
+  SignedExchangePrefetcher(ExecutionContext* execution_context,
+                           const KURL& href)
+      : ContextLifecycleObserver(execution_context) {
+    LOG(ERROR) << "SignedExchangePrefetcher::SignedExchangePrefetcher "
+               << href.GetString().Utf8().data();
+    GetFrame()->GetInterfaceProvider().GetInterface(
+        mojo::MakeRequest(&service_));
+    service_.set_connection_error_handler(
+        WTF::Bind(&SignedExchangePrefetcher::OnConnectionError,
+                  WrapWeakPersistent(this)));
+    DCHECK(service_);
+    service_->Prefetch(href, mojo::MakeRequest(&aborter_));
+  }
+  ~SignedExchangePrefetcher() {
+    LOG(ERROR) << "SignedExchangePrefetcher::~SignedExchangePrefetcher";
+  }
+  void Dispose() {
+    LOG(ERROR) << "SignedExchangePrefetcher::Dispose";
+    Abort();
+  }
+  void Abort() {
+    LOG(ERROR) << "SignedExchangePrefetcher::Abort " << !!aborter_;
+    if (aborter_) {
+      aborter_->Abort();
+      aborter_ = nullptr;
+    }
+  }
+  void OnConnectionError() {
+    LOG(ERROR) << "SignedExchangePrefetcher::OnConnectionError";
+  }
+
+  void Trace(blink::Visitor* visitor) override {
+    ContextLifecycleObserver::Trace(visitor);
+  }
+
+ private:
+  void ContextDestroyed(ExecutionContext*) override {
+    LOG(ERROR) << "SignedExchangePrefetcher::ContextDestroyed";
+    Abort();
+  }
+
+  blink::mojom::blink::SignedExchangePrefetchServicePtr service_;
+  blink::mojom::blink::SignedExchangePrefetchAborterPtr aborter_;
 };
 
 LinkLoader::LinkLoader(LinkLoaderClient* client,
@@ -635,6 +707,11 @@ bool LinkLoader::LoadLink(
   if (resource)
     finish_observer_ = new FinishObserver(this, resource);
 
+  if (RuntimeEnabledFeatures::SignedHTTPExchangeEnabled()) {
+    htxg_prefetcher_ = SignedExchangePrefetcher::CreateIfNeeded(
+        rel_attribute, href, &document, as);
+  }
+
   ModulePreloadIfNeeded(rel_attribute, href, document, as, media, nonce,
                         integrity, cross_origin, nullptr, referrer_policy,
                         this);
@@ -672,10 +749,15 @@ void LinkLoader::Abort() {
     finish_observer_->ClearResource();
     finish_observer_ = nullptr;
   }
+  if (htxg_prefetcher_) {
+    htxg_prefetcher_->Abort();
+    htxg_prefetcher_ = nullptr;
+  }
 }
 
 void LinkLoader::Trace(blink::Visitor* visitor) {
   visitor->Trace(finish_observer_);
+  visitor->Trace(htxg_prefetcher_);
   visitor->Trace(client_);
   visitor->Trace(prerender_);
   SingleModuleClient::Trace(visitor);
