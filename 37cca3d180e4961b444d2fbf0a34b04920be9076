@@ -22,6 +22,30 @@
       "revId": "37cca3d180e4961b444d2fbf0a34b04920be9076",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d517dc8_c6561a90",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2018-01-26T22:22:41Z",
+      "side": 1,
+      "message": "This is exposed publicly mainly because CompositorFrameSinkImpl and RootCompositorFrameSinkImpl call it and close the connection to the client if the call is not successful (rather than DCHECK). According to fsamuel@\u0027s comment at https://crbug.com/776154#c9, there are ideas to handle those cases in another way in which case we\u0027d be able to get rid of this function.",
+      "parentUuid": "8d04f412_476a2139",
+      "range": {
+        "startLine": 98,
+        "startChar": 2,
+        "endLine": 101,
+        "endChar": 44
+      },
+      "revId": "37cca3d180e4961b444d2fbf0a34b04920be9076",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
