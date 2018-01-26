@@ -117,6 +117,24 @@
       "revId": "0398abcddf5c6f86768593dbf7591b40f86eaa93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8244ba5_2a45f6e7",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-26T18:39:47Z",
+      "side": 1,
+      "message": "maybe just add a member to FetchContext?",
+      "parentUuid": "78677b89_5f6e42ce",
+      "revId": "0398abcddf5c6f86768593dbf7591b40f86eaa93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
