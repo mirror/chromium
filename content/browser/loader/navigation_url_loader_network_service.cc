@@ -740,10 +740,10 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
       network::mojom::URLLoaderClientRequest response_client_request;
       if (handler->MaybeCreateLoaderForResponse(response, &response_url_loader_,
                                                 &response_client_request,
-                                                url_loader_.get())) {
+                                                &url_loader_)) {
+        DCHECK(!url_loader_);
         response_loader_binding_.Bind(std::move(response_client_request));
         default_loader_used_ = false;
-        url_loader_.reset();
         return true;
       }
     }

@@ -58,16 +58,15 @@ class CONTENT_EXPORT URLLoaderRequestHandler {
   // The interface request for the URLLoaderClient is returned in the
   // |client_request| parameter.
   // The |url_loader| points to the ThrottlingURLLoader that currently controls
-  // the request. It can be optionally consumed to get the current
-  // URLLoaderClient and URLLoader so that the implementation can rebind them to
-  // intercept the inflight loading if necessary.  Note that the |url_loader|
-  // will be reset after this method is called, which will also drop the
-  // URLLoader held by |url_loader_| if it is not unbound yet.
+  // the request. When this method returns true, the handler must take the
+  // ownership of the |url_loader|. If there is no need to receive the response
+  // body, it is OK to just clear the |url_loader|, otherwise need to update the
+  // forwarding client of the ThrottlingURLLoader.
   virtual bool MaybeCreateLoaderForResponse(
       const network::ResourceResponseHead& response,
       network::mojom::URLLoaderPtr* loader,
       network::mojom::URLLoaderClientRequest* client_request,
-      ThrottlingURLLoader* url_loader);
+      std::unique_ptr<ThrottlingURLLoader>* url_loader);
 };
 
 }  // namespace content
