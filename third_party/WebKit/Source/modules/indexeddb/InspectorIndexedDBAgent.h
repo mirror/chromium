@@ -61,14 +61,16 @@ class MODULES_EXPORT InspectorIndexedDBAgent final
   void requestDatabase(const String& security_origin,
                        const String& database_name,
                        std::unique_ptr<RequestDatabaseCallback>) override;
-  void requestData(const String& security_origin,
-                   const String& database_name,
-                   const String& object_store_name,
-                   const String& index_name,
-                   int skip_count,
-                   int page_size,
-                   protocol::Maybe<protocol::IndexedDB::KeyRange>,
-                   std::unique_ptr<RequestDataCallback>) override;
+  void requestData(
+      const String& security_origin,
+      const String& database_name,
+      const String& object_store_name,
+      const String& index_name,
+      int skip_count,
+      int page_size,
+      protocol::Maybe<protocol::IndexedDB::KeyRange>,
+      protocol::Maybe<protocol::Array<protocol::IndexedDB::EntryTag>> tags,
+      std::unique_ptr<RequestDataCallback>) override;
   void deleteObjectStoreEntries(
       const String& security_origin,
       const String& database_name,

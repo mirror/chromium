@@ -36,6 +36,7 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/V8BindingForCore.h"
+#include "bindings/modules/v8/V8BindingForModules.h"
 #include "core/dom/DOMStringList.h"
 #include "core/dom/Document.h"
 #include "core/dom/ExecutionContext.h"
@@ -97,6 +98,8 @@ static const char kIndexedDBAgentEnabled[] = "indexedDBAgentEnabled";
 
 namespace {
 
+using IDBKeyTag = std::pair<std::unique_ptr<IDBKey>, int>;
+
 static const char kIndexedDBObjectGroup[] = "indexeddb";
 static const char kNoDocumentError[] = "No document for given frame found";
 
@@ -110,6 +113,45 @@ static Response AssertIDBFactory(Document* document, IDBFactory*& result) {
     return Response::Error("No IndexedDB factory for given frame found");
   result = idb_factory;
   return Response::OK();
+}
+
+std::unique_ptr<IDBKey> DecodeIDBKey(
+    v8_inspector::V8InspectorSession* v8_session,
+    ScriptState* script_state,
+    const String& id) {
+  v8::Local<v8::Value> value;
+  v8::Local<v8::Context> context;
+  DummyExceptionStateForTesting exception_state;
+  std::unique_ptr<v8_inspector::StringBuffer> error;
+  if (!id)
+    return nullptr;
+  if (!v8_session->unwrapObject(&error, ToV8InspectorStringView(id), &value,
+                                &context, nullptr)) {
+    return nullptr;
+  }
+  auto key = ScriptValue::To<std::unique_ptr<IDBKey>>(
+      script_state->GetIsolate(), value, exception_state);
+  if (exception_state.HadException())
+    return nullptr;
+  return key;
+}
+
+std::vector<IDBKeyTag> ToIDBKeyTags(
+    v8_inspector::V8InspectorSession* v8_session,
+    ScriptState* script_state,
+    Array<protocol::IndexedDB::EntryTag>* entry_tags) {
+  ScriptState::Scope scope(script_state);
+  std::vector<IDBKeyTag> result;
+  if (!entry_tags)
+    return result;
+  for (size_t i = 0; i < entry_tags->length(); i++) {
+    const auto& tag = entry_tags->get(i);
+    std::unique_ptr<IDBKey> idb_key = DecodeIDBKey(
+        v8_session, script_state, entryTag->getPrimaryKeyRemoteID());
+    if (idb_key)
+      result.push_back({std::move(idb_key), entryTag->getTag()});
+  }
+  return result;
 }
 
 class GetDatabaseNamesCallback final : public EventListener {
@@ -555,10 +597,11 @@ class OpenCursorCallback final : public EventListener {
       ScriptState* script_state,
       std::unique_ptr<RequestDataCallback> request_callback,
       int skip_count,
-      unsigned page_size) {
+      unsigned page_size,
+      std::vector<IDBKeyTag> key_tags) {
     return new OpenCursorCallback(v8_session, script_state,
                                   std::move(request_callback), skip_count,
-                                  page_size);
+                                  page_size, std::move(key_tags));
   }
 
   ~OpenCursorCallback() override = default;
@@ -635,6 +678,9 @@ class OpenCursorCallback final : public EventListener {
                 context, idb_cursor->value(script_state).V8Value(),
                 object_group, true /* generatePreview */))
             .build();
+    int tag;
+    if (FindTag(idb_cursor->IdbPrimaryKey(), &tag))
+      data_entry->setTag(tag);
     result_->addItem(std::move(data_entry));
   }
 
@@ -649,14 +695,26 @@ class OpenCursorCallback final : public EventListener {
                      ScriptState* script_state,
                      std::unique_ptr<RequestDataCallback> request_callback,
                      int skip_count,
-                     unsigned page_size)
+                     unsigned page_size,
+                     std::vector<IDBKeyTag> key_tags)
       : EventListener(EventListener::kCPPEventListenerType),
         v8_session_(v8_session),
         script_state_(script_state),
         request_callback_(std::move(request_callback)),
         skip_count_(skip_count),
-        page_size_(page_size) {
+        page_size_(page_size),
+        key_tags_(std::move(key_tags)) {
     result_ = Array<DataEntry>::create();
+  }
+
+  bool FindTag(const IDBKey* key, int* tag) {
+    for (const IDBKeyTag& key_tag : key_tags_) {
+      if (key_tag.first->IsEqual(key)) {
+        *tag = key_tag.second;
+        return true;
+      }
+    }
+    return false;
   }
 
   v8_inspector::V8InspectorSession* v8_session_;
@@ -665,6 +723,7 @@ class OpenCursorCallback final : public EventListener {
   int skip_count_;
   unsigned page_size_;
   std::unique_ptr<Array<DataEntry>> result_;
+  std::vector<IDBKeyTag> key_tags_;
 };
 
 class DataLoader final : public ExecutableWithDatabase<RequestDataCallback> {
@@ -676,10 +735,11 @@ class DataLoader final : public ExecutableWithDatabase<RequestDataCallback> {
       const String& index_name,
       IDBKeyRange* idb_key_range,
       int skip_count,
-      unsigned page_size) {
+      unsigned page_size,
+      Maybe<Array<protocol::IndexedDB::EntryTag>> tags) {
     return base::AdoptRef(new DataLoader(
         v8_session, std::move(request_callback), object_store_name, index_name,
-        idb_key_range, skip_count, page_size));
+        idb_key_range, skip_count, page_size, std::move(tags)));
   }
 
   ~DataLoader() override = default;
@@ -716,7 +776,8 @@ class DataLoader final : public ExecutableWithDatabase<RequestDataCallback> {
     }
     OpenCursorCallback* open_cursor_callback = OpenCursorCallback::Create(
         v8_session_, script_state, std::move(request_callback_), skip_count_,
-        page_size_);
+        page_size_,
+        ToIDBKeyTags(v8_session_, script_state, tags_.fromMaybe(nullptr)));
     idb_request->addEventListener(EventTypeNames::success, open_cursor_callback,
                                   false);
   }
@@ -730,14 +791,16 @@ class DataLoader final : public ExecutableWithDatabase<RequestDataCallback> {
              const String& index_name,
              IDBKeyRange* idb_key_range,
              int skip_count,
-             unsigned page_size)
+             unsigned page_size,
+             Maybe<Array<protocol::IndexedDB::EntryTag>> tags)
       : v8_session_(v8_session),
         request_callback_(std::move(request_callback)),
         object_store_name_(object_store_name),
         index_name_(index_name),
         idb_key_range_(idb_key_range),
         skip_count_(skip_count),
-        page_size_(page_size) {}
+        page_size_(page_size),
+        tags_(std::move(tags)) {}
 
   v8_inspector::V8InspectorSession* v8_session_;
   std::unique_ptr<RequestDataCallback> request_callback_;
@@ -746,6 +809,7 @@ class DataLoader final : public ExecutableWithDatabase<RequestDataCallback> {
   Persistent<IDBKeyRange> idb_key_range_;
   int skip_count_;
   unsigned page_size_;
+  Maybe<Array<protocol::IndexedDB::EntryTag>> tags_;
 };
 
 }  // namespace
@@ -842,6 +906,7 @@ void InspectorIndexedDBAgent::requestData(
     int skip_count,
     int page_size,
     Maybe<protocol::IndexedDB::KeyRange> key_range,
+    Maybe<Array<protocol::IndexedDB::EntryTag>> tags,
     std::unique_ptr<RequestDataCallback> request_callback) {
   IDBKeyRange* idb_key_range =
       key_range.isJust() ? IdbKeyRangeFromKeyRange(key_range.fromJust())
@@ -853,7 +918,7 @@ void InspectorIndexedDBAgent::requestData(
 
   scoped_refptr<DataLoader> data_loader = DataLoader::Create(
       v8_session_, std::move(request_callback), object_store_name, index_name,
-      idb_key_range, skip_count, page_size);
+      idb_key_range, skip_count, page_size, std::move(tags));
 
   data_loader->Start(
       inspected_frames_->FrameWithSecurityOrigin(security_origin),
@@ -1115,5 +1180,4 @@ void InspectorIndexedDBAgent::Trace(blink::Visitor* visitor) {
   visitor->Trace(inspected_frames_);
   InspectorBaseAgent::Trace(visitor);
 }
-
 }  // namespace blink
