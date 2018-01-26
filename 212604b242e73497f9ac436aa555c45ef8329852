@@ -46,6 +46,30 @@
       "revId": "212604b242e73497f9ac436aa555c45ef8329852",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7889b91a_3d929e9c",
+        "filename": "skia/public/interfaces/bitmap_skbitmap_struct_traits.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-01-26T13:45:03Z",
+      "side": 1,
+      "message": "We don\u0027t really Mojo... what exactly does it mean to map these as EnumTraits?  Is it, one day we might want to support these here instead of bail out?\n\nFor now these are experimental... would it make more sense to add a default case to sop up anything not explicitly supported or unsupported?",
+      "parentUuid": "37de01b3_45317aae",
+      "range": {
+        "startLine": 78,
+        "startChar": 7,
+        "endLine": 78,
+        "endChar": 30
+      },
+      "revId": "212604b242e73497f9ac436aa555c45ef8329852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
