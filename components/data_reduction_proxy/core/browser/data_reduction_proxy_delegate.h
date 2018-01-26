@@ -80,10 +80,9 @@ class DataReductionProxyDelegate
   // NetworkChangeNotifier::IPAddressObserver:
   void OnIPAddressChanged() override;
 
-  bool GetAlternativeProxy(const GURL& url,
-                           const net::ProxyServer& resolved_proxy_server,
+  void GetAlternativeProxy(const GURL& url,
                            const net::ProxyRetryInfoMap& proxy_retry_info,
-                           net::ProxyServer* alternative_proxy_server) const;
+                           net::ProxyInfo* result) const;
 
   const DataReductionProxyConfig* config_;
   const DataReductionProxyConfigurator* configurator_;
