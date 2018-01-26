@@ -31,10 +31,10 @@ with qemu_target.QemuTarget(tmpdir, 'x64') as target:
       tmp_path = tmpdir + "/payload"
       with open(tmp_path, "w") as tmpfile:
         tmpfile.write(TEST_PAYLOAD)
-      target.CopyTo(tmp_path, '/tmp/payload')
+      target.PutFile(tmp_path, '/tmp/payload')
 
       tmp_path_roundtrip = tmp_path + ".roundtrip"
-      target.CopyFrom('/tmp/payload', tmp_path_roundtrip)
+      target.GetFile('/tmp/payload', tmp_path_roundtrip)
       with open(tmp_path_roundtrip) as roundtrip:
         self.assertEqual(TEST_PAYLOAD, roundtrip.read())
 

@@ -71,7 +71,7 @@ def MakePackagePath(file_path, roots):
 
 
 def BuildManifest(root_dir, out_dir, app_name, runtime_deps_file, output_path):
-  with open(output_path, 'w') as output:
+  with open(output_path, "w") as output:
     # Process the runtime deps file for file paths, recursively walking
     # directories as needed.
     # runtime_deps may contain duplicate paths, so use a set for
@@ -82,8 +82,6 @@ def BuildManifest(root_dir, out_dir, app_name, runtime_deps_file, output_path):
       if os.path.isdir(next_path):
         for root, _, files in os.walk(next_path):
           for next_file in files:
-            if next_file.startswith('.'):
-              continue
             expanded_files.add(os.path.abspath(os.path.join(root, next_file)))
       else:
         expanded_files.add(os.path.abspath(next_path))
