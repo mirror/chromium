@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b6713999_99be02ee",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-26T20:21:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "856a9853_6288f624",
+      "range": {
+        "startLine": 54,
+        "startChar": 5,
+        "endLine": 54,
+        "endChar": 28
+      },
+      "revId": "e0fbabb38a25f79369451a2d68c96a4dbf90a518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da3403d9_fadcf609",
         "filename": "chrome/browser/vr/elements/ui_element.cc",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2018-01-26T18:44:54Z",
       "side": 1,
       "message": "Unrelated question since this code is changing:  Does this work reliably with axis-angle?  Ie rotating ({1, 0, 0}, PI} is the same as {{PI, 0, 0}, 1}",
+      "revId": "e0fbabb38a25f79369451a2d68c96a4dbf90a518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea2ceb6b_4d8d49b9",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-26T20:21:16Z",
+      "side": 1,
+      "message": "Yeah, it doesn\u0027t work with axis angle. The way we build our rotation in UiElement is out of x, y, and z rotations. If you have an element that can produce a different transform, you\u0027d need to write your own DumpGeometry override. In fact, the repositioner does this: https://cs.chromium.org/chromium/src/chrome/browser/vr/elements/repositioner.cc?rcl\u003d484efec4dd6d485370023b7465b92b340128d2f2\u0026l\u003d77",
+      "parentUuid": "da3403d9_fadcf609",
       "revId": "e0fbabb38a25f79369451a2d68c96a4dbf90a518",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "b4fc2ebd_a689dd5c",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-26T20:21:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d09af41_89c1dab5",
+      "revId": "e0fbabb38a25f79369451a2d68c96a4dbf90a518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ad362a0_7c9c502a",
         "filename": "chrome/browser/vr/elements/ui_element.h",
         "patchSetId": 2
@@ -73,6 +133,24 @@
       "revId": "e0fbabb38a25f79369451a2d68c96a4dbf90a518",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bca2a16b_43e3a065",
+        "filename": "chrome/browser/vr/elements/ui_element.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-26T20:21:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ad362a0_7c9c502a",
+      "revId": "e0fbabb38a25f79369451a2d68c96a4dbf90a518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "cea4c9f4_4fdeb8eb",
+        "filename": "chrome/browser/vr/ui_scene_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-26T20:21:16Z",
+      "side": 1,
+      "message": "Truly invisible elements aren\u0027t hit testable, but I want this button to be hittable even when it\u0027s hiding. Added an explanatory comment.",
+      "parentUuid": "bc088e38_b78f983f",
+      "revId": "e0fbabb38a25f79369451a2d68c96a4dbf90a518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4643d639_815f490d",
         "filename": "chrome/browser/vr/ui_scene_creator.cc",
         "patchSetId": 2
@@ -107,6 +203,24 @@
       "revId": "e0fbabb38a25f79369451a2d68c96a4dbf90a518",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e43be5d5_45cac299",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1284,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-26T20:21:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4643d639_815f490d",
+      "revId": "e0fbabb38a25f79369451a2d68c96a4dbf90a518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
