@@ -69,6 +69,30 @@
       "revId": "3dd5f6cec014b19199e7bee8a0ed51c9d9e5f73f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "781b6135_6ce7a3e8",
+        "filename": "services/shape_detection/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2018-01-26T07:00:29Z",
+      "side": 1,
+      "message": "\u003e I suggest land first the face_detection_provider_mac.*, which is relatively straightforward\n\nFirst CL in here [1].\n\n\u003e this means 10.13 code will be compiled, but no tests run.\n\nShould we add services_unittests in here [2].\n\n[1] https://chromium-review.googlesource.com/c/chromium/src/+/888478\n[2] https://cs.chromium.org/chromium/src/testing/buildbot/chromium.fyi.json?type\u003dcs\u0026q\u003d%22Chromium+Mac+10.13%22\u0026sq\u003dpackage:chromium\u0026l\u003d2029",
+      "parentUuid": "42930d6d_f0469890",
+      "range": {
+        "startLine": 43,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 39
+      },
+      "revId": "3dd5f6cec014b19199e7bee8a0ed51c9d9e5f73f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
