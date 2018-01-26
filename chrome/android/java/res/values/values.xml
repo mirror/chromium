@@ -64,11 +64,6 @@
     <!-- Our manage space activity. Default pre-KitKat to be nothing. -->
     <string name="manage_space_activity"></string>
 
-    <!-- Whether the device is a tablet or large tablet. Used to determine which resources the OS
-         loaded. -->
-    <bool name="is_tablet">false</bool>
-    <bool name="is_large_tablet">false</bool>
-
     <!-- Value for scaleX to mirror drawables correctly for LTR / RTL layouts. -->
     <integer name="automirror_scale_x">1</integer>
 
@@ -76,4 +71,8 @@
     <integer name="list_item_level_default">0</integer>
     <integer name="list_item_level_selected">1</integer>
     <integer name="list_item_level_incognito">2</integer>
+
+    <!-- Whether the device is a phone, tablet or large tablet. Used to determine which resources
+         the OS loaded. -->
+    <integer name="min_screen_width_bucket">1</integer>
 </resources>

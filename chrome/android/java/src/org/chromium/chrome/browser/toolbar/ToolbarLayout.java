@@ -210,11 +210,6 @@ public abstract class ToolbarLayout extends FrameLayout implements Toolbar {
             }
 
             @Override
-            public boolean shouldShowSecurityIcon() {
-                return false;
-            }
-
-            @Override
             public boolean shouldShowVerboseStatus() {
                 return false;
             }
@@ -225,7 +220,7 @@ public abstract class ToolbarLayout extends FrameLayout implements Toolbar {
             }
 
             @Override
-            public int getSecurityIconResource() {
+            public int getSecurityIconResource(boolean isTablet) {
                 return 0;
             }
         };

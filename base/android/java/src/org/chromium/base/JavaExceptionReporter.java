@@ -54,6 +54,19 @@ public class JavaExceptionReporter implements Thread.UncaughtExceptionHandler {
         nativeReportJavaStackTrace(stackTrace);
     }
 
+    /**
+     * Report and upload the stack trace as if it was a crash. This is very expensive and should
+     * be called rarely and only on the UI thread to avoid corrupting other crash uploads. Ideally
+     * only called in idle handlers.
+     *
+     * @param e The exception to report.
+     */
+    @UiThread
+    public static void reportStackTrace(Throwable e) {
+        assert ThreadUtils.runningOnUiThread();
+        nativeReportJavaException(false, e);
+    }
+
     @CalledByNative
     private static void installHandler(boolean crashAfterReport) {
         Thread.setDefaultUncaughtExceptionHandler(new JavaExceptionReporter(
