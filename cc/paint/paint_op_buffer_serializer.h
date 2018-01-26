@@ -28,6 +28,7 @@ class CC_PAINT_EXPORT PaintOpBufferSerializer {
     gfx::RectF playback_rect;
     gfx::Vector2dF post_translation;
     gfx::SizeF post_scale = gfx::SizeF(1.f, 1.f);
+    bool requires_clear = true;
   };
   // Serialize the buffer with a preamble. This function wraps the buffer in a
   // save/restore and includes any translations and/or scales as specified by

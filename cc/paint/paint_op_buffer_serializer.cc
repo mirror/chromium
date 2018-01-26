@@ -102,6 +102,11 @@ void PaintOpBufferSerializer::SerializePreamble(
     ScaleOp scale_op(preamble.post_scale.width(), preamble.post_scale.height());
     SerializeOp(&scale_op, options, params);
   }
+
+  if (preamble.requires_clear) {
+    DrawColorOp clear(SK_ColorTRANSPARENT, SkBlendMode::kSrc);
+    SerializeOp(&clear, options, params);
+  }
 }
 
 void PaintOpBufferSerializer::SerializeBuffer(

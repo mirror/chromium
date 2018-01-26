@@ -56,10 +56,14 @@ static void RasterizeSourceOOP(
   // TODO(enne): need to pass color space into this function as well.
   float recording_to_raster_scale =
       transform.scale() / raster_source->recording_scale_factor();
+  // TODO(enne): could skip the clear on new textures, as the service side has
+  // to do that anyway.  resource_has_previous_content implies that the texture
+  // is not new, but the reverse does not hold, so more plumbing is needed.
   ri->RasterCHROMIUM(raster_source->GetDisplayItemList().get(),
                      playback_settings.image_provider,
                      raster_full_rect.OffsetFromOrigin(), playback_rect,
-                     transform.translation(), recording_to_raster_scale);
+                     transform.translation(), recording_to_raster_scale,
+                     raster_source->requires_clear());
   ri->EndRasterCHROMIUM();
 
   ri->DeleteTextures(1, &texture_id);
