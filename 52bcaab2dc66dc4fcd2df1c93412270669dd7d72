@@ -16,6 +16,24 @@
       "revId": "52bcaab2dc66dc4fcd2df1c93412270669dd7d72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24be4025_51aae887",
+        "filename": "chrome/browser/vr/model/color_scheme.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-26T21:24:51Z",
+      "side": 1,
+      "message": "I wrote this code assuming that all versions beyond 1.1 will use these colors. I\u0027m sure that\u0027s not true, but when we have a version that doesn\u0027t use these colors, I would structure the code as follows\n\nif (component_version()[0] \u003e\u003d kSomeNewConstant \u0026\u0026 ...) {\n  // set future colors.\n} else if (/* the gradients conditionals */) {\n  // set the gradient colors.\n}",
+      "parentUuid": "64d88304_51db4981",
+      "revId": "52bcaab2dc66dc4fcd2df1c93412270669dd7d72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
