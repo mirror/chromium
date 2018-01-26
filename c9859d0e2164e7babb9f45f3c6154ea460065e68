@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6d914583_b044bbc4",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-26T08:19:00Z",
+      "side": 1,
+      "message": "Ack, changed thsi to just link to crbug.com/803125",
+      "parentUuid": "dd3c9efc_74350790",
+      "revId": "c9859d0e2164e7babb9f45f3c6154ea460065e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7de47f0f_98c6ce48",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/serviceworker/resources/fetch-request-body-file-test.php",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-26T05:38:06Z",
       "side": 1,
       "message": "Would it be tough to reuse the same file?",
+      "revId": "c9859d0e2164e7babb9f45f3c6154ea460065e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f4789bf_2c07f655",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/serviceworker/resources/fetch-request-body-file-test.php",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-26T08:19:00Z",
+      "side": 1,
+      "message": "Yes, it looks like http/tests/local run in a weird server config without access to the other files. Added comment.",
+      "parentUuid": "7de47f0f_98c6ce48",
       "revId": "c9859d0e2164e7babb9f45f3c6154ea460065e68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
