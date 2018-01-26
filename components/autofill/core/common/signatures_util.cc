@@ -43,7 +43,7 @@ std::string StripDigitsIfRequired(const base::string16& input) {
 
 }  // namespace
 
-FormSignature CalculateFormSignature(const FormData& form_data) {
+FormSignature CalculateFormSignature(const FormData& form_data, bool record) {
   const GURL& target_url = form_data.action;
   const GURL& source_url = form_data.origin;
   std::string scheme(target_url.scheme());
@@ -70,6 +70,8 @@ FormSignature CalculateFormSignature(const FormData& form_data) {
   std::string form_string = scheme + "://" + host + "&" +
                             base::UTF16ToUTF8(form_data.name) +
                             form_signature_field_names;
+
+  if (record) LOG(ERROR) << form_string;
 
   return StrToHash64Bit(form_string);
 }
