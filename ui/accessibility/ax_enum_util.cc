@@ -111,7 +111,7 @@ const char* ToString(ax::mojom::Event event) {
   return "";
 }
 
-ax::mojom::Event ParseEvent(const char* event) {
+ax::mojom::Event ParseEvent(const char *event) {
   if (0 == strcmp(event, "none"))
     return ax::mojom::Event::kNone;
   if (0 == strcmp(event, "activedescendantchanged"))
@@ -325,6 +325,14 @@ const char* ToString(ax::mojom::Role role) {
       return "inputTime";
     case ax::mojom::Role::kLabelText:
       return "labelText";
+    case ax::mojom::Role::kLayoutTable:
+      return "layoutTable";
+    case ax::mojom::Role::kLayoutTableCell:
+      return "layoutTableCell";
+    case ax::mojom::Role::kLayoutTableColumn:
+      return "layoutTableColumn";
+    case ax::mojom::Role::kLayoutTableRow:
+      return "layoutTableRow";
     case ax::mojom::Role::kLegend:
       return "legend";
     case ax::mojom::Role::kLineBreak:
@@ -474,7 +482,7 @@ const char* ToString(ax::mojom::Role role) {
   return "";
 }
 
-ax::mojom::Role ParseRole(const char* role) {
+ax::mojom::Role ParseRole(const char *role) {
   if (0 == strcmp(role, "none"))
     return ax::mojom::Role::kNone;
   if (0 == strcmp(role, "abbr"))
@@ -585,6 +593,14 @@ ax::mojom::Role ParseRole(const char* role) {
     return ax::mojom::Role::kInputTime;
   if (0 == strcmp(role, "labelText"))
     return ax::mojom::Role::kLabelText;
+  if (0 == strcmp(role, "layoutTable"))
+    return ax::mojom::Role::kLayoutTable;
+  if (0 == strcmp(role, "layoutTableCell"))
+    return ax::mojom::Role::kLayoutTableCell;
+  if (0 == strcmp(role, "layoutTableColumn"))
+    return ax::mojom::Role::kLayoutTableColumn;
+  if (0 == strcmp(role, "layoutTableRow"))
+    return ax::mojom::Role::kLayoutTableRow;
   if (0 == strcmp(role, "legend"))
     return ax::mojom::Role::kLegend;
   if (0 == strcmp(role, "lineBreak"))
@@ -779,7 +795,7 @@ const char* ToString(ax::mojom::State state) {
   return "";
 }
 
-ax::mojom::State ParseState(const char* state) {
+ax::mojom::State ParseState(const char *state) {
   if (0 == strcmp(state, "none"))
     return ax::mojom::State::kNone;
   if (0 == strcmp(state, "collapsed"))
@@ -878,7 +894,7 @@ const char* ToString(ax::mojom::Action action) {
   return "";
 }
 
-ax::mojom::Action ParseAction(const char* action) {
+ax::mojom::Action ParseAction(const char *action) {
   if (0 == strcmp(action, "none"))
     return ax::mojom::Action::kNone;
   if (0 == strcmp(action, "blur"))
@@ -943,7 +959,7 @@ const char* ToString(ax::mojom::ActionFlags action_flags) {
   return "";
 }
 
-ax::mojom::ActionFlags ParseActionFlags(const char* action_flags) {
+ax::mojom::ActionFlags ParseActionFlags(const char *action_flags) {
   if (0 == strcmp(action_flags, "none"))
     return ax::mojom::ActionFlags::kNone;
   if (0 == strcmp(action_flags, "requestImages"))
@@ -980,8 +996,7 @@ const char* ToString(ax::mojom::DefaultActionVerb default_action_verb) {
   return "";
 }
 
-ax::mojom::DefaultActionVerb ParseDefaultActionVerb(
-    const char* default_action_verb) {
+ax::mojom::DefaultActionVerb ParseDefaultActionVerb(const char *default_action_verb) {
   if (0 == strcmp(default_action_verb, "none"))
     return ax::mojom::DefaultActionVerb::kNone;
   if (0 == strcmp(default_action_verb, "activate"))
@@ -1022,7 +1037,7 @@ const char* ToString(ax::mojom::Mutation mutation) {
   return "";
 }
 
-ax::mojom::Mutation ParseMutation(const char* mutation) {
+ax::mojom::Mutation ParseMutation(const char *mutation) {
   if (0 == strcmp(mutation, "none"))
     return ax::mojom::Mutation::kNone;
   if (0 == strcmp(mutation, "nodeCreated"))
@@ -1091,7 +1106,7 @@ const char* ToString(ax::mojom::StringAttribute string_attribute) {
   return "";
 }
 
-ax::mojom::StringAttribute ParseStringAttribute(const char* string_attribute) {
+ax::mojom::StringAttribute ParseStringAttribute(const char *string_attribute) {
   if (0 == strcmp(string_attribute, "none"))
     return ax::mojom::StringAttribute::kNone;
   if (0 == strcmp(string_attribute, "accessKey"))
@@ -1250,7 +1265,7 @@ const char* ToString(ax::mojom::IntAttribute int_attribute) {
   return "";
 }
 
-ax::mojom::IntAttribute ParseIntAttribute(const char* int_attribute) {
+ax::mojom::IntAttribute ParseIntAttribute(const char *int_attribute) {
   if (0 == strcmp(int_attribute, "none"))
     return ax::mojom::IntAttribute::kNone;
   if (0 == strcmp(int_attribute, "defaultActionVerb"))
@@ -1373,7 +1388,7 @@ const char* ToString(ax::mojom::FloatAttribute float_attribute) {
   return "";
 }
 
-ax::mojom::FloatAttribute ParseFloatAttribute(const char* float_attribute) {
+ax::mojom::FloatAttribute ParseFloatAttribute(const char *float_attribute) {
   if (0 == strcmp(float_attribute, "none"))
     return ax::mojom::FloatAttribute::kNone;
   if (0 == strcmp(float_attribute, "valueForRange"))
@@ -1420,7 +1435,7 @@ const char* ToString(ax::mojom::BoolAttribute bool_attribute) {
   return "";
 }
 
-ax::mojom::BoolAttribute ParseBoolAttribute(const char* bool_attribute) {
+ax::mojom::BoolAttribute ParseBoolAttribute(const char *bool_attribute) {
   if (0 == strcmp(bool_attribute, "none"))
     return ax::mojom::BoolAttribute::kNone;
   if (0 == strcmp(bool_attribute, "busy"))
@@ -1491,8 +1506,7 @@ const char* ToString(ax::mojom::IntListAttribute int_list_attribute) {
   return "";
 }
 
-ax::mojom::IntListAttribute ParseIntListAttribute(
-    const char* int_list_attribute) {
+ax::mojom::IntListAttribute ParseIntListAttribute(const char *int_list_attribute) {
   if (0 == strcmp(int_list_attribute, "none"))
     return ax::mojom::IntListAttribute::kNone;
   if (0 == strcmp(int_list_attribute, "indirectChildIds"))
@@ -1543,8 +1557,7 @@ const char* ToString(ax::mojom::StringListAttribute string_list_attribute) {
   return "";
 }
 
-ax::mojom::StringListAttribute ParseStringListAttribute(
-    const char* string_list_attribute) {
+ax::mojom::StringListAttribute ParseStringListAttribute(const char *string_list_attribute) {
   if (0 == strcmp(string_list_attribute, "none"))
     return ax::mojom::StringListAttribute::kNone;
   if (0 == strcmp(string_list_attribute, "customActionDescriptions"))
@@ -1616,15 +1629,14 @@ const char* ToString(ax::mojom::MarkerType marker_type) {
       return "spellingTextMatchActiveSuggestionSuggestion";
     case ax::mojom::MarkerType::kGrammarTextMatchActiveSuggestionSuggestion:
       return "grammarTextMatchActiveSuggestionSuggestion";
-    case ax::mojom::MarkerType::
-        kSpellingGrammarTextMatchActiveSuggestionSuggestion:
+    case ax::mojom::MarkerType::kSpellingGrammarTextMatchActiveSuggestionSuggestion:
       return "spellingGrammarTextMatchActiveSuggestionSuggestion";
   }
 
   return "";
 }
 
-ax::mojom::MarkerType ParseMarkerType(const char* marker_type) {
+ax::mojom::MarkerType ParseMarkerType(const char *marker_type) {
   if (0 == strcmp(marker_type, "none"))
     return ax::mojom::MarkerType::kNone;
   if (0 == strcmp(marker_type, "spelling"))
@@ -1687,10 +1699,8 @@ ax::mojom::MarkerType ParseMarkerType(const char* marker_type) {
     return ax::mojom::MarkerType::kSpellingTextMatchActiveSuggestionSuggestion;
   if (0 == strcmp(marker_type, "grammarTextMatchActiveSuggestionSuggestion"))
     return ax::mojom::MarkerType::kGrammarTextMatchActiveSuggestionSuggestion;
-  if (0 ==
-      strcmp(marker_type, "spellingGrammarTextMatchActiveSuggestionSuggestion"))
-    return ax::mojom::MarkerType::
-        kSpellingGrammarTextMatchActiveSuggestionSuggestion;
+  if (0 == strcmp(marker_type, "spellingGrammarTextMatchActiveSuggestionSuggestion"))
+    return ax::mojom::MarkerType::kSpellingGrammarTextMatchActiveSuggestionSuggestion;
   return ax::mojom::MarkerType::kNone;
 }
 
@@ -1711,7 +1721,7 @@ const char* ToString(ax::mojom::TextDirection text_direction) {
   return "";
 }
 
-ax::mojom::TextDirection ParseTextDirection(const char* text_direction) {
+ax::mojom::TextDirection ParseTextDirection(const char *text_direction) {
   if (0 == strcmp(text_direction, "none"))
     return ax::mojom::TextDirection::kNone;
   if (0 == strcmp(text_direction, "ltr"))
@@ -1764,7 +1774,7 @@ const char* ToString(ax::mojom::TextStyle text_style) {
   return "";
 }
 
-ax::mojom::TextStyle ParseTextStyle(const char* text_style) {
+ax::mojom::TextStyle ParseTextStyle(const char *text_style) {
   if (0 == strcmp(text_style, "none"))
     return ax::mojom::TextStyle::kNone;
   if (0 == strcmp(text_style, "textStyleBold"))
@@ -1825,8 +1835,7 @@ const char* ToString(ax::mojom::AriaCurrentState aria_current_state) {
   return "";
 }
 
-ax::mojom::AriaCurrentState ParseAriaCurrentState(
-    const char* aria_current_state) {
+ax::mojom::AriaCurrentState ParseAriaCurrentState(const char *aria_current_state) {
   if (0 == strcmp(aria_current_state, "none"))
     return ax::mojom::AriaCurrentState::kNone;
   if (0 == strcmp(aria_current_state, "false"))
@@ -1867,7 +1876,7 @@ const char* ToString(ax::mojom::InvalidState invalid_state) {
   return "";
 }
 
-ax::mojom::InvalidState ParseInvalidState(const char* invalid_state) {
+ax::mojom::InvalidState ParseInvalidState(const char *invalid_state) {
   if (0 == strcmp(invalid_state, "none"))
     return ax::mojom::InvalidState::kNone;
   if (0 == strcmp(invalid_state, "false"))
@@ -1896,7 +1905,7 @@ const char* ToString(ax::mojom::Restriction restriction) {
   return "";
 }
 
-ax::mojom::Restriction ParseRestriction(const char* restriction) {
+ax::mojom::Restriction ParseRestriction(const char *restriction) {
   if (0 == strcmp(restriction, "none"))
     return ax::mojom::Restriction::kNone;
   if (0 == strcmp(restriction, "readOnly"))
@@ -1921,7 +1930,7 @@ const char* ToString(ax::mojom::CheckedState checked_state) {
   return "";
 }
 
-ax::mojom::CheckedState ParseCheckedState(const char* checked_state) {
+ax::mojom::CheckedState ParseCheckedState(const char *checked_state) {
   if (0 == strcmp(checked_state, "none"))
     return ax::mojom::CheckedState::kNone;
   if (0 == strcmp(checked_state, "false"))
@@ -1950,7 +1959,7 @@ const char* ToString(ax::mojom::SortDirection sort_direction) {
   return "";
 }
 
-ax::mojom::SortDirection ParseSortDirection(const char* sort_direction) {
+ax::mojom::SortDirection ParseSortDirection(const char *sort_direction) {
   if (0 == strcmp(sort_direction, "none"))
     return ax::mojom::SortDirection::kNone;
   if (0 == strcmp(sort_direction, "unsorted"))
@@ -1987,7 +1996,7 @@ const char* ToString(ax::mojom::NameFrom name_from) {
   return "";
 }
 
-ax::mojom::NameFrom ParseNameFrom(const char* name_from) {
+ax::mojom::NameFrom ParseNameFrom(const char *name_from) {
   if (0 == strcmp(name_from, "none"))
     return ax::mojom::NameFrom::kNone;
   if (0 == strcmp(name_from, "uninitialized"))
@@ -2026,7 +2035,7 @@ const char* ToString(ax::mojom::DescriptionFrom description_from) {
   return "";
 }
 
-ax::mojom::DescriptionFrom ParseDescriptionFrom(const char* description_from) {
+ax::mojom::DescriptionFrom ParseDescriptionFrom(const char *description_from) {
   if (0 == strcmp(description_from, "none"))
     return ax::mojom::DescriptionFrom::kNone;
   if (0 == strcmp(description_from, "uninitialized"))
@@ -2057,7 +2066,7 @@ const char* ToString(ax::mojom::EventFrom event_from) {
   return "";
 }
 
-ax::mojom::EventFrom ParseEventFrom(const char* event_from) {
+ax::mojom::EventFrom ParseEventFrom(const char *event_from) {
   if (0 == strcmp(event_from, "none"))
     return ax::mojom::EventFrom::kNone;
   if (0 == strcmp(event_from, "user"))
@@ -2114,7 +2123,7 @@ const char* ToString(ax::mojom::Gesture gesture) {
   return "";
 }
 
-ax::mojom::Gesture ParseGesture(const char* gesture) {
+ax::mojom::Gesture ParseGesture(const char *gesture) {
   if (0 == strcmp(gesture, "none"))
     return ax::mojom::Gesture::kNone;
   if (0 == strcmp(gesture, "click"))
@@ -2169,7 +2178,7 @@ const char* ToString(ax::mojom::TextAffinity text_affinity) {
   return "";
 }
 
-ax::mojom::TextAffinity ParseTextAffinity(const char* text_affinity) {
+ax::mojom::TextAffinity ParseTextAffinity(const char *text_affinity) {
   if (0 == strcmp(text_affinity, "none"))
     return ax::mojom::TextAffinity::kNone;
   if (0 == strcmp(text_affinity, "downstream"))
@@ -2196,7 +2205,7 @@ const char* ToString(ax::mojom::TreeOrder tree_order) {
   return "";
 }
 
-ax::mojom::TreeOrder ParseTreeOrder(const char* tree_order) {
+ax::mojom::TreeOrder ParseTreeOrder(const char *tree_order) {
   if (0 == strcmp(tree_order, "none"))
     return ax::mojom::TreeOrder::kNone;
   if (0 == strcmp(tree_order, "undefined"))
