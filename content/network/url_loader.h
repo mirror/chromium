@@ -32,11 +32,13 @@ struct ResourceResponse;
 namespace content {
 
 class NetworkContext;
+class NetworkServiceURLLoaderFactory;
 
 class CONTENT_EXPORT URLLoader : public network::mojom::URLLoader,
                                  public net::URLRequest::Delegate {
  public:
-  URLLoader(NetworkContext* context,
+  URLLoader(NetworkServiceURLLoaderFactory* url_loader_factory,
+            NetworkContext* context,
             network::mojom::URLLoaderRequest url_loader_request,
             int32_t options,
             const network::ResourceRequest& request,
@@ -92,7 +94,8 @@ class CONTENT_EXPORT URLLoader : public network::mojom::URLLoader,
   void OnSSLCertificateErrorResponse(const net::SSLInfo& ssl_info,
                                      int net_error);
 
-  NetworkContext* context_;
+  NetworkServiceURLLoaderFactory* const url_loader_factory_;
+  NetworkContext* const context_;
   int32_t options_;
   int resource_type_;
   bool is_load_timing_enabled_;
