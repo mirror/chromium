@@ -2,11 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef THIRD_PARTY_WEBKIT_SOURCE_PLATFORM_SCHEDULER_UTIL_THREAD_TYPE_H_
-#define THIRD_PARTY_WEBKIT_SOURCE_PLATFORM_SCHEDULER_UTIL_THREAD_TYPE_H_
+#ifndef ThreadType_h
+#define ThreadType_h
+
+#include "public/platform/WebCommon.h"
 
 namespace blink {
-namespace scheduler {
 
 enum class ThreadType {
   kMainThread = 0,
@@ -17,10 +18,21 @@ enum class ThreadType {
   kAnimationWorkletThread = 5,
   kServiceWorkerThread = 6,
   kAudioWorkletThread = 7,
-  kCount = 8
+  kFileThread = 8,
+  kDatabaseThread = 9,
+  kWebAudioThread = 10,
+  kScriptStreamerThread = 11,
+  kOfflineAudioRenderThread = 12,
+  kFIFOClientThread = 13,
+  kReverbConvolutionBackgroundThread = 14,
+  kHRTFDatabaseLoaderThread = 15,
+  kTestThread = 16,
+
+  kCount = 17
 };
 
-}  // namespace scheduler
+BLINK_PLATFORM_EXPORT const char* GetNameForThreadType(ThreadType);
+
 }  // namespace blink
 
-#endif  // THIRD_PARTY_WEBKIT_SOURCE_PLATFORM_SCHEDULER_UTIL_THREAD_TYPE_H_
+#endif  // ThreadType_h
