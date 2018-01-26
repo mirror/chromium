@@ -15,6 +15,7 @@
 #include "ipc/ipc_message_macros.h"
 #include "net/base/ip_address.h"
 #include "net/base/network_interfaces.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "third_party/webrtc/rtc_base/asyncpacketsocket.h"
 
 #undef IPC_MESSAGE_EXPORT
@@ -124,12 +125,14 @@ IPC_MESSAGE_CONTROL3(P2PHostMsg_AcceptIncomingTcpConnection,
                     int /* connected_socket_id */)
 
 // TODO(sergeyu): Use shared memory to pass the data.
-IPC_MESSAGE_CONTROL5(P2PHostMsg_Send,
-                     int /* socket_id */,
-                     net::IPEndPoint /* socket_address */,
-                     std::vector<char> /* data */,
-                     rtc::PacketOptions /* packet options */,
-                     uint64_t /* packet_id */)
+IPC_MESSAGE_CONTROL6(
+    P2PHostMsg_Send,
+    int /* socket_id */,
+    net::IPEndPoint /* socket_address */,
+    std::vector<char> /* data */,
+    rtc::PacketOptions /* packet options */,
+    uint64_t /* packet_id */,
+    net::MutableNetworkTrafficAnnotationTag /* traffic_annotation */)
 
 IPC_MESSAGE_CONTROL1(P2PHostMsg_DestroySocket,
                      int /* socket_id */)
