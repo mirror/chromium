@@ -314,6 +314,24 @@
       "revId": "cb2ca318ac3d874c258496a758aa296ad43fd27b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7550c099_cf8f4a6e",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-26T00:30:45Z",
+      "side": 1,
+      "message": "oh, so azimuthRadians could technically be deduced from azimuthScore?\nsomething like (approximately) max(function defined by azimuthScores).\n\ncan you document that here?\nAlso, I think some details about meaning of azimuthScores elements would be useful.\ne.g. in array [x0, x1, x2, x3, ....], what do x0, x1, etc represent (polynomial coefficients, some other function parameters, values for specific angles....).",
+      "parentUuid": "a566149a_90e5bb65",
+      "revId": "cb2ca318ac3d874c258496a758aa296ad43fd27b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
