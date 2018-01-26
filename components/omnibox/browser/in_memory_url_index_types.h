@@ -158,6 +158,8 @@ struct HistoryInfoMapValue {
   HistoryInfoMapValue& operator=(HistoryInfoMapValue&& other);
   ~HistoryInfoMapValue();
 
+  size_t EstimateMemoryUsage() const;
+
   // This field is always populated.
   history::URLRow url_row;
 
@@ -179,6 +181,8 @@ struct RowWordStarts {
   RowWordStarts& operator=(const RowWordStarts& other);
   RowWordStarts& operator=(RowWordStarts&& other);
   ~RowWordStarts();
+
+  size_t EstimateMemoryUsage() const;
 
   // Clears both url_word_starts_ and title_word_starts_.
   void Clear();
