@@ -6,8 +6,10 @@
 #define WebScrollIntoViewParams_h
 
 #include "public/platform/WebCommon.h"
+#include "public/platform/WebFloatRect.h"
 
 #if INSIDE_BLINK
+#include "platform/geometry/FloatRect.h"
 #include "platform/scroll/ScrollAlignment.h"
 #include "platform/scroll/ScrollTypes.h"
 #endif
@@ -69,6 +71,11 @@ struct WebScrollIntoViewParams {
   Behavior behavior = kAuto;
   bool is_for_scroll_sequence = false;
 
+  // The following parameters are used when at the root layer we need to zoom
+  // into the final scroll rect.
+  bool zoom_into_final_rect = false;
+  WebFloatRect relative_rect_of_interest = WebFloatRect();
+
   WebScrollIntoViewParams() = default;
 #if INSIDE_BLINK
   BLINK_PLATFORM_EXPORT WebScrollIntoViewParams(
@@ -77,7 +84,9 @@ struct WebScrollIntoViewParams {
       ScrollType scroll_type = kProgrammaticScroll,
       bool make_visible_in_visual_viewport = true,
       ScrollBehavior scroll_behavior = kScrollBehaviorAuto,
-      bool is_for_scroll_sequence = false);
+      bool is_for_scroll_sequence = false,
+      bool zoom_into_final_rect = false,
+      FloatRect relative_rect_of_interest = FloatRect());
 
   BLINK_PLATFORM_EXPORT ScrollAlignment GetScrollAlignmentX() const;
 

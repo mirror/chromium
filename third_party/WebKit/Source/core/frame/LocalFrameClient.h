@@ -78,6 +78,7 @@ class HTMLFrameOwnerElement;
 class HTMLMediaElement;
 class HTMLPlugInElement;
 class HistoryItem;
+class IntRect;
 class KURL;
 class LocalFrame;
 class WebPluginContainerImpl;
@@ -379,6 +380,12 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
   // frame.
   virtual void ScrollRectToVisibleInParentFrame(
       const WebRect&,
+      const WebScrollIntoViewParams&) {}
+
+  // Called at the end of a recursive scroll in the main frame to zoom into the
+  // given rectangle.
+  virtual void ApplyFinalZoomForRecursiveScroll(
+      const IntRect&,
       const WebScrollIntoViewParams&) {}
 
   virtual void SetVirtualTimePauser(
