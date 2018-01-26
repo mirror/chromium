@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25a109bf_2b49c1b9",
+        "filename": "third_party/WebKit/Source/core/html/HTMLContentElement.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-26T08:54:10Z",
+      "side": 1,
+      "message": "Please drop this. HTMLContentElement is obsolete, and it should not be constructive.",
+      "revId": "94246e7484d750794c6dc1bd01dcf324aa8e4cdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "213db33b_8616ec64",
+        "filename": "third_party/WebKit/Source/core/html/HTMLShadowElement.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-26T08:54:10Z",
+      "side": 1,
+      "message": "Please drop this. HTMLShadowElement is obsolete, and it should not be constructive.",
+      "revId": "94246e7484d750794c6dc1bd01dcf324aa8e4cdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c6645a7_3dd24926",
+        "filename": "third_party/WebKit/Source/core/html/HTMLUnknownElement.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-26T08:54:10Z",
+      "side": 1,
+      "message": "Please drop this.\nThe spec says:\n  // Note: intentionally not [HTMLConstructor]",
+      "revId": "94246e7484d750794c6dc1bd01dcf324aa8e4cdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
