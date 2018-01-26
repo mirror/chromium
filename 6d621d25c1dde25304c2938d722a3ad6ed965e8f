@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea429a0b_136c2a35",
+        "filename": "media/cast/sender/external_video_encoder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-26T23:07:46Z",
+      "side": 1,
+      "message": "nit: This comment can be deleted now.",
+      "range": {
+        "startLine": 690,
+        "startChar": 6,
+        "endLine": 690,
+        "endChar": 40
+      },
+      "revId": "6d621d25c1dde25304c2938d722a3ad6ed965e8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
