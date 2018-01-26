@@ -9,7 +9,6 @@
 #include "base/bind.h"
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
-#include "base/memory/ptr_util.h"
 #include "base/numerics/safe_conversions.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/task_scheduler/task_traits.h"
@@ -53,7 +52,7 @@ void MTPReadFileWorker::WriteDataIntoSnapshotFile(
     const base::File::Info& snapshot_file_info) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   ReadDataChunkFromDeviceFile(
-      base::MakeUnique<SnapshotFileDetails>(request_info, snapshot_file_info));
+      std::make_unique<SnapshotFileDetails>(request_info, snapshot_file_info));
 }
 
 void MTPReadFileWorker::ReadDataChunkFromDeviceFile(
