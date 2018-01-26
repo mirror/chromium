@@ -929,44 +929,42 @@ CommandHandler.onEditCommand_ = function(command) {
   var isMultiline = AutomationPredicate.multiline(current.start.node);
   switch (command) {
     case 'previousCharacter':
-      BackgroundKeyboardHandler.sendKeyPress(36, 'Home', Mod.SHIFT);
+      BackgroundKeyboardHandler.sendKeyPress(36, Mod.SHIFT);
       break;
     case 'nextCharacter':
-      BackgroundKeyboardHandler.sendKeyPress(35, 'End', Mod.SHIFT);
+      BackgroundKeyboardHandler.sendKeyPress(35, Mod.SHIFT);
       break;
     case 'previousWord':
-      BackgroundKeyboardHandler.sendKeyPress(
-          36, 'Home', Mod.SHIFT | Mod.CONTROL);
+      BackgroundKeyboardHandler.sendKeyPress(36, Mod.SHIFT | Mod.CONTROL);
       break;
     case 'nextWord':
-      BackgroundKeyboardHandler.sendKeyPress(
-          35, 'End', Mod.SHIFT | Mod.CONTROL);
+      BackgroundKeyboardHandler.sendKeyPress(35, Mod.SHIFT | Mod.CONTROL);
       break;
     case 'previousObject':
       if (!isMultiline)
         return true;
-      BackgroundKeyboardHandler.sendKeyPress(36, 'Home');
+      BackgroundKeyboardHandler.sendKeyPress(36);
       break;
     case 'nextObject':
       if (!isMultiline)
         return true;
-      BackgroundKeyboardHandler.sendKeyPress(35, 'End');
+      BackgroundKeyboardHandler.sendKeyPress(35);
       break;
     case 'previousLine':
       if (!isMultiline)
         return true;
-      BackgroundKeyboardHandler.sendKeyPress(33, 'PageUp');
+      BackgroundKeyboardHandler.sendKeyPress(33);
       break;
     case 'nextLine':
       if (!isMultiline)
         return true;
-      BackgroundKeyboardHandler.sendKeyPress(34, 'PageDown');
+      BackgroundKeyboardHandler.sendKeyPress(34);
       break;
     case 'jumpToTop':
-      BackgroundKeyboardHandler.sendKeyPress(36, 'Home', Mod.CONTROL);
+      BackgroundKeyboardHandler.sendKeyPress(36, Mod.CONTROL);
       break;
     case 'jumpToBottom':
-      BackgroundKeyboardHandler.sendKeyPress(35, 'End', Mod.CONTROL);
+      BackgroundKeyboardHandler.sendKeyPress(35, Mod.CONTROL);
       break;
     default:
       return true;

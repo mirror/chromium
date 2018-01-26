@@ -107,34 +107,34 @@ BrailleCommandHandler.onEditCommand = function(command) {
   var isMultiline = AutomationPredicate.multiline(current.start.node);
   switch (command) {
     case 'previousCharacter':
-      BackgroundKeyboardHandler.sendKeyPress(37, 'ArrowLeft');
+      BackgroundKeyboardHandler.sendKeyPress(37);
       break;
     case 'nextCharacter':
-      BackgroundKeyboardHandler.sendKeyPress(39, 'ArrowRight');
+      BackgroundKeyboardHandler.sendKeyPress(39);
       break;
     case 'previousWord':
-      BackgroundKeyboardHandler.sendKeyPress(37, 'ArrowLeft', Mod.CONTROL);
+      BackgroundKeyboardHandler.sendKeyPress(37, Mod.CONTROL);
       break;
     case 'nextWord':
-      BackgroundKeyboardHandler.sendKeyPress(39, 'ArrowRight', Mod.CONTROL);
+      BackgroundKeyboardHandler.sendKeyPress(39, Mod.CONTROL);
       break;
     case 'previousObject':
     case 'previousLine':
       if (!isMultiline)
         return true;
-      BackgroundKeyboardHandler.sendKeyPress(38, 'ArrowUp');
+      BackgroundKeyboardHandler.sendKeyPress(38);
       break;
     case 'nextObject':
     case 'nextLine':
       if (!isMultiline)
         return true;
-      BackgroundKeyboardHandler.sendKeyPress(40, 'ArrowDown');
+      BackgroundKeyboardHandler.sendKeyPress(40);
       break;
     case 'previousGroup':
-      BackgroundKeyboardHandler.sendKeyPress(38, 'ArrowUp', Mod.CONTROL);
+      BackgroundKeyboardHandler.sendKeyPress(38, Mod.CONTROL);
       break;
     case 'nextGroup':
-      BackgroundKeyboardHandler.sendKeyPress(40, 'ArrowDown', Mod.CONTROL);
+      BackgroundKeyboardHandler.sendKeyPress(40, Mod.CONTROL);
       break;
     default:
       return true;
