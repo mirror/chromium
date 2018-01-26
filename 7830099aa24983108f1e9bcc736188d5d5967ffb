@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "10c2883f_4b215d3b",
+        "filename": "components/cronet/android/java/src/org/chromium/net/impl/CronetLibraryLoader.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-26T16:26:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "99c96e52_e8a5bd01",
+      "range": {
+        "startLine": 129,
+        "startChar": 19,
+        "endLine": 129,
+        "endChar": 0
+      },
+      "revId": "7830099aa24983108f1e9bcc736188d5d5967ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "392786e0_4e986e6e",
         "filename": "components/cronet/android/java/src/org/chromium/net/impl/CronetLibraryLoader.java",
         "patchSetId": 10
@@ -339,6 +363,30 @@
       "revId": "7830099aa24983108f1e9bcc736188d5d5967ffb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "045e474d_75a705e4",
+        "filename": "components/cronet/native/engine.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-26T16:26:09Z",
+      "side": 1,
+      "message": "I think file scoped classes with no out-of-line definitions aren\u0027t visible outside of a module, for example:\n\n$ cat foo.cc\nclass X {\n public:\n  X() {}\n  static int x() { return 1; }\n  int y() { return 1; }\n};\n$ c++ foo.cc -c\n$ nm foo.o\n$\n\nYour class has one out-of-line definition so the anonymous namespace is necessary, and a good idea anyhow so ignore my nit.",
+      "parentUuid": "b1271c60_b905dd0c",
+      "range": {
+        "startLine": 25,
+        "startChar": 11,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "7830099aa24983108f1e9bcc736188d5d5967ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -565,6 +613,30 @@
       "side": 1,
       "message": "Hrm, on Android it is triggered from Java: https://cs.chromium.org/chromium/src/components/cronet/android/java/src/org/chromium/net/impl/CronetUrlRequestContext.java?rcl\u003dba12dcb89c18e461ec3963543c349260e620969c\u0026l\u003d191 so I\u0027d leave it as is to avoid extra refactoring. WDYT?",
       "parentUuid": "a58a38e4_9666afbc",
+      "range": {
+        "startLine": 159,
+        "startChar": 0,
+        "endLine": 163,
+        "endChar": 56
+      },
+      "revId": "7830099aa24983108f1e9bcc736188d5d5967ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e979bef_affe9409",
+        "filename": "components/cronet/native/engine.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-26T16:26:09Z",
+      "side": 1,
+      "message": "That\u0027s fine if you don\u0027t want to do it in this CL, but I think we should leave a TODO to do it soon.  It\u0027d be nice to remove the java code and this code, and I believe we could get rid of CronetURLRequestContextAdapter::InitRequestContextOnInitThread as well.  We could also make CronetURLRequestContext::InitRequestContextOnInitThread() private and mark CronetLibraryLoader.postToInitThread() as @VisibleForTesting (as the only external use will be in a test).",
+      "parentUuid": "8747b866_636a3ad6",
       "range": {
         "startLine": 159,
         "startChar": 0,
@@ -809,6 +881,30 @@
       "revId": "7830099aa24983108f1e9bcc736188d5d5967ffb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f320be27_ef02fd09",
+        "filename": "components/cronet/native/engine.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-26T16:26:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7ea0921d_5560c7d1",
+      "range": {
+        "startLine": 39,
+        "startChar": 50,
+        "endLine": 39,
+        "endChar": 0
+      },
+      "revId": "7830099aa24983108f1e9bcc736188d5d5967ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
