@@ -2529,7 +2529,19 @@ int AXPlatformNodeWin::MSAARole() {
     case ax::mojom::Role::kLegend:
       return ROLE_SYSTEM_TEXT;
 
-    case ax::mojom::Role::kLink:
+    case ax::mojom::Role::kLayoutTable:
+      return ROLE_SYSTEM_TABLE;
+
+    case ax::mojom::Role::kLayoutTableCell:
+      return ROLE_SYSTEM_CELL;
+
+    case ax::mojom::Role::kLayoutTableColumn:
+      return ROLE_SYSTEM_COLUMN;
+
+    case ax::mojom::Role::kLayoutTableRow:
+      return ROLE_SYSTEM_ROW;
+
+    case ax::mojom::Role::kLayoutTableLink:
       return ROLE_SYSTEM_LINK;
 
     case ax::mojom::Role::kList:
@@ -2937,6 +2949,18 @@ int32_t AXPlatformNodeWin::ComputeIA2Role() {
     case ax::mojom::Role::kLegend:
       ia2_role = IA2_ROLE_LABEL;
       break;
+    case ax::mojom::Role::kLayoutTable:
+      ia2_role = ROLE_SYSTEM_TABLE;
+      break;
+    case ax::mojom::Role::kLayoutTableCell:
+      ia2_role =  ROLE_SYSTEM_CELL;
+      break;
+    case ax::mojom::Role::kLayoutTableColumn:
+      ia2_role =  ROLE_SYSTEM_COLUMN;
+      break;
+    case ax::mojom::Role::kLayoutTableRow:
+      ia2_role =  ROLE_SYSTEM_ROW;
+      break;
     case ax::mojom::Role::kMain:
       ia2_role = IA2_ROLE_PARAGRAPH;
       break;
@@ -3100,6 +3124,8 @@ std::vector<base::string16> AXPlatformNodeWin::ComputeIA2Attributes() {
       }
     }
   }
+  if (GetData().role == ax::mojom::Role::kLayoutTable)
+    result.push_back(base::string16(L"layout-guess:true"));
 
   // Expose aria-colcount and aria-rowcount in a table, grid or treegrid.
   if (IsTableLikeRole(GetData().role)) {
