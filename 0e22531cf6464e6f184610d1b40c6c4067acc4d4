@@ -70,6 +70,24 @@
       "revId": "0e22531cf6464e6f184610d1b40c6c4067acc4d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "262a5c5b_2aba4387",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4069,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-26T01:17:01Z",
+      "side": 1,
+      "message": "Yes, I think that\u0027s pretty reasonable.",
+      "parentUuid": "7783f784_38d2be7f",
+      "revId": "0e22531cf6464e6f184610d1b40c6c4067acc4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

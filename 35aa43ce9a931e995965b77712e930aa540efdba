@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1dcd6797_2ba546ab",
+        "filename": "content/renderer/service_worker/service_worker_network_provider.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-26T01:17:01Z",
+      "side": 1,
+      "message": "Could you revise this comment now that it points to the network loader factory? Something like..\n\n\"|default_loader_factory| is a default loader factory for network requests, and is used when we create a subresource loader for controllees. This is non-null only if the provider is created for controllees, and if the loading context, e.g. a frame, provides it.\"",
+      "revId": "35aa43ce9a931e995965b77712e930aa540efdba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c52aee3_69023467",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-26T01:17:01Z",
+      "side": 1,
+      "message": "\"|default_loader_factory| is a ...\"\n\nCan we also update this comment while you\u0027re there? Thanks!",
+      "revId": "35aa43ce9a931e995965b77712e930aa540efdba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ecb5f9e_5e55d4a5",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-26T01:17:01Z",
+      "side": 1,
+      "message": "Yeah we probably don\u0027t need the constarints thing actually, AppCache will just get the network factory in the browser process or can do the same as in SW if it starts to have some factory in the renderer. Sorry that I didn\u0027t foresee this.",
+      "revId": "35aa43ce9a931e995965b77712e930aa540efdba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
