@@ -46,6 +46,29 @@
       "revId": "31d6452e4d81af605677b945f5acc12e200175a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdca0d7f_6ce4f18a",
+        "filename": "remoting/android/java/AndroidManifest.xml.jinja2",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2018-01-26T00:08:20Z",
+      "side": 1,
+      "message": "I\u0027m not sure why this is needed, or what its value should be?\nGetting this wrong will break third-party authentication, and users will be unable to use the official Chrome Remote Desktop Android app to connect to Google Corp machines.\nI think this is a handler for an \"intent:...\" OAuth redirect-URL, so I don\u0027t know if \"host\" has any meaning here?\nTo test this end-to-end on Corp, the APK_PACKAGE_NAME needs to be \"com.google.chromeremotedesktop\" for the redirect-URL to be whitelisted. That will be the case for an official build of the Android app.\nYou could maybe land this CL speculatively, then wait for the official builders to produce a build, then test it by connecting to a Corp machine.",
+      "range": {
+        "startLine": 38,
+        "startChar": 40,
+        "endLine": 38,
+        "endChar": 0
+      },
+      "revId": "31d6452e4d81af605677b945f5acc12e200175a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
