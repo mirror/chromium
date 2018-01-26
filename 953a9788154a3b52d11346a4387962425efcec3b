@@ -367,6 +367,30 @@
     },
     {
       "key": {
+        "uuid": "7f6443f3_99c514bf",
+        "filename": "components/version_ui/resources/about_version.css",
+        "patchSetId": 13
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116265
+      },
+      "writtenOn": "2018-01-26T15:52:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8de544d3_d93ba783",
+      "range": {
+        "startLine": 16,
+        "startChar": 16,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "953a9788154a3b52d11346a4387962425efcec3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5c1c3b2_ee0b76f1",
         "filename": "components/version_ui/version_handler_helper.h",
         "patchSetId": 13
