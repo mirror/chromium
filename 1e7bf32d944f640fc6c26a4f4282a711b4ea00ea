@@ -16,6 +16,24 @@
       "revId": "1e7bf32d944f640fc6c26a4f4282a711b4ea00ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d76367e6_bdef7ae6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookies/http-state/resources/cookie-setter.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2018-01-26T12:50:31Z",
+      "side": 1,
+      "message": "Absolutely. Changed that.",
+      "parentUuid": "4241ade2_cc0621b4",
+      "revId": "1e7bf32d944f640fc6c26a4f4282a711b4ea00ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
