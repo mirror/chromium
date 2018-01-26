@@ -164,6 +164,9 @@ extern const char kDevtoolsExperimentsDescription[];
 extern const char kDisableAudioForDesktopShareName[];
 extern const char kDisableAudioForDesktopShareDescription[];
 
+extern const char kDisablePushStateThrottleName[];
+extern const char kDisablePushStateThrottleDescription[];
+
 extern const char kDisableTabForDesktopShareName[];
 extern const char kDisableTabForDesktopShareDescription[];
 
