@@ -253,15 +253,6 @@ static constexpr float kKeyboardDistance = 2.2f;
 static constexpr float kKeyboardVerticalOffsetDMM = -0.45f;
 static constexpr float kKeyboardRotationRadians = -0.14f;
 
-static constexpr float kSnackbarDistance = 1.5f;
-static constexpr float kSnackbarAngle = -gfx::DegToRad(34.0f);
-static constexpr float kSnackbarPaddingDMM = 0.032f;
-static constexpr float kSnackbarIconWidthDMM = 0.034f;
-static constexpr float kSnackbarFontHeightDMM = 0.024f;
-static constexpr float kSnackbarHeightDMM = 0.08f;
-static constexpr float kSnackbarMoveInAngle = -base::kPiFloat / 10;
-static constexpr int kSnackbarTransitionDurationMs = 300;
-
 static constexpr float kControllerLabelSpacerSize = 0.025f;
 static constexpr float kControllerLabelLayoutMargin = -0.005f;
 static constexpr float kControllerLabelCalloutWidth = 0.02f;
