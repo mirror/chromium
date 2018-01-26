@@ -116,6 +116,15 @@ const char kNetworkQualityEstimatorFieldTrialName[] = "NetworkQualityEstimator";
 const char kNetworkErrorLoggingFieldTrialName[] = "NetworkErrorLogging";
 // Name of boolean to enable Reporting API.
 const char kNetworkErrorLoggingEnable[] = "enable";
+// Name of list of preloaded "Report-To" headers.
+const char kNetworkErrorLoggingReportToHeaderPreloads[] =
+    "report_to_header_preloads";
+// Name of list of preloaded "NEL" headers.
+const char kNetworkErrorLoggingNELHeaderPreloads[] = "nel_header_preloads";
+// Name of key (For above two lists) for header origin.
+const char kNetworkErrorLoggingOrigin[] = "origin";
+// Name of key (for above two lists) for header value.
+const char kNetworkErrorLoggingValue[] = "value";
 
 // Disable IPv6 when on WiFi. This is a workaround for a known issue on certain
 // Android phones, and should not be necessary when not on one of those devices.
@@ -138,6 +147,32 @@ class DoNothingCTPolicyEnforcer : public net::CTPolicyEnforcer {
   }
 };
 
+void ParseNetworkErrorLoggingHeaders(
+    const base::ListValue& header_preloads_value,
+    std::vector<std::unique_ptr<URLRequestContextConfig::HeaderPreload>>*
+        header_preloads_vector_out) {
+  header_preloads_vector_out->clear();
+  for (size_t i = 0; i < header_preloads_value.GetSize(); ++i) {
+    const base::DictionaryValue* header_preload_value;
+    if (!header_preloads_value.GetDictionary(i, &header_preload_value))
+      continue;
+    std::string origin_string;
+    std::string value;
+    if (!header_preload_value->GetString(kNetworkErrorLoggingOrigin,
+                                         &origin_string))
+      continue;
+    if (!header_preload_value->GetString(kNetworkErrorLoggingValue, &value))
+      continue;
+    GURL origin_url(origin_string);
+    if (!origin_url.is_valid())
+      continue;
+    auto origin = url::Origin::Create(origin_url);
+    header_preloads_vector_out->push_back(
+        std::make_unique<URLRequestContextConfig::HeaderPreload>(origin,
+                                                                 value));
+  }
+}
+
 }  // namespace
 
 URLRequestContextConfig::QuicHint::QuicHint(const std::string& host,
@@ -145,7 +180,7 @@ URLRequestContextConfig::QuicHint::QuicHint(const std::string& host,
                                             int alternate_port)
     : host(host), port(port), alternate_port(alternate_port) {}
 
-URLRequestContextConfig::QuicHint::~QuicHint() {}
+URLRequestContextConfig::QuicHint::~QuicHint() = default;
 
 URLRequestContextConfig::Pkp::Pkp(const std::string& host,
                                   bool include_subdomains,
@@ -154,7 +189,13 @@ URLRequestContextConfig::Pkp::Pkp(const std::string& host,
       include_subdomains(include_subdomains),
       expiration_date(expiration_date) {}
 
-URLRequestContextConfig::Pkp::~Pkp() {}
+URLRequestContextConfig::Pkp::~Pkp() = default;
+
+URLRequestContextConfig::HeaderPreload::HeaderPreload(const url::Origin& origin,
+                                                      const std::string& value)
+    : origin(origin), value(value) {}
+
+URLRequestContextConfig::HeaderPreload::~HeaderPreload() = default;
 
 URLRequestContextConfig::URLRequestContextConfig(
     bool enable_quic,
@@ -187,7 +228,7 @@ URLRequestContextConfig::URLRequestContextConfig(
       cert_verifier_data(cert_verifier_data),
       experimental_options(experimental_options) {}
 
-URLRequestContextConfig::~URLRequestContextConfig() {}
+URLRequestContextConfig::~URLRequestContextConfig() = default;
 
 void URLRequestContextConfig::ParseAndSetExperimentalOptions(
     net::URLRequestContextBuilder* context_builder,
@@ -441,6 +482,18 @@ void URLRequestContextConfig::ParseAndSetExperimentalOptions(
         continue;
       }
       nel_args->GetBoolean(kNetworkErrorLoggingEnable, &nel_enable);
+      const base::ListValue* report_to_header_preloads_list;
+      if (nel_args->GetList(kNetworkErrorLoggingReportToHeaderPreloads,
+                            &report_to_header_preloads_list)) {
+        ParseNetworkErrorLoggingHeaders(*report_to_header_preloads_list,
+                                        &report_to_header_preloads);
+      }
+      const base::ListValue* nel_header_preloads_list;
+      if (nel_args->GetList(kNetworkErrorLoggingNELHeaderPreloads,
+                            &nel_header_preloads_list)) {
+        ParseNetworkErrorLoggingHeaders(*nel_header_preloads_list,
+                                        &nel_header_preloads);
+      }
     } else if (it.key() == kDisableIPv6OnWifi) {
       if (!it.value().GetAsBoolean(&disable_ipv6_on_wifi)) {
         LOG(ERROR) << "\"" << it.key() << "\" config params \"" << it.value()
@@ -527,6 +580,9 @@ void URLRequestContextConfig::ParseAndSetExperimentalOptions(
 
     context_builder->set_reporting_policy(std::move(policy));
     context_builder->set_network_error_logging_enabled(true);
+
+    // TODO(juliatuttle): How do I get preloads into ReportingService and
+    // NetworkErrorLoggingService?
   }
 #endif  // BUILDFLAG(ENABLE_REPORTING)
 }
@@ -584,7 +640,7 @@ void URLRequestContextConfig::ConfigureURLRequestContextBuilder(
 }
 
 URLRequestContextConfigBuilder::URLRequestContextConfigBuilder() {}
-URLRequestContextConfigBuilder::~URLRequestContextConfigBuilder() {}
+URLRequestContextConfigBuilder::~URLRequestContextConfigBuilder() = default;
 
 std::unique_ptr<URLRequestContextConfig>
 URLRequestContextConfigBuilder::Build() {

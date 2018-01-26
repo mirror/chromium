@@ -51,7 +51,9 @@
 #include "net/nqe/network_quality_estimator_params.h"
 #include "net/proxy_resolution/proxy_service.h"
 #include "net/quic/core/quic_versions.h"
+#include "net/reporting/reporting_service.h"
 #include "net/ssl/channel_id_service.h"
+#include "net/url_request/network_error_logging_delegate.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_builder.h"
 #include "net/url_request/url_request_context_getter.h"
@@ -455,6 +457,22 @@ void CronetURLRequestContext::NetworkTasks::Initialize(
             &CronetURLRequestContext::NetworkTasks::InitializeNQEPrefs,
             base::Unretained(this)));
   }
+
+#if BUILDFLAG(ENABLE_REPORTING)
+  if (context_->reporting_service()) {
+    for (auto& header_preload : config->report_to_header_preloads) {
+      context_->reporting_service()->ProcessHeader(
+          header_preload->origin.GetURL(), header_preload->value);
+    }
+  }
+
+  if (context_->network_error_logging_delegate()) {
+    for (auto& header_preload : config->nel_header_preloads) {
+      context_->network_error_logging_delegate()->OnHeader(
+          header_preload->origin, header_preload->value);
+    }
+  }
+#endif  // BUILDFLAG(ENABLE_REPORTING)
 
   while (!tasks_waiting_for_context_.empty()) {
     std::move(tasks_waiting_for_context_.front()).Run();
