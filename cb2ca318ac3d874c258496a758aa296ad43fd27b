@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cdf93502_2009d03c",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1189096
+      },
+      "writtenOn": "2018-01-26T00:17:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f52adb0d_00dc92c7",
+      "revId": "cb2ca318ac3d874c258496a758aa296ad43fd27b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0478d4ef_8c9bcd8f",
         "filename": "extensions/common/api/media_perception_private.idl",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "cb2ca318ac3d874c258496a758aa296ad43fd27b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2c22332_38ad7acf",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1189096
+      },
+      "writtenOn": "2018-01-26T00:17:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0478d4ef_8c9bcd8f",
+      "revId": "cb2ca318ac3d874c258496a758aa296ad43fd27b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "88b3a4b3_9d555227",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1189096
+      },
+      "writtenOn": "2018-01-26T00:17:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d01ac27_ce16810b",
+      "revId": "cb2ca318ac3d874c258496a758aa296ad43fd27b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4066a554_6b5f011a",
         "filename": "extensions/common/api/media_perception_private.idl",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "cb2ca318ac3d874c258496a758aa296ad43fd27b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf81e5f0_18cc785e",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1189096
+      },
+      "writtenOn": "2018-01-26T00:17:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4066a554_6b5f011a",
+      "revId": "cb2ca318ac3d874c258496a758aa296ad43fd27b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "f426a3fb_d020139d",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1189096
+      },
+      "writtenOn": "2018-01-26T00:17:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4314873d_b7ee59e1",
+      "revId": "cb2ca318ac3d874c258496a758aa296ad43fd27b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cd98036_c3d232df",
         "filename": "extensions/common/api/media_perception_private.idl",
         "patchSetId": 6
@@ -101,6 +191,24 @@
       "revId": "cb2ca318ac3d874c258496a758aa296ad43fd27b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8235e554_76ac6231",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1189096
+      },
+      "writtenOn": "2018-01-26T00:17:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cd98036_c3d232df",
+      "revId": "cb2ca318ac3d874c258496a758aa296ad43fd27b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "942f8971_76d32e42",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1189096
+      },
+      "writtenOn": "2018-01-26T00:17:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12f4b813_74284d75",
+      "revId": "cb2ca318ac3d874c258496a758aa296ad43fd27b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee4f6387_6183efb4",
         "filename": "extensions/common/api/media_perception_private.idl",
         "patchSetId": 6
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "bd30591d_dedd3d92",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1189096
+      },
+      "writtenOn": "2018-01-26T00:17:33Z",
+      "side": 1,
+      "message": "Yes azimuth refers to an angle in the horizontal plane.",
+      "parentUuid": "ee4f6387_6183efb4",
+      "revId": "cb2ca318ac3d874c258496a758aa296ad43fd27b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf227607_5ac8ba44",
         "filename": "extensions/common/api/media_perception_private.idl",
         "patchSetId": 6
@@ -152,6 +296,24 @@
       "revId": "cb2ca318ac3d874c258496a758aa296ad43fd27b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a566149a_90e5bb65",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1189096
+      },
+      "writtenOn": "2018-01-26T00:17:33Z",
+      "side": 1,
+      "message": "Yea this is the probability distribution of azimuth. The azimuthRadians defined above roughly points to the peak of this distribution.",
+      "parentUuid": "bf227607_5ac8ba44",
+      "revId": "cb2ca318ac3d874c258496a758aa296ad43fd27b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
