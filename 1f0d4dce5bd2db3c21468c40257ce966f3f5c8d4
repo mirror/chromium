@@ -46,6 +46,30 @@
       "revId": "1f0d4dce5bd2db3c21468c40257ce966f3f5c8d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b26c78e_e0e28251",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-26T02:14:40Z",
+      "side": 1,
+      "message": "Uh-oh. Primiano, you\u0027re so cool!\n\nI tried the profiler on Clank Canary and got two crashes with SEGV at addresses 0xc997fffc and 0xcb4ffffc.\nThis definitely looks like reads from the previous page. dalvik alloc seems to leave no space at the beginning of [some] allocations. I removed the optimization in a separate patch. I still want to have this patch landed as it addresses MacOS hooks implementations.",
+      "parentUuid": "7a76a383_714c0fe4",
+      "range": {
+        "startLine": 38,
+        "startChar": 20,
+        "endLine": 38,
+        "endChar": 60
+      },
+      "revId": "1f0d4dce5bd2db3c21468c40257ce966f3f5c8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
