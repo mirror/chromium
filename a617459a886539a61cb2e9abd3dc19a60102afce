@@ -16,6 +16,24 @@
       "revId": "a617459a886539a61cb2e9abd3dc19a60102afce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "075ed70f_094ea238",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSParsingUtils.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2018-01-26T10:26:28Z",
+      "side": 1,
+      "message": "This are the changes related to CSSOM and how we must serialize the CSS value. This function just gets the ID of the serialized CSSValue. See also the changes in the ComsumeBaselineKeyword to understand how this serialization is implemented. The spec states the following: \n\nhttps://drafts.csswg.org/css-align/#baseline-values\nNote: Because they are equivalent, and baseline is shorter, the CSSOM serializes first baseline as baseline.\n\nFF claims that there is a general CSSOM rule that states that any value must be serialized using its shorter form. We were serializing the CSS value in any possible form, so this change tries to match FF and serialize \"first baseline\" as \"baseline\"",
+      "parentUuid": "2e1b6bf1_da3982af",
+      "revId": "a617459a886539a61cb2e9abd3dc19a60102afce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
