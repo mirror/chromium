@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "395a8853_90218d38",
+        "filename": "extensions/renderer/bindings/api_binding_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-26T18:22:52Z",
+      "side": 1,
+      "message": "The one above matches the context-\u003eEnter() in APIBindingTest::SetUp, which only applies to the main context. This is analogous to APIBindingTest::DisposeAllContexts, which only exits when the main context is being disposed.\n\nIt\u0027s assumed, then, that tests will exit any other context they enter at a suitable time.",
+      "parentUuid": "53e15001_ecfaa793",
+      "revId": "605ee054f7edffb03e20a9e8642e36c3c732b63a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47355ba8_de3d2811",
         "filename": "extensions/renderer/native_extension_bindings_system_unittest.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-26T18:20:30Z",
       "side": 1,
       "message": "Is this scope necessary?",
+      "revId": "605ee054f7edffb03e20a9e8642e36c3c732b63a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e93a5a6f_983a66d8",
+        "filename": "extensions/renderer/native_extension_bindings_system_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-26T18:22:52Z",
+      "side": 1,
+      "message": "Since it extends for the rest of the function, not strictly, no, though I kinda wanted to emphasize the v8::Context::Scope. I\u0027m happy either way; would you like it removed?",
+      "parentUuid": "47355ba8_de3d2811",
       "revId": "605ee054f7edffb03e20a9e8642e36c3c732b63a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
