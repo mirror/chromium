@@ -92,5 +92,9 @@ base::TimeTicks WebSchedulerImpl::MonotonicallyIncreasingVirtualTime() const {
   return base::TimeTicks::Now();
 }
 
+base::TimeDelta WebSchedulerImpl::MostRecentExpectedQueueingTime() const {
+  return base::TimeDelta();
+}
+
 }  // namespace scheduler
 }  // namespace blink

@@ -52,6 +52,10 @@ base::TimeTicks RendererWebSchedulerImpl::MonotonicallyIncreasingVirtualTime()
   return renderer_scheduler_->GetActiveTimeDomain()->Now();
 }
 
+base::TimeDelta RendererWebSchedulerImpl::MostRecentExpectedQueueingTime() const {
+  return renderer_scheduler_->MostRecentExpectedQueueingTime();
+}
+
 RendererScheduler* RendererWebSchedulerImpl::GetRendererSchedulerForTest() {
   return renderer_scheduler_;
 }

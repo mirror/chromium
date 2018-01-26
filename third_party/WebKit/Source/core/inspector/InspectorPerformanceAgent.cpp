@@ -13,6 +13,7 @@
 #include "platform/bindings/V8PerIsolateData.h"
 #include "platform/wtf/dtoa/utils.h"
 #include "public/platform/Platform.h"
+#include "platform/scheduler/child/web_scheduler.h"
 
 namespace blink {
 
@@ -79,6 +80,25 @@ void AppendMetric(protocol::Array<protocol::Performance::Metric>* container,
 }
 }  // namespace
 
+class DummyLargeObject : public GarbageCollectedFinalized<DummyLargeObject> {
+ public:
+  DummyLargeObject() {data_[0]='c';}
+  ~DummyLargeObject() { }
+  char* data() { return data_; }
+  void Trace(blink::Visitor* visitor) { }
+
+ private:
+  static const size_t kLength = 200 * 1024 * 1024;
+  char data_[kLength];
+};
+
+double allocationSpeed() {
+  base::TimeTicks start_time = WTF::CurrentTimeTicks();
+  DummyLargeObject* dummy = new DummyLargeObject();
+  CHECK_EQ(dummy->data()[0], 'c');
+  return sizeof(DummyLargeObject) / (WTF::CurrentTimeTicks() - start_time).InSecondsF();
+}
+
 Response InspectorPerformanceAgent::getMetrics(
     std::unique_ptr<protocol::Array<protocol::Performance::Metric>>*
         out_result) {
@@ -92,6 +112,15 @@ Response InspectorPerformanceAgent::getMetrics(
 
   TimeTicks now = CurrentTimeTicks();
   AppendMetric(result.get(), "Timestamp", TimeTicksInSeconds(now));
+
+  AppendMetric(result.get(), "MarkingSpeed",
+               ThreadState::Current()->MarkingSpeed() / 1024.0 / 1024.0);
+  AppendMetric(result.get(), "ExpectedQueueingTime",
+               Platform::Current()
+                 ->CurrentThread()
+                 ->Scheduler()->MostRecentExpectedQueueingTime().InMillisecondsF());
+  AppendMetric(result.get(), "AllocationSpeed",
+               allocationSpeed() / 1024.0 / 1024.0);
 
   // Renderer instance counters.
   for (size_t i = 0; i < ARRAY_SIZE(kInstanceCounterNames); ++i) {

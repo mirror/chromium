@@ -334,6 +334,8 @@ class PLATFORM_EXPORT ThreadState {
     object_resurrection_forbidden_ = false;
   }
 
+  double MarkingSpeed();
+
   bool WrapperTracingInProgress() const { return wrapper_tracing_in_progress_; }
   void SetWrapperTracingInProgress(bool value) {
     wrapper_tracing_in_progress_ = value;

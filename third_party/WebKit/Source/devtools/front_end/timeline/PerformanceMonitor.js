@@ -449,6 +449,9 @@ Timeline.PerformanceMonitor.ControlPane = class extends Common.Object {
       {title: Common.UIString('Documents'), metrics: [{name: 'Documents', color: 'darkblue'}]},
       {title: Common.UIString('Document Frames'), metrics: [{name: 'Frames', color: 'darkcyan'}]},
       {title: Common.UIString('Layouts / sec'), metrics: [{name: 'LayoutCount', color: 'hotpink'}]},
+      {title: Common.UIString('MarkingSpeed(MBps)'), metrics: [{name: 'MarkingSpeed', color: 'hotpink'}]},
+      {title: Common.UIString('AllocationSpeed(MBps)'), metrics: [{name: 'AllocationSpeed', color: 'hotpink'}]},
+      {title: Common.UIString('ExpectedQueueingTime(ms)'), metrics: [{name: 'ExpectedQueueingTime', color: 'hotpink'}]},
       {title: Common.UIString('Style recalcs / sec'), metrics: [{name: 'RecalcStyleCount', color: 'deeppink'}]}
     ];
     for (var info of this._chartsInfo) {
