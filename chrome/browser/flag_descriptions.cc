@@ -1170,6 +1170,12 @@ const char kReducedReferrerGranularityDescription[] =
     "reduce the amount of information in the 'referer' header for cross-origin "
     "requests.";
 
+const char kRemoveNavigationHistoryName[] =
+    "Remove navigation entry on history deletion";
+const char kRemoveNavigationHistoryDescription[] =
+    "Remove a navigation entry when the corresponding history entry has been "
+    "deleted.";
+
 const char kRemoveUsageOfDeprecatedGaiaSigninEndpointName[] =
     "Remove usage of the deprecated GAIA sign-in endpoint";
 const char kRemoveUsageOfDeprecatedGaiaSigninEndpointDescription[] =
