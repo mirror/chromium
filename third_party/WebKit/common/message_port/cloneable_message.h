@@ -37,6 +37,9 @@ struct BLINK_COMMON_EXPORT CloneableMessage {
   base::span<const uint8_t> encoded_message;
   std::vector<uint8_t> owned_encoded_message;
 
+  // Copies data into owned_encoded_message if it's not already there.
+  void EnsureDataIsOwned();
+
   // Blob handles for any blobs being sent in this message.
   std::vector<mojo::StructPtr<mojom::SerializedBlob>> blobs;
 

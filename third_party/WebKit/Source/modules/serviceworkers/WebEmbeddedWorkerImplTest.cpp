@@ -73,8 +73,7 @@ class MockServiceWorkerContextClient : public WebServiceWorkerContextClient {
     NOTREACHED();
   }
   void PostMessageToClient(const WebString& uuid,
-                           const WebString&,
-                           WebVector<MessagePortChannel>) override {
+                           TransferableMessage) override {
     NOTREACHED();
   }
   void SkipWaiting(
