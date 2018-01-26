@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5734cdaf_54fafc00",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3977,
+      "author": {
+        "id": 1000592
+      },
+      "writtenOn": "2018-01-26T15:50:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a47bf0b6_dbfd7996",
+      "revId": "868062045852303b6536137c48eb2ca1c55d4119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db3655c3_391e6b75",
         "filename": "pdf/pdfium/pdfium_engine.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "52074395_34a9ce7f",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3978,
+      "author": {
+        "id": 1000592
+      },
+      "writtenOn": "2018-01-26T15:50:37Z",
+      "side": 1,
+      "message": "I believe this is true for text fields, since text elements and text fields are different things in XFA, fields are the widget that take in user input. This probably incorrect for ComboBoxes. I will put up a CL for cleaning this up.",
+      "parentUuid": "db3655c3_391e6b75",
+      "revId": "868062045852303b6536137c48eb2ca1c55d4119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9194855f_90e1e6b0",
         "filename": "pdf/pdfium/pdfium_engine.cc",
         "patchSetId": 4
@@ -50,6 +86,24 @@
       "revId": "868062045852303b6536137c48eb2ca1c55d4119",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9d5430c_a78a6aab",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3984,
+      "author": {
+        "id": 1000592
+      },
+      "writtenOn": "2018-01-26T15:50:37Z",
+      "side": 1,
+      "message": "It was breaking in the event that an Full XFA form field was being passed in, since there is no associated AcroForm element, thus no annotation. This should probably be switch back to a DCHECK",
+      "parentUuid": "9194855f_90e1e6b0",
+      "revId": "868062045852303b6536137c48eb2ca1c55d4119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
