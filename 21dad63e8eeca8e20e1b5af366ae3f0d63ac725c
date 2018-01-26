@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "24501d77_575682ad",
+        "filename": "chrome/browser/browser_process_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-26T00:10:15Z",
+      "side": 1,
+      "message": "nit: Move this inside the #if to make clang-format indent it correctly.",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4a7503c_7383fc3f",
         "filename": "chrome/browser/browser_process_impl.cc",
         "patchSetId": 8
@@ -47,6 +64,24 @@
       "writtenOn": "2018-01-26T00:05:00Z",
       "side": 1,
       "message": "Moving these set locale calls here leaves a gap between when SetApplicationLocale() gets called and when this gets called. How can we be sure no code is trying to read the locale in this gap?",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df583529_3e753d2b",
+        "filename": "chrome/browser/browser_process_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-26T00:10:15Z",
+      "side": 1,
+      "message": "This is still relatively early in the start up code. I don\u0027t expect any code that reads the locale to be active yet. I\u0027m just trying to be extra careful.",
+      "parentUuid": "f4a7503c_7383fc3f",
       "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
