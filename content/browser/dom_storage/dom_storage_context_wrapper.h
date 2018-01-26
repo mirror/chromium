@@ -88,15 +88,18 @@ class CONTENT_EXPORT DOMStorageContextWrapper
  private:
   friend class DOMStorageMessageFilter;  // for access to context()
   friend class SessionStorageNamespaceImpl;  // ditto
+  friend class DOMStorageSession;            // ditto
   friend class base::RefCountedThreadSafe<DOMStorageContextWrapper>;
   friend class MojoDOMStorageBrowserTest;
 
   ~DOMStorageContextWrapper() override;
   DOMStorageContextImpl* context() const { return context_.get(); }
   SessionStorageContextMojo* mojo_session_state() {
-    return mojo_session_state_.get();
+    return mojo_session_state_;
   }
-  base::WeakPtr<SessionStorageContextMojo> GetMojoSessionStateWeakPtr();
+  base::SingleThreadTaskRunner* mojo_task_runner() {
+    return mojo_task_runner_.get();
+  }
 
   // Called on UI thread when the system is under memory pressure.
   void OnMemoryPressure(
@@ -111,8 +114,8 @@ class CONTENT_EXPORT DOMStorageContextWrapper
   // interface. The |mojo_state_| object is owned by this object, but destroyed
   // asynchronously on the |mojo_task_runner_|.
   LocalStorageContextMojo* mojo_state_ = nullptr;
+  SessionStorageContextMojo* mojo_session_state_ = nullptr;
   scoped_refptr<base::SingleThreadTaskRunner> mojo_task_runner_;
-  std::unique_ptr<SessionStorageContextMojo> mojo_session_state_;
 
   // To receive memory pressure signals.
   std::unique_ptr<base::MemoryPressureListener> memory_pressure_listener_;
