@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6f110fe_c456cbed",
+        "filename": "base/win/scoped_handle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-26T23:18:02Z",
+      "side": 1,
+      "message": "To do this correctly per\nhttps://google.github.io/styleguide/cppguide.html#Unnamed_Namespaces_and_Static_Variables\nwe\u0027ll need to have an external header file for ActiveVerifier.\n\nOf course once we have the header file, do we still need LTO_VISIBILITY_PUBLIC?",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 20
+      },
+      "revId": "7a8e8db9dd227da38ae9c8b7a3b75eb01768df30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
