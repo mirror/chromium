@@ -18,7 +18,7 @@
 namespace ui {
 namespace {
 
-const float kFixedPointScaleValue = 65536.0f;
+const float k1616FixedPointScaleValue = 65536.0f;
 
 }  // namespace
 
@@ -284,8 +284,9 @@ bool HardwareDisplayPlaneManager::AssignOverlayPlanes(
 
       // This returns a number in 16.16 fixed point, required by the DRM overlay
       // APIs.
-      auto to_fixed_point =
-          [](double v) -> uint32_t { return v * kFixedPointScaleValue; };
+      auto to_fixed_point = [](double v) -> uint32_t {
+        return v * k1616FixedPointScaleValue;
+      };
       fixed_point_rect = gfx::Rect(to_fixed_point(crop_rect.x()),
                                    to_fixed_point(crop_rect.y()),
                                    to_fixed_point(crop_rect.width()),

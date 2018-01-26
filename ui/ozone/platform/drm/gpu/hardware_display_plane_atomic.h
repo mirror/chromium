@@ -31,6 +31,7 @@ class HardwareDisplayPlaneAtomic : public HardwareDisplayPlane {
                     const gfx::Rect& crtc_rect,
                     const gfx::Rect& src_rect,
                     const gfx::OverlayTransform transform,
+                    const uint64_t (&color_transform)[3][3],
                     int in_fence_fd);
 
   void set_crtc(CrtcController* crtc) { crtc_ = crtc; }
@@ -60,8 +61,12 @@ class HardwareDisplayPlaneAtomic : public HardwareDisplayPlane {
   Property src_w_prop_;
   Property src_h_prop_;
   Property rotation_prop_;
+  Property color_transform_prop_;
   Property in_fence_fd_prop_;
   CrtcController* crtc_ = nullptr;
+
+  uint64_t color_transform_[3][3];
+  uint32_t color_transform_blob_id_ = 0;
 };
 
 }  // namespace ui

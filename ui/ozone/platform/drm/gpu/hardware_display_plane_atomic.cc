@@ -4,6 +4,7 @@
 
 #include "ui/ozone/platform/drm/gpu/hardware_display_plane_atomic.h"
 
+#include "ui/ozone/platform/drm/gpu/crtc_controller.h"
 #include "ui/ozone/platform/drm/gpu/drm_device.h"
 
 namespace ui {
@@ -20,6 +21,7 @@ const char* kSrcYPropName = "SRC_Y";
 const char* kSrcWPropName = "SRC_W";
 const char* kSrcHPropName = "SRC_H";
 const char* kRotationPropName = "rotation";
+const char* kPlaneColorTransformPropName = "PLANE_CTM";
 const char* kInFenceFdPropName = "IN_FENCE_FD";
 
 // TODO(dcastagna): Remove the following defines once they're in libdrm headers.
@@ -88,6 +90,7 @@ bool HardwareDisplayPlaneAtomic::SetPlaneData(
     const gfx::Rect& crtc_rect,
     const gfx::Rect& src_rect,
     const gfx::OverlayTransform transform,
+    const uint64_t (&color_transform)[3][3],
     int in_fence_fd) {
   if (transform != gfx::OVERLAY_TRANSFORM_NONE && !rotation_prop_.id)
     return false;
@@ -121,6 +124,28 @@ bool HardwareDisplayPlaneAtomic::SetPlaneData(
             property_set, plane_id_, rotation_prop_.id,
             OverlayTransformToDrmRotationPropertyValue(transform));
   }
+
+  if (color_transform_prop_.id) {
+    DCHECK(crtc_);
+    int drm_fd = crtc_->drm()->get_fd();
+    if (!color_transform_blob_id_ ||
+        memcmp(color_transform, color_transform_, sizeof(color_transform_))) {
+      if (color_transform_blob_id_)
+        drmModeDestroyPropertyBlob(drm_fd, color_transform_blob_id_);
+      plane_set_succeeded =
+          plane_set_succeeded &&
+          !drmModeCreatePropertyBlob(drm_fd, color_transform,
+                                     sizeof(color_transform),
+                                     &color_transform_blob_id_);
+    }
+
+    DCHECK(!plane_set_succeeded || color_transform_blob_id_);
+    plane_set_succeeded = plane_set_succeeded &&
+                          drmModeAtomicAddProperty(property_set, plane_id_,
+                                                   color_transform_prop_.id,
+                                                   color_transform_blob_id_);
+  }
+
   if (in_fence_fd_prop_.id && in_fence_fd >= 0) {
     plane_set_succeeded =
         plane_set_succeeded &&
@@ -154,6 +179,8 @@ bool HardwareDisplayPlaneAtomic::InitializeProperties(
   }
   // The following properties are optional.
   rotation_prop_.Initialize(drm, kRotationPropName, plane_props);
+  color_transform_prop_.Initialize(drm, kPlaneColorTransformPropName,
+                                   plane_props);
   in_fence_fd_prop_.Initialize(drm, kInFenceFdPropName, plane_props);
   return true;
 }
