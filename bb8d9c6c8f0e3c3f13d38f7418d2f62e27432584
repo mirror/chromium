@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54638b89_4181b7b8",
+        "filename": "gpu/config/gpu_driver_bug_list.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 2746,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2018-01-26T19:52:56Z",
+      "side": 1,
+      "message": "You can express this as \"op\" as \"between\", and \"value\" as \"10.13.0\" and \"value2\" as \"10.13.3\".",
+      "range": {
+        "startLine": 2746,
+        "startChar": 18,
+        "endLine": 2746,
+        "endChar": 19
+      },
+      "revId": "bb8d9c6c8f0e3c3f13d38f7418d2f62e27432584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
