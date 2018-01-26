@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0abbbaa3_29b2482e",
+        "filename": "chrome/common/extensions/api/accessibility_private.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T22:20:23Z",
+      "side": 1,
+      "message": "This is already clear from the \"enum\" section below; maybe we could say something like \"The type of event to send.\" or similar?",
+      "range": {
+        "startLine": 44,
+        "startChar": 24,
+        "endLine": 44,
+        "endChar": 47
+      },
+      "revId": "6bf013ba21f79a4f66eb87aa3f843561973bbc66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3002b62_4e8bbed3",
+        "filename": "chrome/common/extensions/api/accessibility_private.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T22:20:23Z",
+      "side": 1,
+      "message": "Is this supposed to be a bitmask?  If so, might be helpful to call that out.\n\nIt might also be more readable if this were a struct with\n{\n  alt: bool?,\n  ctrl: bool?,\n  shift: bool?,\n}\n\nand then script would pass in, e.g., {alt: true}.  But I don\u0027t feel very strongly, since this is a private API, so whichever y\u0027all prefer is fine.",
+      "range": {
+        "startLine": 53,
+        "startChar": 76,
+        "endLine": 53,
+        "endChar": 156
+      },
+      "revId": "6bf013ba21f79a4f66eb87aa3f843561973bbc66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04c17651_65e34057",
+        "filename": "chrome/common/extensions/api/accessibility_private.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-26T22:20:23Z",
+      "side": 1,
+      "message": "prefer js casing here (i.e., fullWidth and floating).",
+      "range": {
+        "startLine": 59,
+        "startChar": 18,
+        "endLine": 59,
+        "endChar": 43
+      },
+      "revId": "6bf013ba21f79a4f66eb87aa3f843561973bbc66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
