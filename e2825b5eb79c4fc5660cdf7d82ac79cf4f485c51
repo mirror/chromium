@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0e56b8bd_deff1e8d",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-26T09:22:35Z",
+      "side": 1,
+      "message": "Regarding leaks: If OnStorageCleared and the local_storage_helper callback have been called, there should be no more references to the BarrierClosure and it will be deleted.\n\nAbout getting stuck: This CL doesn\u0027t change anything here. If QuotaStatus wasn\u0027t OK, it already didn\u0027t call settings.WebsiteUsagePrivateApi.onUsageCleared. Whether that is a good idea? I\u0027m not sure. In the end the call goes to site_details::onUsageDeleted_, so storedData_ wouldn\u0027t be reset.\n(https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/site_settings/site_details.js?l\u003d236\u0026rcl\u003dc67646fb6096ac1d87b516b2eaf2eb9968d2da73)\nThis is probably a good thing as resetting it although the data might not have been deleted is bad as well. This way we might at least get some bug reports.\n\nIf we want to investigate this more, it might make sense to add some UMA to QuotaManager to find out if this ever happens and which storage backends are affected.",
+      "parentUuid": "cbc31dd6_56c47ee0",
+      "revId": "e2825b5eb79c4fc5660cdf7d82ac79cf4f485c51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c4514336_e6d476e3",
         "filename": "chrome/browser/ui/webui/settings/site_settings_handler.cc",
         "patchSetId": 17
@@ -33,6 +51,24 @@
       "revId": "e2825b5eb79c4fc5660cdf7d82ac79cf4f485c51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6be1322c_22692a6c",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-26T09:22:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4514336_e6d476e3",
+      "revId": "e2825b5eb79c4fc5660cdf7d82ac79cf4f485c51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
