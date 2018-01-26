@@ -25,6 +25,7 @@
 #include "ui/events/keycodes/dom/dom_key.h"
 #include "ui/events/keycodes/dom/keycode_converter.h"
 #include "ui/events/keycodes/keyboard_code_conversion.h"
+#include "ui/keyboard/container_type.h"
 #include "ui/keyboard/keyboard_controller.h"
 #include "ui/keyboard/keyboard_switches.h"
 #include "ui/keyboard/keyboard_ui.h"
@@ -234,6 +235,16 @@ bool SendKeyEvent(const std::string type,
     event_type = ui::ET_KEY_RELEASED;
   if (event_type == ui::ET_UNKNOWN)
     return false;
+
+  if (event_type == ui::ET_KEY_PRESSED) {
+    KeyboardController* kc = KeyboardController::GetInstance();
+    if (key_code == 88) {
+      kc->SetContainerType(ContainerType::FLOATING);
+    }
+    if (key_code == 90) {
+      kc->SetContainerType(ContainerType::FULL_WIDTH);
+    }
+  }
 
   ui::KeyboardCode code = static_cast<ui::KeyboardCode>(key_code);
 
