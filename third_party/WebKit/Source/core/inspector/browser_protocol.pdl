@@ -2539,6 +2539,8 @@ experimental domain IndexedDB
       Runtime.RemoteObject primaryKey
       # Value object.
       Runtime.RemoteObject value
+      # Tag used by the frontend to track the record
+      optional integer tag
 
   # Key path.
   type KeyPath extends object
@@ -2552,6 +2554,14 @@ experimental domain IndexedDB
       optional string string
       # Array value.
       optional array of string array
+
+  # Entry tags. Needed for the frontend to map old records to new ones
+  type EntryTag extends object
+    properties
+      # Primary key remote object ID
+      string primaryKeyRemoteID
+      # Numeric tag
+      integer tag
 
   # Clears all entries from an object store.
   command clearObjectStore
@@ -2603,6 +2613,8 @@ experimental domain IndexedDB
       integer pageSize
       # Key range.
       optional KeyRange keyRange
+      # Numeric tags associated with composite key values
+      optional array of EntryTag tags
     returns
       # Array of object store data entries.
       array of DataEntry objectStoreDataEntries
