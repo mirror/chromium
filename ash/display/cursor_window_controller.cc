@@ -7,6 +7,7 @@
 #include "ash/ash_constants.h"
 #include "ash/display/mirror_window_controller.h"
 #include "ash/display/window_tree_host_manager.h"
+#include "ash/magnifier/docked_magnifier.h"
 #include "ash/public/cpp/ash_pref_names.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/root_window_controller.h"
@@ -121,10 +122,12 @@ bool CursorWindowController::ShouldEnableCursorCompositing() {
     return false;
   }
   display::DisplayManager* display_manager = Shell::Get()->display_manager();
+  const auto* docked_magnifier = Shell::Get()->docked_magnifier();
   return prefs->GetBoolean(prefs::kAccessibilityLargeCursorEnabled) ||
          prefs->GetBoolean(prefs::kAccessibilityHighContrastEnabled) ||
          prefs->GetBoolean(prefs::kAccessibilityScreenMagnifierEnabled) ||
          prefs->GetBoolean(prefs::kNightLightEnabled) ||
+         docked_magnifier->enabled() ||
          (display_manager->is_multi_mirroring_enabled() &&
           display_manager->IsInSoftwareMirrorMode());
 }
