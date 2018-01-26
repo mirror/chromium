@@ -2003,7 +2003,10 @@ config("minimal_symbols") {
   if (is_win) {
     # Linker symbols for backtraces only.
     cflags = []
-    ldflags = [ "/DEBUG" ]
+    ldflags = [
+      "/DEBUG",
+      "/PDBCOMPRESS",
+    ]
   } else {
     cflags = []
     if (target_cpu == "arm") {
