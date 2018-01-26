@@ -22,6 +22,53 @@
       "revId": "0893420952bba3caf5e284fbd469c75f91206342",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9f478c0_1e70ddd2",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2018-01-26T23:44:26Z",
+      "side": 1,
+      "message": "OS under test, feel free to modify the comment.",
+      "parentUuid": "89b9d5b7_1266ca60",
+      "range": {
+        "startLine": 193,
+        "startChar": 6,
+        "endLine": 193,
+        "endChar": 32
+      },
+      "revId": "0893420952bba3caf5e284fbd469c75f91206342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a390d5e_827f0ea8",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2018-01-26T23:44:26Z",
+      "side": 1,
+      "message": "i\u0027d use explicit\n dimensions: \"os:Ubuntu-14.04\"\ninstead of mixin, because less confusing and easier to read.",
+      "range": {
+        "startLine": 197,
+        "startChar": 5,
+        "endLine": 197,
+        "endChar": 21
+      },
+      "revId": "0893420952bba3caf5e284fbd469c75f91206342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
