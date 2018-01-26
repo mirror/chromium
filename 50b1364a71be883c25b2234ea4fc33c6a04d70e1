@@ -34,6 +34,24 @@
       "revId": "50b1364a71be883c25b2234ea4fc33c6a04d70e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "938bd201_51b561f0",
+        "filename": "content/browser/renderer_host/media/media_devices_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-26T12:43:32Z",
+      "side": 1,
+      "message": "Aha. Now I get it. Thanks!",
+      "parentUuid": "b6cf58ca_043945c1",
+      "revId": "50b1364a71be883c25b2234ea4fc33c6a04d70e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
