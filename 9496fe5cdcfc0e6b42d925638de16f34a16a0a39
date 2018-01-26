@@ -34,6 +34,24 @@
       "revId": "9496fe5cdcfc0e6b42d925638de16f34a16a0a39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "786679d1_df7e91ed",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/feature-policy-experimental-features/unsized-video.php",
+        "patchSetId": 27
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-26T20:15:41Z",
+      "side": 1,
+      "message": "Does GetBoundingClientRect work?",
+      "parentUuid": "94ec439b_6a65fabd",
+      "revId": "9496fe5cdcfc0e6b42d925638de16f34a16a0a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
