@@ -21,15 +21,21 @@ class PublicKeyCredentialParams {
   explicit PublicKeyCredentialParams(
       std::vector<std::tuple<std::string, int>> credential_params);
   PublicKeyCredentialParams(PublicKeyCredentialParams&& other);
+  PublicKeyCredentialParams(const PublicKeyCredentialParams& other);
+
   PublicKeyCredentialParams& operator=(PublicKeyCredentialParams&& other);
+  PublicKeyCredentialParams& operator=(const PublicKeyCredentialParams& other);
+
   ~PublicKeyCredentialParams();
 
   cbor::CBORValue ConvertToCBOR() const;
+  const std::vector<std::tuple<std::string, int>>&
+  public_key_credential_params() const {
+    return public_key_credential_params_;
+  }
 
  private:
   std::vector<std::tuple<std::string, int>> public_key_credential_params_;
-
-  DISALLOW_COPY_AND_ASSIGN(PublicKeyCredentialParams);
 };
 
 }  // namespace device

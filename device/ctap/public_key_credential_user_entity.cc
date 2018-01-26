@@ -78,10 +78,10 @@ cbor::CBORValue PublicKeyCredentialUserEntity::ConvertToCBOR() const {
   if (user_icon_url_)
     user_map[cbor::CBORValue(kUserIconUrlKey)] =
         cbor::CBORValue(user_icon_url_->spec());
-  if (user_display_name_) {
-    user_map[cbor::CBORValue(kUserDisplayNameKey)] =
-        cbor::CBORValue(*user_display_name_);
-  }
+  // if (user_display_name_) {
+  //   user_map[cbor::CBORValue(kUserDisplayNameKey)] =
+  //       cbor::CBORValue(*user_display_name_);
+  // }
   return cbor::CBORValue(std::move(user_map));
 }
 
