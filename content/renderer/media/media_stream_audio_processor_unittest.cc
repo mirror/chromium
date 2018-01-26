@@ -79,6 +79,20 @@ void ReadDataFromSpeechFile(char* data, int length) {
 
 }  // namespace
 
+class CONTENT_EXPORT AecDumpMessageFilterForTest : public AecDumpMessageFilter {
+ public:
+  AecDumpMessageFilterForTest()
+      : AecDumpMessageFilter(base::MessageLoop::current()->task_runner(),
+                             base::MessageLoop::current()->task_runner()) {}
+
+  void set_override_aec3(base::Optional<bool> override_aec3) {
+    override_aec3_ = override_aec3;
+  }
+
+ protected:
+  ~AecDumpMessageFilterForTest() override {}
+};
+
 class MediaStreamAudioProcessorTest : public ::testing::Test {
  public:
   MediaStreamAudioProcessorTest()
@@ -452,6 +466,10 @@ TEST_F(MediaStreamAudioProcessorTest, MAYBE_TestWithKeyboardMicChannel) {
 
 // Test that the OnAec3Enable method has the desired effect on the APM config.
 TEST_F(MediaStreamAudioProcessorTest, TestAec3Switch) {
+  scoped_refptr<AecDumpMessageFilterForTest> admf =
+      new AecDumpMessageFilterForTest();
+  admf->set_override_aec3(true);
+
   scoped_refptr<WebRtcAudioDeviceImpl> webrtc_audio_device(
       new rtc::RefCountedObject<WebRtcAudioDeviceImpl>());
   AudioProcessingProperties properties;
@@ -459,11 +477,7 @@ TEST_F(MediaStreamAudioProcessorTest, TestAec3Switch) {
       new rtc::RefCountedObject<MediaStreamAudioProcessor>(
           properties, webrtc_audio_device.get()));
 
-  audio_processor->OnAec3Enable(true);
   EXPECT_TRUE(GetAec3ConfigState(audio_processor.get()));
-
-  audio_processor->OnAec3Enable(false);
-  EXPECT_FALSE(GetAec3ConfigState(audio_processor.get()));
 
   // Stop |audio_processor| so that it removes itself from
   // |webrtc_audio_device| and clears its pointer to it.
@@ -473,21 +487,18 @@ TEST_F(MediaStreamAudioProcessorTest, TestAec3Switch) {
 // Same test as above, but when AEC is disabled in the constrants. The expected
 // outcome is that AEC3 should be disabled in all cases.
 TEST_F(MediaStreamAudioProcessorTest, TestAec3Switch_AecOff) {
+  scoped_refptr<AecDumpMessageFilterForTest> admf =
+      new AecDumpMessageFilterForTest();
+  admf->set_override_aec3(true);
+
   scoped_refptr<WebRtcAudioDeviceImpl> webrtc_audio_device(
       new rtc::RefCountedObject<WebRtcAudioDeviceImpl>());
   AudioProcessingProperties properties;
-  // Disable the AEC.
   properties.enable_sw_echo_cancellation = false;
   scoped_refptr<MediaStreamAudioProcessor> audio_processor(
       new rtc::RefCountedObject<MediaStreamAudioProcessor>(
           properties, webrtc_audio_device.get()));
 
-  EXPECT_FALSE(GetAec3ConfigState(audio_processor.get()));
-
-  audio_processor->OnAec3Enable(true);
-  EXPECT_FALSE(GetAec3ConfigState(audio_processor.get()));
-
-  audio_processor->OnAec3Enable(false);
   EXPECT_FALSE(GetAec3ConfigState(audio_processor.get()));
 
   // Stop |audio_processor| so that it removes itself from
