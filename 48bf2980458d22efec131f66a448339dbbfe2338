@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cfac8e9e_6cfad0bc",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-26T00:42:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba3e9cd4_57ae332b",
+      "range": {
+        "startLine": 69,
+        "startChar": 6,
+        "endLine": 69,
+        "endChar": 13
+      },
+      "revId": "48bf2980458d22efec131f66a448339dbbfe2338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cbd0d6e_84aba1c5",
         "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_bridge.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d6031a9d_98161169",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-26T00:42:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cbd0d6e_84aba1c5",
+      "range": {
+        "startLine": 72,
+        "startChar": 6,
+        "endLine": 72,
+        "endChar": 13
+      },
+      "revId": "48bf2980458d22efec131f66a448339dbbfe2338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92ff7ac8_dc285777",
         "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_bridge.cc",
         "patchSetId": 1
@@ -62,6 +110,24 @@
       "revId": "48bf2980458d22efec131f66a448339dbbfe2338",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7fd09bb_0f9ad4b2",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-26T00:42:48Z",
+      "side": 1,
+      "message": "Yes, that\u0027s OK. I\u0027ll add a comment about it.",
+      "parentUuid": "92ff7ac8_dc285777",
+      "revId": "48bf2980458d22efec131f66a448339dbbfe2338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "10a57814_969e3467",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-26T00:42:48Z",
+      "side": 1,
+      "message": "I don\u0027t see a way it can be a nullptr, just old habits of being extra safe with stuff like this. I\u0027ll remove this part of the conditional.",
+      "parentUuid": "aaceb1a7_2899094b",
+      "range": {
+        "startLine": 102,
+        "startChar": 38,
+        "endLine": 102,
+        "endChar": 55
+      },
+      "revId": "48bf2980458d22efec131f66a448339dbbfe2338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9a84bf9_69694b0a",
         "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_bridge.h",
         "patchSetId": 1
@@ -108,6 +198,30 @@
       "revId": "48bf2980458d22efec131f66a448339dbbfe2338",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "967083af_4254bfa3",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_bridge.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-26T00:42:48Z",
+      "side": 1,
+      "message": "OK, thanks. Wasn\u0027t entirely sure about that.",
+      "parentUuid": "d9a84bf9_69694b0a",
+      "range": {
+        "startLine": 48,
+        "startChar": 43,
+        "endLine": 48,
+        "endChar": 47
+      },
+      "revId": "48bf2980458d22efec131f66a448339dbbfe2338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "29707d9d_d13e0c1d",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_bridge.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-26T00:42:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9aefae6_1e0bc0f4",
+      "range": {
+        "startLine": 49,
+        "startChar": 49,
+        "endLine": 49,
+        "endChar": 56
+      },
+      "revId": "48bf2980458d22efec131f66a448339dbbfe2338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd6caaba_292cd1f8",
         "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.cc",
         "patchSetId": 1
@@ -148,6 +286,24 @@
       "revId": "48bf2980458d22efec131f66a448339dbbfe2338",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d60b2237_6e5546ba",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-26T00:42:48Z",
+      "side": 1,
+      "message": "Yup, removed.",
+      "parentUuid": "cd6caaba_292cd1f8",
+      "revId": "48bf2980458d22efec131f66a448339dbbfe2338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -168,6 +324,24 @@
     },
     {
       "key": {
+        "uuid": "0d19a153_be4fa9ac",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-26T00:42:48Z",
+      "side": 1,
+      "message": "It was actually copy_output_result in the header...but I moved that one here as well and forward declared more things in the header.",
+      "parentUuid": "25da5706_ffa1d942",
+      "revId": "48bf2980458d22efec131f66a448339dbbfe2338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8f68a1e_92c12665",
         "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.cc",
         "patchSetId": 1
@@ -182,6 +356,24 @@
       "revId": "48bf2980458d22efec131f66a448339dbbfe2338",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6da08fba_ec40f396",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-26T00:42:48Z",
+      "side": 1,
+      "message": "Same as above, forward declared this and removed from header.",
+      "parentUuid": "d8f68a1e_92c12665",
+      "revId": "48bf2980458d22efec131f66a448339dbbfe2338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -202,6 +394,24 @@
     },
     {
       "key": {
+        "uuid": "13146b47_954206c6",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-26T00:42:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5b17de0_e8a2094f",
+      "revId": "48bf2980458d22efec131f66a448339dbbfe2338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "071da49b_7eb570fe",
         "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.h",
         "patchSetId": 1
@@ -216,6 +426,24 @@
       "revId": "48bf2980458d22efec131f66a448339dbbfe2338",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fcfec88_d3fa6def",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-26T00:42:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "071da49b_7eb570fe",
+      "revId": "48bf2980458d22efec131f66a448339dbbfe2338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -236,6 +464,24 @@
     },
     {
       "key": {
+        "uuid": "688ef837_67fbd843",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-26T00:42:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebcc92e1_778181a8",
+      "revId": "48bf2980458d22efec131f66a448339dbbfe2338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed01f949_6371627a",
         "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.h",
         "patchSetId": 1
@@ -250,6 +496,24 @@
       "revId": "48bf2980458d22efec131f66a448339dbbfe2338",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7472521_6f63f0b4",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-26T00:42:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed01f949_6371627a",
+      "revId": "48bf2980458d22efec131f66a448339dbbfe2338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -276,6 +540,30 @@
     },
     {
       "key": {
+        "uuid": "4db59f4e_00bc0daf",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-26T00:42:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0677a60_ca11f6ef",
+      "range": {
+        "startLine": 36,
+        "startChar": 12,
+        "endLine": 36,
+        "endChar": 21
+      },
+      "revId": "48bf2980458d22efec131f66a448339dbbfe2338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e74c2f2_318456e6",
         "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.h",
         "patchSetId": 1
@@ -296,6 +584,30 @@
       "revId": "48bf2980458d22efec131f66a448339dbbfe2338",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efb0c817_a6642f8a",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-26T00:42:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e74c2f2_318456e6",
+      "range": {
+        "startLine": 53,
+        "startChar": 28,
+        "endLine": 53,
+        "endChar": 29
+      },
+      "revId": "48bf2980458d22efec131f66a448339dbbfe2338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
