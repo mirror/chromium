@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6089d04f_2292d202",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-26T06:47:31Z",
+      "side": 1,
+      "message": "Nice description:)",
+      "revId": "a68efe18e4806055bd4dfaf9b952415c0efbc804",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c0f210a_5a7e766b",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-26T06:47:31Z",
+      "side": 1,
+      "message": "Actually this will never return true since this project (enable Android Wallpapers App by default) was cancelled. Could you add a TODO(xdai|wzang) here to clean it up later?",
+      "revId": "a68efe18e4806055bd4dfaf9b952415c0efbc804",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ebaef50_8f6a8eeb",
+        "filename": "chrome/browser/ui/webui/settings/appearance_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-26T06:47:31Z",
+      "side": 1,
+      "message": "Make sure you test it on device that the wallpaper settings in chrome://settings is disabled for policy controlled devices.",
+      "revId": "a68efe18e4806055bd4dfaf9b952415c0efbc804",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
