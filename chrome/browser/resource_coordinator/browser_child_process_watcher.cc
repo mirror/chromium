@@ -4,6 +4,8 @@
 
 #include "chrome/browser/resource_coordinator/browser_child_process_watcher.h"
 
+#include <memory>
+
 #include "base/process/process.h"
 #include "content/public/browser/child_process_data.h"
 #include "content/public/common/process_type.h"
@@ -28,7 +30,7 @@ void BrowserChildProcessWatcher::BrowserChildProcessLaunchedAndConnected(
 
   if (data.process_type == content::PROCESS_TYPE_GPU) {
     gpu_process_resource_coordinator_ =
-        base::MakeUnique<resource_coordinator::ProcessResourceCoordinator>(
+        std::make_unique<resource_coordinator::ProcessResourceCoordinator>(
             content::ServiceManagerConnection::GetForProcess()->GetConnector());
 
     gpu_process_resource_coordinator_->SetLaunchTime(base::Time::Now());

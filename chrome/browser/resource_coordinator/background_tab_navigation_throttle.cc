@@ -4,8 +4,9 @@
 
 #include "chrome/browser/resource_coordinator/background_tab_navigation_throttle.h"
 
+#include <memory>
+
 #include "base/feature_list.h"
-#include "base/memory/ptr_util.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/prerender/prerender_manager.h"
 #include "chrome/browser/prerender/prerender_manager_factory.h"
@@ -61,7 +62,7 @@ BackgroundTabNavigationThrottle::MaybeCreateThrottleFor(
   if (!TabUIHelper::FromWebContents(web_contents))
     return nullptr;
 
-  return base::MakeUnique<BackgroundTabNavigationThrottle>(navigation_handle);
+  return std::make_unique<BackgroundTabNavigationThrottle>(navigation_handle);
 }
 
 const char* BackgroundTabNavigationThrottle::GetNameForLogging() {

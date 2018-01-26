@@ -2,11 +2,11 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <memory>
 #include <string>
 
 #include "base/feature_list.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/test/scoped_feature_list.h"
 #include "chrome/browser/browser_process.h"
@@ -72,7 +72,7 @@ IN_PROC_BROWSER_TEST_F(ResourceCoordinatorRenderProcessProbeBrowserTest,
 
   resource_coordinator::ResourceCoordinatorRenderProcessProbe probe;
   probe.set_render_process_metrics_handler_for_testing(
-      base::MakeUnique<MockResourceCoordinatorRenderProcessMetricsHandler>());
+      std::make_unique<MockResourceCoordinatorRenderProcessMetricsHandler>());
   set_probe(&probe);
 
   ASSERT_TRUE(embedded_test_server()->Start());

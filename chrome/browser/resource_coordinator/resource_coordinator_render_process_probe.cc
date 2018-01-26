@@ -4,10 +4,10 @@
 
 #include "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.h"
 
+#include <memory>
 #include <vector>
 
 #include "base/bind.h"
-#include "base/memory/ptr_util.h"
 #include "base/values.h"
 #include "build/build_config.h"
 #include "content/public/browser/browser_thread.h"
@@ -64,7 +64,7 @@ class ResourceCoordinatorRenderProcessMetricsHandler
 
 ResourceCoordinatorRenderProcessProbe::ResourceCoordinatorRenderProcessProbe()
     : metrics_handler_(
-          base::MakeUnique<ResourceCoordinatorRenderProcessMetricsHandler>()),
+          std::make_unique<ResourceCoordinatorRenderProcessMetricsHandler>()),
       interval_ms_(
           base::TimeDelta::FromSeconds(kDefaultMeasurementIntervalInSeconds)) {
   UpdateWithFieldTrialParams();

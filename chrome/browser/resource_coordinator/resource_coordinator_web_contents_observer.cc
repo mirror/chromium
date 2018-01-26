@@ -4,6 +4,7 @@
 
 #include "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h"
 
+#include <memory>
 #include <utility>
 
 #include "base/atomic_sequence_num.h"
@@ -36,7 +37,7 @@ ResourceCoordinatorWebContentsObserver::ResourceCoordinatorWebContentsObserver(
   }
 
   page_resource_coordinator_ =
-      base::MakeUnique<resource_coordinator::PageResourceCoordinator>(
+      std::make_unique<resource_coordinator::PageResourceCoordinator>(
           connector);
 
   // Make sure to set the visibility property when we create
