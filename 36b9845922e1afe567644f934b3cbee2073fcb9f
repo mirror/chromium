@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c8fcb2df_98aa802d",
+        "filename": "third_party/WebKit/Source/core/css/parser/SizesCalcParser.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-26T15:08:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04a3c5ce_8127e8cc",
+      "revId": "36b9845922e1afe567644f934b3cbee2073fcb9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e1eb7a0_4c8de3c6",
         "filename": "third_party/WebKit/Source/core/css/parser/SizesCalcParser.cpp",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "06483c5d_7a7bfc1f",
+        "filename": "third_party/WebKit/Source/core/css/parser/SizesCalcParser.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-26T15:08:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e1eb7a0_4c8de3c6",
+      "range": {
+        "startLine": 40,
+        "startChar": 5,
+        "endLine": 40,
+        "endChar": 10
+      },
+      "revId": "36b9845922e1afe567644f934b3cbee2073fcb9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63abc0f9_aa6f4460",
         "filename": "third_party/WebKit/Source/core/css/parser/SizesCalcParserTest.cpp",
         "patchSetId": 1
@@ -62,6 +104,30 @@
       "revId": "36b9845922e1afe567644f934b3cbee2073fcb9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "984deb14_448c9514",
+        "filename": "third_party/WebKit/Source/core/css/parser/SizesCalcParserTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-26T15:08:40Z",
+      "side": 1,
+      "message": "Added those (and a few more) as well.",
+      "parentUuid": "63abc0f9_aa6f4460",
+      "range": {
+        "startLine": 100,
+        "startChar": 6,
+        "endLine": 100,
+        "endChar": 68
+      },
+      "revId": "36b9845922e1afe567644f934b3cbee2073fcb9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
