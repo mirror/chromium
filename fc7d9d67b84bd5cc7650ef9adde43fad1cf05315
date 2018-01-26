@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "998b2992_135a41bb",
+        "filename": "tools/mac/rewrite_modern_objc.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-26T19:31:21Z",
+      "side": 1,
+      "message": "I want :).",
+      "revId": "fc7d9d67b84bd5cc7650ef9adde43fad1cf05315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e926c547_2b08cb39",
+        "filename": "tools/mac/rewrite_modern_objc.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-26T19:31:21Z",
+      "side": 1,
+      "message": "Also want.",
+      "revId": "fc7d9d67b84bd5cc7650ef9adde43fad1cf05315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "686754e5_a3d15fde",
+        "filename": "tools/mac/rewrite_modern_objc.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-26T19:31:21Z",
+      "side": 1,
+      "message": "nit/question: Is it necessary to use shell\u003dTrue versus passing split_cmd + flags?",
+      "revId": "fc7d9d67b84bd5cc7650ef9adde43fad1cf05315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ac1eeb8_b3842beb",
+        "filename": "tools/mac/rewrite_modern_objc.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-26T19:31:21Z",
+      "side": 1,
+      "message": "optional: Perhaps something like this instead of reading and slicing?\n\n    with open(remap_file) as remap:\n     for infile in remap:\n      mtime \u003d next(remap)\n      outfile \u003d next(remap)\n      # …\n\nor\n\n      mtime, outfile \u003d [next(remap) for _ in range(2)]",
+      "range": {
+        "startLine": 130,
+        "startChar": 2,
+        "endLine": 132,
+        "endChar": 57
+      },
+      "revId": "fc7d9d67b84bd5cc7650ef9adde43fad1cf05315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
