@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "737713d5_af74fff9",
+        "filename": "third_party/WebKit/Source/bindings/bindings.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2018-01-26T01:32:23Z",
+      "side": 1,
+      "message": "What about WorkletClassParserHelper?",
+      "range": {
+        "startLine": 35,
+        "startChar": 29,
+        "endLine": 35,
+        "endChar": 46
+      },
+      "revId": "2e893bba18a3c4d591edebbbc45ec987e3648fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4894def_101393f8",
         "filename": "third_party/WebKit/Source/bindings/core/v8/ClassParserHelper.h",
         "patchSetId": 2
