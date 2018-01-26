@@ -132,7 +132,11 @@ Sources.UISourceCodeFrame = class extends SourceFrame.SourceFrame {
   wasShown() {
     super.wasShown();
     // We need CodeMirrorTextEditor to be initialized prior to this call as it calls |cursorPositionToCoordinates| internally. @see crbug.com/506566
-    setImmediate(this._updateBucketDecorations.bind(this));
+    setImmediate(() => {
+      this._refreshPlugins();
+      this._updateBucketDecorations();
+    });
+
     this.setEditable(this._canEditSource());
   }
 
@@ -141,6 +145,7 @@ Sources.UISourceCodeFrame = class extends SourceFrame.SourceFrame {
    */
   willHide() {
     super.willHide();
+    this._disposePlugins();
     UI.context.setFlavor(Sources.UISourceCodeFrame, null);
     this._uiSourceCode.removeWorkingCopyGetter();
   }
@@ -232,27 +237,30 @@ Sources.UISourceCodeFrame = class extends SourceFrame.SourceFrame {
     if (this._muteSourceCodeEvents)
       return;
     this._innerSetContent(this._uiSourceCode.workingCopy());
-    this.onUISourceCodeContentChanged();
   }
 
   /**
    * @param {!Common.Event} event
    */
   _onWorkingCopyCommitted(event) {
-    if (!this._muteSourceCodeEvents) {
+    if (!this._muteSourceCodeEvents)
       this._innerSetContent(this._uiSourceCode.workingCopy());
-      this.onUISourceCodeContentChanged();
-    }
+
     this.textEditor.markClean();
     this._updateStyle();
   }
 
   _refreshPlugins() {
     this._disposePlugins();
+    if (!this.loaded)
+      return;
+
     var binding = Persistence.persistence.binding(this._uiSourceCode);
     var pluginUISourceCode = binding ? binding.network : this._uiSourceCode;
 
     // The order of these plugins matters for toolbar items
+    if (Sources.DebuggerPlugin.accepts(pluginUISourceCode))
+      this._plugins.push(new Sources.DebuggerPlugin(this.textEditor, pluginUISourceCode));
     if (Sources.CSSPlugin.accepts(pluginUISourceCode))
       this._plugins.push(new Sources.CSSPlugin(this.textEditor));
     if (Sources.JavaScriptCompilerPlugin.accepts(pluginUISourceCode))
@@ -311,9 +319,6 @@ Sources.UISourceCodeFrame = class extends SourceFrame.SourceFrame {
     this.setEditable(this._canEditSource());
   }
 
-  onUISourceCodeContentChanged() {
-  }
-
   /**
    * @param {string} content
    */
@@ -333,31 +338,13 @@ Sources.UISourceCodeFrame = class extends SourceFrame.SourceFrame {
    * @override
    * @return {!Promise}
    */
-  populateTextAreaContextMenu(contextMenu, lineNumber, columnNumber) {
-    /**
-     * @this {Sources.UISourceCodeFrame}
-     */
-    function appendItems() {
-      contextMenu.appendApplicableItems(this._uiSourceCode);
-      contextMenu.appendApplicableItems(new Workspace.UILocation(this._uiSourceCode, lineNumber, columnNumber));
-      contextMenu.appendApplicableItems(this);
-    }
-
-    return super.populateTextAreaContextMenu(contextMenu, lineNumber, columnNumber).then(appendItems.bind(this));
-  }
-
-  /**
-   * @param {!Array.<!UI.Infobar|undefined>} infobars
-   */
-  attachInfobars(infobars) {
-    for (var i = infobars.length - 1; i >= 0; --i) {
-      var infobar = infobars[i];
-      if (!infobar)
-        continue;
-      this.element.insertBefore(infobar.element, this.element.children[0]);
-      infobar.setParentView(this);
-    }
-    this.doResize();
+  async populateTextAreaContextMenu(contextMenu, lineNumber, columnNumber) {
+    await super.populateTextAreaContextMenu(contextMenu, lineNumber, columnNumber);
+    contextMenu.appendApplicableItems(this._uiSourceCode);
+    contextMenu.appendApplicableItems(new Workspace.UILocation(this._uiSourceCode, lineNumber, columnNumber));
+    contextMenu.appendApplicableItems(this);
+    for (var plugin of this._plugins)
+      await plugin.populateTextAreaContextMenu(contextMenu, lineNumber, columnNumber);
   }
 
   dispose() {
@@ -516,6 +503,18 @@ Sources.UISourceCodeFrame = class extends SourceFrame.SourceFrame {
       return leftToolbarItems;
 
     return [...leftToolbarItems, new UI.ToolbarSeparator(true), ...rightToolbarItems];
+  }
+
+  /**
+   * @override
+   * @param {!UI.ContextMenu} contextMenu
+   * @param {number} lineNumber
+   * @return {!Promise}
+   */
+  async populateLineGutterContextMenu(contextMenu, lineNumber) {
+    await super.populateLineGutterContextMenu(contextMenu, lineNumber);
+    for (var plugin of this._plugins)
+      await plugin.populateLineGutterContextMenu(contextMenu, lineNumber);
   }
 };
 
@@ -767,6 +766,23 @@ Sources.UISourceCodeFrame.Plugin = class {
    * @return {!Array<!UI.ToolbarItem>}
    */
   leftToolbarItems() {
+  }
+
+  /**
+   * @param {!UI.ContextMenu} contextMenu
+   * @param {number} lineNumber
+   * @return {!Promise}
+   */
+  populateLineGutterContextMenu(contextMenu, lineNumber) {
+  }
+
+  /**
+   * @param {!UI.ContextMenu} contextMenu
+   * @param {number} lineNumber
+   * @param {number} columnNumber
+   * @return {!Promise}
+   */
+  populateTextAreaContextMenu(contextMenu, lineNumber, columnNumber) {
   }
 
   dispose() {

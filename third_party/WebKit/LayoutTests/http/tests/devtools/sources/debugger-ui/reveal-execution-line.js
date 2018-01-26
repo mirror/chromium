@@ -18,7 +18,7 @@
     var executionLineSet = false;
     var executionLineRevealed = false;
     TestRunner.addSniffer(SourceFrame.SourceFrame.prototype, 'revealPosition', didRevealLine);
-    TestRunner.addSniffer(Sources.JavaScriptSourceFrame.prototype, 'setExecutionLocation', didSetExecutionLocation);
+    TestRunner.addSniffer(Sources.DebuggerPlugin.prototype, '_executionLineChanged', didSetExecutionLocation);
     SourcesTestRunner.runTestFunctionAndWaitUntilPaused(didPause);
 
     function didPause(callFrames) {

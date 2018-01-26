@@ -442,24 +442,28 @@ SourcesTestRunner.waitForScriptSource = function(scriptName, callback) {
 };
 
 SourcesTestRunner.setBreakpoint = function(sourceFrame, lineNumber, condition, enabled) {
-  if (!sourceFrame._muted)
-    sourceFrame._setBreakpoint(lineNumber, 0, condition, enabled);
+  var debuggerPlugin = SourcesTestRunner.debuggerPlugin(sourceFrame);
+  if (!debuggerPlugin._muted)
+    debuggerPlugin._setBreakpoint(lineNumber, 0, condition, enabled);
 };
 
 SourcesTestRunner.removeBreakpoint = function(sourceFrame, lineNumber) {
-  sourceFrame._breakpointManager.findBreakpoints(sourceFrame._uiSourceCode, lineNumber)[0].remove();
+  var debuggerPlugin = SourcesTestRunner.debuggerPlugin(sourceFrame);
+  debuggerPlugin._breakpointManager.findBreakpoints(sourceFrame._uiSourceCode, lineNumber)[0].remove();
 };
 
 SourcesTestRunner.createNewBreakpoint = function(sourceFrame, lineNumber, condition, enabled) {
+  var debuggerPlugin = SourcesTestRunner.debuggerPlugin(sourceFrame);
   var promise =
-      new Promise(resolve => TestRunner.addSniffer(sourceFrame.__proto__, '_breakpointWasSetForTest', resolve));
-  sourceFrame._createNewBreakpoint(lineNumber, condition, enabled);
+      new Promise(resolve => TestRunner.addSniffer(debuggerPlugin.__proto__, '_breakpointWasSetForTest', resolve));
+  debuggerPlugin._createNewBreakpoint(lineNumber, condition, enabled);
   return promise;
 };
 
 SourcesTestRunner.toggleBreakpoint = function(sourceFrame, lineNumber, disableOnly) {
-  if (!sourceFrame._muted)
-    sourceFrame._toggleBreakpoint(lineNumber, disableOnly);
+  var debuggerPlugin = SourcesTestRunner.debuggerPlugin(sourceFrame);
+  if (!debuggerPlugin._muted)
+    debuggerPlugin._toggleBreakpoint(lineNumber, disableOnly);
 };
 
 SourcesTestRunner.waitBreakpointSidebarPane = function(waitUntilResolved) {
@@ -681,7 +685,8 @@ SourcesTestRunner.waitJavaScriptSourceFrameBreakpoints = function(sourceFrame) {
 
   function waitUpdate() {
     return new Promise(
-        resolve => TestRunner.addSniffer(sourceFrame.__proto__, '_breakpointDecorationsUpdatedForTest', resolve));
+        resolve =>
+            TestRunner.addSniffer(Sources.DebuggerPlugin.prototype, '_breakpointDecorationsUpdatedForTest', resolve));
   }
 
   function checkIfReady() {
@@ -706,13 +711,13 @@ SourcesTestRunner.dumpJavaScriptSourceFrameBreakpoints = function(sourceFrame) {
     TestRunner.addResult(
         'breakpoint at ' + lineNumber + ((disabled ? ' disabled' : '')) + ((conditional ? ' conditional' : '')));
     var range = new TextUtils.TextRange(lineNumber, 0, lineNumber, textEditor.line(lineNumber).length);
-    var bookmarks = textEditor.bookmarks(range, Sources.JavaScriptSourceFrame.BreakpointDecoration._bookmarkSymbol);
+    var bookmarks = textEditor.bookmarks(range, Sources.DebuggerPlugin.BreakpointDecoration._bookmarkSymbol);
     bookmarks = bookmarks.filter(bookmark => !!bookmark.position());
     bookmarks.sort((bookmark1, bookmark2) => bookmark1.position().startColumn - bookmark2.position().startColumn);
 
     for (var bookmark of bookmarks) {
       var position = bookmark.position();
-      var element = bookmark[Sources.JavaScriptSourceFrame.BreakpointDecoration._elementSymbolForTest];
+      var element = bookmark[Sources.DebuggerPlugin.BreakpointDecoration._elementSymbolForTest];
       var disabled = element.classList.contains('cm-inline-disabled');
       var conditional = element.classList.contains('cm-inline-conditional');
 
@@ -727,16 +732,26 @@ SourcesTestRunner.clickJavaScriptSourceFrameBreakpoint = function(sourceFrame, l
   var textEditor = sourceFrame._textEditor;
   var lineLength = textEditor.line(lineNumber).length;
   var lineRange = new TextUtils.TextRange(lineNumber, 0, lineNumber, lineLength);
-  var bookmarks = textEditor.bookmarks(lineRange, Sources.JavaScriptSourceFrame.BreakpointDecoration._bookmarkSymbol);
+  var bookmarks = textEditor.bookmarks(lineRange, Sources.DebuggerPlugin.BreakpointDecoration._bookmarkSymbol);
   bookmarks.sort((bookmark1, bookmark2) => bookmark1.position().startColumn - bookmark2.position().startColumn);
   var bookmark = bookmarks[index];
 
   if (bookmark) {
-    bookmark[Sources.JavaScriptSourceFrame.BreakpointDecoration._elementSymbolForTest].click();
+    bookmark[Sources.DebuggerPlugin.BreakpointDecoration._elementSymbolForTest].click();
   } else {
     TestRunner.addResult(`Could not click on Javascript breakpoint - lineNumber: ${lineNumber}, index: ${index}`);
     next();
   }
+};
+
+SourcesTestRunner.debuggerPlugin = function(sourceFrame) {
+  return sourceFrame._plugins.find(plugin => plugin instanceof Sources.DebuggerPlugin);
+};
+
+SourcesTestRunner.waitUntilDebuggerPluginLoaded = async function(sourceFrame) {
+  while (!SourcesTestRunner.debuggerPlugin(sourceFrame))
+    // await new Promise(x => setTimeout(x, 100));
+    await TestRunner.addSnifferPromise(sourceFrame, '_refreshPlugins');
 };
 
 SourcesTestRunner.setEventListenerBreakpoint = function(id, enabled, targetName) {

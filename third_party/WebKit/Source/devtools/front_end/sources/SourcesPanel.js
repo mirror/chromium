@@ -431,8 +431,6 @@ Sources.SourcesPanel = class extends UI.Panel {
     var uiLocation = liveLocation.uiLocation();
     if (!uiLocation)
       return;
-    this._sourcesView.clearCurrentExecutionLine();
-    this._sourcesView.setExecutionLocation(uiLocation);
     if (window.performance.now() - this._lastModificationTime < Sources.SourcesPanel._lastModificationTimeout)
       return;
     this._sourcesView.showSourceLocation(
@@ -495,7 +493,6 @@ Sources.SourcesPanel = class extends UI.Panel {
   }
 
   _clearInterface() {
-    this._sourcesView.clearCurrentExecutionLine();
     this._updateDebuggerButtonsAndStatus();
     UI.context.setFlavor(SDK.DebuggerPausedDetails, null);
 

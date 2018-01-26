@@ -50,7 +50,6 @@ Sources.SourcesView = class extends UI.VBox {
     this._scriptViewToolbar = new UI.Toolbar('', this._toolbarContainerElement);
     this._scriptViewToolbar.element.style.flex = 'auto';
     this._bottomToolbar = new UI.Toolbar('', this._toolbarContainerElement);
-    this._bindingChangeBound = this._onBindingChanged.bind(this);
 
     /** @type {?Common.EventTarget.EventDescriptor} */
     this._toolbarChangedListener = null;
@@ -158,12 +157,6 @@ Sources.SourcesView = class extends UI.VBox {
         this, UI.ShortcutsScreen.SourcesPanelShortcuts.GoToLine, this._showGoToLineQuickOpen.bind(this));
     registerShortcut.call(
         this, UI.ShortcutsScreen.SourcesPanelShortcuts.GoToMember, this._showOutlineQuickOpen.bind(this));
-    registerShortcut.call(
-        this, UI.ShortcutsScreen.SourcesPanelShortcuts.ToggleBreakpoint,
-        this._toggleBreakpoint.bind(this, false /* onlyDisable */));
-    registerShortcut.call(
-        this, UI.ShortcutsScreen.SourcesPanelShortcuts.ToggleBreakpointEnabled,
-        this._toggleBreakpoint.bind(this, true /* onlyDisable */));
     registerShortcut.call(this, UI.ShortcutsScreen.SourcesPanelShortcuts.Save, this._save.bind(this));
     registerShortcut.call(this, UI.ShortcutsScreen.SourcesPanelShortcuts.SaveAll, this._saveAll.bind(this));
   }
@@ -364,9 +357,7 @@ Sources.SourcesView = class extends UI.VBox {
     var sourceView;
     var contentType = uiSourceCode.contentType();
 
-    if (contentType.hasScripts())
-      sourceFrame = new Sources.JavaScriptSourceFrame(uiSourceCode);
-    else if (contentType === Common.resourceTypes.Image)
+    if (contentType === Common.resourceTypes.Image)
       sourceView = new SourceFrame.ImageView(uiSourceCode.mimeType(), uiSourceCode);
     else if (contentType === Common.resourceTypes.Font)
       sourceView = new SourceFrame.FontView(uiSourceCode.mimeType(), uiSourceCode);
@@ -392,17 +383,6 @@ Sources.SourcesView = class extends UI.VBox {
   }
 
   /**
-   * @param {!Sources.UISourceCodeFrame} sourceFrame
-   * @param {!Workspace.UISourceCode} uiSourceCode
-   * @return {boolean}
-   */
-  _sourceFrameMatchesUISourceCode(sourceFrame, uiSourceCode) {
-    if (uiSourceCode.contentType().hasScripts())
-      return sourceFrame instanceof Sources.JavaScriptSourceFrame;
-    return !(sourceFrame instanceof Sources.JavaScriptSourceFrame);
-  }
-
-  /**
    * @param {!Workspace.UISourceCode} uiSourceCode
    */
   _recreateSourceFrameIfNeeded(uiSourceCode) {
@@ -410,12 +390,7 @@ Sources.SourcesView = class extends UI.VBox {
     if (!oldSourceView || !(oldSourceView instanceof Sources.UISourceCodeFrame))
       return;
     var oldSourceFrame = /** @type {!Sources.UISourceCodeFrame} */ (oldSourceView);
-    if (this._sourceFrameMatchesUISourceCode(oldSourceFrame, uiSourceCode)) {
-      oldSourceFrame.setHighlighterType(uiSourceCode.mimeType());
-    } else {
-      this._editorContainer.removeUISourceCode(uiSourceCode);
-      this._removeSourceFrame(uiSourceCode);
-    }
+    oldSourceFrame.setHighlighterType(uiSourceCode.mimeType());
   }
 
   /**
@@ -436,39 +411,6 @@ Sources.SourcesView = class extends UI.VBox {
     uiSourceCode.removeEventListener(Workspace.UISourceCode.Events.TitleChanged, this._uiSourceCodeTitleChanged, this);
     if (sourceView && sourceView instanceof Sources.UISourceCodeFrame)
       /** @type {!Sources.UISourceCodeFrame} */ (sourceView).dispose();
-  }
-
-  _onBindingChanged() {
-    this.setExecutionLocation(this._executionLocation);
-    this.showSourceLocation(
-        this._executionLocation.uiSourceCode, this._executionLocation.lineNumber, this._executionLocation.columnNumber);
-  }
-
-  clearCurrentExecutionLine() {
-    if (!this._executionLocation)
-      return;
-    Persistence.persistence.unsubscribeFromBindingEvent(this._executionLocation.uiSourceCode, this._bindingChangeBound);
-    this._executionSourceFrame.clearExecutionLine();
-    this._executionSourceFrame = null;
-    this._executionLocation = null;
-  }
-
-  /**
-   * @param {!Workspace.UILocation} uiLocation
-   */
-  setExecutionLocation(uiLocation) {
-    this.clearCurrentExecutionLine();
-    var binding = Persistence.persistence.binding(uiLocation.uiSourceCode);
-    var uiSourceCode = binding ? binding.fileSystem : uiLocation.uiSourceCode;
-    var sourceView = this._getOrCreateSourceView(uiSourceCode);
-    if (!(sourceView instanceof Sources.UISourceCodeFrame))
-      return;
-    Persistence.persistence.subscribeForBindingEvent(uiLocation.uiSourceCode, this._bindingChangeBound);
-    var sourceFrame = /** @type {!Sources.JavaScriptSourceFrame} */ (sourceView);
-    sourceFrame.setExecutionLocation(
-        new Workspace.UILocation(uiSourceCode, uiLocation.lineNumber, uiLocation.columnNumber));
-    this._executionSourceFrame = sourceFrame;
-    this._executionLocation = uiLocation;
   }
 
   /**
@@ -683,23 +625,6 @@ Sources.SourcesView = class extends UI.VBox {
       return;
     var uiSourceCodeFrame = /** @type {!Sources.UISourceCodeFrame} */ (sourceFrame);
     uiSourceCodeFrame.commitEditing();
-  }
-
-  /**
-   * @param {boolean} onlyDisable
-   * @return {boolean}
-   */
-  _toggleBreakpoint(onlyDisable) {
-    var sourceFrame = this.currentSourceFrame();
-    if (!sourceFrame)
-      return false;
-
-    if (sourceFrame instanceof Sources.JavaScriptSourceFrame) {
-      var javaScriptSourceFrame = /** @type {!Sources.JavaScriptSourceFrame} */ (sourceFrame);
-      javaScriptSourceFrame.toggleBreakpointOnCurrentLine(onlyDisable);
-      return true;
-    }
-    return false;
   }
 
   /**

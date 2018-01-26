@@ -29,10 +29,17 @@
         scriptFormatter._toggleFormatScriptSource();
       }
 
-      function uiSourceCodeScriptFormatted() {
+     async function uiSourceCodeScriptFormatted() {
         var formattedSourceFrame = panel.visibleView;
-        SourcesTestRunner.setBreakpoint(formattedSourceFrame, 3, '', true);
-        SourcesTestRunner.waitBreakpointSidebarPane().then(evaluateF2);
+        try {
+          await SourcesTestRunner.waitUntilDebuggerPluginLoaded(formattedSourceFrame);
+         SourcesTestRunner.setBreakpoint(formattedSourceFrame, 3, '', true);
+         SourcesTestRunner.waitBreakpointSidebarPane().then(evaluateF2);
+       } catch (e) {
+         TestRunner.addResult(e);
+         TestRunner.completeTest();
+
+       }
       }
 
       function evaluateF2() {

@@ -45,6 +45,25 @@ Sources.SnippetsPlugin = class {
 
   /**
    * @override
+   * @param {!UI.ContextMenu} contextMenu
+   * @param {number} lineNumber
+   * @return {!Promise}
+   */
+  async populateLineGutterContextMenu(contextMenu, lineNumber) {
+  }
+
+  /**
+   * @override
+   * @param {!UI.ContextMenu} contextMenu
+   * @param {number} lineNumber
+   * @param {number} columnNumber
+   * @return {!Promise}
+   */
+  async populateTextAreaContextMenu(contextMenu, lineNumber, columnNumber) {
+  }
+
+  /**
+   * @override
    */
   dispose() {
   }

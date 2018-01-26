@@ -93,8 +93,10 @@
         SourcesTestRunner.undoSourceEditing(javaScriptSourceFrame);
       }
 
-      function breakpointResolvedAgain() {
+      async function breakpointResolvedAgain() {
         dumpBreakpointStorageAndLocations();
+        SourcesTestRunner.showUISourceCode(uiSourceCode, function() {});
+        await SourcesTestRunner.waitUntilDebuggerPluginLoaded(javaScriptSourceFrame);
         TestRunner.addResult('Finally removing breakpoint:');
         SourcesTestRunner.removeBreakpoint(javaScriptSourceFrame, 2);
 
@@ -146,8 +148,10 @@
         SourcesTestRunner.commitSource(javaScriptSourceFrame);
       }
 
-      function breakpointResolvedAgain() {
+      async function breakpointResolvedAgain() {
         dumpBreakpointStorageAndLocations();
+        SourcesTestRunner.showUISourceCode(uiSourceCode, function() {});
+        await SourcesTestRunner.waitUntilDebuggerPluginLoaded(javaScriptSourceFrame);
         TestRunner.addResult('Finally removing breakpoint:');
         SourcesTestRunner.removeBreakpoint(javaScriptSourceFrame, 2);
 
@@ -211,8 +215,10 @@
         SourcesTestRunner.commitSource(javaScriptSourceFrame);
       }
 
-      function breakpointResolvedAgain() {
+      async function breakpointResolvedAgain() {
         dumpBreakpointStorageAndLocations();
+        SourcesTestRunner.showUISourceCode(uiSourceCode, function() {});
+        await SourcesTestRunner.waitUntilDebuggerPluginLoaded(javaScriptSourceFrame);
         TestRunner.addResult('Finally removing breakpoint:');
         SourcesTestRunner.removeBreakpoint(javaScriptSourceFrame, 2);
 
@@ -276,8 +282,10 @@
         SourcesTestRunner.commitSource(javaScriptSourceFrame);
       }
 
-      function breakpointResolvedAgain() {
+      async function breakpointResolvedAgain() {
         dumpBreakpointStorageAndLocations();
+        SourcesTestRunner.showUISourceCode(uiSourceCode, function() {});
+        await SourcesTestRunner.waitUntilDebuggerPluginLoaded(javaScriptSourceFrame);
         TestRunner.addResult('Finally removing breakpoint:');
         SourcesTestRunner.removeBreakpoint(javaScriptSourceFrame, 2);
 
