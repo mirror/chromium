@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df8a3961_2efea0ed",
+        "filename": "chrome/browser/chromeos/arc/policy/arc_policy_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-26T22:42:24Z",
+      "side": 1,
+      "message": "nit: you can elide braces for single-line blocks.",
+      "range": {
+        "startLine": 196,
+        "startChar": 35,
+        "endLine": 196,
+        "endChar": 37
+      },
+      "revId": "65e507a409ad8a7f57013d20bf788b07c86d2178",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
