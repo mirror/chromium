@@ -1041,22 +1041,24 @@ void DiskCacheBackendTest::BackendLoad() {
   int seed = static_cast<int>(Time::Now().ToInternalValue());
   srand(seed);
 
-  disk_cache::Entry* entries[100];
-  for (int i = 0; i < 100; i++) {
+  const int kNumEntries = 512;
+
+  disk_cache::Entry* entries[kNumEntries];
+  for (int i = 0; i < kNumEntries; i++) {
     std::string key = GenerateKey(true);
     ASSERT_THAT(CreateEntry(key, &entries[i]), IsOk());
   }
-  EXPECT_EQ(100, cache_->GetEntryCount());
+  EXPECT_EQ(kNumEntries, cache_->GetEntryCount());
 
-  for (int i = 0; i < 100; i++) {
-    int source1 = rand() % 100;
-    int source2 = rand() % 100;
+  for (int i = 0; i < kNumEntries; i++) {
+    int source1 = rand() % kNumEntries;
+    int source2 = rand() % kNumEntries;
     disk_cache::Entry* temp = entries[source1];
     entries[source1] = entries[source2];
     entries[source2] = temp;
   }
 
-  for (int i = 0; i < 100; i++) {
+  for (int i = 0; i < kNumEntries; i++) {
     disk_cache::Entry* entry;
     ASSERT_THAT(OpenEntry(entries[i]->GetKey(), &entry), IsOk());
     EXPECT_TRUE(entry == entries[i]);
@@ -3784,21 +3786,13 @@ TEST_F(DiskCacheBackendTest, SimpleCacheAppCacheKeying) {
   BackendKeying();
 }
 
-// MacOS has a default open file limit of 256 files, which is incompatible with
-// this simple cache test.
-#if defined(OS_MACOSX)
-#define SIMPLE_MAYBE_MACOS(TestName) DISABLED_ ## TestName
-#else
-#define SIMPLE_MAYBE_MACOS(TestName) TestName
-#endif
-
-TEST_F(DiskCacheBackendTest, SIMPLE_MAYBE_MACOS(SimpleCacheLoad)) {
+TEST_F(DiskCacheBackendTest, SimpleCacheLoad) {
   SetMaxSize(0x100000);
   SetSimpleCacheMode();
   BackendLoad();
 }
 
-TEST_F(DiskCacheBackendTest, SIMPLE_MAYBE_MACOS(SimpleCacheAppCacheLoad)) {
+TEST_F(DiskCacheBackendTest, SimpleCacheAppCacheLoad) {
   SetCacheType(net::APP_CACHE);
   SetSimpleCacheMode();
   SetMaxSize(0x100000);
