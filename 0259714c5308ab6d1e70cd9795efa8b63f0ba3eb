@@ -69,6 +69,24 @@
       "revId": "0259714c5308ab6d1e70cd9795efa8b63f0ba3eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "816d92a9_2ad3da68",
+        "filename": "chrome/browser/resources/chromeos/wallpaper_manager/js/wallpaper_manager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-26T23:04:57Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "a778f8c1_01557c19",
+      "revId": "0259714c5308ab6d1e70cd9795efa8b63f0ba3eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
