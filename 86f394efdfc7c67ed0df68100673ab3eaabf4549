@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aa39156_9af20bc2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-26T22:52:57Z",
+      "side": 1,
+      "message": "nit: \"Do not show\" \u003d\u003e \"Fix\"",
+      "revId": "86f394efdfc7c67ed0df68100673ab3eaabf4549",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
