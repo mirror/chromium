@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72115500_48da1cdb",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3979,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-26T23:30:29Z",
+      "side": 1,
+      "message": "- I still don\u0027t understand how this can return without checking the |page_x| and |page_y| coordinates.\n- I should note for non-XFA text fields, the fields have attributes. e.g. Read-only text fields are not editable. Does XFA have a similar concept?\n- Does XFA have comboboxes that support custom user input?",
+      "revId": "8853b1ddaf589b283ce0bcbb3b0290d7c89bc5a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
