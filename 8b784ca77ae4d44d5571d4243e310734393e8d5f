@@ -1,0 +1,343 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9340bbd7_adf295d9",
+        "filename": "ios/web/public/web_state/navigation_context.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-26T18:23:50Z",
+      "side": 1,
+      "message": "s/Get/Returns \n\nhttps://google.github.io/styleguide/cppguide.html#Function_Comments",
+      "range": {
+        "startLine": 32,
+        "startChar": 5,
+        "endLine": 32,
+        "endChar": 8
+      },
+      "revId": "8b784ca77ae4d44d5571d4243e310734393e8d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "588dac44_81abf7a0",
+        "filename": "ios/web/public/web_state/navigation_context.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-26T18:23:50Z",
+      "side": 1,
+      "message": "I assume this comment was taken from comment. Is portion about 204/205 status is true for iOS?",
+      "range": {
+        "startLine": 50,
+        "startChar": 33,
+        "endLine": 50,
+        "endChar": 41
+      },
+      "revId": "8b784ca77ae4d44d5571d4243e310734393e8d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7380a2b_98376a05",
+        "filename": "ios/web/public/web_state/navigation_context.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-26T18:23:50Z",
+      "side": 1,
+      "message": "WebContents does not exist on iOS",
+      "range": {
+        "startLine": 51,
+        "startChar": 5,
+        "endLine": 51,
+        "endChar": 16
+      },
+      "revId": "8b784ca77ae4d44d5571d4243e310734393e8d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e292874_d59eb726",
+        "filename": "ios/web/public/web_state/navigation_context.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-26T18:23:50Z",
+      "side": 1,
+      "message": "NavigationContext::IsErrorPage method does not exist",
+      "range": {
+        "startLine": 53,
+        "startChar": 50,
+        "endLine": 53,
+        "endChar": 61
+      },
+      "revId": "8b784ca77ae4d44d5571d4243e310734393e8d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7d19967_dc401a73",
+        "filename": "ios/web/public/web_state/navigation_context.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-26T18:23:50Z",
+      "side": 1,
+      "message": "I don\u0027t think this comment is valid for iOS. We cab just drop it.",
+      "range": {
+        "startLine": 60,
+        "startChar": 39,
+        "endLine": 60,
+        "endChar": 43
+      },
+      "revId": "8b784ca77ae4d44d5571d4243e310734393e8d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1ecc0e7_7ec9f396",
+        "filename": "ios/web/web_state/navigation_and_load_callbacks_inttest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-26T18:23:50Z",
+      "side": 1,
+      "message": "Would it be useful to add tests for GetNavigationId?",
+      "range": {
+        "startLine": 59,
+        "startChar": 27,
+        "endLine": 59,
+        "endChar": 41
+      },
+      "revId": "8b784ca77ae4d44d5571d4243e310734393e8d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d299a74_e493aa7c",
+        "filename": "ios/web/web_state/navigation_and_load_callbacks_inttest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-26T18:23:50Z",
+      "side": 1,
+      "message": "Can we add a test case where IsDownload returns true? download_inttest has a test which simulates download.",
+      "range": {
+        "startLine": 338,
+        "startChar": 27,
+        "endLine": 338,
+        "endChar": 37
+      },
+      "revId": "8b784ca77ae4d44d5571d4243e310734393e8d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bfaa663_a0cad859",
+        "filename": "ios/web/web_state/navigation_context_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-26T18:23:50Z",
+      "side": 1,
+      "message": "Can we update these comments to explain default values for HasCommitted and IsDownload ?",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 35
+      },
+      "revId": "8b784ca77ae4d44d5571d4243e310734393e8d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4990c0d8_937befd8",
+        "filename": "ios/web/web_state/navigation_context_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-26T18:23:50Z",
+      "side": 1,
+      "message": "Can we initialize this?",
+      "range": {
+        "startLine": 75,
+        "startChar": 10,
+        "endLine": 75,
+        "endChar": 24
+      },
+      "revId": "8b784ca77ae4d44d5571d4243e310734393e8d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65bd0a32_63f38d4f",
+        "filename": "ios/web/web_state/navigation_context_impl.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-26T18:23:50Z",
+      "side": 1,
+      "message": "nit: s/Use this to get/Returns",
+      "range": {
+        "startLine": 20,
+        "startChar": 3,
+        "endLine": 20,
+        "endChar": 18
+      },
+      "revId": "8b784ca77ae4d44d5571d4243e310734393e8d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b191f9f9_2d0481f4",
+        "filename": "ios/web/web_state/navigation_context_impl.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-26T18:23:50Z",
+      "side": 1,
+      "message": "s/ID/Id",
+      "range": {
+        "startLine": 22,
+        "startChar": 8,
+        "endLine": 22,
+        "endChar": 29
+      },
+      "revId": "8b784ca77ae4d44d5571d4243e310734393e8d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49478cd4_f00e2bc9",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1708,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-26T18:23:50Z",
+      "side": 1,
+      "message": "|DCHECK(_webStateImpl-\u003eIsCommitted());|",
+      "range": {
+        "startLine": 1708,
+        "startChar": 30,
+        "endLine": 1708,
+        "endChar": 38
+      },
+      "revId": "8b784ca77ae4d44d5571d4243e310734393e8d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0265adce_076e5d58",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1928,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-26T18:23:50Z",
+      "side": 1,
+      "message": "webStateImpl-\u003eSetCommitted(true);",
+      "range": {
+        "startLine": 1928,
+        "startChar": 4,
+        "endLine": 1928,
+        "endChar": 17
+      },
+      "revId": "8b784ca77ae4d44d5571d4243e310734393e8d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f99b039c_1aab69e4",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 4933,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-26T18:23:50Z",
+      "side": 1,
+      "message": "if (!isSameDocumentNavigation)\n  newContext-\u003eSetCommitted(true);",
+      "range": {
+        "startLine": 4933,
+        "startChar": 56,
+        "endLine": 4933,
+        "endChar": 0
+      },
+      "revId": "8b784ca77ae4d44d5571d4243e310734393e8d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ccd0bea_d4b920ef",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 4950,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-26T18:23:50Z",
+      "side": 1,
+      "message": "if (!isSameDocumentNavigation)\n  existingContext-\u003eSetCommitted(true);",
+      "revId": "8b784ca77ae4d44d5571d4243e310734393e8d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
