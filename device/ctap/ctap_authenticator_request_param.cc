@@ -1,8 +1,10 @@
-// Copyright 2018 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
 #include "device/ctap/ctap_authenticator_request_param.h"
+
+#include <utility>
 
 #include "base/numerics/safe_conversions.h"
 
@@ -10,36 +12,38 @@ namespace device {
 
 // static
 CTAPAuthenticatorRequestParam
-CTAPAuthenticatorRequestParam::CreateGetInfoParam() {
+CTAPAuthenticatorRequestParam::CreateAuthenticatorGetInfoParam() {
   return CTAPAuthenticatorRequestParam(
       CTAPRequestCommand::kAuthenticatorGetInfo);
 }
 
 // static
 CTAPAuthenticatorRequestParam
-CTAPAuthenticatorRequestParam::CreateGetNextAssertionParam() {
+CTAPAuthenticatorRequestParam::CreateAuthenticatorGetNextAssertionParam() {
   return CTAPAuthenticatorRequestParam(
       CTAPRequestCommand::kAuthenticatorGetNextAssertion);
 }
-
 // static
 CTAPAuthenticatorRequestParam
-CTAPAuthenticatorRequestParam::CreateResetParam() {
+CTAPAuthenticatorRequestParam::CreateAuthenticatorResetParam() {
   return CTAPAuthenticatorRequestParam(CTAPRequestCommand::kAuthenticatorReset);
 }
-
 // static
 CTAPAuthenticatorRequestParam
-CTAPAuthenticatorRequestParam::CreateCancelParam() {
+CTAPAuthenticatorRequestParam::CreateAuthenticatorCancelParam() {
   return CTAPAuthenticatorRequestParam(
       CTAPRequestCommand::kAuthenticatorCancel);
 }
 
 CTAPAuthenticatorRequestParam::CTAPAuthenticatorRequestParam(
+    CTAPRequestCommand cmd)
+    : cmd_(cmd) {}
+
+CTAPAuthenticatorRequestParam::CTAPAuthenticatorRequestParam(
     CTAPAuthenticatorRequestParam&& that) = default;
 
 CTAPAuthenticatorRequestParam& CTAPAuthenticatorRequestParam::operator=(
-    CTAPAuthenticatorRequestParam&& that) = default;
+    CTAPAuthenticatorRequestParam&& other) = default;
 
 CTAPAuthenticatorRequestParam::~CTAPAuthenticatorRequestParam() = default;
 
@@ -47,9 +51,5 @@ base::Optional<std::vector<uint8_t>> CTAPAuthenticatorRequestParam::Encode()
     const {
   return std::vector<uint8_t>{base::strict_cast<uint8_t>(cmd_)};
 }
-
-CTAPAuthenticatorRequestParam::CTAPAuthenticatorRequestParam(
-    CTAPRequestCommand cmd)
-    : cmd_(cmd) {}
 
 }  // namespace device

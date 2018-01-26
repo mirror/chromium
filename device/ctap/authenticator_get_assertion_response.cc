@@ -9,14 +9,13 @@
 namespace device {
 
 AuthenticatorGetAssertionResponse::AuthenticatorGetAssertionResponse(
-    CTAPDeviceResponseCode response_code,
+    PublicKeyCredentialDescriptor credential,
     std::vector<uint8_t> auth_data,
-    std::vector<uint8_t> signature,
-    PublicKeyCredentialUserEntity user)
-    : response_code_(response_code),
+    std::vector<uint8_t> signature)
+    : CTAPAuthenticationResponseData(credential.id()),
+      credential_(credential),
       auth_data_(std::move(auth_data)),
-      signature_(std::move(signature)),
-      user_(std::move(user)) {}
+      signature_(std::move(signature)) {}
 
 AuthenticatorGetAssertionResponse::AuthenticatorGetAssertionResponse(
     AuthenticatorGetAssertionResponse&& that) = default;
@@ -28,15 +27,15 @@ AuthenticatorGetAssertionResponse::~AuthenticatorGetAssertionResponse() =
     default;
 
 AuthenticatorGetAssertionResponse&
-AuthenticatorGetAssertionResponse::SetNumCredentials(uint8_t num_credentials) {
-  num_credentials_ = num_credentials;
+AuthenticatorGetAssertionResponse::SetUserEntity(
+    PublicKeyCredentialUserEntity user) {
+  user_ = std::move(user);
   return *this;
 }
 
 AuthenticatorGetAssertionResponse&
-AuthenticatorGetAssertionResponse::SetCredential(
-    PublicKeyCredentialDescriptor credential) {
-  credential_ = std::move(credential);
+AuthenticatorGetAssertionResponse::SetNumCredentials(uint8_t num_credentials) {
+  num_credentials_ = num_credentials;
   return *this;
 }
 
