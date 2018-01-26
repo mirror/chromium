@@ -213,9 +213,6 @@ class PlatformNotificationServiceBrowserTest : public InProcessBrowserTest {
 PlatformNotificationServiceBrowserTest::PlatformNotificationServiceBrowserTest()
     : server_root_(FILE_PATH_LITERAL("chrome/test/data")) {}
 
-// TODO(peter): Move PlatformNotificationService-related tests over from
-// notification_browsertest.cc to this file.
-
 IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceBrowserTest,
                        DisplayPersistentNotificationWithoutPermission) {
   RequestAndDenyPermission();
@@ -1004,9 +1001,6 @@ IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceMojoEnabledBrowserTest,
   // First, test the default values.
 
   std::string script_result;
-  // TODO(crbug.com/595685): Can simply call
-  // 'RunScript("DisplayNonPersistentNotification(...' once the show event is
-  // implemented via mojo, here and elsewhere in this test.
   RunScriptAndWaitForNotificationAdded(
       "DisplayNonPersistentNotification('Title')", &script_result);
   EXPECT_EQ("ok", script_result);
