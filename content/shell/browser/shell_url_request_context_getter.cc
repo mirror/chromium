@@ -17,6 +17,9 @@
 #include "base/task_scheduler/post_task.h"
 #include "build/build_config.h"
 #include "components/network_session_configurator/browser/network_session_configurator.h"
+#include "content/browser/permafill/browser_protocol.h"
+#include "content/browser/permafill/well_known_interceptor.h"
+#include "content/common/permafill/constants.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/cookie_store_factory.h"
 #include "content/public/common/content_switches.h"
@@ -201,6 +204,11 @@ net::URLRequestContext* ShellURLRequestContextGetter::GetURLRequestContext() {
 #if !BUILDFLAG(DISABLE_FILE_SUPPORT)
     builder.set_file_enabled(true);
 #endif
+
+    builder.SetProtocolHandler(permafill::kBrowserScheme,
+                               permafill::CreateBrowserProtocolHandler());
+    request_interceptors_.push_back(
+        base::MakeUnique<permafill::WellKnownURLInterceptor>());
 
     // Set up interceptors in the reverse order.
     builder.SetInterceptors(std::move(request_interceptors_));

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<title>Permafills (Syntax A)</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script>
+    window.log = [];
+</script>
+
+<!-- non-supported permafill + valid fallback URL w/ CORS header => load the fallback. -->
+<script type="module" onload="log.push('load1a')" onerror="log.push('error1a')"
+    stdsrc="browser://none"
+    src="http://{{host}}:{{ports[http][0]}}/permafill/fallback.py"></script>
+
+<!-- non-supported permafill + valid fallback URL w/o CORS header
+     => load the fallback. -->
+<script type="module" onload="log.push('load1b')" onerror="log.push('error1b')"
+    stdsrc="browser://none"
+    src="http://{{host}}:{{ports[http][0]}}/permafill/fallback.js"></script>
+
+<!-- non-supported permafill + no fallback URL => TODO: How should we handle?
+<script type="module" onload="log.push('load1d')" onerror="log.push('error1d')"
+    stdsrc="browser://none"></script>
+-->
+
+<!-- Supported permafill + valid fallback URL w/ CORS header => load the permafill. -->
+<!-- '?test' is appended to the URL to avoid conflicts with other <script> elements -->
+<script type="module" onload="log.push('load2a')" onerror="log.push('error2a')"
+    stdsrc="browser://test"
+    src="http://{{host}}:{{ports[http][0]}}/permafill/fallback.py?test"></script>
+
+<!-- Supported permafill + no fallback URL => TODO: How should we handle?
+<script type="module" onload="log.push('load2d')" onerror="log.push('error2d')"
+    stdsrc="browser://test"></script>
+-->
+
+<!-- Invalid stdsrc + valid fallback URL w/ CORS header => load the fallback. -->
+<script type="module" onload="log.push('load2e')" onerror="log.push('error2e')"
+    stdsrc="invalid"
+    src="http://{{host}}:{{ports[http][0]}}/permafill/fallback.py?test2"></script>
+
+<!-- non-supported permafill + valid cross-origin fallback URL w/ CORS header => load the fallback. -->
+<script type="module" onload="log.push('load3a')" onerror="log.push('error3a')"
+    stdsrc="browser://none"
+    src="http://{{host}}:{{ports[http][1]}}/permafill/fallback.py"></script>
+
+<!-- non-supported permafill + valid cross-origin fallback URL w/o CORS header
+     => error. -->
+<script type="module" onload="log.push('load3b')" onerror="log.push('error3b')"
+    stdsrc="browser://none"
+    src="http://{{host}}:{{ports[http][1]}}/permafill/fallback.js"></script>
+
+<script type="module">
+    test(() => {
+        console.log(log);
+
+        // See the comments above for what is expected.
+        assert_array_equals(log, [
+          "fallback", "http://{{host}}:{{ports[http][0]}}/permafill/fallback.py", "load1a",
+          "fallback", "http://{{host}}:{{ports[http][0]}}/permafill/fallback.js", "load1b",
+
+          "permafill(test)", "browser://test/", "load2a",
+          "fallback", "http://{{host}}:{{ports[http][0]}}/permafill/fallback.py?test2", "load2e",
+
+          "fallback", "http://{{host}}:{{ports[http][1]}}/permafill/fallback.py", "load3a",
+          "error3b"
+        ]);
+      }, "Load permafills by <script> elements");
+</script>

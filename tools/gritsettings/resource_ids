@@ -200,8 +200,11 @@
   },
 
   # This file is generated during the build.
-  "<(SHARED_INTERMEDIATE_DIR)/content/browser/tracing/tracing_resources.grd": {
+  "<(SHARED_INTERMEDIATE_DIR)/content/browser/permafill/permafill_resources.grd": {
     "includes": [20550],
+  },
+  "<(SHARED_INTERMEDIATE_DIR)/content/browser/tracing/tracing_resources.grd": {
+    "includes": [20750],
   },
   # END content/ section.
 
