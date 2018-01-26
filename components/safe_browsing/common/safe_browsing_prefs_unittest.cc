@@ -29,6 +29,8 @@ class SafeBrowsingPrefsTest : public ::testing::Test {
         prefs::kSafeBrowsingSawInterstitialExtendedReporting, false);
     prefs_.registry()->RegisterBooleanPref(
         prefs::kSafeBrowsingSawInterstitialScoutReporting, false);
+    prefs_.registry()->RegisterBooleanPref(
+        prefs::kSafeBrowsingExtendedReportingOptInAllowed, true);
 
     ResetExperiments(/*can_show_scout=*/false);
   }
@@ -350,4 +352,37 @@ TEST_F(SafeBrowsingPrefsTest, GetSafeBrowsingExtendedReportingLevel) {
   EXPECT_EQ(SBER_LEVEL_SCOUT, GetExtendedReportingLevel(prefs_));
 }
 
+TEST_F(SafeBrowsingPrefsTest, IsExtendedReportingPolicyManaged) {
+  // This test checks that manipulating SBEROptInAllowed and the management
+  // state of SBER behaves as expected. Below, we describe what should happen
+  // to the results of IsExtendedReportingPolicyManaged and
+  // IsExtendedReportingOptInAllowed.
+
+  // Confirm default state, SBER should be disabled, OptInAllowed should
+  // be enabled, and SBER is not managed.
+  EXPECT_FALSE(IsExtendedReportingEnabled(prefs_));
+  EXPECT_TRUE(IsExtendedReportingOptInAllowed(prefs_));
+  EXPECT_FALSE(IsExtendedReportingPolicyManaged(prefs_));
+
+  // Setting SBEROptInAllowed to false makes SBER pref act as managed, and
+  // opt-in is now disallowed.
+  prefs_.SetBoolean(prefs::kSafeBrowsingExtendedReportingOptInAllowed, false);
+  EXPECT_TRUE(IsExtendedReportingPolicyManaged(prefs_));
+  EXPECT_FALSE(IsExtendedReportingOptInAllowed(prefs_));
+  // Setting the value back to true reverts back to the default.
+  prefs_.SetBoolean(prefs::kSafeBrowsingExtendedReportingOptInAllowed, true);
+  EXPECT_TRUE(IsExtendedReportingOptInAllowed(prefs_));
+  EXPECT_FALSE(IsExtendedReportingPolicyManaged(prefs_));
+
+  // Make the SBER pref managed and enable it, and ensure that this takes
+  // precedence.
+  prefs_.SetManagedPref(GetExtendedReportingPrefName(prefs_),
+                        std::make_unique<base::Value>(true));
+  EXPECT_TRUE(prefs_.IsManagedPreference(GetExtendedReportingPrefName(prefs_)));
+  // The value of the pref comes from the policy.
+  EXPECT_TRUE(IsExtendedReportingEnabled(prefs_));
+  // When SBER is policy managed, opt-in is disallowed.
+  EXPECT_FALSE(IsExtendedReportingOptInAllowed(prefs_));
+  EXPECT_TRUE(IsExtendedReportingPolicyManaged(prefs_));
+}
 }  // namespace safe_browsing
