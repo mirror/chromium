@@ -14,8 +14,14 @@ PublicKeyCredentialRPEntity::PublicKeyCredentialRPEntity(std::string rp_id)
 PublicKeyCredentialRPEntity::PublicKeyCredentialRPEntity(
     PublicKeyCredentialRPEntity&& other) = default;
 
+PublicKeyCredentialRPEntity::PublicKeyCredentialRPEntity(
+    const PublicKeyCredentialRPEntity& other) = default;
+
 PublicKeyCredentialRPEntity& PublicKeyCredentialRPEntity::operator=(
     PublicKeyCredentialRPEntity&& other) = default;
+
+PublicKeyCredentialRPEntity& PublicKeyCredentialRPEntity::operator=(
+    const PublicKeyCredentialRPEntity& other) = default;
 
 PublicKeyCredentialRPEntity::~PublicKeyCredentialRPEntity() = default;
 

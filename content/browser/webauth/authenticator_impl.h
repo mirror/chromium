@@ -6,12 +6,19 @@
 #define CONTENT_BROWSER_WEBAUTH_AUTHENTICATOR_IMPL_H_
 
 #include <stdint.h>
+
 #include <memory>
+#include <string>
 
 #include "base/macros.h"
 #include "base/optional.h"
 #include "content/browser/webauth/collected_client_data.h"
 #include "content/common/content_export.h"
+#include "device/ctap/authenticator_get_assertion_response.h"
+#include "device/ctap/authenticator_make_credential_response.h"
+#include "device/ctap/ctap_constants.h"
+#include "device/ctap/ctap_discovery.h"
+#include "device/ctap/ctap_request.h"
 #include "device/u2f/register_response_data.h"
 #include "device/u2f/sign_response_data.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
@@ -21,12 +28,6 @@
 namespace base {
 class OneShotTimer;
 }
-
-namespace device {
-class U2fDiscovery;
-class U2fRequest;
-enum class U2fReturnCode : uint8_t;
-}  // namespace device
 
 namespace service_manager {
 class Connector;
@@ -66,12 +67,14 @@ class CONTENT_EXPORT AuthenticatorImpl : public webauth::mojom::Authenticator {
 
   // Callback to handle the async response from a U2fDevice.
   void OnRegisterResponse(
-      device::U2fReturnCode status_code,
-      base::Optional<device::RegisterResponseData> response_data);
+      device::CTAPReturnCode status_code,
+      base::Optional<device::AuthenticatorMakeCredentialResponse>
+          response_data);
 
   // Callback to handle the async response from a U2fDevice.
-  void OnSignResponse(device::U2fReturnCode status_code,
-                      base::Optional<device::SignResponseData> response_data);
+  void OnSignResponse(
+      device::CTAPReturnCode status_code,
+      base::Optional<device::AuthenticatorGetAssertionResponse> response_data);
 
   // Runs when timer expires and cancels all issued requests to a U2fDevice.
   void OnTimeout();
@@ -79,8 +82,8 @@ class CONTENT_EXPORT AuthenticatorImpl : public webauth::mojom::Authenticator {
 
   // Owns pipes to this Authenticator from |render_frame_host_|.
   mojo::BindingSet<webauth::mojom::Authenticator> bindings_;
-  std::unique_ptr<device::U2fDiscovery> u2f_discovery_;
-  std::unique_ptr<device::U2fRequest> u2f_request_;
+  std::unique_ptr<device::CTAPDiscovery> ctap_discovery_;
+  std::unique_ptr<device::CTAPRequest> ctap_request_;
   MakeCredentialCallback make_credential_response_callback_;
   GetAssertionCallback get_assertion_response_callback_;
 
