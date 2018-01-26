@@ -22,6 +22,145 @@
       "revId": "90c72ebd65a22f06e6514c5a10e264119f1be364",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "064e84fb_72a2e822",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-26T19:07:28Z",
+      "side": 1,
+      "message": "I had recommended that while we\u0027re working on deleting Chrome Home code we don\u0027t actually add @Deprecated since it will spam everyone with warnings during builds. At some point soon, we should be able to actually delete these methods.\n\nThat said cacheChromeHomeEnabled is used less than isChromeHomeEnabled, so marking this one as @Deprecated may not be too spammy.",
+      "parentUuid": "04a91cae_db5ccd0f",
+      "range": {
+        "startLine": 168,
+        "startChar": 7,
+        "endLine": 168,
+        "endChar": 30
+      },
+      "revId": "90c72ebd65a22f06e6514c5a10e264119f1be364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fac81b2_478b02c7",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-26T19:07:28Z",
+      "side": 1,
+      "message": "I think some of these tests are for regular Chrome",
+      "range": {
+        "startLine": 145,
+        "startChar": 8,
+        "endLine": 149,
+        "endChar": 9
+      },
+      "revId": "90c72ebd65a22f06e6514c5a10e264119f1be364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f696902f_714482d1",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapterTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-26T19:07:28Z",
+      "side": 1,
+      "message": "Can these use @Disabled or is there a reason to prefer @Ignore?",
+      "range": {
+        "startLine": 1022,
+        "startChar": 4,
+        "endLine": 1022,
+        "endChar": 74
+      },
+      "revId": "90c72ebd65a22f06e6514c5a10e264119f1be364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "770c5fbb_d3a17a69",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/ntp/cards/SectionListTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-26T19:07:28Z",
+      "side": 1,
+      "message": "Naively, these tests don\u0027t appear to be entirely about Chrome Home.\n\nbauerb@ - should we be retaining some of these?",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 46
+      },
+      "revId": "90c72ebd65a22f06e6514c5a10e264119f1be364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d420a5e_4fb0ca0f",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSectionTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-26T19:07:28Z",
+      "side": 1,
+      "message": "Are the tests that are disabled here all Chrome Home specific or are they failing because the behavior expectation is different when Chrome Home is enabled vs disabled?",
+      "range": {
+        "startLine": 258,
+        "startChar": 3,
+        "endLine": 258,
+        "endChar": 74
+      },
+      "revId": "90c72ebd65a22f06e6514c5a10e264119f1be364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ee07a44_0381de04",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/suggestions/TileGroupUnitTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-26T19:07:28Z",
+      "side": 1,
+      "message": "Same comment here about naively these not seeming to be necessarily about Chrome Home since we show tiles on the regular NTP too.",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 70
+      },
+      "revId": "90c72ebd65a22f06e6514c5a10e264119f1be364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
