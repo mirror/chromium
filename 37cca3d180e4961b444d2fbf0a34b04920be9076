@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d04f412_476a2139",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-26T21:48:15Z",
+      "side": 1,
+      "message": "Given the other function of the same name handled the DCHECK is there a reason to also expose this? Should the two functions be merged into a single one with no bool* success?",
+      "range": {
+        "startLine": 98,
+        "startChar": 2,
+        "endLine": 101,
+        "endChar": 44
+      },
+      "revId": "37cca3d180e4961b444d2fbf0a34b04920be9076",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
