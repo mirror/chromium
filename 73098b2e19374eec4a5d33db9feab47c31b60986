@@ -69,6 +69,24 @@
       "revId": "73098b2e19374eec4a5d33db9feab47c31b60986",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b839786b_2e37be56",
+        "filename": "services/resource_coordinator/public/cpp/tracing/no_op_agent.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2018-01-26T20:05:51Z",
+      "side": 1,
+      "message": "Oops, missed the earlier discussion haha. Sorry.\n\nYeah since this isn\u0027t an agent that\u0027s meant to be used by itself, and is specifically there as a common base, Base sgtm.",
+      "parentUuid": "f2703719_ebc0699b",
+      "revId": "73098b2e19374eec4a5d33db9feab47c31b60986",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
