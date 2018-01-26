@@ -45,6 +45,30 @@
       "revId": "109c96b4046a0f641a0e9a036ee12a6487a4bc92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b93359e_565d32c7",
+        "filename": "jingle/glue/xmpp_client_socket_factory.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-26T01:28:56Z",
+      "side": 1,
+      "message": "Because it\u0027s used to access an object it doesn\u0027t own, and that is not refcounted.",
+      "parentUuid": "7965d517_3b552c4a",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 78
+      },
+      "revId": "109c96b4046a0f641a0e9a036ee12a6487a4bc92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
