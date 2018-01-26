@@ -104,8 +104,10 @@ MediaTransferProtocolDeviceObserverChromeOS::
             base::Unretained(mtp_manager_))),
       notifications_(receiver),
       weak_ptr_factory_(this) {
-  mtp_manager_->AddObserver(this);
-  EnumerateStorages();
+  mtp_manager_->AddObserverAndEnumerateStorages(
+      this, base::BindOnce(
+                &MediaTransferProtocolDeviceObserverChromeOS::EnumerateStorages,
+                weak_ptr_factory_.GetWeakPtr()));
 }
 
 // This constructor is only used by unit tests.
@@ -208,22 +210,12 @@ void MediaTransferProtocolDeviceObserverChromeOS::DoAttachStorage(
   notifications_->ProcessAttach(storage_info);
 }
 
-void MediaTransferProtocolDeviceObserverChromeOS::EnumerateStorages() {
-  mtp_manager_->GetStorages(base::BindOnce(
-        &MediaTransferProtocolDeviceObserverChromeOS::OnReceivedStorages,
-        weak_ptr_factory_.GetWeakPtr()));
-}
-
-void MediaTransferProtocolDeviceObserverChromeOS::OnReceivedStorages(
-    const std::vector<std::string>& storages) {
-  typedef std::vector<std::string> StorageList;
-  for (StorageList::const_iterator storage_iter = storages.begin();
-       storage_iter != storages.end(); ++storage_iter) {
-    get_mtp_storage_info_cb_.Run(
-        *storage_iter,
-        base::BindOnce(
-              &MediaTransferProtocolDeviceObserverChromeOS::DoAttachStorage,
-              weak_ptr_factory_.GetWeakPtr()));
+void MediaTransferProtocolDeviceObserverChromeOS::EnumerateStorages(
+    std::vector<const device::mojom::MtpStorageInfo*> storage_info_list) {
+  typedef std::vector<const device::mojom::MtpStorageInfo*> StorageInfoList;
+  for (StorageInfoList::const_iterator storage_iter = storage_info_list.begin();
+       storage_iter != storage_info_list.end(); ++storage_iter) {
+    DoAttachStorage(*storage_iter);
   }
 }
 
@@ -237,7 +229,6 @@ bool MediaTransferProtocolDeviceObserverChromeOS::GetLocationForDeviceId(
       return true;
     }
   }
-
   return false;
 }
 
