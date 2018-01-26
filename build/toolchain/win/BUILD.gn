@@ -236,11 +236,8 @@ template("msvc_toolchain") {
     tool("solink") {
       dllname = "{{output_dir}}/{{target_output_name}}{{output_extension}}"  # e.g. foo.dll
       libname = "${dllname}.lib"  # e.g. foo.dll.lib
-      pdbname = "${dllname}.pdb"
       rspfile = "${dllname}.rsp"
       pool = "//build/toolchain:link_pool($default_toolchain)"
-
-      command = "$python_path $tool_wrapper_path link-wrapper $env False $link /nologo /IMPLIB:$libname /DLL /OUT:$dllname /PDB:$pdbname @$rspfile"
 
       default_output_extension = ".dll"
       default_output_dir = "{{root_out_dir}}"
@@ -252,9 +249,14 @@ template("msvc_toolchain") {
       link_output = libname
       depend_output = libname
       runtime_outputs = [ dllname ]
-      if (symbol_level != 0) {
+
+      if (symbol_level == 2) {
+        pdbname = "${dllname}.pdb"
+        command = "$python_path $tool_wrapper_path link-wrapper $env False $link /nologo /IMPLIB:$libname /DLL /OUT:$dllname /PDB:$pdbname @$rspfile"
         outputs += [ pdbname ]
         runtime_outputs += [ pdbname ]
+      } else {
+        command = "$python_path $tool_wrapper_path link-wrapper $env False $link /nologo /IMPLIB:$libname /DLL /OUT:$dllname @$rspfile"
       }
 
       # Since the above commands only updates the .lib file when it changes, ask
@@ -269,11 +271,8 @@ template("msvc_toolchain") {
 
     tool("solink_module") {
       dllname = "{{output_dir}}/{{target_output_name}}{{output_extension}}"  # e.g. foo.dll
-      pdbname = "${dllname}.pdb"
       rspfile = "${dllname}.rsp"
       pool = "//build/toolchain:link_pool($default_toolchain)"
-
-      command = "$python_path $tool_wrapper_path link-wrapper $env False $link /nologo /DLL /OUT:$dllname /PDB:$pdbname @$rspfile"
 
       default_output_extension = ".dll"
       default_output_dir = "{{root_out_dir}}"
@@ -281,9 +280,16 @@ template("msvc_toolchain") {
       outputs = [
         dllname,
       ]
-      if (symbol_level != 0) {
+
+      if (symbol_level == 2) {
+        pdbname = "${dllname}.pdb"
+
+        command = "$python_path $tool_wrapper_path link-wrapper $env False $link /nologo /DLL /OUT:$dllname /PDB:$pdbname @$rspfile"
         outputs += [ pdbname ]
+      } else {
+        command = "$python_path $tool_wrapper_path link-wrapper $env False $link /nologo /DLL /OUT:$dllname @$rspfile"
       }
+
       runtime_outputs = outputs
 
       # The use of inputs_newline is to work around a fixed per-line buffer
@@ -293,11 +299,20 @@ template("msvc_toolchain") {
 
     tool("link") {
       exename = "{{output_dir}}/{{target_output_name}}{{output_extension}}"
-      pdbname = "$exename.pdb"
       rspfile = "$exename.rsp"
       pool = "//build/toolchain:link_pool($default_toolchain)"
 
-      command = "$python_path $tool_wrapper_path link-wrapper $env False $link /nologo /OUT:$exename /PDB:$pdbname @$rspfile"
+      outputs = [
+        exename,
+      ]
+
+      if (symbol_level == 2) {
+        pdbname = "$exename.pdb"
+        command = "$python_path $tool_wrapper_path link-wrapper $env False $link /nologo /OUT:$exename /PDB:$pdbname @$rspfile"
+        outputs += [ pdbname ]
+      } else {
+        command = "$python_path $tool_wrapper_path link-wrapper $env False $link /nologo /OUT:$exename @$rspfile"
+      }
 
       if (is_official_build) {
         # On bots, the binary's PDB grow and eventually exceed 4G, causing the
@@ -320,12 +335,6 @@ template("msvc_toolchain") {
       default_output_extension = ".exe"
       default_output_dir = "{{root_out_dir}}"
       description = "LINK {{output}}"
-      outputs = [
-        exename,
-      ]
-      if (symbol_level != 0) {
-        outputs += [ pdbname ]
-      }
       runtime_outputs = outputs
 
       # The use of inputs_newline is to work around a fixed per-line buffer

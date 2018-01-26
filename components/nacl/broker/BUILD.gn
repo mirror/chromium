@@ -71,7 +71,7 @@ if (current_cpu == "x86") {
     sources = [
       "$nacl64_out_dir/nacl64.exe",
     ]
-    if (symbol_level != 0) {
+    if (symbol_level == 2) {
       sources += [ "$nacl64_out_dir/nacl64.exe.pdb" ]
     }
     outputs = [
