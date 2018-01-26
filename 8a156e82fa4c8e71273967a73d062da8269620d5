@@ -91,6 +91,29 @@
       "revId": "8a156e82fa4c8e71273967a73d062da8269620d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a01e1acb_d6885f52",
+        "filename": "chrome/browser/media/webrtc/desktop_media_picker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-26T01:15:43Z",
+      "side": 1,
+      "message": "Does the dialog need to be system modal?",
+      "range": {
+        "startLine": 46,
+        "startChar": 19,
+        "endLine": 46,
+        "endChar": 38
+      },
+      "revId": "8a156e82fa4c8e71273967a73d062da8269620d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
