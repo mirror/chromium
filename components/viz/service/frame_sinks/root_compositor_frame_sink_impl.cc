@@ -10,6 +10,7 @@
 #include "components/viz/service/display/display.h"
 #include "components/viz/service/display_embedder/external_begin_frame_controller_impl.h"
 #include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
+#include "components/viz/service/hit_test/hit_test_aggregator.h"
 
 namespace viz {
 
@@ -37,8 +38,7 @@ RootCompositorFrameSinkImpl::RootCompositorFrameSinkImpl(
       synthetic_begin_frame_source_(std::move(synthetic_begin_frame_source)),
       external_begin_frame_controller_(
           std::move(external_begin_frame_controller)),
-      display_(std::move(display)),
-      hit_test_aggregator_(frame_sink_manager->hit_test_manager(), this) {
+      display_(std::move(display)) {
   DCHECK(begin_frame_source());
   DCHECK(display_);
 
@@ -116,22 +116,6 @@ void RootCompositorFrameSinkImpl::DidNotProduceFrame(
   support_->DidNotProduceFrame(begin_frame_ack);
 }
 
-void RootCompositorFrameSinkImpl::OnAggregatedHitTestRegionListUpdated(
-    mojo::ScopedSharedBufferHandle active_handle,
-    uint32_t active_handle_size,
-    mojo::ScopedSharedBufferHandle idle_handle,
-    uint32_t idle_handle_size) {
-  support_->frame_sink_manager()->OnAggregatedHitTestRegionListUpdated(
-      support_->frame_sink_id(), std::move(active_handle), active_handle_size,
-      std::move(idle_handle), idle_handle_size);
-}
-
-void RootCompositorFrameSinkImpl::SwitchActiveAggregatedHitTestRegionList(
-    uint8_t active_handle_index) {
-  support_->frame_sink_manager()->SwitchActiveAggregatedHitTestRegionList(
-      support_->frame_sink_id(), active_handle_index);
-}
-
 void RootCompositorFrameSinkImpl::DisplayOutputSurfaceLost() {
   // TODO(staraz): Implement this. Client should hear about context/output
   // surface lost.
@@ -140,7 +124,7 @@ void RootCompositorFrameSinkImpl::DisplayOutputSurfaceLost() {
 void RootCompositorFrameSinkImpl::DisplayWillDrawAndSwap(
     bool will_draw_and_swap,
     const RenderPassList& render_pass) {
-  hit_test_aggregator_.Aggregate(display_->CurrentSurfaceId());
+  support_->GetHitTestAggregator()->Aggregate(display_->CurrentSurfaceId());
 }
 
 void RootCompositorFrameSinkImpl::DisplayDidReceiveCALayerParams(

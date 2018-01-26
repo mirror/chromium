@@ -229,6 +229,7 @@ if (enable_message_center) {
       ":test_support",
       "//base",
       "//base/test:test_support",
+      "//mojo/public/cpp/system",
       "//skia",
       "//testing/gmock",
       "//testing/gtest",

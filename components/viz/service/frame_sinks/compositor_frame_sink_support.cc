@@ -33,6 +33,12 @@ CompositorFrameSinkSupport::CompositorFrameSinkSupport(
       weak_factory_(this) {
   // This may result in SetBeginFrameSource() being called.
   frame_sink_manager_->RegisterCompositorFrameSinkSupport(frame_sink_id_, this);
+
+  if (is_root) {
+    hit_test_aggregator_ = std::make_unique<HitTestAggregator>(
+        frame_sink_manager_->hit_test_manager(), frame_sink_manager_,
+        frame_sink_id_);
+  }
 }
 
 CompositorFrameSinkSupport::~CompositorFrameSinkSupport() {
@@ -430,6 +436,11 @@ void CompositorFrameSinkSupport::RequestCopyOfSurface(
   ack.has_damage = true;
   if (current_surface->HasActiveFrame())
     surface_manager_->SurfaceModified(current_surface->surface_id(), ack);
+}
+
+HitTestAggregator* CompositorFrameSinkSupport::GetHitTestAggregator() {
+  DCHECK(is_root_);
+  return hit_test_aggregator_.get();
 }
 
 Surface* CompositorFrameSinkSupport::GetCurrentSurfaceForTesting() {
