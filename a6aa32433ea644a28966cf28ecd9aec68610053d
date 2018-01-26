@@ -16,6 +16,127 @@
       "revId": "a6aa32433ea644a28966cf28ecd9aec68610053d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5217f810_f9241b82",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_set_manufacturer_model_behavior.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2018-01-26T01:05:21Z",
+      "side": 1,
+      "message": "I think you can add a TODO with a bug number for now and we\u0027ll be sure to tackle it.",
+      "parentUuid": "56faabcb_7ef1ee2c",
+      "revId": "a6aa32433ea644a28966cf28ecd9aec68610053d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a91a95b5_8237b3c5",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2018-01-26T01:05:21Z",
+      "side": 1,
+      "message": "value_dict or maybe \"result\"?",
+      "revId": "a6aa32433ea644a28966cf28ecd9aec68610053d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "735c6971_279892fc",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2018-01-26T01:05:21Z",
+      "side": 1,
+      "message": "nit: If you construct the dict after checking the contents, you can set it once instead of twice.",
+      "range": {
+        "startLine": 728,
+        "startChar": 2,
+        "endLine": 728,
+        "endChar": 48
+      },
+      "revId": "a6aa32433ea644a28966cf28ecd9aec68610053d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2347b6f_7b3df519",
+        "filename": "chromeos/printing/ppd_line_reader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2018-01-26T01:05:21Z",
+      "side": 1,
+      "message": "this,",
+      "range": {
+        "startLine": 30,
+        "startChar": 5,
+        "endLine": 30,
+        "endChar": 9
+      },
+      "revId": "a6aa32433ea644a28966cf28ecd9aec68610053d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7b04395_fe53365f",
+        "filename": "chromeos/printing/ppd_line_reader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2018-01-26T01:05:21Z",
+      "side": 1,
+      "message": "\"magic number\" should be widely recognizable by most developers.  Unless \"header string\" came from the PPD spec?",
+      "range": {
+        "startLine": 31,
+        "startChar": 40,
+        "endLine": 31,
+        "endChar": 53
+      },
+      "revId": "a6aa32433ea644a28966cf28ecd9aec68610053d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f249f505_432692e9",
+        "filename": "chromeos/printing/ppd_line_reader_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2018-01-26T01:05:21Z",
+      "side": 1,
+      "message": "For fun, can we verify that we reject Microsoft executables (*.exe files) and Zip Files?\nEXEs seem to start with \"MZ\" or \"ZM\"\nZIP seems to start with \"PK\"\nFor good measure, make sure we handle a leading newline correctly \"\\x0A\"",
+      "revId": "a6aa32433ea644a28966cf28ecd9aec68610053d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
