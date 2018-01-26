@@ -119,6 +119,8 @@ P2PSocketDispatcherHost::P2PSocketDispatcherHost(
     : BrowserMessageFilter(P2PMsgStart),
       resource_context_(resource_context),
       url_context_(url_context),
+      proxy_resolving_socket_factory_(nullptr,
+                                      url_context_->GetURLRequestContext()),
       monitoring_networks_(false),
       dump_incoming_rtp_packet_(false),
       dump_outgoing_rtp_packet_(false),
@@ -262,8 +264,9 @@ void P2PSocketDispatcherHost::OnCreateSocket(
     return;
   }
 
-  std::unique_ptr<P2PSocketHost> socket(P2PSocketHost::Create(
-      this, socket_id, type, url_context_.get(), &throttler_));
+  std::unique_ptr<P2PSocketHost> socket(
+      P2PSocketHost::Create(this, socket_id, type, url_context_.get(),
+                            &proxy_resolving_socket_factory_, &throttler_));
 
   if (!socket) {
     Send(new P2PMsg_OnError(socket_id));

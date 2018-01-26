@@ -407,6 +407,8 @@ int InitSocketHandleForWebSocketRequest(
 
 int InitSocketHandleForRawConnect(const HostPortPair& host_port_pair,
                                   HttpNetworkSession* session,
+                                  int request_load_flags,
+                                  RequestPriority request_priority,
                                   const ProxyInfo& proxy_info,
                                   const SSLConfig& ssl_config_for_origin,
                                   const SSLConfig& ssl_config_for_proxy,
@@ -416,8 +418,6 @@ int InitSocketHandleForRawConnect(const HostPortPair& host_port_pair,
                                   const CompletionCallback& callback) {
   DCHECK(socket_handle);
   HttpRequestHeaders request_extra_headers;
-  int request_load_flags = 0;
-  RequestPriority request_priority = MEDIUM;
   return InitSocketPoolHelper(
       ClientSocketPoolManager::NORMAL_GROUP, host_port_pair,
       request_extra_headers, request_load_flags, request_priority, session,
