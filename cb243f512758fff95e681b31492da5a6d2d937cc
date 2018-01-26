@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57a57b44_f9f2f5f1",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2018-01-26T07:11:31Z",
+      "side": 1,
+      "message": "Plz DHCECK(mapping) just after L448.",
+      "revId": "cb243f512758fff95e681b31492da5a6d2d937cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
