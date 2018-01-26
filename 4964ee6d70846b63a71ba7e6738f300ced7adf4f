@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f35ba351_c76b7222",
+        "filename": "components/payments/content/manifest_verifier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2018-01-26T15:11:55Z",
+      "side": 1,
+      "message": "This would be contrary to the spec:\n\nhttps://w3c.github.io/payment-method-manifest/#validate-and-parse\n\nIs this causing an issue somewhere?",
+      "range": {
+        "startLine": 243,
+        "startChar": 0,
+        "endLine": 248,
+        "endChar": 3
+      },
+      "revId": "4964ee6d70846b63a71ba7e6738f300ced7adf4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
