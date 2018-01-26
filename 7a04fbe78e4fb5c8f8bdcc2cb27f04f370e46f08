@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1901a8f_fd8b252b",
+        "filename": "third_party/WebKit/Source/core/editing/RenderedPosition.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-26T02:50:24Z",
+      "side": 1,
+      "message": "This is the same as Style()-\u003eGetWritingMode() \u003d\u003d WritingMode::kVerticalRl.\n\nWhy do we have such obfuscated code...",
+      "range": {
+        "startLine": 389,
+        "startChar": 6,
+        "endLine": 390,
+        "endChar": 52
+      },
+      "revId": "7a04fbe78e4fb5c8f8bdcc2cb27f04f370e46f08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
