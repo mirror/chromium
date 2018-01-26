@@ -247,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "cf574df8_84e04a3e",
+        "filename": "media/audio/audio_debug_recording_session_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-26T13:45:34Z",
+      "side": 1,
+      "message": "Oh sorry! I somehow though we are checking unique_ptr. Could you please revert both?",
+      "parentUuid": "ae8f7459_14a88308",
+      "revId": "53074d1e924866e72139af5c1c22e1696dfcd4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9c139d9_1c47a31e",
         "filename": "media/audio/audio_debug_recording_session_impl.cc",
         "patchSetId": 9
