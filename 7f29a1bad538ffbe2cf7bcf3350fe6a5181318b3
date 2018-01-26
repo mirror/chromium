@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bb918c1b_659ba5dd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2018-01-26T18:21:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4fceae2_24f98bd8",
+      "range": {
+        "startLine": 15,
+        "startChar": 44,
+        "endLine": 15,
+        "endChar": 52
+      },
+      "revId": "7f29a1bad538ffbe2cf7bcf3350fe6a5181318b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7594ca5_9ae0dacd",
         "filename": "content/browser/frame_host/render_frame_host_impl.h",
         "patchSetId": 10
@@ -39,6 +63,24 @@
       "revId": "7f29a1bad538ffbe2cf7bcf3350fe6a5181318b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b307c6d3_9dffad41",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2018-01-26T18:21:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7594ca5_9ae0dacd",
+      "revId": "7f29a1bad538ffbe2cf7bcf3350fe6a5181318b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "bc8c9092_cff35c93",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1287,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2018-01-26T18:21:22Z",
+      "side": 1,
+      "message": "Yes, the reason I didn\u0027t use Optional\u003c\u003e is because it doesn\u0027t pack nicely. Though, 4 extra bytes in RenderFrameHost/RenderWidget/etc probably won\u0027t make much difference, so I can change if you think Optional is more readable.",
+      "parentUuid": "bc69c117_c939a118",
+      "revId": "7f29a1bad538ffbe2cf7bcf3350fe6a5181318b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43aa25aa_bb80e6a9",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 10
@@ -70,6 +130,24 @@
       "writtenOn": "2018-01-26T15:04:31Z",
       "side": 1,
       "message": "Does this affect main frame\u0027s behavior at all, or does it just always get its size early because it is the content viewport?",
+      "revId": "7f29a1bad538ffbe2cf7bcf3350fe6a5181318b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3670565f_a2dda2d9",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 7365,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2018-01-26T18:21:22Z",
+      "side": 1,
+      "message": "The main frame is not affected because it gets its size during creation, from CreateViewParams, and RenderWidget::OnResize is called with the initial size, guaranteeing that the size is always set by the time the main frame\u0027s widget is initialized.\n\nThere\u0027s one case where this isn\u0027t true, and that\u0027s when \u003cwebview\u003e has autoresize enabled. That\u0027s why I had to add !is_main_frame_ before setting is_waiting_for_initial_size_. In this case, the initial layout is performed with a (0,0) size, and I\u0027m not really sure how the layout engine makes it converge to an actual size, but in this case, the size is determined by the renderer and propagated via IPC to the browser.",
+      "parentUuid": "43aa25aa_bb80e6a9",
       "revId": "7f29a1bad538ffbe2cf7bcf3350fe6a5181318b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
