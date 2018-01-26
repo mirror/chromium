@@ -19,6 +19,8 @@ base::LazyInstance<ColorScheme>::Leaky g_fullscreen_scheme =
 base::LazyInstance<ColorScheme>::Leaky g_incognito_scheme =
     LAZY_INSTANCE_INITIALIZER;
 
+constexpr char kMinVersionWithGradients[] = "1.1";
+
 void InitializeColorSchemes() {
   static bool initialized = false;
   if (initialized)
@@ -312,6 +314,15 @@ const ColorScheme& ColorScheme::GetColorScheme(ColorScheme::Mode mode) {
   if (mode == kModeFullscreen)
     return g_fullscreen_scheme.Get();
   return g_normal_scheme.Get();
+}
+
+void ColorScheme::UpdateForComponent(const base::Version& component_version) {
+  if (component_version >= base::Version(kMinVersionWithGradients)) {
+    //    ColorScheme& normal_scheme = g_normal_scheme.Get();
+    //    // update the normal scheme colors here.
+    //    ColorScheme& incognito_scheme = g_incognito_scheme.Get();
+    // update the incognito scheme colors here.
+  }
 }
 
 }  // namespace vr
