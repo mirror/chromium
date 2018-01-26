@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a838688_c00a4334",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2018-01-26T14:22:02Z",
+      "side": 1,
+      "message": "\u003e When you say \u0027it is possible\u0027, can you clarify how/how often this can happen?\n\nIt happens to me 100% when resizing manually in Gnome/X11 (3.26, ubuntu 17.10).\n\nIt happens to me after hard trying in Gnome/Wayland (3.26, ubuntu 17.10), chrome running with XWayland.\n\n\u003e If the native WM is not sending a mouse-release event, then how does chrome know that the resize has ended?\n\nIt is not chrome that performs/ends the resize; instead, it is the Window Manager that is performing the resize. Chrome only reacts to resize changes (so its content gets adapted).\n\n\u003e Or does it continue to think a resize is in progress?\n\nNo, again because the resize happens/ends in the WM level. Chrome only \"thinks\" that there is still a BUTTON DOWN (mouse being pressed).",
+      "parentUuid": "350dbb9b_a3499088",
+      "revId": "0864f86cb06f731723a1da51290dcb7338950147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10a68cff_9bf5ae37",
         "filename": "ui/aura/env_input_state_controller.cc",
         "patchSetId": 3
