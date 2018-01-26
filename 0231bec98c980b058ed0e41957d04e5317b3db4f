@@ -16,6 +16,24 @@
       "revId": "0231bec98c980b058ed0e41957d04e5317b3db4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44d1743f_6503b785",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/RootScrollerController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-26T21:30:48Z",
+      "side": 1,
+      "message": "Tried that but it seems we don\u0027t give it a LayoutObject in that case either? We never get here without a LayoutObject. Even if we did, an iframe will only be promoted to rootScroller if it has an OwnedEmbeddedContentView(), which I think implies it has a ContentFrame.\n\nThat means the guilty iframe starts off with a ContentFrame() and is promoted. Then at some point it loses the ContentFrame and we hit this condition here when we\u0027re removing it as the rootScroller.",
+      "parentUuid": "a1d4102e_19d2487b",
+      "revId": "0231bec98c980b058ed0e41957d04e5317b3db4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
