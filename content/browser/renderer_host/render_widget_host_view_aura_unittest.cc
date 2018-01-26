@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include <tuple>
+#include <iostream>
 #include <utility>
 
 #include "base/command_line.h"
@@ -2450,6 +2451,121 @@ TEST_F(RenderWidgetHostViewAuraTest, AutoResizeWithBrowserInitiatedResize) {
     EXPECT_NE(local_surface_id2, local_surface_id3);
   }
 }
+
+// This test verifies that a child-generated LocalSurfaceId attached to a
+// ViewMsg_SetLocalSurfaceIdForAutoResize message is sent when the child changes
+// its size.
+TEST_F(RenderWidgetHostViewAuraTest, ChildGeneratedResizeRoutesLocalSurfaceId) {
+  view_->InitAsChild(nullptr);
+  aura::client::ParentWindowWithContext(
+      view_->GetNativeView(), parent_view_->GetNativeView()->GetRootWindow(),
+      gfx::Rect());
+  sink_->ClearMessages();
+  viz::LocalSurfaceId local_surface_id1(view_->GetLocalSurfaceId());
+  EXPECT_TRUE(local_surface_id1.is_valid());
+
+  widget_host_->SetAutoResize(true, gfx::Size(50, 50), gfx::Size(100, 100));
+  base::RunLoop run_loop2;
+  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
+                                                run_loop2.QuitClosure());
+  run_loop2.Run();
+
+  std::cout << "1.5: " << view_->GetLocalSurfaceId() << std::endl;
+  view_->WasResized();
+  viz::LocalSurfaceId local_surface_id2(view_->GetLocalSurfaceId());
+
+  // RenderWidgetHostImpl has delayed auto-resize processing. Yield here to
+  // let it complete.
+  base::RunLoop run_loop;
+  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
+                                                run_loop.QuitClosure());
+  run_loop.Run();
+
+  viz::LocalSurfaceId local_surface_id3;
+  ASSERT_EQ(1u, sink_->message_count());
+  {
+    const IPC::Message* msg = sink_->GetMessageAt(0);
+    EXPECT_EQ(static_cast<uint32_t>(ViewMsg_SetLocalSurfaceIdForAutoResize::ID),
+              msg->type());
+    ViewMsg_SetLocalSurfaceIdForAutoResize::Param params;
+    ViewMsg_SetLocalSurfaceIdForAutoResize::Read(msg, &params);
+    EXPECT_EQ("50x50", std::get<1>(params).ToString());
+    EXPECT_EQ("100x100", std::get<2>(params).ToString());
+    EXPECT_EQ(1, std::get<3>(params).device_scale_factor);
+    local_surface_id3 = std::get<5>(params);
+    std::cout << "1: " << local_surface_id1 << std::endl;
+    std::cout << "2: " << local_surface_id2 << std::endl;
+    std::cout << "3: " << local_surface_id3 << std::endl;
+    EXPECT_NE(local_surface_id1, local_surface_id2);
+    EXPECT_EQ(local_surface_id2, local_surface_id3);
+  }
+}
+
+/*
+// This test verifies that when there is a conflict between a parent-generated
+// and a child-generated LocalSurfaceId, the new parent ID is used.
+TEST_F(RenderWidgetHostViewAuraTest, NewParentComponentOfLocalSurfaceIdUsed) {
+  view_->InitAsChild(nullptr);
+  aura::client::ParentWindowWithContext(
+      view_->GetNativeView(), parent_view_->GetNativeView()->GetRootWindow(),
+      gfx::Rect());
+  sink_->ClearMessages();
+  viz::LocalSurfaceId local_surface_id1(view_->GetLocalSurfaceId());
+  EXPECT_TRUE(local_surface_id1.is_valid());
+
+  widget_host_->SetAutoResize(true, gfx::Size(50, 50), gfx::Size(100, 100));
+  ViewHostMsg_ResizeOrRepaint_ACK_Params params;
+  params.view_size = gfx::Size(75, 75);
+  params.sequence_number = 1;
+  params.optional_local_surface_id = viz::LocalSurfaceId(1, 2, base::UnguessableToken::Create());
+  widget_host_->OnResizeOrRepaintACK(params);
+
+  // RenderWidgetHostImpl has delayed auto-resize processing. Yield here to
+  // let it complete.
+  base::RunLoop run_loop;
+  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
+                                                run_loop.QuitClosure());
+  run_loop.Run();
+
+  viz::LocalSurfaceId local_surface_id2;
+  ASSERT_EQ(1u, sink_->message_count());
+  {
+    const IPC::Message* msg = sink_->GetMessageAt(0);
+    EXPECT_EQ(static_cast<uint32_t>(ViewMsg_SetLocalSurfaceIdForAutoResize::ID),
+              msg->type());
+    ViewMsg_SetLocalSurfaceIdForAutoResize::Param params;
+    ViewMsg_SetLocalSurfaceIdForAutoResize::Read(msg, &params);
+    EXPECT_EQ(1u, std::get<0>(params));  // sequence_number
+    EXPECT_EQ("50x50", std::get<1>(params).ToString());
+    EXPECT_EQ("100x100", std::get<2>(params).ToString());
+    EXPECT_EQ(1, std::get<3>(params).device_scale_factor);
+    local_surface_id2 = std::get<5>(params);
+    EXPECT_EQ(local_surface_id1, local_surface_id2);
+  }
+
+  sink_->ClearMessages();
+
+  widget_host_->WasResized();
+
+  viz::LocalSurfaceId local_surface_id3;
+  // Find out what the second IPC is.
+  ASSERT_EQ(2u, sink_->message_count());
+  {
+    const IPC::Message* msg = sink_->GetMessageAt(0);
+    EXPECT_EQ(static_cast<uint32_t>(ViewMsg_SetLocalSurfaceIdForAutoResize::ID),
+              msg->type());
+    ViewMsg_SetLocalSurfaceIdForAutoResize::Param params;
+    ViewMsg_SetLocalSurfaceIdForAutoResize::Read(msg, &params);
+    EXPECT_EQ(1u, std::get<0>(params));  // sequence_number
+    EXPECT_EQ("50x50", std::get<1>(params).ToString());
+    EXPECT_EQ("100x100", std::get<2>(params).ToString());
+    EXPECT_EQ(1, std::get<3>(params).device_scale_factor);
+    local_surface_id3 = std::get<5>(params);
+    EXPECT_NE(local_surface_id1, local_surface_id3);
+    EXPECT_NE(local_surface_id2, local_surface_id3);
+  }
+}
+*/
 
 // Checks that InputMsg_CursorVisibilityChange IPC messages are dispatched
 // to the renderer at the correct times.
