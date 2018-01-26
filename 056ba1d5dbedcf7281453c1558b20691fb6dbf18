@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67710d40_610973f7",
+        "filename": "content/browser/loader/web_package_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-26T04:54:42Z",
+      "side": 1,
+      "message": "If this pkg loader works below the NavLoader and above the throttling loader, could that mean the first redirect this loader makes do not go through the throttling loader?\n\nThrottlingURLLoader basically doesn\u0027t care once body streaming starts (per url_loader_throttle definition \u0026 that\u0027s what NavMojoResponse assumes), so I still feel this needs to be re-attached below the throttling loader... wdyt? (I\u0027m happy to be corrected)",
+      "revId": "056ba1d5dbedcf7281453c1558b20691fb6dbf18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
