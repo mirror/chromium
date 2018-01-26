@@ -416,6 +416,144 @@
     },
     {
       "key": {
+        "uuid": "551eea72_589c1931",
+        "filename": "build/fuchsia/runner_v2/deploy_util.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-26T00:15:08Z",
+      "side": 1,
+      "message": "nit: There\u0027s only one deployment utility function here - should we rename this file to run_package.py, or do you expect there to be other functions?\n\n(Generally \"utility\" script/code files end up being a dumping-ground, which is one reason I\u0027d prefer that we have a more explicit focus for this script :)",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 11
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b980391_4b7e0275",
+        "filename": "build/fuchsia/runner_v2/deploy_util.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-26T00:15:08Z",
+      "side": 1,
+      "message": "nit: Technically you don\u0027t need the |manifest_path| to be able to run the package; it\u0027s only used for symbolization. I\u0027d therefore suggest putting it as the final argument, since it could conceivably be optional, if we wanted, or default to empty.\n\nI\u0027d also suggest calling it something more generic like symbolizer_config; this function doesn\u0027t actually care whether it\u0027s the manifest, or some other form of data (e.g. I plan to replace the current filename map with a DSO build-Id based mapping once you land this :) that only the Symbolizer cares about.",
+      "range": {
+        "startLine": 15,
+        "startChar": 27,
+        "endLine": 15,
+        "endChar": 62
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fe63774_1ced2eb2",
+        "filename": "build/fuchsia/runner_v2/deploy_util.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-26T00:15:08Z",
+      "side": 1,
+      "message": "nit: command-line arguments, for clarity",
+      "range": {
+        "startLine": 23,
+        "startChar": 16,
+        "endLine": 23,
+        "endChar": 25
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f08cc0f1_ee211c26",
+        "filename": "build/fuchsia/runner_v2/deploy_util.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-26T00:15:08Z",
+      "side": 1,
+      "message": "nit: Since we only run SymbolizeStream once using the filter, we could reasonably fold the two together, avoid the need for |symbolizer|, and then rename the symbolizer module, so this could become:\n\nimport symbolizer\n\nfor next_line in symbolizer.FilterStream(process.stdout, manifest_path, output_dir):\n  ...\n\nWDYT?",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 60
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3bf1a02_291b9e36",
+        "filename": "build/fuchsia/runner_v2/device_target.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-26T00:15:08Z",
+      "side": 1,
+      "message": "Normally we only define these when there is some teardown that the __exit__ case can perform when we exit the with block, but we\u0027re not doing anything here.  Should we be e.g. _Detach()ing, perhaps?\n\nShould we instead define no-op __enter__ and __exit__ on the Target base, for specializations to override?",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 15
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd6eecd4_55833a06",
+        "filename": "build/fuchsia/runner_v2/device_target.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-26T00:15:08Z",
+      "side": 1,
+      "message": "nit: Can this be __Discover? Does anything else ever need to use it, or is it solely for use by Start(), below?",
+      "range": {
+        "startLine": 49,
+        "startChar": 6,
+        "endLine": 49,
+        "endChar": 15
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ccf020dc_55ebf816",
         "filename": "build/fuchsia/runner_v2/qemu_target.py",
         "patchSetId": 5
@@ -478,6 +616,121 @@
         "startChar": 0,
         "endLine": 84,
         "endChar": 27
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74cbe548_623b56a3",
+        "filename": "build/fuchsia/runner_v2/symbolizer_filter.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-26T00:15:08Z",
+      "side": 1,
+      "message": "nit: What is the \"container\" in this context?",
+      "range": {
+        "startLine": 10,
+        "startChar": 14,
+        "endLine": 10,
+        "endChar": 23
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ec33844_22bdbfd1",
+        "filename": "build/fuchsia/runner_v2/symbolizer_filter.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-26T00:15:08Z",
+      "side": 1,
+      "message": "If we can arrange for the manifest to contain absolute paths then we can get rid of |output_dir|, but as noted below, we\u0027ll need to know the source directory root prefix for filenames to be nicely elided in the output.",
+      "range": {
+        "startLine": 25,
+        "startChar": 36,
+        "endLine": 25,
+        "endChar": 46
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa497b8a_f0c186cc",
+        "filename": "build/fuchsia/runner_v2/symbolizer_filter.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-26T00:15:08Z",
+      "side": 1,
+      "message": "This is making the path relative to the output directory, whereas the filenames we\u0027re emitting are source files (though some may be generated, and so reside in the output directory).",
+      "range": {
+        "startLine": 75,
+        "startChar": 36,
+        "endLine": 75,
+        "endChar": 52
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "884f7115_5509dc6e",
+        "filename": "build/fuchsia/runner_v2/symbolizer_filter.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-26T00:15:08Z",
+      "side": 1,
+      "message": "nit: \"and returns\" -\u003e \".\\n  Returns\" to match the styles of other function level comments.",
+      "range": {
+        "startLine": 96,
+        "startChar": 72,
+        "endLine": 97,
+        "endChar": 11
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3937b3ce_7bcff917",
+        "filename": "build/fuchsia/runner_v2/symbolizer_filter.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-26T00:15:08Z",
+      "side": 1,
+      "message": "This function is actually a generator, parsing and filtering |stream| to yield output lines.  Suggest rewording the comment to e.g:\n\n\"\"\"Looks for backtrace lines from an iterable |stream|, and symbolizes them.\n\nYields a stream of strings with symbolized entries replaced.\"\"\"\n\nor something along those lines.",
+      "range": {
+        "startLine": 150,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 16
       },
       "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -616,6 +869,98 @@
         "startChar": 6,
         "endLine": 103,
         "endChar": 13
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95a3ad2e_bd2f18e5",
+        "filename": "build/fuchsia/runner_v2/target_factory.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-26T00:15:08Z",
+      "side": 1,
+      "message": "nit: This is a \"common arg\" so is there any reason not to put this helper in the common_args.py?",
+      "range": {
+        "startLine": 12,
+        "startChar": 9,
+        "endLine": 12,
+        "endChar": 20
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dc2f1e2_90364668",
+        "filename": "build/fuchsia/runner_v2/test_runner.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-26T00:15:08Z",
+      "side": 1,
+      "message": "Looks like these TODOs are TODOne?",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 1
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "279799f9_459680fa",
+        "filename": "build/fuchsia/runner_v2/test_runner.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-26T00:15:08Z",
+      "side": 1,
+      "message": "nit: \"fuchsia\" seems a very generic name given the context; suggest \"target\".",
+      "range": {
+        "startLine": 95,
+        "startChar": 43,
+        "endLine": 95,
+        "endChar": 50
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "857eaf2b_82bf5bc5",
+        "filename": "build/fuchsia/runner_v2/test_runner.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-26T00:15:08Z",
+      "side": 1,
+      "message": "Hmmm, this highlights a flaw in the method names we\u0027ve chosen for file operations; fuchsia.CopyFrom(x) reads as \"copy from x into fuchsia\", which is the opposite of what we\u0027re doing here.\n\nShould CopyTo/CopyFrom be PutFile/GetFile or UploadFile/DownloadFile?  Or CopyToTarget/CopyFromTarget?",
+      "range": {
+        "startLine": 107,
+        "startChar": 8,
+        "endLine": 107,
+        "endChar": 24
       },
       "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
