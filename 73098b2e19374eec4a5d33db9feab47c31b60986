@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb6950e0_c5893d68",
+        "filename": "services/resource_coordinator/public/cpp/tracing/no_op_agent.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2018-01-26T18:38:40Z",
+      "side": 1,
+      "message": "Why is a separate Register() function needed? Can\u0027t all of this be done in the constructor?",
+      "revId": "73098b2e19374eec4a5d33db9feab47c31b60986",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d05b590_b66e59b3",
+        "filename": "services/resource_coordinator/public/cpp/tracing/no_op_agent.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2018-01-26T18:38:40Z",
+      "side": 1,
+      "message": "I get why you\u0027re calling this \"NoOpAgent\" but the naming still feels a bit odd to me. Both since it\u0027s not technically no-op (still runs callbacks etc) but also looks a bit counter-intuitive in the inheritance tree that you want to inherit from  a \"NoOpAgent\" to get some default behaviors.\n\nHow about \"BaseAgent\" or \"DefaultAgent\" or something instead, since this is something we want all tracing agents to inherit.",
+      "revId": "73098b2e19374eec4a5d33db9feab47c31b60986",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
