@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12299eea_8cfd4057",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/csslayout/at-supports-rule-insecure-context.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-26T17:17:28Z",
+      "side": 1,
+      "message": "This test could use some documentation on what it\u0027s testing. Is it about the feature only being enabled for https?\n\nI guess this is not in wpt since we need some non-standard api to test it?",
+      "revId": "fc4613e980f7e2af2c049fc1f22aeeef1ca64e26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37b5eb49_6d595102",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/csslayout/dynamic-parse-insecure-context.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-26T17:17:28Z",
+      "side": 1,
+      "message": "A description for the test would be good. We cannot dynamically insert layout() display types through CSSOM? Is this, or will it be part of a spec?",
+      "revId": "fc4613e980f7e2af2c049fc1f22aeeef1ca64e26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6ab9976_1ab05ab0",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-26T17:17:28Z",
+      "side": 1,
+      "message": "So the layout-inline/layout difference is inline/block for \"display-outside\"?",
+      "revId": "fc4613e980f7e2af2c049fc1f22aeeef1ca64e26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88043156_020ab9bf",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSummaryElement.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-26T17:17:28Z",
+      "side": 1,
+      "message": "I don\u0027t understand why this particular list of display types are allowed for summary. Would be good with a comment here.",
+      "revId": "fc4613e980f7e2af2c049fc1f22aeeef1ca64e26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
