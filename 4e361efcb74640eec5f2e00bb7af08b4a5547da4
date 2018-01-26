@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dff0be0d_2d93b17f",
+        "filename": "third_party/WebKit/Source/core/editing/RenderedPosition.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-26T02:42:12Z",
+      "side": 1,
+      "message": "nit: should be static function",
+      "revId": "4e361efcb74640eec5f2e00bb7af08b4a5547da4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
