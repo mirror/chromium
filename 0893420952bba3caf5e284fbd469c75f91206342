@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89b9d5b7_1266ca60",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2018-01-26T23:28:06Z",
+      "side": 1,
+      "message": "btw, I wasn\u0027t sure if \"OS\" here meant OS-under-test or OS-of-slave (since android is cross-compiled on linux). I assumed it\u0027s referring to OS-under-test, so I threw these 2 android bots at the top of the list.",
+      "range": {
+        "startLine": 193,
+        "startChar": 6,
+        "endLine": 193,
+        "endChar": 32
+      },
+      "revId": "0893420952bba3caf5e284fbd469c75f91206342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
