@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "562103cc_4a3e1d77",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-26T18:25:41Z",
+      "side": 1,
+      "message": "nit: It would be nice to have method comments here?",
+      "range": {
+        "startLine": 83,
+        "startChar": 7,
+        "endLine": 83,
+        "endChar": 26
+      },
+      "revId": "01f04a0bdc3abe0ee464467714619c3e81f46116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
