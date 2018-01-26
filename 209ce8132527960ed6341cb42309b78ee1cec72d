@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "7bd9bfa5_b99ff106",
+        "filename": "device/geolocation/geolocation_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-26T11:39:28Z",
+      "side": 0,
+      "message": "Nope, I was just mistaken!",
+      "parentUuid": "88337853_8170df22",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 62
+      },
+      "revId": "209ce8132527960ed6341cb42309b78ee1cec72d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7d47713_f32f63ef",
         "filename": "device/geolocation/geolocation_provider.h",
         "patchSetId": 4
@@ -125,6 +149,24 @@
       "side": 0,
       "message": "Yes, that\u0027s what we are doing. I have another CL(https://chromium-review.googlesource.com/c/chromium/src/+/880141), after that we can remove this OverrideLocationForTesting(), and remove and rename like you said.",
       "parentUuid": "2bb207fe_b367327c",
+      "revId": "209ce8132527960ed6341cb42309b78ee1cec72d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00cc29ad_03e23d46",
+        "filename": "device/geolocation/geolocation_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-26T11:39:28Z",
+      "side": 0,
+      "message": "Here\u0027s what I suggest: Let\u0027s remove the external usage of these APIs but leave them in GeolocationProvider rather than moving them to GeolocationProviderImpl. Once all external usage is gone can do a simple CL merging GeolocationProvider into GeolocationProviderImpl and renaming the latter to GeolocationProvider. This avoids the need to switch all these API usages to talk in terms of GeolocationProviderImpl only to soon switch them back to talk in terms of GeolocationProvider again. It will also make these CLs more focused as they\u0027re just about removing the external API usage, rather than also having the noise of the API moves themselves. Does that make sense?",
+      "parentUuid": "74eeb225_1339a8ad",
       "revId": "209ce8132527960ed6341cb42309b78ee1cec72d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
