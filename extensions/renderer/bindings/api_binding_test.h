@@ -44,6 +44,11 @@ class APIBindingTest : public testing::Test {
   v8::Local<v8::Context> AddContext();
 
   // Disposes the context pointed to by |context|.
+  //
+  // When the main context is disposed, it will be exited. This will not work
+  // if either you have already exited the main context, or you have nested
+  // another Context::Enter or Context::Scope. This balances the fact that
+  // APIBindingTest implicitly enters the main context in SetUp.
   void DisposeContext(v8::Local<v8::Context> context);
 
   // Disposes all contexts and checks for leaks.
