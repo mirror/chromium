@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "99c442e6_de2096cc",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-26T19:00:37Z",
+      "side": 1,
+      "message": "Done. Thanks for review.",
+      "parentUuid": "7c0f210a_5a7e766b",
+      "revId": "a68efe18e4806055bd4dfaf9b952415c0efbc804",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ebaef50_8f6a8eeb",
         "filename": "chrome/browser/ui/webui/settings/appearance_handler.cc",
         "patchSetId": 11
@@ -47,6 +65,24 @@
       "writtenOn": "2018-01-26T06:47:31Z",
       "side": 1,
       "message": "Make sure you test it on device that the wallpaper settings in chrome://settings is disabled for policy controlled devices.",
+      "revId": "a68efe18e4806055bd4dfaf9b952415c0efbc804",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3854717d_261d88d5",
+        "filename": "chrome/browser/ui/webui/settings/appearance_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-26T19:00:37Z",
+      "side": 1,
+      "message": "Verified on device.",
+      "parentUuid": "3ebaef50_8f6a8eeb",
       "revId": "a68efe18e4806055bd4dfaf9b952415c0efbc804",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
