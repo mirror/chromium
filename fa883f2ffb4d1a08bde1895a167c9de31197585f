@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b7e86b4_c2a3c92d",
+        "filename": "DEPS",
+        "patchSetId": 13
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-26T22:44:40Z",
+      "side": 1,
+      "message": "Is this going to be used on all platforms? Should it have a \u0027condition\u0027 field like other git dependencies?",
+      "range": {
+        "startLine": 168,
+        "startChar": 2,
+        "endLine": 169,
+        "endChar": 97
+      },
+      "revId": "fa883f2ffb4d1a08bde1895a167c9de31197585f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
