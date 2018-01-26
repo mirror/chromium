@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "db2b93cb_3dc9abff",
+        "filename": "third_party/WebKit/Source/core/layout/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-26T06:40:53Z",
+      "side": 1,
+      "message": "This was moved to Source/platform/BUILD.gn.",
+      "parentUuid": "3bf4090a_360612dd",
+      "revId": "6b45cd6155d554734213f0e4226aaf63deb16117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dafe8ebb_b1e36f49",
         "filename": "third_party/WebKit/Source/platform/fonts/FontMetrics.h",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "6b45cd6155d554734213f0e4226aaf63deb16117",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05631088_75eb0c72",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontMetrics.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-26T06:40:53Z",
+      "side": 1,
+      "message": "Thanks, it was left over from WIP, removed.",
+      "parentUuid": "dafe8ebb_b1e36f49",
+      "revId": "6b45cd6155d554734213f0e4226aaf63deb16117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
