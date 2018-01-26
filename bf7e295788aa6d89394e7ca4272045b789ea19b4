@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c238421_3accf1f7",
+        "filename": "testing/buildbot/gn_isolate_map.pyl",
+        "patchSetId": 5
+      },
+      "lineNbr": 984,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2018-01-26T19:28:48Z",
+      "side": 1,
+      "message": "note this isn\u0027t the script we will be using to run tests with the new chrome test unification.  we will eventually be using https://cs.chromium.org/chromium/src/testing/scripts/run_performance_tests.py.  That script isn\u0027t working yet though, so just an fyi to keep these in sync as we move forward.",
+      "revId": "bf7e295788aa6d89394e7ca4272045b789ea19b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3601fbc8_a4f3b649",
+        "filename": "tools/perf/chrome_telemetry_build/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2018-01-26T19:28:48Z",
+      "side": 1,
+      "message": "it looks like there is only one line difference here? \ndata_deps +\u003d [ \"//chrome\" ]\n\nis there a way to separate that out combine the common elements?  maybe a todo for down the line if we decide to keep this one in its current form.",
+      "revId": "bf7e295788aa6d89394e7ca4272045b789ea19b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
