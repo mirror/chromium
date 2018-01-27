@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c9fdbd9_fdd89e1f",
+        "filename": "net/quic/platform/impl/quic_url_utils_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2018-01-27T03:39:25Z",
+      "side": 1,
+      "message": "Is this comment about ambiguities in the authority still valid?",
+      "revId": "e28a3c7e29cf01a39fdb715b6a02fccd1af6304b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
