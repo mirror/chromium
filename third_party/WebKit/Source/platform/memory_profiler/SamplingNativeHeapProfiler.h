@@ -13,6 +13,7 @@
 #include "base/synchronization/lock.h"
 #include "base/threading/thread_local.h"
 #include "platform/PlatformExport.h"
+#include "platform/memory_profiler/LockFreeMap.h"
 #include "public/platform/SamplingHeapProfiler.h"
 
 namespace base {
@@ -38,8 +39,6 @@ class PLATFORM_EXPORT SamplingNativeHeapProfiler : public SamplingHeapProfiler {
     uint32_t ordinal;
   };
 
-  SamplingNativeHeapProfiler() = default;
-
   uint32_t Start() override;
   void Stop() override;
   void SetSamplingInterval(size_t sampling_interval) override;
@@ -50,6 +49,8 @@ class PLATFORM_EXPORT SamplingNativeHeapProfiler : public SamplingHeapProfiler {
   static SamplingNativeHeapProfiler* GetInstance();
 
  private:
+  SamplingNativeHeapProfiler();
+
   static void InstallAllocatorHooksOnce();
   static bool InstallAllocatorHooks();
   static size_t GetNextSampleInterval(size_t base_interval);

@@ -1300,6 +1300,7 @@ jumbo_component("platform") {
     "mediastream/MediaStreamSource.h",
     "mediastream/MediaStreamWebAudioSource.cpp",
     "mediastream/MediaStreamWebAudioSource.h",
+    "memory_profiler/LockFreeMap.h",
     "memory_profiler/SamplingNativeHeapProfiler.cpp",
     "memory_profiler/SamplingNativeHeapProfiler.h",
     "mhtml/ArchiveResource.cpp",

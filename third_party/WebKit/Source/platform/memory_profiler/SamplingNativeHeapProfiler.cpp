@@ -28,10 +28,13 @@ const size_t kDefaultSamplingInterval = 128 * 1024;
 
 bool g_deterministic;
 Atomic32 g_running;
+Atomic32 g_operations_in_flight;
+Atomic32 g_fast_path_is_safe;
 AtomicWord g_cumulative_counter = 0;
 AtomicWord g_threshold = kDefaultSamplingInterval;
 AtomicWord g_sampling_interval = kDefaultSamplingInterval;
 uint32_t g_last_sample_ordinal = 0;
+SamplingNativeHeapProfiler* g_instance;
 
 }  // namespace
 
@@ -42,6 +45,14 @@ SamplingNativeHeapProfiler::Sample::Sample(size_t size,
 
 SamplingHeapProfiler* SamplingHeapProfiler::GetInstance() {
   return SamplingNativeHeapProfiler::GetInstance();
+}
+
+SamplingNativeHeapProfiler::SamplingNativeHeapProfiler() : samples_(8) {
+  g_instance = this;
+  base::subtle::NoBarrier_Store(&g_fast_path_is_safe, 1);
+
+  fprintf(stderr, "lf:%f  max_lf:%f\n", samples_.load_factor(), samples_.max_load_factor());
+  // Make sure it never rehashes
 }
 
 void* SamplingNativeHeapProfiler::AllocFn(const AllocatorDispatch* self,
@@ -247,6 +258,7 @@ void SamplingNativeHeapProfiler::RecordStackTrace(Sample* sample,
       &addresses[std::max(count, static_cast<size_t>(skip_frames))]);
 }
 
+static unsigned alf;
 void SamplingNativeHeapProfiler::RecordAlloc(size_t total_allocated,
                                              size_t size,
                                              void* address,
@@ -262,26 +274,47 @@ void SamplingNativeHeapProfiler::RecordAlloc(size_t total_allocated,
   size_t count = std::max<size_t>(1, (total_allocated + size / 2) / size);
   Sample sample(size, count, ++g_last_sample_ordinal);
   RecordStackTrace(&sample, skip_frames);
+
+  // Close the fast path.
+  base::subtle::Release_Store(&g_fast_path_is_safe, 0);
+  // Wait for everyone on the fast path leaves.
+  while (base::subtle::Acquire_Load(&g_operations_in_flight)) {}
+  // TODO(alph): Do not close the fast-path if the container is far enough
+  // from rehashing.
+  // Do the insertion. Could potentially cause rehashing.
+  if (++alf % 10 == 0)
+    fprintf(stderr, "%d   lf:%f  max_lf:%f   cap:%lu  size:%lu\n", getpid(),
+        samples_.load_factor(), samples_.max_load_factor(), samples_.bucket_count(), samples_.size());
   samples_.insert(std::make_pair(address, std::move(sample)));
+  // Reopen the fast path.
+  base::subtle::Release_Store(&g_fast_path_is_safe, 1);
 
   entered_.Set(false);
 }
 
 // static
 void SamplingNativeHeapProfiler::MaybeRecordFree(void* address) {
-  GetInstance()->RecordFree(address);
+  base::subtle::Barrier_AtomicIncrement(&g_operations_in_flight, 1);
+  if (LIKELY(base::subtle::Acquire_Load(&g_fast_path_is_safe))) {
+    auto& samples = g_instance->samples_;
+    if (samples.find(address) == samples.end()) {
+      base::subtle::NoBarrier_AtomicIncrement(&g_operations_in_flight, -1);
+      return;
+    }
+  } else {
+ //   fprintf(stderr, "Fast path is closed!!!\n");
+  }
+  base::subtle::NoBarrier_AtomicIncrement(&g_operations_in_flight, -1);
+  g_instance->RecordFree(address);
 }
 
 void SamplingNativeHeapProfiler::RecordFree(void* address) {
-  // TODO(alph): Try to get rid of this lock on the fast path.
   if (entered_.Get())
     return;
   base::AutoLock lock(mutex_);
   entered_.Set(true);
 
-  auto it = samples_.find(address);
-  if (UNLIKELY(it != samples_.end()))
-    samples_.erase(it);
+  samples_.erase(address);
 
   entered_.Set(false);
 }
@@ -299,6 +332,8 @@ void SamplingNativeHeapProfiler::SuppressRandomnessForTest() {
 std::vector<SamplingNativeHeapProfiler::Sample>
 SamplingNativeHeapProfiler::GetSamples(uint32_t profile_id) {
   base::AutoLock lock(mutex_);
+  fprintf(stderr, "GetSamples\tlf:%f  max_lf:%f\n",
+      samples_.load_factor(), samples_.max_load_factor());
   CHECK(!entered_.Get());
   entered_.Set(true);
   std::vector<Sample> samples;
