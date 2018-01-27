@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42e2285b_e5f1907a",
+        "filename": "components/version_ui_strings.grdp",
+        "patchSetId": 21
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2018-01-27T00:12:08Z",
+      "side": 1,
+      "message": "Can we expand/unabbreviate Cmd (since this is user facing).",
+      "revId": "ced21c2d72b8e0381d64f1d1a447fbc9cfdf5c1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
