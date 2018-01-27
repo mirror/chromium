@@ -5,6 +5,7 @@ specific_include_rules = {
     "+ui/ozone/public/ozone_switches.h",
   ],
   "gpu_process_host\.cc": [
+    "+components/crash/core/common/crash_key.h",
     "+ui/ozone/public",
   ],
   "in_process_gpu_thread_browsertests\.cc": [

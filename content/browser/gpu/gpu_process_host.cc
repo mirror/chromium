@@ -27,6 +27,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
+#include "components/crash/core/common/crash_key.h"
 #include "components/tracing/common/tracing_switches.h"
 #include "components/viz/common/switches.h"
 #include "content/browser/browser_child_process_host_impl.h"
@@ -83,6 +84,8 @@
 #include "services/service_manager/sandbox/win/sandbox_win.h"
 #include "ui/gfx/switches.h"
 #include "ui/gfx/win/rendering_window_manager.h"
+
+#include <Windows.h>
 #endif
 
 #if defined(USE_OZONE)
@@ -1035,6 +1038,38 @@ void GpuProcessHost::SetChildSurface(gpu::SurfaceHandle parent_handle,
       DWORD thread_id = GetWindowThreadProcessId(window_handle, &process_id);
 
       if (!thread_id || process_id != process_->GetProcess().Pid()) {
+        // TODO(sunnyps): Remove this code and associated header includes once
+        // https://crbug.com/782359 is fixed.
+        {
+          static crash_reporter::CrashKeyString<10> gpu_process_id_key(
+              "gpu-process-host-gpu-process-id");
+          gpu_process_id_key.Set(
+              base::NumberToString(process_->GetProcess().Pid()));
+
+          static crash_reporter::CrashKeyString<10> process_id_key(
+              "gpu-process-host-process-id");
+          process_id_key.Set(base::NumberToString(process_id));
+
+          static crash_reporter::CrashKeyString<10> thread_id_key(
+              "gpu-process-host-thread-id");
+          thread_id_key.Set(base::NumberToString(thread_id));
+
+          static crash_reporter::CrashKeyString<MAX_PATH>
+              process_image_name_key("gpu-process-host-process-image-name");
+          base::win::ScopedHandle process_handle(OpenProcess(
+              PROCESS_QUERY_LIMITED_INFORMATION, FALSE, process_id));
+          char process_image_name[MAX_PATH];
+          unsigned long process_image_name_size = MAX_PATH;
+          if (process_handle.IsValid() &&
+              QueryFullProcessImageNameA(process_handle.Get(), 0,
+                                         process_image_name,
+                                         &process_image_name_size)) {
+            process_image_name_key.Set(process_image_name);
+          } else {
+            process_image_name_key.Set("cannot retrieve process image name");
+          }
+        }
+
         process_->TerminateOnBadMessageReceived(kBadMessageError);
         return;
       }
