@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<meta charset=utf-8>
+<title>Web Locks API: steal option</title>
+<link rel=help href="https://github.com/inexorabletash/web-locks">
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="resources/helpers.js"></script>
+<script>
+'use strict';
+
+const never_settled = new Promise(resolve => { /*never*/ });
+
+promise_test(async t => {
+  const res = uniqueName(t);
+  let callback_called = false;
+  await navigator.locks.acquire(res, {steal: true}, lock => {
+    callback_called = true;
+    assert_not_equals(lock, null, 'lock should be granted');
+  });
+  assert_true(callback_called, 'callback should be called');
+}, 'steal - lock available');
+
+promise_test(async t => {
+  const res = uniqueName(t);
+  let callback_called = false;
+
+  // Grab and hold the lock.
+  navigator.locks.acquire(res, lock => never_settled).catch(_ => {});
+
+  // Steal it.
+  await navigator.locks.acquire(res, {steal: true}, lock => {
+    callback_called = true;
+    assert_not_equals(lock, null, 'lock should be granted');
+  });
+
+  assert_true(callback_called, 'callback should be called');
+}, 'steal - lock not available');
+
+promise_test(async t => {
+  const res = uniqueName(t);
+
+  // Grab and hold the lock.
+  const promise = navigator.locks.acquire(res, lock => never_settled);
+  const assertion = promise_rejects(
+    t, 'AbortError', promise, `Initial request's promise should reject`);
+
+  // Steal it.
+  await navigator.locks.acquire(res, {steal: true}, lock => {});
+
+  await assertion;
+
+}, `steal - held lock's release promise rejects`);
+
+promise_test(async t => {
+  const res = uniqueName(t);
+
+  // Grab and hold the lock.
+  navigator.locks.acquire(res, lock => never_settled).catch(_ => {});
+
+  // Make an unsatisfied request for it.
+  const promise = navigator.locks.acquire(
+    res, t.unreached_func('this request should never be granted'));
+  const assertion = promise_rejects(
+    t, 'AbortError', promise, 'Unsatisfied request should reject');
+
+  // Steal it.
+  await navigator.locks.acquire(res, {steal: true}, lock => {});
+
+  await assertion;
+
+}, `steal - requested lock's release promise rejects`);
+
+</script>
