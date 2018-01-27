@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e4d26d1_b8c67ece",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2501,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-27T18:33:38Z",
+      "side": 1,
+      "message": "I think the deadline should be zero. Also if navigation happens right after resize we should still have the default deadline.",
+      "range": {
+        "startLine": 2499,
+        "startChar": 0,
+        "endLine": 2501,
+        "endChar": 61
+      },
+      "revId": "07a7ab41313649ac76051cbf2231d378451ed7f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
