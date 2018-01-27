@@ -139,16 +139,23 @@ WorkspaceDiff.WorkspaceDiff = class extends Common.Object {
    * @param {!Workspace.UISourceCode} uiSourceCode
    */
   async _updateModifiedState(uiSourceCode) {
+
+    // if (uiSourceCode.project().type() !== Workspace.projectTypes.Network) {
+    //   this._markAsUnmodified(uiSourceCode);
+    //   return;
+    // }
+
+    var binding = Persistence.persistence.binding(uiSourceCode);
+    if (binding)
+      uiSourceCode = binding.fileSystem;
+
     this._loadingUISourceCodes.delete(uiSourceCode);
 
-    if (uiSourceCode.project().type() !== Workspace.projectTypes.Network) {
-      this._markAsUnmodified(uiSourceCode);
-      return;
-    }
     if (uiSourceCode.isDirty()) {
       this._markAsModified(uiSourceCode);
       return;
     }
+
     if (!uiSourceCode.hasCommits()) {
       this._markAsUnmodified(uiSourceCode);
       return;
@@ -244,16 +251,19 @@ WorkspaceDiff.WorkspaceDiff.UISourceCodeDiff = class extends Common.Object {
   /**
    * @return {!Promise<?string>}
    */
-  _originalContent() {
-    var originalNetworkContent =
-        Persistence.networkPersistenceManager.originalContentForUISourceCode(this._uiSourceCode);
-    if (originalNetworkContent)
-      return originalNetworkContent;
+  async _originalContent() {
+    var backend = await Services.serviceManager.createRemoteService('Git');
+    var result = await backend.send('show', {path: this._uiSourceCode.url().substr('file://'.length)});
+    return result;
+    // var originalNetworkContent =
+    //     Persistence.networkPersistenceManager.originalContentForUISourceCode(this._uiSourceCode);
+    // if (originalNetworkContent)
+    //   return originalNetworkContent;
 
-    var callback;
-    var promise = new Promise(fulfill => callback = fulfill);
-    this._uiSourceCode.project().requestFileContent(this._uiSourceCode, callback);
-    return promise;
+    // var callback;
+    // var promise = new Promise(fulfill => callback = fulfill);
+    // this._uiSourceCode.project().requestFileContent(this._uiSourceCode, callback);
+    // return promise;
   }
 
   /**
