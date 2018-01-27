@@ -30,6 +30,13 @@ const char kClippingTextfieldDescription[] =
     "When enabled, the new URL clipping implementation compatible with iOS 11 "
     "is used.";
 
+const char kContextMenuElementPostMessageName[] =
+    "Context Menu Element Post Message";
+const char kContextMenuElementPostMessageDescription[] =
+    "When enabled, the DOM element for the Context Menu is returned using a "
+    "webkit postMessage call instead of directly returned from the JavaScript "
+    "function.";
+
 const char kContextualSearch[] = "Contextual Search";
 const char kContextualSearchDescription[] =
     "Whether or not Contextual Search is enabled.";
