@@ -16,6 +16,24 @@
       "revId": "b8c9bc24f8c09b6636cd99092d871201e97a23a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "569bef40_c7805dd3",
+        "filename": "extensions/browser/updater/extension_downloader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2018-01-27T00:00:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c207ab03_9ccdd568",
+      "revId": "b8c9bc24f8c09b6636cd99092d871201e97a23a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
