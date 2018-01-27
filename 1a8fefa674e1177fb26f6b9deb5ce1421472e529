@@ -16,6 +16,24 @@
       "revId": "1a8fefa674e1177fb26f6b9deb5ce1421472e529",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d57af58_4ff8f41a",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/jpeg/JPEGImageDecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-27T17:20:54Z",
+      "side": 1,
+      "message": "It\u0027s in base/compiler_specific.h, which we are fairly bad about including when needed (because it\u0027s already included everywhere indirectly, by happenstance). I can add the include in all files containing FALLTHROUGH once I\u0027m done if you think it\u0027s important, but for now I\u0027m focusing on getting things built so I\u0027d prefer to not add the include manually.",
+      "parentUuid": "c425d4b9_8310c723",
+      "revId": "1a8fefa674e1177fb26f6b9deb5ce1421472e529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
