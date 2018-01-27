@@ -35,8 +35,7 @@ static const base::FilePath::CharType kPngExtension[] =
 static const base::FilePath::CharType kJpegExtension[] =
     FILE_PATH_LITERAL("jpeg");
 
-constexpr uint32_t kMinMinorVersionWithGradients = 1;
-constexpr uint32_t kMinMajorVersionWithGradients = 1;
+constexpr char kMinVersionWithGradients[] = "1.1";
 
 }  // namespace
 
@@ -146,8 +145,7 @@ void AssetsLoader::LoadAssetsTask(
   status = LoadImage(component_install_dir, kBackgroundBaseFilename,
                      &assets->background);
 
-  if (component_version.components()[0] >= kMinMajorVersionWithGradients &&
-      component_version.components()[1] >= kMinMinorVersionWithGradients) {
+  if (component_version >= base::Version(kMinVersionWithGradients)) {
     if (status == AssetsLoadStatus::kSuccess) {
       status = LoadImage(component_install_dir, kNormalGradientBaseFilename,
                          &assets->normal_gradient);
