@@ -119,6 +119,10 @@ class CONTENT_EXPORT NavigatorDelegate {
   virtual std::vector<std::unique_ptr<NavigationThrottle>>
   CreateThrottlesForNavigation(NavigationHandle* navigation_handle);
 
+  // Returns whether the tab was previously discarded.
+  // This is passed to RequestNavigationParams in NavigationRequest.
+  virtual bool WasDiscarded() const = 0;
+
   // PlzNavigate
   // Called at the start of the navigation to get opaque data the embedder
   // wants to see passed to the corresponding URLRequest on the IO thread.
