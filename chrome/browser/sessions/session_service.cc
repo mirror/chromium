@@ -714,14 +714,12 @@ void SessionService::BuildCommandsFromBrowsers(
     IdToRange* tab_to_available_range,
     std::set<SessionID::id_type>* windows_to_track) {
   for (auto* browser : *BrowserList::GetInstance()) {
-    // Make sure the browser has tabs and a window. Browser's destructor
-    // removes itself from the BrowserList. When a browser is closed the
-    // destructor is not necessarily run immediately. This means it's possible
-    // for us to get a handle to a browser that is about to be removed. If
-    // the tab count is 0 or the window is NULL, the browser is about to be
-    // deleted, so we ignore it.
-    if (ShouldTrackBrowser(browser) && browser->tab_strip_model()->count() &&
-        browser->window()) {
+    // Make sure the browser has tabs. Browser's destructor removes itself from
+    // the BrowserList. When a browser is closed the destructor is not
+    // necessarily run immediately. This means it's possible for us to get a
+    // handle to a browser that is about to be removed. If the tab count is 0,
+    // the browser is about to be deleted, so we ignore it.
+    if (ShouldTrackBrowser(browser) && browser->tab_strip_model()->count()) {
       BuildCommandsForBrowser(browser,
                               tab_to_available_range,
                               windows_to_track);
