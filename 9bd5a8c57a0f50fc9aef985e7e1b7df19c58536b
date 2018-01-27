@@ -16,6 +16,24 @@
       "revId": "9bd5a8c57a0f50fc9aef985e7e1b7df19c58536b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c6b674f_f00a621a",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-27T01:49:24Z",
+      "side": 1,
+      "message": "Ah, yeah, that\u0027s another case like the maximized back button.  Here also we want to place padding inside the actual button bounds so that hit testing will hit a larger area than the visible button.",
+      "parentUuid": "82f33b14_bfc43308",
+      "revId": "9bd5a8c57a0f50fc9aef985e7e1b7df19c58536b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
