@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab4deaf8_70a0448e",
+        "filename": "chrome/browser/devtools/devtools_window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 997,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-27T18:37:00Z",
+      "side": 1,
+      "message": "You\u0027ll need this in content shell.",
+      "revId": "4136b2f4384af34e0f29df4c96518121c771125f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88d822a6_d40bec94",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/TargetManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-27T18:37:00Z",
+      "side": 1,
+      "message": "Leave v8only check for frontends opened using link printed out by node.",
+      "revId": "4136b2f4384af34e0f29df4c96518121c771125f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
