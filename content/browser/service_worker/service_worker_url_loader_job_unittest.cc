@@ -15,6 +15,7 @@
 #include "content/common/service_worker/service_worker_event_dispatcher.mojom.h"
 #include "content/common/service_worker/service_worker_utils.h"
 #include "content/public/common/content_features.h"
+#include "content/public/common/shared_url_loader_factory.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/test_url_loader_client.h"
 #include "mojo/common/data_pipe_utils.h"
@@ -36,9 +37,9 @@
 namespace content {
 namespace service_worker_url_loader_job_unittest {
 
-void ReceiveStartLoaderCallback(StartLoaderCallback* out_callback,
-                                StartLoaderCallback callback) {
-  *out_callback = std::move(callback);
+void ReceiveLoader(SharedURLLoaderFactory::SingleRequestLoader* out_loader,
+                   SharedURLLoaderFactory::SingleRequestLoader loader) {
+  *out_loader = std::move(loader);
 }
 
 // NavigationPreloadLoaderClient mocks the renderer-side URLLoaderClient for the
@@ -61,7 +62,7 @@ void ReceiveStartLoaderCallback(StartLoaderCallback* out_callback,
 //    with the response.
 // 6. Like all FetchEvent responses, the response is sent to
 //    ServiceWorkerURLLoaderJob::DidDispatchFetchEvent, and the
-//    StartLoaderCallback is returned.
+//    SingleRequestLoader is returned.
 class NavigationPreloadLoaderClient final
     : public network::mojom::URLLoaderClient {
  public:
@@ -525,7 +526,7 @@ class ServiceWorkerURLLoaderJobTest
   ServiceWorkerStorage* storage() { return helper_->context()->storage(); }
 
   // Indicates whether ServiceWorkerURLLoaderJob decided to handle a request,
-  // i.e., it returned a non-null StartLoaderCallback for the request.
+  // i.e., it returned a non-null SingleRequestLoader for the request.
   enum class JobResult {
     kHandledRequest,
     kDidNotHandleRequest,
@@ -536,20 +537,20 @@ class ServiceWorkerURLLoaderJobTest
   // functions like client_.RunUntilComplete() to wait for completion.
   JobResult StartRequest(std::unique_ptr<network::ResourceRequest> request) {
     // Start a ServiceWorkerURLLoaderJob. It should return a
-    // StartLoaderCallback.
-    StartLoaderCallback callback;
+    // SingleRequestLoader.
+    SharedURLLoaderFactory::SingleRequestLoader loader;
     job_ = std::make_unique<ServiceWorkerURLLoaderJob>(
-        base::BindOnce(&ReceiveStartLoaderCallback, &callback), this, *request,
+        base::BindOnce(&ReceiveLoader, &loader), this, *request,
         base::WrapRefCounted<URLLoaderFactoryGetter>(
             helper_->context()->loader_factory_getter()));
     job_->ForwardToServiceWorker();
     base::RunLoop().RunUntilIdle();
-    if (!callback)
+    if (!loader)
       return JobResult::kDidNotHandleRequest;
 
     // Start the loader. It will load |request.url|.
-    std::move(callback).Run(mojo::MakeRequest(&loader_),
-                            client_.CreateInterfacePtr());
+    std::move(loader).Run(mojo::MakeRequest(&loader_),
+                          client_.CreateInterfacePtr());
 
     return JobResult::kHandledRequest;
   }
@@ -913,16 +914,16 @@ TEST_F(ServiceWorkerURLLoaderJobTest, FallbackToNetwork) {
       network::mojom::FetchCredentialsMode::kInclude;
   request.fetch_redirect_mode = network::mojom::FetchRedirectMode::kManual;
 
-  StartLoaderCallback callback;
+  SharedURLLoaderFactory::SingleRequestLoader loader;
   auto job = std::make_unique<ServiceWorkerURLLoaderJob>(
-      base::BindOnce(&ReceiveStartLoaderCallback, &callback), this, request,
+      base::BindOnce(&ReceiveLoader, &loader), this, request,
       base::WrapRefCounted<URLLoaderFactoryGetter>(
           helper_->context()->loader_factory_getter()));
   // Ask the job to fallback to network. In production code,
   // ServiceWorkerControlleeRequestHandler calls FallbackToNetwork() to do this.
   job->FallbackToNetwork();
   base::RunLoop().RunUntilIdle();
-  EXPECT_FALSE(callback);
+  EXPECT_FALSE(loader);
 }
 
 // Test responding to the fetch event with the navigation preload response.

@@ -7,6 +7,7 @@
 
 #include <memory>
 
+#include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "content/common/content_export.h"
@@ -51,8 +52,20 @@ class CONTENT_EXPORT SharedURLLoaderFactory
     // Skip appcache and service worker if this flag is set to true.
     bool bypass_custom_network_loader = false;
   };
+
   static scoped_refptr<SharedURLLoaderFactory> Create(
       std::unique_ptr<SharedURLLoaderFactoryInfo> info);
+
+  // Creates a one-shot SharedURLLoaderFactory instance which will handle a
+  // single call to |CreateLoaderAndStart()| by passing the received
+  // URLLoaderRequest and URLLoaderClientPtr to |loader|. While the returned
+  // factory may invoke |Clone()|, at most one of the clones may invoke
+  // |CreateLoaderAndStart()|.
+  using SingleRequestLoader =
+      base::OnceCallback<void(network::mojom::URLLoaderRequest,
+                              network::mojom::URLLoaderClientPtr)>;
+  static scoped_refptr<SharedURLLoaderFactory> CreateForSingleRequest(
+      SingleRequestLoader loader);
 
   virtual void CreateLoaderAndStart(
       network::mojom::URLLoaderRequest loader,
