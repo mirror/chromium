@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d2ccc4e3_565d1010",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-27T02:27:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0be575f4_2ce5e938",
+      "revId": "a35c3e89a47009950be6a0fe7a3861503fc78937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15f1656a_ba1bb84c",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-26T22:37:25Z",
       "side": 1,
       "message": "I think this logic is specific to DIAL only. Maybe this should be a static method in this class?",
+      "revId": "a35c3e89a47009950be6a0fe7a3861503fc78937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc466de8_1ecd9015",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-27T02:27:43Z",
+      "side": 1,
+      "message": "Discussed with Derek offline. It is not needed for Cast sinks. Just leave it as it is for now, in case there is any change in mDNS discovery service.",
+      "parentUuid": "15f1656a_ba1bb84c",
       "revId": "a35c3e89a47009950be6a0fe7a3861503fc78937",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d9c3d76c_812906a9",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-27T02:27:43Z",
+      "side": 1,
+      "message": "Discussed with Derek offline. It is not needed for Cast sinks. Just leave it as it is for now, in case there is any change in mDNS discovery service.",
+      "parentUuid": "8492d999_a9d7d381",
+      "revId": "a35c3e89a47009950be6a0fe7a3861503fc78937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41f7adc6_e6bfce28",
         "filename": "chrome/common/media_router/discovery/media_sink_internal.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "a35c3e89a47009950be6a0fe7a3861503fc78937",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50c87684_3e4336f8",
+        "filename": "chrome/common/media_router/discovery/media_sink_internal.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-27T02:27:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41f7adc6_e6bfce28",
+      "revId": "a35c3e89a47009950be6a0fe7a3861503fc78937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -107,6 +179,30 @@
       "revId": "a35c3e89a47009950be6a0fe7a3861503fc78937",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "739657de_0aa99ed3",
+        "filename": "chrome/common/media_router/discovery/media_sink_internal.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-27T02:27:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e8e278d_05bac7a0",
+      "range": {
+        "startLine": 107,
+        "startChar": 63,
+        "endLine": 107,
+        "endChar": 74
+      },
+      "revId": "a35c3e89a47009950be6a0fe7a3861503fc78937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
