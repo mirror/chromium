@@ -46,6 +46,30 @@
       "revId": "e846d1b553c980c2a91a9b3c5e167b06b847b383",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c9bbccd_97d99b74",
+        "filename": "build/util/lib/common/chrome_test_server_spawner.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-27T00:45:35Z",
+      "side": 1,
+      "message": "That\u0027s a good point. It\u0027s not so straightforward as I thought. But as far as I can tell ADB should allow to remap ports that are already mapped. You can call port_map.Map([already_mapped_device_port, new_host_port]) and this will update host port for the a client port that\u0027s already mapped. Something like this could work:\n\nlisten_socket \u003d socket.socket(socket.AF_INET, socket.SOCK_STREAM)\nlisten_socket.bind((\u0027127.0.0.1\u0027, 0))\nlisten_socket.listen(1)\ndummy_host_port \u003d listen_socket.getsockname()[1]\nself.port_forwarder.Map([(0, dummy_host_port)])\ndevice_ocsp_port \u003d self.port_forwarder.GetDevicePortForHostPort(socket_port)\n\n... Start testserver.py --ocsp-proxy-port-number\u003d\u003cdevice_ocsp_port\u003e\n\nself.port_forwarder.Map([(device_ocsp_port, self.host_ocsp_port)])\nlisten_socket.close()\n\nIt doesn\u0027t look very clean, but it should work properly.\nWDYT?",
+      "parentUuid": "3a21822a_2fd0052a",
+      "range": {
+        "startLine": 260,
+        "startChar": 26,
+        "endLine": 260,
+        "endChar": 27
+      },
+      "revId": "e846d1b553c980c2a91a9b3c5e167b06b847b383",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
