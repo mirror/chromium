@@ -1,0 +1,1 @@
+window.log.push("fallback"); window.log.push(import.meta.url);
