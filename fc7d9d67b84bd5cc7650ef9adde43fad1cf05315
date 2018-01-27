@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dd5c80a5_30270f7c",
+        "filename": "tools/mac/rewrite_modern_objc.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-27T01:35:00Z",
+      "side": 1,
+      "message": "I actually don\u0027t have an opinion on which of these settings we want to use. Let\u0027s check this in, and then y\u0027all can decide which ones you want to use. (I\u0027m happy to help running the script, but I\u0027m also happy if someone else does that.)",
+      "parentUuid": "998b2992_135a41bb",
+      "revId": "fc7d9d67b84bd5cc7650ef9adde43fad1cf05315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e926c547_2b08cb39",
         "filename": "tools/mac/rewrite_modern_objc.py",
         "patchSetId": 3
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "it\u0027s not clear to me what this actually does?",
       "parentUuid": "e926c547_2b08cb39",
+      "revId": "fc7d9d67b84bd5cc7650ef9adde43fad1cf05315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d34ec906_f8ee662f",
+        "filename": "tools/mac/rewrite_modern_objc.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-27T01:35:00Z",
+      "side": 1,
+      "message": "It converts property-ish method declarations into @property declarations, see all but the first changes in https://chromium-review.googlesource.com/c/chromium/src/+/888966/3/chrome/browser/app_controller_mac.h\n\n(There\u0027s also an option to only do this for ro or only for rw methods.)",
+      "parentUuid": "2ae6f8fd_c2d62635",
       "revId": "fc7d9d67b84bd5cc7650ef9adde43fad1cf05315",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -88,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "50cb64fd_37ff5dba",
+        "filename": "tools/mac/rewrite_modern_objc.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-27T01:35:00Z",
+      "side": 1,
+      "message": "Passing the split command without shell should work too. I wrote it this way because:\n\na) It\u0027s how ninja calls commands on posix (so in theory it _could_ make a difference for commands containing shell vars, but we don\u0027t do shenanigans like that in compile commands)\n\nb) I didn\u0027t have the shlex bit yet when I wrote this line\n\nI can try and change it if you feel strongly; I think it doesn\u0027t matter too much either way.",
+      "parentUuid": "686754e5_a3d15fde",
+      "revId": "fc7d9d67b84bd5cc7650ef9adde43fad1cf05315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ac1eeb8_b3842beb",
         "filename": "tools/mac/rewrite_modern_objc.py",
         "patchSetId": 3
@@ -99,6 +153,30 @@
       "writtenOn": "2018-01-26T19:31:21Z",
       "side": 1,
       "message": "optional: Perhaps something like this instead of reading and slicing?\n\n    with open(remap_file) as remap:\n     for infile in remap:\n      mtime \u003d next(remap)\n      outfile \u003d next(remap)\n      # …\n\nor\n\n      mtime, outfile \u003d [next(remap) for _ in range(2)]",
+      "range": {
+        "startLine": 130,
+        "startChar": 2,
+        "endLine": 132,
+        "endChar": 57
+      },
+      "revId": "fc7d9d67b84bd5cc7650ef9adde43fad1cf05315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d5e4575_25470b22",
+        "filename": "tools/mac/rewrite_modern_objc.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-27T01:35:00Z",
+      "side": 1,
+      "message": "Hm, does this work? You have to call next() on an iterator, not on an iterable, right? Do you mean\n\nwith open(remap_file) as remap:\n  remap_it \u003d iter(remap)\n  try:\n    while True:\n      infile \u003d remap_it.next()\n      mtime \u003d remap_it.next()\n      outfile \u003d remap_it.next()\n      ...\n  catch StopIteration:\n    pass\n\n? That seems a lot more complicated than what I have (it doesn\u0027t load the whole file in memory, but we\u0027re talking a few kB of data here). Maybe I misunderstood though :-)",
+      "parentUuid": "3ac1eeb8_b3842beb",
       "range": {
         "startLine": 130,
         "startChar": 2,
