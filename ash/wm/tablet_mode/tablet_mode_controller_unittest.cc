@@ -160,8 +160,8 @@ class TabletModeControllerTest : public AshTestBase {
         tablet_mode_controller()->tick_clock_->NowTicks());
   }
 
-  bool WasLidOpenedRecently() {
-    return tablet_mode_controller()->WasLidOpenedRecently();
+  bool WasLidFullyOpenedRecently() {
+    return tablet_mode_controller()->WasLidFullyOpenedRecently();
   }
 
   void SetTabletMode(bool on) {
@@ -239,49 +239,40 @@ TEST_F(TabletModeControllerTest, HingeAnglesWithLidClosed) {
   EXPECT_FALSE(IsTabletModeStarted());
 }
 
-// Verify the tablet mode state for unstable hinge angles when the lid was
-// recently open.
-TEST_F(TabletModeControllerTest, UnstableHingeAnglesWhenLidRecentlyOpened) {
+// Verify the erroneous lid angle is suppressed when opening the lid.
+TEST_F(TabletModeControllerTest, OpenLidErroneousLidAngle) {
   AttachTickClockForTest();
 
   OpenLid();
-  ASSERT_TRUE(WasLidOpenedRecently());
 
+  // Simulate the erroneous accelerometer readings.
+  OpenLidToAngle(357.0f);
+  EXPECT_FALSE(IsTabletModeStarted());
+
+  // Simulate the correct accelerometer readings.
+  OpenLidToAngle(5.0f);
+  EXPECT_FALSE(IsTabletModeStarted());
+}
+
+// Verify the erroneous lid angle is suppressed when closing the lid.
+TEST_F(TabletModeControllerTest, CloseLidErroneousAngle) {
+  AttachTickClockForTest();
+
+  OpenLid();
+
+  OpenLidToAngle(45.0f);
+  EXPECT_FALSE(IsTabletModeStarted());
+
+  // Simulate the correct accelerometer readings.
   OpenLidToAngle(5.0f);
   EXPECT_FALSE(IsTabletModeStarted());
 
-  OpenLidToAngle(355.0f);
+  // Simulate the erroneous accelerometer readings.
+  OpenLidToAngle(357.0f);
   EXPECT_FALSE(IsTabletModeStarted());
-
-  // This is a stable reading and should clear the last lid opened time.
-  OpenLidToAngle(45.0f);
-  EXPECT_FALSE(IsTabletModeStarted());
-  EXPECT_FALSE(WasLidOpenedRecently());
-
-  OpenLidToAngle(355.0f);
-  EXPECT_TRUE(IsTabletModeStarted());
-}
-
-// Verify the WasLidOpenedRecently signal with respect to time.
-TEST_F(TabletModeControllerTest, WasLidOpenedRecentlyOverTime) {
-  AttachTickClockForTest();
-
-  // No lid open time initially.
-  ASSERT_FALSE(WasLidOpenedRecently());
 
   CloseLid();
-  EXPECT_FALSE(WasLidOpenedRecently());
-
-  OpenLid();
-  EXPECT_TRUE(WasLidOpenedRecently());
-
-  // 1 second after lid open.
-  AdvanceTickClock(base::TimeDelta::FromSeconds(1));
-  EXPECT_TRUE(WasLidOpenedRecently());
-
-  // 3 seconds after lid open.
-  AdvanceTickClock(base::TimeDelta::FromSeconds(2));
-  EXPECT_FALSE(WasLidOpenedRecently());
+  EXPECT_FALSE(IsTabletModeStarted());
 }
 
 TEST_F(TabletModeControllerTest, TabletModeTransition) {
@@ -333,7 +324,6 @@ TEST_F(TabletModeControllerTest, TabletModeTransitionNoKeyboardAccelerometer) {
 // Verify the tablet mode enter/exit thresholds for stable angles.
 TEST_F(TabletModeControllerTest, StableHingeAnglesWithLidOpened) {
   ASSERT_FALSE(IsTabletModeStarted());
-  ASSERT_FALSE(WasLidOpenedRecently());
 
   OpenLidToAngle(180.0f);
   EXPECT_FALSE(IsTabletModeStarted());
@@ -354,21 +344,32 @@ TEST_F(TabletModeControllerTest, StableHingeAnglesWithLidOpened) {
   EXPECT_FALSE(IsTabletModeStarted());
 }
 
-// Verify the tablet mode state for unstable hinge angles when the lid is open
-// but not recently.
-TEST_F(TabletModeControllerTest, UnstableHingeAnglesWithLidOpened) {
+// Verify entering tablet mode for fully opened lid angles only if 2 seconds
+// has passed.
+TEST_F(TabletModeControllerTest, EnterTabletModeWithFullyOpenedLidAngle) {
   AttachTickClockForTest();
 
-  ASSERT_FALSE(WasLidOpenedRecently());
+  OpenLid();
+
   ASSERT_FALSE(IsTabletModeStarted());
 
   OpenLidToAngle(5.0f);
   EXPECT_FALSE(IsTabletModeStarted());
 
-  OpenLidToAngle(355.0f);
-  EXPECT_TRUE(IsTabletModeStarted());
+  OpenLidToAngle(357.0f);
+  EXPECT_TRUE(WasLidFullyOpenedRecently());
+  EXPECT_FALSE(IsTabletModeStarted());
 
-  OpenLidToAngle(5.0f);
+  // 1 second after entering fully opened angle range.
+  AdvanceTickClock(base::TimeDelta::FromSeconds(1));
+  OpenLidToAngle(357.0f);
+  EXPECT_TRUE(WasLidFullyOpenedRecently());
+  EXPECT_FALSE(IsTabletModeStarted());
+
+  // 2 seconds after entering fully opened angle range.
+  AdvanceTickClock(base::TimeDelta::FromSeconds(1));
+  OpenLidToAngle(357.0f);
+  EXPECT_FALSE(WasLidFullyOpenedRecently());
   EXPECT_TRUE(IsTabletModeStarted());
 }
 
