@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84436f2b_7d3f5aee",
+        "filename": "chrome/browser/vr/model/color_scheme.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-27T16:03:19Z",
+      "side": 1,
+      "message": "Why the duplicate definition?  Shouldn\u0027t ColorScheme now be including an asset header with the version definitions?  Maybe this is intentional, to separate component version from \"versions that directly affect color scheme\"?",
+      "revId": "96d21ab40a4d295916ec46f08c3435a2e1fcd098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

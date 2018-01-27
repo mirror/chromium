@@ -52,6 +52,24 @@
       "revId": "52bcaab2dc66dc4fcd2df1c93412270669dd7d72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f223d1cc_43796c84",
+        "filename": "chrome/browser/vr/model/color_scheme.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-27T16:03:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2d5dd863_4a4c4ba0",
+      "revId": "52bcaab2dc66dc4fcd2df1c93412270669dd7d72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
