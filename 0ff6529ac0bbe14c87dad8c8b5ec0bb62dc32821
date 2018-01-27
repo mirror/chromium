@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c26ad693_3270a113",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-27T19:58:27Z",
+      "side": 1,
+      "message": "I agree that this function looks like it doesn\u0027t belong here. (Good observation, I didn\u0027t catch it.) But I don\u0027t think changing SetInputInProgress() to replace it is the answer, however.\n\nA better suggestion might be, \"Can we just push this entire function down to the model?\" That seems the least intrusive and possibly better architecturally (the only risk being if the model were currently a derived class, OmniboxViewsViews knew that, and some of these functions weren\u0027t virtual. But that\u0027s not the case currently, so let me know what you think of the latest.)",
+      "parentUuid": "cc5bea4d_28b3b7af",
+      "revId": "0ff6529ac0bbe14c87dad8c8b5ec0bb62dc32821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd2e257a_631370f1",
         "filename": "components/omnibox/browser/omnibox_edit_model.cc",
         "patchSetId": 3
@@ -104,6 +122,24 @@
       "revId": "0ff6529ac0bbe14c87dad8c8b5ec0bb62dc32821",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eae5cc8e_cacaeeea",
+        "filename": "components/omnibox/browser/omnibox_edit_model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-27T19:58:27Z",
+      "side": 1,
+      "message": "\u003e No comments about my suggested improvement to the interface?\n\nSorry, I thought changing the comment would clear up my intention. Your proposal would require a lot more code at each call site. It\u0027s not just 2 function calls; there\u0027s a test too. I think it highlights the whiplash that Justin talks about. By including the |notify| parameter, it cleans up most of the call sites, since only one place wants to split the function. I also believe that it addresses a lot of the concern over forgetting to make the second call that Peter raised.",
+      "parentUuid": "c08bab69_d2997fcb",
+      "revId": "0ff6529ac0bbe14c87dad8c8b5ec0bb62dc32821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
