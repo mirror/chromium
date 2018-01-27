@@ -151,8 +151,17 @@ unsigned SamplingNativeHeapProfiler::BatchMallocFn(
     void** results,
     unsigned num_requested,
     void* context) {
-  CHECK(false) << "Not implemented.";
-  return 0;
+  unsigned num_allocated = self->next->batch_malloc_function(
+      self->next, size + kDefaultAlignment, results, num_requested, context);
+  for (unsigned i = 0; i < num_allocated; ++i) {
+    size_t accumulated;
+    if (UNLIKELY(ShouldRecordSample(size, &accumulated))) {
+      results[i] =
+          GetInstance()->RecordAlloc(accumulated, size, results[i],
+                                     kDefaultAlignment, kSkipAllocatorFrames);
+    }
+  }
+  return num_allocated;
 }
 
 // static
@@ -160,16 +169,27 @@ void SamplingNativeHeapProfiler::BatchFreeFn(const AllocatorDispatch* self,
                                              void** to_be_freed,
                                              unsigned num_to_be_freed,
                                              void* context) {
-  CHECK(false) << "Not implemented.";
+  for (unsigned i = 0; i < num_to_be_freed; ++i) {
+    if (UNLIKELY(HasBeenSampledFastCheck(to_be_freed[i])))
+      to_be_freed[i] = GetInstance()->RecordFree(to_be_freed[i]);
+  }
+  self->next->batch_free_function(self->next, to_be_freed, num_to_be_freed,
+                                  context);
 }
 
 // static
 void SamplingNativeHeapProfiler::FreeDefiniteSizeFn(
     const AllocatorDispatch* self,
-    void* ptr,
+    void* address,
     size_t size,
     void* context) {
-  CHECK(false) << "Not implemented.";
+  if (UNLIKELY(HasBeenSampledFastCheck(address))) {
+    void* client_address = address;
+    address = GetInstance()->RecordFree(address);
+    size += reinterpret_cast<uint8_t*>(client_address) -
+            reinterpret_cast<uint8_t*>(address);
+  }
+  self->next->free_definite_size_function(self->next, address, size, context);
 }
 
 AllocatorDispatch SamplingNativeHeapProfiler::allocator_dispatch_ = {

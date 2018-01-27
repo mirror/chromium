@@ -9,7 +9,6 @@
 #include <vector>
 
 #include "base/allocator/allocator_shim.h"
-#include "base/atomicops.h"
 #include "base/macros.h"
 #include "base/synchronization/lock.h"
 #include "base/threading/thread_local.h"
