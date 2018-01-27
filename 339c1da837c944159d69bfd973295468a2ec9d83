@@ -22,6 +22,30 @@
       "revId": "339c1da837c944159d69bfd973295468a2ec9d83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43cea106_acbdb2b6",
+        "filename": "content/browser/renderer_host/input/tap_suppression_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-27T02:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e47e965a_f83bc002",
+      "range": {
+        "startLine": 135,
+        "startChar": 6,
+        "endLine": 135,
+        "endChar": 17
+      },
+      "revId": "339c1da837c944159d69bfd973295468a2ec9d83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
