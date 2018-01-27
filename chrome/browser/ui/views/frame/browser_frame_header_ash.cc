@@ -19,12 +19,14 @@
 #include "third_party/skia/include/core/SkColor.h"
 #include "third_party/skia/include/core/SkPaint.h"
 #include "third_party/skia/include/core/SkPath.h"
+#include "ui/base/material_design/material_design_controller.h"
 #include "ui/gfx/animation/slide_animation.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/image/image_skia.h"
 #include "ui/gfx/scoped_canvas.h"
 #include "ui/gfx/skia_util.h"
+#include "ui/views/layout/layout_provider.h"
 #include "ui/views/view.h"
 #include "ui/views/widget/widget.h"
 #include "ui/views/widget/widget_delegate.h"
@@ -39,6 +41,13 @@ const SkColor kIncognitoWindowTitleTextColor = SK_ColorWHITE;
 
 // Duration of crossfade animation for activating and deactivating frame.
 const int kActivationCrossfadeDurationMs = 200;
+
+// Returns true if the frame header should follow the touch-optimized UI layout
+// style; that is when the feature is enabled and the tab strip is visible.
+bool IsTouchOptimized(BrowserNonClientFrameViewAsh* header_view) {
+  return ui::MaterialDesignController::IsTouchOptimizedUiEnabled() &&
+         header_view->browser_view()->IsTabStripVisible();
+}
 
 // Creates a path with rounded top corners.
 SkPath MakeRoundRectPath(const gfx::Rect& bounds,
@@ -196,19 +205,31 @@ void BrowserFrameHeaderAsh::LayoutHeader() {
   UpdateCaptionButtons();
   caption_button_container_->Layout();
 
-  gfx::Size caption_button_container_size =
+  const gfx::Size caption_button_container_size =
       caption_button_container_->GetPreferredSize();
+
+  int capture_button_container_y = 0;
+  if (IsTouchOptimized(view_)) {
+    const bool is_maximized_layout =
+        (frame_->IsMaximized() || frame_->IsFullscreen());
+    const views::DistanceMetric vertical_padding_type =
+        is_maximized_layout
+            ? views::DISTANCE_BROWSR_HEADER_VERTICAL_PADDING_MAXIMIZED_TOUCH
+            : views::DISTANCE_BROWSR_HEADER_VERTICAL_PADDING_TOUCH;
+    capture_button_container_y =
+        views::LayoutProvider::Get()->GetDistanceMetric(vertical_padding_type);
+  }
+
   caption_button_container_->SetBounds(
-      view_->width() - caption_button_container_size.width(), 0,
-      caption_button_container_size.width(),
+      view_->width() - caption_button_container_size.width(),
+      capture_button_container_y, caption_button_container_size.width(),
       caption_button_container_size.height());
 
   if (window_icon_) {
     // Vertically center the window icon with respect to the caption button
     // container.
-    gfx::Size icon_size(window_icon_->GetPreferredSize());
-    int icon_offset_y =
-        (caption_button_container_->height() - icon_size.height()) / 2;
+    const gfx::Size icon_size(window_icon_->GetPreferredSize());
+    const int icon_offset_y = (GetHeaderHeight() - icon_size.height()) / 2;
     window_icon_->SetBounds(ash::FrameHeaderUtil::GetLeftViewXInset(),
                             icon_offset_y, icon_size.width(),
                             icon_size.height());
@@ -216,7 +237,20 @@ void BrowserFrameHeaderAsh::LayoutHeader() {
 }
 
 int BrowserFrameHeaderAsh::GetHeaderHeight() const {
-  return caption_button_container_->height();
+  const int caption_container_bottom =
+      caption_button_container_->bounds().bottom();
+  if (!IsTouchOptimized(view_))
+    return caption_container_bottom;
+
+  views::DistanceMetric vertical_padding_type =
+      views::DISTANCE_BROWSR_HEADER_VERTICAL_PADDING_TOUCH;
+  if (frame_->IsMaximized() || frame_->IsFullscreen()) {
+    vertical_padding_type =
+        views::DISTANCE_BROWSR_HEADER_VERTICAL_PADDING_MAXIMIZED_TOUCH;
+  }
+
+  return caption_container_bottom +
+         views::LayoutProvider::Get()->GetDistanceMetric(vertical_padding_type);
 }
 
 int BrowserFrameHeaderAsh::GetHeaderHeightForPainting() const {

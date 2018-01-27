@@ -39,6 +39,9 @@ class UI_BASE_EXPORT MaterialDesignController {
   // Returns the per-platform default material design variant.
   static Mode DefaultMode();
 
+  // Returns true if the touch-optimized UI is enabled on Chrome OS.
+  static bool IsTouchOptimizedUiEnabled();
+
   static bool is_mode_initialized() { return is_mode_initialized_; }
 
  private:

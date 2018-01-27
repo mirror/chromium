@@ -15,6 +15,7 @@
 #include "base/metrics/user_metrics.h"
 #include "ui/base/hit_test.h"
 #include "ui/base/l10n/l10n_util.h"
+#include "ui/base/material_design/material_design_controller.h"
 #include "ui/compositor/scoped_animation_duration_scale_mode.h"
 #include "ui/gfx/animation/slide_animation.h"
 #include "ui/gfx/animation/tween.h"
@@ -24,6 +25,7 @@
 #include "ui/gfx/vector_icon_types.h"
 #include "ui/strings/grit/ui_strings.h"  // Accessibility names
 #include "ui/views/layout/box_layout.h"
+#include "ui/views/layout/layout_provider.h"
 #include "ui/views/widget/widget.h"
 #include "ui/views/widget/widget_delegate.h"
 
@@ -116,8 +118,18 @@ FrameCaptionButtonContainerView::FrameCaptionButtonContainerView(
       minimize_button_(NULL),
       size_button_(NULL),
       close_button_(NULL) {
-  auto layout =
-      std::make_unique<views::BoxLayout>(views::BoxLayout::kHorizontal);
+  const auto* layout_provider = views::LayoutProvider::Get();
+  const gfx::Insets insets = layout_provider->GetInsetsMetric(
+      ui::MaterialDesignController::IsTouchOptimizedUiEnabled()
+          ? views::INSETS_CAPTION_BUTTONS_TOUCH_OPTIMIZED
+          : views::INSETS_CAPTION_BUTTONS);
+  const int caption_buttons_spacing = layout_provider->GetDistanceMetric(
+      ui::MaterialDesignController::IsTouchOptimizedUiEnabled()
+          ? views::DISTANCE_CAPTION_BUTTONS_SPACING_TOUCH_OPTIMIZED
+          : views::DISTANCE_CAPTION_BUTTONS_SPACING);
+  auto layout = std::make_unique<views::BoxLayout>(
+      views::BoxLayout::kHorizontal, insets, caption_buttons_spacing);
+
   layout->set_cross_axis_alignment(
       views::BoxLayout::CROSS_AXIS_ALIGNMENT_CENTER);
   SetLayoutManager(std::move(layout));

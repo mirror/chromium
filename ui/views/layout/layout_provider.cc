@@ -17,6 +17,9 @@ namespace {
 
 LayoutProvider* g_layout_delegate = nullptr;
 
+constexpr int kTouchOptimizedPadding = 8;
+constexpr int kTouchOptimizedMaximizedBrowserVerticalPadding = 5;
+
 }  // namespace
 
 LayoutProvider::LayoutProvider() {
@@ -45,6 +48,10 @@ int LayoutProvider::GetControlHeightForFont(int context,
 gfx::Insets LayoutProvider::GetInsetsMetric(int metric) const {
   DCHECK_LT(metric, VIEWS_INSETS_MAX);
   switch (metric) {
+    case InsetsMetric::INSETS_CAPTION_BUTTONS:
+      return gfx::Insets();
+    case InsetsMetric::INSETS_CAPTION_BUTTONS_TOUCH_OPTIMIZED:
+      return gfx::Insets(0, kTouchOptimizedPadding, 0, kTouchOptimizedPadding);
     case InsetsMetric::INSETS_DIALOG:
     case InsetsMetric::INSETS_DIALOG_SUBSECTION:
       return gfx::Insets(13, 13);
@@ -70,10 +77,21 @@ gfx::Insets LayoutProvider::GetInsetsMetric(int metric) const {
 int LayoutProvider::GetDistanceMetric(int metric) const {
   DCHECK_GE(metric, VIEWS_INSETS_MAX);
   switch (metric) {
+    case DISTANCE_BACK_BUTTON_HORIZONTAL_PADDING:
+      return 0;
+    case DISTANCE_BACK_BUTTON_HORIZONTAL_PADDING_TOUCH_OPTIMIZED:
+      return kTouchOptimizedPadding;
+    case DISTANCE_BROWSR_HEADER_VERTICAL_PADDING_TOUCH:
+      return kTouchOptimizedPadding;
+    case DISTANCE_BROWSR_HEADER_VERTICAL_PADDING_MAXIMIZED_TOUCH:
+      return kTouchOptimizedMaximizedBrowserVerticalPadding;
     case DistanceMetric::DISTANCE_BUTTON_HORIZONTAL_PADDING:
       return 16;
     case DistanceMetric::DISTANCE_BUTTON_MAX_LINKABLE_WIDTH:
+    case DistanceMetric::DISTANCE_CAPTION_BUTTONS_SPACING:
       return 0;
+    case DistanceMetric::DISTANCE_CAPTION_BUTTONS_SPACING_TOUCH_OPTIMIZED:
+      return kTouchOptimizedPadding;
     case DistanceMetric::DISTANCE_CLOSE_BUTTON_MARGIN:
       return 7;
     case DistanceMetric::DISTANCE_CONTROL_VERTICAL_TEXT_PADDING:
