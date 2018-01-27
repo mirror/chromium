@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f750225_1360fe35",
+        "filename": "chrome/browser/ui/browser_window.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-27T13:18:49Z",
+      "side": 1,
+      "message": "oops",
+      "revId": "17f4a5f708bb4a61f17eb80aea7868c6db0ff576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c99173af_85cd69ab",
+        "filename": "chrome/browser/ui/browser_window_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-27T13:18:49Z",
+      "side": 1,
+      "message": "may as well \u003d 0",
+      "range": {
+        "startLine": 14,
+        "startChar": 66,
+        "endLine": 14,
+        "endChar": 68
+      },
+      "revId": "17f4a5f708bb4a61f17eb80aea7868c6db0ff576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d26aa1c7_6c000dcc",
+        "filename": "chrome/browser/ui/tabs/window_activity_watcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-27T13:18:49Z",
+      "side": 1,
+      "message": "oops",
+      "revId": "17f4a5f708bb4a61f17eb80aea7868c6db0ff576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
