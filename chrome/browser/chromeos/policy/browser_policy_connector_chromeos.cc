@@ -83,6 +83,8 @@ scoped_refptr<base::SequencedTaskRunner> GetBackgroundTaskRunner() {
 
 }  // namespace
 
+void BrowserPolicyConnectorChromeOS::OnPreCreateThreads() {}
+
 BrowserPolicyConnectorChromeOS::BrowserPolicyConnectorChromeOS()
     : weak_ptr_factory_(this) {
   if (g_testing_install_attributes) {
