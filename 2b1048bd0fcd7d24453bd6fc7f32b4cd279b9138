@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb57e207_1359b7f2",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-27T01:12:53Z",
+      "side": 1,
+      "message": "Comment is out of date now.",
+      "revId": "2b1048bd0fcd7d24453bd6fc7f32b4cd279b9138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cf73c6d_3867a78b",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-27T01:12:53Z",
+      "side": 1,
+      "message": "typo, and double space mid-sentence on the next line.",
+      "range": {
+        "startLine": 701,
+        "startChar": 17,
+        "endLine": 701,
+        "endChar": 18
+      },
+      "revId": "2b1048bd0fcd7d24453bd6fc7f32b4cd279b9138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d961f729_b99734c5",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1235,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-27T01:12:53Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 1235,
+        "startChar": 9,
+        "endLine": 1235,
+        "endChar": 16
+      },
+      "revId": "2b1048bd0fcd7d24453bd6fc7f32b4cd279b9138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
