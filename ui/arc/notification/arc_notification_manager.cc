@@ -7,6 +7,7 @@
 #include <memory>
 #include <utility>
 
+#include "ash/message_center/message_center_controller.h"
 #include "ash/shell.h"
 #include "ash/system/toast/toast_manager.h"
 #include "base/memory/ptr_util.h"
@@ -92,6 +93,7 @@ ArcNotificationManager::ArcNotificationManager(
     : arc_bridge_service_(bridge_service),
       main_profile_id_(main_profile_id),
       message_center_(message_center) {
+  message_center_controller_ = ash::Shell::Get()->message_center_controller();
   arc_bridge_service_->notifications()->SetHost(this);
   arc_bridge_service_->notifications()->AddObserver(this);
   if (!message_center::MessageViewFactory::HasCustomNotificationViewFactory())
@@ -130,6 +132,16 @@ void ArcNotificationManager::OnNotificationPosted(
   const std::string& key = data->key;
   auto it = items_.find(key);
   if (it == items_.end()) {
+    if (data->package_name.has_value()) {
+      // This is just a stub, should result in a log from both ash and browser.
+      message_center_controller_->GetAppIdToPackageNameMap(
+          this, data->package_name.value());
+      LOG(ERROR) << data->package_name.value_or("nothing");
+    } else {
+      LOG(ERROR) << "No package name value :(";
+    }
+    LOG(ERROR) << data->key;
+
     // Show a notification on the primary logged-in user's desktop.
     // TODO(yoshiki): Reconsider when ARC supports multi-user.
     auto item = std::make_unique<ArcNotificationItemImpl>(

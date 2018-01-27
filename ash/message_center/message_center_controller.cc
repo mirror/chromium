@@ -4,6 +4,7 @@
 
 #include "ash/message_center/message_center_controller.h"
 
+#include "ui/arc/notification/arc_notification_manager.h"
 #include "ui/message_center/message_center.h"
 #include "ui/message_center/notification_delegate.h"
 #include "ui/message_center/notifier_id.h"
@@ -104,6 +105,28 @@ void MessageCenterController::SetNotifierSettingsListener(
     client_->GetNotifierList(base::BindOnce(
         &MessageCenterController::OnGotNotifierList, base::Unretained(this)));
   }
+}
+
+void MessageCenterController::GetAppIdToPackageNameMap(
+    arc::ArcNotificationManager* arc_notification_manager,
+    std::string package_name) {
+  // |client_| may not be bound in unit tests.
+  if (client_.is_bound()) {
+    LOG(ERROR) << "Sent from MessageCenterController!";
+    // save pointer to callback later.
+    arc_notification_manager_ = arc_notification_manager;
+    // send package name and callback!
+    client_->GetAppId(package_name,
+                      base::BindOnce(&MessageCenterController::OnGotAppId,
+                                     base::Unretained(this)));
+  }
+}
+
+void MessageCenterController::OnGotAppId(const std::vector<std::string>& info) {
+  LOG(ERROR) << "MessageCentercontroller!";
+  LOG(ERROR) << "Package Name: " << info[0];
+  LOG(ERROR) << "App Id: " << info[1];
+  // Eventually let ArcNotificationManager know.
 }
 
 void MessageCenterController::OnGotNotifierList(

@@ -15,6 +15,10 @@
 #include "components/signin/core/account_id/account_id.h"
 #include "ui/message_center/message_center.h"
 
+namespace ash {
+class MessageCenterController;
+}
+
 namespace content {
 class BrowserContext;
 }  // namespace content
@@ -83,6 +87,7 @@ class ArcNotificationManager
   ArcBridgeService* const arc_bridge_service_;  // Owned by ArcServiceManager.
   const AccountId main_profile_id_;
   message_center::MessageCenter* const message_center_;
+  ash::MessageCenterController* message_center_controller_;  // Owned by Shell.
 
   using ItemMap =
       std::unordered_map<std::string, std::unique_ptr<ArcNotificationItem>>;

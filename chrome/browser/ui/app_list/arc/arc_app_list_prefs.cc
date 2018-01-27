@@ -269,6 +269,18 @@ std::string ArcAppListPrefs::GetAppId(const std::string& package_name,
   return app_id;
 }
 
+std::string ArcAppListPrefs::GetAppId(const std::string& package_name) {
+  for (const auto& default_app : default_apps_.app_map()) {
+    if (default_app.second->package_name == package_name) {
+      LOG(ERROR) << "Found app.";
+      return GetAppId(default_app.second->package_name,
+                      default_app.second->activity);
+    }
+  }
+  LOG(ERROR) << "Didn't find app.";
+  return std::string();
+}
+
 ArcAppListPrefs::ArcAppListPrefs(
     Profile* profile,
     arc::ConnectionHolder<arc::mojom::AppInstance, arc::mojom::AppHost>*
