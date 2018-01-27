@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ff484cd_6937bc13",
+        "filename": "chromeos/dbus/smb_provider_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2018-01-27T01:12:40Z",
+      "side": 1,
+      "message": "Given that this is giving away the FD, it implies this function owns it but the fact it\u0027s passed by ref implies the caller owns it.",
+      "revId": "875fb0d410fe13d7d3d66e564bc4a4e1e59246ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d7b2dff_692c1a92",
+        "filename": "chromeos/dbus/smb_provider_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2018-01-27T01:12:40Z",
+      "side": 1,
+      "message": "Good cleanup but should not be in this CL.",
+      "revId": "875fb0d410fe13d7d3d66e564bc4a4e1e59246ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "565a9b83_37efc7ef",
+        "filename": "chromeos/dbus/smb_provider_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2018-01-27T01:12:40Z",
+      "side": 1,
+      "message": "I don\u0027t think this should be a reference. In chrome we rarely pass by ref, only const ref or ptr or value.",
+      "revId": "875fb0d410fe13d7d3d66e564bc4a4e1e59246ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
