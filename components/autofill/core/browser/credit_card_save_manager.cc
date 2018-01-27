@@ -98,6 +98,13 @@ void CreditCardSaveManager::OfferCardLocalSave(const CreditCard& card) {
 void CreditCardSaveManager::AttemptToOfferCardUploadSave(
     const FormStructure& submitted_form,
     const CreditCard& card) {
+  // If no expiration date, no offer save.
+  if (!card.IsValidExpirationDate()) {
+    upload_decision_metrics_ |=
+        AutofillMetrics::UPLOAD_NOT_OFFERED_NO_VALID_EXPIRATION_DATE;
+    LogCardUploadDecisions(upload_decision_metrics_);
+    return;
+  }
   upload_request_ = payments::PaymentsClient::UploadRequestDetails();
   upload_request_.card = card;
 

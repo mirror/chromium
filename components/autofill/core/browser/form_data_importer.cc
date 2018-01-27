@@ -323,9 +323,8 @@ bool FormDataImporter::ImportCreditCard(
   if (has_duplicate_field_type)
     return false;
 
-  // Reject the credit card if we did not detect enough filled credit card
-  // fields (such as valid number, month, year).
-  if (!candidate_credit_card.IsValid())
+  // Reject the credit card if it is invalid credit card number.
+  if (!candidate_credit_card.IsValidCardNumber())
     return false;
 
   // Attempt to merge with an existing credit card. Don't present a prompt if we
