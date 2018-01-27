@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "cedab851_db2de6fa",
+        "filename": "ash/frame/caption_buttons/frame_caption_button_container_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-27T00:14:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb43c839_b112e369",
+      "range": {
+        "startLine": 35,
+        "startChar": 14,
+        "endLine": 35,
+        "endChar": 37
+      },
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7458b2fe_6ddfe38d",
         "filename": "ash/frame/caption_buttons/frame_caption_button_container_view.cc",
         "patchSetId": 1
@@ -108,6 +132,24 @@
       "writtenOn": "2018-01-26T02:34:30Z",
       "side": 1,
       "message": "I don\u0027t understand what this first sentence means.\n\nAre you trying to say that there are several types of window frames, and they normally lay out caption buttons differently, but in this case we\u0027ll lay them all out like we lay out \"regular Chrome\" windows?",
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66296fda_f5afa2ad",
+        "filename": "ash/frame/caption_buttons/frame_caption_button_container_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-27T00:14:57Z",
+      "side": 1,
+      "message": "There are different types of windows (Chrome browser, V1 apps, browser popups, ... etc.), but we only add top and bottom paddings for the caption buttons of the browser\u0027s frame only. the left, right paddings as well as the between-child spacings are the same for all window types so that they align together.\n\nI removed this comment because it\u0027s no longer informative since the insets and spacing are now inside the layout provider.",
+      "parentUuid": "7458b2fe_6ddfe38d",
       "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -131,6 +173,24 @@
     },
     {
       "key": {
+        "uuid": "ca28c6bb_f399a25b",
+        "filename": "ash/frame/caption_buttons/frame_caption_button_container_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-27T00:14:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5de5a209_d2ce2b92",
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69a351ab_9f11dfe3",
         "filename": "ash/frame/default_frame_header.cc",
         "patchSetId": 1
@@ -148,6 +208,24 @@
     },
     {
       "key": {
+        "uuid": "1dc12918_33ce9de4",
+        "filename": "ash/frame/default_frame_header.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-27T00:14:57Z",
+      "side": 1,
+      "message": "Yes, I didn\u0027t want to merge all those constants until I decide which file they should reside in. \nDone.",
+      "parentUuid": "69a351ab_9f11dfe3",
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d406f48c_e8b5195f",
         "filename": "ash/frame/default_frame_header.cc",
         "patchSetId": 1
@@ -159,6 +237,24 @@
       "writtenOn": "2018-01-26T02:34:30Z",
       "side": 1,
       "message": "This worries me because I think it breaks Fitts\u0027 Law in the maximized case?  You probably don\u0027t want to offset the back button but rather to insert extra padding inside it?",
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79dd0995_e181d13b",
+        "filename": "ash/frame/default_frame_header.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-27T00:14:57Z",
+      "side": 1,
+      "message": "Since this back button is being laid out manually rather than by a layout manager, I\u0027m not sure how to add the horizontal padding differently. So I offset it in X by the 8 pixels so it looks like this:\n\n+-----+------+\n| 8px |  \u003c-  |\n+-----+------+\n\nThis offset will never change as long as thee feature is enabled, regardless whether the window is maximized or not, so can you please explain how that will break Fitts\u0027 Law?",
+      "parentUuid": "d406f48c_e8b5195f",
       "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -182,6 +278,24 @@
     },
     {
       "key": {
+        "uuid": "a34dc74b_04c694e9",
+        "filename": "chrome/browser/ui/views/frame/browser_frame_header_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-27T00:14:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32ae7f99_967c3006",
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31a04afb_f6e5488a",
         "filename": "chrome/browser/ui/views/frame/browser_frame_header_ash.cc",
         "patchSetId": 1
@@ -193,6 +307,24 @@
       "writtenOn": "2018-01-26T02:34:30Z",
       "side": 1,
       "message": "Where does this value come from?  Is it because we\u0027re chopping 3 px off the top when maximizing or something?  If so, we\u0027d want to make that value the constant instead, so that if the 8 px constant changed, this would automatically change to match.",
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e80afddb_af9ff3c8",
+        "filename": "chrome/browser/ui/views/frame/browser_frame_header_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-27T00:14:57Z",
+      "side": 1,
+      "message": "This is coming from the specs here: https://gallery.googleplex.com/projects/MCHbtQVoQ2HCZZsKUFLaS3Ii/files/MCGnZePQNEdEshUCveL64FYEwMSJbxAVNpw\n\nI don\u0027t think it\u0027s that we chop 3px off the top, it\u0027s just that when the browser is maximized, the top of the frame should touch the top of the tab.",
+      "parentUuid": "31a04afb_f6e5488a",
       "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -216,6 +348,24 @@
     },
     {
       "key": {
+        "uuid": "712d4acb_e0ebfd81",
+        "filename": "chrome/browser/ui/views/frame/browser_frame_header_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-27T00:14:57Z",
+      "side": 1,
+      "message": "Yes, in Chrome OS, this is the immersive fullscreen mode, the caption is hidden by default until the user hovers over it, we slide it down.",
+      "parentUuid": "dc66dba0_2db74ce4",
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b2d6898_81003d88",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
         "patchSetId": 1
@@ -230,6 +380,24 @@
       "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39e5cbcd_ab1d41ee",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-27T00:14:57Z",
+      "side": 1,
+      "message": "Done. Removed.",
+      "parentUuid": "5b2d6898_81003d88",
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -250,6 +418,24 @@
     },
     {
       "key": {
+        "uuid": "be3176a1_c021d6ac",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-27T00:14:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f158d06b_2c0245d4",
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "203fb8ab_dea8fb0e",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
         "patchSetId": 1
@@ -264,6 +450,24 @@
       "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f49c93ba_4de3c5f6",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-27T00:14:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "203fb8ab_dea8fb0e",
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -362,6 +566,30 @@
     },
     {
       "key": {
+        "uuid": "09f65b98_b3ad11e9",
+        "filename": "ui/base/material_design/material_design_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-27T00:14:57Z",
+      "side": 1,
+      "message": "Yes, there\u0027s a plan to bring it to other platforms, but for now, Chrome OS is our first target.",
+      "parentUuid": "82e90c1c_6b1555b3",
+      "range": {
+        "startLine": 122,
+        "startChar": 12,
+        "endLine": 122,
+        "endChar": 23
+      },
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e564224_9f176b92",
         "filename": "ui/base/material_design/material_design_controller.h",
         "patchSetId": 1
@@ -376,6 +604,24 @@
       "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12f2aafb_176efd20",
+        "filename": "ui/base/material_design/material_design_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-27T00:14:57Z",
+      "side": 1,
+      "message": "Done. I changed the feature name to `kTouchOptimizedUi`.",
+      "parentUuid": "0e564224_9f176b92",
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -438,6 +684,30 @@
       "side": 1,
       "message": "Do we need to put this under a switch?  Can we just change the default behavior piecemeal?",
       "parentUuid": "6985e57d_13538345",
+      "range": {
+        "startLine": 43,
+        "startChar": 14,
+        "endLine": 43,
+        "endChar": 41
+      },
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "069f9606_e02ab139",
+        "filename": "ui/base/material_design/material_design_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-27T00:14:57Z",
+      "side": 1,
+      "message": "For now we will limit this new design to Chrome OS, but I expect in the future this will be pushed to other platforms as well. I assume by \"switch\" you mean ifdef chromeos? If so, I didn\u0027t want to get into a situation where we\u0027d need ifdefs whenever we call this. For now I made it return false for all other platforms.",
+      "parentUuid": "c4cb6f0c_9932234c",
       "range": {
         "startLine": 43,
         "startChar": 14,
