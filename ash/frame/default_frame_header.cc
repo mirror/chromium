@@ -13,6 +13,7 @@
 #include "base/debug/leak_annotations.h"
 #include "base/logging.h"  // DCHECK
 #include "third_party/skia/include/core/SkPath.h"
+#include "ui/base/material_design/material_design_controller.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/animation/slide_animation.h"
 #include "ui/gfx/canvas.h"
@@ -22,6 +23,7 @@
 #include "ui/gfx/image/image.h"
 #include "ui/gfx/scoped_canvas.h"
 #include "ui/gfx/skia_util.h"
+#include "ui/views/layout/layout_provider.h"
 #include "ui/views/view.h"
 #include "ui/views/widget/native_widget_aura.h"
 #include "ui/views/widget/widget.h"
@@ -172,8 +174,11 @@ void DefaultFrameHeader::LayoutHeader() {
   if (back_button_) {
     back_button_->set_use_light_images(ShouldUseLightImages());
     gfx::Size size = back_button_->GetPreferredSize();
-    back_button_->SetBounds(0, 0, size.width(),
-                            caption_button_container_size.height());
+    const int back_button_x = views::LayoutProvider::Get()->GetDistanceMetric(
+        ui::MaterialDesignController::IsTouchOptimizedUiEnabled()
+            ? views::DISTANCE_BACK_BUTTON_HORIZONTAL_PADDING_TOUCH_OPTIMIZED
+            : views::DISTANCE_BACK_BUTTON_HORIZONTAL_PADDING);
+    back_button_->SetBounds(back_button_x, 0, size.width(), size.height());
     origin = back_button_->bounds().right();
   }
 

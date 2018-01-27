@@ -19,8 +19,12 @@ enum InsetsMetric {
   // actual Insets: the rest are markers.
   VIEWS_INSETS_START = 0,
 
+  // The insets used to layout the caption buttons in the non-client frame view.
+  INSETS_CAPTION_BUTTONS = VIEWS_INSETS_START,
+  INSETS_CAPTION_BUTTONS_TOUCH_OPTIMIZED,
+
   // Internal border around checkboxes and radio buttons.
-  INSETS_CHECKBOX_RADIO_BUTTON = VIEWS_INSETS_START,
+  INSETS_CHECKBOX_RADIO_BUTTON,
   // The margins around the edges of the dialog.
   INSETS_DIALOG,
   // The margins around the button row of a dialog. The top margin is implied
@@ -49,12 +53,27 @@ enum DistanceMetric {
   // two types have not been interchanged.
   VIEWS_DISTANCE_START = VIEWS_INSETS_MAX,
 
+  // The horizontal padding for the back button shown in the non-client frame
+  // view for packaged web apps on Chrome OS.
+  DISTANCE_BACK_BUTTON_HORIZONTAL_PADDING = VIEWS_DISTANCE_START,
+  DISTANCE_BACK_BUTTON_HORIZONTAL_PADDING_TOUCH_OPTIMIZED,
+
+  // The vertical padding of the caption buttons in the non-client frame of a
+  // browser window in the maximized and restored states when the
+  // touch-optimized UI is enabled.
+  DISTANCE_BROWSR_HEADER_VERTICAL_PADDING_TOUCH,
+  DISTANCE_BROWSR_HEADER_VERTICAL_PADDING_MAXIMIZED_TOUCH,
+
   // The default padding to add on each side of a button's label.
-  DISTANCE_BUTTON_HORIZONTAL_PADDING = VIEWS_DISTANCE_START,
+  DISTANCE_BUTTON_HORIZONTAL_PADDING,
   // The maximum width a button can have and still influence the sizes of
   // other linked buttons.  This allows short buttons to have linked widths
   // without long buttons making things overly wide.
   DISTANCE_BUTTON_MAX_LINKABLE_WIDTH,
+  // The amount of spacing between caption buttons in the non-client frame view.
+  DISTANCE_CAPTION_BUTTONS_SPACING,
+  DISTANCE_CAPTION_BUTTONS_SPACING_TOUCH_OPTIMIZED,
+
   // The distance between a dialog's edge and the close button in the upper
   // trailing corner.
   DISTANCE_CLOSE_BUTTON_MARGIN,
