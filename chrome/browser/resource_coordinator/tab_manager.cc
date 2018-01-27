@@ -844,6 +844,9 @@ WebContents* TabManager::DiscardWebContentsAt(int index,
   // RenderFrameProxyHosts.
   delete old_contents;
 
+  // This ensures that on reload after discard, the document has
+  // "wasDiscarded" set to true.
+  null_contents->SetWasDiscarded(true);
   return null_contents;
 }
 

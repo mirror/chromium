@@ -552,6 +552,10 @@ bool InterstitialPageImpl::ShowingInterstitialPage() const {
   return false;
 }
 
+bool InterstitialPageImpl::WasDiscarded() const {
+  return false;
+}
+
 RendererPreferences InterstitialPageImpl::GetRendererPrefs(
     BrowserContext* browser_context) const {
   delegate_->OverrideRendererPrefs(&renderer_preferences_);
