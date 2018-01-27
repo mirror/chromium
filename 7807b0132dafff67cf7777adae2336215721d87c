@@ -16,6 +16,24 @@
       "revId": "7807b0132dafff67cf7777adae2336215721d87c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79af7a48_7b94b6a2",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-27T00:37:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cae5f6f3_8f6fb926",
+      "revId": "7807b0132dafff67cf7777adae2336215721d87c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
