@@ -62,6 +62,8 @@ extern NSString* const kBrowserActionVisibilityChangedNotification;
 
   // Bridge for showing the toolkit-views bubble on a Cocoa browser.
   std::unique_ptr<ToolbarActionsBarBubbleViewsPresenter> viewsBubblePresenter_;
+
+  BOOL isDraggingSession_;
 }
 
 @property(nonatomic) CGFloat maxWidth;
