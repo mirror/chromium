@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "87045632_8ba4a88b",
+        "filename": "chrome/browser/site_per_process_interactive_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1486,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-27T01:01:53Z",
+      "side": 1,
+      "message": "Ah, I missed that the subframe has its own subframe.  This is fine. :)",
+      "parentUuid": "d04282d6_642b7990",
+      "range": {
+        "startLine": 1486,
+        "startChar": 9,
+        "endLine": 1486,
+        "endChar": 11
+      },
+      "revId": "776dcd97cadd08ca02719f4387926178bbcc6702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c69a8aba_be60338d",
         "filename": "chrome/browser/site_per_process_interactive_browsertest.cc",
         "patchSetId": 2
@@ -154,6 +178,30 @@
       "side": 1,
       "message": "I think I\u0027ll leave the test as-is - we get slightly more coverage this way (e.g. that |new_contents| opened to the right of the |old_contents|).",
       "parentUuid": "263c3b7e_711c402d",
+      "range": {
+        "startLine": 1515,
+        "startChar": 0,
+        "endLine": 1519,
+        "endChar": 79
+      },
+      "revId": "776dcd97cadd08ca02719f4387926178bbcc6702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2c8dca9a_42a7768e",
+        "filename": "chrome/browser/site_per_process_interactive_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1519,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-27T01:01:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "87f0a93b_35d3f44b",
       "range": {
         "startLine": 1515,
         "startChar": 0,
