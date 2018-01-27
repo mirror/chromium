@@ -8,6 +8,7 @@
 #import <UIKit/UIKit.h>
 #include <string>
 
+#import "ios/chrome/browser/ui/commands/toolbar_commands.h"
 #import "ios/chrome/browser/ui/content_suggestions/ntp_home_constant.h"
 #import "ios/chrome/browser/ui/native_content_controller.h"
 #import "ios/chrome/browser/ui/ntp/new_tab_page_bar.h"
@@ -69,9 +70,10 @@ class ChromeBrowserState;
     parentViewController:(UIViewController*)parentViewController
               dispatcher:(id<ApplicationCommands,
                              BrowserCommands,
-                             OmniboxFocuser,
                              FakeboxFocuser,
+                             OmniboxFocuser,
                              SnackbarCommands,
+                             ToolbarCommands,
                              UrlLoader>)dispatcher
            safeAreaInset:(UIEdgeInsets)safeAreaInset;
 
