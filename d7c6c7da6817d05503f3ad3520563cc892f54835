@@ -16,6 +16,24 @@
       "revId": "d7c6c7da6817d05503f3ad3520563cc892f54835",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4f369d9_053c3b45",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobDataForward.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-27T01:06:14Z",
+      "side": 1,
+      "message": "Would it work if SerializedBlob was in its own mojom?",
+      "parentUuid": "7862b927_9034fab1",
+      "revId": "d7c6c7da6817d05503f3ad3520563cc892f54835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
