@@ -3246,6 +3246,7 @@ ScriptValue WebGLRenderingContextBase::getProgramParameter(
                           "invalid parameter name");
         return ScriptValue::CreateNull(script_state);
       }
+      FALLTHROUGH;
     case GL_ATTACHED_SHADERS:
     case GL_ACTIVE_ATTRIBUTES:
     case GL_ACTIVE_UNIFORMS:
@@ -3256,6 +3257,7 @@ ScriptValue WebGLRenderingContextBase::getProgramParameter(
         ContextGL()->GetProgramiv(ObjectOrZero(program), pname, &value);
         return WebGLAny(script_state, static_cast<unsigned>(value));
       }
+      FALLTHROUGH;
     default:
       SynthesizeGLError(GL_INVALID_ENUM, "getProgramParameter",
                         "invalid parameter name");
@@ -3295,6 +3297,7 @@ ScriptValue WebGLRenderingContextBase::getRenderbufferParameter(
                           "invalid parameter name");
         return ScriptValue::CreateNull(script_state);
       }
+      FALLTHROUGH;
     case GL_RENDERBUFFER_WIDTH:
     case GL_RENDERBUFFER_HEIGHT:
     case GL_RENDERBUFFER_RED_SIZE:
@@ -3785,7 +3788,7 @@ ScriptValue WebGLRenderingContextBase::getVertexAttrib(
         ContextGL()->GetVertexAttribiv(index, pname, &value);
         return WebGLAny(script_state, static_cast<bool>(value));
       }
-    // fall through to default error case
+      FALLTHROUGH;
     default:
       SynthesizeGLError(GL_INVALID_ENUM, "getVertexAttrib",
                         "invalid parameter name");
@@ -5543,12 +5546,12 @@ void WebGLRenderingContextBase::TexParameter(GLenum target,
     case GL_TEXTURE_MAG_FILTER:
       break;
     case GL_TEXTURE_WRAP_R:
-      // fall through to WRAP_S and WRAP_T for WebGL 2 or higher
       if (!IsWebGL2OrHigher()) {
         SynthesizeGLError(GL_INVALID_ENUM, "texParameter",
                           "invalid parameter name");
         return;
       }
+      FALLTHROUGH;
     case GL_TEXTURE_WRAP_S:
     case GL_TEXTURE_WRAP_T:
       if ((is_float && paramf != GL_CLAMP_TO_EDGE &&
@@ -6926,6 +6929,7 @@ bool WebGLRenderingContextBase::ValidateTexFuncDimensions(
         }
         break;
       }
+      FALLTHROUGH;
     case GL_TEXTURE_2D_ARRAY:
       if (IsWebGL2OrHigher()) {
         if (width > (max_texture_size_ >> level) ||
@@ -6937,6 +6941,7 @@ bool WebGLRenderingContextBase::ValidateTexFuncDimensions(
         }
         break;
       }
+      FALLTHROUGH;
     default:
       SynthesizeGLError(GL_INVALID_ENUM, function_name, "invalid target");
       return false;
