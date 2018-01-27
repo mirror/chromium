@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "69d95c9a_09875cc8",
+        "filename": "components/omnibox/browser/in_memory_url_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1235449
+      },
+      "writtenOn": "2018-01-27T17:22:07Z",
+      "side": 1,
+      "message": "About threading here:\n\nThis class exists on UI thread.\nThe task_runner_ here is for history thread, that is used to restore in_memory_url_index from disk. When it\u0027s being restored, the current class stays empty.",
+      "parentUuid": "17eff8db_8bf8d772",
+      "range": {
+        "startLine": 104,
+        "startChar": 55,
+        "endLine": 104,
+        "endChar": 75
+      },
+      "revId": "e78f9720d6852261345bb3d91a47e8057a80b34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b222cbe_1699ed32",
         "filename": "components/omnibox/browser/in_memory_url_index.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e9f728a5_2ad40fc0",
+        "filename": "components/omnibox/browser/in_memory_url_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1235449
+      },
+      "writtenOn": "2018-01-27T17:22:07Z",
+      "side": 1,
+      "message": "This is a UI thread class.\nThe task_runner_ is only used for restoring history from disk and and should not be used for memory reporting.",
+      "parentUuid": "2b222cbe_1699ed32",
+      "range": {
+        "startLine": 105,
+        "startChar": 32,
+        "endLine": 105,
+        "endChar": 67
+      },
+      "revId": "e78f9720d6852261345bb3d91a47e8057a80b34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adb2d47a_9ca9fd04",
         "filename": "components/omnibox/browser/in_memory_url_index.cc",
         "patchSetId": 1
@@ -62,6 +110,24 @@
       "revId": "e78f9720d6852261345bb3d91a47e8057a80b34c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a059a3a_c80ac136",
+        "filename": "components/omnibox/browser/in_memory_url_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1235449
+      },
+      "writtenOn": "2018-01-27T17:22:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adb2d47a_9ca9fd04",
+      "revId": "e78f9720d6852261345bb3d91a47e8057a80b34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -100,6 +166,24 @@
     },
     {
       "key": {
+        "uuid": "fc2ac779_d1952d8d",
+        "filename": "components/omnibox/browser/in_memory_url_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1235449
+      },
+      "writtenOn": "2018-01-27T17:22:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45ed120c_2990e384",
+      "revId": "e78f9720d6852261345bb3d91a47e8057a80b34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f570cbbe_8930a370",
         "filename": "components/omnibox/browser/in_memory_url_index.cc",
         "patchSetId": 1
@@ -111,6 +195,30 @@
       "writtenOn": "2018-01-26T23:31:46Z",
       "side": 1,
       "message": "just CreateAllocatorDump.\nGetOrCreate might mean the dump already exists, which is not the case here.",
+      "range": {
+        "startLine": 224,
+        "startChar": 36,
+        "endLine": 224,
+        "endChar": 60
+      },
+      "revId": "e78f9720d6852261345bb3d91a47e8057a80b34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c923a9e_015fa526",
+        "filename": "components/omnibox/browser/in_memory_url_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1235449
+      },
+      "writtenOn": "2018-01-27T17:22:07Z",
+      "side": 1,
+      "message": "Why can\u0027t it exist? What If I do tracing more than once?\nBTW this is a per profile class - so I can have two of them at once.\n\nAre you sure?",
+      "parentUuid": "f570cbbe_8930a370",
       "range": {
         "startLine": 224,
         "startChar": 36,
@@ -158,6 +266,24 @@
     },
     {
       "key": {
+        "uuid": "69fffc72_6c557ca0",
+        "filename": "components/omnibox/browser/in_memory_url_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1235449
+      },
+      "writtenOn": "2018-01-27T17:22:07Z",
+      "side": 1,
+      "message": "Ok. It\u0027s just part of the Autocomplete subsystem.",
+      "parentUuid": "822efd72_64bc1e9d",
+      "revId": "e78f9720d6852261345bb3d91a47e8057a80b34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66510b40_e9600c45",
         "filename": "components/omnibox/browser/in_memory_url_index.h",
         "patchSetId": 1
@@ -172,6 +298,24 @@
       "revId": "e78f9720d6852261345bb3d91a47e8057a80b34c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64bdbc96_d452ae71",
+        "filename": "components/omnibox/browser/in_memory_url_index.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1235449
+      },
+      "writtenOn": "2018-01-27T17:22:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66510b40_e9600c45",
+      "revId": "e78f9720d6852261345bb3d91a47e8057a80b34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -192,6 +336,24 @@
     },
     {
       "key": {
+        "uuid": "ce57c201_4f57c2eb",
+        "filename": "components/omnibox/browser/in_memory_url_index_types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1235449
+      },
+      "writtenOn": "2018-01-27T17:22:07Z",
+      "side": 1,
+      "message": "I\u0027d say so. It\u0027s a wrapped int64_t.",
+      "parentUuid": "c5ce9acc_9154f0c8",
+      "revId": "e78f9720d6852261345bb3d91a47e8057a80b34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b6beb7d_c7dea4bc",
         "filename": "components/omnibox/browser/in_memory_url_index_types.h",
         "patchSetId": 1
@@ -206,6 +368,24 @@
       "revId": "e78f9720d6852261345bb3d91a47e8057a80b34c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8686e420_493b811a",
+        "filename": "components/omnibox/browser/in_memory_url_index_types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1235449
+      },
+      "writtenOn": "2018-01-27T17:22:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b6beb7d_c7dea4bc",
+      "revId": "e78f9720d6852261345bb3d91a47e8057a80b34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
