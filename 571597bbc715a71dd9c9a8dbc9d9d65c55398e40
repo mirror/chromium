@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f98ec05_84639131",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-27T00:42:41Z",
+      "side": 1,
+      "message": "CalculatePreferredSize() already subtracts out the margins width - just confirming that we still want to subtract out the insets here, too?",
+      "revId": "571597bbc715a71dd9c9a8dbc9d9d65c55398e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
