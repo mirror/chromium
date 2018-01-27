@@ -16,6 +16,24 @@
       "revId": "571597bbc715a71dd9c9a8dbc9d9d65c55398e40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cef6ab1_e2f6fa54",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-27T00:46:57Z",
+      "side": 1,
+      "message": "Yes. margins().width() should actually be 0; that\u0027s just a little future-proofing on my part :) The margins we want to subtract are extension_info_container\u0027s border.",
+      "parentUuid": "4f98ec05_84639131",
+      "revId": "571597bbc715a71dd9c9a8dbc9d9d65c55398e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
