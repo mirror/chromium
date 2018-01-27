@@ -116,6 +116,7 @@ class FakePeripheral : public device::BluetoothDevice {
 
  protected:
   void CreateGattConnectionImpl() override;
+  void CancelGattConnectionImpl() override;
   void DisconnectGatt() override;
 
  private:

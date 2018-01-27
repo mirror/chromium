@@ -80,6 +80,9 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothDeviceClient : public BluezDBusClient {
     // Indicates that the device is currently paired. Read-only.
     dbus::Property<bool> paired;
 
+    // Indicates that the device is currently connecting.
+    dbus::Property<bool> connecting;
+
     // Indicates that the device is currently connected. Read-only.
     dbus::Property<bool> connected;
 

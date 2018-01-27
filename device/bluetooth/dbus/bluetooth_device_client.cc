@@ -192,6 +192,7 @@ BluetoothDeviceClient::Properties::Properties(
   RegisterProperty(bluetooth_device::kAppearanceProperty, &appearance);
   RegisterProperty(bluetooth_device::kUUIDsProperty, &uuids);
   RegisterProperty(bluetooth_device::kPairedProperty, &paired);
+  RegisterProperty(bluetooth_device::kConnectingProperty, &connecting);
   RegisterProperty(bluetooth_device::kConnectedProperty, &connected);
   RegisterProperty(bluetooth_device::kTrustedProperty, &trusted);
   RegisterProperty(bluetooth_device::kBlockedProperty, &blocked);

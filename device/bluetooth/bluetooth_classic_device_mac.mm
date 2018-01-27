@@ -78,6 +78,11 @@ void BluetoothClassicDeviceMac::CreateGattConnectionImpl() {
   DidFailToConnectGatt(ERROR_UNSUPPORTED_DEVICE);
 }
 
+void BluetoothDeviceAndroid::CancelGattConnectionImpl() {
+  // Classic devices do not support GATT connection.
+  NOTREACHED();
+}
+
 void BluetoothClassicDeviceMac::DisconnectGatt() {}
 
 std::string BluetoothClassicDeviceMac::GetAddress() const {

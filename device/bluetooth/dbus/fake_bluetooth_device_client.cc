@@ -431,9 +431,19 @@ void FakeBluetoothDeviceClient::Connect(const dbus::ObjectPath& object_path,
     return;
   }
 
-  // The device can be connected.
+  connection_callbacks_[object_path].push_back(callback);
+  connection_error_callbacks_[object_path].push_back(error_callback);
+  properties->connecting.ReplaceValue(true);
+}
+
+void FakeBluetoothDeviceClient::SucceedConnectionForTesting(
+    const dbus::ObjectPath& object_path) {
+  Properties* properties = GetProperties(object_path);
+  if (!properties->connecting.value()) {
+    return;
+  }
+  properties->connecting.ReplaceValue(false);
   properties->connected.ReplaceValue(true);
-  callback.Run();
 
   // Expose GATT services if connected to LE device.
   if (object_path == dbus::ObjectPath(kLowEnergyPath)) {
@@ -445,6 +455,11 @@ void FakeBluetoothDeviceClient::Connect(const dbus::ObjectPath& object_path,
   }
 
   AddInputDeviceIfNeeded(object_path, properties);
+
+  for (const auto& connection_callback : connection_callbacks_[object_path])
+    connection_callback.Run();
+  connection_callbacks_[object_path].clear();
+  connection_error_callbacks_[object_path].clear();
 }
 
 void FakeBluetoothDeviceClient::Disconnect(
@@ -454,8 +469,9 @@ void FakeBluetoothDeviceClient::Disconnect(
   VLOG(1) << "Disconnect: " << object_path.value();
   Properties* properties = GetProperties(object_path);
 
-  if (!properties->connected.value()) {
-    error_callback.Run(bluetooth_device::kErrorNotConnected, "Not Connected");
+  if (!properties->connected.value() && !properties->connecting.value()) {
+    error_callback.Run(bluetooth_device::kErrorNotConnected,
+                       "Not connected or connecting");
     return;
   }
 
@@ -468,7 +484,14 @@ void FakeBluetoothDeviceClient::Disconnect(
   }
 
   callback.Run();
+  for (const auto& connection_error_callback :
+       connection_error_callbacks_[object_path])
+    connection_error_callback.Run(
+        bluetooth_device::kErrorFailed, "Connection cancelled");
+  connection_callbacks_.clear();
+  connection_error_callbacks_.clear();
   properties->connected.ReplaceValue(false);
+  properties->connecting.ReplaceValue(false);
 }
 
 void FakeBluetoothDeviceClient::ConnectProfile(

@@ -381,6 +381,68 @@ TEST_F(BluetoothTest, AdvertisementData_Discovery) {
 }
 #endif  // defined(OS_ANDROID) || defined(OS_MACOSX)
 
+// Tests cancellation works properly on a device that is neither connected nor
+// connecting.
+# if defined(OS_LINUX)
+TEST_F(BluetoothTest, CancellationNonConnectedConnectingDevice) {
+  if (!PlatformSupportsLowEnergy()) {
+    LOG(WARNING) << "Low Energy Bluetooth unavailable, skipping unit test.";
+    return;
+  }
+
+  InitWithFakeAdapter();
+  BluetoothDevice* device = SimulateLowEnergyDevice(8);
+
+  // Cancel the connection (even though there is none, pending or otherwise).
+  device->CancelGattConnection(GetDeviceSuccessCallback(Call::NOT_EXPECTED),
+                               GetDeviceErrorCallback(Call::EXPECTED));
+  base::RunLoop().RunUntilIdle();
+  ASSERT_FALSE(device->IsGattConnected());
+}
+
+// Tests cancellation works properly on a device that is connecting.
+TEST_F(BluetoothTest, CancellationOnConnectingDevice) {
+  if (!PlatformSupportsLowEnergy()) {
+    LOG(WARNING) << "Low Energy Bluetooth unavailable, skipping unit test.";
+    return;
+  }
+
+  InitWithFakeAdapter();
+  BluetoothDevice* device = SimulateLowEnergyDevice(8);
+
+  // Begin to connect to the device and cancel.
+  device->CreateGattConnection(GetGattConnectionCallback(Call::NOT_EXPECTED),
+                               GetConnectErrorCallback(Call::EXPECTED));
+  device->CancelGattConnection(GetDeviceSuccessCallback(Call::EXPECTED),
+                               GetDeviceErrorCallback(Call::NOT_EXPECTED));
+  SimulateGattConnection(device);
+  base::RunLoop().RunUntilIdle();
+
+  ASSERT_FALSE(device->IsGattConnected());
+}
+
+// Tests cancellation works properly on a device that is connected.
+TEST_F(BluetoothTest, CancellationOnConnectedDevice) {
+  if (!PlatformSupportsLowEnergy()) {
+    LOG(WARNING) << "Low Energy Bluetooth unavailable, skipping unit test.";
+    return;
+  }
+
+  InitWithFakeAdapter();
+  BluetoothDevice* device = SimulateLowEnergyDevice(8);
+
+  // Connect to the device, and then cancel after connection is finished.
+  device->CreateGattConnection(GetGattConnectionCallback(Call::EXPECTED),
+                               GetConnectErrorCallback(Call::NOT_EXPECTED));
+  SimulateGattConnection(device);
+  device->CancelGattConnection(GetDeviceSuccessCallback(Call::NOT_EXPECTED),
+                               GetDeviceErrorCallback(Call::EXPECTED));
+  base::RunLoop().RunUntilIdle();
+
+  ASSERT_TRUE(device->IsGattConnected());
+}
+#endif  // defined(LINUX)
+
 #if defined(OS_ANDROID) || defined(OS_MACOSX)
 // Tests Advertisement Data is updated correctly during a connection.
 TEST_F(BluetoothTest, GetUUIDs_Connection) {

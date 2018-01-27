@@ -107,6 +107,7 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothDeviceWin
  protected:
   // BluetoothDevice override
   void CreateGattConnectionImpl() override;
+  void CancelGattConnectionImpl() override;
   void DisconnectGatt() override;
 
  private:

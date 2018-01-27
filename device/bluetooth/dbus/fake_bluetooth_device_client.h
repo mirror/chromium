@@ -82,6 +82,7 @@ class DEVICE_BLUETOOTH_EXPORT FakeBluetoothDeviceClient
   void Connect(const dbus::ObjectPath& object_path,
                const base::Closure& callback,
                const ErrorCallback& error_callback) override;
+  void SucceedConnectionForTesting(const dbus::ObjectPath& object_path);
   void Disconnect(const dbus::ObjectPath& object_path,
                   const base::Closure& callback,
                   const ErrorCallback& error_callback) override;
@@ -366,6 +367,13 @@ class DEVICE_BLUETOOTH_EXPORT FakeBluetoothDeviceClient
   // Controls the fake behavior to allow more extensive UI testing without
   // having to cycle the discovery simulation.
   bool delay_start_discovery_;
+
+  // Callbacks we should make when a connection succeeds.
+  std::map<const dbus::ObjectPath,
+           std::vector<base::Closure>> connection_callbacks_;
+  // Callbacks we should make when a connection fails.
+  std::map<const dbus::ObjectPath,
+           std::vector<ErrorCallback>> connection_error_callbacks_;
 };
 
 }  // namespace bluez

@@ -360,6 +360,9 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothDevice {
   // support this feature.
   base::Optional<uint8_t> GetAdvertisingDataFlags() const;
 
+  // The SuccessCallback is called when a method succeeds.
+  typedef base::Callback<void()> SuccessCallback;
+
   // The ErrorCallback is used for methods that can fail in which case it
   // is called, in the success case the callback is simply not called.
   typedef base::Callback<void()> ErrorCallback;
@@ -516,6 +519,11 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothDevice {
   virtual void CreateGattConnection(const GattConnectionCallback& callback,
                                     const ConnectErrorCallback& error_callback);
 
+  // Cancels a pending GATT connection to this device. On success, a new
+  // TODO: Add more here.
+  virtual void CancelGattConnection(const SuccessCallback& callback,
+                                    const ErrorCallback& error_callback);
+
   // Set the gatt services discovery complete flag for this device.
   virtual void SetGattServicesDiscoveryComplete(bool complete);
 
@@ -618,6 +626,11 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothDevice {
   // changes.
   virtual void CreateGattConnectionImpl() = 0;
 
+  // Implements platform specific operations to cancel a GATT connection.
+  // Subclasses must also call DidCancelGatt or DidFailToCancelGatt immediately
+  // or asynchronously as the connection state changes.
+  virtual void CancelGattConnectionImpl() = 0;
+
   // Disconnects GATT connection on platforms that maintain a specific GATT
   // connection.
   virtual void DisconnectGatt() = 0;
@@ -633,6 +646,12 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothDevice {
   void DidConnectGatt();
   void DidFailToConnectGatt(ConnectErrorCode);
   void DidDisconnectGatt();
+
+  // Calls any pending callbacks for CancelGattConnection based on result of
+  // subclasses actions initiated in CancelGattConnectionImpl.
+  // DidCancelGattConnection will call DidFailToConnectGatt.
+  void DidCancelGattConnection();
+  void DidFailToCancelGattConnection();
 
   // Tracks BluetoothGattConnection instances that act as a reference count
   // keeping the GATT connection open. Instances call Add/RemoveGattConnection
@@ -650,6 +669,10 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothDevice {
   // Callbacks for pending success and error result of CreateGattConnection.
   std::vector<GattConnectionCallback> create_gatt_connection_success_callbacks_;
   std::vector<ConnectErrorCallback> create_gatt_connection_error_callbacks_;
+
+  // Callbacks for pending success and error result of CancelGattConnection.
+  std::vector<SuccessCallback> cancel_gatt_connection_success_callbacks_;
+  std::vector<ErrorCallback> cancel_gatt_connection_error_callbacks_;
 
   // BluetoothGattConnection objects keeping the GATT connection alive.
   std::set<BluetoothGattConnection*> gatt_connections_;

@@ -104,6 +104,7 @@ class MockBluetoothDevice : public BluetoothDevice {
   MOCK_CONST_METHOD1(GetGattService,
                      BluetoothRemoteGattService*(const std::string&));
   MOCK_METHOD0(CreateGattConnectionImpl, void());
+  MOCK_METHOD0(CancelGattConnectionImpl, void());
   MOCK_METHOD0(DisconnectGatt, void());
 
   // BluetoothDevice manages the lifetime of its BluetoothGATTServices.

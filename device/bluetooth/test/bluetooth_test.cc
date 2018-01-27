@@ -172,6 +172,15 @@ void BluetoothTestBase::DiscoverySessionCallback(
     unexpected_success_callback_ = true;
 }
 
+void BluetoothTestBase::DeviceSuccessCallback(Call expected) {
+  ++callback_count_;
+
+  if (expected == Call::EXPECTED)
+    ++actual_success_callback_calls_;
+  else
+    unexpected_success_callback_ = true;
+}
+
 void BluetoothTestBase::GattConnectionCallback(
     Call expected,
     std::unique_ptr<BluetoothGattConnection> connection) {
@@ -236,6 +245,15 @@ void BluetoothTestBase::ReadValueCallback(Call expected,
 }
 
 void BluetoothTestBase::ErrorCallback(Call expected) {
+  ++error_callback_count_;
+
+  if (expected == Call::EXPECTED)
+    ++actual_error_callback_calls_;
+  else
+    unexpected_error_callback_ = true;
+}
+
+void BluetoothTestBase::DeviceErrorCallback(Call expected) {
   ++error_callback_count_;
 
   if (expected == Call::EXPECTED)
@@ -324,6 +342,14 @@ BluetoothTestBase::GetDiscoverySessionCallback(Call expected) {
                     weak_factory_.GetWeakPtr(), expected);
 }
 
+BluetoothDevice::SuccessCallback
+BluetoothTestBase::GetDeviceSuccessCallback(Call expected) {
+  if (expected == Call::EXPECTED)
+    ++expected_success_callback_calls_;
+  return base::Bind(&BluetoothTestBase::DeviceSuccessCallback,
+                    weak_factory_.GetWeakPtr(), expected);
+}
+
 BluetoothDevice::GattConnectionCallback
 BluetoothTestBase::GetGattConnectionCallback(Call expected) {
   if (expected == Call::EXPECTED)
@@ -371,6 +397,14 @@ BluetoothTestBase::GetReadValueCallback(Call expected) {
 
 BluetoothAdapter::ErrorCallback BluetoothTestBase::GetErrorCallback(
     Call expected) {
+  if (expected == Call::EXPECTED)
+    ++expected_error_callback_calls_;
+  return base::Bind(&BluetoothTestBase::ErrorCallback,
+                    weak_factory_.GetWeakPtr(), expected);
+}
+
+BluetoothDevice::ErrorCallback
+BluetoothTestBase::GetDeviceErrorCallback(Call expected) {
   if (expected == Call::EXPECTED)
     ++expected_error_callback_calls_;
   return base::Bind(&BluetoothTestBase::ErrorCallback,

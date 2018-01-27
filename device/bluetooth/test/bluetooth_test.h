@@ -469,6 +469,7 @@ class BluetoothTestBase : public testing::Test {
   void Callback(Call expected);
   void DiscoverySessionCallback(Call expected,
                                 std::unique_ptr<BluetoothDiscoverySession>);
+  void DeviceSuccessCallback(Call expected);
   void GattConnectionCallback(Call expected,
                               std::unique_ptr<BluetoothGattConnection>);
   void NotifyCallback(Call expected,
@@ -480,6 +481,7 @@ class BluetoothTestBase : public testing::Test {
   void StopNotifyCheckForPrecedingCalls(int num_of_preceding_calls);
   void ReadValueCallback(Call expected, const std::vector<uint8_t>& value);
   void ErrorCallback(Call expected);
+  void DeviceErrorCallback(Call expected);
   void ConnectErrorCallback(Call expected,
                             enum BluetoothDevice::ConnectErrorCode);
   void GattErrorCallback(Call expected,
@@ -498,6 +500,7 @@ class BluetoothTestBase : public testing::Test {
   base::Closure GetCallback(Call expected);
   BluetoothAdapter::DiscoverySessionCallback GetDiscoverySessionCallback(
       Call expected);
+  BluetoothDevice::SuccessCallback GetDeviceSuccessCallback(Call expected);
   BluetoothDevice::GattConnectionCallback GetGattConnectionCallback(
       Call expected);
   BluetoothRemoteGattCharacteristic::NotifySessionCallback GetNotifyCallback(
@@ -509,6 +512,7 @@ class BluetoothTestBase : public testing::Test {
   BluetoothRemoteGattCharacteristic::ValueCallback GetReadValueCallback(
       Call expected);
   BluetoothAdapter::ErrorCallback GetErrorCallback(Call expected);
+  BluetoothDevice::ErrorCallback GetDeviceErrorCallback(Call expected);
   BluetoothDevice::ConnectErrorCallback GetConnectErrorCallback(Call expected);
   base::Callback<void(BluetoothRemoteGattService::GattErrorCode)>
   GetGattErrorCallback(Call expected);

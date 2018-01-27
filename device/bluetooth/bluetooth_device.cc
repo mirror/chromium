@@ -352,6 +352,18 @@ void BluetoothDevice::CreateGattConnection(
   CreateGattConnectionImpl();
 }
 
+void BluetoothDevice::CancelGattConnection(
+    const SuccessCallback& callback,
+    const ErrorCallback& error_callback) {
+  cancel_gatt_connection_success_callbacks_.push_back(callback);
+  cancel_gatt_connection_error_callbacks_.push_back(error_callback);
+
+  if (IsGattConnected())
+    return DidFailToCancelGattConnection();
+
+  CancelGattConnectionImpl();
+}
+
 void BluetoothDevice::SetGattServicesDiscoveryComplete(bool complete) {
   gatt_services_discovery_complete_ = complete;
 }
@@ -500,6 +512,22 @@ void BluetoothDevice::DidDisconnectGatt() {
   }
   gatt_connections_.clear();
   GetAdapter()->NotifyDeviceChanged(this);
+}
+
+void BluetoothDevice::DidCancelGattConnection() {
+  DCHECK(gatt_connections_.empty());
+  for (const auto& callback : cancel_gatt_connection_success_callbacks_)
+    callback.Run();
+  cancel_gatt_connection_success_callbacks_.clear();
+  cancel_gatt_connection_error_callbacks_.clear();
+  DidFailToConnectGatt(ERROR_AUTH_CANCELED);
+}
+
+void BluetoothDevice::DidFailToCancelGattConnection() {
+  for (const auto& error_callback : cancel_gatt_connection_error_callbacks_)
+    error_callback.Run();
+  cancel_gatt_connection_success_callbacks_.clear();
+  cancel_gatt_connection_error_callbacks_.clear();
 }
 
 void BluetoothDevice::AddGattConnection(BluetoothGattConnection* connection) {

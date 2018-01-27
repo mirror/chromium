@@ -270,6 +270,11 @@ void BluetoothDeviceAndroid::CreateGattConnectionImpl() {
                                                       j_device_);
 }
 
+void BluetoothDeviceAndroid::CancelGattConnectionImpl() {
+  // TODO(684073): This needs to be implemented.
+  NOTIMPLEMENTED();
+}
+
 void BluetoothDeviceAndroid::DisconnectGatt() {
   Java_ChromeBluetoothDevice_disconnectGatt(AttachCurrentThread(), j_device_);
 }

@@ -85,6 +85,7 @@ class BluetoothClassicDeviceMac : public BluetoothDeviceMac {
  protected:
   // BluetoothDevice override
   void CreateGattConnectionImpl() override;
+  void CancelGattConnectionImpl() override;
   void DisconnectGatt() override;
 
  private:

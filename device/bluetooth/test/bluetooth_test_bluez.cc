@@ -115,7 +115,7 @@ void BluetoothTestBlueZ::InitWithFakeAdapter() {
 
 BluetoothDevice* BluetoothTestBlueZ::SimulateLowEnergyDevice(
     int device_ordinal) {
-  if (device_ordinal > 7 || device_ordinal < 1)
+  if (device_ordinal > 8 || device_ordinal < 1)
     return nullptr;
 
   base::Optional<std::string> device_name = std::string(kTestDeviceName);
@@ -157,6 +157,13 @@ BluetoothDevice* BluetoothTestBlueZ::SimulateLowEnergyDevice(
       service_uuids.push_back(kTestUUIDU2f);
       service_data[kTestUUIDU2fControlPointLength] = {0x00, 0x14};
       break;
+    case 8:
+      device_address = bluez::FakeBluetoothDeviceClient::kPairedDeviceAddress;
+      service_uuids.push_back(kTestUUIDGenericAccess);
+      service_uuids.push_back(kTestUUIDGenericAttribute);
+      service_data[kTestUUIDHeartRate] = {0x01};
+      manufacturer_data[kTestManufacturerId] = {1, 2, 3, 4};
+      break;
   }
 
   BluetoothDevice* device = adapter_->GetDevice(device_address);
@@ -190,6 +197,11 @@ BluetoothDevice* BluetoothTestBlueZ::SimulateClassicDevice() {
         manufacturer_data);
   }
   return adapter_->GetDevice(device_address);
+}
+
+void BluetoothTestBlueZ::SimulateGattConnection(BluetoothDevice* device) {
+  fake_bluetooth_device_client_->SucceedConnectionForTesting(
+      GetDevicePath(device));
 }
 
 void BluetoothTestBlueZ::SimulateLocalGattCharacteristicValueReadRequest(

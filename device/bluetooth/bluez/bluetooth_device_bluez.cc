@@ -238,6 +238,14 @@ void BluetoothDeviceBlueZ::CreateGattConnectionImpl() {
   NOTIMPLEMENTED();
 }
 
+void BluetoothDeviceBlueZ::CancelGattConnectionImpl() {
+  // Disconnect cancels Connect calls before a reply has been received.
+  Disconnect(base::Bind(&BluetoothDeviceBlueZ::OnCancelGattConnection,
+                        weak_ptr_factory_.GetWeakPtr()),
+             base::Bind(&BluetoothDeviceBlueZ::OnCancelGattConnectionError,
+                        weak_ptr_factory_.GetWeakPtr()));
+}
+
 void BluetoothDeviceBlueZ::SetGattServicesDiscoveryComplete(bool complete) {
   // BlueZ implementation already tracks service discovery state.
   NOTIMPLEMENTED();
@@ -813,6 +821,14 @@ void BluetoothDeviceBlueZ::UpdateGattServices(
       adapter()->NotifyGattDiscoveryComplete(service);
     }
   }
+}
+
+void BluetoothDeviceBlueZ::OnCancelGattConnection() {
+  DidCancelGattConnection();
+}
+
+void BluetoothDeviceBlueZ::OnCancelGattConnectionError() {
+  DidFailToCancelGattConnection();
 }
 
 void BluetoothDeviceBlueZ::OnGetConnInfo(const ConnectionInfoCallback& callback,

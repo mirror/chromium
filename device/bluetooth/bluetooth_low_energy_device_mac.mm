@@ -208,6 +208,11 @@ void BluetoothLowEnergyDeviceMac::CreateGattConnectionImpl() {
   }
 }
 
+void BluetoothLowEnergyDeviceMac::CancelGattConnectionImpl() {
+  // TODO(684073): This needs to be implemented.
+  NOTIMPLEMENTED();
+}
+
 void BluetoothLowEnergyDeviceMac::DisconnectGatt() {
   GetMacAdapter()->DisconnectGatt(this);
 }

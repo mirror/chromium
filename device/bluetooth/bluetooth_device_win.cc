@@ -293,6 +293,13 @@ void BluetoothDeviceWin::CreateGattConnectionImpl() {
   // https://docs.microsoft.com/en-us/windows/uwp/devices-sensors/gatt-client#connecting-to-the-device
 }
 
+void BluetoothDeviceWin::CancelGattConnectionImpl() {
+  // On Windows, the adapter cannot force a cancellation.
+  // Since we are never in a connecting state on Windows, we should never reach
+  // this.
+  NOTREACHED();
+}
+
 void BluetoothDeviceWin::DisconnectGatt() {
   // On Windows, the adapter cannot force a disconnection.
 }

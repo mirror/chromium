@@ -159,6 +159,7 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothDeviceBlueZ
  protected:
   // BluetoothDevice override
   void CreateGattConnectionImpl() override;
+  void CancelGattConnectionImpl() override;
   void DisconnectGatt() override;
 
  private:
@@ -179,6 +180,10 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothDeviceBlueZ
   // before e.g. if a services is exposed during construction but services
   // haven't been resolved yet..
   void UpdateGattServices(const dbus::ObjectPath& object_path);
+
+  // Called when we have used Disconnect to cancel a pending Connect call.
+  void OnCancelGattConnection();
+  void OnCancelGattConnectionError();
 
   // Called by dbus:: on completion of the D-Bus method call to get the
   // connection attributes of the current connection to the device.

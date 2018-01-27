@@ -304,6 +304,11 @@ void FakePeripheral::CreateGattConnectionImpl() {
                             weak_ptr_factory_.GetWeakPtr()));
 }
 
+void FakePeripheral::CancelGattConnectionImpl() {
+  // TODO(684073): This needs to be implemented.
+  NOTIMPLEMENTED();
+}
+
 void FakePeripheral::DispatchConnectionResponse() {
   DCHECK(next_connection_response_);
 
