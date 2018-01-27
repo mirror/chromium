@@ -1,0 +1,28 @@
+Tests tagging IndexedDB object store data
+New database
+(masked date key) => (no tag)
+42 => (no tag)
+Array(4) => (no tag)
+ArrayBuffer(4) => (no tag)
+Lazy fox jumped => (no tag)
+
+Data unchanged
+(masked date key) => 100
+42 => (no tag)
+Array(4) => 200
+ArrayBuffer(4) => 0
+Lazy fox jumped => (no tag)
+
+Removed integer key
+(masked date key) => 100
+Array(4) => 200
+ArrayBuffer(4) => 0
+Lazy fox jumped => (no tag)
+
+Removed date key
+Array(4) => 200
+ArrayBuffer(4) => 0
+Lazy fox jumped => (no tag)
+
+Remaining databases: 0
+
