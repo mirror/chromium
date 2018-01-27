@@ -16,6 +16,24 @@
       "revId": "64eab8d1f6a74584cc0d5a2498efc46dfd0b4b82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6004a33_bcf70c6a",
+        "filename": "chrome/common/extensions/docs/examples/api/browserAction/print/manifest.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2018-01-27T00:23:20Z",
+      "side": 1,
+      "message": "Oh gee, duh. Whoops! Fixed it",
+      "parentUuid": "e20d6dc8_01c4bac4",
+      "revId": "64eab8d1f6a74584cc0d5a2498efc46dfd0b4b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
