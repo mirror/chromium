@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9f895b9_dfc6df36",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-27T01:11:09Z",
+      "side": 1,
+      "message": "Can we store and use rrect and path in layer\u0027s local space?",
+      "revId": "4c71ff237a308661f9152dc0d2b0054e05fcfb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
