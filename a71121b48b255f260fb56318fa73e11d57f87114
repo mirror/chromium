@@ -22,6 +22,30 @@
       "revId": "a71121b48b255f260fb56318fa73e11d57f87114",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2506bf43_2f80f1a7",
+        "filename": "net/test/spawned_test_server/remote_test_server.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2018-01-27T00:00:43Z",
+      "side": 0,
+      "message": "Thanks for the explanation!",
+      "parentUuid": "27e2491d_8537db8d",
+      "range": {
+        "startLine": 98,
+        "startChar": 6,
+        "endLine": 98,
+        "endChar": 53
+      },
+      "revId": "a71121b48b255f260fb56318fa73e11d57f87114",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
