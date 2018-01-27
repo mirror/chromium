@@ -15,8 +15,11 @@
 #include "base/test/mock_callback.h"
 #include "base/test/scoped_task_environment.h"
 #include "media/cast/net/cast_transport_config.h"
+#include "media/cast/net/mojo_udp_transport_client.h"
 #include "media/cast/net/udp_packet_pipe.h"
 #include "media/cast/test/utility/net_utility.h"
+#include "mojo/public/cpp/bindings/binding.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
 #include "net/base/ip_address.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -25,10 +28,10 @@ namespace cast {
 
 namespace {
 
-class MockPacketReceiver final : public UdpTransportReceiver {
+class MockPacketReceiver final : public mojom::UdpTransportReceiver {
  public:
   MockPacketReceiver(const base::RepeatingClosure& callback)
-      : packet_callback_(callback) {}
+      : packet_callback_(callback), binding_(this) {}
 
   bool ReceivedPacket(std::unique_ptr<Packet> packet) {
     packet_ = std::move(packet);
@@ -36,7 +39,7 @@ class MockPacketReceiver final : public UdpTransportReceiver {
     return true;
   }
 
-  // UdpTransportReceiver implementation.
+  // mojom::UdpTransportReceiver implementation.
   void OnPacketReceived(const std::vector<uint8_t>& packet) override {
     EXPECT_GT(packet.size(), 0u);
     packet_.reset(new Packet(packet));
@@ -48,18 +51,23 @@ class MockPacketReceiver final : public UdpTransportReceiver {
                                base::Unretained(this));
   }
 
+  void BindToRequest(mojom::UdpTransportReceiverRequest request) {
+    binding_.Bind(std::move(request));
+  }
+
   std::unique_ptr<Packet> TakePacket() { return std::move(packet_); }
 
  private:
   base::RepeatingClosure packet_callback_;
+  mojo::Binding<mojom::UdpTransportReceiver> binding_;
   std::unique_ptr<Packet> packet_;
 
   DISALLOW_COPY_AND_ASSIGN(MockPacketReceiver);
 };
 
-void SendPacket(UdpTransportImpl* transport, Packet packet) {
-  base::Closure cb;
-  transport->SendPacket(new base::RefCountedData<Packet>(packet), cb);
+void SendPacket(PacketTransport* transport, Packet packet) {
+  transport->SendPacket(new base::RefCountedData<Packet>(packet),
+                        base::BindRepeating([]() {}));
 }
 
 static void UpdateCastTransportStatus(CastTransportStatus status) {
@@ -103,7 +111,7 @@ class UdpTransportImplTest : public ::testing::Test {
   DISALLOW_COPY_AND_ASSIGN(UdpTransportImplTest);
 };
 
-// Test the sending/receiving functions as a PacketSender.
+// Test the sending/receiving as a PacketSender.
 TEST_F(UdpTransportImplTest, PacketSenderSendAndReceive) {
   std::string data = "Test";
   Packet packet(data.begin(), data.end());
@@ -116,7 +124,6 @@ TEST_F(UdpTransportImplTest, PacketSenderSendAndReceive) {
   recv_transport_->StartReceiving(
       packet_receiver_on_receiver.packet_receiver());
 
-  base::Closure cb;
   SendPacket(send_transport_.get(), packet);
   run_loop.Run();
   std::unique_ptr<Packet> received_packet =
@@ -130,7 +137,7 @@ TEST_F(UdpTransportImplTest, PacketSenderSendAndReceive) {
       std::equal(packet.begin(), packet.end(), (*received_packet).begin()));
 }
 
-// Test the sending/receiving functions as a UdpTransport.
+// Test the sending/receiving as a UdpTransport.
 TEST_F(UdpTransportImplTest, UdpTransportSendAndReceive) {
   std::string data = "Hello!";
   Packet packet(data.begin(), data.end());
@@ -139,7 +146,9 @@ TEST_F(UdpTransportImplTest, UdpTransportSendAndReceive) {
   MockPacketReceiver packet_receiver_on_sender(run_loop.QuitClosure());
   MockPacketReceiver packet_receiver_on_receiver(
       base::BindRepeating(&SendPacket, recv_transport_.get(), packet));
-  send_transport_->StartReceiving(&packet_receiver_on_sender);
+  mojom::UdpTransportReceiverPtr receiver_ptr;
+  packet_receiver_on_sender.BindToRequest(mojo::MakeRequest(&receiver_ptr));
+  send_transport_->StartReceiving(std::move(receiver_ptr));
   recv_transport_->StartReceiving(
       packet_receiver_on_receiver.packet_receiver());
 
@@ -159,6 +168,51 @@ TEST_F(UdpTransportImplTest, UdpTransportSendAndReceive) {
   EXPECT_TRUE(received_packet);
   EXPECT_TRUE(
       std::equal(packet.begin(), packet.end(), (*received_packet).begin()));
+}
+
+// Test the sending/receiving with a MojoUdpTransportClient. When
+// sending a packet from the client, the packet is first send to the connected
+// UdpTransportImpl through the mojo data pipe, and then send out to the remote
+// receiver over network.
+TEST_F(UdpTransportImplTest, WithMojoUdpTransportClient) {
+  std::string data = "Hello!";
+  Packet packet(data.begin(), data.end());
+  base::RunLoop run_loop;
+
+  // The remote receiver will send back any received packet to sender.
+  MockPacketReceiver packet_receiver_on_receiver(
+      base::BindRepeating(&SendPacket, recv_transport_.get(), packet));
+  recv_transport_->StartReceiving(
+      packet_receiver_on_receiver.packet_receiver());
+
+  // Creates the UdpTransportClient and connect it to |send_transport_|.
+  mojom::UdpTransportPtr transport_host_ptr;
+  mojo::MakeStrongBinding(std::move(send_transport_),
+                          mojo::MakeRequest(&transport_host_ptr));
+  auto transport_client_on_sender =
+      std::make_unique<MojoUdpTransportClient>(std::move(transport_host_ptr));
+  // Exits run loop when |transport_client_on_sender| receives any packet.
+  MockPacketReceiver packet_receiver_on_sender(run_loop.QuitClosure());
+  transport_client_on_sender->StartReceiving(
+      packet_receiver_on_sender.packet_receiver());
+
+  // Sends |packet|.
+  SendPacket(transport_client_on_sender.get(), packet);
+  run_loop.Run();
+
+  // Verifies that the |packet| is received on the remote receiver.
+  std::unique_ptr<Packet> received_packet =
+      packet_receiver_on_receiver.TakePacket();
+  EXPECT_TRUE(received_packet);
+  EXPECT_TRUE(
+      std::equal(packet.begin(), packet.end(), (*received_packet).begin()));
+
+  // The remote receiver is expect to have sent back the received packet to
+  // sender. Verifies that it is received by |transport_client_on_sender|.
+  received_packet = packet_receiver_on_sender.TakePacket();
+  EXPECT_TRUE(received_packet);
+  EXPECT_TRUE(
+      std::equal(packet.begin(), packet.end(), received_packet->begin()));
 }
 
 }  // namespace cast

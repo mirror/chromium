@@ -97,6 +97,12 @@ mojom("remoting") {
   ]
 }
 
+mojom("mirroring") {
+  sources = [
+    "udp_transport.mojom",
+  ]
+}
+
 mojom("test_interfaces") {
   testonly = true
   sources = [

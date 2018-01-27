@@ -18,7 +18,7 @@
 #include "media/cast/net/cast_transport.h"
 #include "media/cast/net/cast_transport_config.h"
 #include "media/cast/net/pacing/paced_sender.h"
-#include "media/cast/net/udp_transport_interface.h"
+#include "media/mojo/interfaces/udp_transport.mojom.h"
 #include "net/base/io_buffer.h"
 #include "net/base/ip_endpoint.h"
 #include "net/socket/diff_serv_code_point.h"
@@ -34,7 +34,8 @@ namespace cast {
 class UdpPacketPipeReader;
 
 // This class implements UDP transport mechanism for Cast.
-class UdpTransportImpl final : public PacketTransport, public UdpTransport {
+class UdpTransportImpl final : public PacketTransport,
+                               public mojom::UdpTransport {
  public:
   // Construct a UDP transport.
   // All methods must be called on |io_thread_proxy|.
@@ -62,7 +63,7 @@ class UdpTransportImpl final : public PacketTransport, public UdpTransport {
   void StopReceiving() final;
 
   // UdpTransport implementations.
-  void StartReceiving(UdpTransportReceiver* receiver) final;
+  void StartReceiving(mojom::UdpTransportReceiverPtr receiver) final;
   void StartSending(mojo::ScopedDataPipeConsumerHandle packet_pipe) final;
 
   // Set a new DSCP value to the socket. The value will be set right before
@@ -133,8 +134,8 @@ class UdpTransportImpl final : public PacketTransport, public UdpTransport {
   const CastTransportStatusCallback status_callback_;
   int bytes_sent_;
 
-  // TODO(xjz): Replace this with a mojo ptr.
-  UdpTransportReceiver* mojo_packet_receiver_ = nullptr;
+  // Set by StartReceiving(). Will deliver the received packets to this if set.
+  mojom::UdpTransportReceiverPtr mojo_packet_receiver_;
 
   // Used to read packets from the data pipe. Created when StartSending() is
   // called.

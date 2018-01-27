@@ -1,0 +1,18 @@
+// Copyright 2018 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module media.mojom;
+
+// Receives packets from UdpTransport.
+interface UdpTransportReceiver {
+  OnPacketReceived(array<uint8> packet);
+};
+
+interface UdpTransport {
+  // Reads UDP packets from |packets_pipe| and sends them out to network.
+  StartSending(handle<data_pipe_consumer> packets_pipe);
+  // Start receiving UDP packets and passing them to |receiver|.
+  StartReceiving(UdpTransportReceiver receiver);
+  StopReceiving();
+};

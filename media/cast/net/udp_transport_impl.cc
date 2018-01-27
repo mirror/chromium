@@ -130,10 +130,10 @@ void UdpTransportImpl::StartReceiving(
   ScheduleReceiveNextPacket();
 }
 
-void UdpTransportImpl::StartReceiving(UdpTransportReceiver* receiver) {
+void UdpTransportImpl::StartReceiving(mojom::UdpTransportReceiverPtr receiver) {
   DCHECK(packet_receiver_.is_null());
 
-  mojo_packet_receiver_ = receiver;
+  mojo_packet_receiver_ = std::move(receiver);
   StartReceiving(base::BindRepeating(&UdpTransportImpl::OnPacketReceived,
                                      base::Unretained(this)));
 }

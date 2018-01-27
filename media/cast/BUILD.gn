@@ -78,6 +78,8 @@ source_set("net") {
     "net/cast_transport_defines.h",
     "net/cast_transport_impl.cc",
     "net/cast_transport_impl.h",
+    "net/mojo_udp_transport_client.cc",
+    "net/mojo_udp_transport_client.h",
     "net/pacing/paced_sender.cc",
     "net/pacing/paced_sender.h",
     "net/rtcp/receiver_rtcp_event_subscriber.cc",
@@ -106,14 +108,14 @@ source_set("net") {
     "net/udp_packet_pipe.h",
     "net/udp_transport_impl.cc",
     "net/udp_transport_impl.h",
-    "net/udp_transport_interface.h",
   ]
 
   deps = [
     ":common",
     "//base",
     "//media/mojo/common",
-    "//mojo/public/cpp/system",
+    "//media/mojo/interfaces:mirroring",
+    "//mojo/public/cpp/bindings",
     "//net",
   ]
 
@@ -345,6 +347,7 @@ test("cast_unittests") {
     "//base/test:test_support",
     "//media:test_support",
     "//media/test:run_all_unittests",
+    "//mojo/public/cpp/bindings",
     "//net",
     "//testing/gmock",
     "//testing/gtest",
