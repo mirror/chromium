@@ -789,9 +789,13 @@ void TokenPreloadScanner::ScanCommon(const Token& token,
                                                  "accept-ch")) {
             const typename Token::Attribute* content_attribute =
                 token.GetAttributeItem(contentAttr);
-            if (content_attribute)
+            if (content_attribute &&
+                (!blink::RuntimeEnabledFeatures::
+                     ClientHintsPersistentEnabled() ||
+                 ClientHintsPreferences::IsClientHintsAllowed(document_url_))) {
               client_hints_preferences_.UpdateFromAcceptClientHintsHeader(
                   content_attribute->Value(), nullptr);
+            }
           }
           return;
         }
