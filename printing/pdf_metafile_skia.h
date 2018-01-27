@@ -28,7 +28,10 @@ struct PdfMetafileSkiaData;
 // TODO(thestig): Rename to MetafileSkia.
 class PRINTING_EXPORT PdfMetafileSkia : public Metafile {
  public:
-  explicit PdfMetafileSkia(SkiaDocumentType type);
+  PdfMetafileSkia();
+  PdfMetafileSkia(SkiaDocumentType type,
+                  int document_cookie,
+                  int page_number = -1);
   ~PdfMetafileSkia() override;
 
   // Metafile methods.
@@ -62,6 +65,12 @@ class PRINTING_EXPORT PdfMetafileSkia : public Metafile {
 
   bool SaveTo(base::File* file) const override;
 
+  // Unlike FinishPage() or FinishDocument(), this is for out-of-process
+  // subframe printing. It will just serialize the content into SkPicture
+  // format and store it as final data.
+  bool FinishFrameContent();
+  const ContentToProxyIdMap& GetSubframeContentInfo() const;
+
   // Return a new metafile containing just the current page in draft mode.
   std::unique_ptr<PdfMetafileSkia> GetMetafileForCurrentPage(
       SkiaDocumentType type);
@@ -76,7 +85,20 @@ class PRINTING_EXPORT PdfMetafileSkia : public Metafile {
                                              const gfx::Rect& content_area,
                                              const float& scale_factor);
 
+  // This is used for painting content with out-of-process subframes.
+  // For such subframe, since the content is in another process, we create a
+  // place holder picture for now, and replace it with actual content later.
+  uint32_t CreateContentForRemoteFrame(const gfx::Rect& rect,
+                                       int render_proxy_id);
+
+  int GetDocumentCookie() const;
+  int GetPageNumber() const;
+
  private:
+  // Callback function used during page content drawing to replace the custom
+  // data holder with corresponding SkPicture content.
+  void MskpDrawingCallback(SkCanvas* canvas, uint32_t content_id);
+
   std::unique_ptr<PdfMetafileSkiaData> data_;
 
   DISALLOW_COPY_AND_ASSIGN(PdfMetafileSkia);

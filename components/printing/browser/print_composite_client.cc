@@ -8,9 +8,13 @@
 
 #include "base/bind.h"
 #include "base/memory/shared_memory_handle.h"
+#include "components/printing/common/print_messages.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/render_frame_host.h"
+#include "content/public/browser/render_process_host.h"
 #include "content/public/common/service_manager_connection.h"
 #include "mojo/public/cpp/system/platform_handle.h"
+#include "printing/printing_utils.h"
 #include "services/service_manager/public/cpp/connector.h"
 
 DEFINE_WEB_CONTENTS_USER_DATA_KEY(printing::PrintCompositeClient);
@@ -18,22 +22,71 @@ DEFINE_WEB_CONTENTS_USER_DATA_KEY(printing::PrintCompositeClient);
 namespace printing {
 
 PrintCompositeClient::PrintCompositeClient(content::WebContents* web_contents)
-    : for_preview_(false) {
-  DCHECK(web_contents);
-}
+    : content::WebContentsObserver(web_contents), for_preview_(false) {}
 
 PrintCompositeClient::~PrintCompositeClient() {}
+
+void PrintCompositeClient::OnDidPrintFrameContent(
+    content::RenderFrameHost* render_frame_host,
+    int document_cookie,
+    int page_number,
+    const PrintHostMsg_DidPrintContent_Params& params) {
+  // Content in |params| is sent from untrusted source, only minimal processing
+  // is done here. Most of it will be directly forwarded to pdf compositor
+  // service.
+  auto& compositor = GetCompositeRequest(document_cookie, page_number);
+  DCHECK(compositor.is_bound());
+
+  mojo::ScopedSharedBufferHandle buffer_handle = mojo::WrapSharedMemoryHandle(
+      params.metafile_data_handle, params.data_size,
+      mojo::UnwrappedSharedMemoryHandleProtection::kReadOnly);
+  auto frame_guid = GenFrameGuid(render_frame_host->GetProcess()->GetID(),
+                                 render_frame_host->GetRoutingID());
+  compositor->AddSubframeContent(
+      frame_guid, std::move(buffer_handle),
+      ConvertContentInfoMap(web_contents(), render_frame_host,
+                            params.subframe_content_info));
+}
+
+void PrintCompositeClient::PrintSubframe(const gfx::Rect& rect,
+                                         int document_cookie,
+                                         int page_number,
+                                         content::RenderFrameHost* dst_host) {
+  PrintMsg_PrintFrame_Params params;
+  params.printable_area = gfx::Rect(rect.width(), rect.height());
+  params.document_cookie = document_cookie;
+  params.page_number = page_number;
+  // Send the request to the destination frame.
+  dst_host->Send(
+      new PrintMsg_PrintFrameContent(dst_host->GetRoutingID(), params));
+}
+
+bool PrintCompositeClient::OnMessageReceived(
+    const IPC::Message& message,
+    content::RenderFrameHost* render_frame_host) {
+  bool handled = true;
+  IPC_BEGIN_MESSAGE_MAP_WITH_PARAM(PrintCompositeClient, message,
+                                   render_frame_host)
+    IPC_MESSAGE_HANDLER(PrintHostMsg_DidPrintFrameContent,
+                        OnDidPrintFrameContent)
+    IPC_MESSAGE_UNHANDLED(handled = false)
+  IPC_END_MESSAGE_MAP()
+  return handled;
+}
 
 void PrintCompositeClient::DoCompositePageToPdf(
     int document_cookie,
     uint64_t frame_guid,
     int page_num,
+    bool is_draft,
     base::SharedMemoryHandle handle,
     uint32_t data_size,
     const ContentToFrameMap& subframe_content_map,
     mojom::PdfCompositor::CompositePageToPdfCallback callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  auto& compositor = GetCompositeRequest(document_cookie, page_num);
+  // In draft mode, reuse the actual document's instance since they share
+  // contents.
+  auto& compositor = GetCompositeRequest(document_cookie, page_num, is_draft);
 
   DCHECK(data_size);
   mojo::ScopedSharedBufferHandle buffer_handle = mojo::WrapSharedMemoryHandle(
@@ -46,7 +99,7 @@ void PrintCompositeClient::DoCompositePageToPdf(
       frame_guid, page_num, std::move(buffer_handle), subframe_content_map,
       base::BindOnce(&PrintCompositeClient::OnDidCompositePageToPdf,
                      base::Unretained(this), page_num, document_cookie,
-                     std::move(callback)));
+                     is_draft, std::move(callback)));
 }
 
 void PrintCompositeClient::DoCompositeDocumentToPdf(
@@ -76,10 +129,12 @@ void PrintCompositeClient::DoCompositeDocumentToPdf(
 void PrintCompositeClient::OnDidCompositePageToPdf(
     int page_num,
     int document_cookie,
+    bool is_draft,
     printing::mojom::PdfCompositor::CompositePageToPdfCallback callback,
     printing::mojom::PdfCompositor::Status status,
     mojo::ScopedSharedBufferHandle handle) {
-  RemoveCompositeRequest(document_cookie, page_num);
+  if (!is_draft)
+    RemoveCompositeRequest(document_cookie, page_num);
   std::move(callback).Run(status, std::move(handle));
 }
 
@@ -92,11 +147,43 @@ void PrintCompositeClient::OnDidCompositeDocumentToPdf(
   std::move(callback).Run(status, std::move(handle));
 }
 
+ContentToFrameMap PrintCompositeClient::ConvertContentInfoMap(
+    content::WebContents* web_contents,
+    content::RenderFrameHost* render_frame_host,
+    const ContentToProxyIdMap& content_proxy_map) {
+  ContentToFrameMap content_frame_map;
+  int process_id = render_frame_host->GetProcess()->GetID();
+  for (auto& entry : content_proxy_map) {
+    auto content_id = entry.first;
+    auto proxy_id = entry.second;
+    // Find the render frame host which the render proxy id corresponds to.
+    content::RenderFrameHost* rfh =
+        web_contents->UnsafeFindFrameByFrameTreeNodeId(
+            content::RenderFrameHost::GetFrameTreeNodeIdForRoutingId(process_id,
+                                                                     proxy_id));
+    if (!rfh) {
+      // This should not happen. Since |ConvertContentInfoMap| comes from
+      // untrusted source, we skip here to avoid crashing.
+      NOTREACHED();
+      continue;
+    }
+
+    // Store this frame's global unique id into the map.
+    content_frame_map[content_id] =
+        GenFrameGuid(rfh->GetProcess()->GetID(), rfh->GetRoutingID());
+  }
+  return content_frame_map;
+}
+
 mojom::PdfCompositorPtr& PrintCompositeClient::GetCompositeRequest(
     int cookie,
-    base::Optional<int> page_num) {
-  int page_no =
-      page_num == base::nullopt ? kPageNumForWholeDoc : page_num.value();
+    base::Optional<int> page_num,
+    bool for_draft) {
+  // When page_num is not provided, it is for the whole document.
+  // Also, in draft mode, reuse the document's instance since they share
+  // contents.
+  int page_no = page_num == base::nullopt || for_draft ? kPageNumForWholeDoc
+                                                       : page_num.value();
   std::pair<int, int> key = std::make_pair(cookie, page_no);
   auto iter = compositor_map_.find(key);
   if (iter != compositor_map_.end())

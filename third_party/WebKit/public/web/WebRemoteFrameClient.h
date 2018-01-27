@@ -10,6 +10,8 @@
 #include "public/web/WebDOMMessageEvent.h"
 #include "public/web/WebFrame.h"
 
+class SkMetaData;
+
 namespace blink {
 enum class ClientRedirectPolicy;
 enum class WebFrameLoadType;
@@ -65,6 +67,13 @@ class WebRemoteFrameClient {
   // It is derived from the content's devtools_frame_token, is
   // defined by the browser and passed into Blink upon frame creation.
   virtual WebString GetDevToolsFrameToken() { return WebString(); }
+
+  // Print out this frame.
+  // |rect| is the rectangular area this frame resides on its parent frame.
+  // |metadata| is skia canvas metadata associated with this print request.
+  virtual uint32_t Print(const WebRect& rect, SkMetaData* metadata) {
+    return 0;
+  }
 
  protected:
   virtual ~WebRemoteFrameClient() = default;

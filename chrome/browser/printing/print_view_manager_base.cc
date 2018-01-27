@@ -49,6 +49,7 @@
 #include "printing/pdf_metafile_skia.h"
 #include "printing/print_settings.h"
 #include "printing/printed_document.h"
+#include "printing/printing_utils.h"
 #include "ui/base/l10n/l10n_util.h"
 
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW)
@@ -193,7 +194,7 @@ void PrintViewManagerBase::PrintDocument(
   }
 #else
   std::unique_ptr<PdfMetafileSkia> metafile =
-      std::make_unique<PdfMetafileSkia>(SkiaDocumentType::PDF);
+      std::make_unique<PdfMetafileSkia>();
   CHECK(metafile->InitFromData(print_data->front(), print_data->size()));
 
   // Update the rendered document. It will send notifications to the listener.
@@ -354,7 +355,9 @@ void PrintViewManagerBase::OnDidPrintDocument(
         params.document_cookie,
         GenFrameGuid(render_frame_host->GetProcess()->GetID(),
                      render_frame_host->GetRoutingID()),
-        content.metafile_data_handle, content.data_size, ContentToFrameMap(),
+        content.metafile_data_handle, content.data_size,
+        PrintCompositeClient::ConvertContentInfoMap(
+            web_contents(), render_frame_host, content.subframe_content_info),
         base::BindOnce(&PrintViewManagerBase::OnComposePdfDone,
                        weak_ptr_factory_.GetWeakPtr(), params));
     return;
