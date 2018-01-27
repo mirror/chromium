@@ -261,6 +261,24 @@
     },
     {
       "key": {
+        "uuid": "9b529f39_2d346870",
+        "filename": "ash/frame/default_frame_header.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-27T01:09:15Z",
+      "side": 1,
+      "message": "The idea is that in the maximized case, the back button\u0027s hit target is actually expanded beyond its normal visible area, all the way to the left edge of the window.  This way single-monitor users have a back button that\u0027s effectively \"infinite width\" to the left in terms of clicking on it.\n\nSo what we want is likely to affect the visual padding of the button/icon, but not the real button edge/click target.  This would argue for putting the padding inside the button instead of using it to offset the button.",
+      "parentUuid": "79dd0995_e181d13b",
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32ae7f99_967c3006",
         "filename": "chrome/browser/ui/views/frame/browser_frame_header_ash.cc",
         "patchSetId": 1
@@ -325,6 +343,24 @@
       "side": 1,
       "message": "This is coming from the specs here: https://gallery.googleplex.com/projects/MCHbtQVoQ2HCZZsKUFLaS3Ii/files/MCGnZePQNEdEshUCveL64FYEwMSJbxAVNpw\n\nI don\u0027t think it\u0027s that we chop 3px off the top, it\u0027s just that when the browser is maximized, the top of the frame should touch the top of the tab.",
       "parentUuid": "31a04afb_f6e5488a",
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02f5887a_b39186a6",
+        "filename": "chrome/browser/ui/views/frame/browser_frame_header_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-27T01:09:15Z",
+      "side": 1,
+      "message": "AFAICT from reading the spec, it is overspecifying what it really wants: center the caption buttons vertically within the space above the toolbar, placing any extra pixel above the buttons rather than below.\n\nIf you write this algorithm, then you don\u0027t need spacing constants for the above/below caption button regions at all :).  As a bonus, it will automatically work correctly in the future if we change the sizes of the caption buttons or the space above the toolbar.",
+      "parentUuid": "e80afddb_af9ff3c8",
       "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -708,6 +744,30 @@
       "side": 1,
       "message": "For now we will limit this new design to Chrome OS, but I expect in the future this will be pushed to other platforms as well. I assume by \"switch\" you mean ifdef chromeos? If so, I didn\u0027t want to get into a situation where we\u0027d need ifdefs whenever we call this. For now I made it return false for all other platforms.",
       "parentUuid": "c4cb6f0c_9932234c",
+      "range": {
+        "startLine": 43,
+        "startChar": 14,
+        "endLine": 43,
+        "endChar": 41
+      },
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8f33c107_5a199a5b",
+        "filename": "ui/base/material_design/material_design_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-27T01:09:15Z",
+      "side": 1,
+      "message": "By \"switch\" I actually meant any conditionalizing at all.  My question was whether we could just piecemeal ship-by-default the various parts of this spec without having to gate it under some kind of oracle function that might return false in some cases.  That works if the pieces you check in make sense individually and are improvements to the overall state of the world, not so much if you check in something that will feel terrible until some other piece lands.\n\nThe less code is switch-gated, the more we can refactor immediately to remove old/dead codepaths, and the more we gain test coverage/developer usage of the new code.  But it might not be possible.",
+      "parentUuid": "069f9606_e02ab139",
       "range": {
         "startLine": 43,
         "startChar": 14,
