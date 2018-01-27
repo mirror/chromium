@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f5c6187_16abfcd5",
+        "filename": "net/quic/platform/impl/quic_url_utils_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-27T18:09:06Z",
+      "side": 1,
+      "message": "I think this is the cause of the MSAN failure",
+      "revId": "734de9630d8fd39ed515f95f692ad1671097d6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
