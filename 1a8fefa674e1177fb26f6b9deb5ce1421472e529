@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c425d4b9_8310c723",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/jpeg/JPEGImageDecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-27T06:40:21Z",
+      "side": 1,
+      "message": "Is there an #include that defines this macro?  Because neither file is #including it right now.",
+      "revId": "1a8fefa674e1177fb26f6b9deb5ce1421472e529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
