@@ -19,7 +19,7 @@ interface LockRequest {
   // Request failed; e.g. request was only "if available" and it was not.
   Failed();
 
-  // TODO(jsbell): Abort() is not yet used.
+  // Requested was aborted, e.g. by a later request with "steal" specified.
   Abort(string reason);
 };
 
@@ -61,6 +61,7 @@ interface LockManager {
   RequestLock(string name,
               LockMode mode,
               WaitMode wait,
+              bool steal,
               LockRequest request);
 
   // Produces a snapshot of the lock manager's state. Web applications
