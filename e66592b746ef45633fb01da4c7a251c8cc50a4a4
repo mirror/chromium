@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c095ef46_728cb24d",
+        "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-27T02:01:38Z",
+      "side": 1,
+      "message": "no need to use weak ptrs with mojo binding callbacks. invocation is already bounded by the lifetime of the thing to which they\u0027re attached.",
+      "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdbd9bce_3eeeb8e3",
+        "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-27T02:01:38Z",
+      "side": 1,
+      "message": "nit: OnClientError?",
+      "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6130b73_d9d75385",
+        "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-27T02:01:38Z",
+      "side": 1,
+      "message": "nit: OnBindingError?",
+      "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "310b35b8_d45f7fd1",
+        "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-27T02:01:38Z",
+      "side": 1,
+      "message": "nit: here and elsewhere, please |bar-quote| symbol names in comments",
+      "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5709a3c8_5df1bbd1",
+        "filename": "extensions/browser/extension_protocols.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-27T02:01:38Z",
+      "side": 1,
+      "message": "nit: Prefer to assign TODOs to bugs instead of people, i.e. TODO(https://crbug.com/806971): ...",
+      "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccc6d3e7_e313ec9e",
+        "filename": "extensions/browser/extension_protocols.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-27T02:01:38Z",
+      "side": 1,
+      "message": "still unsafe - you can\u0027t pass \u0026enabled_extensions or the result of ProcessMap::Get to the IO thread, as they are both still UI thread objects. this will be racy and crashy\n\nI see AllowExtensionResourceLoad claims it\u0027s safe to call on the IO thread, which it\u0027s definitely NOT (because it takes a ProcessMap, which only ever live on the UI thread), and so there is probably already some totally wrong and unsafe code reading the ProcessMap from the IO thread. probably code I added. wheeee...\n\nMan, extensions code is a mess. I wonder if we can solve this without making things worse.\n\nDoes the AllowExtensionResourceLoad call really need to be on IO? If it can\u0027t get the info it needs from outside of the InfoMap, I assume it\u0027s because (based on my vague recollection of what you said before) there are tests which directly mangle InfoMap instances. Maybe we should fix the tests then. All this information is mirrored from the UI thread, and in fact it\u0027s probably all kinds of racy because of that. The more we can do on UI the better.",
+      "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
