@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0299c4b4_d5758506",
+        "filename": "chrome/browser/resources/print_preview/new/destination_dialog.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-27T01:15:01Z",
+      "side": 1,
+      "message": "It is needed to show the \"Manage\" link. The recent destinations list doesn\u0027t have this so it defaults to false.",
+      "parentUuid": "5d53eca6_a6f8aa34",
+      "range": {
+        "startLine": 76,
+        "startChar": 27,
+        "endLine": 76,
+        "endChar": 32
+      },
+      "revId": "7cb3e513db1c4f74e90bfd2da019183051fdab62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bd9c32c_6178ddd7",
         "filename": "chrome/browser/resources/print_preview/new/destination_dialog.js",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "7cb3e513db1c4f74e90bfd2da019183051fdab62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee15a1ae_8c533f39",
+        "filename": "chrome/browser/resources/print_preview/new/destination_dialog.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-27T01:15:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bd9c32c_6178ddd7",
+      "range": {
+        "startLine": 87,
+        "startChar": 6,
+        "endLine": 88,
+        "endChar": 68
+      },
+      "revId": "7cb3e513db1c4f74e90bfd2da019183051fdab62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "471b285b_2cddbe9c",
+        "filename": "chrome/browser/resources/print_preview/new/destination_dialog.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-27T01:15:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6fd7518_33aad408",
+      "range": {
+        "startLine": 110,
+        "startChar": 4,
+        "endLine": 110,
+        "endChar": 26
+      },
+      "revId": "7cb3e513db1c4f74e90bfd2da019183051fdab62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df8c3aee_e528733c",
         "filename": "chrome/browser/resources/print_preview/new/destination_dialog.js",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "7cb3e513db1c4f74e90bfd2da019183051fdab62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f497fdc2_7b5c6c40",
+        "filename": "chrome/browser/resources/print_preview/new/destination_dialog.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-27T01:15:01Z",
+      "side": 1,
+      "message": "Changed to use close_, but kept onCancel_ which is called when dialog.cancel() is called, so that it does not end up in a loop of dialog.cancel() -\u003e onCancel_ -\u003e dialog.cancel() etc (noticed there was a console error due to this).",
+      "parentUuid": "df8c3aee_e528733c",
+      "range": {
+        "startLine": 123,
+        "startChar": 4,
+        "endLine": 123,
+        "endChar": 21
+      },
+      "revId": "7cb3e513db1c4f74e90bfd2da019183051fdab62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f2fdca46_940132ed",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-27T01:15:01Z",
+      "side": 1,
+      "message": "Removed - I don\u0027t think we have strings for these to use instead though, and there have been reports that the icons aren\u0027t really all that useful/clear anyway.",
+      "parentUuid": "924264b5_3daa9d0d",
+      "range": {
+        "startLine": 199,
+        "startChar": 50,
+        "endLine": 199,
+        "endChar": 56
+      },
+      "revId": "7cb3e513db1c4f74e90bfd2da019183051fdab62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7dd6a49a_7c6d2b73",
         "filename": "chrome/browser/resources/print_preview/new/destination_list.html",
         "patchSetId": 7
@@ -137,6 +257,30 @@
       "revId": "7cb3e513db1c4f74e90bfd2da019183051fdab62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f3990ba_8fb6c431",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-27T01:15:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dd6a49a_7c6d2b73",
+      "range": {
+        "startLine": 242,
+        "startChar": 28,
+        "endLine": 242,
+        "endChar": 47
+      },
+      "revId": "7cb3e513db1c4f74e90bfd2da019183051fdab62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "dbb0984d_920db93e",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-27T01:15:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cb1384a_9619acc6",
+      "range": {
+        "startLine": 69,
+        "startChar": 13,
+        "endLine": 69,
+        "endChar": 30
+      },
+      "revId": "7cb3e513db1c4f74e90bfd2da019183051fdab62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5313b8e6_f953c29e",
         "filename": "chrome/browser/resources/print_preview/new/destination_list.js",
         "patchSetId": 7
@@ -183,6 +351,30 @@
       "revId": "7cb3e513db1c4f74e90bfd2da019183051fdab62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fa694e9_02f8418c",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-27T01:15:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5313b8e6_f953c29e",
+      "range": {
+        "startLine": 70,
+        "startChar": 7,
+        "endLine": 70,
+        "endChar": 11
+      },
+      "revId": "7cb3e513db1c4f74e90bfd2da019183051fdab62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "e8fcd31f_fa7fb989",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-27T01:15:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5fdde1e_c56d9f4c",
+      "range": {
+        "startLine": 104,
+        "startChar": 46,
+        "endLine": 104,
+        "endChar": 48
+      },
+      "revId": "7cb3e513db1c4f74e90bfd2da019183051fdab62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa65c9f6_a926f4c0",
         "filename": "chrome/browser/resources/print_preview/new/model.js",
         "patchSetId": 7
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "2015966f_ed90bd5b",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-27T01:15:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa65c9f6_a926f4c0",
+      "range": {
+        "startLine": 374,
+        "startChar": 4,
+        "endLine": 375,
+        "endChar": 44
+      },
+      "revId": "7cb3e513db1c4f74e90bfd2da019183051fdab62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e543c3c_ef56e654",
         "filename": "chrome/browser/resources/print_preview/new/print_preview_search_box.js",
         "patchSetId": 7
@@ -252,6 +492,30 @@
       "revId": "7cb3e513db1c4f74e90bfd2da019183051fdab62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0c1d17c_0c957c58",
+        "filename": "chrome/browser/resources/print_preview/new/print_preview_search_box.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-27T01:15:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e543c3c_ef56e654",
+      "range": {
+        "startLine": 32,
+        "startChar": 32,
+        "endLine": 32,
+        "endChar": 58
+      },
+      "revId": "7cb3e513db1c4f74e90bfd2da019183051fdab62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
