@@ -554,8 +554,6 @@ void DelegatedFrameHost::OnBeginFramePausedChanged(bool paused) {
 void DelegatedFrameHost::OnFirstSurfaceActivation(
     const viz::SurfaceInfo& surface_info) {
   // This is used by macOS' unique resize path.
-  client_->OnFirstSurfaceActivation(surface_info);
-
   gfx::Size frame_size_in_dip = gfx::ConvertSizeToDIP(
       surface_info.device_scale_factor(), surface_info.size_in_pixels());
 
@@ -602,6 +600,7 @@ void DelegatedFrameHost::OnFirstSurfaceActivation(
         surface_info.id(), frame_size_in_dip, GetGutterColor());
   }
 
+  client_->OnFirstSurfaceActivation(surface_info);
   client_->DelegatedFrameHostGetLayer()->SetFallbackSurfaceId(
       surface_info.id());
   local_surface_id_ = surface_info.id().local_surface_id();
