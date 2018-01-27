@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "1aa8a067_dda39257",
+        "filename": "chrome_server/BUILD.gn",
+        "patchSetId": 29
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-27T01:19:11Z",
+      "side": 1,
+      "message": "I will leave it as a top-level directory as sky@ thinks it\u0027s okay to do so.",
+      "parentUuid": "c822dfd8_f6fded0d",
+      "range": {
+        "startLine": 8,
+        "startChar": 12,
+        "endLine": 8,
+        "endChar": 25
+      },
+      "revId": "9cebba2fb44669b6b84adf7602a0b2aa025d5f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77237dba_b8c78c3c",
         "filename": "chrome_server/BUILD.gn",
         "patchSetId": 29
