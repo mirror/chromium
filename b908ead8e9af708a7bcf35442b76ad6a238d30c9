@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff280966_6cc0c531",
+        "filename": "net/quic/core/spdy_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2018-01-27T00:12:02Z",
+      "side": 1,
+      "message": "It\u0027s not clear to me from the description of this method that it checks :method, as it only refers to the URL related fields. Checking the method seems fine, though it seems like we should mention this in the description.",
+      "range": {
+        "startLine": 153,
+        "startChar": 3,
+        "endLine": 153,
+        "endChar": 0
+      },
+      "revId": "b908ead8e9af708a7bcf35442b76ad6a238d30c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ebd669d_c33b4bc8",
+        "filename": "net/quic/platform/api/quic_url_utils.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2018-01-27T00:12:02Z",
+      "side": 1,
+      "message": "I realize that we basically have tests of this in the SpdyUtilsTest, but we should test this method directly.",
+      "range": {
+        "startLine": 30,
+        "startChar": 61,
+        "endLine": 30,
+        "endChar": 0
+      },
+      "revId": "b908ead8e9af708a7bcf35442b76ad6a238d30c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
