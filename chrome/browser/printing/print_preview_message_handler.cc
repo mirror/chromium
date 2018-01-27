@@ -149,7 +149,8 @@ void PrintPreviewMessageHandler::OnDidPreviewPage(
         params.document_cookie,
         GenFrameGuid(render_frame_host->GetProcess()->GetID(),
                      render_frame_host->GetRoutingID()),
-        params.page_number, content.metafile_data_handle, content.data_size,
+        params.page_number, params.is_draft, content.metafile_data_handle,
+        content.data_size,
         PrintCompositeClient::ConvertContentInfoMap(
             web_contents(), render_frame_host, content.subframe_content_info),
         base::BindOnce(&PrintPreviewMessageHandler::OnCompositePdfPageDone,

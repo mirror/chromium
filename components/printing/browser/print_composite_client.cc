@@ -22,9 +22,7 @@ DEFINE_WEB_CONTENTS_USER_DATA_KEY(printing::PrintCompositeClient);
 namespace printing {
 
 PrintCompositeClient::PrintCompositeClient(content::WebContents* web_contents)
-    : for_preview_(false) {
-  DCHECK(web_contents);
-}
+    : content::WebContentsObserver(web_contents), for_preview_(false) {}
 
 PrintCompositeClient::~PrintCompositeClient() {}
 
@@ -55,7 +53,7 @@ void PrintCompositeClient::PrintSubframe(const gfx::Rect& rect,
                                          int page_number,
                                          content::RenderFrameHost* dst_host) {
   PrintMsg_PrintFrame_Params params;
-  params.printable_area = rect;
+  params.printable_area = gfx::Rect(rect.width(), rect.height());
   params.document_cookie = document_cookie;
   params.page_number = page_number;
   // Send the request to the destination frame.
@@ -80,12 +78,15 @@ void PrintCompositeClient::DoCompositePageToPdf(
     int document_cookie,
     uint64_t frame_guid,
     int page_num,
+    bool is_draft,
     base::SharedMemoryHandle handle,
     uint32_t data_size,
     const ContentToFrameMap& subframe_content_map,
     mojom::PdfCompositor::CompositePageToPdfCallback callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  auto& compositor = GetCompositeRequest(document_cookie, page_num);
+  // In draft mode, reuse the actual document's instance since they share
+  // contents.
+  auto& compositor = GetCompositeRequest(document_cookie, page_num, is_draft);
 
   DCHECK(data_size);
   mojo::ScopedSharedBufferHandle buffer_handle = mojo::WrapSharedMemoryHandle(
@@ -98,7 +99,7 @@ void PrintCompositeClient::DoCompositePageToPdf(
       frame_guid, page_num, std::move(buffer_handle), subframe_content_map,
       base::BindOnce(&PrintCompositeClient::OnDidCompositePageToPdf,
                      base::Unretained(this), page_num, document_cookie,
-                     std::move(callback)));
+                     is_draft, std::move(callback)));
 }
 
 void PrintCompositeClient::DoCompositeDocumentToPdf(
@@ -128,10 +129,12 @@ void PrintCompositeClient::DoCompositeDocumentToPdf(
 void PrintCompositeClient::OnDidCompositePageToPdf(
     int page_num,
     int document_cookie,
+    bool is_draft,
     printing::mojom::PdfCompositor::CompositePageToPdfCallback callback,
     printing::mojom::PdfCompositor::Status status,
     mojo::ScopedSharedBufferHandle handle) {
-  RemoveCompositeRequest(document_cookie, page_num);
+  if (!is_draft)
+    RemoveCompositeRequest(document_cookie, page_num);
   std::move(callback).Run(status, std::move(handle));
 }
 
@@ -174,9 +177,13 @@ ContentToFrameMap PrintCompositeClient::ConvertContentInfoMap(
 
 mojom::PdfCompositorPtr& PrintCompositeClient::GetCompositeRequest(
     int cookie,
-    base::Optional<int> page_num) {
-  int page_no =
-      page_num == base::nullopt ? kPageNumForWholeDoc : page_num.value();
+    base::Optional<int> page_num,
+    bool for_draft) {
+  // When page_num is not provided, it is for the whole document.
+  // Also, in draft mode, reuse the document's instance since they share
+  // contents.
+  int page_no = page_num == base::nullopt || for_draft ? kPageNumForWholeDoc
+                                                       : page_num.value();
   std::pair<int, int> key = std::make_pair(cookie, page_no);
   auto iter = compositor_map_.find(key);
   if (iter != compositor_map_.end())

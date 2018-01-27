@@ -31,8 +31,9 @@ bool PrintRenderFrameHelper::RenderPreviewPage(
       print_preview_context_.IsModifiable() && is_print_ready_metafile_sent_;
 
   if (render_to_draft) {
-    draft_metafile =
-        std::make_unique<PdfMetafileSkia>(print_params.printed_doc_type);
+    draft_metafile = std::make_unique<PdfMetafileSkia>(
+        print_params.printed_doc_type, print_params.document_cookie,
+        page_number);
     CHECK(draft_metafile->Init());
     initial_render_metafile = draft_metafile.get();
   }
@@ -53,7 +54,7 @@ bool PrintRenderFrameHelper::RenderPreviewPage(
       DCHECK(!draft_metafile.get());
       draft_metafile =
           print_preview_context_.metafile()->GetMetafileForCurrentPage(
-              print_params.printed_doc_type);
+              print_params.printed_doc_type, page_number);
     }
   }
   return PreviewPageRendered(page_number, draft_metafile.get());
