@@ -46,6 +46,30 @@
       "revId": "0b4477f0b0eda8cc6220ce1428578fd7179e5b83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d999c7d_2f6bc41b",
+        "filename": "chrome/browser/resources/media_router/extension/typecheck.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1239285
+      },
+      "writtenOn": "2018-01-27T01:16:16Z",
+      "side": 1,
+      "message": "I changed it to use a flag the same way Chromoting does.",
+      "parentUuid": "1ddc1e67_4426c1bc",
+      "range": {
+        "startLine": 26,
+        "startChar": 5,
+        "endLine": 26,
+        "endChar": 45
+      },
+      "revId": "0b4477f0b0eda8cc6220ce1428578fd7179e5b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

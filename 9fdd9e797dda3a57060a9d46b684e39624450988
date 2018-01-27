@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "f69f4b59_4e9f6215",
+        "filename": "chrome/browser/resources/media_router/extension/assemble_extension.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1239285
+      },
+      "writtenOn": "2018-01-27T01:16:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "aaa1b06c_276ef58e",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "9fdd9e797dda3a57060a9d46b684e39624450988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d647346a_2bc3e2fe",
         "filename": "chrome/browser/resources/media_router/extension/manifest.yaml",
         "patchSetId": 11

@@ -22,6 +22,30 @@
       "revId": "fa883f2ffb4d1a08bde1895a167c9de31197585f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5edb00b8_be2a4714",
+        "filename": "DEPS",
+        "patchSetId": 13
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1239285
+      },
+      "writtenOn": "2018-01-27T01:16:16Z",
+      "side": 1,
+      "message": "Yes, depending on what you mean by \"used\".  It\u0027s all platform-agnostic.\n\nThis CL doesn\u0027t add anything that would end up in a release; it\u0027s not complete enough to be useful for anything but waterfall tests.  We\u0027re working on open-sourcing more code, so Chromium could eventually support most of the Cast-related use cases Chrome supports now, but we don\u0027t yet have a timeline for when that might happen.",
+      "parentUuid": "3b7e86b4_c2a3c92d",
+      "range": {
+        "startLine": 168,
+        "startChar": 2,
+        "endLine": 169,
+        "endChar": 97
+      },
+      "revId": "fa883f2ffb4d1a08bde1895a167c9de31197585f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
