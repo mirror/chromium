@@ -7,6 +7,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_view.h"
 #import "ios/chrome/browser/ui/toolbar/toolbar_owner.h"
 
 class ReadingListModel;
@@ -14,7 +15,8 @@ class ReadingListModel;
 // Header view for the Material Design NTP. The header view contains all views
 // that are displayed above the list of most visited sites, which includes the
 // toolbar buttons, Google doodle, and fake omnibox.
-@interface NewTabPageHeaderView : UIView<ToolbarOwner>
+@interface NewTabPageHeaderView
+    : UIView<ToolbarOwner, ContentSuggestionsHeaderViewAdapter>
 
 // Return the toolbar view;
 @property(nonatomic, readonly) UIView* toolBarView;
