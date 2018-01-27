@@ -42,6 +42,18 @@ SourceFrame.SourceFrame = class extends UI.SimpleView {
 
     this._lazyContent = lazyContent;
 
+    this._pretty = false;
+    this._rawContent = '';
+    this._formattedContent = null;
+    this._formattedMap = null;
+    this._prettyToggle = new UI.ToolbarToggle(ls`Pretty print`, 'largeicon-pretty-print');
+    this._prettyToggle.addEventListener(UI.ToolbarButton.Events.Click, () => {
+      this._setPretty(!this._prettyToggle.toggled());
+    });
+    this._canPrettyPrint = false;
+    this._shouldAutoPrettyPrint = false;
+    this._prettyToggle.setVisible(false);
+
     this._textEditor = new SourceFrame.SourcesTextEditor(this);
     this._textEditor.show(this.element);
 
@@ -81,6 +93,64 @@ SourceFrame.SourceFrame = class extends UI.SimpleView {
   }
 
   /**
+   * @param {boolean} canPrettyPrint
+   * @param {boolean=} autoPrettyPrint
+   */
+  setCanPrettyPrint(canPrettyPrint, autoPrettyPrint) {
+    this._canPrettyPrint = canPrettyPrint;
+    this._shouldAutoPrettyPrint = !!autoPrettyPrint;
+    this._prettyToggle.setVisible(this._canPrettyPrint);
+  }
+
+  /**
+   * @param {boolean} value
+   * @param {string=} content
+   */
+  async _setPretty(value, content) {
+    this._pretty = value;
+    this._prettyToggle.setToggled(value);
+    this._prettyToggle.setEnabled(false);
+
+    var selection = this.selection();
+    if (this._pretty && this._rawContent) {
+      this.setContent(await this._requestFormattedContent(this._rawContent));
+      this.setSelection(this._convertRange(selection, false));
+      this._textEditor.setLineNumberFormatter(lineNumber => {
+        if (!this._formattedMap)
+          return '';
+        var line = this._formattedMap.formattedToOriginal(lineNumber - 1, 0)[0] + 1;
+        if (lineNumber === 1)
+          return line;
+        if (line !== this._formattedMap.formattedToOriginal(lineNumber - 2, 0)[0] + 1)
+          return line;
+        return '-';
+      });
+    } else {
+      this._textEditor.setLineNumberFormatter(lineNumber => {
+        return lineNumber.toString();
+      });
+      this.setContent(this._rawContent);
+      this.setSelection(this._convertRange(selection, true));
+    }
+    this._prettyToggle.setEnabled(true);
+  }
+
+  /**
+   * @param {!TextUtils.TextRange} range
+   * @param {boolean} fromPretty
+   * @return {!TextUtils.TextRange}
+   */
+  _convertRange(range, fromPretty) {
+    if (!this._formattedMap)
+      return range.clone();
+    var convert = fromPretty ? this._formattedMap.formattedToOriginal.bind(this._formattedMap) :
+                               this._formattedMap.originalToFormatted.bind(this._formattedMap);
+    var start = convert(range.startLine, range.startColumn);
+    var end = convert(range.endLine, range.endColumn);
+    return new TextUtils.TextRange(start[0], start[1], end[0], end[1]);
+  }
+
+  /**
    * @param {boolean} editable
    * @protected
    */
@@ -112,7 +182,7 @@ SourceFrame.SourceFrame = class extends UI.SimpleView {
    * @return {!Array<!UI.ToolbarItem>}
    */
   syncToolbarItems() {
-    return [this._sourcePosition];
+    return [this._prettyToggle, this._sourcePosition];
   }
 
   get loaded() {
@@ -123,11 +193,39 @@ SourceFrame.SourceFrame = class extends UI.SimpleView {
     return this._textEditor;
   }
 
-  _ensureContentLoaded() {
+  async _ensureContentLoaded() {
     if (!this._contentRequested) {
       this._contentRequested = true;
-      this._lazyContent().then(this.setContent.bind(this));
+      this._setRawContent(await this._lazyContent());
+      if (this._canPrettyPrint && this._shouldAutoPrettyPrint && TextUtils.isMinified(this._rawContent))
+        this._setPretty(true);
+      else
+        this.setContent(this._rawContent);
     }
+  }
+
+  /**
+   * @param {?string} content
+   */
+  _setRawContent(content) {
+    this._rawContent = content || '';
+    this._formattedContent = null;
+    this._formattedMap = null;
+  }
+
+  /**
+   * @return {!Promise<string>}
+   */
+  _requestFormattedContent(content) {
+    if (this._formattedContent)
+      return this._formattedContent;
+    var fulfill;
+    this._formattedContent = new Promise(x => fulfill = x);
+    new Formatter.ScriptFormatter(this._highlighterType, content, (data, map) => {
+      this._formattedMap = map;
+      fulfill(data);
+    });
+    return this._formattedContent;
   }
 
   /**
@@ -538,8 +636,11 @@ SourceFrame.SourceFrame = class extends UI.SimpleView {
     }
     var textRange = selections[0];
     if (textRange.isEmpty()) {
-      this._sourcePosition.setText(
-          Common.UIString('Line %d, Column %d', textRange.endLine + 1, textRange.endColumn + 1));
+      var line = textRange.endLine;
+      var column = textRange.endColumn;
+      if (this._formattedMap && this._pretty)
+        [line, column] = this._formattedMap.formattedToOriginal(line, column);
+      this._sourcePosition.setText(Common.UIString('Line %d, Column %d', line + 1, column + 1));
       return;
     }
     textRange = textRange.normalize();

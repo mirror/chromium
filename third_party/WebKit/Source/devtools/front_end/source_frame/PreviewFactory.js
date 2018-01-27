@@ -35,7 +35,8 @@ SourceFrame.PreviewFactory = class {
 
     if (resourceType.isTextType()) {
       var highlighterType = mimeType.replace(/;.*/, '');  // remove charset
-      return SourceFrame.ResourceSourceFrame.createSearchableView(provider, highlighterType);
+      return SourceFrame.ResourceSourceFrame.createSearchableView(
+          provider, highlighterType, /* autoPrettyPrint */ true);
     }
 
     return null;
