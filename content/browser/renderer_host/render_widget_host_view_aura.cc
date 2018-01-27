@@ -1595,7 +1595,7 @@ void RenderWidgetHostViewAura::OnDeviceScaleFactorChanged(
 
   host_->WasResized();
   if (delegated_frame_host_)
-    delegated_frame_host_->WasResized();
+    delegated_frame_host_->WasResized(base::nullopt);
   if (host_->auto_resize_enabled()) {
     host_->DidAllocateLocalSurfaceIdForAutoResize(
         host_->last_auto_resize_request_number());
@@ -2046,10 +2046,11 @@ void RenderWidgetHostViewAura::UpdateCursorIfOverSelf() {
   }
 }
 
-void RenderWidgetHostViewAura::WasResized() {
+void RenderWidgetHostViewAura::WasResized(
+    base::Optional<uint32_t> deadline_in_frames) {
   window_->AllocateLocalSurfaceId();
   if (delegated_frame_host_)
-    delegated_frame_host_->WasResized();
+    delegated_frame_host_->WasResized(deadline_in_frames);
   if (host_->auto_resize_enabled()) {
     host_->DidAllocateLocalSurfaceIdForAutoResize(
         host_->last_auto_resize_request_number());
@@ -2192,7 +2193,7 @@ void RenderWidgetHostViewAura::InternalSetBounds(const gfx::Rect& rect) {
     window_->SetBounds(rect);
   host_->WasResized();
   if (delegated_frame_host_)
-    delegated_frame_host_->WasResized();
+    delegated_frame_host_->WasResized(base::nullopt);
   if (host_->auto_resize_enabled()) {
     host_->DidAllocateLocalSurfaceIdForAutoResize(
         host_->last_auto_resize_request_number());
@@ -2486,16 +2487,19 @@ void RenderWidgetHostViewAura::ScrollFocusedEditableNodeIntoRect(
 }
 
 void RenderWidgetHostViewAura::OnSynchronizedDisplayPropertiesChanged() {
-  WasResized();
+  WasResized(base::nullopt);
 }
 
 void RenderWidgetHostViewAura::ResizeDueToAutoResize(const gfx::Size& new_size,
                                                      uint64_t sequence_number) {
-  WasResized();
+  WasResized(base::nullopt);
 }
 
 void RenderWidgetHostViewAura::DidNavigate() {
-  WasResized();
+  // TODO(fsamuel): This is a bit of a magic number. We should either do a user
+  // study or make this configurable.
+  constexpr uint32_t deadline_to_synchronize_navigation = 2u;
+  WasResized(deadline_to_synchronize_navigation);
   if (delegated_frame_host_)
     delegated_frame_host_->DidNavigate();
 }

@@ -41,6 +41,10 @@ class CC_EXPORT SurfaceLayer : public Layer {
     return fallback_surface_id_;
   }
 
+  base::Optional<uint32_t> deadline_in_frames() const {
+    return deadline_in_frames_;
+  }
+
  protected:
   SurfaceLayer();
   bool HasDrawableContent() const override;
