@@ -151,6 +151,21 @@ class OmniboxEditModel {
   // that state has changed.
   void SetInputInProgress(bool in_progress);
 
+  // Calls SetInputInProgress, via SetInputInProgressNoNotify and
+  // NotifyObserversInputInProgress, calling the latter after
+  // StartAutocomplete, so that the result is only updated once.
+  void UpdateInput(bool has_selected_text,
+                   bool prevent_inline_autocomplete);
+
+  // Sets the state of user_input_in_progress_, and notifies observers if
+  // the state has changed and the caller requested it via |notify|.
+  // Returns whether said state changed, so that the caller can evoke
+  // NotifyObserversInputInProgress() (below) if they didn't request it.
+  bool SetInputInProgressNoNotify(bool in_progress);
+
+  // Notifies the observers that the state has changed.
+  void NotifyObserversInputInProgress(bool in_progress);
+
   // Sets permanent_text_ to |text|. Returns true if the permanent text changed
   // and the change should be immediately user-visible, because either the user
   // is not editing or the edit does not have focus.
