@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d207cd3a_a6783467",
+        "filename": "cc/tiles/gpu_image_decode_cache.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-27T00:12:23Z",
+      "side": 1,
+      "message": "nit: I\u0027d say its simpler to not set the cs and let the caller do it after.",
+      "range": {
+        "startLine": 381,
+        "startChar": 6,
+        "endLine": 381,
+        "endChar": 40
+      },
+      "revId": "3b44e86e652e3043a840437f6fdf51ce28ccacc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99809a63_db5169c9",
+        "filename": "cc/tiles/gpu_image_decode_cache_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2175,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-27T00:12:23Z",
+      "side": 1,
+      "message": "nit: Also verify that it has the target cs?",
+      "range": {
+        "startLine": 2174,
+        "startChar": 2,
+        "endLine": 2175,
+        "endChar": 60
+      },
+      "revId": "3b44e86e652e3043a840437f6fdf51ce28ccacc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
