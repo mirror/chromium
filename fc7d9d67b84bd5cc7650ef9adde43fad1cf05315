@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "776a131f_2580f8f7",
+        "filename": "tools/mac/rewrite_modern_objc.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-27T17:27:33Z",
+      "side": 1,
+      "message": "(a) is a good point for correctness. OK.",
+      "parentUuid": "50cb64fd_37ff5dba",
+      "revId": "fc7d9d67b84bd5cc7650ef9adde43fad1cf05315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ac1eeb8_b3842beb",
         "filename": "tools/mac/rewrite_modern_objc.py",
         "patchSetId": 3
@@ -177,6 +195,30 @@
       "side": 1,
       "message": "Hm, does this work? You have to call next() on an iterator, not on an iterable, right? Do you mean\n\nwith open(remap_file) as remap:\n  remap_it \u003d iter(remap)\n  try:\n    while True:\n      infile \u003d remap_it.next()\n      mtime \u003d remap_it.next()\n      outfile \u003d remap_it.next()\n      ...\n  catch StopIteration:\n    pass\n\n? That seems a lot more complicated than what I have (it doesn\u0027t load the whole file in memory, but we\u0027re talking a few kB of data here). Maybe I misunderstood though :-)",
       "parentUuid": "3ac1eeb8_b3842beb",
+      "range": {
+        "startLine": 130,
+        "startChar": 2,
+        "endLine": 132,
+        "endChar": 57
+      },
+      "revId": "fc7d9d67b84bd5cc7650ef9adde43fad1cf05315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e78b3d68_bd940b12",
+        "filename": "tools/mac/rewrite_modern_objc.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-27T17:27:33Z",
+      "side": 1,
+      "message": "What I posted works (though I forgot to .strip), but no strong feelings :-).",
+      "parentUuid": "3d5e4575_25470b22",
       "range": {
         "startLine": 130,
         "startChar": 2,
