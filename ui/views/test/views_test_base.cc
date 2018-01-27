@@ -8,6 +8,7 @@
 
 #include "base/environment.h"
 #include "base/run_loop.h"
+#include "mojo/edk/embedder/embedder.h"
 #include "ui/base/clipboard/clipboard.h"
 #include "ui/base/material_design/material_design_controller.h"
 #include "ui/base/test/material_design_controller_test_api.h"
@@ -68,6 +69,7 @@ bool ViewsTestBase::IsMus() {
 
 void ViewsTestBase::SetUp() {
   testing::Test::SetUp();
+  mojo::edk::Init();
   // ContentTestSuiteBase might have already initialized
   // MaterialDesignController in unit_tests suite.
   ui::test::MaterialDesignControllerTestAPI::Uninitialize();
