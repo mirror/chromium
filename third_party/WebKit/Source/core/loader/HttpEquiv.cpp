@@ -92,6 +92,11 @@ void HttpEquiv::ProcessHttpEquivAcceptCH(Document& document,
   if (!document.GetFrame())
     return;
 
+  if (blink::RuntimeEnabledFeatures::ClientHintsPersistentEnabled() &&
+      !ClientHintsPreferences::IsClientHintsAllowed(document.Url())) {
+    return;
+  }
+
   UseCounter::Count(document, WebFeature::kClientHintsMetaAcceptCH);
   FrameClientHintsPreferencesContext hints_context(document.GetFrame());
   document.GetClientHintsPreferences().UpdateFromAcceptClientHintsHeader(

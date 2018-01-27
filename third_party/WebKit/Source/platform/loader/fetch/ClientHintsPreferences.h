@@ -13,6 +13,7 @@
 
 namespace blink {
 
+class KURL;
 class ResourceResponse;
 
 // TODO (tbansal): Remove PLATFORM_EXPORT, and pass WebClientHintsType
@@ -58,6 +59,10 @@ class PLATFORM_EXPORT ClientHintsPreferences {
       Context*,
       WebEnabledClientHints& enabled_hints,
       TimeDelta* persist_duration);
+
+  // Returns true if client hints are allowed for the provided KURL. Client
+  // hints are allowed only on HTTP URLs that belong to secure contexts.
+  static bool IsClientHintsAllowed(const KURL&);
 
  private:
   WebEnabledClientHints enabled_hints_;
