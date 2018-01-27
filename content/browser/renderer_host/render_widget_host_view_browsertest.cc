@@ -39,6 +39,7 @@
 #include "media/renderers/paint_canvas_video_renderer.h"
 #include "net/base/filename_util.h"
 #include "net/dns/mock_host_resolver.h"
+#include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "third_party/skia/include/core/SkCanvas.h"
 #include "ui/base/layout.h"
@@ -155,34 +156,6 @@ class RenderWidgetHostViewBrowserTest : public ContentBrowserTest {
       task_runner->PostTask(FROM_HERE, quit_closure);
   }
 
-  // Copy one frame using the CopyFromSurface API.
-  void RunBasicCopyFromSurfaceTest() {
-    SET_UP_SURFACE_OR_PASS_TEST(nullptr);
-
-    // Repeatedly call CopyFromBackingStore() since, on some platforms (e.g.,
-    // Windows), the operation will fail until the first "present" has been
-    // made.
-    int count_attempts = 0;
-    while (true) {
-      ++count_attempts;
-      base::RunLoop run_loop;
-      GetRenderWidgetHostView()->CopyFromSurface(
-          gfx::Rect(), frame_size(),
-          base::Bind(&RenderWidgetHostViewBrowserTest::FinishCopyFromSurface,
-                     base::Unretained(this), run_loop.QuitClosure()),
-          kN32_SkColorType);
-      run_loop.Run();
-
-      if (frames_captured())
-        break;
-      else
-        GiveItSomeTime();
-    }
-
-    EXPECT_EQ(count_attempts, callback_invoke_count());
-    EXPECT_EQ(1, frames_captured());
-  }
-
  protected:
   // Waits until the source is available for copying.
   void WaitForCopySourceReady() {
@@ -196,7 +169,7 @@ class RenderWidgetHostViewBrowserTest : public ContentBrowserTest {
     base::RunLoop run_loop;
     base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
         FROM_HERE, run_loop.QuitClosure(),
-        base::TimeDelta::FromMilliseconds(10));
+        base::TimeDelta::FromMilliseconds(250));
     run_loop.Run();
   }
 
@@ -296,6 +269,7 @@ class CompositingRenderWidgetHostViewBrowserTest
   void SetUp() override {
     if (compositing_mode_ == SOFTWARE_COMPOSITING)
       UseSoftwareCompositing();
+    EnablePixelOutput();
     RenderWidgetHostViewBrowserTest::SetUp();
   }
 
@@ -366,7 +340,32 @@ class FakeFrameSubscriber : public RenderWidgetHostViewFrameSubscriber {
 // enabled.
 IN_PROC_BROWSER_TEST_P(CompositingRenderWidgetHostViewBrowserTest,
                        CopyFromSurface) {
-  RunBasicCopyFromSurfaceTest();
+  SET_UP_SURFACE_OR_PASS_TEST(nullptr);
+
+  // Repeatedly call CopyFromBackingStore() since, on some platforms (e.g.,
+  // Windows), the operation will fail until the first "present" has been
+  // made.
+  int count_attempts = 0;
+  while (true) {
+    ++count_attempts;
+    base::RunLoop run_loop;
+    GetRenderWidgetHostView()->CopyFromSurface(
+        gfx::Rect(), frame_size(),
+        // TODO(crbug/759310): This should be a OnceCallback.
+        base::BindRepeating(
+            &RenderWidgetHostViewBrowserTest::FinishCopyFromSurface,
+            base::Unretained(this), run_loop.QuitClosure()),
+        kN32_SkColorType);
+    run_loop.Run();
+
+    if (frames_captured())
+      break;
+    else
+      GiveItSomeTime();
+  }
+
+  EXPECT_EQ(count_attempts, callback_invoke_count());
+  EXPECT_EQ(1, frames_captured());
 }
 
 // Tests that the callback passed to CopyFromSurface is always called, even
@@ -381,6 +380,7 @@ IN_PROC_BROWSER_TEST_P(CompositingRenderWidgetHostViewBrowserTest,
       base::Bind(&RenderWidgetHostViewBrowserTest::FinishCopyFromSurface,
                  base::Unretained(this), run_loop.QuitClosure()),
       kN32_SkColorType);
+  shell()->web_contents()->Close();
   run_loop.Run();
 
   EXPECT_EQ(1, callback_invoke_count());
@@ -389,8 +389,11 @@ IN_PROC_BROWSER_TEST_P(CompositingRenderWidgetHostViewBrowserTest,
 // Tests that the callback passed to CopyFromSurfaceToVideoFrame is always
 // called, even when the RenderWidgetHostView is deleting in the middle of an
 // async copy.
-IN_PROC_BROWSER_TEST_P(CompositingRenderWidgetHostViewBrowserTest,
-                       CopyFromSurfaceToVideoFrame_CallbackDespiteDelete) {
+// TODO(crbug/754872): This is testing a now-dead code path, and will be deleted
+// soon.
+IN_PROC_BROWSER_TEST_P(
+    CompositingRenderWidgetHostViewBrowserTest,
+    DISABLED_CopyFromSurfaceToVideoFrame_CallbackDespiteDelete) {
   SET_UP_SURFACE_OR_PASS_TEST(nullptr);
 
   base::RunLoop run_loop;
@@ -408,8 +411,10 @@ IN_PROC_BROWSER_TEST_P(CompositingRenderWidgetHostViewBrowserTest,
 
 // Test basic frame subscription functionality.  We subscribe, and then run
 // until at least one DeliverFrameCallback has been invoked.
+// TODO(crbug/754872): This is testing a now-dead code path, and will be deleted
+// soon.
 IN_PROC_BROWSER_TEST_P(CompositingRenderWidgetHostViewBrowserTest,
-                       FrameSubscriberTest) {
+                       DISABLED_FrameSubscriberTest) {
   SET_UP_SURFACE_OR_PASS_TEST(nullptr);
   RenderWidgetHostViewBase* const view = GetRenderWidgetHostView();
 
@@ -427,7 +432,10 @@ IN_PROC_BROWSER_TEST_P(CompositingRenderWidgetHostViewBrowserTest,
   EXPECT_LE(1, frames_captured());
 }
 
-IN_PROC_BROWSER_TEST_P(CompositingRenderWidgetHostViewBrowserTest, CopyTwice) {
+// TODO(crbug/754872): This is testing a now-dead code path, and will be deleted
+// soon.
+IN_PROC_BROWSER_TEST_P(CompositingRenderWidgetHostViewBrowserTest,
+                       DISABLED_CopyTwice) {
   SET_UP_SURFACE_OR_PASS_TEST(nullptr);
   RenderWidgetHostViewBase* const view = GetRenderWidgetHostView();
 
@@ -462,11 +470,6 @@ class CompositingRenderWidgetHostViewBrowserTestTabCapture
       : readback_response_(READBACK_NO_RESPONSE),
         allowable_error_(0),
         test_url_("data:text/html,<!doctype html>") {}
-
-  void SetUp() override {
-    EnablePixelOutput();
-    CompositingRenderWidgetHostViewBrowserTest::SetUp();
-  }
 
   void ReadbackRequestCallbackTest(base::Closure quit_callback,
                                    const SkBitmap& bitmap,
@@ -514,6 +517,12 @@ class CompositingRenderWidgetHostViewBrowserTestTabCapture
         expected_copy_from_compositing_surface_bitmap_;
     EXPECT_EQ(expected_bitmap.width(), bitmap.width());
     EXPECT_EQ(expected_bitmap.height(), bitmap.height());
+    if (expected_bitmap.width() != bitmap.width() ||
+        expected_bitmap.height() != bitmap.height()) {
+      readback_response_ = READBACK_INCORRECT_RESULT_SIZE;
+      quit_callback.Run();
+      return;
+    }
     EXPECT_EQ(expected_bitmap.colorType(), bitmap.colorType());
     int fails = 0;
     for (int i = 0; i < bitmap.width() && fails < 10; ++i) {
@@ -648,14 +657,13 @@ class CompositingRenderWidgetHostViewBrowserTestTabCapture
     //      is allowed to transiently fail.  The purpose of these tests is to
     //      confirm correct cropping/scaling behavior; and not that every
     //      readback must succeed.  http://crbug.com/444237
-    uint32_t last_frame_number = 0;
+    int attempt_count = 0;
     do {
-      // Wait for renderer to provide the next frame.
-      while (!GetRenderWidgetHost()->ScheduleComposite())
+      // Wait a little before retrying again. This gives the most up-to-date
+      // frame a chance to propagate from the renderer to the compositor.
+      if (attempt_count > 0)
         GiveItSomeTime();
-      while (rwhv->RendererFrameNumber() == last_frame_number)
-        GiveItSomeTime();
-      last_frame_number = rwhv->RendererFrameNumber();
+      ++attempt_count;
 
       // Request readback.  The callbacks will examine the pixels in the
       // SkBitmap/VideoFrame result if readback was successful.
@@ -700,25 +708,29 @@ class CompositingRenderWidgetHostViewBrowserTestTabCapture
       // If the readback operation did not provide a frame, log the reason
       // to aid in future debugging.  This information will also help determine
       // whether the implementation is broken, or a test bot is in a bad state.
-      #define CASE_LOG_READBACK_WARNING(enum_value) \
-        case enum_value: \
-          LOG(WARNING) << "Readback attempt failed (render frame #" \
-                       << last_frame_number << ").  Reason: " #enum_value; \
-          break
+      // clang-format off
       switch (readback_response_) {
         case READBACK_SUCCESS:
           break;
+        #define CASE_LOG_READBACK_WARNING(enum_value)                    \
+          case enum_value:                                               \
+            LOG(WARNING) << "Readback attempt failed (attempt #"         \
+                         << attempt_count << ").  Reason: " #enum_value; \
+            break
         CASE_LOG_READBACK_WARNING(READBACK_FAILED);
         CASE_LOG_READBACK_WARNING(READBACK_SURFACE_UNAVAILABLE);
         CASE_LOG_READBACK_WARNING(READBACK_BITMAP_ALLOCATION_FAILURE);
         CASE_LOG_READBACK_WARNING(READBACK_NO_TEST_COLORS);
+        CASE_LOG_READBACK_WARNING(READBACK_INCORRECT_RESULT_SIZE);
         CASE_LOG_READBACK_WARNING(READBACK_TO_VIDEO_FRAME_FAILED);
         default:
           LOG(ERROR)
               << "Invalid readback response value: " << readback_response_;
           NOTREACHED();
       }
-    } while (readback_response_ != READBACK_SUCCESS);
+      // clang-format on
+    } while (readback_response_ != READBACK_SUCCESS &&
+             !testing::Test::HasFailure());
   }
 
   // Sets up |bitmap| to have size |copy_size|. It floods the left half with
@@ -742,6 +754,7 @@ class CompositingRenderWidgetHostViewBrowserTestTabCapture
   enum ExtraReadbackResponsesForTest {
     READBACK_NO_RESPONSE = -1337,
     READBACK_NO_TEST_COLORS,
+    READBACK_INCORRECT_RESULT_SIZE,
     READBACK_TO_VIDEO_FRAME_FAILED,
   };
 
@@ -813,8 +826,10 @@ IN_PROC_BROWSER_TEST_P(CompositingRenderWidgetHostViewBrowserTestTabCapture,
                                 video_frame);
 }
 
+// TODO(crbug/754872): This is testing a now-dead code path, and will be deleted
+// soon.
 IN_PROC_BROWSER_TEST_P(CompositingRenderWidgetHostViewBrowserTestTabCapture,
-                       CopyFromSurface_ForVideoFrame) {
+                       DISABLED_CopyFromSurface_ForVideoFrame) {
   // Grab 90x60 pixels from the center of the tab contents.
   gfx::Rect copy_rect(400, 300);
   copy_rect = gfx::Rect(copy_rect.CenterPoint() - gfx::Vector2d(45, 30),
@@ -828,8 +843,10 @@ IN_PROC_BROWSER_TEST_P(CompositingRenderWidgetHostViewBrowserTestTabCapture,
                                 video_frame);
 }
 
+// TODO(crbug/754872): This is testing a now-dead code path, and will be deleted
+// soon.
 IN_PROC_BROWSER_TEST_P(CompositingRenderWidgetHostViewBrowserTestTabCapture,
-                       CopyFromSurface_ForVideoFrame_Scaled) {
+                       DISABLED_CopyFromSurface_ForVideoFrame_Scaled) {
   // Grab 90x60 pixels from the center of the tab contents.
   gfx::Rect copy_rect(400, 300);
   copy_rect = gfx::Rect(copy_rect.CenterPoint() - gfx::Vector2d(45, 30),
@@ -884,19 +901,10 @@ class CompositingRenderWidgetHostViewBrowserTestTabCaptureHighDPI
 #define MAYBE_CopyToBitmap_EntireRegion DISABLED_CopyToBitmap_EntireRegion
 #define MAYBE_CopyToBitmap_CenterRegion DISABLED_CopyToBitmap_CenterRegion
 #define MAYBE_CopyToBitmap_ScaledResult DISABLED_CopyToBitmap_ScaledResult
-#define MAYBE_CopyToVideoFrame_EntireRegion \
-            DISABLED_CopyToVideoFrame_EntireRegion
-#define MAYBE_CopyToVideoFrame_CenterRegion \
-            DISABLED_CopyToVideoFrame_CenterRegion
-#define MAYBE_CopyToVideoFrame_ScaledResult \
-            DISABLED_CopyToVideoFrame_ScaledResult
 #else
 #define MAYBE_CopyToBitmap_EntireRegion CopyToBitmap_EntireRegion
 #define MAYBE_CopyToBitmap_CenterRegion CopyToBitmap_CenterRegion
 #define MAYBE_CopyToBitmap_ScaledResult CopyToBitmap_ScaledResult
-#define MAYBE_CopyToVideoFrame_EntireRegion CopyToVideoFrame_EntireRegion
-#define MAYBE_CopyToVideoFrame_CenterRegion CopyToVideoFrame_CenterRegion
-#define MAYBE_CopyToVideoFrame_ScaledResult CopyToVideoFrame_ScaledResult
 #endif
 
 IN_PROC_BROWSER_TEST_P(
@@ -944,9 +952,11 @@ IN_PROC_BROWSER_TEST_P(
                                 video_frame);
 }
 
+// TODO(crbug/754872): This is testing a now-dead code path, and will be deleted
+// soon.
 IN_PROC_BROWSER_TEST_P(
     CompositingRenderWidgetHostViewBrowserTestTabCaptureHighDPI,
-    MAYBE_CopyToVideoFrame_EntireRegion) {
+    DISABLED_CopyToVideoFrame_EntireRegion) {
   gfx::Size html_rect_size(200, 150);
   gfx::Rect copy_rect(200, 150);
   // Scale the output size so that, internally, scaling is not occurring.
@@ -958,9 +968,11 @@ IN_PROC_BROWSER_TEST_P(
                                 video_frame);
 }
 
+// TODO(crbug/754872): This is testing a now-dead code path, and will be deleted
+// soon.
 IN_PROC_BROWSER_TEST_P(
     CompositingRenderWidgetHostViewBrowserTestTabCaptureHighDPI,
-    MAYBE_CopyToVideoFrame_CenterRegion) {
+    DISABLED_CopyToVideoFrame_CenterRegion) {
   gfx::Size html_rect_size(200, 150);
   // Grab 90x60 pixels from the center of the tab contents.
   gfx::Rect copy_rect =
@@ -975,9 +987,11 @@ IN_PROC_BROWSER_TEST_P(
                                 video_frame);
 }
 
+// TODO(crbug/754872): This is testing a now-dead code path, and will be deleted
+// soon.
 IN_PROC_BROWSER_TEST_P(
     CompositingRenderWidgetHostViewBrowserTestTabCaptureHighDPI,
-    MAYBE_CopyToVideoFrame_ScaledResult) {
+    DISABLED_CopyToVideoFrame_ScaledResult) {
   gfx::Size html_rect_size(200, 100);
   gfx::Rect copy_rect(200, 100);
   // Output is being down-scaled since output_size is in phyiscal pixels.
