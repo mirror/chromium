@@ -846,6 +846,33 @@ void EffectTree::UpdateSurfaceContentsScale(EffectNode* effect_node) {
                 transform_tree.ToScreen(transform_node->id), layer_scale_factor)
           : gfx::Vector2dF(layer_scale_factor, layer_scale_factor);
 
+  if (!effect_node->filters.IsEmpty()) {
+    // Apply layer scale optimization for blur filters. Blur filters are
+    // implemented through down-scaling of contents using mipmaps to a size
+    // where the amount of blur needed is small enough that it can be
+    // efficiently processed by the GPU. When dividing the layer scale by 2, we
+    // handle the first level of down-scaling when producing input for the blur
+    // filter. More specifically, we scale contents when compositing to the
+    // intermediate render surface, instead of having to down-scale the render
+    // surface. This provides a significant performance improvement without
+    // affecting quality. The performance improvement comes from the reduced
+    // bandwidth required for compositing and the reduced amount of down-scaling
+    // required when applying the filter. Quality is not affected as the amount
+    // of down-scaling is the same. The first level of down-scaling was just
+    // moved to a place where it can be handled more efficiently. This doesn't
+    // affect the raster scale as raster scale is determined by the absolute
+    // transform relative to the screen.
+    auto& filter = effect_node->filters.at(0);
+    // This constant is set to match MAX_BLUR_SIGMA in Skia
+    // (SkGpuBlurUtils.cpp). The result is that this optimization can be used
+    // in as many cases as possible without causing a change to filter quality.
+    const float kMinBlurAmountForLayerScaleAdjustment = 4.0f;
+    if (filter.type() == FilterOperation::BLUR &&
+        filter.amount() > kMinBlurAmountForLayerScaleAdjustment) {
+      effect_node->surface_contents_scale.Scale(0.5f);
+    }
+  }
+
   // If surface contents scale changes, draw transforms are no longer valid.
   // Invalidates the draw transform cache and updates the clip for the surface.
   if (old_scale != effect_node->surface_contents_scale) {

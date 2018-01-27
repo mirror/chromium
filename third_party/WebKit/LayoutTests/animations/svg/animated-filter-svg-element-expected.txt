@@ -1,0 +1,12 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x271
+  LayoutBlockFlow {HTML} at (0,0) size 800x271
+    LayoutBlockFlow {BODY} at (8,8) size 784x255
+      LayoutBlockFlow (anonymous) at (0,100) size 784x155
+        LayoutSVGRoot {svg} at (0,0) size 300x150
+          LayoutSVGRect {rect} at (0,0) size 100x100 [fill={[type=SOLID] [color=#0000FF]}] [x=0.00] [y=0.00] [width=100.00] [height=100.00]
+        LayoutText {#text} at (0,0) size 0x0
+layer at (8,8) size 300x100
+  LayoutSVGRoot {svg} at (0,0) size 300x100
+    LayoutSVGRect {rect} at (0,0) size 100x100 [fill={[type=SOLID] [color=#0000FF]}] [x=0.00] [y=0.00] [width=100.00] [height=100.00]
