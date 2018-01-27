@@ -92,6 +92,8 @@ void BrowserTabStripTracker::OnBrowserRemoved(Browser* browser) {
 }
 
 void BrowserTabStripTracker::OnBrowserSetLastActive(Browser* browser) {
-  if (browser_list_observer_)
+  if (browser_list_observer_ &&
+      browsers_observing_.find(browser) != browsers_observing_.end()) {
     browser_list_observer_->OnBrowserSetLastActive(browser);
+  }
 }

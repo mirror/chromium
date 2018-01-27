@@ -147,8 +147,7 @@ TabsEventRouter::~TabsEventRouter() {
 }
 
 bool TabsEventRouter::ShouldTrackBrowser(Browser* browser) {
-  return profile_->IsSameProfile(browser->profile()) &&
-         ExtensionTabUtil::BrowserSupportsTabs(browser);
+  return profile_->IsSameProfile(browser->profile());
 }
 
 void TabsEventRouter::RegisterForTabNotifications(WebContents* contents) {
