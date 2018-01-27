@@ -93,7 +93,9 @@ void DelegatedFrameHost::WasShown(const ui::LatencyInfo& latency_info) {
   if (compositor_)
     compositor_->SetLatencyInfo(latency_info);
 
-  WasResized();
+  // Use the default deadline to synchronize web content with browser UI.
+  // TODO(fsamuel): Investigate if there is a better deadline to use here.
+  WasResized(base::nullopt);
 }
 
 bool DelegatedFrameHost::HasSavedFrame() {
@@ -286,7 +288,8 @@ void DelegatedFrameHost::OnAggregatedSurfaceDamage(
   AttemptFrameSubscriberCapture(damage_rect);
 }
 
-void DelegatedFrameHost::WasResized() {
+void DelegatedFrameHost::WasResized(
+    base::Optional<uint32_t> deadline_in_frames) {
   const viz::SurfaceId* primary_surface_id =
       client_->DelegatedFrameHostGetLayer()->GetPrimarySurfaceId();
   gfx::Size new_size_in_dip = client_->DelegatedFrameHostDesiredSizeInDIP();
@@ -299,7 +302,8 @@ void DelegatedFrameHost::WasResized() {
 
     viz::SurfaceId surface_id(frame_sink_id_, client_->GetLocalSurfaceId());
     client_->DelegatedFrameHostGetLayer()->SetShowPrimarySurface(
-        surface_id, current_frame_size_in_dip_, GetGutterColor());
+        surface_id, current_frame_size_in_dip_, GetGutterColor(),
+        deadline_in_frames);
     if (compositor_ && !base::CommandLine::ForCurrentProcess()->HasSwitch(
                            switches::kDisableResizeLock)) {
       compositor_->OnChildResizing();
@@ -595,7 +599,7 @@ void DelegatedFrameHost::OnFirstSurfaceActivation(
     }
   } else {
     client_->DelegatedFrameHostGetLayer()->SetShowPrimarySurface(
-        surface_info.id(), frame_size_in_dip, GetGutterColor());
+        surface_info.id(), frame_size_in_dip, GetGutterColor(), base::nullopt);
   }
 
   client_->DelegatedFrameHostGetLayer()->SetFallbackSurfaceId(

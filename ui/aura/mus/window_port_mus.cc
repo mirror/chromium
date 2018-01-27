@@ -666,8 +666,9 @@ void WindowPortMus::OnSurfaceChanged(const viz::SurfaceInfo& surface_info) {
   DCHECK(!switches::IsMusHostingViz());
   DCHECK_EQ(surface_info.id().frame_sink_id(), GetFrameSinkId());
   DCHECK_EQ(surface_info.id().local_surface_id(), local_surface_id_);
-  window_->layer()->SetShowPrimarySurface(
-      surface_info.id(), window_->bounds().size(), SK_ColorWHITE);
+  window_->layer()->SetShowPrimarySurface(surface_info.id(),
+                                          window_->bounds().size(),
+                                          SK_ColorWHITE, base::nullopt);
   window_->layer()->SetFallbackSurfaceId(surface_info.id());
 }
 

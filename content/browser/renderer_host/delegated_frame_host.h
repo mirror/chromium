@@ -142,7 +142,7 @@ class CONTENT_EXPORT DelegatedFrameHost
   void ClearDelegatedFrame();
   void WasHidden();
   void WasShown(const ui::LatencyInfo& latency_info);
-  void WasResized();
+  void WasResized(base::Optional<uint32_t> deadline_in_frames);
   bool HasSavedFrame();
   gfx::Size GetRequestedRendererSize() const;
   void SetCompositor(ui::Compositor* compositor);

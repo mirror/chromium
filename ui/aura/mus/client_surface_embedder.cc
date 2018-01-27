@@ -36,7 +36,7 @@ ClientSurfaceEmbedder::~ClientSurfaceEmbedder() = default;
 void ClientSurfaceEmbedder::SetPrimarySurfaceId(
     const viz::SurfaceId& surface_id) {
   surface_layer_->SetShowPrimarySurface(surface_id, window_->bounds().size(),
-                                        SK_ColorWHITE);
+                                        SK_ColorWHITE, base::nullopt);
 }
 
 void ClientSurfaceEmbedder::SetFallbackSurfaceInfo(
