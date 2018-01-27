@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bccc7b2_4669ce34",
+        "filename": "chrome/browser/resources/welcome/welcome_win10.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-27T05:58:53Z",
+      "side": 1,
+      "message": "Could this be done with a class instead? Modifying CSS variables in JS feels a bit hacky, especially with the updateStyles call. As a bonus we could get both constants defined in the same place.\n\nI\u0027d suggest adding a class dynamically:\n\n  this.classList.toggle(\u0027accelerated\u0027, this.isAccelerated);\n\nThen you can set the variable based on the class:\n\n  .host.accelerated {\n    --expandable-section-height: 26.375em;\n  }\n\nor have two variables and choose which one to apply, e.g.:\n\n  .accelerated .section {\n    height: var(--expandable-section-height-accelerated);\n  }\n\nWDYT?",
+      "revId": "171158b7d7cd072b09c2a934dd9a59b4110dd7b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
