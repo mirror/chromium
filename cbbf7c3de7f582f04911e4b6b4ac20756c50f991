@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c40b052_ca416f50",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2018-01-27T02:13:59Z",
+      "side": 1,
+      "message": "I don\u0027t think there\u0027s much point to coming into this function if it\u0027s just going to quit immediately.  In that case we can just log this as a separate UMA for \"# of cards submitted without expiration date\" and not clutter up the Upstream metric.\n\nOn the other hand, if you also want data on if CVC/name/address was found, you\u0027d have to continue through this function (but beware of places expiration date is expected.)",
+      "range": {
+        "startLine": 106,
+        "startChar": 4,
+        "endLine": 106,
+        "endChar": 11
+      },
+      "revId": "cbbf7c3de7f582f04911e4b6b4ac20756c50f991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a59fe9a_ef5f17c1",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2018-01-27T02:13:59Z",
+      "side": 1,
+      "message": "If you wanted to continue through this function, this would be the best place to kick out.  I\u0027d recommend setting a boolean at the top like \"hasValidExpirationDate\" and doing the \"metrics |\u003d NO_EXP\" part there, then add \"\u0026\u0026 hasValidExpirationDate\" to this check, because we wouldn\u0027t want even the DetectedValues experiment to allow this through.\n\nThe reason for this is to keep this section here as the only place this function can quit, because not only does it log the decision metrics, but it also resets the request and calls the observer_for_testing_ function, which is important for browsertests.",
+      "range": {
+        "startLine": 184,
+        "startChar": 2,
+        "endLine": 185,
+        "endChar": 65
+      },
+      "revId": "cbbf7c3de7f582f04911e4b6b4ac20756c50f991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1372bc47_cc17d7d2",
+        "filename": "components/autofill/core/browser/form_data_importer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2018-01-27T02:13:59Z",
+      "side": 1,
+      "message": "It would also be nice to log just a general-purpose UMA for this right here in this file.  \"Detected card with valid expiration date\" vs. \"Detected card without valid expiration date\" would at least tell us how big this problem is.",
+      "revId": "cbbf7c3de7f582f04911e4b6b4ac20756c50f991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9db88549_5400f734",
+        "filename": "components/autofill/core/browser/form_data_importer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2018-01-27T02:13:59Z",
+      "side": 1,
+      "message": "nit: s/is/has an",
+      "range": {
+        "startLine": 326,
+        "startChar": 34,
+        "endLine": 326,
+        "endChar": 36
+      },
+      "revId": "cbbf7c3de7f582f04911e4b6b4ac20756c50f991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e95819ef_1acd1856",
+        "filename": "components/autofill/core/browser/form_data_importer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2018-01-27T02:13:59Z",
+      "side": 1,
+      "message": "We\u0027d want to put this whole thing behind a flag.  There\u0027s a lot of stuff past this point that could potentially require expiration without us realizing it.",
+      "range": {
+        "startLine": 327,
+        "startChar": 2,
+        "endLine": 328,
+        "endChar": 17
+      },
+      "revId": "cbbf7c3de7f582f04911e4b6b4ac20756c50f991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "724533b2_2146f1aa",
+        "filename": "components/autofill/core/browser/form_data_importer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2018-01-27T02:13:59Z",
+      "side": 1,
+      "message": "For instance, these two lines could now trigger for a card without expiration.  Please double-check that it wouldn\u0027t make them crash or overwrite existing cards with bad data.",
+      "range": {
+        "startLine": 340,
+        "startChar": 4,
+        "endLine": 341,
+        "endChar": 58
+      },
+      "revId": "cbbf7c3de7f582f04911e4b6b4ac20756c50f991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cea1bc1e_7b8dab53",
+        "filename": "components/autofill/core/browser/form_data_importer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2018-01-27T02:13:59Z",
+      "side": 1,
+      "message": "This section will also start logging *incorrect* metrics without a fix that checks if expiration date even exists.",
+      "range": {
+        "startLine": 360,
+        "startChar": 6,
+        "endLine": 374,
+        "endChar": 7
+      },
+      "revId": "cbbf7c3de7f582f04911e4b6b4ac20756c50f991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
