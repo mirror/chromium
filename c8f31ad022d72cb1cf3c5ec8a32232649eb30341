@@ -1,0 +1,602 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c3c7ae7_8237ddcb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 34
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-27T00:07:27Z",
+      "side": 1,
+      "message": "Nit: Chrome should be capable",
+      "range": {
+        "startLine": 10,
+        "startChar": 55,
+        "endLine": 10,
+        "endChar": 77
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "194a2bd3_818ef328",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 34
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-27T00:07:27Z",
+      "side": 1,
+      "message": "Nit: Action Center\nhere and afterwards",
+      "range": {
+        "startLine": 10,
+        "startChar": 40,
+        "endLine": 10,
+        "endChar": 53
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c981fe7_e4c79f8d",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-27T00:07:27Z",
+      "side": 1,
+      "message": "Nit: cache",
+      "range": {
+        "startLine": 173,
+        "startChar": 43,
+        "endLine": 173,
+        "endChar": 47
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0592c8b_6f24a054",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-27T00:07:27Z",
+      "side": 1,
+      "message": "Does this case happen? If not, use a DCHECK for this condition.",
+      "range": {
+        "startLine": 181,
+        "startChar": 31,
+        "endLine": 181,
+        "endChar": 67
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ed2ec96_998a87fa",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-27T00:07:27Z",
+      "side": 1,
+      "message": "Nit: Linebreak.",
+      "range": {
+        "startLine": 195,
+        "startChar": 0,
+        "endLine": 196,
+        "endChar": 2
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88b4b945_26e845b5",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-27T00:07:27Z",
+      "side": 1,
+      "message": "Nit:\n\nif (toast_activator_reg_path.empty()) {\n  LOG(DFATAL) \u003c\u003c \"Cannot retrieve the toast activator registry path\";\n  return;\n}",
+      "range": {
+        "startLine": 204,
+        "startChar": 2,
+        "endLine": 204,
+        "endChar": 42
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a01d1f7b_286b1f0e",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-27T00:07:27Z",
+      "side": 1,
+      "message": "Move this declaration and initialization to right before list-\u003eAddCreateRegKeyWorkItem below.",
+      "range": {
+        "startLine": 210,
+        "startChar": 4,
+        "endLine": 211,
+        "endChar": 43
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dfac6d4_2b83a510",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-27T00:07:27Z",
+      "side": 1,
+      "message": "Nit: Linebreak above here.",
+      "range": {
+        "startLine": 217,
+        "startChar": 4,
+        "endLine": 217,
+        "endChar": 59
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "389c3533_375766c6",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-27T00:07:27Z",
+      "side": 1,
+      "message": "This might be better as\nbase::string16 \u003d JoinString({L\"\\\"\", chrome_server.value(), L\"\\\"\"}, L\"\");\nSee base/strings/string_util.h",
+      "range": {
+        "startLine": 220,
+        "startChar": 4,
+        "endLine": 221,
+        "endChar": 58
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edf6aaff_4b9b2dad",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-27T00:07:27Z",
+      "side": 1,
+      "message": "Comment that we don\u0027t have a version check for Win10+ here so that Windows upgrades work.",
+      "range": {
+        "startLine": 816,
+        "startChar": 2,
+        "endLine": 818,
+        "endChar": 0
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46615f1a_94422d41",
+        "filename": "chrome/installer/setup/setup_util.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-27T00:07:27Z",
+      "side": 1,
+      "message": "Nit: null",
+      "range": {
+        "startLine": 862,
+        "startChar": 27,
+        "endLine": 862,
+        "endChar": 35
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a81e2901_bb8ba402",
+        "filename": "chrome/installer/setup/setup_util.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-27T00:07:27Z",
+      "side": 1,
+      "message": "I think you want path.data here.",
+      "range": {
+        "startLine": 866,
+        "startChar": 66,
+        "endLine": 866,
+        "endChar": 74
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cedb5342_e144bd30",
+        "filename": "chrome/installer/setup/setup_util.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 867,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-27T00:07:27Z",
+      "side": 1,
+      "message": "Use path.capacity() for robustness.",
+      "range": {
+        "startLine": 867,
+        "startChar": 24,
+        "endLine": 867,
+        "endChar": 39
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9901bef6_ad7e8c37",
+        "filename": "chrome/installer/setup/setup_util.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-27T00:07:27Z",
+      "side": 1,
+      "message": "Doesn\u0027t string16 concatenation handle these details?",
+      "range": {
+        "startLine": 870,
+        "startChar": 2,
+        "endLine": 870,
+        "endChar": 65
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34eb87dc_ea74b7dd",
+        "filename": "chrome_server/chrome_server.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-27T00:07:27Z",
+      "side": 1,
+      "message": "Use the base logging equivalents here and for the rest of the change.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 22
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "338b9cf8_dea60283",
+        "filename": "chrome_server/chrome_server.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-27T00:07:27Z",
+      "side": 1,
+      "message": "Is the extern \"C\" necessary?",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 11
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cad714a5_4869290d",
+        "filename": "chrome_server/chrome_server.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-27T00:07:27Z",
+      "side": 1,
+      "message": "nullptr",
+      "range": {
+        "startLine": 30,
+        "startChar": 29,
+        "endLine": 30,
+        "endChar": 33
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce235093_7dffc9e0",
+        "filename": "chrome_server/chrome_server.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-27T00:07:27Z",
+      "side": 1,
+      "message": "This isn\u0027t necessary if you\u0027re using ScopedWinrtInitializer.",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 4
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5ea7053_403d2ec9",
+        "filename": "chrome_server/chrome_server.rc",
+        "patchSetId": 34
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-27T00:07:27Z",
+      "side": 1,
+      "message": "Is this file required? This executable doesn\u0027t really contain any strings or dialogs.\nMaybe we should include an icon?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 3
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f386b6ad_9a75b272",
+        "filename": "chrome_server/notification_activator.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-27T00:07:27Z",
+      "side": 1,
+      "message": "Nit \u003cwindows.h\u003e",
+      "range": {
+        "startLine": 12,
+        "startChar": 9,
+        "endLine": 12,
+        "endChar": 20
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21ef697b_9ea6c169",
+        "filename": "chrome_server/notification_activator.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-27T00:07:27Z",
+      "side": 1,
+      "message": "Nit: Forward slash \u0027/\u0027",
+      "range": {
+        "startLine": 15,
+        "startChar": 13,
+        "endLine": 15,
+        "endChar": 14
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab53fae5_c97c87a8",
+        "filename": "chrome_server/notification_activator.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-27T00:07:27Z",
+      "side": 1,
+      "message": "Remove this namespace alias. Other files shouldn\u0027t be able to pick this up.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 32
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8000d130_50ce07fc",
+        "filename": "chrome_server/notification_activator.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-27T00:07:27Z",
+      "side": 1,
+      "message": "Nit: Registrar",
+      "range": {
+        "startLine": 41,
+        "startChar": 15,
+        "endLine": 41,
+        "endChar": 25
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b956377a_549d9c47",
+        "filename": "chrome_server/notification_activator.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-27T00:07:27Z",
+      "side": 1,
+      "message": "This should be moved into its own header+cc file pair. I\u0027ll defer reviewing the implementation until after that so the commenting threads can be preserved.",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 27
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41d365a2_dc521c07",
+        "filename": "chrome_server/notification_activator.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-27T00:07:27Z",
+      "side": 1,
+      "message": "This comment restates the implementation. Let\u0027s go higher level:\n\n// Handles object registration and unregistration. Returns when all registered objects are released.\n\nOr something to that effect.",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 67
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33d2d014_221085f6",
+        "filename": "chrome_server/notification_activator.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-27T00:07:27Z",
+      "side": 1,
+      "message": "Since this array only contains 1 item, does it need to be an array? Subsequent users can be \u0026cookie_ with a size of 1 pass to the receiving function.",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 26
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
