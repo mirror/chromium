@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d53eca6_a6f8aa34",
+        "filename": "chrome/browser/resources/print_preview/new/destination_dialog.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-27T00:14:56Z",
+      "side": 1,
+      "message": "I believe this can be removed.",
+      "range": {
+        "startLine": 76,
+        "startChar": 27,
+        "endLine": 76,
+        "endChar": 32
+      },
+      "revId": "7cb3e513db1c4f74e90bfd2da019183051fdab62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bd9c32c_6178ddd7",
+        "filename": "chrome/browser/resources/print_preview/new/destination_dialog.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-27T00:14:56Z",
+      "side": 1,
+      "message": "Nit (optional): Unnecessary temp local variables. Maybe just inline them as follows?\n\nconst destination \u003d this.destinationStore.getDestination(\n    recentDestination.origin, recentDestination.id;\n    recentDestination.account || \u0027\u0027);",
+      "range": {
+        "startLine": 87,
+        "startChar": 6,
+        "endLine": 88,
+        "endChar": 68
+      },
+      "revId": "7cb3e513db1c4f74e90bfd2da019183051fdab62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6fd7518_33aad408",
+        "filename": "chrome/browser/resources/print_preview/new/destination_dialog.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-27T00:14:56Z",
+      "side": 1,
+      "message": "Polymer.dom() is mostly a compatibility API for browsers that don\u0027t support Shadow DOM. Can we avoid using it, as follows?\n\nthis.shadowRoot.querySelectorAll(...);",
+      "range": {
+        "startLine": 110,
+        "startChar": 4,
+        "endLine": 110,
+        "endChar": 26
+      },
+      "revId": "7cb3e513db1c4f74e90bfd2da019183051fdab62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df8c3aee_e528733c",
+        "filename": "chrome/browser/resources/print_preview/new/destination_dialog.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-27T00:14:56Z",
+      "side": 1,
+      "message": "Given that onCancel_() is called both when cancelling via the \"Cancel\" button, but also when selecting a destination, how about the following?\n\n- s/onCancel_/close_\n- Change HTML to on-cancel\u003d\"close\"",
+      "range": {
+        "startLine": 123,
+        "startChar": 4,
+        "endLine": 123,
+        "endChar": 21
+      },
+      "revId": "7cb3e513db1c4f74e90bfd2da019183051fdab62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "924264b5_3daa9d0d",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-27T00:14:56Z",
+      "side": 1,
+      "message": "This is probably not good for a11y.",
+      "range": {
+        "startLine": 199,
+        "startChar": 50,
+        "endLine": 199,
+        "endChar": 56
+      },
+      "revId": "7cb3e513db1c4f74e90bfd2da019183051fdab62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dd6a49a_7c6d2b73",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-27T00:14:56Z",
+      "side": 1,
+      "message": "Could you directly use \"[[i18n(\u0027destinationCount\u0027, displayedDestinations_.length)]]\" here?",
+      "range": {
+        "startLine": 242,
+        "startChar": 28,
+        "endLine": 242,
+        "endChar": 47
+      },
+      "revId": "7cb3e513db1c4f74e90bfd2da019183051fdab62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cb1384a_9619acc6",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-27T00:14:56Z",
+      "side": 1,
+      "message": "Can this be moved before iterating over all the destinations?\n\nif (!this.searchQuery)\n  return true;\n...",
+      "range": {
+        "startLine": 69,
+        "startChar": 13,
+        "endLine": 69,
+        "endChar": 30
+      },
+      "revId": "7cb3e513db1c4f74e90bfd2da019183051fdab62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5313b8e6_f953c29e",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-27T00:14:56Z",
+      "side": 1,
+      "message": "Use \u003d\u003e arrow function to avoid the need to pass |this| as the scope.",
+      "range": {
+        "startLine": 70,
+        "startChar": 7,
+        "endLine": 70,
+        "endChar": 11
+      },
+      "revId": "7cb3e513db1c4f74e90bfd2da019183051fdab62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5fdde1e_c56d9f4c",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-27T00:14:56Z",
+      "side": 1,
+      "message": "Nit (optional): Given that length can only be greater or equal to zero, maybe do \"\u003e 0\" here (shorter by 1 char).",
+      "range": {
+        "startLine": 104,
+        "startChar": 46,
+        "endLine": 104,
+        "endChar": 48
+      },
+      "revId": "7cb3e513db1c4f74e90bfd2da019183051fdab62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa65c9f6_a926f4c0",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-27T00:14:56Z",
+      "side": 1,
+      "message": "Could we use this.splice() instead, which automatically notifies? Alternatively, I think the proper way of publishing array changes that Polymer would not detect otherwise is this.notifySplices(), see https://www.polymer-project.org/1.0/docs/devguide/model-data#notifysplices.",
+      "range": {
+        "startLine": 374,
+        "startChar": 4,
+        "endLine": 375,
+        "endChar": 44
+      },
+      "revId": "7cb3e513db1c4f74e90bfd2da019183051fdab62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e543c3c_ef56e654",
+        "filename": "chrome/browser/resources/print_preview/new/print_preview_search_box.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-27T00:14:56Z",
+      "side": 1,
+      "message": "Perhaps extract this RegExp to a local constant so that it does not have to be re-created on every search. (Internally this is equivalent to new RegExp(...)).",
+      "range": {
+        "startLine": 32,
+        "startChar": 32,
+        "endLine": 32,
+        "endChar": 58
+      },
+      "revId": "7cb3e513db1c4f74e90bfd2da019183051fdab62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
