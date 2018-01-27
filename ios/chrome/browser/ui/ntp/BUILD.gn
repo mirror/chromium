@@ -12,6 +12,7 @@ source_set("ntp") {
   configs += [ "//build/config/compiler:enable_arc" ]
 }
 
+# This can be removed post refresh flag.
 source_set("ntp_header") {
   configs += [ "//build/config/compiler:enable_arc" ]
   sources = [
