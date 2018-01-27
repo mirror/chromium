@@ -922,9 +922,6 @@ ExtensionFunction::ResponseAction TabsQueryFunction::Run() {
     if (!profile->IsSameProfile(browser->profile()))
       continue;
 
-    if (!browser->window())
-      continue;
-
     if (!include_incognito() && profile != browser->profile())
       continue;
 
