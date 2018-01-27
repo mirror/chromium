@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "124ce642_81b35c97",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 5288,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-27T22:15:39Z",
+      "side": 1,
+      "message": "Do you want to set an upper bound here per January 2019, or wait until then?",
+      "range": {
+        "startLine": 5288,
+        "startChar": 34,
+        "endLine": 5288,
+        "endChar": 36
+      },
+      "revId": "3aecab3b69133847ca886bcc1713dafbe1ed1cc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60f13a46_7c11df95",
+        "filename": "components/ssl_config/ssl_config_service_manager_pref.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-27T22:15:39Z",
+      "side": 1,
+      "message": "I believe you also need to update this function.\n\nOoooorrrr we could do this:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/656113",
+      "revId": "3aecab3b69133847ca886bcc1713dafbe1ed1cc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d49e6b7a_e564c700",
+        "filename": "components/ssl_config/ssl_config_service_manager_pref_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-27T22:15:39Z",
+      "side": 1,
+      "message": "Forgot to update this comment?",
+      "range": {
+        "startLine": 483,
+        "startChar": 36,
+        "endLine": 484,
+        "endChar": 28
+      },
+      "revId": "3aecab3b69133847ca886bcc1713dafbe1ed1cc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
