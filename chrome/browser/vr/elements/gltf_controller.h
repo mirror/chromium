@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_VR_ELEMENTS_CONTROLLER_H_
-#define CHROME_BROWSER_VR_ELEMENTS_CONTROLLER_H_
+#ifndef CHROME_BROWSER_VR_ELEMENTS_GLTF_CONTROLLER_H_
+#define CHROME_BROWSER_VR_ELEMENTS_GLTF_CONTROLLER_H_
 
 #include <vector>
 
@@ -15,10 +15,10 @@
 namespace vr {
 
 // This represents the controller.
-class Controller : public UiElement {
+class GltfController : public UiElement {
  public:
-  Controller();
-  ~Controller() override;
+  GltfController();
+  ~GltfController() override;
 
   void set_touchpad_button_pressed(bool pressed) {
     touchpad_button_pressed_ = pressed;
@@ -79,9 +79,9 @@ class Controller : public UiElement {
   bool home_button_pressed_ = false;
   gfx::Transform local_transform_;
 
-  DISALLOW_COPY_AND_ASSIGN(Controller);
+  DISALLOW_COPY_AND_ASSIGN(GltfController);
 };
 
 }  // namespace vr
 
-#endif  // CHROME_BROWSER_VR_ELEMENTS_CONTROLLER_H_
+#endif  // CHROME_BROWSER_VR_ELEMENTS_GLTF_CONTROLLER_H_
