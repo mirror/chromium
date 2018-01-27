@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "b0bf356a_17da9880",
+        "filename": "chromeos/dbus/smb_provider_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2018-01-27T02:10:59Z",
+      "side": 1,
+      "message": "I see why it is needed for this change, still ideally would be done as a preparatory CL before this one.",
+      "parentUuid": "3d7b2dff_692c1a92",
+      "revId": "875fb0d410fe13d7d3d66e564bc4a4e1e59246ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "565a9b83_37efc7ef",
         "filename": "chromeos/dbus/smb_provider_client.h",
         "patchSetId": 4
