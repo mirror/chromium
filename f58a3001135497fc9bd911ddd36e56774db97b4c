@@ -22,6 +22,30 @@
       "revId": "f58a3001135497fc9bd911ddd36e56774db97b4c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fd90dfa_6a4bafe4",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2018-01-27T01:18:30Z",
+      "side": 1,
+      "message": "I had considered that, but I think this is a little more correct from a layering/encapsulation standpoint.  It seems likely that the location bar will also be used in the new NTP implementation, so it\u0027s not guaranteed to be in the toolbar.  Since this class is a FullscreenUIElement, it makes sense to set it here since it has knowledge of fullscreen and knows that it will be translating the location bar out of the safe area.  I\u0027d rather leave the LocationBarView\u0027s property to the default value in other cases.  I do feel that we could get rid of the property storing the restoration value and just reset it to YES, since that\u0027s the default value.  Any other view controller or coordinator that needs to lay it out offscreen can reset the property accordingly.",
+      "parentUuid": "8d0e2774_be90d426",
+      "range": {
+        "startLine": 319,
+        "startChar": 0,
+        "endLine": 319,
+        "endChar": 67
+      },
+      "revId": "f58a3001135497fc9bd911ddd36e56774db97b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
