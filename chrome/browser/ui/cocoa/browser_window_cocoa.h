@@ -7,6 +7,7 @@
 
 #include "base/mac/scoped_nsobject.h"
 #include "base/memory/weak_ptr.h"
+#include "base/observer_list.h"
 #include "chrome/browser/extensions/extension_keybinding_registry.h"
 #include "chrome/browser/signin/chrome_signin_helper.h"
 #include "chrome/browser/ui/browser_window.h"
@@ -145,6 +146,8 @@ class BrowserWindowCocoa
       const extensions::Extension* extension,
       const base::Callback<void(ImeWarningBubblePermissionStatus status)>&
           callback) override;
+  void AddObserver(BrowserWindowObserver* observer) override;
+  void RemoveObserver(BrowserWindowObserver* observer) override;
 
   // Overridden from ExtensionKeybindingRegistry::Delegate:
   extensions::ActiveTabPermissionGranter* GetActiveTabPermissionGranter()
@@ -173,6 +176,9 @@ class BrowserWindowCocoa
   void DestroyBrowser() override;
 
  private:
+  // Notifies observers that the current show state may have changed.
+  void NotifyShowStateChanged();
+
   NSWindow* window() const;  // Accessor for the (current) |NSWindow|.
 
   Browser* browser_;  // weak, owned by controller
@@ -185,6 +191,8 @@ class BrowserWindowCocoa
   // which can be audio playing, muting or none (determined by alert state of
   // tabs.
   TabAlertState alert_state_;
+
+  base::ObserverList<BrowserWindowObserver> observers_;
 };
 
 #endif  // CHROME_BROWSER_UI_COCOA_BROWSER_WINDOW_COCOA_H_
