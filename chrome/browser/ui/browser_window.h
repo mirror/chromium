@@ -31,6 +31,7 @@
 #endif  // defined(OS_CHROMEOS)
 
 class Browser;
+class BrowserWindowObserver;
 class DownloadShelf;
 class ExclusiveAccessContext;
 class FindBar;
@@ -325,6 +326,9 @@ class BrowserWindow : public ui::BaseWindow {
   static BrowserWindow* CreateBrowserWindow(Browser* browser,
                                             bool user_gesture);
 
+  // Returns the current window show state.
+  static ui::WindowShowState GetShowState(const BrowserWindow* window);
+
   // Shows the avatar bubble on the window frame off of the avatar button with
   // the given mode. The Service Type specified by GAIA is provided as well.
   // |access_point| indicates the access point used to open the Gaia sign in
@@ -366,6 +370,10 @@ class BrowserWindow : public ui::BaseWindow {
   // currently resides in.
   virtual std::string GetWorkspace() const = 0;
   virtual bool IsVisibleOnAllWorkspaces() const = 0;
+
+  // Adds/removes window state observers.
+  virtual void AddObserver(BrowserWindowObserver* observer) = 0;
+  virtual void RemoveObserver(BrowserWindowObserver* observer) = 0;
 
  protected:
   friend class BrowserCloseManager;
