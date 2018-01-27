@@ -241,6 +241,7 @@ static_library("content_shell_lib") {
     "//content:resources",
     "//content/app/resources",
     "//content/app/strings",
+    "//content/browser",  # TODO(hiroshige): Fix this violation.
     "//content/gpu",
     "//content/public/common",
     "//content/public/common:service_names",
@@ -455,6 +456,7 @@ repack("pak") {
     "$root_gen_dir/blink/public/resources/blink_scaled_resources_100_percent.pak",
     "$root_gen_dir/content/app/resources/content_resources_100_percent.pak",
     "$root_gen_dir/content/app/strings/content_strings_en-US.pak",
+    "$root_gen_dir/content/browser/permafill/permafill_resources.pak",
     "$root_gen_dir/content/browser/tracing/tracing_resources.pak",
     "$root_gen_dir/content/content_resources.pak",
     "$root_gen_dir/content/shell/shell_resources.pak",
@@ -471,6 +473,7 @@ repack("pak") {
     "//content:resources",
     "//content/app/resources",
     "//content/app/strings",
+    "//content/browser/permafill:resources",
     "//content/browser/tracing:resources",
     "//mojo/public/js:resources",
     "//net:net_resources",
