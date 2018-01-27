@@ -33,6 +33,7 @@
 #include "chrome/browser/ui/singleton_tabs.h"
 #include "chrome/browser/ui/user_manager.h"
 #include "chrome/browser/ui/webui/profile_helper.h"
+#include "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.h"
 #include "chrome/browser/ui/webui/signin/login_ui_service.h"
 #include "chrome/browser/ui/webui/signin/login_ui_service_factory.h"
 #include "chrome/common/chrome_switches.h"
@@ -62,7 +63,10 @@
 #if defined(OS_CHROMEOS)
 #include "components/signin/core/browser/signin_manager_base.h"
 #else
+#include "chrome/browser/signin/account_tracker_service_factory.h"
+#include "components/signin/core/browser/account_tracker_service.h"
 #include "components/signin/core/browser/signin_manager.h"
+#include "third_party/skia/include/core/SkBitmap.h"
 #endif
 
 using browser_sync::ProfileSyncService;
@@ -186,7 +190,14 @@ PeopleHandler::PeopleHandler(Profile* profile)
     : profile_(profile),
       configuring_sync_(false),
       signin_observer_(this),
-      sync_service_observer_(this) {}
+#if !defined(OS_CHROMEOS)
+      sync_service_observer_(this),
+      account_tracker_observer_(this) {
+}
+#else
+      sync_service_observer_(this) {
+}
+#endif
 
 PeopleHandler::~PeopleHandler() {
   // Early exit if running unit tests (no actual WebUI is attached).
@@ -228,8 +239,16 @@ void PeopleHandler::RegisterMessages() {
       "SyncSetupStopSyncing",
       base::Bind(&PeopleHandler::HandleStopSyncing, base::Unretained(this)));
   web_ui()->RegisterMessageCallback(
+      "SyncSetupStartSyncingWithEmail",
+      base::BindRepeating(&PeopleHandler::HandleStartSyncingWithEmail,
+                          base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
       "SyncSetupStartSignIn",
       base::Bind(&PeopleHandler::HandleStartSignin, base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      "SyncSetupGetAvailableAccounts",
+      base::BindRepeating(&PeopleHandler::HandleGetAvailableAccounts,
+                          base::Unretained(this)));
 #endif
 }
 
@@ -249,12 +268,22 @@ void PeopleHandler::OnJavascriptAllowed() {
       ProfileSyncServiceFactory::GetInstance()->GetForProfile(profile_));
   if (sync_service)
     sync_service_observer_.Add(sync_service);
+
+#if !defined(OS_CHROMEOS)
+  AccountTrackerService* account_tracker(
+      AccountTrackerServiceFactory::GetForProfile(profile_));
+  if (account_tracker)
+    account_tracker_observer_.Add(account_tracker);
+#endif
 }
 
 void PeopleHandler::OnJavascriptDisallowed() {
   profile_pref_registrar_.RemoveAll();
   signin_observer_.RemoveAll();
   sync_service_observer_.RemoveAll();
+#if !defined(OS_CHROMEOS)
+  account_tracker_observer_.RemoveAll();
+#endif
 }
 
 #if !defined(OS_CHROMEOS)
@@ -407,6 +436,53 @@ void PeopleHandler::HandleSetDatatypes(const base::ListValue* args) {
     ProfileMetrics::LogProfileSyncInfo(ProfileMetrics::SYNC_CHOOSE);
 }
 
+#if !defined(OS_CHROMEOS)
+void PeopleHandler::HandleGetAvailableAccounts(const base::ListValue* args) {
+  CHECK_EQ(1U, args->GetSize());
+  const base::Value* callback_id;
+  CHECK(args->Get(0, &callback_id));
+
+  ResolveJavascriptCallback(*callback_id, *GetAvailableAccountsList());
+}
+
+void PeopleHandler::OnAccountUpdated(const AccountInfo& info) {
+  LOG(ERROR) << "----------UPDATED----------";
+  FireWebUIListener("available-accounts-updated", *GetAvailableAccountsList());
+}
+
+void PeopleHandler::OnAccountRemoved(const AccountInfo& info) {
+  LOG(ERROR) << "----------REMOVED----------";
+  // TODO: This creates a race condition when logging out of many accounts at the same time.
+  FireWebUIListener("available-accounts-updated", *GetAvailableAccountsList());
+}
+
+std::unique_ptr<base::ListValue>
+PeopleHandler::GetAvailableAccountsList() {
+  AccountTrackerService* account_tracker =
+      AccountTrackerServiceFactory::GetForProfile(profile_);
+  std::vector<AccountInfo> accounts = account_tracker->GetAccounts();
+
+  LOG(ERROR) << accounts.size();
+
+  std::unique_ptr<base::ListValue> accounts_(new base::ListValue);
+  accounts_->Reserve(accounts.size());
+
+  for (auto const& account : accounts) {
+    accounts_->GetList().push_back(base::Value(base::Value::Type::DICTIONARY));
+    base::Value& acc = accounts_->GetList().back();
+    acc.SetKey("email", base::Value(account.email));
+    acc.SetKey("fullName", base::Value(account.full_name));
+    acc.SetKey("pictureUrl", base::Value(account.picture_url));
+    // acc.SetKey(
+    //     "pictureUrl",
+    //     base::Value(webui::GetBitmapDataUrl(
+    //         account_tracker->GetAccountImage(account.account_id).AsBitmap())));
+  }
+
+  return accounts_;
+}
+#endif
+
 void PeopleHandler::HandleSetEncryption(const base::ListValue* args) {
   DCHECK(!sync_startup_tracker_);
 
@@ -526,6 +602,30 @@ void PeopleHandler::HandleStartSignin(const base::ListValue* args) {
          SigninErrorControllerFactory::GetForProfile(profile_)->HasError());
 
   OpenSyncSetup();
+}
+
+void PeopleHandler::HandleStartSyncingWithEmail(const base::ListValue* args) {
+  const base::Value* email;
+  CHECK(args->Get(0, &email));
+
+  LOG(ERROR) << *email;
+
+  AccountTrackerService* account_tracker =
+      AccountTrackerServiceFactory::GetForProfile(profile_);
+  std::vector<AccountInfo> accounts = account_tracker->GetAccounts();
+
+  Browser* browser =
+      chrome::FindBrowserWithWebContents(web_ui()->GetWebContents());
+
+  for (auto const& account : accounts) {
+    if (base::Value(account.email) == *email) {
+      signin_ui_util::EnableSync(
+          browser, account, signin_metrics::AccessPoint::ACCESS_POINT_SETTINGS);
+
+      LOG(ERROR) << "ENABLE SYNC";
+      break;
+    }
+  }
 }
 
 void PeopleHandler::HandleStopSyncing(const base::ListValue* args) {
@@ -787,6 +887,16 @@ PeopleHandler::GetSyncStatusDictionary() {
   sync_status->SetBoolean("hasUnrecoverableError",
                           service && service->HasUnrecoverableError());
 
+  // TODO: for some reason this doesn't get passed the first time user logs in.
+  if (signin->IsAuthenticated()) {
+    sync_status->SetString(
+        "signedInFullName",
+        base::UTF8ToUTF16(signin->GetAuthenticatedAccountInfo().full_name));
+    // TODO: use encoded image url
+    sync_status->SetString(
+        "signedInPictureUrl",
+        base::UTF8ToUTF16(signin->GetAuthenticatedAccountInfo().picture_url));
+  }
   return sync_status;
 }
 

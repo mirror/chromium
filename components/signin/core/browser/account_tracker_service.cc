@@ -206,10 +206,10 @@ void AccountTrackerService::StopTrackingAccount(const std::string& account_id) {
   if (base::ContainsKey(accounts_, account_id)) {
     AccountState& state = accounts_[account_id];
     RemoveFromPrefs(state);
+    accounts_.erase(account_id);
+
     if (!state.info.gaia.empty())
       NotifyAccountRemoved(state);
-
-    accounts_.erase(account_id);
   }
 }
 
