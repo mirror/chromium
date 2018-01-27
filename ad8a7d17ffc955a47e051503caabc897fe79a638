@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "425ea12c_8c7af4a1",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_fragment_painter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2018-01-27T00:27:13Z",
+      "side": 1,
+      "message": "I\u0027ve pulled traversal into NGPaintFragmentTraversal",
+      "parentUuid": "2962a167_120527b3",
+      "revId": "ad8a7d17ffc955a47e051503caabc897fe79a638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a6974d2_16dcc1e0",
         "filename": "third_party/WebKit/Source/core/paint/ng/ng_fragment_painter.cc",
         "patchSetId": 3
@@ -51,6 +69,24 @@
       "revId": "ad8a7d17ffc955a47e051503caabc897fe79a638",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc4ee438_0cc7e342",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_fragment_painter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2018-01-27T00:27:13Z",
+      "side": 1,
+      "message": "Good suggestion. Done.",
+      "parentUuid": "4a6974d2_16dcc1e0",
+      "revId": "ad8a7d17ffc955a47e051503caabc897fe79a638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
