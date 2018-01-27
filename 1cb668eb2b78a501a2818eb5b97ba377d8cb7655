@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b76f9e3_e2bbcb30",
+        "filename": "content/public/common/content_features.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-27T14:30:49Z",
+      "side": 1,
+      "message": "This needs a comment what the feature is.",
+      "revId": "1cb668eb2b78a501a2818eb5b97ba377d8cb7655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
