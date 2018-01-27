@@ -12,6 +12,7 @@
 #include "content/browser/appcache/appcache_url_loader_request.h"
 #include "content/browser/url_loader_factory_getter.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/common/shared_url_loader_factory.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "mojo/public/cpp/bindings/interface_ptr.h"
@@ -89,16 +90,17 @@ class SubresourceLoader : public network::mojom::URLLoader,
                                  weak_factory_.GetWeakPtr()));
   }
 
-  void ContinueStart(StartLoaderCallback start_function) {
-    if (start_function)
-      CreateAndStartAppCacheLoader(std::move(start_function));
+  void ContinueStart(SharedURLLoaderFactory::SingleRequestLoader loader) {
+    if (loader)
+      CreateAndStartAppCacheLoader(std::move(loader));
     else
       CreateAndStartNetworkLoader();
   }
 
-  void CreateAndStartAppCacheLoader(StartLoaderCallback start_function) {
+  void CreateAndStartAppCacheLoader(
+      SharedURLLoaderFactory::SingleRequestLoader loader) {
     DCHECK(!appcache_loader_) << "only expected to be called onced";
-    DCHECK(start_function);
+    DCHECK(loader);
 
     // Disconnect from the network loader first.
     local_client_binding_.Close();
@@ -106,8 +108,8 @@ class SubresourceLoader : public network::mojom::URLLoader,
 
     network::mojom::URLLoaderClientPtr client_ptr;
     local_client_binding_.Bind(mojo::MakeRequest(&client_ptr));
-    std::move(start_function)
-        .Run(mojo::MakeRequest(&appcache_loader_), std::move(client_ptr));
+    std::move(loader).Run(mojo::MakeRequest(&appcache_loader_),
+                          std::move(client_ptr));
   }
 
   void CreateAndStartNetworkLoader() {
@@ -141,9 +143,10 @@ class SubresourceLoader : public network::mojom::URLLoader,
   // network::mojom::URLLoader implementation
   void ProceedWithResponse() override { NOTREACHED(); }
 
-  void ContinueFollowRedirect(StartLoaderCallback start_function) {
-    if (start_function)
-      CreateAndStartAppCacheLoader(std::move(start_function));
+  void ContinueFollowRedirect(
+      SharedURLLoaderFactory::SingleRequestLoader loader) {
+    if (loader)
+      CreateAndStartAppCacheLoader(std::move(loader));
     else
       network_loader_->FollowRedirect();
   }
@@ -194,9 +197,9 @@ class SubresourceLoader : public network::mojom::URLLoader,
       const network::ResourceResponseHead& response_head,
       const base::Optional<net::SSLInfo>& ssl_info,
       network::mojom::DownloadedTempFilePtr downloaded_file,
-      StartLoaderCallback start_function) {
-    if (start_function) {
-      CreateAndStartAppCacheLoader(std::move(start_function));
+      SharedURLLoaderFactory::SingleRequestLoader loader) {
+    if (loader) {
+      CreateAndStartAppCacheLoader(std::move(loader));
     } else {
       remote_client_->OnReceiveResponse(response_head, ssl_info,
                                         std::move(downloaded_file));
@@ -225,9 +228,9 @@ class SubresourceLoader : public network::mojom::URLLoader,
 
   void ContinueOnReceiveRedirect(
       const network::ResourceResponseHead& response_head,
-      StartLoaderCallback start_function) {
-    if (start_function)
-      CreateAndStartAppCacheLoader(std::move(start_function));
+      SharedURLLoaderFactory::SingleRequestLoader loader) {
+    if (loader)
+      CreateAndStartAppCacheLoader(std::move(loader));
     else
       remote_client_->OnReceiveRedirect(redirect_info_, response_head);
   }
@@ -269,9 +272,9 @@ class SubresourceLoader : public network::mojom::URLLoader,
   }
 
   void ContinueOnComplete(const network::URLLoaderCompletionStatus& status,
-                          StartLoaderCallback start_function) {
-    if (start_function)
-      CreateAndStartAppCacheLoader(std::move(start_function));
+                          SharedURLLoaderFactory::SingleRequestLoader loader) {
+    if (loader)
+      CreateAndStartAppCacheLoader(std::move(loader));
     else
       remote_client_->OnComplete(status);
   }
