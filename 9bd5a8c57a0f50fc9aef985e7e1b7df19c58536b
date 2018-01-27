@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82f33b14_bfc43308",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-27T01:30:04Z",
+      "side": 1,
+      "message": "Is this desirable? In general we always want a click above a tab to switch to the tab when the window is maximized. This makes the clickable area effectively infinitely tall and makes it easier to switch tabs.",
+      "revId": "9bd5a8c57a0f50fc9aef985e7e1b7df19c58536b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
