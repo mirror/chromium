@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f94a7570_c8e4a58a",
+        "filename": "components/omnibox/browser/in_memory_url_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2018-01-27T20:06:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "69d95c9a_09875cc8",
+      "range": {
+        "startLine": 104,
+        "startChar": 55,
+        "endLine": 104,
+        "endChar": 75
+      },
+      "revId": "e78f9720d6852261345bb3d91a47e8057a80b34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b222cbe_1699ed32",
         "filename": "components/omnibox/browser/in_memory_url_index.cc",
         "patchSetId": 1
@@ -219,6 +243,30 @@
       "side": 1,
       "message": "Why can\u0027t it exist? What If I do tracing more than once?\nBTW this is a per profile class - so I can have two of them at once.\n\nAre you sure?",
       "parentUuid": "f570cbbe_8930a370",
+      "range": {
+        "startLine": 224,
+        "startChar": 36,
+        "endLine": 224,
+        "endChar": 60
+      },
+      "revId": "e78f9720d6852261345bb3d91a47e8057a80b34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35047ce3_14217c1a",
+        "filename": "components/omnibox/browser/in_memory_url_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2018-01-27T20:06:00Z",
+      "side": 1,
+      "message": "Ohh! In that case you\u0027d have to append an id and create two dumps. Running tracing multiple times will not be an issue since we append a global dump id to the dumps. But if we have multiple instances then creating multiple dumps would record both usage. Using GetOrCreate will override existing dump, so we will lose data. Could you please add the pointer to this class as Id, like here\nhttps://cs.chromium.org/chromium/src/gin/v8_isolate_memory_dump_provider.cc?rcl\u003dfb85136da7f8e6e70210c18ffa4ebd1be0c6b5d6\u0026l\u003d120\nLike Stringprintf(\"omnibox/profile_0x\" prixptr \"/in_memory_index\", cast(this))\nNote: We need the \"0x\" and hex format for internal parsing code.\nThanks.",
+      "parentUuid": "0c923a9e_015fa526",
       "range": {
         "startLine": 224,
         "startChar": 36,
