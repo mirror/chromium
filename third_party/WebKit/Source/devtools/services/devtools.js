@@ -2,11 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-var dispatcher = require("./dispatcher.js");
-var terminal = require("./terminal.js");
+var dispatcher = require('./dispatcher.js');
+var terminal = require('./terminal.js');
+var git = require('./git.js')
 
 var d = new dispatcher.Dispatcher();
-d.registerObject("Terminal", terminal.Terminal);
+d.registerObject('Terminal', terminal.Terminal);
+d.registerObject('Git', git.Git);
 d.start(9022);
 
-console.log("Run chrome as `chrome --devtools-flags='service-backend=ws://localhost:9022/endpoint'`");
+console.log(`Run chrome as "chrome --devtools-flags='service-backend=ws://localhost:9022/endpoint'"`);
