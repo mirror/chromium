@@ -7,16 +7,21 @@
 #import <objc/runtime.h>
 #include <stddef.h>
 
+#include "base/feature_list.h"
 #include "base/ios/ios_util.h"
 #include "base/logging.h"
 #include "base/mac/foundation_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/sys_string_conversions.h"
+#include "ios/web/public/features.h"
 #import "ios/web/public/web_state/context_menu_params.h"
 #import "ios/web/public/web_state/js/crw_js_injection_evaluator.h"
 #import "ios/web/public/web_state/ui/crw_context_menu_delegate.h"
 #import "ios/web/web_state/context_menu_constants.h"
 #import "ios/web/web_state/context_menu_params_utils.h"
+#import "ios/web/web_state/ui/crw_context_menu_element_fetch_details.h"
+#import "ios/web/web_state/ui/crw_wk_script_message_router.h"
+#import "ios/web/web_state/ui/wk_web_view_configuration_provider.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -40,6 +45,11 @@ void CancelTouches(UIGestureRecognizer* gesture_recognizer) {
     gesture_recognizer.enabled = YES;
   }
 }
+
+// JavaScript message handler name installed in WKWebView for found element
+// response.
+NSString* const kFindElementResultHandlerName = @"FindElementResultHandler";
+
 }  // namespace
 
 @interface CRWContextMenuController ()<UIGestureRecognizerDelegate>
@@ -53,6 +63,8 @@ void CancelTouches(UIGestureRecognizer* gesture_recognizer) {
 @property(nonatomic, readonly, weak) id<CRWContextMenuDelegate> delegate;
 // Returns the x, y offset the content has been scrolled.
 @property(nonatomic, readonly) CGPoint scrollPosition;
+// Details for currently in progress element fetches.
+@property(nonatomic, strong) NSMutableDictionary* ongoingElementFetchDetails;
 
 // Returns a gesture recognizers with |fragment| in it's description.
 - (UIGestureRecognizer*)gestureRecognizerWithDescriptionFragment:
@@ -75,6 +87,10 @@ void CancelTouches(UIGestureRecognizer* gesture_recognizer) {
              completionHandler:(void (^)(NSDictionary*))handler;
 // Sets the value of |_DOMElementForLastTouch|.
 - (void)setDOMElementForLastTouch:(NSDictionary*)element;
+// Called to process a message received from JavaScript.
+- (void)receivedScriptMessage:(WKScriptMessage*)message;
+// Logs the time taken to fetch DOM element details.
+- (void)logElementFetchDuration:(base::TimeTicks)elementFetchStartTime;
 // Forwards the execution of |script| to |javaScriptDelegate| and if it is nil,
 // to |webView|.
 - (void)executeJavaScript:(NSString*)script
@@ -103,10 +119,12 @@ void CancelTouches(UIGestureRecognizer* gesture_recognizer) {
 }
 
 @synthesize delegate = _delegate;
+@synthesize ongoingElementFetchDetails = _ongoingElementFetchDetails;
 @synthesize injectionEvaluator = _injectionEvaluator;
 @synthesize webView = _webView;
 
 - (instancetype)initWithWebView:(WKWebView*)webView
+                   browserState:(web::BrowserState*)browserState
              injectionEvaluator:(id<CRWJSInjectionEvaluator>)injectionEvaluator
                        delegate:(id<CRWContextMenuDelegate>)delegate {
   DCHECK(webView);
@@ -115,6 +133,7 @@ void CancelTouches(UIGestureRecognizer* gesture_recognizer) {
     _webView = webView;
     _delegate = delegate;
     _injectionEvaluator = injectionEvaluator;
+    _ongoingElementFetchDetails = [[NSMutableDictionary alloc] init];
 
     // The system context menu triggers after 0.55 second. Add a gesture
     // recognizer with a shorter delay to be able to cancel the system menu if
@@ -150,6 +169,21 @@ void CancelTouches(UIGestureRecognizer* gesture_recognizer) {
                                  associated_object_key, _contextMenuRecognizer,
                                  OBJC_ASSOCIATION_RETAIN_NONATOMIC);
       }
+    }
+
+    if (base::FeatureList::IsEnabled(
+            web::features::kContextMenuAsyncElementFetch)) {
+      // Listen for fetched element response.
+      web::WKWebViewConfigurationProvider& configurationProvider =
+          web::WKWebViewConfigurationProvider::FromBrowserState(browserState);
+      CRWWKScriptMessageRouter* messageRouter =
+          configurationProvider.GetScriptMessageRouter();
+      __weak CRWContextMenuController* weakSelf = self;
+      [messageRouter setScriptMessageHandler:^(WKScriptMessage* message) {
+        [weakSelf receivedScriptMessage:message];
+      }
+                                        name:kFindElementResultHandlerName
+                                     webView:webView];
     }
   }
   return self;
@@ -286,6 +320,23 @@ void CancelTouches(UIGestureRecognizer* gesture_recognizer) {
   }
 }
 
+- (void)receivedScriptMessage:(WKScriptMessage*)message {
+  NSDictionary* response = message.body;
+  NSString* identifier = response[web::kContextMenuElementRequestID];
+  CRWContextMenuElementFetchDetails* fetchDetails =
+      _ongoingElementFetchDetails[identifier];
+  if (fetchDetails) {
+    [_ongoingElementFetchDetails removeObjectForKey:identifier];
+    [self logElementFetchDuration:fetchDetails.fetchStartTime];
+    fetchDetails.foundElementHandler(response);
+  }
+}
+
+- (void)logElementFetchDuration:(base::TimeTicks)elementFetchStartTime {
+  UMA_HISTOGRAM_TIMES("ContextMenu.DOMElementFetchDuration",
+                      base::TimeTicks::Now() - elementFetchStartTime);
+}
+
 #pragma mark -
 #pragma mark UIGestureRecognizerDelegate
 
@@ -337,18 +388,41 @@ void CancelTouches(UIGestureRecognizer* gesture_recognizer) {
 - (void)fetchDOMElementAtPoint:(CGPoint)point
              completionHandler:(void (^)(NSDictionary*))handler {
   DCHECK(handler);
+
   CGPoint scrollOffset = self.scrollPosition;
   CGSize webViewContentSize = self.webScrollView.contentSize;
   CGFloat webViewContentWidth = webViewContentSize.width;
   CGFloat webViewContentHeight = webViewContentSize.height;
-  NSString* getElementScript = [NSString
-      stringWithFormat:@"__gCrWeb.getElementFromPoint(%g, %g, %g, %g);",
-                       point.x + scrollOffset.x, point.y + scrollOffset.y,
-                       webViewContentWidth, webViewContentHeight];
-  [self executeJavaScript:getElementScript
-        completionHandler:^(id element, NSError*) {
-          handler(base::mac::ObjCCastStrict<NSDictionary>(element));
-        }];
+
+  NSString* formatString;
+  web::JavaScriptResultBlock completionHandler;
+  if (base::FeatureList::IsEnabled(
+          web::features::kContextMenuAsyncElementFetch)) {
+    CRWContextMenuElementFetchDetails* fetchDetails =
+        [[CRWContextMenuElementFetchDetails alloc]
+            initWithFoundElementHandler:handler];
+    [_ongoingElementFetchDetails setObject:fetchDetails
+                                    forKey:fetchDetails.identifier];
+
+    formatString =
+        [NSString stringWithFormat:
+                      @"__gCrWeb.findElementAtPoint('%@', %%g, %%g, %%g, %%g);",
+                      fetchDetails.identifier];
+    completionHandler = nil;
+  } else {
+    formatString = @"__gCrWeb.getElementFromPoint(%g, %g, %g, %g);";
+    base::TimeTicks getElementStartTime = base::TimeTicks::Now();
+    completionHandler = ^(id element, NSError*) {
+      [self logElementFetchDuration:getElementStartTime];
+      handler(base::mac::ObjCCastStrict<NSDictionary>(element));
+    };
+  }
+
+  NSString* getElementScript =
+      [NSString stringWithFormat:formatString, point.x + scrollOffset.x,
+                                 point.y + scrollOffset.y, webViewContentWidth,
+                                 webViewContentHeight];
+  [self executeJavaScript:getElementScript completionHandler:completionHandler];
 }
 
 @end
