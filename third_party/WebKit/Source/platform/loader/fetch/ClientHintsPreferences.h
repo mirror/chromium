@@ -13,6 +13,7 @@
 
 namespace blink {
 
+class KURL;
 class ResourceResponse;
 
 // TODO (tbansal): Remove PLATFORM_EXPORT, and pass WebClientHintsType
@@ -58,6 +59,8 @@ class PLATFORM_EXPORT ClientHintsPreferences {
       Context*,
       WebEnabledClientHints& enabled_hints,
       TimeDelta* persist_duration);
+
+  static bool IsClientHintsAllowed(const KURL&);
 
  private:
   WebEnabledClientHints enabled_hints_;
