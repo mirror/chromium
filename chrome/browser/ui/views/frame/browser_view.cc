@@ -52,6 +52,7 @@
 #include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_list.h"
+#include "chrome/browser/ui/browser_window_observer.h"
 #include "chrome/browser/ui/browser_window_state.h"
 #include "chrome/browser/ui/extensions/hosted_app_browser_controller.h"
 #include "chrome/browser/ui/sync/bubble_sync_promo_delegate.h"
@@ -842,14 +843,17 @@ bool BrowserView::IsMinimized() const {
 
 void BrowserView::Maximize() {
   frame_->Maximize();
+  NotifyIfShowStateChanged();
 }
 
 void BrowserView::Minimize() {
   frame_->Minimize();
+  NotifyIfShowStateChanged();
 }
 
 void BrowserView::Restore() {
   frame_->Restore();
+  NotifyIfShowStateChanged();
 }
 
 void BrowserView::EnterFullscreen(const GURL& url,
@@ -2372,6 +2376,8 @@ void BrowserView::ProcessFullscreen(bool fullscreen,
   WebContents* contents = browser_->tab_strip_model()->GetActiveWebContents();
   if (contents && PermissionRequestManager::FromWebContents(contents))
     PermissionRequestManager::FromWebContents(contents)->UpdateAnchorPosition();
+
+  NotifyIfShowStateChanged();
 }
 
 bool BrowserView::ShouldUseImmersiveFullscreenForUrl(const GURL& url) const {
@@ -2562,6 +2568,14 @@ bool BrowserView::IsVisibleOnAllWorkspaces() const {
   return frame_->IsVisibleOnAllWorkspaces();
 }
 
+void BrowserView::AddObserver(BrowserWindowObserver* observer) {
+  observers_.AddObserver(observer);
+}
+
+void BrowserView::RemoveObserver(BrowserWindowObserver* observer) {
+  observers_.RemoveObserver(observer);
+}
+
 bool BrowserView::DoCutCopyPasteForWebContents(
     WebContents* contents,
     void (WebContents::*method)()) {
@@ -2621,6 +2635,15 @@ bool BrowserView::FindCommandIdForAccelerator(
     return false;
 
   return true;
+}
+
+void BrowserView::NotifyIfShowStateChanged() {
+  ui::WindowShowState show_state = GetShowState(this);
+  if (show_state == last_show_state_)
+    return;
+  last_show_state_ = show_state;
+  for (BrowserWindowObserver& observer : observers_)
+    observer.OnShowStateChanged(show_state);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

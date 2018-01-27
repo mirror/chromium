@@ -27,6 +27,7 @@
 #include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/browser/ui/browser_list.h"
+#include "chrome/browser/ui/browser_window_observer.h"
 #include "chrome/browser/ui/browser_window_state.h"
 #include "chrome/browser/ui/cocoa/autofill/save_card_bubble_view_views.h"
 #import "chrome/browser/ui/cocoa/browser/exclusive_access_controller_views.h"
@@ -371,12 +372,15 @@ bool BrowserWindowCocoa::IsMinimized() const {
 
 void BrowserWindowCocoa::Maximize() {
   // Zoom toggles so only call if not already maximized.
-  if (!IsMaximized())
+  if (!IsMaximized()) {
     [window() zoom:controller_];
+    NotifyIfShowStateChanged();
+  }
 }
 
 void BrowserWindowCocoa::Minimize() {
   [window() miniaturize:controller_];
+  NotifyIfShowStateChanged();
 }
 
 void BrowserWindowCocoa::Restore() {
@@ -384,6 +388,7 @@ void BrowserWindowCocoa::Restore() {
     [window() zoom:controller_];  // Toggles zoom mode.
   else if (IsMinimized())
     [window() deminiaturize:controller_];
+  NotifyIfShowStateChanged();
 }
 
 bool BrowserWindowCocoa::ShouldHideUIForFullscreen() const {
@@ -712,4 +717,21 @@ void BrowserWindowCocoa::ShowImeWarningBubble(
     const base::Callback<void(ImeWarningBubblePermissionStatus status)>&
         callback) {
   NOTREACHED() << "The IME warning bubble is unsupported on this platform.";
+}
+
+void BrowserWindowCocoa::AddObserver(BrowserWindowObserver* observer) {
+  observers_.AddObserver(observer);
+}
+
+void BrowserWindowCocoa::RemoveObserver(BrowserWindowObserver* observer) {
+  observers_.RemoveObserver(observer);
+}
+
+void BrowserWindowCocoa::NotifyIfShowStateChanged() {
+  ui::WindowShowState show_state = GetShowState(this);
+  if (show_state == last_show_state_)
+    return;
+  last_show_state_ = show_state;
+  for (BrowserWindowObserver& observer : observers_)
+    observer.OnShowStateChanged(show_state);
 }
