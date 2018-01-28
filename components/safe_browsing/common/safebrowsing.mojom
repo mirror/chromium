@@ -1,0 +1,19 @@
+
+module blink.mojom;
+
+struct Node {
+  int32 node_id;
+  # gurl url;
+  string tag_name;
+  # gurl parent;
+  int32 parent_node_id;
+  # array<gurl> children;
+  array<int32> child_node_ids;
+  # array <safe_browsing::AttributeNameValue> attributes;
+  int32 child_routing_id;
+};
+
+interface SafeBrowsing {
+  ThreatDOMDetails(str blah) => (str blah);
+
+};

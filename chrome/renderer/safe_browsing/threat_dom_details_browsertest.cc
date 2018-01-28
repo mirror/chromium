@@ -56,7 +56,8 @@ TEST_F(ThreatDOMDetailsTest, Everything) {
   std::unique_ptr<base::test::ScopedFeatureList> feature_list =
       SetupTagAndAttributeFeature();
   std::unique_ptr<safe_browsing::ThreatDOMDetails> details(
-      safe_browsing::ThreatDOMDetails::Create(view_->GetMainRenderFrame()));
+      safe_browsing::ThreatDOMDetails::Create(view_->GetMainRenderFrame(),
+                                              registry_.get()));
   // Lower kMaxNodes and kMaxAttributes for the test. Loading 500 subframes in a
   // debug build takes a while.
   safe_browsing::ThreatDOMDetails::kMaxNodes = 50;
@@ -300,7 +301,8 @@ TEST_F(ThreatDOMDetailsTest, DefaultTagAndAttributesList) {
   feature_list->InitAndDisableFeature(
       safe_browsing::kThreatDomDetailsTagAndAttributeFeature);
   std::unique_ptr<safe_browsing::ThreatDOMDetails> details(
-      safe_browsing::ThreatDOMDetails::Create(view_->GetMainRenderFrame()));
+      safe_browsing::ThreatDOMDetails::Create(view_->GetMainRenderFrame(),
+                                              registry_.get()));
   const char urlprefix[] = "data:text/html;charset=utf-8,";
 
   // A page with some divs containing an iframe which itself contains an

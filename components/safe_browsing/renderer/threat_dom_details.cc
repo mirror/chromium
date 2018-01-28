@@ -19,6 +19,7 @@
 #include "components/safe_browsing/common/safebrowsing_types.h"
 #include "components/safe_browsing/features.h"
 #include "content/public/renderer/render_frame.h"
+#include "third_party/WebKit/common/associated_interfaces/associated_interface_registry.h"
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
 #include "third_party/WebKit/public/web/WebElement.h"
@@ -263,15 +264,25 @@ uint32_t ThreatDOMDetails::kMaxAttributes = 100;
 uint32_t ThreatDOMDetails::kMaxAttributeStringLength = 100;
 
 // static
-ThreatDOMDetails* ThreatDOMDetails::Create(content::RenderFrame* render_frame) {
+ThreatDOMDetails* ThreatDOMDetails::Create(
+    content::RenderFrame* render_frame,
+    service_manager::BinderRegistry* registry) {
   // Private constructor and public static Create() method to facilitate
   // stubbing out this class for binary-size reduction purposes.
-  return new ThreatDOMDetails(render_frame);
+  return new ThreatDOMDetails(render_frame, registry);
 }
 
-ThreatDOMDetails::ThreatDOMDetails(content::RenderFrame* render_frame)
+void ThreatDOMDetails::OnThreatReportRequest(
+    mojom::ThreatReportRequest request) {
+  threat_report_bindings_.AddBinding(this, std::move(request));
+}
+
+ThreatDOMDetails::ThreatDOMDetails(content::RenderFrame* render_frame,
+                                   service_manager::BinderRegistry* registry)
     : content::RenderFrameObserver(render_frame) {
   ParseTagAndAttributeParams(&tag_and_attributes_list_);
+  registry->AddInterface(base::BindRepeating(
+      &ThreatDOMDetails::OnThreatReportRequest, base::Unretained(this)));
 }
 
 ThreatDOMDetails::~ThreatDOMDetails() {}
@@ -279,14 +290,12 @@ ThreatDOMDetails::~ThreatDOMDetails() {}
 bool ThreatDOMDetails::OnMessageReceived(const IPC::Message& message) {
   bool handled = true;
   IPC_BEGIN_MESSAGE_MAP(ThreatDOMDetails, message)
-    IPC_MESSAGE_HANDLER(SafeBrowsingMsg_GetThreatDOMDetails,
-                        OnGetThreatDOMDetails)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
   return handled;
 }
 
-void ThreatDOMDetails::OnGetThreatDOMDetails() {
+void ThreatDOMDetails::GetThreatDOMDetails() {
   std::vector<SafeBrowsingHostMsg_ThreatDOMDetails_Node> resources;
   ExtractResources(&resources);
   // Notify the browser.
