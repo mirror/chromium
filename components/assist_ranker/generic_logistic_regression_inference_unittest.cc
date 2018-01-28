@@ -21,9 +21,12 @@ class GenericLogisticRegressionInferenceTest : public testing::Test {
     weights[scalar3_name_].set_scalar(scalar3_weight_);
     auto* one_hot_feat = weights[one_hot_name_].mutable_one_hot();
     one_hot_feat->set_default_weight(one_hot_default_weight_);
-    (*one_hot_feat->mutable_weights())[one_hot_elem1_name_] = elem1_weight_;
-    (*one_hot_feat->mutable_weights())[one_hot_elem2_name_] = elem2_weight_;
-    (*one_hot_feat->mutable_weights())[one_hot_elem3_name_] = elem3_weight_;
+    (*one_hot_feat->mutable_weights())[one_hot_elem1_name_] =
+        one_hot_elem1_weight;
+    (*one_hot_feat->mutable_weights())[one_hot_elem2_name_] =
+        one_hot_elem2_weight;
+    (*one_hot_feat->mutable_weights())[one_hot_elem3_name_] =
+        one_hot_elem3_weight;
     return proto;
   }
 
@@ -39,9 +42,9 @@ class GenericLogisticRegressionInferenceTest : public testing::Test {
   const float scalar1_weight_ = 0.8f;
   const float scalar2_weight_ = -2.4f;
   const float scalar3_weight_ = 0.01f;
-  const float elem1_weight_ = -1.0f;
-  const float elem2_weight_ = 5.0f;
-  const float elem3_weight_ = -1.5f;
+  const float one_hot_elem1_weight = -1.0f;
+  const float one_hot_elem2_weight = 5.0f;
+  const float one_hot_elem3_weight = -1.5f;
   const float one_hot_default_weight_ = 10.0f;
   const float epsilon_ = 0.001f;
 };
@@ -59,7 +62,7 @@ TEST_F(GenericLogisticRegressionInferenceTest, BaseTest) {
   float score = predictor.PredictScore(example);
   float expected_score =
       Sigmoid(bias_ + 1.0f * scalar1_weight_ + 42.0f * scalar2_weight_ +
-              0.666f * scalar3_weight_ + elem1_weight_);
+              0.666f * scalar3_weight_ + one_hot_elem1_weight);
   EXPECT_NEAR(expected_score, score, epsilon_);
   EXPECT_EQ(expected_score >= threshold_, predictor.Predict(example));
 }
@@ -99,7 +102,7 @@ TEST_F(GenericLogisticRegressionInferenceTest, UnknownFeatures) {
   auto predictor = GenericLogisticRegressionInference(GetProto());
   float score = predictor.PredictScore(example);
   // Unknown features will be ignored.
-  float expected_score = Sigmoid(bias_ + elem2_weight_);
+  float expected_score = Sigmoid(bias_ + one_hot_elem2_weight);
   EXPECT_NEAR(expected_score, score, epsilon_);
 }
 
