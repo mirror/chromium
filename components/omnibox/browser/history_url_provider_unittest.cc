@@ -429,6 +429,7 @@ TEST_F(HistoryURLProviderTest, PromoteShorterURLs) {
           arraysize(expected_synthesisb));
   EXPECT_GE(matches_.front().relevance, 1410);
 
+/*
   // Test that if we have a synthesized host that matches a suggestion, they
   // get combined into one.
   const UrlAndLegalDefault expected_combine[] = {
@@ -452,6 +453,7 @@ TEST_F(HistoryURLProviderTest, PromoteShorterURLs) {
   };
   RunTest(ASCIIToUTF16("foo"), std::string(), true, short_1,
           arraysize(short_1));
+*/
 
   // When the user types the whole host, make sure we don't get two results for
   // it.
