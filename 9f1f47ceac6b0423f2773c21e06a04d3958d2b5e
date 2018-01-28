@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "4c60273c_837c9b89",
+        "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-28T23:47:19Z",
+      "side": 1,
+      "message": "Because it\u0027s a bit subtle:\n\nOnly run this test if BLE is available because BluetoothAdapter::SetPowered is only supported on macOS if BLE is available.",
+      "revId": "9f1f47ceac6b0423f2773c21e06a04d3958d2b5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a3bc5ae_edc2ba06",
         "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
         "patchSetId": 14
