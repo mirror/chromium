@@ -30,16 +30,20 @@ class ComputedAccessibleNode : public ScriptWrappable {
   // Starts computation of the accessibility properties of the stored element.
   ScriptPromise ComputeAccessibleProperties(ScriptState*);
 
-  // String attribute accessors. These can return blank strings if the element
-  // has no node in the computed accessible tree, or property does not apply.
-  const String role() const;
+  const String keyShortcuts() const;
   const String name() const;
+  const String placeholder() const;
+  const String role() const;
+  const String roleDescription() const;
+  const String valueText() const;
 
  private:
   explicit ComputedAccessibleNode(Element*);
 
   // content::ComputedAXTree callback.
   void OnSnapshotResponse(ScriptPromiseResolver*);
+
+  String GetStringAttribute(AOMStringAttribute) const;
 
   Member<Element> element_;
   Member<AXObjectCache> cache_;

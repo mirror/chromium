@@ -4,11 +4,35 @@
 
 #include "content/renderer/accessibility/aom_content_ax_tree.h"
 
+#include <string>
+
 #include "content/common/ax_content_node_data.h"
 #include "content/renderer/accessibility/render_accessibility_impl.h"
 #include "ui/accessibility/ax_enum_util.h"
 #include "ui/accessibility/ax_enums.mojom.h"
 #include "ui/accessibility/ax_node.h"
+
+namespace {
+
+ax::mojom::StringAttribute GetCorrespondingAXAttribute(
+    blink::AOMStringAttribute attr) {
+  switch (attr) {
+    case blink::AOMStringAttribute::AOM_ATTR_KEY_SHORTCUTS:
+      return ax::mojom::StringAttribute::kKeyShortcuts;
+    case blink::AOMStringAttribute::AOM_ATTR_NAME:
+      return ax::mojom::StringAttribute::kName;
+    case blink::AOMStringAttribute::AOM_ATTR_PLACEHOLDER:
+      return ax::mojom::StringAttribute::kPlaceholder;
+    case blink::AOMStringAttribute::AOM_ATTR_ROLE_DESCRIPTION:
+      return ax::mojom::StringAttribute::kRoleDescription;
+    case blink::AOMStringAttribute::AOM_ATTR_VALUE_TEXT:
+      return ax::mojom::StringAttribute::kValue;
+    default:
+      return ax::mojom::StringAttribute::kNone;
+  }
+}
+
+}  // namespace
 
 namespace content {
 
@@ -34,18 +58,27 @@ bool AomContentAxTree::ComputeAccessibilityTree() {
   return tree_.Unserialize(tree_update);
 }
 
-blink::WebString AomContentAxTree::GetNameForAXNode(int32_t axID) {
-  ui::AXNode* node = tree_.GetFromId(axID);
-  return (node) ? blink::WebString::FromUTF8(node->data().GetStringAttribute(
-                      ax::mojom::StringAttribute::kName))
-                : blink::WebString();
-}
-
 blink::WebString AomContentAxTree::GetRoleForAXNode(int32_t axID) {
   ui::AXNode* node = tree_.GetFromId(axID);
-  // TODO(meredithl): Change to blink_ax_conversion.cc method once available.
-  return (node) ? blink::WebString::FromUTF8(ui::ToString(node->data().role))
-                : blink::WebString();
+  if (!node)
+    return blink::WebString();
+  return blink::WebString::FromUTF8(ui::ToString(node->data().role));
+}
+
+blink::WebString AomContentAxTree::GetStringAttributeForAXNode(
+    int32_t axID,
+    blink::AOMStringAttribute attr) {
+  ui::AXNode* node = tree_.GetFromId(axID);
+  if (!node)
+    return blink::WebString();
+
+  std::string out_string;
+  if (node->data().GetStringAttribute(GetCorrespondingAXAttribute(attr),
+                                      &out_string)) {
+    return blink::WebString::FromUTF8(out_string.c_str());
+  }
+
+  return blink::WebString();
 }
 
 }  // namespace content
