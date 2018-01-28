@@ -5,6 +5,9 @@
 #include "printing/common/pdf_metafile_utils.h"
 
 #include "base/time/time.h"
+#include "third_party/skia/include/core/SkCanvas.h"
+#include "third_party/skia/include/core/SkPicture.h"
+#include "third_party/skia/include/core/SkPictureRecorder.h"
 #include "third_party/skia/include/core/SkTime.h"
 
 namespace {
@@ -40,6 +43,60 @@ sk_sp<SkDocument> MakePdfDocument(const std::string& creator,
                           ? SkString("Chromium")
                           : SkString(creator.c_str(), creator.size());
   return SkDocument::MakePDF(stream, metadata);
+}
+
+sk_sp<SkPicture> GetEmptyPicture() {
+  SkPictureRecorder rec;
+  SkCanvas* canvas = rec.beginRecording(100, 100);
+  // Add some ops whose net effects equal to a noop.
+  canvas->save();
+  canvas->restore();
+  return rec.finishRecordingAsPicture();
+}
+
+sk_sp<SkData> SerializeOopPicture(SkPicture* pic, void* ctx) {
+  ContentToProxyIdMap* context = reinterpret_cast<ContentToProxyIdMap*>(ctx);
+  uint32_t pic_id = pic->uniqueID();
+  auto iter = context->find(pic_id);
+  if (iter == context->end())
+    return nullptr;
+
+  return SkData::MakeWithCopy(&pic_id, sizeof(pic_id));
+}
+
+sk_sp<SkPicture> DeserializeOopPicture(const void* data,
+                                       size_t length,
+                                       void* ctx) {
+  DCHECK(ctx);
+  auto* pic_map = reinterpret_cast<DeserializationContext*>(ctx);
+  uint32_t id;
+  if (length < sizeof(id)) {
+    NOTREACHED();  // Should not happen if the content is as written.
+    return GetEmptyPicture();
+  }
+  memcpy(&id, data, sizeof(id));
+  auto iter = pic_map->find(id);
+  if (iter == pic_map->end()) {
+    // When we don't have the out-of-process picture available, we return
+    // an empty picture. Returning a nullptr will cause the deserialization
+    // crash.
+    return GetEmptyPicture();
+  }
+  return iter->second;
+}
+
+SkSerialProcs SerializationProcs(SerializationContext* ctx) {
+  SkSerialProcs procs;
+  procs.fPictureProc = SerializeOopPicture;
+  procs.fPictureCtx = reinterpret_cast<void*>(ctx);
+  return procs;
+}
+
+SkDeserialProcs DeserializationProcs(DeserializationContext* ctx) {
+  SkDeserialProcs procs;
+  procs.fPictureProc = DeserializeOopPicture;
+  procs.fPictureCtx = reinterpret_cast<void*>(ctx);
+  return procs;
 }
 
 }  // namespace printing

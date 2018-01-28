@@ -32,14 +32,18 @@ void PdfCompositorImpl::AddSubframeContent(
     const ContentToFrameMap& subframe_content_map) {
   // Add this frame and its serialized content.
   DCHECK(!base::ContainsKey(frame_info_map_, frame_guid));
-  frame_info_map_[frame_guid] = std::make_unique<FrameInfo>(
-      GetShmFromMojoHandle(std::move(serialized_content)),
-      subframe_content_map);
+  frame_info_map_[frame_guid] = std::make_unique<FrameInfo>();
+  std::unique_ptr<FrameInfo>& frame_info = frame_info_map_[frame_guid];
+  frame_info->serialized_content =
+      GetShmFromMojoHandle(std::move(serialized_content));
+
+  // Copy the subframe content information.
+  frame_info->subframe_content_map = subframe_content_map;
 
   // If the request is not here yet, we do nothing more.
   // Otherwise, we need to check whether the request actually waits on this
   // frame content.
-  if (!request_)
+  if (requests_.empty())
     return;
 
   // Get the pending list which is a list of subframes this frame needs
@@ -51,26 +55,25 @@ void PdfCompositorImpl::AddSubframeContent(
       pending_subframes.push_back(subframe_guid);
   }
 
-  // Check for the request's pending list.
-  // If the request needs the this frame, we can remove the dependecy, but
-  // update with this frame's pending list.
-  auto& pending_list = request_->pending_subframes;
-  if (!pending_list.erase(frame_guid)) {
-    // The request doesn't directly waits on this frame, simply return.
-    return;
-  }
-  std::copy(pending_subframes.begin(), pending_subframes.end(),
-            std::inserter(pending_list, pending_list.end()));
-  if (pending_list.empty()) {
-    // If the request doesn't wait on any subframes which means it is ready,
-    // fullfill the request now.
-    auto iter = frame_info_map_.find(request_->frame_guid);
-    DCHECK(iter != frame_info_map_.end());
-    auto& frame_info = iter->second;
-    FullfillRequest(request_->frame_guid, request_->page_number,
-                    std::move(frame_info->serialized_content),
-                    frame_info->subframe_content_map,
-                    std::move(request_->callback));
+  // Check for each request's pending list.
+  for (auto& request : requests_) {
+    // If the request needs the this frame, we can remove the dependecy, but
+    // update with this frame's pending list.
+    auto& pending_list = request->pending_subframes;
+    if (!pending_list.erase(frame_guid)) {
+      // The request doesn't directly waits on this frame, simply return.
+      return;
+    }
+    std::copy(pending_subframes.begin(), pending_subframes.end(),
+              std::inserter(pending_list, pending_list.end()));
+    if (pending_list.empty()) {
+      // If the request doesn't wait on any subframes which means it is ready,
+      // fullfill the request now.
+      FullfillRequest(request->frame_guid, request->page_number,
+                      std::move(request->serialized_content),
+                      request->subframe_content_map,
+                      std::move(request->callback));
+    }
   }
 }
 
@@ -145,13 +148,13 @@ void PdfCompositorImpl::HandleCompositionRequest(
 
   // When it is not ready yet, keep its information and
   // wait until all dependent subframes are ready.
-  DCHECK(!base::ContainsKey(frame_info_map_, frame_guid));
-  frame_info_map_[frame_guid] = std::make_unique<FrameInfo>(
-      GetShmFromMojoHandle(std::move(serialized_content)),
-      subframe_content_map);
+  auto iter = frame_info_map_.find(frame_guid);
+  if (iter == frame_info_map_.end())
+    frame_info_map_[frame_guid] = std::make_unique<FrameInfo>();
 
-  request_ = std::make_unique<RequestInfo>(
-      frame_guid, page_num, std::move(pending_subframes), std::move(callback));
+  requests_.emplace_back(new RequestInfo(
+      frame_guid, page_num, GetShmFromMojoHandle(std::move(serialized_content)),
+      subframe_content_map, std::move(pending_subframes), std::move(callback)));
 }
 
 mojom::PdfCompositor::Status PdfCompositorImpl::CompositeToPdf(
@@ -172,8 +175,7 @@ mojom::PdfCompositor::Status PdfCompositorImpl::CompositeToPdf(
   }
 
   std::vector<SkDocumentPage> pages(page_count);
-  // TODO(weili): Change the default functions to actual implementation.
-  SkDeserialProcs procs;
+  SkDeserialProcs procs = DeserializationProcs(&subframes);
   if (!SkMultiPictureDocumentRead(&stream, pages.data(), page_count, &procs)) {
     DLOG(ERROR) << "CompositeToPdf: Page reading failed.";
     return mojom::PdfCompositor::Status::CONTENT_FORMAT_ERROR;
@@ -204,6 +206,9 @@ sk_sp<SkPicture> PdfCompositorImpl::CompositeSubframe(uint64_t frame_guid) {
   // The content of this frame should be available.
   auto iter = frame_info_map_.find(frame_guid);
   DCHECK(iter != frame_info_map_.end());
+  if (iter == frame_info_map_.end())
+    return GetEmptyPicture();
+
   std::unique_ptr<FrameInfo>& frame_info = iter->second;
   frame_info->composited = true;
 
@@ -214,8 +219,7 @@ sk_sp<SkPicture> PdfCompositorImpl::CompositeSubframe(uint64_t frame_guid) {
   // Composite the entire frame.
   SkMemoryStream stream(iter->second->serialized_content->memory(),
                         iter->second->serialized_content->mapped_size());
-  // TODO(weili): Change the default functions to actual implementation.
-  SkDeserialProcs procs;
+  SkDeserialProcs procs = DeserializationProcs(&subframes);
   iter->second->content = SkPicture::MakeFromStream(&stream, &procs);
   return iter->second->content;
 }
@@ -225,8 +229,8 @@ PdfCompositorImpl::GetDeserializationContext(
     const ContentToFrameMap& subframe_content_map) {
   DeserializationContext subframes;
   for (auto& content_info : subframe_content_map) {
-    uint64_t frame_guid = content_info.first;
-    uint32_t content_id = content_info.second;
+    uint32_t content_id = content_info.first;
+    uint64_t frame_guid = content_info.second;
     auto frame_iter = frame_info_map_.find(frame_guid);
     if (frame_iter == frame_info_map_.end())
       continue;
@@ -252,19 +256,28 @@ void PdfCompositorImpl::FullfillRequest(
   std::move(callback).Run(status, std::move(handle));
 }
 
-PdfCompositorImpl::FrameInfo::FrameInfo(
+PdfCompositorImpl::FrameContentInfo::FrameContentInfo(
     std::unique_ptr<base::SharedMemory> content,
     const ContentToFrameMap& map)
     : serialized_content(std::move(content)), subframe_content_map(map) {}
+
+PdfCompositorImpl::FrameContentInfo::FrameContentInfo() {}
+
+PdfCompositorImpl::FrameContentInfo::~FrameContentInfo() {}
+
+PdfCompositorImpl::FrameInfo::FrameInfo() {}
 
 PdfCompositorImpl::FrameInfo::~FrameInfo() {}
 
 PdfCompositorImpl::RequestInfo::RequestInfo(
     uint64_t frame_guid,
     base::Optional<uint32_t> page_num,
+    std::unique_ptr<base::SharedMemory> content,
+    const ContentToFrameMap& content_info,
     const base::flat_set<uint64_t>& pending_subframes,
     mojom::PdfCompositor::CompositePageToPdfCallback callback)
-    : frame_guid(frame_guid),
+    : FrameContentInfo(std::move(content), content_info),
+      frame_guid(frame_guid),
       page_number(page_num),
       pending_subframes(pending_subframes),
       callback(std::move(callback)) {}
