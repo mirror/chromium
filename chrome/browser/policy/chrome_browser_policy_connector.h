@@ -42,6 +42,12 @@ class ChromeBrowserPolicyConnector : public BrowserPolicyConnector {
   // class to notify observers.
   void OnResourceBundleCreated();
 
+  // Called from ChromeBrowserMainParts::PreCreateThreads(). This is intended
+  // to complete initialization that can't be done before then.
+  // NOTE: this is called before Init(). This implementation does nothing and
+  // is provided for subclasses.
+  virtual void OnPreCreateThreads();
+
   // TODO(sky): remove. Temporary until resolve ordering.
   void InitPolicyProviders();
 

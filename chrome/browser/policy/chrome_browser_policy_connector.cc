@@ -71,6 +71,8 @@ void ChromeBrowserPolicyConnector::OnResourceBundleCreated() {
   BrowserPolicyConnectorBase::OnResourceBundleCreated();
 }
 
+void ChromeBrowserPolicyConnector::OnPreCreateThreads() {}
+
 void ChromeBrowserPolicyConnector::InitPolicyProviders() {
   std::vector<std::unique_ptr<ConfigurationPolicyProvider>> providers;
   std::unique_ptr<ConfigurationPolicyProvider> platform_provider =
