@@ -18,6 +18,7 @@
 #include "base/debug/asan_invalid_access.h"
 #include "base/debug/crash_logging.h"
 #include "base/debug/dump_without_crashing.h"
+#include "base/debug/stack_trace.h"
 #include "base/feature_list.h"
 #include "base/files/file.h"
 #include "base/i18n/char_iterator.h"
@@ -477,6 +478,8 @@ base::TimeTicks SanitizeNavigationTiming(
 CommonNavigationParams MakeCommonNavigationParams(
     const blink::WebFrameClient::NavigationPolicyInfo& info,
     int load_flags) {
+  base::debug::StackTrace().Print();
+
   Referrer referrer(
       GURL(info.url_request.HttpHeaderField(WebString::FromUTF8("Referer"))
                .Latin1()),
@@ -533,7 +536,7 @@ CommonNavigationParams MakeCommonNavigationParams(
       base::TimeTicks::Now(), info.url_request.HttpMethod().Latin1(),
       GetRequestBodyForWebURLRequest(info.url_request), source_location,
       should_check_main_world_csp, false /* started_from_context_menu */,
-      info.url_request.HasUserGesture(),
+      info.url_request.HasUserGesture(), info.should_squelch_downloads,
       info.url_request.GetSuggestedFilename().has_value()
           ? base::Optional<std::string>(
                 info.url_request.GetSuggestedFilename()->Utf8())
@@ -4079,7 +4082,8 @@ void RenderFrameImpl::DidStartProvisionalLoad(
         pending_navigation_info_->triggering_event_info;
     info.form = pending_navigation_info_->form;
     info.source_location = pending_navigation_info_->source_location;
-
+    info.should_squelch_downloads =
+        pending_navigation_info_->should_squelch_downloads;
     pending_navigation_info_.reset(nullptr);
     BeginNavigation(info);
   }
@@ -5974,6 +5978,7 @@ WebNavigationPolicy RenderFrameImpl::DecidePolicyForNavigation(
   // includes navigations with no request being sent to the network stack.
   if (info.url_request.CheckForBrowserSideNavigation() &&
       IsURLHandledByNetworkStack(url) && !use_archive) {
+    LOG(ERROR) << "Made it here.";
     if (info.default_policy == blink::kWebNavigationPolicyCurrentTab) {
       // The BeginNavigation() call happens in didStartProvisionalLoad(). We
       // need to save information about the navigation here.
@@ -6716,8 +6721,9 @@ void RenderFrameImpl::BeginNavigation(const NavigationPolicyInfo& info) {
           is_form_submission, searchable_form_url, searchable_form_encoding,
           initiator_origin, client_side_redirect_url);
 
-  GetFrameHost()->BeginNavigation(MakeCommonNavigationParams(info, load_flags),
-                                  std::move(begin_navigation_params));
+  CommonNavigationParams params = MakeCommonNavigationParams(info, load_flags);
+  LOG(ERROR) << "Send squelch " << params.should_squelch_downloads;
+  GetFrameHost()->BeginNavigation(params, std::move(begin_navigation_params));
 }
 
 void RenderFrameImpl::LoadDataURL(
@@ -7282,7 +7288,8 @@ RenderFrameImpl::PendingNavigationInfo::PendingNavigationInfo(
       client_redirect(info.is_client_redirect),
       triggering_event_info(info.triggering_event_info),
       form(info.form),
-      source_location(info.source_location) {}
+      source_location(info.source_location),
+      should_squelch_downloads(info.should_squelch_downloads) {}
 
 void RenderFrameImpl::BindWidget(mojom::WidgetRequest request) {
   GetRenderWidget()->SetWidgetBinding(std::move(request));

@@ -108,6 +108,7 @@ void ResourceMessageFilter::CreateLoaderAndStart(
     return;
   }
 
+  // LOG(ERROR) << "CreateLoader for " << url_request.url;
   url_loader_factory_->CreateLoaderAndStart(
       std::move(request), routing_id, request_id, options, url_request,
       std::move(client), traffic_annotation);
