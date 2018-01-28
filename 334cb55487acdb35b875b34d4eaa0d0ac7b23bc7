@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c045599c_47cbd408",
+        "filename": "content/renderer/accessibility/aom_content_ax_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2018-01-28T23:20:03Z",
+      "side": 1,
+      "message": "Hmm, I do tend to agree. They were originally the same, but then I realised they didn\u0027t need to be and i could pass less string references around. You could definitely argue that AOMContentAxTree shouldn\u0027t really care if the node it is retrieving has a null attribute, it just gets it and gives it to the caller. The responsibility of actually checking the null value can be delegated to the ComputedAccessibleNode, in which case I can change the API so it matches how int attributes are gotten.",
+      "parentUuid": "006ad763_fe174ee3",
+      "range": {
+        "startLine": 60,
+        "startChar": 35,
+        "endLine": 60,
+        "endChar": 62
+      },
+      "revId": "334cb55487acdb35b875b34d4eaa0d0ac7b23bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b66e407_b6127ff2",
         "filename": "content/renderer/accessibility/aom_content_ax_tree.cc",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "334cb55487acdb35b875b34d4eaa0d0ac7b23bc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "387452e5_ece1f650",
+        "filename": "content/renderer/accessibility/aom_content_ax_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2018-01-28T23:20:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b66e407_b6127ff2",
+      "revId": "334cb55487acdb35b875b34d4eaa0d0ac7b23bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "99ce5d64_b696ea1b",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/aom-computed-accessible-node.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2018-01-28T23:20:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "543667a1_297bf26d",
+      "range": {
+        "startLine": 34,
+        "startChar": 26,
+        "endLine": 34,
+        "endChar": 31
+      },
+      "revId": "334cb55487acdb35b875b34d4eaa0d0ac7b23bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70231a47_2daaf45d",
         "filename": "third_party/WebKit/LayoutTests/accessibility/aom-computed-string-properties.html",
         "patchSetId": 2
@@ -85,6 +151,30 @@
       "revId": "334cb55487acdb35b875b34d4eaa0d0ac7b23bc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd900350_f4ce2d48",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/aom-computed-string-properties.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2018-01-28T23:20:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "70231a47_2daaf45d",
+      "range": {
+        "startLine": 72,
+        "startChar": 47,
+        "endLine": 72,
+        "endChar": 53
+      },
+      "revId": "334cb55487acdb35b875b34d4eaa0d0ac7b23bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
