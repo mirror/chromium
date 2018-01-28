@@ -200,6 +200,9 @@ const wchar_t kUninstallArgumentsField[] = L"UninstallArguments";
 const wchar_t kUninstallDisplayNameField[] = L"DisplayName";
 const char kUninstallMetricsName[] = "uninstall_metrics";
 const wchar_t kUninstallInstallationDate[] = L"installation_date";
+const wchar_t kWinNotificationHelperExe[] = L"win_notification_helper.exe";
+
+// Google Update installer result API.
 const wchar_t kInstallerError[] = L"InstallerError";
 const wchar_t kInstallerExtraCode1[] = L"InstallerExtraCode1";
 const wchar_t kInstallerResult[] = L"InstallerResult";
