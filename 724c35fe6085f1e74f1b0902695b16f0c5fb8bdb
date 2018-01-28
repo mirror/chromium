@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "6f547ee8_7bb67789",
+        "filename": "content/public/test/test_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-28T22:51:50Z",
+      "side": 1,
+      "message": "Ah, here\u0027s the code I had in mind, it\u0027s only for browser tests as in unittests the test body isn\u0027t itself already in a RunLoop:\n\n    // This can be called from a posted task. Allow nested tasks here, because\n    // otherwise the test body will have to do it in order to use RunLoop for\n    // waiting.\n    base::MessageLoop::ScopedNestableTaskAllower allow(\n        base::MessageLoop::current());\n\nhttps://cs.chromium.org/chromium/src/content/public/test/browser_test_base.cc?rcl\u003dba37113b10571979d0b58baf4f3b9131a075874b\u0026l\u003d342\n\n(thinking about it that\u0027s not great, it means our browser tests aren\u0027t proper integration tests as they might allow application tasks in unintentional system induced loops where a normal chrome wouldn\u0027t.... food for thought... beyond this CL)",
+      "parentUuid": "276256f4_a2c9b776",
+      "range": {
+        "startLine": 159,
+        "startChar": 38,
+        "endLine": 159,
+        "endChar": 76
+      },
+      "revId": "724c35fe6085f1e74f1b0902695b16f0c5fb8bdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c14a1b60_f374a63d",
         "filename": "content/public/test/test_utils.cc",
         "patchSetId": 4

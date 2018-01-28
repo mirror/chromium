@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59bc7d49_5a8aa1be",
+        "filename": "content/public/test/test_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-28T22:51:50Z",
+      "side": 1,
+      "message": "I find it confusing that this method would have a different behavior if already in a RunLoop (as it blocks the underlying loop from making progress and it also doesn\u0027t wait).\n\nI guess it did before (the RunLoopUntilIdle below would, unintentionally, be a no-op when nested).\n\nI think we should allow nested runloops to run application tasks in tests. The side-effects are either finding re-entrancy bugs in tests (a good outcome), or it doesn\u0027t matter (a fine outcome that avoids devs wasting time).",
+      "revId": "fa14363ff19cb428d178a98dc0411fd7f8c1fa1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
