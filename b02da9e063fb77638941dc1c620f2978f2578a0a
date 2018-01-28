@@ -16,6 +16,24 @@
       "revId": "b02da9e063fb77638941dc1c620f2978f2578a0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "195b1af0_788c8b85",
+        "filename": "third_party/WebKit/LayoutTests/css3/calc/cross-fade-calc.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1262316
+      },
+      "writtenOn": "2018-01-28T21:24:26Z",
+      "side": 1,
+      "message": "I can do that, but I think https://github.com/w3c/csswg-drafts/issues/2234 should be resolved first (I noticed that from https://bugs.webkit.org/show_bug.cgi?id\u003d179942).\n\nI\u0027ll remove the author/help from webkit-gradient-calc.html since that\u0027ll never be upstreamed.",
+      "parentUuid": "4c47857c_4ae6298d",
+      "revId": "b02da9e063fb77638941dc1c620f2978f2578a0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
