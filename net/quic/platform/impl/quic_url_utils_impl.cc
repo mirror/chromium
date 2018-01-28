@@ -51,7 +51,7 @@ std::string QuicUrlUtilsImpl::GetPushPromiseUrl(QuicStringPiece scheme,
   // PUSH_PROMISE. Therefore, the exception mentioned in RFC 7540, Section
   // 8.1.2.3 about OPTIONS requests does not apply here (i.e. ":path" cannot be
   // "*").
-  if (path.empty() || path[0] != '/' || path[1] == '/') {
+  if (path.empty() || path[0] != '/' || (path.size() >= 2 && path[1] == '/')) {
     return std::string();
   }
 
