@@ -674,6 +674,8 @@ void V8Initializer::InitializeMainThread(const intptr_t* reference_table) {
     profiler->SetWrapperClassInfoProvider(
         WrapperTypeInfo::kNodeClassId, &RetainedDOMInfo::CreateRetainedDOMInfo);
     profiler->SetGetRetainerInfosCallback(&V8GCController::GetRetainerInfos);
+    profiler->SetBuildEmbedderGraphCallback(
+        &V8GCController::BuildEmbedderGraph);
   }
 
   DCHECK(ThreadState::MainThreadState());
