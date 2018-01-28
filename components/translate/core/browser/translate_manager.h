@@ -11,20 +11,16 @@
 #include <vector>
 
 #include "base/callback_list.h"
-#include "base/feature_list.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "components/translate/core/browser/language_state.h"
 #include "components/translate/core/common/translate_errors.h"
+#include "third_party/metrics_proto/translate_event.pb.h"
 
 namespace language {
 class LanguageModel;
 }  // namespace language
-
-namespace metrics {
-class TranslateEventProto;
-}  // namespace metrics
 
 namespace translate {
 
@@ -62,7 +58,7 @@ class TranslateManager {
   void set_current_seq_no(int page_seq_no) { page_seq_no_ = page_seq_no; }
 
   metrics::TranslateEventProto* mutable_translate_event() {
-    return translate_event_.get();
+    return &translate_event_;
   }
 
   // Returns the language to translate to.
@@ -163,10 +159,7 @@ class TranslateManager {
                           const TranslatePrefs& translate_prefs);
 
   // Sequence number of the current page.
-  int page_seq_no_;
-
-  // Preference name for the Accept-Languages HTTP header.
-  std::string accept_languages_pref_name_;
+  int page_seq_no_ = 0;
 
   TranslateClient* translate_client_;        // Weak.
   TranslateDriver* translate_driver_;        // Weak.
@@ -175,7 +168,7 @@ class TranslateManager {
 
   LanguageState language_state_;
 
-  std::unique_ptr<metrics::TranslateEventProto> translate_event_;
+  metrics::TranslateEventProto translate_event_;
 
   base::WeakPtrFactory<TranslateManager> weak_method_factory_;
 

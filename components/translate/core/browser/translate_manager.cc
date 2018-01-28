@@ -8,8 +8,6 @@
 #include <memory>
 
 #include "base/bind.h"
-#include "base/command_line.h"
-#include "base/metrics/field_trial.h"
 #include "base/metrics/histogram.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
@@ -39,7 +37,6 @@
 #include "net/base/network_change_notifier.h"
 #include "net/base/url_util.h"
 #include "net/http/http_status_code.h"
-#include "third_party/metrics_proto/translate_event.pb.h"
 
 namespace translate {
 
@@ -74,13 +71,11 @@ TranslateManager::RegisterTranslateErrorCallback(
 TranslateManager::TranslateManager(TranslateClient* translate_client,
                                    TranslateRanker* translate_ranker,
                                    language::LanguageModel* language_model)
-    : page_seq_no_(0),
-      translate_client_(translate_client),
+    : translate_client_(translate_client),
       translate_driver_(translate_client_->GetTranslateDriver()),
       translate_ranker_(translate_ranker),
       language_model_(language_model),
       language_state_(translate_driver_),
-      translate_event_(std::make_unique<metrics::TranslateEventProto>()),
       weak_method_factory_(this) {}
 
 base::WeakPtr<TranslateManager> TranslateManager::GetWeakPtr() {
@@ -164,7 +159,7 @@ void TranslateManager::InitiateTranslation(const std::string& page_lang) {
   // Querying the ranker now, but not exiting immediately so that we may log
   // other potential suppression reasons.
   bool should_offer_translation =
-      translate_ranker_->ShouldOfferTranslation(translate_event_.get());
+      translate_ranker_->ShouldOfferTranslation(&translate_event_);
 
   // Nothing to do if either the language Chrome is in or the language of
   // the page is not supported by the translation server.
@@ -208,7 +203,7 @@ void TranslateManager::InitiateTranslation(const std::string& page_lang) {
     if (!auto_target_lang.empty()) {
       TranslateBrowserMetrics::ReportInitiationStatus(
           TranslateBrowserMetrics::INITIATION_STATUS_AUTO_BY_CONFIG);
-      translate_event_->set_modified_target_language(auto_target_lang);
+      translate_event_.set_modified_target_language(auto_target_lang);
       RecordTranslateEvent(
           metrics::TranslateEventProto::AUTO_TRANSLATION_BY_PREF);
       TranslatePage(language_code, auto_target_lang, false);
@@ -221,7 +216,7 @@ void TranslateManager::InitiateTranslation(const std::string& page_lang) {
     // This page was navigated through a click from a translated page.
     TranslateBrowserMetrics::ReportInitiationStatus(
         TranslateBrowserMetrics::INITIATION_STATUS_AUTO_BY_LINK);
-    translate_event_->set_modified_target_language(auto_translate_to);
+    translate_event_.set_modified_target_language(auto_translate_to);
     RecordTranslateEvent(
         metrics::TranslateEventProto::AUTO_TRANSLATION_BY_LINK);
     TranslatePage(language_code, auto_translate_to, false);
@@ -305,7 +300,7 @@ void TranslateManager::RevertTranslation() {
 void TranslateManager::ReportLanguageDetectionError() {
   TranslateBrowserMetrics::ReportLanguageDetectionError();
 
-  GURL report_error_url = GURL(kReportLanguageDetectionErrorURL);
+  GURL report_error_url(kReportLanguageDetectionErrorURL);
 
   report_error_url = net::AppendQueryParameter(
       report_error_url, kUrlQueryName,
@@ -468,31 +463,29 @@ void TranslateManager::SetIgnoreMissingKeyForTesting(bool ignore) {
 void TranslateManager::InitTranslateEvent(const std::string& src_lang,
                                           const std::string& dst_lang,
                                           const TranslatePrefs& prefs) {
-  translate_event_->Clear();
-  translate_event_->set_source_language(src_lang);
-  translate_event_->set_target_language(dst_lang);
-  translate_event_->set_country(prefs.GetCountry());
-  translate_event_->set_accept_count(
+  translate_event_.Clear();
+  translate_event_.set_source_language(src_lang);
+  translate_event_.set_target_language(dst_lang);
+  translate_event_.set_country(prefs.GetCountry());
+  translate_event_.set_accept_count(
       prefs.GetTranslationAcceptedCount(src_lang));
-  translate_event_->set_decline_count(
-      prefs.GetTranslationDeniedCount(src_lang));
-  translate_event_->set_ignore_count(
-      prefs.GetTranslationIgnoredCount(src_lang));
-  translate_event_->set_ranker_response(
+  translate_event_.set_decline_count(prefs.GetTranslationDeniedCount(src_lang));
+  translate_event_.set_ignore_count(prefs.GetTranslationIgnoredCount(src_lang));
+  translate_event_.set_ranker_response(
       metrics::TranslateEventProto::NOT_QUERIED);
-  translate_event_->set_event_type(metrics::TranslateEventProto::UNKNOWN);
+  translate_event_.set_event_type(metrics::TranslateEventProto::UNKNOWN);
   // TODO(rogerm): Populate the language list.
 }
 
 void TranslateManager::RecordTranslateEvent(int event_type) {
   translate_ranker_->RecordTranslateEvent(
-      event_type, translate_driver_->GetVisibleURL(), translate_event_.get());
-  translate_client_->RecordTranslateEvent(*translate_event_.get());
+      event_type, translate_driver_->GetVisibleURL(), &translate_event_);
+  translate_client_->RecordTranslateEvent(translate_event_);
 }
 
 bool TranslateManager::ShouldOverrideDecision(int event_type) {
   return translate_ranker_->ShouldOverrideDecision(
-      event_type, translate_driver_->GetVisibleURL(), translate_event_.get());
+      event_type, translate_driver_->GetVisibleURL(), &translate_event_);
 }
 
 bool TranslateManager::ShouldSuppressBubbleUI(
