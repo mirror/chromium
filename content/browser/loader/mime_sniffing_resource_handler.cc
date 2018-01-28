@@ -435,13 +435,21 @@ bool MimeSniffingResourceHandler::MaybeStartInterception() {
     return false;
 
   info->set_is_download(true);
-  std::unique_ptr<ResourceHandler> handler(
-      host_->CreateResourceHandlerForDownload(request(),
-                                              true,  // is_content_initiated
-                                              must_download,
-                                              false /* is_new_request */));
-  intercepting_handler_->UseNewHandler(std::move(handler), std::string());
+  if (!ShouldDownloadBeSquelched()) {
+    std::unique_ptr<ResourceHandler> handler(
+        host_->CreateResourceHandlerForDownload(request(),
+                                                true,  // is_content_initiated
+                                                must_download,
+                                                false /* is_new_request */));
+    intercepting_handler_->UseNewHandler(std::move(handler), std::string());
+  }
   return true;
+}
+
+bool MimeSniffingResourceHandler::ShouldDownloadBeSquelched() {
+  ResourceRequestInfoImpl* info = GetRequestInfo();
+  LOG(ERROR) << "Should squelch download? " << info->should_squelch_download();
+  return info->should_squelch_download();
 }
 
 bool MimeSniffingResourceHandler::CheckForPluginHandler(

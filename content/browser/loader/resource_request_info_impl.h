@@ -62,6 +62,7 @@ class ResourceRequestInfoImpl : public ResourceRequestInfo,
       bool is_download,
       bool is_stream,
       bool allow_download,
+      bool should_squelch_download,
       bool has_user_gesture,
       bool enable_load_timing,
       bool enable_upload_progress,
@@ -75,7 +76,7 @@ class ResourceRequestInfoImpl : public ResourceRequestInfo,
       PreviewsState previews_state,
       const scoped_refptr<network::ResourceRequestBody> body,
       bool initiated_in_secure_context,
-      const base::Optional<std::string>& suggested_filename);
+      const base::Optional<std::string>& suggested_filenames);
   ~ResourceRequestInfoImpl() override;
 
   // ResourceRequestInfo implementation:
@@ -148,6 +149,10 @@ class ResourceRequestInfoImpl : public ResourceRequestInfo,
 
   // Downloads are allowed only as a top level request.
   bool allow_download() const { return allow_download_; }
+
+  // If the request would result in a download, cancel the download as well as
+  // abort this request.
+  bool should_squelch_download() const { return should_squelch_download_; }
 
   // Whether this is a download.
   void set_is_download(bool download) { is_download_ = download; }
@@ -237,6 +242,7 @@ class ResourceRequestInfoImpl : public ResourceRequestInfo,
   bool is_download_;
   bool is_stream_;
   bool allow_download_;
+  bool should_squelch_download_;
   bool has_user_gesture_;
   bool enable_load_timing_;
   bool enable_upload_progress_;
