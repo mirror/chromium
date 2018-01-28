@@ -33,6 +33,7 @@
         "chrome": [ "input_device_controller" ],
         "chrome_printing": [ "converter" ],
         "content_browser": [ "profiling_client" ],
+        "content_renderer": [ "safe_browsing::mojom::SafeBrowsing" ],
         "device": [
           "device:fingerprint",
           "device:geolocation_config",
