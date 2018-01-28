@@ -46,6 +46,69 @@
       "revId": "9de86442f6f39576af380b3e88bd456dfb695c2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66033567_05a29fa6",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3420,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2018-01-28T05:42:20Z",
+      "side": 1,
+      "message": "I think we should just have one flag which enables this and also modal dialogs on Android (similar to how we now have one flag on desktop to enable all the new stuff).",
+      "revId": "9de86442f6f39576af380b3e88bd456dfb695c2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65b0f0c5_b3924eb3",
+        "filename": "chrome/browser/banners/app_banner_infobar_delegate_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2018-01-28T05:42:20Z",
+      "side": 1,
+      "message": "Is this change related? It\u0027s strange that this isn\u0027t guarded by a feature / flag.",
+      "range": {
+        "startLine": 197,
+        "startChar": 20,
+        "endLine": 197,
+        "endChar": 32
+      },
+      "revId": "9de86442f6f39576af380b3e88bd456dfb695c2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbacf1dc_610ad2ad",
+        "filename": "chrome/browser/installable/pwa_ambient_badge_manager_android.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2018-01-28T05:42:20Z",
+      "side": 1,
+      "message": "I would have thought we\u0027d add this functionality to the normal manager, since it seems quite linked to it. E.g. while it is an infobar, we might want to prevent showing it if the site prevents default or something.",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 35
+      },
+      "revId": "9de86442f6f39576af380b3e88bd456dfb695c2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
