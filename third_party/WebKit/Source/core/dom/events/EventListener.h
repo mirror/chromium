@@ -57,6 +57,7 @@ class CORE_EXPORT EventListener
 
   virtual void Trace(blink::Visitor* visitor) {}
   virtual void TraceWrappers(const ScriptWrappableVisitor* visitor) const {}
+  virtual const char* NameInHeapSnapshot() const { return "EventListener"; }
 
  protected:
   explicit EventListener(ListenerType type) : type_(type) {}
