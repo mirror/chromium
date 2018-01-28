@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e25f048e_8c2b9a4a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-28T23:09:12Z",
+      "side": 1,
+      "message": "A TLS object is shared across all threads, it\u0027s initialized to point to a slot. That slot just doesn\u0027t have the same *value* on each thread (i.e. the thread-specific part is not the object, it\u0027s the value).",
+      "parentUuid": "144c7c7c_7b1a2cee",
+      "revId": "b9b05f36f5a680e0595e22928c93644fbf04d16b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e947e736_a786ebf9",
         "filename": "base/threading/thread_local_storage.cc",
         "patchSetId": 1
@@ -207,6 +225,30 @@
       "side": 1,
       "message": "ok, but still, looks like\nbase::subtle::Release_Store(\u0026initialized_, 1); \nshould go into the lock scope together with an initialized() check immediately after the AutoLock line. Otherwise its possible that racy Initialize will lead to the same StaticSlot attempting to occupy two slots in g_tls_metadata. Right?",
       "parentUuid": "184095b2_211000c9",
+      "range": {
+        "startLine": 133,
+        "startChar": 39,
+        "endLine": 133,
+        "endChar": 40
+      },
+      "revId": "b9b05f36f5a680e0595e22928c93644fbf04d16b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b71bd848_aded6765",
+        "filename": "base/threading/thread_local_storage.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-28T23:09:12Z",
+      "side": 1,
+      "message": "Right, that feels a whole lot like LazyInstance initialization actually... why don\u0027t we just use that logic? e.g. lazy_instance_helpers.h\n\nI\u0027m not very familiar with StaticSlot, what are the use cases? I\u0027ve always used a non-static-slots stored in a LazyInstance FWIW...\n\nFeels weird to leave something uninitialized but then race to initialize it.",
+      "parentUuid": "03700683_d5555268",
       "range": {
         "startLine": 133,
         "startChar": 39,
