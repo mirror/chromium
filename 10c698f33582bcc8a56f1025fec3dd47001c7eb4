@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "581eafd9_52ea70b2",
+        "filename": "content/public/common/shared_url_loader_factory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-28T17:46:13Z",
+      "side": 1,
+      "message": "Does it make sense to put this (and SingleRequestLoader) in a SharedURLLoaderFactory subclass instead?\n\nclass SingleRequestURLLoaderFactory : public SharedURLLoaderFactory {\n public:\n  SingleRequestURLLoaderFactory(URLLoaderRequest, URLLoaderFactoryClientPtr);\n  SingleRequestURLLoaderFactory(SingleRequestLoader);\n\n  // After the first call, CreateLoaderAndStart() acts as if the connection is broken.\n  ...\n};",
+      "revId": "10c698f33582bcc8a56f1025fec3dd47001c7eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
