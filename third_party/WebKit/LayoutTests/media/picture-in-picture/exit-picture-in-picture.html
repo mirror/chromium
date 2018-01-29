@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<title>Test request picture in picture</title>
+<title>Test exit picture in picture</title>
 <script src='../../resources/testharness.js'></script>
 <script src='../../resources/testharnessreport.js'></script>
 <script src="../../resources/testdriver.js"></script>
@@ -8,6 +8,6 @@
 <body></body>
 <script>
 promise_test(t => {
-  return requestPictureInPictureWithTrustedClick(document.createElement('video'));
+  return document.exitPictureInPicture();
 });
 </script>

@@ -8,6 +8,15 @@
 <body></body>
 <script>
 promise_test(t => {
-  return requestPictureInPictureWithTrustedClick(document.createElement('video'));
+  assert_equals(document.pictureInPictureElement, null);
+  const video = document.createElement('video');
+  return requestPictureInPictureWithTrustedClick(video)
+  .then(() => {
+    assert_equals(document.pictureInPictureElement, video);
+    return document.exitPictureInPicture();
+  })
+  .then(() => {
+    assert_equals(document.pictureInPictureElement, null);
+  })
 });
 </script>

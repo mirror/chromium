@@ -4,6 +4,7 @@
 
 #include "modules/picture_in_picture/DocumentPictureInPicture.h"
 
+#include "core/dom/Document.h"
 #include "modules/picture_in_picture/PictureInPictureController.h"
 
 namespace blink {
@@ -16,11 +17,18 @@ bool DocumentPictureInPicture::pictureInPictureEnabled(Document& document) {
 // static
 ScriptPromise DocumentPictureInPicture::exitPictureInPicture(
     ScriptState* script_state,
-    const Document&) {
+    Document& document) {
   // TODO(crbug.com/806249): Call element.exitPictureInPicture().
 
+  PictureInPictureController::Ensure(document).UnsetPictureInPictureElement();
+
   return ScriptPromise::CastUndefined(script_state);
-  ;
+}
+
+// static
+HTMLVideoElement* DocumentPictureInPicture::pictureInPictureElement(
+    Document& document) {
+  return PictureInPictureController::Ensure(document).PictureInPictureElement();
 }
 
 }  // namespace blink
