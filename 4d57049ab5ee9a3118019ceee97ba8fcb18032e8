@@ -1,0 +1,216 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d9d7354_f55576bf",
+        "filename": "chromeos/network/client_cert_resolver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-29T14:35:31Z",
+      "side": 1,
+      "message": "nit: You can simply specify this value in the |key_slot_id| member definition.",
+      "range": {
+        "startLine": 40,
+        "startChar": 19,
+        "endLine": 40,
+        "endChar": 35
+      },
+      "revId": "4d57049ab5ee9a3118019ceee97ba8fcb18032e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1277127d_c34635b2",
+        "filename": "chromeos/network/client_cert_resolver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-29T14:35:31Z",
+      "side": 1,
+      "message": "nit: While you\u0027re here - please rewrite to \"using ... \u003d ...\".",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 7
+      },
+      "revId": "4d57049ab5ee9a3118019ceee97ba8fcb18032e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d32f0cc_1af09a9b",
+        "filename": "chromeos/network/client_cert_resolver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-29T14:35:31Z",
+      "side": 1,
+      "message": "nit: Just omit this, using the default constructor?",
+      "range": {
+        "startLine": 268,
+        "startChar": 46,
+        "endLine": 268,
+        "endChar": 62
+      },
+      "revId": "4d57049ab5ee9a3118019ceee97ba8fcb18032e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d56512dd_da3ccd83",
+        "filename": "chromeos/network/client_cert_resolver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-29T14:35:31Z",
+      "side": 1,
+      "message": "nit: I think it should be possible to omit either \"MatchingCert()\" or \"make_optional\".",
+      "range": {
+        "startLine": 312,
+        "startChar": 22,
+        "endLine": 313,
+        "endChar": 23
+      },
+      "revId": "4d57049ab5ee9a3118019ceee97ba8fcb18032e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be125962_18ccd8bf",
+        "filename": "chromeos/network/client_cert_resolver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-29T14:35:31Z",
+      "side": 1,
+      "message": "nit: While you\u0027re here - could you please rewrite this to range-based for?",
+      "range": {
+        "startLine": 460,
+        "startChar": 2,
+        "endLine": 461,
+        "endChar": 56
+      },
+      "revId": "4d57049ab5ee9a3118019ceee97ba8fcb18032e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b2716ff_669b1594",
+        "filename": "chromeos/network/client_cert_resolver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-29T14:35:31Z",
+      "side": 1,
+      "message": "This field is already |false| by default - so can we just omit this assignment?",
+      "revId": "4d57049ab5ee9a3118019ceee97ba8fcb18032e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7c99304_8decfb6b",
+        "filename": "chromeos/network/client_cert_resolver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-29T14:35:31Z",
+      "side": 1,
+      "message": "nit: Ditto range-based for.",
+      "revId": "4d57049ab5ee9a3118019ceee97ba8fcb18032e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67b53225_25df2b23",
+        "filename": "chromeos/network/client_cert_resolver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-29T14:35:31Z",
+      "side": 1,
+      "message": "Can this be made private?",
+      "revId": "4d57049ab5ee9a3118019ceee97ba8fcb18032e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "055b1421_8b89cfdf",
+        "filename": "chromeos/network/client_cert_resolver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-29T14:35:31Z",
+      "side": 1,
+      "message": "nit: Sorry, but this comment looks fearfully long to me. Maybe move the documentation about specific fields of CertResolvingStatus straight into its definition?",
+      "range": {
+        "startLine": 127,
+        "startChar": 76,
+        "endLine": 133,
+        "endChar": 71
+      },
+      "revId": "4d57049ab5ee9a3118019ceee97ba8fcb18032e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37ff84ba_e1ecfb16",
+        "filename": "chromeos/network/client_cert_resolver_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-29T14:35:31Z",
+      "side": 1,
+      "message": "nit: Typo.",
+      "range": {
+        "startLine": 552,
+        "startChar": 6,
+        "endLine": 552,
+        "endChar": 14
+      },
+      "revId": "4d57049ab5ee9a3118019ceee97ba8fcb18032e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
