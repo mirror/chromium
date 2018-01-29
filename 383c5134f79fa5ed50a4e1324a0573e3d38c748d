@@ -93,6 +93,30 @@
       "revId": "383c5134f79fa5ed50a4e1324a0573e3d38c748d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e342e42_b75758b5",
+        "filename": "services/device/geolocation/geolocation_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-29T12:03:33Z",
+      "side": 1,
+      "message": "thanks! as a nit, let\u0027s export the constant from device_service_test_base.h and use that instead of directly using the value here.",
+      "parentUuid": "1bbf5a08_f93e5a62",
+      "range": {
+        "startLine": 106,
+        "startChar": 21,
+        "endLine": 106,
+        "endChar": 38
+      },
+      "revId": "383c5134f79fa5ed50a4e1324a0573e3d38c748d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
