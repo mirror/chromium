@@ -87,6 +87,24 @@
       "revId": "3621a28d65125349f4b5831ae8e1cb27e5a44f7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b87ca1e_6a78abd3",
+        "filename": "content/common/renderer.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-29T08:50:28Z",
+      "side": 1,
+      "message": "To just clarify my intention, I\u0027m not concerned with \u0027renderer\u0027 or \u0027scheduler\u0027 part, but just concerned that the term \u0027keepalive\u0027, which is widely used to indicate someone\u0027s keeping alive someone else, might lead to a confusion. Hm, it\u0027s a subtle difference, but how about something like...\n\n// Propagate that this renderer is kept alive (or not) by the browser process due to\n// service workers, shared workers or fetch keep-alive.\n// If set to true, ...\nNotifyIsKeptAlive(bool);",
+      "parentUuid": "e521e713_67232427",
+      "revId": "3621a28d65125349f4b5831ae8e1cb27e5a44f7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
