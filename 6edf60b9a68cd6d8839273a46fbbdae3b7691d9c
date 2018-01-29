@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb310a17_6e9233be",
+        "filename": "skia/public/interfaces/bitmap_skbitmap_struct_traits.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-29T20:02:48Z",
+      "side": 1,
+      "message": "Nit: Chrome",
+      "range": {
+        "startLine": 78,
+        "startChar": 42,
+        "endLine": 78,
+        "endChar": 48
+      },
+      "revId": "6edf60b9a68cd6d8839273a46fbbdae3b7691d9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
