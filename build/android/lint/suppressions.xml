@@ -224,8 +224,6 @@ Still reading?
     <ignore regexp="Default method requires API level 24"/>
     <!-- TODO(crbug.com/805479): Remove the following suppression and fix. -->
     <ignore regexp="Call requires API level 18.*android.view.View#setClipBounds"/>
-    <!-- TODO(crbug.com/805509): Remove the following suppression and fix. -->
-    <ignore regexp="Call requires API level 19.*new java.lang.AssertionError"/>
     <!-- TODO(crbug.com/799070): Fix these after lint upgrade. -->
     <ignore regexp="Static interface  method requires API level 24"/>
     <!-- Suppressions below this line need rationale :( -->
