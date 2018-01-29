@@ -49,11 +49,20 @@ class CC_EXPORT RasterBufferProvider {
       uint64_t resource_content_id,
       uint64_t previous_content_id) = 0;
 
-  // Used for syncing resources to the worker context.
+  // Call this on the compositor thread to allow the RasterBufferProvider to
+  // insert synchronization primatives into the compositor context, which will
+  // be used by the RasterBuffer to synchronize with the worker context. Should
+  // be called once all RasterBuffers are created but before they are scheduled
+  // to run on the worker threads.
   virtual void OrderingBarrier() = 0;
 
-  // In addition to above, also ensures that pending work is sent to the GPU
-  // process.
+  // The synchronziation primitives created by OrderingBarrier() are not seen
+  // by the gpu process until Flush() is called. It is a separate call so that
+  // the synchronization can be inserted in the client, and used on the worker
+  // threads in the client immediately, but the flush to the gpu process that
+  // will allow the work done with the RasterBuffer on the woker threads to run
+  // is delayed to call it less often. This is done because flushing causes
+  // context switches which slow the system down, and that we want to avoid.
   virtual void Flush() = 0;
 
   // Returns the format to use for the tiles.
