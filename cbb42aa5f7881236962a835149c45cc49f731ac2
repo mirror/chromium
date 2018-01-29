@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9b1b107_8b0f24a8",
+        "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1815,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-29T19:32:11Z",
+      "side": 1,
+      "message": "Sorry, this isn\u0027t what I meant.  The DeleteSpeculativeRFHPendingCommitOfPendingEntryOnInterrupted tests are not related to what we\u0027re doing and don\u0027t need to be mimic\u0027d here.  I was only citing them as an example of tests that use TestNavigationManager (and potentially ControllableHttpResponse, if we need it).\n\nCan you simplify this test to match what your unit test is doing?  I just wanted to make sure that when we ran it as a browser test, we would end up in the correct process afterward.\n\nSomething like:\n - Navigate to a.com and make the ControllableHttpResponse redirect to b.com\n - Let it commit and verify URL is b.com\n - Reload disabling previews, and make ControllableHttpResponse redirect to c.com\n - Let it commit and verify URL is c.com\n\nOnce we have that working, I expect we could add checks for the bug I was concerned about.  Specifically, when AreAllSitesIsolatedForTesting(), check the value of the RFH\u0027s GetSiteInstance()-\u003eGetSiteURL() after each commit to make sure they\u0027re b.com and then c.com.  I\u0027m worried they\u0027ll both be b.com, but it should be easy enough to fix.",
+      "range": {
+        "startLine": 1815,
+        "startChar": 4,
+        "endLine": 1815,
+        "endChar": 65
+      },
+      "revId": "cbb42aa5f7881236962a835149c45cc49f731ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
