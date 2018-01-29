@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ae428f9_caf84beb",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_bridge.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-29T18:00:22Z",
+      "side": 1,
+      "message": "nit: emplace_back() works better for move-only types.",
+      "range": {
+        "startLine": 64,
+        "startChar": 15,
+        "endLine": 64,
+        "endChar": 24
+      },
+      "revId": "4645f0f4fadb619901e43df2d0956330e02ebf5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "781c80be_c9a3eece",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_bridge.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-29T18:00:22Z",
+      "side": 1,
+      "message": "Can you add a small comment as to what the string type means?",
+      "range": {
+        "startLine": 64,
+        "startChar": 6,
+        "endLine": 64,
+        "endChar": 22
+      },
+      "revId": "4645f0f4fadb619901e43df2d0956330e02ebf5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c2596df_1b8b2ef7",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-29T18:00:22Z",
+      "side": 1,
+      "message": "what\u0027s the meaning of this 4? is it a sizeof() something? or is it because of the RGBX_8888 type? Can you make it a named constant?",
+      "range": {
+        "startLine": 187,
+        "startChar": 30,
+        "endLine": 187,
+        "endChar": 31
+      },
+      "revId": "4645f0f4fadb619901e43df2d0956330e02ebf5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c13fe41c_1d613d22",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-29T18:00:22Z",
+      "side": 1,
+      "message": "Why do some methods lack a null-check for |gl|?",
+      "range": {
+        "startLine": 236,
+        "startChar": 30,
+        "endLine": 236,
+        "endChar": 32
+      },
+      "revId": "4645f0f4fadb619901e43df2d0956330e02ebf5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8c10fe5_1b5051b3",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-29T18:00:22Z",
+      "side": 1,
+      "message": "nit: emplace",
+      "range": {
+        "startLine": 274,
+        "startChar": 19,
+        "endLine": 274,
+        "endChar": 23
+      },
+      "revId": "4645f0f4fadb619901e43df2d0956330e02ebf5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af7b68b4_6bd34cad",
+        "filename": "chrome/browser/media/webrtc/desktop_media_picker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-29T18:00:22Z",
+      "side": 1,
+      "message": "if you need these, make them \"\u003d default;\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 45,
+        "endLine": 7,
+        "endChar": 47
+      },
+      "revId": "4645f0f4fadb619901e43df2d0956330e02ebf5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8b18fc7_d6c6fd6f",
+        "filename": "chrome/browser/media/webrtc/desktop_media_picker.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2018-01-29T18:00:22Z",
+      "side": 1,
+      "message": "does the compiler complain if you drop these?",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 18
+      },
+      "revId": "4645f0f4fadb619901e43df2d0956330e02ebf5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
