@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "182a2ae3_ba928f5c",
+        "filename": "third_party/WebKit/Source/core/layout/custom/CSSLayoutDefinition.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-29T02:28:37Z",
+      "side": 1,
+      "message": "Remove \u0027;\u0027.",
+      "revId": "fd01ef08b75de718ff8c6beeaa8e04142b464087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30e42246_a5372a6b",
+        "filename": "third_party/WebKit/Source/core/layout/custom/DocumentLayoutDefinition.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-29T02:28:37Z",
+      "side": 1,
+      "message": "Remove TraceWrapperBase?",
+      "revId": "fd01ef08b75de718ff8c6beeaa8e04142b464087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca222266_b2b818ba",
+        "filename": "third_party/WebKit/Source/core/layout/custom/DocumentLayoutDefinition.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-29T02:28:37Z",
+      "side": 1,
+      "message": "Unused?",
+      "revId": "fd01ef08b75de718ff8c6beeaa8e04142b464087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "087a3b54_9766057a",
+        "filename": "third_party/WebKit/Source/core/layout/custom/LayoutWorklet.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-29T02:28:37Z",
+      "side": 1,
+      "message": "Is this const really worth introducing? i.e., you can just check null-ness in LayoutWorkletGlobalScope.cpp.",
+      "revId": "fd01ef08b75de718ff8c6beeaa8e04142b464087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27ab7a84_2d6c96cd",
+        "filename": "third_party/WebKit/Source/core/layout/custom/LayoutWorklet.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-29T02:28:37Z",
+      "side": 1,
+      "message": "No one is tracing DocumentLayoutDefinition. Does it really need to be TraceWrapperMember?",
+      "revId": "fd01ef08b75de718ff8c6beeaa8e04142b464087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "096b1772_312d3eb6",
+        "filename": "third_party/WebKit/Source/core/layout/custom/LayoutWorkletGlobalScope.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-29T02:28:37Z",
+      "side": 1,
+      "message": "You can introduce these functions with V8ObjectHelper once it\u0027s landed, right?",
+      "revId": "fd01ef08b75de718ff8c6beeaa8e04142b464087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ef74185_3bcea0dd",
+        "filename": "third_party/WebKit/Source/core/layout/custom/LayoutWorkletGlobalScope.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-29T02:28:37Z",
+      "side": 1,
+      "message": "ctor_value \u003d\u003e constructor_value\n\nBlink prefers a fully qualified name.",
+      "revId": "fd01ef08b75de718ff8c6beeaa8e04142b464087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f35226f_0038673f",
+        "filename": "third_party/WebKit/Source/core/layout/custom/LayoutWorkletGlobalScope.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-29T02:28:37Z",
+      "side": 1,
+      "message": "Not related to this CL:\n\n- I\u0027m a bit surprised that LayoutWorklet runs on the main thread... I was thinking that it runs on a compositor thread :)\n\n- What\u0027s a lifetime relationship between LayoutWorklet, LayoutWorkletGlobalScope and DOMWindow? It looks a bit strange that there\u0027s not explicit strong references between LayoutWorklet and LayoutWorkletGlobalScope.",
+      "revId": "fd01ef08b75de718ff8c6beeaa8e04142b464087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb3a2bb7_9001994e",
+        "filename": "third_party/WebKit/Source/core/layout/custom/LayoutWorkletGlobalScope.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-29T02:28:37Z",
+      "side": 1,
+      "message": "I don\u0027t fully understand what this line is doing...\n\nWhat\u0027s a relationship between CSSLayoutDefinition and DocumentLayoutDefinition?",
+      "revId": "fd01ef08b75de718ff8c6beeaa8e04142b464087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
