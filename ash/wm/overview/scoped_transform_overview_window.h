@@ -16,6 +16,7 @@
 #include "ui/events/event_handler.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/gfx/transform.h"
+#include "ui/wm/core/shadow_types.h"
 
 namespace aura {
 class Window;
@@ -27,10 +28,6 @@ class Rect;
 
 namespace views {
 class Widget;
-}
-
-namespace wm {
-enum class ShadowElevation;
 }
 
 namespace ash {
