@@ -2693,9 +2693,9 @@ TEST_F(HttpStreamFactoryTest, Tag) {
   EXPECT_EQ(1, GetHandedOutSocketCount(session->GetSSLSocketPool(
                    HttpNetworkSession::NORMAL_SOCKET_POOL)));
   // Verify socket tagged appropriately.
-  EXPECT_TRUE(tag1 == socket_factory->GetLastProducedSocket()->tag());
+  EXPECT_TRUE(tag1 == socket_factory->GetLastProducedTCPSocket()->tag());
   EXPECT_TRUE(
-      socket_factory->GetLastProducedSocket()->tagged_before_connected());
+      socket_factory->GetLastProducedTCPSocket()->tagged_before_connected());
 
   // Verify one more stream with a different tag results in one more session and
   // socket.
@@ -2724,9 +2724,9 @@ TEST_F(HttpStreamFactoryTest, Tag) {
   EXPECT_EQ(2, GetHandedOutSocketCount(session->GetSSLSocketPool(
                    HttpNetworkSession::NORMAL_SOCKET_POOL)));
   // Verify socket tagged appropriately.
-  EXPECT_TRUE(tag2 == socket_factory->GetLastProducedSocket()->tag());
+  EXPECT_TRUE(tag2 == socket_factory->GetLastProducedTCPSocket()->tag());
   EXPECT_TRUE(
-      socket_factory->GetLastProducedSocket()->tagged_before_connected());
+      socket_factory->GetLastProducedTCPSocket()->tagged_before_connected());
 
   // Verify one more stream reusing a tag does not create new sessions, groups
   // or sockets.

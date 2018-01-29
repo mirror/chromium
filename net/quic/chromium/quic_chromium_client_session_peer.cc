@@ -22,7 +22,8 @@ void QuicChromiumClientSessionPeer::SetHostname(
     QuicChromiumClientSession* session,
     const std::string& hostname) {
   QuicServerId server_id(hostname, session->server_id_.port(),
-                         session->server_id_.privacy_mode());
+                         session->server_id_.privacy_mode(),
+                         session->server_id_.socket_tag());
   session->server_id_ = server_id;
 }
 

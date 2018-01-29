@@ -28,6 +28,7 @@
 #include "net/quic/platform/api/quic_logging.h"
 #include "net/quic/platform/api/quic_map_util.h"
 #include "net/quic/platform/api/quic_ptr_util.h"
+#include "net/quic/platform/api/quic_socket_tag.h"
 #include "net/quic/platform/api/quic_text_utils.h"
 #include "third_party/boringssl/src/include/openssl/ssl.h"
 
@@ -401,14 +402,17 @@ void QuicCryptoClientConfig::SetDefaults() {
 
 QuicCryptoClientConfig::CachedState* QuicCryptoClientConfig::LookupOrCreate(
     const QuicServerId& server_id) {
-  auto it = cached_states_.find(server_id);
+  QuicServerId server_id_no_tag(server_id.host_port_pair(),
+                                server_id.privacy_mode(), QuicSocketTag());
+  auto it = cached_states_.find(server_id_no_tag);
   if (it != cached_states_.end()) {
     return it->second.get();
   }
 
   CachedState* cached = new CachedState;
-  cached_states_.insert(std::make_pair(server_id, QuicWrapUnique(cached)));
-  bool cache_populated = PopulateFromCanonicalConfig(server_id, cached);
+  cached_states_.insert(
+      std::make_pair(server_id_no_tag, QuicWrapUnique(cached)));
+  bool cache_populated = PopulateFromCanonicalConfig(server_id_no_tag, cached);
   UMA_HISTOGRAM_BOOLEAN(
       "Net.QuicCryptoClientConfig.PopulatedFromCanonicalConfig",
       cache_populated);
@@ -967,6 +971,7 @@ bool QuicCryptoClientConfig::PopulateFromCanonicalConfig(
     const QuicServerId& server_id,
     CachedState* server_state) {
   DCHECK(server_state->IsEmpty());
+  DCHECK(server_id.socket_tag() == QuicSocketTag());
   size_t i = 0;
   for (; i < canonical_suffixes_.size(); ++i) {
     if (QuicTextUtils::EndsWithIgnoreCase(server_id.host(),
@@ -979,7 +984,7 @@ bool QuicCryptoClientConfig::PopulateFromCanonicalConfig(
   }
 
   QuicServerId suffix_server_id(canonical_suffixes_[i], server_id.port(),
-                                server_id.privacy_mode());
+                                server_id.privacy_mode(), QuicSocketTag());
   if (!QuicContainsKey(canonical_server_map_, suffix_server_id)) {
     // This is the first host we've seen which matches the suffix, so make it
     // canonical.
@@ -989,6 +994,7 @@ bool QuicCryptoClientConfig::PopulateFromCanonicalConfig(
 
   const QuicServerId& canonical_server_id =
       canonical_server_map_[suffix_server_id];
+  DCHECK(canonical_server_id.socket_tag() == QuicSocketTag());
   CachedState* canonical_state = cached_states_[canonical_server_id].get();
   if (!canonical_state->proof_valid()) {
     return false;
