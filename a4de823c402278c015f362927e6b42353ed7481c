@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "fc8914ad_712cbadc",
+        "filename": "base/process/launch.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-29T22:44:55Z",
+      "side": 1,
+      "message": "Hmmmm. LaunchOptions is copyable and therefore can\u0027t use scoped containers for handles, so the burden of handle cleanup is shifted to LaunchProcess()\u0027s callers. It seems like an invitation for accidental handle leakage.\n\n@Tom: Added a comment.",
+      "parentUuid": "0870cd15_6c9da093",
+      "range": {
+        "startLine": 202,
+        "startChar": 1,
+        "endLine": 202,
+        "endChar": 2
+      },
+      "revId": "a4de823c402278c015f362927e6b42353ed7481c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ae273a3_1b0b5a42",
         "filename": "base/process/launch_fuchsia.cc",
         "patchSetId": 6
@@ -69,6 +93,30 @@
       "revId": "a4de823c402278c015f362927e6b42353ed7481c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "501242ec_20644b25",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-29T22:44:55Z",
+      "side": 1,
+      "message": "I feel an index is preferable here because it makes the usage of PA_HND()  more self-descriptive.",
+      "parentUuid": "0ae273a3_1b0b5a42",
+      "range": {
+        "startLine": 72,
+        "startChar": 7,
+        "endLine": 72,
+        "endChar": 70
+      },
+      "revId": "a4de823c402278c015f362927e6b42353ed7481c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "932e1494_4a641773",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-29T22:44:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e68ca68_eba6277e",
+      "range": {
+        "startLine": 119,
+        "startChar": 61,
+        "endLine": 119,
+        "endChar": 76
+      },
+      "revId": "a4de823c402278c015f362927e6b42353ed7481c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e764fd34_93ceb176",
         "filename": "base/process/launch_fuchsia.cc",
         "patchSetId": 6
@@ -115,6 +187,30 @@
       "revId": "a4de823c402278c015f362927e6b42353ed7481c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef4ff8a4_767d3fd8",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-29T22:44:55Z",
+      "side": 1,
+      "message": "Using ScopedGeneric as per Wez\u0027s suggestion, but this is also pretty slick. Thanks for the suggestion.",
+      "parentUuid": "e764fd34_93ceb176",
+      "range": {
+        "startLine": 131,
+        "startChar": 33,
+        "endLine": 131,
+        "endChar": 67
+      },
+      "revId": "a4de823c402278c015f362927e6b42353ed7481c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "d4e19c48_345d3ff5",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-29T22:44:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c60199ab_2f52efa7",
+      "range": {
+        "startLine": 157,
+        "startChar": 0,
+        "endLine": 160,
+        "endChar": 49
+      },
+      "revId": "a4de823c402278c015f362927e6b42353ed7481c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bca8a2cd_3ee652ab",
         "filename": "base/process/launch_fuchsia.cc",
         "patchSetId": 6
@@ -161,6 +281,30 @@
       "revId": "a4de823c402278c015f362927e6b42353ed7481c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf8507d1_c4287755",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-29T22:44:55Z",
+      "side": 1,
+      "message": "Using ScopedGeneric instead",
+      "parentUuid": "bca8a2cd_3ee652ab",
+      "range": {
+        "startLine": 161,
+        "startChar": 6,
+        "endLine": 161,
+        "endChar": 25
+      },
+      "revId": "a4de823c402278c015f362927e6b42353ed7481c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -187,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "5aa6e431_332ac7b6",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-29T22:44:55Z",
+      "side": 1,
+      "message": "Even though it\u0027s not required, I prefer them (Google style guide).",
+      "parentUuid": "687f87a5_4c807e2d",
+      "range": {
+        "startLine": 210,
+        "startChar": 62,
+        "endLine": 210,
+        "endChar": 63
+      },
+      "revId": "a4de823c402278c015f362927e6b42353ed7481c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e609f318_c300efc0",
         "filename": "base/process/launch_fuchsia.cc",
         "patchSetId": 6
@@ -207,6 +375,30 @@
       "revId": "a4de823c402278c015f362927e6b42353ed7481c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b53c1a2_64d3ece1",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-29T22:44:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e609f318_c300efc0",
+      "range": {
+        "startLine": 242,
+        "startChar": 24,
+        "endLine": 242,
+        "endChar": 35
+      },
+      "revId": "a4de823c402278c015f362927e6b42353ed7481c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -233,6 +425,30 @@
     },
     {
       "key": {
+        "uuid": "d0c8783d_018d37bf",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-29T22:44:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "615c8932_a7e1bec3",
+      "range": {
+        "startLine": 243,
+        "startChar": 6,
+        "endLine": 243,
+        "endChar": 21
+      },
+      "revId": "a4de823c402278c015f362927e6b42353ed7481c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f55c855f_4991fb9d",
         "filename": "content/common/sandbox_policy_fuchsia.cc",
         "patchSetId": 6
@@ -253,6 +469,30 @@
       "revId": "a4de823c402278c015f362927e6b42353ed7481c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f4387c1_62a5c0ab",
+        "filename": "content/common/sandbox_policy_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-29T22:44:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f55c855f_4991fb9d",
+      "range": {
+        "startLine": 33,
+        "startChar": 6,
+        "endLine": 33,
+        "endChar": 12
+      },
+      "revId": "a4de823c402278c015f362927e6b42353ed7481c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
