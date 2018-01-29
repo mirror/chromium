@@ -5,10 +5,6 @@
       "_bug_id": "crbug.com/534643"
     },
     {
-      "name": "testJavascriptInterfaceForClientPopup",
-      "_bug_id": "crbug.com/698369"
-    },
-    {
       "name": "testJavascriptInterfaceCustomPropertiesClearedOnReload",
       "_bug_id": "crbug.com/767847"
     }
