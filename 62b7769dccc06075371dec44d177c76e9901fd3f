@@ -16,6 +16,24 @@
       "revId": "62b7769dccc06075371dec44d177c76e9901fd3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45c3d050_ba994c8d",
+        "filename": "third_party/WebKit/common/origin_trials/trial_token.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2018-01-29T20:43:41Z",
+      "side": 1,
+      "message": "I didn\u0027t use a precise calculation to get to 6KB. I picked 6KB because it\u0027s a nice round number, which is clearly large enough for a 4KB payload. Basically, 6KB \u003d 1.5 * 4KB, which is \u003e\u003e 4/3 * 4KB. I thought that calculating the token size based directly on the payload size would give a seemingly random number. Given that no real-life tokens should ever come close to either max size, I opted for a value that was easier to understand/test against.\n\nIf there are changes to the token format that affect the field size/layout (i.e. not just the json payload) then the formula for max token size would need to be changed anyways.",
+      "parentUuid": "561e7961_a0905ac8",
+      "revId": "62b7769dccc06075371dec44d177c76e9901fd3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
