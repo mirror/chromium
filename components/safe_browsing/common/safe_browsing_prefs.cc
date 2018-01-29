@@ -273,11 +273,26 @@ void InitializeSafeBrowsingPrefs(PrefService* prefs) {
 }
 
 bool IsExtendedReportingOptInAllowed(const PrefService& prefs) {
-  return prefs.GetBoolean(prefs::kSafeBrowsingExtendedReportingOptInAllowed);
+  // User is allowed to opt-in to Extended Reporting only when that setting
+  // is not managed by a policy.
+  return !IsExtendedReportingPolicyManaged(prefs);
 }
 
 bool IsExtendedReportingEnabled(const PrefService& prefs) {
   return prefs.GetBoolean(GetExtendedReportingPrefName(prefs));
+}
+
+bool IsExtendedReportingPolicyManaged(const PrefService& prefs) {
+  // SBER pref can be managed directly via policy, or implicitly when
+  // SafeBrowsingExtendedReportingOptInAllowed is turned off.
+  if (prefs.IsManagedPreference(GetExtendedReportingPrefName(prefs)))
+    return true;
+
+  // If the SBER pref isn't itself managed, but the user is not allowed to
+  // opt-in to SBER (because SBEROptInAllowed == false), then also mark SBER
+  // as managed. This prevents users from changing SBER via chrome://settings,
+  // which is consistent with hiding the checkbox on interstitial pages.
+  return !prefs.GetBoolean(prefs::kSafeBrowsingExtendedReportingOptInAllowed);
 }
 
 bool IsScout(const PrefService& prefs) {

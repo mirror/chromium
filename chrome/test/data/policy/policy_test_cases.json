@@ -3453,6 +3453,15 @@
     ]
   },
 
+  "SafeBrowsingExtendedReportingEnabled": {
+    "os": ["win", "linux", "mac", "chromeos", "android"],
+    "test_policy": { "SafeBrowsingExtendedReportingEnabled": true },
+    "pref_mappings": [
+      { "pref": "safebrowsing.scout_reporting_enabled" }
+    ]
+  },
+
+
   "RestrictAccountsToPatterns": {
   },
 
