@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "196fba08_0aae9882",
+        "filename": "components/arc/video_accelerator/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2018-01-29T04:18:07Z",
+      "side": 1,
+      "message": "If shared_ptr is here, doesn\u0027t it mean PBM still exist even PBA is destroyed? so DeallocateAllProctectedBuffers() is not called.\n\nBut all protected buffers should be released when PBA is destroyed. (GAVDA already decoupled buffer (de)allocation)",
+      "range": {
+        "startLine": 147,
+        "startChar": 2,
+        "endLine": 147,
+        "endChar": 17
+      },
+      "revId": "36c8b235c1a22ee229d67cd6118ba0c6dca4978e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8c6224c2_224d1cde",
+        "filename": "components/arc/video_accelerator/protected_buffer_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2018-01-29T04:18:07Z",
+      "side": 1,
+      "message": "This is reasonable, but I\u0027m afraid you may need to change much more GPU side codes in addition of this.\n\nAFAIK, PBM right now is created by chrome_content_gpu_client, and which is already a single instance of chrome_content_gpu_client. You will need to change chrome_content_gpu_client a lot as well.\nhttps://cs.chromium.org/chromium/src/chrome/gpu/chrome_content_gpu_client.cc\n\nAnother issue is, we could not guarantee the order of GPU side creating GAVDA or PBA or PBMProxy, but all of them needs the reference of PBM (so right now in chrome_content_gpu_client, PBM is first created and live until chrome_content_gpu_client is destroyed)",
+      "range": {
+        "startLine": 21,
+        "startChar": 3,
+        "endLine": 21,
+        "endChar": 66
+      },
+      "revId": "36c8b235c1a22ee229d67cd6118ba0c6dca4978e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0795f6cb_cfc98e75",
+        "filename": "components/arc/video_accelerator/protected_buffer_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2018-01-29T04:18:07Z",
+      "side": 1,
+      "message": "As above, there may be the case GAVDA is created earlier than PBA.",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 64
+      },
+      "revId": "36c8b235c1a22ee229d67cd6118ba0c6dca4978e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
