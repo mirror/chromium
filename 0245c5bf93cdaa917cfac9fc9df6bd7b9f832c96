@@ -16,6 +16,24 @@
       "revId": "0245c5bf93cdaa917cfac9fc9df6bd7b9f832c96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c570db7_a263c05c",
+        "filename": "chrome/common/extensions/api/enterprise_device_attributes.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-29T18:41:33Z",
+      "side": 1,
+      "message": "Thanks, clarified that an empty string will be returned in that case.",
+      "parentUuid": "d85cd5ff_890bd4f7",
+      "revId": "0245c5bf93cdaa917cfac9fc9df6bd7b9f832c96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
