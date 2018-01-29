@@ -16,6 +16,24 @@
       "revId": "455d7b4bd9f5d3386228bbe9a2f00e6d9c83ca41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0718c2cf_9615483f",
+        "filename": "base/time/time.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-29T17:15:37Z",
+      "side": 1,
+      "message": "I think this could work, not sure when/if I\u0027ll get around to doing it though..\n\nSome kind of template based on IsCompileTimeConstant",
+      "parentUuid": "b3ac390d_85ea2889",
+      "revId": "455d7b4bd9f5d3386228bbe9a2f00e6d9c83ca41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
