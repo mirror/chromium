@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f3f3cb56_429c59b0",
+        "filename": "media/cast/net/mojo_udp_transport_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-29T19:49:37Z",
+      "side": 1,
+      "message": "This function implements the PacketTransport::SendPacket interface. The interface is designed for cast streaming that uses UdpSocket to send out the packets. The behavior is consistent with UdpSocket::Write or UdpSocket::SendTo interface that requires that caller can only write packet to the UdpSocket when the writing is not blocked. Here in our case the packet is writing to the mojo data pipe, and read by the host, and write to the UdpSocket by the host. If the network is blocked, the host will not stop reading packets from the data pipe, and when data pipe reaches to its capacity, the writing is blocked, and the caller should stop writing more packets to in the data pipe.",
+      "parentUuid": "3ae3800b_920fefe4",
+      "revId": "cbab56c8ec7f0dfc21b04408709761cc6b40a21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2929f0b1_86599a59",
         "filename": "media/cast/net/mojo_udp_transport_client.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-29T18:27:33Z",
       "side": 1,
       "message": "I\u0027m still shaky on c++ style, but the interaction between done_cb_, is_pending_, and cb passed around) is a little confusing here and in SendPacket above.\n\nIf done_cb_ is set to a new closure here, how can it be null for the next SendPacket call (on line 28)?\n\nis_pending_ seems to imply that done_cb_ is not null, but then we set it to false below on line 56.\n\n\nApologies if I\u0027m missing something obvious. :)",
+      "revId": "cbab56c8ec7f0dfc21b04408709761cc6b40a21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4ff1d70_66d2f0a1",
+        "filename": "media/cast/net/mojo_udp_transport_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-29T19:49:37Z",
+      "side": 1,
+      "message": "base::RepeatingCosure() creates a null callback. \nThe behavior should be: If the writing to data pipe is unblocked, CompleteWritingPacket() will be called in the same stack, and in this case SendPacket() should return true and |cb| should not run; Otherwise (the writing to data pipe is blocked), SendPacket() should return false to prevent the caller calling it again. In this case, CompleteWritingPacket() will be called async after writing is completed, and |cb| should run. So here whether |done_cb_| is null is used as the return value to indicate whether CompleteWritingPacket() is called sync (whether writing is completed), and |is_pending_| is used to indicate whether |cb| needs to run (whether was blocked).",
+      "parentUuid": "2929f0b1_86599a59",
       "revId": "cbab56c8ec7f0dfc21b04408709761cc6b40a21c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
