@@ -94,6 +94,30 @@
       "revId": "ef7541b5606207579906405bd8e1a144b88946a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "efeddbad_e2ac5110",
+        "filename": "base/time/time.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-29T08:53:42Z",
+      "side": 1,
+      "message": "Those were integral representations of seconds used to feed ugly code that uses SSPrintf. Hence, in hindsight, doesn\u0027t really need to be constexpr as it\u0027s mostly all runtime already.",
+      "parentUuid": "ba1f94bb_6659c9a5",
+      "range": {
+        "startLine": 783,
+        "startChar": 0,
+        "endLine": 863,
+        "endChar": 0
+      },
+      "revId": "ef7541b5606207579906405bd8e1a144b88946a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
