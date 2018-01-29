@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "7e783723_7d38b31f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-29T22:17:19Z",
+      "side": 1,
+      "message": "Leaving as-is for now.",
+      "parentUuid": "064e84fb_72a2e822",
+      "range": {
+        "startLine": 168,
+        "startChar": 7,
+        "endLine": 168,
+        "endChar": 30
+      },
+      "revId": "90c72ebd65a22f06e6514c5a10e264119f1be364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6fac81b2_478b02c7",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
         "patchSetId": 9
@@ -143,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "500360cc_a833bb88",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapterTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-29T22:17:19Z",
+      "side": 1,
+      "message": "Turns out junit doesn\u0027t have @Disabled.",
+      "parentUuid": "c093e94a_94c7b589",
+      "range": {
+        "startLine": 1022,
+        "startChar": 4,
+        "endLine": 1022,
+        "endChar": 74
+      },
+      "revId": "90c72ebd65a22f06e6514c5a10e264119f1be364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "770c5fbb_d3a17a69",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/ntp/cards/SectionListTest.java",
         "patchSetId": 9
@@ -189,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "071c8562_d0e588ac",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSectionTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-29T22:17:19Z",
+      "side": 1,
+      "message": "It looks like the expectation is different. bauerb@ can confirm.",
+      "parentUuid": "3d420a5e_4fb0ca0f",
+      "range": {
+        "startLine": 258,
+        "startChar": 3,
+        "endLine": 258,
+        "endChar": 74
+      },
+      "revId": "90c72ebd65a22f06e6514c5a10e264119f1be364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ee07a44_0381de04",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/suggestions/TileGroupUnitTest.java",
         "patchSetId": 9
@@ -200,6 +272,30 @@
       "writtenOn": "2018-01-26T19:07:28Z",
       "side": 1,
       "message": "Same comment here about naively these not seeming to be necessarily about Chrome Home since we show tiles on the regular NTP too.",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 70
+      },
+      "revId": "90c72ebd65a22f06e6514c5a10e264119f1be364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "971352c7_ef17127f",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/suggestions/TileGroupUnitTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-29T22:17:19Z",
+      "side": 1,
+      "message": "It looks like I can just remove the Chrome Home annotations and these all pass again.",
+      "parentUuid": "1ee07a44_0381de04",
       "range": {
         "startLine": 66,
         "startChar": 0,
