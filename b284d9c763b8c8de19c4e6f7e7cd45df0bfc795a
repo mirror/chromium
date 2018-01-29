@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5687a9d5_6b831df9",
+        "filename": "ios/chrome/browser/ui/download/download_manager_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-29T13:22:18Z",
+      "side": 1,
+      "message": "typo: webStateIsVisible",
+      "range": {
+        "startLine": 75,
+        "startChar": 39,
+        "endLine": 75,
+        "endChar": 56
+      },
+      "revId": "b284d9c763b8c8de19c4e6f7e7cd45df0bfc795a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "262fd030_83f91cb1",
+        "filename": "ios/chrome/browser/ui/download/download_manager_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-29T13:22:18Z",
+      "side": 1,
+      "message": "typo: multiple",
+      "range": {
+        "startLine": 99,
+        "startChar": 59,
+        "endLine": 99,
+        "endChar": 67
+      },
+      "revId": "b284d9c763b8c8de19c4e6f7e7cd45df0bfc795a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "654c8bbc_fcda31c4",
+        "filename": "ios/chrome/browser/ui/download/download_manager_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-29T13:22:18Z",
+      "side": 1,
+      "message": "typo: interactions",
+      "range": {
+        "startLine": 187,
+        "startChar": 67,
+        "endLine": 187,
+        "endChar": 80
+      },
+      "revId": "b284d9c763b8c8de19c4e6f7e7cd45df0bfc795a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3be6c259_b670bcb5",
+        "filename": "ios/chrome/browser/ui/download/download_manager_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-29T13:22:18Z",
+      "side": 1,
+      "message": "base::TaskTraits supports initializer list and the common way is to inline the constructor in the PostTaskWithTraits:\n\n  base::PostTaskWithTraits(\n    FROM_HERE, {base::MayBlock(), base::TaskPriority::USER_VISIBLE},\n    base::BindBlockArc(^{\n      ...\n    });",
+      "revId": "b284d9c763b8c8de19c4e6f7e7cd45df0bfc795a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5951b91a_7be9d357",
+        "filename": "ios/chrome/browser/ui/download/download_manager_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-29T13:22:18Z",
+      "side": 1,
+      "message": "typo: downloadFilePath",
+      "range": {
+        "startLine": 205,
+        "startChar": 19,
+        "endLine": 205,
+        "endChar": 35
+      },
+      "revId": "b284d9c763b8c8de19c4e6f7e7cd45df0bfc795a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "735f0463_b14a0362",
+        "filename": "ios/chrome/browser/ui/download/download_manager_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-29T13:22:18Z",
+      "side": 1,
+      "message": "ditto, inline the constructor of base::TaskTraits\n\n  base::CreateSequencedTaskRunnerWithTraits(\n    {base::MayBlock(), base::TaskPriority::BACKGROUND});",
+      "range": {
+        "startLine": 209,
+        "startChar": 22,
+        "endLine": 209,
+        "endChar": 63
+      },
+      "revId": "b284d9c763b8c8de19c4e6f7e7cd45df0bfc795a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
