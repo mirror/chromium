@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "5187f16a_ef15ab24",
+        "filename": "cc/raster/zero_copy_raster_buffer_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-29T23:04:00Z",
+      "side": 1,
+      "message": "If I understand correctly for a separate struct, the difference would be\n\nGpuBacking {\n  .. common things ..\n\n  struct SubclassThings {};\n  SubclassThings *subclass;\n}\n\nWhich still subclasses but doesn\u0027t inherit anything.. or\n\nGpuBacking {\n  .. common things ..\n  void *subclass;\n}\n\nWhich does not subclass?\n\nThe virtual interface felt like a lot of overkill to me when there\u0027s just shared data and unknown data.\n\nCan you clarify what seems anti-pattern here with adding data fields in a subclass instead of adding methods?",
+      "parentUuid": "1a9fb8e9_e804f992",
+      "revId": "95cb5704e05a40bf1f0fae958e92abe2808cfc8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef990823_f3d29faa",
         "filename": "cc/raster/zero_copy_raster_buffer_provider.cc",
         "patchSetId": 7
@@ -77,6 +95,24 @@
       "writtenOn": "2018-01-29T22:31:57Z",
       "side": 1,
       "message": "One subtle difference here is that previously the GMB would be created here on the raster worker thread, and now the GMB is created in AcquireBufferForRaster on the compositor thread. Creating the GMB is a synchronous IPC call so we may not want to do it on compositor thread.",
+      "revId": "95cb5704e05a40bf1f0fae958e92abe2808cfc8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f2879fb_33ea6774",
+        "filename": "cc/raster/zero_copy_raster_buffer_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-29T23:04:00Z",
+      "side": 1,
+      "message": "Oh ok, I can move it back here then. I just saw the manager is thread safe so wasn\u0027t clear that it mattered.",
+      "parentUuid": "ef990823_f3d29faa",
       "revId": "95cb5704e05a40bf1f0fae958e92abe2808cfc8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -117,6 +153,24 @@
     },
     {
       "key": {
+        "uuid": "6c7d48e2_87f7baab",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-29T23:04:00Z",
+      "side": 1,
+      "message": "Both occur frequently in chromium, and this one is used in the style guide (I only saw this one recently too) https://google.github.io/styleguide/cppguide.html#Implementation_Comments",
+      "parentUuid": "a0dd5a04_93244947",
+      "revId": "95cb5704e05a40bf1f0fae958e92abe2808cfc8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fb51bba_b62b1e54",
         "filename": "cc/resources/resource_pool.cc",
         "patchSetId": 7
@@ -128,6 +182,24 @@
       "writtenOn": "2018-01-29T22:31:57Z",
       "side": 1,
       "message": "I\u0027m not 100% sure on this part. In ResourceProvider we keep the raster context sync token around so that if the browser drops the resource without consuming it (returns empty sync token), we wait on the raster context sync token before destroying the resource.",
+      "revId": "95cb5704e05a40bf1f0fae958e92abe2808cfc8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08c73a96_1e3b3121",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-29T23:04:00Z",
+      "side": 1,
+      "message": "The sync token will still be kept in the TransferableResource in the ResourceProvider. This is only resetting it in the pool, cuz we don\u0027t need to use it again why the resource id exists.",
+      "parentUuid": "1fb51bba_b62b1e54",
       "revId": "95cb5704e05a40bf1f0fae958e92abe2808cfc8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
