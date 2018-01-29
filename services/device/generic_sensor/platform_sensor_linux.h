@@ -20,7 +20,7 @@ class PlatformSensorLinux : public PlatformSensor {
  public:
   PlatformSensorLinux(
       mojom::SensorType type,
-      SensorReadingSharedBuffer* reading_buffer,
+      mojo::ScopedSharedBufferMapping mapping,
       PlatformSensorProvider* provider,
       const SensorInfoLinux* sensor_device,
       scoped_refptr<base::SingleThreadTaskRunner> polling_thread_task_runner);

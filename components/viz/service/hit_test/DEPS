@@ -1,5 +1,3 @@
-# Please consult components/viz/README.md about allowable dependencies.
-
 include_rules = [
   "+components/viz/service/surfaces",
 ]

@@ -22,21 +22,21 @@ class PlatformSensorProviderAndroid : public PlatformSensorProvider {
 
  protected:
   void CreateSensorInternal(mojom::SensorType type,
-                            SensorReadingSharedBuffer* reading_buffer,
+                            mojo::ScopedSharedBufferMapping mapping,
                             const CreateSensorCallback& callback) override;
 
  private:
   void CreateAbsoluteOrientationEulerAnglesSensor(
       JNIEnv* env,
-      SensorReadingSharedBuffer* reading_buffer,
+      mojo::ScopedSharedBufferMapping mapping,
       const CreateSensorCallback& callback);
   void CreateAbsoluteOrientationQuaternionSensor(
       JNIEnv* env,
-      SensorReadingSharedBuffer* reading_buffer,
+      mojo::ScopedSharedBufferMapping mapping,
       const CreateSensorCallback& callback);
   void CreateRelativeOrientationEulerAnglesSensor(
       JNIEnv* env,
-      SensorReadingSharedBuffer* reading_buffer,
+      mojo::ScopedSharedBufferMapping mapping,
       const CreateSensorCallback& callback);
 
   // Java object org.chromium.device.sensors.PlatformSensorProvider

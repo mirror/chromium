@@ -135,8 +135,9 @@ void HardwareRenderer::DrawGL(AwDrawGLInfo* draw_info) {
       device_scale_factor_ = device_scale_factor;
     }
 
-    support_->SubmitCompositorFrame(child_id_,
-                                    std::move(*child_compositor_frame));
+    bool result = support_->SubmitCompositorFrame(
+        child_id_, std::move(*child_compositor_frame));
+    DCHECK(result);
   }
 
   gfx::Transform transform(gfx::Transform::kSkipInitialization);

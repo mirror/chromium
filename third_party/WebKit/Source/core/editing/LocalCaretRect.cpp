@@ -42,8 +42,7 @@ namespace {
 
 template <typename Strategy>
 LocalCaretRect LocalCaretRectOfPositionTemplate(
-    const PositionWithAffinityTemplate<Strategy>& position,
-    LayoutUnit* extra_width_to_end_of_line) {
+    const PositionWithAffinityTemplate<Strategy>& position) {
   if (position.IsNull())
     return LocalCaretRect();
   Node* const node = position.AnchorNode();
@@ -75,16 +74,15 @@ LocalCaretRect LocalCaretRectOfPositionTemplate(
       return LocalCaretRect(
           box_layout_object,
           box_layout_object->LocalCaretRect(box_position.inline_box,
-                                            box_position.offset_in_box,
-                                            extra_width_to_end_of_line));
+                                            box_position.offset_in_box));
     }
   }
 
   // DeleteSelectionCommandTest.deleteListFromTable goes here.
   return LocalCaretRect(
-      layout_object, layout_object->LocalCaretRect(
-                         nullptr, position.GetPosition().ComputeEditingOffset(),
-                         extra_width_to_end_of_line));
+      layout_object,
+      layout_object->LocalCaretRect(
+          nullptr, position.GetPosition().ComputeEditingOffset()));
 }
 
 // This function was added because the caret rect that is calculated by
@@ -144,17 +142,13 @@ LocalCaretRect LocalSelectionRectOfPositionTemplate(
 
 }  // namespace
 
-LocalCaretRect LocalCaretRectOfPosition(
-    const PositionWithAffinity& position,
-    LayoutUnit* extra_width_to_end_of_line) {
-  return LocalCaretRectOfPositionTemplate<EditingStrategy>(
-      position, extra_width_to_end_of_line);
+LocalCaretRect LocalCaretRectOfPosition(const PositionWithAffinity& position) {
+  return LocalCaretRectOfPositionTemplate<EditingStrategy>(position);
 }
 
 LocalCaretRect LocalCaretRectOfPosition(
     const PositionInFlatTreeWithAffinity& position) {
-  return LocalCaretRectOfPositionTemplate<EditingInFlatTreeStrategy>(position,
-                                                                     nullptr);
+  return LocalCaretRectOfPositionTemplate<EditingInFlatTreeStrategy>(position);
 }
 
 LocalCaretRect LocalSelectionRectOfPosition(

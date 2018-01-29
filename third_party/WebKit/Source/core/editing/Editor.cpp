@@ -1473,18 +1473,19 @@ IntRect Editor::FirstRectForRange(const EphemeralRange& range) const {
   LayoutUnit extra_width_to_end_of_line;
   DCHECK(range.IsNotNull());
 
-  const PositionWithAffinity start_position(
-      CreateVisiblePosition(range.StartPosition()).DeepEquivalent(),
-      TextAffinity::kDownstream);
-  const IntRect start_caret_rect = RenderedPosition::AbsoluteRect(
-      start_position, &extra_width_to_end_of_line);
+  IntRect start_caret_rect =
+      RenderedPosition(
+          CreateVisiblePosition(range.StartPosition()).DeepEquivalent(),
+          TextAffinity::kDownstream)
+          .AbsoluteRect(&extra_width_to_end_of_line);
   if (start_caret_rect.IsEmpty())
     return IntRect();
 
-  const PositionWithAffinity end_position(
-      CreateVisiblePosition(range.EndPosition()).DeepEquivalent(),
-      TextAffinity::kUpstream);
-  const IntRect end_caret_rect = RenderedPosition::AbsoluteRect(end_position);
+  IntRect end_caret_rect =
+      RenderedPosition(
+          CreateVisiblePosition(range.EndPosition()).DeepEquivalent(),
+          TextAffinity::kUpstream)
+          .AbsoluteRect();
   if (end_caret_rect.IsEmpty())
     return IntRect();
 

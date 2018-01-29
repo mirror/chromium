@@ -36,6 +36,7 @@ namespace blink {
 
 class ClassCollection;
 class ExceptionState;
+class FloatPoint;
 class HTMLCollection;
 class NameNodeList;
 using StaticElementList = StaticNodeTypeList<Element>;
@@ -425,6 +426,9 @@ class CORE_EXPORT ContainerNode : public Node {
   inline bool IsHostIncludingInclusiveAncestorOfThis(const Node&,
                                                      ExceptionState&) const;
   inline bool IsChildTypeAllowed(const Node& child) const;
+
+  bool GetUpperLeftCorner(FloatPoint&) const;
+  bool GetLowerRightCorner(FloatPoint&) const;
 
   TraceWrapperMember<Node> first_child_;
   TraceWrapperMember<Node> last_child_;

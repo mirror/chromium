@@ -23,7 +23,7 @@ class PlatformSensorAccelerometerMac : public PlatformSensor {
  public:
   // Construct a platform sensor of type ACCELEROMETER, given a buffer |mapping|
   // where readings will be written.
-  PlatformSensorAccelerometerMac(SensorReadingSharedBuffer* reading_buffer,
+  PlatformSensorAccelerometerMac(mojo::ScopedSharedBufferMapping mapping,
                                  PlatformSensorProvider* provider);
 
   mojom::ReportingMode GetReportingMode() override;

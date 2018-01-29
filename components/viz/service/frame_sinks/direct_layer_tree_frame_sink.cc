@@ -112,7 +112,9 @@ void DirectLayerTreeFrameSink::SubmitCompositorFrame(CompositorFrame frame) {
     display_->SetLocalSurfaceId(local_surface_id_, device_scale_factor_);
   }
 
-  support_->SubmitCompositorFrame(local_surface_id_, std::move(frame));
+  bool result =
+      support_->SubmitCompositorFrame(local_surface_id_, std::move(frame));
+  DCHECK(result);
 }
 
 void DirectLayerTreeFrameSink::DidNotProduceFrame(const BeginFrameAck& ack) {

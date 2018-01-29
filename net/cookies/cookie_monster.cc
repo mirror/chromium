@@ -95,6 +95,10 @@ static const int kMinutesInTenYears = 10 * 365 * 24 * 60;
 
 namespace {
 
+const char kFetchWhenNecessaryName[] = "FetchWhenNecessary";
+const char kAlwaysFetchName[] = "AlwaysFetch";
+const char kCookieMonsterFetchStrategyName[] = "CookieMonsterFetchStrategy";
+
 void MayeRunDeleteCallback(base::WeakPtr<net::CookieMonster> cookie_monster,
                            base::OnceClosure callback) {
   if (cookie_monster && callback)
@@ -410,6 +414,7 @@ CookieMonster::CookieMonster(PersistentCookieStore* store,
     : initialized_(false),
       started_fetching_all_cookies_(false),
       finished_fetching_all_cookies_(false),
+      fetch_strategy_(kUnknownFetch),
       seen_global_task_(false),
       store_(store),
       last_access_threshold_(last_access_threshold),
@@ -892,7 +897,8 @@ void CookieMonster::SetCookieWithCreationTimeForTesting(
   }
 
   MarkCookieStoreAsInitialized();
-  FetchAllCookiesIfNecessary();
+  if (ShouldFetchAllCookiesWhenFetchingAnyCookie())
+    FetchAllCookiesIfNecessary();
 
   return SetCookieWithCreationTimeAndOptions(
       url, cookie_line, creation_time, CookieOptions(), std::move(callback));
@@ -943,6 +949,26 @@ void CookieMonster::FetchAllCookies() {
   // loading cookies.
   store_->Load(base::Bind(&CookieMonster::OnLoaded,
                           weak_ptr_factory_.GetWeakPtr(), TimeTicks::Now()));
+}
+
+bool CookieMonster::ShouldFetchAllCookiesWhenFetchingAnyCookie() {
+  DCHECK(thread_checker_.CalledOnValidThread());
+
+  if (fetch_strategy_ == kUnknownFetch) {
+    const std::string group_name =
+        base::FieldTrialList::FindFullName(kCookieMonsterFetchStrategyName);
+    if (group_name == kFetchWhenNecessaryName) {
+      fetch_strategy_ = kFetchWhenNecessary;
+    } else if (group_name == kAlwaysFetchName) {
+      fetch_strategy_ = kAlwaysFetch;
+    } else {
+      // The logic in the conditional is redundant, but it makes trials of
+      // the Finch experiment more explicit.
+      fetch_strategy_ = kAlwaysFetch;
+    }
+  }
+
+  return fetch_strategy_ == kAlwaysFetch;
 }
 
 void CookieMonster::OnLoaded(
@@ -1932,7 +1958,8 @@ void CookieMonster::DoCookieCallback(base::OnceClosure callback) {
 void CookieMonster::DoCookieCallbackForURL(base::OnceClosure callback,
                                            const GURL& url) {
   MarkCookieStoreAsInitialized();
-  FetchAllCookiesIfNecessary();
+  if (ShouldFetchAllCookiesWhenFetchingAnyCookie())
+    FetchAllCookiesIfNecessary();
 
   // If cookies for the requested domain key (eTLD+1) have been loaded from DB
   // then run the task, otherwise load from DB.

@@ -25,11 +25,11 @@ bool HaveValuesChanged(const SensorReading& lhs, const SensorReading& rhs) {
 
 PlatformSensorLinux::PlatformSensorLinux(
     mojom::SensorType type,
-    SensorReadingSharedBuffer* reading_buffer,
+    mojo::ScopedSharedBufferMapping mapping,
     PlatformSensorProvider* provider,
     const SensorInfoLinux* sensor_device,
     scoped_refptr<base::SingleThreadTaskRunner> polling_thread_task_runner)
-    : PlatformSensor(type, reading_buffer, provider),
+    : PlatformSensor(type, std::move(mapping), provider),
       default_configuration_(
           PlatformSensorConfiguration(sensor_device->device_frequency)),
       reporting_mode_(sensor_device->reporting_mode),

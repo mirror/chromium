@@ -27,7 +27,7 @@ class PlatformSensorWin final : public PlatformSensor,
  public:
   PlatformSensorWin(
       mojom::SensorType type,
-      SensorReadingSharedBuffer* reading_buffer,
+      mojo::ScopedSharedBufferMapping mapping,
       PlatformSensorProvider* provider,
       scoped_refptr<base::SingleThreadTaskRunner> sensor_thread_runner,
       std::unique_ptr<PlatformSensorReaderWin> sensor_reader);

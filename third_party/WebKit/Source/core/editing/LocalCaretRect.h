@@ -28,10 +28,8 @@ struct LocalCaretRect {
 };
 
 // Rect is local to the returned layoutObject
-// TODO(xiaochengh): Get rid of the default parameter.
-CORE_EXPORT LocalCaretRect LocalCaretRectOfPosition(
-    const PositionWithAffinity&,
-    LayoutUnit* /* extra_width_to_end_of_line */ = nullptr);
+CORE_EXPORT LocalCaretRect
+LocalCaretRectOfPosition(const PositionWithAffinity&);
 CORE_EXPORT LocalCaretRect
 LocalCaretRectOfPosition(const PositionInFlatTreeWithAffinity&);
 

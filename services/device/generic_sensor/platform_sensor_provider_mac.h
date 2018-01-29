@@ -18,7 +18,7 @@ class PlatformSensorProviderMac : public PlatformSensorProvider {
 
  protected:
   void CreateSensorInternal(mojom::SensorType type,
-                            SensorReadingSharedBuffer* reading_buffer,
+                            mojo::ScopedSharedBufferMapping mapping,
                             const CreateSensorCallback& callback) override;
 
  private:

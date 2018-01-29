@@ -163,7 +163,9 @@ void TestLayerTreeFrameSink::SubmitCompositorFrame(CompositorFrame frame) {
     device_scale_factor_ = device_scale_factor;
   }
 
-  support_->SubmitCompositorFrame(local_surface_id_, std::move(frame));
+  bool result =
+      support_->SubmitCompositorFrame(local_surface_id_, std::move(frame));
+  DCHECK(result);
 
   for (auto& copy_request : copy_requests_)
     support_->RequestCopyOfSurface(std::move(copy_request));

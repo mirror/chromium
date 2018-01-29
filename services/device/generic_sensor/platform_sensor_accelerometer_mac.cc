@@ -35,9 +35,9 @@ namespace device {
 using mojom::SensorType;
 
 PlatformSensorAccelerometerMac::PlatformSensorAccelerometerMac(
-    SensorReadingSharedBuffer* reading_buffer,
+    mojo::ScopedSharedBufferMapping mapping,
     PlatformSensorProvider* provider)
-    : PlatformSensor(SensorType::ACCELEROMETER, reading_buffer, provider),
+    : PlatformSensor(SensorType::ACCELEROMETER, std::move(mapping), provider),
       sudden_motion_sensor_(SuddenMotionSensor::Create()) {}
 
 PlatformSensorAccelerometerMac::~PlatformSensorAccelerometerMac() = default;
