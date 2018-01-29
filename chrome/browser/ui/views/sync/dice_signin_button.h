@@ -26,9 +26,12 @@ class DiceSigninButton : public views::MdTextButton {
 
   // Creates a sign-in button personalized with the data from |account|.
   // |button_listener| will be called for events originating from |this| or from
-  // |drop_down_arrow|.
+  // |drop_down_arrow|. The drop down arrow will only be shown when
+  // |display_drop_down_arrow| is true.
   DiceSigninButton(const AccountInfo& account_info,
-                   views::ButtonListener* button_listener);
+                   const gfx::Image& account_icon,
+                   views::ButtonListener* button_listener,
+                   bool display_drop_down_arrow = true);
   ~DiceSigninButton() override;
 
   const views::Button* drop_down_arrow() const { return arrow_; }
