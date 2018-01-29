@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ca26940a_4db18e0e",
+        "filename": "chrome/browser/extensions/updater/extension_updater.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2018-01-29T21:53:11Z",
+      "side": 1,
+      "message": "This event is emitted by CrxInstaller, which means that an extension update has been downloaded successfully. In another word, this event and OnExtensionDownloadFailed  are mutually exclusive.",
+      "parentUuid": "14d4ae58_da79fedc",
+      "revId": "89e204230a809e99b2873b04088274bd8cb12a68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad80c97a_3602b7c1",
         "filename": "extensions/browser/updater/extension_downloader.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "89e204230a809e99b2873b04088274bd8cb12a68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fa6bf9b_c18674e7",
+        "filename": "extensions/browser/updater/extension_downloader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2018-01-29T21:53:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad80c97a_3602b7c1",
+      "revId": "89e204230a809e99b2873b04088274bd8cb12a68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9526cd74_d019ec3d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 23841,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2018-01-29T21:53:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63c20e49_ff1bea31",
+      "revId": "89e204230a809e99b2873b04088274bd8cb12a68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55d6e6bc_f611d83f",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 6
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "3b0cb66a_cb08afdc",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 23842,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2018-01-29T21:53:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55d6e6bc_f611d83f",
+      "revId": "89e204230a809e99b2873b04088274bd8cb12a68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23cb1f3c_501fb9b5",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 6
@@ -84,6 +156,24 @@
       "revId": "89e204230a809e99b2873b04088274bd8cb12a68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf056b6a_5bd7f782",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 23860,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2018-01-29T21:53:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23cb1f3c_501fb9b5",
+      "revId": "89e204230a809e99b2873b04088274bd8cb12a68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
