@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "da87ed13_284002b5",
+        "filename": "build/mac/should_use_hermetic_xcode.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2018-01-29T23:32:15Z",
+      "side": 1,
+      "message": "Not yet, but I\u0027ll definitely try it. My understanding is, for a specific checkout, it\u0027s either targeting iOS or macOS, but not both, correct?",
+      "parentUuid": "837c6461_0eec6dcf",
+      "range": {
+        "startLine": 31,
+        "startChar": 43,
+        "endLine": 31,
+        "endChar": 44
+      },
+      "revId": "82d981d5477e95c0ab70a407ea80873a149be9e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b919a780_4d103277",
         "filename": "build/mac_toolchain.py",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "3113c578_e760f970",
+        "filename": "build/mac_toolchain.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2018-01-29T23:32:15Z",
+      "side": 1,
+      "message": "Only because the new pipeline doesn\u0027t (currently) support Xcode 8.*. I was hoping to deprecate Xcode 8 before deploying this, and in its current form this would allow me to test the CL in a try job.\n\nIf Xcode 8 is there for a good reason and needs to stay, I\u0027ll try to implement the support for it.",
+      "parentUuid": "b919a780_4d103277",
+      "revId": "82d981d5477e95c0ab70a407ea80873a149be9e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5a4fffe_55c6698d",
         "filename": "build/mac_toolchain.py",
         "patchSetId": 2
@@ -56,6 +98,24 @@
       "revId": "82d981d5477e95c0ab70a407ea80873a149be9e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a752562a_dad3a24b",
+        "filename": "build/mac_toolchain.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2018-01-29T23:32:15Z",
+      "side": 1,
+      "message": "It does indeed call xcode-select -s to install the correct packages, but it will also revert it to the original path when done: https://chromium.googlesource.com/infra/infra/+/master/go/src/infra/cmd/mac_toolchain/install.go#121\n\nSo I believe it\u0027s safe even on dev machines.",
+      "parentUuid": "e5a4fffe_55c6698d",
+      "revId": "82d981d5477e95c0ab70a407ea80873a149be9e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
