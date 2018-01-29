@@ -41,7 +41,7 @@ class LazyThreadControllerForTest : public internal::ThreadControllerImpl {
 
   base::PlatformThreadRef thread_ref_;
 
-  base::RunLoop::NestingObserver* pending_observer_ = nullptr;
+  bool pending_observer_ = false;
   scoped_refptr<base::SingleThreadTaskRunner> pending_default_task_runner_;
 
   DISALLOW_COPY_AND_ASSIGN(LazyThreadControllerForTest);
