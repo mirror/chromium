@@ -34,6 +34,24 @@
       "revId": "6f9a0404c2d1180ffe7ce7a94041a14bd9ee040a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c33a5f1f_8ff3f44b",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-29T22:56:17Z",
+      "side": 1,
+      "message": "I mean storing local_rrect_ only. It will simplify line 577-578 and move line 621-622 into the rare path (line 629).",
+      "parentUuid": "81109555_bc8683cc",
+      "revId": "6f9a0404c2d1180ffe7ce7a94041a14bd9ee040a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
