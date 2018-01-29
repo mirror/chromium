@@ -48,6 +48,52 @@
     },
     {
       "key": {
+        "uuid": "a6a2cec1_7747b54c",
+        "filename": "ios/chrome/browser/ui/download/download_manager_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-29T16:19:08Z",
+      "side": 1,
+      "message": "In the fully fleshed out coordinator model, there is a mediator object that\u0027s responsible for pushing model-layer updates to the view controller. Typically the mediator is where all of the \"business logic\" lives, and also it\u0027s where any async or threading logic is. Because the mediator doesn\u0027t directly respond to UI events, it\u0027s thus straightforward to unit test.\n\n(the mediator pushes updates to the view controller via a \u0027consumer\u0027 protocol; it doesn\u0027t depend directly on the VC implementation).\n\nI think there\u0027s enough complexity and business logic here to factor out into a mediator object. That would mean the coordinator is functionally just forwarding some of the DownloadManagerTabHelperDelegate methods to the mediator, but I\u0027d prefer to do that and keep the coordinator\u0027s responsibility limited to just managing plumbing.",
+      "range": {
+        "startLine": 152,
+        "startChar": 8,
+        "endLine": 152,
+        "endChar": 28
+      },
+      "revId": "b284d9c763b8c8de19c4e6f7e7cd45df0bfc795a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d15c561b_1cc5ef40",
+        "filename": "ios/chrome/browser/ui/download/download_manager_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-29T16:19:08Z",
+      "side": 1,
+      "message": "Asynchronously",
+      "range": {
+        "startLine": 178,
+        "startChar": 3,
+        "endLine": 178,
+        "endChar": 18
+      },
+      "revId": "b284d9c763b8c8de19c4e6f7e7cd45df0bfc795a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "654c8bbc_fcda31c4",
         "filename": "ios/chrome/browser/ui/download/download_manager_coordinator.mm",
         "patchSetId": 2
