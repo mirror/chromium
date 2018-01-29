@@ -365,6 +365,24 @@
     },
     {
       "key": {
+        "uuid": "646d6071_83a838d0",
+        "filename": "chrome_server/notification_activator.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-29T01:26:47Z",
+      "side": 1,
+      "message": "Please ignore my previous reply. There is no need to include \u003cwrl/module.h\u003e here at all. Instead, \u003cwrl/implements.h\u003e is the right one. Now that \u003cwrl/module.h\u003e is only included in notification_activator_registrar.cc, I have defined the macro there.",
+      "parentUuid": "7584e31c_fcd2f956",
+      "revId": "d71f47e2050dce15bb484333b161b551c30cb49b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08c9bc90_20bbeff2",
         "filename": "chrome_server/notification_activator.h",
         "patchSetId": 33
