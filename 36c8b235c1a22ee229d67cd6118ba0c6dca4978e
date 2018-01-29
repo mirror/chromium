@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8742ab8e_659ef5de",
+        "filename": "components/arc/video_accelerator/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2018-01-29T04:48:54Z",
+      "side": 1,
+      "message": "I get rid of this pointer.\nInstead, GAVDA tries to get PBM shared_pointer by using GetInstance() all the time PBM is needed.",
+      "parentUuid": "196fba08_0aae9882",
+      "range": {
+        "startLine": 147,
+        "startChar": 2,
+        "endLine": 147,
+        "endChar": 17
+      },
+      "revId": "36c8b235c1a22ee229d67cd6118ba0c6dca4978e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c6224c2_224d1cde",
         "filename": "components/arc/video_accelerator/protected_buffer_manager.h",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e2c0ba3d_999fbd10",
+        "filename": "components/arc/video_accelerator/protected_buffer_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2018-01-29T04:48:54Z",
+      "side": 1,
+      "message": "Yes. We need to change the codes a lot.\nIn the new design, PBM will never created by its constructor, and instead created by Create().\n\nCreate() must be called by PBA.\nGetInstance() must be called by GAVDA and PBMProxy all the time PBM is required.\nGetInstance() returns nullptr if there is an active PBM, which is created by Create().\nThese guarantee that one PBM which is created by PBA exists if it is needed in GAVDA and PBMProxy.",
+      "parentUuid": "8c6224c2_224d1cde",
+      "range": {
+        "startLine": 21,
+        "startChar": 3,
+        "endLine": 21,
+        "endChar": 66
+      },
+      "revId": "36c8b235c1a22ee229d67cd6118ba0c6dca4978e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0795f6cb_cfc98e75",
         "filename": "components/arc/video_accelerator/protected_buffer_manager.h",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-29T04:18:07Z",
       "side": 1,
       "message": "As above, there may be the case GAVDA is created earlier than PBA.",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 64
+      },
+      "revId": "36c8b235c1a22ee229d67cd6118ba0c6dca4978e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7b3f5174_93c36150",
+        "filename": "components/arc/video_accelerator/protected_buffer_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2018-01-29T04:48:54Z",
+      "side": 1,
+      "message": "Returns nullptr if there is no active PBM.",
+      "parentUuid": "0795f6cb_cfc98e75",
       "range": {
         "startLine": 35,
         "startChar": 2,
