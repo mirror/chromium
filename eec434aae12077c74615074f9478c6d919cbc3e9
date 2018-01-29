@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "7b01232c_d195045d",
+        "filename": "third_party/WebKit/Source/core/dom/events/EventListener.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-29T10:31:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d74d892e_c10ab2dc",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 58,
+        "endChar": 9
+      },
+      "revId": "eec434aae12077c74615074f9478c6d919cbc3e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7b24f23_dc8156b7",
         "filename": "third_party/WebKit/Source/core/dom/events/EventListener.h",
         "patchSetId": 4
