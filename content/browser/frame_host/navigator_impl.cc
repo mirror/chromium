@@ -844,6 +844,10 @@ void NavigatorImpl::OnBeginNavigation(
   // This is a renderer-initiated navigation.
   DCHECK(frame_tree_node);
 
+  if (common_params.should_squelch_downloads) {
+    LOG(ERROR) << "should_squelch_downloads";
+  }
+
   NavigationRequest* ongoing_navigation_request =
       frame_tree_node->navigation_request();
 

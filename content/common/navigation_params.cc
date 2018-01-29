@@ -37,7 +37,8 @@ CommonNavigationParams::CommonNavigationParams()
       method("GET"),
       should_check_main_world_csp(CSPDisposition::CHECK),
       started_from_context_menu(false),
-      has_user_gesture(false) {}
+      has_user_gesture(false),
+      should_squelch_downloads(false) {}
 
 CommonNavigationParams::CommonNavigationParams(
     const GURL& url,
@@ -58,6 +59,7 @@ CommonNavigationParams::CommonNavigationParams(
     CSPDisposition should_check_main_world_csp,
     bool started_from_context_menu,
     bool has_user_gesture,
+    bool should_squelch_downloads,
     const base::Optional<std::string>& suggested_filename)
     : url(url),
       referrer(referrer),
@@ -77,11 +79,15 @@ CommonNavigationParams::CommonNavigationParams(
       should_check_main_world_csp(should_check_main_world_csp),
       started_from_context_menu(started_from_context_menu),
       has_user_gesture(has_user_gesture),
+      should_squelch_downloads(should_squelch_downloads),
       suggested_filename(suggested_filename) {
   // |method != "POST"| should imply absence of |post_data|.
   if (method != "POST" && post_data) {
     NOTREACHED();
     this->post_data = nullptr;
+  }
+  if (should_squelch_downloads) {
+    LOG(ERROR) << "should_squelch_downloads";
   }
 }
 

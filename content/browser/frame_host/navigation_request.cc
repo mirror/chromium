@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "base/debug/stack_trace.h"
 #include "base/memory/ptr_util.h"
 #include "base/optional.h"
 #include "base/strings/string_util.h"
@@ -425,6 +426,8 @@ NavigationRequest::~NavigationRequest() {
 }
 
 void NavigationRequest::BeginNavigation() {
+  base::debug::StackTrace().Print();
+
   DCHECK(!loader_);
   DCHECK(state_ == NOT_STARTED || state_ == WAITING_FOR_RENDERER_RESPONSE);
   TRACE_EVENT_ASYNC_STEP_INTO0("navigation", "NavigationRequest", this,
@@ -1158,23 +1161,26 @@ void NavigationRequest::OnWillProcessResponseChecksComplete(
     // DownloadManager, and cancel the navigation.
     if (is_download_ &&
         base::FeatureList::IsEnabled(features::kNetworkService)) {
-      // TODO(arthursonzogni): Pass the real ResourceRequest. For the moment
-      // only these 4 parameters will be used, but it may evolve quickly.
-      auto resource_request = std::make_unique<network::ResourceRequest>();
-      resource_request->url = common_params_.url;
-      resource_request->method = common_params_.method;
-      resource_request->request_initiator = begin_params_->initiator_origin;
-      resource_request->referrer = common_params_.referrer.url;
+      if (!common_params_.should_squelch_downloads) {
+        // TODO(arthursonzogni): Pass the real ResourceRequest. For the moment
+        // only these 4 parameters will be used, but it may evolve quickly.
+        auto resource_request = std::make_unique<network::ResourceRequest>();
+        resource_request->url = common_params_.url;
+        resource_request->method = common_params_.method;
+        resource_request->request_initiator = begin_params_->initiator_origin;
+        resource_request->referrer = common_params_.referrer.url;
 
-      BrowserContext* browser_context =
-          frame_tree_node_->navigator()->GetController()->GetBrowserContext();
-      DownloadManagerImpl* download_manager = static_cast<DownloadManagerImpl*>(
-          BrowserContext::GetDownloadManager(browser_context));
-      download_manager->InterceptNavigation(
-          std::move(resource_request), navigation_handle_->GetRedirectChain(),
-          common_params_.suggested_filename, response_,
-          std::move(url_loader_client_endpoints_), ssl_info_.cert_status,
-          frame_tree_node_->frame_tree_node_id());
+        BrowserContext* browser_context =
+            frame_tree_node_->navigator()->GetController()->GetBrowserContext();
+        DownloadManagerImpl* download_manager =
+            static_cast<DownloadManagerImpl*>(
+                BrowserContext::GetDownloadManager(browser_context));
+        download_manager->InterceptNavigation(
+            std::move(resource_request), navigation_handle_->GetRedirectChain(),
+            common_params_.suggested_filename, response_,
+            std::move(url_loader_client_endpoints_), ssl_info_.cert_status,
+            frame_tree_node_->frame_tree_node_id());
+      }
 
       OnRequestFailed(false, net::ERR_ABORTED, base::nullopt);
       return;
