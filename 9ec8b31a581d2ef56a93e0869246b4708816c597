@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2dbb1f6f_604a76a2",
+        "filename": "third_party/WebKit/Source/core/layout/custom/DocumentLayoutDefinition.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-29T17:21:16Z",
+      "side": 0,
+      "message": "\u003e Remove TraceWrapperBase?\n\nDone.",
+      "range": {
+        "startLine": 18,
+        "startChar": 31,
+        "endLine": 18,
+        "endChar": 0
+      },
+      "revId": "9ec8b31a581d2ef56a93e0869246b4708816c597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4c3e71f_09699571",
+        "filename": "third_party/WebKit/Source/core/layout/custom/DocumentLayoutDefinition.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-29T17:21:16Z",
+      "side": 0,
+      "message": "\u003e Unused?\n\nDone.",
+      "revId": "9ec8b31a581d2ef56a93e0869246b4708816c597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1127b76b_07131723",
+        "filename": "third_party/WebKit/Source/core/layout/custom/LayoutWorklet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-29T17:21:16Z",
+      "side": 0,
+      "message": "\u003eNo one is tracing DocumentLayoutDefinition. Does it really need to be TraceWrapperMember?\n\nNo this can just be a member.\n\nSorry a lot of this patch was cloned from the paint worklet classes. Fixed there as well.",
+      "revId": "9ec8b31a581d2ef56a93e0869246b4708816c597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de7cb1fa_c39b6655",
+        "filename": "third_party/WebKit/Source/core/layout/custom/LayoutWorkletGlobalScope.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-29T17:21:16Z",
+      "side": 0,
+      "message": "\u003e You can introduce these functions with V8ObjectHelper once it\u0027s landed, right?\n\nThat\u0027s right, V8ObectHelper was based off the registerLayout patch so these functions got moved.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 17
+      },
+      "revId": "9ec8b31a581d2ef56a93e0869246b4708816c597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5bea6b7_075c51ed",
+        "filename": "third_party/WebKit/Source/core/layout/custom/LayoutWorkletGlobalScope.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-29T17:21:16Z",
+      "side": 0,
+      "message": "\u003e ctor_value \u003d\u003e constructor_value\n\n\u003e Blink prefers a fully qualified name.\n\nDone \u0026 other WGS files.",
+      "revId": "9ec8b31a581d2ef56a93e0869246b4708816c597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8890f146_503caa74",
+        "filename": "third_party/WebKit/Source/core/layout/custom/LayoutWorkletGlobalScope.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-29T17:21:16Z",
+      "side": 0,
+      "message": "\u003e Not related to this CL:\n\u003e\n\u003e I\u0027m a bit surprised that LayoutWorklet runs on the main thread... I was \u003ethinking that it runs on a compositor thread :)\n\u003e\n\u003eWhat\u0027s a lifetime relationship between LayoutWorklet, \u003eLayoutWorkletGlobalScope and DOMWindow? It looks a bit strange that there\u0027s not explicit strong references between LayoutWorklet and LayoutWorkletGlobalScope.\n\nYeah needs to be the main thread. :)\n\nLayoutWorklet exists for the lifetime of the DOMWindow. The worklet class holds the WorkletGlobalScopeProxies alive:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/workers/Worklet.h?sq\u003dpackage:chromium\u0026l\u003d78\n\nWhich for us (The LayoutWorkletGlobalScopeProxy) keeps the global scope alive.\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/layout/custom/LayoutWorkletGlobalScopeProxy.h?sq\u003dpackage:chromium\u0026l\u003d18\n\n(no strong ref between LWGS -\u003e LW due to reference cycle).\n\nThe LWGS\u0027s can actually be killed and restarted dynamically if we need them to be.",
+      "revId": "9ec8b31a581d2ef56a93e0869246b4708816c597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

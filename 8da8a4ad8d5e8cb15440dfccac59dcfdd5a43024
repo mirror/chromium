@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "708101c2_d2be4780",
+        "filename": "third_party/WebKit/Source/core/layout/custom/CSSLayoutDefinition.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-29T17:21:16Z",
+      "side": 1,
+      "message": "\u003e Remove \u0027;\u0027.\n\nDone.",
+      "revId": "8da8a4ad8d5e8cb15440dfccac59dcfdd5a43024",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bc6ec74_a04a3cb0",
+        "filename": "third_party/WebKit/Source/core/layout/custom/LayoutWorkletGlobalScope.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-29T17:21:16Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t fully understand what this line is doing...\n\u003e\n\u003e What\u0027s a relationship between CSSLayoutDefinition and DocumentLayoutDefinition?\n\nYeah this is in the spec, basically as we run the same script in multiple WorkletGlobalScopes its possible to register a class with two different definitions. I.e.\n\nregisterLayout(\u0027foo\u0027, class {\n  static get inputProperties() { return [\u0027--a\u0027+Math.random()]; }\n});\n\nTo protect against this, we mark the \"document\" (master) definition as invalid if this occurs, which is what the error below is.",
+      "revId": "8da8a4ad8d5e8cb15440dfccac59dcfdd5a43024",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
