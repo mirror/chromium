@@ -1091,6 +1091,12 @@
                             "description": "Requested substring in name. Only histograms which have query as a\nsubstring in their name are extracted. An empty or absent query returns\nall histograms.",
                             "optional": true,
                             "type": "string"
+                        },
+                        {
+                            "name": "deltaFromLastSnapshot",
+                            "description": "If true, return the delta from the last histogram snapshot (default: false).",
+                            "optional": true,
+                            "type": "boolean"
                         }
                     ],
                     "returns": [
@@ -1113,6 +1119,12 @@
                             "name": "name",
                             "description": "Requested histogram name.",
                             "type": "string"
+                        },
+                        {
+                            "name": "deltaFromLastSnapshot",
+                            "description": "If true, return the delta from the last histogram snapshot (default: false).",
+                            "optional": true,
+                            "type": "boolean"
                         }
                     ],
                     "returns": [
@@ -1122,6 +1134,11 @@
                             "$ref": "Histogram"
                         }
                     ]
+                },
+                {
+                    "name": "takeHistogramSnapshot",
+                    "description": "Takes a snapshot of Chrome histograms.",
+                    "experimental": true
                 },
                 {
                     "name": "getWindowBounds",

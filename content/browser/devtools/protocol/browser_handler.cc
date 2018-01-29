@@ -7,8 +7,6 @@
 #include <string.h>
 #include <algorithm>
 
-#include "base/metrics/histogram_base.h"
-#include "base/metrics/histogram_samples.h"
 #include "base/metrics/statistics_recorder.h"
 #include "content/public/browser/devtools_agent_host.h"
 #include "content/public/common/content_client.h"
@@ -44,11 +42,8 @@ namespace {
 
 // Converts an histogram.
 std::unique_ptr<Browser::Histogram> Convert(
-    const base::HistogramBase& in_histogram) {
-  const std::unique_ptr<const base::HistogramSamples> in_buckets =
-      in_histogram.SnapshotSamples();
-  DCHECK(in_buckets);
-
+    const char* const in_name,
+    const std::unique_ptr<base::HistogramSamples>& in_buckets) {
   auto out_buckets = std::make_unique<Array<Browser::Bucket>>();
 
   for (const std::unique_ptr<base::SampleCountIterator> bucket_it =
@@ -66,7 +61,7 @@ std::unique_ptr<Browser::Histogram> Convert(
   }
 
   return Browser::Histogram::Create()
-      .SetName(in_histogram.histogram_name())
+      .SetName(in_name)
       .SetSum(in_buckets->sum())
       .SetCount(in_buckets->TotalCount())
       .SetBuckets(std::move(out_buckets))
@@ -77,6 +72,7 @@ std::unique_ptr<Browser::Histogram> Convert(
 
 Response BrowserHandler::GetHistograms(
     const Maybe<std::string> in_query,
+    Maybe<bool> in_deltaFromLastSnapshot,
     std::unique_ptr<Array<Browser::Histogram>>* const out_histograms) {
   // Convert histograms.
   DCHECK(out_histograms);
@@ -84,7 +80,10 @@ Response BrowserHandler::GetHistograms(
   for (const base::HistogramBase* const h :
        base::StatisticsRecorder::GetSnapshot(in_query.fromMaybe(""))) {
     DCHECK(h);
-    (*out_histograms)->addItem(Convert(*h));
+    std::unique_ptr<base::HistogramSamples> in_buckets =
+        GetHistogramSnapshotSamples(*h,
+                                    in_deltaFromLastSnapshot.fromMaybe(false));
+    (*out_histograms)->addItem(Convert(h->histogram_name(), in_buckets));
   }
 
   return Response::OK();
@@ -92,6 +91,7 @@ Response BrowserHandler::GetHistograms(
 
 Response BrowserHandler::GetHistogram(
     const std::string& in_name,
+    Maybe<bool> in_deltaFromLastSnapshot,
     std::unique_ptr<Browser::Histogram>* const out_histogram) {
   // Get histogram by name.
   const base::HistogramBase* const in_histogram =
@@ -101,9 +101,42 @@ Response BrowserHandler::GetHistogram(
 
   // Convert histogram.
   DCHECK(out_histogram);
-  *out_histogram = Convert(*in_histogram);
+  std::unique_ptr<base::HistogramSamples> in_buckets =
+      GetHistogramSnapshotSamples(*in_histogram,
+                                  in_deltaFromLastSnapshot.fromMaybe(false));
+  (*out_histogram) = Convert(in_histogram->histogram_name(), in_buckets);
 
   return Response::OK();
+}
+
+Response BrowserHandler::TakeHistogramSnapshot() {
+  auto* current_snapshot = new BrowserHandler::HistogramMap();
+  for (const base::HistogramBase* const h :
+       base::StatisticsRecorder::GetHistograms()) {
+    const char* const name = h->histogram_name();
+    std::unique_ptr<base::HistogramSamples> samples = h->SnapshotSamples();
+    (*current_snapshot)[name] = std::move(samples);
+  }
+  histogram_snapshot_.reset(current_snapshot);
+
+  return Response::OK();
+}
+
+std::unique_ptr<base::HistogramSamples>
+BrowserHandler::GetHistogramSnapshotSamples(
+    const base::HistogramBase& in_histogram,
+    const bool in_deltaFromLastSnapshot) {
+  auto in_buckets = in_histogram.SnapshotSamples();
+  DCHECK(in_buckets);
+
+  if (in_deltaFromLastSnapshot) {
+    const BrowserHandler::HistogramMap::const_iterator it =
+        histogram_snapshot_->find(in_histogram.histogram_name());
+    if (it != histogram_snapshot_->end())
+      in_buckets->Subtract(*it->second.get());
+  }
+
+  return in_buckets;
 }
 
 }  // namespace protocol

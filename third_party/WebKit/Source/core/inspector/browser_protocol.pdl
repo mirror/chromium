@@ -520,6 +520,8 @@ domain Browser
       # substring in their name are extracted. An empty or absent query returns
       # all histograms.
       optional string query
+      # If true, return the delta from the last histogram snapshot (default: false).
+      optional boolean deltaFromLastSnapshot
     returns
       # Histograms.
       array of Histogram histograms
@@ -529,9 +531,14 @@ domain Browser
     parameters
       # Requested histogram name.
       string name
+      # If true, return the delta from the last histogram snapshot (default: false).
+      optional boolean deltaFromLastSnapshot
     returns
       # Histogram.
       Histogram histogram
+
+  # Takes a snapshot of Chrome histograms.
+  experimental command takeHistogramSnapshot
 
   # Get position and size of the browser window.
   experimental command getWindowBounds
