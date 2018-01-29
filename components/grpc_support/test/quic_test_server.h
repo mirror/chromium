@@ -13,6 +13,9 @@ bool StartQuicTestServer();
 
 void ShutdownQuicTestServer();
 
+// Shut down the server dispatcher, and the stream should error out.
+void ShutdownQuicTestServerDispatcher();
+
 int GetQuicTestServerPort();
 
 extern const char kTestServerDomain[];
