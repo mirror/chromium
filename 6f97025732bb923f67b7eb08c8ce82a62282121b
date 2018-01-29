@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6daf1594_575f7a06",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-29T16:41:56Z",
+      "side": 0,
+      "message": "Leftover from ScriptWrappableVisitor refactoring",
+      "range": {
+        "startLine": 42,
+        "startChar": 3,
+        "endLine": 42,
+        "endChar": 70
+      },
+      "revId": "6f97025732bb923f67b7eb08c8ce82a62282121b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64497bfc_34c8ba34",
+        "filename": "third_party/WebKit/Source/platform/heap/TraceTraits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-29T16:41:56Z",
+      "side": 0,
+      "message": "Leftover from ScriptWrappableVisitor refactoring",
+      "range": {
+        "startLine": 254,
+        "startChar": 2,
+        "endLine": 254,
+        "endChar": 8
+      },
+      "revId": "6f97025732bb923f67b7eb08c8ce82a62282121b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
