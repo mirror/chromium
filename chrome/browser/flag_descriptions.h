@@ -1054,6 +1054,9 @@ extern const char kAutofillAccessoryViewDescription[];
 extern const char kBackgroundLoaderForDownloadsName[];
 extern const char kBackgroundLoaderForDownloadsDescription[];
 
+extern const char kChromeDuplexName[];
+extern const char kChromeDuplexDescription[];
+
 extern const char kChromeHomeBottomNavLabelsName[];
 extern const char kChromeHomeBottomNavLabelsDescription[];
 
@@ -1085,9 +1088,6 @@ extern const char kChromeHomeSwipeLogicName[];
 extern const char kChromeHomeSwipeLogicDescription[];
 extern const char kChromeHomeSwipeLogicRestrictArea[];
 extern const char kChromeHomeSwipeLogicVelocity[];
-
-extern const char kChromeHomeName[];
-extern const char kChromeHomeDescription[];
 
 extern const char kChromeModernDesignName[];
 extern const char kChromeModernDesignDescription[];
