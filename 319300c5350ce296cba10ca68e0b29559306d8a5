@@ -16,6 +16,24 @@
       "revId": "319300c5350ce296cba10ca68e0b29559306d8a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b160b1d7_5d0c2d04",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2018-01-29T18:22:31Z",
+      "side": 1,
+      "message": "Can\u0027t do that. This method can get called from both sides. I think it is correct not having any thread DCHECK() here.\n\nThis returns a thread reference which is safe to be called from any thread.",
+      "parentUuid": "eeac7c50_edbb082a",
+      "revId": "319300c5350ce296cba10ca68e0b29559306d8a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
