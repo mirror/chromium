@@ -33,6 +33,24 @@
       "revId": "c70c51877a61abe7cba8523257e88a93282d0bc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d42f26de_94659a2b",
+        "filename": "content/browser/renderer_host/input/touch_selection_controller_client_aura_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2018-01-29T22:25:32Z",
+      "side": 1,
+      "message": "We have had to work around similar problems in a few places, and I am not sure that there is a better approach. AFAICT this is just a problem with tests, but I don\u0027t know if James has any concerns with the WaitUntilStable() mechanism. It seems like it should be fine here.",
+      "parentUuid": "9872c1a0_84e44db4",
+      "revId": "c70c51877a61abe7cba8523257e88a93282d0bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
