@@ -159,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b5fffcae_cfb8a94d",
+        "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-29T11:06:34Z",
+      "side": 1,
+      "message": "\u003e Isn\u0027t this a unit test? Or is it a browser test because I deal with widgets?\n\nah, you are correct. I missed that this is a unit test. However, the same applies in this respect -- only interactive_ui_tests can reliably test for native window focus.\n\nBut that makes it even more confusing - since there should be a ViewsTestHelperMac in scope, which already has a scoped_fake_nswindow_focus.h :/. There may simply be gaps in how well it simulate hover. There\u0027s definitely something to investigate here",
+      "parentUuid": "1f6586c9_29f921ed",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "025a6846_d433efa5",
         "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
         "patchSetId": 15
@@ -381,6 +399,24 @@
     },
     {
       "key": {
+        "uuid": "0794bd43_4649d4ee",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-29T11:06:34Z",
+      "side": 1,
+      "message": "\u003e It does not happen in this implementation, but there should always only be one bubble.\n\u003e Do you think a DCHECK is better here?\n\nA DCHECK is usually preferred, unless it\u0027s a known thing that needs to be handled. The risk is that code added later can start depend on it, or that some refactoring occurs that unintentionally relies on it. It can make troubleshooting bugs harder, or mask leaks. (basically anything unplanned should trigger a crash so it can be planned for properly)",
+      "parentUuid": "347b82ad_4d720c37",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f4bd2bd_7ee6a1dd",
         "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
         "patchSetId": 15
@@ -410,6 +446,24 @@
       "side": 1,
       "message": "This has to be called after CreateBubble() otherwise it crashes. Apparently the widget has to exist at the point the method is called. Should I add a comment?",
       "parentUuid": "1f4bd2bd_7ee6a1dd",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6233f081_47d41be2",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-29T11:06:34Z",
+      "side": 1,
+      "message": "Ah, yeah I think it needs a comment - there\u0027s one on SetAlignment(), but the more interesting thing is why it needs to be called at all. most bubbles just use the default (and the default is different with/without chrome://flags/#secondary-ui-md ).\n\n\n(another option could be to pass something other than views::BubbleBorder::NONE to the BubbleDialogDelegateView constructor, and combine that with an ArrowPaintType -- that might give better anchoring behaviour [e.g. flipping in RTL locales]. SetArrowPaintType needs to be called in a similar way, but PaintNone is default under Harmony so in the long run shouldn\u0027t do a second layout).",
+      "parentUuid": "1ec1ca0a_4e14415a",
       "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -486,6 +540,24 @@
     },
     {
       "key": {
+        "uuid": "abc5e119_f8283cea",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-29T11:06:34Z",
+      "side": 1,
+      "message": "\u003e Usually this should only be called for DiceAccountsMenu because the observer gets removed from the parent when the DiceAccountsMenu bubble is destroyed.\n\u003e But I added a check just in case.\n\nSadly, it\u0027s always possible for the parent widget to be destroyed first. (that\u0027s why BubbleDialogDelegateView observes it in SetAnchorView() and checks in BubbleDialogDelegateView::OnWidgetDestroying()). Sometimes it can be hard to trigger manually (might involve a11y tools, third-party \u0027desktop enhancers\u0027, system logoff flows, timed reboots, etc.), but the crash reports certainly indicate it as a common occurrence.\n\nHere, I think parent_bubble_-\u003eGetWidget() may be passed in for |widget| -- if that happens, the code below shouldn\u0027t try to close it again, since it\u0027s in the process of being destroyed already.\n\nTo trigger in code, you just need to call anchor_widget()-\u003eCloseNow() (with \"real\" desktop widgets -- not the fake ones that CreateTopLevelPlatformWidget() makes)",
+      "parentUuid": "214ef946_2f39fed9",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f803f27b_5f9517dc",
         "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
         "patchSetId": 15
@@ -515,6 +587,24 @@
       "side": 1,
       "message": "The parent bubble only closes when it changes from active to inactive. (in this case it either changes from inactive to inactive or from inactive to active)\nSo it could listen for this itself, but I found it more convenient to do it in the DiceAccountsMenu bubble, when the widget is destroyed. It also makes it easier to install into other bubbles which is handy since it will not only be used in the ProfileChooserView, but also for the BookmarksBubble, ...",
       "parentUuid": "f803f27b_5f9517dc",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2805c3b0_60eaa78d",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-29T11:06:34Z",
+      "side": 1,
+      "message": "I think this is worth highlighting in the comment more directly. I.e. is the only way this can happen by the user clicking the parent bubble? (in all other cases I can think of, both bubbles should dismiss) E.g. \n\n  // If the user clicked the parent bubble (thereby causing it to activate, and this\n  // bubble to deactivate and close), the parent bubble should stay open. In all other\n  // cases, close the parent bubble if it hasn\u0027t been destroyed already.\n\n(perhaps also mention behavior on pressing escape?)\n\nAlso note I think bubbles on mac are different in this respect (via the BubbleDialogDelegateView::mac_bubble_closer_ member) and don\u0027t need this (or didn\u0027t while the ScopedCloseBubbleOnDeactivate was out of scope).",
+      "parentUuid": "b9fb00b1_0d17974f",
       "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -602,6 +692,24 @@
       "writtenOn": "2018-01-24T23:55:17Z",
       "side": 1,
       "message": "rather than a raw pointer, I think this would be better as a helper function doing\n\nanchor_widget()-\u003ewidget_delegate()-\u003eAsBubbleDialogDelegate()\n\nBubbleDialogDelegateView already does some lifetime management of anchor_widget_",
+      "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f875a9d_56eed957",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-29T11:06:34Z",
+      "side": 1,
+      "message": "\u003e rather than a raw pointer, I think this would be better as a helper function doing\n\u003e \n\u003e anchor_widget()-\u003ewidget_delegate()-\u003eAsBubbleDialogDelegate()\n\u003e \n\u003e BubbleDialogDelegateView already does some lifetime management of anchor_widget_\n\nIs this still possible? It would be nice to remove this raw/weak/unmanaged pointer.",
+      "parentUuid": "ca67f1e8_68e57628",
       "revId": "f6b39569538872cff0113b4eca5f77e19695cab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fb5e0a7_4c547daa",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-29T11:06:34Z",
+      "side": 1,
+      "message": "nit: blank line after",
+      "revId": "ca08c3f8c7d4dd5a180485df0000427ad5c50ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2cbc822_5e2ece57",
+        "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-29T11:06:34Z",
+      "side": 1,
+      "message": "`this-\u003e` not needed",
+      "revId": "ca08c3f8c7d4dd5a180485df0000427ad5c50ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0add4218_ad5b872d",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-29T11:06:34Z",
+      "side": 1,
+      "message": "this should hold a DiceAccountsMenu* and get the parent bubble with BubbleDialogDelegateView::anchor_widget() -- it might return null.\n\nthe parent (|bubble_|) doesn\u0027t own ScopedCloseBubbleOnDeactivate so it can\u0027t ensure the lifetimes are safe enough to hold a raw pointer.",
+      "revId": "ca08c3f8c7d4dd5a180485df0000427ad5c50ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f33b0b3f_0c807c6b",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-29T11:06:34Z",
+      "side": 1,
+      "message": "this should be in namespace test (you\u0027ll need a forward declare), and we usually name them like DiceAccountsMenuTestApi (`git grep TestApi under ui/views for examples)",
+      "revId": "ca08c3f8c7d4dd5a180485df0000427ad5c50ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c88257c1_b8342079",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-29T11:06:34Z",
+      "side": 1,
+      "message": "nit: private:\n DISALLOW..",
+      "revId": "ca08c3f8c7d4dd5a180485df0000427ad5c50ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e1ddec6_16946fcf",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-29T11:06:34Z",
+      "side": 1,
+      "message": "this puts the bubble\u0027s background into the tab-focus chain, which is a bit odd - comment?",
+      "revId": "ca08c3f8c7d4dd5a180485df0000427ad5c50ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee09739a_698f1425",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-29T11:06:34Z",
+      "side": 1,
+      "message": "std::vector\u003cAccountInfo\u003e() -\u003e {}?",
+      "range": {
+        "startLine": 101,
+        "startChar": 46,
+        "endLine": 101,
+        "endChar": 72
+      },
+      "revId": "ca08c3f8c7d4dd5a180485df0000427ad5c50ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5615e288_3d48c846",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-29T11:06:34Z",
+      "side": 1,
+      "message": "can more of this be moved into SetUp()?",
+      "revId": "ca08c3f8c7d4dd5a180485df0000427ad5c50ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80b0cf58_e872ed66",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-29T11:06:34Z",
+      "side": 1,
+      "message": "std::vector\u003cAccountInfo\u003e accounts \u003d {account}?",
+      "revId": "ca08c3f8c7d4dd5a180485df0000427ad5c50ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
