@@ -44,6 +44,18 @@ namespace {
 const char kTestPageText[] = "landing!";
 const char kExpectedMimeType[] = "text/html";
 
+const char kDownloadMimeType[] = "application/vnd.test";
+const char kDownloadContent[] = "testdata";
+
+// Returns HTTP response which causes WebState to start the download.
+HtmlResponseProviderImpl::Response GetDownloadResponse() {
+  auto response_headers = web::ResponseProvider::GetResponseHeaders(
+      kDownloadMimeType, net::HTTP_OK);
+  response_headers->AddHeader(
+      "Content-Disposition: attachment; filename=download.test");
+  return HtmlResponseProviderImpl::Response(kDownloadContent, response_headers);
+}
+
 // Verifies correctness of |NavigationContext| (|arg1|) for new page navigation
 // passed to |DidStartNavigation|. Stores |NavigationContext| in |context|
 // pointer.
@@ -52,11 +64,14 @@ ACTION_P3(VerifyNewPageStartedContext, web_state, url, context) {
   ASSERT_TRUE(*context);
   EXPECT_EQ(web_state, arg0);
   EXPECT_EQ(web_state, (*context)->GetWebState());
+  EXPECT_NE(0, (*context)->GetNavigationId());
   EXPECT_EQ(url, (*context)->GetUrl());
   EXPECT_TRUE(
       PageTransitionCoreTypeIs(ui::PageTransition::PAGE_TRANSITION_TYPED,
                                (*context)->GetPageTransition()));
   EXPECT_FALSE((*context)->IsSameDocument());
+  EXPECT_FALSE((*context)->HasCommitted());
+  EXPECT_FALSE((*context)->IsDownload());
   EXPECT_FALSE((*context)->IsPost());
   EXPECT_FALSE((*context)->GetError());
   EXPECT_FALSE((*context)->IsRendererInitiated());
@@ -76,11 +91,14 @@ ACTION_P3(VerifyNewPageFinishedContext, web_state, url, context) {
   EXPECT_EQ(web_state, (*context)->GetWebState());
   ASSERT_TRUE((*context));
   EXPECT_EQ(web_state, (*context)->GetWebState());
+  EXPECT_NE(0, (*context)->GetNavigationId());
   EXPECT_EQ(url, (*context)->GetUrl());
   EXPECT_TRUE(
       PageTransitionCoreTypeIs(ui::PageTransition::PAGE_TRANSITION_TYPED,
                                (*context)->GetPageTransition()));
   EXPECT_FALSE((*context)->IsSameDocument());
+  EXPECT_TRUE((*context)->HasCommitted());
+  EXPECT_FALSE((*context)->IsDownload());
   EXPECT_FALSE((*context)->IsPost());
   EXPECT_FALSE((*context)->GetError());
   EXPECT_FALSE((*context)->IsRendererInitiated());
@@ -103,11 +121,14 @@ ACTION_P3(VerifyErrorFinishedContext, web_state, url, context) {
   EXPECT_EQ(web_state, arg0);
   ASSERT_TRUE((*context));
   EXPECT_EQ(web_state, (*context)->GetWebState());
+  EXPECT_NE(0, (*context)->GetNavigationId());
   EXPECT_EQ(url, (*context)->GetUrl());
   EXPECT_TRUE(
       PageTransitionCoreTypeIs(ui::PageTransition::PAGE_TRANSITION_TYPED,
                                (*context)->GetPageTransition()));
   EXPECT_FALSE((*context)->IsSameDocument());
+  EXPECT_TRUE((*context)->HasCommitted());
+  EXPECT_FALSE((*context)->IsDownload());
   EXPECT_FALSE((*context)->IsPost());
   // The error code will be different on bots and for local runs. Allow both.
   NSInteger error_code = (*context)->GetError().code;
@@ -134,8 +155,11 @@ ACTION_P4(VerifyPostStartedContext,
   ASSERT_TRUE(*context);
   EXPECT_EQ(web_state, arg0);
   EXPECT_EQ(web_state, (*context)->GetWebState());
+  EXPECT_NE(0, (*context)->GetNavigationId());
   EXPECT_EQ(url, (*context)->GetUrl());
   EXPECT_FALSE((*context)->IsSameDocument());
+  EXPECT_FALSE((*context)->HasCommitted());
+  EXPECT_FALSE((*context)->IsDownload());
   EXPECT_TRUE((*context)->IsPost());
   EXPECT_FALSE((*context)->GetError());
   EXPECT_EQ(renderer_initiated, (*context)->IsRendererInitiated());
@@ -167,8 +191,11 @@ ACTION_P4(VerifyPostFinishedContext,
   EXPECT_EQ(web_state, (*context)->GetWebState());
   ASSERT_TRUE((*context));
   EXPECT_EQ(web_state, (*context)->GetWebState());
+  EXPECT_NE(0, (*context)->GetNavigationId());
   EXPECT_EQ(url, (*context)->GetUrl());
   EXPECT_FALSE((*context)->IsSameDocument());
+  EXPECT_TRUE((*context)->HasCommitted());
+  EXPECT_FALSE((*context)->IsDownload());
   EXPECT_TRUE((*context)->IsPost());
   EXPECT_FALSE((*context)->GetError());
   EXPECT_EQ(renderer_initiated, (*context)->IsRendererInitiated());
@@ -192,10 +219,13 @@ ACTION_P5(VerifySameDocumentStartedContext,
   ASSERT_TRUE(*context);
   EXPECT_EQ(web_state, arg0);
   EXPECT_EQ(web_state, (*context)->GetWebState());
+  EXPECT_NE(0, (*context)->GetNavigationId());
   EXPECT_EQ(url, (*context)->GetUrl());
   EXPECT_TRUE(PageTransitionTypeIncludingQualifiersIs(
       page_transition, (*context)->GetPageTransition()));
   EXPECT_TRUE((*context)->IsSameDocument());
+  EXPECT_FALSE((*context)->HasCommitted());
+  EXPECT_FALSE((*context)->IsDownload());
   EXPECT_FALSE((*context)->IsPost());
   EXPECT_FALSE((*context)->GetError());
   EXPECT_FALSE((*context)->GetResponseHeaders());
@@ -214,10 +244,13 @@ ACTION_P5(VerifySameDocumentFinishedContext,
   ASSERT_TRUE(*context);
   EXPECT_EQ(web_state, arg0);
   EXPECT_EQ(web_state, (*context)->GetWebState());
+  EXPECT_NE(0, (*context)->GetNavigationId());
   EXPECT_EQ(url, (*context)->GetUrl());
   EXPECT_TRUE(PageTransitionTypeIncludingQualifiersIs(
       page_transition, (*context)->GetPageTransition()));
   EXPECT_TRUE((*context)->IsSameDocument());
+  EXPECT_TRUE((*context)->HasCommitted());
+  EXPECT_FALSE((*context)->IsDownload());
   EXPECT_FALSE((*context)->IsPost());
   EXPECT_FALSE((*context)->GetError());
   EXPECT_FALSE((*context)->GetResponseHeaders());
@@ -235,11 +268,14 @@ ACTION_P3(VerifyNewNativePageStartedContext, web_state, url, context) {
   ASSERT_TRUE(*context);
   EXPECT_EQ(web_state, arg0);
   EXPECT_EQ(web_state, (*context)->GetWebState());
+  EXPECT_NE(0, (*context)->GetNavigationId());
   EXPECT_EQ(url, (*context)->GetUrl());
   EXPECT_TRUE(
       PageTransitionCoreTypeIs(ui::PageTransition::PAGE_TRANSITION_TYPED,
                                (*context)->GetPageTransition()));
   EXPECT_FALSE((*context)->IsSameDocument());
+  EXPECT_FALSE((*context)->HasCommitted());
+  EXPECT_FALSE((*context)->IsDownload());
   EXPECT_FALSE((*context)->IsPost());
   EXPECT_FALSE((*context)->GetError());
   EXPECT_FALSE((*context)->IsRendererInitiated());
@@ -258,11 +294,14 @@ ACTION_P3(VerifyNewNativePageFinishedContext, web_state, url, context) {
   ASSERT_TRUE(*context);
   EXPECT_EQ(web_state, arg0);
   EXPECT_EQ(web_state, (*context)->GetWebState());
+  EXPECT_NE(0, (*context)->GetNavigationId());
   EXPECT_EQ(url, (*context)->GetUrl());
   EXPECT_TRUE(
       PageTransitionCoreTypeIs(ui::PageTransition::PAGE_TRANSITION_TYPED,
                                (*context)->GetPageTransition()));
   EXPECT_FALSE((*context)->IsSameDocument());
+  EXPECT_TRUE((*context)->HasCommitted());
+  EXPECT_FALSE((*context)->IsDownload());
   EXPECT_FALSE((*context)->IsPost());
   EXPECT_FALSE((*context)->GetError());
   EXPECT_FALSE((*context)->IsRendererInitiated());
@@ -281,11 +320,14 @@ ACTION_P3(VerifyReloadStartedContext, web_state, url, context) {
   ASSERT_TRUE(*context);
   EXPECT_EQ(web_state, arg0);
   EXPECT_EQ(web_state, (*context)->GetWebState());
+  EXPECT_NE(0, (*context)->GetNavigationId());
   EXPECT_EQ(url, (*context)->GetUrl());
   EXPECT_TRUE(
       PageTransitionCoreTypeIs(ui::PageTransition::PAGE_TRANSITION_RELOAD,
                                (*context)->GetPageTransition()));
   EXPECT_FALSE((*context)->IsSameDocument());
+  EXPECT_FALSE((*context)->HasCommitted());
+  EXPECT_FALSE((*context)->IsDownload());
   EXPECT_FALSE((*context)->GetError());
   EXPECT_TRUE((*context)->IsRendererInitiated());
   EXPECT_FALSE((*context)->GetResponseHeaders());
@@ -309,11 +351,14 @@ ACTION_P4(VerifyReloadFinishedContext, web_state, url, context, is_web_page) {
   ASSERT_TRUE(*context);
   EXPECT_EQ(web_state, arg0);
   EXPECT_EQ(web_state, (*context)->GetWebState());
+  EXPECT_NE(0, (*context)->GetNavigationId());
   EXPECT_EQ(url, (*context)->GetUrl());
   EXPECT_TRUE(
       PageTransitionCoreTypeIs(ui::PageTransition::PAGE_TRANSITION_RELOAD,
                                (*context)->GetPageTransition()));
   EXPECT_FALSE((*context)->IsSameDocument());
+  EXPECT_TRUE((*context)->HasCommitted());
+  EXPECT_FALSE((*context)->IsDownload());
   EXPECT_FALSE((*context)->GetError());
   EXPECT_TRUE((*context)->IsRendererInitiated());
   if (is_web_page) {
@@ -324,6 +369,37 @@ ACTION_P4(VerifyReloadFinishedContext, web_state, url, context, is_web_page) {
   } else {
     EXPECT_FALSE((*context)->GetResponseHeaders());
   }
+  NavigationManager* navigation_manager = web_state->GetNavigationManager();
+  NavigationItem* item = navigation_manager->GetLastCommittedItem();
+  EXPECT_TRUE(!item->GetTimestamp().is_null());
+  EXPECT_EQ(url, item->GetURL());
+}
+
+// Verifies correctness of |NavigationContext| (|arg1|) for download navigation
+// passed to |DidFinishNavigation|. Asserts that |NavigationContext| the same as
+// |context|.
+ACTION_P3(VerifyDownloadFinishedContext, web_state, url, context) {
+  ASSERT_EQ(*context, arg1);
+  EXPECT_EQ(web_state, arg0);
+  EXPECT_EQ(web_state, (*context)->GetWebState());
+  ASSERT_TRUE((*context));
+  EXPECT_EQ(web_state, (*context)->GetWebState());
+  EXPECT_NE(0, (*context)->GetNavigationId());
+  EXPECT_EQ(url, (*context)->GetUrl());
+  EXPECT_TRUE(
+      PageTransitionCoreTypeIs(ui::PageTransition::PAGE_TRANSITION_TYPED,
+                               (*context)->GetPageTransition()));
+  EXPECT_FALSE((*context)->IsSameDocument());
+  EXPECT_TRUE((*context)->HasCommitted());
+  EXPECT_TRUE((*context)->IsDownload());
+  EXPECT_FALSE((*context)->IsPost());
+  EXPECT_FALSE((*context)->GetError());
+  EXPECT_FALSE((*context)->IsRendererInitiated());
+  ASSERT_TRUE((*context)->GetResponseHeaders());
+  std::string mime_type;
+  (*context)->GetResponseHeaders()->GetMimeType(&mime_type);
+  ASSERT_FALSE(web_state->IsLoading());
+  EXPECT_EQ(kDownloadMimeType, mime_type);
   NavigationManager* navigation_manager = web_state->GetNavigationManager();
   NavigationItem* item = navigation_manager->GetLastCommittedItem();
   EXPECT_TRUE(!item->GetTimestamp().is_null());
@@ -986,6 +1062,29 @@ TEST_F(NavigationAndLoadCallbacksTest, RedirectNavigation) {
   EXPECT_CALL(observer_, DidFinishNavigation(web_state(), _))
       .WillOnce(
           VerifyNewPageFinishedContext(web_state(), redirect_url, &context));
+  EXPECT_CALL(observer_, DidStopLoading(web_state()));
+  EXPECT_CALL(observer_,
+              PageLoaded(web_state(), PageLoadCompletionStatus::SUCCESS));
+  ASSERT_TRUE(LoadUrl(url));
+}
+
+// Tests download navigation.
+TEST_F(NavigationAndLoadCallbacksTest, DownloadNavigation) {
+  const GURL url = HttpServer::MakeUrl("http://chromium.test");
+  std::map<GURL, HtmlResponseProviderImpl::Response> responses;
+  responses[url] = GetDownloadResponse();
+  std::unique_ptr<web::DataResponseProvider> provider(
+      new HtmlResponseProvider(responses));
+  web::test::SetUpHttpServer(std::move(provider));
+
+  // Perform download navigation.
+  NavigationContext* context = nullptr;
+  EXPECT_CALL(observer_, DidStartLoading(web_state()));
+  EXPECT_CALL(*decider_, ShouldAllowRequest(_, _)).WillOnce(Return(true));
+  EXPECT_CALL(observer_, DidStartNavigation(web_state(), _))
+      .WillOnce(VerifyNewPageStartedContext(web_state(), url, &context));
+  EXPECT_CALL(observer_, DidFinishNavigation(web_state(), _))
+      .WillOnce(VerifyDownloadFinishedContext(web_state(), url, &context));
   EXPECT_CALL(observer_, DidStopLoading(web_state()));
   EXPECT_CALL(observer_,
               PageLoaded(web_state(), PageLoadCompletionStatus::SUCCESS));
