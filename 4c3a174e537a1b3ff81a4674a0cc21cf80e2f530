@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9d7778a_37184f28",
+        "filename": "third_party/WebKit/public/platform/ThreadType.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-29T01:25:23Z",
+      "side": 1,
+      "message": "WebThreadType",
+      "revId": "4c3a174e537a1b3ff81a4674a0cc21cf80e2f530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33d4e513_7040fea5",
+        "filename": "third_party/WebKit/public/platform/WebThread.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-29T01:25:23Z",
+      "side": 1,
+      "message": "Can we add the |name| parameter to WebThreadCreationParams\u0027s constructor (instead of adding SetThreadName)?",
+      "revId": "4c3a174e537a1b3ff81a4674a0cc21cf80e2f530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
