@@ -46,8 +46,8 @@
 #include "modules/filesystem/DOMFileSystemBase.h"
 #include "modules/filesystem/DirectoryEntry.h"
 #include "modules/filesystem/DirectoryReader.h"
-#include "modules/filesystem/Entry.h"
 #include "modules/filesystem/FileEntry.h"
+#include "modules/filesystem/FileSystemEntry.h"
 #include "modules/filesystem/FileWriterBase.h"
 #include "modules/filesystem/FileWriterBaseCallback.h"
 #include "modules/filesystem/Metadata.h"
@@ -171,7 +171,7 @@ void EntryCallbacks::OnDidGetEntryV8Impl::Trace(blink::Visitor* visitor) {
   OnDidGetEntryCallback::Trace(visitor);
 }
 
-void EntryCallbacks::OnDidGetEntryV8Impl::OnSuccess(Entry* entry) {
+void EntryCallbacks::OnDidGetEntryV8Impl::OnSuccess(FileSystemEntry* entry) {
   callback_->handleEvent(entry);
 }
 
@@ -202,10 +202,11 @@ void EntryCallbacks::DidSucceed() {
   if (!success_callback_)
     return;
 
-  Entry* entry = is_directory_ ? static_cast<Entry*>(DirectoryEntry::Create(
-                                     file_system_, expected_path_))
-                               : static_cast<Entry*>(FileEntry::Create(
-                                     file_system_, expected_path_));
+  FileSystemEntry* entry =
+      is_directory_ ? static_cast<FileSystemEntry*>(
+                          DirectoryEntry::Create(file_system_, expected_path_))
+                    : static_cast<FileSystemEntry*>(
+                          FileEntry::Create(file_system_, expected_path_));
   InvokeOrScheduleCallback(&OnDidGetEntryCallback::OnSuccess,
                            success_callback_.Release(), entry);
 }
@@ -334,11 +335,11 @@ void ResolveURICallbacks::DidResolveURL(const String& name,
     return;
   }
 
-  Entry* entry =
-      is_directory
-          ? static_cast<Entry*>(
-                DirectoryEntry::Create(filesystem, absolute_path))
-          : static_cast<Entry*>(FileEntry::Create(filesystem, absolute_path));
+  FileSystemEntry* entry =
+      is_directory ? static_cast<FileSystemEntry*>(
+                         DirectoryEntry::Create(filesystem, absolute_path))
+                   : static_cast<FileSystemEntry*>(
+                         FileEntry::Create(filesystem, absolute_path));
   InvokeOrScheduleCallback(&OnDidGetEntryCallback::OnSuccess,
                            success_callback_.Release(), entry);
 }

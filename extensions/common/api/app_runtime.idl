@@ -8,8 +8,8 @@
 namespace app.runtime {
 
   [inline_doc] dictionary LaunchItem {
-    // Entry for the item.
-    [instanceOf=Entry] object entry;
+    // FileSystemEntry for the item.
+    [instanceOf=FileSystemEntry] object entry;
 
     // The MIME type of the file.
     DOMString? type;

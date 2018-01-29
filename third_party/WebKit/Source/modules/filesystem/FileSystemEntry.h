@@ -28,8 +28,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef Entry_h
-#define Entry_h
+#ifndef FileSystemEntry_h
+#define FileSystemEntry_h
 
 #include "modules/ModulesExport.h"
 #include "modules/filesystem/DOMFileSystem.h"
@@ -44,7 +44,7 @@ class V8EntryCallback;
 class V8ErrorCallback;
 class VoidCallback;
 
-class MODULES_EXPORT Entry : public EntryBase {
+class MODULES_EXPORT FileSystemEntry : public EntryBase {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -77,9 +77,9 @@ class MODULES_EXPORT Entry : public EntryBase {
   void Trace(blink::Visitor*) override;
 
  protected:
-  Entry(DOMFileSystemBase*, const String& full_path);
+  FileSystemEntry(DOMFileSystemBase*, const String& full_path);
 };
 
 }  // namespace blink
 
-#endif  // Entry_h
+#endif  // FileSystemEntry_h

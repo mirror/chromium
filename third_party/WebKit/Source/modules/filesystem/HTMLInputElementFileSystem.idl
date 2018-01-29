@@ -34,5 +34,5 @@
     ImplementedAs=HTMLInputElementFileSystem,
     RuntimeEnabled=FileSystem
 ] partial interface HTMLInputElement {
-    [CallWith=ScriptState, Measure] readonly attribute FrozenArray<Entry> webkitEntries;
+    [CallWith=ScriptState, Measure] readonly attribute FrozenArray<FileSystemEntry> webkitEntries;
 };

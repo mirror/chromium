@@ -250,7 +250,7 @@ chrome.fileManagerPrivate.cancelDialog = function() {};
  * Executes file browser task over selected files. |taskId| The unique
  * identifier of task to execute. |entries| Array of file entries |callback|
  * @param {string} taskId
- * @param {!Array<!Entry>} entries
+ * @param {!Array<!FileSystemEntry>} entries
  * @param {function((boolean|undefined))} callback |result| Result of the task
  *     execution.
  */
@@ -263,7 +263,7 @@ chrome.fileManagerPrivate.executeTask = function(taskId, entries, callback) {};
  * of selected file entries to extract path extensions from. |mimeTypes| Array
  * of selected file MIME types. |callback|
  * @param {string} taskId
- * @param {!Array<!Entry>} entries
+ * @param {!Array<!FileSystemEntry>} entries
  * @param {!Array<string>} mimeTypes
  * @param {!function()} callback Callback that does not take arguments.
  */
@@ -273,7 +273,7 @@ chrome.fileManagerPrivate.setDefaultTask = function(taskId, entries, mimeTypes,
 /**
  * Gets the list of tasks that can be performed over selected files. |entries|
  * Array of selected entries |callback|
- * @param {!Array<!Entry>} entries
+ * @param {!Array<!FileSystemEntry>} entries
  * @param {function((!Array<!FileTask>|undefined))} callback |tasks| The list of
  *     matched file entries for this task.
  */
@@ -287,16 +287,16 @@ chrome.fileManagerPrivate.getFileTasks = function(entries, callback) {};
 chrome.fileManagerPrivate.getStrings = function(callback) {};
 
 /**
- * Adds file watch. |entry| Entry of file to watch |callback|
- * @param {!Entry} entry
+ * Adds file watch. |entry| FileSystemEntry of file to watch |callback|
+ * @param {!FileSystemEntry} entry
  * @param {function((boolean|undefined))} callback |success| True when file
  *     watch is successfully added.
  */
 chrome.fileManagerPrivate.addFileWatch = function(entry, callback) {};
 
 /**
- * Removes file watch. |entry| Entry of watched file to remove |callback|
- * @param {!Entry} entry
+ * Removes file watch. |entry| FileSystemEntry of watched file to remove |callback|
+ * @param {!FileSystemEntry} entry
  * @param {function((boolean|undefined))} callback |success| True when file
  *     watch is successfully
  * removed.
@@ -345,7 +345,7 @@ chrome.fileManagerPrivate.selectFile = function(selectedPath, index, forOpening,
 /**
  * Requests additional properties for files. |entries| list of entries of files
  * |callback|
- * @param {!Array<!Entry>} entries
+ * @param {!Array<!FileSystemEntry>} entries
  * @param {!Array<string>} names
  * @param {function((!Array<!EntryProperties>|undefined))} callback
  *     |entryProperties| A dictionary containing properties of the requested
@@ -355,10 +355,10 @@ chrome.fileManagerPrivate.getEntryProperties = function(entries, names,
     callback) {};
 
 /**
- * Pins/unpins a Drive file in the cache. |entry| Entry of a file to pin/unpin.
- * |pin| Pass true to pin the file. |callback| Completion callback.
+ * Pins/unpins a Drive file in the cache. |entry| FileSystemEntry of a file to
+ * pin/unpin. |pin| Pass true to pin the file. |callback| Completion callback.
  * $(ref:runtime.lastError) will be set if     there was an error.
- * @param {!Entry} entry
+ * @param {!FileSystemEntry} entry
  * @param {boolean} pin
  * @param {function()} callback Callback that does not take arguments.
  */
@@ -369,9 +369,9 @@ chrome.fileManagerPrivate.pinDriveFile = function(entry, pin, callback) {};
  * entries in the external file system mounted to Chrome OS file manager
  * backend. If resolving entry fails, the entry will be just ignored and the
  * corresponding entry does not appear in the result.
- * @param {!Array<!Entry>} entries
- * @param {function((!Array<!Entry>|undefined))} callback Completion callback
- *     with resolved entries.
+ * @param {!Array<!FileSystemEntry>} entries
+ * @param {function((!Array<!FileSystemEntry>|undefined))} callback Completion
+ *     callback with resolved entries.
  */
 chrome.fileManagerPrivate.resolveIsolatedEntries = function(entries,
     callback) {};
@@ -414,10 +414,10 @@ chrome.fileManagerPrivate.cancelAllFileTransfers = function(callback) {};
 
 /**
  * Starts to copy an entry. If the source is a directory, the copy is done
- * recursively. |entry| Entry of the source entry to be copied. |parent| Entry
- * of the destination directory. |newName| Name of the new entry. It must not
- * contain '/'. |callback| Completion callback.
- * @param {!Entry} entry
+ * recursively. |entry| FileSystemEntry of the source entry to be copied.
+ * |parent| Entry of the destination directory. |newName| Name of the new entry.
+ * It must not contain '/'. |callback| Completion callback.
+ * @param {!FileSystemEntry} entry
  * @param {!DirectoryEntry} parentEntry
  * @param {string} newName
  * @param {function((number|undefined))} callback |copyId| ID of the copy task.
@@ -472,7 +472,7 @@ chrome.fileManagerPrivate.setPreferences = function(changeInfo) {};
 /**
  * Performs drive content search. |searchParams| |callback|
  * @param {SearchParams} searchParams
- * @param {function((!Array<Entry>|undefined), (string|undefined))} callback
+ * @param {function((!Array<FileSystemEntry>|undefined), (string|undefined))} callback
  * Entries and ID of the feed that contains next chunk of the search result.
  * Should be sent to the next searchDrive request to perform incremental search.
  */
@@ -503,7 +503,7 @@ chrome.fileManagerPrivate.searchFilesByHashes = function(volumeId, hashes,
  * Name of the destination zip file. The zip file will be created under the
  * directory specified by |parentEntry|.
  * @param {!DirectoryEntry} parentEntry
- * @param {!Array<!Entry>} entries
+ * @param {!Array<!FileSystemEntry>} entries
  * @param {string} destName
  * @param {function((boolean|undefined))} callback
  */
@@ -552,21 +552,21 @@ chrome.fileManagerPrivate.requestWebStoreAccessToken = function(callback) {};
 
 /**
  * Requests a share dialog url for the specified file.
- * @param {!Entry} entry
+ * @param {!FileSystemEntry} entry
  * @param {function((string|undefined))} callback Callback with the result url.
  */
 chrome.fileManagerPrivate.getShareUrl = function(entry, callback) {};
 
 /**
  * Requests a download url to download the file contents.
- * @param {!Entry} entry
+ * @param {!FileSystemEntry} entry
  * @param {function((string|undefined))} callback Callback with the result url.
  */
 chrome.fileManagerPrivate.getDownloadUrl = function(entry, callback) {};
 
 /**
  * Requests to share drive files.
- * @param {!Entry} entry
+ * @param {!FileSystemEntry} entry
  * @param {string} shareType
  * @param {function()} callback Callback that does not take arguments.
  */
@@ -602,14 +602,14 @@ chrome.fileManagerPrivate.openInspector = function(type) {};
 
 /**
  * Computes an MD5 checksum for the given file.
- * @param {!Entry} entry
+ * @param {!FileSystemEntry} entry
  * @param {function((string|undefined))} callback
  */
 chrome.fileManagerPrivate.computeChecksum = function(entry, callback) {};
 
 /**
  * Gets the MIME type of a file.
- * @param {!Entry} entry
+ * @param {!FileSystemEntry} entry
  * @param {function((string|undefined))} callback Callback that MIME type of the
  *     file is passed.
  */
@@ -623,7 +623,7 @@ chrome.fileManagerPrivate.isUMAEnabled = function(callback) {};
 
 /**
  * Sets a tag on a file or a directory. Only Drive files are supported.
- * @param {!Entry} entry
+ * @param {!FileSystemEntry} entry
  * @param {string} visibility 'private' or 'public'
  * @param {string} key
  * @param {string} value
@@ -664,7 +664,7 @@ chrome.fileManagerPrivate.configureVolume = function(volumeId, callback) {};
 /**
  * Requests fetching list of actions for the specified set of entries. If not
  * possible, then returns an error via chrome.runtime.lastError.
- * @param {!Array<!Entry>} entries
+ * @param {!Array<!FileSystemEntry>} entries
  * @param {function((!Array<!EntryAction>|undefined))} callback
  */
 chrome.fileManagerPrivate.getCustomActions = function(entries, callback) {};
@@ -687,7 +687,7 @@ chrome.fileManagerPrivate.getRecentFiles = function(restriction, callback) {};
 /**
  * Executes the action on the specified set of entries. If not possible, then
  * returns an error via chrome.runtime.lastError.
- * @param {!Array<!Entry>} entries
+ * @param {!Array<!FileSystemEntry>} entries
  * @param {string} actionId
  * @param {function()} callback
  */

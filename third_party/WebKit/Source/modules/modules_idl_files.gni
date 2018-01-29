@@ -123,7 +123,7 @@ modules_idl_files =
           "filesystem/DirectoryReader.idl",
           "filesystem/DirectoryReaderSync.idl",
           "filesystem/EntriesCallback.idl",
-          "filesystem/Entry.idl",
+          "filesystem/FileSystemEntry.idl",
           "filesystem/EntryCallback.idl",
           "filesystem/EntrySync.idl",
           "filesystem/ErrorCallback.idl",

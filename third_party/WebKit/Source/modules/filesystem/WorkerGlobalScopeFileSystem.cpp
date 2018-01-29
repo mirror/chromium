@@ -173,7 +173,7 @@ EntrySync* WorkerGlobalScopeFileSystem::webkitResolveLocalFileSystemSyncURL(
   LocalFileSystem::From(worker)->ResolveURL(&worker, completed_url,
                                             std::move(callbacks));
 
-  Entry* entry = sync_helper->GetResultOrThrow(exception_state);
+  FileSystemEntry* entry = sync_helper->GetResultOrThrow(exception_state);
   return entry ? EntrySync::Create(entry) : nullptr;
 }
 

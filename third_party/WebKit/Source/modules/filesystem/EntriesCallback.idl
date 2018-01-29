@@ -30,5 +30,5 @@
 
 // https://www.w3.org/TR/2012/WD-file-system-api-20120417/#idl-def-EntriesCallback
 callback interface EntriesCallback {
-    void handleEvent(sequence<Entry> entries);
+    void handleEvent(sequence<FileSystemEntry> entries);
 };

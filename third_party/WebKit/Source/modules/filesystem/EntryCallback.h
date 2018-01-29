@@ -35,13 +35,13 @@
 
 namespace blink {
 
-class Entry;
+class FileSystemEntry;
 
 class EntryCallback : public GarbageCollectedFinalized<EntryCallback> {
  public:
   virtual ~EntryCallback() = default;
   virtual void Trace(blink::Visitor* visitor) {}
-  virtual void handleEvent(Entry*) = 0;
+  virtual void handleEvent(FileSystemEntry*) = 0;
 };
 
 }  // namespace blink

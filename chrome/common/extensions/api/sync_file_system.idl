@@ -64,7 +64,7 @@ namespace syncFileSystem {
     // On file deletion,
     // <code>fileEntry</code> information will still be available
     // but file will no longer exist.
-    [instanceOf=Entry] object fileEntry;
+    [instanceOf=FileSystemEntry] object fileEntry;
 
     // Resulting file status after $(ref:onFileStatusChanged) event.
     // The status value can be <code>'synced'</code>,
@@ -85,8 +85,8 @@ namespace syncFileSystem {
   };
 
   dictionary FileStatusInfo {
-    // One of the Entry's originally given to getFileStatuses.
-    [instanceOf=Entry] object fileEntry;
+    // One of the FileSystemEntry's originally given to getFileStatuses.
+    [instanceOf=FileSystemEntry] object fileEntry;
 
     // The status value can be <code>'synced'</code>,
     // <code>'pending'</code> or <code>'conflicting'</code>.
@@ -174,7 +174,7 @@ namespace syncFileSystem {
     // <code>'pending'</code> or <code>'conflicting'</code>.
     // Note that <code>'conflicting'</code> state only happens when
     // the service's conflict resolution policy is set to <code>'manual'</code>.
-    static void getFileStatus([instanceOf=Entry] object fileEntry,
+    static void getFileStatus([instanceOf=FileSystemEntry] object fileEntry,
                               GetFileStatusCallback callback);
 
     // Returns each $(ref:FileStatus) for the given <code>fileEntry</code> array.

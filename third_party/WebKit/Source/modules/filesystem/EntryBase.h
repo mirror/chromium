@@ -41,7 +41,7 @@ namespace blink {
 class DOMFileSystemBase;
 class EntrySync;
 
-// A common base class for Entry and EntrySync.
+// A common base class for FileSystemEntry and EntrySync.
 class MODULES_EXPORT EntryBase : public ScriptWrappable {
  public:
   virtual ~EntryBase();

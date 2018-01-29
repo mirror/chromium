@@ -487,13 +487,13 @@ dictionary FileWatchEvent {
   // Specifies type of event that is raised.
   FileWatchEventType eventType;
 
-  // An Entry object which represents a changed directory. The conversion into a
-  // kind of FileEntry object is done in
-  // file_browser_handler_custom_bindings.cc. For filesystem API's Entry
-  // interface, see <a
-  // href='http://www.w3.org/TR/file-system-api/#the-entry-interface'>The Entry
-  // interface</a>.
-  [instanceOf=Entry] object entry;
+  // An FileSystemEntry object which represents a changed directory. The
+  //  conversion into a kind of FileEntry object is done in
+  // file_browser_handler_custom_bindings.cc. For filesystem API's
+  // FileSystemEntry interface, see <a
+  // href='http://www.w3.org/TR/file-system-api/#the-entry-interface'>The
+  // FileSystemEntry interface</a>.
+  [instanceOf=FileSystemEntry] object entry;
 
   // Detailed change information of change. It would be null if the detailed
   // information is not available.
@@ -536,15 +536,15 @@ dictionary SearchMetadataParams {
   long maxResults;
 };
 
-// Entry and Drive-related properties representing a search result.
+// FileSystemEntry and Drive-related properties representing a search result.
 dictionary SearchResult {
   // A dictionary object which represents a Drive file. This will be converted
   // into a kind of FileEntry object. See
   // file_browser_handler_custom_bindings.cc for details. For filesystem API's
-  // Entry interface, see <a
-  // href='http://www.w3.org/TR/file-system-api/#the-entry-interface'>The Entry
-  // interface</a>.
-  [instanceOf=Entry] object entry;
+  // FileSystemEntry interface, see <a
+  // href='http://www.w3.org/TR/file-system-api/#the-entry-interface'>The
+  // FileSystemEntry interface</a>.
+  [instanceOf=FileSystemEntry] object entry;
 
   // The base name of a Drive file that matched the search query. The matched
   // sub strings are highlighted with <b> element. Meta characters are escaped
@@ -651,7 +651,7 @@ callback GetPreferencesCallback = void(Preferences result);
 //     Should be sent to the next searchDrive request to perform
 //     incremental search.
 callback SearchDriveCallback =
-    void([instanceOf=Entry] object[] entries, DOMString nextFeed);
+    void([instanceOf=FileSystemEntry] object[] entries, DOMString nextFeed);
 
 callback SearchDriveMetadataCallback = void(SearchResult[] results);
 
@@ -684,7 +684,7 @@ callback GetProfilesCallback = void(ProfileInfo[] profiles,
 
 // |entries| External entries.
 callback ResolveEntriesCallback =
-    void([instanceOf=Entry] object[] entries);
+    void([instanceOf=FileSystemEntry] object[] entries);
 
 // |checksum| Result checksum.
 callback ComputeChecksumCallback = void(DOMString checksum);
@@ -699,7 +699,8 @@ callback GetCustomActionsCallback = void(fileSystemProvider.Action[] actions);
 callback GetDirectorySizeCallback = void(double size);
 
 // |entries| Recently modified entries.
-callback GetRecentFilesCallback = void([instanceOf=Entry] object[] entries);
+callback GetRecentFilesCallback =
+    void([instanceOf=FileSystemEntry] object[] entries);
 
 interface Functions {
   // Logout the current user for navigating to the re-authentication screen for
@@ -715,7 +716,7 @@ interface Functions {
   // |callback|
   [nocompile]
   static void executeTask(DOMString taskId,
-                          [instanceof=Entry] object[] entries,
+                          [instanceof=FileSystemEntry] object[] entries,
                           ExecuteTaskCallback callback);
 
   // Sets the default task for the supplied MIME types and path extensions.
@@ -727,7 +728,7 @@ interface Functions {
   // |callback|
   [nocompile]
   static void setDefaultTask(DOMString taskId,
-                             [instanceof=Entry] object[] entries,
+                             [instanceof=FileSystemEntry] object[] entries,
                              DOMString[] mimeTypes,
                              SimpleCallback callback);
 
@@ -735,14 +736,14 @@ interface Functions {
   // |entries| Array of selected entries
   // |callback|
   [nocompile]
-  static void getFileTasks([instanceof=Entry] object[] entries,
+  static void getFileTasks([instanceof=FileSystemEntry] object[] entries,
                            GetFileTasksCallback callback);
 
   // Gets the MIME type of a file.
-  // |entry| Entry to be checked.
+  // |entry| FileSystemEntry to be checked.
   // |callback|
   [nocompile]
-  static void getMimeType([instanceof=Entry] object entry,
+  static void getMimeType([instanceof=FileSystemEntry] object entry,
                           GetMimeTypeCallback callback);
 
   // Gets localized strings and initialization data.
@@ -750,17 +751,17 @@ interface Functions {
   static void getStrings(GetStringsCallback callback);
 
   // Adds file watch.
-  // |entry| Entry to watch
+  // |entry| FileSystemEntry to watch
   // |callback|
   [nocompile]
-  static void addFileWatch([instanceof=Entry] object entry,
+  static void addFileWatch([instanceof=FileSystemEntry] object entry,
                            AddFileWatchCallback callback);
 
   // Removes file watch.
   // |entry| Watched entry
   // |callback|
   [nocompile]
-  static void removeFileWatch([instanceof=Entry] object entry,
+  static void removeFileWatch([instanceof=FileSystemEntry] object entry,
                               RemoveFileWatchCallback callback);
 
   // Enables the extenal file scheme necessary to initiate drags to the browser
@@ -802,17 +803,17 @@ interface Functions {
   //     which were not requested (if it's cheap to compute them).
   [nocompile]
   static void getEntryProperties(
-      [instanceOf=Entry] object[] entries,
+      [instanceOf=FileSystemEntry] object[] entries,
       EntryPropertyName[] names,
       GetEntryPropertiesCallback callback);
 
   // Pins/unpins a Drive file in the cache.
-  // |entry| Entry to pin/unpin.
+  // |entry| FileSystemEntry to pin/unpin.
   // |pin| Pass true to pin the file.
   // |callback| Completion callback. $(ref:runtime.lastError) will be set if
   //     there was an error.
   [nocompile]
-  static void pinDriveFile([instanceof=Entry] object entry,
+  static void pinDriveFile([instanceof=FileSystemEntry] object entry,
                            boolean pin,
                            SimpleCallback callback);
 
@@ -822,7 +823,7 @@ interface Functions {
   // corresponding entry does not appear in the result.
   [nocompile]
   static void resolveIsolatedEntries(
-      [instanceOf=Entry] object[] entries,
+      [instanceOf=FileSystemEntry] object[] entries,
       ResolveEntriesCallback callback);
 
   // Mount a resource or a file.
@@ -843,7 +844,7 @@ interface Functions {
   // |entries| Array of files for which ongoing transfer should be canceled.
   // |callback| Completion callback of the cancel.
   [nocompile]
-  static void cancelFileTransfers([instanceof=Entry] object[] entries,
+  static void cancelFileTransfers([instanceof=FileSystemEntry] object[] entries,
                                   SimpleCallback callback);
 
   // Cancels all ongoing file transfers.
@@ -852,12 +853,12 @@ interface Functions {
 
   // Starts to copy an entry. If the source is a directory, the copy is done
   // recursively.
-  // |entry| Entry of the source entry to be copied.
-  // |parentEntry| Entry for the destination (parent) directory.
+  // |entry| FileSystemEntry of the source entry to be copied.
+  // |parentEntry| FileSystemEntry for the destination (parent) directory.
   // |newName| Name of the new entry. It must not contain '/'.
   // |callback| Completion callback.
   [nocompile]
-  static void startCopy([instanceof=Entry] object entry,
+  static void startCopy([instanceof=FileSystemEntry] object entry,
                         [instanceof=DirectoryEntry] object parentEntry,
                         DOMString newName,
                         StartCopyCallback callback);
@@ -909,15 +910,15 @@ interface Functions {
 
   // Create a zip file for the selected files.
   // |parentEntry| Entry of the directory containing the selected files.
-  // |entries| Entries of the selected files. The files must be under the
-  //     directory specified by |parentEntry|.
+  // |entries| FileSystemEntries of the selected files. The files must be under
+  //     the directory specified by |parentEntry|.
   // |destName| Name of the destination zip file. The zip file will be created
   //     under the directory specified by |parentEntry|.
   // |callback|
   // TODO(mtomasz): Swap order of |entries| and |parentEntry|.
   [nocompile]
   static void zipSelection([instanceof=DirectoryEntry] object parentEntry,
-                           [instanceof=Entry] object[] entries,
+                           [instanceof=FileSystemEntry] object[] entries,
                            DOMString destName,
                            ZipSelectionCallback callback);
 
@@ -955,21 +956,21 @@ interface Functions {
   // |entry| The entry to share.
   // |callback|
   [nocompile]
-  static void getShareUrl([instanceof=Entry] object entry,
+  static void getShareUrl([instanceof=FileSystemEntry] object entry,
                           GetUrlCallback callback);
 
   // Requests a download url to download the file contents.
   // |entry| The entry to download.
   // |callback|
   [nocompile]
-  static void getDownloadUrl([instanceof=Entry] object entry,
+  static void getDownloadUrl([instanceof=FileSystemEntry] object entry,
                              GetUrlCallback callback);
 
   // Requests to share drive files.
-  // |entry| Entry to be shared.
+  // |entry| FileSystemEntry to be shared.
   // |shareType| Type of access that is getting granted.
   [nocompile]
-  static void requestDriveShare([instanceof=Entry] object entry,
+  static void requestDriveShare([instanceof=FileSystemEntry] object entry,
                                 DriveShareType shareType,
                                 SimpleCallback callback);
 
@@ -984,7 +985,7 @@ interface Functions {
   // |entry| The entry of the file to checksum.
   // |callback|
   [nocompile]
-  static void computeChecksum([instanceof=Entry] object entry,
+  static void computeChecksum([instanceof=FileSystemEntry] object entry,
                               ComputeChecksumCallback callback);
 
   // Is UMA enabled?
@@ -992,7 +993,7 @@ interface Functions {
 
   // Sets a tag on a file or a directory. Only Drive files are supported.
   [nocompile]
-  static void setEntryTag([instanceof=Entry] object entry,
+  static void setEntryTag([instanceof=FileSystemEntry] object entry,
                           EntryTagVisibility visibility,
                           DOMString key,
                           DOMString value,
@@ -1016,13 +1017,13 @@ interface Functions {
   // Requests list of custom actions for the specified entries. If not possible,
   // then an error via chrome.runtime.lastError is returned.
   [nocompile]
-  static void getCustomActions([instanceof=Entry] object[] entries,
+  static void getCustomActions([instanceof=FileSystemEntry] object[] entries,
                                GetCustomActionsCallback callback);
 
   // Executes a custom action for a set of entries. If not possible, then an
   // error via chrome.runtime.lastError is returned.
   [nocompile]
-  static void executeCustomAction([instanceof=Entry] object[] entries,
+  static void executeCustomAction([instanceof=FileSystemEntry] object[] entries,
                                   DOMString actionId,
                                   SimpleCallback callback);
 

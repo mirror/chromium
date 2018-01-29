@@ -31,7 +31,7 @@
 // https://www.w3.org/TR/2012/WD-file-system-api-20120417/#idl-def-DirectoryEntry
 [
     NoInterfaceObject
-] interface DirectoryEntry : Entry {
+] interface DirectoryEntry : FileSystemEntry {
     DirectoryReader createReader();
     void getFile(DOMString? path, optional FileSystemFlags options, optional EntryCallback successCallback, optional ErrorCallback errorCallback);
     void getDirectory(DOMString? path, optional FileSystemFlags options, optional EntryCallback successCallback, optional ErrorCallback errorCallback);

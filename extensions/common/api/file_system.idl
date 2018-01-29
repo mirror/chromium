@@ -101,7 +101,7 @@ namespace fileSystem {
 
   // Change to an entry within a tracked directory.
   [nodoc] dictionary ChildChange {
-    [instanceOf=Entry] object entry;
+    [instanceOf=FileSystemEntry] object entry;
     ChildChangeType type;
   };
 
@@ -114,7 +114,7 @@ namespace fileSystem {
   // contents.
   [nodoc] dictionary EntryChangedEvent {
     // Tracked entry.
-    [instanceOf=Entry] object target;
+    [instanceOf=FileSystemEntry] object target;
 
     // List of changed entries within the tracked directory in order they
     // happened. May not be available for some types of file systems.
@@ -123,39 +123,39 @@ namespace fileSystem {
 
   // Event notifying about a tracked file or a directory being removed.
   [nodoc] dictionary EntryRemovedEvent {
-    [instanceOf=Entry] object target;
+    [instanceOf=FileSystemEntry] object target;
   };
 
   callback GetDisplayPathCallback = void (DOMString displayPath);
-  callback EntryCallback = void ([instanceOf=Entry] object entry);
+  callback EntryCallback = void ([instanceOf=FileSystemEntry] object entry);
   callback EntriesCallback = void (
-      [instanceOf=Entry] optional object entry,
+      [instanceOf=FileSystemEntry] optional object entry,
       [instanceOf=FileEntry] optional object[] fileEntries);
   callback IsWritableCallback = void (boolean isWritable);
   callback IsRestorableCallback = void (boolean isRestorable);
   [nodoc] callback GetObservedEntriesCallback = void (
-      [instanceOf=Entry] object[] entries);
+      [instanceOf=FileSystemEntry] object[] entries);
   callback RequestFileSystemCallback = void(
       [instanceOf=FileSystem] optional object fileSystem);
   callback GetVolumeListCallback = void(optional Volume[] volumes);
 
   interface Functions {
-    // Get the display path of an Entry object. The display path is based on
-    // the full path of the file or directory on the local file system, but may
-    // be made more readable for display purposes.
-    static void getDisplayPath([instanceOf=Entry] object entry,
+    // Get the display path of an FileSystemEntry object. The display path is
+    // based on the full path of the file or directory on the local file system,
+    // but may be made more readable for display purposes.
+    static void getDisplayPath([instanceOf=FileSystemEntry] object entry,
                                GetDisplayPathCallback callback);
 
-    // Get a writable Entry from another Entry. This call will fail with a
-    // runtime error if the application does not have the 'write' permission
-    // under 'fileSystem'. If entry is a DirectoryEntry, this call will fail if
-    // the application does not have the 'directory' permission under
-    // 'fileSystem'.
-    static void getWritableEntry([instanceOf=Entry] object entry,
+    // Get a writable FileSystemEntry from another FileSystemEntry. This call
+    // will fail with a runtime error if the application does not have the
+    // 'write' permission under 'fileSystem'. If entry is a DirectoryEntry, this
+    // call will fail if the application does not have the 'directory'
+    // permission under 'fileSystem'.
+    static void getWritableEntry([instanceOf=FileSystemEntry] object entry,
                                  EntryCallback callback);
 
-    // Gets whether this Entry is writable or not.
-    static void isWritableEntry([instanceOf=Entry] object entry,
+    // Gets whether this FileSystemEntry is writable or not.
+    static void isWritableEntry([instanceOf=FileSystemEntry] object entry,
                                 IsWritableCallback callback);
 
     // Ask the user to choose a file or directory.
@@ -176,7 +176,7 @@ namespace fileSystem {
     // the 'retainEntries' permission under 'fileSystem', entries are retained
     // indefinitely. Otherwise, entries are retained only while the app is
     // running and across restarts.
-    static DOMString retainEntry([instanceOf=Entry] object entry);
+    static DOMString retainEntry([instanceOf=FileSystemEntry] object entry);
 
     // Requests access to a file system for a volume represented by <code>
     // options.volumeId</code>. If <code>options.writable</code> is set to true,
@@ -215,7 +215,8 @@ namespace fileSystem {
         optional boolean recursive);
 
     // Unobserves a previously observed either a file or a directory.
-    [nodoc] static void unobserveEntry([instanceOf=Entry] object entry);
+    [nodoc] static void unobserveEntry(
+        [instanceOf=FileSystemEntry] object entry);
 
     // Lists all observed entries.
     [nodoc] static void getObservedEntries(GetObservedEntriesCallback callback);

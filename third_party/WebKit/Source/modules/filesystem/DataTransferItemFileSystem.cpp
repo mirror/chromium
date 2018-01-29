@@ -39,8 +39,8 @@
 #include "modules/filesystem/DOMFileSystem.h"
 #include "modules/filesystem/DirectoryEntry.h"
 #include "modules/filesystem/DraggedIsolatedFileSystemImpl.h"
-#include "modules/filesystem/Entry.h"
 #include "modules/filesystem/FileEntry.h"
+#include "modules/filesystem/FileSystemEntry.h"
 #include "platform/AsyncFileSystemCallbacks.h"
 #include "platform/FileMetadata.h"
 #include "platform/bindings/ScriptState.h"
@@ -48,8 +48,9 @@
 namespace blink {
 
 // static
-Entry* DataTransferItemFileSystem::webkitGetAsEntry(ScriptState* script_state,
-                                                    DataTransferItem& item) {
+FileSystemEntry* DataTransferItemFileSystem::webkitGetAsEntry(
+    ScriptState* script_state,
+    DataTransferItem& item) {
   if (!item.GetDataObjectItem()->IsFilename())
     return nullptr;
 
