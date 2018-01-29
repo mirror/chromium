@@ -22,6 +22,30 @@
       "revId": "1030860cdec3ec9cf46ab8fdbcf98fa48e60b9c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdf1cacf_9ef62c52",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/externalnav/ExternalNavigationDelegateImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2018-01-29T17:35:18Z",
+      "side": 1,
+      "message": "But if it is closing why would we want to navigate? Can closing be canceled?",
+      "parentUuid": "88249f94_6776863f",
+      "range": {
+        "startLine": 83,
+        "startChar": 16,
+        "endLine": 83,
+        "endChar": 29
+      },
+      "revId": "1030860cdec3ec9cf46ab8fdbcf98fa48e60b9c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
