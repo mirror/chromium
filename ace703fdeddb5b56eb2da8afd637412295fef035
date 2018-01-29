@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "999f6416_ec1ce33a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-29T16:53:49Z",
+      "side": 1,
+      "message": "this reads \"is NOT in PATH\". your comment sounds like you read it as \"IS in PATH\". did you misread the cl description, or am i misunderstanding what you\u0027re saying?",
+      "parentUuid": "e4fd55db_78ad0c56",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 45
+      },
+      "revId": "ace703fdeddb5b56eb2da8afd637412295fef035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "635541d5_3d2a0d9d",
         "filename": "tools/clang/pylib/clang/compile_db.py",
         "patchSetId": 1
