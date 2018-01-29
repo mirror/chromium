@@ -2,6 +2,282 @@
   "comments": [
     {
       "key": {
+        "uuid": "eb893051_6ec29ccc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/AnchoredPopupWindow.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-29T18:56:48Z",
+      "side": 1,
+      "message": "Should we add a few comments to these?  IIUC we typically to center the popup but mandate that it fits on screen.  How does max available space work?",
+      "range": {
+        "startLine": 60,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 58
+      },
+      "revId": "ac9038fdfb2473153813a2fb00239810d2970520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56b47c20_f9fc4e0a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/AnchoredPopupWindow.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-29T18:56:48Z",
+      "side": 1,
+      "message": "Should this go up near margin?  Add dimensions (px/dp)",
+      "range": {
+        "startLine": 134,
+        "startChar": 4,
+        "endLine": 134,
+        "endChar": 26
+      },
+      "revId": "ac9038fdfb2473153813a2fb00239810d2970520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84f3635e_14f95343",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/AnchoredPopupWindow.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-29T18:56:48Z",
+      "side": 1,
+      "message": "Should these recompute the position if showing?  Actually same with margin/max width/overlap.  I\u0027m fine if they don\u0027t, but we should comment on that or something.",
+      "range": {
+        "startLine": 234,
+        "startChar": 4,
+        "endLine": 253,
+        "endChar": 5
+      },
+      "revId": "ac9038fdfb2473153813a2fb00239810d2970520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a602b465_c6405e1a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/AnchoredPopupWindow.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-29T18:56:48Z",
+      "side": 1,
+      "message": "overlap all teh timez!?!  We know better than the caller!!",
+      "range": {
+        "startLine": 284,
+        "startChar": 25,
+        "endLine": 284,
+        "endChar": 29
+      },
+      "revId": "ac9038fdfb2473153813a2fb00239810d2970520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a242386f_df6e94db",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/AnchoredPopupWindow.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-29T18:56:48Z",
+      "side": 1,
+      "message": "Should this be preferCurrentVerticalOrientation now?",
+      "range": {
+        "startLine": 305,
+        "startChar": 16,
+        "endLine": 305,
+        "endChar": 40
+      },
+      "revId": "ac9038fdfb2473153813a2fb00239810d2970520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4050464_0a2b96a0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/AnchoredPopupWindow.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-29T18:56:48Z",
+      "side": 1,
+      "message": "How do we want this to work with overlap anchor and horizontal orientation?",
+      "range": {
+        "startLine": 311,
+        "startChar": 12,
+        "endLine": 311,
+        "endChar": 27
+      },
+      "revId": "ac9038fdfb2473153813a2fb00239810d2970520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77cfd951_36f3dfe6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/AnchoredPopupWindow.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-29T18:56:48Z",
+      "side": 1,
+      "message": "Does it make sense to try to make the big positioning method testable instead?  wdyt?",
+      "range": {
+        "startLine": 393,
+        "startChar": 15,
+        "endLine": 393,
+        "endChar": 25
+      },
+      "revId": "ac9038fdfb2473153813a2fb00239810d2970520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "137cdfbf_26393b1b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/AnchoredPopupWindow.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-29T18:56:48Z",
+      "side": 1,
+      "message": "Same as for vertical, do we want to try to hold the existing position as long as possible?  It looks odd if it jumps due to a small change in position on the anchor if there is still room.",
+      "range": {
+        "startLine": 398,
+        "startChar": 8,
+        "endLine": 398,
+        "endChar": 76
+      },
+      "revId": "ac9038fdfb2473153813a2fb00239810d2970520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58e8e95d_c564e86a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/AnchoredPopupWindow.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-29T18:56:48Z",
+      "side": 1,
+      "message": "Rename to windowRect?",
+      "range": {
+        "startLine": 409,
+        "startChar": 38,
+        "endLine": 409,
+        "endChar": 55
+      },
+      "revId": "ac9038fdfb2473153813a2fb00239810d2970520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6acc8c4a_8158d3b2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ListMenuButton.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-29T18:56:48Z",
+      "side": 1,
+      "message": "I thought there was some reason this was called after show, but I don\u0027t remember why I did it (maybe I saw it in bookmarks code?).  I would just confirm this is ok!",
+      "range": {
+        "startLine": 216,
+        "startChar": 8,
+        "endLine": 216,
+        "endChar": 30
+      },
+      "revId": "ac9038fdfb2473153813a2fb00239810d2970520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1b43ece_11290c11",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ListMenuButton.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-29T18:56:48Z",
+      "side": 1,
+      "message": "Not used?",
+      "range": {
+        "startLine": 219,
+        "startChar": 8,
+        "endLine": 219,
+        "endChar": 64
+      },
+      "revId": "ac9038fdfb2473153813a2fb00239810d2970520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2a07071_3ff30ee9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ListMenuButton.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-29T18:56:48Z",
+      "side": 1,
+      "message": "Actually if all of these are set before we build the popup, it\u0027s lending itself to a builder pattern... (that would let you not have to re-compute the position when they\u0027re set).  I\u0027m fine either way though.  Maybe a follow up patch one of us can do later?",
+      "range": {
+        "startLine": 225,
+        "startChar": 8,
+        "endLine": 227,
+        "endChar": 38
+      },
+      "revId": "ac9038fdfb2473153813a2fb00239810d2970520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9ff1da2_11f2c1ee",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ViewRectProvider.java",
         "patchSetId": 4
@@ -13,6 +289,24 @@
       "writtenOn": "2018-01-29T16:04:35Z",
       "side": 1,
       "message": "I thought of a better name over the weekend -- I\u0027m thinking this should be called setIncludePadding() which sets whether padding should be included in the provided Rect.",
+      "revId": "ac9038fdfb2473153813a2fb00239810d2970520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eea8b47d_51ab8e5f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ViewRectProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-29T18:56:48Z",
+      "side": 1,
+      "message": "Sounds good to me!",
+      "parentUuid": "b9ff1da2_11f2c1ee",
       "revId": "ac9038fdfb2473153813a2fb00239810d2970520",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
