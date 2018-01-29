@@ -1,7 +1,7 @@
 <link rel="import" href="chrome://resources/html/polymer.html">
 
 <link rel="import" href="chrome://resources/cr_elements/icons.html">
-<link rel="import" href="chrome://resources/html/icon.html">
+<link rel="import" href="chrome://resources/cr_elements/cr_action_menu/cr_action_menu.html">
 <link rel="import" href="chrome://resources/html/web_ui_listener_behavior.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/paper-button/paper-button.html">
 <link rel="import" href="profile_info_browser_proxy.html">
@@ -17,7 +17,7 @@
         -webkit-margin-start: 20px;
       }
 
-      #profile-icon {
+      .account-icon {
         background: center / cover no-repeat;
         border-radius: 20px;
         flex-shrink: 0;
@@ -25,40 +25,94 @@
         width: 40px;
       }
 
+      .account-icon.small {
+        height: 20px;
+        width: 20px;
+      }
+
+      dialog {
+        --cr-action-menu-dropdown-padding: 12px;
+      }
+
+      dialog .dropdown-item .email {
+        -webkit-margin-start: 8px;
+      }
+
       .flex {
         display: flex;
         flex-direction: column;
       }
     </style>
-    <div class="settings-box first two-line">
-      <template is="dom-if" if="[[syncStatus]]">
-        <div id="profile-icon"
-            style="background-image: [[getIcon_(profileInfo_.iconUrl)]]">
-        </div>
-        <div class="middle two-line no-min-width">
-          <div class="flex text-elide">
-            <span>[[profileInfo_.name]]</span>
-            <div class="secondary" hidden="[[!syncStatus.signedIn]]">
-              [[syncStatus.signedInUsername]]
-            </div>
-          </div>
-        </div>
-        <template is="dom-if" if="[[showSignin_(syncStatus)]]">
-          <paper-button class="primary-button" on-tap="onSigninTap_"
-              disabled="[[syncStatus.setupInProgress]]">
-            $i18n{syncSignin}
-          </paper-button>
-        </template>
-        <template is="dom-if" if="[[syncStatus.signedIn]]">
-          <div class="separator"></div>
-          <paper-button id="disconnectButton" class="secondary-button"
-              on-tap="onDisconnectTap_"
-              disabled="[[syncStatus.setupInProgress]]">
-            $i18n{syncDisconnect}
-          </paper-button>
-        </template>
-      </template>
+    <!-- TODO(scottchen): figure out what to show if sign-in is not allowed 
+        (by policy) -->
+    <div class="settings-box first two-line" hidden="[[syncStatus.signedIn]]">
+      <div class="start">
+        <div>[[promoLabel]]</div>
+        <div class="secondary">[[promoSecondaryLabel]]</div>
+      </div>
+      <div class="separator" hidden="[[shouldShowAvatarRow_]]"></div>
+      <paper-button class="primary-button" on-tap="onSigninTap_"
+          disabled="[[syncStatus.setupInProgress]]"
+          hidden="[[shouldShowAvatarRow_]]">
+        $i18n{syncSignin}
+      </paper-button>
     </div>
+    <template is="dom-if" if="[[shouldShowAvatarRow_]]">
+      <div class="settings-box first two-line">
+        <template is="dom-if" if="[[syncStatus]]">
+          <div class="account-icon"
+              style="background-image: url([[shownAccount_.pictureUrl]])">
+          </div>
+          <div class="middle two-line no-min-width">
+            <div class="flex text-elide">
+              <span>
+                <span hidden="[[!syncStatus.signedIn]]">--Synced to--</span>
+                [[shownAccount_.fullName]]
+              </span>
+              <div class="secondary">
+                [[shownAccount_.email]]
+              </div>
+            </div>
+            <template is="dom-if" if="[[!syncStatus.signedIn]]">
+              <div class="separator"></div>
+              <button is="paper-icon-button-light" id="dots"
+                  on-tap="onMenuButtonTap_" title="$i18n{moreActions}"
+                  class="icon-arrow-dropdown">
+              </button>
+            </template>
+          </div>
+          <template is="dom-if" if="[[!syncStatus.signedIn]]">
+            <!-- TODO(scottchen): Disable if sync not allowed (by policy). -->
+            <paper-button class="primary-button" on-tap="onSyncButtonTap_">
+              --SYNC AS-- [[shownAccount_.fullName]]
+            </paper-button>
+          </template>
+          <template is="dom-if" if="[[syncStatus.signedIn]]">
+            <!-- TODO(scottchen): Find out if there's a policy that forbits 
+                turning off sync. If so, disable this button. -->
+            <paper-button id="disconnectButton" class="secondary-button"
+                on-tap="onDisconnectTap_">
+              --TURN OFF--
+            </paper-button>
+          </template>
+
+          <dialog is="cr-action-menu" id="menu">
+            <template is="dom-repeat" items="[[storedAccounts_]]">
+              <button class="dropdown-item" on-tap="onAccountTap_">
+                <div class="account-icon small"
+                    style="background-image: url([[item.pictureUrl]])"></div>
+                <span class="email">[[item.email]]</span>
+              </button>
+            </template>
+            <button class="dropdown-item" on-tap="onSigninTap_">
+              <!-- TODO(scottchen): placeholder -->
+              <div class="account-icon small" style="background:red"></div>
+              <span class="email">--USER ANOTHER ACCOUNT--</span>
+            </button>
+          </dialog>
+        </template>
+      </div>
+    </template>
   </template>
   <script src="sync_account_control.js"></script>
 </dom-module>
