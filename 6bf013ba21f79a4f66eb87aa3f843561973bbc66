@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "afa5ad11_2275aa35",
+        "filename": "chrome/browser/accessibility/accessibility_extension_api.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-29T17:38:37Z",
+      "side": 1,
+      "message": "It seems like this depends on ChromeVox passing the right modifiers, so\nif the value of EF_SHIFT_DOWN ever changed it would break.\n\nThere\u0027s a mojom file for the event constants, and those generate\nJavaScript bindings. Would it be possible for ChromeVox to import\nevent_constants.mojom.js and then use kEventFlagShiftDown\ndirectly?",
+      "revId": "6bf013ba21f79a4f66eb87aa3f843561973bbc66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a2da145_4cd60252",
         "filename": "chrome/browser/accessibility/accessibility_extension_api.cc",
         "patchSetId": 6
@@ -30,6 +47,41 @@
       "writtenOn": "2018-01-26T23:19:55Z",
       "side": 1,
       "message": "dmazzoni FYI, it looks like mustash is going to need a way for extensions to inject arbitrary events into the window server. I commented in your doc.",
+      "revId": "6bf013ba21f79a4f66eb87aa3f843561973bbc66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3429b86_57b887e8",
+        "filename": "chrome/browser/accessibility/accessibility_extension_api.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-29T17:38:37Z",
+      "side": 1,
+      "message": "Acknowledged.",
+      "parentUuid": "0336424f_9e04a0aa",
+      "revId": "6bf013ba21f79a4f66eb87aa3f843561973bbc66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a626735a_42e2fa62",
+        "filename": "chrome/browser/resources/chromeos/chromevox/braille/braille_input_handler.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-29T17:38:37Z",
+      "side": 1,
+      "message": "Magic numbers here",
       "revId": "6bf013ba21f79a4f66eb87aa3f843561973bbc66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
