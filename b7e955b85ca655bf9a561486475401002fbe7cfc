@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ccf6c0a5_5028dbdb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2018-01-29T18:30:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aacb7b85_4ee428c9",
+      "revId": "b7e955b85ca655bf9a561486475401002fbe7cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e583262_ee393ad9",
         "filename": "services/device/generic_sensor/platform_sensor.h",
         "patchSetId": 1
@@ -69,6 +87,24 @@
       "revId": "b7e955b85ca655bf9a561486475401002fbe7cfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f63b8e23_93b8d379",
+        "filename": "services/device/generic_sensor/platform_sensor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2018-01-29T18:30:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88b9045b_973a40c2",
+      "revId": "b7e955b85ca655bf9a561486475401002fbe7cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
