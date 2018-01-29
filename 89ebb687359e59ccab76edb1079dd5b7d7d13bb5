@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "51a028e3_2b377623",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/cssom/MediaList.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2018-01-29T12:11:14Z",
+      "side": 1,
+      "message": "Thanks for the review, I\u0027ll add this test in follow-up patch.",
+      "parentUuid": "8229b33a_5102f2ac",
+      "revId": "89ebb687359e59ccab76edb1079dd5b7d7d13bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dbd78c2f_95d137db",
         "filename": "third_party/WebKit/Source/core/css/MediaList.idl",
         "patchSetId": 4
@@ -30,6 +48,30 @@
       "writtenOn": "2018-01-29T11:50:55Z",
       "side": 1,
       "message": "nit: The spec is using an annotated type.  Shall we follow it if possible?  (I don\u0027t know if Blink already supports the case of |[TreatNullAs\u003dEmptyString] DOMString| or not.  If not, it\u0027s okay as is.)\n\nWith an annotated type, it should be:\n\n    stringifier attribute [TreatNullAs\u003dEmptyString] DOMString mediaText;",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 32,
+        "endChar": 61
+      },
+      "revId": "89ebb687359e59ccab76edb1079dd5b7d7d13bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c16ac445_f9129495",
+        "filename": "third_party/WebKit/Source/core/css/MediaList.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2018-01-29T12:11:14Z",
+      "side": 1,
+      "message": "Thanks for the review, I\u0027ll try this in follow-up patch if feasible.",
+      "parentUuid": "dbd78c2f_95d137db",
       "range": {
         "startLine": 32,
         "startChar": 4,
