@@ -43,7 +43,6 @@
 #include "core/frame/LocalFrameClient.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
-#include "core/frame/UseCounter.h"
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "core/html/imports/HTMLImportsController.h"
 #include "core/inspector/ConsoleMessage.h"
@@ -1263,7 +1262,7 @@ void FrameFetchContext::Trace(blink::Visitor* visitor) {
 }
 
 void FrameFetchContext::RecordDataUriWithOctothorpe() {
-  UseCounter::Count(GetFrame(), WebFeature::kDataUriHasOctothorpe);
+  CountDeprecation(WebFeature::kDataUriHasOctothorpe);
 }
 
 ResourceLoadPriority FrameFetchContext::ModifyPriorityForExperiments(

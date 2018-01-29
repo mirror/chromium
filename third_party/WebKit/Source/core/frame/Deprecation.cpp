@@ -608,6 +608,12 @@ DeprecationInfo GetDeprecationInfo(WebFeature feature) {
       return {"ChromeLoadTimesWasAlternateProtocolAvailable", Unknown,
               chromeLoadTimesNextHopProtocol};
 
+    case WebFeature::kDataUriHasOctothorpe:
+      return {"DataUriHasOctothorpe", M67,
+              replacedWillBeRemoved(
+                  "Using unescaped '#' characters in a data URI body", "'%23'",
+                  M67, "5656049583390720")};
+
     // Features that aren't deprecated don't have a deprecation message.
     default:
       return {"NotDeprecated", Unknown, ""};
