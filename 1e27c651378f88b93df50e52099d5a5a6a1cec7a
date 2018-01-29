@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ed5e1b3_2edca0a1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/DebuggerPlugin.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-29T23:01:17Z",
+      "side": 1,
+      "message": "merge uiSourceCode and debuggerSourceCode",
+      "range": {
+        "startLine": 43,
+        "startChar": 9,
+        "endLine": 43,
+        "endChar": 28
+      },
+      "revId": "1e27c651378f88b93df50e52099d5a5a6a1cec7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c96e800_7939e77d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/DebuggerPlugin.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-29T23:01:17Z",
+      "side": 1,
+      "message": "drop async",
+      "range": {
+        "startLine": 202,
+        "startChar": 2,
+        "endLine": 202,
+        "endChar": 7
+      },
+      "revId": "1e27c651378f88b93df50e52099d5a5a6a1cec7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea80a4e9_3d4520a3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/DebuggerPlugin.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-29T23:01:17Z",
+      "side": 1,
+      "message": "can you make these actions?",
+      "range": {
+        "startLine": 491,
+        "startChar": 8,
+        "endLine": 491,
+        "endChar": 70
+      },
+      "revId": "1e27c651378f88b93df50e52099d5a5a6a1cec7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dec88c3d_921ffadb",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/SourcesView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-29T23:01:17Z",
+      "side": 1,
+      "message": "rename into update highlighter?",
+      "range": {
+        "startLine": 388,
+        "startChar": 2,
+        "endLine": 388,
+        "endChar": 30
+      },
+      "revId": "1e27c651378f88b93df50e52099d5a5a6a1cec7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

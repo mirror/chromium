@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed76df46_c6f1ec84",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/DebuggerPlugin.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-29T23:01:17Z",
+      "side": 0,
+      "message": "let\u0027s land this separately so that we have a good patch to blame in future",
+      "range": {
+        "startLine": 186,
+        "startChar": 2,
+        "endLine": 186,
+        "endChar": 30
+      },
+      "revId": "cef9a685bab41606d435e902439ae5e80250a832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
