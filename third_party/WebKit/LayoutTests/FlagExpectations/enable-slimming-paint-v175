@@ -1,12 +1,6 @@
 # Skip tests that we are running under virtual/spv175
 Bug(none) compositing/ [ Skip ]
-Bug(none) virtual/prefer_compositing_to_lcd_text/compositing [ Skip ]
 Bug(none) paint/ [ Skip ]
-Bug(none) fast/borders/ [ Skip ]
-Bug(none) fast/multicol/ [ Skip ]
-Bug(none) fast/pagination/ [ Skip ]
-Bug(none) fragmentation/ [ Skip ]
-Bug(none) printing/ [ Skip ]
 Bug(none) virtual/spv175 [ Skip ]
 
 crbug.com/769942 css3/masking/clip-path-circle-filter.html [ Failure ]
@@ -99,7 +93,9 @@ crbug.com/771643 svg/zoom/page/zoom-mask-with-percentages.svg [ Failure ]
 # Incorect LocalBorderBoxProperties for absolute-pos under transformed table section. 
 crbug.com/771643 tables/table-transform-absolute-position-child.html [ Failure ]
 # Others.
+crbug.com/771643 printing/fixed-positioned-scrolled.html [ Failure ]
 crbug.com/771643 virtual/threaded/printing/fixed-positioned-scrolled.html [ Failure ]
+crbug.com/771643 fast/multicol/multicol-svg.html [ Failure ]
 
 crbug.com/805134 http/tests/devtools/tracing/scroll-invalidations.js [ Failure ]
 crbug.com/805134 virtual/threaded/http/tests/devtools/tracing/scroll-invalidations.js [ Failure ]
