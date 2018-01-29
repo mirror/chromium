@@ -16,6 +16,24 @@
       "revId": "d5132345b80cc749867319d473dadfe14bd8da8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49e740b6_96a85ae4",
+        "filename": "content/public/common/simple_url_loader_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-29T18:55:30Z",
+      "side": 1,
+      "message": "Egads!  No, it does not.  Tests probably pass because the states are related, but it does mean we lack some test coverage.  Thanks for catching this.",
+      "parentUuid": "aff369ca_880d7046",
+      "revId": "d5132345b80cc749867319d473dadfe14bd8da8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
