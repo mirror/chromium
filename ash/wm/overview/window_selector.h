@@ -19,7 +19,6 @@
 #include "base/time/time.h"
 #include "ui/aura/window_observer.h"
 #include "ui/display/display_observer.h"
-#include "ui/gfx/image/image_skia.h"
 #include "ui/views/controls/textfield/textfield_controller.h"
 #include "ui/wm/public/activation_change_observer.h"
 
@@ -31,7 +30,11 @@ class Rect;
 namespace views {
 class Textfield;
 class Widget;
-}
+}  // namespace views
+
+namespace wm {
+class Shadow;
+}  // namespace wm
 
 namespace ash {
 class OverviewWindowDragController;
@@ -241,8 +244,8 @@ class ASH_EXPORT WindowSelector : public display::DisplayObserver,
   // such as enter key to select.
   std::unique_ptr<views::Widget> text_filter_widget_;
 
-  // Image used for text filter textfield.
-  gfx::ImageSkia search_image_;
+  // Shadow around the text filter.
+  std::unique_ptr<::wm::Shadow> text_filter_shadow_;
 
   // The current length of the string entered into the text filtering textfield.
   size_t text_filter_string_length_;
