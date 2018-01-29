@@ -24,6 +24,8 @@ void TestWallpaperController::Init(
     const base::FilePath& user_data_path,
     const base::FilePath& chromeos_wallpapers_path,
     const base::FilePath& chromeos_custom_wallpapers_path,
+    const base::FilePath& customized_default_small_path,
+    const base::FilePath& customized_default_large_path,
     bool is_device_wallpaper_policy_enforced) {
   was_client_set_ = true;
 }
@@ -54,10 +56,9 @@ void TestWallpaperController::SetDefaultWallpaper(
   set_default_wallpaper_count_++;
 }
 
-void TestWallpaperController::SetCustomizedDefaultWallpaper(
-    const GURL& wallpaper_url,
-    const base::FilePath& file_path,
-    const base::FilePath& resized_directory) {
+void TestWallpaperController::SetCustomizedDefaultWallpaperPaths(
+    const base::FilePath& customized_default_small_path,
+    const base::FilePath& customized_default_large_path) {
   NOTIMPLEMENTED();
 }
 
