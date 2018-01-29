@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2a9f351e_8e1c29a4",
+        "filename": "chrome/renderer/page_load_metrics/metrics_render_frame_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-29T19:27:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d46e44c_6abc16a2",
+      "revId": "ba75ff1d7fdeb63f70147b72c066429a57ca17de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "752e85fe_dd1e54f3",
         "filename": "third_party/WebKit/Source/core/DEPS",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "ba75ff1d7fdeb63f70147b72c066429a57ca17de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc8748e5_9126ce77",
+        "filename": "third_party/WebKit/Source/core/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-29T19:27:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "752e85fe_dd1e54f3",
+      "revId": "ba75ff1d7fdeb63f70147b72c066429a57ca17de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1245503f_df1abd4c",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-29T19:27:09Z",
+      "side": 1,
+      "message": "My intuition is that we should report events before FP.\nWhen paired with the time of first input, this should give a distribution which is easier to analyze.\n\nIn practice, it\u0027s unlikely that any meaningful aggregate will be overly skewed by pre-first-paint cases, so I don\u0027t think it\u0027s a problem.",
+      "parentUuid": "548b671c_c63d0001",
+      "revId": "ba75ff1d7fdeb63f70147b72c066429a57ca17de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e64845e6_d86c0469",
         "filename": "third_party/WebKit/Source/core/page/PageWidgetDelegate.cpp",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "ba75ff1d7fdeb63f70147b72c066429a57ca17de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9e7ae68_47141dc2",
+        "filename": "third_party/WebKit/Source/core/page/PageWidgetDelegate.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-29T19:27:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e64845e6_d86c0469",
+      "revId": "ba75ff1d7fdeb63f70147b72c066429a57ca17de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
