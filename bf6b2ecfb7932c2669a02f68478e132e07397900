@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "f6bcd00a_a2fe202c",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1228924
+      },
+      "writtenOn": "2018-01-29T16:26:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3e1ca1b_8ab27da5",
+      "range": {
+        "startLine": 154,
+        "startChar": 14,
+        "endLine": 154,
+        "endChar": 25
+      },
+      "revId": "bf6b2ecfb7932c2669a02f68478e132e07397900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0792e85d_3133db04",
         "filename": "net/dns/dns_transaction_unittest.cc",
         "patchSetId": 22
@@ -550,6 +574,30 @@
       "revId": "bf6b2ecfb7932c2669a02f68478e132e07397900",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "116f78dc_e9eb9d4a",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1109,
+      "author": {
+        "id": 1228924
+      },
+      "writtenOn": "2018-01-29T16:26:37Z",
+      "side": 1,
+      "message": "For the request to check that we cache responses, we don\u0027t cache at this level, that happens in the host resolver.",
+      "parentUuid": "61128ca9_cc6175b1",
+      "range": {
+        "startLine": 1109,
+        "startChar": 0,
+        "endLine": 1109,
+        "endChar": 6
+      },
+      "revId": "bf6b2ecfb7932c2669a02f68478e132e07397900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
