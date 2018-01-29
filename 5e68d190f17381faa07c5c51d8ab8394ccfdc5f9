@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fbf61a1_5d7d5df7",
+        "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2018-01-29T20:35:39Z",
+      "side": 1,
+      "message": "UMA_HISTOGRAM_ENUMERATION probably makes more sense here?",
+      "range": {
+        "startLine": 824,
+        "startChar": 8,
+        "endLine": 824,
+        "endChar": 34
+      },
+      "revId": "5e68d190f17381faa07c5c51d8ab8394ccfdc5f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
