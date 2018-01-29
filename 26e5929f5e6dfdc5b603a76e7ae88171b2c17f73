@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4af67a5a_9c5b5c2c",
+        "filename": "media/capture/video/file_video_capture_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-29T20:08:36Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this CHECK() in this method (nor l.363, \nnor l.369), since we don\u0027t interact with |capture_thread_|.",
+      "range": {
+        "startLine": 337,
+        "startChar": 2,
+        "endLine": 337,
+        "endChar": 37
+      },
+      "revId": "26e5929f5e6dfdc5b603a76e7ae88171b2c17f73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fc4f17e_ef6f0587",
+        "filename": "media/capture/video/file_video_capture_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-29T20:08:36Z",
+      "side": 1,
+      "message": "Replying \"true\" would be seen in WebKit as \"OK\" and will\nresolve() the Promise, but since we cannot write any\n|settings|, what might need to be smarter and check: if\nthe |settings| are compatible with the current state, then\nreturn true, otherwise return false. WDYT?",
+      "range": {
+        "startLine": 365,
+        "startChar": 26,
+        "endLine": 365,
+        "endChar": 30
+      },
+      "revId": "26e5929f5e6dfdc5b603a76e7ae88171b2c17f73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
