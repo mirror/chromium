@@ -57,6 +57,24 @@
       "revId": "d79e314f150ad819ea4af8c7bb6f48f7b1dd9091",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28a67e19_3ab8eae4",
+        "filename": "chrome/common/extensions/extension_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2018-01-29T17:34:09Z",
+      "side": 1,
+      "message": "See my reply referring to the comment in rtl.h.",
+      "parentUuid": "3cf89bbc_7fb8acfc",
+      "revId": "d79e314f150ad819ea4af8c7bb6f48f7b1dd9091",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
