@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "130812b2_724f24ca",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1151126
+      },
+      "writtenOn": "2018-01-29T02:55:23Z",
+      "side": 0,
+      "message": "Note: this is the config, we want to use.",
+      "revId": "15a77f62309908137eb07ea563647404cccf7009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
