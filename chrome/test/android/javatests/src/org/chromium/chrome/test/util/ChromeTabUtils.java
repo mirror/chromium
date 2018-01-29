@@ -339,7 +339,7 @@ public class ChromeTabUtils {
                     }
                 });
         // Tablet and phone have different new tab buttons; click the right one.
-        if (DeviceFormFactor.isTablet()) {
+        if (DeviceFormFactor.isTabletLayout()) {
             StripLayoutHelper strip =
                     TabStripUtils.getStripLayoutHelper(activity, false /* incognito */);
             CompositorButton newTabButton = strip.getNewTabButton();
