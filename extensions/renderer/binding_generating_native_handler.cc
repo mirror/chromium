@@ -22,6 +22,9 @@ BindingGeneratingNativeHandler::BindingGeneratingNativeHandler(
     : context_(context), api_name_(api_name), bind_to_(bind_to) {}
 
 void BindingGeneratingNativeHandler::Initialize() {}
+bool BindingGeneratingNativeHandler::IsInitialized() {
+  return true;
+}
 
 v8::Local<v8::Object> BindingGeneratingNativeHandler::NewInstance() {
   base::ElapsedTimer timer;
