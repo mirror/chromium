@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "73e4dc09_fba18c9e",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedScriptValue.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1236784
+      },
+      "writtenOn": "2018-01-29T21:14:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd1319e2_c5fa83da",
+      "revId": "1d495da934dcd2b66b7e291bac7057cd27f636c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a938e03_e6c9c190",
         "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedScriptValue.h",
         "patchSetId": 26
@@ -33,6 +51,24 @@
       "revId": "1d495da934dcd2b66b7e291bac7057cd27f636c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e9dad45_949b3498",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedScriptValue.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1236784
+      },
+      "writtenOn": "2018-01-29T21:14:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a938e03_e6c9c190",
+      "revId": "1d495da934dcd2b66b7e291bac7057cd27f636c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "83d677d1_f729f05e",
+        "filename": "third_party/WebKit/Source/core/messaging/BlinkTransferableMessage.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1236784
+      },
+      "writtenOn": "2018-01-29T21:14:05Z",
+      "side": 1,
+      "message": "You\u0027re right -- I removed these and added them to BlinkTransferableMessageStructTraits.cpp, where they\u0027re actually needed.",
+      "parentUuid": "0571b12c_9b3bc0e1",
+      "revId": "1d495da934dcd2b66b7e291bac7057cd27f636c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bc15805_516fe6e9",
         "filename": "third_party/WebKit/Source/core/messaging/BlinkTransferableMessageStructTraits.cpp",
         "patchSetId": 26
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "9a2976c0_5c3b7309",
+        "filename": "third_party/WebKit/Source/core/messaging/BlinkTransferableMessageStructTraits.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1236784
+      },
+      "writtenOn": "2018-01-29T21:14:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bc15805_516fe6e9",
+      "revId": "1d495da934dcd2b66b7e291bac7057cd27f636c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8e8ff39_1b9127d5",
         "filename": "third_party/WebKit/Source/core/messaging/BlinkTransferableMessageStructTraits.cpp",
         "patchSetId": 26
@@ -84,6 +156,24 @@
       "revId": "1d495da934dcd2b66b7e291bac7057cd27f636c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6275aebf_3fe6351a",
+        "filename": "third_party/WebKit/Source/core/messaging/BlinkTransferableMessageStructTraits.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1236784
+      },
+      "writtenOn": "2018-01-29T21:14:05Z",
+      "side": 1,
+      "message": "Good question -- as it was, this would have resulted in partial serialization. It\u0027s probably best to go all-or-nothing.",
+      "parentUuid": "f8e8ff39_1b9127d5",
+      "revId": "1d495da934dcd2b66b7e291bac7057cd27f636c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "1671c33d_66af7595",
+        "filename": "third_party/WebKit/Source/core/messaging/BlinkTransferableMessageStructTraits.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1236784
+      },
+      "writtenOn": "2018-01-29T21:14:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9927fb07_206ce6a5",
+      "range": {
+        "startLine": 20,
+        "startChar": 79,
+        "endLine": 20,
+        "endChar": 0
+      },
+      "revId": "1d495da934dcd2b66b7e291bac7057cd27f636c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71cb0fa8_5b38d0e9",
         "filename": "third_party/WebKit/Source/core/messaging/BlinkTransferableMessageStructTraits.cpp",
         "patchSetId": 26
@@ -124,6 +238,24 @@
       "revId": "1d495da934dcd2b66b7e291bac7057cd27f636c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaa902a2_999121f6",
+        "filename": "third_party/WebKit/Source/core/messaging/BlinkTransferableMessageStructTraits.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1236784
+      },
+      "writtenOn": "2018-01-29T21:14:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71cb0fa8_5b38d0e9",
+      "revId": "1d495da934dcd2b66b7e291bac7057cd27f636c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "56d0584a_63d5a9a6",
+        "filename": "third_party/WebKit/Source/core/messaging/BlinkTransferableMessageStructTraits.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1236784
+      },
+      "writtenOn": "2018-01-29T21:14:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bda014f1_9ff2d104",
+      "revId": "1d495da934dcd2b66b7e291bac7057cd27f636c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06184191_701ad541",
         "filename": "third_party/WebKit/Source/core/messaging/BlinkTransferableMessageStructTraits.cpp",
         "patchSetId": 26
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "ff6413f7_4c753632",
+        "filename": "third_party/WebKit/Source/core/messaging/BlinkTransferableMessageStructTraits.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1236784
+      },
+      "writtenOn": "2018-01-29T21:14:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06184191_701ad541",
+      "revId": "1d495da934dcd2b66b7e291bac7057cd27f636c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91f7d8ce_51f32132",
         "filename": "third_party/WebKit/Source/core/messaging/BlinkTransferableMessageStructTraits.cpp",
         "patchSetId": 26
@@ -175,6 +343,24 @@
       "revId": "1d495da934dcd2b66b7e291bac7057cd27f636c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f65b01db_8aac7feb",
+        "filename": "third_party/WebKit/Source/core/messaging/BlinkTransferableMessageStructTraits.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1236784
+      },
+      "writtenOn": "2018-01-29T21:14:05Z",
+      "side": 1,
+      "message": "Don\u0027t need the cast, done.",
+      "parentUuid": "91f7d8ce_51f32132",
+      "revId": "1d495da934dcd2b66b7e291bac7057cd27f636c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -201,6 +387,30 @@
     },
     {
       "key": {
+        "uuid": "a7f5bfa0_0a0448a9",
+        "filename": "third_party/WebKit/Source/core/messaging/BlinkTransferableMessageStructTraits.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1236784
+      },
+      "writtenOn": "2018-01-29T21:14:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a9cbc03_707be70e",
+      "range": {
+        "startLine": 54,
+        "startChar": 11,
+        "endLine": 54,
+        "endChar": 30
+      },
+      "revId": "1d495da934dcd2b66b7e291bac7057cd27f636c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee412658_286d3e91",
         "filename": "third_party/WebKit/Source/core/messaging/BlinkTransferableMessageStructTraitsTest.cpp",
         "patchSetId": 26
@@ -218,6 +428,24 @@
     },
     {
       "key": {
+        "uuid": "2b4cb429_1f7c00a6",
+        "filename": "third_party/WebKit/Source/core/messaging/BlinkTransferableMessageStructTraitsTest.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1236784
+      },
+      "writtenOn": "2018-01-29T21:14:05Z",
+      "side": 1,
+      "message": "No difference, done",
+      "parentUuid": "ee412658_286d3e91",
+      "revId": "1d495da934dcd2b66b7e291bac7057cd27f636c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8cc61b9f_30f119f4",
         "filename": "third_party/WebKit/Source/core/messaging/BlinkTransferableMessageStructTraitsTest.cpp",
         "patchSetId": 26
@@ -232,6 +460,24 @@
       "revId": "1d495da934dcd2b66b7e291bac7057cd27f636c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f28bfe49_7cad6cec",
+        "filename": "third_party/WebKit/Source/core/messaging/BlinkTransferableMessageStructTraitsTest.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1236784
+      },
+      "writtenOn": "2018-01-29T21:14:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cc61b9f_30f119f4",
+      "revId": "1d495da934dcd2b66b7e291bac7057cd27f636c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
