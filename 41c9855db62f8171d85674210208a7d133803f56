@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e0f5456_5b938c32",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnectionCallbacks.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-29T22:46:03Z",
+      "side": 1,
+      "message": "In principle, it looks like presentation_info and error could be std::move\u0027d into OnSuccess/OnError (and passed along further by moving).  However these are tiny objects and I don\u0027t think it\u0027s worth complicating the code downstream.",
+      "revId": "41c9855db62f8171d85674210208a7d133803f56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
