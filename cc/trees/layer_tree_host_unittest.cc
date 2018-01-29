@@ -1092,12 +1092,12 @@ class LayerTreeHostTestSurfaceDamage : public LayerTreeHostTest {
 
 SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostTestSurfaceDamage);
 
-// When settings->check_damage_early is true, verify that invalidate is not
-// called when changes to a layer don't cause visible damage.
+// When settings->enable_early_damage_check is true, verify that invalidate is
+// not called when changes to a layer don't cause visible damage.
 class LayerTreeHostTestNoDamageCausesNoInvalidate : public LayerTreeHostTest {
   void InitializeSettings(LayerTreeSettings* settings) override {
     settings->using_synchronous_renderer_compositor = true;
-    settings->check_damage_early = true;
+    settings->enable_early_damage_check = true;
   }
 
  protected:
@@ -1123,7 +1123,7 @@ class LayerTreeHostTestNoDamageCausesNoInvalidate : public LayerTreeHostTest {
   void DidCommit() override {
     // This does not damage the frame because the root layer is outside the
     // viewport.
-    if (layer_tree_host()->SourceFrameNumber() == 1)
+    if (layer_tree_host()->SourceFrameNumber() == 2)
       root_->SetOpacity(0.9f);
   }
 
@@ -1137,11 +1137,11 @@ class LayerTreeHostTestNoDamageCausesNoInvalidate : public LayerTreeHostTest {
   void CommitCompleteOnThread(LayerTreeHostImpl* impl) override {
     switch (impl->active_tree()->source_frame_number()) {
       // This gives us some assurance that invalidates happen before this call,
-      // so invalidating on frame 1 will cause a failure before the test ends.
+      // so invalidating on frame 2 will cause a failure before the test ends.
       case 0:
         EXPECT_TRUE(first_frame_invalidate_before_commit_);
         break;
-      case 1:
+      case 2:
         EndTest();
     }
   }
@@ -1153,9 +1153,13 @@ class LayerTreeHostTestNoDamageCausesNoInvalidate : public LayerTreeHostTest {
       case 0:
         first_frame_invalidate_before_commit_ = true;
         break;
+      // Frame 1 will invalidate, even though it has no damage. The early
+      // damage check that prevents frame 2 from invalidating only runs if
+      // a previous frame did not have damage.
+
       // This frame should not cause an invalidate, since there is no visible
       // damage.
-      case 1:
+      case 2:
         ADD_FAILURE();
     }
   }
