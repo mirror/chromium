@@ -46,6 +46,30 @@
       "revId": "3d0476a897f85ba83f7fa280f625160518c64487",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5bd20b4_5c89675c",
+        "filename": "DEPS",
+        "patchSetId": 8
+      },
+      "lineNbr": 1348,
+      "author": {
+        "id": 1115956
+      },
+      "writtenOn": "2018-01-29T18:59:48Z",
+      "side": 1,
+      "message": "V8 autorolls everything else that Chrome has in the deps section. Only runhooks is the problem... there\u0027s no good way to decypher the actions and change V8\u0027s, though also that should be possible...",
+      "parentUuid": "a2a0a0b6_4712e56e",
+      "range": {
+        "startLine": 1348,
+        "startChar": 6,
+        "endLine": 1348,
+        "endChar": 49
+      },
+      "revId": "3d0476a897f85ba83f7fa280f625160518c64487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
