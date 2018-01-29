@@ -743,7 +743,7 @@ void MultibufferDataSource::UpdateBufferSizes() {
   reader_->SetMaxBuffer(buffer_size);
   reader_->SetPinRange(pin_backward, pin_forward);
 
-  if (preload_ == METADATA) {
+  if (preload_ == NONE || preload_ == METADATA) {
     reader_->SetPreload(0, 0);
   } else {
     reader_->SetPreload(preload_high, preload);
