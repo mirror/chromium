@@ -260,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "bb3868d5_cfe434bd",
+        "filename": "third_party/android_crazy_linker/src/src/crazy_linker_pointer_set.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2018-01-29T17:00:35Z",
+      "side": 1,
+      "message": "Yes, I\u0027ve done that. Since this is only for testing, we can return a reference to the vector and avoid a copy as well, after removing IsEmpty/GetCount/operator[] above",
+      "parentUuid": "26fb7a92_fa5afb5f",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 60
+      },
+      "revId": "533731563787dbe47e9b15de88aa4a7c1524bd91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07f15cbc_a9e33c81",
         "filename": "third_party/android_crazy_linker/src/src/crazy_linker_pointer_set.h",
         "patchSetId": 3
