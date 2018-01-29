@@ -42,6 +42,7 @@ class BrowserSurfaceViewManager;
 class BrowserTestBase;
 class CategorizedWorkerPool;
 class NestedMessagePumpAndroid;
+class RTCVideoEncoder;
 class ScopedAllowWaitForAndroidLayoutTests;
 class ScopedAllowWaitForDebugURL;
 class SessionStorageDatabase;
@@ -395,6 +396,7 @@ class BASE_EXPORT ThreadRestrictions {
   friend class content::BrowserSurfaceViewManager;
   friend class content::BrowserTestBase;
   friend class content::NestedMessagePumpAndroid;
+  friend class content::RTCVideoEncoder;
   friend class content::ScopedAllowWaitForAndroidLayoutTests;
   friend class content::ScopedAllowWaitForDebugURL;
   friend class content::SynchronousCompositor;
