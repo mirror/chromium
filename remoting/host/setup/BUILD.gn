@@ -33,10 +33,13 @@ source_set("setup") {
 
   deps = [
     "//base",
+    "//extensions/browser/api/messaging:messaging",
     "//google_apis",
     "//remoting/base:authorization",
+    "//remoting/base:base",
     "//remoting/host",
     "//remoting/host/native_messaging",
+    "//remoting/protocol:protocol",
   ]
 
   if (is_mac || is_ios) {

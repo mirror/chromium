@@ -38,7 +38,10 @@ source_set("security_key") {
   deps = [
     "//ipc",
     "//mojo/edk/system",
+    "//net",
+    "//remoting/host",
     "//remoting/proto",
+    "//remoting/protocol",
     "//third_party/webrtc/modules/desktop_capture",
   ]
 }
@@ -53,6 +56,13 @@ source_set("main") {
   sources = [
     "remote_security_key_main.cc",
     "remote_security_key_main.h",
+  ]
+
+  deps = [
+    "//base",
+    "//mojo/edk/embedder:headers",
+    "//remoting/host",
+    "//remoting/host/security_key",
   ]
 }
 
@@ -94,7 +104,18 @@ source_set("unit_tests") {
     ":test_support",
   ]
   deps = [
+    "//base",
+    "//ipc",
+    "//mojo/edk/embedder:headers",
     "//mojo/edk/test:test_support",
+    "//net",
+    "//net:test_support",
+    "//remoting/host",
+    "//remoting/host:test_support",
+    "//remoting/host/security_key",
+    "//remoting/host/setup",
+    "//remoting/protocol",
+    "//testing/gtest",
   ]
 }
 
@@ -114,6 +135,9 @@ static_library("test_support") {
 
   deps = [
     "//ipc",
+    "//mojo/edk/embedder:headers",
+    "//remoting/host",
+    "//remoting/host/security_key",
     "//remoting/proto",
     "//testing/gtest",
   ]

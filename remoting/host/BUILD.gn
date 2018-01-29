@@ -302,15 +302,19 @@ static_library("host") {
     "//components/policy/core/common",
     "//crypto",
     "//google_apis",
+    "//jingle:jingle_glue",
     "//media",
     "//remoting/base",
     "//remoting/base:authorization",
-    "//remoting/host/security_key",
+
+    #"//remoting/host/security_key",
     "//remoting/protocol",
     "//remoting/resources",
+    "//remoting/signaling",
 
     # //remoting uses the power_save_blocker directly. See crbug.com/689423
     "//services/device/wake_lock/power_save_blocker",
+    "//third_party/webrtc/modules/desktop_capture:primitives",
     "//ui/base",
     "//ui/events:dom_keycode_converter",
     "//ui/events/platform",
@@ -325,6 +329,9 @@ static_library("host") {
   }
 
   if (is_linux && !is_chromeos) {
+    # TODO(crbug.com/599277): Fix the include cycle and remove this.
+    allow_circular_includes_from = [ "//remoting/host/linux" ]
+
     public_deps += [ "//remoting/host/linux" ]
     libs += [ "pam" ]
   }
@@ -429,13 +436,18 @@ static_library("test_support") {
   configs += [ "//remoting/build/config:version" ]
 
   deps = [
+    "//remoting/host/security_key",
     "//remoting/proto",
+    "//remoting/protocol",
+    "//remoting/protocol:test_support",
     "//testing/gmock",
     "//testing/gtest",
+    "//third_party/webrtc/modules/desktop_capture:primitives",
   ]
   public_deps = [
     ":host",
     "//remoting/base:test_support",
+    "//remoting/codec:encoder",
     "//third_party/protobuf:protobuf_lite",
   ]
 
@@ -512,15 +524,22 @@ source_set("unit_tests") {
   deps = [
     ":host",
     ":test_support",
+    "//net:test_support",
     "//remoting/host/it2me:common",
     "//remoting/host/native_messaging",
     "//remoting/host/security_key:unit_tests",
     "//remoting/host/setup",
     "//remoting/proto",
+    "//remoting/protocol:test_support",
     "//remoting/resources",
+    "//remoting/signaling",
+    "//remoting/signaling:test_support",
+    "//remoting/signaling:unit_tests",
     "//skia",
     "//testing/gmock",
     "//testing/gtest",
+    "//third_party/webrtc/modules/desktop_capture:primitives",
+    "//ui/base",
   ]
 
   if (is_linux && !is_chromeos) {
@@ -602,6 +621,9 @@ if (enable_remoting_host) {
       deps += [
         "//google_apis",
         "//net",
+        "//remoting/base:authorization",
+        "//remoting/base:base",
+        "//remoting/host:host",
         "//remoting/host/setup",
       ]
     }
@@ -711,10 +733,17 @@ if (enable_me2me_host) {
       "//base:i18n",
       "//components/policy/core/common",
       "//ipc",
+      "//jingle:jingle_glue",
+      "//mojo/edk/embedder:headers",
       "//net",
       "//remoting/base",
+      "//remoting/base:authorization",
       "//remoting/host",
+      "//remoting/host:main",
+      "//remoting/host/security_key",
       "//remoting/proto",
+      "//remoting/protocol",
+      "//remoting/signaling",
       "//third_party/webrtc/modules/desktop_capture",
     ]
 
@@ -761,9 +790,20 @@ if (enable_me2me_host) {
     }
   } else {
     source_set("main") {
+      configs += [ "//remoting/build/config:version" ]
+
       sources = [
         "host_main.cc",
         "host_main.h",
+      ]
+
+      deps = [
+        "//base",
+        "//base:i18n",
+        "//mojo/edk/embedder:headers",
+        "//remoting/base:breakpad",
+        "//remoting/host",
+        "//remoting/host/setup",
       ]
     }
     if (is_mac) {
@@ -774,17 +814,9 @@ if (enable_me2me_host) {
       }
     } else {
       target("executable", "remoting_me2me_host") {
-        configs += [ "//remoting/build/config:version" ]
-
-        sources = [
-          "host_main.cc",
-          "host_main.h",
-        ]
-
         deps = [
           ":remoting_me2me_host_static",
           "//build/config:exe_and_shlib_deps",
-          "//remoting/base:breakpad",
           "//remoting/host/installer:credits",
           "//remoting/resources",
         ]

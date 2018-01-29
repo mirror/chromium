@@ -20,5 +20,6 @@ source_set("native_messaging") {
 
   deps = [
     "//base",
+    "//extensions/browser/api/messaging",
   ]
 }

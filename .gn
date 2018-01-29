@@ -137,6 +137,7 @@ check_targets = [
   "//printing/*",
 
   #"//remoting/*",  # Medium-hard.
+  "//remoting/host/*",
   "//rlz/*",
 
   #"//sandbox/*",  # Medium-hard.

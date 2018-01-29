@@ -14,7 +14,6 @@
 #include "remoting/base/rsa_key_pair.h"
 #include "remoting/protocol/errors.h"
 #include "remoting/signaling/signal_strategy.h"
-#include "testing/gtest/include/gtest/gtest_prod.h"
 
 namespace buzz {
 class XmlElement;
