@@ -7,6 +7,7 @@
 #include "media/audio/test_audio_thread.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "services/audio/public/cpp/audio_system_to_service_adapter.h"
+#include "services/audio/public/cpp/mock_system_info.h"
 #include "services/audio/public/interfaces/constants.mojom.h"
 #include "services/audio/service_factory.h"
 #include "services/service_manager/public/cpp/service_context.h"
@@ -155,6 +156,54 @@ class InProcessServiceTest : public service_manager::test::ServiceTest {
   DISALLOW_COPY_AND_ASSIGN(InProcessServiceTest);
 };
 
+// Tests for MockSystemInfo overriding the global binder.
+// if |use_audio_thread| is true, MockAudioManager has a dedicated audio thread
+// and SystemInfo binding is overriden on it; otherwise audio thread is the main
+// thread of the test fixture, and that's where the binding is overriden and the
+// mock is accessed.
+template <bool use_audio_thread>
+class MockSystemInfoTest : public InProcessServiceTest<use_audio_thread> {
+ public:
+  MockSystemInfoTest() {}
+  ~MockSystemInfoTest() override {}
+
+ protected:
+  using TestBase = InProcessServiceTest<use_audio_thread>;
+  std::unique_ptr<service_manager::Service> CreateService() override {
+    return std::make_unique<ServiceTestClient>(this,
+                                               unused_audio_manager_.get());
+  }
+
+  void SetUp() override {
+    unused_audio_manager_ = std::make_unique<media::MockAudioManager>(
+        std::make_unique<media::TestAudioThread>(use_audio_thread));
+    TestBase::SetUp();
+    mock_system_info_ =
+        std::make_unique<MockSystemInfo>(TestBase::audio_manager());
+    MockSystemInfo::OverrideGlobalBinder(mock_system_info_.get());
+  }
+
+  void TearDown() override {
+    if (use_audio_thread) {
+      TestBase::audio_manager()->GetTaskRunner()->DeleteSoon(
+          FROM_HERE, std::move(mock_system_info_));
+    }
+    TestBase::TearDown();
+    unused_audio_manager_->Shutdown();
+  }
+
+ protected:
+  // To be passed to the service: it won't be affected by mock settings verified
+  // in the tests.
+  std::unique_ptr<media::MockAudioManager> unused_audio_manager_;
+
+  // Will override mojom::SystemInfo binder.
+  std::unique_ptr<MockSystemInfo> mock_system_info_;
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(MockSystemInfoTest);
+};
+
 }  // namespace audio
 
 // AudioSystem interface conformance tests.
@@ -163,7 +212,9 @@ namespace media {
 
 using InProcessServiceTestVariations =
     testing::Types<audio::InProcessServiceTest<false>,
-                   audio::InProcessServiceTest<true>>;
+                   audio::InProcessServiceTest<true>,
+                   audio::MockSystemInfoTest<false>,
+                   audio::MockSystemInfoTest<true>>;
 
 INSTANTIATE_TYPED_TEST_CASE_P(InProcessService,
                               AudioSystemTestTemplate,
