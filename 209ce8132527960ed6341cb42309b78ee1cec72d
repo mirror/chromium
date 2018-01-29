@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "b838804d_09e38b71",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-29T12:10:24Z",
+      "side": 0,
+      "message": "As a sanity check: Is all usage of geolocation going through the Device Service now? If not, we can\u0027t make this change yet as there might be some consumer that uses geolocation before the Device Service is instantiated (or in a context where the Device Service isn\u0027t instantiated at all).",
+      "range": {
+        "startLine": 506,
+        "startChar": 10,
+        "endLine": 506,
+        "endChar": 29
+      },
+      "revId": "209ce8132527960ed6341cb42309b78ee1cec72d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dde10833_c5fba4aa",
         "filename": "device/geolocation/geolocation_provider.h",
         "patchSetId": 4
