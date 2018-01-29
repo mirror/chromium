@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4ed5bf92_260c6e01",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/AnchoredPopupWindow.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-29T22:14:20Z",
+      "side": 1,
+      "message": "I added some comments.\n\nMax available space positions to the left or to the right based on whether there\u0027s more space to the left or to the right.",
+      "parentUuid": "eb893051_6ec29ccc",
+      "range": {
+        "startLine": 60,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 58
+      },
+      "revId": "ac9038fdfb2473153813a2fb00239810d2970520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56b47c20_f9fc4e0a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/AnchoredPopupWindow.java",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "ac9038fdfb2473153813a2fb00239810d2970520",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d10bab1_522ac670",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/AnchoredPopupWindow.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-29T22:14:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56b47c20_f9fc4e0a",
+      "range": {
+        "startLine": 134,
+        "startChar": 4,
+        "endLine": 134,
+        "endChar": 26
+      },
+      "revId": "ac9038fdfb2473153813a2fb00239810d2970520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5e2cebf4_76889fed",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/AnchoredPopupWindow.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-29T22:14:20Z",
+      "side": 1,
+      "message": "I don\u0027t think setting we should recompute positioning for setting the preferred orientation, margin, and max width.. none of those should change after the popup is showing. I updated the comments for the applicable methods.",
+      "parentUuid": "84f3635e_14f95343",
+      "range": {
+        "startLine": 234,
+        "startChar": 4,
+        "endLine": 253,
+        "endChar": 5
+      },
+      "revId": "ac9038fdfb2473153813a2fb00239810d2970520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a602b465_c6405e1a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/AnchoredPopupWindow.java",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "ac9038fdfb2473153813a2fb00239810d2970520",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90663a33_035811ad",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/AnchoredPopupWindow.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-29T22:14:20Z",
+      "side": 1,
+      "message": "Oops, fixed.",
+      "parentUuid": "a602b465_c6405e1a",
+      "range": {
+        "startLine": 284,
+        "startChar": 25,
+        "endLine": 284,
+        "endChar": 29
+      },
+      "revId": "ac9038fdfb2473153813a2fb00239810d2970520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f6bc8de4_86902a72",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/AnchoredPopupWindow.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-29T22:14:20Z",
+      "side": 1,
+      "message": "I kept it as preferCurrentOrientation since I\u0027m using it for left/right positioning now as well.",
+      "parentUuid": "a242386f_df6e94db",
+      "range": {
+        "startLine": 305,
+        "startChar": 16,
+        "endLine": 305,
+        "endChar": 40
+      },
+      "revId": "ac9038fdfb2473153813a2fb00239810d2970520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4050464_0a2b96a0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/AnchoredPopupWindow.java",
         "patchSetId": 4
@@ -137,6 +257,30 @@
       "revId": "ac9038fdfb2473153813a2fb00239810d2970520",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5e85b45_b6611ed8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/AnchoredPopupWindow.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-29T22:14:20Z",
+      "side": 1,
+      "message": "I added some code below to re-compute the width if the horizontal orientation is max_available_space and the specified maxContentWidth is less than the available space to the left or right.",
+      "parentUuid": "b4050464_0a2b96a0",
+      "range": {
+        "startLine": 311,
+        "startChar": 12,
+        "endLine": 311,
+        "endChar": 27
+      },
+      "revId": "ac9038fdfb2473153813a2fb00239810d2970520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "b27a8ff4_ae3811dd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/AnchoredPopupWindow.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-29T22:14:20Z",
+      "side": 1,
+      "message": "Ultimately yes, I think it does. For this CL, I focused on breaking out and testing new code for this patch. I added a TODO() to break apart the large method to make it more testable.",
+      "parentUuid": "77cfd951_36f3dfe6",
+      "range": {
+        "startLine": 393,
+        "startChar": 15,
+        "endLine": 393,
+        "endChar": 25
+      },
+      "revId": "ac9038fdfb2473153813a2fb00239810d2970520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "137cdfbf_26393b1b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/AnchoredPopupWindow.java",
         "patchSetId": 4
@@ -183,6 +351,30 @@
       "revId": "ac9038fdfb2473153813a2fb00239810d2970520",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42870880_ade99e7d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/AnchoredPopupWindow.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-29T22:14:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "137cdfbf_26393b1b",
+      "range": {
+        "startLine": 398,
+        "startChar": 8,
+        "endLine": 398,
+        "endChar": 76
+      },
+      "revId": "ac9038fdfb2473153813a2fb00239810d2970520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "4e4a3436_be6ca273",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/AnchoredPopupWindow.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-29T22:14:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58e8e95d_c564e86a",
+      "range": {
+        "startLine": 409,
+        "startChar": 38,
+        "endLine": 409,
+        "endChar": 55
+      },
+      "revId": "ac9038fdfb2473153813a2fb00239810d2970520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6acc8c4a_8158d3b2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ListMenuButton.java",
         "patchSetId": 4
@@ -229,6 +445,30 @@
       "revId": "ac9038fdfb2473153813a2fb00239810d2970520",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e454727_f3ce876d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ListMenuButton.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-29T22:14:20Z",
+      "side": 1,
+      "message": "Perhaps previously #getListView() didn\u0027t reliably return the list view until the popup was shown?\n\nI tested this pretty throughly and setting here is working as expected.",
+      "parentUuid": "6acc8c4a_8158d3b2",
+      "range": {
+        "startLine": 216,
+        "startChar": 8,
+        "endLine": 216,
+        "endChar": 30
+      },
+      "revId": "ac9038fdfb2473153813a2fb00239810d2970520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "1a0b03ca_d585c89e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ListMenuButton.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-29T22:14:20Z",
+      "side": 1,
+      "message": "Nope, not used. Removed.",
+      "parentUuid": "e1b43ece_11290c11",
+      "range": {
+        "startLine": 219,
+        "startChar": 8,
+        "endLine": 219,
+        "endChar": 64
+      },
+      "revId": "ac9038fdfb2473153813a2fb00239810d2970520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2a07071_3ff30ee9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ListMenuButton.java",
         "patchSetId": 4
@@ -275,6 +539,30 @@
       "revId": "ac9038fdfb2473153813a2fb00239810d2970520",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6373cde2_808e5a3e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ListMenuButton.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-29T22:14:20Z",
+      "side": 1,
+      "message": "Currently the position isn\u0027t recomputed when these are set, but I still agree that the proliferation of setters means we likely want a builder.\n\nWe could do something similar to what we do in PromoDialog, where a set of params is used during construction. If it\u0027s all right, let\u0027s leave it for a follow-up patch.",
+      "parentUuid": "f2a07071_3ff30ee9",
+      "range": {
+        "startLine": 225,
+        "startChar": 8,
+        "endLine": 227,
+        "endChar": 38
+      },
+      "revId": "ac9038fdfb2473153813a2fb00239810d2970520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -310,6 +598,24 @@
       "revId": "ac9038fdfb2473153813a2fb00239810d2970520",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9d5c644_f3cdb311",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ViewRectProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-29T22:14:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eea8b47d_51ab8e5f",
+      "revId": "ac9038fdfb2473153813a2fb00239810d2970520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
