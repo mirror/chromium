@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35be255c_eba97dfc",
+        "filename": "tools/cygprofile/phased_orderfile.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-29T16:24:40Z",
+      "side": 1,
+      "message": "intuitively 1.5 for the size of \\frac{startup_union,startup_intersection} looks like a large variance for a reasonable startup benchmark. Is it based on case \u0027A\u0027 you mention? Please remind me the name of the benchmark and what \u0027startup\u0027 symbols mean for it.",
+      "range": {
+        "startLine": 45,
+        "startChar": 32,
+        "endLine": 45,
+        "endChar": 35
+      },
+      "revId": "2823b8b099ee86bd99ed47b79041c55fdec80d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af54317e_0c4c1a59",
+        "filename": "tools/cygprofile/phased_orderfile.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-29T16:24:40Z",
+      "side": 1,
+      "message": "should this be invoked somewhere or it is in future plans?",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 28
+      },
+      "revId": "2823b8b099ee86bd99ed47b79041c55fdec80d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7513a1f4_29e36334",
+        "filename": "tools/cygprofile/phased_orderfile.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-29T16:24:40Z",
+      "side": 1,
+      "message": "my understanding of the word \u0027difference\u0027 is synonymous to subtraction, and this one computes a fraction, which made me puzzled initially.",
+      "range": {
+        "startLine": 87,
+        "startChar": 22,
+        "endLine": 87,
+        "endChar": 32
+      },
+      "revId": "2823b8b099ee86bd99ed47b79041c55fdec80d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42fb3fc4_20cf8356",
+        "filename": "tools/cygprofile/phased_orderfile.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-29T16:24:40Z",
+      "side": 1,
+      "message": "the fact that this is a namedtuple of lists is only discoverable by looking at the implementation details of this method. Perhaps put some comment describing what this datastructure is about?",
+      "range": {
+        "startLine": 127,
+        "startChar": 7,
+        "endLine": 127,
+        "endChar": 28
+      },
+      "revId": "2823b8b099ee86bd99ed47b79041c55fdec80d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cd6e608_297a99b0",
+        "filename": "tools/cygprofile/phased_orderfile.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-29T16:24:40Z",
+      "side": 1,
+      "message": "I thought maybe renaming it to GetPhaseOffsetsForMultipleRuns (or something) would be more readable as a name to replace GetRunGroupOffsets. Understanding the difference between a RunGroup and a Phase requires reading the entirety of the comments and implementation of the ProfileManager. I did it once, forgot entirely, now reading second time and ... not sure I\u0027d be able to keep it in memory for long. Maybe it\u0027s just me :)\n\nThe docsting for GetRunGroupOffsets() could also be improved to replace the reference to GetMergedOffsets() with explanation of what it does in terms of the toplevel terms introduced in the calss. It would also be useful, I think, to explain how the elements in the list of offset lists are ordered.",
+      "range": {
+        "startLine": 135,
+        "startChar": 44,
+        "endLine": 135,
+        "endChar": 62
+      },
+      "revId": "2823b8b099ee86bd99ed47b79041c55fdec80d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58e79c6d_fc3eb80d",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-29T16:24:40Z",
+      "side": 1,
+      "message": "nit: is it the same as total size (i.e. without \u0027primary\u0027)?",
+      "range": {
+        "startLine": 115,
+        "startChar": 26,
+        "endLine": 115,
+        "endChar": 33
+      },
+      "revId": "2823b8b099ee86bd99ed47b79041c55fdec80d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
