@@ -11,6 +11,7 @@
 #include "net/base/privacy_mode.h"
 #include "net/http/http_request_headers.h"
 #include "net/socket/socket_tag.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "url/gurl.h"
 
 namespace net {
@@ -31,6 +32,16 @@ struct NET_EXPORT HttpRequestInfo {
   HttpRequestInfo();
   HttpRequestInfo(const HttpRequestInfo& other);
   ~HttpRequestInfo();
+
+  void SetTrafficAnnotation(
+      const net::NetworkTrafficAnnotationTag& traffic_annotation) {
+    this->traffic_annotation =
+        net::MutableNetworkTrafficAnnotationTag(traffic_annotation);
+  }
+
+  net::NetworkTrafficAnnotationTag GetTrafficAnnotation() const {
+    return net::NetworkTrafficAnnotationTag(traffic_annotation);
+  }
 
   // The requested URL.
   GURL url;
@@ -60,6 +71,9 @@ struct NET_EXPORT HttpRequestInfo {
 
   // Tag applied to all sockets used to service request.
   SocketTag socket_tag;
+
+  // Network traffic annotation received from URL request.
+  net::MutableNetworkTrafficAnnotationTag traffic_annotation;
 };
 
 }  // namespace net
