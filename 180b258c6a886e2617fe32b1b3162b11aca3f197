@@ -16,6 +16,24 @@
       "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7440e4da_57b67dad",
+        "filename": "content/public/browser/content_browser_client.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2018-01-29T23:55:24Z",
+      "side": 1,
+      "message": "wrt method location: the IPC call comes from the RendererWebMediaPlayerDelegate (called from WebMediaPlayer).\n\nwrt multiple windows: we\u0027re initially focusing on restricting to having one PiP window.",
+      "parentUuid": "c6333d60_e845a100",
+      "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
