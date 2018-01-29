@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "332c5263_114ef457",
+        "filename": "third_party/WebKit/Source/core/frame/RemoteFrameView.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-29T19:29:10Z",
+      "side": 1,
+      "message": "Composited, non-remote frames do not adjust the size or positions of their composited layers\nto include transform. Instead, they draw at their non-transformed resolution, and the\nresult is composited onto the screen with transforms.\n\nTherefore I think your CL is on the right track. I think it\u0027s correct to not scale the\nframe rect to include transform of content. However, I don\u0027t think it is correct to apply\nthe transform to the location of this frame rect either.\n\nIt seems to me that the remote-frame representation of a sub-frame w/transform should be equivalent to the local-frame \u0026 composited one, in that the position of the contained surface for the remote iframe should not include transform.",
+      "revId": "43e14b167f6eaec2bcf58903500cd5507b33d672",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
