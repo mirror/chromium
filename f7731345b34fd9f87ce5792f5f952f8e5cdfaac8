@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2318d0e4_db8d3d6e",
+        "filename": "content/browser/renderer_host/browser_compositor_view_mac.mm",
+        "patchSetId": 62
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2018-01-29T23:19:46Z",
+      "side": 1,
+      "message": "To draw new content, we need to\n- inform the renderer (via RenderWidgetHostImpl) of the new surface id\n- tell the DelegatedFrameHost to show the new surface via SetShowPrimarySurface\n\nWe don\u0027t do both of these things, so this patch causes Mac to freeze after navigation. I\u0027ll take care of the issue in a change I\u0027m working on -- please include me on patches changing RWHVMac and BrowserCompositorViewMac in the future.",
+      "revId": "f7731345b34fd9f87ce5792f5f952f8e5cdfaac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
