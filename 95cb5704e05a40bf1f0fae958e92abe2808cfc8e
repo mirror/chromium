@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "ed95993e_a21d3e2d",
+        "filename": "cc/raster/zero_copy_raster_buffer_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2018-01-29T23:17:32Z",
+      "side": 1,
+      "message": "I agree interface seems overkill, and adding all the things to GpuBacking makes it kinda be like ResourceProvider::Resource which was terrible.\n\nMy suggestion was to make separate structs i.e. GpuTextureBacking and GpuMemoryBufferBacking in ResourcePool. So each resource has one of GpuTextureBacking, GpuMemoryBufferBacking, or SharedBitmap based on type. It seems the reason to have a GpuBacking base class is to share code between GL texture and GMB backings. Is that assumption correct?",
+      "parentUuid": "5187f16a_ef15ab24",
+      "revId": "95cb5704e05a40bf1f0fae958e92abe2808cfc8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef990823_f3d29faa",
         "filename": "cc/raster/zero_copy_raster_buffer_provider.cc",
         "patchSetId": 7
@@ -171,6 +189,24 @@
     },
     {
       "key": {
+        "uuid": "7da9306b_6dd76585",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2018-01-29T23:17:32Z",
+      "side": 1,
+      "message": "Ok, that seems fine, TIL.",
+      "parentUuid": "6c7d48e2_87f7baab",
+      "revId": "95cb5704e05a40bf1f0fae958e92abe2808cfc8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fb51bba_b62b1e54",
         "filename": "cc/resources/resource_pool.cc",
         "patchSetId": 7
@@ -200,6 +236,24 @@
       "side": 1,
       "message": "The sync token will still be kept in the TransferableResource in the ResourceProvider. This is only resetting it in the pool, cuz we don\u0027t need to use it again why the resource id exists.",
       "parentUuid": "1fb51bba_b62b1e54",
+      "revId": "95cb5704e05a40bf1f0fae958e92abe2808cfc8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "321b3a56_8b49ab49",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2018-01-29T23:17:32Z",
+      "side": 1,
+      "message": "Don\u0027t we wait on returned sync token before deleting the texture id in ~ZeroCopyGpuBacking? Will ResourceProvider set it back before the resource pool resource is destroyed?",
+      "parentUuid": "08c73a96_1e3b3121",
       "revId": "95cb5704e05a40bf1f0fae958e92abe2808cfc8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
