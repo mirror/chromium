@@ -88,6 +88,24 @@
       "revId": "e6c9e5404ebdd9b7c4477e7137cdd5ce3f955885",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68c574ec_51ac6902",
+        "filename": "third_party/WebKit/Source/platform/bindings/TraceWrapperMember.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-29T11:17:22Z",
+      "side": 1,
+      "message": "Ah, sorry -- I should have just used code search... :)\n\nHmm. I still a bit hesitate to hesitate to introduce FixGCInfoIndex -- changing type info sounds very tricky.\n\nDo you think it would be hard to reorganize the code like this?\n\n- For not-performance sensitive call sites, just use per-element copy.\n- For performance sensitive call sites, replace HeapVector\u003cTraceWrapperMember\u003e with HeapVector\u003cMember\u003e and use TraceWrappersWithManualWriteBarriers to trace HeapVector\u003cMember\u003e.\n- Remove swap(HeapVector\u003cTraceWrapperMember\u003e, HeapVector\u003cMember\u003e).\n\nThere are 6 call sites... Thoughts?",
+      "parentUuid": "d43264c0_2759450f",
+      "revId": "e6c9e5404ebdd9b7c4477e7137cdd5ce3f955885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
