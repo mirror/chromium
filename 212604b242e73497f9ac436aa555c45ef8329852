@@ -190,6 +190,30 @@
       "revId": "212604b242e73497f9ac436aa555c45ef8329852",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b7d9fa9_ccef9d5c",
+        "filename": "skia/public/interfaces/bitmap_skbitmap_struct_traits.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-29T19:31:56Z",
+      "side": 1,
+      "message": "Mojo-related files are special: they require additional review from the IPC security reviewers, but they\u0027re not typically written or owned by the security team itself. Typically they\u0027re maintained by the regular owners of the directory (in this case, //skia/OWNERS).",
+      "parentUuid": "c2bb3d60_0b39b4b8",
+      "range": {
+        "startLine": 78,
+        "startChar": 7,
+        "endLine": 78,
+        "endChar": 30
+      },
+      "revId": "212604b242e73497f9ac436aa555c45ef8329852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
