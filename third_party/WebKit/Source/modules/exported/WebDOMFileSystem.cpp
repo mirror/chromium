@@ -53,8 +53,8 @@ WebDOMFileSystem WebDOMFileSystem::FromV8Value(v8::Local<v8::Value> value) {
 }
 
 WebURL WebDOMFileSystem::CreateFileSystemURL(v8::Local<v8::Value> value) {
-  const Entry* const entry =
-      V8Entry::ToImplWithTypeCheck(v8::Isolate::GetCurrent(), value);
+  const FileSystemEntry* const entry =
+      V8FileSystemEntry::ToImplWithTypeCheck(v8::Isolate::GetCurrent(), value);
   if (entry)
     return entry->filesystem()->CreateFileSystemURL(entry);
   return WebURL();

@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#include "modules/filesystem/Entry.h"
+#include "modules/filesystem/FileSystemEntry.h"
 
 #include "core/dom/ExecutionContext.h"
 #include "core/fileapi/FileError.h"
@@ -42,10 +42,11 @@
 
 namespace blink {
 
-Entry::Entry(DOMFileSystemBase* file_system, const String& full_path)
+FileSystemEntry::FileSystemEntry(DOMFileSystemBase* file_system,
+                                 const String& full_path)
     : EntryBase(file_system, full_path) {}
 
-DOMFileSystem* Entry::filesystem(ScriptState* script_state) const {
+DOMFileSystem* FileSystemEntry::filesystem(ScriptState* script_state) const {
   if (file_system_->GetType() == kFileSystemTypeIsolated) {
     UseCounter::Count(
         ExecutionContext::From(script_state),
@@ -54,9 +55,9 @@ DOMFileSystem* Entry::filesystem(ScriptState* script_state) const {
   return filesystem();
 }
 
-void Entry::getMetadata(ScriptState* script_state,
-                        MetadataCallback* success_callback,
-                        V8ErrorCallback* error_callback) {
+void FileSystemEntry::getMetadata(ScriptState* script_state,
+                                  MetadataCallback* success_callback,
+                                  V8ErrorCallback* error_callback) {
   if (file_system_->GetType() == kFileSystemTypeIsolated) {
     UseCounter::Count(ExecutionContext::From(script_state),
                       WebFeature::kEntry_GetMetadata_Method_IsolatedFileSystem);
@@ -65,11 +66,11 @@ void Entry::getMetadata(ScriptState* script_state,
                             ScriptErrorCallback::Wrap(error_callback));
 }
 
-void Entry::moveTo(ScriptState* script_state,
-                   DirectoryEntry* parent,
-                   const String& name,
-                   V8EntryCallback* success_callback,
-                   V8ErrorCallback* error_callback) const {
+void FileSystemEntry::moveTo(ScriptState* script_state,
+                             DirectoryEntry* parent,
+                             const String& name,
+                             V8EntryCallback* success_callback,
+                             V8ErrorCallback* error_callback) const {
   if (file_system_->GetType() == kFileSystemTypeIsolated) {
     UseCounter::Count(ExecutionContext::From(script_state),
                       WebFeature::kEntry_MoveTo_Method_IsolatedFileSystem);
@@ -80,11 +81,11 @@ void Entry::moveTo(ScriptState* script_state,
       ScriptErrorCallback::Wrap(error_callback));
 }
 
-void Entry::copyTo(ScriptState* script_state,
-                   DirectoryEntry* parent,
-                   const String& name,
-                   V8EntryCallback* success_callback,
-                   V8ErrorCallback* error_callback) const {
+void FileSystemEntry::copyTo(ScriptState* script_state,
+                             DirectoryEntry* parent,
+                             const String& name,
+                             V8EntryCallback* success_callback,
+                             V8ErrorCallback* error_callback) const {
   if (file_system_->GetType() == kFileSystemTypeIsolated) {
     UseCounter::Count(ExecutionContext::From(script_state),
                       WebFeature::kEntry_CopyTo_Method_IsolatedFileSystem);
@@ -95,9 +96,9 @@ void Entry::copyTo(ScriptState* script_state,
       ScriptErrorCallback::Wrap(error_callback));
 }
 
-void Entry::remove(ScriptState* script_state,
-                   VoidCallback* success_callback,
-                   V8ErrorCallback* error_callback) const {
+void FileSystemEntry::remove(ScriptState* script_state,
+                             VoidCallback* success_callback,
+                             V8ErrorCallback* error_callback) const {
   if (file_system_->GetType() == kFileSystemTypeIsolated) {
     UseCounter::Count(ExecutionContext::From(script_state),
                       WebFeature::kEntry_Remove_Method_IsolatedFileSystem);
@@ -106,9 +107,9 @@ void Entry::remove(ScriptState* script_state,
                        ScriptErrorCallback::Wrap(error_callback));
 }
 
-void Entry::getParent(ScriptState* script_state,
-                      V8EntryCallback* success_callback,
-                      V8ErrorCallback* error_callback) const {
+void FileSystemEntry::getParent(ScriptState* script_state,
+                                V8EntryCallback* success_callback,
+                                V8ErrorCallback* error_callback) const {
   if (file_system_->GetType() == kFileSystemTypeIsolated) {
     UseCounter::Count(ExecutionContext::From(script_state),
                       WebFeature::kEntry_GetParent_Method_IsolatedFileSystem);
@@ -118,7 +119,7 @@ void Entry::getParent(ScriptState* script_state,
       ScriptErrorCallback::Wrap(error_callback));
 }
 
-String Entry::toURL(ScriptState* script_state) const {
+String FileSystemEntry::toURL(ScriptState* script_state) const {
   if (file_system_->GetType() == kFileSystemTypeIsolated) {
     UseCounter::Count(ExecutionContext::From(script_state),
                       WebFeature::kEntry_ToURL_Method_IsolatedFileSystem);
@@ -126,7 +127,7 @@ String Entry::toURL(ScriptState* script_state) const {
   return static_cast<const EntryBase*>(this)->toURL();
 }
 
-void Entry::Trace(blink::Visitor* visitor) {
+void FileSystemEntry::Trace(blink::Visitor* visitor) {
   EntryBase::Trace(visitor);
 }
 

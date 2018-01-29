@@ -33,15 +33,15 @@
 #include "bindings/modules/v8/V8EntriesCallback.h"
 #include "bindings/modules/v8/V8ErrorCallback.h"
 #include "core/fileapi/FileError.h"
-#include "modules/filesystem/Entry.h"
 #include "modules/filesystem/FileSystemCallbacks.h"
+#include "modules/filesystem/FileSystemEntry.h"
 
 namespace blink {
 
 namespace {
 
 void RunEntriesCallback(V8EntriesCallback* callback,
-                        HeapVector<Member<Entry>>* entries) {
+                        HeapVector<Member<FileSystemEntry>>* entries) {
   callback->handleEvent(*entries);
 }
 
@@ -113,7 +113,8 @@ void DirectoryReader::readEntries(V8EntriesCallback* entries_callback,
 
   if (!has_more_entries_ || !entries_.IsEmpty()) {
     if (entries_callback) {
-      auto* entries = new HeapVector<Member<Entry>>(std::move(entries_));
+      auto* entries =
+          new HeapVector<Member<FileSystemEntry>>(std::move(entries_));
       DOMFileSystem::ScheduleCallback(
           Filesystem()->GetExecutionContext(),
           WTF::Bind(&RunEntriesCallback, WrapPersistent(entries_callback),

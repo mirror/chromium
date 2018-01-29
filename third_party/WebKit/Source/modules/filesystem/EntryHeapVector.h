@@ -9,9 +9,9 @@
 
 namespace blink {
 
-class Entry;
+class FileSystemEntry;
 
-using EntryHeapVector = HeapVector<Member<Entry>>;
+using EntryHeapVector = HeapVector<Member<FileSystemEntry>>;
 
 }  // namespace blink
 

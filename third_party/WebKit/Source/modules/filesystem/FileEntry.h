@@ -32,7 +32,7 @@
 #define FileEntry_h
 
 #include "modules/ModulesExport.h"
-#include "modules/filesystem/Entry.h"
+#include "modules/filesystem/FileSystemEntry.h"
 #include "platform/heap/Handle.h"
 
 namespace blink {
@@ -41,7 +41,7 @@ class DOMFileSystemBase;
 class FileWriterCallback;
 class V8FileCallback;
 
-class MODULES_EXPORT FileEntry final : public Entry {
+class MODULES_EXPORT FileEntry final : public FileSystemEntry {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -61,7 +61,11 @@ class MODULES_EXPORT FileEntry final : public Entry {
   FileEntry(DOMFileSystemBase*, const String& full_path);
 };
 
-DEFINE_TYPE_CASTS(FileEntry, Entry, entry, entry->isFile(), entry.isFile());
+DEFINE_TYPE_CASTS(FileEntry,
+                  FileSystemEntry,
+                  entry,
+                  entry->isFile(),
+                  entry.isFile());
 
 }  // namespace blink
 
