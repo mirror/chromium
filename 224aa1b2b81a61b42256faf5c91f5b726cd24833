@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dee64e79_86528f34",
+        "filename": "content/browser/frame_host/navigator_impl_unittest.cc",
+        "patchSetId": 57
+      },
+      "lineNbr": 1190,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-29T16:40:15Z",
+      "side": 0,
+      "message": "I sthe callback used outside this test? If not, can we remove the function?",
+      "revId": "224aa1b2b81a61b42256faf5c91f5b726cd24833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
