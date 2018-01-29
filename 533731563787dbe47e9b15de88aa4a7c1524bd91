@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b778b699_3d44edac",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-29T14:06:30Z",
+      "side": 1,
+      "message": "If you have ideas how to formulate the criteria for the moment in time when we can remove this mechanism. Then we\u0027d be able to say when to remove in a TODO (which I think would be nice). But it seems this criteria depends on the GVR part of the story. I wrote a comment asking to extend plans in http://go/gvr-dynamic-loading, hope these things will solidify.",
+      "range": {
+        "startLine": 10,
+        "startChar": 14,
+        "endLine": 10,
+        "endChar": 69
+      },
+      "revId": "533731563787dbe47e9b15de88aa4a7c1524bd91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e285ce04_f2cd7763",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-29T14:06:30Z",
+      "side": 1,
+      "message": "that\u0027s an old bug from 2011, I think you mean \"Bug: 805861\" :)",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 9
+      },
+      "revId": "533731563787dbe47e9b15de88aa4a7c1524bd91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b6d7a8b_06ee90ca",
+        "filename": "third_party/android_crazy_linker/src/src/crazy_linker_globals.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-29T14:06:30Z",
+      "side": 1,
+      "message": "nit: Perhaps GetPointerSet() instead? A mix of class_members_ and struct_members reduce consistency.",
+      "range": {
+        "startLine": 41,
+        "startChar": 13,
+        "endLine": 41,
+        "endChar": 33
+      },
+      "revId": "533731563787dbe47e9b15de88aa4a7c1524bd91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c310388_4f697a66",
+        "filename": "third_party/android_crazy_linker/src/src/crazy_linker_pointer_set.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-29T14:06:30Z",
+      "side": 1,
+      "message": "can these two be in anonymous namespace? That\u0027d be more consistent with Chromium code, but I don\u0027t know what the convention is in the crazylinker. Up to you.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 6
+      },
+      "revId": "533731563787dbe47e9b15de88aa4a7c1524bd91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43f6fff6_33ecf8cd",
+        "filename": "third_party/android_crazy_linker/src/src/crazy_linker_pointer_set.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-29T14:06:30Z",
+      "side": 1,
+      "message": "CRAZY_LINKER_POINTER_SET_H would be better aligned with my understanding of our style guide..",
+      "range": {
+        "startLine": 6,
+        "startChar": 8,
+        "endLine": 6,
+        "endChar": 30
+      },
+      "revId": "533731563787dbe47e9b15de88aa4a7c1524bd91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e57cc30_3cd0f038",
+        "filename": "third_party/android_crazy_linker/src/src/crazy_linker_pointer_set.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-29T14:06:30Z",
+      "side": 1,
+      "message": "rather nit: I think operator[] is not used outside of the internals of this class. Can we move it to private to avoid thinking about potential misuses? Not a big issue, just a general request to expose the minimal needed set of functionality.",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 60
+      },
+      "revId": "533731563787dbe47e9b15de88aa4a7c1524bd91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07f15cbc_a9e33c81",
+        "filename": "third_party/android_crazy_linker/src/src/crazy_linker_pointer_set.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-29T14:06:30Z",
+      "side": 1,
+      "message": "We could name it as GetValuesForTesting().",
+      "range": {
+        "startLine": 35,
+        "startChar": 57,
+        "endLine": 35,
+        "endChar": 75
+      },
+      "revId": "533731563787dbe47e9b15de88aa4a7c1524bd91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
