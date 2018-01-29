@@ -10,6 +10,7 @@
 #include "core/css/StyleSheetContents.h"
 #include "core/css/parser/CSSParserContext.h"
 #include "core/css/parser/CSSParserObserver.h"
+#include "core/css/parser/CSSParserScopedTokenBuffer.h"
 #include "core/css/parser/CSSParserTokenStream.h"
 #include "core/frame/Deprecation.h"
 #include "core/frame/UseCounter.h"
@@ -77,13 +78,19 @@ CSSSelectorList CSSSelectorParser::ConsumeComplexSelectorList(
   Vector<std::unique_ptr<CSSParserSelector>> selector_list;
 
   while (true) {
+    CSSParserScopedTokenBuffer selector_buffer(stream);
+    stream.EnsureLookAhead();
     const size_t selector_offset_start = stream.LookAheadOffset();
-    CSSParserTokenRange complex_selector =
-        stream.ConsumeUntilPeekedTypeIs<kLeftBraceToken, kCommaToken>();
+    while (!stream.UncheckedAtEnd() &&
+           stream.UncheckedPeek().GetType() != kLeftBraceToken &&
+           stream.UncheckedPeek().GetType() != kCommaToken)
+      stream.UncheckedConsumeComponentValue(selector_buffer);
     const size_t selector_offset_end = stream.LookAheadOffset();
 
     if (stream.UncheckedAtEnd())
       return CSSSelectorList();
+
+    CSSParserTokenRange complex_selector = selector_buffer.Range();
 
     std::unique_ptr<CSSParserSelector> selector =
         ConsumeComplexSelector(complex_selector);

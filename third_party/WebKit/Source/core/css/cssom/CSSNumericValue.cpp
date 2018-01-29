@@ -202,12 +202,8 @@ CSSPrimitiveValue::UnitType CSSNumericValue::UnitFromName(const String& name) {
 CSSNumericValue* CSSNumericValue::parse(const String& css_text,
                                         ExceptionState& exception_state) {
   CSSTokenizer tokenizer(css_text);
-  CSSParserTokenStream stream(tokenizer);
-  auto range = stream.ConsumeUntilPeekedTypeIs<>();
-  if (!stream.AtEnd()) {
-    exception_state.ThrowDOMException(kSyntaxError, "Invalid math expression");
-    return nullptr;
-  }
+  const auto tokens = tokenizer.TokenizeToEOF();
+  CSSParserTokenRange range(tokens);
 
   switch (range.Peek().GetType()) {
     case kNumberToken:

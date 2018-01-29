@@ -22,6 +22,7 @@ namespace blink {
 class CSSLazyParsingState;
 class CSSParserContext;
 class CSSParserObserver;
+class CSSParserScopedTokenBuffer;
 class CSSParserTokenStream;
 class StyleRule;
 class StyleRuleBase;
@@ -135,29 +136,34 @@ class CSSParserImpl {
                                      CSSParserTokenRange prelude,
                                      const RangeOffset& prelude_offset);
   StyleRuleNamespace* ConsumeNamespaceRule(CSSParserTokenRange prelude);
-  StyleRuleMedia* ConsumeMediaRule(CSSParserTokenRange prelude,
+  StyleRuleMedia* ConsumeMediaRule(CSSParserScopedTokenBuffer prelude_buffer,
                                    const RangeOffset& prelude_offset,
                                    CSSParserTokenStream& block);
-  StyleRuleSupports* ConsumeSupportsRule(CSSParserTokenRange prelude,
-                                         const RangeOffset& prelude_offset,
-                                         CSSParserTokenStream& block);
-  StyleRuleViewport* ConsumeViewportRule(CSSParserTokenRange prelude,
-                                         const RangeOffset& prelude_offset,
-                                         CSSParserTokenStream& block);
-  StyleRuleFontFace* ConsumeFontFaceRule(CSSParserTokenRange prelude,
-                                         const RangeOffset& prelude_offset,
-                                         CSSParserTokenStream& block);
-  StyleRuleKeyframes* ConsumeKeyframesRule(bool webkit_prefixed,
-                                           CSSParserTokenRange prelude,
-                                           const RangeOffset& prelude_offset,
-                                           CSSParserTokenStream& block);
-  StyleRulePage* ConsumePageRule(CSSParserTokenRange prelude,
+  StyleRuleSupports* ConsumeSupportsRule(
+      CSSParserScopedTokenBuffer prelude_buffer,
+      const RangeOffset& prelude_offset,
+      CSSParserTokenStream& block);
+  StyleRuleViewport* ConsumeViewportRule(
+      CSSParserScopedTokenBuffer prelude_buffer,
+      const RangeOffset& prelude_offset,
+      CSSParserTokenStream& block);
+  StyleRuleFontFace* ConsumeFontFaceRule(
+      CSSParserScopedTokenBuffer prelude_buffer,
+      const RangeOffset& prelude_offset,
+      CSSParserTokenStream& block);
+  StyleRuleKeyframes* ConsumeKeyframesRule(
+      bool webkit_prefixed,
+      CSSParserScopedTokenBuffer prelude_buffer,
+      const RangeOffset& prelude_offset,
+      CSSParserTokenStream& block);
+  StyleRulePage* ConsumePageRule(CSSParserScopedTokenBuffer prelude_buffer,
                                  const RangeOffset& prelude_offset,
                                  CSSParserTokenStream& block);
 
-  StyleRuleKeyframe* ConsumeKeyframeStyleRule(CSSParserTokenRange prelude,
-                                              const RangeOffset& prelude_offset,
-                                              CSSParserTokenStream& block);
+  StyleRuleKeyframe* ConsumeKeyframeStyleRule(
+      CSSParserScopedTokenBuffer prelude_buffer,
+      const RangeOffset& prelude_offset,
+      CSSParserTokenStream& block);
   StyleRule* ConsumeStyleRule(CSSParserTokenStream&);
 
   void ConsumeDeclarationList(CSSParserTokenStream&, StyleRule::RuleType);
