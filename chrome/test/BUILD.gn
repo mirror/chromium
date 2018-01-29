@@ -2823,6 +2823,7 @@ test("unit_tests") {
       "../browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
       "../browser/resource_coordinator/tab_manager_unittest.cc",
       "../browser/resource_coordinator/tab_manager_web_contents_data_unittest.cc",
+      "../browser/resource_coordinator/tab_metrics_logger_impl_unittest.cc",
 
       # Android does not use the Message Center notification system.
       "../browser/net/firefox_proxy_settings_unittest.cc",
@@ -2905,7 +2906,6 @@ test("unit_tests") {
       "../browser/ui/tabs/pinned_tab_test_utils.cc",
       "../browser/ui/tabs/pinned_tab_test_utils.h",
       "../browser/ui/tabs/tab_menu_model_unittest.cc",
-      "../browser/ui/tabs/tab_metrics_logger_impl_unittest.cc",
       "../browser/ui/tabs/tab_strip_model_stats_recorder_unittest.cc",
       "../browser/ui/tabs/tab_strip_model_unittest.cc",
       "../browser/ui/tabs/tab_ukm_test_helper.cc",
