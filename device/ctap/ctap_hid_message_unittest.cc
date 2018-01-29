@@ -1,27 +1,30 @@
-// Copyright 2016 The Chromium Authors. All rights reserved.
+// Copyright 2018 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "device/u2f/u2f_message.h"
+#include "device/ctap/ctap_hid_message.h"
+
 #include "base/memory/ptr_util.h"
+#include "device/ctap/ctap_constants.h"
+#include "device/ctap/ctap_hid_packet.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace device {
 
-class U2fMessageTest : public testing::Test {};
+class CTAPHidMessageTest : public testing::Test {};
 
 // Packets should be 64 bytes + 1 report ID byte
-TEST_F(U2fMessageTest, TestPacketSize) {
+TEST_F(CTAPHidMessageTest, TestPacketSize) {
   uint32_t channel_id = 0x05060708;
   std::vector<uint8_t> data;
 
   auto init_packet =
-      std::make_unique<U2fInitPacket>(channel_id, 0, data, data.size());
+      std::make_unique<CTAPHidInitPacket>(channel_id, 0, data, data.size());
   EXPECT_EQ(64u, init_packet->GetSerializedData().size());
 
   auto continuation_packet =
-      std::make_unique<U2fContinuationPacket>(channel_id, 0, data);
+      std::make_unique<CTAPHidContinuationPacket>(channel_id, 0, data);
   EXPECT_EQ(64u, continuation_packet->GetSerializedData().size());
 }
 
@@ -35,12 +38,12 @@ TEST_F(U2fMessageTest, TestPacketSize) {
  *
  * Remaining buffer is padded with 0
  */
-TEST_F(U2fMessageTest, TestPacketData) {
+TEST_F(CTAPHidMessageTest, TestPacketData) {
   uint32_t channel_id = 0xF5060708;
   std::vector<uint8_t> data{10, 11};
-  uint8_t cmd = static_cast<uint8_t>(U2fCommandType::CMD_WINK);
+  uint8_t cmd = static_cast<uint8_t>(CTAPHIDDeviceCommand::kCtapHidWink);
   auto init_packet =
-      std::make_unique<U2fInitPacket>(channel_id, cmd, data, data.size());
+      std::make_unique<CTAPHidInitPacket>(channel_id, cmd, data, data.size());
   size_t index = 0;
 
   std::vector<uint8_t> serialized = init_packet->GetSerializedData();
@@ -58,18 +61,18 @@ TEST_F(U2fMessageTest, TestPacketData) {
     EXPECT_EQ(0, serialized[index]) << "mismatch at index " << index;
 }
 
-TEST_F(U2fMessageTest, TestPacketConstructors) {
+TEST_F(CTAPHidMessageTest, TestPacketConstructors) {
   uint32_t channel_id = 0x05060708;
   std::vector<uint8_t> data{10, 11};
-  uint8_t cmd = static_cast<uint8_t>(U2fCommandType::CMD_WINK);
+  uint8_t cmd = static_cast<uint8_t>(CTAPHIDDeviceCommand::kCtapHidWink);
   auto orig_packet =
-      std::make_unique<U2fInitPacket>(channel_id, cmd, data, data.size());
+      std::make_unique<CTAPHidInitPacket>(channel_id, cmd, data, data.size());
 
   size_t payload_length = static_cast<size_t>(orig_packet->payload_length());
   std::vector<uint8_t> orig_data = orig_packet->GetSerializedData();
 
-  std::unique_ptr<U2fInitPacket> reconstructed_packet =
-      U2fInitPacket::CreateFromSerializedData(orig_data, &payload_length);
+  std::unique_ptr<CTAPHidInitPacket> reconstructed_packet =
+      CTAPHidInitPacket::CreateFromSerializedData(orig_data, &payload_length);
   EXPECT_EQ(orig_packet->command(), reconstructed_packet->command());
   EXPECT_EQ(orig_packet->payload_length(),
             reconstructed_packet->payload_length());
@@ -88,20 +91,19 @@ TEST_F(U2fMessageTest, TestPacketConstructors) {
   }
 }
 
-TEST_F(U2fMessageTest, TestMaxLengthPacketConstructors) {
+TEST_F(CTAPHidMessageTest, TestMaxLengthPacketConstructors) {
   uint32_t channel_id = 0xAAABACAD;
   std::vector<uint8_t> data;
-  for (size_t i = 0; i < U2fMessage::kMaxMessageSize; ++i)
+  for (size_t i = 0; i < kMaxMessageSize; ++i)
     data.push_back(static_cast<uint8_t>(i % 0xff));
 
-  U2fCommandType cmd = U2fCommandType::CMD_MSG;
-  std::unique_ptr<U2fMessage> orig_msg =
-      U2fMessage::Create(channel_id, cmd, data);
+  std::unique_ptr<CTAPHidMessage> orig_msg =
+      CTAPHidMessage::CreateHidMessageCmd(channel_id, data);
   auto it = orig_msg->begin();
 
   std::vector<uint8_t> msg_data = (*it)->GetSerializedData();
-  std::unique_ptr<U2fMessage> new_msg =
-      U2fMessage::CreateFromSerializedData(msg_data);
+  std::unique_ptr<CTAPHidMessage> new_msg =
+      CTAPHidMessage::CreateFromSerializedData(msg_data);
   it++;
   for (; it != orig_msg->end(); ++it) {
     msg_data = (*it)->GetSerializedData();
@@ -129,54 +131,52 @@ TEST_F(U2fMessageTest, TestMaxLengthPacketConstructors) {
   }
 }
 
-TEST_F(U2fMessageTest, TestMessagePartitoning) {
+TEST_F(CTAPHidMessageTest, TestMessagePartitoning) {
   uint32_t channel_id = 0x01010203;
-  std::vector<uint8_t> data(U2fMessage::kInitPacketDataSize + 1);
-  std::unique_ptr<U2fMessage> two_packet_message =
-      U2fMessage::Create(channel_id, U2fCommandType::CMD_PING, data);
+  std::vector<uint8_t> data(kInitPacketDataSize + 1);
+  std::unique_ptr<CTAPHidMessage> two_packet_message =
+      CTAPHidMessage::CreateHidPingCmd(channel_id, data);
   EXPECT_EQ(2U, two_packet_message->NumPackets());
 
-  data.resize(U2fMessage::kInitPacketDataSize);
-  std::unique_ptr<U2fMessage> one_packet_message =
-      U2fMessage::Create(channel_id, U2fCommandType::CMD_PING, data);
+  data.resize(kInitPacketDataSize);
+  std::unique_ptr<CTAPHidMessage> one_packet_message =
+      CTAPHidMessage::CreateHidPingCmd(channel_id, data);
   EXPECT_EQ(1U, one_packet_message->NumPackets());
 
-  data.resize(U2fMessage::kInitPacketDataSize +
-              U2fMessage::kContinuationPacketDataSize + 1);
-  std::unique_ptr<U2fMessage> three_packet_message =
-      U2fMessage::Create(channel_id, U2fCommandType::CMD_PING, data);
+  data.resize(kInitPacketDataSize + kContinuationPacketDataSize + 1);
+  std::unique_ptr<CTAPHidMessage> three_packet_message =
+      CTAPHidMessage::CreateHidPingCmd(channel_id, data);
   EXPECT_EQ(3U, three_packet_message->NumPackets());
 }
 
-TEST_F(U2fMessageTest, TestMaxSize) {
+TEST_F(CTAPHidMessageTest, TestMaxSize) {
   uint32_t channel_id = 0x00010203;
-  std::vector<uint8_t> data(U2fMessage::kMaxMessageSize + 1);
-  std::unique_ptr<U2fMessage> oversize_message =
-      U2fMessage::Create(channel_id, U2fCommandType::CMD_PING, data);
+  std::vector<uint8_t> data(kMaxMessageSize + 1);
+  std::unique_ptr<CTAPHidMessage> oversize_message =
+      CTAPHidMessage::CreateHidPingCmd(channel_id, data);
   EXPECT_EQ(nullptr, oversize_message);
 }
 
-TEST_F(U2fMessageTest, TestDeconstruct) {
+TEST_F(CTAPHidMessageTest, TestDeconstruct) {
   uint32_t channel_id = 0x0A0B0C0D;
-  std::vector<uint8_t> data(U2fMessage::kMaxMessageSize, 0x7F);
-  std::unique_ptr<U2fMessage> filled_message =
-      U2fMessage::Create(channel_id, U2fCommandType::CMD_PING, data);
-
+  std::vector<uint8_t> data(kMaxMessageSize, 0x7F);
+  std::unique_ptr<CTAPHidMessage> filled_message =
+      CTAPHidMessage::CreateHidPingCmd(channel_id, data);
   EXPECT_THAT(data, testing::ContainerEq(filled_message->GetMessagePayload()));
 }
 
-TEST_F(U2fMessageTest, TestDeserialize) {
+TEST_F(CTAPHidMessageTest, TestDeserialize) {
   uint32_t channel_id = 0x0A0B0C0D;
-  std::vector<uint8_t> data(U2fMessage::kMaxMessageSize);
+  std::vector<uint8_t> data(kMaxMessageSize);
 
-  std::unique_ptr<U2fMessage> orig_message =
-      U2fMessage::Create(channel_id, U2fCommandType::CMD_PING, data);
+  std::unique_ptr<CTAPHidMessage> orig_message =
+      CTAPHidMessage::CreateHidPingCmd(channel_id, data);
   std::list<std::vector<uint8_t>> orig_list;
   std::vector<uint8_t> buf = orig_message->PopNextPacket();
   orig_list.push_back(buf);
 
-  std::unique_ptr<U2fMessage> new_message =
-      U2fMessage::CreateFromSerializedData(buf);
+  std::unique_ptr<CTAPHidMessage> new_message =
+      CTAPHidMessage::CreateFromSerializedData(buf);
   while (!new_message->MessageComplete()) {
     buf = orig_message->PopNextPacket();
     orig_list.push_back(buf);

@@ -12,12 +12,11 @@
 #include <vector>
 
 #include "base/cancelable_callback.h"
+#include "device/ctap/ctap_hid_message.h"
 #include "device/u2f/u2f_device.h"
 #include "services/device/public/interfaces/hid.mojom.h"
 
 namespace device {
-
-class U2fMessage;
 
 class U2fHidDevice : public U2fDevice {
  public:
@@ -51,7 +50,7 @@ class U2fHidDevice : public U2fDevice {
   enum class State { INIT, CONNECTED, BUSY, IDLE, DEVICE_ERROR };
 
   using U2fHidMessageCallback =
-      base::OnceCallback<void(bool, std::unique_ptr<U2fMessage>)>;
+      base::OnceCallback<void(bool, std::unique_ptr<CTAPHidMessage>)>;
   using ConnectCallback = device::mojom::HidManager::ConnectCallback;
 
   // Open a connection to this device
@@ -66,14 +65,14 @@ class U2fHidDevice : public U2fDevice {
                          std::unique_ptr<U2fApduCommand> command,
                          DeviceCallback callback,
                          bool success,
-                         std::unique_ptr<U2fMessage> message);
+                         std::unique_ptr<CTAPHidMessage> message);
   void Transition(std::unique_ptr<U2fApduCommand> command,
                   DeviceCallback callback);
   // Write all message packets to device, and read response if expected
-  void WriteMessage(std::unique_ptr<U2fMessage> message,
+  void WriteMessage(std::unique_ptr<CTAPHidMessage> message,
                     bool response_expected,
                     U2fHidMessageCallback callback);
-  void PacketWritten(std::unique_ptr<U2fMessage> message,
+  void PacketWritten(std::unique_ptr<CTAPHidMessage> message,
                      bool response_expected,
                      U2fHidMessageCallback callback,
                      bool success);
@@ -81,19 +80,19 @@ class U2fHidDevice : public U2fDevice {
   void ReadMessage(U2fHidMessageCallback callback);
   void MessageReceived(DeviceCallback callback,
                        bool success,
-                       std::unique_ptr<U2fMessage> message);
+                       std::unique_ptr<CTAPHidMessage> message);
   void OnRead(U2fHidMessageCallback callback,
               bool success,
               uint8_t report_id,
               const base::Optional<std::vector<uint8_t>>& buf);
-  void OnReadContinuation(std::unique_ptr<U2fMessage> message,
+  void OnReadContinuation(std::unique_ptr<CTAPHidMessage> message,
                           U2fHidMessageCallback callback,
                           bool success,
                           uint8_t report_id,
                           const base::Optional<std::vector<uint8_t>>& buf);
   void OnWink(WinkCallback callback,
               bool success,
-              std::unique_ptr<U2fMessage> response);
+              std::unique_ptr<CTAPHidMessage> response);
   void ArmTimeout(DeviceCallback callback);
   void OnTimeout(DeviceCallback callback);
   void OnDeviceTransact(bool success,

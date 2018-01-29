@@ -1,25 +1,24 @@
-// Copyright 2016 The Chromium Authors. All rights reserved.
+// Copyright 2018 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include <cstring>
+#include "device/ctap/ctap_hid_packet.h"
+
+#include <algorithm>
 
 #include "base/memory/ptr_util.h"
-
-#include "u2f_packet.h"
+#include "base/numerics/safe_conversions.h"
+#include "device/ctap/ctap_constants.h"
 
 namespace device {
 
-U2fPacket::U2fPacket(const std::vector<uint8_t>& data, uint32_t channel_id)
+CTAPHidPacket::CTAPHidPacket(const std::vector<uint8_t>& data,
+                             uint32_t channel_id)
     : data_(data), channel_id_(channel_id) {}
 
-U2fPacket::U2fPacket() = default;
+CTAPHidPacket::CTAPHidPacket() = default;
 
-U2fPacket::~U2fPacket() = default;
-
-std::vector<uint8_t> U2fPacket::GetPacketPayload() const {
-  return data_;
-}
+CTAPHidPacket::~CTAPHidPacket() = default;
 
 // U2F Initialization packet is defined as:
 // Offset Length
@@ -28,15 +27,15 @@ std::vector<uint8_t> U2fPacket::GetPacketPayload() const {
 // 5      1       High order packet payload size
 // 6      1       Low order packet payload size
 // 7      (s-7)   Payload data
-U2fInitPacket::U2fInitPacket(uint32_t channel_id,
-                             uint8_t cmd,
-                             const std::vector<uint8_t>& data,
-                             uint16_t payload_length)
-    : U2fPacket(data, channel_id),
+CTAPHidInitPacket::CTAPHidInitPacket(uint32_t channel_id,
+                                     uint8_t cmd,
+                                     const std::vector<uint8_t>& data,
+                                     uint16_t payload_length)
+    : CTAPHidPacket(data, channel_id),
       command_(cmd),
       payload_length_(payload_length) {}
 
-std::vector<uint8_t> U2fInitPacket::GetSerializedData() {
+std::vector<uint8_t> CTAPHidInitPacket::GetSerializedData() {
   std::vector<uint8_t> serialized;
   serialized.reserve(kPacketSize);
   serialized.push_back((channel_id_ >> 24) & 0xff);
@@ -53,17 +52,17 @@ std::vector<uint8_t> U2fInitPacket::GetSerializedData() {
 }
 
 // static
-std::unique_ptr<U2fInitPacket> U2fInitPacket::CreateFromSerializedData(
+std::unique_ptr<CTAPHidInitPacket> CTAPHidInitPacket::CreateFromSerializedData(
     const std::vector<uint8_t>& serialized,
     size_t* remaining_size) {
   if (remaining_size == nullptr || serialized.size() != kPacketSize)
     return nullptr;
 
-  return std::make_unique<U2fInitPacket>(serialized, remaining_size);
+  return std::make_unique<CTAPHidInitPacket>(serialized, remaining_size);
 }
 
-U2fInitPacket::U2fInitPacket(const std::vector<uint8_t>& serialized,
-                             size_t* remaining_size) {
+CTAPHidInitPacket::CTAPHidInitPacket(const std::vector<uint8_t>& serialized,
+                                     size_t* remaining_size) {
   size_t index = 0;
   channel_id_ = (serialized[index++] & 0xff) << 24;
   channel_id_ |= (serialized[index++] & 0xff) << 16;
@@ -85,19 +84,20 @@ U2fInitPacket::U2fInitPacket(const std::vector<uint8_t>& serialized,
                serialized.begin() + index + data_size);
 }
 
-U2fInitPacket::~U2fInitPacket() = default;
+CTAPHidInitPacket::~CTAPHidInitPacket() = default;
 
 // U2F Continuation packet is defined as:
 // Offset Length
 // 0      4       Channel ID
 // 4      1       Packet sequence 0x00..0x7f
 // 5      (s-5)   Payload data
-U2fContinuationPacket::U2fContinuationPacket(const uint32_t channel_id,
-                                             const uint8_t sequence,
-                                             const std::vector<uint8_t>& data)
-    : U2fPacket(data, channel_id), sequence_(sequence) {}
+CTAPHidContinuationPacket::CTAPHidContinuationPacket(
+    const uint32_t channel_id,
+    const uint8_t sequence,
+    const std::vector<uint8_t>& data)
+    : CTAPHidPacket(data, channel_id), sequence_(sequence) {}
 
-std::vector<uint8_t> U2fContinuationPacket::GetSerializedData() {
+std::vector<uint8_t> CTAPHidContinuationPacket::GetSerializedData() {
   std::vector<uint8_t> serialized;
   serialized.reserve(kPacketSize);
   serialized.push_back((channel_id_ >> 24) & 0xff);
@@ -112,17 +112,18 @@ std::vector<uint8_t> U2fContinuationPacket::GetSerializedData() {
 }
 
 // static
-std::unique_ptr<U2fContinuationPacket>
-U2fContinuationPacket::CreateFromSerializedData(
+std::unique_ptr<CTAPHidContinuationPacket>
+CTAPHidContinuationPacket::CreateFromSerializedData(
     const std::vector<uint8_t>& serialized,
     size_t* remaining_size) {
   if (remaining_size == nullptr || serialized.size() != kPacketSize)
     return nullptr;
 
-  return std::make_unique<U2fContinuationPacket>(serialized, remaining_size);
+  return std::make_unique<CTAPHidContinuationPacket>(serialized,
+                                                     remaining_size);
 }
 
-U2fContinuationPacket::U2fContinuationPacket(
+CTAPHidContinuationPacket::CTAPHidContinuationPacket(
     const std::vector<uint8_t>& serialized,
     size_t* remaining_size) {
   size_t index = 0;
@@ -139,6 +140,6 @@ U2fContinuationPacket::U2fContinuationPacket(
                serialized.begin() + index + data_size);
 }
 
-U2fContinuationPacket::~U2fContinuationPacket() = default;
+CTAPHidContinuationPacket::~CTAPHidContinuationPacket() = default;
 
 }  // namespace device

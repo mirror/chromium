@@ -148,9 +148,24 @@ constexpr std::array<CTAPDeviceResponseCode, 51> GetCTAPResponseCodeList() {
           CTAPDeviceResponseCode::kCtap2ErrVendorLast};
 }
 
+// String key values for  CTAP request optional parameters and
+// AuthenticatorGetInfo response.
 extern const char kResidentKeyMapKey[];
 extern const char kUserVerificationMapKey[];
 extern const char kUserPresenceMapKey[];
+
+// HID transport specific constants
+extern const size_t kPacketSize;
+extern const uint32_t kHIDBroadcastChannel;
+extern const size_t kInitPacketHeader;
+extern const size_t kContinuationPacketHeader;
+extern const size_t kMaxHidPacketSize;
+extern const size_t kInitPacketDataSize;
+extern const size_t kContinuationPacketDataSize;
+extern const uint8_t kMaxHIDLockSeconds;
+
+// Messages are limited to an init packet and 128 continuation packets
+extern const size_t kMaxMessageSize;
 
 }  // namespace device
 
