@@ -9,19 +9,13 @@
 
 #include "base/callback.h"
 #include "base/optional.h"
+#include "content/browser/loader/signed_exchange_reader.h"
 #include "mojo/common/data_pipe_drainer.h"
 #include "mojo/public/cpp/system/data_pipe.h"
+#include "net/base/completion_callback.h"
 #include "net/ssl/ssl_info.h"
+#include "services/network/public/cpp/resource_response.h"
 #include "url/gurl.h"
-
-namespace mojo {
-class StringDataPipeProducer;
-}  // namespace mojo
-
-namespace network {
-struct ResourceResponseHead;
-struct URLLoaderCompletionStatus;
-}  // namespace network
 
 namespace content {
 
@@ -31,47 +25,64 @@ namespace content {
 // a response with a payload which is equal to the original body.
 // TODO(https://crbug.com/80374): Implement CBOR parsing logic and verifying
 // logic.
-class SignedExchangeHandler final
-    : public mojo::common::DataPipeDrainer::Client {
+class SignedExchangeHandler final : public SignedExchangeReader {
  public:
-  using ExchangeFoundCallback =
+  constexpr static int kBufferSize = SignedExchangeReader::kDefaultBufferSize;
+
+  // TODO(https://crbug.com/80374): Add verification status here.
+  using ExchangeHeadersCallback =
       base::OnceCallback<void(const GURL& request_url,
                               const std::string& request_method,
                               const network::ResourceResponseHead&,
-                              base::Optional<net::SSLInfo>,
-                              mojo::ScopedDataPipeConsumerHandle)>;
-  using ExchangeFinishedCallback =
-      base::OnceCallback<void(const network::URLLoaderCompletionStatus&)>;
+                              base::Optional<net::SSLInfo>)>;
 
-  // The passed |body| will be read to parse the signed HTTP exchange.
-  // TODO(https://crbug.com/80374): Consider making SignedExchangeHandler
-  // independent from DataPipe to make it easy to port it in //net.
-  explicit SignedExchangeHandler(mojo::ScopedDataPipeConsumerHandle body);
-
+  SignedExchangeHandler(std::unique_ptr<SignedExchangeReader> body,
+                        ExchangeHeadersCallback headers_callback);
   ~SignedExchangeHandler() override;
 
-  // TODO(https://crbug.com/80374): Currently SignedExchangeHandler always calls
-  // found_callback and then calls finish_callback after reading the all buffer.
-  // Need to redesign this callback model when we will introduce
-  // SignedExchangeHandler::Reader class to read the body and introduce the
-  // cert verification.
-  void GetHTTPExchange(ExchangeFoundCallback found_callback,
-                       ExchangeFinishedCallback finish_callback);
+  // SignedExchangeReader:
+  int Read(net::IOBuffer* buf,
+           int buf_size,
+           const net::CompletionCallback& callback) override;
 
  private:
-  // mojo::Common::DataPipeDrainer::Client
-  void OnDataAvailable(const void* data, size_t num_bytes) override;
-  void OnDataComplete() override;
+  int ReadData();
 
-  // Called from |data_producer_|.
-  void OnDataWritten(MojoResult result);
+  // Called by |body_|->Read().
+  void DidRead(int result);
 
-  mojo::ScopedDataPipeConsumerHandle body_;
-  std::unique_ptr<mojo::common::DataPipeDrainer> drainer_;
-  ExchangeFoundCallback found_callback_;
-  ExchangeFinishedCallback finish_callback_;
-  std::string original_body_string_;
-  std::unique_ptr<mojo::StringDataPipeProducer> data_producer_;
+  // Creates an internal |drainable_input_buf_| from |input_buf_| and calls
+  // MaybeRunHeadersCallback().
+  void HandleReadData(int result);
+
+  // Returns true if this fired the headers callback.
+  bool MaybeRunHeadersCallback();
+
+  // Consumes |drainable_input_buf_| and write the processed data out to
+  // |output_buf_|. Returns the # of bytes written to |output_buf|.
+  int ConsumeData();
+
+  // TODO(https://crbug.com/80374): Remove this.
+  void FillMockExchangeHeaders();
+
+  // Signed exchange contents.
+  GURL request_url_;
+  std::string request_method_;
+  network::ResourceResponseHead response_head_;
+  base::Optional<net::SSLInfo> ssl_info_;
+
+  std::unique_ptr<SignedExchangeReader> body_;
+  ExchangeHeadersCallback headers_callback_;
+
+  scoped_refptr<net::IOBuffer> input_buf_;
+  scoped_refptr<net::DrainableIOBuffer> drainable_input_buf_;
+
+  scoped_refptr<net::IOBuffer> output_buf_;
+  int output_buf_size_ = 0;
+  net::CompletionCallback pending_callback_;
+
+  bool body_reached_end_ = false;
+  int last_result_ = 0;
 
   DISALLOW_COPY_AND_ASSIGN(SignedExchangeHandler);
 };
