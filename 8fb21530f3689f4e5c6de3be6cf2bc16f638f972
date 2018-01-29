@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "1713a957_8527f95a",
+        "filename": "content/browser/renderer_host/input/fling_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-29T17:17:17Z",
+      "side": 1,
+      "message": "This should probably be an ASSERT_EQ\n\nSomeone recently told me that we should be using ASSERTs if there is a dependence after the type. And here there is.",
+      "revId": "8fb21530f3689f4e5c6de3be6cf2bc16f638f972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cee8c4d2_f23e64a0",
         "filename": "content/browser/renderer_host/input/fling_controller_unittest.cc",
         "patchSetId": 4
