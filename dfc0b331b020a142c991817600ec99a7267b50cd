@@ -22,6 +22,30 @@
       "revId": "dfc0b331b020a142c991817600ec99a7267b50cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a60699c1_61c87a03",
+        "filename": "chrome/common/profiling/profiling_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-29T18:43:33Z",
+      "side": 1,
+      "message": "bindingset takes care of removing bindings on connection error:\nhttps://cs.chromium.org/chromium/src/mojo/public/cpp/bindings/binding_set.h?type\u003dcs\u0026q\u003dbindingset\u0026sq\u003dpackage:chromium\u0026l\u003d298",
+      "parentUuid": "6b6889ee_537b5fd6",
+      "range": {
+        "startLine": 45,
+        "startChar": 26,
+        "endLine": 45,
+        "endChar": 41
+      },
+      "revId": "dfc0b331b020a142c991817600ec99a7267b50cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
