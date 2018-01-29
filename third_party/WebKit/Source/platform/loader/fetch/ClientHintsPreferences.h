@@ -13,6 +13,7 @@
 
 namespace blink {
 
+class KURL;
 class ResourceResponse;
 
 // TODO (tbansal): Remove PLATFORM_EXPORT, and pass WebClientHintsType
@@ -36,7 +37,9 @@ class PLATFORM_EXPORT ClientHintsPreferences {
 
   // Parses the client hints headers, and populates |this| with the client hint
   // preferences. |context| may be null.
-  void UpdateFromAcceptClientHintsHeader(const String& header_value, Context*);
+  void UpdateFromAcceptClientHintsHeader(const String& header_value,
+                                         const KURL&,
+                                         Context*);
 
   bool ShouldSend(mojom::WebClientHintsType type) const {
     return enabled_hints_.IsEnabled(type);
@@ -58,6 +61,10 @@ class PLATFORM_EXPORT ClientHintsPreferences {
       Context*,
       WebEnabledClientHints& enabled_hints,
       TimeDelta* persist_duration);
+
+  // Returns true if client hints are allowed for the provided KURL. Client
+  // hints are allowed only on HTTP URLs that belong to secure contexts.
+  static bool IsClientHintsAllowed(const KURL&);
 
  private:
   WebEnabledClientHints enabled_hints_;
