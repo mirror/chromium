@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b45757d0_ba6febd8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2018-01-29T22:40:14Z",
+      "side": 1,
+      "message": "It seems to work with enable-site-per-process, I\u0027ve also changed the call to happen during didFinishNavigation vs. didStartNavigation below which should guarantee that we\u0027re affecting the proper RFH.",
+      "parentUuid": "84743c6a_bd235f82",
+      "revId": "b4c9a3077c684bb839f0c7cc6e5d65125e74fc1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80004ca8_cd33e51f",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 17
@@ -33,6 +51,24 @@
       "revId": "b4c9a3077c684bb839f0c7cc6e5d65125e74fc1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e976004_22ef2fbc",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 2803,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2018-01-29T22:40:14Z",
+      "side": 1,
+      "message": "I agree, it seems a little backwards to do this roundtrip, and it\u0027s worth some investigation to see if this can be cleaned up.",
+      "parentUuid": "80004ca8_cd33e51f",
+      "revId": "b4c9a3077c684bb839f0c7cc6e5d65125e74fc1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "c6e73b96_8676b404",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 2182,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2018-01-29T22:40:14Z",
+      "side": 1,
+      "message": "GetFrame()-\u003eNotifyUserActivation() is private, so this seems like the only way.",
+      "parentUuid": "0ba88d15_1da34753",
+      "range": {
+        "startLine": 2182,
+        "startChar": 4,
+        "endLine": 2182,
+        "endChar": 74
+      },
+      "revId": "b4c9a3077c684bb839f0c7cc6e5d65125e74fc1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31440400_6b83bdf9",
         "filename": "third_party/WebKit/public/web/WebFrame.h",
         "patchSetId": 17
@@ -79,6 +139,30 @@
       "revId": "b4c9a3077c684bb839f0c7cc6e5d65125e74fc1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df9c1337_eb0753fc",
+        "filename": "third_party/WebKit/public/web/WebFrame.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2018-01-29T22:40:14Z",
+      "side": 1,
+      "message": "Looks like it\u0027s no longer accurate, changed the comment.",
+      "parentUuid": "31440400_6b83bdf9",
+      "range": {
+        "startLine": 207,
+        "startChar": 67,
+        "endLine": 208,
+        "endChar": 60
+      },
+      "revId": "b4c9a3077c684bb839f0c7cc6e5d65125e74fc1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
