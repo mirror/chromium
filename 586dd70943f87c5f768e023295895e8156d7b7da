@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09d3ed12_47a8f40a",
+        "filename": "third_party/WebKit/LayoutTests/fast/forms/namedgetter-cache-invalidation.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-29T16:36:41Z",
+      "side": 1,
+      "message": "super-nit: now that these variables have only one use, inlining them into the assertion seems more readable to me\n\n  assert_equals(form.aa, textarea);\n  // ... should invalidate cache ...\n  assert_equals(form.aa, input);",
+      "revId": "586dd70943f87c5f768e023295895e8156d7b7da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
