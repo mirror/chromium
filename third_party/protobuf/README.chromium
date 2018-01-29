@@ -110,3 +110,11 @@ Description of the patches:
 
   Define PROTOBUF_CONSTEXPR_VAR as constexpr for VS 2017, also landed upstream
   as https://github.com/google/protobuf/commit/210be267fd81d5aafdc049d197d57cb45b75f3ba
+
+- 0018-remove-arm-kuser-helpers.patch
+
+  On Linux/ARM and Android/ARM, remove hard-coded use of kernel user helpers
+  (addresses 0xffff0fa0 and 0xffff0c0) when implementing atomic operations.
+  For recent CPUs, it is simpler and better to use native machine instructions
+  instead to do the same thing. This fixes the atomicops.h header to do just
+  that when compiling with Clang (which advertizes itself as GCC 4.2.1).
