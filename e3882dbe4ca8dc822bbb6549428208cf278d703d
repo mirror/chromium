@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "6aef543b_6b7672da",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2018-01-29T18:50:34Z",
+      "side": 0,
+      "message": "I\u0027ve uploaded a new patchset that adds trimming of initial characters and comments on the trimming line as well as a comment on the public functions. Let me know what you think/if there are clearer ways of expressing the edge case issues.\n\nI do think that long term using tests to maintain the contract with the GURL implementation makes more sense, but I\u0027m happy to defer on this since the only callers of these functions are local to this file (and new callers would see the comments).",
+      "parentUuid": "ddb6d05a_da30c188",
+      "revId": "e3882dbe4ca8dc822bbb6549428208cf278d703d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b4273b0_d26b1461",
         "filename": "chrome/browser/page_load_metrics/page_load_metrics_util.cc",
         "patchSetId": 4
@@ -105,6 +123,24 @@
       "revId": "e3882dbe4ca8dc822bbb6549428208cf278d703d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "135a6d1f_186552e9",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2018-01-29T18:50:34Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "1b4273b0_d26b1461",
+      "revId": "e3882dbe4ca8dc822bbb6549428208cf278d703d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
