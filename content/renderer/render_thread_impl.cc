@@ -1951,12 +1951,14 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
     scoped_refptr<FrameSwapMessageQueue> frame_swap_message_queue,
     const GURL& url,
     const LayerTreeFrameSinkCallback& callback) {
+#if !defined(OS_FUCHSIA)
   // Misconfigured bots (eg. crbug.com/780757) could run layout tests on a
   // machine where gpu compositing doesn't work. Don't crash in that case.
   if (layout_test_mode() && is_gpu_compositing_disabled_) {
     LOG(FATAL) << "Layout tests require gpu compositing, but it is disabled.";
     return;
   }
+#endif  // defined(OS_FUCHSIA)
 
   const base::CommandLine& command_line =
       *base::CommandLine::ForCurrentProcess();
@@ -2020,7 +2022,6 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
   }
 
   if (is_gpu_compositing_disabled_) {
-    DCHECK(!layout_test_mode());
     frame_sink_provider_->CreateForWidget(routing_id, std::move(sink_request),
                                           std::move(client));
     params.shared_bitmap_manager = shared_bitmap_manager();
