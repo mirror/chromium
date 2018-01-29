@@ -57,7 +57,7 @@ class ServiceWorkerURLLoaderJob::StreamWaiter
 };
 
 ServiceWorkerURLLoaderJob::ServiceWorkerURLLoaderJob(
-    LoaderCallback callback,
+    URLLoaderRequestHandler::LoaderCallback callback,
     Delegate* delegate,
     const network::ResourceRequest& resource_request,
     scoped_refptr<URLLoaderFactoryGetter> url_loader_factory_getter)
@@ -87,8 +87,8 @@ void ServiceWorkerURLLoaderJob::FallbackToNetwork() {
   // call this synchronously here and don't wait for a separate async
   // StartRequest cue like what URLRequestJob case does.
   // TODO(kinuko): Make sure this is ok or we need to make this async.
-  if (!loader_callback_.is_null())
-    std::move(loader_callback_).Run(StartLoaderCallback());
+  if (loader_callback_)
+    std::move(loader_callback_).Run({});
 }
 
 void ServiceWorkerURLLoaderJob::FallbackToNetworkOrRenderer() {

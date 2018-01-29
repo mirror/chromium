@@ -341,7 +341,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
     DCHECK(!started_);
     started_ = true;
 
-    StartLoaderCallback create_url_loader = base::BindOnce(
+    auto load_single_request = base::BindOnce(
         &URLLoaderRequestController::CreateNonNetworkServiceURLLoader,
         weak_factory_.GetWeakPtr(),
         base::Unretained(url_request_context_getter),
@@ -352,9 +352,11 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
 
     network::ResourceRequest resource_request;
     url_loader_ = ThrottlingURLLoader::CreateLoaderAndStart(
-        std::move(create_url_loader),
+        base::MakeRefCounted<SingleRequestURLLoaderFactory>(
+            std::move(load_single_request)),
         std::vector<std::unique_ptr<content::URLLoaderThrottle>>(),
-        /* routing_id = */ -1, &resource_request,
+        /* routing_id = */ -1, /* request_id */ -1,
+        network::mojom::kURLLoadOptionNone, &resource_request,
         /* client = */ this, kNavigationUrlLoaderTrafficAnnotation,
         base::ThreadTaskRunnerHandle::Get());
   }
@@ -448,27 +450,30 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
       url_loader_.reset();
     handler_index_ = 0;
     received_response_ = false;
-    MaybeStartLoader(nullptr /* handler */, StartLoaderCallback());
+    MaybeStartLoader(nullptr /* handler */, {} /* loader */);
   }
 
   // |handler| is the one who called this method (as a LoaderCallback), nullptr
   // if this method is not called by a handler.
-  // |start_loader_callback| is the callback given by the |handler|, non-null
-  // if the |handler| wants to handle the request.
-  void MaybeStartLoader(URLLoaderRequestHandler* handler,
-                        StartLoaderCallback start_loader_callback) {
+  // |loader| is the factory given by the |handler|, non-null if the handler
+  // wants to handle the request.
+  void MaybeStartLoader(
+      URLLoaderRequestHandler* handler,
+      SingleRequestURLLoaderFactory::RequestHandler single_request_handler) {
     DCHECK(IsRequestHandlerEnabled());
-    if (start_loader_callback) {
+    if (single_request_handler) {
       // |handler| wants to handle the request.
       DCHECK(handler);
       default_loader_used_ = false;
       url_loader_ = ThrottlingURLLoader::CreateLoaderAndStart(
-          std::move(start_loader_callback),
+          base::MakeRefCounted<SingleRequestURLLoaderFactory>(
+              std::move(single_request_handler)),
           base::FeatureList::IsEnabled(features::kNetworkService)
               ? GetContentClient()->browser()->CreateURLLoaderThrottles(
                     web_contents_getter_, navigation_ui_data_.get())
               : std::vector<std::unique_ptr<content::URLLoaderThrottle>>(),
-          frame_tree_node_id_, resource_request_.get(), this,
+          frame_tree_node_id_, 0 /* request_id? */,
+          network::mojom::kURLLoadOptionNone, resource_request_.get(), this,
           kNavigationUrlLoaderTrafficAnnotation,
           base::ThreadTaskRunnerHandle::Get());
 
@@ -485,7 +490,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
     // to the child process. This is necessary for correctness in the cases
     // where, e.g. there's a controlling ServiceWorker that doesn't handle main
     // resource loading, but may still want to control the page and/or handle
-    // subresource loading. In that case we want to skip APpCache.
+    // subresource loading. In that case we want to skip AppCache.
     if (handler) {
       subresource_loader_params_ =
           handler->MaybeCreateSubresourceLoaderParams();
@@ -903,17 +908,13 @@ NavigationURLLoaderNetworkService::NavigationURLLoaderNetworkService(
       weak_factory_.GetWeakPtr());
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&URLLoaderRequestController::Start,
-                     base::Unretained(request_controller_.get()),
-                     base::Unretained(service_worker_navigation_handle_core),
-                     base::Unretained(appcache_handle_core),
-                     base::Passed(std::move(request_info)),
-                     base::Passed(std::move(navigation_ui_data)),
-                     base::Passed(std::move(factory_for_webui)),
-                     frame_tree_node_id,
-                     base::Passed(ServiceManagerConnection::GetForProcess()
-                                      ->GetConnector()
-                                      ->Clone())));
+      base::BindOnce(
+          &URLLoaderRequestController::Start,
+          base::Unretained(request_controller_.get()),
+          service_worker_navigation_handle_core, appcache_handle_core,
+          std::move(request_info), std::move(navigation_ui_data),
+          std::move(factory_for_webui), frame_tree_node_id,
+          ServiceManagerConnection::GetForProcess()->GetConnector()->Clone()));
 
   non_network_url_loader_factories_[url::kFileScheme] =
       std::make_unique<FileURLLoaderFactory>(
