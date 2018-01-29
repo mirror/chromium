@@ -35,7 +35,6 @@ class URLRow {
 
   virtual ~URLRow();
   URLRow& operator=(const URLRow& other);
-  URLRow& operator=(URLRow&& other);
 
   URLID id() const { return id_; }
 
@@ -96,10 +95,6 @@ class URLRow {
   void set_hidden(bool hidden) {
     hidden_ = hidden;
   }
-
-  // Estimates dynamic memory usage.
-  // See base/trace_event/memory_usage_estimator.h for more info.
-  size_t EstimateMemoryUsage() const;
 
   // Helper functor that determines if an URLRow refers to a given URL.
   class URLRowHasURL {

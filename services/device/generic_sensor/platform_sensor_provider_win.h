@@ -39,7 +39,7 @@ class PlatformSensorProviderWin final : public PlatformSensorProvider {
   // PlatformSensorProvider interface implementation.
   void FreeResources() override;
   void CreateSensorInternal(mojom::SensorType type,
-                            SensorReadingSharedBuffer* reading_buffer,
+                            mojo::ScopedSharedBufferMapping mapping,
                             const CreateSensorCallback& callback) override;
 
  private:
@@ -52,7 +52,7 @@ class PlatformSensorProviderWin final : public PlatformSensorProvider {
       mojom::SensorType type);
   void SensorReaderCreated(
       mojom::SensorType type,
-      SensorReadingSharedBuffer* reading_buffer,
+      mojo::ScopedSharedBufferMapping mapping,
       const CreateSensorCallback& callback,
       std::unique_ptr<PlatformSensorReaderWin> sensor_reader);
 

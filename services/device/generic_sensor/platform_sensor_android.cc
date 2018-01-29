@@ -14,10 +14,10 @@ namespace device {
 
 PlatformSensorAndroid::PlatformSensorAndroid(
     mojom::SensorType type,
-    SensorReadingSharedBuffer* reading_buffer,
+    mojo::ScopedSharedBufferMapping mapping,
     PlatformSensorProvider* provider,
     const JavaRef<jobject>& java_sensor)
-    : PlatformSensor(type, reading_buffer, provider) {
+    : PlatformSensor(type, std::move(mapping), provider) {
   JNIEnv* env = AttachCurrentThread();
   j_object_.Reset(java_sensor);
 

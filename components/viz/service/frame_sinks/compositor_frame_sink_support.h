@@ -82,29 +82,26 @@ class VIZ_SERVICE_EXPORT CompositorFrameSinkSupport
   void SetNeedsBeginFrame(bool needs_begin_frame) override;
   void SetWantsAnimateOnlyBeginFrames() override;
   void DidNotProduceFrame(const BeginFrameAck& ack) override;
-  void SubmitCompositorFrame(
-      const LocalSurfaceId& local_surface_id,
-      CompositorFrame frame,
-      mojom::HitTestRegionListPtr hit_test_region_list = nullptr,
-      uint64_t submit_time = 0) override;
+  void SubmitCompositorFrame(const LocalSurfaceId& local_surface_id,
+                             CompositorFrame frame,
+                             mojom::HitTestRegionListPtr hit_test_region_list,
+                             uint64_t submit_time) override;
 
   void EvictCurrentSurface();
 
   // Submits a new CompositorFrame to |local_surface_id|. If |local_surface_id|
   // hasn't been submitted to before then a new Surface will be created for it.
-  // Sets |success| to false if |frame| was rejected due to invalid data.
-  // SubmitCompositorFrame() that is inherited from mojom::CompositorFrameSink
-  // calls this one and DCHECK's |success|. Callers should prefer to call the
-  // other one unless they really want to check the value of |success|.
-  void SubmitCompositorFrame(const LocalSurfaceId& local_surface_id,
-                             CompositorFrame frame,
-                             mojom::HitTestRegionListPtr hit_test_region_list,
-                             bool* success);
+  // Returns false if |frame| was rejected due to invalid data.
+  // TODO(kylechar): Merge the two SubmitCompositorFrame() methods.
+  bool SubmitCompositorFrame(
+      const LocalSurfaceId& local_surface_id,
+      CompositorFrame frame,
+      mojom::HitTestRegionListPtr hit_test_region_list = nullptr);
 
   // CapturableFrameSink implementation.
   void AttachCaptureClient(CapturableFrameSink::Client* client) override;
   void DetachCaptureClient(CapturableFrameSink::Client* client) override;
-  gfx::Size GetActiveFrameSize() override;
+  gfx::Size GetSurfaceSize() override;
   void RequestCopyOfSurface(
       std::unique_ptr<CopyOutputRequest> request) override;
 

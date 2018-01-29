@@ -170,23 +170,18 @@ void CompositorFrameSinkSupport::SubmitCompositorFrame(
     CompositorFrame frame,
     mojom::HitTestRegionListPtr hit_test_region_list,
     uint64_t submit_time) {
-  bool success;
   SubmitCompositorFrame(local_surface_id, std::move(frame),
-                        std::move(hit_test_region_list), &success);
-  DCHECK(success);
+                        std::move(hit_test_region_list));
 }
 
-void CompositorFrameSinkSupport::SubmitCompositorFrame(
+bool CompositorFrameSinkSupport::SubmitCompositorFrame(
     const LocalSurfaceId& local_surface_id,
     CompositorFrame frame,
-    mojom::HitTestRegionListPtr hit_test_region_list,
-    bool* success) {
+    mojom::HitTestRegionListPtr hit_test_region_list) {
   TRACE_EVENT1("viz", "CompositorFrameSinkSupport::SubmitCompositorFrame",
                "FrameSinkId", frame_sink_id_.ToString());
   DCHECK(local_surface_id.is_valid());
   DCHECK(!frame.render_pass_list.empty());
-  DCHECK(success);
-  *success = true;
 
   uint64_t frame_index = ++last_frame_index_;
   ++ack_pending_count_;
@@ -245,8 +240,7 @@ void CompositorFrameSinkSupport::SubmitCompositorFrame(
         DidPresentCompositorFrame(frame.metadata.presentation_token,
                                   base::TimeTicks(), base::TimeDelta(), 0);
       }
-      *success = false;
-      return;
+      return false;
     }
 
     current_surface = CreateSurface(surface_info);
@@ -267,8 +261,7 @@ void CompositorFrameSinkSupport::SubmitCompositorFrame(
           : Surface::PresentedCallback());
   if (!result) {
     EvictCurrentSurface();
-    *success = false;
-    return;
+    return false;
   }
 
   if (prev_surface && prev_surface != current_surface) {
@@ -281,6 +274,8 @@ void CompositorFrameSinkSupport::SubmitCompositorFrame(
 
   if (begin_frame_source_)
     begin_frame_source_->DidFinishFrame(this);
+
+  return true;
 }
 
 void CompositorFrameSinkSupport::UpdateSurfaceReferences(
@@ -414,15 +409,12 @@ void CompositorFrameSinkSupport::DetachCaptureClient(
     capture_clients_.erase(it);
 }
 
-gfx::Size CompositorFrameSinkSupport::GetActiveFrameSize() {
+gfx::Size CompositorFrameSinkSupport::GetSurfaceSize() {
   if (current_surface_id_.is_valid()) {
     Surface* current_surface =
         surface_manager_->GetSurfaceForId(current_surface_id_);
-    if (current_surface->HasActiveFrame()) {
-      DCHECK(current_surface->GetActiveFrame().size_in_pixels() ==
-             current_surface->size_in_pixels());
+    if (current_surface)
       return current_surface->size_in_pixels();
-    }
   }
   return gfx::Size();
 }

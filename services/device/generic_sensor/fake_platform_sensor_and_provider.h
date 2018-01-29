@@ -15,7 +15,7 @@ namespace device {
 class FakePlatformSensor : public PlatformSensor {
  public:
   FakePlatformSensor(mojom::SensorType type,
-                     SensorReadingSharedBuffer* reading_buffer,
+                     mojo::ScopedSharedBufferMapping mapping,
                      PlatformSensorProvider* provider);
 
   // PlatformSensor:
@@ -51,11 +51,11 @@ class FakePlatformSensorProvider : public PlatformSensorProvider {
                     scoped_refptr<PlatformSensor>,
                     const CreateSensorCallback&));
 
-  SensorReadingSharedBuffer* GetSensorReadingBuffer(mojom::SensorType type);
+  mojo::ScopedSharedBufferMapping GetMapping(mojom::SensorType type);
 
  private:
   void CreateSensorInternal(mojom::SensorType type,
-                            SensorReadingSharedBuffer* reading_buffer,
+                            mojo::ScopedSharedBufferMapping mapping,
                             const CreateSensorCallback& callback) override;
 
   DISALLOW_COPY_AND_ASSIGN(FakePlatformSensorProvider);

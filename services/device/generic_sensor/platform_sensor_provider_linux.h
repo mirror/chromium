@@ -37,7 +37,7 @@ class PlatformSensorProviderLinux : public PlatformSensorProvider,
   ~PlatformSensorProviderLinux() override;
 
   void CreateSensorInternal(mojom::SensorType type,
-                            SensorReadingSharedBuffer* reading_buffer,
+                            mojo::ScopedSharedBufferMapping mapping,
                             const CreateSensorCallback& callback) override;
 
   void FreeResources() override;
@@ -55,7 +55,7 @@ class PlatformSensorProviderLinux : public PlatformSensorProvider,
 
   void SensorDeviceFound(
       mojom::SensorType type,
-      SensorReadingSharedBuffer* reading_buffer,
+      mojo::ScopedSharedBufferMapping mapping,
       const PlatformSensorProviderBase::CreateSensorCallback& callback,
       const SensorInfoLinux* sensor_device);
 
@@ -92,7 +92,7 @@ class PlatformSensorProviderLinux : public PlatformSensorProvider,
                        const std::string& device_node) override;
 
   void CreateFusionSensor(mojom::SensorType type,
-                          SensorReadingSharedBuffer* reading_buffer,
+                          mojo::ScopedSharedBufferMapping mapping,
                           const CreateSensorCallback& callback);
 
   // Set to true when enumeration is ready.

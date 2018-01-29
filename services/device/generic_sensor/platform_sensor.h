@@ -78,7 +78,7 @@ class PlatformSensor : public base::RefCountedThreadSafe<PlatformSensor> {
  protected:
   virtual ~PlatformSensor();
   PlatformSensor(mojom::SensorType type,
-                 SensorReadingSharedBuffer* reading_buffer,
+                 mojo::ScopedSharedBufferMapping mapping,
                  PlatformSensorProvider* provider);
 
   using ReadingBuffer = SensorReadingSharedBuffer;
@@ -106,7 +106,7 @@ class PlatformSensor : public base::RefCountedThreadSafe<PlatformSensor> {
 
  private:
   friend class base::RefCountedThreadSafe<PlatformSensor>;
-  SensorReadingSharedBuffer* reading_buffer_;  // NOTE: Owned by |provider_|.
+  const mojo::ScopedSharedBufferMapping shared_buffer_mapping_;
   std::unique_ptr<SensorReadingSharedBufferReader> shared_buffer_reader_;
   mojom::SensorType type_;
   ConfigMap config_map_;

@@ -70,8 +70,30 @@ def MakePackagePath(file_path, roots):
   raise Exception('Error: no matching root paths found for \'%s\'.' % file_path)
 
 
+def GetStrippedPath(bin_path):
+  """Finds the stripped version of the binary |bin_path| in the build
+  output directory."""
+
+  if not '.unstripped' in bin_path:
+    raise Exception('File "%s" is not in an .unstripped directory.' % bin_path)
+
+  return os.path.normpath(os.path.join(bin_path,
+                                       os.path.pardir,
+                                       os.path.pardir,
+                                       os.path.basename(bin_path)))
+
+
+def IsBinary(path):
+  """Checks if the file at |path| is an ELF executable by inspecting its FourCC
+  header."""
+
+  with open(path, 'rb') as f:
+    file_tag = f.read(4)
+  return file_tag == '\x7fELF'
+
+
 def BuildManifest(root_dir, out_dir, app_name, runtime_deps_file, output_path):
-  with open(output_path, 'w') as output:
+  with open(output_path, "w") as output:
     # Process the runtime deps file for file paths, recursively walking
     # directories as needed.
     # runtime_deps may contain duplicate paths, so use a set for
@@ -82,8 +104,6 @@ def BuildManifest(root_dir, out_dir, app_name, runtime_deps_file, output_path):
       if os.path.isdir(next_path):
         for root, _, files in os.walk(next_path):
           for next_file in files:
-            if next_file.startswith('.'):
-              continue
             expanded_files.add(os.path.abspath(os.path.join(root, next_file)))
       else:
         expanded_files.add(os.path.abspath(next_path))
@@ -91,11 +111,15 @@ def BuildManifest(root_dir, out_dir, app_name, runtime_deps_file, output_path):
     # Format and write out the manifest contents.
     app_found = False
     for next_file in expanded_files:
+      if IsBinary(next_file):
+        next_file = GetStrippedPath(next_file)
+
       in_package_path = MakePackagePath(os.path.join(out_dir, next_file),
                                         [root_dir, out_dir])
       if in_package_path == app_name:
         in_package_path = 'bin/app'
         app_found = True
+
       output.write('%s=%s\n' % (in_package_path, next_file))
     if not app_found:
       raise Exception('Could not locate executable inside runtime_deps.')

@@ -21,7 +21,7 @@ class PlatformSensorAmbientLightMac : public PlatformSensor {
  public:
   // Construct a platform sensor of AMBIENT_LIGHT, given a buffer |mapping|
   // to write the result back.
-  PlatformSensorAmbientLightMac(SensorReadingSharedBuffer* reading_buffer,
+  PlatformSensorAmbientLightMac(mojo::ScopedSharedBufferMapping mapping,
                                 PlatformSensorProvider* provider);
 
   mojom::ReportingMode GetReportingMode() override;

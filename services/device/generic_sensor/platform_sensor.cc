@@ -16,10 +16,10 @@
 namespace device {
 
 PlatformSensor::PlatformSensor(mojom::SensorType type,
-                               SensorReadingSharedBuffer* reading_buffer,
+                               mojo::ScopedSharedBufferMapping mapping,
                                PlatformSensorProvider* provider)
     : task_runner_(base::ThreadTaskRunnerHandle::Get()),
-      reading_buffer_(reading_buffer),
+      shared_buffer_mapping_(std::move(mapping)),
       type_(type),
       provider_(provider),
       weak_factory_(this) {}
@@ -103,8 +103,10 @@ void PlatformSensor::RemoveClient(Client* client) {
 
 bool PlatformSensor::GetLatestReading(SensorReading* result) {
   if (!shared_buffer_reader_) {
+    const auto* buffer = static_cast<const device::SensorReadingSharedBuffer*>(
+        shared_buffer_mapping_.get());
     shared_buffer_reader_ =
-        std::make_unique<SensorReadingSharedBufferReader>(reading_buffer_);
+        std::make_unique<SensorReadingSharedBufferReader>(buffer);
   }
 
   return shared_buffer_reader_->GetReading(result);
@@ -119,7 +121,8 @@ void PlatformSensor::UpdateSharedBufferAndNotifyClients(
 }
 
 void PlatformSensor::UpdateSharedBuffer(const SensorReading& reading) {
-  ReadingBuffer* buffer = reading_buffer_;
+  ReadingBuffer* buffer =
+      static_cast<ReadingBuffer*>(shared_buffer_mapping_.get());
   auto& seqlock = buffer->seqlock.value();
   seqlock.WriteBegin();
   buffer->reading = reading;

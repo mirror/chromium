@@ -52,7 +52,7 @@ bool FindBarHost::MaybeForwardKeyEventToWebpage(
     case ui::VKEY_END:
       if (key_event.IsControlDown())
         break;
-      FALLTHROUGH;
+    // Fall through.
     default:
       return false;
   }

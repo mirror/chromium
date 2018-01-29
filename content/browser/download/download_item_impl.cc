@@ -33,7 +33,6 @@
 #include "base/guid.h"
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
-#include "base/optional.h"
 #include "base/stl_util.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
@@ -49,7 +48,6 @@
 #include "content/browser/download/download_request_handle.h"
 #include "content/browser/download/download_stats.h"
 #include "content/browser/download/download_task_runner.h"
-#include "content/browser/download/download_ukm_helper.h"
 #include "content/browser/download/download_utils.h"
 #include "content/browser/download/parallel_download_utils.h"
 #include "content/browser/renderer_host/render_view_host_impl.h"
@@ -689,8 +687,8 @@ bool DownloadItemImpl::CanResume() const {
       ResumeMode resume_mode = GetResumeMode();
       // Only allow Resume() calls if the resumption mode requires a user
       // action.
-      return resume_mode == ResumeMode::USER_RESTART ||
-             resume_mode == ResumeMode::USER_CONTINUE;
+      return resume_mode == RESUME_MODE_USER_RESTART ||
+             resume_mode == RESUME_MODE_USER_CONTINUE;
     }
 
     case MAX_DOWNLOAD_INTERNAL_STATE:
@@ -994,7 +992,7 @@ void DownloadItemImpl::OnContentCheckCompleted(DownloadDangerType danger_type,
   SetDangerType(danger_type);
   if (reason != DOWNLOAD_INTERRUPT_REASON_NONE) {
     InterruptAndDiscardPartialState(reason);
-    DCHECK_EQ(ResumeMode::INVALID, GetResumeMode());
+    DCHECK_EQ(RESUME_MODE_INVALID, GetResumeMode());
   }
   UpdateObservers();
 }
@@ -1080,12 +1078,12 @@ void DownloadItemImpl::SimulateErrorForTesting(DownloadInterruptReason reason) {
   UpdateObservers();
 }
 
-ResumeMode DownloadItemImpl::GetResumeMode() const {
+DownloadItemImpl::ResumeMode DownloadItemImpl::GetResumeMode() const {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   // Only support resumption for HTTP(S).
   if (!GetURL().SchemeIsHTTPOrHTTPS())
-    return ResumeMode::INVALID;
+    return RESUME_MODE_INVALID;
 
   // We can't continue without a handle on the intermediate file.
   // We also can't continue if we don't have some verifier to make sure
@@ -1161,19 +1159,19 @@ ResumeMode DownloadItemImpl::GetResumeMode() const {
     case DOWNLOAD_INTERRUPT_REASON_SERVER_CERT_PROBLEM:
     case DOWNLOAD_INTERRUPT_REASON_SERVER_FORBIDDEN:
     case DOWNLOAD_INTERRUPT_REASON_FILE_SAME_AS_SOURCE:
-      return ResumeMode::INVALID;
+      return RESUME_MODE_INVALID;
   }
 
   if (user_action_required && restart_required)
-    return ResumeMode::USER_RESTART;
+    return RESUME_MODE_USER_RESTART;
 
   if (restart_required)
-    return ResumeMode::IMMEDIATE_RESTART;
+    return RESUME_MODE_IMMEDIATE_RESTART;
 
   if (user_action_required)
-    return ResumeMode::USER_CONTINUE;
+    return RESUME_MODE_USER_CONTINUE;
 
-  return ResumeMode::IMMEDIATE_CONTINUE;
+  return RESUME_MODE_IMMEDIATE_CONTINUE;
 }
 
 void DownloadItemImpl::UpdateValidatorsOnResumption(
@@ -1466,14 +1464,6 @@ void DownloadItemImpl::Start(
                                         IsParallelDownloadEnabled());
     }
     RecordDownloadMimeType(mime_type_);
-    DownloadContent file_type = DownloadContentFromMimeType(mime_type_, false);
-    auto in_progress_entry = GetInProgressEntry(guid_, GetBrowserContext());
-    if (in_progress_entry) {
-      DownloadUkmHelper::RecordDownloadStarted(
-          in_progress_entry->ukm_download_id, new_create_info.ukm_source_id,
-          file_type, download_source_);
-    }
-
     if (!GetBrowserContext()->IsOffTheRecord()) {
       RecordDownloadCountWithSource(NEW_DOWNLOAD_COUNT_NORMAL_PROFILE,
                                     download_source_);
@@ -1838,18 +1828,6 @@ void DownloadItemImpl::Completed() {
     auto_opened_ = true;
   }
   UpdateObservers();
-
-  base::TimeDelta time_since_start = GetEndTime() - GetStartTime();
-
-  // If all data is saved, the number of received bytes is resulting file size.
-  int resulting_file_size = GetReceivedBytes();
-
-  auto in_progress_entry = GetInProgressEntry(guid_, GetBrowserContext());
-  if (in_progress_entry) {
-    DownloadUkmHelper::RecordDownloadCompleted(
-        in_progress_entry->ukm_download_id, resulting_file_size,
-        time_since_start);
-  }
 }
 
 // **** End of Download progression cascade
@@ -1922,8 +1900,8 @@ void DownloadItemImpl::InterruptWithPartialState(
 
       if (download_file_) {
         ResumeMode resume_mode = GetResumeMode();
-        ReleaseDownloadFile(resume_mode != ResumeMode::IMMEDIATE_CONTINUE &&
-                            resume_mode != ResumeMode::USER_CONTINUE);
+        ReleaseDownloadFile(resume_mode != RESUME_MODE_IMMEDIATE_CONTINUE &&
+                            resume_mode != RESUME_MODE_USER_CONTINUE);
       }
       break;
 
@@ -1994,20 +1972,6 @@ void DownloadItemImpl::InterruptWithPartialState(
   RecordDownloadInterrupted(reason, GetReceivedBytes(), total_bytes_,
                             job_ && job_->IsParallelizable(),
                             IsParallelDownloadEnabled(), download_source_);
-
-  base::TimeDelta time_since_start = base::Time::Now() - GetStartTime();
-  int resulting_file_size = GetReceivedBytes();
-  auto in_progress_entry = GetInProgressEntry(guid_, GetBrowserContext());
-  base::Optional<int> change_in_file_size;
-  if (in_progress_entry) {
-    if (total_bytes_ >= 0) {
-      change_in_file_size = total_bytes_ - resulting_file_size;
-    }
-
-    DownloadUkmHelper::RecordDownloadInterrupted(
-        in_progress_entry->ukm_download_id, change_in_file_size, reason,
-        resulting_file_size, time_since_start);
-  }
   if (reason == DOWNLOAD_INTERRUPT_REASON_SERVER_CONTENT_LENGTH_MISMATCH)
     received_bytes_at_length_mismatch_ = GetReceivedBytes();
 
@@ -2263,8 +2227,8 @@ void DownloadItemImpl::AutoResumeIfValid() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   ResumeMode mode = GetResumeMode();
 
-  if (mode != ResumeMode::IMMEDIATE_RESTART &&
-      mode != ResumeMode::IMMEDIATE_CONTINUE) {
+  if (mode != RESUME_MODE_IMMEDIATE_RESTART &&
+      mode != RESUME_MODE_IMMEDIATE_CONTINUE) {
     return;
   }
 
@@ -2286,8 +2250,8 @@ void DownloadItemImpl::ResumeInterruptedDownload(
 
   // Reset the appropriate state if restarting.
   ResumeMode mode = GetResumeMode();
-  if (mode == ResumeMode::IMMEDIATE_RESTART ||
-      mode == ResumeMode::USER_RESTART) {
+  if (mode == RESUME_MODE_IMMEDIATE_RESTART ||
+      mode == RESUME_MODE_USER_RESTART) {
     DCHECK(GetFullPath().empty());
     destination_info_.received_bytes = 0;
     last_modified_time_.clear();
@@ -2358,17 +2322,11 @@ void DownloadItemImpl::ResumeInterruptedDownload(
       Referrer(GetReferrerUrl(), blink::kWebReferrerPolicyAlways));
 
   TransitionTo(RESUMING_INTERNAL);
+
   RecordDownloadCountWithSource(source == ResumptionRequestSource::USER
                                     ? MANUAL_RESUMPTION_COUNT
                                     : AUTO_RESUMPTION_COUNT,
                                 download_source_);
-
-  base::TimeDelta time_since_start = base::Time::Now() - GetStartTime();
-  auto in_progress_entry = GetInProgressEntry(guid_, GetBrowserContext());
-  if (in_progress_entry) {
-    DownloadUkmHelper::RecordDownloadResumed(in_progress_entry->ukm_download_id,
-                                             GetResumeMode(), time_since_start);
-  }
 
   delegate_->ResumeInterruptedDownload(std::move(download_params), GetId());
 
@@ -2537,18 +2495,18 @@ const char* DownloadItemImpl::DebugDownloadStateString(
 
 const char* DownloadItemImpl::DebugResumeModeString(ResumeMode mode) {
   switch (mode) {
-    case ResumeMode::INVALID:
+    case RESUME_MODE_INVALID:
       return "INVALID";
-    case ResumeMode::IMMEDIATE_CONTINUE:
+    case RESUME_MODE_IMMEDIATE_CONTINUE:
       return "IMMEDIATE_CONTINUE";
-    case ResumeMode::IMMEDIATE_RESTART:
+    case RESUME_MODE_IMMEDIATE_RESTART:
       return "IMMEDIATE_RESTART";
-    case ResumeMode::USER_CONTINUE:
+    case RESUME_MODE_USER_CONTINUE:
       return "USER_CONTINUE";
-    case ResumeMode::USER_RESTART:
+    case RESUME_MODE_USER_RESTART:
       return "USER_RESTART";
   }
-  NOTREACHED() << "Unknown resume mode " << static_cast<int>(mode);
+  NOTREACHED() << "Unknown resume mode " << mode;
   return "unknown";
 }
 

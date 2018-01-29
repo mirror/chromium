@@ -49,17 +49,11 @@ class CC_EXPORT RasterBufferProvider {
       uint64_t resource_content_id,
       uint64_t previous_content_id) = 0;
 
-  // Call this on the compositor thread to allow the RasterBufferProvider to
-  // insert synchronization primatives into the compositor context, which will
-  // be used by the RasterBuffer to synchronize with the worker context. Should
-  // be called once all RasterBuffers are created but before they are scheduled
-  // to run on the worker threads.
+  // Used for syncing resources to the worker context.
   virtual void OrderingBarrier() = 0;
 
-  // Flush pending work from writing the content of the RasterBuffer, so that
-  // queries to tell if the backing is ready to draw from will get the right
-  // answer. This should be done before calling IsResourceReadyToDraw() or
-  // SetReadyToDrawCallback().
+  // In addition to above, also ensures that pending work is sent to the GPU
+  // process.
   virtual void Flush() = 0;
 
   // Returns the format to use for the tiles.
