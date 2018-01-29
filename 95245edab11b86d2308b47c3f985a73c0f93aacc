@@ -16,6 +16,24 @@
       "revId": "95245edab11b86d2308b47c3f985a73c0f93aacc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41ba02a8_f6df65d3",
+        "filename": "chrome/browser/extensions/extension_commands_global_registry_apitest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-29T04:39:36Z",
+      "side": 1,
+      "message": "I think this will still lead to flakiness -- usleep is almost never the right answer.\n\nI\u0027m not sure what you mean by `the app doesn\u0027t see these events precisely`. Is it more reliable if they are sent one at a time?\n\nCan we borrow ideas from ui_controls_mac.mm? It has an EventQueueWatcher, which does\n\n  NSEvent* event \u003d [NSApp nextEventMatchingMask:NSAnyEventMask\n                                      untilDate:nil\n                                         inMode:NSDefaultRunLoopMode\n                                        dequeue:NO];\n\nthis is used to implement SendKeyPressNotifyWhenDone(). That\u0027s basically what the test here needs except ui_controls_mac sends NSEvents, but to interact with the global system modifier state we need to send CGEvents (and also there might be a delay after CGEventPost() -- nextEventMatchignMask might return `nil` even if there\u0027s still an event).\n\nPerhaps we could add ui_controls_mac.h, with something like\n\n\n  // While in scope, ui_controls_mac.mm will send CGEvents using CGEventPost(),\n  // after setting CGEventSetSource(cg_event, kCGEventSourceStateHIDSystemState).\n  // cg_event is [ns_event CGEvent]. Otherwise, events are posted using\n  // [NSApp sendEvent:ns_event].\n  class ScopedCGEVentSender {\n   public:\n    ScopedCGEVentSender();\n    ~ScopedCGEVentSender();\n  }\n\n\nHowever, it\u0027s possible that EventQueueWatcher doesn\u0027t work for CGEvents in the same way. We can\u0027t pass a timeout for untilDate -- that\u0027s no better than usleep. We could instead install a CGEventTap and count the events, only returning once they are all seen.",
+      "parentUuid": "bacea997_46f9b8d9",
+      "revId": "95245edab11b86d2308b47c3f985a73c0f93aacc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
