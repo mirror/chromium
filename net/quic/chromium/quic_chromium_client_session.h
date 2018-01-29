@@ -500,7 +500,9 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
   // Returns true if |hostname| may be pooled onto this session.  If this
   // is a secure QUIC session, then |hostname| must match the certificate
   // presented during the handshake.
-  bool CanPool(const std::string& hostname, PrivacyMode privacy_mode) const;
+  bool CanPool(const std::string& hostname,
+               PrivacyMode privacy_mode,
+               const SocketTag& socket_tag) const;
 
   const QuicServerId& server_id() const { return server_id_; }
 

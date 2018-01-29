@@ -1203,10 +1203,12 @@ int QuicChromiumClientSession::GetNumSentClientHellos() const {
 }
 
 bool QuicChromiumClientSession::CanPool(const std::string& hostname,
-                                        PrivacyMode privacy_mode) const {
+                                        PrivacyMode privacy_mode,
+                                        const SocketTag& socket_tag) const {
   DCHECK(connection()->connected());
-  if (privacy_mode != server_id_.privacy_mode()) {
-    // Privacy mode must always match.
+  if (privacy_mode != server_id_.privacy_mode() ||
+      socket_tag != server_id_.socket_tag()) {
+    // Privacy mode and socket tag must always match.
     return false;
   }
   SSLInfo ssl_info;
@@ -2122,7 +2124,8 @@ ProbingResult QuicChromiumClientSession::StartProbeNetwork(
   std::unique_ptr<DatagramClientSocket> probing_socket =
       stream_factory_->CreateSocket(net_log_.net_log(), net_log_.source());
   if (stream_factory_->ConfigureSocket(probing_socket.get(), peer_address,
-                                       network) != OK) {
+                                       network,
+                                       server_id_.socket_tag()) != OK) {
     HistogramAndLogMigrationFailure(
         migration_net_log, MIGRATION_STATUS_INTERNAL_ERROR, connection_id(),
         "Socket configuration failed");
@@ -2502,8 +2505,8 @@ MigrationResult QuicChromiumClientSession::Migrate(
   // Create and configure socket on |network|.
   std::unique_ptr<DatagramClientSocket> socket(
       stream_factory_->CreateSocket(net_log_.net_log(), net_log_.source()));
-  if (stream_factory_->ConfigureSocket(socket.get(), peer_address, network) !=
-      OK) {
+  if (stream_factory_->ConfigureSocket(socket.get(), peer_address, network,
+                                       server_id_.socket_tag()) != OK) {
     HistogramAndLogMigrationFailure(
         migration_net_log, MIGRATION_STATUS_INTERNAL_ERROR, connection_id(),
         "Socket configuration failed");
@@ -2597,7 +2600,8 @@ const DatagramClientSocket* QuicChromiumClientSession::GetDefaultSocket()
 }
 
 bool QuicChromiumClientSession::IsAuthorized(const std::string& hostname) {
-  bool result = CanPool(hostname, server_id_.privacy_mode());
+  bool result =
+      CanPool(hostname, server_id_.privacy_mode(), server_id_.socket_tag());
   if (result)
     streams_pushed_count_++;
   return result;

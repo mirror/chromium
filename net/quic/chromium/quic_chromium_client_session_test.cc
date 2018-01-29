@@ -43,6 +43,7 @@
 #include "net/quic/test_tools/quic_test_utils.h"
 #include "net/quic/test_tools/simple_quic_framer.h"
 #include "net/socket/datagram_client_socket.h"
+#include "net/socket/socket_tag.h"
 #include "net/socket/socket_test_util.h"
 #include "net/spdy/core/spdy_test_utils.h"
 #include "net/test/cert_test_util.h"
@@ -94,7 +95,10 @@ class QuicChromiumClientSessionTest
             new SequencedSocketData(default_read_.get(), 1, nullptr, 0)),
         random_(0),
         helper_(&clock_, &random_),
-        server_id_(kServerHostname, kServerPort, PRIVACY_MODE_DISABLED),
+        server_id_(kServerHostname,
+                   kServerPort,
+                   PRIVACY_MODE_DISABLED,
+                   SocketTag()),
         destination_(kServerHostname, kServerPort),
         client_maker_(version_,
                       0,
@@ -1064,11 +1068,16 @@ TEST_P(QuicChromiumClientSessionTest, CanPool) {
   CompleteCryptoHandshake();
   session_->OnProofVerifyDetailsAvailable(details);
 
-  EXPECT_TRUE(session_->CanPool("www.example.org", PRIVACY_MODE_DISABLED));
-  EXPECT_FALSE(session_->CanPool("www.example.org", PRIVACY_MODE_ENABLED));
-  EXPECT_TRUE(session_->CanPool("mail.example.org", PRIVACY_MODE_DISABLED));
-  EXPECT_TRUE(session_->CanPool("mail.example.com", PRIVACY_MODE_DISABLED));
-  EXPECT_FALSE(session_->CanPool("mail.google.com", PRIVACY_MODE_DISABLED));
+  EXPECT_TRUE(
+      session_->CanPool("www.example.org", PRIVACY_MODE_DISABLED, SocketTag()));
+  EXPECT_FALSE(
+      session_->CanPool("www.example.org", PRIVACY_MODE_ENABLED, SocketTag()));
+  EXPECT_TRUE(session_->CanPool("mail.example.org", PRIVACY_MODE_DISABLED,
+                                SocketTag()));
+  EXPECT_TRUE(session_->CanPool("mail.example.com", PRIVACY_MODE_DISABLED,
+                                SocketTag()));
+  EXPECT_FALSE(
+      session_->CanPool("mail.google.com", PRIVACY_MODE_DISABLED, SocketTag()));
 }
 
 TEST_P(QuicChromiumClientSessionTest, ConnectionPooledWithTlsChannelId) {
@@ -1095,10 +1104,14 @@ TEST_P(QuicChromiumClientSessionTest, ConnectionPooledWithTlsChannelId) {
   QuicChromiumClientSessionPeer::SetHostname(session_.get(), "www.example.org");
   session_->OverrideChannelIDSent();
 
-  EXPECT_TRUE(session_->CanPool("www.example.org", PRIVACY_MODE_DISABLED));
-  EXPECT_TRUE(session_->CanPool("mail.example.org", PRIVACY_MODE_DISABLED));
-  EXPECT_FALSE(session_->CanPool("mail.example.com", PRIVACY_MODE_DISABLED));
-  EXPECT_FALSE(session_->CanPool("mail.google.com", PRIVACY_MODE_DISABLED));
+  EXPECT_TRUE(
+      session_->CanPool("www.example.org", PRIVACY_MODE_DISABLED, SocketTag()));
+  EXPECT_TRUE(session_->CanPool("mail.example.org", PRIVACY_MODE_DISABLED,
+                                SocketTag()));
+  EXPECT_FALSE(session_->CanPool("mail.example.com", PRIVACY_MODE_DISABLED,
+                                 SocketTag()));
+  EXPECT_FALSE(
+      session_->CanPool("mail.google.com", PRIVACY_MODE_DISABLED, SocketTag()));
 }
 
 TEST_P(QuicChromiumClientSessionTest, ConnectionNotPooledWithDifferentPin) {
@@ -1131,7 +1144,8 @@ TEST_P(QuicChromiumClientSessionTest, ConnectionNotPooledWithDifferentPin) {
   QuicChromiumClientSessionPeer::SetHostname(session_.get(), "www.example.org");
   session_->OverrideChannelIDSent();
 
-  EXPECT_FALSE(session_->CanPool("mail.example.org", PRIVACY_MODE_DISABLED));
+  EXPECT_FALSE(session_->CanPool("mail.example.org", PRIVACY_MODE_DISABLED,
+                                 SocketTag()));
 }
 
 TEST_P(QuicChromiumClientSessionTest, ConnectionPooledWithMatchingPin) {
@@ -1163,7 +1177,8 @@ TEST_P(QuicChromiumClientSessionTest, ConnectionPooledWithMatchingPin) {
   QuicChromiumClientSessionPeer::SetHostname(session_.get(), "www.example.org");
   session_->OverrideChannelIDSent();
 
-  EXPECT_TRUE(session_->CanPool("mail.example.org", PRIVACY_MODE_DISABLED));
+  EXPECT_TRUE(session_->CanPool("mail.example.org", PRIVACY_MODE_DISABLED,
+                                SocketTag()));
 }
 
 TEST_P(QuicChromiumClientSessionTest, MigrateToSocket) {

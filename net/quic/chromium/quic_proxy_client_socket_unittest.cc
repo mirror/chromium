@@ -34,6 +34,7 @@
 #include "net/quic/test_tools/mock_random.h"
 #include "net/quic/test_tools/quic_connection_peer.h"
 #include "net/quic/test_tools/quic_test_utils.h"
+#include "net/socket/socket_tag.h"
 #include "net/socket/socket_test_util.h"
 #include "net/test/cert_test_util.h"
 #include "net/test/test_data_directory.h"
@@ -198,7 +199,8 @@ class QuicProxyClientSocketTest
         /*stream_factory=*/nullptr, &crypto_client_stream_factory_, &clock_,
         &transport_security_state_,
         base::WrapUnique(static_cast<QuicServerInfo*>(nullptr)),
-        QuicServerId("mail.example.org", 80, PRIVACY_MODE_DISABLED),
+        QuicServerId("mail.example.org", 80, PRIVACY_MODE_DISABLED,
+                     SocketTag()),
         /*require_confirmation=*/false, /*migrate_session_early*/ false,
         /*migrate_session_on_network_change*/ false,
         /*migrate_session_early_v2*/ false,

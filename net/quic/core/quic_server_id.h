@@ -11,6 +11,7 @@
 #include "net/base/host_port_pair.h"
 #include "net/base/privacy_mode.h"
 #include "net/quic/platform/api/quic_export.h"
+#include "net/quic/platform/api/quic_socket_tag.h"
 
 namespace net {
 
@@ -19,11 +20,16 @@ namespace net {
 class QUIC_EXPORT_PRIVATE QuicServerId {
  public:
   QuicServerId();
-  QuicServerId(const HostPortPair& host_port_pair, PrivacyMode privacy_mode);
-  QuicServerId(const std::string& host, uint16_t port);
+  QuicServerId(const HostPortPair& host_port_pair,
+               PrivacyMode privacy_mode,
+               const QuicSocketTag& socket_tag);
   QuicServerId(const std::string& host,
                uint16_t port,
-               PrivacyMode privacy_mode);
+               const QuicSocketTag& socket_tag);
+  QuicServerId(const std::string& host,
+               uint16_t port,
+               PrivacyMode privacy_mode,
+               const QuicSocketTag& socket_tag);
   ~QuicServerId();
 
   // Needed to be an element of std::set.
@@ -43,11 +49,14 @@ class QUIC_EXPORT_PRIVATE QuicServerId {
 
   PrivacyMode privacy_mode() const { return privacy_mode_; }
 
+  QuicSocketTag socket_tag() const { return socket_tag_; }
+
   size_t EstimateMemoryUsage() const;
 
  private:
   HostPortPair host_port_pair_;
   PrivacyMode privacy_mode_;
+  QuicSocketTag socket_tag_;
 };
 
 }  // namespace net
