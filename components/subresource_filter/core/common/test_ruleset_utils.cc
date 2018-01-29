@@ -4,14 +4,17 @@
 
 #include "components/subresource_filter/core/common/test_ruleset_utils.h"
 
+#include <utility>
+
 namespace subresource_filter {
 namespace testing {
 
 namespace proto = url_pattern_index::proto;
 
-proto::UrlRule CreateSuffixRule(base::StringPiece suffix) {
+proto::UrlRule CreateSuffixRule(base::StringPiece suffix,
+                                proto::RuleSemantics semantics) {
   proto::UrlRule rule;
-  rule.set_semantics(proto::RULE_SEMANTICS_BLACKLIST);
+  rule.set_semantics(semantics);
   rule.set_source_type(proto::SOURCE_TYPE_ANY);
   rule.set_element_types(proto::ELEMENT_TYPE_ALL);
   rule.set_url_pattern_type(proto::URL_PATTERN_TYPE_SUBSTRING);
