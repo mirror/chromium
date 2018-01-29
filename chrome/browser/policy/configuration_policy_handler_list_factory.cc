@@ -745,6 +745,17 @@ const PolicyToPreferenceMapEntry kSimplePolicyMap[] = {
     prefs::kThirdPartyBlockingEnabled,
     base::Value::Type::BOOLEAN },
 #endif
+
+#if (defined(OS_POSIX) && !defined(OS_ANDROID)) || defined(OS_WIN)
+#if !defined(OS_CHROMEOS)
+  { key::kRestartNotification,
+    prefs::kRestartNotification,
+    base::Value::Type::INTEGER },
+#endif  // !defined(OS_CHROMEOS)
+  { key::kRestartNotificationPeriod,
+    prefs::kRestartNotificationPeriod,
+    base::Value::Type::INTEGER },
+#endif  // (defined(OS_POSIX) && !defined(OS_ANDROID)) || defined(OS_WIN)
 };
 // clang-format on
 
