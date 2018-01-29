@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "717782cb_b0bded48",
+        "filename": "chrome/app/chrome_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-29T22:39:12Z",
+      "side": 1,
+      "message": "I like what you\u0027re trying to do, but AFAIK this won\u0027t be possible when I convert mus to a feature. In particular this point is way before features are available and last I asked there isn\u0027t a good way to have chained features.",
+      "range": {
+        "startLine": 64,
+        "startChar": 6,
+        "endLine": 64,
+        "endChar": 49
+      },
+      "revId": "c3f5e6e9e835c9e66fe3404ca207df52da2a0b1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
