@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7731d439_daf247df",
+        "filename": "chrome/browser/resource_coordinator/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-29T17:37:24Z",
+      "side": 1,
+      "message": "Generally we don\u0027t update copyrights during a move (as you didn\u0027t with the other files).",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "2390e55b90f3e106a7adb451de61268b332126e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
