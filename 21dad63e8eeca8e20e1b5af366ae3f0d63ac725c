@@ -232,6 +232,24 @@
     },
     {
       "key": {
+        "uuid": "982998c2_8b02ac7a",
+        "filename": "chrome/browser/browser_process_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-29T19:31:58Z",
+      "side": 1,
+      "message": "Ok, I moved the locale propagation back to SetApplicationLocale. I had to update ChromeContentBrowserClient as it\u0027s now called at a different point in time which made some of the DCHECKs fail.",
+      "parentUuid": "c1824094_83a01e60",
+      "revId": "21dad63e8eeca8e20e1b5af366ae3f0d63ac725c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d92fca0_4457bec5",
         "filename": "chrome/browser/browser_process_impl.cc",
         "patchSetId": 8
