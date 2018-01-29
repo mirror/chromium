@@ -4,10 +4,11 @@
 
 #include "media/audio/audio_debug_recording_session.h"
 
-#include "base/files/file_path.h"
 #include "media/audio/audio_debug_recording_session_impl.h"
-#include "media/audio/audio_manager.h"
 
+namespace base {
+class FilePath;
+}
 namespace media {
 
 AudioDebugRecordingSession::~AudioDebugRecordingSession() {}
