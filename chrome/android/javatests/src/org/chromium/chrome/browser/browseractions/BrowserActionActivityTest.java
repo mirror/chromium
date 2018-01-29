@@ -397,7 +397,7 @@ public class BrowserActionActivityTest {
 
         // The Intent of the Browser Actions notification should toggle overview mode.
         mActivityTestRule.startActivityCompletely(notificationIntent);
-        if (DeviceFormFactor.isTablet()) {
+        if (DeviceFormFactor.isTabletLayout()) {
             Assert.assertFalse(
                     mActivityTestRule.getActivity().getLayoutManager().overviewVisible());
         } else {
@@ -509,7 +509,7 @@ public class BrowserActionActivityTest {
         Assert.assertEquals(1, currentModel.index());
 
         // Tab switcher should be shown on phones.
-        if (DeviceFormFactor.isTablet()) {
+        if (DeviceFormFactor.isTabletLayout()) {
             Assert.assertFalse(
                     mActivityTestRule.getActivity().getLayoutManager().overviewVisible());
         } else {

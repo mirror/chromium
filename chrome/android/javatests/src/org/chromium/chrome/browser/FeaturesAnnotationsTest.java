@@ -125,7 +125,7 @@ public class FeaturesAnnotationsTest {
     @SmallTest
     @ChromeHome.Enable
     public void testChromeHomeSkipping() {
-        assertFalse("The test should only run on phones.", DeviceFormFactor.isTablet());
+        assertFalse("The test should only run on phones.", DeviceFormFactor.isTabletLayout());
         assertTrue("ChromeHome should be enabled.", FeatureUtilities.isChromeHomeEnabled());
     }
 
