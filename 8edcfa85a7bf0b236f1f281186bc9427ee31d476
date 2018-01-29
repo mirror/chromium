@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "a8851544_c188a57c",
+        "filename": "components/cast_channel/cast_message_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-29T18:41:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "49106528_6dd06b40",
+      "revId": "8edcfa85a7bf0b236f1f281186bc9427ee31d476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f15dd55_ce8edd07",
         "filename": "components/cast_channel/cast_message_handler.cc",
         "patchSetId": 9
@@ -177,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "eb25e028_760b480a",
+        "filename": "components/cast_channel/cast_message_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-29T18:41:14Z",
+      "side": 1,
+      "message": "I think the advantage would be conservation of resources on the receiver side (otherwise, a client that is in a reconnect loop could eventually create an infinite number of VCs).  This is a good item to follow up with the Cast platform team (but doesn\u0027t block this patch).",
+      "parentUuid": "ae5438b4_3543587e",
+      "revId": "8edcfa85a7bf0b236f1f281186bc9427ee31d476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50f5b73c_a39b79b1",
         "filename": "components/cast_channel/cast_message_handler.cc",
         "patchSetId": 9
@@ -209,6 +245,24 @@
       "revId": "8edcfa85a7bf0b236f1f281186bc9427ee31d476",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e8f8937_32fdd21f",
+        "filename": "components/cast_channel/cast_message_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-29T18:41:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a569d412_7a97efa1",
+      "revId": "8edcfa85a7bf0b236f1f281186bc9427ee31d476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -282,6 +336,24 @@
     },
     {
       "key": {
+        "uuid": "6a0be2bc_bfdb5edf",
+        "filename": "components/cast_channel/cast_message_handler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-29T18:41:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "95efec99_2d6e6e16",
+      "revId": "8edcfa85a7bf0b236f1f281186bc9427ee31d476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "879b797f_ab95b361",
         "filename": "components/cast_channel/cast_message_handler.h",
         "patchSetId": 9
@@ -346,6 +418,24 @@
       "side": 1,
       "message": "Yeah in my prototype, the caller binds the sink id to the callback, and receives app id and result from the callback.\n\nWhat about making this class part of CastSocket? I think that way it doesn\u0027t even have to implement CastSocket::Observer, and should get cleanup \"for free\".",
       "parentUuid": "0b8c6619_4a0b38a6",
+      "revId": "8edcfa85a7bf0b236f1f281186bc9427ee31d476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "711ed1c2_8455316c",
+        "filename": "components/cast_channel/cast_message_handler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-29T18:41:14Z",
+      "side": 1,
+      "message": "I would prefer to keep a layered model where the CastSocket is not aware of application level messages passed through it. (While acknowledging that there is an \"in between\" layer that couples closely with the socket and handles the ping pong messages.)\n\nIf you think the lifetime issues can be handled cleanly through this design, then I don\u0027t feel strongly about revising it.",
+      "parentUuid": "8b176ba1_6e1dd6bc",
       "revId": "8edcfa85a7bf0b236f1f281186bc9427ee31d476",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -422,6 +512,24 @@
     },
     {
       "key": {
+        "uuid": "08cafc98_37fb19d0",
+        "filename": "components/cast_channel/cast_message_handler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-29T18:41:14Z",
+      "side": 1,
+      "message": "OnMessageSent is a private method and currently has no side effects, so yeah, that\u0027s fine.",
+      "parentUuid": "aeda4fce_dcf0da6e",
+      "revId": "8edcfa85a7bf0b236f1f281186bc9427ee31d476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "928ae9a3_0ee6a454",
         "filename": "components/cast_channel/cast_message_util.cc",
         "patchSetId": 9
@@ -486,6 +594,24 @@
       "side": 1,
       "message": "This generates an identical user agent string as the one from GetUserAgent() in chrome_content_client: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3331.0 Safari/537.36\n\nOne reason I don\u0027t call GetUserAgent() here is because components/ cannot depend on chrome/. Another reason is I didn\u0027t want to do string parsing from the user agent string to get systemVersion (for parity with extension), which seems a bit hacky.\n\nIn an earlier iteration I had caller (i.e. CastMediaSinkServiceImpl) pass in string from GetUserAgent() to CastMessageHandler, who then passes the string into this method. Then for systemVersion we can either parse the string or call into the refactored content:: method. I don\u0027t feel particularly strongly so let me know if you prefer that. (Parsing is probably ok if the string format isn\u0027t likely to change)",
       "parentUuid": "08a3b7c4_483a3dae",
+      "revId": "8edcfa85a7bf0b236f1f281186bc9427ee31d476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a13dae1b_e9419089",
+        "filename": "components/cast_channel/cast_message_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-29T18:41:14Z",
+      "side": 1,
+      "message": "It seems like chrome/ (which is embedding this component) should pass userAgent, version and browserVersion which would minimize the dependencies taken on by this component (and make it more component-like).\n\nI don\u0027t feel super strongly about this, it\u0027s really up to the content/ OWNERS to see how they feel about having a second code path to construct a user agent string.",
+      "parentUuid": "2507bd53_cf388773",
       "revId": "8edcfa85a7bf0b236f1f281186bc9427ee31d476",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
