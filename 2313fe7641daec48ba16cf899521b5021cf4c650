@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b20b096_8da90a6e",
+        "filename": "testing/gmock/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-29T19:34:37Z",
+      "side": 1,
+      "message": "Nit: s/TOTO/TODO and s/beacuse/because :).",
+      "revId": "2313fe7641daec48ba16cf899521b5021cf4c650",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
