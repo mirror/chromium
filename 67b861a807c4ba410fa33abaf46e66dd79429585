@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "9c4d47ab_0c01bebc",
+        "filename": "net/base/registry_controlled_domains/registry_controlled_domain.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-29T22:32:01Z",
+      "side": 1,
+      "message": "OK.  FWIW, the changes you were making in patch set 6 look generally like improvements to me (e.g. there are cases today where we check for \"!\u003d 0\" on return, but we don\u0027t actually want the npos case either; handling these identically is more correct).\n\nIt\u0027s possible that what we want is some sort of parsing function that returns an enum instead:\n\n  kNoHost,\n  kMultipleTrailingDots,\n  kIpAddress,\n  ...\n\nThis way callers could be clearer, instead of looking for magic numbers in the return values.  But I\u0027m OK with punting that indefinitely.",
+      "parentUuid": "1cb9f4f5_3f88eb3c",
+      "revId": "67b861a807c4ba410fa33abaf46e66dd79429585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9dbdd208_4d85ec37",
         "filename": "net/base/registry_controlled_domains/registry_controlled_domain.cc",
         "patchSetId": 3

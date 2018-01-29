@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05bb80ec_2aab121a",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-29T22:32:01Z",
+      "side": 1,
+      "message": "Nit: I\u0027d avoid using the word \"ping\" in comments, since that has a well-defined meaning from a networking perspective, and it\u0027s not what we\u0027re actually doing :)",
+      "revId": "9c83715aa8534b6a72a75840b34d18218fffad7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f816058f_34f5ec74",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-29T22:32:01Z",
+      "side": 1,
+      "message": "This wasn\u0027t where I was thinking of hoisting this to.\n\nI think what you want is to add to the conditionals at the end of AutocompleteInput::Init(), so you don\u0027t set canonicalized_url_ in this case.  This isn\u0027t really a navigable URL, so in addition to avoiding being treated as the alternate nav URL, that will avoid some HUP and HQP cases that also shouldn\u0027t run for non-navigable URLs.",
+      "revId": "9c83715aa8534b6a72a75840b34d18218fffad7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a6675ea_3263761b",
+        "filename": "net/base/registry_controlled_domains/registry_controlled_domain.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-29T22:32:01Z",
+      "side": 1,
+      "message": "Nit: This could use a comment saying what the returned values are.  (It could also maybe use a rename.)",
+      "revId": "9c83715aa8534b6a72a75840b34d18218fffad7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dacd2a0e_b3e9d5bc",
+        "filename": "net/base/registry_controlled_domains/registry_controlled_domain.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-29T22:32:01Z",
+      "side": 1,
+      "message": "Nit: Pretty much all these could \"return {std::string::npos, false};\" rather than calling make_pair explicitly.  Added bonus, this might avoid the need to specify template types.",
+      "revId": "9c83715aa8534b6a72a75840b34d18218fffad7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd86077a_b52c326e",
+        "filename": "net/base/registry_controlled_domains/registry_controlled_domain.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-29T22:32:01Z",
+      "side": 1,
+      "message": "Nit: Or:\n\n  const size_t length \u003d host.length() - curr_start;\n  return {(unknown_filter \u003d\u003d INCLUDE_UNKNOWN_REGISTRIES) ? length : 0, false};",
+      "revId": "9c83715aa8534b6a72a75840b34d18218fffad7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc0274ee_4124b068",
+        "filename": "net/base/registry_controlled_domains/registry_controlled_domain.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-29T22:32:01Z",
+      "side": 1,
+      "message": "Nit: I don\u0027t know what the first sentence means.  It sounds like GetRegistryLength() relaxes some rules or something?  I think the second sentence is all you really need.",
+      "revId": "9c83715aa8534b6a72a75840b34d18218fffad7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
