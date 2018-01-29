@@ -247,8 +247,8 @@ class ClientSideDetectionHostTest : public ChromeRenderViewHostTestHarness {
     return mock_profile_;
   }
 
-  void OnPhishingDetectionDone(const std::string& verdict_str) {
-    csd_host_->OnPhishingDetectionDone(verdict_str);
+  void PhishingDetectionDone(const std::string& verdict_str) {
+    csd_host_->PhishingDetectionDone(verdict_str);
   }
 
   void DidStopLoading() { csd_host_->DidStopLoading(); }
@@ -455,7 +455,7 @@ TEST_F(ClientSideDetectionHostTest, OnPhishingDetectionDoneInvalidVerdict) {
           csd_host_.get());
   SetFeatureExtractor(mock_extractor);  // The host class takes ownership.
   EXPECT_CALL(*mock_extractor, ExtractFeatures(_, _, _)).Times(0);
-  OnPhishingDetectionDone("Invalid Protocol Buffer");
+  PhishingDetectionDone("Invalid Protocol Buffer");
   EXPECT_TRUE(Mock::VerifyAndClear(mock_extractor));
 }
 
@@ -480,7 +480,7 @@ TEST_F(ClientSideDetectionHostTest, OnPhishingDetectionDoneNotPhishing) {
               SendClientReportPhishingRequest(
                   Pointee(PartiallyEqualVerdict(verdict)), _, _))
       .WillOnce(DoAll(DeleteArg<0>(), SaveArg<2>(&cb)));
-  OnPhishingDetectionDone(verdict.SerializeAsString());
+  PhishingDetectionDone(verdict.SerializeAsString());
   EXPECT_TRUE(Mock::VerifyAndClear(csd_host_.get()));
   ASSERT_FALSE(cb.is_null());
 
@@ -512,7 +512,7 @@ TEST_F(ClientSideDetectionHostTest, OnPhishingDetectionDoneDisabled) {
               SendClientReportPhishingRequest(
                   Pointee(PartiallyEqualVerdict(verdict)), _, _))
       .WillOnce(DoAll(DeleteArg<0>(), SaveArg<2>(&cb)));
-  OnPhishingDetectionDone(verdict.SerializeAsString());
+  PhishingDetectionDone(verdict.SerializeAsString());
   EXPECT_TRUE(Mock::VerifyAndClear(csd_host_.get()));
   ASSERT_FALSE(cb.is_null());
 
@@ -545,7 +545,7 @@ TEST_F(ClientSideDetectionHostTest, OnPhishingDetectionDoneShowInterstitial) {
               SendClientReportPhishingRequest(
                   Pointee(PartiallyEqualVerdict(verdict)), _, _))
       .WillOnce(DoAll(DeleteArg<0>(), SaveArg<2>(&cb)));
-  OnPhishingDetectionDone(verdict.SerializeAsString());
+  PhishingDetectionDone(verdict.SerializeAsString());
   EXPECT_TRUE(Mock::VerifyAndClear(csd_host_.get()));
   EXPECT_TRUE(Mock::VerifyAndClear(csd_service_.get()));
   ASSERT_FALSE(cb.is_null());
@@ -596,7 +596,7 @@ TEST_F(ClientSideDetectionHostTest, OnPhishingDetectionDoneMultiplePings) {
               SendClientReportPhishingRequest(
                   Pointee(PartiallyEqualVerdict(verdict)), _, _))
       .WillOnce(DoAll(DeleteArg<0>(), SaveArg<2>(&cb)));
-  OnPhishingDetectionDone(verdict.SerializeAsString());
+  PhishingDetectionDone(verdict.SerializeAsString());
   EXPECT_TRUE(Mock::VerifyAndClear(csd_host_.get()));
   EXPECT_TRUE(Mock::VerifyAndClear(csd_service_.get()));
   ASSERT_FALSE(cb.is_null());
@@ -626,7 +626,7 @@ TEST_F(ClientSideDetectionHostTest, OnPhishingDetectionDoneMultiplePings) {
   std::vector<GURL> redirect_chain;
   redirect_chain.push_back(other_phishing_url);
   SetRedirectChain(redirect_chain);
-  OnPhishingDetectionDone(verdict.SerializeAsString());
+  PhishingDetectionDone(verdict.SerializeAsString());
   base::RunLoop().Run();
   EXPECT_TRUE(Mock::VerifyAndClear(csd_host_.get()));
   EXPECT_TRUE(Mock::VerifyAndClear(csd_service_.get()));
@@ -672,7 +672,7 @@ TEST_F(ClientSideDetectionHostTest,
   verdict.set_is_phishing(false);
 
   EXPECT_CALL(*mock_extractor, ExtractFeatures(_, _, _)).Times(0);
-  OnPhishingDetectionDone(verdict.SerializeAsString());
+  PhishingDetectionDone(verdict.SerializeAsString());
   EXPECT_TRUE(Mock::VerifyAndClear(mock_extractor));
 }
 
@@ -700,7 +700,7 @@ TEST_F(ClientSideDetectionHostTest,
   std::vector<GURL> redirect_chain;
   redirect_chain.push_back(url);
   SetRedirectChain(redirect_chain);
-  OnPhishingDetectionDone(verdict.SerializeAsString());
+  PhishingDetectionDone(verdict.SerializeAsString());
   base::RunLoop().Run();
   EXPECT_TRUE(Mock::VerifyAndClear(csd_host_.get()));
 }
@@ -738,7 +738,7 @@ TEST_F(ClientSideDetectionHostTest,
   std::vector<GURL> redirect_chain;
   redirect_chain.push_back(url);
   SetRedirectChain(redirect_chain);
-  OnPhishingDetectionDone(verdict.SerializeAsString());
+  PhishingDetectionDone(verdict.SerializeAsString());
   base::RunLoop().Run();
   EXPECT_TRUE(Mock::VerifyAndClear(csd_host_.get()));
 
@@ -794,7 +794,7 @@ TEST_F(
   std::vector<GURL> redirect_chain;
   redirect_chain.push_back(url);
   SetRedirectChain(redirect_chain);
-  OnPhishingDetectionDone(verdict.SerializeAsString());
+  PhishingDetectionDone(verdict.SerializeAsString());
   base::RunLoop().Run();
   EXPECT_TRUE(Mock::VerifyAndClear(csd_host_.get()));
 }

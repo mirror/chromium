@@ -36,6 +36,7 @@
 #include "content/public/common/frame_navigate_params.h"
 #include "content/public/common/url_constants.h"
 #include "net/http/http_response_headers.h"
+#include "third_party/WebKit/common/associated_interfaces/associated_interface_registry.h"
 #include "url/gurl.h"
 
 using content::BrowserThread;
@@ -330,6 +331,11 @@ ClientSideDetectionHost* ClientSideDetectionHost::Create(
   return new ClientSideDetectionHost(tab);
 }
 
+void ClientSideDetectionHost::PhishingDetectionClientRequest(
+    mojom::PhishingDetectionClientRequest request) {
+  phishing_detection_client_bindings_.AddBinding(this, std::move(request));
+}
+
 ClientSideDetectionHost::ClientSideDetectionHost(WebContents* tab)
     : content::WebContentsObserver(tab),
       csd_service_(NULL),
@@ -344,6 +350,11 @@ ClientSideDetectionHost::ClientSideDetectionHost(WebContents* tab)
   csd_service_ = g_browser_process->safe_browsing_detection_service();
   feature_extractor_.reset(new BrowserFeatureExtractor(tab, this));
 
+  auto registry = base::MakeUnique<service_manager::BinderRegistry>();
+  registry->AddInterface(base::BindRepeating(
+      &ClientSideDetectionHost::PhishingDetectionClientRequest,
+      base::Unretained(this)));
+
   scoped_refptr<SafeBrowsingService> sb_service =
       g_browser_process->safe_browsing_service();
   if (sb_service.get()) {
@@ -356,18 +367,6 @@ ClientSideDetectionHost::ClientSideDetectionHost(WebContents* tab)
 ClientSideDetectionHost::~ClientSideDetectionHost() {
   if (ui_manager_.get())
     ui_manager_->RemoveObserver(this);
-}
-
-bool ClientSideDetectionHost::OnMessageReceived(
-    const IPC::Message& message,
-    content::RenderFrameHost* render_frame_host) {
-  bool handled = true;
-  IPC_BEGIN_MESSAGE_MAP(ClientSideDetectionHost, message)
-    IPC_MESSAGE_HANDLER(SafeBrowsingHostMsg_PhishingDetectionDone,
-                        OnPhishingDetectionDone)
-    IPC_MESSAGE_UNHANDLED(handled = false)
-  IPC_END_MESSAGE_MAP()
-  return handled;
 }
 
 void ClientSideDetectionHost::DidFinishNavigation(
@@ -549,7 +548,7 @@ void ClientSideDetectionHost::MaybeStartMalwareFeatureExtraction() {
   }
 }
 
-void ClientSideDetectionHost::OnPhishingDetectionDone(
+void ClientSideDetectionHost::PhishingDetectionDone(
     const std::string& verdict_str) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   // There is something seriously wrong if there is no service class but

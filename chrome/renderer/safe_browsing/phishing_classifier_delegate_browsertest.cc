@@ -61,21 +61,6 @@ class MockScorer : public Scorer {
 
 class FakeRenderThread : public ChromeMockRenderThread {
  public:
-  // Instead of sending this message, we verify its content here.
-  bool Send(IPC::Message* msg) override {
-    // handle and verify message here.
-    IPC_BEGIN_MESSAGE_MAP(FakeRenderThread, *msg)
-      IPC_MESSAGE_HANDLER(SafeBrowsingHostMsg_PhishingDetectionDone,
-                          VerifyMessageContent)
-    IPC_END_MESSAGE_MAP()
-    if (msg) {  // Prevent memory leak.
-      delete msg;
-      msg = nullptr;
-    }
-    // Return true anyway, since we don't want to block other IPC.
-    return true;
-  }
-
   void VerifyMessageContent(const std::string& verdict_str) {
     ClientPhishingRequest verdict;
     if (verdict.ParseFromString(verdict_str)) {

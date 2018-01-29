@@ -15,8 +15,10 @@
 #include "base/memory/ref_counted.h"
 #include "chrome/browser/safe_browsing/browser_feature_extractor.h"
 #include "chrome/browser/safe_browsing/ui_manager.h"
+#include "components/safe_browsing/common/safe_browsing.mojom.h"
 #include "components/safe_browsing/db/database_manager.h"
 #include "content/public/browser/web_contents_observer.h"
+#include "mojo/public/cpp/bindings/binding_set.h"
 #include "url/gurl.h"
 
 namespace safe_browsing {
@@ -29,16 +31,13 @@ class ClientSideDetectionService;
 // class which sends a ping to a server to validate the verdict.
 // TODO(noelutz): move all client-side detection IPCs to this class.
 class ClientSideDetectionHost : public content::WebContentsObserver,
-                                public SafeBrowsingUIManager::Observer {
+                                public SafeBrowsingUIManager::Observer,
+                                public mojom::PhishingDetectionClient {
  public:
   // The caller keeps ownership of the tab object and is responsible for
   // ensuring that it stays valid until WebContentsDestroyed is called.
   static ClientSideDetectionHost* Create(content::WebContents* tab);
   ~ClientSideDetectionHost() override;
-
-  // From content::WebContentsObserver.
-  bool OnMessageReceived(const IPC::Message& message,
-                         content::RenderFrameHost* render_frame_host) override;
 
   // From content::WebContentsObserver.  If we navigate away we cancel all
   // pending callbacks that could show an interstitial, and check to see whether
@@ -85,7 +84,7 @@ class ClientSideDetectionHost : public content::WebContentsObserver,
   void OnPhishingPreClassificationDone(bool should_classify);
 
   // Verdict is an encoded ClientPhishingRequest protocol message.
-  void OnPhishingDetectionDone(const std::string& verdict);
+  void PhishingDetectionDone(const std::string& verdict) override;
 
   // Callback that is called when the server ping back is
   // done. Display an interstitial if |is_phishing| is true.
@@ -97,6 +96,12 @@ class ClientSideDetectionHost : public content::WebContentsObserver,
   // Otherwise, we do nothing.  Called in UI thread.
   void MaybeShowMalwareWarning(GURL original_url, GURL malware_url,
                                bool is_malware);
+
+  void PhishingDetectionClientRequest(
+      mojom::PhishingDetectionClientRequest request);
+
+  mojo::BindingSet<mojom::PhishingDetectionClient>
+      phishing_detection_client_bindings_;
 
   // Callback that is called when the browser feature extractor is done.
   // This method is responsible for deleting the request object.  Called on

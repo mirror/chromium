@@ -17,6 +17,8 @@
           "content::mojom::FrameFactory",
           "content::mojom::RenderWidgetWindowTreeClientFactory",
           "content::mojom::SharedWorkerFactory",
+          "safe_browsing::mojom::PhishingDetection",
+          "safe_browsing::mojom::ThreatReport",
           "IPC::mojom::ChannelBootstrap",
           "visitedlink::mojom::VisitedLinkNotificationSink",
           "web_cache::mojom::WebCache"

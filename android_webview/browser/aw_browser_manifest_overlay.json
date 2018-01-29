@@ -4,7 +4,9 @@
     "service_manager:connector": {
       "provides": {
         "renderer": [
-          "safe_browsing::mojom::SafeBrowsing"
+          "safe_browsing::mojom::PhishingDetection",
+          "safe_browsing::mojom::SafeBrowsing",
+          "safe_browsing::mojom::ThreatReport"
         ]
       }
     },
@@ -14,7 +16,9 @@
           "autofill::mojom::AutofillDriver",
           "autofill::mojom::PasswordManagerDriver",
           "blink::mojom::TextSuggestionHost",
-          "web_restrictions::mojom::WebRestrictions"
+          "web_restrictions::mojom::WebRestrictions",
+          "safe_browsing::mojom::PhishingDetection",
+          "safe_browsing::mojom::ThreatReport"
         ]
       }
     }
