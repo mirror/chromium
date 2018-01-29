@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b0c0495_bb0cf6c9",
+        "filename": "services/identity/public/cpp/identity_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-29T09:21:41Z",
+      "side": 1,
+      "message": "I think everything that is done is this method should be done when IdentityManagerHolder::Shutdown() is called (otherwise there is no gurantee that |signin_manager_| was not destroyed before.\n\nI think that IdentityManager is not destroyed when IdentityManagerHolder is shut down:\nhttps://cs.chromium.org/chromium/src/chrome/browser/signin/identity_manager_factory.cc?rcl\u003d12668a4cfab17fe2b62697327b65194ad80e81be\u0026l\u003d20",
+      "range": {
+        "startLine": 22,
+        "startChar": 18,
+        "endLine": 22,
+        "endChar": 33
+      },
+      "revId": "170bd57f511d031cadaa36eb83faa16ae384479c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
