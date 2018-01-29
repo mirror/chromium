@@ -22,6 +22,30 @@
       "revId": "ca6d6952c1c2bec370aea052830b7f8fb6581560",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca4be639_77f8427e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-29T23:43:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb25e43b_0fef6569",
+      "range": {
+        "startLine": 172,
+        "startChar": 8,
+        "endLine": 174,
+        "endChar": 9
+      },
+      "revId": "ca6d6952c1c2bec370aea052830b7f8fb6581560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
