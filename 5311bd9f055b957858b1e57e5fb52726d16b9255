@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "99d7ec8a_cf5e23cb",
+        "filename": "device/ctap/ctap_response_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-29T17:54:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8db69ed2_26ed97c2",
+      "range": {
+        "startLine": 301,
+        "startChar": 0,
+        "endLine": 301,
+        "endChar": 31
+      },
+      "revId": "5311bd9f055b957858b1e57e5fb52726d16b9255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb6636be_b4061b37",
         "filename": "device/ctap/device_response_convertor.cc",
         "patchSetId": 17
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-19T16:24:18Z",
       "side": 1,
       "message": "nit: Is it worth creating a helper method for these operations that you\u0027re repeating multiple times? Can we consolidate some of the other repeated operations in this file as well?",
+      "range": {
+        "startLine": 216,
+        "startChar": 0,
+        "endLine": 220,
+        "endChar": 0
+      },
+      "revId": "5311bd9f055b957858b1e57e5fb52726d16b9255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ca9668d_0a2d9cd4",
+        "filename": "device/ctap/device_response_convertor.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-29T17:54:25Z",
+      "side": 1,
+      "message": "Hmm I\u0027m not sure if we could reduce the amount of code using helper method. Since many of the above operations are for optional values we have 3 possible return cases :\n \n1) Device response map does not contain key-value pair with given key, in which case nothing happens.\n\n2) Device response map contains value with given key but the value type is incorrect, in which case null optional should be returned. \n\n3) Response contains key value pair with correct type, in which case value should be added to corresponding Response object.   \n\nThus, helper function with boolean return value would not be able to encapsulate all possible scenario and I feel like adding Enum just for this would be a overkill. \n\nPlease let me know if I\u0027ve missed other better solutions! :)",
+      "parentUuid": "fb6636be_b4061b37",
       "range": {
         "startLine": 216,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f051dee8_2e17a5ae",
+        "filename": "device/ctap/device_response_convertor.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-29T17:54:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d1e2a7e_03397a31",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 48
+      },
+      "revId": "5311bd9f055b957858b1e57e5fb52726d16b9255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe149ae9_8d3e087b",
         "filename": "device/ctap/device_response_convertor.h",
         "patchSetId": 17
@@ -91,6 +163,30 @@
       "revId": "5311bd9f055b957858b1e57e5fb52726d16b9255",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ecb6985_d9736247",
+        "filename": "device/ctap/device_response_convertor.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-29T17:54:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe149ae9_8d3e087b",
+      "range": {
+        "startLine": 23,
+        "startChar": 29,
+        "endLine": 23,
+        "endChar": 30
+      },
+      "revId": "5311bd9f055b957858b1e57e5fb52726d16b9255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
