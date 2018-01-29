@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37a4c144_4690aa02",
+        "filename": "ui/gfx/x/x11.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-29T18:50:55Z",
+      "side": 1,
+      "message": "Is there a way to not have to hardcode these here? e.g. something like:\n\n#define TMP_FocusIn FocusIn\n#undef FocusIn\n\n... other undefs\n\nnamespace x11 {\n...\nstatic const int FocusIn \u003d TMP_FocusIn;\n...\n}\n\n#undef TMP_FocusIn\n... other TMP_ undefs.\n\nOr, at least some sort of other checks, e.g.\n\n#if FocusIn !\u003d 9\n#error Whoops\n#endif\n\netc.",
+      "revId": "d57402ec5eaefb020654dc6f7a4cb645fbf18e89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
