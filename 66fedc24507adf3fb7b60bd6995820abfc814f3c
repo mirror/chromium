@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b831564e_6e0b9a1d",
+        "filename": "third_party/WebKit/Source/platform/heap/ProcessHeap.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2018-01-29T10:57:56Z",
+      "side": 1,
+      "message": "Without the TryLock logic I think this is the same as WTF::Locker so removed.",
+      "parentUuid": "d62a36b9_541c5dcf",
+      "revId": "66fedc24507adf3fb7b60bd6995820abfc814f3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c1e2402_775a7e4d",
         "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "66fedc24507adf3fb7b60bd6995820abfc814f3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ff6716b_b0d763af",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1293,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2018-01-29T10:57:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c1e2402_775a7e4d",
+      "revId": "66fedc24507adf3fb7b60bd6995820abfc814f3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
