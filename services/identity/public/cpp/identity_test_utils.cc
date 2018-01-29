@@ -69,19 +69,19 @@ void MakePrimaryAccountAvailable(SigninManagerForTest* signin_manager,
                                  IdentityManager* identity_manager,
                                  const std::string& refresh_token,
                                  const std::string& gaia_id,
-                                 const std::string& username) {
+                                 const std::string& email_address) {
 #if defined(OS_CHROMEOS)
   // ChromeOS has no real notion of signin, so just plumb the information
   // through.
-  identity_manager->SetPrimaryAccountSynchronouslyForTests(gaia_id, username,
-                                                           refresh_token);
+  identity_manager->SetPrimaryAccountSynchronouslyForTests(
+      refresh_token, gaia_id, email_address);
 #else
   base::RunLoop run_loop;
   OneShotIdentityManagerObserver signin_observer(identity_manager,
                                                  run_loop.QuitClosure());
 
   signin_manager->StartSignInWithRefreshToken(
-      refresh_token, gaia_id, username, /*password=*/"",
+      refresh_token, gaia_id, email_address, /*password=*/"",
       SigninManager::OAuthTokenFetchedCallback());
   signin_manager->CompletePendingSignin();
   token_service->UpdateCredentials(signin_manager->GetAuthenticatedAccountId(),

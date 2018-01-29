@@ -92,9 +92,9 @@ void IdentityManager::RemoveDiagnosticsObserver(DiagnosticsObserver* observer) {
 }
 
 void IdentityManager::SetPrimaryAccountSynchronouslyForTests(
+    std::string refresh_token,
     std::string gaia_id,
-    std::string email_address,
-    std::string refresh_token) {
+    std::string email_address) {
   signin_manager_->SetAuthenticatedAccountInfo(gaia_id, email_address);
   primary_account_info_ = signin_manager_->GetAuthenticatedAccountInfo();
 

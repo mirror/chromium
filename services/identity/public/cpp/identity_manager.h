@@ -115,9 +115,9 @@ class IdentityManager : public SigninManagerBase::Observer,
 
   // Sets the primary account info synchronously with both the IdentityManager
   // and its backing SigninManager/ProfileOAuth2TokenService instances.
-  void SetPrimaryAccountSynchronouslyForTests(std::string gaia_id,
-                                              std::string email_address,
-                                              std::string refresh_token);
+  void SetPrimaryAccountSynchronouslyForTests(std::string refresh_token,
+                                              std::string gaia_id,
+                                              std::string email_address);
 
   // SigninManagerBase::Observer:
   void GoogleSigninSucceeded(const AccountInfo& account_info) override;
