@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c565168_a365ef5e",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1223,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-29T17:49:35Z",
+      "side": 1,
+      "message": "Should this be cellLike or just CELL? If the top-left cell of a table is a\nheader should it be a row header for each column header and vice versa?",
+      "revId": "e962b7096934413e1a0082b75b44aef39a230974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27bdb777_5ebe188f",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1224,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-29T17:49:35Z",
+      "side": 1,
+      "message": "Note that we could expose indirect_child_ids if we wanted to...would\nthat make things easier?",
+      "revId": "e962b7096934413e1a0082b75b44aef39a230974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
