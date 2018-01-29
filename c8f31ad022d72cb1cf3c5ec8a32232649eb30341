@@ -707,6 +707,30 @@
     },
     {
       "key": {
+        "uuid": "7df973d1_b93b6cd8",
+        "filename": "chrome_server/chrome_server.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T15:23:03Z",
+      "side": 1,
+      "message": "You can\u0027t use base/logging unless you sensibly initialize it. There\u0027s quite a bit of code in chrome/common/logging_chrome.cc\u0027s InitChromeLogging, with dependencies on PathService. Minimally, you\u0027d need to do something similar to initialize logging with a path to a reasonable file before you call any LOG APIs.\n\nOr, you can use ATLTrace and see messages appear in dbgview.exe (https://docs.microsoft.com/en-us/sysinternals/downloads/debugview) or your favorite debugger.",
+      "parentUuid": "c7ecf255_27faaa8d",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 22
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "338b9cf8_dea60283",
         "filename": "chrome_server/chrome_server.cc",
         "patchSetId": 34
@@ -742,6 +766,30 @@
       "side": 1,
       "message": "Done. Removed.",
       "parentUuid": "338b9cf8_dea60283",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 11
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8a2849b_8b7ab611",
+        "filename": "chrome_server/chrome_server.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T15:23:03Z",
+      "side": 1,
+      "message": "while it may compile and link without it, it is required. this is a c-sytle function that must use the ordinary \"C\"-style calling conventions; see crt/src/vcruntime/vcstartup_internal.h.",
+      "parentUuid": "b075843d_b779416d",
       "range": {
         "startLine": 21,
         "startChar": 0,

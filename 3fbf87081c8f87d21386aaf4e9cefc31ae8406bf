@@ -1,0 +1,439 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2146d118_8fca4fcf",
+        "filename": "chrome/installer/mini_installer/chrome.release",
+        "patchSetId": 41
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T15:23:03Z",
+      "side": 1,
+      "message": "this file should be in the same block as chrome.dll above since it isn\u0027t specific to Google Chrome (right?).",
+      "revId": "3fbf87081c8f87d21386aaf4e9cefc31ae8406bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a4c5688_9f94611a",
+        "filename": "chrome/installer/mini_installer/chrome.release",
+        "patchSetId": 41
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T15:23:03Z",
+      "side": 1,
+      "message": "i don\u0027t think we should have a \"win_\" prefix on a win-only file.",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 3
+      },
+      "revId": "3fbf87081c8f87d21386aaf4e9cefc31ae8406bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d46eea38_866a43f7",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T15:23:03Z",
+      "side": 1,
+      "message": "NULL -\u003e nullptr",
+      "range": {
+        "startLine": 188,
+        "startChar": 48,
+        "endLine": 188,
+        "endChar": 52
+      },
+      "revId": "3fbf87081c8f87d21386aaf4e9cefc31ae8406bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca11479f_5e0d724c",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T15:23:03Z",
+      "side": 1,
+      "message": "you need to add a work item to delete the old registration (i.e., delete the key toast_activator_reg_path) before adding the probe callback below. to handle the case where 32-bit Chrome is being updated to 64-bit (or the inverse), it\u0027s probably best to delete in both hives explicitly.",
+      "revId": "3fbf87081c8f87d21386aaf4e9cefc31ae8406bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f6f59ef_dda1a7a6",
+        "filename": "chrome/installer/setup/setup_util.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T15:23:03Z",
+      "side": 1,
+      "message": "nit: if we\u0027re going to be pedantic, i would call it the \"string terminator\" rather than \"null terminator\".",
+      "range": {
+        "startLine": 862,
+        "startChar": 27,
+        "endLine": 862,
+        "endChar": 31
+      },
+      "revId": "3fbf87081c8f87d21386aaf4e9cefc31ae8406bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c242a300_135f1de1",
+        "filename": "chrome/installer/setup/setup_util.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T15:23:03Z",
+      "side": 1,
+      "message": "string terminator",
+      "range": {
+        "startLine": 870,
+        "startChar": 45,
+        "endLine": 870,
+        "endChar": 60
+      },
+      "revId": "3fbf87081c8f87d21386aaf4e9cefc31ae8406bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84a072bb_87035e4d",
+        "filename": "win_notification_helper/notification_activator.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T15:23:03Z",
+      "side": 1,
+      "message": "\u003d default;",
+      "range": {
+        "startLine": 9,
+        "startChar": 48,
+        "endLine": 9,
+        "endChar": 50
+      },
+      "revId": "3fbf87081c8f87d21386aaf4e9cefc31ae8406bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba94ae9a_7a030f29",
+        "filename": "win_notification_helper/notification_activator.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T15:23:03Z",
+      "side": 1,
+      "message": "is this true for all toasts, or only for toasts created by that particular browser instance?",
+      "revId": "3fbf87081c8f87d21386aaf4e9cefc31ae8406bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8912368_12f8dbca",
+        "filename": "win_notification_helper/notification_activator.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T15:23:03Z",
+      "side": 1,
+      "message": "is this payload documented anywhere?",
+      "revId": "3fbf87081c8f87d21386aaf4e9cefc31ae8406bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "526a4433_dcbd9c55",
+        "filename": "win_notification_helper/notification_activator.h",
+        "patchSetId": 41
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T15:23:03Z",
+      "side": 1,
+      "message": "this comment sorta states a fact of working with the AC rather than documents the class at hand. could you rephrase it?",
+      "revId": "3fbf87081c8f87d21386aaf4e9cefc31ae8406bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b468e913_982d451e",
+        "filename": "win_notification_helper/notification_activator.h",
+        "patchSetId": 41
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T15:23:03Z",
+      "side": 1,
+      "message": "\u003d default; since this looks trivial",
+      "range": {
+        "startLine": 20,
+        "startChar": 25,
+        "endLine": 20,
+        "endChar": 26
+      },
+      "revId": "3fbf87081c8f87d21386aaf4e9cefc31ae8406bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cdc2cfa_48ff175b",
+        "filename": "win_notification_helper/notification_activator.h",
+        "patchSetId": 41
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T15:23:03Z",
+      "side": 1,
+      "message": "RunTime class has the dtor in the protected: section. i suggest you do the same since instances shouldn\u0027t be destroyed by their holders (only Release() should do so).",
+      "revId": "3fbf87081c8f87d21386aaf4e9cefc31ae8406bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d15b596_bf724581",
+        "filename": "win_notification_helper/notification_activator.h",
+        "patchSetId": 41
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T15:23:03Z",
+      "side": 1,
+      "message": "pro tip: these URLs can be shortened to: https://msdn.microsoft.com/library/windows/desktop/mt643712.aspx",
+      "range": {
+        "startLine": 25,
+        "startChar": 5,
+        "endLine": 25,
+        "endChar": 84
+      },
+      "revId": "3fbf87081c8f87d21386aaf4e9cefc31ae8406bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1fd4842_198c3457",
+        "filename": "win_notification_helper/notification_activator_registrar.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T15:23:03Z",
+      "side": 1,
+      "message": "i think this isn\u0027t the best name for this class. the class is really serving as the module for an out-of-proc COM server. it just so happens that it only hosts one class at the moment. i think i like something simple like ServerModule or ComServerModule.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 30
+      },
+      "revId": "3fbf87081c8f87d21386aaf4e9cefc31ae8406bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b28a121_0e3efbc1",
+        "filename": "win_notification_helper/notification_activator_registrar.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T15:23:03Z",
+      "side": 1,
+      "message": "if everything up to this point succeeded, i\u0027m not sure why unregistration would potentially lead the caller to think that this function failed. since the return value of Run() is ignored anyway, how about making it a void function to avoid the ambiguity?",
+      "range": {
+        "startLine": 31,
+        "startChar": 9,
+        "endLine": 31,
+        "endChar": 31
+      },
+      "revId": "3fbf87081c8f87d21386aaf4e9cefc31ae8406bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87c599c9_15547b74",
+        "filename": "win_notification_helper/notification_activator_registrar.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T15:23:03Z",
+      "side": 1,
+      "message": "an",
+      "range": {
+        "startLine": 54,
+        "startChar": 12,
+        "endLine": 54,
+        "endChar": 13
+      },
+      "revId": "3fbf87081c8f87d21386aaf4e9cefc31ae8406bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe287696_96068159",
+        "filename": "win_notification_helper/notification_activator_registrar.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T15:23:03Z",
+      "side": 1,
+      "message": "\"Windows internals\" -\u003e WRL::Module",
+      "range": {
+        "startLine": 62,
+        "startChar": 44,
+        "endLine": 62,
+        "endChar": 61
+      },
+      "revId": "3fbf87081c8f87d21386aaf4e9cefc31ae8406bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c0d6baa_068533dc",
+        "filename": "win_notification_helper/notification_activator_registrar.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T15:23:03Z",
+      "side": 1,
+      "message": "nit: \"have a\" -\u003e \"be the\"",
+      "range": {
+        "startLine": 68,
+        "startChar": 52,
+        "endLine": 68,
+        "endChar": 58
+      },
+      "revId": "3fbf87081c8f87d21386aaf4e9cefc31ae8406bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "215d397d_60122dee",
+        "filename": "win_notification_helper/notification_activator_registrar.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T15:23:03Z",
+      "side": 1,
+      "message": "hmm. this assumes that there\u0027s only one factory being registered. either stuff the interface pointer in an array like class_ids and cookies_, or drop a comment saying that this will need to be done if more than one class is ever registered.",
+      "range": {
+        "startLine": 70,
+        "startChar": 51,
+        "endLine": 70,
+        "endChar": 79
+      },
+      "revId": "3fbf87081c8f87d21386aaf4e9cefc31ae8406bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed9869ca_26c58718",
+        "filename": "win_notification_helper/notification_activator_registrar.h",
+        "patchSetId": 41
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T15:23:03Z",
+      "side": 1,
+      "message": "can you use \"base/win/windows_types.h\" instead?",
+      "revId": "3fbf87081c8f87d21386aaf4e9cefc31ae8406bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca990a8c_dcaa0636",
+        "filename": "win_notification_helper/win_notification_helper.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T15:23:03Z",
+      "side": 1,
+      "message": "i think it\u0027s more clear for this to say something like\n  // Run the out-of-proc COM server.",
+      "revId": "3fbf87081c8f87d21386aaf4e9cefc31ae8406bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
