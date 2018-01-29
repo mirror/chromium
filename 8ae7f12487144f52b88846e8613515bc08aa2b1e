@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58411d5b_31e401c1",
+        "filename": "chrome/browser/extensions/lazy_background_page_apitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-29T22:39:50Z",
+      "side": 1,
+      "message": "So, the non-MD test was never actually checking the value of is_inactive. In other words, it was never testing what it advertises (verified locally that it was passing either way).\n\nAlso interestingly the test does not turn developer mode on. It just happens that div.active-views is in the DOM, but hidden (unlike the MD version which uses dom-if to prune the DOM aggressively).",
+      "range": {
+        "startLine": 624,
+        "startChar": 2,
+        "endLine": 624,
+        "endChar": 27
+      },
+      "revId": "8ae7f12487144f52b88846e8613515bc08aa2b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
