@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c5bfdd7_dcbc3f42",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ObjectParser.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-29T01:19:59Z",
+      "side": 1,
+      "message": "It looks unnecessary to pass both Isolate* and Context. You can get an isolate by context-\u003eGetIsolate().",
+      "revId": "23a23cd389610e3b780a4b8bf1cf90656391d34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
