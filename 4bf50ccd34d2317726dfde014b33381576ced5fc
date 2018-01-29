@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d07fe97_2f990ff3",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-29T20:53:08Z",
+      "side": 1,
+      "message": "Mike - this is the part that asks the question: which MIME types should be protected by XSDB.",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 48
+      },
+      "revId": "4bf50ccd34d2317726dfde014b33381576ced5fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f49116c_1a5713a6",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-29T20:53:08Z",
+      "side": 1,
+      "message": "And this is the risky (but probably correct in the long-term) part.",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 36
+      },
+      "revId": "4bf50ccd34d2317726dfde014b33381576ced5fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
