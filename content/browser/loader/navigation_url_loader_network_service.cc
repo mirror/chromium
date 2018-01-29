@@ -6,6 +6,7 @@
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
+#include "base/debug/stack_trace.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/task_scheduler/post_task.h"
@@ -624,6 +625,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
     if (IsRequestHandlerEnabled()) {
       is_download = IsDownload(*response.get(), url_, url_chain_,
                                initiator_origin_, suggested_filename_);
+      base::debug::StackTrace().Print();
       is_stream = false;
     } else {
       ResourceDispatcherHostImpl* rdh = ResourceDispatcherHostImpl::Get();

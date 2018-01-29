@@ -1572,6 +1572,7 @@ class CONTENT_EXPORT RenderFrameImpl
     blink::WebTriggeringEventInfo triggering_event_info;
     blink::WebFormElement form;
     blink::WebSourceLocation source_location;
+    bool should_squelch_downloads;
 
     explicit PendingNavigationInfo(const NavigationPolicyInfo& info);
   };

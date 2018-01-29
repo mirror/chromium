@@ -19,6 +19,7 @@
 #include "base/command_line.h"
 #include "base/compiler_specific.h"
 #include "base/debug/alias.h"
+#include "base/debug/stack_trace.h"
 #include "base/feature_list.h"
 #include "base/logging.h"
 #include "base/macros.h"
@@ -900,6 +901,8 @@ void ResourceDispatcherHostImpl::BeginRequest(
   DCHECK(requester_info->IsRenderer() || requester_info->IsNavigationPreload());
   int child_id = requester_info->child_id();
 
+  LOG(ERROR) << "BeginRequest " << request_data.url;
+
   // Reject request id that's currently in use.
   if (IsRequestIDInUse(GlobalRequestID(child_id, request_id))) {
     // Navigation preload requests have child_id's of -1 and monotonically
@@ -1078,6 +1081,11 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
   }
 
   // Construct the request.
+  LOG(ERROR) << "Creating request for "
+             << (is_navigation_stream_request
+                     ? request_data.resource_body_stream_url
+                     : request_data.url);
+
   std::unique_ptr<net::URLRequest> new_request = request_context->CreateRequest(
       is_navigation_stream_request ? request_data.resource_body_stream_url
                                    : request_data.url,
@@ -1210,7 +1218,8 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
       request_data.should_replace_current_entry,
       false,  // is download
       false,  // is stream
-      false,  // allow_download,
+      false,  // allow_downloads
+      false,  // should_squelch_download
       request_data.has_user_gesture, request_data.enable_load_timing,
       request_data.enable_upload_progress, do_not_prompt_for_login,
       request_data.keepalive,
@@ -1500,6 +1509,7 @@ ResourceRequestInfoImpl* ResourceDispatcherHostImpl::CreateRequestInfo(
       download,  // is_download
       false,     // is_stream
       download,  // allow_download
+      false,     // should_squelch_download
       false,     // has_user_gesture
       false,     // enable_load_timing
       false,     // enable_upload_progress
@@ -1817,6 +1827,7 @@ void ResourceDispatcherHostImpl::BeginNavigationRequest(
     AppCacheNavigationHandleCore* appcache_handle_core,
     uint32_t url_loader_options,
     GlobalRequestID* global_request_id) {
+  base::debug::StackTrace().Print();
   // PlzNavigate: BeginNavigationRequest currently should only be used for the
   // browser-side navigations project.
   CHECK(IsBrowserSideNavigationEnabled());
@@ -1824,6 +1835,8 @@ void ResourceDispatcherHostImpl::BeginNavigationRequest(
   DCHECK_EQ(IsNavigationMojoResponseEnabled(), !loader);
   DCHECK_EQ(IsNavigationMojoResponseEnabled(), url_loader_client.is_bound());
   DCHECK_EQ(IsNavigationMojoResponseEnabled(), url_loader_request.is_pending());
+
+  // LOG(ERROR) << "BeginNavigationRequest for " << info.common_params.url;
 
   ResourceType resource_type = info.is_main_frame ?
       RESOURCE_TYPE_MAIN_FRAME : RESOURCE_TYPE_SUB_FRAME;
@@ -1937,7 +1950,9 @@ void ResourceDispatcherHostImpl::BeginNavigationRequest(
       false,
       false,  // is download
       false,  // is stream
-      info.common_params.allow_download, info.common_params.has_user_gesture,
+      info.common_params.allow_download,
+      info.common_params.should_squelch_downloads,
+      info.common_params.has_user_gesture,
       true,   // enable_load_timing
       false,  // enable_upload_progress
       false,  // do_not_prompt_for_login
@@ -2166,6 +2181,8 @@ void ResourceDispatcherHostImpl::BeginURLRequest(
     ResourceContext* context) {
   DCHECK(io_thread_task_runner_->BelongsToCurrentThread());
   DCHECK(!request->is_pending());
+
+  LOG(ERROR) << "BeginURLRequest for " << request->url();
 
   ResourceRequestInfoImpl* info =
       ResourceRequestInfoImpl::ForRequest(request.get());

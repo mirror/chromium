@@ -74,6 +74,7 @@ struct CONTENT_EXPORT CommonNavigationParams {
       CSPDisposition should_check_main_world_csp,
       bool started_from_context_menu,
       bool has_user_gesture,
+      bool should_squelch_downloads,
       const base::Optional<std::string>& suggested_filename);
   CommonNavigationParams(const CommonNavigationParams& other);
   ~CommonNavigationParams();
@@ -156,6 +157,9 @@ struct CONTENT_EXPORT CommonNavigationParams {
 
   // True if the request was user initiated.
   bool has_user_gesture;
+
+  // True if a download should be squelched due to policies.
+  bool should_squelch_downloads;
 
   // If the navigation started in response to a HTML anchor element with a
   // download attribute, this is the (possible empty) value of the download
