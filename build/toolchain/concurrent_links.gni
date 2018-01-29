@@ -35,8 +35,8 @@ if (concurrent_links == -1) {
     _args = [ "--mem_per_link_gb=4" ]
   } else if (is_android && !is_component_build && symbol_level == 2) {
     _args = [ "--mem_per_link_gb=25" ]
-  } else {
-    _args = []
+  } else if (is_linux && symbol_level == 1) {
+    _args = [ "--mem_per_link_gb=3" ]
   }
 
   # TODO(crbug.com/617429) Pass more build configuration info to the script
