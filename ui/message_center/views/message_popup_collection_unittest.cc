@@ -18,6 +18,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/compositor/scoped_animation_duration_scale_mode.h"
 #include "ui/display/display.h"
 #include "ui/events/event.h"
 #include "ui/events/event_constants.h"
@@ -28,6 +29,8 @@
 #include "ui/message_center/fake_message_center.h"
 #include "ui/message_center/public/cpp/message_center_constants.h"
 #include "ui/message_center/views/desktop_popup_alignment_delegate.h"
+#include "ui/message_center/views/message_view.h"
+#include "ui/message_center/views/slide_out_controller.h"
 #include "ui/message_center/views/toast_contents_view.h"
 #include "ui/views/test/views_test_base.h"
 #include "ui/views/widget/widget.h"
@@ -100,6 +103,8 @@ class MessagePopupCollectionTest : public views::ViewsTestBase {
  protected:
   MessagePopupCollection* collection() { return collection_.get(); }
 
+  int GetDeferCounter() { return collection_->defer_counter_; }
+
   size_t GetToastCounts() {
     return collection_->toasts_.size();
   }
@@ -138,6 +143,14 @@ class MessagePopupCollectionTest : public views::ViewsTestBase {
         return *iter;
     }
     return NULL;
+  }
+
+  void SlideOutToast(const std::string& id) {
+    ui::ScopedAnimationDurationScaleMode zero_duration_scope(
+        ui::ScopedAnimationDurationScaleMode::ZERO_DURATION);
+    ui::GestureEventDetails details(ui::ET_SCROLL_FLING_START, 1000.0f, 0.f);
+    ui::GestureEvent event(0, 0, ui::EF_NONE, ui::EventTimeForNow(), details);
+    GetToast(id)->message_view()->slide_out_controller_.OnGestureEvent(&event);
   }
 
   std::string AddNotification() {
@@ -751,6 +764,19 @@ TEST_F(MessagePopupCollectionTest, ChangingNotificationSize) {
 
   CloseAllToasts();
   WaitForTransitionsDone();
+}
+
+TEST_F(MessagePopupCollectionTest, RemoveBySlide) {
+  std::string id = AddNotification();
+  WaitForTransitionsDone();
+  EXPECT_EQ(0, GetDeferCounter());
+  EXPECT_EQ(1u, GetToastCounts());
+
+  SlideOutToast(id);
+  WaitForTransitionsDone();
+
+  EXPECT_EQ(0, GetDeferCounter());
+  EXPECT_EQ(0u, GetToastCounts());
 }
 
 }  // namespace test
