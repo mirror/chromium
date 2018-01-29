@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "53dc9bad_2feac23b",
+        "filename": "third_party/android_crazy_linker/src/src/crazy_linker_globals.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2018-01-29T15:03:39Z",
+      "side": 1,
+      "message": "Good point. I intend to refactor this a little bit to avoid redudant Get() calls, but this will be for a future CL, so changed this to static GetValidHandles(). Thanks.",
+      "parentUuid": "1b6d7a8b_06ee90ca",
+      "range": {
+        "startLine": 41,
+        "startChar": 13,
+        "endLine": 41,
+        "endChar": 33
+      },
+      "revId": "533731563787dbe47e9b15de88aa4a7c1524bd91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c310388_4f697a66",
         "filename": "third_party/android_crazy_linker/src/src/crazy_linker_pointer_set.cpp",
         "patchSetId": 3
@@ -82,6 +106,30 @@
       "writtenOn": "2018-01-29T14:06:30Z",
       "side": 1,
       "message": "can these two be in anonymous namespace? That\u0027d be more consistent with Chromium code, but I don\u0027t know what the convention is in the crazylinker. Up to you.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 6
+      },
+      "revId": "533731563787dbe47e9b15de88aa4a7c1524bd91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15439c68_b9d95779",
+        "filename": "third_party/android_crazy_linker/src/src/crazy_linker_pointer_set.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2018-01-29T15:03:39Z",
+      "side": 1,
+      "message": "I prefer \u0027static\u0027 for simple functions because they don\u0027t have that ugly \"(anonymous namespace)\" in log traces (which also makes putting breakpoints in them in GDB very difficult). I don\u0027t think our style guide has a preference for functions (though namespaces make sense for class definitions).",
+      "parentUuid": "8c310388_4f697a66",
       "range": {
         "startLine": 16,
         "startChar": 0,
@@ -117,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "2c9065b1_d6a4e08a",
+        "filename": "third_party/android_crazy_linker/src/src/crazy_linker_pointer_set.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2018-01-29T15:03:39Z",
+      "side": 1,
+      "message": "Oops, you\u0027re right, this comes from a previous version of this header :) Fixed.",
+      "parentUuid": "43f6fff6_33ecf8cd",
+      "range": {
+        "startLine": 6,
+        "startChar": 8,
+        "endLine": 6,
+        "endChar": 30
+      },
+      "revId": "533731563787dbe47e9b15de88aa4a7c1524bd91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e57cc30_3cd0f038",
         "filename": "third_party/android_crazy_linker/src/src/crazy_linker_pointer_set.h",
         "patchSetId": 3
@@ -128,6 +200,30 @@
       "writtenOn": "2018-01-29T14:06:30Z",
       "side": 1,
       "message": "rather nit: I think operator[] is not used outside of the internals of this class. Can we move it to private to avoid thinking about potential misuses? Not a big issue, just a general request to expose the minimal needed set of functionality.",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 60
+      },
+      "revId": "533731563787dbe47e9b15de88aa4a7c1524bd91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f87a8b9_b4330770",
+        "filename": "third_party/android_crazy_linker/src/src/crazy_linker_pointer_set.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2018-01-29T15:03:39Z",
+      "side": 1,
+      "message": "It is actually in crazy_linker_wrappers.cpp",
+      "parentUuid": "4e57cc30_3cd0f038",
       "range": {
         "startLine": 23,
         "startChar": 2,
@@ -160,6 +256,30 @@
       "revId": "533731563787dbe47e9b15de88aa4a7c1524bd91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02ce1d60_ddea2e77",
+        "filename": "third_party/android_crazy_linker/src/src/crazy_linker_pointer_set.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2018-01-29T15:03:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07f15cbc_a9e33c81",
+      "range": {
+        "startLine": 35,
+        "startChar": 57,
+        "endLine": 35,
+        "endChar": 75
+      },
+      "revId": "533731563787dbe47e9b15de88aa4a7c1524bd91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
