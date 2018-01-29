@@ -822,6 +822,10 @@ void Fullscreen::PushFullscreenElementStack(Element& element,
                                             RequestType request_type) {
   Element* old_element = FullscreenElement();
   fullscreen_element_stack_.push_back(std::make_pair(&element, request_type));
+  UseCounter::Count(element.GetDocument(),
+                    fullscreen_element_stack_.size() == 1u
+                        ? WebFeature::kFullscreenSingleElement
+                        : WebFeature::kFullscreenMultipleElements);
 
   FullscreenElementChanged(old_element, &element, request_type);
 }
