@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c44f60f_fd22c832",
+        "filename": "components/omnibox/browser/omnibox_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-29T19:39:50Z",
+      "side": 1,
+      "message": "nit: might as well be const",
+      "revId": "1e4650fada1c7fb595641519ea852f2c315a25c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
