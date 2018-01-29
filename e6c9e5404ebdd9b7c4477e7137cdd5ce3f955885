@@ -34,6 +34,24 @@
       "revId": "e6c9e5404ebdd9b7c4477e7137cdd5ce3f955885",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cbdd237_65ac21d0",
+        "filename": "third_party/WebKit/Source/platform/bindings/TraceWrapperMember.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-29T10:14:57Z",
+      "side": 1,
+      "message": "It is indeed very hacky.. \n\n- Afaik, the method is used when creating new containers that are then linked into the wrapper traced graph (or taking out). It was sensitive to performance as we would otherwise need to (a) copy and (b) check the write barrier for each element.\n\nIf I remember correctly, we used this apporach to avoid changing a ton of callers. Essentially, anything that could at some point require plugging in to wrapper tracing would need to start off as TraceWrapperMember.\n\n- This was not a problem before this CL because we always shortcutted out-of-line backing stores and thus the GCInfo index validation did not trigger for those backing stores.",
+      "parentUuid": "8d06327f_3a2a2e21",
+      "revId": "e6c9e5404ebdd9b7c4477e7137cdd5ce3f955885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
