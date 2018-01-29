@@ -62,7 +62,7 @@ namespace {
 constexpr int kOverviewSelectorTransitionMilliseconds = 250;
 
 // The color and opacity of the screen shield in overview.
-constexpr SkColor kShieldColor = SkColorSetARGB(255, 0, 0, 0);
+constexpr SkColor kShieldColor = SkColorSetARGB(255, 255, 255, 255);
 constexpr float kShieldOpacity = 0.6f;
 
 // The color and opacity of the overview selector.

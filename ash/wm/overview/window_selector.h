@@ -31,7 +31,11 @@ class Rect;
 namespace views {
 class Textfield;
 class Widget;
-}
+}  // namespace views
+
+namespace wm {
+class Shadow;
+}  // namespace wm
 
 namespace ash {
 class OverviewWindowDragController;
@@ -240,6 +244,9 @@ class ASH_EXPORT WindowSelector : public display::DisplayObserver,
   // in the overview. It is also responsible for handling overview key events,
   // such as enter key to select.
   std::unique_ptr<views::Widget> text_filter_widget_;
+
+  // Shadow around the text filter.
+  std::unique_ptr<::wm::Shadow> text_filter_shadow_;
 
   // Image used for text filter textfield.
   gfx::ImageSkia search_image_;
