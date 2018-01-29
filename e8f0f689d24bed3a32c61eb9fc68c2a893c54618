@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "070cea4f_075fc280",
+        "filename": "chrome/browser/media/webrtc/desktop_media_picker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-29T22:25:41Z",
+      "side": 1,
+      "message": "Vall it just \"Params\" or \"Config\"\nBut it may be better to leave this struct for a separate CL. This one is big enough already.",
+      "range": {
+        "startLine": 28,
+        "startChar": 9,
+        "endLine": 28,
+        "endChar": 19
+      },
+      "revId": "e8f0f689d24bed3a32c61eb9fc68c2a893c54618",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c4b790c_050170ca",
+        "filename": "chrome/browser/media/webrtc/desktop_media_picker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-29T22:25:41Z",
+      "side": 1,
+      "message": "nit add empty line here.",
+      "range": {
+        "startLine": 30,
+        "startChar": 9,
+        "endLine": 30,
+        "endChar": 18
+      },
+      "revId": "e8f0f689d24bed3a32c61eb9fc68c2a893c54618",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7442b2f1_a2c0fe1f",
+        "filename": "chrome/browser/media/webrtc/desktop_media_picker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-29T22:25:41Z",
+      "side": 1,
+      "message": "\u003d nullptr is more readable. Same for other fields in this struct.",
+      "range": {
+        "startLine": 31,
+        "startChar": 26,
+        "endLine": 31,
+        "endChar": 47
+      },
+      "revId": "e8f0f689d24bed3a32c61eb9fc68c2a893c54618",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d5d4fa3_0f207bce",
+        "filename": "chrome/browser/media/webrtc/desktop_media_picker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-29T22:25:41Z",
+      "side": 1,
+      "message": "it would be useful to add comments for each field.",
+      "range": {
+        "startLine": 32,
+        "startChar": 22,
+        "endLine": 32,
+        "endChar": 29
+      },
+      "revId": "e8f0f689d24bed3a32c61eb9fc68c2a893c54618",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16019f9a_1f035c2e",
+        "filename": "chrome/browser/ui/views/desktop_capture/desktop_media_picker_views.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-29T22:25:41Z",
+      "side": 1,
+      "message": "Update this to take DesktopMediaPicker::Config\nThere is no point in adding that struct if it\u0027s used only in one place.",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 24
+      },
+      "revId": "e8f0f689d24bed3a32c61eb9fc68c2a893c54618",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
