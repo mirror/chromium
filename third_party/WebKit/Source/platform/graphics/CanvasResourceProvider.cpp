@@ -378,6 +378,12 @@ PaintCanvas* CanvasResourceProvider::Canvas() {
           GetSkSurface()->getCanvas(), std::move(image_provider));
     }
   }
+
+  if (IsGpuContextLost()) {
+    canvas_->reset_image_provider();
+    canvas_image_provider_.reset();
+  }
+
   return canvas_.get();
 }
 
