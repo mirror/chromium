@@ -8,6 +8,7 @@
 #include "platform/PlatformExport.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Atomics.h"
+#include "platform/wtf/ThreadingPrimitives.h"
 
 namespace blink {
 
@@ -20,6 +21,37 @@ class PLATFORM_EXPORT ProcessHeap {
   static void Init();
 
   static CrossThreadPersistentRegion& GetCrossThreadPersistentRegion();
+  static CrossThreadPersistentRegion& GetCrossThreadWeakPersistentRegion();
+
+  // Recursive as prepareForThreadStateTermination() clears a PersistentNode's
+  // associated Persistent<> -- it in turn freeing the PersistentNode. And both
+  // CrossThreadPersistentRegion operations need a lock on the region before
+  // mutating.
+  static RecursiveMutex& CrossThreadPersistentMutex();
+
+  class CrossThreadPersistentLockScope final {
+    STACK_ALLOCATED();
+
+   public:
+    CrossThreadPersistentLockScope(bool try_lock = false) : locked_(true) {
+      if (try_lock)
+        locked_ = CrossThreadPersistentMutex().TryLock();
+      else
+        CrossThreadPersistentMutex().lock();
+    }
+    ~CrossThreadPersistentLockScope() {
+      if (locked_)
+        CrossThreadPersistentMutex().unlock();
+    }
+
+    // If the lock scope is set up with |try_lock| set to |true|, caller/user
+    // is responsible for checking whether the GC lock was taken via
+    // |HasLock()|.
+    bool HasLock() const { return locked_; }
+
+   private:
+    bool locked_;
+  };
 
   static void IncreaseTotalAllocatedObjectSize(size_t delta) {
     AtomicAdd(&total_allocated_object_size_, static_cast<long>(delta));
