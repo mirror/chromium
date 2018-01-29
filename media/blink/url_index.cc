@@ -51,6 +51,8 @@ UrlData::UrlData(const GURL& url, CORSMode cors_mode, UrlIndex* url_index)
       length_(kPositionNotSpecified),
       range_supported_(false),
       cacheable_(false),
+      response_type_via_service_worker_(
+          network::mojom::FetchResponseType::kDefault),
       last_used_(),
       multibuffer_(this, url_index_->block_shift_) {}
 
@@ -86,6 +88,10 @@ void UrlData::MergeFrom(const scoped_refptr<UrlData>& other) {
       last_modified_ = other->last_modified_;
     }
     bytes_read_from_cache_ += other->bytes_read_from_cache_;
+    // set_response_type_via_service_worker() will not relax the type from
+    // opaque to non-opaque if already set.
+    set_response_type_via_service_worker(
+        other->response_type_via_service_worker_);
     multibuffer()->MergeFrom(other->multibuffer());
   }
 }
@@ -99,6 +105,28 @@ void UrlData::set_length(int64_t length) {
   DCHECK(thread_checker_.CalledOnValidThread());
   if (length != kPositionNotSpecified) {
     length_ = length;
+  }
+}
+
+void UrlData::set_response_type_via_service_worker(
+    network::mojom::FetchResponseType type) {
+  switch (response_type_via_service_worker_) {
+    case network::mojom::FetchResponseType::kBasic:
+    case network::mojom::FetchResponseType::kCORS:
+    case network::mojom::FetchResponseType::kDefault:
+      // Override with the new response type.
+      response_type_via_service_worker_ = type;
+      break;
+    // These are dangerous values that indicate error or a security concern
+    // (i.e., access to an opaque response is restricted). They probably
+    // shouldn't be changed even if a later request/resource somehow relaxed
+    // the value. This is potentially overly conservative but it's better to
+    // play it safe.
+    case network::mojom::FetchResponseType::kError:
+    case network::mojom::FetchResponseType::kOpaque:
+    case network::mojom::FetchResponseType::kOpaqueRedirect:
+      // Do not override with the new response type.
+      break;
   }
 }
 
