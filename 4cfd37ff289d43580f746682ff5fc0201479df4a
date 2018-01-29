@@ -34,6 +34,24 @@
       "revId": "4cfd37ff289d43580f746682ff5fc0201479df4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce7c8b49_c6431aeb",
+        "filename": "third_party/WebKit/Source/modules/device_orientation/DeviceMotionController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2018-01-29T16:29:23Z",
+      "side": 1,
+      "message": "Just came to mind: is it also possible for frame\u003d\u003dnull in the case of a Service Worker? (not sure if we want to allow device orientation inside service workers though anyway ;))",
+      "parentUuid": "3cffd7d8_0a49286d",
+      "revId": "4cfd37ff289d43580f746682ff5fc0201479df4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
