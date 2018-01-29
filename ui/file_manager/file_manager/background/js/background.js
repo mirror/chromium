@@ -43,14 +43,33 @@ function FileBrowserBackgroundImpl() {
 
   /**
    * Event handler for C++ sides notifications.
-   * @private {!DeviceHandler}
+   * @private {DeviceHandler}
    */
-  this.deviceHandler_ = new DeviceHandler();
+  this.deviceHandler_ = null;
 
-  // Handle device navigation requests.
-  this.deviceHandler_.addEventListener(
-      DeviceHandler.VOLUME_NAVIGATION_REQUESTED,
-      this.handleViewEvent_.bind(this));
+  /**
+   * Executes callback function if the context is NOT the incognito one in a
+   * regular session.
+   * This is meant to avoid do something duplicatedly both in the user's and
+   * incognito contexts in a regular session.
+   * @param {function()} callback function to execute
+   * @private
+   */
+  this.doIfPrimaryContext_ = function(callback) {
+    chrome.fileManagerPrivate.getProfiles((profiles) => {
+      if ((profiles[0] && profiles[0].profileId == '$guest') ||
+          !chrome.extension.inIncognitoContext) {
+        callback();
+      }
+    });
+  };
+
+  this.doIfPrimaryContext_(() => {
+    this.deviceHandler_ = new DeviceHandler();
+    this.deviceHandler_.addEventListener(
+        DeviceHandler.VOLUME_NAVIGATION_REQUESTED,
+        this.handleViewEvent_.bind(this));
+  });
 
   /**
    * Drive sync handler.
@@ -106,11 +125,13 @@ function FileBrowserBackgroundImpl() {
     this.stringData = strings;
     this.initContextMenu_();
 
-    volumeManagerFactory.getInstance().then(function(volumeManager) {
-      volumeManager.addEventListener(
-          VolumeManagerCommon.VOLUME_ALREADY_MOUNTED,
-          this.handleViewEvent_.bind(this));
-    }.bind(this));
+    this.doIfPrimaryContext_(() => {
+      volumeManagerFactory.getInstance().then(function(volumeManager) {
+        volumeManager.addEventListener(
+            VolumeManagerCommon.VOLUME_ALREADY_MOUNTED,
+            this.handleViewEvent_.bind(this));
+      }.bind(this));
+    });
 
     this.fileOperationManager = new FileOperationManager();
     this.fileOperationHandler_ = new FileOperationHandler(
@@ -119,8 +140,10 @@ function FileBrowserBackgroundImpl() {
 
   // Handle newly mounted FSP file systems. Workaround for crbug.com/456648.
   // TODO(mtomasz): Replace this hack with a proper solution.
-  chrome.fileManagerPrivate.onMountCompleted.addListener(
-      this.onMountCompleted_.bind(this));
+  this.doIfPrimaryContext_(() => {
+    chrome.fileManagerPrivate.onMountCompleted.addListener(
+        this.onMountCompleted_.bind(this));
+  });
 
   launcher.queue.run(function(callback) {
     this.initializationPromise_.then(callback);
