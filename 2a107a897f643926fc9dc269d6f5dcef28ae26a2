@@ -22,6 +22,30 @@
       "revId": "2a107a897f643926fc9dc269d6f5dcef28ae26a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6be6e9b4_ed42284e",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5427,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-01-29T18:58:38Z",
+      "side": 1,
+      "message": "I want to relax it now, but couldn\u0027t figure out how to map from a RenderWidgetHost to the question of \"is this swapped out?\".\n\nRWHI::renderer_initialized() is great to switch in for IsRenderViewLive() but how to check for not being swapped out?",
+      "parentUuid": "0e55d6f9_70427bb6",
+      "range": {
+        "startLine": 5424,
+        "startChar": 0,
+        "endLine": 5427,
+        "endChar": 37
+      },
+      "revId": "2a107a897f643926fc9dc269d6f5dcef28ae26a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
