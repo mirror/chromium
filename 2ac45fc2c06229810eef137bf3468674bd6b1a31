@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9cc69f8_d391645e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-29T18:13:44Z",
+      "side": 1,
+      "message": "I think you need to update the commit message after your changes.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 12
+      },
+      "revId": "2ac45fc2c06229810eef137bf3468674bd6b1a31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc0c4983_d67d7c36",
+        "filename": "third_party/WebKit/Source/core/dom/Node.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-29T18:13:44Z",
+      "side": 1,
+      "message": "Please add a comment on how this can differ from BoundingBox",
+      "range": {
+        "startLine": 552,
+        "startChar": 2,
+        "endLine": 552,
+        "endChar": 50
+      },
+      "revId": "2ac45fc2c06229810eef137bf3468674bd6b1a31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

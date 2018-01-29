@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "eeab9f9e_d66023bc",
+        "filename": "third_party/WebKit/Source/core/dom/ContainerNode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 987,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-29T18:13:44Z",
+      "side": 1,
+      "message": "Actually, I was wrong on this. This is one (rare) place Blink style guide deviates from Google C++: https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/blink-c++.md#Use-references-for-all-non_null-pointer-arguments",
+      "parentUuid": "0d1898a6_e3d8e9c7",
+      "range": {
+        "startLine": 987,
+        "startChar": 36,
+        "endLine": 987,
+        "endChar": 53
+      },
+      "revId": "68d1433df3772436bfccd2c6053682c1f28da846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4a939bb_15eed5fd",
         "filename": "third_party/WebKit/Source/core/dom/ContainerNode.cpp",
         "patchSetId": 3
@@ -93,6 +117,30 @@
       "revId": "68d1433df3772436bfccd2c6053682c1f28da846",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "180d72e5_37d311dd",
+        "filename": "third_party/WebKit/Source/core/dom/ContainerNode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-29T18:13:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3ebc1111_82561f00",
+      "range": {
+        "startLine": 1113,
+        "startChar": 6,
+        "endLine": 1113,
+        "endChar": 29
+      },
+      "revId": "68d1433df3772436bfccd2c6053682c1f28da846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -237,6 +285,30 @@
     },
     {
       "key": {
+        "uuid": "de13a8b6_bc9b697a",
+        "filename": "third_party/WebKit/Source/core/dom/Node.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-29T18:13:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "162e7bd9_bab21f5c",
+      "range": {
+        "startLine": 709,
+        "startChar": 11,
+        "endLine": 709,
+        "endChar": 28
+      },
+      "revId": "68d1433df3772436bfccd2c6053682c1f28da846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3bee5757_4b0722fd",
         "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollIntoViewTest.cpp",
         "patchSetId": 3
@@ -284,6 +356,30 @@
     },
     {
       "key": {
+        "uuid": "47da6cfa_7a38f983",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollIntoViewTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-29T18:13:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d220f965_7624646a",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 6
+      },
+      "revId": "68d1433df3772436bfccd2c6053682c1f28da846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b48d825b_b535fc71",
         "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollIntoViewTest.cpp",
         "patchSetId": 3
@@ -319,6 +415,30 @@
       "side": 1,
       "message": "ditto.",
       "parentUuid": "b48d825b_b535fc71",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 11
+      },
+      "revId": "68d1433df3772436bfccd2c6053682c1f28da846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ae37c907_17239aad",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollIntoViewTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-29T18:13:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5b134188_bac0d9c7",
       "range": {
         "startLine": 59,
         "startChar": 2,
