@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a808a5eb_f92528f0",
+        "filename": "ui/webui/resources/cr_elements/cr_expand_button/cr_expand_button.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-29T04:59:32Z",
+      "side": 1,
+      "message": "use spaces, not tabs; and indent by 4 spaces for line continuations, instead of trying to line up text",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 3
+      },
+      "revId": "6e4fa42263c41f95be928d7a67a37a99d36f9233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
