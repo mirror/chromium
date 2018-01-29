@@ -12,45 +12,133 @@
 #include "services/network/public/cpp/url_loader_completion_status.h"
 
 namespace content {
+
 namespace {
 
-constexpr size_t kPipeSizeForSignedResponseBody = 65536;
+scoped_refptr<net::DrainableIOBuffer> MakeDrainableIOBufferWithIOBuffer() {
+  return base::MakeRefCounted<net::DrainableIOBuffer>(
+      new net::IOBuffer(SignedExchangeReader::kDefaultBufferSize),
+      SignedExchangeReader::kDefaultBufferSize);
+}
 
-}  // namespace
+};  // namespace
 
 SignedExchangeHandler::SignedExchangeHandler(
-    mojo::ScopedDataPipeConsumerHandle body)
-    : body_(std::move(body)) {
+    std::unique_ptr<BodyReader> body,
+    ExchangeHeadersCallback headers_callback)
+    : body_(std::move(body)),
+      headers_callback_(std::move(headers_callback)),
+      input_buf_(base::MakeRefCounted<net::IOBuffer>(kBufferSize)) {
   DCHECK(base::FeatureList::IsEnabled(features::kSignedHTTPExchange));
+  // Start reading the first chunk.
+  body_->Read(
+      input_buf_, input_buf_->BytesRemaining(),
+      base::Bind(&SignedExchangeHandler::DidRead, base::Unretained(this)));
 }
 
 SignedExchangeHandler::~SignedExchangeHandler() = default;
 
-void SignedExchangeHandler::GetHTTPExchange(
-    ExchangeFoundCallback found_callback,
-    ExchangeFinishedCallback finish_callback) {
-  DCHECK(!found_callback_);
-  DCHECK(!finish_callback_);
-  found_callback_ = std::move(found_callback);
-  finish_callback_ = std::move(finish_callback);
+int SignedExchangeHandler::Read(net::IOBuffer* buf,
+                                int buf_size,
+                                const net::CompletionCallback& callback) {
+  DCHECK(!body_reached_end_);
+  DCHECK(!pending_callback_);
 
-  drainer_.reset(new mojo::common::DataPipeDrainer(this, std::move(body_)));
+  output_buf_ = buf;
+  output_buf_size_ = buf_size;
+
+  if (drainable_input_buf_)
+    return ProcessData();
+
+  DCHECK(!input_buf_);
+  input_buf_ = base::MakeRefCounted<net::IOBuffer>(kBufferSize);
+  int result = body_->Read(
+      input_buf_, input_buf_->BytesRemaining(),
+      base::Bind(&SignedExchangeHandler::DidRead, base::Unretained(this)));
+  if (result == net::ERR_IO_PENDING) {
+    pending_callback_ = callback;
+    return;
+  }
+  if (result <= 0) {
+    body_reached_end_ = true;
+    return result;
+  }
+
+  MakeDrainableBuffer(result);
+  return ProcessData();
 }
 
-void SignedExchangeHandler::OnDataAvailable(const void* data,
-                                            size_t num_bytes) {
-  original_body_string_.append(static_cast<const char*>(data), num_bytes);
-}
+void SignedExchangeHandler::DidRead(int result) {
+  DCHECK(input_buf_);
+  DCHECK(!body_reached_end_);
 
-void SignedExchangeHandler::OnDataComplete() {
-  if (!found_callback_)
+  MakeDrainableBuffer(result);
+
+  if (MaybeRunHeadersCallback())
     return;
 
+  DCHECK(pending_callback_);
+  DCHECK(output_buf_);
+  int written = ProcessData();
+  // TODO(https://crbug.com/80374): We need to run a loop to
+  // call body_->Read() if ProcessData() needs more data.
+  DCHECK(written >= 0);
+  std::move(pending_callback_).Run(written);
+  output_buf_ = nullptr;
+  output_buf_size_ = 0;
+}
+
+bool SignedExchangeHandler::MaybeRunHeadersCallback() {
+  if (!headers_callback_)
+    return false;
+  DCHECK(!pending_callback_);
+
+  // If this was the first read, fire the headers callback now.
+  // TODO(https://crbug.com/80374): This is just for testing, we should
+  // implement the CBOR parsing here.
+  FillMockExchangeHandler();
+  std::move(headers_callback_)
+      .Run(url_, request_method_, response_head_, ssl_info_);
+
+  // TODO(https://crbug.com/80374) Consume the bytes size that were
+  // necessary to read out the headers.
+  // drainable_input_buf_->DidConsume();
+
+  return true;
+}
+
+void SignedExchangeHandler::MakeDrainableBuffer(int result) {
+  DCHECK(input_buf_);
+  DCHECK(!drainable_input_buf_);
+  drainable_input_buf_ =
+      base::MakeRefCounted<net::DrainableIOBuffer>(input_buf_.get(), result);
+  // |input_buf_| is now owned by |drainable_input_buf_|.
+  input_buf_ = nullptr;
+}
+
+int SignedExchangeHandler::ProcessData() {
+  DCHECK(output_buf_);
+  DCHECK(output_buf_size_);
+  DCHECK(drainable_input_buf_);
+
+  // For now we just copy the data.
+  int bytes_to_consume =
+      std::min(drainable_input_buf_->BytesRemaining(), output_buf_size_);
+  memcpy(output_buf_->data(), drainable_input_buf_->data(),
+         base::checked_cast<size_t>(bytes_to_consume));
+  drainable_input_buf_->DidConsume(bytes_to_consume);
+  if (drainable_input_buf_->BytesRemaining() == 0)
+    drainable_input_buf_ = nullptr;
+
+  return bytes_to_consume;
+}
+
+void SignedExchangeHandler::FillMockExchangeHeaders() {
   // TODO(https://crbug.com/80374): Get the request url by parsing CBOR format.
-  GURL request_url = GURL("https://example.com/test.html");
+  request_url_ = GURL("https://example.com/test.html");
   // TODO(https://crbug.com/80374): Get the request method by parsing CBOR
   // format.
-  std::string request_method = "GET";
+  request_method_ = "GET";
   // TODO(https://crbug.com/80374): Get the payload by parsing CBOR format.
   std::string payload = original_body_string_;
   original_body_string_.clear();
@@ -58,36 +146,8 @@ void SignedExchangeHandler::OnDataComplete() {
   // TODO(https://crbug.com/80374): Get more headers by parsing CBOR.
   scoped_refptr<net::HttpResponseHeaders> headers(
       new net::HttpResponseHeaders("HTTP/1.1 200 OK"));
-  network::ResourceResponseHead resource_response;
-  resource_response.headers = headers;
-  resource_response.mime_type = "text/html";
-
-  // TODO(https://crbug.com/80374): Get the certificate by parsing CBOR and
-  // verify.
-  base::Optional<net::SSLInfo> ssl_info;
-
-  mojo::DataPipe pipe(kPipeSizeForSignedResponseBody);
-  // TODO(https://crbug.com/80374): Write the error handling code. This could
-  // fail.
-  DCHECK(pipe.consumer_handle.is_valid());
-  mojo::ScopedDataPipeConsumerHandle response_body =
-      std::move(pipe.consumer_handle);
-  std::move(found_callback_)
-      .Run(request_url, request_method, resource_response, std::move(ssl_info),
-           std::move(response_body));
-
-  data_producer_ = std::make_unique<mojo::StringDataPipeProducer>(
-      std::move(pipe.producer_handle));
-  data_producer_->Write(payload,
-                        base::BindOnce(&SignedExchangeHandler::OnDataWritten,
-                                       base::Unretained(this)));
-}
-
-void SignedExchangeHandler::OnDataWritten(MojoResult result) {
-  data_producer_.reset();
-  std::move(finish_callback_)
-      .Run(network::URLLoaderCompletionStatus(
-          result == MOJO_RESULT_OK ? net::OK : net::ERR_FAILED));
+  response_head_.headers = headers;
+  response_head_.mime_type = "text/html";
 }
 
 }  // namespace content

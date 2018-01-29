@@ -6,8 +6,10 @@
 
 #include "base/feature_list.h"
 #include "base/strings/stringprintf.h"
+#include "content/browser/loader/signed_exchange_data_pipe_reader.h"
 #include "content/browser/loader/signed_exchange_handler.h"
 #include "content/public/common/content_features.h"
+#include "net/base/net_error_list.h"
 #include "net/http/http_util.h"
 
 namespace content {
@@ -134,12 +136,9 @@ void WebPackageLoader::OnTransferSizeUpdated(int32_t transfer_size_diff) {
 
 void WebPackageLoader::OnStartLoadingResponseBody(
     mojo::ScopedDataPipeConsumerHandle body) {
-  signed_exchange_handler_ =
-      base::MakeUnique<SignedExchangeHandler>(std::move(body));
-  signed_exchange_handler_->GetHTTPExchange(
+  signed_exchange_handler_ = base::MakeUnique<SignedExchangeHandler>(
+      base::MakeUnique<SignedExchangeDataPipeReader>(std::move(body)),
       base::BindOnce(&WebPackageLoader::OnHTTPExchangeFound,
-                     weak_factory_.GetWeakPtr()),
-      base::BindOnce(&WebPackageLoader::OnHTTPExchangeFinished,
                      weak_factory_.GetWeakPtr()));
 }
 
@@ -157,12 +156,7 @@ void WebPackageLoader::ProceedWithResponse() {
   // TODO(https://crbug.com/791049): Remove this when NetworkService is
   // enabled by default.
   DCHECK(!base::FeatureList::IsEnabled(features::kNetworkService));
-  DCHECK(pending_body_.is_valid());
-  DCHECK(client_);
-  client_->OnStartLoadingResponseBody(std::move(pending_body_));
-  if (pending_completion_status_) {
-    client_->OnComplete(*pending_completion_status_);
-  }
+  ReadMore();
 }
 
 void WebPackageLoader::SetPriority(net::RequestPriority priority,
@@ -189,8 +183,7 @@ void WebPackageLoader::OnHTTPExchangeFound(
     const GURL& request_url,
     const std::string& request_method,
     const network::ResourceResponseHead& resource_response,
-    base::Optional<net::SSLInfo> ssl_info,
-    mojo::ScopedDataPipeConsumerHandle body) {
+    base::Optional<net::SSLInfo> ssl_info) {
   // TODO(https://crbug.com/80374): Handle no-GET request_method as a error.
   DCHECK(original_response_timing_info_);
   forwarding_client_->OnReceiveRedirect(
@@ -202,24 +195,109 @@ void WebPackageLoader::OnHTTPExchangeFound(
   client_->OnReceiveResponse(resource_response, std::move(ssl_info),
                              nullptr /* downloaded_file */);
 
+  // Currently we always assume that we have body.
+  // TODO(https://crbug.com/80374): Add error handling and bail out
+  // earlier if there's an error.
+
+  mojo::DataPipe data_pipe(SignedExchangeReader::kDefaultBufferSize);
+  body_producer_ = std::move(data_pipe.producer_handle);
+  pending_body_consumer_ = std::move(data_pipe.consumer_handle);
+  peer_closed_handle_watcher_.Watch(
+      body_handle_.get(), MOJO_HANDLE_SIGNAL_PEER_CLOSED,
+      base::Bind(&WebPackageLoader::OnResponseBodyStreamClosed,
+                 base::Unretained(this)));
+  peer_closed_handle_watcher_.ArmOrNotify();
+
   if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
     // Need to wait until ProceedWithResponse() is called.
-    pending_body_ = std::move(body);
+    return;
+  }
+
+  // Start reading.
+  ReadMore();
+}
+
+void WebPackageLoader::ReadMore() {
+  DCHECK(!pending_write_.get());
+
+  uint32_t num_bytes;
+  MojoResult result = NetToMojoPendingBuffer::BeginWrite(
+      &body_producer_, &pending_write_, &num_bytes);
+  if (result == MOJO_RESULT_SHOULD_WAIT) {
+    // The pipe is full.  We need to wait for it to have more space.
+    writable_handle_watcher_.ArmOrNotify();
+    return;
+  } else if (result != MOJO_RESULT_OK) {
+    // The body stream is in a bad state. Bail out.
+    FinishReadingBody(net::ERR_UNEXPECTED);
+    return;
+  }
+
+  scoped_refptr<net::IOBuffer> buffer(
+      new network::NetToMojoIOBuffer(pending_write_.get()));
+  int result = signed_exchange_handler_->Read(
+      buffer.get(), base::checked_cast<int>(num_bytes),
+      base::Bind(&WebPackageLoader::DidRead), base::Unretained(this), false);
+
+  if (result != net::ERR_IO_PENDING)
+    DidRead(true /* completed_synchronously */, result);
+}
+
+void WebPackageLoader::DidRead(bool called_synchronously, int result) {
+  DCHECK(!body_producer_);
+  DCHECK(pending_write_);
+  if (result < 0) {
+    // An error case.
+    FinishReadingBody(result);
+    return;
+  }
+  if (result == 0) {
+    pending_write_->Complete(0);
+    FinishReadingBody(net::OK);
+    return;
+  }
+  if (pending_body_consumer_.is_valid()) {
+    // Send the data pipe now.
+    client_->OnStartLoadingResponseBody(std::move(pending_body_consumer_));
+  }
+  body_producer_ = pending_write_->Complete(result);
+  pending_write_ = nullptr;
+
+  if (completed_synchronously) {
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE, base::BindOnce(&WebPackageLoader::ReadMore,
+                                  weak_factory_.GetWeakPtr()));
   } else {
-    client_->OnStartLoadingResponseBody(std::move(body));
+    ReadMore();
   }
 }
 
-void WebPackageLoader::OnHTTPExchangeFinished(
-    const network::URLLoaderCompletionStatus& status) {
-  if (pending_body_.is_valid()) {
-    DCHECK(!base::FeatureList::IsEnabled(features::kNetworkService));
-    // If ProceedWithResponse() was not called yet, need to call OnComplete()
-    // after ProceedWithResponse() is called.
-    pending_completion_status_ = status;
-  } else {
-    client_->OnComplete(status);
+void WebPackageLoader::FinishReadingBody(int result) {
+  // This will eventually delete |this|.
+  client_->OnComplete(ResourceRequestCompletionStatus(result));
+  // Resets the watchers, pipes and the exchange handler, so that
+  // we will never be called back.
+  writable_handle_watcher_.Cancel();
+  peer_closed_handle_watcher_.Cancel();
+  pending_write_ = nullptr;  // Closes the data pipe if this was holding it.
+  pending_body_consumer_.reset();
+  body_producer_.reset();
+  signed_exchange_handler_.reset();
+}
+
+void WebPackageLoader::OnResponseBodyStreamWritable(MojoResult result) {
+  if (result == MOJO_RESULT_FAILED_PRECONDITION) {
+    FinishReadingBody(net::ERR_ABORTED);
+    return;
   }
+  DCHECK_EQ(result, MOJO_RESULT_OK) << result;
+
+  ReadMore();
+}
+
+void WebPackageLoader::OnResponseBodyStreamClosed(MojoResult result) {
+  // We unlikely need to notify the completion, but just let it go.
+  FinishReadingBody(net::ERR_ABORTED);
 }
 
 }  // namespace content
