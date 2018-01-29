@@ -1793,6 +1793,12 @@
     'telemetry_perf_unittests_isolated_scripts',
   ],
 
+  'chromium_rel_isolated_scripts': [
+    'chromedriver_py_tests_isolated_scripts',
+    'desktop_chromium_isolated_scripts',
+    'telemetry_perf_unittests_isolated_scripts',
+  ],
+
   'chromium_linux_cast_audio_gtests': [
     'cast_audio_specific_chromium_gtests',
     'chromium_gtests',
