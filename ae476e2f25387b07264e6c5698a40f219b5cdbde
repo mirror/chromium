@@ -34,6 +34,24 @@
       "revId": "ae476e2f25387b07264e6c5698a40f219b5cdbde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e72dd19_11aac5a2",
+        "filename": "net/base/mime_util_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-29T22:16:27Z",
+      "side": 1,
+      "message": "Added an extension-specific test for json and js.",
+      "parentUuid": "ccf6a736_f8fa8031",
+      "revId": "ae476e2f25387b07264e6c5698a40f219b5cdbde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
