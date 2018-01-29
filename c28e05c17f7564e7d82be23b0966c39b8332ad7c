@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8d8c6880_9628e9b0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrDialog.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-29T20:41:52Z",
+      "side": 1,
+      "message": "I moved the logic around a little bit so VrModalPresenter is very simple now.",
+      "parentUuid": "e443c321_5f9184aa",
+      "range": {
+        "startLine": 34,
+        "startChar": 12,
+        "endLine": 34,
+        "endChar": 23
+      },
+      "revId": "c28e05c17f7564e7d82be23b0966c39b8332ad7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6bf6bef_198540be",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrDialog.java",
         "patchSetId": 9
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "6a72cc8c_f6e897e4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrDialog.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-29T20:41:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c61bdec8_e6ef81cd",
+      "range": {
+        "startLine": 45,
+        "startChar": 31,
+        "endLine": 45,
+        "endChar": 62
+      },
+      "revId": "c28e05c17f7564e7d82be23b0966c39b8332ad7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "becf3aed_0ebb45e2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrDialog.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-29T20:41:52Z",
+      "side": 1,
+      "message": "removed and the event routing is updated",
+      "parentUuid": "c6bf6bef_198540be",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 45,
+        "endChar": 16
+      },
+      "revId": "c28e05c17f7564e7d82be23b0966c39b8332ad7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7965b04d_cff20159",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrDialog.java",
         "patchSetId": 9
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "d81b443f_1f38fe95",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrDialog.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-29T20:41:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7965b04d_cff20159",
+      "range": {
+        "startLine": 96,
+        "startChar": 16,
+        "endLine": 96,
+        "endChar": 27
+      },
+      "revId": "c28e05c17f7564e7d82be23b0966c39b8332ad7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df5dca79_19b0e510",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 9
@@ -111,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "3110ecb5_2dfb7bc9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-29T20:41:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df5dca79_19b0e510",
+      "revId": "c28e05c17f7564e7d82be23b0966c39b8332ad7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5765051_ce397320",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
         "patchSetId": 9
@@ -122,6 +236,30 @@
       "writtenOn": "2018-01-25T20:04:00Z",
       "side": 1,
       "message": "Why do we need a lock?",
+      "range": {
+        "startLine": 110,
+        "startChar": 18,
+        "endLine": 110,
+        "endChar": 31
+      },
+      "revId": "c28e05c17f7564e7d82be23b0966c39b8332ad7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "956b8026_8aaeff34",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-29T20:41:52Z",
+      "side": 1,
+      "message": "I hit a race condition before, but I can\u0027t think of any case that it can happen in the new design. I\u0027ll remove it, and if we started to see crashes I\u0027ll bring it back.",
+      "parentUuid": "b5765051_ce397320",
       "range": {
         "startLine": 110,
         "startChar": 18,
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "c39e732e_ddab700d",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-29T20:41:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62ccdc31_969fbb91",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 56,
+        "endChar": 9
+      },
+      "revId": "c28e05c17f7564e7d82be23b0966c39b8332ad7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a3eda36_53c2acb3",
         "filename": "chrome/browser/android/vr_shell/vr_shell_delegate.cc",
         "patchSetId": 9
@@ -168,6 +330,30 @@
       "writtenOn": "2018-01-25T20:04:00Z",
       "side": 1,
       "message": "?",
+      "range": {
+        "startLine": 268,
+        "startChar": 4,
+        "endLine": 268,
+        "endChar": 42
+      },
+      "revId": "c28e05c17f7564e7d82be23b0966c39b8332ad7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2b71f80_7e32fcea",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_delegate.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-29T20:41:52Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "0a3eda36_53c2acb3",
       "range": {
         "startLine": 268,
         "startChar": 4,
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "9213f0a9_23e90c3b",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-29T20:41:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "721686e0_2ee15ff8",
+      "range": {
+        "startLine": 264,
+        "startChar": 15,
+        "endLine": 264,
+        "endChar": 36
+      },
+      "revId": "c28e05c17f7564e7d82be23b0966c39b8332ad7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c05020dd_f533323c",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
         "patchSetId": 9
@@ -223,6 +433,30 @@
       "revId": "c28e05c17f7564e7d82be23b0966c39b8332ad7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7cf67a7_e5b28471",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-29T20:41:52Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "c05020dd_f533323c",
+      "range": {
+        "startLine": 200,
+        "startChar": 6,
+        "endLine": 200,
+        "endChar": 20
+      },
+      "revId": "c28e05c17f7564e7d82be23b0966c39b8332ad7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
