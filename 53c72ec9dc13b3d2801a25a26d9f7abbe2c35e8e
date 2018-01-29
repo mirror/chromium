@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "490cdea3_70d66bf2",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2018-01-29T21:46:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b048de59_f61ff02b",
+      "revId": "53c72ec9dc13b3d2801a25a26d9f7abbe2c35e8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "515be7a3_b177ba49",
         "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager_unittest.cc",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "53c72ec9dc13b3d2801a25a26d9f7abbe2c35e8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a5b3256_233866d9",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2018-01-29T21:46:38Z",
+      "side": 1,
+      "message": "Made \"false\" the default value of this function. Makes it easier to check which scenarios is it actually true.\nAlso included a comment here as suggested.",
+      "parentUuid": "515be7a3_b177ba49",
+      "revId": "53c72ec9dc13b3d2801a25a26d9f7abbe2c35e8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
