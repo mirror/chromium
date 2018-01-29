@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfff54a7_3d2b449d",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 5434,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-29T23:00:57Z",
+      "side": 1,
+      "message": "Presumably we don\u0027t want to keep renderer_initialized() check here, because if we\u0027ve already put up the hung dialog for this process, we still should hide it if we get here, even if the process managed to die in the meantime?",
+      "revId": "91d0e52e5d5c74a6792f0b7058800fe78fbe3059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
