@@ -151,8 +151,8 @@ void FormTracker::DidStartProvisionalLoad(WebDocumentLoader* document_loader) {
   ui::PageTransition type = navigation_state->GetTransitionType();
   if (ui::PageTransitionIsWebTriggerable(type) &&
       ui::PageTransitionIsNewNavigation(type) &&
-      !blink::WebUserGestureIndicator::IsProcessingUserGesture(
-          navigated_frame)) {
+      !ui::PageTransitionTypeIncludingQualifiersIs(type,
+                                                   ui::PAGE_TRANSITION_LINK)) {
     FireProbablyFormSubmitted();
   }
 }
