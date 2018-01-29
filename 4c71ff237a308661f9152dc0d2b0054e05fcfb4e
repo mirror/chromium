@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c8c9b32b_b748daf8",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2018-01-29T22:24:41Z",
+      "side": 1,
+      "message": "Great suggestion! This also removed the double negation. Done.",
+      "parentUuid": "8dcc0758_00509d15",
+      "revId": "4c71ff237a308661f9152dc0d2b0054e05fcfb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9f895b9_dfc6df36",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
         "patchSetId": 3
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "I see.\n\nHow about still storing rrect_ (-\u003e local_rrect_) in layer space and changing the above code to:\n\n  if (path_) {\n     SaveOp\n     TranslateOp\n     ClipPathOp\n     RestoreOp\n  }\n  ...\n  DrawRRectOp(local_rrect_, flags);\n?\n\nIn this way we won\u0027t output SaveOp/TranslateOp/RestoreOp if there is no clip path (which is common).",
       "parentUuid": "5fc0447c_beb813d9",
+      "revId": "4c71ff237a308661f9152dc0d2b0054e05fcfb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1dc63a9_1443f862",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2018-01-29T22:24:41Z",
+      "side": 1,
+      "message": "This way the clip path won\u0027t enclose DrawRRect... If the worry is about Save/Translate/Restore being expensive, this can be done:\n\nif (!path_) {\n  DrawRRectOp(rrect_ - layer_origin);\n} else {\n  SaveOp\n  TranslateOp\n  ClipPathOp\n  DrawRRectOp\n  RestoreOp\n}",
+      "parentUuid": "3da085e6_e28828c6",
       "revId": "4c71ff237a308661f9152dc0d2b0054e05fcfb4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
