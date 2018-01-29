@@ -26,6 +26,7 @@
 #include "net/quic/platform/api/quic_logging.h"
 #include "net/quic/platform/api/quic_ptr_util.h"
 #include "net/quic/platform/api/quic_socket_address.h"
+#include "net/quic/platform/api/quic_socket_tag.h"
 #include "net/quic/platform/api/quic_test.h"
 #include "net/quic/test_tools/crypto_test_utils.h"
 #include "net/quic/test_tools/failing_proof_source.h"
@@ -72,7 +73,10 @@ class QuicCryptoServerStreamTest : public QuicTestWithParam<bool> {
                               TlsServerHandshaker::CreateSslCtx()),
         server_compressed_certs_cache_(
             QuicCompressedCertsCache::kQuicCompressedCertsCacheSize),
-        server_id_(kServerHostname, kServerPort, PRIVACY_MODE_DISABLED),
+        server_id_(kServerHostname,
+                   kServerPort,
+                   PRIVACY_MODE_DISABLED,
+                   QuicSocketTag()),
         client_crypto_config_(crypto_test_utils::ProofVerifierForTesting(),
                               TlsClientHandshaker::CreateSslCtx()) {
     SetQuicReloadableFlag(enable_quic_stateless_reject_support, false);

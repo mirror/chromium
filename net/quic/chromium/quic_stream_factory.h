@@ -66,6 +66,7 @@ class QuicRandom;
 class QuicServerInfo;
 class QuicStreamFactory;
 class SocketPerformanceWatcherFactory;
+class SocketTag;
 class TransportSecurityState;
 
 namespace test {
@@ -114,6 +115,7 @@ class NET_EXPORT_PRIVATE QuicStreamRequest {
               QuicTransportVersion quic_version,
               PrivacyMode privacy_mode,
               RequestPriority priority,
+              const SocketTag& socket_tag,
               int cert_verify_flags,
               const GURL& url,
               const NetLogWithSource& net_log,
@@ -308,7 +310,8 @@ class NET_EXPORT_PRIVATE QuicStreamFactory
   // Returns net_error code.
   int ConfigureSocket(DatagramClientSocket* socket,
                       IPEndPoint addr,
-                      NetworkChangeNotifier::NetworkHandle network);
+                      NetworkChangeNotifier::NetworkHandle network,
+                      const SocketTag& socket_tag);
 
   // Finds an alternative to |old_network| from the platform's list of connected
   // networks. Returns NetworkChangeNotifier::kInvalidNetworkHandle if no
