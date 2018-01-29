@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8dcc0758_00509d15",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-29T22:01:29Z",
+      "side": 1,
+      "message": "How about this which is shorter:\n\n  bool path_in_layer_changed;\n  if (path \u003d\u003d path_) {\n    path_in_layer_changed \u003d path \u0026\u0026 layer_origin_ !\u003d new_layer_origin;\n  } else {\n    SkPath new_path \u003d path-\u003eGetSkPath();\n    new_path.offset(layer_origin_.x() - new_layer_origin.x(),\n                    layer_origin_.y() - new_layer_origin.y());\n    path_in_layer_changed \u003d path_-\u003eGetSkPath() !\u003d new_path;\n  }",
+      "revId": "4c71ff237a308661f9152dc0d2b0054e05fcfb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9f895b9_dfc6df36",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
         "patchSetId": 3
@@ -31,6 +48,24 @@
       "side": 1,
       "message": "I have considered that, but that will disallow identity comparison for path. The update logic in this CL uses identity comparison for the (common) unchanging case, and only resort to deep comparison for non-trivial changes.",
       "parentUuid": "e9f895b9_dfc6df36",
+      "revId": "4c71ff237a308661f9152dc0d2b0054e05fcfb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3da085e6_e28828c6",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-29T22:01:29Z",
+      "side": 1,
+      "message": "I see.\n\nHow about still storing rrect_ (-\u003e local_rrect_) in layer space and changing the above code to:\n\n  if (path_) {\n     SaveOp\n     TranslateOp\n     ClipPathOp\n     RestoreOp\n  }\n  ...\n  DrawRRectOp(local_rrect_, flags);\n?\n\nIn this way we won\u0027t output SaveOp/TranslateOp/RestoreOp if there is no clip path (which is common).",
+      "parentUuid": "5fc0447c_beb813d9",
       "revId": "4c71ff237a308661f9152dc0d2b0054e05fcfb4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
