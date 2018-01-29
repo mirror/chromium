@@ -93,6 +93,23 @@
       "revId": "ea6ee6341fcd9c7962f8c77dcbfbcf5b4a9c9d81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd352976_36907883",
+        "filename": "components/cronet/url_request_context_config.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2018-01-29T17:44:04Z",
+      "side": 1,
+      "message": "Looks like this TODO is resolved",
+      "revId": "ea6ee6341fcd9c7962f8c77dcbfbcf5b4a9c9d81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
