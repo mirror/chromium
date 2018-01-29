@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13173b8c_eeb9cb7a",
+        "filename": "chrome/browser/resources/settings/people_page/sync_account_control.html",
+        "patchSetId": 17
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-29T19:09:29Z",
+      "side": 1,
+      "message": "Would this work using the shorthand syntax (https://www.w3.org/TR/css-backgrounds-3/#the-background)?\n\nbackground: cover no-repeat center;",
+      "range": {
+        "startLine": 21,
+        "startChar": 7,
+        "endLine": 23,
+        "endChar": 31
+      },
+      "revId": "c929bc4ec170b40c1e7cd91e2e038962897d44a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7a12cfa_e13edc9c",
+        "filename": "chrome/browser/resources/settings/people_page/sync_account_control.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-29T19:09:29Z",
+      "side": 1,
+      "message": "Can |syncStatus| be null here? If so does line 83 throw a runtime error?",
+      "range": {
+        "startLine": 50,
+        "startChar": 13,
+        "endLine": 50,
+        "endChar": 14
+      },
+      "revId": "c929bc4ec170b40c1e7cd91e2e038962897d44a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
