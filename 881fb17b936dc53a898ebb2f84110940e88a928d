@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bd6cabc_13b6a682",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-29T21:20:00Z",
+      "side": 1,
+      "message": "Limit this to a 100 characters please",
+      "revId": "881fb17b936dc53a898ebb2f84110940e88a928d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
