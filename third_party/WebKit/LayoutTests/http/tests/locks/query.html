@@ -17,6 +17,21 @@ function clients(list, name) {
   return list.filter(item => item.name === name).map(item => item.clientId);
 }
 
+// NOTE: This test depends on serialization of promise_test() cases to
+// observe no locks being held. If that changes, move this to its own file.
+promise_test(async t => {
+  const state = await navigator.locks.query();
+
+  assert_own_property(state, 'pending', 'State has `pending` property');
+  assert_true(Array.isArray(state.pending),
+              'State `pending` property is an array');
+  assert_array_equals(state.pending, [], 'Pending array is empty');
+
+  assert_own_property(state, 'held', 'State has `held` property');
+  assert_true(Array.isArray(state.held), 'State `held` property is an array');
+  assert_array_equals(state.held, [], 'Held array is empty');
+}, 'query() returns dictionary with empty arrays when no locks are held');
+
 promise_test(async t => {
   const res = uniqueName(t);
 
@@ -56,8 +71,6 @@ promise_test(async t => {
     });
   });
 }, 'query() returns dictionaries with expected properties');
-
-
 
 promise_test(async t => {
   const res = uniqueName(t);
