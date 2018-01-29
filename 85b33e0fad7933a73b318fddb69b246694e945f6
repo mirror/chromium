@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "0cc0ceca_48133cca",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-29T04:11:39Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is right - the old code was a bit confusing. kLocationBarBorderThicknessDip is just 1. so the device scale factor will need to be at least 2 for std::floor to return something other than 1. But then insetting by 2 would make the border 2 pixels, instead of 1. I think we just need\n\n  round_rect.inset(kLocationBarBorderThicknessDip, kLocationBarBorderThicknessDip);",
+      "revId": "85b33e0fad7933a73b318fddb69b246694e945f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afdd32f7_a3a7d34e",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-29T04:11:39Z",
+      "side": 1,
+      "message": "update comment? (and/or revert below back to kCornerRadius)",
+      "revId": "85b33e0fad7933a73b318fddb69b246694e945f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3408f1ac_6fc0d76a",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-29T04:11:39Z",
+      "side": 1,
+      "message": "comment for this (and document the units for |height| - i.e. pixels not DIPs)",
+      "revId": "85b33e0fad7933a73b318fddb69b246694e945f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f899711a_9fbee8b9",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-29T04:11:39Z",
+      "side": 1,
+      "message": "protected data members aren\u0027t allowed per the style guide - can the private: go before this?",
+      "revId": "85b33e0fad7933a73b318fddb69b246694e945f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a49a2a2a_4f90d84e",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
         "patchSetId": 5
@@ -13,6 +81,92 @@
       "writtenOn": "2018-01-29T00:15:36Z",
       "side": 1,
       "message": "This seems to be an OK amount of padding that will never cause |omnibox_view_|\u0027s length to extend past the rounded corners of |this|. WDYT?",
+      "revId": "85b33e0fad7933a73b318fddb69b246694e945f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecd03f6b_fb09ff64",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-29T04:11:39Z",
+      "side": 1,
+      "message": "\u003e This seems to be an OK amount of padding that will never cause |omnibox_view_|\u0027s length to extend past the rounded corners of |this|. WDYT?\n\nThere are other cases where the StarView is hidden -- see LocationBarView::UpdateBookmarkStarVisibility() -- maybe use GetBookmarkStarVisibility()?\n\nof course... there are other things that could make more room for input -- see all the RefreshFooView*() calls in LocationBarView::Update(). Just using the bookmark star is probably a good start. (maybe TODO?). Or \n\nThere\u0027s also a |keyword_hint_view_| and a |ime_inline_autocomplete_view_| which might need special treatment if they are square..\n\nI think the right fix is to override LocationBarView::GetHorizontalEdgeThickness() -- rather than returning BackgroundWith1PxBorder::kLocationBarBorderThicknessDip it should call a static function on BackgroundWith1PxBorder which looks up the feature setting and returns something bigger if the ends are rounded (maybe pass the omnibox height into this static function).",
+      "parentUuid": "a49a2a2a_4f90d84e",
+      "revId": "85b33e0fad7933a73b318fddb69b246694e945f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b2dd86e_8af8b7cf",
+        "filename": "chrome/browser/ui/views/location_bar/omnibox_background_border.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-29T04:11:39Z",
+      "side": 1,
+      "message": "note I think this needs to return float -- the height might be an odd number, in which case the radius needs to be something-point-five",
+      "revId": "85b33e0fad7933a73b318fddb69b246694e945f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbb143ef_dfbed62a",
+        "filename": "chrome/browser/ui/views/location_bar/omnibox_background_border.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-29T04:11:39Z",
+      "side": 1,
+      "message": "this needs to be consistent with the border drawing code (i.e. fill not stroke).\n\nTo get it to paint the difference between two roundrects, you can call something like\n\n gfx::ScopedCanvas save(canvas);\n SKRRect outer_rect \u003d SkRRect::MakeRectXY(gfx::RectToSkRect(local_bounds), \n SKRRect inner_rect \u003d outer_rect;\n inner_rect.inset(1, 1);\n sk_canvas()-\u003eclipRRect(inner, SkClipOp::kIntersect, true);\n canvas-\u003esk_canvas()-\u003edrawRRect(outer_rect, flags);\n\n\nnote this doesn\u0027t need any of these +0.5 hacks.\n\nBut! This isn\u0027t taking into account scale factor -- it will draw a focus borer of 1 DIP, not 1 pixel. That might be incorrect.\n\n\nI\u0027m sorta hoping we can keep this drawing logic all in a general purpose routine. Like\n\n PaintOmniboxRect(canvas, SkColor inner, SkColor border, float radius, gfx:Rect bounds) {\n   // undo scale factor\n \n   gfx::ScopedCanvas save(canvas);\n   SKRRect outer_rect \u003d SkRRect::MakeRectXY(gfx::RectToSkRect(local_bounds.Scale(xx)), radius*xx, radius*xx);\n   SKRRect inner_rect \u003d outer_rect;\n   inner_rect.inset(1, 1);\n\n   // make paint flags\n   set_color(outer);\n   if (inner \u003d\u003d Transparent) {  // focus ring: clip out inner\n    sk_canvas()-\u003eclipRRect(inner, SkClipOp::kIntersect, true);\n   }\n   canvas-\u003esk_canvas()-\u003edrawRRect(outer_rect, flags);\n   if (inner \u003d\u003d Transparent)\n     return;\n\n   set_color(inner)\n   canvas-\u003esk_canvas()-\u003edrawRRect(inner_rect, flags);",
+      "revId": "85b33e0fad7933a73b318fddb69b246694e945f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79c1e01d_660ec5c1",
+        "filename": "chrome/browser/ui/views/location_bar/omnibox_background_border.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-29T04:11:39Z",
+      "side": 1,
+      "message": "comment?",
+      "revId": "85b33e0fad7933a73b318fddb69b246694e945f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8acccfd_2979c048",
+        "filename": "chrome/browser/ui/views/location_bar/omnibox_background_border.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-29T04:11:39Z",
+      "side": 1,
+      "message": "const ref local_bounds",
       "revId": "85b33e0fad7933a73b318fddb69b246694e945f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
