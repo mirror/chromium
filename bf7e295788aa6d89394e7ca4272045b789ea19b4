@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "f8f30b14_54f54843",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 2077,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-29T23:15:26Z",
+      "side": 1,
+      "message": "Nit: Please add a comment and/or a bug about why this target exists and when it might go away.",
+      "revId": "bf7e295788aa6d89394e7ca4272045b789ea19b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c238421_3accf1f7",
         "filename": "testing/buildbot/gn_isolate_map.pyl",
         "patchSetId": 5
@@ -37,6 +54,23 @@
     },
     {
       "key": {
+        "uuid": "cc5c7d9b_cc9be373",
+        "filename": "tools/perf/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-29T23:15:26Z",
+      "side": 1,
+      "message": "Nit: same request to add a comment :).",
+      "revId": "bf7e295788aa6d89394e7ca4272045b789ea19b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3601fbc8_a4f3b649",
         "filename": "tools/perf/chrome_telemetry_build/BUILD.gn",
         "patchSetId": 5
@@ -66,6 +100,24 @@
       "side": 1,
       "message": "Let\u0027s keep them as copy paste for now since we\u0027ll likely be removing this one once we no longer need this trybot (and I don\u0027t want to have to undo any more code changes than needed at that point)",
       "parentUuid": "3601fbc8_a4f3b649",
+      "revId": "bf7e295788aa6d89394e7ca4272045b789ea19b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ede5110_fd16080e",
+        "filename": "tools/perf/chrome_telemetry_build/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-29T23:15:26Z",
+      "side": 1,
+      "message": "You could use a template() in GN to avoid the copy/paste, but it may not really be worth it for one hopefully somewhat short-lived target.",
+      "parentUuid": "bc658db7_6f9588f5",
       "revId": "bf7e295788aa6d89394e7ca4272045b789ea19b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
