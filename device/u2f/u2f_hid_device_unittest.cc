@@ -16,8 +16,6 @@
 #include "device/u2f/u2f_apdu_response.h"
 #include "device/u2f/u2f_command_type.h"
 #include "device/u2f/u2f_hid_device.h"
-#include "device/u2f/u2f_message.h"
-#include "device/u2f/u2f_packet.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "services/device/public/cpp/hid/hid_device_filter.h"
@@ -364,7 +362,8 @@ TEST_F(U2fHidDeviceTest, TestRetryChannelAllocation) {
       .WillOnce(WithArgs<2>(
           Invoke([](device::mojom::HidConnection::WriteCallback* cb) {
             std::move(*cb).Run(true);
-          })));
+          })))
+      .RetiresOnSaturation();
 
   EXPECT_CALL(mock_connection, ReadPtr(_))
       // First response to HID_INIT request with incorrect nonce.
@@ -390,7 +389,8 @@ TEST_F(U2fHidDeviceTest, TestRetryChannelAllocation) {
             std::move(*cb).Run(true, 0,
                                CreateMockVersionResponse(
                                    mock_connection.connection_channel_id()));
-          })));
+          })))
+      .RetiresOnSaturation();
 
   // Add device and set mock connection to fake hid manager
   fake_hid_manager_->AddDeviceAndSetConnection(std::move(hid_device),
