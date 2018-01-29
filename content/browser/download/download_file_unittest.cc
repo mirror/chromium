@@ -437,7 +437,8 @@ class DownloadFileTest : public testing::Test {
 
   void VerifySourceStreamsStates(const SourceStreamTestData& data) {
     DCHECK(download_file_->source_streams_.find(data.offset) !=
-           download_file_->source_streams_.end());
+           download_file_->source_streams_.end())
+        << "Can't find stream at offset : " << data.offset;
     DownloadFileImpl::SourceStream* stream =
         download_file_->source_streams_[data.offset].get();
     DCHECK(stream);
@@ -461,7 +462,7 @@ class DownloadFileTest : public testing::Test {
   // Owned by download_file_; will be alive for lifetime of download_file_.
   StrictMock<MockByteStreamReader>* input_stream_;
 
-  // Additional streams to test multiple stream write.
+  // Additional streams to test m stream write.
   std::vector<StrictMock<MockByteStreamReader>*> additional_streams_;
 
   // Sink callback data for stream.
@@ -901,7 +902,7 @@ TEST_F(DownloadFileTest, StreamNonEmptyError) {
 // Tests for concurrent streams handling, used for parallel download.
 //
 // Activate both streams at the same time.
-TEST_F(DownloadFileTest, MutipleStreamsWrite) {
+TEST_F(DownloadFileTest, MultipleStreamsWrite) {
   int64_t stream_0_length = GetBuffersLength(kTestData6, 2);
   int64_t stream_1_length = GetBuffersLength(kTestData7, 2);
 

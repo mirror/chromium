@@ -128,6 +128,7 @@ DownloadInterruptReason BaseFile::AppendDataToFile(const char* data,
 DownloadInterruptReason BaseFile::WriteDataToFile(int64_t offset,
                                                   const char* data,
                                                   size_t data_len) {
+  // LOG(ERROR) << "@@@ " << __func__ << " , offset = " << offset;
   // NOTE(benwells): The above DCHECK won't be present in release builds,
   // so we log any occurences to see how common this error is in the wild.
   if (detached_)
