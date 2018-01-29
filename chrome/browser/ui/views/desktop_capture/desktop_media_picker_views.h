@@ -28,6 +28,7 @@ class DesktopMediaPickerDialogView : public views::DialogDelegateView,
       content::WebContents* parent_web_contents,
       gfx::NativeWindow context,
       DesktopMediaPickerViews* parent,
+      ui::ModalType modality,
       const base::string16& app_name,
       const base::string16& target_name,
       std::vector<std::unique_ptr<DesktopMediaList>> source_lists,
@@ -71,6 +72,7 @@ class DesktopMediaPickerDialogView : public views::DialogDelegateView,
   void OnSourceTypeSwitched(int index);
 
   DesktopMediaPickerViews* parent_;
+  ui::ModalType modality_;
 
   views::Label* description_label_;
 
@@ -92,13 +94,8 @@ class DesktopMediaPickerViews : public DesktopMediaPicker {
   void NotifyDialogResult(content::DesktopMediaID source);
 
   // DesktopMediaPicker overrides.
-  void Show(content::WebContents* web_contents,
-            gfx::NativeWindow context,
-            gfx::NativeWindow parent,
-            const base::string16& app_name,
-            const base::string16& target_name,
+  void Show(const DesktopMediaPicker::ShowParams& params,
             std::vector<std::unique_ptr<DesktopMediaList>> source_lists,
-            bool request_audio,
             const DoneCallback& done_callback) override;
 
   DesktopMediaPickerDialogView* GetDialogViewForTesting() const {
