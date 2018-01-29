@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b61939fe_dacc83d8",
+        "filename": "net/socket/socket_bio_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-29T15:31:01Z",
+      "side": 1,
+      "message": "This also is not necessarily true. Off the top of my head:\n\n- The traffic, of course, includes the user\u0027s IP address.\n- The hostname that triggered the request is, of course, included. That may be something the user typed into the URL bar.\n- The handshake uses TLS session caching, so previous handshakes may be related to this one.\n- If the server requests a client certificate and either the user selects one [or admin policy auto-selects it], or we had previously remembered a user-selected client certificate for this host, we\u0027ll send it. Client certificates may contain user data. \n- If the server requests a Channel ID (a funny authentication cookie with more crypto attached, managed with the same UI as any other cookie) and the request is made in a credentialed context, we\u0027ll generate and use with it at handshake time. I do not know whether you consider this user data. The Channel ID itself is random, but it\u0027s a correlator, like session caching or other cookies.\n\nNote this is not the only case where a socket\u0027s Connect() triggers lower-level reads or writes. Proxies, for instance. Or DNS.",
+      "range": {
+        "startLine": 37,
+        "startChar": 37,
+        "endLine": 37,
+        "endChar": 61
+      },
+      "revId": "e10f167e97f941e0664e1c75f4b50c719fa65734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
