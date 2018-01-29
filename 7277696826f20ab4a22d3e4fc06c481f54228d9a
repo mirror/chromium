@@ -231,6 +231,24 @@
     },
     {
       "key": {
+        "uuid": "f0424017_daf8da7f",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCoreImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-29T00:52:47Z",
+      "side": 1,
+      "message": "Gave it another look and I think it\u0027s okay to just return in onFocusChanged() if mWebContents is null. mWebContents being null means CVC.destroy() was called. And we made sure all the popups are hidden in it by calling hidePopupsAndPreserveSelection(). No need to try to hide popups there again. Removed |hidePopups()| in onFocusChanged.",
+      "parentUuid": "7620066a_d54e68e8",
+      "revId": "7277696826f20ab4a22d3e4fc06c481f54228d9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "efdc8a2c_bc719129",
         "filename": "content/public/android/java/src/org/chromium/content/browser/TapDisambiguator.java",
         "patchSetId": 9
