@@ -16,6 +16,29 @@
       "revId": "171158b7d7cd072b09c2a934dd9a59b4110dd7b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dd32520_a0a283cd",
+        "filename": "chrome/browser/win/settings_app_monitor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:51:03Z",
+      "side": 1,
+      "message": "nit: remove comma.",
+      "range": {
+        "startLine": 116,
+        "startChar": 33,
+        "endLine": 116,
+        "endChar": 34
+      },
+      "revId": "171158b7d7cd072b09c2a934dd9a59b4110dd7b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
