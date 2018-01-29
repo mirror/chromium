@@ -94,6 +94,8 @@ extern "C" {
 #undef CurrentTime    // Defined by X11/X.h to 0L
 #undef Success        // Defined by X11/X.h to 0
 #undef DestroyAll     // Defined by X11/X.h to 0
+#undef FocusIn        // Defined by X.h to 9
+#undef FocusOut       // Defined by X.h to 10
 #undef COUNT          // Defined by X11/extensions/XI.h to 0
 #undef CREATE         // Defined by X11/extensions/XI.h to 1
 #undef DeviceAdded    // Defined by X11/extensions/XI.h to 0
@@ -109,6 +111,8 @@ static const long CurrentTime = 0L;
 static const int False = 0;
 static const int True = 1;
 static const int Success = 0;
+static const int FocusIn = 9;
+static const int FocusOut = 10;
 typedef int Bool;
 typedef int Status;
 }  // namespace x11
