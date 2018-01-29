@@ -4,6 +4,8 @@
 
 source_set("cpp") {
   sources = [
+    "audio_system_factory.cc",
+    "audio_system_factory.h",
     "audio_system_to_service_adapter.cc",
     "audio_system_to_service_adapter.h",
   ]
@@ -12,6 +14,22 @@ source_set("cpp") {
     "//base",
     "//media",
     "//services/audio/public/interfaces",
+    "//services/service_manager/public/cpp",
+  ]
+}
+
+source_set("test_support") {
+  testonly = true
+
+  sources = [
+    "mock_system_info.cc",
+    "mock_system_info.h",
+  ]
+
+  public_deps = [
+    "//base",
+    "//media",
+    "//services/audio/common:system_info",
     "//services/service_manager/public/cpp",
   ]
 }
