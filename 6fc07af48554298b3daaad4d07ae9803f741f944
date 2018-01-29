@@ -16,6 +16,24 @@
       "revId": "6fc07af48554298b3daaad4d07ae9803f741f944",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1dfdf17_90a60d57",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/paragraph_utils.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2018-01-29T19:34:20Z",
+      "side": 1,
+      "message": "If the inline text boxes change indices, it seems like  we shouldn\u0027t have a NodeGroupItem for each inlineTextBox at all, rather there should be one reference to the whole staticText, with a start/stop char. Then we can dynamically find the inlineTextBoxes inside that node as speech proceeds. Otherwise I think it\u0027d be possible to skip inlineTextBoxes \n\nThat\u0027s a more significant change that\u0027s going to involve updating the way nodes are added to the queue to be read, as well as bigger updates to the way these are constructed.\n\nI think this is a dramatic improvement, but we should go all the way to that solution above later, because like you say, it\u0027s critical for resizing windows. What do you think?",
+      "parentUuid": "d331c3d0_64c58053",
+      "revId": "6fc07af48554298b3daaad4d07ae9803f741f944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
