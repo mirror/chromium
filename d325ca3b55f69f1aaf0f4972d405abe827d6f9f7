@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "323e8230_0ef51a6d",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 5016,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-29T16:15:35Z",
+      "side": 1,
+      "message": "Sanity check: if the navigation fails for whatever reason, the tab will no longer be marked as having been discarded. When a second navigation comes in and succeeds (making it the first successful navigation in the tab), it will not be marked as having taken place in a discarded tab. Is that WAI?\n\nAlso I\u0027m concerned that we migh not be marking the tab as no longer discarded correctly if we do two navigation in a row. E.g. we restore a page, and before the restore is done, we start a new navigation. We will not get a DidStopLoading in that case until the second navigation is finished, so the second navigation will likely commit with was_discarded set to true.",
+      "revId": "d325ca3b55f69f1aaf0f4972d405abe827d6f9f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d20e603_c1ee5a1a",
+        "filename": "content/common/navigation_params.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-29T16:15:35Z",
+      "side": 1,
+      "message": "Could you add a comment explaining what this parameter is.",
+      "revId": "d325ca3b55f69f1aaf0f4972d405abe827d6f9f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
