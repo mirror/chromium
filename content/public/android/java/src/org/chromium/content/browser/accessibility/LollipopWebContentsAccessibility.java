@@ -161,7 +161,12 @@ public class LollipopWebContentsAccessibility extends KitKatWebContentsAccessibi
     public void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         if (!isNativeInitialized()) return;
-        mContext.unregisterReceiver(mBroadcastReceiver);
+        try {
+            mContext.unregisterReceiver(mBroadcastReceiver);
+        } catch (IllegalArgumentException e) {
+            // Do nothing. This might occur incase the context is being handled in an
+            // inappropriate way.
+        }
     }
 
     @Override
