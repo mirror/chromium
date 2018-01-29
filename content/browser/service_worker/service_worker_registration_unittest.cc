@@ -676,20 +676,17 @@ class ServiceWorkerRegistrationObjectHostTest
     ServiceWorkerStatusCode status = SERVICE_WORKER_ERROR_MAX_VALUE;
     storage()->FindRegistrationForId(
         registration_id, scope,
-        base::AdaptCallbackForRepeating(base::BindOnce(
+        base::BindOnce(
             [](ServiceWorkerStatusCode* out_status,
                ServiceWorkerStatusCode status,
                scoped_refptr<ServiceWorkerRegistration> registration) {
               *out_status = status;
             },
-            &status)));
+            &status));
     return status;
   }
 
   int64_t SetUpRegistration(const GURL& scope, const GURL& script_url) {
-    storage()->LazyInitializeForTest(base::BindOnce(&base::DoNothing));
-    base::RunLoop().RunUntilIdle();
-
     // Prepare ServiceWorkerRegistration.
     blink::mojom::ServiceWorkerRegistrationOptions options;
     options.scope = scope;
@@ -714,9 +711,9 @@ class ServiceWorkerRegistrationObjectHostTest
     // Make the registration findable via storage functions.
     bool called = false;
     ServiceWorkerStatusCode status = SERVICE_WORKER_ERROR_MAX_VALUE;
-    storage()->StoreRegistration(registration.get(), version.get(),
-                                 base::AdaptCallbackForRepeating(base::BindOnce(
-                                     &SaveStatusCallback, &called, &status)));
+    storage()->StoreRegistration(
+        registration.get(), version.get(),
+        base::BindOnce(&SaveStatusCallback, &called, &status));
     base::RunLoop().RunUntilIdle();
     EXPECT_EQ(SERVICE_WORKER_OK, status);
 

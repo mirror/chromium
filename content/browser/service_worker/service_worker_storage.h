@@ -272,7 +272,7 @@ class CONTENT_EXPORT ServiceWorkerStorage
   // |resources| must already be on the purgeable list.
   void PurgeResources(const ResourceList& resources);
 
-  bool LazyInitializeForTest(base::OnceClosure callback);
+  void LazyInitializeForTest(base::OnceClosure callback);
 
  private:
   friend class service_worker_storage_unittest::ServiceWorkerStorageTest;
@@ -365,7 +365,7 @@ class CONTENT_EXPORT ServiceWorkerStorage
   base::FilePath GetDatabasePath();
   base::FilePath GetDiskCachePath();
 
-  void LazyInitialize(base::OnceClosure callback);
+  void Initialize(base::OnceClosure callback);
   void DidReadInitialData(std::unique_ptr<InitialData> data,
                           ServiceWorkerDatabase::Status status);
   void DidFindRegistrationForDocument(
