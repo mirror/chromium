@@ -35,6 +35,20 @@ class ComputedAccessibleNode : public ScriptWrappable {
   const String role() const;
   const String name() const;
 
+  // readonly attribute ComputedAccessibleNode? parent;
+  //   readonly attribute ComputedAccessibleNode? firstChild;
+  //   readonly attribute ComputedAccessibleNode? lastChild;
+  //   readonly attribute ComputedAccessibleNode? previousSibling;
+  //   readonly attribute ComputedAccessibleNode? nextSibling;
+
+  ComputedAccessibleNode* GetRelationFromCache(AXID) const;
+
+  ComputedAccessibleNode* parent() const;
+  ComputedAccessibleNode* firstChild() const;
+  ComputedAccessibleNode* lastChild() const;
+  ComputedAccessibleNode* previousSibling() const;
+  ComputedAccessibleNode* nextSibling() const;
+
  private:
   explicit ComputedAccessibleNode(Element*);
 

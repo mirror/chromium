@@ -16,6 +16,13 @@ class WebComputedAXTree {
   virtual bool ComputeAccessibilityTree() = 0;
   virtual WebString GetNameForAXNode(int32_t axID) = 0;
   virtual WebString GetRoleForAXNode(int32_t axID) = 0;
+
+  virtual bool GetParentIdForAXNode(int32_t axID, int32_t* out_param) = 0;
+  virtual bool GetFirstChildIdForAXNode(int32_t axID, int32_t* out_param) = 0;
+  virtual bool GetLastChildIdForAXNode(int32_t axID, int32_t* out_param) = 0;
+  virtual bool GetPreviousSiblingIdForAXNode(int32_t axID,
+                                             int32_t* out_param) = 0;
+  virtual bool GetNextSiblingIdForAXNode(int32_t axID, int32_t* out_param) = 0;
 };
 
 }  // namespace blink
