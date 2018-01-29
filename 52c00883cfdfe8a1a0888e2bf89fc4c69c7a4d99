@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aebd1448_b6e22bc6",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1479,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-29T02:06:55Z",
+      "side": 1,
+      "message": "nit: s/IntRect/const IntRect/",
+      "range": {
+        "startLine": 1479,
+        "startChar": 2,
+        "endLine": 1479,
+        "endChar": 9
+      },
+      "revId": "52c00883cfdfe8a1a0888e2bf89fc4c69c7a4d99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "924ce7b8_dd41894e",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1487,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-29T02:06:55Z",
+      "side": 1,
+      "message": "nit: s/IntRect/const IntRect/",
+      "range": {
+        "startLine": 1487,
+        "startChar": 2,
+        "endLine": 1487,
+        "endChar": 9
+      },
+      "revId": "52c00883cfdfe8a1a0888e2bf89fc4c69c7a4d99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
