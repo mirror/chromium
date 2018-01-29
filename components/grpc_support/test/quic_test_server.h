@@ -13,6 +13,10 @@ bool StartQuicTestServer();
 
 void ShutdownQuicTestServer();
 
+// Shuts down the server dispatcher, which results in sending ConnectionClose
+// frames to all connected clients.
+void ShutdownQuicTestServerDispatcher();
+
 int GetQuicTestServerPort();
 
 extern const char kTestServerDomain[];
