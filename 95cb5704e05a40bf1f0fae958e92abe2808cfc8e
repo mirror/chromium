@@ -46,6 +46,91 @@
       "revId": "95cb5704e05a40bf1f0fae958e92abe2808cfc8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a9fb8e9_e804f992",
+        "filename": "cc/raster/zero_copy_raster_buffer_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2018-01-29T22:31:57Z",
+      "side": 1,
+      "message": "I\u0027d prefer a separate struct for GMB (GpuMemoryBufferBacking?) that\u0027s shared between zero copy raster buffer provider and resource pool. Or a GpuBacking interface that produces (mailbox, texture target, sync token) and accepts a returned sync token. Subclassing non-interface structs seems like an anti-pattern.",
+      "revId": "95cb5704e05a40bf1f0fae958e92abe2808cfc8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef990823_f3d29faa",
+        "filename": "cc/raster/zero_copy_raster_buffer_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2018-01-29T22:31:57Z",
+      "side": 1,
+      "message": "One subtle difference here is that previously the GMB would be created here on the raster worker thread, and now the GMB is created in AcquireBufferForRaster on the compositor thread. Creating the GMB is a synchronous IPC call so we may not want to do it on compositor thread.",
+      "revId": "95cb5704e05a40bf1f0fae958e92abe2808cfc8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d768a94a_b5636b4b",
+        "filename": "cc/raster/zero_copy_raster_buffer_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2018-01-29T22:31:57Z",
+      "side": 1,
+      "message": "nit: gpu_memory_buffer_manager (no underscore)",
+      "revId": "95cb5704e05a40bf1f0fae958e92abe2808cfc8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0dd5a04_93244947",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2018-01-29T22:31:57Z",
+      "side": 1,
+      "message": "nit: I\u0027ve always seen comments like this written this way:\n\ntrue /* is_overlay_candidate */,\\n",
+      "revId": "95cb5704e05a40bf1f0fae958e92abe2808cfc8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fb51bba_b62b1e54",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2018-01-29T22:31:57Z",
+      "side": 1,
+      "message": "I\u0027m not 100% sure on this part. In ResourceProvider we keep the raster context sync token around so that if the browser drops the resource without consuming it (returns empty sync token), we wait on the raster context sync token before destroying the resource.",
+      "revId": "95cb5704e05a40bf1f0fae958e92abe2808cfc8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
