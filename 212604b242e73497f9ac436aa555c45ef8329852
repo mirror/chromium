@@ -118,6 +118,30 @@
       "revId": "212604b242e73497f9ac436aa555c45ef8329852",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6750cd9_8d3dbe14",
+        "filename": "skia/public/interfaces/bitmap_skbitmap_struct_traits.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-01-29T18:32:34Z",
+      "side": 1,
+      "message": "OK, so I think the answer is, no we don\u0027t plan to do any of that, at least not until the new color types are used in Chromium, and in general we\u0027d not like to be responsible for any of the Mojo parts of Skia-in-Chromium at all.  It\u0027s not something we ever think about.\n\nWe are of course happy to review changes to these files if any questions about how Skia works come up.",
+      "parentUuid": "c9d6e665_72f74931",
+      "range": {
+        "startLine": 78,
+        "startChar": 7,
+        "endLine": 78,
+        "endChar": 30
+      },
+      "revId": "212604b242e73497f9ac436aa555c45ef8329852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
