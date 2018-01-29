@@ -4,7 +4,9 @@
 
 #include "components/toolbar/toolbar_model_impl.h"
 
+#include "base/feature_list.h"
 #include "base/logging.h"
+#include "base/metrics/field_trial_params.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
@@ -12,6 +14,7 @@
 #include "components/security_state/core/security_state.h"
 #include "components/strings/grit/components_strings.h"
 #include "components/toolbar/features.h"
+#include "components/toolbar/toolbar_field_trial.h"
 #include "components/toolbar/toolbar_model_delegate.h"
 #include "components/url_formatter/elide_url.h"
 #include "components/url_formatter/url_formatter.h"
@@ -137,9 +140,46 @@ base::string16 ToolbarModelImpl::GetSecureVerboseText() const {
   if (IsOfflinePage())
     return l10n_util::GetStringUTF16(IDS_OFFLINE_VERBOSE_STATE);
 
+  // Security UI study (https://crbug.com/803501): Change EV/Secure text.
+  if (base::FeatureList::IsEnabled(
+          toolbar::features::kSimplifyHttpsIndicator)) {
+    std::string parameter = base::GetFieldTrialParamValueByFeature(
+        toolbar::features::kSimplifyHttpsIndicator,
+        toolbar::features::kSimplifyHttpsIndicatorParameterName);
+    switch (GetSecurityLevel(false)) {
+      case security_state::HTTP_SHOW_WARNING:
+        return l10n_util::GetStringUTF16(IDS_NOT_SECURE_VERBOSE_STATE);
+      case security_state::EV_SECURE:
+        if (parameter ==
+            toolbar::features::kSimplifyHttpsIndicatorParameterEVToSecure) {
+          return l10n_util::GetStringUTF16(IDS_SECURE_VERBOSE_STATE);
+        }
+        if (parameter ==
+            toolbar::features::kSimplifyHttpsIndicatorParameterBothToLock) {
+          return base::string16();
+        }
+        return GetEVCertName();
+      case security_state::SECURE:
+        if (parameter == toolbar::features::
+                             kSimplifyHttpsIndicatorParameterSecureToLock ||
+            parameter ==
+                toolbar::features::kSimplifyHttpsIndicatorParameterBothToLock) {
+          return base::string16();
+        }
+        return l10n_util::GetStringUTF16(IDS_SECURE_VERBOSE_STATE);
+      case security_state::DANGEROUS:
+        return l10n_util::GetStringUTF16(delegate_->FailsMalwareCheck()
+                                             ? IDS_DANGEROUS_VERBOSE_STATE
+                                             : IDS_NOT_SECURE_VERBOSE_STATE);
+      default:
+        return base::string16();
+    }
+  }
   switch (GetSecurityLevel(false)) {
     case security_state::HTTP_SHOW_WARNING:
       return l10n_util::GetStringUTF16(IDS_NOT_SECURE_VERBOSE_STATE);
+    case security_state::EV_SECURE:
+      return GetEVCertName();
     case security_state::SECURE:
       return l10n_util::GetStringUTF16(IDS_SECURE_VERBOSE_STATE);
     case security_state::DANGEROUS:
