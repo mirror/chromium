@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "525c7f82_9ca1d769",
+        "filename": "content/renderer/media/media_stream_audio_processor.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-29T13:50:22Z",
+      "side": 1,
+      "message": "Not needed, see above.",
+      "revId": "f041207d5e5b46de330d198f7ce844b554f20bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6abe24b6_c0a5779a",
+        "filename": "content/renderer/media/media_stream_audio_processor.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-29T13:50:22Z",
+      "side": 1,
+      "message": "What about the number of channels? I think we discussed checking that as well.",
+      "revId": "f041207d5e5b46de330d198f7ce844b554f20bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bb41e21_4c416efe",
+        "filename": "content/renderer/media/media_stream_audio_processor.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-29T13:50:22Z",
+      "side": 1,
+      "message": "Do you think we need 100 of those?",
+      "revId": "f041207d5e5b46de330d198f7ce844b554f20bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ebc112d_318b34a9",
+        "filename": "content/renderer/media/media_stream_audio_processor.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-29T13:50:22Z",
+      "side": 1,
+      "message": "NOTREACHED();",
+      "revId": "f041207d5e5b46de330d198f7ce844b554f20bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a59ec21_93f535da",
+        "filename": "content/renderer/media/media_stream_audio_processor.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-29T13:50:22Z",
+      "side": 1,
+      "message": "Do we want to log or trace an error here maybe?",
+      "revId": "f041207d5e5b46de330d198f7ce844b554f20bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9906a9fa_51da4cfe",
+        "filename": "content/renderer/media/media_stream_audio_processor.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-29T13:50:22Z",
+      "side": 1,
+      "message": "\u003d 0;",
+      "revId": "f041207d5e5b46de330d198f7ce844b554f20bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "691d7f24_72111f28",
+        "filename": "content/renderer/media/webrtc_audio_device_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-29T13:50:22Z",
+      "side": 1,
+      "message": "Have you added DCHECKs to the implementations?\nAlso, what about channels - what if it\u0027s not mono/stereo?",
+      "revId": "f041207d5e5b46de330d198f7ce844b554f20bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbb6dced_7e541ce9",
+        "filename": "content/renderer/media/webrtc_audio_device_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-29T13:50:22Z",
+      "side": 1,
+      "message": "What is the limitation on channels?",
+      "revId": "f041207d5e5b46de330d198f7ce844b554f20bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
