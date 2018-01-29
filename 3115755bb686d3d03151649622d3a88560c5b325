@@ -16,6 +16,24 @@
       "revId": "3115755bb686d3d03151649622d3a88560c5b325",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c704acb_ae368c1d",
+        "filename": "net/socket/socket_bio_adapter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-29T10:15:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12e5ec13_538f47ce",
+      "revId": "3115755bb686d3d03151649622d3a88560c5b325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
