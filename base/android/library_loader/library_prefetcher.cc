@@ -91,6 +91,15 @@ std::pair<size_t, size_t> GetTextRange() {
   return {start_page, end_page};
 }
 
+// Returns the start and end of the ordered part of .text, aligned to the lower
+// and upper page boundaries, respectively.
+std::pair<size_t, size_t> GetOrderedTextRange() {
+  // See comments above in |GetTextRange()| for the address computations here.
+  size_t start_page = kStartOfOrderedText - kStartOfOrderedText % kPageSize;
+  size_t end_page = base::bits::Align(kEndOfOrderedText, kPageSize);
+  return {start_page, end_page};
+}
+
 // Timestamp in ns since Unix Epoch, and residency, as returned by mincore().
 struct TimestampAndResidency {
   uint64_t timestamp_nanos;
@@ -171,12 +180,12 @@ bool NativeLibraryPrefetcher::ForkAndPrefetchNativeLibrary() {
     return false;
   }
 
-  // Looking for ranges is done before the fork, to avoid syscalls and/or memory
-  // allocations in the forked process. The child process inherits the lock
-  // state of its parent thread. It cannot rely on being able to acquire any
-  // lock (unless special care is taken in a pre-fork handler), including being
-  // able to call malloc().
-  const auto& range = GetTextRange();
+  // Looking for the range is done before the fork, as it might allocate memory,
+  // which is not allowed in the child process. It inherits the lock state of
+  // its parent thread, and cannot rely on being able to acquire any lock
+  // (unless special care is taken in a pre-fork handler), including being able
+  // to call malloc().
+  const auto& range = GetOrderedTextRange();
 
   pid_t pid = fork();
   if (pid == 0) {
