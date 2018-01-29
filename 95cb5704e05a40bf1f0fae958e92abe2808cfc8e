@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "99bbfd07_37f6e292",
+        "filename": "cc/raster/zero_copy_raster_buffer_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-29T23:22:19Z",
+      "side": 1,
+      "message": "Ah so my intention here was to have the things ResourcePool needs to know about clearly separated from things that are RasterBufferProvider-specific. The base struct has all the things that ResourcePool needs to export to the ResourceProvider basically. It doesn\u0027t have the actual ownership, just the mailbox and params for export to the display.\n\nIf we put all the fields into ResourcePool then it needs to know about the implementation details of each RasterBufferProvider and if we add/change them then ResourcePool has to change its storage structures as well.\n\nThe other option is to have RasterBufferProvider export to the ResourceProvider and give a ResourceId, then TileManager needs to do that and pass it to ResourcePool via PrepareForExport instead. I was kinda going toward the RasterBufferProviders not knowing about the ResourceProvider type tho, since it\u0027s \"general\" and they are \"implementations\" or something. \n\nwdyt?",
+      "parentUuid": "ed95993e_a21d3e2d",
+      "revId": "95cb5704e05a40bf1f0fae958e92abe2808cfc8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef990823_f3d29faa",
         "filename": "cc/raster/zero_copy_raster_buffer_provider.cc",
         "patchSetId": 7
@@ -254,6 +272,24 @@
       "side": 1,
       "message": "Don\u0027t we wait on returned sync token before deleting the texture id in ~ZeroCopyGpuBacking? Will ResourceProvider set it back before the resource pool resource is destroyed?",
       "parentUuid": "08c73a96_1e3b3121",
+      "revId": "95cb5704e05a40bf1f0fae958e92abe2808cfc8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31f87ef3_9ad5c087",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-29T23:22:19Z",
+      "side": 1,
+      "message": "Right, that\u0027s |returned_sync_token| which is a different field, it\u0027s set in OnResourceReturned here when the ResourceProvider gives the id back (after it\u0027s deleted).\n\nIn fact there\u0027s never a sync token in both fields but I liked 2 names to make their use more clear instead of ResourceProvider-type enums.",
+      "parentUuid": "321b3a56_8b49ab49",
       "revId": "95cb5704e05a40bf1f0fae958e92abe2808cfc8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
