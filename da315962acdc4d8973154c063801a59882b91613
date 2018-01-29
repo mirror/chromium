@@ -34,6 +34,24 @@
       "revId": "da315962acdc4d8973154c063801a59882b91613",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "249591a6_4689b4c3",
+        "filename": "DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 1352,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-01-29T21:49:10Z",
+      "side": 1,
+      "message": "Hrm, is that because the android hook still exists, or is this in a checkout w/o target_os \u003d [\u0027android\u0027, ...]?",
+      "parentUuid": "42077d66_d812cf8b",
+      "revId": "da315962acdc4d8973154c063801a59882b91613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
