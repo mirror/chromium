@@ -289,10 +289,12 @@ bool RDebug::GetDebuggerSupport() const {
 }
 
 void RDebug::CallRBrk(int state) {
+#if !defined(CRAZY_DISABLE_R_BRK)
   if (call_r_brk_) {
     r_debug_->r_state = state;
     r_debug_->r_brk();
   }
+#endif  // !CRAZY_DISABLE_R_BRK
 }
 
 namespace {
