@@ -52,11 +52,6 @@
   return self;
 }
 
-- (instancetype)init {
-  NOTREACHED();
-  return nil;
-}
-
 - (void)dealloc {
   DCHECK(!_bookmarkManager);
   DCHECK(!_topSitesManager);
