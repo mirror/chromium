@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2768e621_0bc5cd69",
+        "filename": "chrome/browser/content_settings/sound_content_setting_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-29T21:45:21Z",
+      "side": 1,
+      "message": "nit: Remove the \u0027std::string(\"--\") + \u0027. It\u0027s not required.",
+      "range": {
+        "startLine": 195,
+        "startChar": 6,
+        "endLine": 195,
+        "endChar": 26
+      },
+      "revId": "b2d92c533bf50897edb6da2b4c473ed86ec3f0ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
