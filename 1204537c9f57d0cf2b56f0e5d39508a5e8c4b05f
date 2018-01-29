@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "052aed2c_af2f802b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/ChannelsInitializer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-29T18:03:15Z",
+      "side": 1,
+      "message": "This isn\u0027t going to work.\n\nImportance is one of the fields you can only change before the Channel is first created - it gets set in stone and can only be changed *by the user* and not by the developer like this once the channel is registered on the notification manager.",
+      "revId": "1204537c9f57d0cf2b56f0e5d39508a5e8c4b05f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
