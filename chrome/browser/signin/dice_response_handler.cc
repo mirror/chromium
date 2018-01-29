@@ -49,6 +49,8 @@ enum DiceResponseHeader {
   kSignoutPrimary = 1,
   // Received a signout header for other account(s).
   kSignoutSecondary = 2,
+  // Received a "EnableSync" header.
+  kEnableSync = 3,
 
   kDiceResponseHeaderCount
 };
@@ -312,6 +314,7 @@ void DiceResponseHandler::ProcessEnableSyncHeader(
     const std::string& email,
     std::unique_ptr<ProcessDiceHeaderDelegate> delegate) {
   VLOG(1) << "Start processing Dice enable sync response";
+  RecordDiceResponseHeader(kEnableSync);
   for (auto it = token_fetchers_.begin(); it != token_fetchers_.end(); ++it) {
     DiceTokenFetcher* fetcher = it->get();
     if (fetcher->gaia_id() == gaia_id) {
@@ -347,13 +350,14 @@ void DiceResponseHandler::ProcessDiceSignoutHeader(
         account_tracker_service_->PickAccountIdForAccount(account_info.gaia_id,
                                                           account_info.email);
     if (signed_out_account == current_account) {
+      RecordDiceResponseHeader(kSignoutPrimary);
+
       // If Dice migration is not complete, the token for the main account must
       // not be deleted when signing out of the web.
       if (!signin::IsDiceEnabledForProfile(signin_client_->GetPrefs()))
         continue;
 
       VLOG(1) << "[Dice] Signing out all accounts.";
-      RecordDiceResponseHeader(kSignoutPrimary);
       signin_manager_->SignOutAndRemoveAllAccounts(
           signin_metrics::SERVER_FORCED_DISABLE,
           signin_metrics::SignoutDelete::IGNORE_METRIC);
