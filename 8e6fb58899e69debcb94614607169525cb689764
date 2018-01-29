@@ -69,6 +69,24 @@
       "revId": "8e6fb58899e69debcb94614607169525cb689764",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a1dcb04f_8204ccdf",
+        "filename": "chrome/browser/resources/md_extensions/code_section.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-29T16:31:54Z",
+      "side": 1,
+      "message": "I think including the entire error text is fine and would not be too verbose for assistive technologies.",
+      "parentUuid": "6ae3fb15_6397c6a7",
+      "revId": "8e6fb58899e69debcb94614607169525cb689764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
