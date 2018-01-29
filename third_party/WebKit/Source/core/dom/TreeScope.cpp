@@ -320,6 +320,21 @@ SVGTreeScopeResources& TreeScope::EnsureSVGTreeScopedResources() {
   return *svg_tree_scoped_resources_;
 }
 
+bool TreeScope::HasMoreStyleSheets() const {
+  return more_style_sheets_ && more_style_sheets_->length() > 0;
+}
+
+StyleSheetList& TreeScope::MoreStyleSheets() {
+  if (!more_style_sheets_)
+    SetMoreStyleSheets(StyleSheetList::Create(this));
+  return *more_style_sheets_;
+}
+
+void TreeScope::SetMoreStyleSheets(StyleSheetList* more_style_sheets) {
+  more_style_sheets_ = more_style_sheets;
+  /* GetDocument().GetStyleEngine().SetNeedsActiveStyleUpdate(*this); */
+}
+
 DOMSelection* TreeScope::GetSelection() const {
   if (!RootNode().GetDocument().GetFrame())
     return nullptr;
@@ -549,6 +564,7 @@ void TreeScope::Trace(blink::Visitor* visitor) {
   visitor->Trace(scoped_style_resolver_);
   visitor->Trace(radio_button_group_scope_);
   visitor->Trace(svg_tree_scoped_resources_);
+  visitor->Trace(more_style_sheets_);
 }
 
 }  // namespace blink

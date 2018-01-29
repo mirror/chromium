@@ -24,6 +24,7 @@
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "core/css/CSSImportRule.h"
 #include "core/css/CSSRuleList.h"
+#include "core/css/CSSStyleSheetInit.h"
 #include "core/css/MediaList.h"
 #include "core/css/StyleEngine.h"
 #include "core/css/StyleRule.h"
@@ -84,6 +85,50 @@ const Document* CSSStyleSheet::SingleOwnerDocument(
   if (style_sheet)
     return StyleSheetContents::SingleOwnerDocument(style_sheet->Contents());
   return nullptr;
+}
+
+CSSStyleSheet* CSSStyleSheet::Create(Document& document,
+                                     const String& text,
+                                     ExceptionState& exception_state) {
+  return CSSStyleSheet::Create(document, text, CSSStyleSheetInit(),
+                               exception_state);
+}
+
+CSSStyleSheet* CSSStyleSheet::Create(Document& document,
+                                     const String& text,
+                                     const CSSStyleSheetInit& options,
+                                     ExceptionState& exception_state) {
+  if (!RuntimeEnabledFeatures::ConstructableStylesheetsEnabled()) {
+    exception_state.ThrowTypeError("Illegal constructor");
+    return nullptr;
+  }
+
+  // Implements the algorithm from
+  // https://tabatkins.github.io/specs/construct-stylesheets/#adding-stylesheets
+
+  // Step 1.
+  CSSParserContext* parser_context = CSSParserContext::Create(document);
+  StyleSheetContents* contents = StyleSheetContents::Create(parser_context);
+  CSSStyleSheet* sheet = new CSSStyleSheet(contents, nullptr);
+  sheet->SetTitle(options.title());
+  sheet->ClearOwnerNode();
+  sheet->ClearOwnerRule();
+
+  // Step 2.
+  // TODO: create a MediaList object.
+
+  // Step 3.
+  // TODO: set sheet’s alternate flag. See StyleSheetCandidate::IsAlternate()
+
+  // Step 4.
+  if (options.disabled())
+    sheet->setDisabled(true);
+
+  // Step 5.
+  sheet->SetText(text);
+
+  // Step 6.
+  return sheet;
 }
 
 CSSStyleSheet* CSSStyleSheet::Create(StyleSheetContents* sheet,
