@@ -9,6 +9,8 @@
 #include "printing/printing_export.h"
 #include "third_party/skia/include/core/SkRefCnt.h"
 
+class SkMetaData;
+
 namespace printing {
 
 class PdfMetafileSkia;
@@ -23,6 +25,8 @@ class PRINTING_EXPORT MetafileSkiaWrapper : public SkRefCnt {
                                   PdfMetafileSkia* metafile);
 
   static PdfMetafileSkia* GetMetafileFromCanvas(cc::PaintCanvas* canvas);
+
+  static PdfMetafileSkia* GetMetafileFromMetadata(SkMetaData* meta);
 
  private:
   explicit MetafileSkiaWrapper(PdfMetafileSkia* metafile);

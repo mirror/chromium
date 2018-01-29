@@ -9,12 +9,21 @@
 #include <utility>
 #include <vector>
 
+#include "base/bind.h"
+#include "base/bind_helpers.h"
 #include "base/files/file.h"
+#include "base/process/process.h"
+#include "base/stl_util.h"
 #include "base/time/time.h"
 #include "cc/paint/paint_record.h"
 #include "cc/paint/paint_recorder.h"
 #include "cc/paint/skia_paint_canvas.h"
 #include "printing/print_settings.h"
+#include "third_party/skia/include/core/SkCanvas.h"
+#include "third_party/skia/include/core/SkColor.h"
+#include "third_party/skia/include/core/SkPaint.h"
+#include "third_party/skia/include/core/SkPicture.h"
+#include "third_party/skia/include/core/SkPictureRecorder.h"
 #include "third_party/skia/include/core/SkSerialProcs.h"
 #include "third_party/skia/include/core/SkStream.h"
 // Note that headers in third_party/skia/src are fragile.  This is
@@ -62,13 +71,17 @@ struct Page {
 };
 
 // TODO(weili): Remove pdf from struct name and field names since it is used for
-//              other formats as well.
+//              other formats as well. Also change member variable names without
+//              the ending underscore.
 struct PdfMetafileSkiaData {
   cc::PaintRecorder recorder_;  // Current recording
 
   std::vector<Page> pages_;
   std::unique_ptr<SkStreamAsset> pdf_data_;
   ContentToProxyIdMap subframe_content_info;
+  std::map<uint32_t, sk_sp<SkPicture>> subframe_pics;
+  int document_cookie = 0;
+  int page_number = 0;
 
   // The scale factor is used because Blink occasionally calls
   // PaintCanvas::getTotalMatrix() even though the total matrix is not as
@@ -82,9 +95,18 @@ struct PdfMetafileSkiaData {
 #endif
 };
 
-PdfMetafileSkia::PdfMetafileSkia(SkiaDocumentType type)
+PdfMetafileSkia::PdfMetafileSkia()
+    : data_(std::make_unique<PdfMetafileSkiaData>()) {
+  data_->type_ = SkiaDocumentType::PDF;
+}
+
+PdfMetafileSkia::PdfMetafileSkia(SkiaDocumentType type,
+                                 int document_cookie,
+                                 int page_number)
     : data_(std::make_unique<PdfMetafileSkiaData>()) {
   data_->type_ = type;
+  data_->document_cookie = document_cookie;
+  data_->page_number = page_number;
 }
 
 PdfMetafileSkia::~PdfMetafileSkia() = default;
@@ -167,19 +189,24 @@ bool PdfMetafileSkia::FinishDocument() {
 
   SkDynamicMemoryWStream stream;
   sk_sp<SkDocument> doc;
+  cc::PlaybackParams params(nullptr);
   switch (data_->type_) {
     case SkiaDocumentType::PDF:
       doc = MakePdfDocument(printing::GetAgent(), &stream);
       break;
     case SkiaDocumentType::MSKP:
-      doc = SkMakeMultiPictureDocument(&stream);
+      SkSerialProcs procs = SerializationProcs(&data_->subframe_content_info);
+      doc = SkMakeMultiPictureDocument(&stream, &procs);
+      // The callback is only used inside this function.
+      params.custom_callback = base::BindRepeating(
+          &PdfMetafileSkia::MskpDrawingCallback, base::Unretained(this));
       break;
   }
 
   for (const Page& page : data_->pages_) {
     cc::SkiaPaintCanvas canvas(
         doc->beginPage(page.size_.width(), page.size_.height()));
-    canvas.drawPicture(page.content_);
+    canvas.drawPicture(page.content_, params);
     doc->endPage();
   }
   doc->close();
@@ -202,7 +229,7 @@ bool PdfMetafileSkia::FinishFrameContent() {
   SkDynamicMemoryWStream stream;
   sk_sp<SkPicture> pic = ToSkPicture(data_->pages_[0].content_,
                                      SkRect::MakeSize(data_->pages_[0].size_));
-  SkSerialProcs procs;
+  SkSerialProcs procs = SerializationProcs(&data_->subframe_content_info);
   pic->serialize(&stream, &procs);
   data_->pdf_data_ = stream.detachAsStream();
   data_->subframe_content_info.clear();
@@ -310,7 +337,8 @@ std::unique_ptr<PdfMetafileSkia> PdfMetafileSkia::GetMetafileForCurrentPage(
     SkiaDocumentType type) {
   // If we only ever need the metafile for the last page, should we
   // only keep a handle on one PaintRecord?
-  auto metafile = std::make_unique<PdfMetafileSkia>(type);
+  auto metafile = std::make_unique<PdfMetafileSkia>(
+      type, data_->document_cookie, data_->page_number);
   if (data_->pages_.size() == 0)
     return metafile;
 
@@ -318,11 +346,55 @@ std::unique_ptr<PdfMetafileSkia> PdfMetafileSkia::GetMetafileForCurrentPage(
     return metafile;
 
   metafile->data_->pages_.push_back(data_->pages_.back());
+  metafile->data_->subframe_content_info = data_->subframe_content_info;
+  metafile->data_->subframe_pics = data_->subframe_pics;
 
   if (!metafile->FinishDocument())  // Generate PDF.
     metafile.reset();
 
   return metafile;
+}
+
+uint32_t PdfMetafileSkia::CreateContentForRemoteFrame(const gfx::Rect& rect,
+                                                      int render_proxy_id) {
+  // Create a place holder picture.
+  sk_sp<SkPicture> pic = SkPicture::MakePlaceholder(
+      SkRect::MakeXYWH(rect.x(), rect.y(), rect.width(), rect.height()));
+
+  // Store the map between content id and the proxy id.
+  uint32_t content_id = pic->uniqueID();
+  DCHECK(!base::ContainsKey(data_->subframe_content_info, content_id));
+  data_->subframe_content_info[content_id] = render_proxy_id;
+
+  // Store the picture content.
+  data_->subframe_pics[content_id] = pic;
+  return content_id;
+}
+
+int PdfMetafileSkia::GetDocumentCookie() const {
+  return data_->document_cookie;
+}
+
+int PdfMetafileSkia::GetPageNumber() const {
+  return data_->page_number;
+}
+
+void PdfMetafileSkia::MskpDrawingCallback(SkCanvas* canvas,
+                                          uint32_t content_id) {
+  // Check whether this is the one we need to handle.
+  if (!base::ContainsKey(data_->subframe_content_info, content_id))
+    return;
+
+  auto it = data_->subframe_pics.find(content_id);
+  DCHECK(it != data_->subframe_pics.end());
+  if (it == data_->subframe_pics.end())
+    return;
+
+  // Found the picture, draw it on canvas.
+  sk_sp<SkPicture> pic = it->second;
+  SkRect rect = pic->cullRect();
+  SkMatrix matrix = SkMatrix::MakeTrans(rect.x(), rect.y());
+  canvas->drawPicture(it->second, &matrix, nullptr);
 }
 
 }  // namespace printing

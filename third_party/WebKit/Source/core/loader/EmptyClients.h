@@ -73,6 +73,8 @@
  Brittle, yes. Unfortunate, yes. Hopefully temporary.
 */
 
+class SkMetaData;
+
 namespace blink {
 
 class CORE_EXPORT EmptyChromeClient : public ChromeClient {
@@ -425,6 +427,9 @@ class CORE_EXPORT EmptyRemoteFrameClient : public RemoteFrameClient {
   void SetIsInert(bool) override {}
   void UpdateRenderThrottlingStatus(bool is_throttled,
                                     bool subtree_throttled) override {}
+  uint32_t Print(const IntRect& rect, SkMetaData* metadata) const override {
+    return 0;
+  }
 
   // FrameClient implementation.
   bool InShadowTree() const override { return false; }

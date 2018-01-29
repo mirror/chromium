@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "printing/metafile_skia_wrapper.h"
+#include "printing/pdf_metafile_skia.h"
 #include "third_party/skia/include/core/SkMetaData.h"
 #include "third_party/skia/include/core/SkRefCnt.h"
 
@@ -29,9 +30,13 @@ void MetafileSkiaWrapper::SetMetafileOnCanvas(cc::PaintCanvas* canvas,
 // static
 PdfMetafileSkia* MetafileSkiaWrapper::GetMetafileFromCanvas(
     cc::PaintCanvas* canvas) {
-  SkMetaData& meta = canvas->getMetaData();
+  return GetMetafileFromMetadata(&canvas->getMetaData());
+}
+
+PdfMetafileSkia* MetafileSkiaWrapper::GetMetafileFromMetadata(
+    SkMetaData* meta) {
   SkRefCnt* value;
-  if (!meta.findRefCnt(kMetafileKey, &value) || !value)
+  if (!meta || !meta->findRefCnt(kMetafileKey, &value) || !value)
     return nullptr;
 
   return static_cast<MetafileSkiaWrapper*>(value)->metafile_;

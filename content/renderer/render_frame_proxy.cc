@@ -31,6 +31,7 @@
 #include "content/renderer/render_widget.h"
 #include "content/renderer/resource_timing_info_conversions.h"
 #include "ipc/ipc_message_macros.h"
+#include "printing/features/features.h"
 #include "third_party/WebKit/common/feature_policy/feature_policy.h"
 #include "third_party/WebKit/common/frame_policy.h"
 #include "third_party/WebKit/public/platform/URLConversion.h"
@@ -46,6 +47,11 @@
 #if defined(USE_AURA)
 #include "content/renderer/mus/mus_embedded_frame.h"
 #include "content/renderer/mus/renderer_window_tree_client.h"
+#endif
+
+#if BUILDFLAG(ENABLE_PRINTING)
+#include "printing/metafile_skia_wrapper.h"  // nogncheck
+#include "printing/pdf_metafile_skia.h"      // nogncheck
 #endif
 
 namespace content {
@@ -755,5 +761,26 @@ void RenderFrameProxy::OnMusEmbeddedFrameSinkIdAllocated(
   ResendResizeParams();
 }
 #endif
+
+uint32_t RenderFrameProxy::Print(const blink::WebRect& rect,
+                                 SkMetaData* metadata) {
+#if BUILDFLAG(ENABLE_PRINTING)
+  printing::PdfMetafileSkia* metafile =
+      printing::MetafileSkiaWrapper::GetMetafileFromMetadata(metadata);
+
+  // Create a place holder content for the remote frame so it can be replaced
+  // with actual content later.
+  uint32_t content_id =
+      metafile->CreateContentForRemoteFrame(rect, routing_id_);
+
+  // Inform browser to print the remote subframe.
+  Send(new FrameHostMsg_PrintSubframe(routing_id_, rect,
+                                      metafile->GetDocumentCookie(),
+                                      metafile->GetPageNumber()));
+  return content_id;
+#else
+  return 0;
+#endif
+}
 
 }  // namespace content

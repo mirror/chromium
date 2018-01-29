@@ -10,6 +10,8 @@
 #include "core/loader/FrameLoaderTypes.h"
 #include "public/platform/WebFocusType.h"
 
+class SkMetaData;
+
 namespace blink {
 
 class IntRect;
@@ -45,6 +47,8 @@ class RemoteFrameClient : public FrameClient {
 
   virtual void UpdateRenderThrottlingStatus(bool isThrottled,
                                             bool subtreeThrottled) = 0;
+
+  virtual uint32_t Print(const IntRect&, SkMetaData* metadata) const = 0;
 };
 
 }  // namespace blink

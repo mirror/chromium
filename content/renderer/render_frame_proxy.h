@@ -24,6 +24,8 @@
 #include "content/renderer/mus/mus_embedded_frame_delegate.h"
 #endif
 
+class SkMetaData;
+
 namespace blink {
 struct FramePolicy;
 struct WebRect;
@@ -185,6 +187,7 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
                     blink::WebLocalFrame* source) override;
   void FrameFocused() override;
   blink::WebString GetDevToolsFrameToken() override;
+  uint32_t Print(const blink::WebRect& rect, SkMetaData* metadata) override;
 
   // IPC handlers
   void OnDidStartLoading();

@@ -1228,7 +1228,8 @@ bool PrintRenderFrameHelper::CreatePreviewDocument() {
   const std::vector<int>& pages = print_pages_params_->pages;
 
   if (!print_preview_context_.CreatePreviewDocument(
-          std::move(prep_frame_view_), pages, print_params.printed_doc_type)) {
+          std::move(prep_frame_view_), pages, print_params.printed_doc_type,
+          print_params.document_cookie)) {
     return false;
   }
 
@@ -1334,8 +1335,9 @@ bool PrintRenderFrameHelper::RenderPreviewPage(
   std::unique_ptr<PdfMetafileSkia> draft_metafile;
   PdfMetafileSkia* initial_render_metafile = print_preview_context_.metafile();
   if (print_preview_context_.IsModifiable() && is_print_ready_metafile_sent_) {
-    draft_metafile =
-        std::make_unique<PdfMetafileSkia>(print_params.printed_doc_type);
+    draft_metafile = std::make_unique<PdfMetafileSkia>(
+        print_params.printed_doc_type, print_params.document_cookie,
+        page_number);
     initial_render_metafile = draft_metafile.get();
   }
 
@@ -1448,7 +1450,8 @@ void PrintRenderFrameHelper::OnPrintFrameContent(
   // that instead.
   auto plugin = delegate_->GetPdfElement(frame);
 
-  PdfMetafileSkia metafile(SkiaDocumentType::MSKP);
+  PdfMetafileSkia metafile(SkiaDocumentType::MSKP, params.document_cookie,
+                           params.page_number);
   PrintMsg_Print_Params print_params;
   auto& rect = params.printable_area;
   print_params.page_size = gfx::Size(rect.width(), rect.height());
@@ -1674,7 +1677,8 @@ bool PrintRenderFrameHelper::PrintPagesNative(blink::WebLocalFrame* frame,
   if (printed_pages.empty())
     return false;
 
-  PdfMetafileSkia metafile(print_params.printed_doc_type);
+  PdfMetafileSkia metafile(print_params.printed_doc_type,
+                           print_params.document_cookie);
   CHECK(metafile.Init());
 
   PrintHostMsg_DidPrintDocument_Params page_params;
@@ -2170,6 +2174,7 @@ bool PrintRenderFrameHelper::PreviewPageRendered(int page_number,
       print_pages_params_->params.preview_request_id;
   preview_page_params.document_cookie =
       print_pages_params_->params.document_cookie;
+  preview_page_params.is_draft = metafile->GetPageNumber() != page_number;
 
   Send(new PrintHostMsg_DidPreviewPage(routing_id(), preview_page_params));
   return true;
@@ -2216,7 +2221,8 @@ void PrintRenderFrameHelper::PrintPreviewContext::OnPrintPreview() {
 bool PrintRenderFrameHelper::PrintPreviewContext::CreatePreviewDocument(
     std::unique_ptr<PrepareFrameAndViewForPrint> prepared_frame,
     const std::vector<int>& pages,
-    SkiaDocumentType doc_type) {
+    SkiaDocumentType doc_type,
+    int document_cookie) {
   DCHECK_EQ(INITIALIZED, state_);
   state_ = RENDERING;
 
@@ -2231,7 +2237,7 @@ bool PrintRenderFrameHelper::PrintPreviewContext::CreatePreviewDocument(
     return false;
   }
 
-  metafile_ = std::make_unique<PdfMetafileSkia>(doc_type);
+  metafile_ = std::make_unique<PdfMetafileSkia>(doc_type, document_cookie);
   CHECK(metafile_->Init());
 
   current_page_index_ = 0;
