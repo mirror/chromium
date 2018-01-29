@@ -15,8 +15,10 @@
 #include "base/memory/weak_ptr.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string16.h"
+#include "chrome/browser/android/vr_shell/vr_dialog.h"
 #include "chrome/browser/ui/toolbar/chrome_toolbar_model_delegate.h"
 #include "chrome/browser/vr/assets_load_status.h"
+#include "chrome/browser/vr/content_input_delegate.h"
 #include "chrome/browser/vr/exit_vr_prompt_choice.h"
 #include "chrome/browser/vr/speech_recognizer.h"
 #include "chrome/browser/vr/ui.h"
@@ -92,6 +94,10 @@ class VrShell : device::GvrGamepadDataProvider,
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj,
       const base::android::JavaParamRef<jobject>& android_ui_gesture_target);
+  void SetDialogGestureTarget(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& obj,
+      const base::android::JavaParamRef<jobject>& dialog_gesture_target);
   void Destroy(JNIEnv* env, const base::android::JavaParamRef<jobject>& obj);
   void OnTriggerEvent(JNIEnv* env,
                       const base::android::JavaParamRef<jobject>& obj,
@@ -155,6 +161,7 @@ class VrShell : device::GvrGamepadDataProvider,
 
   device::mojom::VRDisplayFrameTransportOptionsPtr
   GetVRDisplayFrameTransportOptions();
+  void DialogSurfaceChanged(jobject surface);
 
   void BufferBoundsChanged(JNIEnv* env,
                            const base::android::JavaParamRef<jobject>& object,
@@ -185,6 +192,19 @@ class VrShell : device::GvrGamepadDataProvider,
 
   void ProcessContentGesture(std::unique_ptr<blink::WebInputEvent> event,
                              int content_id);
+
+  void ProcessDialogGesture(std::unique_ptr<blink::WebInputEvent> event);
+
+  void AddAlertDialog(JNIEnv* env,
+                      const base::android::JavaParamRef<jobject>& obj,
+                      int width,
+                      int height);
+  void CloseAlertDialog(JNIEnv* env,
+                        const base::android::JavaParamRef<jobject>& obj);
+  void SetAlertDialogSize(JNIEnv* env,
+                          const base::android::JavaParamRef<jobject>& obj,
+                          int width,
+                          int height);
 
   void ConnectPresentingService(
       device::mojom::VRSubmitFrameClientPtr submit_client,
@@ -241,10 +261,12 @@ class VrShell : device::GvrGamepadDataProvider,
   base::android::ScopedJavaGlobalRef<jobject> j_vr_shell_;
 
   std::unique_ptr<AndroidUiGestureTarget> android_ui_gesture_target_;
+  std::unique_ptr<AndroidUiGestureTarget> dialog_gesture_target_;
   std::unique_ptr<VrMetricsHelper> metrics_helper_;
 
   scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner_;
   std::unique_ptr<VrGLThread> gl_thread_;
+  std::unique_ptr<VrDialog> vr_dialog_;
   vr::BrowserUiInterface* ui_;
 
   // These instances make use of ui_ (provided by gl_thread_), and hence must be

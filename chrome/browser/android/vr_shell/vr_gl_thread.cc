@@ -103,6 +103,12 @@ void VrGLThread::ContentOverlaySurfaceCreated(jobject surface,
                      surface, base::Unretained(texture)));
 }
 
+void VrGLThread::DialogSurfaceChanged(jobject surface) {
+  main_thread_task_runner_->PostTask(
+      FROM_HERE,
+      base::Bind(&VrShell::DialogSurfaceChanged, weak_vr_shell_, surface));
+}
+
 void VrGLThread::GvrDelegateReady(
     gvr::ViewerType viewer_type,
     device::mojom::VRDisplayFrameTransportOptionsPtr transport_options) {
@@ -124,6 +130,14 @@ void VrGLThread::ForwardEvent(std::unique_ptr<blink::WebInputEvent> event,
   main_thread_task_runner_->PostTask(
       FROM_HERE, base::Bind(&VrShell::ProcessContentGesture, weak_vr_shell_,
                             base::Passed(std::move(event)), content_id));
+}
+
+void VrGLThread::ForwardDialogEvent(
+    std::unique_ptr<blink::WebInputEvent> event) {
+  DCHECK(OnGlThread());
+  main_thread_task_runner_->PostTask(
+      FROM_HERE, base::Bind(&VrShell::ProcessDialogGesture, weak_vr_shell_,
+                            base::Passed(std::move(event))));
 }
 
 void VrGLThread::ForceExitVr() {
@@ -354,6 +368,21 @@ void VrGLThread::SetOmniboxSuggestions(
   task_runner()->PostTask(
       FROM_HERE, base::Bind(&vr::BrowserUiInterface::SetOmniboxSuggestions,
                             browser_ui_, base::Passed(std::move(suggestions))));
+}
+void VrGLThread::SetAlertDialogEnabled(bool enabled,
+                                       vr::ContentInputDelegate* delegate,
+                                       int width,
+                                       int height) {
+  DCHECK(OnMainThread());
+  task_runner()->PostTask(
+      FROM_HERE, base::Bind(&vr::BrowserUiInterface::SetAlertDialogEnabled,
+                            browser_ui_, enabled, delegate, width, height));
+}
+
+void VrGLThread::SetAlertDialogSize(int width, int height) {
+  task_runner()->PostTask(
+      FROM_HERE, base::Bind(&vr::BrowserUiInterface::SetAlertDialogSize,
+                            browser_ui_, width, height));
 }
 
 void VrGLThread::OnAssetsComponentReady() {

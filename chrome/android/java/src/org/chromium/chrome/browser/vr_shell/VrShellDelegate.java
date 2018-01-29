@@ -836,6 +836,7 @@ public class VrShellDelegate
             mVrDaydreamApi.launchVrHomescreen();
             return;
         }
+
         mExitedDueToUnsupportedMode = false;
 
         addVrViews();
