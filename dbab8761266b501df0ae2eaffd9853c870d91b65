@@ -275,6 +275,24 @@
       "revId": "dbab8761266b501df0ae2eaffd9853c870d91b65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfa0cb3e_46b7e104",
+        "filename": "ios/chrome/browser/ui/util/named_guide.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-29T13:34:14Z",
+      "side": 1,
+      "message": "The problem is that if the toolbars change how these layout guides behave, there\u0027s a good chance this comment will go unchanged and thus be inaccurate. \n\nI\u0027d prefer that the classes that implement the behavior document it, I think.",
+      "parentUuid": "dc068e39_8fa78449",
+      "revId": "dbab8761266b501df0ae2eaffd9853c870d91b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
