@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4457d64c_bfb27175",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-29T18:50:13Z",
+      "side": 1,
+      "message": "It should work similar to custom/webkit pseudo elements. In IsPseudoClassValidAfterPseudoElement in CSSSelectorParser.cpp, add a case for the ::part pseudo alongside:\n\n  case CSSSelector::kPseudoWebKitCustomElement:\n  case CSSSelector::kPseudoBlinkInternalElement:",
+      "revId": "8f512dd5c04053427839649b1a1fe82bc17f8590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67aa0c6b_220d29f5",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSSelectorParserTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-29T18:50:13Z",
+      "side": 1,
+      "message": "Did you mean \":host::part(ident)\"? Otherwise, could you use e.g \"div\" if this is what\u0027s causing your presubmit failure?",
+      "revId": "8f512dd5c04053427839649b1a1fe82bc17f8590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
