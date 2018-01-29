@@ -243,6 +243,20 @@ void GpuServiceImpl::RecordLogMessage(int severity,
   (*gpu_host_)->RecordLogMessage(severity, header, message);
 }
 
+void GpuServiceImpl::CreateArcVideoDecodeAcceleratorDeprecated(
+    arc::mojom::VideoDecodeAcceleratorRequest vda_request) {
+#if defined(OS_CHROMEOS)
+  DCHECK(io_runner_->BelongsToCurrentThread());
+  main_runner_->PostTask(
+      FROM_HERE,
+      base::BindOnce(
+          &GpuServiceImpl::CreateArcVideoDecodeAcceleratorDeprecatedOnMainThread,
+          weak_ptr_, std::move(vda_request)));
+#else
+  NOTREACHED();
+#endif  // defined(OS_CHROMEOS)
+}
+
 void GpuServiceImpl::CreateArcVideoDecodeAccelerator(
     arc::mojom::VideoDecodeAcceleratorRequest vda_request) {
 #if defined(OS_CHROMEOS)
@@ -286,12 +300,20 @@ void GpuServiceImpl::CreateArcProtectedBufferManager(
 }
 
 #if defined(OS_CHROMEOS)
-void GpuServiceImpl::CreateArcVideoDecodeAcceleratorOnMainThread(
+void GpuServiceImpl::CreateArcVideoDecodeAcceleratorDeprecatedOnMainThread(
     arc::mojom::VideoDecodeAcceleratorRequest vda_request) {
   DCHECK(main_runner_->BelongsToCurrentThread());
   mojo::MakeStrongBinding(
       std::make_unique<arc::GpuArcVideoDecodeAccelerator>(
           gpu_preferences_, protected_buffer_manager_.get()),
+      std::move(vda_request));
+}
+
+void GpuServiceImpl::CreateArcVideoDecodeAcceleratorOnMainThread(
+    arc::mojom::VideoDecodeAcceleratorRequest vda_request) {
+  DCHECK(main_runner_->BelongsToCurrentThread());
+  mojo::MakeStrongBinding(
+      std::make_unique<arc::GpuArcVideoDecodeAccelerator>(gpu_preferences_),
       std::move(vda_request));
 }
 

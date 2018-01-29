@@ -19,7 +19,9 @@
 namespace arc {
 
 class ProtectedBufferManager;
+// TODO(hiroh): Remove.
 class ProtectedBufferHandle;
+
 
 // GpuArcVideoDecodeAccelerator is executed in the GPU process.
 // It takes decoding requests from ARC via IPC channels and translates and
@@ -35,9 +37,12 @@ class GpuArcVideoDecodeAccelerator
     : public mojom::VideoDecodeAccelerator,
       public media::VideoDecodeAccelerator::Client {
  public:
+  explicit GpuArcVideoDecodeAccelerator(const gpu::GpuPreferences& gpu_preferences);
+  // TODO(hiroh): Remove.
   GpuArcVideoDecodeAccelerator(
       const gpu::GpuPreferences& gpu_preferences,
       ProtectedBufferManager* protected_buffer_manager);
+
   ~GpuArcVideoDecodeAccelerator() override;
 
   // Implementation of media::VideoDecodeAccelerator::Client interface.
@@ -57,6 +62,7 @@ class GpuArcVideoDecodeAccelerator
   void Initialize(mojom::VideoDecodeAcceleratorConfigPtr config,
                   mojom::VideoDecodeClientPtr client,
                   InitializeCallback callback) override;
+  // TODO(hiroh): Remove.
   void AllocateProtectedBuffer(
       mojo::ScopedHandle handle,
       uint64_t size,
@@ -145,12 +151,8 @@ class GpuArcVideoDecodeAccelerator
   gfx::Size coded_size_;
   gfx::Size pending_coded_size_;
 
-  // Owned by caller.
+  // TODO(hiroh): Remove.
   ProtectedBufferManager* const protected_buffer_manager_;
-
-  bool secure_mode_ = false;
-  size_t output_buffer_count_ = 0;
-
   // Although the stored data are not used for anything in GAVDA,
   // storing them in GAVDA is needed to keep the protected buffers and
   // their mappings valid on behalf of the GAVDA client.
@@ -161,8 +163,12 @@ class GpuArcVideoDecodeAccelerator
   // AssignPictureBuffers() for protected output buffers.
   // |protected_output_handles_| is indexed by |picture_buffer_id| in
   // ImportBufferForPicture().
+  // TODO(hiroh): Remove them.
   std::vector<std::unique_ptr<ProtectedBufferHandle>> protected_input_handles_;
   std::vector<std::unique_ptr<ProtectedBufferHandle>> protected_output_handles_;
+
+  bool secure_mode_ = false;
+  size_t output_buffer_count_ = 0;
 
   THREAD_CHECKER(thread_checker_);
   DISALLOW_COPY_AND_ASSIGN(GpuArcVideoDecodeAccelerator);

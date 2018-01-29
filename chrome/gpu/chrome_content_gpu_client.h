@@ -42,6 +42,9 @@ class ChromeContentGpuClient : public content::ContentGpuClient {
 
  private:
 #if defined(OS_CHROMEOS)
+  void CreateArcVideoDecodeAcceleratorDeprecated(
+      ::arc::mojom::VideoDecodeAcceleratorRequest request);
+
   void CreateArcVideoDecodeAccelerator(
       ::arc::mojom::VideoDecodeAcceleratorRequest request);
 

@@ -29,6 +29,9 @@ interface GpuService {
   CloseChannel(int32 client_id);
 
   // Create a new ARC VideoDecodeAccelerator and binds it to |vda|.
+  CreateArcVideoDecodeAcceleratorDeprecated(arc.mojom.VideoDecodeAccelerator& vda);
+
+  // Create a new ARC VideoDecodeAccelerator and binds it to |vda|.
   CreateArcVideoDecodeAccelerator(arc.mojom.VideoDecodeAccelerator& vda);
 
   // Create a new ARC VideoEncodeAccelerator and binds it to |vea|.
