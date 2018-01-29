@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "e4287e73_a084e8cf",
+        "filename": "chrome/browser/ui/browser_window_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-29T17:26:47Z",
+      "side": 1,
+      "message": "You don\u0027t need this include, unless you add the show state.",
+      "range": {
+        "startLine": 8,
+        "startChar": 10,
+        "endLine": 8,
+        "endChar": 33
+      },
+      "revId": "9848bcb2a38ef74933be75c07754b9ad656dfbac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bf0ee99_bf742d21",
+        "filename": "chrome/browser/ui/browser_window_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-29T17:26:47Z",
+      "side": 1,
+      "message": "How about changing this to just \u0027the browser window.\u0027 I have no doubt this interface will change to include other state too.",
+      "range": {
+        "startLine": 10,
+        "startChar": 20,
+        "endLine": 10,
+        "endChar": 40
+      },
+      "revId": "9848bcb2a38ef74933be75c07754b9ad656dfbac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5543e8af_5b4950d6",
         "filename": "chrome/browser/ui/browser_window_observer.h",
         "patchSetId": 2
@@ -18,6 +64,122 @@
         "startChar": 39,
         "endLine": 13,
         "endChar": 56
+      },
+      "revId": "9848bcb2a38ef74933be75c07754b9ad656dfbac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69bacac9_708d605a",
+        "filename": "chrome/browser/ui/browser_window_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-29T17:26:47Z",
+      "side": 1,
+      "message": "It\u0027s nice to have functions only called when the state definitely changed, but I realize this may slightly complicate things and both can be made to work. So, I\u0027m ok either way.",
+      "parentUuid": "5543e8af_5b4950d6",
+      "range": {
+        "startLine": 13,
+        "startChar": 39,
+        "endLine": 13,
+        "endChar": 56
+      },
+      "revId": "9848bcb2a38ef74933be75c07754b9ad656dfbac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d39206e_7c32dca1",
+        "filename": "chrome/browser/ui/browser_window_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-29T17:26:47Z",
+      "side": 1,
+      "message": "Are you sure you really want show state? Show state contains a bunch of values that don\u0027t really make sense in this context. For example, inactive and default.",
+      "range": {
+        "startLine": 14,
+        "startChar": 15,
+        "endLine": 14,
+        "endChar": 33
+      },
+      "revId": "9848bcb2a38ef74933be75c07754b9ad656dfbac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbc62a84_70730413",
+        "filename": "chrome/browser/ui/cocoa/browser_window_cocoa.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-29T17:26:47Z",
+      "side": 1,
+      "message": "DISALLOW..",
+      "range": {
+        "startLine": 196,
+        "startChar": 0,
+        "endLine": 196,
+        "endChar": 2
+      },
+      "revId": "9848bcb2a38ef74933be75c07754b9ad656dfbac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09676d1e_8f90d21a",
+        "filename": "chrome/browser/ui/tabs/window_activity_watcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-29T17:26:47Z",
+      "side": 1,
+      "message": "This is ick and I would not want other places to have to worry about this. Are you sure about the comment? At least on non-mac the BrowserWindow owns the Browser, and it\u0027s ~Browser that triggers deleting this. So, are you sure this is necessary? If so, under what conditions is the browser_window() already deleted?",
+      "range": {
+        "startLine": 124,
+        "startChar": 4,
+        "endLine": 130,
+        "endChar": 5
+      },
+      "revId": "9848bcb2a38ef74933be75c07754b9ad656dfbac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1e98d39_0bbbfbdf",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-29T17:26:47Z",
+      "side": 1,
+      "message": "At least with views (and I suspect the mac side too), it\u0027s far better to send this notification in response to actual changes. That way you deal with the case of the OS triggering the state change vs only Chrome code triggering the change. I\u0027m specifically thinking of overriding OnNativeWidgetShowStateChanged in BrowserFrame.",
+      "range": {
+        "startLine": 844,
+        "startChar": 0,
+        "endLine": 857,
+        "endChar": 1
       },
       "revId": "9848bcb2a38ef74933be75c07754b9ad656dfbac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
