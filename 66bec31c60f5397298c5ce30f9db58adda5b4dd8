@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d985e7b_dd62e2ba",
+        "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2018-01-29T23:17:13Z",
+      "side": 0,
+      "message": "This logic was wrong because it will always keep the default GPUInfo.sandboxed, which is false.",
+      "revId": "66bec31c60f5397298c5ce30f9db58adda5b4dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
