@@ -715,7 +715,10 @@ scoped_refptr<StaticBitmapImage> Canvas2DLayerBridge::NewImageSnapshot(
   if (!GetOrCreateResourceProvider(hint))
     return nullptr;
   FlushRecording();
-  return GetOrCreateResourceProvider()->Snapshot();
+  auto image = GetOrCreateResourceProvider()->Snapshot();
+  GetOrCreateResourceProvider()->GetSkSurface()->notifyContentWillChange(
+      SkSurface::kRetain_ContentChangeMode);
+  return image;
 }
 
 void Canvas2DLayerBridge::WillOverwriteCanvas() {
