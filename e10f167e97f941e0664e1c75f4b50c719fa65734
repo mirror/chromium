@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "3400c40e_c593ce52",
+        "filename": "net/socket/socket_bio_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-29T17:55:05Z",
+      "side": 1,
+      "message": "Nit: BIO, not Bio. (\"BIO\" is some OpenSSL socket interface. No idea what it stands for. Much of OpenSSL\u0027s historical APIs are a mystery. :-) )",
+      "range": {
+        "startLine": 29,
+        "startChar": 24,
+        "endLine": 29,
+        "endChar": 27
+      },
+      "revId": "e10f167e97f941e0664e1c75f4b50c719fa65734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b61939fe_dacc83d8",
         "filename": "net/socket/socket_bio_adapter.cc",
         "patchSetId": 4
@@ -37,6 +60,30 @@
       "side": 1,
       "message": "How about I remove this sentence, and add the following to the \u0027data\u0027 field:\n\n\"In case of handshake, user\u0027s IP, host name, full URL, data related to previous handshake, client certificates, and channel id, may be sent.\"",
       "parentUuid": "b61939fe_dacc83d8",
+      "range": {
+        "startLine": 37,
+        "startChar": 37,
+        "endLine": 37,
+        "endChar": 61
+      },
+      "revId": "e10f167e97f941e0664e1c75f4b50c719fa65734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68dc3d3c_9784b08c",
+        "filename": "net/socket/socket_bio_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-29T17:55:05Z",
+      "side": 1,
+      "message": "The full URL is not sent during the handshake. Otherwise, I will defer to you whether text is sufficient to satisfy the needs of this feature or whether you want, say, to plumb a socket tag out of Connect().",
+      "parentUuid": "58aa6dff_ca536ef0",
       "range": {
         "startLine": 37,
         "startChar": 37,
