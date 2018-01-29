@@ -168,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "5f3b5d6f_57f06373",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1256179
+      },
+      "writtenOn": "2018-01-29T04:58:54Z",
+      "side": 1,
+      "message": "Submitted a separate CL crrev.com/c/888278 for moving ReadFileSystemFilesToPickle function to a public place (content/public/common/drop_data.h)\n\nUpdated the file_helper API to take in a pickle and read URLs using this public function.",
+      "parentUuid": "0c00de2a_a1405453",
+      "range": {
+        "startLine": 56,
+        "startChar": 57,
+        "endLine": 57,
+        "endChar": 62
+      },
+      "revId": "2e470ec936dd51a62317183810c06cb1cf3b84cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0de28a2_45384f31",
         "filename": "components/exo/data_offer.cc",
         "patchSetId": 9
