@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ae3800b_920fefe4",
+        "filename": "media/cast/net/mojo_udp_transport_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2018-01-29T18:27:33Z",
+      "side": 1,
+      "message": "Orthogonal to this issue and not blocking, but SendPacket returning a bool about whether things are blocked are not doesn\u0027t make a lot of sense to me (but I didn\u0027t follow through the call paths to understand why it might be needed).",
+      "revId": "cbab56c8ec7f0dfc21b04408709761cc6b40a21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2929f0b1_86599a59",
+        "filename": "media/cast/net/mojo_udp_transport_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2018-01-29T18:27:33Z",
+      "side": 1,
+      "message": "I\u0027m still shaky on c++ style, but the interaction between done_cb_, is_pending_, and cb passed around) is a little confusing here and in SendPacket above.\n\nIf done_cb_ is set to a new closure here, how can it be null for the next SendPacket call (on line 28)?\n\nis_pending_ seems to imply that done_cb_ is not null, but then we set it to false below on line 56.\n\n\nApologies if I\u0027m missing something obvious. :)",
+      "revId": "cbab56c8ec7f0dfc21b04408709761cc6b40a21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
