@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b5f5aa0_740ddb0f",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-29T22:33:30Z",
+      "side": 1,
+      "message": "Nit: I still think storing local_rrect_ instead of rrect_ could simplify code here and line 577-578 and reduce cost of the common path. Just optional. The current code CL already looks good.",
+      "revId": "6f9a0404c2d1180ffe7ce7a94041a14bd9ee040a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
