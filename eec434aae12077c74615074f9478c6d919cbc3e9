@@ -379,6 +379,30 @@
       "revId": "eec434aae12077c74615074f9478c6d919cbc3e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afad3c9c_2ae4f624",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-29T13:54:44Z",
+      "side": 1,
+      "message": "The heap snapshot generator is going to show all objects that are reachable via wrapper tracing. So every node that the ScriptWrappableVisitor visits will show up in the DevTools UI.\n\nThe goal is to give descriptive names to as many of them as possible. This CL (ScriptWrappable + EventListener) already covers about 90% of all nodes, other nodes show up as \"UnknownNode\".\n\nI really like to give EventListener a descriptive name because they are frequent, so restricting to only ScriptWrappables would not be sufficient.\n\nFor TraceWrapperBase object that are not ScriptWrappables, the NameInHeapSnapshot should just return the name of the C++ class (like EventListener does).\nSo maybe we can use a macro for that. I would be also fine with the current approach because the class name is not going to change often.",
+      "parentUuid": "ea7a1009_8093e0ad",
+      "range": {
+        "startLine": 153,
+        "startChar": 11,
+        "endLine": 153,
+        "endChar": 29
+      },
+      "revId": "eec434aae12077c74615074f9478c6d919cbc3e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
