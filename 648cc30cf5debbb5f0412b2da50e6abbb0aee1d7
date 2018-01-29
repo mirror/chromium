@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fa46c21_f7c122b1",
+        "filename": "net/interfaces/address_family_traits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-29T18:27:06Z",
+      "side": 1,
+      "message": "Sorry for the drive-by, but I noticed that this file is incorrectly named and won\u0027t have security checks enforced. Do you mind renaming these files to address_family_struct_traits.h in a followup?\n\ntsepez, rockot, maybe we should just call these files *_mojo_traits?",
+      "revId": "648cc30cf5debbb5f0412b2da50e6abbb0aee1d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
