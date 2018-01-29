@@ -272,6 +272,24 @@
     },
     {
       "key": {
+        "uuid": "e9e74b37_8a259876",
+        "filename": "ios/chrome/browser/ui/download/download_manager_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-29T17:41:16Z",
+      "side": 1,
+      "message": "There are really few occurrence of non-inline value, but I don\u0027t have strong objections (https://cs.chromium.org/search/?sq\u003dpackage:chromium\u0026q\u003dbase::PostTaskWithTraits%5C(FROM_HERE,%5C+%5B%5E%7B%5D).\n\nMaybe mark traits as const (or constexpr if it works).",
+      "parentUuid": "82c1527b_00bdf7b0",
+      "revId": "b284d9c763b8c8de19c4e6f7e7cd45df0bfc795a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5951b91a_7be9d357",
         "filename": "ios/chrome/browser/ui/download/download_manager_coordinator.mm",
         "patchSetId": 2
