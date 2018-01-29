@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79991ab3_d8b8a4d1",
+        "filename": "ios/chrome/browser/mailto/features.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2018-01-29T21:45:19Z",
+      "side": 1,
+      "message": "Can this flag be more specific. I think a usage of:\n\n  if (base::FeatureList::IsEnabled(kMailtoHandling)) {\n    ...\n  }\n\ncan be confusing since the opposite of IsEnabled() is not \"is disabled\". What do you think about something more specific, e.g. kUseGrowthKitForMailtoHandler or kMailtoHandlingWithGrowthKit?",
+      "range": {
+        "startLine": 11,
+        "startChar": 20,
+        "endLine": 11,
+        "endChar": 35
+      },
+      "revId": "6c9d4a413eabc1c89bce300b83975fc2d189f48d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
