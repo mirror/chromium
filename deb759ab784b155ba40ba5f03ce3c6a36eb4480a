@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46701cd9_a5f94550",
+        "filename": "components/policy/core/browser/browser_policy_connector_base.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-29T17:24:41Z",
+      "side": 1,
+      "message": "This is different from policy_service_ in the case of Shutdown(). By that I mean Shutdown() explicitly sets is_initialized_ to false but does not destroy the policy_service_. Otherwise I could remove this.",
+      "range": {
+        "startLine": 91,
+        "startChar": 7,
+        "endLine": 91,
+        "endChar": 23
+      },
+      "revId": "deb759ab784b155ba40ba5f03ce3c6a36eb4480a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
