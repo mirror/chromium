@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9723ccc_f21fcbe5",
+        "filename": "base/time/time_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1231,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-29T18:32:47Z",
+      "side": 1,
+      "message": "wtb c++17",
+      "range": {
+        "startLine": 1231,
+        "startChar": 53,
+        "endLine": 1231,
+        "endChar": 55
+      },
+      "revId": "8aeb322b824c94381c0c00a7218d4165a91b7bfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
