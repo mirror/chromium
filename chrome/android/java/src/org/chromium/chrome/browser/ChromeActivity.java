@@ -67,8 +67,7 @@ import org.chromium.chrome.browser.compositor.layouts.content.ContentOffsetProvi
 import org.chromium.chrome.browser.compositor.layouts.content.TabContentManager;
 import org.chromium.chrome.browser.contextualsearch.ContextualSearchFieldTrial;
 import org.chromium.chrome.browser.contextualsearch.ContextualSearchManager;
-import org.chromium.chrome.browser.contextualsearch.ContextualSearchManager
-        .ContextualSearchTabPromotionDelegate;
+import org.chromium.chrome.browser.contextualsearch.ContextualSearchManager.ContextualSearchTabPromotionDelegate;
 import org.chromium.chrome.browser.datausage.DataUseTabUIManager;
 import org.chromium.chrome.browser.device.DeviceClassManager;
 import org.chromium.chrome.browser.dom_distiller.DomDistillerUIUtils;
@@ -2180,16 +2179,15 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
      * is in Android N multi-window mode.
      */
     protected void recordMultiWindowModeScreenWidth() {
-        if (!DeviceFormFactor.isTablet()) return;
+        if (!isTablet()) return;
 
         RecordHistogram.recordBooleanHistogram(
                 "Android.MultiWindowMode.IsTabletScreenWidthBelow600",
                 mScreenWidthDp < DeviceFormFactor.MINIMUM_TABLET_WIDTH_DP);
 
         if (mScreenWidthDp < DeviceFormFactor.MINIMUM_TABLET_WIDTH_DP) {
-            RecordHistogram.recordLinearCountHistogram(
-                    "Android.MultiWindowMode.TabletScreenWidth", mScreenWidthDp, 1,
-                    DeviceFormFactor.MINIMUM_TABLET_WIDTH_DP, 50);
+            RecordHistogram.recordLinearCountHistogram("Android.MultiWindowMode.TabletScreenWidth",
+                    mScreenWidthDp, 1, DeviceFormFactor.MINIMUM_TABLET_WIDTH_DP, 50);
         }
     }
 

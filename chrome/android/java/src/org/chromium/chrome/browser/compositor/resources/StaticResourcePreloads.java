@@ -30,10 +30,10 @@ public class StaticResourcePreloads {
     private static int[] sEmptyList = new int[] {};
 
     public static int[] getSynchronousResources(Context context) {
-        return DeviceFormFactor.isTablet() ? sSynchronousResources : sEmptyList;
+        return DeviceFormFactor.isTabletLayout(context) ? sSynchronousResources : sEmptyList;
     }
 
     public static int[] getAsynchronousResources(Context context) {
-        return DeviceFormFactor.isTablet() ? sAsynchronousResources : sEmptyList;
+        return DeviceFormFactor.isTabletLayout(context) ? sAsynchronousResources : sEmptyList;
     }
 }

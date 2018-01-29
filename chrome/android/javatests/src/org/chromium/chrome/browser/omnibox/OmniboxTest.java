@@ -389,7 +389,7 @@ public class OmniboxTest {
             throws ExecutionException, InterruptedException {
         // Default orientation for tablets is landscape. Default for phones is portrait.
         int requestedOrientation = 1;
-        if (DeviceFormFactor.isTablet()) {
+        if (DeviceFormFactor.isTabletLayout()) {
             requestedOrientation = 0;
         }
         doTestAutoCompleteAndCorrectionForOrientation(requestedOrientation);
@@ -403,7 +403,7 @@ public class OmniboxTest {
             throws ExecutionException, InterruptedException {
         // Default orientation for tablets is landscape. Default for phones is portrait.
         int requestedOrientation = 0;
-        if (DeviceFormFactor.isTablet()) {
+        if (DeviceFormFactor.isTabletLayout()) {
             requestedOrientation = 1;
         }
         doTestAutoCompleteAndCorrectionForOrientation(requestedOrientation);
@@ -672,7 +672,7 @@ public class OmniboxTest {
                     (LocationBarLayout) mActivityTestRule.getActivity().findViewById(
                             R.id.location_bar);
             boolean securityIcon = locationBar.isSecurityButtonShown();
-            if (DeviceFormFactor.isTablet()) {
+            if (DeviceFormFactor.isTabletLayout()) {
                 Assert.assertTrue("Omnibox should have a Security icon", securityIcon);
                 Assert.assertTrue(securityButton.isShown());
                 Assert.assertEquals(
@@ -772,7 +772,7 @@ public class OmniboxTest {
             Assert.assertEquals("security_button with wrong resource-id", R.id.security_button,
                     securityButton.getId());
 
-            if (DeviceFormFactor.isTablet()) {
+            if (DeviceFormFactor.isTabletLayout()) {
                 Assert.assertTrue(locationBarLayout.shouldEmphasizeHttpsScheme());
             } else {
                 Assert.assertFalse(locationBarLayout.shouldEmphasizeHttpsScheme());
