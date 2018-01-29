@@ -820,8 +820,11 @@ class PeerConnectionUMAObserver : public webrtc::UMAObserver {
         UMA_HISTOGRAM_EXACT_LINEAR("WebRTC.PeerConnection.IceRegatheringReason",
                                    counter, counter_max);
         break;
+      case webrtc::kEnumCounterKeyProtocol:
+        UMA_HISTOGRAM_EXACT_LINEAR("WebRTC.PeerConnection.KeyProtocol", counter,
+                                   counter_max);
       default:
-        // The default clause is expected to reach when new enum types are
+        // The default clause is expected to be reached when new enum types are
         // added.
         break;
     }
