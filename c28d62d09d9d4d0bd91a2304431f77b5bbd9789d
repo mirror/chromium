@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c04ea5ec_c949d982",
+        "filename": "components/grpc_support/test/quic_test_server.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-01-29T18:15:36Z",
+      "side": 1,
+      "message": "Since g_quic_server_thread is not a unique pointer anymore, when the server thread is going to be stopped?",
+      "revId": "c28d62d09d9d4d0bd91a2304431f77b5bbd9789d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
