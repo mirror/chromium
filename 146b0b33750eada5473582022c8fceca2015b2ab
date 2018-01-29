@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "9a0aae72_64581580",
+        "filename": "device/u2f/u2f_apdu_command.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-29T15:22:37Z",
+      "side": 1,
+      "message": "Yeah, this has been happening for quite a while in the cryptotoken extension (years)",
+      "parentUuid": "d9ec4946_5db8999e",
+      "range": {
+        "startLine": 102,
+        "startChar": 54,
+        "endLine": 102,
+        "endChar": 58
+      },
+      "revId": "146b0b33750eada5473582022c8fceca2015b2ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "daab6094_3d21d341",
         "filename": "device/u2f/u2f_apdu_unittest.cc",
         "patchSetId": 2
