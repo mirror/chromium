@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8d815ed_9cf82733",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 13336,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-29T16:37:27Z",
+      "side": 1,
+      "message": "nit: It will be nice to write a comment on what this is trying to accomplish, since it is a bit subtle. Also, not a big fan of nested message loops, but I don\u0027t see a better way of testing this in a browser test.",
+      "revId": "03c6f2c9da55854076932476c2255377b6ee0b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e66fb8f3_120b57ed",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 13362,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-29T16:37:27Z",
+      "side": 1,
+      "message": "nit: Put a comment on what the test is testing and a reference to the bug number.",
+      "revId": "03c6f2c9da55854076932476c2255377b6ee0b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
