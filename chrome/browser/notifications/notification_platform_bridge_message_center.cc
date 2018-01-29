@@ -22,72 +22,65 @@ namespace {
 // TODO(estade): also handle other NotificationDelegate actions as needed.
 class PassThroughDelegate : public message_center::NotificationDelegate {
  public:
-  PassThroughDelegate(Profile* profile,
+  PassThroughDelegate(const std::string& profile_id,
+                      bool is_incognito,
                       const message_center::Notification& notification,
                       NotificationHandler::Type notification_type)
-      : profile_(profile),
+      : profile_id_(profile_id),
+        is_incognito_(is_incognito),
         notification_(notification),
         notification_type_(notification_type) {
     DCHECK_NE(notification_type, NotificationHandler::Type::TRANSIENT);
   }
 
   void SettingsClick() override {
-    NotificationDisplayServiceImpl::GetForProfile(profile_)
-        ->ProcessNotificationOperation(
-            NotificationCommon::SETTINGS, notification_type_,
-            notification_.origin_url(), notification_.id(), base::nullopt,
-            base::nullopt, base::nullopt /* by_user */);
+    NotificationDisplayServiceImpl::ProcessSettingsClick(
+        profile_id_, is_incognito_, notification_type_,
+        notification_.origin_url(), notification_.id());
   }
 
   void DisableNotification() override {
-    NotificationDisplayServiceImpl::GetForProfile(profile_)
-        ->ProcessNotificationOperation(
-            NotificationCommon::DISABLE_PERMISSION, notification_type_,
-            notification_.origin_url(), notification_.id(),
-            base::nullopt /* action_index */, base::nullopt /* reply */,
-            base::nullopt /* by_user */);
+    NotificationDisplayServiceImpl::ProcessDisablePermission(
+        profile_id_, is_incognito_, notification_type_,
+        notification_.origin_url(), notification_.id());
   }
 
   void Close(bool by_user) override {
-    NotificationDisplayServiceImpl::GetForProfile(profile_)
-        ->ProcessNotificationOperation(
-            NotificationCommon::CLOSE, notification_type_,
-            notification_.origin_url(), notification_.id(),
-            base::nullopt /* action_index */, base::nullopt /* reply */,
-            by_user);
+    NotificationDisplayServiceImpl::ProcessClose(
+        profile_id_, is_incognito_, notification_type_,
+        notification_.origin_url(), notification_.id(), by_user,
+        base::Bind(&base::DoNothing));
   }
 
   void Click() override {
-    NotificationDisplayServiceImpl::GetForProfile(profile_)
-        ->ProcessNotificationOperation(
-            NotificationCommon::CLICK, notification_type_,
-            notification_.origin_url(), notification_.id(),
-            base::nullopt /* action_index */, base::nullopt /* reply */,
-            base::nullopt /* by_user */);
+    NotificationDisplayServiceImpl::ProcessClick(
+        profile_id_, is_incognito_, notification_type_,
+        notification_.origin_url(), notification_.id(),
+        base::nullopt /* action_index */, base::nullopt /* reply */,
+        base::Bind(&base::DoNothing));
   }
 
   void ButtonClick(int action_index) override {
-    NotificationDisplayServiceImpl::GetForProfile(profile_)
-        ->ProcessNotificationOperation(
-            NotificationCommon::CLICK, notification_type_,
-            notification_.origin_url(), notification_.id(), action_index,
-            base::nullopt /* reply */, base::nullopt /* by_user */);
+    NotificationDisplayServiceImpl::ProcessClick(
+        profile_id_, is_incognito_, notification_type_,
+        notification_.origin_url(), notification_.id(), action_index,
+        base::nullopt /* reply */, base::Bind(&base::DoNothing));
   }
 
   void ButtonClickWithReply(int action_index,
                             const base::string16& reply) override {
-    NotificationDisplayServiceImpl::GetForProfile(profile_)
-        ->ProcessNotificationOperation(
-            NotificationCommon::CLICK, notification_type_,
-            notification_.origin_url(), notification_.id(), action_index, reply,
-            base::nullopt /* by_user */);
+    NotificationDisplayServiceImpl::ProcessClick(
+        profile_id_, is_incognito_, notification_type_,
+        notification_.origin_url(), notification_.id(), action_index, reply,
+        base::Bind(&base::DoNothing));
   }
 
  protected:
   ~PassThroughDelegate() override = default;
 
  private:
-  Profile* profile_;
+  std::string profile_id_;
+  bool is_incognito_;
   message_center::Notification notification_;
   NotificationHandler::Type notification_type_;
 
@@ -105,8 +98,8 @@ NotificationPlatformBridgeMessageCenter::
 
 void NotificationPlatformBridgeMessageCenter::Display(
     NotificationHandler::Type notification_type,
-    const std::string& /* profile_id */,
-    bool /* is_incognito */,
+    const std::string& profile_id,
+    bool is_incognito,
     const message_center::Notification& notification,
     std::unique_ptr<NotificationCommon::Metadata> /* metadata */) {
   NotificationUIManager* ui_manager =
@@ -123,8 +116,9 @@ void NotificationPlatformBridgeMessageCenter::Display(
   // If there's no delegate, replace it with a PassThroughDelegate so clicks
   // go back to the appropriate handler.
   message_center::Notification notification_with_delegate(notification);
-  notification_with_delegate.set_delegate(base::WrapRefCounted(
-      new PassThroughDelegate(profile_, notification, notification_type)));
+  notification_with_delegate.set_delegate(
+      base::WrapRefCounted(new PassThroughDelegate(
+          profile_id, is_incognito, notification, notification_type)));
   ui_manager->Add(notification_with_delegate, profile_);
 }
 

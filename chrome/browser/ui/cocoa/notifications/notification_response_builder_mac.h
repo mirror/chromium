@@ -9,6 +9,12 @@
 
 @class NSUserNotification;
 
+enum NotificationOperation {
+  NOTIFICATION_CLICK = 0,
+  NOTIFICATION_CLOSE = 1,
+  NOTIFICATION_SETTINGS = 2
+};
+
 // Provides a marshallable way for storing the information related to a
 // notification response action, clicking on it, clicking on a button etc.
 @interface NotificationResponseBuilder : NSObject

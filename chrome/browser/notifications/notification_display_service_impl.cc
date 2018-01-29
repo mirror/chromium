@@ -8,6 +8,7 @@
 
 #include "base/bind.h"
 #include "base/callback.h"
+#include "base/callback_helpers.h"
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
 #include "build/build_config.h"
@@ -18,6 +19,7 @@
 #include "chrome/browser/notifications/notification_platform_bridge.h"
 #include "chrome/browser/notifications/persistent_notification_handler.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/common/chrome_features.h"
 #include "content/public/browser/browser_thread.h"
 #include "ui/base/ui_features.h"
@@ -95,6 +97,30 @@ std::unique_ptr<NotificationPlatformBridge> CreateMessageCenterBridge(
 #endif
 }
 
+// Loads the appropriate profile for the |profile_id| and |is_incognito| pair
+// and uses it to select the right handler for the |notification_type|.
+void LoadProfileAndGetNotificationHandler(
+    const std::string& profile_id,
+    bool is_incognito,
+    NotificationHandler::Type notification_type,
+    base::OnceCallback<void(NotificationHandler*)> callback) {
+  g_browser_process->profile_manager()->LoadProfile(
+      profile_id, is_incognito,
+      base::AdaptCallbackForRepeating(base::BindOnce(
+          [](NotificationHandler::Type notification_type,
+             base::OnceCallback<void(NotificationHandler*)> callback,
+             Profile* profile) {
+            NotificationDisplayServiceImpl* service =
+                NotificationDisplayServiceImpl::GetForProfile(profile);
+            DCHECK(service);
+
+            // Invoke the |callback| with the handler that is ready to be used.
+            std::move(callback).Run(
+                service->GetNotificationHandler(notification_type));
+          },
+          notification_type, std::move(callback))));
+}
+
 std::string GetProfileId(Profile* profile) {
 #if defined(OS_WIN)
   return base::WideToUTF8(profile->GetPath().BaseName().value());
@@ -105,10 +131,6 @@ std::string GetProfileId(Profile* profile) {
 #endif
 }
 
-void OperationCompleted() {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-}
-
 }  // namespace
 
 // static
@@ -116,6 +138,92 @@ NotificationDisplayServiceImpl* NotificationDisplayServiceImpl::GetForProfile(
     Profile* profile) {
   return static_cast<NotificationDisplayServiceImpl*>(
       NotificationDisplayServiceFactory::GetForProfile(profile));
+}
+
+// static
+void NotificationDisplayServiceImpl::ProcessClick(
+    const std::string& profile_id,
+    bool is_incognito,
+    NotificationHandler::Type notification_type,
+    const GURL& origin,
+    const std::string& notification_id,
+    const base::Optional<int>& action_index,
+    const base::Optional<base::string16>& reply,
+    base::OnceClosure completed_closure) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  DCHECK(completed_closure);
+
+  LoadProfileAndGetNotificationHandler(
+      profile_id, is_incognito, notification_type,
+      base::BindOnce(
+          [](const GURL& origin, const std::string& notification_id,
+             const base::Optional<int>& action_index,
+             const base::Optional<base::string16>& reply,
+             base::OnceClosure completed_closure,
+             NotificationHandler* handler) {
+            handler->OnClick(nullptr /* profile */, origin, notification_id,
+                             action_index, reply, std::move(completed_closure));
+          },
+          origin, notification_id, action_index, reply,
+          std::move(completed_closure)));
+}
+
+// static
+void NotificationDisplayServiceImpl::ProcessSettingsClick(
+    const std::string& profile_id,
+    bool is_incognito,
+    NotificationHandler::Type notification_type,
+    const GURL& origin,
+    const std::string& notification_id) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  LoadProfileAndGetNotificationHandler(
+      profile_id, is_incognito, notification_type,
+      base::BindOnce(
+          [](const GURL& origin, NotificationHandler* handler) {
+            handler->OpenSettings(nullptr /* profile */, origin);
+          },
+          origin));
+}
+
+// static
+void NotificationDisplayServiceImpl::ProcessDisablePermission(
+    const std::string& profile_id,
+    bool is_incognito,
+    NotificationHandler::Type notification_type,
+    const GURL& origin,
+    const std::string& notification_id) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  LoadProfileAndGetNotificationHandler(
+      profile_id, is_incognito, notification_type,
+      base::BindOnce(
+          [](const GURL& origin, NotificationHandler* handler) {
+            handler->DisableNotifications(nullptr /* profile */, origin);
+          },
+          origin));
+}
+
+// static
+void NotificationDisplayServiceImpl::ProcessClose(
+    const std::string& profile_id,
+    bool is_incognito,
+    NotificationHandler::Type notification_type,
+    const GURL& origin,
+    const std::string& notification_id,
+    bool by_user,
+    base::OnceClosure completed_closure) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  DCHECK(completed_closure);
+
+  LoadProfileAndGetNotificationHandler(
+      profile_id, is_incognito, notification_type,
+      base::BindOnce(
+          [](const GURL& origin, const std::string& notification_id,
+             bool by_user, base::OnceClosure completed_closure,
+             NotificationHandler* handler) {
+            handler->OnClose(nullptr /* profile */, origin, notification_id,
+                             by_user, std::move(completed_closure));
+          },
+          origin, notification_id, by_user, std::move(completed_closure)));
 }
 
 NotificationDisplayServiceImpl::NotificationDisplayServiceImpl(Profile* profile)
@@ -146,45 +254,6 @@ NotificationDisplayServiceImpl::NotificationDisplayServiceImpl(Profile* profile)
 }
 
 NotificationDisplayServiceImpl::~NotificationDisplayServiceImpl() = default;
-
-void NotificationDisplayServiceImpl::ProcessNotificationOperation(
-    NotificationCommon::Operation operation,
-    NotificationHandler::Type notification_type,
-    const GURL& origin,
-    const std::string& notification_id,
-    const base::Optional<int>& action_index,
-    const base::Optional<base::string16>& reply,
-    const base::Optional<bool>& by_user) {
-  NotificationHandler* handler = GetNotificationHandler(notification_type);
-  DCHECK(handler);
-  if (!handler) {
-    LOG(ERROR) << "Unable to find a handler for "
-               << static_cast<int>(notification_type);
-    return;
-  }
-
-  // TODO(crbug.com/766854): Plumb this through from the notification platform
-  // bridges so they can report completion of the operation as needed.
-  base::OnceClosure completed_closure = base::BindOnce(&OperationCompleted);
-
-  switch (operation) {
-    case NotificationCommon::CLICK:
-      handler->OnClick(profile_, origin, notification_id, action_index, reply,
-                       std::move(completed_closure));
-      break;
-    case NotificationCommon::CLOSE:
-      DCHECK(by_user.has_value());
-      handler->OnClose(profile_, origin, notification_id, by_user.value(),
-                       std::move(completed_closure));
-      break;
-    case NotificationCommon::DISABLE_PERMISSION:
-      handler->DisableNotifications(profile_, origin);
-      break;
-    case NotificationCommon::SETTINGS:
-      handler->OpenSettings(profile_, origin);
-      break;
-  }
-}
 
 void NotificationDisplayServiceImpl::AddNotificationHandler(
     NotificationHandler::Type notification_type,
@@ -269,31 +338,6 @@ void NotificationDisplayServiceImpl::GetDisplayed(
 
   bridge_->GetDisplayed(GetProfileId(profile_), profile_->IsOffTheRecord(),
                         callback);
-}
-
-// Callback to run once the profile has been loaded in order to perform a
-// given |operation| in a notification.
-void NotificationDisplayServiceImpl::ProfileLoadedCallback(
-    NotificationCommon::Operation operation,
-    NotificationHandler::Type notification_type,
-    const GURL& origin,
-    const std::string& notification_id,
-    const base::Optional<int>& action_index,
-    const base::Optional<base::string16>& reply,
-    const base::Optional<bool>& by_user,
-    Profile* profile) {
-  if (!profile) {
-    // TODO(miguelg): Add UMA for this condition.
-    // Perhaps propagate this through PersistentNotificationStatus.
-    LOG(WARNING) << "Profile not loaded correctly";
-    return;
-  }
-
-  NotificationDisplayServiceImpl* display_service =
-      NotificationDisplayServiceImpl::GetForProfile(profile);
-  display_service->ProcessNotificationOperation(operation, notification_type,
-                                                origin, notification_id,
-                                                action_index, reply, by_user);
 }
 
 void NotificationDisplayServiceImpl::OnNotificationPlatformBridgeReady(

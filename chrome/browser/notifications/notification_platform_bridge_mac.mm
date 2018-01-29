@@ -65,7 +65,7 @@
 namespace {
 
 // Loads the profile and process the Notification response
-void DoProcessNotificationResponse(NotificationCommon::Operation operation,
+void DoProcessNotificationResponse(NotificationOperation operation,
                                    NotificationHandler::Type type,
                                    const std::string& profile_id,
                                    bool incognito,
@@ -75,15 +75,24 @@ void DoProcessNotificationResponse(NotificationCommon::Operation operation,
                                    const base::Optional<base::string16>& reply,
                                    const base::Optional<bool>& by_user) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  switch (operation) {
+    case NOTIFICATION_CLICK:
+      NotificationDisplayServiceImpl::ProcessClick(
+          profile_id, incognito, type, origin, notification_id, action_index,
+          reply, base::Bind(&base::DoNothing));
+      return;
+    case NOTIFICATION_CLOSE:
+      NotificationDisplayServiceImpl::ProcessClose(
+          profile_id, incognito, type, origin, notification_id, by_user.value(),
+          base::Bind(&base::DoNothing));
+      return;
+    case NOTIFICATION_SETTINGS:
+      NotificationDisplayServiceImpl::ProcessSettingsClick(
+          profile_id, incognito, type, origin, notification_id);
+      return;
+  }
 
-  ProfileManager* profileManager = g_browser_process->profile_manager();
-  DCHECK(profileManager);
-
-  profileManager->LoadProfile(
-      profile_id, incognito,
-      base::Bind(&NotificationDisplayServiceImpl::ProfileLoadedCallback,
-                 operation, type, origin, notification_id, action_index, reply,
-                 by_user));
+  NOTREACHED();
 }
 
 // This enum backs an UMA histogram, so it should be treated as append-only.
@@ -365,7 +374,7 @@ void NotificationPlatformBridgeMac::ProcessNotificationResponse(
   content::BrowserThread::PostTask(
       content::BrowserThread::UI, FROM_HERE,
       base::Bind(DoProcessNotificationResponse,
-                 static_cast<NotificationCommon::Operation>(
+                 static_cast<NNotificationOperation>(
                      operation.unsignedIntValue),
                  static_cast<NotificationHandler::Type>(
                      notification_type.unsignedIntValue),

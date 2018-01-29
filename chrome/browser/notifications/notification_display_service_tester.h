@@ -73,11 +73,6 @@ class NotificationDisplayServiceTester {
   // Removes all notifications of the given |type|.
   void RemoveAllNotifications(NotificationHandler::Type type, bool by_user);
 
-  // Sets a |delegate| to notify when ProcessNotificationOperation is called.
-  void SetProcessNotificationOperationDelegate(
-      const StubNotificationDisplayService::
-          ProcessNotificationOperationCallback& delegate);
-
  private:
   void OnProfileShutdown();
 

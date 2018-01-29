@@ -177,12 +177,6 @@ void NotificationDisplayServiceTester::RemoveAllNotifications(
   display_service_->RemoveAllNotifications(type, by_user);
 }
 
-void NotificationDisplayServiceTester::SetProcessNotificationOperationDelegate(
-    const StubNotificationDisplayService::ProcessNotificationOperationCallback&
-        delegate) {
-  display_service_->SetProcessNotificationOperationDelegate(delegate);
-}
-
 void NotificationDisplayServiceTester::OnProfileShutdown() {
   profile_ = nullptr;
   profile_shutdown_subscription_.reset();
