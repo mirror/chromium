@@ -213,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "44db2b8d_9a26066e",
+        "filename": "chrome/installer/setup/setup_util.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-29T23:19:19Z",
+      "side": 1,
+      "message": "null terminator seems to get more votes in the codebase. We could also sideskirt the issue and call it the \"null string terminator\".\n\nI suspect null terminator is faster to process. I had to parse this sentence again when I saw string terminator and then questions on how this string was terminated came up.",
+      "parentUuid": "62b0ccd8_4f515dce",
+      "range": {
+        "startLine": 862,
+        "startChar": 27,
+        "endLine": 862,
+        "endChar": 31
+      },
+      "revId": "3fbf87081c8f87d21386aaf4e9cefc31ae8406bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c242a300_135f1de1",
         "filename": "chrome/installer/setup/setup_util.cc",
         "patchSetId": 41
