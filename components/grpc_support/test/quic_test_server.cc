@@ -111,37 +111,39 @@ void ShutdownOnServerThread(base::WaitableEvent* server_stopped_event) {
 }
 
 bool StartQuicTestServer() {
-  LOG(INFO) << g_quic_server_thread;
-  DCHECK(!g_quic_server_thread);
-  g_quic_server_thread = new base::Thread("quic server thread");
-  base::Thread::Options thread_options;
-  thread_options.message_loop_type = base::MessageLoop::TYPE_IO;
-  bool started = g_quic_server_thread->StartWithOptions(thread_options);
-  DCHECK(started);
+  DVLOG(3) << g_quic_server_thread;
+  DCHECK(!g_quic_server);
+  if (!g_quic_server_thread) {
+    g_quic_server_thread = new base::Thread("quic server thread");
+    base::Thread::Options thread_options;
+    thread_options.message_loop_type = base::MessageLoop::TYPE_IO;
+    bool started = g_quic_server_thread->StartWithOptions(thread_options);
+    DCHECK(started);
+  }
   base::FilePath test_files_root = net::GetTestCertsDirectory();
 
   base::WaitableEvent server_started_event(
       base::WaitableEvent::ResetPolicy::MANUAL,
       base::WaitableEvent::InitialState::NOT_SIGNALED);
   g_quic_server_thread->task_runner()->PostTask(
-      FROM_HERE, base::Bind(&StartQuicServerOnServerThread, test_files_root,
-                            &server_started_event));
+      FROM_HERE, base::BindOnce(&StartQuicServerOnServerThread, test_files_root,
+                                &server_started_event));
   server_started_event.Wait();
   return true;
 }
 
 void ShutdownQuicTestServer() {
-  if (!g_quic_server_thread)
+  if (!g_quic_server)
     return;
   DCHECK(!g_quic_server_thread->task_runner()->BelongsToCurrentThread());
   base::WaitableEvent server_stopped_event(
       base::WaitableEvent::ResetPolicy::MANUAL,
       base::WaitableEvent::InitialState::NOT_SIGNALED);
   g_quic_server_thread->task_runner()->PostTask(
-      FROM_HERE, base::Bind(&ShutdownOnServerThread, &server_stopped_event));
+      FROM_HERE,
+      base::BindOnce(&ShutdownOnServerThread, &server_stopped_event));
   server_stopped_event.Wait();
-  delete g_quic_server_thread;
-  g_quic_server_thread = nullptr;
+  // Don't stop QUIC server thread to avoid blocking current thread.
 }
 
 int GetQuicTestServerPort() {
