@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c026c301_78711cd9",
+        "filename": "content/browser/android/synchronous_compositor_host_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-29T17:27:08Z",
+      "side": 1,
+      "message": "this can lead to RemoteClosedOnIOThread being called twice, not wrong, but bad form and makes things hard to reason about. probably worth factoring out the implementation here, and in UnregisterHostOnIOThread, double check remote_closed_ and avoid the repeated call",
+      "revId": "31a16a62cc7836dec107c6c5f6e3e38f69cb2552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fa1db80_571b299a",
+        "filename": "content/browser/android/synchronous_compositor_host_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-29T17:27:08Z",
+      "side": 1,
+      "message": "can factor this block out into a helper method",
+      "revId": "31a16a62cc7836dec107c6c5f6e3e38f69cb2552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b68e0760_60c5178a",
+        "filename": "content/browser/android/synchronous_compositor_host_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-29T17:27:08Z",
+      "side": 1,
+      "message": "this needs braces",
+      "revId": "31a16a62cc7836dec107c6c5f6e3e38f69cb2552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
