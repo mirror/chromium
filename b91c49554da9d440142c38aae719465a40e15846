@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "c10e654d_f99af1fe",
+        "filename": "components/cronet/ios/cronet_global_state_ios.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-01-29T23:08:24Z",
+      "side": 1,
+      "message": "Ack. Would it be possible to create cronet_global_state_android.cc for Android as well? Otherwise, it is a little inconsistent that the method is declared in cronet_global_state.h but managed by cronet_library_loader.cc. It would be easier to follow if all the related code (including |g_init_message_loop|) is in one place.",
+      "parentUuid": "28568372_249ba892",
+      "range": {
+        "startLine": 44,
+        "startChar": 5,
+        "endLine": 44,
+        "endChar": 17
+      },
+      "revId": "b91c49554da9d440142c38aae719465a40e15846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acf58ad6_28acef69",
         "filename": "components/cronet/ios/cronet_global_state_ios.mm",
         "patchSetId": 15
@@ -187,6 +211,30 @@
       "revId": "b91c49554da9d440142c38aae719465a40e15846",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98f7907c_21605c6c",
+        "filename": "components/cronet/ios/cronet_global_state_ios.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-01-29T23:08:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fd332625_faade1e8",
+      "range": {
+        "startLine": 48,
+        "startChar": 5,
+        "endLine": 48,
+        "endChar": 25
+      },
+      "revId": "b91c49554da9d440142c38aae719465a40e15846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -284,6 +332,30 @@
     },
     {
       "key": {
+        "uuid": "7270f3d0_e3fceec3",
+        "filename": "components/cronet/ios/cronet_global_state_ios.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-01-29T23:08:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "45489f22_892cf3cf",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 17
+      },
+      "revId": "b91c49554da9d440142c38aae719465a40e15846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "359a814a_89d8f4d6",
         "filename": "components/cronet/ios/cronet_global_state_ios.mm",
         "patchSetId": 15
@@ -319,6 +391,30 @@
       "side": 1,
       "message": "std::move is required by OnceClosure: https://cs.chromium.org/chromium/src/base/callback.h?rcl\u003db0b0128aa75bf296ff499ea8a0b703552316ad39\u0026l\u003d51",
       "parentUuid": "359a814a_89d8f4d6",
+      "range": {
+        "startLine": 53,
+        "startChar": 6,
+        "endLine": 53,
+        "endChar": 15
+      },
+      "revId": "b91c49554da9d440142c38aae719465a40e15846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9064f7d6_4d414236",
+        "filename": "components/cronet/ios/cronet_global_state_ios.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-01-29T23:08:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "30c54920_d247fe7a",
       "range": {
         "startLine": 53,
         "startChar": 6,
