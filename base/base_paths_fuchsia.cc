@@ -21,9 +21,6 @@ constexpr char kPackageRoot[] = "/pkg";
 
 base::FilePath GetPackageRoot() {
   base::FilePath path_obj(kPackageRoot);
-
-  // Fuchsia's appmgr will set argv[0] to a fully qualified executable path
-  // under /pkg for packaged binaries.
   if (path_obj.IsParent(base::CommandLine::ForCurrentProcess()->GetProgram())) {
     return path_obj;
   } else {
