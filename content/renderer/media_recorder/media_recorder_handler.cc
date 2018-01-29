@@ -279,9 +279,9 @@ bool MediaRecorderHandler::Start(int timeslice) {
         media::BindToCurrentLoop(base::Bind(
             &MediaRecorderHandler::OnEncodedVideo, weak_factory_.GetWeakPtr()));
 
-    video_recorders_.emplace_back(
-        new VideoTrackRecorder(video_codec_id_, video_track,
-                               on_encoded_video_cb, video_bits_per_second_));
+    video_recorders_.emplace_back(new VideoTrackRecorder(
+        video_codec_id_, video_track, on_encoded_video_cb,
+        video_bits_per_second_, base::ThreadTaskRunnerHandle::Get()));
   }
 
   if (use_audio_tracks) {

@@ -41,6 +41,7 @@ VEAEncoder::VEAEncoder(
     : Encoder(on_encoded_video_callback,
               bits_per_second > 0 ? bits_per_second
                                   : size.GetArea() * kVEADefaultBitratePerPixel,
+              base::ThreadTaskRunnerHandle::Get(),
               RenderThreadImpl::current()->GetGpuFactories()->GetTaskRunner()),
       gpu_factories_(RenderThreadImpl::current()->GetGpuFactories()),
       codec_(codec),
