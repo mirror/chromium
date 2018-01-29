@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47b12d45_0bf5564f",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-29T23:42:46Z",
+      "side": 1,
+      "message": "nit: 80 cols",
+      "range": {
+        "startLine": 142,
+        "startChar": 0,
+        "endLine": 142,
+        "endChar": 5
+      },
+      "revId": "83588ead71aa1ffe4687d51f7d02a5edc5217fe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
