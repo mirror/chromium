@@ -42,6 +42,29 @@
     },
     {
       "key": {
+        "uuid": "9ee1ac58_d4bb7b84",
+        "filename": "third_party/libdrm/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1149774
+      },
+      "writtenOn": "2018-01-29T22:51:58Z",
+      "side": 1,
+      "message": "The i965 Mesa driver stop relying on libdrm_intel with this commit:\n\nhttps://lists.freedesktop.org/archives/mesa-dev/2017-May/154548.html\n\nThe i915 Mesa driver still needs it though.  The minigbm i915 backend does not need libdrm_intel or it\u0027s dependency, libpciaccess.",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 7
+      },
+      "revId": "409f2d586c66870aab9bcc1a2af5361cbe33222c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d91867c7_8a363f33",
         "filename": "third_party/minigbm/BUILD.gn",
         "patchSetId": 14
