@@ -28,7 +28,9 @@ class DiceSigninButton : public views::MdTextButton {
   // |button_listener| will be called for events originating from |this| or from
   // |drop_down_arrow|.
   DiceSigninButton(const AccountInfo& account_info,
-                   views::ButtonListener* button_listener);
+                   const gfx::Image& account_icon,
+                   views::ButtonListener* button_listener,
+                   bool display_drop_down_arrow = true);
   ~DiceSigninButton() override;
 
   const views::Button* drop_down_arrow() const { return arrow_; }
