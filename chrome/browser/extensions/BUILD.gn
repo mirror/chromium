@@ -1024,6 +1024,7 @@ static_library("extensions") {
       "default_apps.cc",
       "default_apps.h",
     ]
+    deps += [ "//chrome/common:service_process_mojom" ]
   }
 
   if (use_x11) {
