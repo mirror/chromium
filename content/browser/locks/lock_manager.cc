@@ -26,14 +26,14 @@ namespace {
 // by script or by process termination - causes the lock to be released.
 class LockHandleImpl final : public blink::mojom::LockHandle {
  public:
-  static blink::mojom::LockHandlePtr Create(base::WeakPtr<LockManager> context,
-                                            const url::Origin& origin,
-                                            int64_t lock_id) {
-    blink::mojom::LockHandlePtr ptr;
-    mojo::MakeStrongBinding(
+  static mojo::StrongBindingPtr<blink::mojom::LockHandle> Create(
+      base::WeakPtr<LockManager> context,
+      const url::Origin& origin,
+      int64_t lock_id,
+      blink::mojom::LockHandlePtr* ptr) {
+    return mojo::MakeStrongBinding(
         std::make_unique<LockHandleImpl>(std::move(context), origin, lock_id),
-        mojo::MakeRequest(&ptr));
-    return ptr;
+        mojo::MakeRequest(ptr));
   }
 
   LockHandleImpl(base::WeakPtr<LockManager> context,
@@ -45,6 +45,10 @@ class LockHandleImpl final : public blink::mojom::LockHandle {
     if (context_)
       context_->ReleaseLock(origin_, lock_id_);
   }
+
+  // Called when the handle will be released from this end of the pipe. It
+  // nulls out the context so that the lock will not be double-released.
+  void Close() { context_.reset(); }
 
  private:
   base::WeakPtr<LockManager> context_;
@@ -59,25 +63,68 @@ class LockHandleImpl final : public blink::mojom::LockHandle {
 // A requested or held lock. When granted, a LockHandle will be minted
 // and passed to the held callback. Eventually the client will drop the
 // handle, which will notify the context and remove this.
-struct LockManager::Lock {
+class LockManager::Lock {
+ public:
   Lock(const std::string& name,
        LockMode mode,
        int64_t lock_id,
        const std::string& client_id,
        blink::mojom::LockRequestPtr request)
-      : name(name),
-        mode(mode),
-        lock_id(lock_id),
-        client_id(client_id),
-        request(std::move(request)) {}
+      : name_(name),
+        mode_(mode),
+        lock_id_(lock_id),
+        client_id_(client_id),
+        request_(std::move(request)) {}
 
   ~Lock() = default;
 
-  const std::string name;
-  const LockMode mode;
-  const int64_t lock_id;
-  const std::string client_id;
-  blink::mojom::LockRequestPtr request;
+  // Abort a lock request.
+  void Abort(const std::string& message) {
+    DCHECK(request_);
+    DCHECK(!handle_);
+
+    request_->Abort(message);
+    request_ = nullptr;
+  }
+
+  // Grant a lock request. This mints a LockHandle and returns it over the
+  // request pipe.
+  void Grant(base::WeakPtr<LockManager> context, const url::Origin& origin) {
+    DCHECK(request_);
+    DCHECK(!handle_);
+
+    blink::mojom::LockHandlePtr ptr;
+    handle_ = LockHandleImpl::Create(context, origin, lock_id_, &ptr);
+    request_->Granted(std::move(ptr));
+    request_ = nullptr;
+  }
+
+  // Drop a granted lock. This terminates the connection, signalling an error
+  // on the other end of the pipe.
+  void Drop() {
+    DCHECK(!request_);
+    DCHECK(handle_);
+
+    LockHandleImpl* impl = static_cast<LockHandleImpl*>(handle_->impl());
+    // Explicitly close the LockHandle first; this ensures that when the
+    // connection is subsequently closed it will not re-entrantly try to drop
+    // the lock.
+    impl->Close();
+    handle_->Close();
+  }
+
+  const std::string& name() const { return name_; }
+  LockMode mode() const { return mode_; }
+  int64_t lock_id() const { return lock_id_; }
+  const std::string& client_id() const { return client_id_; }
+
+ private:
+  const std::string name_;
+  const LockMode mode_;
+  const int64_t lock_id_;
+  const std::string client_id_;
+  blink::mojom::LockRequestPtr request_;
+  mojo::StrongBindingPtr<blink::mojom::LockHandle> handle_;
 };
 
 LockManager::LockManager() : weak_ptr_factory_(this) {}
@@ -113,6 +160,22 @@ class LockManager::OriginState {
     }
   }
 
+  void Drop(const std::string& name) {
+    // Drop any held locks.
+    for (auto it = held_.begin(); it != held_.end();) {
+      if (it->second->name() == name) {
+        std::unique_ptr<Lock> lock = std::move(it->second);
+        it = held_.erase(it);
+
+        // Deleting the LockHandleImpl will signal an error on the other end
+        // of the pipe, which will notify script that the lock was broken.
+        lock->Drop();
+      } else {
+        ++it;
+      }
+    }
+  }
+
   void ProcessRequests(LockManager* lock_manager, const url::Origin& origin) {
     if (requested_.empty())
       return;
@@ -121,24 +184,21 @@ class LockManager::OriginState {
     exclusive_.clear();
     for (const auto& id_lock_pair : held_) {
       const auto& lock = id_lock_pair.second;
-      MergeLockState(lock->name, lock->mode);
+      MergeLockState(lock->name(), lock->mode());
     }
 
     for (auto it = requested_.begin(); it != requested_.end();) {
       auto& lock = it->second;
 
-      bool granted = IsGrantable(lock->name, lock->mode);
+      bool granted = IsGrantable(lock->name(), lock->mode());
 
-      MergeLockState(lock->name, lock->mode);
+      MergeLockState(lock->name(), lock->mode());
 
       if (granted) {
         std::unique_ptr<Lock> grantee = std::move(lock);
         it = requested_.erase(it);
-        grantee->request->Granted(
-            LockHandleImpl::Create(lock_manager->weak_ptr_factory_.GetWeakPtr(),
-                                   origin, grantee->lock_id));
-        grantee->request = nullptr;
-        held_.insert(std::make_pair(grantee->lock_id, std::move(grantee)));
+        grantee->Grant(lock_manager->weak_ptr_factory_.GetWeakPtr(), origin);
+        held_.insert(std::make_pair(grantee->lock_id(), std::move(grantee)));
       } else {
         ++it;
       }
@@ -150,7 +210,8 @@ class LockManager::OriginState {
     out.reserve(requested_.size());
     for (const auto& id_lock_pair : requested_) {
       const auto& lock = id_lock_pair.second;
-      out.emplace_back(base::in_place, lock->name, lock->mode, lock->client_id);
+      out.emplace_back(base::in_place, lock->name(), lock->mode(),
+                       lock->client_id());
     }
     return out;
   }
@@ -160,7 +221,8 @@ class LockManager::OriginState {
     out.reserve(held_.size());
     for (const auto& id_lock_pair : held_) {
       const auto& lock = id_lock_pair.second;
-      out.emplace_back(base::in_place, lock->name, lock->mode, lock->client_id);
+      out.emplace_back(base::in_place, lock->name(), lock->mode(),
+                       lock->client_id());
     }
     return out;
   }
@@ -195,16 +257,23 @@ void LockManager::CreateService(blink::mojom::LockManagerRequest request,
 void LockManager::RequestLock(const std::string& name,
                               LockMode mode,
                               WaitMode wait,
+                              Priority priority,
                               blink::mojom::LockRequestPtr request) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   const auto& context = bindings_.dispatch_context();
-  if (wait == WaitMode::NO_WAIT && !IsGrantable(context.origin, name, mode)) {
+  int64_t lock_id = next_lock_id++;
+
+  if (priority == Priority::OVERRIDE) {
+    Drop(context.origin, name);
+    // Inverting the ID puts it at the front of the request queue.
+    lock_id = -lock_id;
+  } else if (wait == WaitMode::NO_WAIT &&
+             !IsGrantable(context.origin, name, mode)) {
     request->Failed();
     return;
   }
 
-  int64_t lock_id = next_lock_id++;
   request.set_connection_error_handler(base::BindOnce(&LockManager::ReleaseLock,
                                                       base::Unretained(this),
                                                       context.origin, lock_id));
@@ -247,6 +316,13 @@ bool LockManager::IsGrantable(const url::Origin& origin,
   if (it == origins_.end())
     return true;
   return it->second.IsGrantable(name, mode);
+}
+
+void LockManager::Drop(const url::Origin& origin, const std::string& name) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  auto it = origins_.find(origin);
+  if (it != origins_.end())
+    it->second.Drop(name);
 }
 
 void LockManager::ProcessRequests(const url::Origin& origin) {
