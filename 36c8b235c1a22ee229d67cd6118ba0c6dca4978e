@@ -212,6 +212,30 @@
       "revId": "36c8b235c1a22ee229d67cd6118ba0c6dca4978e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3e57e6e_534bc5b8",
+        "filename": "components/arc/video_accelerator/protected_buffer_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2018-01-29T07:32:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77dabf92_1ee4223c",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 64
+      },
+      "revId": "36c8b235c1a22ee229d67cd6118ba0c6dca4978e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
