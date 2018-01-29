@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f9248e46_d89f03ef",
+        "filename": "net/tools/cert_verify_tool/cert_verify_tool.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2018-01-29T23:14:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28988007_3bea3fc3",
+      "revId": "7e49a7991b6e6a149d98eb08a0166380e9a89c4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98522936_5cc9bca9",
         "filename": "net/tools/cert_verify_tool/cert_verify_tool_util.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-29T17:37:08Z",
       "side": 1,
       "message": "is this guaranteed to be set by our ReadFileToString() API?",
+      "revId": "7e49a7991b6e6a149d98eb08a0166380e9a89c4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35b2ae08_b90f056d",
+        "filename": "net/tools/cert_verify_tool/cert_verify_tool_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2018-01-29T23:14:16Z",
+      "side": 1,
+      "message": "good question, it doesn\u0027t seem guaranteed anywhere, but there doesn\u0027t seem to be a general solution either. I\u0027ll leave this for now since it\u0027s just moving code but try playing with it more later.",
+      "parentUuid": "98522936_5cc9bca9",
       "revId": "7e49a7991b6e6a149d98eb08a0166380e9a89c4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
