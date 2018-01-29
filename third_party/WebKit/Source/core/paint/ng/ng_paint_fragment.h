@@ -32,16 +32,30 @@ struct PaintInfo;
 //   placeholders for displaying them.
 class NGPaintFragment : public DisplayItemClient, public ImageResourceObserver {
  public:
-  explicit NGPaintFragment(scoped_refptr<const NGPhysicalFragment>,
-                           bool stop_at_block_layout_root = false);
+  NGPaintFragment(scoped_refptr<const NGPhysicalFragment>, NGPaintFragment*);
+  static std::unique_ptr<NGPaintFragment> Create(
+      scoped_refptr<const NGPhysicalFragment>);
 
   const NGPhysicalFragment& PhysicalFragment() const {
     return *physical_fragment_;
   }
 
+  NGPaintFragment* Parent() const { return parent_; }
   const Vector<std::unique_ptr<NGPaintFragment>>& Children() const {
     return children_;
   }
+
+  // Returns offset to its container box for inline fragments.
+  const NGPhysicalOffset& InlineOffsetToContainerBox() const {
+    // TODO(kojii): replace without relying on LayoutObject.
+    // DCHECK(PhysicalFragment().GetLayoutObject() &&
+    // PhysicalFragment().GetLayoutObject()->IsInline());
+    return inline_offset_to_container_box_;
+  }
+
+  // Next NGPaintFragment that was from the same Node/LayoutObject when it was
+  // fragmented into multiple NGPaintFragment.
+  NGPaintFragment* NextFragment() const { return next_fragment_; }
 
   // Update VisualRect() for this object and all its descendants from
   // LayoutObject. Corresponding LayoutObject::VisualRect() must be computed and
@@ -84,14 +98,20 @@ class NGPaintFragment : public DisplayItemClient, public ImageResourceObserver {
  private:
   void SetVisualRect(const LayoutRect& rect) { visual_rect_ = rect; }
 
-  void PopulateDescendants(bool stop_at_block_layout_root);
+  void PopulateDescendants(
+      const NGPhysicalOffset inline_offset_to_container_box,
+      HashMap<LayoutObject*, NGPaintFragment*>*);
 
   void UpdateVisualRectFromLayoutObject(const NGPhysicalOffset&);
 
   scoped_refptr<const NGPhysicalFragment> physical_fragment_;
   LayoutRect visual_rect_;
 
+  NGPaintFragment* parent_;
   Vector<std::unique_ptr<NGPaintFragment>> children_;
+
+  NGPaintFragment* next_fragment_;
+  NGPhysicalOffset inline_offset_to_container_box_;
 };
 
 }  // namespace blink

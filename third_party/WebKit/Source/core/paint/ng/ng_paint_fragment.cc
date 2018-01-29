@@ -17,10 +17,18 @@ namespace blink {
 
 NGPaintFragment::NGPaintFragment(
     scoped_refptr<const NGPhysicalFragment> fragment,
-    bool stop_at_block_layout_root)
-    : physical_fragment_(std::move(fragment)) {
+    NGPaintFragment* parent)
+    : physical_fragment_(std::move(fragment)), parent_(parent) {
   DCHECK(physical_fragment_);
-  PopulateDescendants(stop_at_block_layout_root);
+}
+
+std::unique_ptr<NGPaintFragment> NGPaintFragment::Create(
+    scoped_refptr<const NGPhysicalFragment> fragment) {
+  std::unique_ptr<NGPaintFragment> paint_fragment =
+      std::make_unique<NGPaintFragment>(std::move(fragment), nullptr);
+  HashMap<LayoutObject*, NGPaintFragment*> layout_object_map;
+  paint_fragment->PopulateDescendants(NGPhysicalOffset(), &layout_object_map);
+  return paint_fragment;
 }
 
 bool NGPaintFragment::HasSelfPaintingLayer() const {
@@ -47,19 +55,42 @@ LayoutRect NGPaintFragment::VisualOverflowRect() const {
 // |stop_at_block_layout_root| is set to |false| on the root fragment because
 // most root fragments are block layout root but their children are needed.
 // For children, it is set to |true| to stop at the block layout root.
-void NGPaintFragment::PopulateDescendants(bool stop_at_block_layout_root) {
+void NGPaintFragment::PopulateDescendants(
+    const NGPhysicalOffset inline_offset_to_container_box,
+    HashMap<LayoutObject*, NGPaintFragment*>* layout_object_map) {
   DCHECK(children_.IsEmpty());
   const NGPhysicalFragment& fragment = PhysicalFragment();
+  if (!fragment.IsContainer())
+    return;
+
   // Recurse chlidren, except when this is a block layout root.
-  if (fragment.IsContainer() &&
-      !(fragment.IsBlockLayoutRoot() && stop_at_block_layout_root)) {
-    const NGPhysicalContainerFragment& container =
-        ToNGPhysicalContainerFragment(fragment);
-    children_.ReserveCapacity(container.Children().size());
-    for (const auto& child_fragment : container.Children()) {
-      children_.push_back(
-          std::make_unique<NGPaintFragment>(child_fragment, true));
+  if (fragment.IsBlockLayoutRoot() && parent_)
+    return;
+
+  const NGPhysicalContainerFragment& container =
+      ToNGPhysicalContainerFragment(fragment);
+  children_.ReserveCapacity(container.Children().size());
+  for (const auto& child_fragment : container.Children()) {
+    std::unique_ptr<NGPaintFragment> child =
+        std::make_unique<NGPaintFragment>(child_fragment, this);
+
+    LayoutObject* layout_object = child_fragment->GetLayoutObject();
+    auto add_result = layout_object_map->insert(layout_object, child.get());
+    // TODO(kojii): Create a list per LayoutText/LayoutInline and store to them.
+    // TODO: incomplete...
+    if (add_result.is_new_entry) {
+    } else {
+      DCHECK(add_result.stored_value->value);
+      add_result.stored_value->value->next_fragment_ = child.get();
+      add_result.stored_value->value = child.get();
     }
+
+    child->inline_offset_to_container_box_ =
+        inline_offset_to_container_box + child_fragment->Offset();
+    child->PopulateDescendants(child->inline_offset_to_container_box_,
+                               layout_object_map);
+
+    children_.push_back(std::move(child));
   }
 }
 

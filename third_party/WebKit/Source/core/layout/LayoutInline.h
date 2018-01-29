@@ -33,6 +33,8 @@
 
 namespace blink {
 
+class NGPaintFragment;
+
 class LayoutBlockFlow;
 
 // LayoutInline is the LayoutObject associated with display: inline.
@@ -340,6 +342,18 @@ class CORE_EXPORT LayoutInline : public LayoutBoxModelObject {
   // All of the line boxes created for this inline flow. For example,
   // <i>Hello<br>world.</i> will have two <i> line boxes.
   LineBoxList line_boxes_;
+
+#if 0
+  // All of the NGPaintFragments created for this inline flow.
+  // TODO(kojii): Make this union with line_boxes. Only one of them is used.
+  struct {
+    // Safe guard to ensure line_boxes_.first_box_ is nullptr.
+    // Not sure we need this, maybe we can read_box_ first without checking
+    // runtime flag?
+    void* safe_guard_for_legacy_ = nullptr;
+    NGPaintFragment* first_fragment_;
+  };
+#endif
 };
 
 DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutInline, IsLayoutInline());
