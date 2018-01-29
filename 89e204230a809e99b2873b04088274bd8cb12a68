@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14d4ae58_da79fedc",
+        "filename": "chrome/browser/extensions/updater/extension_updater.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-01-29T19:30:12Z",
+      "side": 1,
+      "message": "are you sure this will never execute before/after OnExtensionDownloadFailed? You don\u0027t want any double counting",
+      "revId": "89e204230a809e99b2873b04088274bd8cb12a68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad80c97a_3602b7c1",
+        "filename": "extensions/browser/updater/extension_downloader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-01-29T19:30:12Z",
+      "side": 1,
+      "message": "instead of emitting id_set length counts of 1 - why not just emit the total amount?",
+      "revId": "89e204230a809e99b2873b04088274bd8cb12a68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63c20e49_ff1bea31",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 23841,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-01-29T19:30:12Z",
+      "side": 1,
+      "message": "add unit, here and in the next",
+      "revId": "89e204230a809e99b2873b04088274bd8cb12a68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55d6e6bc_f611d83f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 23842,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-01-29T19:30:12Z",
+      "side": 1,
+      "message": "for both of these, you could be a bit more explicit in when this is triggered",
+      "revId": "89e204230a809e99b2873b04088274bd8cb12a68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23cb1f3c_501fb9b5",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 23860,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-01-29T19:30:12Z",
+      "side": 1,
+      "message": "nit, don\u0027t need to say this histogram",
+      "revId": "89e204230a809e99b2873b04088274bd8cb12a68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
