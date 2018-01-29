@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25599d8b_53eff63b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-29T19:00:59Z",
+      "side": 1,
+      "message": "Please add these test on a TEST\u003d line (grep git log for how TEST\u003d in commit messages looks)",
+      "range": {
+        "startLine": 12,
+        "startChar": 12,
+        "endLine": 12,
+        "endChar": 80
+      },
+      "revId": "92c42419499db3320f8ac7b197cc1f4567847a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a9eb517_490e3f5d",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-29T19:00:59Z",
+      "side": 1,
+      "message": "This should be pix_to_dip and the other variables should be _dip. (CSS pixels is a Blink-level concept).",
+      "range": {
+        "startLine": 1469,
+        "startChar": 17,
+        "endLine": 1469,
+        "endChar": 20
+      },
+      "revId": "92c42419499db3320f8ac7b197cc1f4567847a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05a92efb_b6edb7a5",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1477,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-29T19:00:59Z",
+      "side": 1,
+      "message": "\"in physical pixels\"",
+      "range": {
+        "startLine": 1477,
+        "startChar": 29,
+        "endLine": 1477,
+        "endChar": 49
+      },
+      "revId": "92c42419499db3320f8ac7b197cc1f4567847a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5eaa761_3db16622",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1478,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-29T19:00:59Z",
+      "side": 1,
+      "message": "DIPs",
+      "range": {
+        "startLine": 1478,
+        "startChar": 34,
+        "endLine": 1478,
+        "endChar": 45
+      },
+      "revId": "92c42419499db3320f8ac7b197cc1f4567847a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
