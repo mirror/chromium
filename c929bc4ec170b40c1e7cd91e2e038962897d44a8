@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2b952f62_1a0c33b0",
+        "filename": "chrome/browser/resources/settings/people_page/sync_account_control.html",
+        "patchSetId": 17
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-29T19:52:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13173b8c_eeb9cb7a",
+      "range": {
+        "startLine": 21,
+        "startChar": 7,
+        "endLine": 23,
+        "endChar": 31
+      },
+      "revId": "c929bc4ec170b40c1e7cd91e2e038962897d44a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7a12cfa_e13edc9c",
         "filename": "chrome/browser/resources/settings/people_page/sync_account_control.js",
         "patchSetId": 17
@@ -45,6 +69,30 @@
       "revId": "c929bc4ec170b40c1e7cd91e2e038962897d44a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "261a195b_47a978aa",
+        "filename": "chrome/browser/resources/settings/people_page/sync_account_control.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-29T19:52:30Z",
+      "side": 1,
+      "message": "It looks like all \"showSignIn_\" usages are wrapped inside a if\u003d\"SyncStatus\", so while SyncStatus can be null, showSignIn_ would never be called when it is null.",
+      "parentUuid": "b7a12cfa_e13edc9c",
+      "range": {
+        "startLine": 50,
+        "startChar": 13,
+        "endLine": 50,
+        "endChar": 14
+      },
+      "revId": "c929bc4ec170b40c1e7cd91e2e038962897d44a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
