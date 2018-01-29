@@ -2,6 +2,121 @@
   "comments": [
     {
       "key": {
+        "uuid": "49880730_a3e7d3fb",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerThread.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2018-01-29T07:44:18Z",
+      "side": 1,
+      "message": "GetThreadType()?",
+      "range": {
+        "startLine": 55,
+        "startChar": 34,
+        "endLine": 55,
+        "endChar": 68
+      },
+      "revId": "4c3a174e537a1b3ff81a4674a0cc21cf80e2f530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e77a50a2_ac493608",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerThread.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2018-01-29T07:44:18Z",
+      "side": 1,
+      "message": "GetThreadType()?",
+      "range": {
+        "startLine": 47,
+        "startChar": 34,
+        "endLine": 47,
+        "endChar": 65
+      },
+      "revId": "4c3a174e537a1b3ff81a4674a0cc21cf80e2f530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59e85fd3_31bc3600",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerThread.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2018-01-29T07:44:18Z",
+      "side": 1,
+      "message": "GetThreadType()?",
+      "range": {
+        "startLine": 51,
+        "startChar": 34,
+        "endLine": 51,
+        "endChar": 66
+      },
+      "revId": "4c3a174e537a1b3ff81a4674a0cc21cf80e2f530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "172c0944_77212b71",
+        "filename": "third_party/WebKit/Source/platform/audio/PushPullFIFOMultithreadTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2018-01-29T07:44:18Z",
+      "side": 1,
+      "message": "Looks like kFIFOClientThread is used only in this test file. How about replacing it with kTestThread?",
+      "range": {
+        "startLine": 33,
+        "startChar": 48,
+        "endLine": 33,
+        "endChar": 65
+      },
+      "revId": "4c3a174e537a1b3ff81a4674a0cc21cf80e2f530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f694714b_2c06e3de",
+        "filename": "third_party/WebKit/public/platform/ThreadType.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2018-01-29T07:44:18Z",
+      "side": 1,
+      "message": "2018",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "4c3a174e537a1b3ff81a4674a0cc21cf80e2f530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9d7778a_37184f28",
         "filename": "third_party/WebKit/public/platform/ThreadType.h",
         "patchSetId": 3
