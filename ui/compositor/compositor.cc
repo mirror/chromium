@@ -214,6 +214,7 @@ Compositor::Compositor(const viz::FrameSinkId& frame_sink_id,
 }
 
 Compositor::~Compositor() {
+  LOG(ERROR) << "MSW ~Compositor"; 
   TRACE_EVENT0("shutdown", "Compositor::destructor");
 
   for (auto& observer : observer_list_)

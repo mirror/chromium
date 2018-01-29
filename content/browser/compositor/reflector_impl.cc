@@ -47,8 +47,13 @@ void ReflectorImpl::DetachFromOutputSurface() {
   DCHECK(mailbox_.get());
   mailbox_ = nullptr;
   output_surface_ = nullptr;
-  for (const auto& layer_data : mirroring_layers_)
+  LOG(ERROR) << "MSW ReflectorImpl::DetachFromOutputSurface"; 
+  for (const auto& layer_data : mirroring_layers_) {
     layer_data->layer->SetShowSolidColorContent();
+    // layer_data->layer->ResetCompositor();
+    // layer_data->layer->SetVisible(false);
+    // layer_data->layer->SuppressPaint();
+  }
 }
 
 void ReflectorImpl::OnSourceSurfaceReady(
