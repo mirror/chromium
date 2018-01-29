@@ -542,6 +542,7 @@
     },
     {
       name: "LayoutNGFragmentCaching",
+      status: "test",
     },
     {
       name: "LayoutNGPaintFragments",
