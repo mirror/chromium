@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "6d644ed2_217e68ae",
+        "filename": "media/blink/url_index.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-01-29T23:34:59Z",
+      "side": 1,
+      "message": "Can we have a test to check that receiving basic (cors and default) response after opaque response doesn\u0027t relax the restriction?",
+      "revId": "3ebf12f65276584fd507667459084caaeaa68de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89e9a283_d21296ea",
         "filename": "media/blink/url_index.h",
         "patchSetId": 4
