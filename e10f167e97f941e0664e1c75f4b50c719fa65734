@@ -22,6 +22,30 @@
       "revId": "e10f167e97f941e0664e1c75f4b50c719fa65734",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58aa6dff_ca536ef0",
+        "filename": "net/socket/socket_bio_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-29T17:52:31Z",
+      "side": 1,
+      "message": "How about I remove this sentence, and add the following to the \u0027data\u0027 field:\n\n\"In case of handshake, user\u0027s IP, host name, full URL, data related to previous handshake, client certificates, and channel id, may be sent.\"",
+      "parentUuid": "b61939fe_dacc83d8",
+      "range": {
+        "startLine": 37,
+        "startChar": 37,
+        "endLine": 37,
+        "endChar": 61
+      },
+      "revId": "e10f167e97f941e0664e1c75f4b50c719fa65734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
