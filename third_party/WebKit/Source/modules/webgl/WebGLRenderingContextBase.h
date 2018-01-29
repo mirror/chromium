@@ -1694,7 +1694,7 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
   const unsigned version_;
 
   bool IsPaintable() const final { return GetDrawingBuffer(); }
-  bool CopyRenderingResultsFromDrawingBuffer(CanvasResourceProvider*,
+  bool CopyRenderingResultsFromDrawingBuffer(AcceleratedImageBufferSurface*,
                                              SourceDrawingBuffer) const;
 };
 

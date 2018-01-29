@@ -15,6 +15,7 @@
 #include "platform/runtime_enabled_features.h"
 #include "skia/ext/texture_handle.h"
 #include "third_party/skia/include/core/SkColorSpaceXformCanvas.h"
+#include "third_party/skia/include/core/SkSurface.h"
 #include "third_party/skia/include/gpu/GrBackendSurface.h"
 #include "third_party/skia/include/gpu/GrContext.h"
 #include "ui/gfx/gpu_memory_buffer.h"
@@ -44,13 +45,6 @@ class CanvasResourceProvider_Texture : public CanvasResourceProvider {
 
   bool IsValid() const final { return GetSkSurface() && !IsGpuContextLost(); }
   bool IsAccelerated() const final { return true; }
-
-  GLuint GetBackingTextureHandleForOverwrite() override {
-    return skia::GrBackendObjectToGrGLTextureInfo(
-               GetSkSurface()->getTextureHandle(
-                   SkSurface::kDiscardWrite_TextureHandleAccess))
-        ->fID;
-  }
 
  protected:
   scoped_refptr<CanvasResource> ProduceFrame() override {
@@ -283,10 +277,7 @@ std::unique_ptr<CanvasResourceProvider> CanvasResourceProvider::Create(
         }
         break;
       case kTextureResourceType:
-        // TODO(xlai): Check gpu acclereration mode before using this Resource
-        // Type of CanvasResourceProvider and then Add
-        // "DCHECK(SharedGpuContext::IsGpuCompositingEnabled());" here.
-        // See crbug.com/802053.
+        DCHECK(SharedGpuContext::IsGpuCompositingEnabled());
         provider = std::make_unique<CanvasResourceProvider_Texture>(
             size, msaa_sample_count, colorParams, context_provider_wrapper);
         break;
@@ -405,11 +396,12 @@ void CanvasResourceProvider::Clear() {
   // Clear the background transparent or opaque, as required. It would be nice
   // if this wasn't required, but the canvas is currently filled with the magic
   // transparency color. Can we have another way to manage this?
-  DCHECK(IsValid());
-  if (color_params_.GetOpacityMode() == kOpaque) {
-    Canvas()->clear(SK_ColorBLACK);
-  } else {
-    Canvas()->clear(SK_ColorTRANSPARENT);
+  if (IsValid()) {
+    if (color_params_.GetOpacityMode() == kOpaque) {
+      Canvas()->clear(SK_ColorBLACK);
+    } else {
+      Canvas()->clear(SK_ColorTRANSPARENT);
+    }
   }
 }
 
