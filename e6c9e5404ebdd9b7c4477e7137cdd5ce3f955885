@@ -106,6 +106,24 @@
       "revId": "e6c9e5404ebdd9b7c4477e7137cdd5ce3f955885",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1af785e8_8570b219",
+        "filename": "third_party/WebKit/Source/platform/bindings/TraceWrapperMember.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-29T12:48:48Z",
+      "side": 1,
+      "message": "Personally, I\u0027d like to move on as quickly as possible here :) I see though why you\u0027d like a more thorough investigation.\n\nI see 3 actual call site (rest is testing)\n\n- MutationObserver: Should be easily fixable as far as I can see. We can just use HeapVector\u003cTraceWrapperMember\u003cT\u003e\u003e there in a typedef and it should just work.\n- StaticNodeList::Adopt: Seems complicated and quickly spreads across various other call sites.\n- StyleSheetCollection: Similar to StaticNodeList.\n\nI will fix MutationObserver now and then see about the rest.",
+      "parentUuid": "68c574ec_51ac6902",
+      "revId": "e6c9e5404ebdd9b7c4477e7137cdd5ce3f955885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
