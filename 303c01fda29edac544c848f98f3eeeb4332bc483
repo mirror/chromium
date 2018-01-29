@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db1afa48_41a4fcd0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-29T17:06:57Z",
+      "side": 1,
+      "message": "This may regress startup performance on high end devices, right? :/ I would not be surprised if perf is actually improved, but we would need more explanation somewhere to explain why this should happen.\n\nTo follow all best practices we would need to provide some results here from local testing. Not insisting on that if there is a clear rationale (which I might have missed).\n\nAlso please land introducing the symbols to the orderfile as a separate change. Then wait for the orderfile to pick it up, then change the prefetch. This way we would avoid the situation \"alert for slowdown, but wait, it will fix itself, oh wait, something happened in the middle, it did not\". In other words, please make it more revert-ible..",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "303c01fda29edac544c848f98f3eeeb4332bc483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
