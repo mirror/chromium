@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d9c3e6f_48e0c27c",
+        "filename": "base/files/dir_reader_posix_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-29T19:41:18Z",
+      "side": 1,
+      "message": "Isn\u0027t it only failing on an Android ASAN bot? Should this have added \" \u0026\u0026 defined(OS_ANDROID) as well?",
+      "revId": "d94a230684004dcad20d2892c68ecaf4f00a69bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
