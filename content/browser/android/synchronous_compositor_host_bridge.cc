@@ -8,6 +8,7 @@
 #include "content/browser/android/synchronous_compositor_host.h"
 #include "content/browser/renderer_host/render_process_host_impl.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/common/content_features.h"
 #include "ui/android/window_android.h"
 
 namespace content {
@@ -16,6 +17,7 @@ SynchronousCompositorHostBridge::SynchronousCompositorHostBridge(
     SynchronousCompositorHost* host)
     : routing_id_(host->routing_id()),
       host_(host),
+      mojo_enabled_(base::FeatureList::IsEnabled(features::kMojoInputMessages)),
       begin_frame_condition_(&lock_) {
   DCHECK(host);
 }
@@ -28,7 +30,7 @@ SynchronousCompositorHostBridge::~SynchronousCompositorHostBridge() {
 void SynchronousCompositorHostBridge::BindFilterOnUIThread() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(host_);
-  if (bound_to_filter_)
+  if (mojo_enabled_ || bound_to_filter_)
     return;
   scoped_refptr<SynchronousCompositorBrowserFilter> filter = host_->GetFilter();
   if (!filter)
@@ -117,7 +119,7 @@ bool SynchronousCompositorHostBridge::WaitAfterVSyncOnUIThread(
   if (remote_closed_)
     return false;
   DCHECK(!begin_frame_response_valid_);
-  DCHECK(bound_to_filter_);
+  DCHECK(mojo_enabled_ || bound_to_filter_);
   if (window_android_in_vsync_) {
     DCHECK_EQ(window_android_in_vsync_, window_android);
     return true;
@@ -139,7 +141,7 @@ void SynchronousCompositorHostBridge::SetFrameFutureOnUIThread(
   }
 
   BindFilterOnUIThread();
-  DCHECK(bound_to_filter_);
+  DCHECK(mojo_enabled_ || bound_to_filter_);
   // Allowing arbitrary number of pending futures can lead to increase in frame
   // latency. Due to this, Android platform already ensures that here that there
   // can be at most 2 pending frames. Here, we rely on Android to do the
@@ -169,6 +171,12 @@ void SynchronousCompositorHostBridge::HostDestroyedOnUIThread() {
   }
 }
 
+bool SynchronousCompositorHostBridge::IsRemoteReadyOnUIThread() {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  base::AutoLock lock(lock_);
+  return !remote_closed_;
+}
+
 void SynchronousCompositorHostBridge::VSyncCompleteOnUIThread() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(window_android_in_vsync_);
@@ -187,7 +195,7 @@ void SynchronousCompositorHostBridge::VSyncCompleteOnUIThread() {
   DCHECK(begin_frame_response_valid_ || remote_closed_);
   begin_frame_response_valid_ = false;
   if (!remote_closed_)
-    host_->ProcessCommonParams(last_render_params_);
+    host_->UpdateState(last_render_params_);
 }
 
 void SynchronousCompositorHostBridge::ProcessFrameMetadataOnUIThread(

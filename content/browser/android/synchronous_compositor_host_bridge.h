@@ -27,7 +27,7 @@ class SynchronousCompositorHostBridge
   void BindFilterOnUIThread();
 
   // Indicatation that the remote is now ready to process requests. Called
-  // on either thread.
+  // on either UI or IO thread.
   void RemoteReady();
 
   // Remote channel is closed signal all waiters.
@@ -53,6 +53,9 @@ class SynchronousCompositorHostBridge
   // Indicate the host is destroyed.
   void HostDestroyedOnUIThread();
 
+  // Return whether the remote side is ready.
+  bool IsRemoteReadyOnUIThread();
+
  private:
   friend class base::RefCountedThreadSafe<SynchronousCompositorHostBridge>;
   ~SynchronousCompositorHostBridge();
@@ -75,6 +78,7 @@ class SynchronousCompositorHostBridge
   ui::WindowAndroid* window_android_in_vsync_ = nullptr;
   SynchronousCompositorHost* host_;
   bool bound_to_filter_ = false;
+  bool mojo_enabled_;
 
   // Shared variables between the IO thread and UI thread.
   base::Lock lock_;
