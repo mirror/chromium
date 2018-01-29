@@ -83,6 +83,9 @@ class CORE_EXPORT NGPhysicalFragment
   bool IsOutOfFlowPositioned() const {
     return BoxType() == NGBoxType::kOutOfFlowPositioned;
   }
+  bool IsFloatingOrOutOfFlowPositioned() const {
+    return IsFloating() || IsOutOfFlowPositioned();
+  }
   bool IsBlockFlow() const;
 
   // A box fragment that do not exist in LayoutObject tree. Its LayoutObject is
