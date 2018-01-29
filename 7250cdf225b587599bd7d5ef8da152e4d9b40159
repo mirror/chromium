@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87d7389b_00c51cee",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintDefinition.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-01-29T18:39:45Z",
+      "side": 1,
+      "message": "I\u0027m not a fan of null-checking \u0027this\u0027; if the CSSPaintDefinition is null then it\u0027s equally valid for the compiled code to crash before the call instead. The check should be moved to PaintWorklet::Paint.",
+      "revId": "7250cdf225b587599bd7d5ef8da152e4d9b40159",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
