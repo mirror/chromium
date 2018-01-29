@@ -71,8 +71,6 @@ jumbo_component("wtf") {
     "DoublyLinkedList.h",
     "DynamicAnnotations.cpp",
     "DynamicAnnotations.h",
-    "FilePrintStream.cpp",
-    "FilePrintStream.h",
     "Forward.h",
     "Functional.h",
     "GetPtr.h",
