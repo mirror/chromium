@@ -52,6 +52,24 @@
       "revId": "c67646fb6096ac1d87b516b2eaf2eb9968d2da73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10406ba8_30798f3c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-29T21:45:14Z",
+      "side": 0,
+      "message": "Cowardly stepping back from this :/. I agree it likely would break the MediaPad (which I don\u0027t have), and also have realized that we can check resources only for tablet (so at least phones don\u0027t take the perf hit).",
+      "parentUuid": "911bf0c7_7e96c432",
+      "revId": "c67646fb6096ac1d87b516b2eaf2eb9968d2da73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

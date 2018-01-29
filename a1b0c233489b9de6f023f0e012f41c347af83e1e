@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "1414e2a5_a9802e69",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-29T21:45:14Z",
+      "side": 1,
+      "message": "I still have to check this. Sounds like I should try on Android N and not any newer. Will report back.",
+      "parentUuid": "f10a8338_964eaac5",
+      "range": {
+        "startLine": 110,
+        "startChar": 8,
+        "endLine": 110,
+        "endChar": 76
+      },
+      "revId": "a1b0c233489b9de6f023f0e012f41c347af83e1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebd52865_f9f8fee0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
         "patchSetId": 3
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "getSmallestWidth() / getDipScale() I think makes sense to me -- it\u0027s the smallest width in pixels divided by the density scale. What\u0027s the +0.5f for?",
       "parentUuid": "c4e935e4_84f7f93a",
+      "range": {
+        "startLine": 122,
+        "startChar": 20,
+        "endLine": 122,
+        "endChar": 86
+      },
+      "revId": "a1b0c233489b9de6f023f0e012f41c347af83e1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "949ef7d4_c52dab2f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-29T21:45:14Z",
+      "side": 1,
+      "message": "It was Math.round() before, but I checked the framework code, and it uses .5 when doing these conversions (at least in the spot I found). Added a note about this in DeviceFormFactor\u0027s use of it.",
+      "parentUuid": "bc8e8b58_e650dec2",
       "range": {
         "startLine": 122,
         "startChar": 20,
