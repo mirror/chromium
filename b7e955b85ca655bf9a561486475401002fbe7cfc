@@ -19,6 +19,63 @@
     },
     {
       "key": {
+        "uuid": "4e583262_ee393ad9",
+        "filename": "services/device/generic_sensor/platform_sensor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-29T16:56:12Z",
+      "side": 1,
+      "message": "// |reading_buffer_| is owned by |provider_|.",
+      "revId": "b7e955b85ca655bf9a561486475401002fbe7cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20eef2c2_f0e4e4c1",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-29T16:56:12Z",
+      "side": 1,
+      "message": "// |reading_buffer_| is owned by |provider_|.",
+      "revId": "b7e955b85ca655bf9a561486475401002fbe7cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4069da4f_9481c39e",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-29T16:56:12Z",
+      "side": 1,
+      "message": "nit: No braces around single-line if.",
+      "range": {
+        "startLine": 77,
+        "startChar": 2,
+        "endLine": 77,
+        "endChar": 3
+      },
+      "revId": "b7e955b85ca655bf9a561486475401002fbe7cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f176ebb6_d788fa50",
         "filename": "services/device/generic_sensor/platform_sensor_provider_base.cc",
         "patchSetId": 1
@@ -30,6 +87,30 @@
       "writtenOn": "2018-01-29T14:06:14Z",
       "side": 1,
       "message": "You\u0027re missing the memset() here, is that intentional?",
+      "range": {
+        "startLine": 169,
+        "startChar": 2,
+        "endLine": 169,
+        "endChar": 8
+      },
+      "revId": "b7e955b85ca655bf9a561486475401002fbe7cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ac8e668_13a3b06d",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-29T16:56:12Z",
+      "side": 1,
+      "message": "This might not be the best place to clear the shared memory area for a sensor type but that should be done on creation to avoid leaving behind stale data from the last time it was initialized.",
+      "parentUuid": "f176ebb6_d788fa50",
       "range": {
         "startLine": 169,
         "startChar": 2,
