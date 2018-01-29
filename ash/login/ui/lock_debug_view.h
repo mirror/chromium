@@ -66,6 +66,7 @@ class LockDebugView : public views::View, public views::ButtonListener {
   views::MdTextButton* add_user_ = nullptr;
   views::MdTextButton* remove_user_ = nullptr;
   views::MdTextButton* toggle_auth_ = nullptr;
+  views::MdTextButton* toggle_gaia_auth_ = nullptr;
 
   // Debug dispatcher and cached data for the UI.
   std::unique_ptr<DebugDataDispatcherTransformer> const debug_data_dispatcher_;
