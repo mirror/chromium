@@ -16,6 +16,24 @@
       "revId": "224aa1b2b81a61b42256faf5c91f5b726cd24833",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea598222_72548f8c",
+        "filename": "content/browser/frame_host/navigator_impl_unittest.cc",
+        "patchSetId": 57
+      },
+      "lineNbr": 1190,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2018-01-29T17:56:54Z",
+      "side": 0,
+      "message": "It\u0027s still used in 5-6 other unittests",
+      "parentUuid": "dee64e79_86528f34",
+      "revId": "224aa1b2b81a61b42256faf5c91f5b726cd24833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

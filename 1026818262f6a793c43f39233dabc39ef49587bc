@@ -16,6 +16,24 @@
       "revId": "1026818262f6a793c43f39233dabc39ef49587bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "295a7761_98cf762e",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 57
+      },
+      "lineNbr": 4552,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2018-01-29T17:56:54Z",
+      "side": 1,
+      "message": "This is only called in the SameDocument version. This means including the navigation_state inside too due to ordering issues.",
+      "parentUuid": "e945ff1b_09ec0b5b",
+      "revId": "1026818262f6a793c43f39233dabc39ef49587bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
