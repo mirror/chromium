@@ -395,6 +395,9 @@ suite('SiteDetails', function() {
           return browserProxy.whenCalled('setOriginPermissions');
         })
         .then(() => {
+          return browserProxy.whenCalled('clearFlashPref');
+        })
+        .then(() => {
           return browserProxy.whenCalled('getOriginPermissions');
         })
         .then((args) => {
