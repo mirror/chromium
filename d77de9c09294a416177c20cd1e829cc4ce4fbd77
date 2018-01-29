@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b6efc86_e56cb072",
+        "filename": "extensions/browser/guest_view/web_view/web_view_guest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-29T18:02:11Z",
+      "side": 0,
+      "message": "Nice, glad to see this going away!",
+      "range": {
+        "startLine": 681,
+        "startChar": 19,
+        "endLine": 681,
+        "endChar": 63
+      },
+      "revId": "d77de9c09294a416177c20cd1e829cc4ce4fbd77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
