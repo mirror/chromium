@@ -62,7 +62,7 @@ EntrySync* EntrySync::moveTo(DirectoryEntrySync* parent,
   file_system_->Move(this, parent, name, helper->GetSuccessCallback(),
                      helper->GetErrorCallback(),
                      DOMFileSystemBase::kSynchronous);
-  Entry* entry = helper->GetResultOrThrow(exception_state);
+  FileSystemEntry* entry = helper->GetResultOrThrow(exception_state);
   return entry ? EntrySync::Create(entry) : nullptr;
 }
 
@@ -73,7 +73,7 @@ EntrySync* EntrySync::copyTo(DirectoryEntrySync* parent,
   file_system_->Copy(this, parent, name, helper->GetSuccessCallback(),
                      helper->GetErrorCallback(),
                      DOMFileSystemBase::kSynchronous);
-  Entry* entry = helper->GetResultOrThrow(exception_state);
+  FileSystemEntry* entry = helper->GetResultOrThrow(exception_state);
   return entry ? EntrySync::Create(entry) : nullptr;
 }
 

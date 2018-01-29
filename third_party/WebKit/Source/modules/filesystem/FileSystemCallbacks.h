@@ -46,7 +46,7 @@ class DOMFileSystem;
 class DOMFileSystemBase;
 class DirectoryReaderBase;
 class DirectoryReaderOnDidReadCallback;
-class Entry;
+class FileSystemEntry;
 class ExecutionContext;
 class File;
 class FileMetadata;
@@ -129,7 +129,7 @@ class EntryCallbacks final : public FileSystemCallbacksBase {
    public:
     virtual ~OnDidGetEntryCallback() = default;
     virtual void Trace(blink::Visitor*) {}
-    virtual void OnSuccess(Entry*) = 0;
+    virtual void OnSuccess(FileSystemEntry*) = 0;
 
    protected:
     OnDidGetEntryCallback() = default;
@@ -141,7 +141,7 @@ class EntryCallbacks final : public FileSystemCallbacksBase {
       return callback ? new OnDidGetEntryV8Impl(callback) : nullptr;
     }
     void Trace(blink::Visitor*) override;
-    void OnSuccess(Entry*) override;
+    void OnSuccess(FileSystemEntry*) override;
 
    private:
     OnDidGetEntryV8Impl(V8EntryCallback* callback) : callback_(callback) {}
@@ -190,7 +190,7 @@ class EntriesCallbacks final : public FileSystemCallbacksBase {
   Persistent<DirectoryReaderOnDidReadCallback> success_callback_;
   Persistent<DirectoryReaderBase> directory_reader_;
   String base_path_;
-  PersistentHeapVector<Member<Entry>> entries_;
+  PersistentHeapVector<Member<FileSystemEntry>> entries_;
 };
 
 class FileSystemCallbacks final : public FileSystemCallbacksBase {

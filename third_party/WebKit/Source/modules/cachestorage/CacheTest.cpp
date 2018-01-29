@@ -379,7 +379,7 @@ TEST_F(CacheStorageTest, Basics) {
                                    CacheStorageError::kErrorExists));
   match_promise = cache->match(GetScriptState(), StringToRequestInfo(url),
                                options, exception_state);
-  EXPECT_EQ("InvalidAccessError: Entry already exists.",
+  EXPECT_EQ("InvalidAccessError: FileSystemEntry already exists.",
             GetRejectString(match_promise));
 }
 

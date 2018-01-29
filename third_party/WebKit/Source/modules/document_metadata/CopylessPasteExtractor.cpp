@@ -157,7 +157,7 @@ void extractEntity(const JSONObject& val, Entity& entity, int recursionLevel) {
   entity.type = type;
   for (size_t i = 0; i < std::min(val.size(), kMaxNumFields); ++i) {
     PropertyPtr property = Property::New();
-    const JSONObject::Entry& entry = val.at(i);
+    const JSONObject::FileSystemEntry& entry = val.at(i);
     property->name = entry.first;
     if (property->name == kJSONLDKeyType) {
       continue;

@@ -32,7 +32,7 @@
 #define DirectoryEntry_h
 
 #include "modules/ModulesExport.h"
-#include "modules/filesystem/Entry.h"
+#include "modules/filesystem/FileSystemEntry.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/text/WTFString.h"
 
@@ -45,7 +45,7 @@ class V8EntryCallback;
 class V8ErrorCallback;
 class VoidCallback;
 
-class MODULES_EXPORT DirectoryEntry final : public Entry {
+class MODULES_EXPORT DirectoryEntry final : public FileSystemEntry {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -74,7 +74,7 @@ class MODULES_EXPORT DirectoryEntry final : public Entry {
 };
 
 DEFINE_TYPE_CASTS(DirectoryEntry,
-                  Entry,
+                  FileSystemEntry,
                   entry,
                   entry->isDirectory(),
                   entry.isDirectory());

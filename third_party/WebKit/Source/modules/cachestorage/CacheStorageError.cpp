@@ -18,9 +18,11 @@ DOMException* CacheStorageError::CreateException(
       return DOMException::Create(kNotSupportedError,
                                   "Method is not implemented.");
     case mojom::CacheStorageError::kErrorNotFound:
-      return DOMException::Create(kNotFoundError, "Entry was not found.");
+      return DOMException::Create(kNotFoundError,
+                                  "FileSystemEntry was not found.");
     case mojom::CacheStorageError::kErrorExists:
-      return DOMException::Create(kInvalidAccessError, "Entry already exists.");
+      return DOMException::Create(kInvalidAccessError,
+                                  "FileSystemEntry already exists.");
     case mojom::CacheStorageError::kErrorQuotaExceeded:
       return DOMException::Create(kQuotaExceededError, "Quota exceeded.");
     case mojom::CacheStorageError::kErrorCacheNameNotFound:

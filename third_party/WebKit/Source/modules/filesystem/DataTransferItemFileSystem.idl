@@ -33,5 +33,5 @@
 [
     ImplementedAs=DataTransferItemFileSystem
 ] partial interface DataTransferItem {
-    [CallWith=ScriptState, Measure] Entry? webkitGetAsEntry();
+    [CallWith=ScriptState, Measure] FileSystemEntry? webkitGetAsEntry();
 };

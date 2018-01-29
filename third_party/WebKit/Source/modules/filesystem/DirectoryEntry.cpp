@@ -40,7 +40,7 @@ namespace blink {
 
 DirectoryEntry::DirectoryEntry(DOMFileSystemBase* file_system,
                                const String& full_path)
-    : Entry(file_system, full_path) {}
+    : FileSystemEntry(file_system, full_path) {}
 
 DirectoryReader* DirectoryEntry::createReader() {
   return DirectoryReader::Create(file_system_, full_path_);
@@ -73,7 +73,7 @@ void DirectoryEntry::removeRecursively(VoidCallback* success_callback,
 }
 
 void DirectoryEntry::Trace(blink::Visitor* visitor) {
-  Entry::Trace(visitor);
+  FileSystemEntry::Trace(visitor);
 }
 
 }  // namespace blink

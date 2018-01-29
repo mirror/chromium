@@ -54,7 +54,7 @@ FileEntrySync* DirectoryEntrySync::getFile(const String& path,
   file_system_->GetFile(this, path, options, helper->GetSuccessCallback(),
                         helper->GetErrorCallback(),
                         DOMFileSystemBase::kSynchronous);
-  Entry* entry = helper->GetResultOrThrow(exception_state);
+  FileSystemEntry* entry = helper->GetResultOrThrow(exception_state);
   return entry ? ToFileEntrySync(EntrySync::Create(entry)) : nullptr;
 }
 
@@ -66,7 +66,7 @@ DirectoryEntrySync* DirectoryEntrySync::getDirectory(
   file_system_->GetDirectory(this, path, options, helper->GetSuccessCallback(),
                              helper->GetErrorCallback(),
                              DOMFileSystemBase::kSynchronous);
-  Entry* entry = helper->GetResultOrThrow(exception_state);
+  FileSystemEntry* entry = helper->GetResultOrThrow(exception_state);
   return entry ? ToDirectoryEntrySync(EntrySync::Create(entry)) : nullptr;
 }
 

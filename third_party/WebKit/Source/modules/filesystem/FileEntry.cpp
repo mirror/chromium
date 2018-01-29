@@ -38,7 +38,7 @@
 namespace blink {
 
 FileEntry::FileEntry(DOMFileSystemBase* file_system, const String& full_path)
-    : Entry(file_system, full_path) {}
+    : FileSystemEntry(file_system, full_path) {}
 
 void FileEntry::createWriter(FileWriterCallback* success_callback,
                              V8ErrorCallback* error_callback) {
@@ -56,7 +56,7 @@ void FileEntry::file(V8FileCallback* success_callback,
 }
 
 void FileEntry::Trace(blink::Visitor* visitor) {
-  Entry::Trace(visitor);
+  FileSystemEntry::Trace(visitor);
 }
 
 }  // namespace blink
