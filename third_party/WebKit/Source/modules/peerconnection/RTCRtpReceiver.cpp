@@ -19,7 +19,6 @@ RTCRtpReceiver::RTCRtpReceiver(std::unique_ptr<WebRTCRtpReceiver> receiver,
       track_(track),
       streams_(std::move(streams)) {
   DCHECK(receiver_);
-  DCHECK(track_);
   // Some bots require #if around the DCHECK to avoid compile error about
   // |StateMatchesWebReceiver| (which is behind #if) not being defined.
 #if DCHECK_IS_ON()
@@ -48,8 +47,10 @@ MediaStreamVector RTCRtpReceiver::streams() const {
 #if DCHECK_IS_ON()
 
 bool RTCRtpReceiver::StateMatchesWebReceiver() const {
-  if (track_->Component() !=
-      static_cast<MediaStreamComponent*>(receiver_->Track())) {
+  // When no lower-level track has been connected to the Web track object
+  // yet, track_ may be null.
+  if (track_ && track_->Component() !=
+                    static_cast<MediaStreamComponent*>(receiver_->Track())) {
     return false;
   }
   WebVector<WebMediaStream> web_streams = receiver_->Streams();

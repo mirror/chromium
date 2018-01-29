@@ -1585,12 +1585,16 @@ void RTCPeerConnection::DidAddRemoteTrack(
   }
   DCHECK(FindReceiver(*web_rtp_receiver) == rtp_receivers_.end());
   MediaStreamTrack* track = GetTrack(web_rtp_receiver->Track());
-  DCHECK(track);
+  // In the case of an Unified Plan receiver with no incoming track, we
+  // might not have a track yet. Create receiver, but do not signal a track.
+  // TODO(hta): Ensure a track is added and signalled on later renegotiation.
   RTCRtpReceiver* rtp_receiver =
       new RTCRtpReceiver(std::move(web_rtp_receiver), track, streams);
   rtp_receivers_.push_back(rtp_receiver);
-  ScheduleDispatchEvent(
-      new RTCTrackEvent(rtp_receiver, rtp_receiver->track(), streams));
+  if (track) {
+    ScheduleDispatchEvent(
+        new RTCTrackEvent(rtp_receiver, rtp_receiver->track(), streams));
+  }
 }
 
 void RTCPeerConnection::DidRemoveRemoteTrack(
