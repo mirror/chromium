@@ -3692,7 +3692,8 @@ IntRect LocalFrameView::RootFrameToDocument(const IntRect& rect_in_root_frame) {
 
 FloatPoint LocalFrameView::RootFrameToDocument(
     const FloatPoint& point_in_root_frame) {
-  FloatPoint local_frame = ConvertFromRootFrame(point_in_root_frame);
+  FloatPoint local_frame =
+      FloatPoint(ConvertFromRootFrame(LayoutPoint(point_in_root_frame)));
   return local_frame + LayoutViewportScrollableArea()->GetScrollOffset();
 }
 
