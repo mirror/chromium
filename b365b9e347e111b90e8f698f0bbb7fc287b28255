@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a77227c1_3652642f",
+        "filename": "device/bluetooth/bluetooth_device_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-29T18:49:40Z",
+      "side": 1,
+      "message": "We are definitely pushing complexity down to clients, especially given that a typical pattern is not to offer distinct cancel and disconnect calls, but just disconnect.  I\u0027d be all for just ensuring disconnect can perform a cancellation.\n\nReturning a BluetoothGattConnection: I suppose that would work.  I don\u0027t think there\u0027s a situation where I client would ever need to poll for the status of the connection...",
+      "parentUuid": "ec649993_909beda8",
+      "revId": "b365b9e347e111b90e8f698f0bbb7fc287b28255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b61147da_f1f9291b",
         "filename": "device/bluetooth/dbus/fake_bluetooth_device_client.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-29T02:03:13Z",
       "side": 1,
       "message": "On macOS, we sometimes get the disconnect event and sometimes we don\u0027t. Are we sure the error callback is always going to be called? I\u0027m particularly worried here because the underlying API is asynchronous as well. Meaning a connection succeeded response might have been sent already by the time we send the disconnect command.",
+      "revId": "b365b9e347e111b90e8f698f0bbb7fc287b28255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e564120_f529048f",
+        "filename": "device/bluetooth/dbus/fake_bluetooth_device_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-29T18:49:40Z",
+      "side": 1,
+      "message": "That\u0027s a good point.  I was also concerned about the race condition implicit in talking to dbus, but a potential not fired event makes the issue more pronounced.  I\u0027ll look into how to work around it.",
+      "parentUuid": "b61147da_f1f9291b",
       "revId": "b365b9e347e111b90e8f698f0bbb7fc287b28255",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
