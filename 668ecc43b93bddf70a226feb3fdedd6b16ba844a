@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59d2a76d_64340ea4",
+        "filename": "ui/message_center/views/notification_view_md_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2018-01-29T05:54:11Z",
+      "side": 1,
+      "message": "nit: base::EmptyString16() should be better.",
+      "range": {
+        "startLine": 59,
+        "startChar": 30,
+        "endLine": 59,
+        "endChar": 53
+      },
+      "revId": "668ecc43b93bddf70a226feb3fdedd6b16ba844a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "292c3eb5_6056cbd1",
+        "filename": "ui/message_center/views/notification_view_md_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2018-01-29T05:54:11Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 539,
+        "startChar": 12,
+        "endLine": 539,
+        "endChar": 34
+      },
+      "revId": "668ecc43b93bddf70a226feb3fdedd6b16ba844a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
