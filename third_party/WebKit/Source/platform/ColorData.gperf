@@ -4,12 +4,6 @@
 
 namespace blink {
 
-#if defined(__clang__)
-#pragma clang diagnostic push
-// TODO(thakis): Remove once we use a gperf that no longer produces "register".
-#pragma clang diagnostic ignored "-Wdeprecated-register"
-#endif
-
 %}
 %struct-type
 struct NamedColor;
