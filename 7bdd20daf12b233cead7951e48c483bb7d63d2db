@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c2d9edf_4f85cdde",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-sdpSemantics-expected.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-29T14:07:52Z",
+      "side": 1,
+      "message": "Perhaps these CONSOLE MESSAGE lines are making bots fail.",
+      "range": {
+        "startLine": 1,
+        "startChar": 8,
+        "endLine": 1,
+        "endChar": 15
+      },
+      "revId": "7bdd20daf12b233cead7951e48c483bb7d63d2db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e09e2862_f96083d7",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-sdpSemantics.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-29T14:07:52Z",
+      "side": 1,
+      "message": "remove trailing whitespace",
+      "range": {
+        "startLine": 140,
+        "startChar": 2,
+        "endLine": 140,
+        "endChar": 3
+      },
+      "revId": "7bdd20daf12b233cead7951e48c483bb7d63d2db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dae2ce44_b6dc6784",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1590,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-29T14:07:52Z",
+      "side": 1,
+      "message": "Add crbug.com reference.",
+      "range": {
+        "startLine": 1590,
+        "startChar": 10,
+        "endLine": 1590,
+        "endChar": 13
+      },
+      "revId": "7bdd20daf12b233cead7951e48c483bb7d63d2db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
