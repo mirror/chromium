@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f25ff54_283fa645",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 8
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-01-29T14:13:56Z",
+      "side": 1,
+      "message": "Would you mind moving these 5 android_release_* bots into alphabetical order? I imagine that may be partially responsible for the duplicate entries.",
+      "revId": "4f22599a1673c22131c94325c3c24802fbbf0d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5989f70_8033f4db",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 8
+      },
+      "lineNbr": 983,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-01-29T14:13:56Z",
+      "side": 1,
+      "message": "Should we remove this one, too?",
+      "revId": "4f22599a1673c22131c94325c3c24802fbbf0d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
