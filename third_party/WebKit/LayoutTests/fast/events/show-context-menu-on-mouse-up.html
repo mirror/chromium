@@ -40,6 +40,8 @@ var region = document.getElementById("region");
 region.addEventListener("mousedown", appendEventLog, false);
 region.addEventListener("mouseup", appendEventLog, false);
 region.addEventListener("contextmenu", appendEventLog, false);
+region.addEventListener("mouseleave", appendEventLog, false);
+region.addEventListener("mouseout", appendEventLog, false);
 
 testEvents(false, "mousedown contextmenu mouseup");
 testEvents(true, "mousedown mouseup contextmenu");
