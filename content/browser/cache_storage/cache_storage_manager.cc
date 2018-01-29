@@ -199,10 +199,9 @@ void CacheStorageManager::HasCache(
   cache_storage->HasCache(cache_name, std::move(callback));
 }
 
-void CacheStorageManager::DeleteCache(
-    const GURL& origin,
-    const std::string& cache_name,
-    CacheStorage::BoolAndErrorCallback callback) {
+void CacheStorageManager::DeleteCache(const GURL& origin,
+                                      const std::string& cache_name,
+                                      CacheStorage::ErrorCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   CacheStorage* cache_storage = FindOrCreateCacheStorage(origin);
@@ -459,6 +458,7 @@ CacheStorage* CacheStorageManager::FindOrCreateCacheStorage(
   DCHECK(request_context_getter_);
   CacheStorageMap::const_iterator it = cache_storage_map_.find(origin);
   if (it == cache_storage_map_.end()) {
+    DLOG(ERROR) << "Creating cache map for: " << origin;
     CacheStorage* cache_storage = new CacheStorage(
         ConstructOriginPath(root_path_, origin), IsMemoryBacked(),
         cache_task_runner_.get(), request_context_getter_, quota_manager_proxy_,
@@ -467,6 +467,7 @@ CacheStorage* CacheStorageManager::FindOrCreateCacheStorage(
         std::make_pair(origin, base::WrapUnique(cache_storage)));
     return cache_storage;
   }
+  DLOG(ERROR) << "Reusing cache map for: " << origin;
   return it->second.get();
 }
 
