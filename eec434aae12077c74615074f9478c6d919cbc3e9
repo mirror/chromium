@@ -239,6 +239,30 @@
     },
     {
       "key": {
+        "uuid": "e3a0f6fa_9cc09740",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-29T13:35:46Z",
+      "side": 1,
+      "message": "Makes sense.",
+      "parentUuid": "b6a98053_a0597b4f",
+      "range": {
+        "startLine": 55,
+        "startChar": 15,
+        "endLine": 55,
+        "endChar": 28
+      },
+      "revId": "eec434aae12077c74615074f9478c6d919cbc3e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "582ab797_dfd9bb00",
         "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
         "patchSetId": 4
@@ -322,6 +346,30 @@
       "side": 1,
       "message": "GarbageCollected is currently non-virtual. Adding anything there might have big impact for overall memory consumption.",
       "parentUuid": "b41fe57f_f67668f8",
+      "range": {
+        "startLine": 153,
+        "startChar": 11,
+        "endLine": 153,
+        "endChar": 29
+      },
+      "revId": "eec434aae12077c74615074f9478c6d919cbc3e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea7a1009_8093e0ad",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-29T13:35:46Z",
+      "side": 1,
+      "message": "Yeah, agreed.\n\nWould you help me understand how NameInHeapSnapshot is going to be used?\n\nFor example, do you think you can solve your problem by adding HeapSnapshotVisitor::Visit(ScriptWrappable*, ...)?\n\nIf your goal is to dump names of ScriptWrappable, adding NameInHeapSnapshot to TraceWrapperBase wouldn\u0027t make much sense (it would make more sense to add HeapSnapshotVisitor::Visit(ScriptWrappable*, ...)). If your goal is to dump all names of TraceWrapperBase, you\u0027ll need to come up with a more general approach.",
+      "parentUuid": "f62d5b7d_99185880",
       "range": {
         "startLine": 153,
         "startChar": 11,
