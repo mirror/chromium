@@ -30,6 +30,7 @@
 #include "ui/message_center/views/padded_button.h"
 #include "ui/message_center/views/proportional_image_view.h"
 #include "ui/strings/grit/ui_strings.h"
+#include "ui/views/animation/flood_fill_ink_drop_ripple.h"
 #include "ui/views/animation/ink_drop_highlight.h"
 #include "ui/views/background.h"
 #include "ui/views/border.h"
@@ -456,14 +457,23 @@ void NotificationInputReplyButtonMD::SetPlaceholderImage() {
 NotificationInputContainerMD::NotificationInputContainerMD(
     NotificationInputDelegate* delegate)
     : delegate_(delegate),
+      ink_drop_container_(new views::InkDropContainerView()),
       textfield_(new NotificationInputTextfieldMD(delegate)),
       button_(new NotificationInputReplyButtonMD(this)) {
   auto* layout = SetLayoutManager(std::make_unique<views::BoxLayout>(
       views::BoxLayout::kHorizontal, gfx::Insets(), 0));
-  SetBackground(views::CreateSolidBackground(kInputContainerBackgroundColor));
+  SetBackground(views::CreateSolidBackground(kActionsRowBackgroundColor));
 
-  AddChildView(textfield_);
+  SetInkDropMode(InkDropMode::ON);
+  set_ink_drop_base_color(kInputContainerBackgroundColor);
+  set_ink_drop_visible_opacity(1);
+
+  ink_drop_container_->SetPaintToLayer();
+  ink_drop_container_->layer()->SetFillsBoundsOpaquely(false);
+  AddChildView(ink_drop_container_);
+
   layout->SetFlexForView(textfield_, 1);
+  AddChildView(textfield_);
 
   AddChildView(button_);
 }
@@ -477,6 +487,41 @@ void NotificationInputContainerMD::ButtonPressed(views::Button* sender,
 }
 
 NotificationInputContainerMD::~NotificationInputContainerMD() = default;
+
+void NotificationInputContainerMD::AddInkDropLayer(ui::Layer* ink_drop_layer) {
+  textfield_->SetPaintToLayer();
+  textfield_->layer()->SetFillsBoundsOpaquely(false);
+  button_->SetPaintToLayer();
+  button_->layer()->SetFillsBoundsOpaquely(false);
+  ink_drop_container_->AddInkDropLayer(ink_drop_layer);
+  InstallInkDropMask(ink_drop_layer);
+}
+
+void NotificationInputContainerMD::RemoveInkDropLayer(
+    ui::Layer* ink_drop_layer) {
+  textfield_->DestroyLayer();
+  button_->DestroyLayer();
+  ResetInkDropMask();
+  ink_drop_container_->RemoveInkDropLayer(ink_drop_layer);
+}
+
+std::unique_ptr<views::InkDropRipple>
+NotificationInputContainerMD::CreateInkDropRipple() const {
+  return std::make_unique<views::FloodFillInkDropRipple>(
+      size(), GetInkDropCenterBasedOnLastEvent(), GetInkDropBaseColor(),
+      ink_drop_visible_opacity());
+}
+
+SkColor NotificationInputContainerMD::GetInkDropBaseColor() const {
+  return ink_drop_base_color_;
+}
+
+void NotificationInputContainerMD::AnimateBackground(
+    const ui::LocatedEvent& event) {
+  if (View::HitTestPoint(event.location()))
+    AnimateInkDrop(views::InkDropState::ACTION_PENDING,
+                   ui::LocatedEvent::FromIfValid(&event));
+}
 
 // InlineSettingsRadioButton ///////////////////////////////////////////////////
 
@@ -760,6 +805,9 @@ void NotificationViewMD::ButtonPressed(views::Button* sender,
       inline_reply_->textfield()->set_placeholder(
           action_buttons_[i]->placeholder());
       inline_reply_->textfield()->RequestFocus();
+      const ui::LocatedEvent* located_event =
+          reinterpret_cast<const ui::LocatedEvent*>(&event);
+      inline_reply_->AnimateBackground(*located_event);
       inline_reply_->SetVisible(true);
       action_buttons_row_->SetVisible(false);
       Layout();
