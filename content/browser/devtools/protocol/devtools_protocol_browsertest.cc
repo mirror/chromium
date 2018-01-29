@@ -313,6 +313,7 @@ class DevToolsProtocolTest : public ContentBrowserTest,
     if (allow_existing) {
       for (size_t i = 0; i < notifications_.size(); i++) {
         if (notifications_[i] == notification) {
+          LOG(ERROR) << "Found notification in saves";
           std::unique_ptr<base::DictionaryValue> result =
               std::move(notification_params_[i]);
           notifications_.erase(notifications_.begin() + i);
@@ -468,6 +469,7 @@ class DevToolsProtocolTest : public ContentBrowserTest,
       notifications_.push_back(notification);
       base::DictionaryValue* params;
       if (root->GetDictionary("params", &params)) {
+        LOG(ERROR) << "Got notification " + notification;
         notification_params_.push_back(params->CreateDeepCopy());
       } else {
         notification_params_.push_back(
@@ -2119,6 +2121,73 @@ class SitePerProcessDevToolsProtocolTest : public DevToolsProtocolTest {
   }
 };
 
+IN_PROC_BROWSER_TEST_F(SitePerProcessDevToolsProtocolTest, TargetNoDiscovery) {
+  std::string temp;
+  std::string target_id;
+  std::unique_ptr<base::DictionaryValue> command_params;
+  std::unique_ptr<base::DictionaryValue> params;
+
+  GURL main_url(embedded_test_server()->GetURL("/site_per_process_main.html"));
+  NavigateToURLBlockUntilNavigationsComplete(shell(), main_url, 1);
+  // It is safe to obtain the root frame tree node here, as it doesn't change.
+  FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
+                            ->GetFrameTree()
+                            ->root();
+
+  // Load cross-site page into iframe.
+  GURL::Replacements replace_host;
+  GURL cross_site_url(embedded_test_server()->GetURL("/title1.html"));
+  replace_host.SetHostStr("foo.com");
+  cross_site_url = cross_site_url.ReplaceComponents(replace_host);
+  NavigateFrameToURL(root->child_at(0), cross_site_url);
+
+  // Enable auto-attach.
+  Attach();
+  command_params.reset(new base::DictionaryValue());
+  command_params->SetBoolean("autoAttach", true);
+  command_params->SetBoolean("waitForDebuggerOnStart", false);
+  SendCommand("Target.setAutoAttach", std::move(command_params), true);
+  EXPECT_TRUE(notifications_.empty());
+  command_params.reset(new base::DictionaryValue());
+  command_params->SetBoolean("value", true);
+  SendCommand("Target.setAttachToFrames", std::move(command_params), false);
+  params = WaitForNotification("Target.attachedToTarget", true);
+  std::string session_id;
+  EXPECT_TRUE(params->GetString("sessionId", &session_id));
+  EXPECT_TRUE(params->GetString("targetInfo.targetId", &target_id));
+  EXPECT_TRUE(params->GetString("targetInfo.type", &temp));
+  EXPECT_EQ("iframe", temp);
+
+  // Load same-site page into iframe.
+  FrameTreeNode* child = root->child_at(0);
+  GURL http_url(embedded_test_server()->GetURL("/title1.html"));
+  NavigateFrameToURL(child, http_url);
+  params = WaitForNotification("Target.detachedFromTarget", true);
+  EXPECT_TRUE(params->GetString("targetId", &temp));
+  EXPECT_EQ(target_id, temp);
+  EXPECT_TRUE(params->GetString("sessionId", &temp));
+  EXPECT_EQ(session_id, temp);
+
+  // Navigate back to cross-site iframe.
+  NavigateFrameToURL(root->child_at(0), cross_site_url);
+  params = WaitForNotification("Target.attachedToTarget", true);
+  EXPECT_TRUE(params->GetString("sessionId", &session_id));
+  EXPECT_TRUE(params->GetString("targetInfo.targetId", &target_id));
+  EXPECT_TRUE(params->GetString("targetInfo.type", &temp));
+  EXPECT_EQ("iframe", temp);
+
+  // Disable auto-attach.
+  command_params.reset(new base::DictionaryValue());
+  command_params->SetBoolean("autoAttach", false);
+  command_params->SetBoolean("waitForDebuggerOnStart", false);
+  SendCommand("Target.setAutoAttach", std::move(command_params), false);
+  params = WaitForNotification("Target.detachedFromTarget", true);
+  EXPECT_TRUE(params->GetString("targetId", &temp));
+  EXPECT_EQ(target_id, temp);
+  EXPECT_TRUE(params->GetString("sessionId", &temp));
+  EXPECT_EQ(session_id, temp);
+}
+
 IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, SetAndGetCookies) {
   ASSERT_TRUE(embedded_test_server()->Start());
   GURL test_url = embedded_test_server()->GetURL("/title1.html");
@@ -2569,12 +2638,52 @@ class DevToolsDownloadContentTest : public DevToolsProtocolTest {
 
   void SetDownloadBehavior(const std::string& behavior,
                            const std::string& download_path) {
+    SetDownloadBehavior(behavior, download_path, 0);
+  }
+
+  void SetDownloadBehavior(const std::string& behavior,
+                           const std::string& download_path,
+                           int max_size) {
     std::unique_ptr<base::DictionaryValue> params(new base::DictionaryValue());
     params->SetString("behavior", behavior);
     params->SetString("downloadPath", download_path);
-    SendCommand("Page.setDownloadBehavior", std::move(params));
+    if (max_size)
+      params->SetInteger("max_size", max_size);
+    SendCommand("Page.setDownloadBehavior", std::move(params), true);
 
     EXPECT_GE(result_ids_.size(), 1u);
+  }
+
+  void SetDownloadBehaviorNoWait(const std::string& behavior,
+                                 const std::string& download_path,
+                                 int max_size) {
+    std::unique_ptr<base::DictionaryValue> params(new base::DictionaryValue());
+    params->SetString("behavior", behavior);
+    params->SetString("downloadPath", download_path);
+    if (max_size)
+      params->SetInteger("max_size", max_size);
+    SendCommand("Page.setDownloadBehavior", std::move(params), false);
+
+    EXPECT_GE(result_ids_.size(), 1u);
+  }
+
+  void ReadStreamToString(const std::string& stream, std::string* contents) {
+    std::unique_ptr<base::DictionaryValue> params(new base::DictionaryValue());
+    params->SetString("handle", stream);
+    bool eof;
+    do {
+      base::DictionaryValue* reply = SendCommand("IO.read", std::move(params));
+      std::string data;
+      reply->GetString("data", &data);
+      reply->GetBoolean("eof", &eof);
+
+      if (data.size()) {
+        base::Base64Decode(data, &data);
+        *contents += data;
+      }
+    } while (!eof);
+
+    EXPECT_GE(contents->size(), 1u);
   }
 
   // Create a DownloadTestObserverTerminal that will wait for the
@@ -2834,5 +2943,139 @@ IN_PROC_BROWSER_TEST_F(DevToolsDownloadContentTest, MultiDownload) {
   ASSERT_TRUE(base::ContentsEqual(
       file2, GetTestFilePath("download", "download-test.lib")));
 }
+
+// Check that downloading a single file works.
+IN_PROC_BROWSER_TEST_F(DevToolsDownloadContentTest, StreamSingleDownload) {
+  base::ThreadRestrictions::SetIOAllowed(true);
+  NavigateToURLBlockUntilNavigationsComplete(shell(), GURL("about:blank"), 1);
+  Attach();
+
+  SendCommand("Page.enable", nullptr, false);
+  SetDownloadBehavior("stream", "download", 10);
+
+  GURL url(net::URLRequestMockHTTPJob::GetMockUrl("download-test.lib"));
+  NavigateToURLBlockUntilNavigationsComplete(shell(), url, 1);
+  std::unique_ptr<base::DictionaryValue> result =
+      WaitForNotification("Page.downloadStarted", true);
+  std::string stream;
+  ASSERT_TRUE(result->GetString("stream", &stream));
+  std::string file_name;
+  ASSERT_TRUE(result->GetString("fileName", &file_name));
+  ASSERT_EQ(file_name, "download-test.lib");
+  std::string mime_type;
+  ASSERT_TRUE(result->GetString("mimeType", &mime_type));
+  ASSERT_EQ(mime_type, "application/octet-stream");
+
+  std::string download_contents;
+  ReadStreamToString(stream, &download_contents);
+  ASSERT_TRUE(VerifyFile(GetTestFilePath("download", "download-test.lib"),
+                         download_contents, download_contents.size()));
+}
+
+// Check that downloading a single file on small chunks works.
+IN_PROC_BROWSER_TEST_F(DevToolsDownloadContentTest,
+                       StreamSingleDownloadSmallMaxSize) {
+  base::ThreadRestrictions::SetIOAllowed(true);
+  NavigateToURLBlockUntilNavigationsComplete(shell(), GURL("about:blank"), 1);
+  Attach();
+
+  SendCommand("Page.enable", nullptr, false);
+  SetDownloadBehavior("stream", "download", 10);
+
+  GURL url(net::URLRequestMockHTTPJob::GetMockUrl("download-test.lib"));
+  NavigateToURLBlockUntilNavigationsComplete(shell(), url, 1);
+  std::unique_ptr<base::DictionaryValue> result =
+      WaitForNotification("Page.downloadStarted", true);
+  std::string stream;
+  ASSERT_TRUE(result->GetString("stream", &stream));
+
+  std::string download_contents;
+  ReadStreamToString(stream, &download_contents);
+  std::string expected_contents;
+  ASSERT_TRUE(VerifyFile(GetTestFilePath("download", "download-test.lib"),
+                         download_contents, download_contents.size()));
+}
+
+// Check that cancelling a download works.
+IN_PROC_BROWSER_TEST_F(DevToolsDownloadContentTest,
+                       StreamSingleDownloadCancelled) {
+  base::ThreadRestrictions::SetIOAllowed(true);
+  NavigateToURLBlockUntilNavigationsComplete(shell(), GURL("about:blank"), 1);
+  Attach();
+
+  SendCommand("Page.enable", nullptr, false);
+  SetDownloadBehavior("stream", "download", 10);
+
+  GURL url(net::URLRequestMockHTTPJob::GetMockUrl("download-test.lib"));
+  NavigateToURLBlockUntilNavigationsComplete(shell(), url, 1);
+  std::unique_ptr<base::DictionaryValue> result =
+      WaitForNotification("Page.downloadStarted", true);
+  std::string stream;
+  ASSERT_TRUE(result->GetString("stream", &stream));
+
+  std::unique_ptr<base::DictionaryValue> read_params(
+      new base::DictionaryValue());
+  read_params->SetString("handle", stream);
+  SendCommand("IO.read", std::move(read_params));
+
+  std::unique_ptr<base::DictionaryValue> close_params(
+      new base::DictionaryValue());
+  close_params->SetString("handle", stream);
+  SendCommand("IO.close", std::move(close_params), true);
+
+  NavigateToURLBlockUntilNavigationsComplete(shell(), GURL("about:blank"), 1);
+}
+
+// Check shutting down while a download is running works.
+IN_PROC_BROWSER_TEST_F(DevToolsDownloadContentTest,
+                       StreamSingleDownloadShutdown) {
+  base::ThreadRestrictions::SetIOAllowed(true);
+  NavigateToURLBlockUntilNavigationsComplete(shell(), GURL("about:blank"), 1);
+  Attach();
+
+  SendCommand("Page.enable", nullptr, false);
+  SetDownloadBehavior("stream", "download", 10);
+
+  GURL url(net::URLRequestMockHTTPJob::GetMockUrl("download-test.lib"));
+  NavigateToURLBlockUntilNavigationsComplete(shell(), url, 1);
+  std::unique_ptr<base::DictionaryValue> result =
+      WaitForNotification("Page.downloadStarted", true);
+  std::string stream;
+  ASSERT_TRUE(result->GetString("stream", &stream));
+}
+
+// Check that downloading as a stream and then changing behavior works.
+IN_PROC_BROWSER_TEST_F(DevToolsDownloadContentTest, StreamDownloadAndAllow) {
+  base::ThreadRestrictions::SetIOAllowed(true);
+  NavigateToURLBlockUntilNavigationsComplete(shell(), GURL("about:blank"), 1);
+  Attach();
+
+  SendCommand("Page.enable", nullptr, false);
+  SetDownloadBehavior("stream", "download", 10);
+
+  GURL url(net::URLRequestMockHTTPJob::GetMockUrl("download-test.lib"));
+  NavigateToURLBlockUntilNavigationsComplete(shell(), url, 1);
+  std::unique_ptr<base::DictionaryValue> result =
+      WaitForNotification("Page.downloadStarted");
+  std::string stream;
+  ASSERT_TRUE(result->GetString("stream", &stream));
+
+  std::string download_contents;
+  ReadStreamToString(stream, &download_contents);
+  std::string expected_contents;
+  ASSERT_TRUE(VerifyFile(GetTestFilePath("download", "download-test.lib"),
+                         download_contents, download_contents.size()));
+
+  SetDownloadBehavior("allow", "download");
+
+  DownloadItem* download = StartDownloadAndReturnItem(
+      shell(),
+      GURL(net::URLRequestMockHTTPJob::GetMockUrl("download-test.lib")));
+  ASSERT_EQ(DownloadItem::IN_PROGRESS, download->GetState());
+
+  WaitForCompletion(download);
+  ASSERT_EQ(DownloadItem::COMPLETE, download->GetState());
+}
+
 #endif  // !defined(ANDROID)
 }  // namespace content

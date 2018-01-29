@@ -4747,6 +4747,7 @@ domain Page
       enum behavior
         deny
         allow
+        stream
         default
       # The default path to save downloaded files to. This is requred if behavior is set to 'allow'
       optional string downloadPath
@@ -4943,6 +4944,16 @@ domain Page
       array of string windowFeatures
       # Whether or not it was triggered by user gesture.
       boolean userGesture
+  # Fired when download behavior has been overriden and anew download has started, if
+  # download behavior is STREAM a stream handle will be provided .
+  experimental event downloadStarted
+    parameters
+      # A handle of the stream that holds the download object on base64 encoding.
+      IO.StreamHandle stream
+      # Suggested file name as determined by the browser.
+      string fileName
+      # Resource mimeType as determined by the browser.
+      string mimeType
 
 domain Performance
 
