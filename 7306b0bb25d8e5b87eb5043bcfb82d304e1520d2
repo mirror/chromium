@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e788454b_37243a0a",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-29T15:42:08Z",
+      "side": 1,
+      "message": "I don\u0027t think this is needed? i.e. you can fetch a url on the same origin, that\u0027s not relevant to this test.",
+      "revId": "7306b0bb25d8e5b87eb5043bcfb82d304e1520d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
