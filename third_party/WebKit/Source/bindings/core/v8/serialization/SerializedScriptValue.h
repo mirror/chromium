@@ -231,6 +231,18 @@ class CORE_EXPORT SerializedScriptValue
     return shared_array_buffers_contents_;
   }
   BlobDataHandleMap& BlobDataHandles() { return blob_data_handles_; }
+  ArrayBufferContentsArray& GetArrayBufferContentsArray() {
+    return array_buffer_contents_array_;
+  }
+  void SetArrayBufferContentsArray(ArrayBufferContentsArray& contents) {
+    array_buffer_contents_array_ = std::move(contents);
+  }
+  ImageBitmapContentsArray& GetImageBitmapContentsArray() {
+    return image_bitmap_contents_array_;
+  }
+  void SetImageBitmapContentsArray(ImageBitmapContentsArray& contents) {
+    image_bitmap_contents_array_ = std::move(contents);
+  }
 
  private:
   friend class ScriptValueSerializer;
