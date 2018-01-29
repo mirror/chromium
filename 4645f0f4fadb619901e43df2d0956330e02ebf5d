@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c8d724a1_b7fbb7a5",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_bridge.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-29T18:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ae428f9_caf84beb",
+      "range": {
+        "startLine": 64,
+        "startChar": 15,
+        "endLine": 64,
+        "endChar": 24
+      },
+      "revId": "4645f0f4fadb619901e43df2d0956330e02ebf5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "781c80be_c9a3eece",
         "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_bridge.h",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "4645f0f4fadb619901e43df2d0956330e02ebf5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed827f1d_a3ff2292",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_bridge.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-29T18:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "781c80be_c9a3eece",
+      "range": {
+        "startLine": 64,
+        "startChar": 6,
+        "endLine": 64,
+        "endChar": 22
+      },
+      "revId": "4645f0f4fadb619901e43df2d0956330e02ebf5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "76eb2ed0_ff18dbae",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-29T18:20:40Z",
+      "side": 1,
+      "message": "It\u0027s bytes per pixel. On Android when you query the stride for the graphics buffer it returns in pixel units...but in Chrome we use byte units. I\u0027ll make it a constant so that\u0027s clear.",
+      "parentUuid": "5c2596df_1b8b2ef7",
+      "range": {
+        "startLine": 187,
+        "startChar": 30,
+        "endLine": 187,
+        "endChar": 31
+      },
+      "revId": "4645f0f4fadb619901e43df2d0956330e02ebf5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c13fe41c_1d613d22",
         "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.cc",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "4645f0f4fadb619901e43df2d0956330e02ebf5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38020749_df17cf36",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-29T18:20:40Z",
+      "side": 1,
+      "message": "Because I forgot to put it in there...thanks for catching that.",
+      "parentUuid": "c13fe41c_1d613d22",
+      "range": {
+        "startLine": 236,
+        "startChar": 30,
+        "endLine": 236,
+        "endChar": 32
+      },
+      "revId": "4645f0f4fadb619901e43df2d0956330e02ebf5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "0a074bea_4c7a47f9",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-29T18:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8c10fe5_1b5051b3",
+      "range": {
+        "startLine": 274,
+        "startChar": 19,
+        "endLine": 274,
+        "endChar": 23
+      },
+      "revId": "4645f0f4fadb619901e43df2d0956330e02ebf5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af7b68b4_6bd34cad",
         "filename": "chrome/browser/media/webrtc/desktop_media_picker.cc",
         "patchSetId": 8
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "379d98d7_02932259",
+        "filename": "chrome/browser/media/webrtc/desktop_media_picker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-29T18:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af7b68b4_6bd34cad",
+      "range": {
+        "startLine": 7,
+        "startChar": 45,
+        "endLine": 7,
+        "endChar": 47
+      },
+      "revId": "4645f0f4fadb619901e43df2d0956330e02ebf5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8b18fc7_d6c6fd6f",
         "filename": "chrome/browser/media/webrtc/desktop_media_picker.h",
         "patchSetId": 8
@@ -160,6 +304,30 @@
       "revId": "4645f0f4fadb619901e43df2d0956330e02ebf5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e94a3ed_4e9aaa23",
+        "filename": "chrome/browser/media/webrtc/desktop_media_picker.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-29T18:20:40Z",
+      "side": 1,
+      "message": "Not my local compiler when building for ChromeOS...but when I did a dry run, the compiler in the CQ complained about not having these defined which is why I added them. IIRC it was for the Linux build.",
+      "parentUuid": "f8b18fc7_d6c6fd6f",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 18
+      },
+      "revId": "4645f0f4fadb619901e43df2d0956330e02ebf5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
