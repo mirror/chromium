@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3ac390d_85ea2889",
+        "filename": "base/time/time.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-29T17:10:03Z",
+      "side": 1,
+      "message": "Would it be possible to make it constexpr with the appropriate shenaigans (i.e. not use __builtin_mul_overflow for the constexpr case), or is it wholly impossible?",
+      "revId": "455d7b4bd9f5d3386228bbe9a2f00e6d9c83ca41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
