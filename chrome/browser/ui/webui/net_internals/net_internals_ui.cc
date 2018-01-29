@@ -235,10 +235,7 @@ class NetInternalsMessageHandler
 
   // Called back by the CertificateImporter when a certificate import finished.
   // |previous_error| contains earlier errors during this import.
-  void OnCertificatesImported(
-      const std::string& previous_error,
-      bool success,
-      net::ScopedCERTCertificateList onc_trusted_certificates);
+  void OnCertificatesImported(const std::string& previous_error, bool success);
 #endif
 
  private:
@@ -1019,18 +1016,16 @@ void NetInternalsMessageHandler::ImportONCFileToNSSDB(
 
   chromeos::onc::CertificateImporterImpl cert_importer(
       BrowserThread::GetTaskRunnerForThread(BrowserThread::IO), nssdb);
+  chromeos::onc::OncParsedCertificates onc_parsed_certificates(certificates);
   cert_importer.ImportCertificates(
-      certificates,
-      onc_source,
+      onc_parsed_certificates, onc_source,
       base::Bind(&NetInternalsMessageHandler::OnCertificatesImported,
-                 AsWeakPtr(),
-                 error));
+                 AsWeakPtr(), error));
 }
 
 void NetInternalsMessageHandler::OnCertificatesImported(
     const std::string& previous_error,
-    bool success,
-    net::ScopedCERTCertificateList /* unused onc_trusted_certificates */) {
+    bool success) {
   std::string error = previous_error;
   if (!success)
     error += "Some certificates couldn't be imported. ";

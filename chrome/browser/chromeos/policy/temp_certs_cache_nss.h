@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_CHROMEOS_POLICY_UNTRUSTED_AUTHORITY_CERTS_CACHE_H_
-#define CHROME_BROWSER_CHROMEOS_POLICY_UNTRUSTED_AUTHORITY_CERTS_CACHE_H_
+#ifndef CHROME_BROWSER_CHROMEOS_POLICY_TEMP_CERTS_CACHE_NSS_H_
+#define CHROME_BROWSER_CHROMEOS_POLICY_TEMP_CERTS_CACHE_NSS_H_
 
 #include <string>
 #include <vector>
@@ -11,19 +11,18 @@
 #include "base/callback_forward.h"
 #include "base/macros.h"
 #include "net/cert/scoped_nss_types.h"
+#include "net/cert/x509_certificate.h"
 
 namespace policy {
 
-// Holds untrusted intermediate authority certificates in memory as
-// ScopedCERTCertificates, making them available for client certificate
-// discovery.
-class UntrustedAuthorityCertsCache {
+// Holds NSS temporary certificates in memory as ScopedCERTCertificates, making
+// them available e.g. for client certificate discovery.
+class TempCertsCacheNSS {
  public:
-  explicit UntrustedAuthorityCertsCache(
-      const std::vector<std::string>& onc_x509_authority_certs);
-  ~UntrustedAuthorityCertsCache();
+  explicit TempCertsCacheNSS(const net::CertificateList& certificates);
+  ~TempCertsCacheNSS();
 
-  static std::vector<std::string> GetUntrustedAuthoritiesFromDeviceOncPolicy();
+  static net::CertificateList GetUntrustedAuthoritiesFromDeviceOncPolicy();
 
  private:
   // The actual cache of untrusted authorities.
@@ -35,11 +34,11 @@ class UntrustedAuthorityCertsCache {
   // they don't necessarily become unavailable in NSS due to caching behavior.
   // However, this is not an issue, as these certificates are not imported into
   // permanent databases, nor are the trust settings mutated to trust them.
-  net::ScopedCERTCertificateList untrusted_authority_certs_;
+  net::ScopedCERTCertificateList temp_certs_;
 
-  DISALLOW_COPY_AND_ASSIGN(UntrustedAuthorityCertsCache);
+  DISALLOW_COPY_AND_ASSIGN(TempCertsCacheNSS);
 };
 
 }  // namespace policy
 
-#endif  // CHROME_BROWSER_CHROMEOS_POLICY_UNTRUSTED_AUTHORITY_CERTS_CACHE_H_
+#endif  // CHROME_BROWSER_CHROMEOS_POLICY_TEMP_CERTS_CACHE_NSS_H_

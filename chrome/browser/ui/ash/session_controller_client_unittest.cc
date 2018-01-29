@@ -396,7 +396,7 @@ TEST_F(SessionControllerClientTest,
   net::CertificateList certificates;
   certificates.push_back(
       net::ImportCertFromFile(net::GetTestCertsDirectory(), "ok_cert.pem"));
-  service->OnTrustAnchorsChanged(certificates);
+  service->OnPolicyProvidedCertsChanged(certificates, certificates);
   EXPECT_TRUE(service->has_policy_certificates());
   EXPECT_EQ(ash::AddUserSessionPolicy::ERROR_NOT_ALLOWED_PRIMARY_USER,
             SessionControllerClient::GetAddUserSessionPolicy());

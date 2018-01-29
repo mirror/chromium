@@ -15,11 +15,10 @@
 #include "base/memory/weak_ptr.h"
 #include "chromeos/chromeos_export.h"
 #include "chromeos/network/onc/onc_certificate_importer.h"
+#include "chromeos/network/onc/onc_parsed_certificates.h"
 #include "components/onc/onc_constants.h"
 
 namespace base {
-class DictionaryValue;
-class ListValue;
 class SequencedTaskRunner;
 }
 
@@ -38,6 +37,19 @@ namespace onc {
 // certificates. http://crbug.com/252119
 class CHROMEOS_EXPORT CertificateImporterImpl : public CertificateImporter {
  public:
+  class Factory : public CertificateImporter::Factory {
+   public:
+    explicit Factory(
+        const scoped_refptr<base::SequencedTaskRunner>& io_task_runner);
+    ~Factory() override;
+
+    std::unique_ptr<chromeos::onc::CertificateImporter>
+    CreateCertificateImporter(net::NSSCertDatabase* database) override;
+
+   private:
+    const scoped_refptr<base::SequencedTaskRunner> io_task_runner_;
+  };
+
   // |io_task_runner| will be used for NSSCertDatabase accesses.
   CertificateImporterImpl(
       const scoped_refptr<base::SequencedTaskRunner>& io_task_runner,
@@ -45,47 +57,46 @@ class CHROMEOS_EXPORT CertificateImporterImpl : public CertificateImporter {
   ~CertificateImporterImpl() override;
 
   // CertificateImporter overrides
-  void ImportCertificates(const base::ListValue& certificates,
+  void ImportCertificates(const OncParsedCertificates& certificates,
                           ::onc::ONCSource source,
-                          const DoneCallback& done_callback) override;
+                          DoneCallback done_callback) override;
+
+  void ImportClientCertificates(const OncParsedCertificates& certificates,
+                                ::onc::ONCSource source,
+                                DoneCallback done_callback) override;
 
  private:
-  void RunDoneCallback(const CertificateImporter::DoneCallback& callback,
-                       bool success,
-                       net::ScopedCERTCertificateList onc_trusted_certificates);
+  enum class ImportType { kClientCertificatesOnly, kAllCertificates };
+
+  void RunDoneCallback(CertificateImporter::DoneCallback callback,
+                       bool success);
+
+  void ImportCertificates(ImportType import_type,
+                          const OncParsedCertificates& certificates,
+                          ::onc::ONCSource source,
+                          DoneCallback done_callback);
 
   // This is the synchronous implementation of ImportCertificates. It is
   // executed on the given |io_task_runner_|.
-  static void ParseAndStoreCertificates(::onc::ONCSource source,
-                                        const DoneCallback& done_callback,
-                                        base::ListValue* certificates,
-                                        net::NSSCertDatabase* nssdb);
-
-  // Parses and stores |certificate| in the certificate store. Returns true if
-  // the operation succeeded.
-  static bool ParseAndStoreCertificate(
-      ::onc::ONCSource source,
-      bool allow_trust_imports,
-      const base::DictionaryValue& certificate,
-      net::NSSCertDatabase* nssdb,
-      net::ScopedCERTCertificateList* onc_trusted_certificates);
+  static void StoreCertificates(ImportType import_type,
+                                ::onc::ONCSource source,
+                                DoneCallback done_callback,
+                                const OncParsedCertificates& certificates,
+                                net::NSSCertDatabase* nssdb);
 
   // Imports the Server or CA certificate |certificate|. Web trust is only
   // applied if the certificate requests the TrustBits attribute "Web" and if
   // the |allow_trust_imports| permission is granted, otherwise the attribute is
   // ignored.
-  static bool ParseServerOrCaCertificate(
+  static bool StoreServerOrCaCertificate(
       ::onc::ONCSource source,
       bool allow_trust_imports,
-      const std::string& cert_type,
-      const std::string& guid,
-      const base::DictionaryValue& certificate,
-      net::NSSCertDatabase* nssdb,
-      net::ScopedCERTCertificateList* onc_trusted_certificates);
+      const OncParsedCertificates::ServerOrAuthorityCertificate& certificate,
+      net::NSSCertDatabase* nssdb);
 
-  static bool ParseClientCertificate(const std::string& guid,
-                                     const base::DictionaryValue& certificate,
-                                     net::NSSCertDatabase* nssdb);
+  static bool StoreClientCertificate(
+      const OncParsedCertificates::ClientCertificate& certificate,
+      net::NSSCertDatabase* nssdb);
 
   // The task runner to use for NSSCertDatabase accesses.
   scoped_refptr<base::SequencedTaskRunner> io_task_runner_;

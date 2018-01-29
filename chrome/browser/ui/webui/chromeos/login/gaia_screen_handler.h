@@ -21,7 +21,7 @@
 class AccountId;
 
 namespace policy {
-class UntrustedAuthorityCertsCache;
+class TempCertsCacheNSS;
 }
 
 namespace chromeos {
@@ -283,8 +283,7 @@ class GaiaScreenHandler : public BaseScreenHandler,
 
   // Makes untrusted authority certificates from device policy available for
   // client certificate discovery.
-  std::unique_ptr<policy::UntrustedAuthorityCertsCache>
-      untrusted_authority_certs_cache_;
+  std::unique_ptr<policy::TempCertsCacheNSS> untrusted_authority_certs_cache_;
 
   base::WeakPtrFactory<GaiaScreenHandler> weak_factory_;
 
