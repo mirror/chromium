@@ -282,6 +282,162 @@ v8::HeapProfiler::RetainerInfos V8GCController::GetRetainerInfos(
   return v8::HeapProfiler::RetainerInfos{tracer->Groups(), tracer->Edges()};
 }
 
+class EmbedderGraphBuilder : public ScriptWrappableVisitor,
+                             public v8::PersistentHandleVisitor {
+ public:
+  using Traceable = const void*;
+  using Graph = v8::EmbedderGraph;
+
+  explicit EmbedderGraphBuilder(v8::Isolate* isolate, Graph* graph)
+      : isolate_(isolate), current_parent_(nullptr), graph_(graph) {}
+
+  void BuildEmbedderGraph() {
+    isolate_->VisitHandlesWithClassIds(this);
+    VisitPendingActivities();
+    VisitTransitiveClosure();
+  }
+
+  // v8::PersistentHandleVisitor override.
+  void VisitPersistentHandle(v8::Persistent<v8::Value>* value,
+                             uint16_t class_id) override {
+    if (class_id != WrapperTypeInfo::kNodeClassId &&
+        class_id != WrapperTypeInfo::kObjectClassId)
+      return;
+    v8::Local<v8::Object> v8_value = v8::Local<v8::Object>::New(
+        isolate_, v8::Persistent<v8::Object>::Cast(*value));
+    ScriptWrappable* traceable = ToScriptWrappable(v8_value);
+    if (traceable) {
+      // Add v8_value => traceable edge.
+      Graph::Node* graph_node =
+          GraphNode(traceable, traceable->NameInHeapSnapshot());
+      graph_->AddEdge(GraphNode(v8_value), graph_node);
+      // Visit traceable members. This will also add traceable => v8_value edge.
+      ParentScope parent(this, graph_node);
+      traceable->TraceWrappers(this);
+    }
+  }
+
+ protected:
+  // ScriptWrappableVisitor overrides.
+  void Visit(
+      const TraceWrapperV8Reference<v8::Value>& traced_wrapper) const final {
+    const v8::PersistentBase<v8::Value>* value = &traced_wrapper.Get();
+    // Add an edge from the current parent to the V8 object.
+    v8::Local<v8::Value> v8_value = v8::Local<v8::Value>::New(isolate_, *value);
+    if (!v8_value.IsEmpty()) {
+      graph_->AddEdge(current_parent_, GraphNode(v8_value));
+    }
+  }
+
+  void Visit(const WrapperDescriptor& wrapper_descriptor) const final {
+    // Add an edge from the current parent to this object.
+    // Also push the object to the worklist in order to process its members.
+    const void* traceable = wrapper_descriptor.traceable;
+    Graph::Node* graph_node =
+        GraphNode(traceable, wrapper_descriptor.name_callback(traceable));
+    graph_->AddEdge(current_parent_, graph_node);
+    if (!visited_.count(traceable)) {
+      visited_.insert(traceable);
+      worklist_.push(ToWorklistItem(graph_node, wrapper_descriptor));
+    }
+  }
+
+  void Visit(DOMWrapperMap<ScriptWrappable>* wrapper_map,
+             const ScriptWrappable* key) const final {
+    // Add an edge from the current parent to the V8 object.
+    v8::Local<v8::Value> v8_value =
+        wrapper_map->NewLocal(isolate_, const_cast<ScriptWrappable*>(key));
+    if (!v8_value.IsEmpty()) {
+      graph_->AddEdge(current_parent_, GraphNode(v8_value));
+    }
+  }
+
+ private:
+  class EmbedderNode : public Graph::Node {
+   public:
+    explicit EmbedderNode(const char* name) : name_(name) {}
+
+    // Graph::Node overrides.
+    const char* Name() override { return name_; }
+    size_t SizeInBytes() override { return 0; }
+
+   private:
+    const char* name_;
+  };
+
+  class EmbedderRootNode : public EmbedderNode {
+   public:
+    explicit EmbedderRootNode(const char* name) : EmbedderNode(name) {}
+    // Graph::Node override.
+    bool IsRootNode() { return true; }
+  };
+
+  class ParentScope {
+   public:
+    ParentScope(EmbedderGraphBuilder* visitor, Graph::Node* parent)
+        : visitor_(visitor) {
+      DCHECK_EQ(visitor->current_parent_, nullptr);
+      visitor->current_parent_ = parent;
+    }
+    ~ParentScope() { visitor_->current_parent_ = nullptr; }
+
+   private:
+    EmbedderGraphBuilder* visitor_;
+  };
+
+  Graph::Node* GraphNode(const v8::Local<v8::Value>& value) const {
+    return graph_->V8Node(value);
+  }
+
+  Graph::Node* GraphNode(Traceable traceable, const char* name) const {
+    if (graph_node_.count(traceable) == 0) {
+      graph_node_[traceable] = new EmbedderNode(name);
+    }
+    return graph_node_[traceable];
+  }
+
+  void VisitPendingActivities() {
+    ParentScope parent(this, new EmbedderRootNode("PendingActivities"));
+    ActiveScriptWrappableBase::TraceActiveScriptWrappables(isolate_, this);
+  }
+
+  struct WorklistItem {
+    Graph::Node* node;
+    Traceable traceable;
+    TraceWrappersCallback trace_wrappers_callback;
+  };
+
+  WorklistItem ToWorklistItem(
+      Graph::Node* node,
+      const WrapperDescriptor& wrapper_descriptor) const {
+    return {node, wrapper_descriptor.traceable,
+            wrapper_descriptor.trace_wrappers_callback};
+  }
+
+  void VisitTransitiveClosure() {
+    // Depth-first search.
+    while (!worklist_.empty()) {
+      auto item = worklist_.top();
+      worklist_.pop();
+      ParentScope parent(this, item.node);
+      item.trace_wrappers_callback(this, item.traceable);
+    }
+  }
+
+  v8::Isolate* isolate_;
+  Graph::Node* current_parent_;
+  mutable Graph* graph_;
+  mutable std::unordered_set<Traceable> visited_;
+  mutable std::unordered_map<Traceable, Graph::Node*> graph_node_;
+  mutable std::stack<WorklistItem> worklist_;
+};
+
+void V8GCController::BuildEmbedderGraph(v8::Isolate* isolate,
+                                        v8::EmbedderGraph* graph) {
+  EmbedderGraphBuilder builder(isolate, graph);
+  builder.BuildEmbedderGraph();
+}
+
 static unsigned long long UsedHeapSize(v8::Isolate* isolate) {
   v8::HeapStatistics heap_statistics;
   isolate->GetHeapStatistics(&heap_statistics);

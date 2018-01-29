@@ -56,8 +56,8 @@ class CORE_EXPORT EventListener
   ListenerType GetType() const { return type_; }
 
   virtual void Trace(blink::Visitor* visitor) {}
-  void TraceWrappers(const ScriptWrappableVisitor* visitor) const override {}
-  const char* NameInHeapSnapshot() const override { return "EventListener"; }
+  virtual void TraceWrappers(const ScriptWrappableVisitor* visitor) const {}
+  virtual const char* NameInHeapSnapshot() const { return "EventListener"; }
 
  protected:
   explicit EventListener(ListenerType type) : type_(type) {}
