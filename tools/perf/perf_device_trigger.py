@@ -70,6 +70,7 @@ def trigger_tasks(args, remaining):
 
   # TODO: Do these in parallel
   for shard_num, bot_id in enumerate(args.bot_id):
+    print ("Triggering shard %d on bot %s " % (shard_num, bot_id))
     # Holds the results of the swarming.py trigger call.
     temp_fd, json_temp = tempfile.mkstemp(prefix='perf_device_trigger')
     try:
@@ -104,18 +105,8 @@ def main():
                       help='(Swarming Trigger Script API) Where to dump the'
                       ' resulting json which indicates which tasks were'
                       ' triggered for which shards.')
-  parser.add_argument('--shards',
-                      help='How many shards to trigger. Duplicated from the'
-                      ' `swarming.py trigger` command. If passed, will be'
-                      ' checked to ensure there are as many shards as bots'
-                      ' specified by the --bot-id argument. If omitted,'
-                      ' --bot-id will be used to determine the number of shards'
-                      ' to create.')
   args, remaining = parser.parse_known_args()
 
-  if args.shards and args.shards != len(args.bot_id):
-    raise parser.error(
-        'Number of bots to use must equal number of shards (--shards)')
   return trigger_tasks(args, remaining)
 
 
