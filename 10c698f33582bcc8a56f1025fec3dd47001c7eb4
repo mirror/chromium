@@ -16,6 +16,24 @@
       "revId": "10c698f33582bcc8a56f1025fec3dd47001c7eb4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90ef2423_9c8e7c13",
+        "filename": "content/public/common/shared_url_loader_factory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-29T17:50:11Z",
+      "side": 1,
+      "message": "Sure. And actually I\u0027ll keep it in content/common since there\u0027s probably no good reason for it to be public.\n\n(Done.)",
+      "parentUuid": "581eafd9_52ea70b2",
+      "revId": "10c698f33582bcc8a56f1025fec3dd47001c7eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
