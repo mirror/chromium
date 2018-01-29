@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b7f7729_ec7080b2",
+        "filename": "testing/buildbot/test_suites.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1791,
+      "author": {
+        "id": 1149061
+      },
+      "writtenOn": "2018-01-29T17:43:02Z",
+      "side": 1,
+      "message": "Should this be renamed to \"chromium_debug_isolated_scripts\"?\n\nI ask since it looks like adding a target to this test_suite will only enable it for debug builds now.",
+      "range": {
+        "startLine": 1791,
+        "startChar": 9,
+        "endLine": 1791,
+        "endChar": 27
+      },
+      "revId": "f33b02a65bab99ebea41a1d35965c1dc978ab838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
