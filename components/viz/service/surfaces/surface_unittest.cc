@@ -89,8 +89,10 @@ TEST(SurfaceTest, PresentationCallback) {
 TEST(SurfaceTest, SurfaceIds) {
   for (size_t i = 0; i < 3; ++i) {
     ParentLocalSurfaceIdAllocator allocator;
-    LocalSurfaceId id1 = allocator.GenerateId();
-    LocalSurfaceId id2 = allocator.GenerateId();
+    allocator.GenerateId();
+    LocalSurfaceId id1 = allocator.last_generated_id();
+    allocator.GenerateId();
+    LocalSurfaceId id2 = allocator.last_generated_id();
     EXPECT_NE(id1, id2);
   }
 }

@@ -11,10 +11,9 @@
 
 namespace viz {
 
-const LocalSurfaceId& ParentLocalSurfaceIdAllocator::GenerateId() {
+void ParentLocalSurfaceIdAllocator::GenerateId() {
   last_generated_id_ =
       LocalSurfaceId(next_id_++, base::UnguessableToken::Create());
-  return last_generated_id_;
 }
 
 }  // namespace viz

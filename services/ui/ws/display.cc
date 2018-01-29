@@ -266,7 +266,8 @@ void Display::CreateRootWindow(const gfx::Size& size) {
                                                  ServerWindow::Properties()));
   root_->set_event_targeting_policy(
       mojom::EventTargetingPolicy::DESCENDANTS_ONLY);
-  root_->SetBounds(gfx::Rect(size), allocator_.GenerateId());
+  allocator_.GenerateId();
+  root_->SetBounds(gfx::Rect(size), allocator_.last_generated_id());
   root_->SetVisible(true);
   focus_controller_ = std::make_unique<FocusController>(root_.get());
   focus_controller_->AddObserver(this);
@@ -325,9 +326,12 @@ void Display::SetBoundsInPixels(const gfx::Rect& bounds_in_pixels) {
     return;
 
   gfx::Rect new_bounds(bounds_in_pixels.size());
-  root_->SetBounds(new_bounds, allocator_.GenerateId());
-  for (auto& pair : window_manager_display_root_map_)
-    pair.second->root()->SetBounds(new_bounds, allocator_.GenerateId());
+  allocator_.GenerateId();
+  root_->SetBounds(new_bounds, allocator_.last_generated_id());
+  for (auto& pair : window_manager_display_root_map_) {
+    allocator_.GenerateId();
+    pair.second->root()->SetBounds(new_bounds, allocator_.last_generated_id());
+  }
 }
 
 ServerWindow* Display::GetActiveRootWindow() {

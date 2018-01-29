@@ -154,17 +154,20 @@ void TestLayerTreeFrameSink::SubmitCompositorFrame(CompositorFrame frame) {
 
   gfx::Size frame_size = frame.size_in_pixels();
   float device_scale_factor = frame.device_scale_factor();
-  if (!local_surface_id_.is_valid() || frame_size != display_size_ ||
+  LocalSurfaceId local_surface_id =
+      parent_local_surface_id_allocator_->last_generated_id();
+  if (!local_surface_id.is_valid() || frame_size != display_size_ ||
       device_scale_factor != device_scale_factor_) {
-    local_surface_id_ = parent_local_surface_id_allocator_->GenerateId();
-    display_->SetLocalSurfaceId(local_surface_id_, device_scale_factor);
+    parent_local_surface_id_allocator_->GenerateId();
+    local_surface_id = parent_local_surface_id_allocator_->last_generated_id();
+    display_->SetLocalSurfaceId(local_surface_id, device_scale_factor);
     display_->Resize(frame_size);
     display_size_ = frame_size;
     device_scale_factor_ = device_scale_factor;
   }
 
   bool result =
-      support_->SubmitCompositorFrame(local_surface_id_, std::move(frame));
+      support_->SubmitCompositorFrame(local_surface_id, std::move(frame));
   DCHECK(result);
 
   for (auto& copy_request : copy_requests_)

@@ -24,7 +24,7 @@ VideoFrameSubmitter::VideoFrameSubmitter(
       resource_provider_(std::move(resource_provider)),
       is_rendering_(false),
       weak_ptr_factory_(this) {
-  current_local_surface_id_ = parent_local_surface_id_allocator_.GenerateId();
+  parent_local_surface_id_allocator_.GenerateId();
   DETACH_FROM_THREAD(media_thread_checker_);
 }
 
@@ -138,7 +138,8 @@ void VideoFrameSubmitter::SubmitFrame(
 
   // TODO(lethalantidote): Address third/fourth arg in SubmitCompositorFrame.
   compositor_frame_sink_->SubmitCompositorFrame(
-      current_local_surface_id_, std::move(compositor_frame), nullptr, 0);
+      parent_local_surface_id_allocator_.last_generated_id(),
+      std::move(compositor_frame), nullptr, 0);
   resource_provider_->ReleaseFrameResources();
 }
 

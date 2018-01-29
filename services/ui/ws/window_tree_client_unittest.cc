@@ -1430,9 +1430,9 @@ TEST_F(WindowTreeClientTest, SetWindowBounds) {
   wt_client2_->set_track_root_bounds_changes(true);
 
   viz::ParentLocalSurfaceIdAllocator allocator;
-  viz::LocalSurfaceId local_surface_id = allocator.GenerateId();
+  allocator.GenerateId();
   wt1()->SetWindowBounds(10, window_1_1, gfx::Rect(0, 0, 100, 100),
-                         local_surface_id);
+                         allocator.last_generated_id());
   ASSERT_TRUE(wt_client1()->WaitForChangeCompleted(10));
 
   wt_client2_->WaitForChangeCount(1);
@@ -1440,7 +1440,7 @@ TEST_F(WindowTreeClientTest, SetWindowBounds) {
   Id window11_in_wt2 = BuildWindowId(client_id_1(), LoWord(window_1_1));
   EXPECT_EQ("BoundsChanged window=" + IdToString(window11_in_wt2) +
                 " old_bounds=0,0 0x0 new_bounds=0,0 100x100 local_surface_id=" +
-                local_surface_id.ToString(),
+                allocator.last_generated_id().ToString(),
             SingleChangeToDescription(*changes2()));
 
   // Should not be possible to change the bounds of a window created by another

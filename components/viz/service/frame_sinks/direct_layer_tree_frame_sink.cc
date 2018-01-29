@@ -103,17 +103,20 @@ void DirectLayerTreeFrameSink::SubmitCompositorFrame(CompositorFrame frame) {
   DCHECK_LE(BeginFrameArgs::kStartingFrameNumber,
             frame.metadata.begin_frame_ack.sequence_number);
 
-  if (!local_surface_id_.is_valid() ||
+  LocalSurfaceId local_surface_id =
+      parent_local_surface_id_allocator_.last_generated_id();
+  if (!local_surface_id.is_valid() ||
       frame.size_in_pixels() != last_swap_frame_size_ ||
       frame.device_scale_factor() != device_scale_factor_) {
-    local_surface_id_ = parent_local_surface_id_allocator_.GenerateId();
+    parent_local_surface_id_allocator_.GenerateId();
+    local_surface_id = parent_local_surface_id_allocator_.last_generated_id();
     last_swap_frame_size_ = frame.size_in_pixels();
     device_scale_factor_ = frame.device_scale_factor();
-    display_->SetLocalSurfaceId(local_surface_id_, device_scale_factor_);
+    display_->SetLocalSurfaceId(local_surface_id, device_scale_factor_);
   }
 
   bool result =
-      support_->SubmitCompositorFrame(local_surface_id_, std::move(frame));
+      support_->SubmitCompositorFrame(local_surface_id, std::move(frame));
   DCHECK(result);
 }
 
