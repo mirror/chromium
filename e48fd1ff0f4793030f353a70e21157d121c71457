@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79e221c0_0c388fff",
+        "filename": "components/viz/service/surfaces/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-29T20:34:41Z",
+      "side": 1,
+      "message": "This one seems circular too. Display uses surfaces. Also not listed in the README. Fixable?",
+      "revId": "e48fd1ff0f4793030f353a70e21157d121c71457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
