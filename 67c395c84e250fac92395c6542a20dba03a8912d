@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c5cc2fb_3e8c6589",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-29T21:37:13Z",
+      "side": 1,
+      "message": "Pass in/out values by pointer, avoid non-const references.",
+      "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80a6ca3e_dfd67074",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-29T21:37:13Z",
+      "side": 1,
+      "message": "Transferring View object ownership should be more explicit than this. Simply calling AddStyleRange with a RangeStyleInfo object that has a weak pointer to a View isn\u0027t a clear enough. I think the best option for now is to have a separate function like this (comment and signature in header, definition in cc):\n  // Passes ownership of a custom view for use by RangeStyleInfo structs.\n  void StyledLabel::AddCustomView(std::unique_ptr\u003cView\u003e custom_view) { \n    DCHECK(custom_view-\u003eowned_by_client_);\n    custom_views_.insert(std::move(custom_view));\n  }",
+      "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a2c2270_f49826a7",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-29T21:37:13Z",
+      "side": 1,
+      "message": "Should this invalidate the layout or schedule a paint?",
+      "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4f2c1a4_d28f4756",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-29T21:37:13Z",
+      "side": 1,
+      "message": "I wish this could leverage other existing text layout code, like HarfBuzzLineBreaker, but that\u0027s probably not easy, and definitely not a requirement for this work.",
+      "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ee1c925_ba048394",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-29T21:37:13Z",
+      "side": 1,
+      "message": "nit: replace the x and y values with a gfx::Point",
+      "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab56d723_7be08906",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-29T21:37:13Z",
+      "side": 1,
+      "message": "Can you explain this part of the change? I\u0027m not sure I understand why this conditional excludes the starting position of the current range.",
+      "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "784f57be_f5d4f6e2",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-29T21:37:13Z",
+      "side": 1,
+      "message": "Other than this case, AdjustViewsPosition and AdvanceOneLine are always called together. Should they be combined? (ie. should AdvanceOneLine inline or call AdjustViewsPosition?). This particular case could possibly call AdvanceOneLine and conditionally decrement |line|, right?",
+      "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66453c11_156455c6",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-29T21:37:13Z",
+      "side": 1,
+      "message": "nit: this probably belongs in the !custom_view conditional block above",
+      "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1b14436_12d3674d",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-29T21:37:13Z",
+      "side": 1,
+      "message": "nit: It\u0027s not actually necessary to call this here, is it? (the values aren\u0027t used after this)",
+      "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30f7b4c1_bef54c61",
+        "filename": "ui/views/controls/styled_label.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-29T21:37:13Z",
+      "side": 1,
+      "message": "Remove this, replace the base::Optional with a |View* custom_view \u003d nullptr;|, and rely on that nullptr/valid value.",
+      "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a1b2832_021f87e6",
+        "filename": "ui/views/controls/styled_label.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-29T21:37:13Z",
+      "side": 1,
+      "message": "Add function comments here and below.",
+      "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a19a310d_7a35373b",
+        "filename": "ui/views/controls/styled_label.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-29T21:37:13Z",
+      "side": 1,
+      "message": "// Owns the custom views used to replace ranges of text with icons, etc.",
+      "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12564e23_f1e29649",
+        "filename": "ui/views/controls/styled_label.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-29T21:37:13Z",
+      "side": 1,
+      "message": "Since the RangeStyleInfo object has a weak pointer to the custom view, and there isn\u0027t a need to remove/delete custom Views at the moment, we don\u0027t really need this to be a map. This should just be |std::set\u003cstd::unique_ptr\u003cView\u003e\u003e custom_views_;|",
+      "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f351ebc5_7e0700b1",
+        "filename": "ui/views/controls/styled_label.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-29T21:37:13Z",
+      "side": 1,
+      "message": "nit: Temporary references to the views in a line, used for alignment.",
+      "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18c4757d_98c1701f",
+        "filename": "ui/views/controls/styled_label.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-29T21:37:13Z",
+      "side": 1,
+      "message": "Avoid adding this class member, use a function-local vector in CalculateAndDoLayout and pass that to AdjustViewsPosition (which can then just be a cc file-local helper in the anonymous namespace).",
+      "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
