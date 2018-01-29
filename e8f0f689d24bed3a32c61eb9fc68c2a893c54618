@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b70bbdf3_de3a5d66",
+        "filename": "chrome/browser/media/webrtc/desktop_media_picker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-29T23:50:35Z",
+      "side": 1,
+      "message": "I\u0027ll change it to Params. And at this point I\u0027d rather not break this out into another CL when I already have 6 +1s on this one and just need one more.",
+      "parentUuid": "070cea4f_075fc280",
+      "range": {
+        "startLine": 28,
+        "startChar": 9,
+        "endLine": 28,
+        "endChar": 19
+      },
+      "revId": "e8f0f689d24bed3a32c61eb9fc68c2a893c54618",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c4b790c_050170ca",
         "filename": "chrome/browser/media/webrtc/desktop_media_picker.h",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "e8f0f689d24bed3a32c61eb9fc68c2a893c54618",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4263d09b_a7495449",
+        "filename": "chrome/browser/media/webrtc/desktop_media_picker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-29T23:50:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c4b790c_050170ca",
+      "range": {
+        "startLine": 30,
+        "startChar": 9,
+        "endLine": 30,
+        "endChar": 18
+      },
+      "revId": "e8f0f689d24bed3a32c61eb9fc68c2a893c54618",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0f6f4438_23f0cac4",
+        "filename": "chrome/browser/media/webrtc/desktop_media_picker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-29T23:50:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7442b2f1_a2c0fe1f",
+      "range": {
+        "startLine": 31,
+        "startChar": 26,
+        "endLine": 31,
+        "endChar": 47
+      },
+      "revId": "e8f0f689d24bed3a32c61eb9fc68c2a893c54618",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d5d4fa3_0f207bce",
         "filename": "chrome/browser/media/webrtc/desktop_media_picker.h",
         "patchSetId": 10
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "16457607_00c3142f",
+        "filename": "chrome/browser/media/webrtc/desktop_media_picker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-29T23:50:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d5d4fa3_0f207bce",
+      "range": {
+        "startLine": 32,
+        "startChar": 22,
+        "endLine": 32,
+        "endChar": 29
+      },
+      "revId": "e8f0f689d24bed3a32c61eb9fc68c2a893c54618",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16019f9a_1f035c2e",
         "filename": "chrome/browser/ui/views/desktop_capture/desktop_media_picker_views.h",
         "patchSetId": 10
@@ -114,6 +210,30 @@
       "revId": "e8f0f689d24bed3a32c61eb9fc68c2a893c54618",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a64aa71_7e85e694",
+        "filename": "chrome/browser/ui/views/desktop_capture/desktop_media_picker_views.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-29T23:50:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16019f9a_1f035c2e",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 24
+      },
+      "revId": "e8f0f689d24bed3a32c61eb9fc68c2a893c54618",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
