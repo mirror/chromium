@@ -242,6 +242,7 @@ void AccessibilityEventRecorderWin::OnWinEventHook(
   hr = QueryIAccessible2(iaccessible.Get(), iaccessible2.GetAddressOf());
 
   base::string16 html_tag;
+  base::string16 obj_class;
   base::string16 html_id;
 
   if (SUCCEEDED(hr)) {
@@ -252,6 +253,8 @@ void AccessibilityEventRecorderWin::OnWinEventHook(
           base::string16(attributes_bstr, attributes_bstr.Length()),
           base::string16(1, ';'), base::KEEP_WHITESPACE, base::SPLIT_WANT_ALL);
       for (base::string16& attr : ia2_attributes) {
+        if (base::StringPiece16(attr).starts_with(L"class:"))
+          obj_class = attr.substr(6);  // HTML or view class
         if (base::StringPiece16(attr).starts_with(L"id:")) {
           html_id = base::string16(L"#");
           html_id += attr.substr(3);
@@ -267,11 +270,15 @@ void AccessibilityEventRecorderWin::OnWinEventHook(
   if (!html_tag.empty())
     log += base::StringPrintf(" <%s%s>", base::UTF16ToUTF8(html_tag).c_str(),
                               base::UTF16ToUTF8(html_id).c_str());
+
   log += base::StringPrintf(" role=%s", RoleVariantToString(role).c_str());
   if (name_bstr.Length() > 0)
     log += base::StringPrintf(" name=\"%s\"", BstrToUTF8(name_bstr).c_str());
   if (value_bstr.Length() > 0)
     log += base::StringPrintf(" value=\"%s\"", BstrToUTF8(value_bstr).c_str());
+  if (!obj_class.empty())
+    log +=
+        base::StringPrintf(" class=%s", base::UTF16ToUTF8(obj_class).c_str());
   log += " ";
   log += base::UTF16ToUTF8(IAccessibleStateToString(ia_state));
   log += " ";
