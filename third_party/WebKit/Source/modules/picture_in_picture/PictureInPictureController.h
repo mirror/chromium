@@ -6,6 +6,7 @@
 #define PictureInPictureController_h
 
 #include "core/frame/LocalFrame.h"
+#include "core/html/media/HTMLVideoElement.h"
 #include "modules/ModulesExport.h"
 
 namespace blink {
@@ -35,10 +36,20 @@ class MODULES_EXPORT PictureInPictureController
 
   Status GetStatus();
 
+  void SetPictureInPictureElement(HTMLVideoElement&);
+
+  void UnsetPictureInPictureElement();
+
+  HTMLVideoElement* PictureInPictureElement();
+
+  void Trace(blink::Visitor*) override;
+
  private:
   explicit PictureInPictureController(Document&);
 
   bool picture_in_picture_enabled_;
+
+  Member<HTMLVideoElement> picture_in_picture_element_;
 };
 
 }  // namespace blink
