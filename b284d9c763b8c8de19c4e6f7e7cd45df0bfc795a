@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "9bdb27bf_c3198e0d",
+        "filename": "ios/chrome/browser/ui/download/download_manager_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-29T16:38:19Z",
+      "side": 1,
+      "message": "This class is less than 300 LOC and perfectly testable. In this specific case Mediator will not improve testability, but will add some additional complexity. DownloadTaskObserver is C++ interface, which means that either mediator should be C++ object (which is rather not typical), or we need DownloadTaskObserverBridge class.\n\nOn the design doc I suggested to stick with just a coordinator for now and revisit the need for Mediator if this class grows. How about I land model code as a part of coordinator in this CL and will experiment with Mediator code to see if it actually worth implementing?\n\nIf we choose to go with Mediator, we still have to decide it it should be C++ or Objective-C class. I think we should prototype both options, which will be easier in a separate CL.",
+      "parentUuid": "a6a2cec1_7747b54c",
+      "range": {
+        "startLine": 152,
+        "startChar": 8,
+        "endLine": 152,
+        "endChar": 28
+      },
+      "revId": "b284d9c763b8c8de19c4e6f7e7cd45df0bfc795a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d15c561b_1cc5ef40",
         "filename": "ios/chrome/browser/ui/download/download_manager_coordinator.mm",
         "patchSetId": 2
