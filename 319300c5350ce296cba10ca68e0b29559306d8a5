@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eeac7c50_edbb082a",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2018-01-29T18:13:02Z",
+      "side": 1,
+      "message": "Maybe add DCHECK(isAudioThread())? Just to make it clear?",
+      "revId": "319300c5350ce296cba10ca68e0b29559306d8a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
