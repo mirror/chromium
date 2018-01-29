@@ -120,9 +120,10 @@ Code here supports presentation of the backing store drawn by the display
 compositor (typically thought of as SwapBuffers), as well as the use of
 overlays.
 
-| Can depend on: |
-|:---------------|
-| viz/common/*   |
+| Can depend on:         |
+|:-----------------------|
+| viz/common/*           |
+| viz/service/display/   |
 
 #### service/frame_sinks
 **Frame sinks**: This component implements the Mojo interfaces to send frames,
@@ -130,11 +131,13 @@ resources, and other data types from ``viz/common/`` for display to the
 compositing service. It receives and organizes relationships between what should
 be composited.
 
-| Can depend on:        |
-|:----------------------|
-| viz/common/*          |
-| viz/service/display/  |
-| viz/service/surfaces/ |
+| Can depend on:                |
+|:------------------------------|
+| viz/common/*                  |
+| viz/service/display/          |
+| viz/service/display_embedder/ |
+| viz/service/hit_test/         |
+| viz/service/surfaces/         |
 
 #### service/gl
 **GL**: This component implements the Mojo interfaces for allocating (and

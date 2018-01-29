@@ -6,6 +6,7 @@ include_rules = [
   "+cc/output",
   "+cc/resources",
   "+cc/scheduler",
+  "+components/viz/service/display",
   "+gpu/GLES2",
   "+gpu/command_buffer/client",
   "+gpu/command_buffer/common",
