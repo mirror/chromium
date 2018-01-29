@@ -24,7 +24,6 @@ import org.junit.runner.RunWith;
 
 import org.chromium.base.ApplicationStatus;
 import org.chromium.base.test.util.CommandLineFlags;
-import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Restriction;
 import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.chrome.browser.ChromeSwitches;
@@ -201,7 +200,8 @@ public class VrShellTransitionTest {
         VrTransitionUtils.waitForVrEntry(POLL_TIMEOUT_LONG_MS);
         mVrTestFramework.loadUrlAndAwaitInitialization(
                 VrTestFramework.getHtmlTestFile("test_navigation_2d_page"), PAGE_LOAD_TIMEOUT_S);
-        DOMUtils.clickNode(mVrTestFramework.getFirstTabCvc(), "fullscreen");
+        DOMUtils.clickNode(mVrTestFramework.getFirstTabCvc(), "fullscreen",
+                false /* goThroughRootAndroidView */);
         VrTestFramework.waitOnJavaScriptStep(mVrTestFramework.getFirstTabWebContents());
 
         Assert.assertTrue(DOMUtils.isFullscreen(mVrTestFramework.getFirstTabWebContents()));
@@ -225,7 +225,6 @@ public class VrShellTransitionTest {
      * from WebVR presentation to the VR browser.
      */
     @Test
-    @DisabledTest(message = "crbug.com/804808")
     @CommandLineFlags.Add("enable-webvr")
     @Restriction(RESTRICTION_TYPE_VIEWER_DAYDREAM)
     @MediumTest
