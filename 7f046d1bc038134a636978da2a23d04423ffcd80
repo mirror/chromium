@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6402a3f_93345fd1",
+        "filename": "device/ctap/device_response_converter.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-29T18:12:58Z",
+      "side": 1,
+      "message": "This should not be std::moved. Also, as a note for followup, methods returning const int64_t\u0026 are unusual because of the unnecessary indirection. Is there a reason GetUnsigned() doesn\u0027t return int64_t?",
+      "range": {
+        "startLine": 126,
+        "startChar": 31,
+        "endLine": 126,
+        "endChar": 66
+      },
+      "revId": "7f046d1bc038134a636978da2a23d04423ffcd80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f181b35e_d6b65f8f",
+        "filename": "device/ctap/device_response_converter.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-29T18:12:58Z",
+      "side": 1,
+      "message": "is_bool? (Here and below.)",
+      "range": {
+        "startLine": 186,
+        "startChar": 33,
+        "endLine": 186,
+        "endChar": 42
+      },
+      "revId": "7f046d1bc038134a636978da2a23d04423ffcd80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
