@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fffe5e5_5d9eb67a",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1184,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-29T03:03:24Z",
+      "side": 1,
+      "message": "I think this variation might be extraneous. Per https://bugs.chromium.org/p/chromium/issues/detail?id\u003d803508#c2, it sounds like we want 3 variations and one control group, so I think the other 3 should be sufficient. I don\u0027t think we would downgrade EV to lock while leaving the Secure chip for non-EV.",
+      "range": {
+        "startLine": 1182,
+        "startChar": 0,
+        "endLine": 1184,
+        "endChar": 67
+      },
+      "revId": "0e7e5a2f828482c0874ccf3f80fe7c9ec832984e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f99eaec5_9c385586",
+        "filename": "components/toolbar/toolbar_field_trial.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-29T03:03:24Z",
+      "side": 1,
+      "message": "no need to forward-declare since you have the #include",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 1
+      },
+      "revId": "0e7e5a2f828482c0874ccf3f80fe7c9ec832984e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edd70266_8c62f25b",
+        "filename": "components/toolbar/toolbar_model_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-29T03:03:24Z",
+      "side": 1,
+      "message": "nit: this bug is restricted to Googlers. Is there a public implementation bug you can reference instead? (here and in other similar comments)",
+      "range": {
+        "startLine": 143,
+        "startChar": 42,
+        "endLine": 143,
+        "endChar": 48
+      },
+      "revId": "0e7e5a2f828482c0874ccf3f80fe7c9ec832984e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed98309d_caea73b7",
+        "filename": "components/toolbar/toolbar_model_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-29T03:03:24Z",
+      "side": 1,
+      "message": "nit: you can drop the else here and below\n\nif (foo) {\n  return bar;\n}\nreturn baz;\n\ninstead of\n\nif (foo) {\n  return bar;\n} else {\n  return baz;\n}",
+      "range": {
+        "startLine": 156,
+        "startChar": 10,
+        "endLine": 156,
+        "endChar": 14
+      },
+      "revId": "0e7e5a2f828482c0874ccf3f80fe7c9ec832984e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8b10b2e_395f58cc",
+        "filename": "components/toolbar/toolbar_model_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-29T03:03:24Z",
+      "side": 1,
+      "message": "same here, you can drop the else to save a level of indentation",
+      "range": {
+        "startLine": 181,
+        "startChar": 3,
+        "endLine": 181,
+        "endChar": 10
+      },
+      "revId": "0e7e5a2f828482c0874ccf3f80fe7c9ec832984e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
