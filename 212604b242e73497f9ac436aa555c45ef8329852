@@ -94,6 +94,30 @@
       "revId": "212604b242e73497f9ac436aa555c45ef8329852",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9d6e665_72f74931",
+        "filename": "skia/public/interfaces/bitmap_skbitmap_struct_traits.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-29T18:27:20Z",
+      "side": 1,
+      "message": "https://chromium.googlesource.com/chromium/src/+/master/mojo/public/cpp/bindings#Type-Mapping is the mojo documentation for struct traits: enum traits are a specialization targeted specifically at enums. It\u0027s probably easier to look at an example CL: https://chromium-review.googlesource.com/c/chromium/src/+/826006",
+      "parentUuid": "8a083e8b_9b4323d0",
+      "range": {
+        "startLine": 78,
+        "startChar": 7,
+        "endLine": 78,
+        "endChar": 30
+      },
+      "revId": "212604b242e73497f9ac436aa555c45ef8329852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
