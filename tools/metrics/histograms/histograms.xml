@@ -58422,6 +58422,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="PageLoad.DocumentTiming.FirstInputDelayForMainDocument"
+    units="ms">
+  <owner>tdresser@chromium.org</owner>
+  <summary>
+    Measures the time from hardware timestamp until main thread processing of
+    the first click, keypress or tap event per navigation. Only includes the
+    main document.
+  </summary>
+</histogram>
+
 <histogram
     name="PageLoad.DocumentTiming.NavigationToDOMContentLoadedEventFired"
     units="ms">
