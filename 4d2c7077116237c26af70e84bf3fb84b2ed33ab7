@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c07da786_f6d21705",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/resources/fetch-canvas-tainting-iframe.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-01-29T06:14:17Z",
+      "side": 1,
+      "message": "nit: const\n\nand same for other \"var\"s.",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 9
+      },
+      "revId": "4d2c7077116237c26af70e84bf3fb84b2ed33ab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63b33fcc_41ff04cd",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/resources/fetch-canvas-tainting-tests.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-01-29T06:14:17Z",
+      "side": 1,
+      "message": "nit: const\nand other \"var\"s",
+      "range": {
+        "startLine": 34,
+        "startChar": 6,
+        "endLine": 34,
+        "endChar": 9
+      },
+      "revId": "4d2c7077116237c26af70e84bf3fb84b2ed33ab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
