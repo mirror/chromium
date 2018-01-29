@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5543e8af_5b4950d6",
+        "filename": "chrome/browser/ui/browser_window_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-29T01:31:23Z",
+      "side": 1,
+      "message": "In Patchset 1, this function takes a WindowShowState param, and the BrowserWindow subclasses only call this if the param has actually changed since the last time they called this, by saving the last-sent show state. That may be a bit more technically correct (since it looks like some requests to change window state can be blocked) at the cost of ~40 LOC and some complexity.",
+      "range": {
+        "startLine": 13,
+        "startChar": 39,
+        "endLine": 13,
+        "endChar": 56
+      },
+      "revId": "9848bcb2a38ef74933be75c07754b9ad656dfbac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
