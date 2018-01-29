@@ -353,6 +353,9 @@ class CONTENT_EXPORT DownloadFileImpl : public DownloadFile {
   // by DownloadRequestCore in that case.
   bool is_paused_;
 
+  // If download file is completed on the file thread.
+  bool completed_;
+
   uint32_t download_id_;
 
   SEQUENCE_CHECKER(sequence_checker_);

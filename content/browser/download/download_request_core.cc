@@ -247,6 +247,10 @@ bool DownloadRequestCore::OnResponseStarted(
   if (request()->response_headers()) {
     RecordDownloadHttpResponseCode(
         request()->response_headers()->response_code());
+    LOG(ERROR) << "@@@ Request header = "
+               << request()->extra_request_headers().ToString();
+    LOG(ERROR) << "@@@ Response header = "
+               << request()->response_headers()->raw_headers();
   }
 
   std::unique_ptr<DownloadCreateInfo> create_info =

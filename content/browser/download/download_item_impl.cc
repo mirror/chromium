@@ -2240,6 +2240,7 @@ void DownloadItemImpl::AutoResumeIfValid() {
 void DownloadItemImpl::ResumeInterruptedDownload(
     ResumptionRequestSource source) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  LOG(ERROR) << "@@@ ResumeInterruptedDownload!";
   // If we're not interrupted, ignore the request; our caller is drunk.
   if (state_ != INTERRUPTED_INTERNAL)
     return;
