@@ -22,6 +22,30 @@
       "revId": "902cd3e05524b0cf890fb3389dfa113e48676aff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01536ea1_2a7dc2d7",
+        "filename": "testing/gmock/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-29T18:14:18Z",
+      "side": 1,
+      "message": "Yes, please :). I wonder if we should file a bug to eventually clean this up and make the callers pull this in explicitly?\n\nAlso, we should file a bug to explain why this is just chromium-specific and whether we need to remove this eventually (or possibly make this conditional on use_cxx11 \u003d false instead)?",
+      "parentUuid": "ab31e56e_2c6454db",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 28
+      },
+      "revId": "902cd3e05524b0cf890fb3389dfa113e48676aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
