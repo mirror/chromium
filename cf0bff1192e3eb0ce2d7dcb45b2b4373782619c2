@@ -34,6 +34,41 @@
       "revId": "cf0bff1192e3eb0ce2d7dcb45b2b4373782619c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3fa490b_163d1934",
+        "filename": "media/mojo/interfaces/renderer.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2018-01-29T20:29:55Z",
+      "side": 1,
+      "message": "I am planning to add a FlingingRenderer, that needs to be hosted in the Browser, along with a 3rd HostedRendererType.\n\nTo answer your point about polymorphism, the media pipeline in the renderer process still does not know what kind of renderer is being created in the browser process. This is because the HostedRendererType is given as a parameter to the MojoRendererFactory\u0027s constructor, and then that MRF only creates MojoRenderers using that HostedRendererType. The MRF is then used by itself, or wrapped by the MediaPlayerRendererClient (or eventually, the FlingingRendererClient). Which RendererFactory is used is still determined by the RendererFactorySelector, and the pipeline does not actually know which Factory/Renderer it is using.\n\nThis FlingingRenderer needs neither a URL nor a STREAM MediaResource::Type, because it needs a MediaRouteId. I haven\u0027t looked much into how I will transfer this MediaRouteId, and how this might affect the Initialize interface. I could introduce a 3rd MediaResource::Type, or change the definition of Type::URL to Type::STRING.",
+      "parentUuid": "9004d70a_4d4ff578",
+      "revId": "cf0bff1192e3eb0ce2d7dcb45b2b4373782619c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddf2b8b8_244ec89b",
+        "filename": "media/mojo/interfaces/renderer.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2018-01-29T20:29:55Z",
+      "side": 1,
+      "message": "With these changes, I am also keeping https://bugs.chromium.org/p/chromium/issues/detail?id\u003d669606 in the back of my mind.",
+      "revId": "cf0bff1192e3eb0ce2d7dcb45b2b4373782619c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
