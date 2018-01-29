@@ -22,6 +22,30 @@
       "revId": "f33b02a65bab99ebea41a1d35965c1dc978ab838",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89a5ba19_038f3c9b",
+        "filename": "testing/buildbot/test_suites.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1791,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2018-01-29T21:22:58Z",
+      "side": 1,
+      "message": "Sounds like a good idea. In Patchset 2, I have renamed chromium_isolated_scripts to chromium_dbg_isolated_scripts (using dbg appears to be more common among existing test group names), and renamed chromium_linux_isolated_scripts to chromium_linux_dbg_isolated_scripts.\n\nIn Patchset 3, I reviewed all references to chromium_isolated_scripts and chromium_linux_isolated_scripts, to make sure no release bots are running debug test groups. This resulted in a few changes, affecting only bot configurations that are not used by commit queue.",
+      "parentUuid": "0b7f7729_ec7080b2",
+      "range": {
+        "startLine": 1791,
+        "startChar": 9,
+        "endLine": 1791,
+        "endChar": 27
+      },
+      "revId": "f33b02a65bab99ebea41a1d35965c1dc978ab838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
