@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "c3b18541_ca935755",
+        "filename": "chrome/browser/chromeos/policy/remote_commands/screenshot_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-29T10:09:16Z",
+      "side": 1,
+      "message": "optional nit:\nAs annotation is a long string, it is usually defined in a separate command like here:\nhttps://cs.chromium.org/chromium/src/components/network_time/network_time_tracker.cc?rcl\u003d3b5fe53e0b6b49f5e270472792d67562d222926a\u0026l\u003d471\n\nAlso for the other annotation.",
+      "range": {
+        "startLine": 66,
+        "startChar": 6,
+        "endLine": 66,
+        "endChar": 41
+      },
+      "revId": "4297b80e0c62a0311ae184b30bdaa0372e8855c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6b86b6c_269faa04",
+        "filename": "chrome/browser/chromeos/policy/remote_commands/screenshot_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-29T10:09:16Z",
+      "side": 1,
+      "message": "To keep consistency with other annotations, it would be better to be rephrased to \u0027This feature cannot be disabled in settings, however this request will only happen if ...\u0027",
+      "range": {
+        "startLine": 78,
+        "startChar": 20,
+        "endLine": 80,
+        "endChar": 23
+      },
+      "revId": "4297b80e0c62a0311ae184b30bdaa0372e8855c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2f8782e_6028b782",
+        "filename": "chrome/browser/chromeos/policy/system_log_uploader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-29T10:09:16Z",
+      "side": 1,
+      "message": "I am not a native speaker, but can\u0027t it be \"... for upload of system logs...\"",
+      "range": {
+        "startLine": 160,
+        "startChar": 30,
+        "endLine": 160,
+        "endChar": 49
+      },
+      "revId": "4297b80e0c62a0311ae184b30bdaa0372e8855c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b840155c_e62c04cd",
+        "filename": "chrome/browser/chromeos/policy/system_log_uploader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-29T10:09:16Z",
+      "side": 1,
+      "message": "It\u0027s sufficient to have \"This feature cannot be disabled in settings.\"\nThe policy is mentioned below.",
+      "range": {
+        "startLine": 167,
+        "startChar": 20,
+        "endLine": 167,
+        "endChar": 24
+      },
+      "revId": "4297b80e0c62a0311ae184b30bdaa0372e8855c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7cdc9d3f_be592387",
         "filename": "chrome/browser/chromeos/policy/upload_job_impl.h",
         "patchSetId": 1
