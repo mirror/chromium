@@ -645,7 +645,7 @@ void DocumentMarkerController::RemoveMarkersOfTypes(
   possibly_existing_marker_types_.Remove(marker_types);
   if (PossiblyHasMarkers(DocumentMarker::AllMarkers()))
     return;
-  SetContext(nullptr);
+  StopObserving();
 }
 
 void DocumentMarkerController::RemoveMarkersFromList(

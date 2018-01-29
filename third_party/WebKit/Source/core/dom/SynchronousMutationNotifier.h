@@ -5,25 +5,48 @@
 #ifndef SynchronousMutationNotifier_h
 #define SynchronousMutationNotifier_h
 
+#include <tuple>
+
 #include "base/macros.h"
 #include "core/CoreExport.h"
-#include "platform/LifecycleNotifier.h"
+#include "platform/heap/GarbageCollected.h"
+#include "platform/heap/Member.h"
 
 namespace blink {
 
 class CharacterData;
 class ContainerNode;
-class Document;
+class DocumentMarkerController;
+class DragCaret;
+class FrameSelection;
+class MouseEventManager;
 class Node;
 class NodeWithIndex;
-class SynchronousMutationObserver;
+class SelectionEditor;
+class SynchronousMutationObserverBase;
+class TestSynchronousMutationObserverBase;
 class Text;
 
-class CORE_EXPORT SynchronousMutationNotifier
-    : public LifecycleNotifier<Document, SynchronousMutationObserver> {
+template <typename T>
+class SynchronousMutationObserver;
+
+// There can be exactly one of each of these per document.
+// This allows us to write an extremely specialized set.
+using SynchronousMutationObserverSet =
+    std::tuple<WeakMember<MouseEventManager>,
+               WeakMember<FrameSelection>,
+               WeakMember<SelectionEditor>,
+               WeakMember<DragCaret>,
+               WeakMember<DocumentMarkerController>,
+               WeakMember<TestSynchronousMutationObserverBase>>;
+
+class CORE_EXPORT SynchronousMutationNotifier : public GarbageCollectedMixin {
  public:
+  void Trace(Visitor*);
+
   // TODO(yosin): We will have |notifyXXX()| functions defined in
   // |SynchronousMutationObserver|.
+  void NotifyContextDestroyed();
   void NotifyChangeChildren(const ContainerNode&);
   void NotifyMergeTextNodes(const Text& merged_node,
                             const NodeWithIndex& node_to_be_removed_with_index,
@@ -41,6 +64,35 @@ class CORE_EXPORT SynchronousMutationNotifier
   SynchronousMutationNotifier();
 
  private:
+  using ObserverBase = SynchronousMutationObserverBase;
+
+  // TODO(jbroman): Consider cloning IterationState magic.
+  // Or maybe just making everything that cares also a DocumentShutdownObserver.
+
+  template <typename T>
+  void AddObserver(T* observer) {
+    auto& member = std::get<WeakMember<T>>(observers_);
+    DCHECK(!member);
+    member = observer;
+  }
+
+  template <typename T>
+  void RemoveObserver(T* observer) {
+    auto& member = std::get<WeakMember<T>>(observers_);
+    if (member)
+      DCHECK_EQ(observer, member.Get());
+    member = nullptr;
+  }
+
+  template <typename Functor>
+  void ForEachObserver(const Functor&);
+
+  GC_PLUGIN_IGNORE(DoesNotHandleStdTuple)
+  SynchronousMutationObserverSet observers_;
+
+  template <typename T>
+  friend class SynchronousMutationObserver;
+
   DISALLOW_COPY_AND_ASSIGN(SynchronousMutationNotifier);
 };
 

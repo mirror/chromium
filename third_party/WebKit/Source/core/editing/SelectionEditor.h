@@ -39,8 +39,9 @@ namespace blink {
 // TODO(yosin): We will rename |SelectionEditor| to appropriate name since
 // it is no longer have a changing selection functionality, it was moved to
 // |SelectionModifier| class.
-class SelectionEditor final : public GarbageCollectedFinalized<SelectionEditor>,
-                              public SynchronousMutationObserver {
+class SelectionEditor final
+    : public GarbageCollectedFinalized<SelectionEditor>,
+      public SynchronousMutationObserver<SelectionEditor> {
   USING_GARBAGE_COLLECTED_MIXIN(SelectionEditor);
 
  public:
@@ -65,6 +66,20 @@ class SelectionEditor final : public GarbageCollectedFinalized<SelectionEditor>,
 
   void Trace(blink::Visitor*);
 
+  // Implementation of |SynchronousMutationObserver| member functions.
+  void ContextDestroyed(Document*) final;
+  void DidChangeChildren(const ContainerNode&) final;
+  void DidMergeTextNodes(const Text& merged_node,
+                         const NodeWithIndex& node_to_be_removed_with_index,
+                         unsigned old_length) final;
+  void DidSplitTextNode(const Text&) final;
+  void DidUpdateCharacterData(CharacterData*,
+                              unsigned offset,
+                              unsigned old_length,
+                              unsigned new_length) final;
+  void NodeChildrenWillBeRemoved(ContainerNode&) final;
+  void NodeWillBeRemoved(Node&) final;
+
  private:
   explicit SelectionEditor(LocalFrame&);
 
@@ -84,20 +99,6 @@ class SelectionEditor final : public GarbageCollectedFinalized<SelectionEditor>,
 
   void DidFinishTextChange(const Position& base, const Position& extent);
   void DidFinishDOMMutation();
-
-  // Implementation of |SynchronousMutationObsderver| member functions.
-  void ContextDestroyed(Document*) final;
-  void DidChangeChildren(const ContainerNode&) final;
-  void DidMergeTextNodes(const Text& merged_node,
-                         const NodeWithIndex& node_to_be_removed_with_index,
-                         unsigned old_length) final;
-  void DidSplitTextNode(const Text&) final;
-  void DidUpdateCharacterData(CharacterData*,
-                              unsigned offset,
-                              unsigned old_length,
-                              unsigned new_length) final;
-  void NodeChildrenWillBeRemoved(ContainerNode&) final;
-  void NodeWillBeRemoved(Node&) final;
 
   Member<LocalFrame> frame_;
 

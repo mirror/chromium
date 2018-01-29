@@ -115,8 +115,8 @@ const DisplayItemClient& FrameSelection::CaretDisplayItemClientForTesting()
 }
 
 Document& FrameSelection::GetDocument() const {
-  DCHECK(LifecycleContext());
-  return *LifecycleContext();
+  DCHECK(GetSynchronousMutationNotifier());
+  return *static_cast<Document*>(GetSynchronousMutationNotifier());
 }
 
 VisibleSelection FrameSelection::ComputeVisibleSelectionInDOMTree() const {

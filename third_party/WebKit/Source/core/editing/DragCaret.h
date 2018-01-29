@@ -41,7 +41,7 @@ class LayoutBlock;
 struct PaintInvalidatorContext;
 
 class DragCaret final : public GarbageCollectedFinalized<DragCaret>,
-                        public SynchronousMutationObserver {
+                        public SynchronousMutationObserver<DragCaret> {
   USING_GARBAGE_COLLECTED_MIXIN(DragCaret);
 
  public:
@@ -69,12 +69,12 @@ class DragCaret final : public GarbageCollectedFinalized<DragCaret>,
 
   void Trace(blink::Visitor*);
 
- private:
-  DragCaret();
-
   // Implementations of |SynchronousMutationObserver|
   void NodeChildrenWillBeRemoved(ContainerNode&) final;
   void NodeWillBeRemoved(Node&) final;
+
+ private:
+  DragCaret();
 
   PositionWithAffinity position_;
   const std::unique_ptr<CaretDisplayItemClient> display_item_client_;

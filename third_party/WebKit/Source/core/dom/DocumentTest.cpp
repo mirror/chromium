@@ -76,7 +76,7 @@ namespace {
 
 class TestSynchronousMutationObserver
     : public GarbageCollectedFinalized<TestSynchronousMutationObserver>,
-      public SynchronousMutationObserver {
+      public TestSynchronousMutationObserverBase {
   USING_GARBAGE_COLLECTED_MIXIN(TestSynchronousMutationObserver);
 
  public:
@@ -610,7 +610,7 @@ TEST_F(DocumentTest, EnforceSandboxFlags) {
 TEST_F(DocumentTest, SynchronousMutationNotifier) {
   auto& observer = *new TestSynchronousMutationObserver(GetDocument());
 
-  EXPECT_EQ(GetDocument(), observer.LifecycleContext());
+  EXPECT_EQ(&GetDocument(), observer.GetSynchronousMutationNotifier());
   EXPECT_EQ(0, observer.CountContextDestroyedCalled());
 
   Element* div_node = GetDocument().createElement("div");
@@ -637,7 +637,7 @@ TEST_F(DocumentTest, SynchronousMutationNotifier) {
   EXPECT_EQ(div_node, observer.RemovedChildrenNodes()[0]);
 
   GetDocument().Shutdown();
-  EXPECT_EQ(nullptr, observer.LifecycleContext());
+  EXPECT_EQ(nullptr, observer.GetSynchronousMutationNotifier());
   EXPECT_EQ(1, observer.CountContextDestroyedCalled());
 }
 
