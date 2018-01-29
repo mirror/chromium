@@ -464,82 +464,19 @@
     "isolated_scripts": [
       {
         "args": [
-          "smoothness.maps",
+          "dummy_benchmark.histogram_benchmark_1",
           "-v",
           "--output-format=histograms",
           "--output-format=json-test-results",
           "--xvfb",
-          "--browser=release"
-        ],
-        "isolate_name": "telemetry_perf_tests",
-        "merge": {
-          "args": [],
-          "script": "//tools/perf/upload_perf_results.py"
-        },
-        "name": "benchmark1 smoothness.maps",
-        "override_compile_targets": [
-          "telemetry_perf_tests"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "dimension_sets": [
-            {
-              "id": "swarm823-c4",
-              "pool": "Chrome-perf-fyi"
-            }
-          ],
-          "expiration": 36000,
-          "hard_timeout": 10800,
-          "ignore_task_failure": false,
-          "io_timeout": 3600
-        }
-      },
-      {
-        "args": [
-          "blink_perf.css",
-          "-v",
-          "--output-format=histograms",
-          "--output-format=json-test-results",
-          "--xvfb",
-          "--browser=release"
-        ],
-        "isolate_name": "telemetry_perf_tests",
-        "merge": {
-          "args": [],
-          "script": "//tools/perf/upload_perf_results.py"
-        },
-        "name": "benchmark2 blink_perf.css",
-        "override_compile_targets": [
-          "telemetry_perf_tests"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "dimension_sets": [
-            {
-              "id": "swarm823-c4",
-              "pool": "Chrome-perf-fyi"
-            }
-          ],
-          "expiration": 36000,
-          "hard_timeout": 10800,
-          "ignore_task_failure": false,
-          "io_timeout": 3600
-        }
-      },
-      {
-        "args": [
-          "-v",
-          "--output-format=histograms",
-          "--output-format=json-test-results",
-          "--xvfb",
-          "--browser=release"
+          "--browser=reference"
         ],
         "isolate_name": "performance_test_suite",
         "merge": {
           "args": [],
           "script": "//tools/perf/upload_perf_results.py"
         },
-        "name": "performance_test_suite",
+        "name": "benchmark1 dummy_benchmark.histogram_benchmark_1",
         "override_compile_targets": [
           "performance_test_suite"
         ],
@@ -547,6 +484,7 @@
           "can_use_on_swarming_builders": true,
           "dimension_sets": [
             {
+              "id": "swarm823-c4",
               "pool": "Chrome-perf-fyi"
             }
           ],
@@ -554,13 +492,38 @@
           "hard_timeout": 10800,
           "ignore_task_failure": false,
           "io_timeout": 3600
+        }
+      },
+      {
+        "args": [
+          "dummy_benchmark.stable_benchmark_1",
+          "-v",
+          "--output-format=histograms",
+          "--output-format=json-test-results",
+          "--xvfb",
+          "--browser=reference"
+        ],
+        "isolate_name": "performance_test_suite",
+        "merge": {
+          "args": [],
+          "script": "//tools/perf/upload_perf_results.py"
         },
-        "trigger_script": {
-          "args": [
-            "--bot-id=swarm846-c4",
-            "--bot-id=swarm847-c4"
+        "name": "benchmark2 dummy_benchmark.stable_benchmark_1",
+        "override_compile_targets": [
+          "performance_test_suite"
+        ],
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "id": "swarm823-c4",
+              "pool": "Chrome-perf-fyi"
+            }
           ],
-          "script": "//tools/perf/perf_device_trigger.py"
+          "expiration": 36000,
+          "hard_timeout": 10800,
+          "ignore_task_failure": false,
+          "io_timeout": 3600
         }
       }
     ]
