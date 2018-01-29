@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<title>Test request Picture-in-Picture</title>
+<script src='../../resources/testharness.js'></script>
+<script src='../../resources/testharnessreport.js'></script>
+<script src="../../resources/testdriver.js"></script>
+<script src="../../resources/testdriver-vendor.js"></script>
+<script src="resources/picture-in-picture-helpers.js"></script>
+<body></body>
+<script>
+promise_test(t => {
+  const video = document.createElement('video');
+  video.disablePictureInPicture = true;
+  return promise_rejects(t, 'InvalidStateError',
+      requestPictureInPictureWithTrustedClick(video));
+});
+</script>

@@ -1071,6 +1071,7 @@ html element video
     property defaultMuted
     property defaultPlaybackRate
     property disableRemotePlayback
+    property disablePictureInPicture
     property duration
     property ended
     property error
