@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8f1aea1_a6ec5fb6",
+        "filename": "cc/raster/zero_copy_raster_buffer_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-29T22:03:59Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused at this comment. It\u0027s meant to be used in InUsePoolResource? (ie it\u0027s not a subclass of InUsePoolResource?)",
+      "range": {
+        "startLine": 30,
+        "startChar": 3,
+        "endLine": 30,
+        "endChar": 33
+      },
+      "revId": "95cb5704e05a40bf1f0fae958e92abe2808cfc8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
