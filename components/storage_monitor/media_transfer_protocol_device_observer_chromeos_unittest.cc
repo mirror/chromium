@@ -45,10 +45,8 @@ const char kStorageVolumeIdentifier[] = "ExampleVolumeId";
 base::LazyInstance<std::map<std::string, device::mojom::MtpStorageInfo>>::Leaky
       g_fake_storage_info_map = LAZY_INSTANCE_INITIALIZER;
 
-// Helper function to get fake MTP device details.
-void GetFakeMtpStorageInfo(
-    const std::string& storage_name,
-    device::MediaTransferProtocolManager::GetStorageInfoCallback callback) {
+const device::mojom::MtpStorageInfo* GetFakeMtpStorageInfoSync(
+    const std::string& storage_name) {
   // Fill the map out if it is empty.
   if (g_fake_storage_info_map.Get().empty()) {
     // Add the invalid MTP storage info.
@@ -69,9 +67,14 @@ void GetFakeMtpStorageInfo(
   }
 
   const auto it = g_fake_storage_info_map.Get().find(storage_name);
-  const auto* storage_info =
-      it != g_fake_storage_info_map.Get().end() ? &it->second : nullptr;
-  std::move(callback).Run(storage_info);
+  return it != g_fake_storage_info_map.Get().end() ? &it->second : nullptr;
+}
+
+// Helper function to get fake MTP device details.
+void GetFakeMtpStorageInfo(
+    const std::string& storage_name,
+    device::MediaTransferProtocolManager::GetStorageInfoCallback callback) {
+  std::move(callback).Run(GetFakeMtpStorageInfoSync(storage_name));
 }
 
 class TestMediaTransferProtocolDeviceObserverChromeOS
@@ -89,7 +92,10 @@ class TestMediaTransferProtocolDeviceObserverChromeOS
   // of
   // mtp storage device given the |storage_name|.
   void MtpStorageAttached(const std::string& storage_name) {
-    StorageChanged(true, storage_name);
+    auto* storage_info = GetFakeMtpStorageInfoSync(storage_name);
+    DCHECK(storage_info);
+
+    StorageAttached(*storage_info);
     base::RunLoop().RunUntilIdle();
   }
 
@@ -97,7 +103,7 @@ class TestMediaTransferProtocolDeviceObserverChromeOS
   // of
   // mtp storage device given the |storage_name|.
   void MtpStorageDetached(const std::string& storage_name) {
-    StorageChanged(false, storage_name);
+    StorageDetached(storage_name);
     base::RunLoop().RunUntilIdle();
   }
 
