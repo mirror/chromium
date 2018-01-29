@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "6548c9fe_d345d4fe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2018-01-29T16:07:41Z",
+      "side": 1,
+      "message": "This is not true - SyzyASAN redirects the import table of the binary to replace HeapCreate/HeapAlloc/HeapFree et al at instrumentation time, and there\u0027s no conflict with the link-time replacement of malloc et al.\nIf any part of your machinery uses heap enumeration, there\u0027ll be a problem with instrumented binaries. Depending on how you do things, either you\u0027ll see the padded allocation size, or else enumeration will not work (SyzyASAN\u0027s intercepts don\u0027t implement HeapEnumerate as there\u0027s never been a need). If you\u0027re just noting allocations as they are made and returned, there\u0027s no conflict.",
+      "parentUuid": "dc78f9d3_00b503d5",
+      "range": {
+        "startLine": 9,
+        "startChar": 64,
+        "endLine": 9,
+        "endChar": 77
+      },
+      "revId": "0b1cc59f3804f32bb1e7b5181f6cfc78b7cfee1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d98690ee_cacbcb44",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
