@@ -108,6 +108,10 @@
     "dependencies": ["manifest:automation"],
     "contexts": ["blessed_extension"]
   },
+  "authPrivate": {
+    "dependencies": ["permission:authPrivate"],
+    "contexts": ["blessed_extension"]
+  },
   "autotestPrivate": {
     "dependencies": ["permission:autotestPrivate"],
     "contexts": ["blessed_extension"]
