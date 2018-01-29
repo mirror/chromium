@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82902519_af9d824f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-29T23:37:21Z",
+      "side": 1,
+      "message": "Drive-by nit: this comment seems out of date now. :)",
+      "range": {
+        "startLine": 166,
+        "startChar": 12,
+        "endLine": 166,
+        "endChar": 62
+      },
+      "revId": "487be04c0df44158ed5a2dd7f0cb094a4a2cf922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
