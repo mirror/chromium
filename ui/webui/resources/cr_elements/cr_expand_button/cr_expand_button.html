@@ -23,13 +23,15 @@
         flex: 1;
       }
     </style>
-    <div id="outer" on-tap="toggleExpand_">
-      <div id="label" on-tap="toggleExpand_"><slot></slot></div>
-      <button is="paper-icon-button-light" class$="[[iconName_(expanded)]]"
-          toggles active="{{expanded}}" disabled="[[disabled]]" alt="[[alt]]"
-          aria-active-attribute="aria-expanded"
-          tabindex$="[[tabIndex]]">
-      </button>
+    <div id="outer">
+      <div id="label"><slot></slot></div>
+      <paper-icon-button is="paper-icon-button-light"
+			 class$="[[iconName_(expanded)]]"
+                         toggles active="{{expanded}}"
+			 disabled="[[disabled]]" alt="[[alt]]"
+                         aria-active-attribute="aria-expanded"
+                         tabindex$="[[tabIndex]]">
+      </paper-icon-button>
     </div>
   </template>
   <script src="cr_expand_button.js"></script>
