@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1aad92b6_e1ce321a",
+        "filename": "build/mac/should_use_hermetic_xcode.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-29T23:38:14Z",
+      "side": 1,
+      "message": "unfortunately, no. Checkouts can support both [this is currently unsupported by the existing script, so adding support for it in the new path is nice, but not required].",
+      "parentUuid": "da87ed13_284002b5",
+      "range": {
+        "startLine": 31,
+        "startChar": 43,
+        "endLine": 31,
+        "endChar": 44
+      },
+      "revId": "82d981d5477e95c0ab70a407ea80873a149be9e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b919a780_4d103277",
         "filename": "build/mac_toolchain.py",
         "patchSetId": 2
@@ -84,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "292f17e9_98934580",
+        "filename": "build/mac_toolchain.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-29T23:38:14Z",
+      "side": 1,
+      "message": "Xcode 9.2 only ships with the 10.13 SDK. We currently build with 10.12 SDK. So this shouldn\u0027t work anywhere. [if it does, something is broken]\n\nRevving the SDK is something we generally want to do on a regular basis but no one\u0027s looked at revving to 10.13.",
+      "parentUuid": "3113c578_e760f970",
+      "revId": "82d981d5477e95c0ab70a407ea80873a149be9e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5a4fffe_55c6698d",
         "filename": "build/mac_toolchain.py",
         "patchSetId": 2
@@ -113,6 +155,24 @@
       "side": 1,
       "message": "It does indeed call xcode-select -s to install the correct packages, but it will also revert it to the original path when done: https://chromium.googlesource.com/infra/infra/+/master/go/src/infra/cmd/mac_toolchain/install.go#121\n\nSo I believe it\u0027s safe even on dev machines.",
       "parentUuid": "e5a4fffe_55c6698d",
+      "revId": "82d981d5477e95c0ab70a407ea80873a149be9e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d2646de_2c05a19b",
+        "filename": "build/mac_toolchain.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-29T23:38:14Z",
+      "side": 1,
+      "message": "If you\u0027ve confirmed that it works in practice, then that\u0027s good enough for me.",
+      "parentUuid": "a752562a_dad3a24b",
       "revId": "82d981d5477e95c0ab70a407ea80873a149be9e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
