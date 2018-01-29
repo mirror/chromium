@@ -25,6 +25,7 @@
 #include "chrome/common/url_constants.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/interactive_test_utils.h"
+#include "chrome/test/base/ui_test_utils.h"
 #include "content/public/browser/navigation_details.h"
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/notification_service.h"
@@ -32,6 +33,7 @@
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/test/browser_test_utils.h"
 #include "content/public/test/test_utils.h"
 #include "url/gurl.h"
 
@@ -42,9 +44,16 @@ using content::OpenURLParams;
 
 namespace resource_coordinator {
 
+const char kBlinkPageLifecycleFeature[] = "PageLifecycle";
+
 class TabManagerTest : public InProcessBrowserTest {
  public:
   TabManagerTest() : scoped_set_tick_clock_for_testing_(&test_clock_) {}
+
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    command_line->AppendSwitchASCII(switches::kEnableBlinkFeatures,
+                                    kBlinkPageLifecycleFeature);
+  }
 
   void OpenTwoTabs(const GURL& first_url, const GURL& second_url) {
     // Open two tabs. Wait for both of them to load.
@@ -775,6 +784,36 @@ IN_PROC_BROWSER_TEST_F(TabManagerTest,
 #endif  // OS_CHROMEOS
   tester.ExpectUniqueSample(
       "TabManager.Discarding.DiscardedTabCouldFastShutdown", false, 1);
+}
+
+IN_PROC_BROWSER_TEST_F(TabManagerTest, TabManagerWasDiscarded) {
+  const char kDiscardedStateJS[] =
+      "window.domAutomationController.send("
+      "window.document.wasDiscarded);";
+
+  GURL test_page(ui_test_utils::GetTestUrl(
+      base::FilePath(), base::FilePath(FILE_PATH_LITERAL("simple.html"))));
+  ui_test_utils::NavigateToURL(browser(), test_page);
+
+  // document.wasDiscarded is false initially.
+  bool not_discarded_result;
+  EXPECT_TRUE(content::ExecuteScriptAndExtractBool(
+      browser()->tab_strip_model()->GetWebContentsAt(0), kDiscardedStateJS,
+      &not_discarded_result));
+  EXPECT_FALSE(not_discarded_result);
+
+  // Discard the tab.
+  g_browser_process->GetTabManager()->DiscardWebContentsAt(
+      0, browser()->tab_strip_model(), DiscardReason::kProactive);
+
+  ui_test_utils::NavigateToURL(browser(), test_page);
+
+  // document.wasDiscarded is true on navigate after discard.
+  bool discarded_result;
+  EXPECT_TRUE(content::ExecuteScriptAndExtractBool(
+      browser()->tab_strip_model()->GetWebContentsAt(0), kDiscardedStateJS,
+      &discarded_result));
+  EXPECT_TRUE(discarded_result);
 }
 
 namespace {

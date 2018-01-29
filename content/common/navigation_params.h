@@ -194,6 +194,7 @@ struct CONTENT_EXPORT RequestNavigationParams {
                           int pending_history_list_offset,
                           int current_history_list_offset,
                           int current_history_list_length,
+                          bool was_discarded,
                           bool is_view_source,
                           bool should_clear_history_list);
   RequestNavigationParams(const RequestNavigationParams& other);
@@ -263,6 +264,11 @@ struct CONTENT_EXPORT RequestNavigationParams {
   // size of the session history list.
   int current_history_list_offset;
   int current_history_list_length;
+
+  // Indicates that the tab was previously discarded.
+  // wasDiscarded is exposed on Document after discard, see:
+  // https://github.com/WICG/web-lifecycle
+  bool was_discarded;
 
   // Indicates whether the navigation is to a view-source:// scheme or not.
   // It is a separate boolean as the view-source scheme is stripped from the
