@@ -150,6 +150,7 @@ void WebRtcEventLogManager::StartRemoteLogging(
     int render_process_id,
     int lid,
     size_t max_file_size_bytes,
+    const std::string& metadata,
     base::OnceCallback<void(bool)> reply) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   task_runner_->PostTask(
