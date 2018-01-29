@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c42a3098_a358dd28",
+        "filename": "media/capture/video/android/java/src/org/chromium/media/VideoCaptureCamera2.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-29T21:17:12Z",
+      "side": 1,
+      "message": "Consider adding a comment with your investigation.",
+      "range": {
+        "startLine": 105,
+        "startChar": 32,
+        "endLine": 105,
+        "endChar": 72
+      },
+      "revId": "4e4c3ed7cf6f65a9f61c87f063b9d24bcba71782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
