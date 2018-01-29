@@ -70,6 +70,30 @@
       "revId": "b3af41459f744345e60223b08d16f486a66d60b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3895b7b2_ca8b07bc",
+        "filename": "content/browser/android/synchronous_compositor_host_bridge.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-29T20:43:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1857d02b_d8ddc3b5",
+      "range": {
+        "startLine": 71,
+        "startChar": 7,
+        "endLine": 71,
+        "endChar": 32
+      },
+      "revId": "b3af41459f744345e60223b08d16f486a66d60b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
