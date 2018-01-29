@@ -46,6 +46,30 @@
       "revId": "2a107a897f643926fc9dc269d6f5dcef28ae26a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e033366_c4471f73",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5427,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-29T20:08:16Z",
+      "side": 1,
+      "message": "Actually, I\u0027m not convinced we need to check swapped out at all here.  This is coming from an active/hung RWH, so why do we care about whether or not the RVH is swapped out?  In A-embeds-B, if B is hung, B\u0027s RWH would have a null render_view_host here (I think). There is a RVH in B\u0027s process (not tied to B\u0027s RWH but rather created along with the main frame proxy) and that RVH will be swapped out, but that shouldn\u0027t influence the decision about whether we want to show this dialog for B\u0027s RWH.\n\nThis check is from Charlie\u0027s https://codereview.chromium.org/6319001 in 2011, back when we still had swappedout://, so I\u0027m not sure if it still matters.\n\nThe only case I can think of where this might matter is in a race if a RFH for |render_widget_host| has just become pending deletion after a cross-process navigation, and we might not want to show the hung dialog for that frame since it\u0027s about to die anyway after unload (in at most one second).  Checking render_view_host-\u003eis_active() catches that [1], but only for main frames; I don\u0027t see any easy way of checking that for a subframe RWH, since pending deletion state really lives on RFHI::is_active().  I don\u0027t know if we care about that case though.\n\n[1] via CommitPending() -\u003e SwapOutOldFrame() -\u003e RFHI::SwapOut(), https://cs.chromium.org/chromium/src/content/browser/frame_host/render_frame_host_impl.cc?l\u003d1822\u0026rcl\u003d542c881768d2172a1ee8c6d7bb1679d523d1a395",
+      "parentUuid": "6be6e9b4_ed42284e",
+      "range": {
+        "startLine": 5424,
+        "startChar": 0,
+        "endLine": 5427,
+        "endChar": 37
+      },
+      "revId": "2a107a897f643926fc9dc269d6f5dcef28ae26a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
