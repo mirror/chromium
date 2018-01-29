@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "301cc795_3a4f4efe",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1114299
+      },
+      "writtenOn": "2018-01-29T23:05:50Z",
+      "side": 1,
+      "message": "note that this setting applies only to this builder, whereas on Buildbot no master.chromium.android builder has timeout. I don\u0027t know if this timeout should be moved to \"android-ci\" mixin, perhaps should not because tighter timeouts are better; but i just wanted to point this out",
+      "revId": "a4e291a4eb724a88c9bc5bb8433347701676043c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
