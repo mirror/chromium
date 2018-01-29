@@ -167,8 +167,9 @@ media::VideoCodecProfile CodecEnumerator::CodecIdToVEAProfile(CodecId codec) {
 VideoTrackRecorder::Encoder::Encoder(
     const OnEncodedVideoCB& on_encoded_video_callback,
     int32_t bits_per_second,
+    scoped_refptr<base::SingleThreadTaskRunner> main_task_runner,
     scoped_refptr<base::SingleThreadTaskRunner> encoding_task_runner)
-    : main_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : main_task_runner_(std::move(main_task_runner)),
       encoding_task_runner_(encoding_task_runner),
       paused_(false),
       on_encoded_video_callback_(on_encoded_video_callback),
@@ -374,9 +375,11 @@ VideoTrackRecorder::VideoTrackRecorder(
     CodecId codec,
     const blink::WebMediaStreamTrack& track,
     const OnEncodedVideoCB& on_encoded_video_callback,
-    int32_t bits_per_second)
+    int32_t bits_per_second,
+    scoped_refptr<base::SingleThreadTaskRunner> main_task_runner)
     : track_(track),
       paused_before_init_(false),
+      main_task_runner_(std::move(main_task_runner)),
       weak_ptr_factory_(this) {
   DCHECK(main_render_thread_checker_.CalledOnValidThread());
   DCHECK(!track_.IsNull());
@@ -456,7 +459,7 @@ void VideoTrackRecorder::InitializeEncoder(
         on_encoded_video_callback,
         media::BindToCurrentLoop(base::Bind(&VideoTrackRecorder::OnError,
                                             weak_ptr_factory_.GetWeakPtr())),
-        bits_per_second, vea_profile, input_size);
+        bits_per_second, vea_profile, input_size, main_task_runner_);
   } else {
     UMA_HISTOGRAM_BOOLEAN("Media.MediaRecorder.VEAUsed", false);
     switch (codec) {
@@ -468,8 +471,9 @@ void VideoTrackRecorder::InitializeEncoder(
 #endif
       case CodecId::VP8:
       case CodecId::VP9:
-        encoder_ = new VpxEncoder(codec == CodecId::VP9,
-                                  on_encoded_video_callback, bits_per_second);
+        encoder_ =
+            new VpxEncoder(codec == CodecId::VP9, on_encoded_video_callback,
+                           bits_per_second, main_task_runner_);
         break;
       default:
         NOTREACHED() << "Unsupported codec " << static_cast<int>(codec);
