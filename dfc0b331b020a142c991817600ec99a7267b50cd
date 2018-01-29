@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b6889ee_537b5fd6",
+        "filename": "chrome/common/profiling/profiling_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2018-01-29T18:41:17Z",
+      "side": 1,
+      "message": "I don\u0027t see bindings being removed anywhere?",
+      "range": {
+        "startLine": 45,
+        "startChar": 26,
+        "endLine": 45,
+        "endChar": 41
+      },
+      "revId": "dfc0b331b020a142c991817600ec99a7267b50cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
