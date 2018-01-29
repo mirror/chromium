@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5932bf97_571a3982",
+        "filename": "components/cronet/cronet_global_state.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-29T22:06:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edb16694_277b9342",
+      "range": {
+        "startLine": 31,
+        "startChar": 31,
+        "endLine": 31,
+        "endChar": 44
+      },
+      "revId": "b91c49554da9d440142c38aae719465a40e15846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c647832_414d2818",
         "filename": "components/cronet/ios/cronet_global_state_ios.mm",
         "patchSetId": 15
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0994d296_278df8cb",
+        "filename": "components/cronet/ios/cronet_global_state_ios.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-29T22:06:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c647832_414d2818",
+      "range": {
+        "startLine": 25,
+        "startChar": 5,
+        "endLine": 25,
+        "endChar": 27
+      },
+      "revId": "b91c49554da9d440142c38aae719465a40e15846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a132ca8_6a699521",
         "filename": "components/cronet/ios/cronet_global_state_ios.mm",
         "patchSetId": 15
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-29T21:44:41Z",
       "side": 1,
       "message": "OnMainThread()?",
+      "range": {
+        "startLine": 44,
+        "startChar": 5,
+        "endLine": 44,
+        "endChar": 17
+      },
+      "revId": "b91c49554da9d440142c38aae719465a40e15846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28568372_249ba892",
+        "filename": "components/cronet/ios/cronet_global_state_ios.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-29T22:06:51Z",
+      "side": 1,
+      "message": "This is public method, defined in cronet_global_state.h and called \u0027OnInitThread\u0027 instead of \u0027OnMainThread\u0027 for compatibility outside of iOS.",
+      "parentUuid": "0a132ca8_6a699521",
       "range": {
         "startLine": 44,
         "startChar": 5,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "fd332625_faade1e8",
+        "filename": "components/cronet/ios/cronet_global_state_ios.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-29T22:06:51Z",
+      "side": 1,
+      "message": "This is public method, defined in cronet_global_state.h and called \u0027OnInitThread\u0027 instead of \u0027OnMainThread\u0027 for compatibility outside of iOS.",
+      "parentUuid": "acf58ad6_28acef69",
+      "range": {
+        "startLine": 48,
+        "startChar": 5,
+        "endLine": 48,
+        "endChar": 25
+      },
+      "revId": "b91c49554da9d440142c38aae719465a40e15846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7174e7c_3e75474f",
         "filename": "components/cronet/ios/cronet_global_state_ios.mm",
         "patchSetId": 15
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "e2364999_bc129d8a",
+        "filename": "components/cronet/ios/cronet_global_state_ios.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-29T22:06:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7174e7c_3e75474f",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 33
+      },
+      "revId": "b91c49554da9d440142c38aae719465a40e15846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cba55081_63855522",
         "filename": "components/cronet/ios/cronet_global_state_ios.mm",
         "patchSetId": 15
@@ -128,6 +248,30 @@
       "writtenOn": "2018-01-29T21:44:41Z",
       "side": 1,
       "message": "Is the intention to execute the block on the main queue synchronously? If this method is not used carefully, it can cause deadlocks.",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 17
+      },
+      "revId": "b91c49554da9d440142c38aae719465a40e15846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45489f22_892cf3cf",
+        "filename": "components/cronet/ios/cronet_global_state_ios.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-29T22:06:51Z",
+      "side": 1,
+      "message": "Hrm, good point. \nIt is used to post CronetURLRequestContext::InitRequestContextOnInitThread.\nI think async is better. Done.",
+      "parentUuid": "cba55081_63855522",
       "range": {
         "startLine": 52,
         "startChar": 4,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "30c54920_d247fe7a",
+        "filename": "components/cronet/ios/cronet_global_state_ios.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-29T22:06:51Z",
+      "side": 1,
+      "message": "std::move is required by OnceClosure: https://cs.chromium.org/chromium/src/base/callback.h?rcl\u003db0b0128aa75bf296ff499ea8a0b703552316ad39\u0026l\u003d51",
+      "parentUuid": "359a814a_89d8f4d6",
+      "range": {
+        "startLine": 53,
+        "startChar": 6,
+        "endLine": 53,
+        "endChar": 15
+      },
+      "revId": "b91c49554da9d440142c38aae719465a40e15846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b9609bc_062377f3",
         "filename": "components/cronet/ios/cronet_global_state_ios.mm",
         "patchSetId": 15
@@ -183,6 +351,30 @@
       "revId": "b91c49554da9d440142c38aae719465a40e15846",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2e87c03_ef2ac6c9",
+        "filename": "components/cronet/ios/cronet_global_state_ios.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-29T22:06:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b9609bc_062377f3",
+      "range": {
+        "startLine": 63,
+        "startChar": 4,
+        "endLine": 63,
+        "endChar": 35
+      },
+      "revId": "b91c49554da9d440142c38aae719465a40e15846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
