@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "65c7ce6d_494194fe",
+        "filename": "components/arc/video_accelerator/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2018-01-29T07:12:42Z",
+      "side": 1,
+      "message": "sgtm",
+      "parentUuid": "8742ab8e_659ef5de",
+      "range": {
+        "startLine": 147,
+        "startChar": 2,
+        "endLine": 147,
+        "endChar": 17
+      },
+      "revId": "36c8b235c1a22ee229d67cd6118ba0c6dca4978e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c6224c2_224d1cde",
         "filename": "components/arc/video_accelerator/protected_buffer_manager.h",
         "patchSetId": 1
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "e8e5197a_f84f5f8e",
+        "filename": "components/arc/video_accelerator/protected_buffer_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2018-01-29T07:12:42Z",
+      "side": 1,
+      "message": "Ack, sgtm",
+      "parentUuid": "e2c0ba3d_999fbd10",
+      "range": {
+        "startLine": 21,
+        "startChar": 3,
+        "endLine": 21,
+        "endChar": 66
+      },
+      "revId": "36c8b235c1a22ee229d67cd6118ba0c6dca4978e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0795f6cb_cfc98e75",
         "filename": "components/arc/video_accelerator/protected_buffer_manager.h",
         "patchSetId": 1
@@ -131,6 +179,30 @@
       "side": 1,
       "message": "Returns nullptr if there is no active PBM.",
       "parentUuid": "0795f6cb_cfc98e75",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 64
+      },
+      "revId": "36c8b235c1a22ee229d67cd6118ba0c6dca4978e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77dabf92_1ee4223c",
+        "filename": "components/arc/video_accelerator/protected_buffer_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2018-01-29T07:12:42Z",
+      "side": 1,
+      "message": "So it should not return shared_ptr because no one should own PBM except PBA, maybe just return ProtectedtBufferManager*",
+      "parentUuid": "7b3f5174_93c36150",
       "range": {
         "startLine": 35,
         "startChar": 2,
