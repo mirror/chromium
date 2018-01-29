@@ -186,6 +186,7 @@ class WebRuntimeFeatures {
   BLINK_PLATFORM_EXPORT static void EnableStopNonTimersInBackground(bool);
   BLINK_PLATFORM_EXPORT static void EnablePWAFullCodeCache(bool);
   BLINK_PLATFORM_EXPORT static void EnableDoubleTapToJumpOnVideo(bool);
+  BLINK_PLATFORM_EXPORT static void EnableUnifiedTouchAdjustment(bool);
 
  private:
   WebRuntimeFeatures();
