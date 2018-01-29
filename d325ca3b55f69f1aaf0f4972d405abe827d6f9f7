@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a803ffc1_899f26de",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 5016,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2018-01-29T18:04:19Z",
+      "side": 1,
+      "message": "\u003c\u003cWhen a second navigation comes in and succeeds (making it the first successful navigation in the tab), it will not be marked as having taken place in a discarded tab. Is that WAI?\nThe second navigation could be something else right? the only case where we should set was_discarded is the user revisiting a discarded tab for the first time (so app can restore state).\n\n\u003c\u003cwe might not be marking the tab as no longer discarded correctly if we do two navigation in a row. \nThis seems problematic.\nIf the user issues navigates to a discarded tab and then does a second quick navigation -- we should not set was_discarded for the second one.\nWhere else should we reset was_discarded state on WebContents for this case?\n(I\u0027ll test this out bit more when I get into the office)",
+      "parentUuid": "323e8230_0ef51a6d",
+      "revId": "d325ca3b55f69f1aaf0f4972d405abe827d6f9f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d20e603_c1ee5a1a",
         "filename": "content/common/navigation_params.h",
         "patchSetId": 10
