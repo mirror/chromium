@@ -52,6 +52,24 @@
       "revId": "fa14363ff19cb428d178a98dc0411fd7f8c1fa1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3b14e1ba_2755e53b",
+        "filename": "content/public/test/test_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-29T19:12:05Z",
+      "side": 1,
+      "message": "After discussing offline, we\u0027re going to hold off on this because of the semantic changes this introduces with regards to RunAllTaskUntilIdle.\n\nThere is general agreement that this would be better handled an \"control\" style task (tasks that control the behavior of the system and are reentrant safe), but those don\u0027t exist yet!\n\nThere is also general agreement that calling RunAllTasksUntilIdle while in a loop is an error, so perhaps the way to fix it is to have the CrOS tests work around this and then introduce a DCHCEK to disallow this behavior.",
+      "parentUuid": "51174b2c_290e45cf",
+      "revId": "fa14363ff19cb428d178a98dc0411fd7f8c1fa1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
