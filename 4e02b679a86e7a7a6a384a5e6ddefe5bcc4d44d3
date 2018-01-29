@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0be8a4e6_eb78fe77",
+        "filename": "components/url_pattern_index/url_rule_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-01-29T20:06:38Z",
+      "side": 1,
+      "message": "Went with the latter approach, as I agree it\u0027s more readable.",
+      "parentUuid": "b91414c4_9e072819",
+      "revId": "4e02b679a86e7a7a6a384a5e6ddefe5bcc4d44d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df46e18f_792a24dd",
         "filename": "components/url_pattern_index/url_rule_util.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "36c12929_0446b7a7",
+        "filename": "components/url_pattern_index/url_rule_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-01-29T20:06:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "df46e18f_792a24dd",
+      "revId": "4e02b679a86e7a7a6a384a5e6ddefe5bcc4d44d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a8b3133_8d433ae6",
         "filename": "components/url_pattern_index/url_rule_util.cc",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-29T16:11:06Z",
       "side": 1,
       "message": "Can this be a switch so we get a compile error here if the flatbuffer format gets a new type?",
+      "revId": "4e02b679a86e7a7a6a384a5e6ddefe5bcc4d44d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10b0c119_e64c229a",
+        "filename": "components/url_pattern_index/url_rule_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-01-29T20:06:38Z",
+      "side": 1,
+      "message": "Unfortunately not since it\u0027s a bit flag.",
+      "parentUuid": "1a8b3133_8d433ae6",
       "revId": "4e02b679a86e7a7a6a384a5e6ddefe5bcc4d44d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "87f214b6_b1fc153e",
+        "filename": "components/url_pattern_index/url_rule_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-01-29T20:06:38Z",
+      "side": 1,
+      "message": "Done. Looks a bit better. But still passing a pointer around since the function isn\u0027t const.",
+      "parentUuid": "f054d420_a095e595",
+      "revId": "4e02b679a86e7a7a6a384a5e6ddefe5bcc4d44d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5211b91e_bbec7598",
         "filename": "components/url_pattern_index/url_rule_util_unittest.cc",
         "patchSetId": 5
@@ -84,6 +156,24 @@
       "revId": "4e02b679a86e7a7a6a384a5e6ddefe5bcc4d44d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db31b5eb_88b33f99",
+        "filename": "components/url_pattern_index/url_rule_util_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-01-29T20:06:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5211b91e_bbec7598",
+      "revId": "4e02b679a86e7a7a6a384a5e6ddefe5bcc4d44d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "8eac3f3a_9571a47e",
+        "filename": "components/url_pattern_index/url_rule_util_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-01-29T20:06:38Z",
+      "side": 1,
+      "message": "Unfortunately I can\u0027t do that via the protobuf (the protobuf takes an enum, not a bit flag). After offline discussion we agreed to not add these tests.",
+      "parentUuid": "b79e2e7b_c0505fe9",
+      "revId": "4e02b679a86e7a7a6a384a5e6ddefe5bcc4d44d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac0623d8_1425953e",
         "filename": "components/url_pattern_index/url_rule_util_unittest.cc",
         "patchSetId": 5
@@ -135,6 +243,24 @@
       "revId": "4e02b679a86e7a7a6a384a5e6ddefe5bcc4d44d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd93a0df_11aa73a4",
+        "filename": "components/url_pattern_index/url_rule_util_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-01-29T20:06:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac0623d8_1425953e",
+      "revId": "4e02b679a86e7a7a6a384a5e6ddefe5bcc4d44d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
