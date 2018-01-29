@@ -1,0 +1,197 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba4b3c73_f936fef2",
+        "filename": "chrome/test/data/webui/settings/all_sites_tests.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-29T03:38:50Z",
+      "side": 1,
+      "message": "This method of initializing prefs is inconsistent with the one in other files.\n\nI think let prefsVarious; as below is better here.",
+      "revId": "9f67ec7d7d098e644054433836cfd0b94e63d5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23b87bcf_e0843048",
+        "filename": "chrome/test/data/webui/settings/all_sites_tests.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-29T03:38:50Z",
+      "side": 1,
+      "message": "@return?\n\nAlso, I think this should be extracted to a common testing util place so that the function isn\u0027t essentially duplicated in site_list_tests.js.\n\nBasically, my philosophy here is that the object definitions (e.g RawSiteException) should be able to be changed and updated easily. I want to be able to update one createExceptionForTest function with a new property, add a new default to it, and then start adding overrides where necessary.",
+      "revId": "9f67ec7d7d098e644054433836cfd0b94e63d5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "312093f5_120fa878",
+        "filename": "chrome/test/data/webui/settings/all_sites_tests.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-29T03:38:50Z",
+      "side": 1,
+      "message": "prefsVarious \u003d createSiteSettingsPrefs({\n  exceptions: [\n    createExceptionList(settings.ContentSettingsTypes.GEOLOCATION, [\n      createExceptionForTest(\u0027https://foo.com\u0027, {incognito: false}),\n      createExceptionForTest(\u0027https://bar.com\u0027, {\n        setting: settings.ContentSetting.BLOCK,\n        incognito: false,\n      }),\n    ]\n});\n\nConsider whether incognito: false should be the default. Make sure that the createRawSiteException() function returns a reasonably accurate portrayal of a real RawSiteException (i.e has all the necessary fields filled out, even if it\u0027s just with an empty string, like for displayName).",
+      "revId": "9f67ec7d7d098e644054433836cfd0b94e63d5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04c53c8b_d8856696",
+        "filename": "chrome/test/data/webui/settings/site_details_permission_tests.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-29T03:38:50Z",
+      "side": 1,
+      "message": "let prefs;",
+      "revId": "9f67ec7d7d098e644054433836cfd0b94e63d5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bc2f5dd_ccf84056",
+        "filename": "chrome/test/data/webui/settings/site_details_permission_tests.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-29T03:38:50Z",
+      "side": 1,
+      "message": "prefs \u003d createSiteSettingsPrefs({\n  exceptions: [\n    createExceptionList(settings.ContentSettingsTypes.CAMERA, [\n      createRawSiteException(\u0027https://www.example.com\u0027, {\n        embeddingOrigin: \u0027\u0027,\n        setting: settings.ContentSetting.ALLOW,\n        source: settings.SiteSettingSource.PREFERENCE,\n      })\n    ]),\n  ],\n});",
+      "revId": "9f67ec7d7d098e644054433836cfd0b94e63d5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0b10c19_af22e4f0",
+        "filename": "chrome/test/data/webui/settings/site_list_tests.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-29T03:38:50Z",
+      "side": 1,
+      "message": "Move this (and other test util functions) in their own test_util.js, and include it as a test library in the browser_test.js.\n\nAlso, I think the behavior of the origin argument is confusing because it\u0027s used so inconsistently (sometimes null).\n\nWhat do you think about making it a required argument and then having:\n\nconst exception \u003d {\n  origin: origin,\n  embeddingOrigin: origin,\n...\n}\n\nreturn Object.assign(exception, override);\n\nCallers can override the embeddingOrigin if they wish, but it doesn\u0027t make sense to pass null to createRawSiteException, I think.",
+      "range": {
+        "startLine": 85,
+        "startChar": 32,
+        "endLine": 85,
+        "endChar": 38
+      },
+      "revId": "9f67ec7d7d098e644054433836cfd0b94e63d5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53acced1_4cfd2931",
+        "filename": "chrome/test/data/webui/settings/site_list_tests.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-29T03:38:50Z",
+      "side": 1,
+      "message": "return override ? Object.assign(exception, override) : exception;\n\nThis lets you remove all the empty object args below. Also update the closure annotation to make override optional.",
+      "revId": "9f67ec7d7d098e644054433836cfd0b94e63d5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4700d6a2_913495aa",
+        "filename": "chrome/test/data/webui/settings/site_list_tests.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-29T03:38:50Z",
+      "side": 1,
+      "message": "What do you think of:\n\nbrowserProxy.setPrefs(createSiteSettingsPrefs({\n  defaults : [\n    createDefaultContentSetting(settings.ContentSettingsTypes.CAMERA,\n                                settings.ContentSetting.ASK),\n  ],\n  exceptions : [\n    createRawSiteExceptionList(settings.ContentSettingsTypes.JAVASCRIPT,\n                               [\n                                 createRawSiteException({\n                                   origin : \u0027http://foo.com\u0027,\n                                   embeddingOrigin : \u0027http://foo.com\u0027,\n                                   setting : settings.ContentSetting.ALLOW,\n                                   incognito : true,\n                                 }),\n                                 createRawSiteException({\n                                   origin : \u0027http://foo.com\u0027,\n                                   embeddingOrigin : \u0027\u0027,\n                                   setting : settings.ContentSetting.ALLOW,\n                                   incognito : true,\n                                 }),\n                               ]),\n  ],\n}));\n\ninstead? The Map management here is getting messy.",
+      "revId": "9f67ec7d7d098e644054433836cfd0b94e63d5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d313cb07_517f056d",
+        "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-29T03:38:50Z",
+      "side": 1,
+      "message": "As discussed, it would be good to encode this object creation somewhere, probably just as a util function.",
+      "revId": "9f67ec7d7d098e644054433836cfd0b94e63d5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b211a312_cdc8bef8",
+        "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-29T03:38:50Z",
+      "side": 1,
+      "message": "This entire block ought to be\n\nthis.prefs_ \u003d createSiteSettingsPrefs({\n  defaults : [\n    createDefaultContentSetting(settings.ContentSettingsTypes.COOKIES,\n                                settings.ContentSetting.ALLOW),\n    createDefaultContentSetting(settings.ContentSettingsTypes.IMAGES,\n                                settings.ContentSetting.ALLOW),\n    createDefaultContentSetting(settings.ContentSettingsTypes.JAVASCRIPT,\n                                settings.ContentSetting.ALLOW),\n    createDefaultContentSetting(settings.ContentSettingsTypes.SOUND,\n                                settings.ContentSetting.ALLOW),\n    createDefaultContentSetting(settings.ContentSettingsTypes.POPUPS,\n                                settings.ContentSetting.BLOCK),\n    createDefaultContentSetting(settings.ContentSettingsTypes.PROTOCOL_HANDLERS,\n                                settings.ContentSetting.ALLOW),\n    createDefaultContentSetting(settings.ContentSettingsTypes.BACKGROUND_SYNC,\n                                settings.ContentSetting.ALLOW),\n    createDefaultContentSetting(settings.ContentSettingsTypes.ADS,\n                                settings.ContentSetting.BLOCK),\n  ]\n});\n\nIf the default behavior should be ASK for other things, that should be encoded in createSiteSettingsPrefs. It should also be creating reasonable defaults for the exceptions.\n\nTest object creation should be consistent across all test setups (there are 3 wildly different setups across all these tests)\n\n\nActually, I didn\u0027t realize these serve as the global defaults. This default behavior should be encoded inside createSettingsPrefs so that everything has a consistent base to work from and modify.",
+      "revId": "9f67ec7d7d098e644054433836cfd0b94e63d5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12cae5e7_a9646c0e",
+        "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-29T03:38:50Z",
+      "side": 1,
+      "message": "I think this cloning shouldn\u0027t be necessary. This function should read\n\nthis.prefs_ \u003d prefs;",
+      "revId": "9f67ec7d7d098e644054433836cfd0b94e63d5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

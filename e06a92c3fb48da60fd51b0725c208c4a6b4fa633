@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "6a6b21be_bd970d5d",
+        "filename": "chrome/test/data/webui/settings/site_list_tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-29T03:38:50Z",
+      "side": 1,
+      "message": "Bleh. Ok.",
+      "parentUuid": "90e54a34_3fddb828",
+      "revId": "e06a92c3fb48da60fd51b0725c208c4a6b4fa633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a65b30a_b9d4d6dd",
         "filename": "chrome/test/data/webui/settings/site_list_tests.js",
         "patchSetId": 5
@@ -209,6 +227,23 @@
       "revId": "e06a92c3fb48da60fd51b0725c208c4a6b4fa633",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2bbfe03d_1c9f5ef4",
+        "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-29T03:38:50Z",
+      "side": 1,
+      "message": "Why is this necessary?",
+      "revId": "e06a92c3fb48da60fd51b0725c208c4a6b4fa633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
