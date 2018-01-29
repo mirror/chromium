@@ -39,6 +39,30 @@
       "revId": "4e3fefb16d96fe443f426e24fdf4cc75cb7ab15a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f65067ba_ef359101",
+        "filename": "ui/gfx/mac/io_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-29T22:53:31Z",
+      "side": 1,
+      "message": "It\u0027s a Mac-specific way of telling the pixel format of\nan IOsurface :-/ -- see the CoreVideo pseudo \"fourcc\"s :\n\nhttps://github.com/phracker/MacOSX-SDKs/blob/HEAD/MacOSX10.13.sdk/System/Library/Frameworks/CoreVideo.framework/Versions/A/Headers/CVPixelBuffer.h#L83",
+      "parentUuid": "747d7f72_3285cc0b",
+      "range": {
+        "startLine": 77,
+        "startChar": 66,
+        "endLine": 77,
+        "endChar": 0
+      },
+      "revId": "4e3fefb16d96fe443f426e24fdf4cc75cb7ab15a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
