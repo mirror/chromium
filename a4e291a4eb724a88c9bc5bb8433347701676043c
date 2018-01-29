@@ -16,6 +16,24 @@
       "revId": "a4e291a4eb724a88c9bc5bb8433347701676043c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27b7400d_f92dcacc",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2018-01-29T23:20:24Z",
+      "side": 1,
+      "message": "noted; thanks for pointing that out\n\ni agree that having a smaller default is probably better, so i\u0027ll land as-is",
+      "parentUuid": "301cc795_3a4f4efe",
+      "revId": "a4e291a4eb724a88c9bc5bb8433347701676043c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
