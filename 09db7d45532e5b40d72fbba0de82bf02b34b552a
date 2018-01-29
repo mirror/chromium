@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "feb2504a_99cbc009",
+        "filename": "third_party/WebKit/LayoutTests/fast/forms/namedgetter-cache-invalidation.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-29T16:00:04Z",
+      "side": 1,
+      "message": "mind a comment explaining, if only briefly, why we need this weird set of elements?",
+      "revId": "09db7d45532e5b40d72fbba0de82bf02b34b552a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff6ec6c6_63c8a137",
+        "filename": "third_party/WebKit/LayoutTests/fast/forms/namedgetter-cache-invalidation.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-29T16:00:04Z",
+      "side": 1,
+      "message": "nit: what should it equal? positive assertions are better than negative ones",
+      "revId": "09db7d45532e5b40d72fbba0de82bf02b34b552a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8d0b38d_93230a18",
+        "filename": "third_party/WebKit/LayoutTests/fast/forms/namedgetter-cache-invalidation.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-29T16:00:04Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "09db7d45532e5b40d72fbba0de82bf02b34b552a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
