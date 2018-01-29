@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ed32ec10_cabc3a96",
+        "filename": "chromeos/components/tether/fake_ble_connection_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-29T22:40:50Z",
+      "side": 1,
+      "message": "It depends on how the failure occurs. If it fails during GATT connection creation, it fails in CONNECTING. If it fails when setting the notification session, it fails in CONNECTED. If it fails while authenticating, it fails in AUTHENTICATING. Additionally, at any of those steps above, we can get lost/dropped connections.\n\nIt really doesn\u0027t matter when it fails; it simply matters that when we go back to DISCONNECTED, the correct StateChangeDetail is passed.",
+      "parentUuid": "b1e03648_5911be7b",
+      "range": {
+        "startLine": 45,
+        "startChar": 48,
+        "endLine": 46,
+        "endChar": 19
+      },
+      "revId": "693ccd6298061f1e8ebe752a1744ca41441fe5ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f852cba_c212d46c",
         "filename": "chromeos/components/tether/message_transfer_operation.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8b9f08d9_3cd8eb8b",
+        "filename": "chromeos/components/tether/message_transfer_operation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-29T22:40:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f852cba_c212d46c",
+      "range": {
+        "startLine": 190,
+        "startChar": 35,
+        "endLine": 190,
+        "endChar": 57
+      },
+      "revId": "693ccd6298061f1e8ebe752a1744ca41441fe5ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6e01b50_8c534698",
         "filename": "chromeos/components/tether/message_transfer_operation.cc",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "693ccd6298061f1e8ebe752a1744ca41441fe5ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6e423d3_2029e029",
+        "filename": "chromeos/components/tether/message_transfer_operation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-29T22:40:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6e01b50_8c534698",
+      "range": {
+        "startLine": 195,
+        "startChar": 56,
+        "endLine": 196,
+        "endChar": 33
+      },
+      "revId": "693ccd6298061f1e8ebe752a1744ca41441fe5ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
