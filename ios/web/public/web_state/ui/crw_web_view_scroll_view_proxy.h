@@ -48,6 +48,9 @@
 - (void)removeGestureRecognizer:(UIGestureRecognizer*)gestureRecognizer;
 - (void)setContentOffset:(CGPoint)contentOffset animated:(BOOL)animated;
 
+// Sets the -clipsToBounds property of the scroll view to |clipsToBounds|.
+- (void)setClipsToBounds:(BOOL)clipsToBounds;
+
 // Used by the CRWWebViewProxy to set the UIScrollView to be managed.
 - (void)setScrollView:(UIScrollView*)scrollView;
 
