@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "90a7b2b6_abd73cf0",
+        "filename": "chrome/browser/chromeos/extensions/quick_unlock_private/quick_unlock_private_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-29T19:56:27Z",
+      "side": 1,
+      "message": "Done. Updated the comment as well.",
+      "parentUuid": "98ab585b_68538662",
+      "revId": "1b78c236c2a2150118d4187b84993d42e7f4d1e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ed00578_1606707a",
         "filename": "chrome/browser/chromeos/extensions/quick_unlock_private/quick_unlock_private_api.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-29T19:22:34Z",
       "side": 1,
       "message": "optional nit: it\u0027s not clear what auto means here",
+      "revId": "1b78c236c2a2150118d4187b84993d42e7f4d1e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "768600ef_fdf2f15c",
+        "filename": "chrome/browser/chromeos/extensions/quick_unlock_private/quick_unlock_private_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-29T19:56:27Z",
+      "side": 1,
+      "message": "Done. Though it\u0027s not as though one can easily figure out what the type of \"return-\u003eerrors\" was either.",
+      "parentUuid": "1ed00578_1606707a",
       "revId": "1b78c236c2a2150118d4187b84993d42e7f4d1e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
