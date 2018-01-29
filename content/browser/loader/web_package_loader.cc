@@ -4,6 +4,8 @@
 
 #include "content/browser/loader/web_package_loader.h"
 
+#include <memory>
+
 #include "base/feature_list.h"
 #include "base/strings/stringprintf.h"
 #include "content/browser/loader/signed_exchange_handler.h"
@@ -64,7 +66,7 @@ WebPackageLoader::WebPackageLoader(
     network::mojom::URLLoaderClientPtr forwarding_client,
     network::mojom::URLLoaderClientEndpointsPtr endpoints)
     : original_response_timing_info_(
-          base::MakeUnique<ResponseTimingInfo>(original_response)),
+          std::make_unique<ResponseTimingInfo>(original_response)),
       forwarding_client_(std::move(forwarding_client)),
       url_loader_client_binding_(this),
       weak_factory_(this) {
@@ -135,7 +137,7 @@ void WebPackageLoader::OnTransferSizeUpdated(int32_t transfer_size_diff) {
 void WebPackageLoader::OnStartLoadingResponseBody(
     mojo::ScopedDataPipeConsumerHandle body) {
   signed_exchange_handler_ =
-      base::MakeUnique<SignedExchangeHandler>(std::move(body));
+      std::make_unique<SignedExchangeHandler>(std::move(body));
   signed_exchange_handler_->GetHTTPExchange(
       base::BindOnce(&WebPackageLoader::OnHTTPExchangeFound,
                      weak_factory_.GetWeakPtr()),
