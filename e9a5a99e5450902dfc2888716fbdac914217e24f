@@ -22,6 +22,30 @@
       "revId": "e9a5a99e5450902dfc2888716fbdac914217e24f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4affc4d_660b8864",
+        "filename": "build/fuchsia/runner_v2/qemu_target.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-29T22:48:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edda8292_668cd915",
+      "range": {
+        "startLine": 34,
+        "startChar": 71,
+        "endLine": 34,
+        "endChar": 75
+      },
+      "revId": "e9a5a99e5450902dfc2888716fbdac914217e24f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
