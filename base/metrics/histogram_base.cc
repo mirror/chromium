@@ -108,8 +108,8 @@ bool HistogramBase::ValidateHistogramContents(bool crash_if_invalid,
   return true;
 }
 
-void HistogramBase::WriteJSON(std::string* output,
-                              JSONVerbosityLevel verbosity_level) const {
+base::DictionaryValue HistogramBase::GetDictionaryValue(
+    JSONVerbosityLevel verbosity_level) const {
   Count count;
   int64_t sum;
   std::unique_ptr<ListValue> buckets(new ListValue());
@@ -117,7 +117,6 @@ void HistogramBase::WriteJSON(std::string* output,
   std::unique_ptr<DictionaryValue> parameters(new DictionaryValue());
   GetParameters(parameters.get());
 
-  JSONStringValueSerializer serializer(output);
   DictionaryValue root;
   root.SetString("name", histogram_name());
   root.SetInteger("count", count);
@@ -127,6 +126,13 @@ void HistogramBase::WriteJSON(std::string* output,
   if (verbosity_level != JSON_VERBOSITY_LEVEL_OMIT_BUCKETS)
     root.Set("buckets", std::move(buckets));
   root.SetInteger("pid", GetUniqueIdForProcess());
+  return root;
+}
+
+void HistogramBase::WriteJSON(std::string* output,
+                              JSONVerbosityLevel verbosity_level) const {
+  JSONStringValueSerializer serializer(output);
+  DictionaryValue root = GetDictionaryValue(verbosity_level);
   serializer.Serialize(root);
 }
 

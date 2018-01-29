@@ -365,11 +365,11 @@ class ChromeProtocolHandler
           request, network_delegate, blob_storage_context_->context());
     }
 
-    // Next check for chrome://histograms/, which uses its own job type.
-    if (request->url().SchemeIs(kChromeUIScheme) &&
-        request->url().host_piece() == kChromeUIHistogramHost) {
-      return new HistogramInternalsRequestJob(request, network_delegate);
-    }
+    // // Next check for chrome://histograms/, which uses its own job type.
+    // if (request->url().SchemeIs(kChromeUIScheme) &&
+    //     request->url().host_piece() == kChromeUIHistogramHost) {
+    //   return new HistogramInternalsRequestJob(request, network_delegate);
+    // }
 
     // Check for chrome://network-error/, which uses its own job type.
     if (request->url().SchemeIs(kChromeUIScheme) &&

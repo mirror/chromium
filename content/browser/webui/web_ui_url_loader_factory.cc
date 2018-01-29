@@ -269,10 +269,10 @@ class WebUIURLLoaderFactory : public network::mojom::URLLoaderFactory,
       return;
     }
 
-    if (request.url.host_piece() == kChromeUIHistogramHost) {
-      StartHistogramInternalsURLLoader(request, std::move(client));
-      return;
-    }
+    // if (request.url.host_piece() == kChromeUIHistogramHost) {
+    //   StartHistogramInternalsURLLoader(request, std::move(client));
+    //   return;
+    // }
 
     // We pass the FrameTreeNode ID to get to the WebContents because requests
     // from frames can happen while the RFH is changed for a cross-process

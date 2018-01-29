@@ -230,6 +230,8 @@ class BASE_EXPORT HistogramBase {
   // the serialization verbosity. This is implemented with the help of
   // GetParameters and GetCountAndBucketData; overwrite them to customize the
   // output.
+  base::DictionaryValue GetDictionaryValue(
+      JSONVerbosityLevel verbosity_level = JSON_VERBOSITY_LEVEL_FULL) const;
   void WriteJSON(std::string* output, JSONVerbosityLevel verbosity_level) const;
 
  protected:
