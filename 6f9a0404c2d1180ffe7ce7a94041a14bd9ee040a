@@ -16,6 +16,24 @@
       "revId": "6f9a0404c2d1180ffe7ce7a94041a14bd9ee040a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81109555_bc8683cc",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2018-01-29T22:48:55Z",
+      "side": 1,
+      "message": "Do you mean storing both rrect_ and local_rrect_? Only storing local_rrect_ will complicate line 629 instead due to the need to counter-translate...\n\nWe need SPv3 to make paint-ops use property nodes directly. :\u003e",
+      "parentUuid": "0b5f5aa0_740ddb0f",
+      "revId": "6f9a0404c2d1180ffe7ce7a94041a14bd9ee040a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
