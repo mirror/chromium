@@ -22,6 +22,30 @@
       "revId": "c3f5e6e9e835c9e66fe3404ca207df52da2a0b1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ec8e83e_c5089388",
+        "filename": "chrome/app/chrome_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-29T22:55:23Z",
+      "side": 1,
+      "message": "Discussed offline, I think we\u0027re going to keep it this way. It\u0027ll go away when mus is a feature flag anyway.",
+      "parentUuid": "717782cb_b0bded48",
+      "range": {
+        "startLine": 64,
+        "startChar": 6,
+        "endLine": 64,
+        "endChar": 49
+      },
+      "revId": "c3f5e6e9e835c9e66fe3404ca207df52da2a0b1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
