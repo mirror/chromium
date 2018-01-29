@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af4cd4da_b20e9429",
+        "filename": "base/test/scoped_task_environment_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-29T17:09:46Z",
+      "side": 1,
+      "message": "Actually, I\u0027m not a fan of merging testing of the TickClock into this one. It\u0027s convoluted. Let\u0027s create a new test that just tests the clock without being intertwined with other logic.\n\nThis bit makes it particularly confusing (forwarding for no reason to set something unrelated to the original test).",
+      "revId": "3003bf831937d2b706e05fe5cc5e900609ee7684",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
