@@ -44,6 +44,7 @@ gfx::Rect GetWindowBoundsForClientBounds(DWORD style, DWORD ex_style,
 WinWindow::WinWindow(PlatformWindowDelegate* delegate,
                      const gfx::Rect& bounds)
     : delegate_(delegate) {
+  LOG(ERROR) << "WinWindow::WinWindow()";
   CHECK(delegate_);
   DWORD window_style = WS_OVERLAPPEDWINDOW;
   if (use_popup_as_root_window_for_test) {
@@ -108,6 +109,14 @@ void WinWindow::SetCapture() {
 void WinWindow::ReleaseCapture() {
   if (::GetCapture() == hwnd())
     ::ReleaseCapture();
+}
+
+void WinWindow::ReserveKeys() {
+  LOG(ERROR) << "WinWindow::ReserveKeys()";
+}
+
+void WinWindow::ClearReservedKeys() {
+  LOG(ERROR) << "WinWindow::ClearReservedKeys()";
 }
 
 void WinWindow::ToggleFullscreen() {}

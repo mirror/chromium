@@ -196,6 +196,14 @@ void PlatformWindowAndroid::ReleaseCapture() {
   NOTIMPLEMENTED();
 }
 
+void PlatformWindowAndroid::ReserveKeys() {
+  NOTIMPLEMENTED();
+}
+
+void PlatformWindowAndroid::ClearReservedKeys() {
+  NOTIMPLEMENTED();
+}
+
 void PlatformWindowAndroid::ToggleFullscreen() {
   NOTIMPLEMENTED();
 }

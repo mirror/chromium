@@ -240,6 +240,30 @@ void RenderWidgetHostViewEventHandler::UnlockMouse() {
   host_->LostMouseLock();
 }
 
+void RenderWidgetHostViewEventHandler::ReserveKeys() {
+  aura::Window* root_window = window_->GetRootWindow();
+  if (!root_window) {
+    return;
+  }
+  aura::WindowTreeHost* window_tree_host = root_window->GetHost();
+  if (!window_tree_host) {
+    return;
+  }
+  window_tree_host->ReserveKeys();
+}
+
+void RenderWidgetHostViewEventHandler::ClearReservedKeys() {
+  aura::Window* root_window = window_->GetRootWindow();
+  if (!root_window) {
+    return;
+  }
+  aura::WindowTreeHost* window_tree_host = root_window->GetHost();
+  if (!window_tree_host) {
+    return;
+  }
+  window_tree_host->ClearReservedKeys();
+}
+
 void RenderWidgetHostViewEventHandler::OnKeyEvent(ui::KeyEvent* event) {
   TRACE_EVENT0("input", "RenderWidgetHostViewBase::OnKeyEvent");
 
@@ -247,6 +271,17 @@ void RenderWidgetHostViewEventHandler::OnKeyEvent(ui::KeyEvent* event) {
     popup_child_event_handler_->OnKeyEvent(event);
     if (event->handled())
       return;
+  }
+
+  if (event->FromPlatformHook()) {
+    // TODO: ADD A LONGPRESS HANDLER HERE.
+    LOG(WARNING) << "event->FromPlatformHook(): " << event->key_code();
+    NativeWebKeyboardEvent webkit_event(*event);
+    webkit_event.skip_in_browser = true;
+    delegate_->ForwardKeyboardEventWithLatencyInfo(webkit_event,
+                                                   *event->latency(), nullptr);
+    event->SetHandled();
+    return;
   }
 
   bool mark_event_as_handled = true;
