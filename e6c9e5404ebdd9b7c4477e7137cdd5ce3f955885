@@ -16,6 +16,24 @@
       "revId": "e6c9e5404ebdd9b7c4477e7137cdd5ce3f955885",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d06327f_3a2a2e21",
+        "filename": "third_party/WebKit/Source/platform/bindings/TraceWrapperMember.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-29T01:36:51Z",
+      "side": 1,
+      "message": "Hmm. This looks a bit too hacky...\n\n- Do you know where this swap method is used? Would you it be possible to rewrite the call site to use swap(HeapVector\u003cTraceWrapperMember\u003cT\u003e\u003e\u0026 a, HeapVector\u003cTraceWrapperMember\u003cT\u003e\u003e\u0026 b)?\n\n- Why was this not a problem before this CL?",
+      "parentUuid": "9bfe13e5_95df1d0f",
+      "revId": "e6c9e5404ebdd9b7c4477e7137cdd5ce3f955885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
