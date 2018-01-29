@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "d9ec4946_5db8999e",
+        "filename": "device/u2f/u2f_apdu_command.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-29T08:10:38Z",
+      "side": 1,
+      "message": "Got it, thanks for the explanation. Are we certain that setting this bit won\u0027t cause any problems with other authenticators?",
+      "parentUuid": "53bceb4a_a527690b",
+      "range": {
+        "startLine": 102,
+        "startChar": 54,
+        "endLine": 102,
+        "endChar": 58
+      },
+      "revId": "146b0b33750eada5473582022c8fceca2015b2ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "daab6094_3d21d341",
         "filename": "device/u2f/u2f_apdu_unittest.cc",
         "patchSetId": 2
