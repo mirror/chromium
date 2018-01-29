@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6b0793b_59a6fcb3",
+        "filename": "build/android/gyp/javac.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-29T17:49:10Z",
+      "side": 1,
+      "message": "nit:\n\nreturn not (deprecated_re.match(line) or ...)",
+      "revId": "26d5a4e02eb15960179565ba81a99b52248cbb2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
