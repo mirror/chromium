@@ -22,6 +22,30 @@
       "revId": "bfd0bcbeab9670ef1492c22e35a0542013130a02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44799dd0_a68fe484",
+        "filename": "third_party/WebKit/Source/core/messaging/BlinkCloneableMessageStructTraits.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-29T19:12:54Z",
+      "side": 1,
+      "message": "WTF::HashMap already has HashMapValuesProxy, and mojo already has MapValuesArrayView (with array traits) for std::map.\n\nSo yeah, it probably indeed make sense to also define ArrayTraits for HashMap::HashMapValuesProxy...  Maybe rename array_traits_wtf_vector.h to array_traits_wtf.h (for consistency with array_traits_stl.h), and then add these traits to that file as well? Or of course add a whole separate file for these new array traits...",
+      "parentUuid": "9bbb1eca_cdc5f42a",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 16
+      },
+      "revId": "bfd0bcbeab9670ef1492c22e35a0542013130a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -34,6 +34,24 @@
       "revId": "d7c6c7da6817d05503f3ad3520563cc892f54835",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f2a7cf6_6ca56432",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobDataForward.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-29T19:12:54Z",
+      "side": 1,
+      "message": "Ah yes, that does seem to work. I feared it would need to be in its own mojom target, but just having it in a separate mojom file seems to indeed be enough. Done.",
+      "parentUuid": "f4f369d9_053c3b45",
+      "revId": "d7c6c7da6817d05503f3ad3520563cc892f54835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
