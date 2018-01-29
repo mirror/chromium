@@ -34,6 +34,24 @@
       "revId": "7ef06af8f77aaab4a71f984c8a27923b37ae69e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d03ff441_bbf3f96a",
+        "filename": "DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 1384,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-29T23:27:36Z",
+      "side": 1,
+      "message": "Thank you, makes sense.",
+      "parentUuid": "bbae1c1f_0f8a38ba",
+      "revId": "7ef06af8f77aaab4a71f984c8a27923b37ae69e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
