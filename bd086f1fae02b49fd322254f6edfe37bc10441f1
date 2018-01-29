@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec998e13_d7bb68fe",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2018-01-29T13:08:33Z",
+      "side": 1,
+      "message": "is this not needed on non-MVB builds? that seems odd",
+      "range": {
+        "startLine": 53,
+        "startChar": 13,
+        "endLine": 53,
+        "endChar": 22
+      },
+      "revId": "bd086f1fae02b49fd322254f6edfe37bc10441f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
