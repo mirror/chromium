@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "751226b7_c4413766",
+        "filename": "remoting/protocol/ssl_hmac_channel_authenticator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2018-01-29T22:54:50Z",
+      "side": 1,
+      "message": "It\u0027s used for running the SPAKE2 protocol, which is a zero-disclosure, mutual authentication protocol. At a stretch, you could say that user credentials are sent over this channel, but that\u0027s misleading--the channel is used to verify that both endpoints know the PIN, without actually sending it. There\u0027s really nothing more descriptive you can put here beyond what\u0027s already in \"description\".",
+      "parentUuid": "15cba83c_0c88f0d6",
+      "range": {
+        "startLine": 59,
+        "startChar": 21,
+        "endLine": 59,
+        "endChar": 0
+      },
+      "revId": "6afa1e8ce44716fec8b30a5e2b50982731a0b325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb01ad9c_1f84e32e",
         "filename": "remoting/protocol/ssl_hmac_channel_authenticator.cc",
         "patchSetId": 1
