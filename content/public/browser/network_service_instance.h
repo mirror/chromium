@@ -5,6 +5,8 @@
 #ifndef CONTENT_PUBLIC_BROWSER_NETWORK_SERVICE_INSTANCE_H_
 #define CONTENT_PUBLIC_BROWSER_NETWORK_SERVICE_INSTANCE_H_
 
+#include "base/memory/scoped_refptr.h"
+#include "base/single_thread_task_runner.h"
 #include "content/common/content_export.h"
 
 namespace network {
@@ -23,6 +25,9 @@ class NetworkService;
 // Otherwise it runs out of process.
 // This method can only be called on the UI thread.
 CONTENT_EXPORT network::mojom::NetworkService* GetNetworkService();
+
+CONTENT_EXPORT network::mojom::NetworkService* GetNetworkService(
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner);
 
 // When network service is disabled, returns the in-process NetworkService
 // pointer which is used to ease transition to network service.

@@ -525,6 +525,7 @@ ContentBrowserClient::OutOfProcessServiceInfo::OutOfProcessServiceInfo() =
 ContentBrowserClient::OutOfProcessServiceInfo::OutOfProcessServiceInfo(
     const base::string16& process_name)
     : process_name(process_name) {
+  LOG(ERROR) << "ABCD, OUTOFprocess service name:" << process_name;
   DCHECK(!process_name.empty());
 }
 

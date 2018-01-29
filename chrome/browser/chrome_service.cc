@@ -83,7 +83,6 @@ class ChromeService::IOThreadContext : public service_manager::Service {
 
   // service_manager::Service:
   void OnStart() override {
-    DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
     DCHECK(connector_request_.is_pending());
     context()->connector()->BindConnectorRequest(std::move(connector_request_));
   }
@@ -91,7 +90,6 @@ class ChromeService::IOThreadContext : public service_manager::Service {
   void OnBindInterface(const service_manager::BindSourceInfo& remote_info,
                        const std::string& name,
                        mojo::ScopedMessagePipeHandle handle) override {
-    DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
     content::OverrideOnBindInterface(remote_info, name, &handle);
     if (!handle.is_valid())
       return;
@@ -166,7 +164,6 @@ void ChromeService::InitConnector() {
 
 std::unique_ptr<service_manager::Service>
 ChromeService::CreateChromeServiceWrapper() {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
   return std::make_unique<service_manager::ForwardingService>(
       io_thread_context_.get());
 }
