@@ -20,6 +20,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/synchronization/lock.h"
 #include "base/synchronization/waitable_event.h"
+#include "base/threading/thread_restrictions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "content/public/common/content_features.h"
@@ -828,6 +829,8 @@ int32_t RTCVideoEncoder::InitEncode(const webrtc::VideoCodec* codec_settings,
   }
 
   impl_ = new Impl(gpu_factories_, ProfileToWebRtcVideoCodecType(profile_));
+
+  base::ScopedAllowBaseSyncPrimitives allow_blocking;
 
   base::WaitableEvent initialization_waiter(
       base::WaitableEvent::ResetPolicy::MANUAL,
