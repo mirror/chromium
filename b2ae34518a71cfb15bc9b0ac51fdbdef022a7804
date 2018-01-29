@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b592f67_8a5d231a",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1126834
+      },
+      "writtenOn": "2018-01-29T19:32:40Z",
+      "side": 1,
+      "message": "One thing I am not sure is that you wrote \"the session logic which performs the desktop capture with the GPU and copies the result to the GPU buffer passed from Android.\" in the description. But it seems the implementation you put in \"chromeos\" folder? Can you double check, or clarify this?",
+      "range": {
+        "startLine": 6,
+        "startChar": 8,
+        "endLine": 6,
+        "endChar": 80
+      },
+      "revId": "b2ae34518a71cfb15bc9b0ac51fdbdef022a7804",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf215930_9d31edbb",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1126834
+      },
+      "writtenOn": "2018-01-29T19:32:40Z",
+      "side": 1,
+      "message": "Add period at the end.",
+      "range": {
+        "startLine": 50,
+        "startChar": 43,
+        "endLine": 50,
+        "endChar": 52
+      },
+      "revId": "b2ae34518a71cfb15bc9b0ac51fdbdef022a7804",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
