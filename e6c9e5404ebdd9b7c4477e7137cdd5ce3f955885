@@ -70,6 +70,24 @@
       "revId": "e6c9e5404ebdd9b7c4477e7137cdd5ce3f955885",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d43264c0_2759450f",
+        "filename": "third_party/WebKit/Source/platform/bindings/TraceWrapperMember.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-29T11:07:03Z",
+      "side": 1,
+      "message": "Sure, just click on \"swap\" in [1]. \n\nI think interseting might be e.g. StyleSheetCollection::SwapSheetsForStyleSheet [2]. It looks like the callers collect items by holding a temporary vector. This looks fine because it should not be doing wrapper tracing GCs but is indeed fragile (not sure if wrappers in JS are configured at that point). \n\nNot sure if we should open this as cleanup project or just keep on moving into the right direction.\n\n[1] https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/bindings/TraceWrapperMember.h?l\u003d96\n[2] https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/css/StyleSheetCollection.cpp?l\u003d50",
+      "parentUuid": "46c4f2d6_e6889f30",
+      "revId": "e6c9e5404ebdd9b7c4477e7137cdd5ce3f955885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
