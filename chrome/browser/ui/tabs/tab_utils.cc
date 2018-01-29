@@ -116,7 +116,9 @@ bool ShouldTabShowFavicon(int capacity,
                           TabAlertState alert_state) {
   if (!has_favicon)
     return false;
-  int required_capacity = 1;
+  // If it's active, close button is always visible so hiding favicon
+  // is reasonable. Otherwise, showing favicon is more preceivable for users.
+  int required_capacity = is_active_tab || is_pinned_tab ? 1 : 0;
   if (ShouldTabShowCloseButton(capacity, is_pinned_tab, is_active_tab))
     ++required_capacity;
   if (ShouldTabShowAlertIndicator(capacity, is_pinned_tab, is_active_tab,

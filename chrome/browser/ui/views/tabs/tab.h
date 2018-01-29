@@ -214,6 +214,8 @@ class Tab : public gfx::AnimationDelegate,
   // icon looks (rather than how wide the bounds are).
   void MaybeAdjustLeftForPinnedTab(gfx::Rect* bounds, int visual_width) const;
 
+  void MaybeAdjustWidthForInactiveTab(gfx::Rect* bounds) const;
+
   // Paints with the normal tab style.  If |clip| is non-empty, the tab border
   // should be clipped against it.
   void PaintTab(gfx::Canvas* canvas, const gfx::Path& clip);

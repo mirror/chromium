@@ -563,6 +563,7 @@ void Tab::Layout() {
     favicon_bounds.set_size(gfx::Size(icon_->GetPreferredSize().width(),
                                       lb.height() - favicon_bounds.y()));
     MaybeAdjustLeftForPinnedTab(&favicon_bounds, gfx::kFaviconSize);
+    MaybeAdjustWidthForInactiveTab(&favicon_bounds);
   }
   icon_->SetBoundsRect(favicon_bounds);
   icon_->SetVisible(showing_icon_);
@@ -829,6 +830,18 @@ void Tab::MaybeAdjustLeftForPinnedTab(gfx::Rect* bounds,
           (1 - static_cast<float>(ideal_delta) /
               static_cast<float>(kPinnedTabExtraWidthToRenderAsNormal)) *
           (ideal_x - bounds->x())));
+}
+
+void Tab::MaybeAdjustWidthForInactiveTab(gfx::Rect* bounds) const {
+  if (!ShouldRenderAsNormalTab() || IsActive())
+    return;
+
+  DCHECK(bounds);
+  const gfx::Rect contents_bounds = GetContentsBounds();
+  if (bounds->right() > contents_bounds.right()) {
+    bounds->set_x(contents_bounds.x());
+    bounds->set_width(contents_bounds.width());
+  }
 }
 
 void Tab::PaintTab(gfx::Canvas* canvas, const gfx::Path& clip) {
