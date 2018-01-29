@@ -34,6 +34,24 @@
       "revId": "62b7769dccc06075371dec44d177c76e9901fd3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ff79042_b1f0b3f9",
+        "filename": "third_party/WebKit/common/origin_trials/trial_token.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2018-01-29T21:14:22Z",
+      "side": 1,
+      "message": "Ack. I missed the fact that 6144 is exactly 6*1024; I thought it was the result of a careful calculation of JSON overhead, 100 byte feature name, etc. It looks to me like this leaves us about ~300 characters of room in the token format before this becomes too small, but you\u0027re right, any other changes would affect the formula anyway.",
+      "parentUuid": "45c3d050_ba994c8d",
+      "revId": "62b7769dccc06075371dec44d177c76e9901fd3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
