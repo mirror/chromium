@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "082a47b6_8baa52c3",
+        "filename": "chrome/browser/certificate_viewer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-29T11:29:51Z",
+      "side": 1,
+      "message": "I think on mac the certificate viewer should *always* be Cocoa. I think on Windows it is always native too. Of course, chromeos has its own. Also I think Windows is missing a certificate _selector_, but Mac has a native one we show too.",
+      "revId": "d05f0155aafc0aee288fd2eda050eb53c6e2206e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2397089e_96f866d4",
+        "filename": "chrome/browser/ui/browser_window.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-29T11:29:51Z",
+      "side": 1,
+      "message": "needs a comment",
+      "revId": "d05f0155aafc0aee288fd2eda050eb53c6e2206e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62d0792b_e2907c11",
+        "filename": "chrome/browser/ui/views_mode_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-29T11:29:51Z",
+      "side": 1,
+      "message": "I think we can start with base::Feature, since that\u0027s where we want to end up anyway. Maybe kViewsBrowserWindows? (it gets really confusing when the thing that \"launches\" is not the default, and we want to first launch mac_views_browser with Cocoa windows). i.e. kViewsBrowserWindows disabled by default means we show Cocoa.",
+      "revId": "d05f0155aafc0aee288fd2eda050eb53c6e2206e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
