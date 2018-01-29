@@ -269,6 +269,7 @@ PseudoId CSSSelector::GetPseudoId(PseudoType type) {
     case kPseudoContent:
     case kPseudoHost:
     case kPseudoHostContext:
+    case kPseudoPart:
     case kPseudoShadow:
     case kPseudoFullScreen:
     case kPseudoFullScreenAncestor:
@@ -394,6 +395,7 @@ const static NameToPseudoStruct kPseudoTypeWithArgumentsMap[] = {
     {"nth-last-child", CSSSelector::kPseudoNthLastChild},
     {"nth-last-of-type", CSSSelector::kPseudoNthLastOfType},
     {"nth-of-type", CSSSelector::kPseudoNthOfType},
+    {"part", CSSSelector::kPseudoPart},
     {"slotted", CSSSelector::kPseudoSlotted},
 };
 
@@ -527,9 +529,10 @@ void CSSSelector::UpdatePseudoType(const AtomicString& value,
       // but should be PseudoElement like double colon.
       if (match_ == kPseudoClass)
         match_ = kPseudoElement;
-    // fallthrough
+    // fallthrough for pseudo elements
     case kPseudoBackdrop:
     case kPseudoCue:
+    case kPseudoPart:
     case kPseudoPlaceholder:
     case kPseudoResizer:
     case kPseudoScrollbar:
@@ -562,7 +565,7 @@ void CSSSelector::UpdatePseudoType(const AtomicString& value,
         pseudo_type_ = kPseudoUnknown;
         break;
       }
-    // fallthrough
+    // fallthrough for pseudo classes
     case kPseudoActive:
     case kPseudoAny:
     case kPseudoAnyLink:
@@ -746,6 +749,15 @@ const CSSSelector* CSSSelector::SerializeCompound(
     } else if (simple_selector->match_ == kPseudoElement) {
       builder.Append("::");
       builder.Append(simple_selector->SerializingValue());
+      switch (simple_selector->GetPseudoType()) {
+        case kPseudoPart:
+          builder.Append('(');
+          builder.Append(simple_selector->Argument());
+          builder.Append(')');
+          break;
+        default:
+          break;
+      }
     } else if (simple_selector->IsAttributeSelector()) {
       builder.Append('[');
       SerializeNamespacePrefixIfNeeded(simple_selector->Attribute().Prefix(),
