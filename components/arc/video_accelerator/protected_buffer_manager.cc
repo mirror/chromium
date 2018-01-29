@@ -23,6 +23,7 @@ namespace {
 constexpr gfx::Size kDummyBufferSize(32, 32);
 }  // namespace
 
+//------------------------------Remove----------------------------------------//
 ProtectedBufferHandle::ProtectedBufferHandle(
     base::OnceClosure destruction_cb,
     const base::SharedMemoryHandle& shm_handle)
@@ -63,6 +64,7 @@ base::SharedMemoryHandle ProtectedBufferHandle::shm_handle() const {
 gfx::NativePixmapHandle ProtectedBufferHandle::native_pixmap_handle() const {
   return native_pixmap_handle_;
 }
+//------------------------------Remove end -----------------------------------//
 
 class ProtectedBufferManager::ProtectedBuffer {
  public:
@@ -205,6 +207,9 @@ ProtectedBufferManager::ProtectedNativePixmap::Create(
   return protected_pixmap;
 }
 
+// Although weak_factory_ is not used for new design, it is harmless.
+// Therefore, the same destructor is used by Create() as well.
+// weak_factory_ will be gotten rid of at the end of migration.
 ProtectedBufferManager::ProtectedBufferManager() : weak_factory_(this) {
   VLOGF(2);
   weak_this_ = weak_factory_.GetWeakPtr();
@@ -214,9 +219,94 @@ ProtectedBufferManager::~ProtectedBufferManager() {
   VLOGF(2);
 }
 
+bool ProtectedBufferManager::AllocateProtectedSharedMemory(
+    base::ScopedFD dummy_fd,
+    size_t size) {
+  VLOGF(2) << "dummy_fd: " << dummy_fd.get() << ", size: " << size;
+
+  // Import the |dummy_fd| to produce a unique id for it.
+  uint32_t id;
+  auto pixmap = ImportDummyFd(std::move(dummy_fd), &id);
+  if (!pixmap)
+    return false;
+
+  base::AutoLock lock(buffer_map_lock_);
+
+  if (buffer_map_.find(id) != buffer_map_.end()) {
+    VLOGF(1) << "A protected buffer for this handle already exists";
+    return false;
+  }
+
+  // Allocate a protected buffer and associate it with the dummy pixmap.
+  // The pixmap needs to be stored to ensure the id remains the same for
+  // the entire lifetime of the dummy pixmap.
+  auto protected_shmem = ProtectedSharedMemory::Create(pixmap, size);
+  if (!protected_shmem) {
+    VLOGF(1) << "Failed allocating a protected shared memory buffer";
+    return false;
+  }
+
+  VLOGF(2) << "New protected shared memory buffer, handle id: " << id;
+
+  // This will always succeed as we find() first above.
+  buffer_map_.emplace(id, std::move(protected_shmem));
+
+  return true;
+}
+
+bool ProtectedBufferManager::AllocateProtectedNativePixmap(
+    base::ScopedFD dummy_fd,
+    gfx::BufferFormat format,
+    const gfx::Size& size) {
+  VLOGF(2) << "dummy_fd: " << dummy_fd.get() << ", format: " << (int)format
+           << ", size: " << size.ToString();
+
+  // Import the |dummy_fd| to produce a unique id for it.
+  uint32_t id = 0;
+  auto pixmap = ImportDummyFd(std::move(dummy_fd), &id);
+  if (!pixmap)
+    return false;
+
+  base::AutoLock lock(buffer_map_lock_);
+
+  if (buffer_map_.find(id) != buffer_map_.end()) {
+    VLOGF(1) << "A protected buffer for this handle already exists";
+    return false;
+  }
+
+  // Allocate a protected buffer and associate it with the dummy pixmap.
+  // The pixmap needs to be stored to ensure the id remains the same for
+  // the entire lifetime of the dummy pixmap.
+  auto protected_pixmap = ProtectedNativePixmap::Create(pixmap, format, size);
+  if (!protected_pixmap) {
+    VLOGF(1) << "Failed allocating a protected native pixmap";
+    return false;
+  }
+
+  VLOGF(2) << "New protected native pixmap, handle id: " << id;
+  // This will always succeed as we find() first above.
+  buffer_map_.emplace(id, std::move(protected_pixmap));
+
+  return true;
+}
+
+bool ProtectedBufferManager::DeallocateProtectedBuffer(
+    base::ScopedFD dummy_fd) {
+  uint32_t id = 0;
+  auto pixmap = ImportDummyFd(std::move(dummy_fd), &id);
+  base::AutoLock lock(buffer_map_lock_);
+  const auto& iter = buffer_map_.find(id);
+  if (iter == buffer_map_.end())
+    return false;
+
+  buffer_map_.erase(iter);
+  return true;
+}
+
 std::unique_ptr<ProtectedBufferHandle>
-ProtectedBufferManager::AllocateProtectedSharedMemory(base::ScopedFD dummy_fd,
-                                                      size_t size) {
+ProtectedBufferManager::AllocateProtectedSharedMemoryDeprecated(
+    base::ScopedFD dummy_fd,
+    size_t size) {
   VLOGF(2) << "dummy_fd: " << dummy_fd.get() << ", size: " << size;
 
   // Import the |dummy_fd| to produce a unique id for it.
@@ -262,9 +352,10 @@ ProtectedBufferManager::AllocateProtectedSharedMemory(base::ScopedFD dummy_fd,
 }
 
 std::unique_ptr<ProtectedBufferHandle>
-ProtectedBufferManager::AllocateProtectedNativePixmap(base::ScopedFD dummy_fd,
-                                                      gfx::BufferFormat format,
-                                                      const gfx::Size& size) {
+ProtectedBufferManager::AllocateProtectedNativePixmapDeprecated(
+    base::ScopedFD dummy_fd,
+    gfx::BufferFormat format,
+    const gfx::Size& size) {
   VLOGF(2) << "dummy_fd: " << dummy_fd.get() << ", format: " << (int)format
            << ", size: " << size.ToString();
 
