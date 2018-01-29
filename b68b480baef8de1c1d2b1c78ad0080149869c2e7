@@ -16,6 +16,24 @@
       "revId": "b68b480baef8de1c1d2b1c78ad0080149869c2e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd11d28f_9ebff2d1",
+        "filename": "base/strings/string_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 939,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2018-01-29T21:37:07Z",
+      "side": 1,
+      "message": "I did not know that clang-cl ignores the pragma. What does that mean for code like this?\n\nhttps://cs.chromium.org/chromium/src/net/base/winsock_util.cc?q\u003dwinsock_util.cc\u0026sq\u003dpackage:chromium\u0026l\u003d18\n\nThis code should be using base::Alias but the overall question stands, especially once we get WPO implemented, at which point base::Alias may break if we don\u0027t have pragma optimize support.\n\nAnyway, at this point in Chrome\u0027s history I like making it explicit that this doesn\u0027t affect clang so I think I\u0027ll leave it as is. The alternative would be a check for a specific _MSC_VER.",
+      "parentUuid": "2322042b_3622cc61",
+      "revId": "b68b480baef8de1c1d2b1c78ad0080149869c2e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
