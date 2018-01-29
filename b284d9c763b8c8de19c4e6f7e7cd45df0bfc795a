@@ -290,6 +290,24 @@
     },
     {
       "key": {
+        "uuid": "c1b8ff96_205a3e19",
+        "filename": "ios/chrome/browser/ui/download/download_manager_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-29T21:23:16Z",
+      "side": 1,
+      "message": "Yeah, it should really be const. But then it makes formatting worse, which was the whole purpose of not inlining. So I inlined.",
+      "parentUuid": "e9e74b37_8a259876",
+      "revId": "b284d9c763b8c8de19c4e6f7e7cd45df0bfc795a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5951b91a_7be9d357",
         "filename": "ios/chrome/browser/ui/download/download_manager_coordinator.mm",
         "patchSetId": 2
