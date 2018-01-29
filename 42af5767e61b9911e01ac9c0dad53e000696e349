@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e2a35489_f15bc0eb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/AnchoredPopupWindow.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-29T23:58:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56b3e251_c5ce01f6",
+      "range": {
+        "startLine": 433,
+        "startChar": 8,
+        "endLine": 436,
+        "endChar": 50
+      },
+      "revId": "42af5767e61b9911e01ac9c0dad53e000696e349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec25037d_e5cbab50",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ViewRectProvider.java",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "42af5767e61b9911e01ac9c0dad53e000696e349",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfdc99d5_defe13db",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ViewRectProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-29T23:58:51Z",
+      "side": 1,
+      "message": "The code below is subtracting the padding from the view bounds, so this block should be run if padding is excluded from the rect (!mIncludePadding).",
+      "parentUuid": "ec25037d_e5cbab50",
+      "range": {
+        "startLine": 133,
+        "startChar": 12,
+        "endLine": 133,
+        "endChar": 13
+      },
+      "revId": "42af5767e61b9911e01ac9c0dad53e000696e349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
