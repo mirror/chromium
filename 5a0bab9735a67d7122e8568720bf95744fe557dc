@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "184b109c_d7389225",
+        "filename": "chrome/browser/android/tab_web_contents_delegate_android.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-29T23:34:33Z",
+      "side": 1,
+      "message": "should we also do\n\n\u0026\u0026 base::FeatureList::IsEnabled(chrome::android::kTabModalJsDialog)\n\nIf tab modal isn\u0027t enabled, then I don\u0027t think the VR dialogs would work right?",
+      "range": {
+        "startLine": 278,
+        "startChar": 10,
+        "endLine": 278,
+        "endChar": 16
+      },
+      "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
