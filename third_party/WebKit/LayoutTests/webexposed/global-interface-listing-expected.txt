@@ -1053,8 +1053,12 @@ interface CompositionEvent : UIEvent
     method initCompositionEvent
 interface ComputedAccessibleNode
     attribute @@toStringTag
+    getter keyShortcuts
     getter name
+    getter placeholder
     getter role
+    getter roleDescription
+    getter valueText
     method constructor
 interface ConstantSourceNode : AudioScheduledSourceNode
     attribute @@toStringTag
