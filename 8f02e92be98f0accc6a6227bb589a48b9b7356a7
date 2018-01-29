@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9d6fc62_0557b701",
+        "filename": "ios/web_view/test/web_view_autofill_inttest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-29T21:28:14Z",
+      "side": 1,
+      "message": "ASSERT prints the line number for a failure, which is only useful if the failure happens in the test, not in the helper. How about returning bool from submit form and asserting inside the test instead? Like this:\n\nbool SubmitForm() WARN_UNUSED_RESULT;\n\nSame comment for other methods (FetchSuggestions can return nil on error).",
+      "range": {
+        "startLine": 64,
+        "startChar": 4,
+        "endLine": 64,
+        "endChar": 15
+      },
+      "revId": "8f02e92be98f0accc6a6227bb589a48b9b7356a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12775964_3fc9c788",
+        "filename": "ios/web_view/test/web_view_autofill_inttest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-29T21:28:14Z",
+      "side": 1,
+      "message": "nit: Do we need this local variable? Inlining will probably make formatting better.",
+      "range": {
+        "startLine": 80,
+        "startChar": 18,
+        "endLine": 80,
+        "endChar": 39
+      },
+      "revId": "8f02e92be98f0accc6a6227bb589a48b9b7356a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b2f0579_4c68cffb",
+        "filename": "ios/web_view/test/web_view_autofill_inttest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-29T21:28:14Z",
+      "side": 1,
+      "message": "nit: web_view_.autofillController",
+      "range": {
+        "startLine": 228,
+        "startChar": 4,
+        "endLine": 228,
+        "endChar": 13
+      },
+      "revId": "8f02e92be98f0accc6a6227bb589a48b9b7356a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
