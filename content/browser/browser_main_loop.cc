@@ -767,9 +767,21 @@ void BrowserMainLoop::MainMessageLoopStart() {
     main_message_loop_.reset(new base::MessageLoopForUI);
 
   InitializeMainThread();
+  if (parts_)
+    parts_->MainMessageLoopStart();
 }
 
 void BrowserMainLoop::PostMainMessageLoopStart() {
+  const base::CommandLine* command_line =
+      base::CommandLine::ForCurrentProcess();
+  // Note that we do not initialize a new FeatureList when calling this for
+  // the second time.
+  base::FeatureList::InitializeInstance(
+      command_line->GetSwitchValueASCII(switches::kEnableFeatures),
+      command_line->GetSwitchValueASCII(switches::kDisableFeatures));
+
+  InitializeServiceManager();
+
   {
     TRACE_EVENT0("startup", "BrowserMainLoop::Subsystem:SystemMonitor");
     system_monitor_.reset(new base::SystemMonitor);
@@ -888,14 +900,6 @@ int BrowserMainLoop::PreCreateThreads() {
   // redirection experiment concludes https://crbug.com/622400.
   if (!base::SequencedWorkerPool::IsEnabled())
     base::SequencedWorkerPool::EnableForProcess();
-
-  const base::CommandLine* command_line =
-      base::CommandLine::ForCurrentProcess();
-  // Note that we do not initialize a new FeatureList when calling this for
-  // the second time.
-  base::FeatureList::InitializeInstance(
-      command_line->GetSwitchValueASCII(switches::kEnableFeatures),
-      command_line->GetSwitchValueASCII(switches::kDisableFeatures));
 
   InitializeMemoryManagementComponent();
 
@@ -1354,6 +1358,7 @@ void BrowserMainLoop::ShutdownThreadsAndCleanUp() {
   // Shutdown the Service Manager and IPC.
   service_manager_context_.reset();
   mojo_ipc_support_.reset();
+  ipc_thread_.reset();
 
   if (save_file_manager_)
     save_file_manager_->Shutdown();
@@ -1814,7 +1819,7 @@ void BrowserMainLoop::MainMessageLoopRun() {
 #endif
 }
 
-void BrowserMainLoop::InitializeMojo() {
+void BrowserMainLoop::InitializeServiceManager() {
   if (!parsed_command_line_.HasSwitch(switches::kSingleProcess)) {
     // Disallow mojo sync calls in the browser process. Note that we allow sync
     // calls in single-process mode since renderer IPCs are made from a browser
@@ -1825,16 +1830,22 @@ void BrowserMainLoop::InitializeMojo() {
     DCHECK_EQ(MOJO_RESULT_OK, result);
   }
 
+  ipc_thread_.reset(new base::Thread("service_manager"));
+  ipc_thread_->StartWithOptions(
+      base::Thread::Options(base::MessageLoop::TYPE_IO, 0));
   mojo_ipc_support_.reset(new mojo::edk::ScopedIPCSupport(
-      BrowserThread::GetTaskRunnerForThread(BrowserThread::IO),
+      ipc_thread_->task_runner(),
       mojo::edk::ScopedIPCSupport::ShutdownPolicy::FAST));
+  service_manager_context_.reset(
+      new ServiceManagerContext(ipc_thread_->task_runner()));
+  GetContentClient()->OnServiceManagerConnected(
+      ServiceManagerConnection::GetForProcess());
+}
 
-  service_manager_context_.reset(new ServiceManagerContext);
+void BrowserMainLoop::InitializeMojo() {
 #if defined(OS_MACOSX)
   mojo::edk::SetMachPortProvider(MachBroker::GetInstance());
 #endif  // defined(OS_MACOSX)
-  GetContentClient()->OnServiceManagerConnected(
-      ServiceManagerConnection::GetForProcess());
 
   tracing_controller_ = std::make_unique<content::TracingControllerImpl>();
   content::BackgroundTracingManagerImpl::GetInstance()

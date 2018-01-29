@@ -66,6 +66,8 @@ class CONTENT_EXPORT BrowserMainParts {
   // Allows an embedder to do any extra toolkit initialization.
   virtual void ToolkitInitialized() {}
 
+  virtual void MainMessageLoopStart() {}
+
   // Called just before any child threads owned by the content
   // framework are created.
   //
