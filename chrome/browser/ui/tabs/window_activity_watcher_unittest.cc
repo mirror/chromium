@@ -224,13 +224,6 @@ TEST_F(WindowActivityWatcherTest, MultipleWindows) {
     ukm_entry_checker()->ExpectNewEntry(kEntryName, GURL(), expected_metrics);
   }
 
-  AddTab(browser.get());
-  expected_metrics[TabManager_WindowMetrics::kTabCountName].value()++;
-  {
-    SCOPED_TRACE("");
-    ukm_entry_checker()->ExpectNewEntry(kEntryName, GURL(), expected_metrics);
-  }
-
   browser->window()->Minimize();
   expected_metrics[TabManager_WindowMetrics::kShowStateName] =
       WindowMetricsEvent::SHOW_STATE_MINIMIZED;
@@ -395,25 +388,77 @@ TEST_F(WindowActivityWatcherTest, ReplaceTab) {
   browser->tab_strip_model()->CloseAllTabs();
 }
 
-// Tests that counts are properly bucketized.
-TEST_F(WindowActivityWatcherTest, Counts) {
+// Tests that window show state change counts are properly bucketized.
+TEST_F(WindowActivityWatcherTest, ShowStateChangeCounts) {
+  Browser::CreateParams params(profile(), true);
+  std::unique_ptr<Browser> browser =
+      FakeBrowserWindow::CreateBrowserWithFakeWindowForParams(&params);
+  UkmMetricMap expected_metrics({
+      {TabManager_WindowMetrics::kMaximizeCountName, 0},
+  });
+
+  AddTab(browser.get());
+  ukm_entry_checker()->ExpectNewEntry(kEntryName, GURL(), expected_metrics);
+
+  // Expected buckets for each count value.
+  const std::vector<int> kExpectedBuckets = {
+      // clang-format off
+      0,
+      1,
+      2, 2,
+      4, 4, 4, 4,
+      8, 8, 8, 8, 8, 8, 8, 8,
+      16, 16,  // ...
+      // clang-format on
+  };
+
+  for (size_t i = 1; i < kExpectedBuckets.size(); i++) {
+    SCOPED_TRACE(base::StringPrintf("Iteration: %zd", i));
+    browser->window()->Maximize();
+    expected_metrics[TabManager_WindowMetrics::kMaximizeCountName] =
+        kExpectedBuckets[i];
+    ukm_entry_checker()->ExpectNewEntry(kEntryName, GURL(), expected_metrics);
+
+    // Restore the window so we can maximize again. This logs another entry.
+    browser->window()->Restore();
+    ukm_entry_checker()->ExpectNewEntry(kEntryName, GURL(), expected_metrics);
+  }
+
+  browser->tab_strip_model()->CloseAllTabs();
+}
+
+// Tests that tab counts (which use a custom spacing factor) are properly
+// bucketized.
+TEST_F(WindowActivityWatcherTest, TabCounts) {
   Browser::CreateParams params(profile(), true);
   std::unique_ptr<Browser> browser =
       FakeBrowserWindow::CreateBrowserWithFakeWindowForParams(&params);
   UkmMetricMap expected_metrics;
 
   // Expected buckets for each tab count using a spacing factor of 1.5.
-  std::vector<int> expected_buckets = {
+  const std::vector<int> kExpectedBuckets = {
+      // clang-format off
       0,        // Not actually tested, since we don't log windows with 0 tabs.
       1, 2, 3,  // Values up to 3 should be represented exactly.
-      4, 4, 6, 6, 8, 8, 8, 8, 12, 12, 12, 12, 12, 12, 18,
+      4, 4,
+      6, 6,
+      8, 8, 8, 8,
+      12, 12, 12, 12, 12, 12,
+      18, 18,  // ...
+      // clang-format on
   };
 
-  for (size_t i = 1; i < expected_buckets.size(); i++) {
+  for (size_t i = 1; i < kExpectedBuckets.size(); i++) {
     SCOPED_TRACE(base::StringPrintf("Tab count: %zd", i));
     AddTab(browser.get());
+    // We only log a new UKM if the values are different, post-sanitization.
+    if (kExpectedBuckets[i] == kExpectedBuckets[i - 1]) {
+      EXPECT_EQ(0, ukm_entry_checker()->NumNewEntriesRecorded(kEntryName));
+      continue;
+    }
+
     expected_metrics[TabManager_WindowMetrics::kTabCountName] =
-        expected_buckets[i];
+        kExpectedBuckets[i];
     ukm_entry_checker()->ExpectNewEntry(kEntryName, GURL(), expected_metrics);
   }
 
