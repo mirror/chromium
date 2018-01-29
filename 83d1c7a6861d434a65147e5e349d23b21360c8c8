@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b450b606_6cbf9485",
+        "filename": "third_party/WebKit/LayoutTests/media/picture-in-picture/exit-picture-in-picture.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002525
+      },
+      "writtenOn": "2018-01-29T14:35:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5042e8a_3d21a19c",
+      "revId": "83d1c7a6861d434a65147e5e349d23b21360c8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34e085c4_841b689e",
         "filename": "third_party/WebKit/LayoutTests/media/picture-in-picture/picture-in-picture-element.html",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "002c38c5_80a41f29",
+        "filename": "third_party/WebKit/LayoutTests/media/picture-in-picture/picture-in-picture-element.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002525
+      },
+      "writtenOn": "2018-01-29T14:35:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34e085c4_841b689e",
+      "revId": "83d1c7a6861d434a65147e5e349d23b21360c8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ab398ff_c13042e1",
         "filename": "third_party/WebKit/Source/modules/picture_in_picture/DocumentPictureInPicture.cpp",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "83d1c7a6861d434a65147e5e349d23b21360c8c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6edd5293_59b0a347",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/DocumentPictureInPicture.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002525
+      },
+      "writtenOn": "2018-01-29T14:35:52Z",
+      "side": 1,
+      "message": "I\u0027ll use ScriptPromise::CastUndefined(script_state); to make our tests look good.",
+      "parentUuid": "3ab398ff_c13042e1",
+      "revId": "83d1c7a6861d434a65147e5e349d23b21360c8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "063a4976_e2d8c631",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/DocumentPictureInPicture.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002525
+      },
+      "writtenOn": "2018-01-29T14:35:52Z",
+      "side": 1,
+      "message": "I\u0027ll keep HTMLVideoElement for now and will update if needed once we\u0027ve settled https://github.com/WICG/picture-in-picture/pull/39",
+      "parentUuid": "28124547_8eff0438",
+      "range": {
+        "startLine": 15,
+        "startChar": 23,
+        "endLine": 15,
+        "endChar": 39
+      },
+      "revId": "83d1c7a6861d434a65147e5e349d23b21360c8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8891668_732c0df3",
         "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.cpp",
         "patchSetId": 1
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "1e865235_9365bc56",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002525
+      },
+      "writtenOn": "2018-01-29T14:35:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8891668_732c0df3",
+      "revId": "83d1c7a6861d434a65147e5e349d23b21360c8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eee7b384_193f4300",
         "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.cpp",
         "patchSetId": 1
@@ -107,6 +203,24 @@
       "revId": "83d1c7a6861d434a65147e5e349d23b21360c8c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64410e75_b6ca3667",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002525
+      },
+      "writtenOn": "2018-01-29T14:35:52Z",
+      "side": 1,
+      "message": "Looking at https://cs.chromium.org/search/?q\u003d%22visitor-%3ETrace%22+f:modules+f:cpp\u0026p\u003d4\u0026type\u003dcs, it seems like people keep members at the top.",
+      "parentUuid": "eee7b384_193f4300",
+      "revId": "83d1c7a6861d434a65147e5e349d23b21360c8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -133,6 +247,30 @@
     },
     {
       "key": {
+        "uuid": "3a1f972b_cfc989d1",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002525
+      },
+      "writtenOn": "2018-01-29T14:35:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f84338f9_7bea1e6c",
+      "range": {
+        "startLine": 9,
+        "startChar": 26,
+        "endLine": 9,
+        "endChar": 42
+      },
+      "revId": "83d1c7a6861d434a65147e5e349d23b21360c8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9d9c906_f93ddf9f",
         "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.h",
         "patchSetId": 1
@@ -153,6 +291,30 @@
       "revId": "83d1c7a6861d434a65147e5e349d23b21360c8c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca3bb529_0c9d0868",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002525
+      },
+      "writtenOn": "2018-01-29T14:35:52Z",
+      "side": 1,
+      "message": "I wasn\u0027t able to make it work.",
+      "parentUuid": "e9d9c906_f93ddf9f",
+      "range": {
+        "startLine": 43,
+        "startChar": 20,
+        "endLine": 43,
+        "endChar": 43
+      },
+      "revId": "83d1c7a6861d434a65147e5e349d23b21360c8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
