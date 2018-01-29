@@ -386,10 +386,10 @@ void RasterImplementationGLES::BeginRasterCHROMIUM(
     GLuint msaa_sample_count,
     GLboolean can_use_lcd_text,
     GLboolean use_distance_field_text,
-    GLint pixel_config) {
+    GLint color_type) {
   gl_->BeginRasterCHROMIUM(texture_id, sk_color, msaa_sample_count,
                            can_use_lcd_text, use_distance_field_text,
-                           pixel_config);
+                           color_type);
 };
 
 void RasterImplementationGLES::RasterCHROMIUM(
