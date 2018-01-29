@@ -7,8 +7,6 @@
 <script>
 description("Tests the RTCPeerConnection constructor.");
 
-shouldBe("webkitRTCPeerConnection", "RTCPeerConnection");
-
 shouldNotThrow("new RTCPeerConnection(null);");
 shouldNotThrow("new RTCPeerConnection(undefined);");
 shouldNotThrow("new RTCPeerConnection({});");
