@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98ab585b_68538662",
+        "filename": "chrome/browser/chromeos/extensions/quick_unlock_private/quick_unlock_private_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-01-29T19:22:34Z",
+      "side": 1,
+      "message": "optional: since this no longer returns a boolean change the name maybe GetCredentialProblemForPin",
+      "revId": "1b78c236c2a2150118d4187b84993d42e7f4d1e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ed00578_1606707a",
+        "filename": "chrome/browser/chromeos/extensions/quick_unlock_private/quick_unlock_private_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-01-29T19:22:34Z",
+      "side": 1,
+      "message": "optional nit: it\u0027s not clear what auto means here",
+      "revId": "1b78c236c2a2150118d4187b84993d42e7f4d1e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
