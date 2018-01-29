@@ -2,6 +2,121 @@
   "comments": [
     {
       "key": {
+        "uuid": "88e504d0_41565e50",
+        "filename": "chrome/browser/ssl/ssl_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-29T19:45:37Z",
+      "side": 1,
+      "message": "This will always be false when committed interstitials are enabled. I think you want to call IsShowingInterstitial() instead.",
+      "range": {
+        "startLine": 879,
+        "startChar": 4,
+        "endLine": 879,
+        "endChar": 49
+      },
+      "revId": "e6a3625709c11b0c6196bba15656c1e68889095b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8071918_06c43359",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-29T19:45:37Z",
+      "side": 1,
+      "message": "nit: please move this right below WillProcessResponse to match declaration order",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 1
+      },
+      "revId": "e6a3625709c11b0c6196bba15656c1e68889095b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bba89f0_c771ae5f",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-29T19:45:37Z",
+      "side": 1,
+      "message": "nit: move this above WillProcessResponse to match declaration order",
+      "range": {
+        "startLine": 74,
+        "startChar": 28,
+        "endLine": 74,
+        "endChar": 43
+      },
+      "revId": "e6a3625709c11b0c6196bba15656c1e68889095b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0000b8eb_728551f4",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-29T19:45:37Z",
+      "side": 1,
+      "message": "nit: I read this as \"post-show\" as in \"after showing the interstitial\" and got confused. Maybe rename to QueueShowInterstitial()?",
+      "range": {
+        "startLine": 93,
+        "startChar": 33,
+        "endLine": 93,
+        "endChar": 53
+      },
+      "revId": "e6a3625709c11b0c6196bba15656c1e68889095b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "929dd9a3_e08de6c8",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 947,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-29T19:45:37Z",
+      "side": 1,
+      "message": "See https://chromium-review.googlesource.com/c/chromium/src/+/768930/10/content/browser/frame_host/navigation_request.cc#928 -- sounds like we can remove this case now.\n\nCome to think of it, you might want to look through all the comments on that CL. It was a CL that Lucas started but didn\u0027t finish for supporting committed interstitials for Supervised User interstitials, and it overlaps a bit with this one.",
+      "range": {
+        "startLine": 947,
+        "startChar": 24,
+        "endLine": 947,
+        "endChar": 62
+      },
+      "revId": "e6a3625709c11b0c6196bba15656c1e68889095b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44b7d73b_cca5dd1b",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 4
@@ -13,6 +128,47 @@
       "writtenOn": "2018-01-23T04:50:04Z",
       "side": 1,
       "message": "I believe this DCHECK is there because OnRequestFailedInternal would show an error page only relevant to canceled requests with net::ERR_ABORTED. So I think checking if there is an error page provided would make sense. But I need to double check this. The DCHECK came from nick@ in a patch[1] that introduced different types of net errors but there are no comments about the DCHECK. Do you happen to know its purpose?\n\n[1] https://codereview.chromium.org/2867833002/",
+      "revId": "e6a3625709c11b0c6196bba15656c1e68889095b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edcf2155_f8b68073",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1220,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-29T19:45:37Z",
+      "side": 1,
+      "message": "Yeah, I don\u0027t understand these DCHECKs very well either. You might want to check with clamy@ (see also https://chromium-review.googlesource.com/c/chromium/src/+/768930 which I mentioned above). Per the comments on that CL, I *think* the plan may be that we are no longer requiring ERR_ABORTED for CANCEL but only for CANCEL_AND_IGNORE.",
+      "parentUuid": "44b7d73b_cca5dd1b",
+      "revId": "e6a3625709c11b0c6196bba15656c1e68889095b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "293c04dd_3b1f5202",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1221,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-29T19:45:37Z",
+      "side": 1,
+      "message": "I don\u0027t think I understand why this is added (why does the throttle have to provide error_page_content?)",
+      "range": {
+        "startLine": 1221,
+        "startChar": 11,
+        "endLine": 1221,
+        "endChar": 50
+      },
       "revId": "e6a3625709c11b0c6196bba15656c1e68889095b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
