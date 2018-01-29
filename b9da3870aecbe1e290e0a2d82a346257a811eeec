@@ -107,6 +107,40 @@
     },
     {
       "key": {
+        "uuid": "542dabd9_c7184d8d",
+        "filename": "chrome/browser/chromeos/extensions/wallpaper_manager_util.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-29T23:04:29Z",
+      "side": 1,
+      "message": "Please clean up this switch (This can be a follow-up CL.).",
+      "revId": "b9da3870aecbe1e290e0a2d82a346257a811eeec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdb6771c_9a3ed0cb",
+        "filename": "chrome/browser/chromeos/extensions/wallpaper_manager_util.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-29T23:04:29Z",
+      "side": 1,
+      "message": "Please deprecate this histogram. (This can be a follow-up CL.)",
+      "revId": "b9da3870aecbe1e290e0a2d82a346257a811eeec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8484ce97_4a551a29",
         "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
         "patchSetId": 12
