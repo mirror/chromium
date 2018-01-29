@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8263c8e1_82b301e2",
+        "filename": "tools/battor_agent/battor_connection_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2018-01-29T15:58:40Z",
+      "side": 1,
+      "message": "It looks like based on line 290, we\u0027re still sending a control message, so this comment is now innaccurate, right?",
+      "range": {
+        "startLine": 293,
+        "startChar": 65,
+        "endLine": 294,
+        "endChar": 10
+      },
+      "revId": "008bc27fb8c066818d41ade9ac6aaf488546027f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
