@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "063c7bce_fc24b688",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 8
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-01-29T14:58:55Z",
+      "side": 1,
+      "message": "The 5 android_release_ entries here are in the middle of a large chunk of android_debug_* entries.",
+      "parentUuid": "265ae081_b66bc16e",
+      "revId": "4f22599a1673c22131c94325c3c24802fbbf0d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5989f70_8033f4db",
         "filename": "tools/mb/mb_config.pyl",
         "patchSetId": 8
