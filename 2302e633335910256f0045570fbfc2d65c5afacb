@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32e6c502_cdf06adc",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_methods.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-29T13:20:04Z",
+      "side": 1,
+      "message": "nit: I\u0027m not quite sure about the policy, but I vaguely guess that \u0027WTF::Optional\u0027 is preferred?",
+      "range": {
+        "startLine": 267,
+        "startChar": 40,
+        "endLine": 267,
+        "endChar": 48
+      },
+      "revId": "2302e633335910256f0045570fbfc2d65c5afacb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c21412e9_b1e58ec9",
+        "filename": "third_party/WebKit/Source/bindings/templates/methods.cpp.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-29T13:20:04Z",
+      "side": 1,
+      "message": "nit: !result.has_value()\n\nOr, can we simply write |!result|?",
+      "range": {
+        "startLine": 306,
+        "startChar": 4,
+        "endLine": 306,
+        "endChar": 26
+      },
+      "revId": "2302e633335910256f0045570fbfc2d65c5afacb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35b8ede8_4938df95",
+        "filename": "third_party/WebKit/Source/core/html/media/HTMLMediaElement.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2373,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-29T13:20:04Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 2373,
+        "startChar": 9,
+        "endLine": 2373,
+        "endChar": 39
+      },
+      "revId": "2302e633335910256f0045570fbfc2d65c5afacb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37f123e5_67545fe4",
+        "filename": "third_party/WebKit/Source/modules/device_orientation/DeviceOrientationData.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-29T13:20:04Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "2302e633335910256f0045570fbfc2d65c5afacb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f262e41c_28127ceb",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 978,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-29T13:20:04Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "2302e633335910256f0045570fbfc2d65c5afacb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44456bdc_6174f726",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/SQLTransaction.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-29T13:20:04Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "2302e633335910256f0045570fbfc2d65c5afacb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
