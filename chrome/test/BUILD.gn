@@ -1764,7 +1764,10 @@ test("browser_tests") {
       }
     }
     if (is_win) {
-      sources += [ "../browser/printing/pdf_to_emf_converter_browsertest.cc" ]
+      sources += [
+        "../browser/policy/policy_value_browsertest.cc",
+        "../browser/printing/pdf_to_emf_converter_browsertest.cc",
+      ]
       deps += [
         "//chrome:other_version",
         "//chrome/app:command_ids",
