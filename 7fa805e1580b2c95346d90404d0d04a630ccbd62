@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b0660ec_1a5e13da",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-scroll-snap/snap-at-gesture-scroll-end-manual.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-29T18:04:32Z",
+      "side": 1,
+      "message": "nit: This is a blink concept. Should talk about \"user scroll end\".",
+      "range": {
+        "startLine": 35,
+        "startChar": 42,
+        "endLine": 35,
+        "endChar": 58
+      },
+      "revId": "7fa805e1580b2c95346d90404d0d04a630ccbd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f82e2e7d_f32aed5c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-scroll-snap/snap-at-gesture-scroll-end-manual.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-29T18:04:32Z",
+      "side": 1,
+      "message": "Is this really a requirement? Should work even if I scroll one direction\nand then the other as long as it background turns yello",
+      "range": {
+        "startLine": 38,
+        "startChar": 52,
+        "endLine": 38,
+        "endChar": 66
+      },
+      "revId": "7fa805e1580b2c95346d90404d0d04a630ccbd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71850a30_34a23506",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-scroll-snap/snap-at-gesture-scroll-end-manual.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-29T18:04:32Z",
+      "side": 1,
+      "message": "nit: unnecessary indentation also conflict with the next block!",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 2
+      },
+      "revId": "7fa805e1580b2c95346d90404d0d04a630ccbd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "854cc89f_aa5b4693",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-scroll-snap/snap-at-gesture-scroll-end-manual.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-29T18:04:32Z",
+      "side": 1,
+      "message": "BTW, you can actually treat this as a Single Page Test which reduces a lot of this boilerplate.\nYou just need to simply assert and call onclick and it should work as expected.\n\nSee: http://web-platform-tests.org/writing-tests/testharness-api.html",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 66
+      },
+      "revId": "7fa805e1580b2c95346d90404d0d04a630ccbd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "967cc4eb_a77d99ad",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-scroll-snap/snap-at-gesture-scroll-end-manual.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-29T18:04:32Z",
+      "side": 1,
+      "message": "I think this can be just |scrolled_x \u003d window.scrollX !\u003d start_x|",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 22
+      },
+      "revId": "7fa805e1580b2c95346d90404d0d04a630ccbd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82cce7c5_7756c11d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-scroll-snap/snap-at-gesture-scroll-end-manual.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-29T18:04:32Z",
+      "side": 1,
+      "message": "nit: Why is this necessary? Is it because the test result may not be visible otherwise?",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 30
+      },
+      "revId": "7fa805e1580b2c95346d90404d0d04a630ccbd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ed19d5a_61e0a43f",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-29T18:04:32Z",
+      "side": 1,
+      "message": "Can you elaborate why we we are ignoring viewport scroll offset here? (Perhaps a short comment\non why this is special is usefull).\n\nAlso please add a TODO (there should already be a bug) to remove this once RootLayerScrolling is enabled.",
+      "range": {
+        "startLine": 298,
+        "startChar": 3,
+        "endLine": 299,
+        "endChar": 62
+      },
+      "revId": "7fa805e1580b2c95346d90404d0d04a630ccbd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
