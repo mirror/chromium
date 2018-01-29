@@ -20,6 +20,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/synchronization/lock.h"
 #include "base/synchronization/waitable_event.h"
+#include "base/threading/thread_restrictions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "content/public/common/content_features.h"
@@ -829,6 +830,8 @@ int32_t RTCVideoEncoder::InitEncode(const webrtc::VideoCodec* codec_settings,
 
   impl_ = new Impl(gpu_factories_, ProfileToWebRtcVideoCodecType(profile_));
 
+  base::ScopedAllowBaseSyncPrimitives allow_blocking;
+
   base::WaitableEvent initialization_waiter(
       base::WaitableEvent::ResetPolicy::MANUAL,
       base::WaitableEvent::InitialState::NOT_SIGNALED);
@@ -841,6 +844,7 @@ int32_t RTCVideoEncoder::InitEncode(const webrtc::VideoCodec* codec_settings,
                      &initialization_waiter, &initialization_retval));
 
   // webrtc::VideoEncoder expects this call to be synchronous.
+  base::ScopedAllowBaseSyncPrimitives allow_blocking;
   initialization_waiter.Wait();
   RecordInitEncodeUMA(initialization_retval, profile_);
   return initialization_retval;
@@ -868,6 +872,7 @@ int32_t RTCVideoEncoder::Encode(
                      want_key_frame, &encode_waiter, &encode_retval));
 
   // webrtc::VideoEncoder expects this call to be synchronous.
+  base::ScopedAllowBaseSyncPrimitives allow_blocking;
   encode_waiter.Wait();
   DVLOG(3) << "Encode(): returning encode_retval=" << encode_retval;
   return encode_retval;
@@ -889,6 +894,7 @@ int32_t RTCVideoEncoder::RegisterEncodeCompleteCallback(
       FROM_HERE,
       base::BindOnce(&RTCVideoEncoder::Impl::RegisterEncodeCompleteCallback,
                      impl_, &register_waiter, &register_retval, callback));
+  base::ScopedAllowBaseSyncPrimitives allow_blocking;
   register_waiter.Wait();
   return register_retval;
 }
@@ -904,6 +910,7 @@ int32_t RTCVideoEncoder::Release() {
   gpu_task_runner_->PostTask(
       FROM_HERE,
       base::BindOnce(&RTCVideoEncoder::Impl::Destroy, impl_, &release_waiter));
+  base::ScopedAllowBaseSyncPrimitives allow_blocking;
   release_waiter.Wait();
   impl_ = nullptr;
   return WEBRTC_VIDEO_CODEC_OK;

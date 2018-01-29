@@ -42,6 +42,7 @@ class BrowserSurfaceViewManager;
 class BrowserTestBase;
 class CategorizedWorkerPool;
 class NestedMessagePumpAndroid;
+class RTCVideoEncoder;
 class ScopedAllowWaitForAndroidLayoutTests;
 class ScopedAllowWaitForDebugURL;
 class SessionStorageDatabase;
@@ -266,6 +267,7 @@ class BASE_EXPORT ScopedAllowBaseSyncPrimitives {
   FRIEND_TEST_ALL_PREFIXES(ThreadRestrictionsTest,
                            ScopedAllowBaseSyncPrimitivesWithBlockingDisallowed);
   friend class base::GetAppOutputScopedAllowBaseSyncPrimitives;
+  friend class content::RTCVideoEncoder;
   friend class content::SessionStorageDatabase;
   friend class leveldb::LevelDBMojoProxy;
   friend class media::BlockingUrlProtocol;
