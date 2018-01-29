@@ -54,11 +54,13 @@ DesktopMediaPickerDialogView::DesktopMediaPickerDialogView(
     content::WebContents* parent_web_contents,
     gfx::NativeWindow context,
     DesktopMediaPickerViews* parent,
+    ui::ModalType modality,
     const base::string16& app_name,
     const base::string16& target_name,
     std::vector<std::unique_ptr<DesktopMediaList>> source_lists,
     bool request_audio)
     : parent_(parent),
+      modality_(modality),
       description_label_(new views::Label()),
       audio_share_checkbox_(nullptr),
       pane_(new views::TabbedPane()) {
@@ -281,7 +283,7 @@ gfx::Size DesktopMediaPickerDialogView::CalculatePreferredSize() const {
 }
 
 ui::ModalType DesktopMediaPickerDialogView::GetModalType() const {
-  return ui::MODAL_TYPE_CHILD;
+  return modality_;
 }
 
 base::string16 DesktopMediaPickerDialogView::GetWindowTitle() const {
@@ -426,18 +428,14 @@ DesktopMediaPickerViews::~DesktopMediaPickerViews() {
 }
 
 void DesktopMediaPickerViews::Show(
-    content::WebContents* web_contents,
-    gfx::NativeWindow context,
-    gfx::NativeWindow parent,
-    const base::string16& app_name,
-    const base::string16& target_name,
+    const DesktopMediaPicker::ShowParams& params,
     std::vector<std::unique_ptr<DesktopMediaList>> source_lists,
-    bool request_audio,
     const DoneCallback& done_callback) {
   callback_ = done_callback;
   dialog_ = new DesktopMediaPickerDialogView(
-      web_contents, context, this, app_name, target_name,
-      std::move(source_lists), request_audio);
+      params.web_contents, params.context, this, params.modality,
+      params.app_name, params.target_name, std::move(source_lists),
+      params.request_audio);
 }
 
 void DesktopMediaPickerViews::NotifyDialogResult(DesktopMediaID source) {
