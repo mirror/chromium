@@ -120,6 +120,24 @@
     },
     {
       "key": {
+        "uuid": "1bdb6db5_333ee7f3",
+        "filename": "cc/raster/zero_copy_raster_buffer_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2018-01-29T23:35:39Z",
+      "side": 1,
+      "message": "Ok, that rationale makes sense. Thanks for explaining.",
+      "parentUuid": "99bbfd07_37f6e292",
+      "revId": "95cb5704e05a40bf1f0fae958e92abe2808cfc8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef990823_f3d29faa",
         "filename": "cc/raster/zero_copy_raster_buffer_provider.cc",
         "patchSetId": 7
@@ -290,6 +308,24 @@
       "side": 1,
       "message": "Right, that\u0027s |returned_sync_token| which is a different field, it\u0027s set in OnResourceReturned here when the ResourceProvider gives the id back (after it\u0027s deleted).\n\nIn fact there\u0027s never a sync token in both fields but I liked 2 names to make their use more clear instead of ResourceProvider-type enums.",
       "parentUuid": "321b3a56_8b49ab49",
+      "revId": "95cb5704e05a40bf1f0fae958e92abe2808cfc8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a91e4d7_31df7fc0",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2018-01-29T23:35:39Z",
+      "side": 1,
+      "message": "I meant returned_sync_token should be set to mailbox_sync_token (somehow) if the sync token that the browser returns is empty.",
+      "parentUuid": "31f87ef3_9ad5c087",
       "revId": "95cb5704e05a40bf1f0fae958e92abe2808cfc8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
