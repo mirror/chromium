@@ -1,0 +1,14 @@
+# Copyright 2018 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+mojom = "//mojo/common/big_string.mojom"
+public_headers = []
+traits_headers = [ "//mojo/common/big_string_struct_traits.h" ]
+sources = [
+  "//mojo/common/big_string_struct_traits.cc",
+]
+public_deps = [
+  "//mojo/public/cpp/base",
+]
+type_mappings = [ "mojo.common.mojom.BigString=std::string" ]
