@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d62a36b9_541c5dcf",
+        "filename": "third_party/WebKit/Source/platform/heap/ProcessHeap.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-29T09:13:16Z",
+      "side": 1,
+      "message": "This semantics is a bit tricky... I\u0027d prefer rewriting the call site to directly use TryLock and Unlock of RecursiveMutex. The remove the trylock logic from CrossThreadPersistentLockScope.",
+      "revId": "66fedc24507adf3fb7b60bd6995820abfc814f3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c1e2402_775a7e4d",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1293,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-29T09:13:16Z",
+      "side": 1,
+      "message": "I\u0027d move this to MarkPhaseEpilogue.",
+      "revId": "66fedc24507adf3fb7b60bd6995820abfc814f3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
