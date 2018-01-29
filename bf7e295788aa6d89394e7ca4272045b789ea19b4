@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "71d6576f_b20cc246",
+        "filename": "testing/buildbot/gn_isolate_map.pyl",
+        "patchSetId": 5
+      },
+      "lineNbr": 984,
+      "author": {
+        "id": 1189781
+      },
+      "writtenOn": "2018-01-29T21:06:52Z",
+      "side": 1,
+      "message": "Yep! In case folks looking at this later are confused, since this script isn\u0027t working yet, we\u0027re going to stick with adding the additional isolate and then removing it as soon as performance_test_suite\u0027s script is good to go",
+      "parentUuid": "1c238421_3accf1f7",
+      "revId": "bf7e295788aa6d89394e7ca4272045b789ea19b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3601fbc8_a4f3b649",
         "filename": "tools/perf/chrome_telemetry_build/BUILD.gn",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "bf7e295788aa6d89394e7ca4272045b789ea19b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc658db7_6f9588f5",
+        "filename": "tools/perf/chrome_telemetry_build/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1189781
+      },
+      "writtenOn": "2018-01-29T21:06:52Z",
+      "side": 1,
+      "message": "Let\u0027s keep them as copy paste for now since we\u0027ll likely be removing this one once we no longer need this trybot (and I don\u0027t want to have to undo any more code changes than needed at that point)",
+      "parentUuid": "3601fbc8_a4f3b649",
+      "revId": "bf7e295788aa6d89394e7ca4272045b789ea19b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
