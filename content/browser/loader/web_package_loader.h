@@ -7,8 +7,10 @@
 
 #include "base/optional.h"
 #include "mojo/public/cpp/bindings/binding.h"
+#include "mojo/public/cpp/system/simple_watcher.h"
 #include "net/ssl/ssl_info.h"
 #include "net/url_request/redirect_info.h"
+#include "services/network/public/cpp/net_adapters.h"
 #include "services/network/public/interfaces/url_loader.mojom.h"
 
 namespace content {
@@ -66,12 +68,13 @@ class WebPackageLoader final : public network::mojom::URLLoaderClient,
       const GURL& request_url,
       const std::string& request_method,
       const network::ResourceResponseHead& resource_response,
-      base::Optional<net::SSLInfo> ssl_info,
-      mojo::ScopedDataPipeConsumerHandle body);
+      base::Optional<net::SSLInfo> ssl_info);
 
-  // Called from |signed_exchange_handler_| when it finished sending the
-  // payload of the origin-signed HTTP response.
-  void OnHTTPExchangeFinished(const network::URLLoaderCompletionStatus& status);
+  void ReadMore();
+  void DidRead(int result);
+  void FinishReadingBody(int result);
+  void OnResponseBodyStreamWritable(MojoResult result);
+  void OnResponseBodyStreamClosed(MojoResult result);
 
   // This timing info is used to create a dummy redirect response.
   std::unique_ptr<const ResponseTimingInfo> original_response_timing_info_;
@@ -93,10 +96,12 @@ class WebPackageLoader final : public network::mojom::URLLoaderClient,
 
   std::unique_ptr<SignedExchangeHandler> signed_exchange_handler_;
 
-  // This is used to keep the DataPipe until ProceedWithResponse() is called.
-  mojo::ScopedDataPipeConsumerHandle pending_body_;
-  // This is used to keep the status until ProceedWithResponse() is called.
-  base::Optional<network::URLLoaderCompletionStatus> pending_completion_status_;
+  // For reading the body stream.
+  mojo::ScopedDataPipeProducerHandle body_producer_;
+  mojo::ScopedDataPipeConsumerHandle pending_body_consumer_;
+  scoped_refptr<network::NetToMojoPendingBuffer> pending_write_;
+  mojo::SimpleWatcher writable_handle_watcher_;
+  mojo::SimpleWatcher peer_closed_handle_watcher_;
 
   base::WeakPtrFactory<WebPackageLoader> weak_factory_;
 
