@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f19f19d9_8e7706d1",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1223,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-29T20:47:08Z",
+      "side": 1,
+      "message": "Row headers get handled automagically based on ancestry. i.e. a rows\u0027 output rule picks up on rolw header. This handles only reading row headers when entering a new ancestry containing a row. In other words, doesn\u0027t get handled here.\n\nThe only case I can see is if a column header wants to know it is a header for itself?",
+      "parentUuid": "8c565168_a365ef5e",
+      "revId": "e962b7096934413e1a0082b75b44aef39a230974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27bdb777_5ebe188f",
         "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-29T17:49:35Z",
       "side": 1,
       "message": "Note that we could expose indirect_child_ids if we wanted to...would\nthat make things easier?",
+      "revId": "e962b7096934413e1a0082b75b44aef39a230974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0eff0f8_b25d929f",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1224,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-29T20:47:08Z",
+      "side": 1,
+      "message": "Indirect parents would be easier in this case. Easiest would be if column header relations were placed on the cell directly. Right now, we put headers for rows on the ancestor row node, headers for columns on the ancestor column nodes.",
+      "parentUuid": "27bdb777_5ebe188f",
       "revId": "e962b7096934413e1a0082b75b44aef39a230974",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
