@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83307106_de6aa82e",
+        "filename": "ios/web/public/web_state/ui/crw_web_view_scroll_view_proxy.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-29T16:23:07Z",
+      "side": 1,
+      "message": "Is there a reason for not using a property?",
+      "range": {
+        "startLine": 52,
+        "startChar": 8,
+        "endLine": 52,
+        "endChar": 24
+      },
+      "revId": "d970de1c79e642f3a7ce247d651c760a9c6270ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a4b3438_178592ca",
+        "filename": "ios/web/public/web_state/ui/crw_web_view_scroll_view_proxy.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-29T16:23:07Z",
+      "side": 1,
+      "message": "Can we add a unit test for this API?",
+      "range": {
+        "startLine": 52,
+        "startChar": 24,
+        "endLine": 52,
+        "endChar": 25
+      },
+      "revId": "d970de1c79e642f3a7ce247d651c760a9c6270ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1df490d_33171d2f",
+        "filename": "ios/web/web_state/ui/crw_web_view_content_view.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-29T16:23:07Z",
+      "side": 1,
+      "message": "Per previous comments, can we make these calls in ios/chrome layer instead?",
+      "range": {
+        "startLine": 53,
+        "startChar": 12,
+        "endLine": 53,
+        "endChar": 25
+      },
+      "revId": "d970de1c79e642f3a7ce247d651c760a9c6270ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
