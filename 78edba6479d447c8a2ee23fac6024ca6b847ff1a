@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "52358a42_27d2eabb",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-29T05:30:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3067917d_203c6263",
+      "revId": "78edba6479d447c8a2ee23fac6024ca6b847ff1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ecfb1e79_f74fcfbe",
         "filename": "ash/magnifier/magnification_controller_unittest.cc",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "78edba6479d447c8a2ee23fac6024ca6b847ff1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "901f797b_c1bd6930",
+        "filename": "ash/magnifier/magnification_controller_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-29T05:30:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecfb1e79_f74fcfbe",
+      "revId": "78edba6479d447c8a2ee23fac6024ca6b847ff1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7deebfa5_6cf4e2e7",
+        "filename": "ash/magnifier/magnification_controller_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-29T05:30:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d49897e_becbc09f",
+      "revId": "78edba6479d447c8a2ee23fac6024ca6b847ff1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5297c02_c129c38b",
         "filename": "ash/magnifier/magnification_controller_unittest.cc",
         "patchSetId": 12
@@ -64,6 +118,24 @@
       "writtenOn": "2018-01-26T17:45:35Z",
       "side": 1,
       "message": "nit: Comment what this block of code is simulating (it looks like 819 to 838 is simulating a gesture sequence, but it would help to have a comment saying what/why).",
+      "revId": "78edba6479d447c8a2ee23fac6024ca6b847ff1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1facc6f0_2e893d0a",
+        "filename": "ash/magnifier/magnification_controller_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-29T05:30:30Z",
+      "side": 1,
+      "message": "Also added a comment at line 832 to explain what this sequence is testing.",
+      "parentUuid": "c5297c02_c129c38b",
       "revId": "78edba6479d447c8a2ee23fac6024ca6b847ff1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "6c2eeac1_b7b2eb9b",
+        "filename": "ash/magnifier/magnification_controller_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 895,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-29T05:30:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae1bd275_0732e812",
+      "revId": "78edba6479d447c8a2ee23fac6024ca6b847ff1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4aca0992_30f00e24",
         "filename": "ash/magnifier/magnification_controller_unittest.cc",
         "patchSetId": 12
@@ -101,6 +191,24 @@
       "revId": "78edba6479d447c8a2ee23fac6024ca6b847ff1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44c2961f_b84bb941",
+        "filename": "ash/magnifier/magnification_controller_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 908,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-29T05:30:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4aca0992_30f00e24",
+      "revId": "78edba6479d447c8a2ee23fac6024ca6b847ff1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
