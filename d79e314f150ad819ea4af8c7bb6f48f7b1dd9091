@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "255b880f_233712fa",
+        "filename": "base/i18n/rtl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2018-01-29T17:32:58Z",
+      "side": 1,
+      "message": "The question about Windows is answered by the above comment. However, I think we don\u0027t have to worry about this any more because we don\u0027t support Windows XP any more and I believe Windows 7 or later does come with RTL/BiDi support out of the box regardless of the UI language of the OS. \n\nWe need a bit of testing, though. It\u0027d be nice to file a bug on this and add a TODO comment referring to the bug.",
+      "range": {
+        "startLine": 105,
+        "startChar": 3,
+        "endLine": 113,
+        "endChar": 41
+      },
+      "revId": "d79e314f150ad819ea4af8c7bb6f48f7b1dd9091",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f15ed8a_046b2351",
         "filename": "chrome/common/extensions/extension_unittest.cc",
         "patchSetId": 5
