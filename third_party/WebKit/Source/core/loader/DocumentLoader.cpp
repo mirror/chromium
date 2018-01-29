@@ -199,6 +199,8 @@ const KURL& DocumentLoader::Url() const {
 Resource* DocumentLoader::StartPreload(Resource::Type type,
                                        FetchParameters& params,
                                        CSSPreloaderResourceClient* client) {
+  LOG(ERROR) << "DocumentLoader::StartPreload "
+             << params.Url().GetString().Utf8().data();
   Resource* resource = nullptr;
   DCHECK(!client || type == Resource::kCSSStyleSheet);
   switch (type) {

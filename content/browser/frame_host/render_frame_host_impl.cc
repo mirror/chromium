@@ -53,6 +53,7 @@
 #include "content/browser/keyboard_lock/keyboard_lock_service_impl.h"
 #include "content/browser/loader/resource_dispatcher_host_impl.h"
 #include "content/browser/loader/resource_scheduler_filter.h"
+#include "content/browser/loader/signed_exchange_prefetch_service_impl.h"
 #include "content/browser/media/capture/audio_mirroring_manager.h"
 #include "content/browser/media/media_interface_proxy.h"
 #include "content/browser/media/session/media_session_service_impl.h"
@@ -151,6 +152,7 @@
 #include "third_party/WebKit/common/feature_policy/feature_policy.h"
 #include "third_party/WebKit/common/frame_policy.h"
 #include "third_party/WebKit/common/page/page_visibility_state.mojom.h"
+#include "third_party/WebKit/public/platform/modules/htxg/signed_exchange_prefetch_service.mojom.h"
 #include "ui/accessibility/ax_tree.h"
 #include "ui/accessibility/ax_tree_id_registry.h"
 #include "ui/accessibility/ax_tree_update.h"
@@ -3267,6 +3269,14 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
   // TODO(crbug.com/775792): Move to RendererInterfaceBinders.
   registry_->AddInterface(base::BindRepeating(
       &QuotaDispatcherHost::CreateForFrame, GetProcess(), routing_id_));
+
+  if (base::FeatureList::IsEnabled(features::kSignedHTTPExchange)) {
+    registry_->AddInterface(base::BindRepeating(
+        &SignedExchangePrefetchServiceImpl::CreateMojoService,
+        BrowserContext::GetStoragePartition(
+            GetSiteInstance()->GetBrowserContext(), GetSiteInstance()),
+        GetProcess()->GetID()));
+  }
 }
 
 void RenderFrameHostImpl::ResetWaitingState() {

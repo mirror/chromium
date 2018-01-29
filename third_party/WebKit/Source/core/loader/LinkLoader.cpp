@@ -51,6 +51,7 @@
 #include "core/loader/resource/LinkFetchResource.h"
 #include "core/script/ModuleScript.h"
 #include "core/script/ScriptLoader.h"
+#include "mojo/public/cpp/bindings/binding.h"
 #include "platform/Prerender.h"
 #include "platform/loader/LinkHeader.h"
 #include "platform/loader/SubresourceIntegrity.h"
@@ -61,9 +62,14 @@
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/fetch_initiator_type_names.h"
 #include "platform/network/mime/MIMETypeRegistry.h"
+#include "platform/wtf/Functional.h"
 #include "public/platform/WebPrerender.h"
+#include "public/platform/modules/htxg/signed_exchange_prefetch_service.mojom-blink.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace blink {
+
+namespace {
 
 static unsigned PrerenderRelTypesFromRelAttribute(
     const LinkRelAttribute& rel_attribute,
@@ -79,93 +85,6 @@ static unsigned PrerenderRelTypesFromRelAttribute(
   }
 
   return result;
-}
-
-class LinkLoader::FinishObserver final
-    : public GarbageCollectedFinalized<ResourceFinishObserver>,
-      public ResourceFinishObserver {
-  USING_GARBAGE_COLLECTED_MIXIN(FinishObserver);
-  USING_PRE_FINALIZER(FinishObserver, ClearResource);
-
- public:
-  FinishObserver(LinkLoader* loader, Resource* resource)
-      : loader_(loader), resource_(resource) {
-    resource_->AddFinishObserver(
-        this, loader_->client_->GetLoadingTaskRunner().get());
-  }
-
-  // ResourceFinishObserver implementation
-  void NotifyFinished() override {
-    if (!resource_)
-      return;
-    loader_->NotifyFinished();
-    ClearResource();
-  }
-  String DebugName() const override {
-    return "LinkLoader::ResourceFinishObserver";
-  }
-
-  Resource* GetResource() { return resource_; }
-  void ClearResource() {
-    if (!resource_)
-      return;
-    resource_->RemoveFinishObserver(this);
-    resource_ = nullptr;
-  }
-
-  void Trace(blink::Visitor* visitor) override {
-    visitor->Trace(loader_);
-    visitor->Trace(resource_);
-    blink::ResourceFinishObserver::Trace(visitor);
-  }
-
- private:
-  Member<LinkLoader> loader_;
-  Member<Resource> resource_;
-};
-
-LinkLoader::LinkLoader(LinkLoaderClient* client,
-                       scoped_refptr<WebTaskRunner> task_runner)
-    : client_(client) {
-  DCHECK(client_);
-}
-
-LinkLoader::~LinkLoader() = default;
-
-void LinkLoader::NotifyFinished() {
-  DCHECK(finish_observer_);
-  Resource* resource = finish_observer_->GetResource();
-  if (resource->ErrorOccurred())
-    client_->LinkLoadingErrored();
-  else
-    client_->LinkLoaded();
-}
-
-// https://html.spec.whatwg.org/#link-type-modulepreload
-void LinkLoader::NotifyModuleLoadFinished(ModuleScript* module) {
-  // Step 11. "If result is null, fire an event named error at the link element,
-  // and return." [spec text]
-  // Step 12. "Fire an event named load at the link element." [spec text]
-  if (!module)
-    client_->LinkLoadingErrored();
-  else
-    client_->LinkLoaded();
-}
-
-void LinkLoader::DidStartPrerender() {
-  client_->DidStartLinkPrerender();
-}
-
-void LinkLoader::DidStopPrerender() {
-  client_->DidStopLinkPrerender();
-}
-
-void LinkLoader::DidSendLoadForPrerender() {
-  client_->DidSendLoadForLinkPrerender();
-}
-
-void LinkLoader::DidSendDOMContentLoadedForPrerender() {
-  client_->DidSendDOMContentLoadedForLinkPrerender();
 }
 
 enum LinkCaller {
@@ -250,33 +169,6 @@ static void PreconnectIfNeeded(
     }
     network_hints_interface.PreconnectHost(href, cross_origin);
   }
-}
-
-WTF::Optional<Resource::Type> LinkLoader::GetResourceTypeFromAsAttribute(
-    const String& as) {
-  DCHECK_EQ(as.DeprecatedLower(), as);
-  if (as == "image") {
-    return Resource::kImage;
-  } else if (as == "script") {
-    return Resource::kScript;
-  } else if (as == "style") {
-    return Resource::kCSSStyleSheet;
-  } else if (as == "video") {
-    return Resource::kVideo;
-  } else if (as == "audio") {
-    return Resource::kAudio;
-  } else if (as == "track") {
-    return Resource::kTextTrack;
-  } else if (as == "font") {
-    return Resource::kFont;
-  } else if (as == "fetch") {
-    return Resource::kRaw;
-  }
-  return WTF::nullopt;
-}
-
-Resource* LinkLoader::GetResourceForTesting() {
-  return finish_observer_ ? finish_observer_->GetResource() : nullptr;
 }
 
 static bool IsSupportedType(Resource::Type resource_type,
@@ -539,6 +431,238 @@ static Resource* PrefetchIfNeeded(Document& document,
   return nullptr;
 }
 
+}  // namespace
+
+class LinkLoader::FinishObserver final
+    : public GarbageCollectedFinalized<ResourceFinishObserver>,
+      public ResourceFinishObserver {
+  USING_GARBAGE_COLLECTED_MIXIN(FinishObserver);
+  USING_PRE_FINALIZER(FinishObserver, ClearResource);
+
+ public:
+  FinishObserver(LinkLoader* loader, Resource* resource)
+      : loader_(loader), resource_(resource) {
+    resource_->AddFinishObserver(
+        this, loader_->client_->GetLoadingTaskRunner().get());
+  }
+
+  // ResourceFinishObserver implementation
+  void NotifyFinished() override {
+    if (!resource_)
+      return;
+    loader_->NotifyFinished();
+    ClearResource();
+  }
+  String DebugName() const override {
+    return "LinkLoader::ResourceFinishObserver";
+  }
+
+  Resource* GetResource() { return resource_; }
+  void ClearResource() {
+    if (!resource_)
+      return;
+    resource_->RemoveFinishObserver(this);
+    resource_ = nullptr;
+  }
+
+  void Trace(blink::Visitor* visitor) override {
+    visitor->Trace(loader_);
+    visitor->Trace(resource_);
+    blink::ResourceFinishObserver::Trace(visitor);
+  }
+
+ private:
+  Member<LinkLoader> loader_;
+  Member<Resource> resource_;
+};
+
+class LinkLoader::SignedExchangePrefetcher final
+    : public GarbageCollectedFinalized<SignedExchangePrefetcher>,
+      public ContextLifecycleObserver,
+      public blink::mojom::blink::SignedExchangePrefetchLoaderClient {
+  USING_GARBAGE_COLLECTED_MIXIN(SignedExchangePrefetcher);
+  USING_PRE_FINALIZER(SignedExchangePrefetcher, Dispose);
+
+ public:
+  static SignedExchangePrefetcher* CreateIfNeeded(
+      const LinkRelAttribute& rel_attribute,
+      const KURL& href,
+      Document* document,
+      const String& as) {
+    if (!rel_attribute.IsLinkPrefetch())
+      return nullptr;
+    if (!href.IsValid() || href.IsEmpty())
+      return nullptr;
+    if (as != "htxg")
+      return nullptr;
+    if (!document->GetFrame())
+      return nullptr;
+
+    return new SignedExchangePrefetcher(document, href);
+  }
+
+  SignedExchangePrefetcher(ExecutionContext* execution_context,
+                           const KURL& href)
+      : ContextLifecycleObserver(execution_context),
+        href_(href),
+        client_binding_(this) {
+    LOG(ERROR) << "SignedExchangePrefetcher::SignedExchangePrefetcher "
+               << href.GetString().Utf8().data();
+    GetFrame()->GetInterfaceProvider().GetInterface(
+        mojo::MakeRequest(&service_));
+    service_.set_connection_error_handler(
+        WTF::Bind(&SignedExchangePrefetcher::OnConnectionError,
+                  WrapWeakPersistent(this)));
+    DCHECK(service_);
+
+    mojom::blink::SignedExchangePrefetchLoaderClientPtr client_ptr;
+    client_binding_.Bind(mojo::MakeRequest(&client_ptr));
+
+    service_->StartPrefetch(mojo::MakeRequest(&loader_), std::move(client_ptr),
+                            href);
+  }
+  ~SignedExchangePrefetcher() {
+    LOG(ERROR) << "SignedExchangePrefetcher::~SignedExchangePrefetcher";
+  }
+  void Dispose() {
+    LOG(ERROR) << "SignedExchangePrefetcher::Dispose";
+    Abort();
+  }
+  void Abort() {
+    LOG(ERROR) << "SignedExchangePrefetcher::Abort " << !!loader_;
+    if (loader_) {
+      loader_->Abort();
+      loader_ = nullptr;
+    }
+  }
+  void OnConnectionError() {
+    LOG(ERROR) << "SignedExchangePrefetcher::OnConnectionError";
+  }
+
+  void OnReceiveResponse(const String& link_header_value) override {
+    LOG(ERROR) << "SignedExchangePrefetcher::OnReceiveResponse "
+               << link_header_value.Utf8().data();
+    LocalFrame* frame = GetFrame();
+    if (!frame || !frame->GetDocument())
+      return;
+    ViewportDescription viewportdescription =
+        frame->GetDocument()->GetViewportDescription();
+
+    if (link_header_value.IsEmpty())
+      return;
+    LinkHeaderSet header_set(link_header_value);
+    Vector<KURL> urls;
+    for (auto& header : header_set) {
+      if (!header.Valid() || header.Url().IsEmpty() || header.Rel().IsEmpty())
+        continue;
+      KURL url(href_, header.Url());
+      LOG(ERROR) << "header.Url  " << url.GetString().Utf8().data();
+      if (!header.Media().IsEmpty()) {
+        if (!MediaMatches(*frame->GetDocument(), header.Media(),
+                          &viewportdescription)) {
+          LOG(ERROR) << "media no match";
+        } else {
+          LOG(ERROR) << "media match";
+          urls.push_back(KURL(url));
+        }
+      } else {
+        // TODO: Add more check.
+        urls.push_back(KURL(url));
+      }
+    }
+    if (!urls.IsEmpty())
+      loader_->PrefetchSubresources(urls);
+  }
+
+  void Trace(blink::Visitor* visitor) override {
+    ContextLifecycleObserver::Trace(visitor);
+  }
+
+ private:
+  void ContextDestroyed(ExecutionContext*) override {
+    LOG(ERROR) << "SignedExchangePrefetcher::ContextDestroyed";
+    Abort();
+  }
+
+  const KURL href_;
+
+  blink::mojom::blink::SignedExchangePrefetchServicePtr service_;
+  blink::mojom::blink::SignedExchangePrefetchLoaderPtr loader_;
+
+  mojo::Binding<blink::mojom::blink::SignedExchangePrefetchLoaderClient>
+      client_binding_;
+};
+
+LinkLoader::LinkLoader(LinkLoaderClient* client,
+                       scoped_refptr<WebTaskRunner> task_runner)
+    : client_(client) {
+  DCHECK(client_);
+}
+
+LinkLoader::~LinkLoader() = default;
+
+void LinkLoader::NotifyFinished() {
+  DCHECK(finish_observer_);
+  Resource* resource = finish_observer_->GetResource();
+  if (resource->ErrorOccurred())
+    client_->LinkLoadingErrored();
+  else
+    client_->LinkLoaded();
+}
+
+// https://html.spec.whatwg.org/#link-type-modulepreload
+void LinkLoader::NotifyModuleLoadFinished(ModuleScript* module) {
+  // Step 11. "If result is null, fire an event named error at the link element,
+  // and return." [spec text]
+  // Step 12. "Fire an event named load at the link element." [spec text]
+  if (!module)
+    client_->LinkLoadingErrored();
+  else
+    client_->LinkLoaded();
+}
+
+void LinkLoader::DidStartPrerender() {
+  client_->DidStartLinkPrerender();
+}
+
+void LinkLoader::DidStopPrerender() {
+  client_->DidStopLinkPrerender();
+}
+
+void LinkLoader::DidSendLoadForPrerender() {
+  client_->DidSendLoadForLinkPrerender();
+}
+
+void LinkLoader::DidSendDOMContentLoadedForPrerender() {
+  client_->DidSendDOMContentLoadedForLinkPrerender();
+}
+
+WTF::Optional<Resource::Type> LinkLoader::GetResourceTypeFromAsAttribute(
+    const String& as) {
+  DCHECK_EQ(as.DeprecatedLower(), as);
+  if (as == "image")
+    return Resource::kImage;
+  if (as == "script")
+    return Resource::kScript;
+  if (as == "style")
+    return Resource::kCSSStyleSheet;
+  if (as == "video")
+    return Resource::kVideo;
+  if (as == "audio")
+    return Resource::kAudio;
+  if (as == "track")
+    return Resource::kTextTrack;
+  if (as == "font")
+    return Resource::kFont;
+  if (as == "fetch")
+    return Resource::kRaw;
+  return WTF::nullopt;
+}
+
+Resource* LinkLoader::GetResourceForTesting() {
+  return finish_observer_ ? finish_observer_->GetResource() : nullptr;
+}
+
 void LinkLoader::LoadLinksFromHeader(
     const String& header_value,
     const KURL& base_url,
@@ -635,6 +759,11 @@ bool LinkLoader::LoadLink(
   if (resource)
     finish_observer_ = new FinishObserver(this, resource);
 
+  if (RuntimeEnabledFeatures::SignedHTTPExchangeEnabled()) {
+    htxg_prefetcher_ = SignedExchangePrefetcher::CreateIfNeeded(
+        rel_attribute, href, &document, as);
+  }
+
   ModulePreloadIfNeeded(rel_attribute, href, document, as, media, nonce,
                         integrity, cross_origin, nullptr, referrer_policy,
                         this);
@@ -672,10 +801,15 @@ void LinkLoader::Abort() {
     finish_observer_->ClearResource();
     finish_observer_ = nullptr;
   }
+  if (htxg_prefetcher_) {
+    htxg_prefetcher_->Abort();
+    htxg_prefetcher_ = nullptr;
+  }
 }
 
 void LinkLoader::Trace(blink::Visitor* visitor) {
   visitor->Trace(finish_observer_);
+  visitor->Trace(htxg_prefetcher_);
   visitor->Trace(client_);
   visitor->Trace(prerender_);
   SingleModuleClient::Trace(visitor);
