@@ -879,6 +879,7 @@ bool AXNodeObject::IsMultiSelectable() const {
                                         multiselectable)) {
         return multiselectable;
       }
+      break;
     }
     default:
       break;
@@ -1582,6 +1583,7 @@ bool AXNodeObject::ValueForRange(float* out_value) const {
         *out_value = (min_value + max_value) / 2.0f;
         return true;
       }
+      FALLTHROUGH;
     }
     case kSplitterRole: {
       *out_value = 50.0f;
