@@ -16,6 +16,24 @@
       "revId": "b484f6dcb0ceb72efbe2fd837c8cf5bcc9977a0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6113fa5a_d0696a97",
+        "filename": "chrome/browser/chromeos/printing/synced_printers_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2018-01-29T21:49:54Z",
+      "side": 1,
+      "message": "That is correct.  I\u0027ve changed ExternalPrintersFactory to dispense WeakPtrs now.",
+      "parentUuid": "1c293b83_e416a61d",
+      "revId": "b484f6dcb0ceb72efbe2fd837c8cf5bcc9977a0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
