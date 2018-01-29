@@ -33,6 +33,11 @@
 #include "crc32_simd.h"
 #include "zutil.h"      /* for STDC and FAR definitions */
 
+#if defined(USE_ARMV8_CRC32)
+#include "arm_features.h"
+#include "armv8_crc32.h"
+#endif
+
 /* Definitions for doing the crc four data bytes at a time. */
 #if !defined(NOBYFOUR) && defined(Z_U4)
 #  define BYFOUR
@@ -242,19 +247,25 @@ unsigned long ZEXPORT crc32(crc, buf, len)
     const unsigned char FAR *buf;
     uInt len;
 {
-#if defined(CRC32_SIMD_SSE42_PCLMUL)
+
     /*
      * Use x86 sse4.2+pclmul SIMD to compute the crc32. Since this
-     * routine can be freely used, check the CPU features here, to
-     * stop TSAN complaining about thread data races accessing the
-     * x86_cpu_enable_simd feature variable below.
+     * routine can be freely used, check the CPU features here.
      */
     if (buf == Z_NULL) {
-        if (!len) /* Assume user is calling crc32(0, NULL, 0); */
+        /* Assume user is calling crc32(0, NULL, 0); */
+        if (!len)
+#if defined(CRC32_SIMD_SSE42_PCLMUL)
             x86_check_features();
+#elif defined(USE_ARMV8_CRC32)
+            arm_check_features();
+#else /* MIPS and others we lack an optimized crc32 implementation. */
+            ;
+#endif
         return 0UL;
     }
 
+#if defined(CRC32_SIMD_SSE42_PCLMUL)
     if (x86_cpu_enable_simd && len >= Z_CRC32_SSE42_MINIMUM_LENGTH) {
         /* crc32 16-byte chunks */
         uInt chunk_size = len & ~Z_CRC32_SSE42_CHUNKSIZE_MASK;
@@ -266,7 +277,10 @@ unsigned long ZEXPORT crc32(crc, buf, len)
         /* Fall into the default crc32 for the remaining data. */
         buf += chunk_size;
     }
-#endif /* CRC32_SIMD_SSE42_PCLMUL */
+#elif defined(USE_ARMV8_CRC32)
+    if (arm_cpu_enable_crc32)
+        return armv8_crc32_little(crc, buf, len);
+#endif
 
     return crc32_z(crc, buf, len);
 }
