@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bcaf89aa_ecc51efa",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1228924
+      },
+      "writtenOn": "2018-01-29T16:40:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4d5c5952_0333b58e",
+      "range": {
+        "startLine": 751,
+        "startChar": 3,
+        "endLine": 751,
+        "endChar": 0
+      },
+      "revId": "bf6b2ecfb7932c2669a02f68478e132e07397900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3e1ca1b_8ab27da5",
         "filename": "net/dns/dns_transaction_unittest.cc",
         "patchSetId": 22
@@ -412,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "f02e0009_fc4b8156",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1228924
+      },
+      "writtenOn": "2018-01-29T16:40:28Z",
+      "side": 1,
+      "message": "This code has gone away and the patch now calls OnWrite in URLRequestMockDoHJob::MatchQueryData()",
+      "parentUuid": "5d4574c9_ba5fd1d0",
+      "range": {
+        "startLine": 458,
+        "startChar": 30,
+        "endLine": 458,
+        "endChar": 42
+      },
+      "revId": "bf6b2ecfb7932c2669a02f68478e132e07397900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94c2bf82_da24b333",
         "filename": "net/dns/dns_transaction_unittest.cc",
         "patchSetId": 22
@@ -668,6 +716,30 @@
       "revId": "bf6b2ecfb7932c2669a02f68478e132e07397900",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "148b7699_9a20c09c",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 2210,
+      "author": {
+        "id": 1228924
+      },
+      "writtenOn": "2018-01-29T16:40:28Z",
+      "side": 1,
+      "message": "I don\u0027t expect this to change often, just at start up when reading prefs or sometime in the future if we add the capability, when a user manually enters a DoH server. So, I think this is fine, good to call out and if the usage pattern deviates from the expected we should reconsider.",
+      "parentUuid": "3ef16c43_4bbe04ad",
+      "range": {
+        "startLine": 2210,
+        "startChar": 25,
+        "endLine": 2210,
+        "endChar": 26
+      },
+      "revId": "bf6b2ecfb7932c2669a02f68478e132e07397900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
