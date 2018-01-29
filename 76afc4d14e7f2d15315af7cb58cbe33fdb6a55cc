@@ -16,6 +16,24 @@
       "revId": "76afc4d14e7f2d15315af7cb58cbe33fdb6a55cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d7122cf_6c41c553",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ClientHintsPreferences.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-29T20:19:05Z",
+      "side": 1,
+      "message": "I think you are right. It\u0027s simpler to move the checks there. Done.\nUpdating the UseCounter when the feature was used on non-secure context should not matter, I guess since it reflects that the origin is trying to use the feature.",
+      "parentUuid": "e07bcff7_e56f3b07",
+      "revId": "76afc4d14e7f2d15315af7cb58cbe33fdb6a55cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
