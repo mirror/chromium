@@ -99,11 +99,13 @@ webrtc::VideoTrackInterface::ContentHint ContentHintTypeToWebRtcContentHint(
 class MediaStreamVideoWebRtcSink::WebRtcVideoSourceAdapter
     : public base::RefCountedThreadSafe<WebRtcVideoSourceAdapter> {
  public:
-  WebRtcVideoSourceAdapter(const scoped_refptr<base::SingleThreadTaskRunner>&
-                               libjingle_worker_thread,
-                           const scoped_refptr<WebRtcVideoSource>& source,
-                           base::TimeDelta refresh_interval,
-                           const base::Closure& refresh_callback);
+  WebRtcVideoSourceAdapter(
+      const scoped_refptr<base::SingleThreadTaskRunner>&
+          libjingle_worker_thread,
+      const scoped_refptr<WebRtcVideoSource>& source,
+      base::TimeDelta refresh_interval,
+      const base::RepeatingClosure& refresh_callback,
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner);
 
   // MediaStreamVideoWebRtcSink can be destroyed on the main render thread or
   // libjingles worker thread since it posts video frames on that thread. But
@@ -174,8 +176,9 @@ MediaStreamVideoWebRtcSink::WebRtcVideoSourceAdapter::WebRtcVideoSourceAdapter(
     const scoped_refptr<base::SingleThreadTaskRunner>& libjingle_worker_thread,
     const scoped_refptr<WebRtcVideoSource>& source,
     base::TimeDelta refresh_interval,
-    const base::Closure& refresh_callback)
-    : render_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    const base::RepeatingClosure& refresh_callback,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner)
+    : render_thread_task_runner_(std::move(task_runner)),
       libjingle_worker_thread_(libjingle_worker_thread),
       video_source_(source),
       capture_adapter_(source->capture_adapter()) {
@@ -259,7 +262,8 @@ void MediaStreamVideoWebRtcSink::WebRtcVideoSourceAdapter::
 
 MediaStreamVideoWebRtcSink::MediaStreamVideoWebRtcSink(
     const blink::WebMediaStreamTrack& track,
-    PeerConnectionDependencyFactory* factory)
+    PeerConnectionDependencyFactory* factory,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner)
     : weak_factory_(this) {
   MediaStreamVideoTrack* video_track =
       MediaStreamVideoTrack::GetVideoTrack(track);
@@ -321,7 +325,8 @@ MediaStreamVideoWebRtcSink::MediaStreamVideoWebRtcSink(
   source_adapter_ = new WebRtcVideoSourceAdapter(
       factory->GetWebRtcWorkerThread(), video_source_.get(), refresh_interval,
       base::Bind(&MediaStreamVideoWebRtcSink::RequestRefreshFrame,
-                 weak_factory_.GetWeakPtr()));
+                 weak_factory_.GetWeakPtr()),
+      std::move(task_runner));
 
   MediaStreamVideoSink::ConnectToTrack(
       track,
