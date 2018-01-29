@@ -17,13 +17,13 @@ function DeviceHandler() {
   this.mountStatus_ = {};
 
   chrome.fileManagerPrivate.onDeviceChanged.addListener(
-      this.onDeviceChanged_.bind(this));
+      util.doIfPrimaryContext.bind(null, this.onDeviceChanged_.bind(this)));
   chrome.fileManagerPrivate.onMountCompleted.addListener(
-      this.onMountCompleted_.bind(this));
-  chrome.notifications.onClicked.addListener(
-      this.onNotificationClicked_.bind(this));
-  chrome.notifications.onButtonClicked.addListener(
-      this.onNotificationClicked_.bind(this));
+      util.doIfPrimaryContext.bind(null, this.onMountCompleted_.bind(this)));
+  chrome.notifications.onClicked.addListener(util.doIfPrimaryContext.bind(
+      null, this.onNotificationClicked_.bind(this)));
+  chrome.notifications.onButtonClicked.addListener(util.doIfPrimaryContext.bind(
+      null, this.onNotificationClicked_.bind(this)));
 }
 
 DeviceHandler.prototype = {
