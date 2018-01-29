@@ -213,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "8fe5b222_de7efd8e",
+        "filename": "components/cast_channel/cast_message_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-29T19:54:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "eb25e028_760b480a",
+      "revId": "8edcfa85a7bf0b236f1f281186bc9427ee31d476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50f5b73c_a39b79b1",
         "filename": "components/cast_channel/cast_message_handler.cc",
         "patchSetId": 9
@@ -442,6 +460,24 @@
     },
     {
       "key": {
+        "uuid": "3fec4583_8865c6a4",
+        "filename": "components/cast_channel/cast_message_handler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-29T19:54:34Z",
+      "side": 1,
+      "message": "Ok, I think I will keep current design for now since it seems like a good balance between keeping the layers separate and making this shareable by multiple components in the Cast MRP.",
+      "parentUuid": "711ed1c2_8455316c",
+      "revId": "8edcfa85a7bf0b236f1f281186bc9427ee31d476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5cb58795_2dde3c5c",
         "filename": "components/cast_channel/cast_message_handler_unittest.cc",
         "patchSetId": 9
@@ -612,6 +648,24 @@
       "side": 1,
       "message": "It seems like chrome/ (which is embedding this component) should pass userAgent, version and browserVersion which would minimize the dependencies taken on by this component (and make it more component-like).\n\nI don\u0027t feel super strongly about this, it\u0027s really up to the content/ OWNERS to see how they feel about having a second code path to construct a user agent string.",
       "parentUuid": "2507bd53_cf388773",
+      "revId": "8edcfa85a7bf0b236f1f281186bc9427ee31d476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bef5d8b1_4b6dc385",
+        "filename": "components/cast_channel/cast_message_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-29T19:54:34Z",
+      "side": 1,
+      "message": "I do agree that having caller pass in the strings reduces dependencies for this component. In the latest patchset, I have CastMessageHandler pass in user agent and browser version strings to this function. The strings would be in turn provided to CastMessageHandler during construction by Cast MRP. Also parsing the systemVersion from user agent string here -- user agent string in Chrome follow a fixed format so it\u0027s probably fine.",
+      "parentUuid": "a13dae1b_e9419089",
       "revId": "8edcfa85a7bf0b236f1f281186bc9427ee31d476",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
