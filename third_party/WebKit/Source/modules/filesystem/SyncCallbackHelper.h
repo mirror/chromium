@@ -166,6 +166,8 @@ class DOMFileSystemCallbacksSyncHelper final
     return result_;
   }
 
+  FileError::ErrorCode GetErrorCode() const { return error_code_; }
+
  private:
   class SuccessCallbackImpl final : public SuccessCallback {
    public:
@@ -217,6 +219,9 @@ class DOMFileSystemCallbacksSyncHelper final
 using EntryCallbacksSyncHelper =
     DOMFileSystemCallbacksSyncHelper<EntryCallbacks::OnDidGetEntryCallback,
                                      Entry>;
+using EntriesCallbacksSyncHelper =
+    DOMFileSystemCallbacksSyncHelper<EntriesCallbacks::OnDidGetEntriesCallback,
+                                     EntryHeapVectorCarrier>;
 using FileSystemCallbacksSyncHelper = DOMFileSystemCallbacksSyncHelper<
     FileSystemCallbacks::OnDidOpenFileSystemCallback,
     DOMFileSystem>;

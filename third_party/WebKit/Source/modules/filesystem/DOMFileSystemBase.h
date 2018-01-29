@@ -48,7 +48,6 @@ class WebFileSystem;
 namespace blink {
 
 class DirectoryReaderBase;
-class DirectoryReaderOnDidReadCallback;
 class EntryBase;
 class ExecutionContext;
 class File;
@@ -154,7 +153,7 @@ class MODULES_EXPORT DOMFileSystemBase : public ScriptWrappable {
                     SynchronousType = kAsynchronous);
   int ReadDirectory(DirectoryReaderBase*,
                     const String& path,
-                    DirectoryReaderOnDidReadCallback*,
+                    EntriesCallbacks::OnDidGetEntriesCallback*,
                     ErrorCallbackBase*,
                     SynchronousType = kAsynchronous);
   bool WaitForAdditionalResult(int callbacks_id);

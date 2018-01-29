@@ -33,6 +33,7 @@
 #include <memory>
 
 #include "base/memory/ptr_util.h"
+#include "bindings/modules/v8/V8EntriesCallback.h"
 #include "bindings/modules/v8/V8EntryCallback.h"
 #include "bindings/modules/v8/V8ErrorCallback.h"
 #include "bindings/modules/v8/V8FileCallback.h"
@@ -212,8 +213,18 @@ void EntryCallbacks::DidSucceed() {
 
 // EntriesCallbacks -----------------------------------------------------------
 
+void EntriesCallbacks::OnDidGetEntriesV8Impl::Trace(blink::Visitor* visitor) {
+  visitor->Trace(callback_);
+  OnDidGetEntriesCallback::Trace(visitor);
+}
+
+void EntriesCallbacks::OnDidGetEntriesV8Impl::OnSuccess(
+    EntryHeapVectorCarrier* entries) {
+  callback_->handleEvent(entries->Get());
+}
+
 std::unique_ptr<AsyncFileSystemCallbacks> EntriesCallbacks::Create(
-    DirectoryReaderOnDidReadCallback* success_callback,
+    OnDidGetEntriesCallback* success_callback,
     ErrorCallbackBase* error_callback,
     ExecutionContext* context,
     DirectoryReaderBase* directory_reader,
@@ -222,12 +233,11 @@ std::unique_ptr<AsyncFileSystemCallbacks> EntriesCallbacks::Create(
       success_callback, error_callback, context, directory_reader, base_path));
 }
 
-EntriesCallbacks::EntriesCallbacks(
-    DirectoryReaderOnDidReadCallback* success_callback,
-    ErrorCallbackBase* error_callback,
-    ExecutionContext* context,
-    DirectoryReaderBase* directory_reader,
-    const String& base_path)
+EntriesCallbacks::EntriesCallbacks(OnDidGetEntriesCallback* success_callback,
+                                   ErrorCallbackBase* error_callback,
+                                   ExecutionContext* context,
+                                   DirectoryReaderBase* directory_reader,
+                                   const String& base_path)
     : FileSystemCallbacksBase(error_callback,
                               directory_reader->Filesystem(),
                               context),
@@ -239,23 +249,25 @@ EntriesCallbacks::EntriesCallbacks(
 
 void EntriesCallbacks::DidReadDirectoryEntry(const String& name,
                                              bool is_directory) {
-  if (is_directory)
-    entries_.push_back(
-        DirectoryEntry::Create(directory_reader_->Filesystem(),
-                               DOMFilePath::Append(base_path_, name)));
-  else
-    entries_.push_back(
-        FileEntry::Create(directory_reader_->Filesystem(),
-                          DOMFilePath::Append(base_path_, name)));
+  DOMFileSystemBase* filesystem = directory_reader_->Filesystem();
+  const String& path = DOMFilePath::Append(base_path_, name);
+  Entry* entry =
+      is_directory
+          ? static_cast<Entry*>(DirectoryEntry::Create(filesystem, path))
+          : static_cast<Entry*>(FileEntry::Create(filesystem, path));
+  entries_.push_back(entry);
 }
 
 void EntriesCallbacks::DidReadDirectoryEntries(bool has_more) {
   directory_reader_->SetHasMoreEntries(has_more);
-  EntryHeapVector entries;
-  entries.swap(entries_);
-  // FIXME: delay the callback iff shouldScheduleCallback() is true.
-  if (success_callback_)
-    success_callback_->OnDidReadDirectoryEntries(entries);
+  EntryHeapVectorCarrier* entries = EntryHeapVectorCarrier::Create();
+  entries->Get().swap(entries_);
+
+  if (!success_callback_)
+    return;
+
+  InvokeOrScheduleCallback(&OnDidGetEntriesCallback::OnSuccess,
+                           success_callback_.Get(), entries);
 }
 
 // FileSystemCallbacks --------------------------------------------------------

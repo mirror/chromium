@@ -13,6 +13,25 @@ class Entry;
 
 using EntryHeapVector = HeapVector<Member<Entry>>;
 
+class EntryHeapVectorCarrier final
+    : public GarbageCollectedFinalized<EntryHeapVectorCarrier> {
+ public:
+  static EntryHeapVectorCarrier* Create() {
+    return new EntryHeapVectorCarrier();
+  }
+
+  ~EntryHeapVectorCarrier() = default;
+
+  void Trace(blink::Visitor*);
+
+  EntryHeapVector& Get() { return entries_; }
+
+ private:
+  EntryHeapVectorCarrier() = default;
+
+  EntryHeapVector entries_;
+};
+
 }  // namespace blink
 
 #endif  // EntryHeapVector_h

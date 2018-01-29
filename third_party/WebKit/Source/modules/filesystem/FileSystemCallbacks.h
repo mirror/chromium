@@ -34,6 +34,7 @@
 #include <memory>
 
 #include "core/fileapi/FileError.h"
+#include "modules/filesystem/EntryHeapVector.h"
 #include "platform/AsyncFileSystemCallbacks.h"
 #include "platform/FileSystemType.h"
 #include "platform/heap/Handle.h"
@@ -45,13 +46,13 @@ namespace blink {
 class DOMFileSystem;
 class DOMFileSystemBase;
 class DirectoryReaderBase;
-class DirectoryReaderOnDidReadCallback;
 class Entry;
 class ExecutionContext;
 class File;
 class FileMetadata;
 class FileWriterBase;
 class MetadataCallback;
+class V8EntriesCallback;
 class V8EntryCallback;
 class V8ErrorCallback;
 class V8FileCallback;
@@ -172,8 +173,33 @@ class EntryCallbacks final : public FileSystemCallbacksBase {
 
 class EntriesCallbacks final : public FileSystemCallbacksBase {
  public:
+  class OnDidGetEntriesCallback
+      : public GarbageCollectedFinalized<OnDidGetEntriesCallback> {
+   public:
+    virtual ~OnDidGetEntriesCallback() = default;
+    virtual void Trace(blink::Visitor*) {}
+    virtual void OnSuccess(EntryHeapVectorCarrier*) = 0;
+
+   protected:
+    OnDidGetEntriesCallback() = default;
+  };
+
+  class OnDidGetEntriesV8Impl : public OnDidGetEntriesCallback {
+   public:
+    static OnDidGetEntriesV8Impl* Create(V8EntriesCallback* callback) {
+      return callback ? new OnDidGetEntriesV8Impl(callback) : nullptr;
+    }
+    void Trace(blink::Visitor*) override;
+    void OnSuccess(EntryHeapVectorCarrier*) override;
+
+   private:
+    OnDidGetEntriesV8Impl(V8EntriesCallback* callback) : callback_(callback) {}
+
+    Member<V8EntriesCallback> callback_;
+  };
+
   static std::unique_ptr<AsyncFileSystemCallbacks> Create(
-      DirectoryReaderOnDidReadCallback*,
+      OnDidGetEntriesCallback*,
       ErrorCallbackBase*,
       ExecutionContext*,
       DirectoryReaderBase*,
@@ -182,12 +208,12 @@ class EntriesCallbacks final : public FileSystemCallbacksBase {
   void DidReadDirectoryEntries(bool has_more) override;
 
  private:
-  EntriesCallbacks(DirectoryReaderOnDidReadCallback*,
+  EntriesCallbacks(OnDidGetEntriesCallback*,
                    ErrorCallbackBase*,
                    ExecutionContext*,
                    DirectoryReaderBase*,
                    const String& base_path);
-  Persistent<DirectoryReaderOnDidReadCallback> success_callback_;
+  Persistent<OnDidGetEntriesCallback> success_callback_;
   Persistent<DirectoryReaderBase> directory_reader_;
   String base_path_;
   PersistentHeapVector<Member<Entry>> entries_;

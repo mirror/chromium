@@ -31,8 +31,8 @@
 #ifndef DirectoryReaderSync_h
 #define DirectoryReaderSync_h
 
-#include "core/fileapi/FileError.h"
 #include "modules/filesystem/DirectoryReaderBase.h"
+#include "modules/filesystem/SyncCallbackHelper.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/text/WTFString.h"
 
@@ -52,27 +52,21 @@ class DirectoryReaderSync : public DirectoryReaderBase {
     return new DirectoryReaderSync(file_system, full_path);
   }
 
-  ~DirectoryReaderSync() override;
+  ~DirectoryReaderSync() override = default;
 
   EntrySyncHeapVector readEntries(ExceptionState&);
-
-  void AddEntries(const EntrySyncHeapVector& entries) {
-    entries_.AppendVector(entries);
-  }
-
-  void SetError(FileError::ErrorCode code) { error_code_ = code; }
 
   void Trace(blink::Visitor*) override;
 
  private:
   class EntriesCallbackHelper;
-  class ErrorCallbackHelper;
+  friend class EntriesCallbackHelper;
 
   DirectoryReaderSync(DOMFileSystemBase*, const String& full_path);
 
-  int callbacks_id_;
+  int callbacks_id_ = 0;
+  Member<EntriesCallbacksSyncHelper> sync_helper_;
   EntrySyncHeapVector entries_;
-  FileError::ErrorCode error_code_;
 };
 
 }  // namespace blink

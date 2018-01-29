@@ -30,126 +30,29 @@
 
 #include "modules/filesystem/DirectoryReader.h"
 
-#include "bindings/modules/v8/V8EntriesCallback.h"
-#include "bindings/modules/v8/V8ErrorCallback.h"
 #include "core/fileapi/FileError.h"
 #include "modules/filesystem/Entry.h"
 #include "modules/filesystem/FileSystemCallbacks.h"
 
 namespace blink {
 
-namespace {
-
-void RunEntriesCallback(V8EntriesCallback* callback,
-                        HeapVector<Member<Entry>>* entries) {
-  callback->handleEvent(*entries);
-}
-
-}  // namespace
-
-class DirectoryReader::EntriesCallbackHelper final
-    : public DirectoryReaderOnDidReadCallback {
- public:
-  explicit EntriesCallbackHelper(DirectoryReader* reader) : reader_(reader) {}
-
-  void OnDidReadDirectoryEntries(const EntryHeapVector& entries) override {
-    reader_->AddEntries(entries);
-  }
-
-  void Trace(blink::Visitor* visitor) override {
-    visitor->Trace(reader_);
-    DirectoryReaderOnDidReadCallback::Trace(visitor);
-  }
-
- private:
-  // FIXME: This Member keeps the reader alive until all of the readDirectory
-  // results are received. crbug.com/350285
-  Member<DirectoryReader> reader_;
-};
-
-class DirectoryReader::ErrorCallbackHelper final : public ErrorCallbackBase {
- public:
-  explicit ErrorCallbackHelper(DirectoryReader* reader) : reader_(reader) {}
-
-  void Invoke(FileError::ErrorCode error) override { reader_->OnError(error); }
-
-  void Trace(blink::Visitor* visitor) override {
-    visitor->Trace(reader_);
-    ErrorCallbackBase::Trace(visitor);
-  }
-
- private:
-  Member<DirectoryReader> reader_;
-};
-
 DirectoryReader::DirectoryReader(DOMFileSystemBase* file_system,
                                  const String& full_path)
     : DirectoryReaderBase(file_system, full_path), is_reading_(false) {}
 
-DirectoryReader::~DirectoryReader() = default;
-
-void DirectoryReader::readEntries(V8EntriesCallback* entries_callback,
+void DirectoryReader::readEntries(V8EntriesCallback* success_callback,
                                   V8ErrorCallback* error_callback) {
-  if (!is_reading_) {
-    is_reading_ = true;
-    Filesystem()->ReadDirectory(this, full_path_,
-                                new EntriesCallbackHelper(this),
-                                new ErrorCallbackHelper(this));
-  }
-
-  if (error_) {
-    Filesystem()->ReportError(ScriptErrorCallback::Wrap(error_callback),
-                              error_);
-    return;
-  }
-
-  if (entries_callback_) {
-    // Non-null m_entriesCallback means multiple readEntries() calls are made
-    // concurrently. We don't allow doing it.
+  if (is_reading_) {
     Filesystem()->ReportError(ScriptErrorCallback::Wrap(error_callback),
                               FileError::kInvalidStateErr);
     return;
   }
+  is_reading_ = true;
 
-  if (!has_more_entries_ || !entries_.IsEmpty()) {
-    if (entries_callback) {
-      auto* entries = new HeapVector<Member<Entry>>(std::move(entries_));
-      DOMFileSystem::ScheduleCallback(
-          Filesystem()->GetExecutionContext(),
-          WTF::Bind(&RunEntriesCallback, WrapPersistent(entries_callback),
-                    WrapPersistent(entries)));
-    }
-    entries_.clear();
-    return;
-  }
-
-  entries_callback_ = entries_callback;
-  error_callback_ = error_callback;
-}
-
-void DirectoryReader::AddEntries(const EntryHeapVector& entries) {
-  entries_.AppendVector(entries);
-  error_callback_ = nullptr;
-  if (entries_callback_) {
-    V8EntriesCallback* entries_callback = entries_callback_.Release();
-    EntryHeapVector entries;
-    entries.swap(entries_);
-    entries_callback->handleEvent(entries);
-  }
-}
-
-void DirectoryReader::OnError(FileError::ErrorCode error) {
-  error_ = error;
-  entries_callback_ = nullptr;
-  if (error_callback_)
-    error_callback_->handleEvent(FileError::CreateDOMException(error));
-}
-
-void DirectoryReader::Trace(blink::Visitor* visitor) {
-  visitor->Trace(entries_);
-  visitor->Trace(entries_callback_);
-  visitor->Trace(error_callback_);
-  DirectoryReaderBase::Trace(visitor);
+  Filesystem()->ReadDirectory(
+      this, full_path_,
+      EntriesCallbacks::OnDidGetEntriesV8Impl::Create(success_callback),
+      ScriptErrorCallback::Wrap(error_callback));
 }
 
 }  // namespace blink
