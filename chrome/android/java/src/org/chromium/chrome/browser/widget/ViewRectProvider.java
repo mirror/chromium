@@ -24,6 +24,8 @@ public class ViewRectProvider extends RectProvider
     /** If not {@code null}, the {@link ViewTreeObserver} that we are registered to. */
     private ViewTreeObserver mViewTreeObserver;
 
+    private boolean mIgnorePadding;
+
     /**
      * Creates an instance of a {@link ViewRectProvider}.
      * @param view The {@link View} used to generate a {@link Rect}.
@@ -41,6 +43,14 @@ public class ViewRectProvider extends RectProvider
     public void setInsetPx(int left, int top, int right, int bottom) {
         mInsetRect.set(left, top, right, bottom);
         refreshRectBounds();
+    }
+
+    /**
+     * Whether padding should be ignored when determining the {@link Rect} for the {@link View}.
+     * @param ignorePadding Whether padding should be ignored. Defaults to false.
+     */
+    public void setIgnorePadding(boolean ignorePadding) {
+        mIgnorePadding = ignorePadding;
     }
 
     @Override
@@ -120,13 +130,15 @@ public class ViewRectProvider extends RectProvider
         mRect.bottom -= mInsetRect.bottom;
 
         // Account for the padding.
-        boolean isRtl = ApiCompatibilityUtils.isLayoutRtl(mView);
-        mRect.left += isRtl ? ApiCompatibilityUtils.getPaddingEnd(mView)
-                            : ApiCompatibilityUtils.getPaddingStart(mView);
-        mRect.right -= isRtl ? ApiCompatibilityUtils.getPaddingStart(mView)
-                             : ApiCompatibilityUtils.getPaddingEnd(mView);
-        mRect.top += mView.getPaddingTop();
-        mRect.bottom -= mView.getPaddingBottom();
+        if (!mIgnorePadding) {
+            boolean isRtl = ApiCompatibilityUtils.isLayoutRtl(mView);
+            mRect.left += isRtl ? ApiCompatibilityUtils.getPaddingEnd(mView)
+                                : ApiCompatibilityUtils.getPaddingStart(mView);
+            mRect.right -= isRtl ? ApiCompatibilityUtils.getPaddingStart(mView)
+                                 : ApiCompatibilityUtils.getPaddingEnd(mView);
+            mRect.top += mView.getPaddingTop();
+            mRect.bottom -= mView.getPaddingBottom();
+        }
 
         // Make sure we still have a valid Rect after applying the inset.
         mRect.right = Math.max(mRect.left, mRect.right);
