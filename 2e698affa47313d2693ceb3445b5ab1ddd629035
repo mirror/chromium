@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "c2c979f1_a9abd5ab",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 13
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-29T11:34:33Z",
+      "side": 1,
+      "message": "\u003e I think Noel is suggesting to use the ZLIB_INTERNAL which is already defined in zutil.h\n\nExactly.",
+      "parentUuid": "5d25ee8e_ec50b150",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5918de0c_7206cfd8",
         "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
         "patchSetId": 13
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "IIRC that was needed to make one of the bots happy (Windows or fuchsia? Dunno).",
       "parentUuid": "5918de0c_7206cfd8",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03178d72_699fa8ec",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 13
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-29T11:34:33Z",
+      "side": 1,
+      "message": "Remove it and let\u0027s see.  It sure it won\u0027t be the windows bot, and fuchsia will compile it.",
+      "parentUuid": "e5b3b658_4996b74f",
       "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -250,6 +286,24 @@
     },
     {
       "key": {
+        "uuid": "c4b9de63_8a604955",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 13
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-29T11:34:33Z",
+      "side": 1,
+      "message": "\u003e But we still want to have the separate code paths for AArch32 and AArch64.\n\nAgree, I provided an idea for that over here [1]\n\n[1] https://chromium-review.googlesource.com/c/chromium/src/+/864582/10/third_party/zlib/arm.c#51\n\nI\u0027d prefer that we use #include \u003casm/hwcap.h\u003e, rather than define our own since we not sure if they changed meaning in earlier Linux.\n\n(And a sandboxed process can use it btw, since the value is stored in the process environment preamble, just before the argc/argv variables.)",
+      "parentUuid": "72916d9e_53a68d38",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "659b95fa_586f305a",
         "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
         "patchSetId": 13
@@ -402,6 +456,24 @@
       "side": 1,
       "message": "If we plan to be built using an old C standard, bool may not be available.\nBut if we are using an old C standard, we might not have access to a new-enough libc to use HWCAP_CRC32 / HWCAP2_CRC32 anyway.\n\nNevertheless, we should probably use a BOOL to attempt to support as much as possible. The x86 feature detection does this:\nhttps://cs.chromium.org/chromium/src/third_party/zlib/x86.c?l\u003d66\u0026rcl\u003dca112b210e77187e6d64158c3a3e5a2365f4231f\n\n\nThey should probably also have a more bool-y name.\nIdeally, it could be something like is_crc32_supported. But in an attempt to minimize name collision, these have all been prefixed with \"arm_\". I think that prefix makes sense -- we\u0027re inside contrib/optimizations/arm.\nSo maybe arm_is_crc32_supported.\n\nThey should probably be ZLIB_INTERNAL. All of this should be, really.",
       "parentUuid": "89a6ef17_385779b3",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e95f3bd_60d4bd2b",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-29T11:34:33Z",
+      "side": 1,
+      "message": "\u003e If we plan to be built using an old C standard, bool may not be available.\n\nOne success of zlib has been it\u0027s portability, and bool might not be available everywhere.  We should be able to include this file without guards on any zlib port.  Using _int_ gives us that.  Please use int.",
+      "parentUuid": "411dbaad_cb2970ab",
       "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -595,6 +667,24 @@
       "side": 1,
       "message": "Helps to keep the symmetry (plus I\u0027m planning to remove the intel stub code).",
       "parentUuid": "fc7f9828_7c6114e6",
+      "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "194a937c_0475f150",
+        "filename": "third_party/zlib/contrib/optimizations/inflate.c",
+        "patchSetId": 13
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-29T11:34:33Z",
+      "side": 1,
+      "message": "No need for the symmetry.  We can remove arm_check_features() now since it\u0027s not needed.",
+      "parentUuid": "9b97852a_b903a0e6",
       "revId": "2e698affa47313d2693ceb3445b5ab1ddd629035",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
