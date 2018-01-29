@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb4d099f_fac4b2aa",
+        "filename": "third_party/WebKit/Source/core/css/SelectorChecker.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2018-01-29T04:18:02Z",
+      "side": 1,
+      "message": "In a strict sense, this should be:\n\nIsHTMLSlotElement(context.element) \u0026\u0026 ToHTMLSlotElement(context.element).SupportsAssignment()\n\nbecause *flattened* should exclude only a slot which is in a shadow tree.\nIn ohter words, *flattened* may include a slot in a document tree.",
+      "revId": "66e58f5215deb630b40914aab8ca7dd8927d3ad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
