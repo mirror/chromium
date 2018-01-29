@@ -304,11 +304,13 @@ void P2PSocketDispatcherHost::OnAcceptIncomingTcpConnection(
   }
 }
 
-void P2PSocketDispatcherHost::OnSend(int socket_id,
-                                     const net::IPEndPoint& socket_address,
-                                     const std::vector<char>& data,
-                                     const rtc::PacketOptions& options,
-                                     uint64_t packet_id) {
+void P2PSocketDispatcherHost::OnSend(
+    int socket_id,
+    const net::IPEndPoint& socket_address,
+    const std::vector<char>& data,
+    const rtc::PacketOptions& options,
+    uint64_t packet_id,
+    const net::MutableNetworkTrafficAnnotationTag& traffic_annotation) {
   P2PSocketHost* socket = LookupSocket(socket_id);
   if (!socket) {
     LOG(ERROR) << "Received P2PHostMsg_Send for invalid socket_id.";
@@ -323,9 +325,8 @@ void P2PSocketDispatcherHost::OnSend(int socket_id,
     return;
   }
 
-  // TODO(crbug.com/656607): Get annotation from IPC message.
   socket->Send(socket_address, data, options, packet_id,
-               NO_TRAFFIC_ANNOTATION_BUG_656607);
+               net::NetworkTrafficAnnotationTag(traffic_annotation));
 }
 
 void P2PSocketDispatcherHost::OnSetOption(int socket_id,
