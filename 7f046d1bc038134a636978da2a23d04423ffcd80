@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "80ed0cb4_0e0b7c54",
+        "filename": "device/ctap/device_response_converter.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-29T23:42:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d7a86af_cf86ce03",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 13
+      },
+      "revId": "7f046d1bc038134a636978da2a23d04423ffcd80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b285fbc2_e10a3249",
         "filename": "device/ctap/device_response_converter.cc",
         "patchSetId": 23
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "582c855e_c5672d0f",
+        "filename": "device/ctap/device_response_converter.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-29T23:42:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b285fbc2_e10a3249",
+      "range": {
+        "startLine": 28,
+        "startChar": 7,
+        "endLine": 28,
+        "endChar": 13
+      },
+      "revId": "7f046d1bc038134a636978da2a23d04423ffcd80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a35a59b_b7d4e742",
         "filename": "device/ctap/device_response_converter.cc",
         "patchSetId": 23
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-29T21:06:46Z",
       "side": 1,
       "message": "nit: std::find_if(foo.begin(), foo.end(), lambda) !\u003d foo.end() can be replaced by std::any_of(foo.begin(), foo.end(), lambda)",
+      "range": {
+        "startLine": 32,
+        "startChar": 9,
+        "endLine": 32,
+        "endChar": 14
+      },
+      "revId": "7f046d1bc038134a636978da2a23d04423ffcd80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "763de2ae_d14a80ff",
+        "filename": "device/ctap/device_response_converter.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-29T23:42:31Z",
+      "side": 1,
+      "message": "Since std::any_of returns a boolean, and we still need matching |response_code| to be returned. Wouldn\u0027t found \u003d\u003d response_codes.end() be better in that we would not need to call lambda twice? (Once during std::find_if and once during std::any_of). \n\nPlease let me know if I\u0027m misunderstanding your comment! :)",
+      "parentUuid": "3a35a59b_b7d4e742",
       "range": {
         "startLine": 32,
         "startChar": 9,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "1d2eb639_7096f2a0",
+        "filename": "device/ctap/device_response_converter.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-29T23:42:31Z",
+      "side": 1,
+      "message": "We chose to return int64_t\u0026 to be consistent with other accessor functions. If you think this is unnecessary or should be fixed, I\u0027ll create a follow up CL for this! :)",
+      "parentUuid": "f6402a3f_93345fd1",
+      "range": {
+        "startLine": 126,
+        "startChar": 31,
+        "endLine": 126,
+        "endChar": 66
+      },
+      "revId": "7f046d1bc038134a636978da2a23d04423ffcd80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f181b35e_d6b65f8f",
         "filename": "device/ctap/device_response_converter.cc",
         "patchSetId": 23
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "0f84d3a1_e87894d2",
+        "filename": "device/ctap/device_response_converter.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-29T23:42:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f181b35e_d6b65f8f",
+      "range": {
+        "startLine": 186,
+        "startChar": 33,
+        "endLine": 186,
+        "endChar": 42
+      },
+      "revId": "7f046d1bc038134a636978da2a23d04423ffcd80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "368720fe_a3c1a4c5",
         "filename": "device/ctap/device_response_converter.cc",
         "patchSetId": 23
@@ -137,6 +257,30 @@
       "revId": "7f046d1bc038134a636978da2a23d04423ffcd80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f73c1c0_bd98a48b",
+        "filename": "device/ctap/device_response_converter.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-29T23:42:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "368720fe_a3c1a4c5",
+      "range": {
+        "startLine": 189,
+        "startChar": 56,
+        "endLine": 190,
+        "endChar": 74
+      },
+      "revId": "7f046d1bc038134a636978da2a23d04423ffcd80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
