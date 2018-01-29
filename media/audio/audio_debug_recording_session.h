@@ -7,12 +7,14 @@
 
 #include <memory>
 
+#include "base/bind.h"
 #include "base/macros.h"
 #include "media/base/media_export.h"
 
 namespace base {
+class File;
 class FilePath;
-}
+}  // namespace base
 
 namespace media {
 
@@ -20,6 +22,10 @@ namespace media {
 // audio debug recording.
 class MEDIA_EXPORT AudioDebugRecordingSession {
  public:
+  using CreateFileCallback = base::RepeatingCallback<void(
+      const base::FilePath&,
+      base::OnceCallback<void(base::File)> reply_callback)>;
+
   virtual ~AudioDebugRecordingSession();
   static std::unique_ptr<AudioDebugRecordingSession> Create(
       const base::FilePath& debug_recording_file_path);
