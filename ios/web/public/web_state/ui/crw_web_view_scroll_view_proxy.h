@@ -48,6 +48,8 @@
 - (void)removeGestureRecognizer:(UIGestureRecognizer*)gestureRecognizer;
 - (void)setContentOffset:(CGPoint)contentOffset animated:(BOOL)animated;
 
+- (void)setClipsToBound:(BOOL)clipToBound;
+
 // Used by the CRWWebViewProxy to set the UIScrollView to be managed.
 - (void)setScrollView:(UIScrollView*)scrollView;
 
