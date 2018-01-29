@@ -2958,6 +2958,13 @@ const FeatureEntry kFeatureEntries[] = {
          kEnableAutofillToolkitViewsCreditCardDialogsMacDescription,
      kOsMac,
      FEATURE_VALUE_TYPE(autofill::kAutofillToolkitViewsCreditCardDialogsMac)},
+    {"enable-autofill-log-credit-card-expiration-date-not-detected",
+     flag_descriptions::kEnableAutofillLogCreditCardExpirationDateNotDetected,
+     flag_descriptions::
+         kEnableAutofillLogCreditCardExpirationDateNotDetectedDescription,
+     kOsAll,
+     FEATURE_VALUE_TYPE(
+         autofill::kEnableAutofillLogCreditCardExpirationDateNotDetected)},
 
 #if defined(OS_WIN)
     {"windows10-custom-titlebar",

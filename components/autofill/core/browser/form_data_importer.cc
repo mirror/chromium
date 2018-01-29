@@ -323,10 +323,17 @@ bool FormDataImporter::ImportCreditCard(
   if (has_duplicate_field_type)
     return false;
 
-  // Reject the credit card if we did not detect enough filled credit card
-  // fields (such as valid number, month, year).
-  if (!candidate_credit_card.IsValid())
-    return false;
+  bool is_valid_expiration_date_detected = true;
+  // Reject the credit card if it has invalid credit card number.
+  if (IsAutofillLogCreditCardExpirationDateNotDetectedEnabled()) {
+    if (!candidate_credit_card.IsValidCardNumber())
+      return false;
+    is_valid_expiration_date_detected =
+        candidate_credit_card.IsValidExpirationDate();
+  } else {
+    if (!candidate_credit_card.IsValid())
+      return false;
+  }
 
   // Attempt to merge with an existing credit card. Don't present a prompt if we
   // have already saved this card number, unless |should_return_local_card| is
@@ -354,38 +361,42 @@ bool FormDataImporter::ImportCreditCard(
   // as the server card, upload is guaranteed to fail. There's no mechanism for
   // entries with the same number but different names or expiration dates as
   // there is for local cards.
-  for (const CreditCard* card :
-       personal_data_manager_->GetServerCreditCards()) {
-    if (candidate_credit_card.HasSameNumberAs(*card)) {
-      // Record metric on whether expiration dates matched.
-      if (candidate_credit_card.expiration_month() ==
-              card->expiration_month() &&
-          candidate_credit_card.expiration_year() == card->expiration_year()) {
-        AutofillMetrics::LogSubmittedServerCardExpirationStatusMetric(
-            card->record_type() == CreditCard::FULL_SERVER_CARD
-                ? AutofillMetrics::FULL_SERVER_CARD_EXPIRATION_DATE_MATCHED
-                : AutofillMetrics::MASKED_SERVER_CARD_EXPIRATION_DATE_MATCHED);
-      } else {
-        AutofillMetrics::LogSubmittedServerCardExpirationStatusMetric(
-            card->record_type() == CreditCard::FULL_SERVER_CARD
-                ? AutofillMetrics::
-                      FULL_SERVER_CARD_EXPIRATION_DATE_DID_NOT_MATCH
-                : AutofillMetrics::
-                      MASKED_SERVER_CARD_EXPIRATION_DATE_DID_NOT_MATCH);
-      }
+  if (is_valid_expiration_date_detected) {
+    for (const CreditCard* card :
+         personal_data_manager_->GetServerCreditCards()) {
+      if (candidate_credit_card.HasSameNumberAs(*card)) {
+        // Record metric on whether expiration dates matched.
+        if (candidate_credit_card.expiration_month() ==
+                card->expiration_month() &&
+            candidate_credit_card.expiration_year() ==
+                card->expiration_year()) {
+          AutofillMetrics::LogSubmittedServerCardExpirationStatusMetric(
+              card->record_type() == CreditCard::FULL_SERVER_CARD
+                  ? AutofillMetrics::FULL_SERVER_CARD_EXPIRATION_DATE_MATCHED
+                  : AutofillMetrics::
+                        MASKED_SERVER_CARD_EXPIRATION_DATE_MATCHED);
+        } else {
+          AutofillMetrics::LogSubmittedServerCardExpirationStatusMetric(
+              card->record_type() == CreditCard::FULL_SERVER_CARD
+                  ? AutofillMetrics::
+                        FULL_SERVER_CARD_EXPIRATION_DATE_DID_NOT_MATCH
+                  : AutofillMetrics::
+                        MASKED_SERVER_CARD_EXPIRATION_DATE_DID_NOT_MATCH);
+        }
 
-      // We can offer to save locally even if we already have this stored as
-      // another masked server card with the same |TypeAndLastFourDigits| as
-      // long as the AutofillOfferLocalSaveIfServerCardManuallyEntered flag is
-      // enabled. This will allow the user to fill the full card number in the
-      // future without having to unmask the card.
-      if (card->record_type() == CreditCard::FULL_SERVER_CARD ||
-          !IsAutofillOfferLocalSaveIfServerCardManuallyEnteredExperimentEnabled()) {
-        return false;
+        // We can offer to save locally even if we already have this stored as
+        // another masked server card with the same |TypeAndLastFourDigits| as
+        // long as the AutofillOfferLocalSaveIfServerCardManuallyEntered flag is
+        // enabled. This will allow the user to fill the full card number in the
+        // future without having to unmask the card.
+        if (card->record_type() == CreditCard::FULL_SERVER_CARD ||
+            !IsAutofillOfferLocalSaveIfServerCardManuallyEnteredExperimentEnabled()) {
+          return false;
+        }
+        DCHECK_EQ(card->record_type(), CreditCard::MASKED_SERVER_CARD);
+        *imported_credit_card_matches_masked_server_credit_card = true;
+        break;
       }
-      DCHECK_EQ(card->record_type(), CreditCard::MASKED_SERVER_CARD);
-      *imported_credit_card_matches_masked_server_credit_card = true;
-      break;
     }
   }
 

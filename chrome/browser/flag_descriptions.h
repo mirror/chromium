@@ -223,6 +223,10 @@ extern const char kEnableAutofillSendBillingCustomerNumberDescription[];
 extern const char kEnableAutofillToolkitViewsCreditCardDialogsMac[];
 extern const char kEnableAutofillToolkitViewsCreditCardDialogsMacDescription[];
 
+extern const char kEnableAutofillLogCreditCardExpirationDateNotDetected[];
+extern const char
+    kEnableAutofillLogCreditCardExpirationDateNotDetectedDescription[];
+
 extern const char kEnableAutofillUseNewSettingsNameInDropdownName[];
 extern const char kEnableAutofillUseNewSettingsNameInDropdownDescription[];
 

@@ -98,6 +98,13 @@ void CreditCardSaveManager::OfferCardLocalSave(const CreditCard& card) {
 void CreditCardSaveManager::AttemptToOfferCardUploadSave(
     const FormStructure& submitted_form,
     const CreditCard& card) {
+  // If no expiration date, no offer save.
+  bool found_expiration_date = true;
+  if (!card.IsValidExpirationDate()) {
+    upload_decision_metrics_ |=
+        AutofillMetrics::UPLOAD_NOT_OFFERED_NO_VALID_EXPIRATION_DATE;
+    found_expiration_date = false;
+  }
   upload_request_ = payments::PaymentsClient::UploadRequestDetails();
   upload_request_.card = card;
 
@@ -175,7 +182,8 @@ void CreditCardSaveManager::AttemptToOfferCardUploadSave(
   // everything was found, as Payments may still allow the card to be saved.
   // If the experiment is off, follow the legacy logic of aborting upload save.
   if (upload_decision_metrics_ &&
-      !IsAutofillUpstreamSendDetectedValuesExperimentEnabled()) {
+      !IsAutofillUpstreamSendDetectedValuesExperimentEnabled() &&
+      !found_expiration_date) {
     LogCardUploadDecisions(upload_decision_metrics_);
     pending_upload_request_origin_ = url::Origin();
     if (observer_for_testing_)

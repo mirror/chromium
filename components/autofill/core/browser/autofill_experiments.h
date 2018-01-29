@@ -46,6 +46,8 @@ extern const base::Feature kAutofillUpstreamAllowAllEmailDomains;
 extern const base::Feature kAutofillUpstreamRequestCvcIfMissing;
 extern const base::Feature kAutofillUpstreamSendDetectedValues;
 extern const base::Feature kAutofillUpstreamSendPanFirstSix;
+extern const base::Feature
+    kEnableAutofillLogCreditCardExpirationDateNotDetected;
 extern const char kCreditCardSigninPromoImpressionLimitParamKey[];
 extern const char kAutofillCreditCardLastUsedDateShowExpirationDateKey[];
 extern const char kAutofillUpstreamMaxMinutesSinceAutofillProfileUseKey[];
@@ -155,6 +157,10 @@ bool IsAutofillUpstreamSendPanFirstSixExperimentEnabled();
 // Returns whether the Credit Card Autofill Touch Bar experiment is enabled.
 bool IsCreditCardAutofillTouchBarExperimentEnabled();
 #endif  // defined(OS_MACOSX)
+
+// Returns whether credit card expiration date not detected is
+// enabled.
+bool IsAutofillLogCreditCardExpirationDateNotDetectedEnabled();
 
 }  // namespace autofill
 

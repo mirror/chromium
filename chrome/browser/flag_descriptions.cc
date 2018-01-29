@@ -326,6 +326,11 @@ const char kEnableAutofillUseNewSettingsNameInDropdownDescription[] =
     "If enabled, shows a new Autofill settings string in the Autofill "
     "dropdown.";
 
+const char kEnableAutofillLogCreditCardExpirationDateNotDetected[] =
+    "Log credit card expiration date not detected metrics.";
+const char kEnableAutofillLogCreditCardExpirationDateNotDetectedDescription[] =
+    "If enabled, logs credit card expiration date not detected metrics.";
+
 const char kEnableBreakingNewsPushName[] = "Breaking News Push";
 const char kEnableBreakingNewsPushDescription[] =
     "Listen for breaking news content suggestions (e.g. for New Tab Page) "

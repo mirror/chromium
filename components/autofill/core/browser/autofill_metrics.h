@@ -88,6 +88,8 @@ class AutofillMetrics {
     // One or more valid addresses, and a name were available but the request to
     // Payments for upload details failed.
     UPLOAD_NOT_OFFERED_GET_UPLOAD_DETAILS_FAILED = 1 << 11,
+    // Valid card expiration date is not detected.
+    UPLOAD_NOT_OFFERED_NO_VALID_EXPIRATION_DATE = 1 << 12,
     // Update |kNumCardUploadDecisionMetrics| when adding new enum here.
   };
 
@@ -993,7 +995,7 @@ class AutofillMetrics {
   };
 
  private:
-  static const int kNumCardUploadDecisionMetrics = 12;
+  static const int kNumCardUploadDecisionMetrics = 13;
 
   DISALLOW_IMPLICIT_CONSTRUCTORS(AutofillMetrics);
 };

@@ -629,6 +629,15 @@ bool CreditCard::IsValid() const {
                                          AutofillClock::Now());
 }
 
+bool CreditCard::IsValidCardNumber() const {
+  return IsValidCreditCardNumber(number_);
+}
+
+bool CreditCard::IsValidExpirationDate() const {
+  return IsValidCreditCardExpirationDate(expiration_year_, expiration_month_,
+                                         AutofillClock::Now());
+}
+
 bool CreditCard::SetExpirationMonthFromString(const base::string16& text,
                                               const std::string& app_locale) {
   base::string16 trimmed;

@@ -69,6 +69,9 @@ const base::Feature kAutofillUpstreamSendDetectedValues{
     "AutofillUpstreamSendDetectedValues", base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kAutofillUpstreamSendPanFirstSix{
     "AutofillUpstreamSendPanFirstSix", base::FEATURE_DISABLED_BY_DEFAULT};
+const base::Feature kEnableAutofillLogCreditCardExpirationDateNotDetected{
+    "AutofillLogCreditCardExpirationDateNotDetected",
+    base::FEATURE_DISABLED_BY_DEFAULT};
 const char kCreditCardSigninPromoImpressionLimitParamKey[] = "impression_limit";
 const char kAutofillCreditCardPopupBackgroundColorKey[] = "background_color";
 const char kAutofillCreditCardPopupDividerColorKey[] = "dropdown_divider_color";
@@ -296,6 +299,11 @@ bool IsAutofillUpstreamSendDetectedValuesExperimentEnabled() {
 
 bool IsAutofillUpstreamSendPanFirstSixExperimentEnabled() {
   return base::FeatureList::IsEnabled(kAutofillUpstreamSendPanFirstSix);
+}
+
+bool IsAutofillLogCreditCardExpirationDateNotDetectedEnabled() {
+  return base::FeatureList::IsEnabled(
+      kEnableAutofillLogCreditCardExpirationDateNotDetected);
 }
 
 #if defined(OS_MACOSX)
