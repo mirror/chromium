@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ec8f0d2f_857fda8f",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-29T11:43:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa9bde69_ef7bfd31",
+      "revId": "b724747446e45a215781aa3262afc1d3d37267c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "641df2dd_a95cfb62",
         "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view.mm",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "b724747446e45a215781aa3262afc1d3d37267c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3a998f1_63d14221",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-29T11:43:52Z",
+      "side": 1,
+      "message": "Yes, it was a temporary fix.",
+      "parentUuid": "641df2dd_a95cfb62",
+      "revId": "b724747446e45a215781aa3262afc1d3d37267c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +131,30 @@
       "side": 1,
       "message": "Different solutions are necessary for the different subviews.  In the old toolbar, the subviews\u0027 heights remain constant, and they are expected to be scrolled out of the safe area insets.  For that effect, it made sense to constrain the height, leading, trailing, and bottom anchors.\n\nIf I understand the desired effect here properly, the location bar will never be scrolled out of the safe area.  When a fullscreen progress of 0.0 should result in kToolbarFullscreenHeight being exposed beyond the top safe inset.  If that\u0027s the case, I think for the location bar, we can constrain the top anchor to being kLocationBarVerticalMargin away from the safe area layout guide\u0027s top anchor.",
       "parentUuid": "9f065083_dad16357",
+      "range": {
+        "startLine": 205,
+        "startChar": 0,
+        "endLine": 205,
+        "endChar": 64
+      },
+      "revId": "b724747446e45a215781aa3262afc1d3d37267c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "625b61d8_5342aed1",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-29T11:43:52Z",
+      "side": 1,
+      "message": "This is a very good idea, but I couldn\u0027t make it work. The location bar container topAnchor doesn\u0027t get updated, even by forcing a layout (setNeedsLayout/layoutIfNeeded) on it and on its superview.\nI think having the toolbar being slid out modifying its frame might mess with the safe area.",
+      "parentUuid": "4ce2a241_5df2377a",
       "range": {
         "startLine": 205,
         "startChar": 0,
@@ -202,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "ec46b6b3_9d319328",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-29T11:43:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f223e6da_06552ab8",
+      "range": {
+        "startLine": 124,
+        "startChar": 12,
+        "endLine": 124,
+        "endChar": 29
+      },
+      "revId": "b724747446e45a215781aa3262afc1d3d37267c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4c9609f_f7f4ae93",
         "filename": "ios/chrome/browser/ui/toolbar/public/toolbar_controller_constants.h",
         "patchSetId": 2
@@ -216,6 +300,24 @@
       "revId": "b724747446e45a215781aa3262afc1d3d37267c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfd11dd6_16a4b32c",
+        "filename": "ios/chrome/browser/ui/toolbar/public/toolbar_controller_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-29T11:43:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4c9609f_f7f4ae93",
+      "revId": "b724747446e45a215781aa3262afc1d3d37267c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
