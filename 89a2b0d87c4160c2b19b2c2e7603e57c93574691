@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73cf37f5_b1e852c4",
+        "filename": "third_party/WebKit/Source/core/origin_trials/OriginTrialContext.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2018-01-29T19:03:42Z",
+      "side": 1,
+      "message": "This comment could be extended to explain why worklets are treated differently",
+      "revId": "89a2b0d87c4160c2b19b2c2e7603e57c93574691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3824b814_04b582c2",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2018-01-29T19:03:42Z",
+      "side": 1,
+      "message": "super-nit: You could use security_origin_-\u003eIsSecure() here",
+      "range": {
+        "startLine": 135,
+        "startChar": 12,
+        "endLine": 135,
+        "endChar": 17
+      },
+      "revId": "89a2b0d87c4160c2b19b2c2e7603e57c93574691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0068350a_01d6d65e",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThreadTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2018-01-29T19:03:42Z",
+      "side": 1,
+      "message": "Ditto here for security_origin_-\u003eIsSecure()",
+      "range": {
+        "startLine": 303,
+        "startChar": 10,
+        "endLine": 303,
+        "endChar": 15
+      },
+      "revId": "89a2b0d87c4160c2b19b2c2e7603e57c93574691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
