@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7ae1120e_ad1f0996",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 5288,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-29T18:33:20Z",
+      "side": 1,
+      "message": "I learned from the Common Name deprecation - it makes bots immediately start failing at branch. So I was going to wait until then and set the version number at the same time it gets nuked",
+      "parentUuid": "124ce642_81b35c97",
+      "range": {
+        "startLine": 5288,
+        "startChar": 34,
+        "endLine": 5288,
+        "endChar": 36
+      },
+      "revId": "3aecab3b69133847ca886bcc1713dafbe1ed1cc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60f13a46_7c11df95",
         "filename": "components/ssl_config/ssl_config_service_manager_pref.cc",
         "patchSetId": 1
