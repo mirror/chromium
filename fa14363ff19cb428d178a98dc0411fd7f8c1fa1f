@@ -34,6 +34,24 @@
       "revId": "fa14363ff19cb428d178a98dc0411fd7f8c1fa1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "51174b2c_290e45cf",
+        "filename": "content/public/test/test_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-29T17:11:14Z",
+      "side": 1,
+      "message": "Yeah, let\u0027s do it. Allow nested first.",
+      "parentUuid": "ac1954f6_60a8904c",
+      "revId": "fa14363ff19cb428d178a98dc0411fd7f8c1fa1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
