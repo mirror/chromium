@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4315ed4_8d04db3c",
+        "filename": "content/renderer/media_recorder/media_recorder_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-29T15:18:53Z",
+      "side": 1,
+      "message": "Can we make the |task_runner_|s added in this CL const?\nThat way we know they\u0027re init\u0027d on ctor and never touched,\nhence being an invariant. Depends on the std::move() \nsemantics on refptrs though. Did we fully discourage passing\nas const\u0026 on the style guide?",
+      "range": {
+        "startLine": 128,
+        "startChar": 46,
+        "endLine": 128,
+        "endChar": 58
+      },
+      "revId": "ae18a4ab34f33061afffe4748725eaddfe4d67f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d70c85f2_216677e8",
+        "filename": "content/renderer/media_recorder/video_track_recorder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-29T15:18:53Z",
+      "side": 1,
+      "message": "s/main_render_thread_checker_/main_thread_checker_/ ?\nBecause the main thread is not necessarily the main\nRender thread anymore.",
+      "range": {
+        "startLine": 193,
+        "startChar": 22,
+        "endLine": 193,
+        "endChar": 49
+      },
+      "revId": "ae18a4ab34f33061afffe4748725eaddfe4d67f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c97fd230_7acfed70",
+        "filename": "third_party/WebKit/Source/modules/media_capabilities/MediaCapabilities.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-29T15:18:53Z",
+      "side": 1,
+      "message": "Bundling \"media\" in the sense of \"playback\" with \"media\"\nin the sense of \"real-time\" processing has caused us headaches\nin the past, because they are not the same thing. I suggest\nwe add a new category for the latter and leave the Media for\nplayback, so e.g. a user playing back a video and recording\nit would not (potentially) see the first influenced by how\nslow the latter is. Makes sense?",
+      "range": {
+        "startLine": 288,
+        "startChar": 30,
+        "endLine": 288,
+        "endChar": 54
+      },
+      "revId": "ae18a4ab34f33061afffe4748725eaddfe4d67f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
