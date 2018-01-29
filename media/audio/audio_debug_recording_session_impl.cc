@@ -4,9 +4,14 @@
 
 #include "media/audio/audio_debug_recording_session_impl.h"
 
+#include <utility>
+
 #include "base/bind.h"
+#include "base/files/file.h"
 #include "base/files/file_path.h"
 #include "base/single_thread_task_runner.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/task_scheduler/task_traits.h"
 #include "media/audio/audio_manager.h"
 
 namespace media {
@@ -15,6 +20,26 @@ namespace media {
 // AudioManager::Shutdown() (called before AudioManager destruction) shuts down
 // AudioManager thread.
 
+namespace {
+
+void CreateFile(const base::FilePath& debug_recording_file_path,
+                const base::FilePath& extension,
+                base::OnceCallback<void(base::File)> reply_callback) {
+  base::PostTaskWithTraitsAndReplyWithResult(
+      FROM_HERE,
+      {base::MayBlock(), base::TaskPriority::BACKGROUND,
+       base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN},
+      base::BindOnce(
+          [](const base::FilePath& file_name) {
+            return base::File(file_name, base::File::FLAG_CREATE_ALWAYS |
+                                             base::File::FLAG_WRITE);
+          },
+          debug_recording_file_path.AddExtension(extension.value())),
+      std::move(reply_callback));
+}
+
+}  // namespace
+
 AudioDebugRecordingSessionImpl::AudioDebugRecordingSessionImpl(
     const base::FilePath& debug_recording_file_path) {
   AudioManager* audio_manager = AudioManager::Get();
@@ -22,9 +47,10 @@ AudioDebugRecordingSessionImpl::AudioDebugRecordingSessionImpl(
     return;
 
   audio_manager->GetTaskRunner()->PostTask(
-      FROM_HERE, base::BindOnce(&AudioManager::EnableDebugRecording,
-                                base::Unretained(audio_manager),
-                                debug_recording_file_path));
+      FROM_HERE,
+      base::BindOnce(
+          &AudioManager::EnableDebugRecording, base::Unretained(audio_manager),
+          base::BindRepeating(&CreateFile, debug_recording_file_path)));
 }
 
 AudioDebugRecordingSessionImpl::~AudioDebugRecordingSessionImpl() {
