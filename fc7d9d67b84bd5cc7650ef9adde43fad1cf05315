@@ -275,6 +275,30 @@
       "revId": "fc7d9d67b84bd5cc7650ef9adde43fad1cf05315",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "296f2f37_fbbfd45d",
+        "filename": "tools/mac/rewrite_modern_objc.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-29T17:23:00Z",
+      "side": 1,
+      "message": "I hadn\u0027t noticed the CL was merged. Done at https://chromium-review.googlesource.com/c/chromium/src/+/891358.",
+      "parentUuid": "b35fceed_d2dfd26b",
+      "range": {
+        "startLine": 136,
+        "startChar": 7,
+        "endLine": 136,
+        "endChar": 31
+      },
+      "revId": "fc7d9d67b84bd5cc7650ef9adde43fad1cf05315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
