@@ -9,7 +9,7 @@
 #include "base/single_thread_task_runner.h"
 #include "build/build_config.h"
 #include "media/audio/audio_manager.h"
-#include "services/audio/system_info.h"
+#include "services/audio/common/system_info.h"
 #include "services/service_manager/public/cpp/service_context.h"
 
 namespace audio {
