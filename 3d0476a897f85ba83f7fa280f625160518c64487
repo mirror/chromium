@@ -22,6 +22,30 @@
       "revId": "3d0476a897f85ba83f7fa280f625160518c64487",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2a0a0b6_4712e56e",
+        "filename": "DEPS",
+        "patchSetId": 8
+      },
+      "lineNbr": 1348,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-01-29T18:40:39Z",
+      "side": 1,
+      "message": "Hmm, maybe. It seems to make sense to have the version here with all the other versions for dependencies. Does v8 not depend on any other of the versions here in DEPS?",
+      "parentUuid": "0d88d791_1f4f5c21",
+      "range": {
+        "startLine": 1348,
+        "startChar": 6,
+        "endLine": 1348,
+        "endChar": 49
+      },
+      "revId": "3d0476a897f85ba83f7fa280f625160518c64487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
