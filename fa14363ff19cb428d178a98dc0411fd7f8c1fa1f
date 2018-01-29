@@ -16,6 +16,24 @@
       "revId": "fa14363ff19cb428d178a98dc0411fd7f8c1fa1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ac1954f6_60a8904c",
+        "filename": "content/public/test/test_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-29T17:02:34Z",
+      "side": 1,
+      "message": "Maybe we should go ahead and allow application tasks first. I was considering throwing the switch after this change, but it doesn\u0027t really make a difference if this goes first or the other one.",
+      "parentUuid": "59bc7d49_5a8aa1be",
+      "revId": "fa14363ff19cb428d178a98dc0411fd7f8c1fa1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
