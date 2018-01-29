@@ -16,6 +16,24 @@
       "revId": "77636820f2af0aeb443fd356353a605a6f0b05e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f77883d9_4bea9b19",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-29T21:23:14Z",
+      "side": 1,
+      "message": "Since I\u0027m matching the existing code and since I have about 100 of these CLs, I\u0027d prefer to not do this nit if you don\u0027t mind too much :-)",
+      "parentUuid": "b9354e33_8d699c3b",
+      "revId": "77636820f2af0aeb443fd356353a605a6f0b05e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
