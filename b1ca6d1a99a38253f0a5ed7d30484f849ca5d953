@@ -16,6 +16,24 @@
       "revId": "b1ca6d1a99a38253f0a5ed7d30484f849ca5d953",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15ecc60a_0a50b999",
+        "filename": "components/viz/service/surfaces/surface_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-29T14:32:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27294c45_6762bd9b",
+      "revId": "b1ca6d1a99a38253f0a5ed7d30484f849ca5d953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
