@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e07bcff7_e56f3b07",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ClientHintsPreferences.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-29T12:41:36Z",
+      "side": 1,
+      "message": "Should we DCHECK(IsClientHintsAllowed()) here?\n\nNaive question- why don\u0027t we check it here and return without doing anything if it\u0027s false (rather than checking it in the callsites)? Is it because in some cases we also want to do other thing like histogram counting before calling this?",
+      "revId": "76afc4d14e7f2d15315af7cb58cbe33fdb6a55cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
