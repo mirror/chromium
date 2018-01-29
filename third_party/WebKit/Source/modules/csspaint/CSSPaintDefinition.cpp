@@ -69,6 +69,12 @@ scoped_refptr<Image> CSSPaintDefinition::Paint(
     const ImageResourceObserver& client,
     const IntSize& container_size,
     const CSSStyleValueVector* paint_arguments) {
+  // It appears that under certain circumstances (crbug.com/806082), the
+  // |script_state_| becomes null, which indicates that this object itself is
+  // null.
+  if (!this)
+    return nullptr;
+
   // TODO: Break dependency on LayoutObject. Passing the Node should work.
   const LayoutObject& layout_object = static_cast<const LayoutObject&>(client);
 
