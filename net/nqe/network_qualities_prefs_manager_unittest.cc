@@ -173,11 +173,8 @@ TEST(NetworkQualitiesPrefManager, WriteWhenMatchingExpectedECT) {
   estimator.RunOneRequest();
   base::RunLoop().RunUntilIdle();
 
-  // Cached network quality for |network_id| should be deleted from the prefs
-  // since the expected network quality for |network_id| matches the observed
-  // network quality.
-  EXPECT_EQ(1u, manager.ForceReadPrefsForTesting().size());
-  EXPECT_EQ(0u, manager.ForceReadPrefsForTesting().count(network_id));
+  EXPECT_EQ(2u, manager.ForceReadPrefsForTesting().size());
+  EXPECT_EQ(1u, manager.ForceReadPrefsForTesting().count(network_id));
   EXPECT_EQ(6u, prefs_delegate_ptr->write_count());
 
   manager.ShutdownOnPrefSequence();
