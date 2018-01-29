@@ -59,11 +59,11 @@ size_t RequiredLineBreaksAround(const Node& node) {
 // whitespace characters are left as-is, without any collapsing or conversion.
 // For example, from HTML <p>\na\n\nb\n</p>, we get text dump "a\n\nb".
 // [*] https://developer.mozilla.org/en-US/docs/Web/API/Node/innerText
-class TextDumper final {
+class InnerTextDumper final {
   STACK_ALLOCATED();
 
  public:
-  TextDumper(StringBuilder& builder, size_t max_length)
+  InnerTextDumper(StringBuilder& builder, size_t max_length)
       : builder_(builder), max_length_(max_length) {}
 
   void DumpTextFrom(const Node& node) {
@@ -155,11 +155,59 @@ class TextDumper final {
   StringBuilder& builder_;
   const size_t max_length_;
 
-  DISALLOW_COPY_AND_ASSIGN(TextDumper);
+  DISALLOW_COPY_AND_ASSIGN(InnerTextDumper);
 };
 
+// This class dumps textContent of a node into a StringBuilder, with the only
+// exception that text nodes in STYLE and SCRIPT elements are ignored.
+class TextContentDumper {
+  STACK_ALLOCATED();
+
+ public:
+  TextContentDumper(StringBuilder& builder, size_t max_length)
+      : builder_(builder), max_length_(max_length) {}
+
+  void DumpTextFrom(const Element& element) { HandleElement(element, 0); }
+
+ private:
+  void HandleElement(const Element& element, unsigned depth) {
+    if (depth == text_dumper_max_depth)
+      return;
+    if (IsHTMLStyleElement(element) || IsHTMLScriptElement(element))
+      return;
+
+    for (const Node& child : NodeTraversal::ChildrenOf(element)) {
+      if (child.IsElementNode()) {
+        HandleElement(ToElement(child), depth + 1);
+        ;
+        continue;
+      }
+
+      if (!child.IsTextNode())
+        continue;
+
+      HandleTextNode(ToText(child));
+      if (builder_.length() >= max_length_)
+        return;
+    }
+  }
+
+  void HandleTextNode(const Text& node) {
+    builder_.Append(node.data());
+    if (builder_.length() > max_length_)
+      builder_.Resize(max_length_);
+  }
+
+  StringBuilder& builder_;
+  const size_t max_length_;
+
+  DISALLOW_COPY_AND_ASSIGN(TextContentDumper);
+};
+
+enum TextDumpOption { kDumpTextContent, kDumpInnerText };
 void FrameContentAsPlainText(size_t max_chars,
                              LocalFrame* frame,
+                             TextDumpOption option,
                              StringBuilder& output) {
   Document* document = frame->GetDocument();
   if (!document)
@@ -168,11 +216,21 @@ void FrameContentAsPlainText(size_t max_chars,
   if (!frame->View() || frame->View()->ShouldThrottleRendering())
     return;
 
-  DCHECK(!frame->View()->NeedsLayout());
-  DCHECK(!document->NeedsLayoutTreeUpdate());
+  if (option == TextDumpOption::kDumpInnerText) {
+    // Dumping inner text requires clean layout
+    DCHECK(!frame->View()->NeedsLayout());
+    DCHECK(!document->NeedsLayoutTreeUpdate());
+  }
 
-  if (document->documentElement())
-    TextDumper(output, max_chars).DumpTextFrom(*document->documentElement());
+  if (document->documentElement()) {
+    if (option == TextDumpOption::kDumpInnerText) {
+      InnerTextDumper(output, max_chars)
+          .DumpTextFrom(*document->documentElement());
+    } else {
+      TextContentDumper(output, max_chars)
+          .DumpTextFrom(*document->documentElement());
+    }
+  }
 
   // The separator between frames when the frames are converted to plain text.
   const LChar kFrameSeparator[] = {'\n', '\n'};
@@ -185,16 +243,19 @@ void FrameContentAsPlainText(size_t max_chars,
     if (!cur_child->IsLocalFrame())
       continue;
     LocalFrame* cur_local_child = ToLocalFrame(cur_child);
-    // Ignore the text of non-visible frames.
-    LayoutView* layout_view = cur_local_child->ContentLayoutObject();
-    LayoutObject* owner_layout_object = cur_local_child->OwnerLayoutObject();
-    if (!layout_view || !layout_view->Size().Width() ||
-        !layout_view->Size().Height() ||
-        (layout_view->Location().X() + layout_view->Size().Width() <= 0) ||
-        (layout_view->Location().Y() + layout_view->Size().Height() <= 0) ||
-        (owner_layout_object && owner_layout_object->Style() &&
-         owner_layout_object->Style()->Visibility() != EVisibility::kVisible)) {
-      continue;
+    // When dumping inner text, ignore the text of non-visible frames.
+    if (option == TextDumpOption::kDumpInnerText) {
+      LayoutView* layout_view = cur_local_child->ContentLayoutObject();
+      LayoutObject* owner_layout_object = cur_local_child->OwnerLayoutObject();
+      if (!layout_view || !layout_view->Size().Width() ||
+          !layout_view->Size().Height() ||
+          (layout_view->Location().X() + layout_view->Size().Width() <= 0) ||
+          (layout_view->Location().Y() + layout_view->Size().Height() <= 0) ||
+          (owner_layout_object && owner_layout_object->Style() &&
+           owner_layout_object->Style()->Visibility() !=
+               EVisibility::kVisible)) {
+        continue;
+      }
     }
 
     // Make sure the frame separator won't fill up the buffer, and give up if
@@ -206,7 +267,7 @@ void FrameContentAsPlainText(size_t max_chars,
       return;
 
     output.Append(kFrameSeparator, frame_separator_length);
-    FrameContentAsPlainText(max_chars, cur_local_child, output);
+    FrameContentAsPlainText(max_chars, cur_local_child, option, output);
     if (output.length() >= max_chars)
       return;  // Filled up the buffer.
   }
@@ -221,7 +282,7 @@ WebString WebFrameContentDumper::DeprecatedDumpFrameTreeAsText(
     return WebString();
   StringBuilder text;
   FrameContentAsPlainText(max_chars, ToWebLocalFrameImpl(frame)->GetFrame(),
-                          text);
+                          TextDumpOption::kDumpTextContent, text);
   return text.ToString();
 }
 
@@ -236,7 +297,7 @@ WebString WebFrameContentDumper::DumpWebViewAsText(WebView* web_view,
 
   StringBuilder text;
   FrameContentAsPlainText(max_chars, ToWebLocalFrameImpl(frame)->GetFrame(),
-                          text);
+                          TextDumpOption::kDumpInnerText, text);
   return text.ToString();
 }
 
