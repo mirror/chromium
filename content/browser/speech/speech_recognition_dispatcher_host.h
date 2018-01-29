@@ -14,6 +14,7 @@
 #include "content/public/browser/speech_recognition_event_listener.h"
 #include "ipc/ipc_sender.h"
 #include "net/url_request/url_request_context_getter.h"
+#include "mojo/public/cpp/bindings/strong_binding_set.h"
 
 namespace content {
 
@@ -93,6 +94,11 @@ class CONTENT_EXPORT SpeechRecognitionDispatcherHost
 
   // TODO(sashab): Convert this message path to Mojo and remove it.
   base::WeakPtr<IPC::Sender> sender_;
+
+  mojo::StrongBindingSet<mojom::SpeechRecognitionRequest> requests_;
+
+  // An auto-incrementing integer, unique to each request.
+  int request_id_;
 
   // Used for posting asynchronous tasks (on the IO thread) without worrying
   // about this class being destroyed in the meanwhile (due to browser shutdown)

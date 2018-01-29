@@ -31,6 +31,64 @@ using blink::WebSpeechRecognizerClient;
 
 namespace content {
 
+class SpeechRecognitionDispatcher::SpeechRecognizerClient : public mojom::SpeechRecognizerClient {
+ public:
+  SpeechRecognizerClient(
+    mojom::SpeechRecognizerClientRequest client_request,
+    mojom::SpeechRecognitionRequestPtr request,
+    const blink::WebSpeechRecognitionHandle& handle,
+    mojom::SpeechRecognizerClientPtrInfo client,
+    blink::WebSpeechRecognizerClient* recognizer_client)
+    : client_request_(std::move(client_request)),
+      request_(std::move(request)),
+      handle_(handle),
+      client_(std::move(client)), recognizer_client_(recognizer_client) {}
+
+  ~SpeechRecognizerClient() override = default;
+
+  // mojom::SpeechRecognizerClient:
+  void Started() override {
+    LOG(ERROR) << "SpeechRecognitionDispatcher::Started() called :)";
+  }
+
+  void AudioStarted() override {
+    LOG(ERROR) << "SpeechRecognitionDispatcher::AudioStarted() called :)";
+  }
+
+  void SoundStarted() override {
+    LOG(ERROR) << "SpeechRecognitionDispatcher::SoundStarted() called :)";
+  }
+
+  void SoundEnded() override {
+    LOG(ERROR) << "SpeechRecognitionDispatcher::SoundEnded() called :)";
+  }
+
+  void AudioEnded() override {
+    LOG(ERROR) << "SpeechRecognitionDispatcher::AudioEnded() called :)";
+  }
+
+  void Ended() override {
+    LOG(ERROR) << "SpeechRecognitionDispatcher::Ended() called :)";
+  }
+
+  void ResultRetrieved(
+      std::vector<mojom::SpeechRecognitionResultPtr> results) override {
+    LOG(ERROR) << "SpeechRecognitionDispatcher::ResultRetrieved() called :)";
+  }
+
+  void ErrorOccurred(mojom::SpeechRecognitionErrorPtr error) override {
+    LOG(ERROR) << "SpeechRecognitionDispatcher::ErrorOccurred() called :)";
+  }
+
+
+  mojom::SpeechRecognizerClientRequest client_request_;
+  mojom::SpeechRecognitionRequestPtr request_;
+  const blink::WebSpeechRecognitionHandle& handle_;
+  mojom::SpeechRecognizerClientPtrInfo client_;
+  blink::WebSpeechRecognizerClient* const recognizer_client_;
+};
+
+
 SpeechRecognitionDispatcher::SpeechRecognitionDispatcher(
     RenderViewImpl* render_view)
     : RenderViewObserver(render_view),
@@ -87,6 +145,18 @@ void SpeechRecognitionDispatcher::Start(
   msg_params->origin = params.Origin();
   msg_params->render_view_id = routing_id();
   msg_params->request_id = GetOrCreateIDForHandle(handle);
+
+  mojom::SpeechRecognitionRequestPtr speech_request;
+  msg_params->request = mojo::MakeRequest(&speech_request);
+
+  mojom::SpeechRecognizerClientPtrInfo speech_client;
+
+  clients_.emplace(
+      handle, std::make_unique<SpeechRecognizerClient>(
+                  mojo::MakeRequest(&speech_client), std::move(speech_request),
+                  handle, std::move(speech_client), recognizer_client_));
+
+  msg_params->client = std::move(speech_client);
 
   // The handle mapping will be removed in |OnRecognitionEnd|.
   GetSpeechRecognitionHost().StartRequest(std::move(msg_params));

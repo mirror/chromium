@@ -5,6 +5,7 @@
 module content.mojom;
 
 import "content/public/common/speech_recognition_grammar.mojom";
+import "mojo/common/string16.mojom";
 import "url/mojo/origin.mojom";
 
 // Used to start a speech recognition session.
@@ -25,6 +26,56 @@ struct StartSpeechRecognitionRequestParams {
   bool continuous;
   // Whether the user requested interim results.
   bool interim_results;
+  // Request object for further communication to the browser process.
+  SpeechRecognitionRequest& request;
+  // Client object for communicating back to the renderer process.
+  SpeechRecognizerClient client;
+};
+
+// Error details for the SPEECH_RECOGNITION_ERROR_AUDIO error.
+enum SpeechAudioErrorDetails {
+  None = 0,
+  NoMic
+};
+
+// This must match content::SpeechRecognitionErrorCode, since a Java counterpart
+// will be generated for this enum.
+enum SpeechRecognitionErrorCode {
+  // There was no error.
+  None,
+  // No speech heard before timeout.
+  NoSpeech,
+  // The user or a script aborted speech input.
+  Aborted,
+  // There was an error with recording audio.
+  AudioCapture,
+  // There was a network error.
+  Network,
+  // Not allowed for privacy or security reasons.
+  NotAllowed,
+  // Speech service is not allowed for privacy or security reasons.
+  ServiceNotAllowed,
+  // There was an error in the speech recognition grammar.
+  BadGrammar,
+  // The language was not supported.
+  LanguageNotSupported,
+  // Speech was heard, but could not be interpreted.
+  NoMatch,
+};
+
+struct SpeechRecognitionError {
+  SpeechRecognitionErrorCode code;
+  SpeechAudioErrorDetails details;
+};
+
+struct SpeechRecognitionHypothesis {
+  mojo.common.mojom.String16 utterance;
+  double confidence;
+};
+
+struct SpeechRecognitionResult {
+  array<SpeechRecognitionHypothesis> hypotheses;
+  bool is_provisional;
 };
 
 // API for the renderer process to send speech recognition JS API messages to
@@ -35,21 +86,59 @@ interface SpeechRecognizer {
   // Requests the speech recognition service to start speech recognition.
   StartRequest(StartSpeechRecognitionRequestParams params);
 
-  // Requests the speech recognition service to abort speech recognition on
-  // behalf of the given |render_view_id| and |request_id|. If there are no
-  // sessions associated with the |request_id| in the render view, this call
-  // does nothing.
-  AbortRequest(int32 render_view_id, int32 request_id);
-
   // Requests the speech recognition service to abort all speech recognitions on
   // behalf of the given |render_view_id|. If speech recognition is not
   // happening or is happening on behalf of some other render view, this call
   // does nothing.
   AbortAllRequests(int32 render_view_id);
 
+  // TODO(sashab): Remove these
+
+  // Requests the speech recognition service to abort speech recognition on
+  // behalf of the given |render_view_id| and |request_id|. If there are no
+  // sessions associated with the |request_id| in the render view, this call
+  // does nothing.
+  AbortRequest(int32 render_view_id, int32 request_id);
+
   // Requests the speech recognition service to stop audio capture on behalf of
   // the given |render_view_id|. Any audio recorded so far will be fed to the
   // speech recognizer. If speech recognition is not happening or is happening
   // on behalf of some other render view, this call does nothing.
   StopCaptureRequest(int32 render_view_id, int32 request_id);
+};
+
+// API for the browser process to send speech recognition events to the
+// renderer process.
+// The messages below follow exactly the same semantic of the corresponding
+// events defined in content/public/browser/speech_recognition_event_listener.h.
+interface SpeechRecognizerClient {
+  Started();
+
+  AudioStarted();
+
+  SoundStarted();
+
+  SoundEnded();
+
+  AudioEnded();
+
+  Ended();
+
+  ResultRetrieved(array<SpeechRecognitionResult> results);
+
+  ErrorOccurred(SpeechRecognitionError error);
+};
+
+interface SpeechRecognitionRequest {
+  // Requests the speech recognition service to abort speech recognition on
+  // behalf of the given |render_view_id| and |request_id|. If there are no
+  // sessions associated with the |request_id| in the render view, this call
+  // does nothing.
+  Abort();
+
+  // Requests the speech recognition service to stop audio capture on behalf of
+  // the given |render_view_id|. Any audio recorded so far will be fed to the
+  // speech recognizer. If speech recognition is not happening or is happening
+  // on behalf of some other render view, this call does nothing.
+  StopCapture();
 };

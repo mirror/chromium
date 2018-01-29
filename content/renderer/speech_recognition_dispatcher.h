@@ -32,6 +32,8 @@ class SpeechRecognitionDispatcher : public RenderViewObserver,
   void AbortAllRecognitions();
 
  private:
+  class SpeechRecognizerClient;
+
   // RenderViewObserver implementation.
   bool OnMessageReceived(const IPC::Message& message) override;
   void OnDestruct() override;
@@ -69,6 +71,10 @@ class SpeechRecognitionDispatcher : public RenderViewObserver,
   typedef std::map<int, blink::WebSpeechRecognitionHandle> HandleMap;
   HandleMap handle_map_;
   int next_id_;
+
+  std::map<blink::WebSpeechRecognitionHandle,
+           std::unique_ptr<SpeechRecognizerClient>>
+      clients_;
 
   DISALLOW_COPY_AND_ASSIGN(SpeechRecognitionDispatcher);
 };
