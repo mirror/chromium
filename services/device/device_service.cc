@@ -14,7 +14,6 @@
 #include "build/build_config.h"
 #include "device/geolocation/geolocation_config.h"
 #include "device/geolocation/geolocation_context.h"
-#include "device/geolocation/geolocation_provider_impl.h"
 #include "mojo/public/cpp/system/message_pipe.h"
 #include "services/device/fingerprint/fingerprint.h"
 #include "services/device/generic_sensor/sensor_provider_impl.h"
@@ -55,6 +54,9 @@ std::unique_ptr<service_manager::Service> CreateDeviceService(
     const WakeLockContextCallback& wake_lock_context_callback,
     const CustomLocationProviderCallback& custom_location_provider_callback,
     const base::android::JavaRef<jobject>& java_nfc_delegate) {
+  GeolocationProvider::SetRequestContextProducer(
+      geolocation_request_context_producer);
+  GeolocationProvider::SetApiKey(geolocation_api_key);
   GeolocationProviderImpl::SetCustomLocationProviderCallback(
       custom_location_provider_callback);
   return std::make_unique<DeviceService>(
@@ -70,6 +72,9 @@ std::unique_ptr<service_manager::Service> CreateDeviceService(
         geolocation_request_context_producer,
     const std::string& geolocation_api_key,
     const CustomLocationProviderCallback& custom_location_provider_callback) {
+  GeolocationProvider::SetRequestContextProducer(
+      geolocation_request_context_producer);
+  GeolocationProvider::SetApiKey(geolocation_api_key);
   GeolocationProviderImpl::SetCustomLocationProviderCallback(
       custom_location_provider_callback);
   return std::make_unique<DeviceService>(
