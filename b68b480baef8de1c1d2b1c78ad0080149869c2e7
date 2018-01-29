@@ -34,6 +34,24 @@
       "revId": "b68b480baef8de1c1d2b1c78ad0080149869c2e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e063ac3_776e1d50",
+        "filename": "base/strings/string_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 939,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-29T23:35:34Z",
+      "side": 1,
+      "message": "It has no effect. https://bugs.chromium.org/p/chromium/issues/detail?id\u003d505314#c5 and following has some notes on it, and half an audit. (I wonder if that\u0027s still needed there, with /Zo improvements.)",
+      "parentUuid": "dd11d28f_9ebff2d1",
+      "revId": "b68b480baef8de1c1d2b1c78ad0080149869c2e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
