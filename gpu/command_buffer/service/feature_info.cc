@@ -1074,18 +1074,19 @@ void FeatureInfo::InitializeFeatures() {
     feature_flags_.chromium_image_ycbcr_422 = true;
   }
 
+  // XB30 is the DRM FourCC name for XBGR2101010: x:B:G:R 2:10:10:10.
 #if defined(OS_MACOSX)
   // Mac can create GLImages out of XR30 IOSurfaces only after High Sierra.
-  feature_flags_.chromium_image_xr30 = base::mac::IsAtLeastOS10_13();
+  feature_flags_.chromium_image_xb30 = base::mac::IsAtLeastOS10_13();
 #elif !defined(OS_WIN)
   // TODO(mcasas): connect in Windows, https://crbug.com/803451
-  // XR30 support was introduced in GLES 3.0/ OpenGL 4.2, before that it was
+  // XB30 support was introduced in GLES 3.0/ OpenGL 4.2, before that it was
   // signalled via a specific extension.
-  feature_flags_.chromium_image_xr30 =
+  feature_flags_.chromium_image_xb30 =
       gl_version_info_->is_es3 || gl_version_info_->IsAtLeastGL(4, 2) ||
       gl::HasExtension(extensions, "GL_EXT_texture_type_2_10_10_10_REV");
 #endif
-  if (feature_flags_.chromium_image_xr30){
+  if (feature_flags_.chromium_image_xb30){
     validators_.texture_internal_format.AddValue(GL_RGB10_A2_EXT);
     validators_.render_buffer_format.AddValue(GL_RGB10_A2_EXT);
     validators_.texture_internal_format_storage.AddValue(GL_RGB10_A2_EXT);
