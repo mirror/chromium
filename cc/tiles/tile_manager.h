@@ -429,6 +429,10 @@ class CC_EXPORT TileManager : CheckerImageTrackerClient {
   // CheckPendingGpuWorkTiles.
   bool pending_tile_requirements_dirty_ = false;
 
+  // Set to true when synchronziation tokens are added in the compositor context
+  // for the RasterBuffers. Reset to false once they are flushed.
+  bool need_flush_ = false;
+
   std::unordered_map<Tile::Id, std::vector<DrawImage>> scheduled_draw_images_;
   std::vector<scoped_refptr<TileTask>> locked_image_tasks_;
 
