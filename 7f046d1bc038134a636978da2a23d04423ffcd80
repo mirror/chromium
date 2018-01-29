@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "4d7a86af_cf86ce03",
+        "filename": "device/ctap/device_response_converter.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-29T21:06:46Z",
+      "side": 1,
+      "message": "nit: can you make this simply std::array\u003cCTAPDeviceResponseCode, 51\u003e? It\u0027s not quite obvious what type this is.",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 13
+      },
+      "revId": "7f046d1bc038134a636978da2a23d04423ffcd80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b285fbc2_e10a3249",
+        "filename": "device/ctap/device_response_converter.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-29T21:06:46Z",
+      "side": 1,
+      "message": "nit: `\u0026buffer`, as you can take this by reference",
+      "range": {
+        "startLine": 28,
+        "startChar": 7,
+        "endLine": 28,
+        "endChar": 13
+      },
+      "revId": "7f046d1bc038134a636978da2a23d04423ffcd80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a35a59b_b7d4e742",
+        "filename": "device/ctap/device_response_converter.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-29T21:06:46Z",
+      "side": 1,
+      "message": "nit: std::find_if(foo.begin(), foo.end(), lambda) !\u003d foo.end() can be replaced by std::any_of(foo.begin(), foo.end(), lambda)",
+      "range": {
+        "startLine": 32,
+        "startChar": 9,
+        "endLine": 32,
+        "endChar": 14
+      },
+      "revId": "7f046d1bc038134a636978da2a23d04423ffcd80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f6402a3f_93345fd1",
         "filename": "device/ctap/device_response_converter.cc",
         "patchSetId": 23
@@ -41,6 +110,29 @@
         "startChar": 33,
         "endLine": 186,
         "endChar": 42
+      },
+      "revId": "7f046d1bc038134a636978da2a23d04423ffcd80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "368720fe_a3c1a4c5",
+        "filename": "device/ctap/device_response_converter.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-29T21:06:46Z",
+      "side": 1,
+      "message": "nit: GetBool(), here and below",
+      "range": {
+        "startLine": 189,
+        "startChar": 56,
+        "endLine": 190,
+        "endChar": 74
       },
       "revId": "7f046d1bc038134a636978da2a23d04423ffcd80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
