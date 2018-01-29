@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b887b82_146d2319",
+        "filename": "base/message_loop/message_pump_libevent.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-29T22:54:27Z",
+      "side": 1,
+      "message": "this feels like such a weird interface to me. i think it\u0027d make more sense if FileDescriptorWatcher didn\u0027t exist, and you just passed a delegate when you want to watch something.\n\nlooking at the implementation, there\u0027s also a requirement that a given FileDescriptorWatcher can only be used to watch a single FD. it looks like FileDescriptorWatchers are almost always created using ::WatchReadable or ::WatchWritable, but there are a few places (including mojo/edk/system/channel_posix.cc) where they\u0027re constructed directly.\n\nbut in any case, i salute your efforts to improve this comment!\n\nwhat about changing the \"If an error occurs ...\" sentence to end with something like \"..., |controller| will stop watching any previously-registered events.\"?",
+      "revId": "ec24294e5a2f7ca0267f88db59839c18d34e824a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e453fc25_4a3744ff",
+        "filename": "base/message_loop/message_pump_libevent.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-29T22:54:27Z",
+      "side": 1,
+      "message": "nit: you can probably delete this old todo",
+      "revId": "ec24294e5a2f7ca0267f88db59839c18d34e824a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
