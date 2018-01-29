@@ -16,6 +16,24 @@
       "revId": "91e9cb18430f48d9078fefcadb8f016caf6f240a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1739f6c0_464cd74b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-29T17:24:50Z",
+      "side": 1,
+      "message": "1. I thought Gerrit did that automatically. \u003d/\n2. I completely forgot that switch executes all statements after the match one and thought that only the default was executed, argh. Thanks for adding this check!",
+      "parentUuid": "4e2d4de4_0a338b11",
+      "revId": "91e9cb18430f48d9078fefcadb8f016caf6f240a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
