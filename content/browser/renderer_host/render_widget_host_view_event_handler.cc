@@ -240,6 +240,34 @@ void RenderWidgetHostViewEventHandler::UnlockMouse() {
   host_->LostMouseLock();
 }
 
+void RenderWidgetHostViewEventHandler::ReserveKeys() {
+  aura::Window* root_window = window_->GetRootWindow();
+  if (!root_window) {
+    return;
+  }
+  // TODO: Remove if we decide to use the WindowTreeHost instead.
+  // root_window->ReserveKeys();
+  aura::WindowTreeHost* window_tree_host = root_window->GetHost();
+  if (!window_tree_host) {
+    return;
+  }
+  window_tree_host->ReserveKeys();
+}
+
+void RenderWidgetHostViewEventHandler::ClearReservedKeys() {
+  aura::Window* root_window = window_->GetRootWindow();
+  if (!root_window) {
+    return;
+  }
+  // TODO: Remove if we decide to use the WindowTreeHost instead.
+  // root_window->ClearReservedKeys();
+  aura::WindowTreeHost* window_tree_host = root_window->GetHost();
+  if (!window_tree_host) {
+    return;
+  }
+  window_tree_host->ClearReservedKeys();
+}
+
 void RenderWidgetHostViewEventHandler::OnKeyEvent(ui::KeyEvent* event) {
   TRACE_EVENT0("input", "RenderWidgetHostViewBase::OnKeyEvent");
 

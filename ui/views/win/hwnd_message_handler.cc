@@ -56,6 +56,7 @@
 #include "ui/views/widget/widget_hwnd_utils.h"
 #include "ui/views/win/fullscreen_handler.h"
 #include "ui/views/win/hwnd_message_handler_delegate.h"
+#include "ui/views/win/platform_hook.h"
 #include "ui/views/win/scoped_fullscreen_visibility.h"
 #include "ui/views/win/windows_session_change_observer.h"
 
@@ -371,6 +372,7 @@ HWNDMessageHandler::HWNDMessageHandler(HWNDMessageHandlerDelegate* delegate)
       sent_window_size_changing_(false),
       left_button_down_on_caption_(false),
       background_fullscreen_hack_(false),
+      platform_hook_(PlatformHook::Create()),
       autohide_factory_(this),
       weak_factory_(this) {}
 
@@ -800,6 +802,14 @@ bool HWNDMessageHandler::HasCapture() const {
   return ::GetCapture() == hwnd();
 }
 
+void HWNDMessageHandler::ReserveKeys() {
+  platform_hook_->Register(delegate_);
+}
+
+void HWNDMessageHandler::ClearReservedKeys() {
+  platform_hook_->Unregister();
+}
+
 void HWNDMessageHandler::SetVisibilityChangedAnimationsEnabled(bool enabled) {
   int dwm_value = enabled ? FALSE : TRUE;
   DwmSetWindowAttribute(hwnd(), DWMWA_TRANSITIONS_FORCEDISABLED, &dwm_value,
@@ -855,6 +865,7 @@ void HWNDMessageHandler::SetWindowIcons(const gfx::ImageSkia& window_icon,
 }
 
 void HWNDMessageHandler::SetFullscreen(bool fullscreen) {
+  LOG(ERROR) << "HWNDMessageHandler::SetFullscreen: " << fullscreen;
   background_fullscreen_hack_ = false;
   fullscreen_handler()->SetFullscreen(fullscreen);
 
@@ -966,9 +977,13 @@ LRESULT HWNDMessageHandler::OnWndProc(UINT message,
   return result;
 }
 
-void HWNDMessageHandler::OnFocus() {}
+void HWNDMessageHandler::OnFocus() {
+  LOG(ERROR) << "HWNDMessageHandler::OnFocus()";
+}
 
-void HWNDMessageHandler::OnBlur() {}
+void HWNDMessageHandler::OnBlur() {
+  LOG(ERROR) << "HWNDMessageHandler::OnBlur()";
+}
 
 void HWNDMessageHandler::OnCaretBoundsChanged(
     const ui::TextInputClient* client) {
