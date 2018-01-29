@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6c1b9733_f466ab16",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerThread.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-29T12:19:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49880730_a3e7d3fb",
+      "range": {
+        "startLine": 55,
+        "startChar": 34,
+        "endLine": 55,
+        "endChar": 68
+      },
+      "revId": "4c3a174e537a1b3ff81a4674a0cc21cf80e2f530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e77a50a2_ac493608",
         "filename": "third_party/WebKit/Source/core/workers/SharedWorkerThread.cpp",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "4c3a174e537a1b3ff81a4674a0cc21cf80e2f530",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18c491aa_4ca0e252",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerThread.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-29T12:19:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e77a50a2_ac493608",
+      "range": {
+        "startLine": 47,
+        "startChar": 34,
+        "endLine": 47,
+        "endChar": 65
+      },
+      "revId": "4c3a174e537a1b3ff81a4674a0cc21cf80e2f530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "13c01119_68ed8aeb",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerThread.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-29T12:19:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59e85fd3_31bc3600",
+      "range": {
+        "startLine": 51,
+        "startChar": 34,
+        "endLine": 51,
+        "endChar": 66
+      },
+      "revId": "4c3a174e537a1b3ff81a4674a0cc21cf80e2f530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "172c0944_77212b71",
         "filename": "third_party/WebKit/Source/platform/audio/PushPullFIFOMultithreadTest.cpp",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "4c3a174e537a1b3ff81a4674a0cc21cf80e2f530",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a625628_b5efa523",
+        "filename": "third_party/WebKit/Source/platform/audio/PushPullFIFOMultithreadTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-29T12:19:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "172c0944_77212b71",
+      "range": {
+        "startLine": 33,
+        "startChar": 48,
+        "endLine": 33,
+        "endChar": 65
+      },
+      "revId": "4c3a174e537a1b3ff81a4674a0cc21cf80e2f530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "2c3aea57_df508891",
+        "filename": "third_party/WebKit/public/platform/ThreadType.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-29T12:19:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f694714b_2c06e3de",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "4c3a174e537a1b3ff81a4674a0cc21cf80e2f530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9d7778a_37184f28",
         "filename": "third_party/WebKit/public/platform/ThreadType.h",
         "patchSetId": 3
@@ -134,6 +254,24 @@
     },
     {
       "key": {
+        "uuid": "08524fd0_70ed72f4",
+        "filename": "third_party/WebKit/public/platform/ThreadType.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-29T12:19:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9d7778a_37184f28",
+      "revId": "4c3a174e537a1b3ff81a4674a0cc21cf80e2f530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33d4e513_7040fea5",
         "filename": "third_party/WebKit/public/platform/WebThread.h",
         "patchSetId": 3
@@ -145,6 +283,24 @@
       "writtenOn": "2018-01-29T01:25:23Z",
       "side": 1,
       "message": "Can we add the |name| parameter to WebThreadCreationParams\u0027s constructor (instead of adding SetThreadName)?",
+      "revId": "4c3a174e537a1b3ff81a4674a0cc21cf80e2f530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa44c48d_57923a73",
+        "filename": "third_party/WebKit/public/platform/WebThread.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-29T12:19:17Z",
+      "side": 1,
+      "message": "The idea here is that each value will provide a default name and for kTestThread type we can call SetThreadName manually, so for non-test threads there is no need to pass it in the constructor. WDYT?",
+      "parentUuid": "33d4e513_7040fea5",
       "revId": "4c3a174e537a1b3ff81a4674a0cc21cf80e2f530",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
