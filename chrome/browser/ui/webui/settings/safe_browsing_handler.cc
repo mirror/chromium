@@ -47,8 +47,14 @@ void SafeBrowsingHandler::HandleGetSafeBrowsingExtendedReporting(
   AllowJavascript();
   const base::Value* callback_id;
   CHECK(args->Get(0, &callback_id));
-  base::Value is_enabled(safe_browsing::IsExtendedReportingEnabled(*prefs_));
-  ResolveJavascriptCallback(*callback_id, is_enabled);
+
+  base::DictionaryValue dict;
+  dict.SetBoolean("enabled",
+                  safe_browsing::IsExtendedReportingEnabled(*prefs_));
+  dict.SetBoolean("managed",
+                  safe_browsing::IsExtendedReportingPolicyManaged(*prefs_));
+
+  ResolveJavascriptCallback(*callback_id, dict);
 }
 
 void SafeBrowsingHandler::HandleSetSafeBrowsingExtendedReportingEnabled(
