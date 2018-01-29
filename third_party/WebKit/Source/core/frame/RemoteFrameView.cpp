@@ -130,8 +130,10 @@ void RemoteFrameView::FrameRectsChanged() {
   // any remote frames, if any, is accounted for by the embedder.
   IntRect new_rect = frame_rect_;
 
-  if (LocalFrameView* parent = ParentFrameView())
-    new_rect = parent->ConvertToRootFrame(parent->ContentsToFrame(new_rect));
+  if (LocalFrameView* parent = ParentFrameView()) {
+    new_rect.SetLocation(parent->ConvertToRootFrame(
+        parent->ContentsToFrame(new_rect.Location())));
+  }
   remote_frame_->Client()->FrameRectsChanged(new_rect);
 }
 
