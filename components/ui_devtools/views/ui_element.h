@@ -16,6 +16,11 @@ namespace ui_devtools {
 
 class UIElementDelegate;
 
+namespace protocol {
+template <typename T>
+class Array;
+}
+
 // UIElement type.
 enum UIElementType { WINDOW, WIDGET, VIEW };
 
@@ -44,7 +49,7 @@ class UIElement {
   int FindUIElementIdForBackendElement(T* element) const;
 
   // Return a vector of pairs of attributes' names and values.
-  virtual std::vector<std::pair<std::string, std::string>> GetCustomAttributes()
+  virtual std::vector<std::pair<std::string, std::string>> GetCustomProperties()
       const = 0;
   virtual void GetBounds(gfx::Rect* bounds) const = 0;
   virtual void SetBounds(const gfx::Rect& bounds) = 0;
@@ -55,6 +60,9 @@ class UIElement {
   // Otherwise, return null and empty bounds.
   virtual std::pair<gfx::NativeWindow, gfx::Rect> GetNodeWindowAndBounds()
       const = 0;
+  // Get a list of interleaved keys and values of attributes to be displayed
+  // on the element in the dev tools hierarchy view.
+  virtual std::unique_ptr<protocol::Array<std::string>> GetAttributes() const;
 
   template <typename BackingT, typename T>
   static BackingT* GetBackingElement(const UIElement* element) {

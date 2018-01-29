@@ -6,6 +6,7 @@
 
 #include <algorithm>
 
+#include "components/ui_devtools/DOM.h"
 #include "components/ui_devtools/views/ui_element_delegate.h"
 #include "components/ui_devtools/views/view_element.h"
 #include "components/ui_devtools/views/widget_element.h"
@@ -69,6 +70,10 @@ void UIElement::ReorderChild(UIElement* child, int new_index) {
   iter = children_.begin() + new_index;
   children_.insert(iter, child);
   delegate()->OnUIElementReordered(child->parent(), child);
+}
+
+std::unique_ptr<protocol::Array<std::string>> UIElement::GetAttributes() const {
+  return protocol::Array<std::string>::create();
 }
 
 template <class T>
