@@ -88,8 +88,10 @@ class LayerTreeHostReadbackPixelTest
       }
     }
 
-    if (!copy_subrect_.IsEmpty())
+    if (!copy_subrect_.IsEmpty()) {
       request->set_area(copy_subrect_);
+      LOG(ERROR) << request->area().ToString();
+    }
     return request;
   }
 

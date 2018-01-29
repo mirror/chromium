@@ -224,7 +224,6 @@ class CONTENT_EXPORT DelegatedFrameHost
   }
   void LockResources();
   void UnlockResources();
-  void RequestCopyOfOutput(std::unique_ptr<viz::CopyOutputRequest> request);
 
   bool ShouldSkipFrame(const gfx::Size& size_in_dip);
 
@@ -279,6 +278,7 @@ class CONTENT_EXPORT DelegatedFrameHost
   const bool enable_surface_synchronization_;
   const bool enable_viz_;
   ui::Compositor* compositor_ = nullptr;
+  float device_scale_factor_;
 
   // The vsync manager we are observing for changes, if any.
   scoped_refptr<ui::CompositorVSyncManager> vsync_manager_;
