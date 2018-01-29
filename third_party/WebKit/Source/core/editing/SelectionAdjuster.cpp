@@ -265,8 +265,11 @@ PositionInFlatTree ComputeEndRespectingGranularity(
     const PositionInFlatTree& start,
     const PositionInFlatTreeWithAffinity& end,
     TextGranularity granularity) {
-  return GranularityAdjuster::ComputeEndRespectingGranularityAlgorithm(
-      start, end, granularity);
+  const auto& result =
+      GranularityAdjuster::ComputeEndRespectingGranularityAlgorithm(
+          start, end, granularity);
+  DCHECK(result.IsNotNull()) << end;
+  return result;
 }
 
 SelectionInDOMTree SelectionAdjuster::AdjustSelectionRespectingGranularity(
