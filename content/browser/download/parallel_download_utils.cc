@@ -52,8 +52,8 @@ std::vector<DownloadItem::ReceivedSlice> FindSlicesForRemainingContent(
     }
   }
 
-  // Last slice is a half open slice, which results in sending range request
-  // like "Range:50-" to fetch from 50 bytes to the end of the file.
+  // No strong assumption that content length header is correct. So the last
+  // slice is always half open, which sends range request like "Range:50-".
   new_slices.emplace_back(current_offset, DownloadSaveInfo::kLengthFullContent);
   return new_slices;
 }
