@@ -1861,6 +1861,8 @@ enum WebFeature {
   kImageDecodeAPI = 2348,
   kV8HTMLElement_Autocapitalize_AttributeGetter = 2349,
   kV8HTMLElement_Autocapitalize_AttributeSetter = 2350,
+  kFullscreenSingleElement = 2351,
+  kFullscreenMultipleElements = 2352,
 
   // Add new features immediately above this line. Don't change assigned
   // numbers of any item, and don't reuse removed slots.
