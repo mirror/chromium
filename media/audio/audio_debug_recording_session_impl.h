@@ -10,7 +10,7 @@
 
 namespace base {
 class FilePath;
-}
+}  // namespace base
 
 namespace media {
 
