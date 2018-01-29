@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<script src="../../../resources/testharness.js"></script>
-<script src="../../../resources/testharnessreport.js"></script>
-<script src="../../../resources/testdriver.js"></script>
-<script src="../../../resources/testdriver-vendor.js"></script>
-<script src="../../../external/wpt/bluetooth/resources/bluetooth-helpers.js"></script>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="/resources/testdriver.js"></script>
+<script src="/resources/testdriver-vendor.js"></script>
+<script src="/bluetooth/resources/bluetooth-helpers.js"></script>
 <script>
 'use strict';
-let test_desc = 'A device disconnecting after the BluetoothDevice object has ' +
-    'been gced should not access freed memory.';
+const test_desc = 'A device disconnecting after the BluetoothDevice object ' +
+    'has been GC\'ed should not access freed memory.';
 let fake_peripheral;
+
 bluetooth_test(() => getHealthThermometerDevice()
   .then(_ => ({fake_peripheral} = _))
   .then(() => {
