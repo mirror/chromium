@@ -383,6 +383,24 @@
     },
     {
       "key": {
+        "uuid": "a1635629_bec3df7d",
+        "filename": "chrome_elf/whitelist/whitelist_log_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2018-01-29T19:19:33Z",
+      "side": 1,
+      "message": "That\u0027s why I\u0027m happy to change it to your suggestion!  I won\u0027t ever think like the average Chromium developer, so I\u0027ll defer to your experience on the coding standard decisions. :)  ...and I appreciate you catching the things I won\u0027t remember naturally.",
+      "parentUuid": "7b7da80a_78ec7c85",
+      "revId": "ef108ca04e3ce29112c266eb312d76480c49b4a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27e04245_97d343b8",
         "filename": "chrome_elf/whitelist/whitelist_packed_format.h",
         "patchSetId": 9
