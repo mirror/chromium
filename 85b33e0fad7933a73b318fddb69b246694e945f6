@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a49a2a2a_4f90d84e",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-29T00:15:36Z",
+      "side": 1,
+      "message": "This seems to be an OK amount of padding that will never cause |omnibox_view_|\u0027s length to extend past the rounded corners of |this|. WDYT?",
+      "revId": "85b33e0fad7933a73b318fddb69b246694e945f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

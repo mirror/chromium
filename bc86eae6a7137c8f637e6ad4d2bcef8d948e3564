@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c0a89833_10aea12b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-29T00:15:36Z",
+      "side": 1,
+      "message": "As discussed offline we are trying to avoid using clip masks, and this is OK because the subviews inside are going to become round anyway.",
+      "parentUuid": "bfe870c5_24fe5e77",
+      "revId": "bc86eae6a7137c8f637e6ad4d2bcef8d948e3564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a865359_600b6c6b",
         "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-22T23:32:37Z",
       "side": 1,
       "message": "nit:: // static\n\nactually, I\u0027d even declare this constexpr in the header, like\n\nconstexpr int GetBorderRadius(int height, Style style) {\n  return style \u003d\u003d RECTANGULAR ? kDefaultCornerRadius : height / 2;\n}",
+      "revId": "bc86eae6a7137c8f637e6ad4d2bcef8d948e3564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23e60f14_9fd72204",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-29T00:15:36Z",
+      "side": 1,
+      "message": "Ditto",
+      "parentUuid": "6a865359_600b6c6b",
       "revId": "bc86eae6a7137c8f637e6ad4d2bcef8d948e3564",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ac2303ed_5c4a9701",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-29T00:15:36Z",
+      "side": 1,
+      "message": "You\u0027re right, thanks! Fixed.",
+      "parentUuid": "7236b7fc_1d3e79ea",
+      "revId": "bc86eae6a7137c8f637e6ad4d2bcef8d948e3564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1ed9039_9e0a805e",
         "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.cc",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2018-01-22T23:32:37Z",
       "side": 1,
       "message": "hmm - a rounded rect stroke technically has different radii on the inside and the outside of the stroke (the radius only applies to the centreline of the stroke). The pixels may be too small to make a difference. But usually the best result is achieved by something like\n\n - paint round-rect FILL with the stroke color\n - inset the round-rect by the thickness of the stroke\n - paint round-rect FILL with background color\n\nthis effectively makes a stroke with the delta in round rects, and uses faster draw operations.",
+      "revId": "bc86eae6a7137c8f637e6ad4d2bcef8d948e3564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "589c83d1_d1d33969",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-29T00:15:36Z",
+      "side": 1,
+      "message": "Done! I don\u0027t know if I fully understood that giant comment above (line 41), so hopefully the way I\u0027m doing it is ok. IIUC it\u0027s just saying the inside of the stroke needs to be snapped to the pixel grid? Which I think I\u0027ve preserved.",
+      "parentUuid": "b1ed9039_9e0a805e",
       "revId": "bc86eae6a7137c8f637e6ad4d2bcef8d948e3564",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "b9426198_bc1b0b9f",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-29T00:15:36Z",
+      "side": 1,
+      "message": "I think with the subclassing this is no longer needed, but let me know if you\u0027d like to have it anyway?",
+      "parentUuid": "7bd04871_c985967d",
+      "range": {
+        "startLine": 28,
+        "startChar": 46,
+        "endLine": 28,
+        "endChar": 53
+      },
+      "revId": "bc86eae6a7137c8f637e6ad4d2bcef8d948e3564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24738bae_75e63cbf",
         "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.h",
         "patchSetId": 2
@@ -104,6 +200,24 @@
       "writtenOn": "2018-01-22T23:32:37Z",
       "side": 1,
       "message": "`bool rounded` -\u003e `Style style \u003d RECTANGULAR`",
+      "revId": "bc86eae6a7137c8f637e6ad4d2bcef8d948e3564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df497ed9_6c547cec",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-29T00:15:36Z",
+      "side": 1,
+      "message": "Ditto (see above comment)",
+      "parentUuid": "24738bae_75e63cbf",
       "revId": "bc86eae6a7137c8f637e6ad4d2bcef8d948e3564",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "10820526_0d435352",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1051,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-29T00:15:36Z",
+      "side": 1,
+      "message": "I subclassed instead - other things do use BackgroundWith1PxBorder (e.g. KeywordHintView, which I think is the thing that says \u0027press tab to search \u003cname of custom search thing\u003e\u0027).\nDone.",
+      "parentUuid": "fd40007f_9a27e0a9",
+      "revId": "bc86eae6a7137c8f637e6ad4d2bcef8d948e3564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5954401_a8121bb3",
         "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
         "patchSetId": 2
@@ -141,6 +273,24 @@
       "revId": "bc86eae6a7137c8f637e6ad4d2bcef8d948e3564",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b71f76ba_38c10e83",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-29T00:15:36Z",
+      "side": 1,
+      "message": "This is reverted - originally I had it to prevent the OmniboxViewViews textfield corners sticking out of the ending edge, but we are making it shorter in width instead.",
+      "parentUuid": "e5954401_a8121bb3",
+      "revId": "bc86eae6a7137c8f637e6ad4d2bcef8d948e3564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
