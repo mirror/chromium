@@ -52,6 +52,24 @@
       "revId": "da315962acdc4d8973154c063801a59882b91613",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9940d87_03cc9858",
+        "filename": "DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 1352,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2018-01-29T22:37:16Z",
+      "side": 1,
+      "message": "No clue. I\u0027m sync\u0027ing with this patch applied, depot_tools@head, and target_os \u003d [\"android\",\"chromeos\",\"linux\",\"fuchsia\"]. Is there something I need to nuke?\n\nAnd btw, I ran into \"There are deps from not allowed hosts\" error when uploading this, so I had to --bypass-hooks.",
+      "parentUuid": "249591a6_4689b4c3",
+      "revId": "da315962acdc4d8973154c063801a59882b91613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
