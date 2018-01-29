@@ -23,7 +23,6 @@ std::unique_ptr<service_manager::Service> ChromeService::Create() {
 }
 
 ChromeService::ChromeService() {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
 #if defined(OS_CHROMEOS)
 #if defined(USE_OZONE)
   input_device_controller_.AddInterface(&registry_);
