@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6eb37bbe_35fdf155",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-29T19:39:35Z",
+      "side": 1,
+      "message": "To clarify, this is only used with ChromeOS because this is for ARC++. That\u0027s why it\u0027s in the chromeos folder.",
+      "parentUuid": "8b592f67_8a5d231a",
+      "range": {
+        "startLine": 6,
+        "startChar": 8,
+        "endLine": 6,
+        "endChar": 80
+      },
+      "revId": "b2ae34518a71cfb15bc9b0ac51fdbdef022a7804",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf215930_9d31edbb",
         "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.h",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "b2ae34518a71cfb15bc9b0ac51fdbdef022a7804",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45bddfd8_67d21a01",
+        "filename": "chrome/browser/chromeos/arc/screen_capture/arc_screen_capture_session.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2018-01-29T19:39:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf215930_9d31edbb",
+      "range": {
+        "startLine": 50,
+        "startChar": 43,
+        "endLine": 50,
+        "endChar": 52
+      },
+      "revId": "b2ae34518a71cfb15bc9b0ac51fdbdef022a7804",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
