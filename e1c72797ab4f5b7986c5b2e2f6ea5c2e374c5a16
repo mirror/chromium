@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "993b9e8f_97bf707d",
+        "filename": "services/resource_coordinator/coordination_unit/page_coordination_unit_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-29T14:12:41Z",
+      "side": 1,
+      "message": "IsLoading\nGiven that this tests the kIsLoading property.",
+      "range": {
+        "startLine": 184,
+        "startChar": 37,
+        "endLine": 184,
+        "endChar": 45
+      },
+      "revId": "e1c72797ab4f5b7986c5b2e2f6ea5c2e374c5a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8e04f45_4cbce19e",
+        "filename": "services/resource_coordinator/observers/page_signal_generator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-29T14:12:41Z",
+      "side": 1,
+      "message": "!base::ContainsKey(page_data_, page_cu)\n\nMore readable IMO",
+      "range": {
+        "startLine": 48,
+        "startChar": 12,
+        "endLine": 48,
+        "endChar": 41
+      },
+      "revId": "e1c72797ab4f5b7986c5b2e2f6ea5c2e374c5a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27b28740_d386cc24",
+        "filename": "services/resource_coordinator/observers/page_signal_generator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-29T14:12:41Z",
+      "side": 1,
+      "message": "A page may never be idling if another page in the same process behaves badly? I would comment on that limitation.",
+      "range": {
+        "startLine": 253,
+        "startChar": 6,
+        "endLine": 254,
+        "endChar": 61
+      },
+      "revId": "e1c72797ab4f5b7986c5b2e2f6ea5c2e374c5a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddc4b513_bbcfd130",
+        "filename": "services/resource_coordinator/observers/page_signal_generator_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-29T14:12:41Z",
+      "side": 1,
+      "message": "TODO to use the ScopedTaskEnvironment\u0027s TickClock once it lands https://chromium-review.googlesource.com/c/chromium/src/+/888094",
+      "range": {
+        "startLine": 207,
+        "startChar": 2,
+        "endLine": 208,
+        "endChar": 43
+      },
+      "revId": "e1c72797ab4f5b7986c5b2e2f6ea5c2e374c5a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
