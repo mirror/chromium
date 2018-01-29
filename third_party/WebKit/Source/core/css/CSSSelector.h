@@ -264,6 +264,10 @@ class CORE_EXPORT CSSSelector {
     return is_last_in_tag_history_ ? nullptr : this + 1;
   }
 
+  CSSSelector* MutableTagHistory() {
+    return is_last_in_tag_history_ ? nullptr : this + 1;
+  }
+
   static const AtomicString& UniversalSelectorAtom() { return g_null_atom; }
   const QualifiedName& TagQName() const;
   const AtomicString& Value() const;
@@ -333,9 +337,16 @@ class CORE_EXPORT CSSSelector {
   }
 
   bool IsLastInSelectorList() const { return is_last_in_selector_list_; }
+  void SetNotLastInSelectorList() { is_last_in_selector_list_ = false; }
   void SetLastInSelectorList() { is_last_in_selector_list_ = true; }
+
+  bool IsLastInOriginalList() const { return is_last_in_original_list_; }
+  void SetNotLastInOriginalList() { is_last_in_original_list_ = false; }
+  void SetLastInOriginalList() { is_last_in_original_list_ = true; }
+
   bool IsLastInTagHistory() const { return is_last_in_tag_history_; }
   void SetNotLastInTagHistory() { is_last_in_tag_history_ = false; }
+  void SetLastInTagHistory() { is_last_in_tag_history_ = true; }
 
   // http://dev.w3.org/csswg/selectors4/#compound
   bool IsCompound() const;
@@ -363,6 +374,7 @@ class CORE_EXPORT CSSSelector {
   bool HasSlottedPseudo() const;
   bool HasDeepCombinatorOrShadowPseudo() const;
   bool NeedsUpdatedDistribution() const;
+  bool HasPseudoMatches() const;
 
  private:
   unsigned relation_ : 4;     // enum RelationType
@@ -374,6 +386,7 @@ class CORE_EXPORT CSSSelector {
   unsigned is_for_page_ : 1;
   unsigned tag_is_implicit_ : 1;
   unsigned relation_is_affected_by_pseudo_content_ : 1;
+  unsigned is_last_in_original_list_ : 1;
 
   void SetPseudoType(PseudoType pseudo_type) {
     pseudo_type_ = pseudo_type;
@@ -474,7 +487,8 @@ inline CSSSelector::CSSSelector()
       has_rare_data_(false),
       is_for_page_(false),
       tag_is_implicit_(false),
-      relation_is_affected_by_pseudo_content_(false) {}
+      relation_is_affected_by_pseudo_content_(false),
+      is_last_in_original_list_(false) {}
 
 inline CSSSelector::CSSSelector(const QualifiedName& tag_q_name,
                                 bool tag_is_implicit)
@@ -486,7 +500,8 @@ inline CSSSelector::CSSSelector(const QualifiedName& tag_q_name,
       has_rare_data_(false),
       is_for_page_(false),
       tag_is_implicit_(tag_is_implicit),
-      relation_is_affected_by_pseudo_content_(false) {
+      relation_is_affected_by_pseudo_content_(false),
+      is_last_in_original_list_(false) {
   data_.tag_q_name_ = tag_q_name.Impl();
   data_.tag_q_name_->AddRef();
 }
@@ -501,7 +516,8 @@ inline CSSSelector::CSSSelector(const CSSSelector& o)
       is_for_page_(o.is_for_page_),
       tag_is_implicit_(o.tag_is_implicit_),
       relation_is_affected_by_pseudo_content_(
-          o.relation_is_affected_by_pseudo_content_) {
+          o.relation_is_affected_by_pseudo_content_),
+      is_last_in_original_list_(o.is_last_in_original_list_) {
   if (o.match_ == kTag) {
     data_.tag_q_name_ = o.data_.tag_q_name_;
     data_.tag_q_name_->AddRef();

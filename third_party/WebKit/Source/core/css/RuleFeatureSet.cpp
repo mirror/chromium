@@ -91,7 +91,6 @@ bool SupportsInvalidation(CSSSelector::PseudoType type) {
     case CSSSelector::kPseudoLink:
     case CSSSelector::kPseudoVisited:
     case CSSSelector::kPseudoAny:
-    case CSSSelector::kPseudoMatches:
     case CSSSelector::kPseudoWebkitAnyLink:
     case CSSSelector::kPseudoAnyLink:
     case CSSSelector::kPseudoAutofill:
@@ -163,6 +162,7 @@ bool SupportsInvalidation(CSSSelector::PseudoType type) {
     case CSSSelector::kPseudoVideoPersistent:
     case CSSSelector::kPseudoVideoPersistentAncestor:
       return true;
+    case CSSSelector::kPseudoMatches:
     case CSSSelector::kPseudoUnknown:
     case CSSSelector::kPseudoLeftPage:
     case CSSSelector::kPseudoRightPage:
@@ -183,8 +183,6 @@ bool SupportsInvalidationWithSelectorList(CSSSelector::PseudoType pseudo) {
          pseudo == CSSSelector::kPseudoCue ||
          pseudo == CSSSelector::kPseudoHost ||
          pseudo == CSSSelector::kPseudoHostContext ||
-         ((pseudo == CSSSelector::kPseudoMatches) &&
-          RuntimeEnabledFeatures::CSSMatchesEnabled()) ||
          pseudo == CSSSelector::kPseudoNot ||
          pseudo == CSSSelector::kPseudoSlotted;
 }
@@ -595,7 +593,7 @@ RuleFeatureSet::ExtractInvalidationSetFeaturesFromSelectorList(
 
   DCHECK(SupportsInvalidationWithSelectorList(simple_selector.GetPseudoType()));
 
-  const CSSSelector* sub_selector = selector_list->First();
+  const CSSSelector* sub_selector = selector_list->FirstInMatchesTransform();
 
   bool all_sub_selectors_have_features = true;
   InvalidationSetFeatures any_features;
@@ -738,7 +736,7 @@ void RuleFeatureSet::AddFeaturesToInvalidationSetsForSelectorList(
       simple_selector.GetPseudoType() == CSSSelector::kPseudoHostContext;
 
   for (const CSSSelector* sub_selector =
-           simple_selector.SelectorList()->First();
+           simple_selector.SelectorList()->FirstInMatchesTransform();
        sub_selector; sub_selector = CSSSelectorList::Next(*sub_selector)) {
     descendant_features.has_features_for_rule_set_invalidation = false;
 
@@ -884,7 +882,8 @@ RuleFeatureSet::SelectorPreMatch RuleFeatureSet::CollectFeaturesFromSelector(
         FALLTHROUGH;
       default:
         if (const CSSSelectorList* selector_list = current->SelectorList()) {
-          for (const CSSSelector* sub_selector = selector_list->First();
+          for (const CSSSelector* sub_selector =
+                   selector_list->FirstInMatchesTransform();
                sub_selector;
                sub_selector = CSSSelectorList::Next(*sub_selector))
             CollectFeaturesFromSelector(*sub_selector, metadata);

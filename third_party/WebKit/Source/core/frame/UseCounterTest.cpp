@@ -2,8 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "core/css/CSSTestHelper.h"
 #include "core/frame/Deprecation.h"
 #include "core/frame/UseCounter.h"
+#include "core/html/HTMLHtmlElement.h"
 #include "core/page/Page.h"
 #include "core/testing/DummyPageHolder.h"
 #include "platform/testing/HistogramTester.h"
@@ -245,6 +247,17 @@ TEST_F(UseCounterTest, SVGImageContextAnimatedCSSProperties) {
         return UseCounter::MapCSSPropertyIdToCSSSampleIdForHistogram(property);
       },
       [&](LocalFrame* frame) { use_counter.DidCommitLoad(frame); }, kSvgUrl);
+}
+
+TEST_F(UseCounterTest, PseudoMatches) {
+  std::unique_ptr<DummyPageHolder> dummy_page_holder =
+      DummyPageHolder::Create(IntSize(800, 600));
+  Document& document = dummy_page_holder->GetDocument();
+  WebFeature feature = WebFeature::kCSSSelectorPseudoMatches;
+  EXPECT_FALSE(UseCounter::IsCounted(document, feature));
+  document.documentElement()->SetInnerHTMLFromString(
+      "<style>.a+:matches(.b, .c+.d) { color: red; }</style>");
+  EXPECT_TRUE(UseCounter::IsCounted(document, feature));
 }
 
 TEST_F(UseCounterTest, CSSSelectorPseudoAnyLink) {
