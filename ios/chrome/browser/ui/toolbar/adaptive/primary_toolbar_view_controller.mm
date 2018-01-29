@@ -49,6 +49,7 @@
   if (!onNTP)
     return;
 
+  self.view.backgroundColor = [UIColor whiteColor];
   self.view.locationBarContainer.hidden = YES;
 }
 
