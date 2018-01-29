@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98522936_5cc9bca9",
+        "filename": "net/tools/cert_verify_tool/cert_verify_tool_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-29T17:37:08Z",
+      "side": 1,
+      "message": "is this guaranteed to be set by our ReadFileToString() API?",
+      "revId": "7e49a7991b6e6a149d98eb08a0166380e9a89c4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
