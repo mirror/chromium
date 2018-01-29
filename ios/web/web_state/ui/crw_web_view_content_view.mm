@@ -50,7 +50,9 @@ const CGFloat kBackgroundRGBComponents[] = {0.75f, 0.74f, 0.76f};
     DCHECK(scrollView);
     DCHECK([scrollView isDescendantOfView:webView]);
     _webView = webView;
+    webView.clipsToBounds = NO;
     _scrollView = scrollView;
+    scrollView.clipsToBounds = NO;
   }
   return self;
 }

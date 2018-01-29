@@ -104,6 +104,8 @@
 #pragma mark - LocationBarConsumer
 
 - (void)updateOmniboxState {
+  if (!_locationBarController)
+    return;
   _locationBarController->SetShouldShowHintText(
       [self.delegate toolbarModelIOS]->ShouldDisplayHintText());
   _locationBarController->OnToolbarUpdated();
