@@ -984,10 +984,6 @@
       'android', 'release_trybot',
     ],
 
-    'android_release_trybot_arm64': [
-      'android', 'release_trybot', 'arm64',
-    ],
-
     'android_without_codecs_release_bot_minimal_symbols': [
       'android_without_codecs', 'release_bot', 'minimal_symbols', 'strip_debug_info',
     ],
