@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "73e0b806_0add4e53",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_methods.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2018-01-29T14:07:40Z",
+      "side": 1,
+      "message": "I wasn\u0027t entirely sure either, so I followed the change in v8_types.py from https://chromium-review.googlesource.com/831497 and what\u0027s already in the tree (without this CL):\n\n    /data/src/chromium/src/third_party/WebKit % git grep \u0027WTF::Optional\u003c\u0027 | wc -l                                        \n    244\n    /data/src/chromium/src/third_party/WebKit % git grep \u0027[^:]Optional\u003c\u0027 | wc -l\n    542",
+      "parentUuid": "32e6c502_cdf06adc",
+      "range": {
+        "startLine": 267,
+        "startChar": 40,
+        "endLine": 267,
+        "endChar": 48
+      },
+      "revId": "2302e633335910256f0045570fbfc2d65c5afacb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c21412e9_b1e58ec9",
         "filename": "third_party/WebKit/Source/bindings/templates/methods.cpp.tmpl",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "2302e633335910256f0045570fbfc2d65c5afacb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bd710b1_337b9401",
+        "filename": "third_party/WebKit/Source/bindings/templates/methods.cpp.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2018-01-29T14:07:40Z",
+      "side": 1,
+      "message": "Done; I think !result is clear enough in this context.",
+      "parentUuid": "c21412e9_b1e58ec9",
+      "range": {
+        "startLine": 306,
+        "startChar": 4,
+        "endLine": 306,
+        "endChar": 26
+      },
+      "revId": "2302e633335910256f0045570fbfc2d65c5afacb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "157150e8_b9398fa7",
+        "filename": "third_party/WebKit/Source/core/html/media/HTMLMediaElement.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2373,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2018-01-29T14:07:40Z",
+      "side": 1,
+      "message": "Done. IMO !exception_code.has_value() is easier to follow than just !exception_code here.",
+      "parentUuid": "35b8ede8_4938df95",
+      "range": {
+        "startLine": 2373,
+        "startChar": 9,
+        "endLine": 2373,
+        "endChar": 39
+      },
+      "revId": "2302e633335910256f0045570fbfc2d65c5afacb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37f123e5_67545fe4",
         "filename": "third_party/WebKit/Source/modules/device_orientation/DeviceOrientationData.cpp",
         "patchSetId": 3
@@ -85,6 +157,24 @@
       "revId": "2302e633335910256f0045570fbfc2d65c5afacb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "759beab6_d22c98d1",
+        "filename": "third_party/WebKit/Source/modules/device_orientation/DeviceOrientationData.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2018-01-29T14:07:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37f123e5_67545fe4",
+      "revId": "2302e633335910256f0045570fbfc2d65c5afacb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "7c70ccc7_502c2683",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 978,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2018-01-29T14:07:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f262e41c_28127ceb",
+      "revId": "2302e633335910256f0045570fbfc2d65c5afacb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44456bdc_6174f726",
         "filename": "third_party/WebKit/Source/modules/webdatabase/SQLTransaction.cpp",
         "patchSetId": 3
@@ -119,6 +227,24 @@
       "revId": "2302e633335910256f0045570fbfc2d65c5afacb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01c0b887_c04600dc",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/SQLTransaction.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2018-01-29T14:07:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44456bdc_6174f726",
+      "revId": "2302e633335910256f0045570fbfc2d65c5afacb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
