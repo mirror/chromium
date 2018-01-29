@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52a9e7e1_a5c70df9",
+        "filename": "chrome/browser/policy/configuration_policy_handler_list_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2018-01-29T19:22:52Z",
+      "side": 1,
+      "message": "Where we we document this pref for the admin? Maybe I missed it.",
+      "revId": "c140d8ab957b580d712a1719fc49f5696a4a9b76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8077c9e5_d7a2f248",
+        "filename": "chrome/browser/policy/policy_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3746,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2018-01-29T19:22:52Z",
+      "side": 1,
+      "message": "Should we mark this policy as deprecated now? That way when people read this code they know that it\u0027s going away. It\u0027d probably require a comment in several different files.",
+      "revId": "c140d8ab957b580d712a1719fc49f5696a4a9b76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a584650_3ddd22cf",
+        "filename": "chrome/browser/ui/webui/settings/safe_browsing_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2018-01-29T19:22:52Z",
+      "side": 1,
+      "message": "So, general question here: If it\u0027s managed, does that change the pref, or does it change how we should interpret the pref?",
+      "revId": "c140d8ab957b580d712a1719fc49f5696a4a9b76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
