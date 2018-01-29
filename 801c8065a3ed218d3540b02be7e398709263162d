@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df115a3e_0d899db5",
+        "filename": "chrome/browser/resources/print_preview/new/destination_dialog.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-29T21:46:43Z",
+      "side": 1,
+      "message": "Could be be directly calling dialog.close() here? Technically the dialog is not cancelled when the user selects a destination. Note that the \u0027close\u0027 event has a different payload when close() vs cancel() is called, which might not matter in our case, but it could be confusing to the reader.",
+      "range": {
+        "startLine": 124,
+        "startChar": 4,
+        "endLine": 124,
+        "endChar": 18
+      },
+      "revId": "801c8065a3ed218d3540b02be7e398709263162d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

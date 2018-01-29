@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d5c08077_a4cea0eb",
+        "filename": "chrome/browser/resources/print_preview/new/destination_dialog.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-29T21:46:43Z",
+      "side": 1,
+      "message": "I meant the \"\u003dtrue\" is not needed as in the following being equivalent:\n\n\u003cprint-preview-destination-list destinations\u003d\"[[destinations_]]\"\n  has-action-link loading-destinations\u003d\"[[loadingDestinations_]]\"...",
+      "parentUuid": "0299c4b4_d5758506",
+      "range": {
+        "startLine": 76,
+        "startChar": 27,
+        "endLine": 76,
+        "endChar": 32
+      },
+      "revId": "7cb3e513db1c4f74e90bfd2da019183051fdab62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bd9c32c_6178ddd7",
         "filename": "chrome/browser/resources/print_preview/new/destination_dialog.js",
         "patchSetId": 7
