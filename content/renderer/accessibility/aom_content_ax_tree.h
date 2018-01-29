@@ -23,10 +23,10 @@ class AomContentAxTree : public blink::WebComputedAXTree {
   // blink::WebComputedAXTree implementation.
   bool ComputeAccessibilityTree() override;
 
-  // String accessible property getters.
-  // TODO(meredithl): Change these to return null rather than empty strings.
-  blink::WebString GetNameForAXNode(int32_t) override;
-  blink::WebString GetRoleForAXNode(int32_t) override;
+  bool GetRoleForAXNode(int32_t axID, blink::WebString* out_param) override;
+  bool GetStringAttributeForAXNode(int32_t,
+                                   blink::WebAOMStringAttribute,
+                                   blink::WebString* out_param) override;
 
  private:
   ui::AXTree tree_;

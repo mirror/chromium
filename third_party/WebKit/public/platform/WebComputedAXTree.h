@@ -9,13 +9,30 @@
 
 namespace blink {
 
+enum WebAOMStringAttribute {
+  WEB_AOM_STRING_ATTRIBUTE_NONE,
+  WEB_AOM_ATTR_KEY_SHORTCUTS,
+  WEB_AOM_ATTR_NAME,
+  WEB_AOM_ATTR_PLACEHOLDER,
+  WEB_AOM_ATTR_ROLE_DESCRIPTION,
+  WEB_AOM_ATTR_VALUE_TEXT,
+};
+
 class WebComputedAXTree {
  public:
   virtual ~WebComputedAXTree() {}
 
   virtual bool ComputeAccessibilityTree() = 0;
-  virtual WebString GetNameForAXNode(int32_t axID) = 0;
-  virtual WebString GetRoleForAXNode(int32_t axID) = 0;
+
+  // The role is stored seperately from other attributes in the AXNode, so we
+  // expose a seperate method for retrieving this.
+  virtual bool GetRoleForAXNode(int32_t axID, blink::WebString* out_param) = 0;
+
+  // This will return a null string if the id does not correspond to a node in
+  // the current AXTree snapshot, or if the requested property does not apply.
+  virtual bool GetStringAttributeForAXNode(int32_t,
+                                           blink::WebAOMStringAttribute,
+                                           blink::WebString* out_param) = 0;
 };
 
 }  // namespace blink
