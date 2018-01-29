@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93a71940_9fa63a40",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-01-29T18:14:37Z",
+      "side": 1,
+      "message": "Would it be too verbose to list those newly disabled features? It\u0027s really hard to see by looking at the BUILD.gn changes since the defines also moved around.",
+      "revId": "0f4c4f51173ae1492e974089ebd223a2d63c2459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf85e196_e96fabe4",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/sqlite/SQLiteFileSystem.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-01-29T18:14:37Z",
+      "side": 1,
+      "message": "Nit: add period.",
+      "revId": "0f4c4f51173ae1492e974089ebd223a2d63c2459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ceb58d7_c73b658d",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/sqlite/SQLiteFileSystem.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-01-29T18:14:37Z",
+      "side": 1,
+      "message": "Nit: InitializeSQLite",
+      "revId": "0f4c4f51173ae1492e974089ebd223a2d63c2459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98723723_7441110f",
+        "filename": "third_party/sqlite/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-01-29T18:14:37Z",
+      "side": 1,
+      "message": "I really like the refactoring you\u0027ve done to this file, but it makes it really hard to see what was disabled. How about doing a refactoring-only CL that\u0027s functionally equivalent to their prior version, and then following it up with this CL with your added defines?",
+      "revId": "0f4c4f51173ae1492e974089ebd223a2d63c2459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72406a1d_d624d119",
+        "filename": "third_party/sqlite/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-01-29T18:14:37Z",
+      "side": 1,
+      "message": "Nit: What do you think about s/shess/costan/g",
+      "revId": "0f4c4f51173ae1492e974089ebd223a2d63c2459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
