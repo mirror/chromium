@@ -8,6 +8,7 @@
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
+#include "base/containers/flat_map.h"
 #include "base/files/file_util.h"
 #include "base/json/json_string_value_serializer.h"
 #include "base/logging.h"
@@ -32,6 +33,7 @@
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/debug_daemon_client.h"
 #include "chromeos/printing/ppd_cache.h"
+#include "chromeos/printing/ppd_line_reader.h"
 #include "chromeos/printing/ppd_provider.h"
 #include "chromeos/printing/printer_configuration.h"
 #include "chromeos/printing/printing_constants.h"
@@ -52,6 +54,8 @@ namespace {
 // These values are written to logs.  New enum values can be added, but existing
 // enums must never be renumbered or deleted and reused.
 enum PpdSourceForHistogram { kUser = 0, kScs = 1, kPpdSourceMax };
+
+const int kPpdMaxLineLength = 255;
 
 void RecordPpdSource(const PpdSourceForHistogram& source) {
   UMA_HISTOGRAM_ENUMERATION("Printing.CUPS.PpdSource", source, kPpdSourceMax);
@@ -720,8 +724,19 @@ void CupsPrintersHandler::FileSelected(const base::FilePath& path,
                                        int index,
                                        void* params) {
   DCHECK(!webui_callback_id_.empty());
-  ResolveJavascriptCallback(base::Value(webui_callback_id_),
-                            base::Value(path.value()));
+
+  // Attempt to read the first line of the file to see if it contains the "magic
+  // number" string which is present in all PPD files.
+  std::string contents;
+  ReadFileToStringWithMaxSize(path, &contents, kPpdMaxLineLength);
+  bool valid = !contents.empty() &&
+               PpdLineReader::ContainsMagicNumber(contents, kPpdMaxLineLength);
+
+  auto result = base::Value(base::Value::Type::DICTIONARY);
+  result.SetKey("path", base::Value(path.value()));
+  result.SetKey("valid", base::Value(valid));
+
+  ResolveJavascriptCallback(base::Value(webui_callback_id_), result);
   webui_callback_id_.clear();
 }
 

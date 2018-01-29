@@ -181,5 +181,32 @@ TEST(PpdLineReaderTest, CorruptGzipData) {
   EXPECT_TRUE(reader->Error());
 }
 
+TEST(PpdLineReaderTest, SimplePpdContainsHeaderString) {
+  EXPECT_TRUE(PpdLineReader::ContainsMagicNumber(kTestPpd, 255));
+}
+
+TEST(PpdLineReaderTest, GzippedPpdContainsHeaderString) {
+  std::string gzipped_contents(kTestPpdGzipped, sizeof(kTestPpdGzipped));
+  EXPECT_TRUE(PpdLineReader::ContainsMagicNumber(gzipped_contents, 255));
+}
+
+TEST(PpdLineReaderTest, InvalidPpdHeaderString) {
+  EXPECT_FALSE(PpdLineReader::ContainsMagicNumber(
+      "*%%%% PPD file for HP PSC 900 Series with CUPS.", 255));
+}
+
+TEST(PpdLineReaderTest, RejectExeFile) {
+  EXPECT_FALSE(
+      PpdLineReader::ContainsMagicNumber("MZ this is fake exe file", 255));
+
+  EXPECT_FALSE(PpdLineReader::ContainsMagicNumber(
+      "\x0A\x0AZM this is another fake exe file", 255));
+}
+
+TEST(PpdLineReaderTest, RejectZipFile) {
+  EXPECT_FALSE(
+      PpdLineReader::ContainsMagicNumber("PK this is a fake zip file", 255));
+}
+
 }  // namespace
 }  // namespace chromeos

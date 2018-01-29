@@ -57,7 +57,7 @@ const SetManufacturerModelBehavior = {
   /** @private */
   onBrowseFile_: function() {
     settings.CupsPrintersBrowserProxyImpl.getInstance()
-        .getCupsPrinterPPDPath()
+        .getCupsPrinterPPDInfo()
         .then(this.printerPPDPathChanged_.bind(this));
   },
 
@@ -86,11 +86,16 @@ const SetManufacturerModelBehavior = {
   },
 
   /**
-   * @param {string} path
+   * @param {!PpdInfo} ppdInfo A dict which contains the path to the ppd
+   *     and whether or not the ppd is valid
    * @private
+   * TODO(valleau): Display an error message to users (crbug.com/806915)
    */
-  printerPPDPathChanged_: function(path) {
-    this.set('activePrinter.printerPPDPath', path);
+  printerPPDPathChanged_: function(ppdInfo) {
+    if (ppdInfo.valid)
+      this.set('activePrinter.printerPPDPath', ppdInfo.path);
+    else
+      this.set('activePrinter.printerPPDPath', '');
   },
 
   /**
