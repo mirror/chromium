@@ -22,6 +22,30 @@
       "revId": "95cb5704e05a40bf1f0fae958e92abe2808cfc8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a97a943_dc829e3b",
+        "filename": "cc/raster/zero_copy_raster_buffer_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-29T22:08:47Z",
+      "side": 1,
+      "message": "Ah.. it\u0027s a subclass of a thing owned by InUsePoolResource, which knows about the base class. I can say that better.",
+      "parentUuid": "f8f1aea1_a6ec5fb6",
+      "range": {
+        "startLine": 30,
+        "startChar": 3,
+        "endLine": 30,
+        "endChar": 33
+      },
+      "revId": "95cb5704e05a40bf1f0fae958e92abe2808cfc8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
