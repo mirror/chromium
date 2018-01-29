@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2934c2b7_12983f5c",
+        "filename": "services/device/geolocation/geolocation_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-29T12:05:22Z",
+      "side": 1,
+      "message": "nit: CheckBoolReturnValue?",
+      "range": {
+        "startLine": 129,
+        "startChar": 9,
+        "endLine": 129,
+        "endChar": 25
+      },
+      "revId": "cc2a34be02699d43a9c52b39a8c274f157736c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44149c77_721caae4",
+        "filename": "services/device/geolocation/geolocation_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-29T12:05:22Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think that we need the inline comments here.",
+      "range": {
+        "startLine": 137,
+        "startChar": 65,
+        "endLine": 137,
+        "endChar": 70
+      },
+      "revId": "cc2a34be02699d43a9c52b39a8c274f157736c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
