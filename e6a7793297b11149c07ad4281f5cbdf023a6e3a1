@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b13248c9_e68cf79e",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2018-01-29T03:53:05Z",
+      "side": 1,
+      "message": "It is used in StatisticsRecorder::PrepareDeltas in statistics_recorder.cc and in tests statistics_recorder_unittest.cc.",
+      "parentUuid": "6e6ed79c_86eebe97",
+      "revId": "e6a7793297b11149c07ad4281f5cbdf023a6e3a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99a1894b_b77043e2",
         "filename": "chrome/browser/mac/exception_processor_unittest.mm",
         "patchSetId": 3
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "e02a8203_812597ee",
+        "filename": "chrome/browser/mac/exception_processor_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2018-01-29T03:53:05Z",
+      "side": 1,
+      "message": "This is asking for too much.\n\nThis change respects the original test logic with a minimal modification. If further test refactoring is necessary, I would leave that to the original test author or maintainer.\n\nMoreover, this is a .mm file. I cannot compile or test it on my workstation. I need to use trybots for that.",
+      "parentUuid": "99a1894b_b77043e2",
+      "range": {
+        "startLine": 76,
+        "startChar": 54,
+        "endLine": 76,
+        "endChar": 0
+      },
+      "revId": "e6a7793297b11149c07ad4281f5cbdf023a6e3a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "947b6b70_9bb7c060",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 3
@@ -56,6 +98,24 @@
       "revId": "e6a7793297b11149c07ad4281f5cbdf023a6e3a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab0ce15a_fe61bade",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 12335,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2018-01-29T03:53:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "947b6b70_9bb7c060",
+      "revId": "e6a7793297b11149c07ad4281f5cbdf023a6e3a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
