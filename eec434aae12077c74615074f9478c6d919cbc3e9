@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bcf1daeb_da6a85a2",
+        "filename": "third_party/WebKit/Source/core/dom/events/EventListener.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-29T08:58:26Z",
+      "side": 1,
+      "message": "\u0027virtual\u0027 should be used at the most parent class. Other classes should use \u0027override\u0027.",
+      "parentUuid": "55bce4f6_8c24b941",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 58,
+        "endChar": 9
+      },
+      "revId": "eec434aae12077c74615074f9478c6d919cbc3e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7b24f23_dc8156b7",
         "filename": "third_party/WebKit/Source/core/dom/events/EventListener.h",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-29T08:08:00Z",
       "side": 1,
       "message": "Example override of NameInHeapSnapshot for TraceWrapperBase object that is not a ScriptWrappable.\n\nIf you can think of better name for this function, please let me know.\n\nSubsequent CLs will change other instances of TraceWrapperBase that are non-ScriptWrappable nodes in similar way.",
+      "range": {
+        "startLine": 60,
+        "startChar": 22,
+        "endLine": 60,
+        "endChar": 40
+      },
+      "revId": "eec434aae12077c74615074f9478c6d919cbc3e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c27d699c_50b3ab13",
+        "filename": "third_party/WebKit/Source/core/dom/events/EventListener.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-29T08:58:26Z",
+      "side": 1,
+      "message": "I\u0027m not sure if it\u0027s worth adding names to all TraceWrapperBases.\n\nOnce we have a unified GC, TraceWrapperBase will be gone and all GarbageCollected classes will be traced. It wouldn\u0027t be nice to manually add names to all GarbageCollected...\n\nAt the moment, I\u0027d recommend you add names to only popular TraceWrapperBases (e.g., EventListeners), instead of all.",
+      "parentUuid": "a7b24f23_dc8156b7",
       "range": {
         "startLine": 60,
         "startChar": 22,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "76b346d4_5fba4612",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-29T08:58:26Z",
+      "side": 1,
+      "message": "Should we consider creating a different WrapperDescriptor for HeapSnapshotVisitor?\n\nI think it would make more sense to have one descriptor per visitor type.",
+      "parentUuid": "f8031840_aa668627",
+      "range": {
+        "startLine": 55,
+        "startChar": 15,
+        "endLine": 55,
+        "endChar": 28
+      },
+      "revId": "eec434aae12077c74615074f9478c6d919cbc3e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "582ab797_dfd9bb00",
         "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2018-01-29T08:08:00Z",
       "side": 1,
       "message": "An alternative would be to use WTF::IsSubclass\u003cT, const TraceWrapperBase\u003e::value and then to cast to TraceWrapperBase. That did not work out due to multiple inheritance (TraceWrapperBase is not necessarily the first super-class in T)",
+      "range": {
+        "startLine": 153,
+        "startChar": 11,
+        "endLine": 153,
+        "endChar": 29
+      },
+      "revId": "eec434aae12077c74615074f9478c6d919cbc3e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66d0f9d7_2b6bdd12",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-29T08:58:26Z",
+      "side": 1,
+      "message": "Is there any case where T does not inherit from TraceWrapperBase?\n\nIf yes, I\u0027d suggest adding NameInHeapSnapshot to GarbageCollected, not TraceWrapperBase. Then you can just call NameInHeapSnapshot since it\u0027s guaranteed that all pointers traced by ScriptWrappableVisitor are GarbageCollected. (Once we have the unified GC, this should anyway happen because TraceWrapperBase will be gone.)",
+      "parentUuid": "582ab797_dfd9bb00",
       "range": {
         "startLine": 153,
         "startChar": 11,
