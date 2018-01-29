@@ -23,6 +23,7 @@ component("cpp") {
   ]
 
   public_deps = [
+    ":network_features",
     ":typemap_dependencies",
     "//services/network/public/interfaces",
     "//url/ipc:url_ipc",

@@ -231,6 +231,7 @@
 #include "ppapi/features/features.h"
 #include "ppapi/host/ppapi_host.h"
 #include "printing/features/features.h"
+#include "services/network/public/cpp/features.h"
 #include "services/preferences/public/cpp/in_process_service_factory.h"
 #include "services/preferences/public/interfaces/preferences.mojom.h"
 #include "services/proxy_resolver/public/interfaces/proxy_resolver.mojom.h"
@@ -3699,7 +3700,7 @@ ChromeContentBrowserClient::CreateURLLoaderThrottles(
     const base::Callback<content::WebContents*()>& wc_getter,
     content::NavigationUIData* navigation_ui_data) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  DCHECK(base::FeatureList::IsEnabled(features::kNetworkService));
+  DCHECK(base::FeatureList::IsEnabled(network::features::kNetworkService));
 
   std::vector<std::unique_ptr<content::URLLoaderThrottle>> result;
 
