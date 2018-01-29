@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "4be3a714_89cdf31c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/AnchoredPopupWindow.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-29T23:07:01Z",
+      "side": 1,
+      "message": "Ah makes sense thanks!",
+      "parentUuid": "f6bc8de4_86902a72",
+      "range": {
+        "startLine": 305,
+        "startChar": 16,
+        "endLine": 305,
+        "endChar": 40
+      },
+      "revId": "ac9038fdfb2473153813a2fb00239810d2970520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4050464_0a2b96a0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/AnchoredPopupWindow.java",
         "patchSetId": 4
@@ -319,6 +343,30 @@
       "side": 1,
       "message": "Ultimately yes, I think it does. For this CL, I focused on breaking out and testing new code for this patch. I added a TODO() to break apart the large method to make it more testable.",
       "parentUuid": "77cfd951_36f3dfe6",
+      "range": {
+        "startLine": 393,
+        "startChar": 15,
+        "endLine": 393,
+        "endChar": 25
+      },
+      "revId": "ac9038fdfb2473153813a2fb00239810d2970520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3eb9687b_ca5a3255",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/AnchoredPopupWindow.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-29T23:07:01Z",
+      "side": 1,
+      "message": "sgtm.  I think at that point we can bake some of the one-line methods back into the logic but that can be done later.",
+      "parentUuid": "b27a8ff4_ae3811dd",
       "range": {
         "startLine": 393,
         "startChar": 15,
@@ -554,6 +602,30 @@
       "side": 1,
       "message": "Currently the position isn\u0027t recomputed when these are set, but I still agree that the proliferation of setters means we likely want a builder.\n\nWe could do something similar to what we do in PromoDialog, where a set of params is used during construction. If it\u0027s all right, let\u0027s leave it for a follow-up patch.",
       "parentUuid": "f2a07071_3ff30ee9",
+      "range": {
+        "startLine": 225,
+        "startChar": 8,
+        "endLine": 227,
+        "endChar": 38
+      },
+      "revId": "ac9038fdfb2473153813a2fb00239810d2970520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bae4d23c_8c6116a5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ListMenuButton.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-29T23:07:01Z",
+      "side": 1,
+      "message": "sgtm",
+      "parentUuid": "6373cde2_808e5a3e",
       "range": {
         "startLine": 225,
         "startChar": 8,

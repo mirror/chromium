@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56b3e251_c5ce01f6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/AnchoredPopupWindow.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-29T23:07:01Z",
+      "side": 1,
+      "message": "For safety clamp to 0?  Could just do the following (don\u0027t mind either way though):\n\nint maxWidth \u003d rootViewWidth - marginPx * 2;\nif (desiredMaxWidthPx \u003e 0) maxWidth \u003d MathUtils.min(maxWidth, desiredMaxWidthPx);\nreturn MathUtils.max(0, maxWidth - paddingX);",
+      "range": {
+        "startLine": 433,
+        "startChar": 8,
+        "endLine": 436,
+        "endChar": 50
+      },
+      "revId": "42af5767e61b9911e01ac9c0dad53e000696e349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec25037d_e5cbab50",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ViewRectProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-29T23:07:01Z",
+      "side": 1,
+      "message": "remove \"!\"",
+      "range": {
+        "startLine": 133,
+        "startChar": 12,
+        "endLine": 133,
+        "endChar": 13
+      },
+      "revId": "42af5767e61b9911e01ac9c0dad53e000696e349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
