@@ -2089,9 +2089,24 @@ be describing additional metrics about the same event.
     Collects information about a browser or app window to associate with the
     TabManager.TabMetrics entries for tabs in that window.
   </summary>
+  <metric name="FullscreenCount">
+    <summary>
+      Total number of times the window has been fullscreened.
+    </summary>
+  </metric>
   <metric name="IsActive">
     <summary>
       Whether the window is the active (frontmost) window.
+    </summary>
+  </metric>
+  <metric name="MaximizeCount">
+    <summary>
+      Total number of times the window has been maximized.
+    </summary>
+  </metric>
+  <metric name="MinimizeCount">
+    <summary>
+      Total number of times the window has been minimized.
     </summary>
   </metric>
   <metric name="ShowState">
