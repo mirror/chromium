@@ -15,6 +15,7 @@
 #include "content/public/common/origin_util.h"
 #include "content/public/common/service_manager_connection.h"
 #include "crypto/sha2.h"
+#include "device/u2f/u2f_ble_discovery.h"
 #include "device/u2f/u2f_hid_discovery.h"
 #include "device/u2f/u2f_register.h"
 #include "device/u2f/u2f_request.h"
@@ -225,8 +226,9 @@ void AuthenticatorImpl::MakeCredential(
   if (!connector_)
     connector_ = ServiceManagerConnection::GetForProcess()->GetConnector();
 
-  DCHECK(!u2f_discovery_);
-  u2f_discovery_ = std::make_unique<device::U2fHidDiscovery>(connector_);
+  DCHECK(!u2f_hid_discovery_ && !u2f_ble_discovery_);
+  u2f_hid_discovery_ = std::make_unique<device::U2fHidDiscovery>(connector_);
+  u2f_ble_discovery_ = std::make_unique<device::U2fBleDiscovery>();
 
   // Extract list of credentials to exclude.
   std::vector<std::vector<uint8_t>> registered_keys;
@@ -245,7 +247,8 @@ void AuthenticatorImpl::MakeCredential(
   // Among other things, the Client Data contains the challenge from the
   // relying party (hence the name of the parameter).
   u2f_request_ = device::U2fRegister::TryRegistration(
-      options->relying_party->id, {u2f_discovery_.get()}, registered_keys,
+      options->relying_party->id,
+      {u2f_hid_discovery_.get(), u2f_ble_discovery_.get()}, registered_keys,
       ConstructClientDataHash(client_data_.SerializeToJson()),
       CreateAppId(options->relying_party->id),
       base::BindOnce(&AuthenticatorImpl::OnRegisterResponse,
@@ -294,8 +297,9 @@ void AuthenticatorImpl::GetAssertion(
   if (!connector_)
     connector_ = ServiceManagerConnection::GetForProcess()->GetConnector();
 
-  DCHECK(!u2f_discovery_);
-  u2f_discovery_ = std::make_unique<device::U2fHidDiscovery>(connector_);
+  DCHECK(!u2f_hid_discovery_ && !u2f_ble_discovery_);
+  u2f_hid_discovery_ = std::make_unique<device::U2fHidDiscovery>(connector_);
+  u2f_ble_discovery_ = std::make_unique<device::U2fBleDiscovery>();
 
   // Save client data to return with the authenticator response.
   client_data_ = CollectedClientData::Create(client_data::kGetType,
@@ -303,7 +307,8 @@ void AuthenticatorImpl::GetAssertion(
                                              std::move(options->challenge));
 
   u2f_request_ = device::U2fSign::TrySign(
-      options->relying_party_id, {u2f_discovery_.get()}, handles,
+      options->relying_party_id,
+      {u2f_hid_discovery_.get(), u2f_ble_discovery_.get()}, handles,
       ConstructClientDataHash(client_data_.SerializeToJson()),
       CreateAppId(options->relying_party_id),
       base::BindOnce(&AuthenticatorImpl::OnSignResponse,
@@ -379,7 +384,8 @@ void AuthenticatorImpl::OnTimeout() {
 
 void AuthenticatorImpl::Cleanup() {
   u2f_request_.reset();
-  u2f_discovery_.reset();
+  u2f_hid_discovery_.reset();
+  u2f_ble_discovery_.reset();
   make_credential_response_callback_.Reset();
   get_assertion_response_callback_.Reset();
   client_data_ = CollectedClientData();

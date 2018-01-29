@@ -79,7 +79,8 @@ class CONTENT_EXPORT AuthenticatorImpl : public webauth::mojom::Authenticator {
 
   // Owns pipes to this Authenticator from |render_frame_host_|.
   mojo::BindingSet<webauth::mojom::Authenticator> bindings_;
-  std::unique_ptr<device::U2fDiscovery> u2f_discovery_;
+  std::unique_ptr<device::U2fDiscovery> u2f_hid_discovery_;
+  std::unique_ptr<device::U2fDiscovery> u2f_ble_discovery_;
   std::unique_ptr<device::U2fRequest> u2f_request_;
   MakeCredentialCallback make_credential_response_callback_;
   GetAssertionCallback get_assertion_response_callback_;
