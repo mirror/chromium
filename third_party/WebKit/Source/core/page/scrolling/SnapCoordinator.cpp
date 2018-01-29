@@ -374,6 +374,26 @@ bool SnapCoordinator::GetSnapPosition(const LayoutBox& snap_container,
   return *snap_position != current_position;
 }
 
+FloatPoint SnapCoordinator::GetSnapPositionForNaturalPosition(
+    const LayoutBox& snap_container,
+    const FloatPoint& natural_position,
+    bool did_scroll_x,
+    bool did_scroll_y) {
+  auto iter = snap_container_map_.find(&snap_container);
+  if (iter == snap_container_map_.end())
+    return natural_position;
+
+  const SnapContainerData& data = iter->value;
+  if (!data.size())
+    return natural_position;
+
+  gfx::ScrollOffset position = data.FindSnapPosition(
+      gfx::ScrollOffset(natural_position.X(), natural_position.Y()),
+      did_scroll_x, did_scroll_y);
+
+  return FloatPoint(position.x(), position.y());
+}
+
 void SnapCoordinator::PerformSnapping(const LayoutBox& snap_container,
                                       bool did_scroll_x,
                                       bool did_scroll_y) {
