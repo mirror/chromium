@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c11493f_97b90f8d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-29T18:29:59Z",
+      "side": 1,
+      "message": "nit: you don\u0027t need chromium: in chromium (you would,\nin CrOS).",
+      "range": {
+        "startLine": 20,
+        "startChar": 29,
+        "endLine": 20,
+        "endChar": 38
+      },
+      "revId": "6286fb51e52920a86000d526b0ac8e6ea5944395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5169c65_d70f498e",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_buffer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-29T18:29:59Z",
+      "side": 1,
+      "message": "Hmm having this static_assert so far away from the definition\nis strange, and kind-a points to we hijacking an API-specific\nvalue: we\u0027re essentially leaking the only (meaningful) \nimplementation (GbmBuffer) onto the abstract base class. But\nI don\u0027t have a better option, because NativePixmap* is just\na way of making a platform-specific thing agnostic enough to\nbe passed around Chromium code, IIUC. IOW, if we could move this\nstatic_assert closer to where it is defined, that\u0027d be great\n(and also add a more meaningful error message?).",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 76
+      },
+      "revId": "6286fb51e52920a86000d526b0ac8e6ea5944395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
