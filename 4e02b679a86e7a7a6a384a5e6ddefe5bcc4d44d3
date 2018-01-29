@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b91414c4_9e072819",
+        "filename": "components/url_pattern_index/url_rule_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-29T16:11:06Z",
+      "side": 1,
+      "message": "explicitly mark the fallthrough. Bonus points for using FALLTHROUGH, see crbug.com/177475. Alternatively, this may be more readable:\n\nswitch (anchor_type) {\n  case NONE:\n    return std::string();\n  case AnchorType_SUBDOMAIN:\n    return \"|\";\n  case AnchorType_BOUNDARY:\n    return \"||\";\n}",
+      "revId": "4e02b679a86e7a7a6a384a5e6ddefe5bcc4d44d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df46e18f_792a24dd",
+        "filename": "components/url_pattern_index/url_rule_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-29T16:11:06Z",
+      "side": 1,
+      "message": "Optional: XOR is not that readable. Maybe:\nif (first_party \u0026\u0026 third_party)\n  return std::string();\nif (first_party) ...\nelse if (third_party) ...",
+      "revId": "4e02b679a86e7a7a6a384a5e6ddefe5bcc4d44d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a8b3133_8d433ae6",
+        "filename": "components/url_pattern_index/url_rule_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-29T16:11:06Z",
+      "side": 1,
+      "message": "Can this be a switch so we get a compile error here if the flatbuffer format gets a new type?",
+      "revId": "4e02b679a86e7a7a6a384a5e6ddefe5bcc4d44d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f054d420_a095e595",
+        "filename": "components/url_pattern_index/url_rule_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-29T16:11:06Z",
+      "side": 1,
+      "message": "Optional: It seems a bit odd to thread this bool* everywhere. Maybe this would be better suited to an anonymous class that holds this member itself. Up to you.",
+      "revId": "4e02b679a86e7a7a6a384a5e6ddefe5bcc4d44d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5211b91e_bbec7598",
+        "filename": "components/url_pattern_index/url_rule_util_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-29T16:11:06Z",
+      "side": 1,
+      "message": "🎉",
+      "revId": "4e02b679a86e7a7a6a384a5e6ddefe5bcc4d44d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b79e2e7b_c0505fe9",
+        "filename": "components/url_pattern_index/url_rule_util_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-29T16:11:06Z",
+      "side": 1,
+      "message": "add FIRST_PARTY | THIRD_PARTY and expect nothing?",
+      "revId": "4e02b679a86e7a7a6a384a5e6ddefe5bcc4d44d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "376f7d83_3a8324f7",
+        "filename": "components/url_pattern_index/url_rule_util_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-29T16:11:06Z",
+      "side": 1,
+      "message": "add FIRST_PARTY | THIRD_PARTY and expect nothing?",
+      "revId": "4e02b679a86e7a7a6a384a5e6ddefe5bcc4d44d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac0623d8_1425953e",
+        "filename": "components/url_pattern_index/url_rule_util_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-29T16:11:06Z",
+      "side": 1,
+      "message": "Be consistent in your comments (prefer capitalized first letter and period)",
+      "revId": "4e02b679a86e7a7a6a384a5e6ddefe5bcc4d44d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
