@@ -3,6 +3,7 @@
 # found in the LICENSE file.
 
 import("//build/config/features.gni")
+import("//testing/libfuzzer/fuzzer_test.gni")
 
 source_set("ctap") {
   sources = [
@@ -20,6 +21,10 @@ source_set("ctap") {
     "ctap_constants.h",
     "ctap_get_assertion_request_param.cc",
     "ctap_get_assertion_request_param.h",
+    "ctap_hid_message.cc",
+    "ctap_hid_message.h",
+    "ctap_hid_packet.cc",
+    "ctap_hid_packet.h",
     "ctap_make_credential_request_param.cc",
     "ctap_make_credential_request_param.h",
     "ctap_request_param.cc",
@@ -41,4 +46,14 @@ source_set("ctap") {
     "//services/service_manager/public/cpp",
     "//services/service_manager/public/interfaces",
   ]
+}
+
+fuzzer_test("ctap_hid_message_fuzzer") {
+  sources = [
+    "ctap_hid_message_fuzzer.cc",
+  ]
+  deps = [
+    ":ctap",
+  ]
+  libfuzzer_options = [ "max_len=2048" ]
 }
