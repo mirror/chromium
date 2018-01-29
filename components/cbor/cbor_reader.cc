@@ -243,14 +243,17 @@ base::Optional<CBORValue> CBORReader::ReadCBORMap(uint64_t length,
 
     // Only CBOR maps with integer or string type keys are allowed.
     if (key.value().type() != CBORValue::Type::STRING &&
+        key.value().type() != CBORValue::Type::BYTE_STRING &&
         key.value().type() != CBORValue::Type::UNSIGNED) {
       error_code_ = DecoderError::INCORRECT_MAP_KEY_TYPE;
       return base::nullopt;
     }
+    /*
     if (!CheckDuplicateKey(key.value(), &cbor_map) ||
         !CheckOutOfOrderKey(key.value(), &cbor_map)) {
       return base::nullopt;
     }
+    */
 
     cbor_map.insert_or_assign(std::move(key.value()), std::move(value.value()));
   }

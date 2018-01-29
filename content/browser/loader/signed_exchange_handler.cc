@@ -5,6 +5,7 @@
 #include "content/browser/loader/signed_exchange_handler.h"
 
 #include "base/feature_list.h"
+#include "components/cbor/cbor_reader.h"
 #include "content/public/common/content_features.h"
 #include "mojo/public/cpp/system/string_data_pipe_producer.h"
 #include "net/http/http_response_headers.h"
@@ -46,14 +47,50 @@ void SignedExchangeHandler::OnDataComplete() {
   if (!found_callback_)
     return;
 
-  // TODO(https://crbug.com/80374): Get the request url by parsing CBOR format.
-  GURL request_url = GURL("https://example.com/test.html");
-  // TODO(https://crbug.com/80374): Get the request method by parsing CBOR
-  // format.
-  std::string request_method = "GET";
-  // TODO(https://crbug.com/80374): Get the payload by parsing CBOR format.
-  std::string payload = original_body_string_;
+  cbor::CBORReader::DecoderError error;
+  base::Optional<cbor::CBORValue> root = cbor::CBORReader::Read(
+      base::span<const uint8_t>(
+          reinterpret_cast<const uint8_t*>(original_body_string_.data()),
+          original_body_string_.size()),
+      &error);
+  std::string payload;
+  if (!root) {
+    payload = cbor::CBORReader::ErrorCodeToString(error);
+  } else {
+    payload = "parse success";
+  }
   original_body_string_.clear();
+
+  const auto& root_array = root->GetArray();
+  CHECK_EQ("htxg", root_array[0].GetString());
+  CHECK_EQ("request", root_array[1].GetString());
+  const auto& request_map = root_array[2].GetMap();
+  CHECK_EQ("response", root_array[3].GetString());
+  const auto& response_map = root_array[4].GetMap();
+  (void)response_map;
+  CHECK_EQ("payload", root_array[5].GetString());
+  const auto& payload_bytes = root_array[6].GetBytestring();
+  (void)payload_bytes;
+
+  static const unsigned char kUrlKey[] = ":url";
+  const cbor::CBORValue url_key_value(
+      cbor::CBORValue::BinaryValue(kUrlKey, kUrlKey + sizeof(kUrlKey) - 1));
+
+  const auto& url_bytestr =
+      request_map.find(url_key_value)->second.GetBytestring();
+  base::StringPiece url_str(reinterpret_cast<const char*>(url_bytestr.data()),
+                            url_bytestr.size());
+  GURL request_url = GURL(url_str);
+
+  static const unsigned char kMethodKey[] = ":method";
+  const cbor::CBORValue method_key_value(cbor::CBORValue::BinaryValue(
+      kMethodKey, kMethodKey + sizeof(kMethodKey) - 1));
+
+  const auto& method_bytestr =
+      request_map.find(url_key_value)->second.GetBytestring();
+  std::string request_method(
+      reinterpret_cast<const char*>(method_bytestr.data()),
+      method_bytestr.size());
 
   // TODO(https://crbug.com/80374): Get more headers by parsing CBOR.
   scoped_refptr<net::HttpResponseHeaders> headers(
