@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bca90e92_08d663bf",
+        "filename": "components/gcm_driver/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-29T15:14:21Z",
+      "side": 1,
+      "message": "micro nit: you could reduce duplication by phrasing this as:\n\n# This is part of the components_unittests BUILD target.",
+      "revId": "a94d8a1d6928cffdd449a842d5fa8222233e1c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "125a1a54_9d9cd2d4",
+        "filename": "components/gcm_driver/gcm_client_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 896,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-29T15:14:21Z",
+      "side": 1,
+      "message": "nits:\n- We try to highlight variable names by using pipes around them: |last_validated|\n- Odd linebreaks.",
+      "revId": "a94d8a1d6928cffdd449a842d5fa8222233e1c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "829a50d8_477bcb34",
+        "filename": "components/gcm_driver/gcm_client_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-29T15:14:21Z",
+      "side": 1,
+      "message": "In order to make this testable, you\u0027d probably want to add a std::unique_ptr\u003cbase::Clock\u003e as a class member on which you can call Now().\n\nIt returns the same value as base::Time::Now() in release builds, but you can override it with a base::SimpleTestClock for testing that allows you to advance time.",
+      "revId": "a94d8a1d6928cffdd449a842d5fa8222233e1c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86801ac9_53cae5b0",
+        "filename": "components/gcm_driver/gcm_client_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 992,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-29T15:14:21Z",
+      "side": 1,
+      "message": "Please revert the code changes - there\u0027s no need to do a map lookup if we\u0027re not going to use the result.",
+      "revId": "a94d8a1d6928cffdd449a842d5fa8222233e1c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c3d50ba_922232fb",
+        "filename": "components/gcm_driver/gcm_client_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-29T15:14:21Z",
+      "side": 1,
+      "message": "Instead of having a return value *and* an out parameter, why not add a boolean parameter to ExistsGCMRegistrationInMap like |must_be_fresh|? It would make the control flow here, as well as in the ExistsGCMRegistrationInMap() implementation, much clearer.",
+      "revId": "a94d8a1d6928cffdd449a842d5fa8222233e1c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8f0fb25_f954dc81",
+        "filename": "components/gcm_driver/gcm_client_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-29T15:14:21Z",
+      "side": 1,
+      "message": "nits:\n- No acronyms (regn -\u003e registration)\n- No need for parenthesis on line 560, there is no ambiguity.",
+      "revId": "a94d8a1d6928cffdd449a842d5fa8222233e1c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c06c2ee_ab0ca888",
+        "filename": "components/gcm_driver/registration_info.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-29T15:14:21Z",
+      "side": 1,
+      "message": "This is the only place where we call RegistrationInfo::Deserialize() and we discard the value of |last_validated|. We probably should just write it to the |last_validated| member of RegistrationInfo too, like we do with the |app_id| and other fields.\n\nLet\u0027s look at how we can iterate here. Maybe something like:\n\n  1) Store the base::Time::Now() value for each registration.\n     (w/ a simple unit test to verify we can serialize/deserialize the value)\n  2) Use the last validation timestamp to determine whether it\u0027s \"fresh\".\n     (w/ a unit test that advances time to verify this logic)\n  3) Use the freshness to occasionally check in with the server again.\n     (w/ a more intergration-y test to verify the request hits the server)\n\nIt feels like we\u0027re currently at a place where we have some of each of the aspects above, but none quite complete.\n\nIn addition, we need to think about putting the Finch machinery in place, so the second part could include the method allowing us to change the frequency. (Where \"0\", the default value, means never.)",
+      "revId": "a94d8a1d6928cffdd449a842d5fa8222233e1c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1750cf80_f916eb3e",
+        "filename": "components/gcm_driver/registration_info.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-29T15:14:21Z",
+      "side": 1,
+      "message": "nit: consider switching to base::StringPrintf() here too",
+      "revId": "a94d8a1d6928cffdd449a842d5fa8222233e1c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
