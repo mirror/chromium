@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f57312f3_eecb34e1",
+        "filename": "build/config/fuchsia/build_manifest.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-29T23:24:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82a44931_f7b950df",
+      "revId": "e3f1915d3f4a7c21dfb47f72d82b89662ac12492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a24ede6d_34828030",
         "filename": "build/config/fuchsia/build_manifest.py",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "117221c6_eef0fb57",
+        "filename": "build/config/fuchsia/build_manifest.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-29T23:24:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a24ede6d_34828030",
+      "range": {
+        "startLine": 86,
+        "startChar": 4,
+        "endLine": 86,
+        "endChar": 12
+      },
+      "revId": "e3f1915d3f4a7c21dfb47f72d82b89662ac12492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef8fabf1_7f702a80",
         "filename": "build/fuchsia/runner_v2/symbolizer.py",
         "patchSetId": 4
@@ -53,6 +95,24 @@
       "writtenOn": "2018-01-29T23:07:15Z",
       "side": 1,
       "message": "Sorry, I\u0027m probably missing something obvious, but won\u0027t the bots not have this, so then not print out useful stacks?",
+      "revId": "e3f1915d3f4a7c21dfb47f72d82b89662ac12492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d2b0ae6_cee73b0f",
+        "filename": "build/fuchsia/runner_v2/symbolizer.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-29T23:24:22Z",
+      "side": 1,
+      "message": "This CL puts \"use_unstripped_as_runtime_outputs \u003d true\" in the fuchsia_clang_toolchain config, so the unstripped binaries should be bundled into the isolate.\n\nSee the paths containing \"exe.unstripped\" and \"lib.unstripped\":\n\n$ gn desc out/fuch //base:base_unittests runtime_deps                                                                                                                                                                                                                                                Done. Made 6561 targets from 907 files in 1989ms\nbin/run_base_unittests\n../../build/fuchsia/\n../../build/util/lib/\n../../third_party/fuchsia-sdk/\ngen.runtime/base/base_unittests/base_unittests.runtime_deps\nbin/run_base_unittests\n../../testing/buildbot/filters/fuchsia.base_unittests.filter\n../../testing/buildbot/filters/fuchsia.content_unittests.filter\n../../testing/buildbot/filters/fuchsia.ipc_tests.filter\n../../testing/buildbot/filters/fuchsia.mojo_system_unittests.filter\n../../testing/buildbot/filters/fuchsia.net_unittests.filter\n../../testing/buildbot/filters/fuchsia.service_manager_unittests.filter\n../../testing/buildbot/filters/fuchsia.ui_base_unittests.filter\nbin/run_base_unittests_v2\n../../build/fuchsia/runner_v2/\n../../build/util/lib/\n../../third_party/fuchsia-sdk/\nbin/run_base_unittests_v2\ngen/base/base_unittests.far\n./exe.unstripped/base_unittests__exec\n../../base/test/data/\n./lib.unstripped/libtest_shared_library.so\nicudtl.dat\n../../testing/test_env.py",
+      "parentUuid": "ef8fabf1_7f702a80",
       "revId": "e3f1915d3f4a7c21dfb47f72d82b89662ac12492",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
