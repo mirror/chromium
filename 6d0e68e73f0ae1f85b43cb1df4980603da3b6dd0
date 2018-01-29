@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c629e4cb_7a41e07a",
+        "filename": "extensions/browser/sandboxed_unpacker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-29T18:17:52Z",
+      "side": 1,
+      "message": "i\u0027m guessing the fallthrough here is unintentional? (found while working on crbug.com/177475)",
+      "revId": "6d0e68e73f0ae1f85b43cb1df4980603da3b6dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
