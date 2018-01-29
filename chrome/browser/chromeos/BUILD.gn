@@ -14,6 +14,12 @@ import("//ui/ozone/ozone.gni")
 assert(is_chromeos)
 assert(use_ozone)
 
+declare_args() {
+  # Enable assistant features.  Assistant related code is compiled only when
+  # true.
+  enable_cros_assistant = false
+}
+
 source_set("chromeos") {
   assert(enable_extensions, "ChromeOS Chrome has to be built with extensions")
 
@@ -1646,6 +1652,41 @@ source_set("chromeos") {
       "printing/fake_cups_print_job_manager.cc",
       "printing/fake_cups_print_job_manager.h",
       "printing/printer_info_stub.cc",
+    ]
+  }
+
+  if (enable_cros_assistant) {
+    defines = [ "ENABLE_CROS_ASSISTANT" ]
+
+    sources += [
+      "assistant/assistant_service.cc",
+      "assistant/assistant_service.h",
+      "assistant/internal/internal_constants.cc",
+      "assistant/internal/internal_constants.h",
+      "assistant/internal/internal_util.cc",
+      "assistant/internal/internal_util.h",
+      "assistant/platform_api_impl.cc",
+      "assistant/platform_api_impl.h",
+    ]
+
+    deps += [
+      "//libassistant/contrib/core",
+      "//libassistant/contrib/platform/audio",
+      "//libassistant/contrib/platform/auth",
+      "//libassistant/contrib/platform/file",
+      "//libassistant/contrib/platform/net",
+      "//libassistant/contrib/platform/resources",
+      "//libassistant/contrib/platform/system",
+      "//libassistant/internal/assistant/controller:libassistant_static",
+      "//libassistant/shared/internal_api/c:api_wrappers_for_caller_no_chromium",
+      "//libassistant/shared/proto:assistant_proto",
+      "//libassistant/shared/public",
+      "//libassistant/shared/public:export",
+    ]
+
+    include_dirs = [
+      "//libassistant/contrib",
+      "//libassistant/shared",
     ]
   }
 

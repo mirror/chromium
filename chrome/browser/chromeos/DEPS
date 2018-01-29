@@ -20,6 +20,7 @@ include_rules = [
   "+cros",
   "+dbus",
   "+device/bluetooth",
+  "+libassistant",
   "+mash/public/interfaces",
   "+media/audio/sounds",  # For system sounds
   "+media/base/media_switches.h",  # For media command line switches.
