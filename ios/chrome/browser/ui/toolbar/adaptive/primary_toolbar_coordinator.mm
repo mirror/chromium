@@ -11,6 +11,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/sys_string_conversions.h"
 #include "components/google/core/browser/google_util.h"
+#include "components/omnibox/browser/omnibox_edit_model.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_controller.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_controller_factory.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_features.h"
@@ -122,15 +123,33 @@
 #pragma mark - FakeboxFocuser
 
 - (void)focusFakebox {
-  // TODO(crbug.com/803372): Implement that.
+  if (IsIPadIdiom()) {
+    OmniboxEditModel* model = _locationBar->GetLocationEntry()->model();
+    // Setting the caret visibility to false causes OmniboxEditModel to indicate
+    // that omnibox interaction was initiated from the fakebox. Note that
+    // SetCaretVisibility is a no-op unless OnSetFocus is called first.  Only
+    // set fakebox on iPad, where there is a distinction between the omnibox
+    // and the fakebox on the NTP.  On iPhone there is no visible omnibox, so
+    // there's no need to indicate interaction was initiated from the fakebox.
+    model->OnSetFocus(false);
+    model->SetCaretVisibility(false);
+  }
+
+  [self.locationBarCoordinator focusOmnibox];
 }
 
 - (void)onFakeboxBlur {
-  // TODO(crbug.com/803372): Implement that.
+  DCHECK(!IsIPadIdiom());
+  // Hide the toolbar if the NTP is currently displayed.
+  web::WebState* webState = self.webStateList->GetActiveWebState();
+  if (webState && IsVisibleUrlNewTabPage(webState)) {
+    self.viewController.view.hidden = YES;
+  }
 }
 
 - (void)onFakeboxAnimationComplete {
-  // TODO(crbug.com/803372): Implement that.
+  DCHECK(!IsIPadIdiom());
+  self.viewController.view.hidden = NO;
 }
 
 // TODO(crbug.com/786940): This protocol should move to the ViewController
