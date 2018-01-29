@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7717481a_696c9ebe",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1149,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-29T01:43:03Z",
+      "side": 1,
+      "message": "should we have the same comment at line 1142?",
+      "revId": "06f6b6b3201d1163ec706ebba3649b06bc0a4b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
