@@ -2459,6 +2459,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
       if (originGURL.is_valid() && originGURL.SchemeIsHTTPOrHTTPS()) {
         GURL::Replacements replacements;
         replacements.SetPathStr("/favicon.ico");
+        replacements.ClearQuery();
         urls.push_back(web::FaviconURL(
             originGURL.ReplaceComponents(replacements),
             web::FaviconURL::IconType::kFavicon, std::vector<gfx::Size>()));
