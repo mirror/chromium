@@ -181,7 +181,7 @@ bool VideoCaptureOracle::ObserveEventAndDecideCapture(
     case kPassiveRefreshRequest:
       if (source_is_dirty_)
         break;
-    // Intentional flow-through to next case here!
+      FALLTHROUGH;
     case kActiveRefreshRequest:
     case kMouseCursorUpdate:
       // Only allow non-compositor samplings when content has not recently been
