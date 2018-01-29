@@ -2836,6 +2836,23 @@
             ]
         }
     ],
+    "RendererSchedulerHighPriorityInput": [
+        {
+            "platforms": [
+                "android",
+                "chromeos",
+                "ios",
+                "linux",
+                "mac",
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "RendererSchedulerHighPriorityInput"
+                }
+            ]
+        }
+    ],
     "RendererSchedulerWakeUpThrottling": [
         {
             "platforms": [

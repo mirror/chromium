@@ -8,6 +8,7 @@
 #include "base/bind.h"
 #include "base/debug/stack_trace.h"
 #include "base/logging.h"
+#include "base/metrics/field_trial.h"
 #include "base/metrics/field_trial_params.h"
 #include "base/metrics/histogram.h"
 #include "base/metrics/histogram_functions.h"
@@ -60,7 +61,11 @@ constexpr base::TimeDelta kQueueingTimeWindowDuration =
 const char kWakeUpThrottlingTrial[] = "RendererSchedulerWakeUpThrottling";
 const char kWakeUpDurationParam[] = "wake_up_duration_ms";
 
+const char kHighPriorityInputTrial[] = "RendererSchedulerHighPriorityInput";
+
 constexpr base::TimeDelta kDefaultWakeUpDuration = base::TimeDelta();
+
+bool g_enabled_high_priority_input_for_testing = false;
 
 base::TimeDelta GetWakeUpDuration() {
   int duration_ms;
@@ -194,6 +199,11 @@ const char* OptionalTaskDescriptionToString(
   return MainThreadTaskQueue::NameForQueueType(opt_desc->queue_type);
 }
 
+bool IsUnconditionalHighPriorityInputEnabled() {
+  return base::FieldTrialList::IsTrialActive(kHighPriorityInputTrial) ||
+         g_enabled_high_priority_input_for_testing;
+}
+
 }  // namespace
 
 RendererSchedulerImpl::RendererSchedulerImpl(
@@ -214,10 +224,12 @@ RendererSchedulerImpl::RendererSchedulerImpl(
           helper_.NewTaskQueue(MainThreadTaskQueue::QueueCreationParams(
                                    MainThreadTaskQueue::QueueType::kCompositor)
                                    .SetShouldMonitorQuiescence(true))),
-      input_task_queue_(
-          helper_.NewTaskQueue(MainThreadTaskQueue::QueueCreationParams(
-                                   MainThreadTaskQueue::QueueType::kInput)
-                                   .SetShouldMonitorQuiescence(true))),
+      input_task_queue_(helper_.NewTaskQueue(
+          MainThreadTaskQueue::QueueCreationParams(
+              MainThreadTaskQueue::QueueType::kInput)
+              .SetShouldMonitorQuiescence(true)
+              .SetUsedForImportantTasks(
+                  IsUnconditionalHighPriorityInputEnabled()))),
       compositor_task_queue_enabled_voter_(
           compositor_task_queue_->CreateQueueEnabledVoter()),
       input_task_queue_enabled_voter_(
@@ -696,7 +708,7 @@ scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::NewLoadingTaskQueue(
           .SetCanBePaused(true)
           .SetCanBeStopped(StopLoadingInBackgroundEnabled())
           .SetCanBeDeferred(true)
-          .SetUsedForControlTasks(
+          .SetUsedForImportantTasks(
               queue_type ==
               MainThreadTaskQueue::QueueType::kFrameLoading_kControl));
 }
@@ -2116,8 +2128,8 @@ bool RendererSchedulerImpl::TaskQueuePolicy::IsQueueEnabled(
 
 TaskQueue::QueuePriority RendererSchedulerImpl::TaskQueuePolicy::GetPriority(
     MainThreadTaskQueue* task_queue) const {
-  return task_queue->UsedForControlTasks() ? TaskQueue::kHighPriority
-                                           : priority;
+  return task_queue->UsedForImportantTasks() ? TaskQueue::kHighPriority
+                                             : priority;
 }
 
 RendererSchedulerImpl::TimeDomainType
@@ -2647,6 +2659,12 @@ const char* RendererSchedulerImpl::VirtualTimePolicyToString(
       NOTREACHED();
       return nullptr;
   }
+}
+
+// static
+void RendererSchedulerImpl::SetUnconditionalHighPriorityInputEnabledForTest(
+    bool enabled) {
+  g_enabled_high_priority_input_for_testing = enabled;
 }
 
 }  // namespace scheduler

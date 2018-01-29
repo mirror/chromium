@@ -307,6 +307,9 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   scoped_refptr<base::SingleThreadTaskRunner> CompositorTaskRunner() override;
   scoped_refptr<base::SingleThreadTaskRunner> InputTaskRunner() override;
 
+  // Test helpers:
+  static void SetUnconditionalHighPriorityInputEnabledForTest(bool enabled);
+
  private:
   friend class RenderWidgetSchedulingState;
   friend class RendererMetricsHelper;

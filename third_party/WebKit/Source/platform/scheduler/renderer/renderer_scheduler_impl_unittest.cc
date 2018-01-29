@@ -208,6 +208,7 @@ class RendererSchedulerImplForTest : public RendererSchedulerImpl {
   using RendererSchedulerImpl::OnIdlePeriodEnded;
   using RendererSchedulerImpl::OnIdlePeriodStarted;
   using RendererSchedulerImpl::EstimateLongestJankFreeTaskDuration;
+  using RendererSchedulerImpl::SetUnconditionalHighPriorityInputEnabledForTest;
 
   explicit RendererSchedulerImplForTest(
       std::unique_ptr<TaskQueueManager> manager)
@@ -276,6 +277,8 @@ class RendererSchedulerImplTest : public ::testing::Test {
   ~RendererSchedulerImplTest() override = default;
 
   void SetUp() override {
+    RendererSchedulerImplForTest::
+        SetUnconditionalHighPriorityInputEnabledForTest(true);
     if (!message_loop_) {
       mock_task_runner_ =
           base::MakeRefCounted<cc::OrderedSimpleTaskRunner>(&clock_, false);
@@ -894,10 +897,11 @@ TEST_F(RendererSchedulerImplTest, TestDefaultPolicy) {
 
   EnableIdleTasks();
   RunUntilIdle();
+  // High-priority input is enabled and input tasks are processed first.
   EXPECT_THAT(run_order,
-              ::testing::ElementsAre(std::string("L1"), std::string("D1"),
-                                     std::string("P1"), std::string("C1"),
-                                     std::string("D2"), std::string("P2"),
+              ::testing::ElementsAre(std::string("P1"), std::string("P2"),
+                                     std::string("L1"), std::string("D1"),
+                                     std::string("C1"), std::string("D2"),
                                      std::string("C2"), std::string("I1")));
   EXPECT_EQ(RendererSchedulerImpl::UseCase::kNone, CurrentUseCase());
 }
@@ -906,14 +910,16 @@ TEST_F(RendererSchedulerImplTest, TestDefaultPolicyWithSlowCompositor) {
   RunSlowCompositorTask();
 
   std::vector<std::string> run_order;
-  PostTestTasks(&run_order, "L1 I1 D1 C1 D2 C2");
+  PostTestTasks(&run_order, "L1 I1 D1 C1 P1 D2 C2");
 
   EnableIdleTasks();
   RunUntilIdle();
+  // Even with slow compositor input tasks are handled first.
   EXPECT_THAT(run_order,
-              ::testing::ElementsAre(std::string("L1"), std::string("D1"),
-                                     std::string("C1"), std::string("D2"),
-                                     std::string("C2"), std::string("I1")));
+              ::testing::ElementsAre(std::string("P1"), std::string("L1"),
+                                     std::string("D1"), std::string("C1"),
+                                     std::string("D2"), std::string("C2"),
+                                     std::string("I1")));
   EXPECT_EQ(RendererSchedulerImpl::UseCase::kNone, CurrentUseCase());
 }
 
