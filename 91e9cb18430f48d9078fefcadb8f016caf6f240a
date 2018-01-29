@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e2d4de4_0a338b11",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-29T17:17:40Z",
+      "side": 1,
+      "message": "1. please wrap commit messages at 78 cols or so\n\n2. I don\u0027t understand this sentence. before this patch, for QueueClass::kTimer, both of the bodies ran, so the other branch of the switch _is_ currently being taken. Or do you mean a different switch?",
+      "revId": "91e9cb18430f48d9078fefcadb8f016caf6f240a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
