@@ -268,6 +268,7 @@ DownloadTargetDeterminer::Result
   }
   DCHECK(virtual_path_.IsAbsolute());
   DVLOG(20) << "Generated virtual path: " << virtual_path_.AsUTF8Unsafe();
+  LOG(ERROR) << "joy: Generated virtual path: " << virtual_path_.AsUTF8Unsafe();
 
   return CONTINUE;
 }
@@ -423,6 +424,7 @@ void DownloadTargetDeterminer::RequestConfirmationDone(
     const base::FilePath& virtual_path) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(!download_->IsTransient());
+  LOG(ERROR) << "joy: User selected path: " << virtual_path.AsUTF8Unsafe();
   DVLOG(20) << "User selected path:" << virtual_path.AsUTF8Unsafe();
   if (result == DownloadConfirmationResult::CANCELED) {
     ScheduleCallbackAndDeleteSelf(
@@ -462,6 +464,7 @@ DownloadTargetDeterminer::Result
 void DownloadTargetDeterminer::DetermineLocalPathDone(
     const base::FilePath& local_path) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  LOG(ERROR) << "joy: Local path: " << local_path.AsUTF8Unsafe();
   DVLOG(20) << "Local path: " << local_path.AsUTF8Unsafe();
   if (local_path.empty()) {
     // Path subsitution failed. Usually caused by something going wrong with the
@@ -500,6 +503,7 @@ DownloadTargetDeterminer::Result
 void DownloadTargetDeterminer::DetermineMimeTypeDone(
     const std::string& mime_type) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  LOG(ERROR) << "joy: Mime type: " << mime_type;
   DVLOG(20) << "MIME type: " << mime_type;
   DCHECK_EQ(STATE_DETERMINE_IF_HANDLED_SAFELY_BY_BROWSER, next_state_);
 
@@ -828,6 +832,15 @@ void DownloadTargetDeterminer::ScheduleCallbackAndDeleteSelf(
             << " Danger type:" << danger_type_
             << " Danger level:" << danger_level_
             << " Result:" << static_cast<int>(result);
+  LOG(ERROR) << "joy: Scheduling callback. Virtual:"
+             << virtual_path_.AsUTF8Unsafe()
+             << " Local:" << local_path_.AsUTF8Unsafe()
+             << " Intermediate:" << intermediate_path_.AsUTF8Unsafe()
+             << " Confirmation reason:"
+             << static_cast<int>(confirmation_reason_)
+             << " Danger type:" << danger_type_
+             << " Danger level:" << danger_level_
+             << " Result:" << static_cast<int>(result);
   std::unique_ptr<DownloadTargetInfo> target_info(new DownloadTargetInfo);
 
   target_info->target_path = local_path_;

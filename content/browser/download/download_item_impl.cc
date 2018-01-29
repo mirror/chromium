@@ -1512,6 +1512,7 @@ void DownloadItemImpl::OnDownloadFileInitialized(
 }
 
 void DownloadItemImpl::DetermineDownloadTarget() {
+  LOG(ERROR) << "joy: DetermineDownloadTarget";
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DVLOG(20) << __func__ << "() " << DebugString(true);
 
@@ -1529,6 +1530,8 @@ void DownloadItemImpl::OnDownloadTargetDetermined(
     DownloadDangerType danger_type,
     const base::FilePath& intermediate_path,
     DownloadInterruptReason interrupt_reason) {
+  LOG(ERROR) << "joy: OnDownloadTargetDetermined target_path: "
+             << target_path.AsUTF8Unsafe();
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (state_ == CANCELLED_INTERNAL)
     return;
