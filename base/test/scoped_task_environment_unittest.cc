@@ -4,6 +4,8 @@
 
 #include "base/test/scoped_task_environment.h"
 
+#include <memory>
+
 #include "base/atomicops.h"
 #include "base/bind.h"
 #include "base/synchronization/atomic_flag.h"
@@ -12,6 +14,7 @@
 #include "base/test/test_timeouts.h"
 #include "base/threading/platform_thread.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "base/time/tick_clock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace base {
@@ -143,6 +146,7 @@ TEST_P(ScopedTaskEnvironmentTest, DelayedTasks) {
 
   subtle::Atomic32 counter = 0;
 
+  constexpr base::TimeDelta kShortTaskDelay = TimeDelta::FromDays(1);
   // Should run only in MOCK_TIME environment when time is fast-forwarded.
   ThreadTaskRunnerHandle::Get()->PostDelayedTask(
       FROM_HERE,
@@ -162,6 +166,7 @@ TEST_P(ScopedTaskEnvironmentTest, DelayedTasks) {
                       Unretained(&counter)),
                   TimeDelta::FromDays(1));
 
+  constexpr base::TimeDelta kLongTaskDelay = TimeDelta::FromDays(7);
   // Same as first task, longer delays to exercise
   // FastForwardUntilNoTasksRemain().
   ThreadTaskRunnerHandle::Get()->PostDelayedTask(
@@ -179,7 +184,7 @@ TEST_P(ScopedTaskEnvironmentTest, DelayedTasks) {
             subtle::NoBarrier_AtomicIncrement(counter, 16);
           },
           Unretained(&counter)),
-      TimeDelta::FromDays(7));
+      kLongTaskDelay);
 
   ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE, Bind(
@@ -205,10 +210,12 @@ TEST_P(ScopedTaskEnvironmentTest, DelayedTasks) {
   EXPECT_EQ(expected_value, counter);
 
   if (GetParam() == ScopedTaskEnvironment::MainThreadType::MOCK_TIME) {
-    scoped_task_environment.FastForwardBy(TimeDelta::FromSeconds(1));
+    constexpr base::TimeDelta kNoTaskDelay = TimeDelta::FromSeconds(1);
+    EXPECT_LT(kNoTaskDelay, kShortTaskDelay);
+    scoped_task_environment.FastForwardBy(kNoTaskDelay);
     EXPECT_EQ(expected_value, counter);
 
-    scoped_task_environment.FastForwardBy(TimeDelta::FromDays(1));
+    scoped_task_environment.FastForwardBy(kShortTaskDelay - kNoTaskDelay);
     expected_value += 4;
     EXPECT_EQ(expected_value, counter);
 
@@ -217,6 +224,47 @@ TEST_P(ScopedTaskEnvironmentTest, DelayedTasks) {
     expected_value += 16;
     EXPECT_EQ(expected_value, counter);
   }
+}
+
+// Verify that the TickClock returned by
+// |ScopedTaskEnvironment::GetMockTickClock| gets updated when the
+// FastForward(By|UntilNoTasksRemain) functions are called.
+TEST_F(ScopedTaskEnvironmentTest, FastForwardAdvanceTickClock) {
+  // Use a QUEUED execution-mode environment, so that no tasks are actually
+  // executed until RunUntilIdle()/FastForwardBy() are invoked.
+  ScopedTaskEnvironment scoped_task_environment(
+      ScopedTaskEnvironment::MainThreadType::MOCK_TIME,
+      ScopedTaskEnvironment::ExecutionMode::QUEUED);
+
+  subtle::Atomic32 counter = 0;
+  auto dummy_task = Bind(
+      [](subtle::Atomic32* counter) {
+        subtle::NoBarrier_AtomicIncrement(counter, 42);
+      },
+      Unretained(&counter));
+
+  constexpr base::TimeDelta kShortTaskDelay = TimeDelta::FromDays(1);
+  ThreadTaskRunnerHandle::Get()->PostDelayedTask(FROM_HERE, dummy_task,
+                                                 TimeDelta::FromDays(1));
+
+  constexpr base::TimeDelta kLongTaskDelay = TimeDelta::FromDays(7);
+  ThreadTaskRunnerHandle::Get()->PostDelayedTask(FROM_HERE, dummy_task,
+                                                 kLongTaskDelay);
+
+  std::unique_ptr<base::TickClock> tick_clock =
+      scoped_task_environment.GetMockTickClock();
+  base::TimeTicks tick_clock_now = tick_clock->NowTicks();
+
+  constexpr base::TimeDelta kNoTaskDelay = TimeDelta::FromSeconds(1);
+  EXPECT_LT(kNoTaskDelay, kShortTaskDelay);
+  scoped_task_environment.FastForwardBy(kNoTaskDelay);
+  EXPECT_EQ(kNoTaskDelay, tick_clock->NowTicks() - tick_clock_now);
+
+  scoped_task_environment.FastForwardBy(kShortTaskDelay - kNoTaskDelay);
+  EXPECT_EQ(kShortTaskDelay, tick_clock->NowTicks() - tick_clock_now);
+
+  scoped_task_environment.FastForwardUntilNoTasksRemain();
+  EXPECT_EQ(kLongTaskDelay, tick_clock->NowTicks() - tick_clock_now);
 }
 
 INSTANTIATE_TEST_CASE_P(
