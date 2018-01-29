@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad2e5712_b575c110",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-29T00:48:12Z",
+      "side": 1,
+      "message": "After looking at this a bit more, can we just check IsContentAllowed and IsContentBlocked rather than tracking more data in the ContentSettingsUsageState ?",
+      "revId": "013ca869994ccaf23163248461a475e390aa1554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19deabbb_f75a14cf",
+        "filename": "chrome/browser/generic_sensor/sensor_permission_context.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-29T00:48:12Z",
+      "side": 1,
+      "message": "nit: no {} needed",
+      "revId": "013ca869994ccaf23163248461a475e390aa1554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15a2daeb_48691867",
+        "filename": "chrome/browser/ui/content_settings/content_setting_image_model.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-29T00:48:12Z",
+      "side": 1,
+      "message": "See previous comment",
+      "revId": "013ca869994ccaf23163248461a475e390aa1554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
