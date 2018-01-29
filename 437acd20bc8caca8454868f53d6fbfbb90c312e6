@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4812f1e2_a002a046",
+        "filename": "components/gcm_driver/gcm_client_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-29T12:52:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "427f1185_5460ed13",
+      "revId": "437acd20bc8caca8454868f53d6fbfbb90c312e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62111d31_56ab7492",
         "filename": "components/gcm_driver/gcm_client_impl.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "437acd20bc8caca8454868f53d6fbfbb90c312e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acf6cd86_fa01a906",
+        "filename": "components/gcm_driver/gcm_client_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 995,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-29T12:52:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62111d31_56ab7492",
+      "revId": "437acd20bc8caca8454868f53d6fbfbb90c312e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b315cc27_e37b82af",
+        "filename": "components/gcm_driver/registration_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-29T12:52:18Z",
+      "side": 1,
+      "message": "Actually, the RegistrationInfoComparer method which we pass as a predicate when defining the RegistrationInfoMap is sufficient, so I have removed this \u003d\u003d overload.",
+      "parentUuid": "a9bfa65b_6a5f0509",
+      "revId": "437acd20bc8caca8454868f53d6fbfbb90c312e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "317a1919_f83a033b",
         "filename": "components/gcm_driver/registration_info.cc",
         "patchSetId": 6
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "4c173671_a1d3523d",
+        "filename": "components/gcm_driver/registration_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-29T12:52:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "317a1919_f83a033b",
+      "revId": "437acd20bc8caca8454868f53d6fbfbb90c312e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e07d992_dc85cbe1",
         "filename": "components/gcm_driver/registration_info.cc",
         "patchSetId": 6
@@ -81,6 +153,24 @@
       "writtenOn": "2018-01-26T16:52:05Z",
       "side": 1,
       "message": "This is causing a bunch of allocations too. It\u0027d be more efficient if we could change the std::strings to base::StringPiece instances, which point to the original string\u0027s memory rather than its own.",
+      "revId": "437acd20bc8caca8454868f53d6fbfbb90c312e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac6ef4d9_b3358056",
+        "filename": "components/gcm_driver/registration_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-29T12:52:18Z",
+      "side": 1,
+      "message": "This was causing a lot of code churn, so I\u0027ve used base::StringPrintf, like in the GetSerializedValue function.",
+      "parentUuid": "5e07d992_dc85cbe1",
       "revId": "437acd20bc8caca8454868f53d6fbfbb90c312e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
