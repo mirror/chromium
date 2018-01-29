@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3a8e1eb_82b14081",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 977,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2018-01-29T09:45:02Z",
+      "side": 1,
+      "message": "The RWHVMac knows the size that it needs to be -- no need to have the RWHImpl ask it for the desired size and then ask it if it has that size.",
+      "revId": "29cfa44e54ea2a860b505016be2dfd031ad7921f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54280121_05f42398",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2018-01-29T09:45:02Z",
+      "side": 0,
+      "message": "This will never be true because we\u0027ll early-out above.",
+      "revId": "6f15712058cc9fd0c02b03bf1e60bb30cfb7de99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
