@@ -271,6 +271,10 @@ bool OmniboxEditModel::CurrentTextIsURL() const {
   if (!user_input_in_progress_)
     return true;
 
+  // Safely skip unnecessary look-up.
+  if (view_->GetText().empty())
+    return false;
+
   return !AutocompleteMatch::IsSearchType(CurrentMatch(nullptr).type);
 }
 
