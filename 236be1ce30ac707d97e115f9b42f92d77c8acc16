@@ -94,6 +94,30 @@
       "revId": "236be1ce30ac707d97e115f9b42f92d77c8acc16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bb8f121_aabb19c4",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1456,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2018-01-29T05:17:11Z",
+      "side": 1,
+      "message": "\u003e But I wonder if we need such accuracy?\n\nI\u0027ll have more investigation about that. Please give the work to me :)\n\nAt least, I think we should use VirtualRectForDirection for second case.\n  if focused element is visible:\n    use focused element\u0027s AbsoluteVisualRect\n  else if focused element is not visible AND the container is visible:\n    use VirtualRectForDirection(container\u0027s AbsoluteVisualRect)\n  else // focused element is not visible AND the container is not visible:\n    use FindSearchStartPoint(frame)",
+      "parentUuid": "ab373ba5_abc8e1a4",
+      "range": {
+        "startLine": 1455,
+        "startChar": 0,
+        "endLine": 1456,
+        "endChar": 73
+      },
+      "revId": "236be1ce30ac707d97e115f9b42f92d77c8acc16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
