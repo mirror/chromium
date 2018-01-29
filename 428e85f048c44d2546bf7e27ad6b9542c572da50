@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52748ef3_a0159e6e",
+        "filename": "chrome/browser/ui/views/frame/contents_web_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-29T05:10:09Z",
+      "side": 1,
+      "message": "comment about rationale for this?",
+      "revId": "428e85f048c44d2546bf7e27ad6b9542c572da50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfd4029d_3d15b2d5",
+        "filename": "chrome/browser/ui/views/sad_tab_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-29T05:10:09Z",
+      "side": 1,
+      "message": "web_contents-\u003eGetTopLevelNativeWindow() might not match web_contents-\u003eGetNativeView() which is sued above -- I think \n\n  GetWidgetForNativeView(web_contents-\u003eGetNativeView());\n\nwill be more reliable.\n\nPerhaps up around line 130, start with\n\n  gfx::NativeView native_parent \u003d web_contents-\u003eGetNativeView();\n  sad_tab_params.parent \u003d native_parent;",
+      "revId": "428e85f048c44d2546bf7e27ad6b9542c572da50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db0042c5_834d5572",
+        "filename": "chrome/browser/ui/views/sad_tab_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-29T05:10:09Z",
+      "side": 1,
+      "message": "This might also need to happen during tab dragging?",
+      "revId": "428e85f048c44d2546bf7e27ad6b9542c572da50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77ab8d05_9aa7ac86",
+        "filename": "chrome/browser/ui/views/sad_tab_view_interactive_uitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-29T05:10:09Z",
+      "side": 1,
+      "message": "nit: private: \n  DISALLOW_COPY..",
+      "revId": "428e85f048c44d2546bf7e27ad6b9542c572da50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74d7cc46_1537ea69",
+        "filename": "chrome/browser/ui/views/sad_tab_view_interactive_uitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-29T05:10:09Z",
+      "side": 1,
+      "message": "some tests navigate to GURL(content::kChromeUICrashURL) instead - (seems about the same amount of effort, so I\u0027m indifferent)",
+      "revId": "428e85f048c44d2546bf7e27ad6b9542c572da50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d55528d1_52e9be28",
+        "filename": "chrome/browser/ui/views/sad_tab_view_interactive_uitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-29T05:10:09Z",
+      "side": 1,
+      "message": "is it worth testing shift+tab as well?",
+      "revId": "428e85f048c44d2546bf7e27ad6b9542c572da50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cc2e2ab_2f100381",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 4643,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-29T05:10:09Z",
+      "side": 1,
+      "message": "it probably needs to be added to this section (toolkit_views is defined on Mac by default, but not mac_views_browser)",
+      "revId": "428e85f048c44d2546bf7e27ad6b9542c572da50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
