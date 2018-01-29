@@ -1,0 +1,33 @@
+diff --git a/src/processor/minidump.cc b/src/processor/minidump.cc
+index 5defe41d..bbed13cd 100644
+--- a/src/processor/minidump.cc
++++ b/src/processor/minidump.cc
+@@ -1969,6 +1969,7 @@ string MinidumpModule::code_identifier() const {
+         break;
+       }
+       // Otherwise fall through to the case below.
++      [[clang::fallthrough]];
+     }
+ 
+     case MD_OS_MAC_OS_X:
+@@ -5199,7 +5200,7 @@ bool Minidump::Read() {
+                             stream_type << ", but can only deal with one";
+             return false;
+           }
+-          // Fall through to default
++          [[clang::fallthrough]];
+         }
+ 
+         default: {
+diff --git a/src/processor/minidump_processor.cc b/src/processor/minidump_processor.cc
+index c522adff..f2360e62 100644
+--- a/src/processor/minidump_processor.cc
++++ b/src/processor/minidump_processor.cc
+@@ -893,6 +893,7 @@ string MinidumpProcessor::GetCrashReason(Minidump *dump, uint64_t *address) {
+                   break;
+                 case MD_EXCEPTION_CODE_MAC_PPC_ALTIVEC_ASSIST:
+                   reason.append("EXC_PPC_ALTIVECASSIST");
++                  break;
+                 default:
+                   reason.append(flags_string);
+                   BPLOG(INFO) << "Unknown exception reason " << reason;

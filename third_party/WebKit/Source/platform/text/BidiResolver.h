@@ -1074,6 +1074,7 @@ void BidiResolver<Iterator, Run, IsolatedRun>::CreateBidiRunsForLine(
             direction_ = WTF::Unicode::kLeftToRight;
           break;
         }
+        FALLTHROUGH;
       case WTF::Unicode::kArabicNumber:
         dir_current = WTF::Unicode::kArabicNumber;
         switch (status_.last) {

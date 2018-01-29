@@ -19,6 +19,7 @@
 
 #include "core/svg/SVGTransformDistance.h"
 
+#include "base/compiler_specific.h"
 #include "platform/geometry/FloatPoint.h"
 #include "platform/geometry/FloatSize.h"
 #include <math.h>
@@ -48,6 +49,7 @@ SVGTransformDistance::SVGTransformDistance(SVGTransform* from_svg_transform,
   switch (transform_type_) {
     case kSvgTransformMatrix:
       NOTREACHED();
+      FALLTHROUGH;
     case kSvgTransformUnknown:
       break;
     case kSvgTransformRotate: {
@@ -85,6 +87,7 @@ SVGTransformDistance SVGTransformDistance::ScaledDistance(
   switch (transform_type_) {
     case kSvgTransformMatrix:
       NOTREACHED();
+      FALLTHROUGH;
     case kSvgTransformUnknown:
       return SVGTransformDistance();
     case kSvgTransformRotate:
@@ -122,6 +125,7 @@ SVGTransform* SVGTransformDistance::AddSVGTransforms(SVGTransform* first,
   switch (first->TransformType()) {
     case kSvgTransformMatrix:
       NOTREACHED();
+      FALLTHROUGH;
     case kSvgTransformUnknown:
       return transform;
     case kSvgTransformRotate: {
@@ -168,6 +172,7 @@ SVGTransform* SVGTransformDistance::AddToSVGTransform(
   switch (transform_type_) {
     case kSvgTransformMatrix:
       NOTREACHED();
+      FALLTHROUGH;
     case kSvgTransformUnknown:
       return SVGTransform::Create();
     case kSvgTransformTranslate: {
@@ -204,6 +209,7 @@ float SVGTransformDistance::Distance() const {
   switch (transform_type_) {
     case kSvgTransformMatrix:
       NOTREACHED();
+      FALLTHROUGH;
     case kSvgTransformUnknown:
       return 0;
     case kSvgTransformRotate:
