@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "f89ce572_f35c482a",
+        "filename": "remoting/protocol/ssl_hmac_channel_authenticator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-29T10:41:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e12e3ff_3551c1a6",
+      "range": {
+        "startLine": 57,
+        "startChar": 28,
+        "endLine": 57,
+        "endChar": 0
+      },
+      "revId": "6afa1e8ce44716fec8b30a5e2b50982731a0b325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5979be86_d6be6040",
         "filename": "remoting/protocol/ssl_hmac_channel_authenticator.cc",
         "patchSetId": 1
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "6b0bc56c_f5825e42",
+        "filename": "remoting/protocol/ssl_hmac_channel_authenticator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-29T10:41:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5979be86_d6be6040",
+      "range": {
+        "startLine": 58,
+        "startChar": 24,
+        "endLine": 58,
+        "endChar": 0
+      },
+      "revId": "6afa1e8ce44716fec8b30a5e2b50982731a0b325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f611dcd_c81d4bda",
         "filename": "remoting/protocol/ssl_hmac_channel_authenticator.cc",
         "patchSetId": 1
@@ -107,6 +155,30 @@
       "writtenOn": "2018-01-26T22:15:30Z",
       "side": 1,
       "message": "I don\u0027t understand how this differs from \"description\". I think you can use my suggested string here too.",
+      "range": {
+        "startLine": 59,
+        "startChar": 21,
+        "endLine": 59,
+        "endChar": 0
+      },
+      "revId": "6afa1e8ce44716fec8b30a5e2b50982731a0b325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15cba83c_0c88f0d6",
+        "filename": "remoting/protocol/ssl_hmac_channel_authenticator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-29T10:41:01Z",
+      "side": 1,
+      "message": "It would be best if we can give an enumeration of sent data items, like user credentials, etc.",
+      "parentUuid": "0f611dcd_c81d4bda",
       "range": {
         "startLine": 59,
         "startChar": 21,
