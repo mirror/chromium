@@ -209,6 +209,10 @@ ScriptPromise LockManager::acquire(ScriptState* script_state,
       options.ifAvailable() ? mojom::blink::LockManager::WaitMode::NO_WAIT
                             : mojom::blink::LockManager::WaitMode::WAIT;
 
+  mojom::blink::LockManager::Priority priority =
+      options.steal() ? mojom::blink::LockManager::Priority::OVERRIDE
+                      : mojom::blink::LockManager::Priority::DEFAULT;
+
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
   ScriptPromise promise = resolver->Promise();
 
@@ -216,7 +220,7 @@ ScriptPromise LockManager::acquire(ScriptState* script_state,
   AddPendingRequest(new LockRequestImpl(callback, resolver, name, mode,
                                         mojo::MakeRequest(&request_ptr), this));
 
-  service_->RequestLock(name, mode, wait, std::move(request_ptr));
+  service_->RequestLock(name, mode, wait, priority, std::move(request_ptr));
 
   return promise;
 }
