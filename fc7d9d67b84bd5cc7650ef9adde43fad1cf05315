@@ -251,6 +251,30 @@
       "revId": "fc7d9d67b84bd5cc7650ef9adde43fad1cf05315",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b35fceed_d2dfd26b",
+        "filename": "tools/mac/rewrite_modern_objc.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-29T16:37:57Z",
+      "side": 1,
+      "message": "I suppose this is due to APFS vs HFS+. Patches accepted :-)",
+      "parentUuid": "2255b004_55af1910",
+      "range": {
+        "startLine": 136,
+        "startChar": 7,
+        "endLine": 136,
+        "endChar": 31
+      },
+      "revId": "fc7d9d67b84bd5cc7650ef9adde43fad1cf05315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
