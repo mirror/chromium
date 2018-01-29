@@ -130,7 +130,8 @@ LocationBarView::LocationBarView(Browser* browser,
       ChromeOmniboxEditController(command_updater),
       browser_(browser),
       delegate_(delegate),
-      is_popup_mode_(is_popup_mode) {
+      is_popup_mode_(is_popup_mode),
+      last_update_security_level_(security_state::NONE) {
   edit_bookmarks_enabled_.Init(
       bookmarks::prefs::kEditBookmarksEnabled, profile->GetPrefs(),
       base::Bind(&LocationBarView::UpdateWithoutTabRestore,
@@ -647,6 +648,7 @@ void LocationBarView::Update(const WebContents* contents) {
       ShouldShowLocationIconText(),
       !contents && ShouldAnimateLocationIconTextVisibilityChange());
   OnChanged();  // NOTE: Calls Layout().
+  last_update_security_level_ = GetToolbarModel()->GetSecurityLevel(false);
 }
 
 void LocationBarView::ResetTabState(WebContents* contents) {
@@ -910,6 +912,12 @@ bool LocationBarView::ShouldAnimateLocationIconTextVisibilityChange() const {
   // SecurityLevel::NONE).
   using SecurityLevel = security_state::SecurityLevel;
   SecurityLevel level = GetToolbarModel()->GetSecurityLevel(false);
+  // Do not animate transitions from HTTP_SHOW_WARNING to DANGEROUS, since the
+  // transition can look confusing/messy.
+  if (level == SecurityLevel::DANGEROUS &&
+      last_update_security_level_ == SecurityLevel::HTTP_SHOW_WARNING) {
+    return false;
+  }
   return level == SecurityLevel::DANGEROUS ||
          level == SecurityLevel::HTTP_SHOW_WARNING;
 }
