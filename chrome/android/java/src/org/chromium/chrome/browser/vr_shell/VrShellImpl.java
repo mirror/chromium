@@ -26,10 +26,12 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.chrome.browser.ChromeActivity;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ChromeTabbedActivity;
 import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.browser.compositor.CompositorView;
 import org.chromium.chrome.browser.fullscreen.ChromeFullscreenManager;
+import org.chromium.chrome.browser.modaldialog.ModalDialogManager;
 import org.chromium.chrome.browser.page_info.PageInfoPopup;
 import org.chromium.chrome.browser.tab.EmptyTabObserver;
 import org.chromium.chrome.browser.tab.InterceptNavigationDelegateImpl;
@@ -99,11 +101,15 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
     private boolean mPendingVSyncPause;
 
     private AndroidUiGestureTarget mAndroidUiGestureTarget;
+    private AndroidUiGestureTarget mAndroidDialogGestureTarget;
 
     private OnDispatchTouchEventCallback mOnDispatchTouchEventForTesting;
 
     private Surface mContentSurface;
     private VrViewContainer mNonVrViews;
+    private VrViewContainer mVrUiViewContainer;
+    private FrameLayout mUiView;
+    private ModalDialogManager mNonVrModalDialogManager;
 
     public VrShellImpl(
             ChromeActivity activity, VrShellDelegate delegate, TabModelSelector tabModelSelector) {
@@ -505,6 +511,16 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
         if (mVrBrowsingEnabled) mNonVrViews.setSurface(surface);
     }
 
+    @CalledByNative
+    public void dialogSurfaceChanged(Surface surface) {
+        if (mVrUiViewContainer != null)
+            mVrUiViewContainer.setSurface(surface);
+        else {
+            mVrUiViewContainer = new VrViewContainer(mActivity);
+            mVrUiViewContainer.setSurface(surface);
+        }
+    }
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         boolean parentConsumed = super.dispatchTouchEvent(event);
@@ -536,6 +552,19 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
     public void onResume() {
         if (mPaused != null && !mPaused) return;
         mPaused = false;
+
+        if (ChromeFeatureList.isEnabled(ChromeFeatureList.VR_BROWSING_NATIVE_ANDROID_UI)) {
+            mNonVrModalDialogManager = mActivity.getModalDialogManager();
+            mNonVrModalDialogManager.cancelAllDialogs();
+            mActivity.setModalDialogManager(new ModalDialogManager(
+                    new VrModalPresenter(this), ModalDialogManager.APP_MODAL));
+        }
+        FrameLayout decor = (FrameLayout) mActivity.getWindow().getDecorView();
+        mUiView = new FrameLayout(decor.getContext());
+        LayoutParams params = new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        decor.addView(mUiView, params);
+
         super.onResume();
         if (mNativeVrShell != 0) {
             // Refreshing the viewer profile may accesses disk under some circumstances outside of
@@ -553,14 +582,23 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
     public void onPause() {
         if (mPaused != null && mPaused) return;
         mPaused = true;
+
+        if (ChromeFeatureList.isEnabled(ChromeFeatureList.VR_BROWSING_NATIVE_ANDROID_UI)) {
+            mActivity.getModalDialogManager().cancelAllDialogs();
+            mActivity.setModalDialogManager(mNonVrModalDialogManager);
+        }
+
         super.onPause();
         if (mNativeVrShell != 0) nativeOnPause(mNativeVrShell);
+        FrameLayout decor = (FrameLayout) mActivity.getWindow().getDecorView();
+        decor.removeView(mUiView);
     }
 
     @Override
     public void shutdown() {
         if (mVrBrowsingEnabled) {
             mNonVrViews.destroy();
+            mVrUiViewContainer.destroy();
             removeVrRootView();
         }
 
@@ -615,6 +653,59 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
     @Override
     public void teardown() {
         shutdown();
+    }
+
+    /**
+     * Set View for the Dialog that should show up on top of the main content.
+     */
+    @Override
+    public void setDialogView(View view) {
+        if (view == null) {
+            mUiView.removeAllViews();
+        }
+        if (view == null) {
+            return;
+        }
+        if (view.getParent() != null) {
+            ((ViewGroup) view.getParent()).removeView(view);
+        }
+        if (mVrUiViewContainer != null) {
+            mVrUiViewContainer.removeAllViews();
+            mVrUiViewContainer.addView(view);
+        } else {
+            VrViewContainer viewContainer = new VrViewContainer(mActivity);
+            viewContainer.addView(view);
+            mVrUiViewContainer = viewContainer;
+        }
+        if (mVrUiViewContainer != null && mVrUiViewContainer.getParent() == null)
+            mUiView.addView(mVrUiViewContainer);
+    }
+
+    /**
+     * Close the popup Dialog in VR.
+     */
+    @Override
+    public void closeVrDialog() {
+        nativeCloseAlertDialog(mNativeVrShell);
+    }
+
+    /**
+     * Set size of the Dialog in VR.
+     */
+    @Override
+    public void setDialogSize(int width, int height) {
+        nativeSetAlertDialogSize(mNativeVrShell, width, height);
+    }
+
+    /**
+     * Initialize the Dialog in VR.
+     */
+    @Override
+    public void initVrDialog(int width, int height) {
+        nativeAddAlertDialog(mNativeVrShell, width, height);
+        mAndroidDialogGestureTarget = new AndroidUiGestureTarget(
+                mVrUiViewContainer.getInputTarget(), 1.0f, getNativePageScrollRatio());
+        nativeSetDialogGestureTarget(mNativeVrShell, mAndroidDialogGestureTarget);
     }
 
     @Override
@@ -843,6 +934,8 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
     private native void nativeSwapContents(long nativeVrShell, Tab tab, float androidViewDipScale);
     private native void nativeSetAndroidGestureTarget(
             long nativeVrShell, AndroidUiGestureTarget androidUiGestureTarget);
+    private native void nativeSetDialogGestureTarget(
+            long nativeVrShell, AndroidUiGestureTarget dialogGestureTarget);
     private native void nativeDestroy(long nativeVrShell);
     private native void nativeOnTriggerEvent(long nativeVrShell, boolean touched);
     private native void nativeOnPause(long nativeVrShell);
@@ -860,6 +953,9 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
     private native void nativeOnTabUpdated(long nativeVrShell, boolean incognito, int id,
             String title);
     private native void nativeOnTabRemoved(long nativeVrShell, boolean incognito, int id);
+    private native void nativeCloseAlertDialog(long nativeVrShell);
+    private native void nativeAddAlertDialog(long nativeVrShell, int width, int height);
+    private native void nativeSetAlertDialogSize(long nativeVrShell, int width, int height);
     private native void nativeSetHistoryButtonsEnabled(
             long nativeVrShell, boolean canGoBack, boolean canGoForward);
     private native void nativeRequestToExitVr(long nativeVrShell, @UiUnsupportedMode int reason);

@@ -836,6 +836,7 @@ public class VrShellDelegate
             mVrDaydreamApi.launchVrHomescreen();
             return;
         }
+
         mExitedDueToUnsupportedMode = false;
 
         addVrViews();
@@ -1459,7 +1460,6 @@ public class VrShellDelegate
 
         if (!mInVr) return;
         mInVr = false;
-
         if (mShowingDaydreamDoff) {
             onExitVrResult(true);
             return;

@@ -53,6 +53,7 @@ class VrGLThread : public base::android::JavaHandlerThread,
   void GvrDelegateReady(
       gvr::ViewerType viewer_type,
       device::mojom::VRDisplayFrameTransportOptionsPtr) override;
+  void DialogSurfaceChanged(jobject surface) override;
   void UpdateGamepadData(device::GvrGamepadData) override;
   void ForceExitVr() override;
   void OnContentPaused(bool enabled) override;
@@ -61,6 +62,7 @@ class VrGLThread : public base::android::JavaHandlerThread,
   // vr::ContentInputForwarder
   void ForwardEvent(std::unique_ptr<blink::WebInputEvent> event,
                     int content_id) override;
+  void ForwardDialogEvent(std::unique_ptr<blink::WebInputEvent> event) override;
 
   // vr::UiBrowserInterface implementation (UI calling to VrShell).
   void ExitPresent() override;
@@ -99,6 +101,11 @@ class VrGLThread : public base::android::JavaHandlerThread,
   void SetOmniboxSuggestions(
       std::unique_ptr<vr::OmniboxSuggestions> result) override;
   void OnAssetsComponentReady() override;
+  void SetAlertDialogEnabled(bool enabled,
+                             vr::ContentInputDelegate* delegate,
+                             int width,
+                             int height) override;
+  void SetAlertDialogSize(int width, int height) override;
 
  protected:
   void Init() override;
