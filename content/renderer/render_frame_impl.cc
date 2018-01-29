@@ -6652,10 +6652,6 @@ void RenderFrameImpl::PrepareRenderViewForNavigation(
       request_params.current_history_list_offset;
   render_view_->history_list_length_ =
       request_params.current_history_list_length;
-  if (request_params.should_clear_history_list) {
-    CHECK_EQ(-1, render_view_->history_list_offset_);
-    CHECK_EQ(0, render_view_->history_list_length_);
-  }
 }
 
 void RenderFrameImpl::BeginNavigation(const NavigationPolicyInfo& info) {
