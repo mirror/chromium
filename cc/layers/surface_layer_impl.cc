@@ -93,6 +93,10 @@ void SurfaceLayerImpl::AppendQuads(viz::RenderPass* render_pass,
   deadline_in_frames_ = 0u;
 }
 
+bool SurfaceLayerImpl::is_surface_layer() const {
+  return true;
+}
+
 viz::SurfaceDrawQuad* SurfaceLayerImpl::CreateSurfaceDrawQuad(
     viz::RenderPass* render_pass,
     const viz::SurfaceId& primary_surface_id,
