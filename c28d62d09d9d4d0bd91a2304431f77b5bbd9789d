@@ -34,6 +34,24 @@
       "revId": "c28d62d09d9d4d0bd91a2304431f77b5bbd9789d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "439e1241_1a1c33ad",
+        "filename": "components/grpc_support/test/quic_test_server.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-01-29T20:10:50Z",
+      "side": 1,
+      "message": "It may be okay in this particular case but doesn\u0027t seem right in general to kill a thread without properly stopping it. Can we solve it by extending base::Thread and implementing Thread::CleanUp() method that signals (WaitableEvent::Signal()) when the thread loop is done?",
+      "parentUuid": "3e987578_1e9b6b91",
+      "revId": "c28d62d09d9d4d0bd91a2304431f77b5bbd9789d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
