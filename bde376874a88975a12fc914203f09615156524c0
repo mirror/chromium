@@ -34,6 +34,24 @@
       "revId": "bde376874a88975a12fc914203f09615156524c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d4cf17f_d05c66b5",
+        "filename": "content/renderer/media/media_stream_audio_processor_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2018-01-29T12:28:19Z",
+      "side": 1,
+      "message": "OK. It would be great to verify that MSAP sets up APM to use AEC3 when it should. I changed MSAP and the test to be able to do this.\n\nAnother option would be to add a function to the EchoCanceller API that returns a string with the name/id of the implementation (could maybe be useful for logging too) or some other way to identify it. But since it\u0027s probably only really useful for this case, let\u0027s don\u0027t.",
+      "parentUuid": "c9ff866a_3836cead",
+      "revId": "bde376874a88975a12fc914203f09615156524c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
