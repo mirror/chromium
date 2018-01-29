@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dce20b97_abfcd29d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-29T22:11:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e9a70e9_8a3f94de",
+      "revId": "b9da3870aecbe1e290e0a2d82a346257a811eeec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70e99f75_6378ce74",
         "filename": "ash/public/interfaces/wallpaper.mojom",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-26T21:09:06Z",
       "side": 1,
       "message": "Can you get the information you need for this out of UserManager and/or SessionControllerClient in //chrome?\n\nOr is this a wallpaper-specific policy controlled boolean? In that case it seems reasonable for ash to own this information. If so, I think it needs a better name and comment. IsUserWallpaperControlledByPolicy?",
+      "revId": "b9da3870aecbe1e290e0a2d82a346257a811eeec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c50cfacd_8c27a02f",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-29T22:11:19Z",
+      "side": 1,
+      "message": "Done. This is a wallpaper-specific policy, so the name and comments are updated. (We could let the caller provide the account_id, but there\u0027s no use case to check the wallpaper policy status for non-active users, so this method is only checks \u0027active user\u0027.)",
+      "parentUuid": "70e99f75_6378ce74",
       "revId": "b9da3870aecbe1e290e0a2d82a346257a811eeec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "43bac5aa_bf1fef83",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-29T22:11:19Z",
+      "side": 1,
+      "message": "Done. I manually tried \u0027TILE\u0027 and it also works. Added that in the comment.",
+      "parentUuid": "389e8cf8_241fed66",
+      "revId": "b9da3870aecbe1e290e0a2d82a346257a811eeec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8484ce97_4a551a29",
         "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
         "patchSetId": 12
@@ -64,6 +118,24 @@
       "writtenOn": "2018-01-26T21:09:06Z",
       "side": 1,
       "message": "If this project was cancelled and this function will always return false I would prefer not to add this block of code (or the activation observer, etc.).",
+      "revId": "b9da3870aecbe1e290e0a2d82a346257a811eeec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca312c34_02660adf",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-29T22:11:19Z",
+      "side": 1,
+      "message": "Done All the related code is deleted (after confirmation from xdai). The utility file \u0027wallpaper\n_manager_util.h/cc\u0027 seems redundant at this point, so they are also deleted.",
+      "parentUuid": "8484ce97_4a551a29",
       "revId": "b9da3870aecbe1e290e0a2d82a346257a811eeec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
