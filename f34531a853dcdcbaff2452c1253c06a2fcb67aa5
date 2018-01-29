@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d07da29_bf099dad",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1263433
+      },
+      "writtenOn": "2018-01-29T19:01:34Z",
+      "side": 1,
+      "message": "Should this check if the logging is enabled/disabled and send out the appropriate event to the observer? I\u0027m not familiar with all the threading logic inside, but it seems like there may be a race condition.",
+      "range": {
+        "startLine": 407,
+        "startChar": 26,
+        "endLine": 407,
+        "endChar": 34
+      },
+      "revId": "f34531a853dcdcbaff2452c1253c06a2fcb67aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36095a85_aa8b1382",
+        "filename": "content/browser/webrtc/webrtc_event_log_uploader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1263433
+      },
+      "writtenOn": "2018-01-29T19:01:34Z",
+      "side": 1,
+      "message": "I don\u0027t suppose there is something inside chrome that gives \"counters\" to how often things happen. It would be nice to have counts of how often these types of errors occur (and the other LOG locations) compared to how often we call it. I have a feeling these may just go to the void and this could be quite common for some reason and we wouldn\u0027t know.",
+      "range": {
+        "startLine": 28,
+        "startChar": 55,
+        "endLine": 28,
+        "endChar": 0
+      },
+      "revId": "f34531a853dcdcbaff2452c1253c06a2fcb67aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb7b14eb_987eb1c3",
+        "filename": "content/browser/webrtc/webrtc_remote_event_log_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1263433
+      },
+      "writtenOn": "2018-01-29T19:01:34Z",
+      "side": 1,
+      "message": "What happens if the user closes the browser during upload? Seems like cleaner to have an uploading and mark as completed only once it\u0027s completed?",
+      "range": {
+        "startLine": 350,
+        "startChar": 61,
+        "endLine": 350,
+        "endChar": 0
+      },
+      "revId": "f34531a853dcdcbaff2452c1253c06a2fcb67aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
