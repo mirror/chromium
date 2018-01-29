@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "415defe6_5b5a0676",
+        "filename": "chrome/browser/browser_process_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-29T22:39:48Z",
+      "side": 1,
+      "message": "Outside of tests this call is unnecessary because GetMetricsServicesManager is called earlier. I added more comments.",
+      "parentUuid": "86034699_48aca2bf",
+      "revId": "63c040288b1f08ed6809f9974d61034b6b1220e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc830863_5b89545d",
         "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
         "patchSetId": 17
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4546820d_d35a1864",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-29T22:39:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc830863_5b89545d",
+      "revId": "63c040288b1f08ed6809f9974d61034b6b1220e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c5811f6_02651766",
         "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
         "patchSetId": 17
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-29T21:30:28Z",
       "side": 1,
       "message": "nit: swap the order of this with 288 if possible (so they unroll in opposite order)",
+      "revId": "63c040288b1f08ed6809f9974d61034b6b1220e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f7e3c6a_fee5f66e",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-29T22:39:48Z",
+      "side": 1,
+      "message": "I was trying to maintain the old ordering. Will see if the bots like it.",
+      "parentUuid": "3c5811f6_02651766",
       "revId": "63c040288b1f08ed6809f9974d61034b6b1220e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
