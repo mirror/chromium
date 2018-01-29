@@ -62,6 +62,7 @@ class CORE_EXPORT V8GCController {
   static bool HasPendingActivity(v8::Isolate*, ExecutionContext*);
 
   static v8::HeapProfiler::RetainerInfos GetRetainerInfos(v8::Isolate*);
+  static void BuildEmbedderGraph(v8::Isolate*, v8::EmbedderGraph*);
 };
 
 }  // namespace blink
