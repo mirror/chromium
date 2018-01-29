@@ -127,8 +127,7 @@ void ParallelDownloadJob::OnInputStreamReady(
 
   // Destroy the request if the sink is gone.
   if (!success) {
-    VLOG(kDownloadJobVerboseLevel)
-        << "Byte stream arrived after download file is released.";
+    LOG(ERROR) << "@@@ Byte stream arrived after download file is released.";
     worker->Cancel(false);
   }
 }
@@ -181,6 +180,7 @@ void ParallelDownloadJob::BuildParallelRequests() {
       // split it into N pieces and pass the last N-1 pieces to different
       // workers. Otherwise, just fork |slices_to_download.size()| number of
       // workers.
+      LOG(ERROR) << "@@@ FindSlicesForRemainingContent!!!";
       slices_to_download = FindSlicesForRemainingContent(
           first_slice_offset,
           content_length_ - first_slice_offset + initial_request_offset_,
@@ -192,9 +192,6 @@ void ParallelDownloadJob::BuildParallelRequests() {
   }
 
   DCHECK(!slices_to_download.empty());
-  DCHECK_EQ(slices_to_download.back().received_bytes,
-            DownloadSaveInfo::kLengthFullContent);
-
   ForkSubRequests(slices_to_download);
   RecordParallelDownloadRequestCount(
       static_cast<int>(slices_to_download.size()));
@@ -205,6 +202,8 @@ void ParallelDownloadJob::ForkSubRequests(
     const DownloadItem::ReceivedSlices& slices_to_download) {
   if (slices_to_download.size() < 2)
     return;
+
+  DebugSlicesInfo(slices_to_download);
 
   // If the initial request is working on the first hole, don't create parallel
   // request for this hole.
@@ -226,12 +225,16 @@ void ParallelDownloadJob::ForkSubRequests(
     }
 
     DCHECK_GE(it->offset, initial_request_offset_);
-    CreateRequest(it->offset, it->received_bytes);
+    // All parallel requests are half open, which sends request headers like
+    // "Range:50-".
+    // If server rejects a certain request, others should take over.
+    CreateRequest(it->offset, DownloadSaveInfo::kLengthFullContent);
   }
 }
 
 void ParallelDownloadJob::CreateRequest(int64_t offset, int64_t length) {
   DCHECK(download_item_);
+  DCHECK_EQ(DownloadSaveInfo::kLengthFullContent, length);
 
   std::unique_ptr<DownloadWorker> worker =
       std::make_unique<DownloadWorker>(this, offset, length);

@@ -2240,6 +2240,7 @@ void DownloadItemImpl::AutoResumeIfValid() {
 void DownloadItemImpl::ResumeInterruptedDownload(
     ResumptionRequestSource source) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  LOG(ERROR) << "@@@ ResumeInterruptedDownload!";
   // If we're not interrupted, ignore the request; our caller is drunk.
   if (state_ != INTERRUPTED_INTERNAL)
     return;
@@ -2301,6 +2302,12 @@ void DownloadItemImpl::ResumeInterruptedDownload(
   if (received_slices_.size() > 0) {
     std::vector<DownloadItem::ReceivedSlice> slices_to_download
         = FindSlicesToDownload(received_slices_);
+
+    LOG(ERROR) << "ResumeInterruptedDownload current slices!";
+    DebugSlicesInfo(received_slices_);
+    LOG(ERROR) << "ResumeInterruptedDownload slices to download!";
+    DebugSlicesInfo(slices_to_download);
+
     download_params->set_offset(slices_to_download[0].offset);
   } else {
     download_params->set_offset(GetReceivedBytes());
