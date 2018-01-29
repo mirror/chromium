@@ -46,6 +46,30 @@
       "revId": "b3af41459f744345e60223b08d16f486a66d60b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1857d02b_d8ddc3b5",
+        "filename": "content/browser/android/synchronous_compositor_host_bridge.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-29T20:32:24Z",
+      "side": 1,
+      "message": "\u003e This can be called by either thread. (it gets called on the UI thread from the HostDestroyedOnUIThread call)\n\nahh, ok, might be worth a comment here then",
+      "parentUuid": "0dab9238_3ca2c056",
+      "range": {
+        "startLine": 71,
+        "startChar": 7,
+        "endLine": 71,
+        "endChar": 32
+      },
+      "revId": "b3af41459f744345e60223b08d16f486a66d60b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
