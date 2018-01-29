@@ -38,7 +38,8 @@ Vector<CSSParserToken, 32> CSSTokenizer::TokenizeToEOF() {
     const CSSParserToken token = NextToken();
     switch (token.GetType()) {
       case kCommentToken:
-        continue;
+        tokens.push_back(kWhitespaceToken);
+        break;
       case kEOFToken:
         return tokens;
       default:
@@ -49,13 +50,11 @@ Vector<CSSParserToken, 32> CSSTokenizer::TokenizeToEOF() {
 }
 
 CSSParserToken CSSTokenizer::TokenizeSingle() {
-  while (true) {
-    prev_offset_ = input_.Offset();
-    const CSSParserToken token = NextToken();
-    if (token.GetType() == kCommentToken)
-      continue;
-    return token;
-  }
+  prev_offset_ = input_.Offset();
+  const CSSParserToken token = NextToken();
+  if (token.GetType() == kCommentToken)
+    return kWhitespaceToken;
+  return token;
 }
 
 CSSParserToken CSSTokenizer::TokenizeSingleWithComments() {
