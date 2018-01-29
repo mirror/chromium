@@ -1,0 +1,714 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07ebe288_c18fa989",
+        "filename": "chrome/browser/conflicts/installed_programs_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:28:06Z",
+      "side": 1,
+      "message": "nit: \"initialization completes\"",
+      "range": {
+        "startLine": 101,
+        "startChar": 17,
+        "endLine": 101,
+        "endChar": 43
+      },
+      "revId": "a703953b2a082777b6b88168afbd0ff44862d62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba7a2225_fb426bff",
+        "filename": "chrome/browser/conflicts/module_database_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:28:06Z",
+      "side": 1,
+      "message": "nit: please drop a comment explaining why Unretained is safe.",
+      "range": {
+        "startLine": 245,
+        "startChar": 23,
+        "endLine": 245,
+        "endChar": 39
+      },
+      "revId": "a703953b2a082777b6b88168afbd0ff44862d62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d02cc357_e50cdc74",
+        "filename": "chrome/browser/conflicts/module_database_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:28:06Z",
+      "side": 1,
+      "message": "it\u0027s not a big deal, but it seems backward for this to add some other thing as an observer. wdyt about passing |this| into the ThirdPartyMetricsRecorder so it can call AddObserver? same q below. feel free to ignore me.",
+      "revId": "a703953b2a082777b6b88168afbd0ff44862d62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6c2b93c_790156be",
+        "filename": "chrome/browser/conflicts/module_database_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:28:06Z",
+      "side": 1,
+      "message": "it seems that this class has gained some new responsibilities (metrics, installed programs). could you update this comment accordingly?",
+      "revId": "a703953b2a082777b6b88168afbd0ff44862d62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bb18b1b_751ef3c3",
+        "filename": "chrome/browser/conflicts/module_database_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:28:06Z",
+      "side": 1,
+      "message": "nit: swap this and idle_timer_ so that the bools are all together. it\u0027ll pack a bit better.",
+      "revId": "a703953b2a082777b6b88168afbd0ff44862d62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1709ea4f_7439fe37",
+        "filename": "chrome/browser/conflicts/module_database_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:28:06Z",
+      "side": 1,
+      "message": "nit: this and the member below are initialized in the opposite order. please either switch the order here or in OnInstalledProgramsInitialized so that the members are in the same order as initialization.",
+      "revId": "a703953b2a082777b6b88168afbd0ff44862d62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0d7c1b2_b4628027",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:28:06Z",
+      "side": 1,
+      "message": "remove; included in .h",
+      "revId": "a703953b2a082777b6b88168afbd0ff44862d62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b68e154_bcd61b27",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:28:06Z",
+      "side": 1,
+      "message": "i always forget -- can this definition be constexpr (while the declaration is just const)?",
+      "revId": "a703953b2a082777b6b88168afbd0ff44862d62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34c92937_6129460b",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:28:06Z",
+      "side": 1,
+      "message": "nit:\n    return std::make_unique\u003cProblematicProgramsUpdater\u003e(installed_programs);\nand remove instance, replacing line 91 with:\n  return std::unique_ptr\u003cProblematicProgramsUpdater\u003e();",
+      "revId": "a703953b2a082777b6b88168afbd0ff44862d62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72d55e8f_9357f55b",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:28:06Z",
+      "side": 1,
+      "message": "inline this below?",
+      "revId": "a703953b2a082777b6b88168afbd0ff44862d62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b425841_a8d74f5e",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:28:06Z",
+      "side": 1,
+      "message": "who -\u003e that",
+      "range": {
+        "startLine": 105,
+        "startChar": 20,
+        "endLine": 105,
+        "endChar": 23
+      },
+      "revId": "a703953b2a082777b6b88168afbd0ff44862d62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a50e2dfc_b3def704",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:28:06Z",
+      "side": 1,
+      "message": "#include \u003calgorithm\u003e",
+      "range": {
+        "startLine": 107,
+        "startChar": 6,
+        "endLine": 107,
+        "endChar": 20
+      },
+      "revId": "a703953b2a082777b6b88168afbd0ff44862d62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc91baa8_636e6f88",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:28:06Z",
+      "side": 1,
+      "message": "erase(end, end) is invalid, so this will be crashy if no items are removed. you need to capture the result of remove_if and only erase if it isn\u0027t end().",
+      "revId": "a703953b2a082777b6b88168afbd0ff44862d62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf5bbf91_ab960858",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:28:06Z",
+      "side": 1,
+      "message": "what prevents there from being duplicate entries in |programs_|?",
+      "revId": "a703953b2a082777b6b88168afbd0ff44862d62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28ad2228_3bffdff4",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:28:06Z",
+      "side": 1,
+      "message": "replace this loop with:\n#include \u003calgorithm\u003e\n#include \u003citerator\u003e\n    std::move(list.begin(), list.end(),\n              std::back_inserter(update.Get()-\u003eGetList());",
+      "revId": "a703953b2a082777b6b88168afbd0ff44862d62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbe36f7d_cba6619d",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:28:06Z",
+      "side": 1,
+      "message": "nit: nix \"user\u0027s\" -- \"on the machine.\"",
+      "range": {
+        "startLine": 20,
+        "startChar": 69,
+        "endLine": 20,
+        "endChar": 76
+      },
+      "revId": "a703953b2a082777b6b88168afbd0ff44862d62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d54d0b48_f3603ae1",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:28:06Z",
+      "side": 1,
+      "message": "cause",
+      "range": {
+        "startLine": 21,
+        "startChar": 27,
+        "endLine": 21,
+        "endChar": 33
+      },
+      "revId": "a703953b2a082777b6b88168afbd0ff44862d62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53ea5b46_2c1bdc99",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:28:06Z",
+      "side": 1,
+      "message": "DLLs",
+      "range": {
+        "startLine": 21,
+        "startChar": 43,
+        "endLine": 21,
+        "endChar": 46
+      },
+      "revId": "a703953b2a082777b6b88168afbd0ff44862d62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f650306_faa5b576",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:28:06Z",
+      "side": 1,
+      "message": "the",
+      "range": {
+        "startLine": 23,
+        "startChar": 11,
+        "endLine": 23,
+        "endChar": 15
+      },
+      "revId": "a703953b2a082777b6b88168afbd0ff44862d62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "015843f9_320f4d90",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:28:06Z",
+      "side": 1,
+      "message": "?\"is expensive\"?",
+      "range": {
+        "startLine": 23,
+        "startChar": 21,
+        "endLine": 23,
+        "endChar": 40
+      },
+      "revId": "a703953b2a082777b6b88168afbd0ff44862d62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3c7852f_b47ee266",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:28:06Z",
+      "side": 1,
+      "message": "nix",
+      "range": {
+        "startLine": 28,
+        "startChar": 43,
+        "endLine": 28,
+        "endChar": 49
+      },
+      "revId": "a703953b2a082777b6b88168afbd0ff44862d62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f613f344_f43cb582",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:28:06Z",
+      "side": 1,
+      "message": "are",
+      "range": {
+        "startLine": 28,
+        "startChar": 9,
+        "endLine": 28,
+        "endChar": 11
+      },
+      "revId": "a703953b2a082777b6b88168afbd0ff44862d62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0edbcc53_973f0512",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:28:06Z",
+      "side": 1,
+      "message": "nit: please document the lifetime requirements on |installed_programs|.",
+      "revId": "a703953b2a082777b6b88168afbd0ff44862d62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3260ce4b_3c169535",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:28:06Z",
+      "side": 1,
+      "message": "happen",
+      "range": {
+        "startLine": 39,
+        "startChar": 53,
+        "endLine": 39,
+        "endChar": 61
+      },
+      "revId": "a703953b2a082777b6b88168afbd0ff44862d62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb7b4a6a_99657828",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:28:06Z",
+      "side": 1,
+      "message": "a",
+      "range": {
+        "startLine": 39,
+        "startChar": 64,
+        "endLine": 39,
+        "endChar": 67
+      },
+      "revId": "a703953b2a082777b6b88168afbd0ff44862d62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5c5a388_d70aac09",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:28:06Z",
+      "side": 1,
+      "message": "nit: remove \"by the user\" -- maybe it was uninstalled by an admin.",
+      "range": {
+        "startLine": 40,
+        "startChar": 17,
+        "endLine": 40,
+        "endChar": 28
+      },
+      "revId": "a703953b2a082777b6b88168afbd0ff44862d62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90469bad_92ffe715",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:28:06Z",
+      "side": 1,
+      "message": "uber-nit: comma after the period; for example: \"(i.e., foobarbaz)\"",
+      "range": {
+        "startLine": 42,
+        "startChar": 52,
+        "endLine": 42,
+        "endChar": 53
+      },
+      "revId": "a703953b2a082777b6b88168afbd0ff44862d62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bf64eaf_f3e3a639",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:28:06Z",
+      "side": 1,
+      "message": "nit: \"...any problematic programs are installed..\"",
+      "range": {
+        "startLine": 41,
+        "startChar": 33,
+        "endLine": 42,
+        "endChar": 14
+      },
+      "revId": "a703953b2a082777b6b88168afbd0ff44862d62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9918e80_d68b7040",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:28:06Z",
+      "side": 1,
+      "message": "nit: \"after trimming completes\"",
+      "range": {
+        "startLine": 42,
+        "startChar": 15,
+        "endLine": 42,
+        "endChar": 46
+      },
+      "revId": "a703953b2a082777b6b88168afbd0ff44862d62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d0097a5_24dde307",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:28:06Z",
+      "side": 1,
+      "message": "nit: \"if the cache contains at least one problematic program.\" or \"the cache is not empty.\" then again, maybe just change this method to IsEmpty() and invert its polarity. it\u0027s your call.",
+      "range": {
+        "startLine": 46,
+        "startChar": 21,
+        "endLine": 46,
+        "endChar": 78
+      },
+      "revId": "a703953b2a082777b6b88168afbd0ff44862d62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8083245_52eac1f3",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:28:06Z",
+      "side": 1,
+      "message": "\"names\"",
+      "range": {
+        "startLine": 49,
+        "startChar": 17,
+        "endLine": 49,
+        "endChar": 21
+      },
+      "revId": "a703953b2a082777b6b88168afbd0ff44862d62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f73ae77_05537d41",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:28:06Z",
+      "side": 1,
+      "message": "base/values.h says that ListValue exists \"only as a compatibility shim that we\u0027re in the process of removing\".  can you use the new style here and in the .cc instead of the old?",
+      "range": {
+        "startLine": 50,
+        "startChar": 15,
+        "endLine": 50,
+        "endChar": 24
+      },
+      "revId": "a703953b2a082777b6b88168afbd0ff44862d62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a6bead0_3a343c6a",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:28:06Z",
+      "side": 1,
+      "message": "nit: how about naming this after the state it describes rather than the operation to perform in that state? for example: before_first_idle_. also, please leave a comment here like:\n\n  // Becomes false on the first call to OnModuleDatabaseIdle.",
+      "range": {
+        "startLine": 66,
+        "startChar": 7,
+        "endLine": 66,
+        "endChar": 31
+      },
+      "revId": "a703953b2a082777b6b88168afbd0ff44862d62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba48efea_006004d0",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:28:06Z",
+      "side": 1,
+      "message": "8",
+      "range": {
+        "startLine": 1,
+        "startChar": 16,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "a703953b2a082777b6b88168afbd0ff44862d62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
