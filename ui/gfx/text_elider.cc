@@ -472,20 +472,6 @@ void RectangleString::NewLine(bool output) {
 // can be broken into smaller methods sharing this state.
 class RectangleText {
  public:
-  static int Elide(const base::string16& input,
-                   const FontList& font_list,
-                   float available_pixel_width,
-                   int available_pixel_height,
-                   WordWrapBehavior wrap_behavior,
-                   Typesetter typesetter,
-                   std::vector<base::string16>* lines) {
-    RectangleText rect(font_list, available_pixel_width, available_pixel_height,
-                       wrap_behavior, typesetter, lines);
-    rect.Init();
-    rect.AddString(input);
-    return rect.Finalize();
-  }
-
   RectangleText(const FontList& font_list,
                 float available_pixel_width,
                 int available_pixel_height,
@@ -770,9 +756,11 @@ int ElideRectangleText(const base::string16& input,
                        int available_pixel_height,
                        WordWrapBehavior wrap_behavior,
                        std::vector<base::string16>* lines) {
-  return RectangleText::Elide(input, font_list, available_pixel_width,
-                              available_pixel_height, wrap_behavior,
-                              Typesetter::HARFBUZZ, lines);
+  RectangleText rect(font_list, available_pixel_width, available_pixel_height,
+                     wrap_behavior, Typesetter::HARFBUZZ, lines);
+  rect.Init();
+  rect.AddString(input);
+  return rect.Finalize();
 }
 
 #if defined(OS_MACOSX)
@@ -782,9 +770,11 @@ int ElideRectangleTextForNativeUi(const base::string16& input,
                                   int available_pixel_height,
                                   WordWrapBehavior wrap_behavior,
                                   std::vector<base::string16>* lines) {
-  return RectangleText::Elide(input, font_list, available_pixel_width,
-                              available_pixel_height, wrap_behavior,
-                              Typesetter::NATIVE, lines);
+  RectangleText rect(font_list, available_pixel_width, available_pixel_height,
+                     wrap_behavior, Typesetter::NATIVE, lines);
+  rect.Init();
+  rect.AddString(input);
+  return rect.Finalize();
 }
 #endif
 
