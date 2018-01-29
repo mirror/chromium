@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44dfdfad_ed8b7870",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/fetch-canvas-tainting-video.https-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-29T08:18:52Z",
+      "side": 1,
+      "message": "Note that this test case is a failure because it\u0027s \"more secure\": the expectation is to not taint but we taint. It\u0027s because the src URL is cross-origin, and the service worker ends up returning a response from the original origin. I\u0027m not sure I agree with the expectation (which came from the taint tests for image) and think it\u0027s not problematic to taint here.",
+      "revId": "54518002979d1217a4e09690b8b1c4f743be84c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8f951b2_9cd2b262",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/fetch-canvas-tainting-video.https-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-29T08:18:52Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "54518002979d1217a4e09690b8b1c4f743be84c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
