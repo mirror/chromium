@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "e54b3224_85dc8a9f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 34
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-29T00:43:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c3c7ae7_8237ddcb",
+      "range": {
+        "startLine": 10,
+        "startChar": 55,
+        "endLine": 10,
+        "endChar": 77
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d395a9c0_380bb977",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 34
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-29T00:43:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "194a2bd3_818ef328",
+      "range": {
+        "startLine": 10,
+        "startChar": 40,
+        "endLine": 10,
+        "endChar": 53
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c981fe7_e4c79f8d",
         "filename": "chrome/installer/setup/install_worker.cc",
         "patchSetId": 34
@@ -68,6 +116,30 @@
       "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eefeec00_b84b7525",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-29T00:43:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c981fe7_e4c79f8d",
+      "range": {
+        "startLine": 173,
+        "startChar": 43,
+        "endLine": 173,
+        "endChar": 47
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "9ccb7e95_edbab433",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-29T00:43:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0592c8b_6f24a054",
+      "range": {
+        "startLine": 181,
+        "startChar": 31,
+        "endLine": 181,
+        "endChar": 67
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ed2ec96_998a87fa",
         "filename": "chrome/installer/setup/install_worker.cc",
         "patchSetId": 34
@@ -114,6 +210,30 @@
       "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc312983_d5b70b05",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-29T00:43:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ed2ec96_998a87fa",
+      "range": {
+        "startLine": 195,
+        "startChar": 0,
+        "endLine": 196,
+        "endChar": 2
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "5a24e933_86830228",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-29T00:43:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88b4b945_26e845b5",
+      "range": {
+        "startLine": 204,
+        "startChar": 2,
+        "endLine": 204,
+        "endChar": 42
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a01d1f7b_286b1f0e",
         "filename": "chrome/installer/setup/install_worker.cc",
         "patchSetId": 34
@@ -160,6 +304,30 @@
       "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a5dcd9e_a5c5314d",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-29T00:43:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a01d1f7b_286b1f0e",
+      "range": {
+        "startLine": 210,
+        "startChar": 4,
+        "endLine": 211,
+        "endChar": 43
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "2545dc75_9bbcee33",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-29T00:43:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6dfac6d4_2b83a510",
+      "range": {
+        "startLine": 217,
+        "startChar": 4,
+        "endLine": 217,
+        "endChar": 59
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "389c3533_375766c6",
         "filename": "chrome/installer/setup/install_worker.cc",
         "patchSetId": 34
@@ -206,6 +398,30 @@
       "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5814767_fb95990f",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-29T00:43:52Z",
+      "side": 1,
+      "message": "Done. Thanks for pointing to this.",
+      "parentUuid": "389c3533_375766c6",
+      "range": {
+        "startLine": 220,
+        "startChar": 4,
+        "endLine": 221,
+        "endChar": 58
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "0c459446_0c178acd",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-29T00:43:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edf6aaff_4b9b2dad",
+      "range": {
+        "startLine": 816,
+        "startChar": 2,
+        "endLine": 818,
+        "endChar": 0
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46615f1a_94422d41",
         "filename": "chrome/installer/setup/setup_util.cc",
         "patchSetId": 34
@@ -252,6 +492,30 @@
       "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e540599_730e7086",
+        "filename": "chrome/installer/setup/setup_util.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-29T00:43:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46615f1a_94422d41",
+      "range": {
+        "startLine": 862,
+        "startChar": 27,
+        "endLine": 862,
+        "endChar": 35
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "6f7a5661_f58478a3",
+        "filename": "chrome/installer/setup/setup_util.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-29T00:43:52Z",
+      "side": 1,
+      "message": "I doesn\u0027t compile with path.data(). \"error: cannot initialize a parameter of type \u0027LPOLESTR\u0027 (aka \u0027wchar_t *\u0027) with an rvalue of type \u0027const wchar_t *\u0027\"",
+      "parentUuid": "a81e2901_bb8ba402",
+      "range": {
+        "startLine": 866,
+        "startChar": 66,
+        "endLine": 866,
+        "endChar": 74
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cedb5342_e144bd30",
         "filename": "chrome/installer/setup/setup_util.cc",
         "patchSetId": 34
@@ -289,6 +577,30 @@
       "writtenOn": "2018-01-27T00:07:27Z",
       "side": 1,
       "message": "Use path.capacity() for robustness.",
+      "range": {
+        "startLine": 867,
+        "startChar": 24,
+        "endLine": 867,
+        "endChar": 39
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6644dabd_ea0f38d7",
+        "filename": "chrome/installer/setup/setup_util.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 867,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-29T00:43:52Z",
+      "side": 1,
+      "message": "StingFromGUID2 takes \"int\" as its 3rd paramater, while path.capacity() returns \"size_t\". We need to do static_cast\u003cint\u003e to stop win-msvc-rel trybot from complaining. \n\nI really don\u0027t like to put a static_cast here though.",
+      "parentUuid": "cedb5342_e144bd30",
       "range": {
         "startLine": 867,
         "startChar": 24,
@@ -324,6 +636,30 @@
     },
     {
       "key": {
+        "uuid": "ff9f484b_40cde7f5",
+        "filename": "chrome/installer/setup/setup_util.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-29T00:43:52Z",
+      "side": 1,
+      "message": "No. Local test shows it won\u0027t work without this. If we do \"reg query ...\", we will get error message like \"ERROR: The system was unable to find the specified registry key or value.\"",
+      "parentUuid": "9901bef6_ad7e8c37",
+      "range": {
+        "startLine": 870,
+        "startChar": 2,
+        "endLine": 870,
+        "endChar": 65
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34eb87dc_ea74b7dd",
         "filename": "chrome_server/chrome_server.cc",
         "patchSetId": 34
@@ -335,6 +671,30 @@
       "writtenOn": "2018-01-27T00:07:27Z",
       "side": 1,
       "message": "Use the base logging equivalents here and for the rest of the change.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 22
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7ecf255_27faaa8d",
+        "filename": "chrome_server/chrome_server.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-29T00:43:52Z",
+      "side": 1,
+      "message": "Hmm, I changed it from base logging to AtlTrace as suggested by grt@.\n\nQuote his earlier comment: \"the old delegate execute handler didn\u0027t use base/logging in any sense. you probably want to use AtlTrace here.\"\n\nHowever, I guess when Greg gave this comment, he might think we are going with ATL rather than WRL. I will double with him.",
+      "parentUuid": "34eb87dc_ea74b7dd",
       "range": {
         "startLine": 7,
         "startChar": 0,
@@ -370,6 +730,30 @@
     },
     {
       "key": {
+        "uuid": "b075843d_b779416d",
+        "filename": "chrome_server/chrome_server.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-29T00:43:52Z",
+      "side": 1,
+      "message": "Done. Removed.",
+      "parentUuid": "338b9cf8_dea60283",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 11
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cad714a5_4869290d",
         "filename": "chrome_server/chrome_server.cc",
         "patchSetId": 34
@@ -390,6 +774,30 @@
       "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d997c6bd_208b7d07",
+        "filename": "chrome_server/chrome_server.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-29T00:43:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cad714a5_4869290d",
+      "range": {
+        "startLine": 30,
+        "startChar": 29,
+        "endLine": 30,
+        "endChar": 33
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -416,6 +824,30 @@
     },
     {
       "key": {
+        "uuid": "179aa759_3a85754a",
+        "filename": "chrome_server/chrome_server.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-29T00:43:52Z",
+      "side": 1,
+      "message": "Done. Removed.",
+      "parentUuid": "ce235093_7dffc9e0",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 4
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5ea7053_403d2ec9",
         "filename": "chrome_server/chrome_server.rc",
         "patchSetId": 34
@@ -427,6 +859,30 @@
       "writtenOn": "2018-01-27T00:07:27Z",
       "side": 1,
       "message": "Is this file required? This executable doesn\u0027t really contain any strings or dialogs.\nMaybe we should include an icon?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 3
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88d606f1_7a04a964",
+        "filename": "chrome_server/chrome_server.rc",
+        "patchSetId": 34
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-29T00:43:52Z",
+      "side": 1,
+      "message": "I like the idea of using an icon. Do we need approval from the UX team and/or some other teams?",
+      "parentUuid": "e5ea7053_403d2ec9",
       "range": {
         "startLine": 1,
         "startChar": 0,
@@ -462,6 +918,30 @@
     },
     {
       "key": {
+        "uuid": "3bbbea6a_96747dd5",
+        "filename": "chrome_server/notification_activator.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-29T00:43:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f386b6ad_9a75b272",
+      "range": {
+        "startLine": 12,
+        "startChar": 9,
+        "endLine": 12,
+        "endChar": 20
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21ef697b_9ea6c169",
         "filename": "chrome_server/notification_activator.h",
         "patchSetId": 34
@@ -485,6 +965,30 @@
     },
     {
       "key": {
+        "uuid": "3fd990c0_85159e0a",
+        "filename": "chrome_server/notification_activator.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-29T00:43:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21ef697b_9ea6c169",
+      "range": {
+        "startLine": 15,
+        "startChar": 13,
+        "endLine": 15,
+        "endChar": 14
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab53fae5_c97c87a8",
         "filename": "chrome_server/notification_activator.h",
         "patchSetId": 34
@@ -505,6 +1009,30 @@
       "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c222dde_7f1f2a5e",
+        "filename": "chrome_server/notification_activator.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-29T00:43:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab53fae5_c97c87a8",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 32
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -554,6 +1082,54 @@
     },
     {
       "key": {
+        "uuid": "ded17d94_c2519345",
+        "filename": "chrome_server/notification_activator.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-29T00:43:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8000d130_50ce07fc",
+      "range": {
+        "startLine": 41,
+        "startChar": 15,
+        "endLine": 41,
+        "endChar": 25
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e7823ee_262c530c",
+        "filename": "chrome_server/notification_activator.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-29T00:43:52Z",
+      "side": 1,
+      "message": "Done. Created its own h+cc file pair.",
+      "parentUuid": "b956377a_549d9c47",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 27
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41d365a2_dc521c07",
         "filename": "chrome_server/notification_activator.h",
         "patchSetId": 34
@@ -577,6 +1153,30 @@
     },
     {
       "key": {
+        "uuid": "b8cf39d2_956137c7",
+        "filename": "chrome_server/notification_activator.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-29T00:43:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41d365a2_dc521c07",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 67
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33d2d014_221085f6",
         "filename": "chrome_server/notification_activator.h",
         "patchSetId": 34
@@ -588,6 +1188,30 @@
       "writtenOn": "2018-01-27T00:07:27Z",
       "side": 1,
       "message": "Since this array only contains 1 item, does it need to be an array? Subsequent users can be \u0026cookie_ with a size of 1 pass to the receiving function.",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 26
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e75a895f_dcdb4acd",
+        "filename": "chrome_server/notification_activator.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-29T00:43:52Z",
+      "side": 1,
+      "message": "Hmm, it was implemented in the way you mentioned (i.e., no arrary). Then grt@ suggested to make it an array. \n\nQuote his earlier comment here: \"make this an array of fixed-size 1, then put a static_assert in the .cc file at the point where the IID array is created to ensure that the two arrays are the same size. this will help protect from someone in the future adding another class ID but forgetting to make the appropriate accommodation here.\"",
+      "parentUuid": "33d2d014_221085f6",
       "range": {
         "startLine": 66,
         "startChar": 2,
