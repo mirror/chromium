@@ -1461,6 +1461,17 @@ void RenderWidgetHostViewAndroid::OnFrameMetadataUpdated(
   gesture_provider_.SetDoubleTapSupportForPageEnabled(!is_mobile_optimized);
 
   float dip_scale = view_.GetDipScale();
+  gfx::SizeF root_layer_size_css = frame_metadata.root_layer_size;
+  gfx::SizeF scrollable_viewport_size_css =
+      frame_metadata.scrollable_viewport_size;
+  gfx::Vector2dF root_scroll_offset_css = frame_metadata.root_scroll_offset;
+  if (IsUseZoomForDSFEnabled()) {
+    float pix_to_css = 1 / dip_scale;
+    root_layer_size_css.Scale(pix_to_css);
+    scrollable_viewport_size_css.Scale(pix_to_css);
+    root_scroll_offset_css.Scale(pix_to_css);
+  }
+
   float to_pix = IsUseZoomForDSFEnabled() ? 1.f : dip_scale;
   float top_controls_pix = frame_metadata.top_controls_height * to_pix;
   // |top_content_offset| is its CSS pixels * DSF if --use-zoom-for-dsf is
@@ -1494,7 +1505,7 @@ void RenderWidgetHostViewAndroid::OnFrameMetadataUpdated(
         frame_metadata.page_scale_factor);
 
     // Set parameters for adaptive handle orientation.
-    gfx::SizeF viewport_size(frame_metadata.scrollable_viewport_size);
+    gfx::SizeF viewport_size(scrollable_viewport_size_css);
     viewport_size.Scale(frame_metadata.page_scale_factor);
     gfx::RectF viewport_rect(0.0f, frame_metadata.top_controls_height *
                                        frame_metadata.top_controls_shown_ratio,
@@ -1509,8 +1520,7 @@ void RenderWidgetHostViewAndroid::OnFrameMetadataUpdated(
   float top_content_offset_css = IsUseZoomForDSFEnabled()
                                      ? top_content_offset / dip_scale
                                      : top_content_offset;
-  view_.UpdateFrameInfo(
-      {frame_metadata.scrollable_viewport_size, top_content_offset});
+  view_.UpdateFrameInfo({scrollable_viewport_size_css, top_content_offset});
 
   bool top_changed = !FloatEquals(top_shown_pix, prev_top_shown_pix_);
   if (top_changed) {
@@ -1535,11 +1545,11 @@ void RenderWidgetHostViewAndroid::OnFrameMetadataUpdated(
 
   // All offsets and sizes except |top_shown_pix| are in CSS pixels.
   content_view_core_->UpdateFrameInfo(
-      frame_metadata.root_scroll_offset, frame_metadata.page_scale_factor,
+      root_scroll_offset_css, frame_metadata.page_scale_factor,
       frame_metadata.min_page_scale_factor,
-      frame_metadata.max_page_scale_factor, frame_metadata.root_layer_size,
-      frame_metadata.scrollable_viewport_size, top_content_offset_css,
-      top_shown_pix, top_changed, is_mobile_optimized);
+      frame_metadata.max_page_scale_factor, root_layer_size_css,
+      scrollable_viewport_size_css, top_content_offset_css, top_shown_pix,
+      top_changed, is_mobile_optimized);
 
   EvictFrameIfNecessary();
 }
