@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8f488cbd_d1ad55b5",
+        "filename": "services/device/geolocation/geolocation_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2018-01-29T01:52:37Z",
+      "side": 1,
+      "message": "This test is from the geolocation_browsertest which is excluded in OS_ANDROID. See https://cs.chromium.org/chromium/src/chrome/test/BUILD.gn?rcl\u003d59b499eff54033b2f91d828bdf2ed66b7f652eb6\u0026l\u003d424\n\nOn Android, geolocation use the android system location provider instead of the NetworkLocationProvider we are testing here.",
+      "parentUuid": "eb92714d_5c21d3c8",
+      "range": {
+        "startLine": 87,
+        "startChar": 36,
+        "endLine": 87,
+        "endChar": 46
+      },
+      "revId": "383c5134f79fa5ed50a4e1324a0573e3d38c748d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a18a2fc2_c3f35875",
         "filename": "services/device/geolocation/geolocation_service_unittest.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-26T11:53:29Z",
       "side": 1,
       "message": "what injects this fake API key?",
+      "range": {
+        "startLine": 106,
+        "startChar": 21,
+        "endLine": 106,
+        "endChar": 38
+      },
+      "revId": "383c5134f79fa5ed50a4e1324a0573e3d38c748d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bbf5a08_f93e5a62",
+        "filename": "services/device/geolocation/geolocation_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2018-01-29T01:52:37Z",
+      "side": 1,
+      "message": "It is injected at line25 of device_service_test_base.cc. The browsertest uses the real api-key which is provided by chrome. Now it is in a service-unittest, so I make the device_service_test_base provide a fake API key.",
+      "parentUuid": "a18a2fc2_c3f35875",
       "range": {
         "startLine": 106,
         "startChar": 21,
