@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d5d6cdb_f473d11f",
+        "filename": "extensions/common/extension_features.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-29T17:12:17Z",
+      "side": 1,
+      "message": "Can we add a TODO to remove this feature in M\u003csomething\u003e, after it\u0027s been stable for awhile?",
+      "revId": "58586da464422c7c0521e709768dc6672ee88772",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
