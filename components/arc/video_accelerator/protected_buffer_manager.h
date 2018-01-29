@@ -16,84 +16,47 @@
 
 namespace arc {
 
-// A ProtectedBufferHandle is returned to the owning client that requested
-// the underlying ProtectedBuffer to be allocated.
-//
-// A ProtectedBuffer is a buffer that can be referred to via a handle (a dummy
-// handle), which does not provide access to the actual contents of the buffer.
-//
-// The client should release this handle once the buffer is no longer needed.
-// Releasing triggers destruction of the ProtectedBuffer instance stored in
-// the ProtectedBufferManager, via the destruction callback passed to the
-// ProtectedBufferHandle's constructor.
-class ProtectedBufferHandle {
- public:
-  // ProtectedBufferHandle takes ownership of the passed |shm_handle|.
-  ProtectedBufferHandle(base::OnceClosure destruction_cb,
-                        const base::SharedMemoryHandle& shm_handle);
-
-  // ProtectedBufferHandle takes ownership of the passed |native_pixmap_handle|.
-  ProtectedBufferHandle(base::OnceClosure destruction_cb,
-                        const gfx::NativePixmapHandle& native_pixmap_handle);
-
-  // Closes the underlying handle.
-  ~ProtectedBufferHandle();
-
-  // Return a non-owned SharedMemoryHandle or NativePixmapHandle for this
-  // ProtectedBufferHandle, or an invalid/null handle if not applicable for the
-  // underlying type.
-  base::SharedMemoryHandle shm_handle() const;
-  gfx::NativePixmapHandle native_pixmap_handle() const;
-
- private:
-  // The underlying, owning handles to the protected buffer.
-  // Only one of the handles is valid for each instance of this class.
-  // Closed on destruction of this ProtectedBufferHandle.
-  base::SharedMemoryHandle shm_handle_;
-  gfx::NativePixmapHandle native_pixmap_handle_;
-
-  base::OnceClosure destruction_cb_;
-};
-
+// ProtectedBufferManager is executed in the GPU process.
+// This is created only using Create() by ProtectedBufferAllocator.
+// The active ProtectedBufferManager must be one at the same time.
 class ProtectedBufferManager {
  public:
   ProtectedBufferManager();
   ~ProtectedBufferManager();
 
-  // Allocate a ProtectedSharedMemory buffer of |size| bytes, to be referred to
-  // via |dummy_fd| as the dummy handle, returning a ProtectedBufferHandle to
-  // it.
-  // Destroying the ProtectedBufferHandle will result in permanently
-  // disassociating the |dummy_fd| with the underlying ProtectedBuffer, but may
-  // not free the underlying protected memory, which will remain valid as long
-  // as any SharedMemoryHandles to it are still in use.
+  // Called only by ProtectedBufferAllocator.
+  // This is successfully done if and only if there is no
+  // ProtcetdBufferManager being used by ProtectedBufferAllocator.
   // Return nullptr on failure.
-  std::unique_ptr<ProtectedBufferHandle> AllocateProtectedSharedMemory(
-      base::ScopedFD dummy_fd,
-      size_t size);
+  static std::shared_ptr<ProtectedtBufferManager> Create();
+
+  // Called from GpuArcVideoDecodeAccelerator.
+  // Return active ProtectedBuffermanager.
+  static ProtectedtBufferManager* const GetInstance();
+
+  // Allocate a ProtectedSharedMemory buffer of |size| bytes, to be referred to
+  // via |dummy_fd| as the dummy handle.
+  // Return whether or not allocating is successfully done or not.
+  bool AllocateProtectedSharedMemory(base::ScopedFD dummy_fd, size_t size);
 
   // Allocate a ProtectedNativePixmap of |format| and |size|, to be referred to
-  // via |dummy_fd| as the dummy handle, returning a ProtectedBufferHandle to
-  // it.
-  // Destroying the ProtectedBufferHandle will result in permanently
-  // disassociating the |dummy_fd| with the underlying ProtectedBuffer, but may
-  // not free the underlying protected memory, which will remain valid as long
-  // as any NativePixmapHandles to it are still in use.
-  // Return nullptr on failure.
-  std::unique_ptr<ProtectedBufferHandle> AllocateProtectedNativePixmap(
-      base::ScopedFD dummy_fd,
-      gfx::BufferFormat format,
-      const gfx::Size& size);
+  // via |dummy_fd| as the dummy handle.
+  // Return whether or not allocating is successfully done or not.
+  bool AllocateProtectedNativePixmap(base::ScopedFD dummy_fd,
+                                     gfx::BufferFormat format,
+                                     const gfx::Size& size);
+
+  // Destroy ProtectedBufferHandle or NativePixmap associated with |dummy_fd|.
+  // Return false if if there is no such a protected buffer.
+  bool DeallocateProtectedBuffer(base::ScopedFD dummy_fd);
 
   // Return a duplicated SharedMemoryHandle associated with the |dummy_fd|,
   // if one exists, or an invalid handle otherwise.
-  // The client is responsible for closing the handle after use.
   base::SharedMemoryHandle GetProtectedSharedMemoryHandleFor(
       base::ScopedFD dummy_fd);
 
   // Return a duplicated NativePixmapHandle associated with the |dummy_fd|,
   // if one exists, or an empty handle otherwise.
-  // The client is responsible for closing the handle after use.
   gfx::NativePixmapHandle GetProtectedNativePixmapHandleFor(
       base::ScopedFD dummy_fd);
 
@@ -122,18 +85,22 @@ class ProtectedBufferManager {
   scoped_refptr<gfx::NativePixmap> ImportDummyFd(base::ScopedFD dummy_fd,
                                                  uint32_t* id) const;
 
-  // Removes an entry for given |id| from buffer_map_, to be called when the
-  // last reference to the buffer is dropped.
-  void RemoveEntry(uint32_t id);
+  // Deallocate all the protected buffers managed by ProtectedBufferManager.
+  // This is called from this destructor.
+  // Destroying the buffers will result in permanently disassociating
+  // the |dummy_fd| with the underlying ProtectedBuffer, but may not free
+  // the underlying protected memory, which will remain valid as long
+  // as any buffers to it are still in use.
+  bool DeallocateAllProtectedBuffers();
+
+  static std::weak_ptr<ProtectedBufferManager> protected_buffer_manager_;
+  static std::mutex pbm_mutex_;
 
   // A map of unique ids to the ProtectedBuffers associated with them.
   using ProtectedBufferMap =
       std::map<uint32_t, std::unique_ptr<ProtectedBuffer>>;
   ProtectedBufferMap buffer_map_;
   base::Lock buffer_map_lock_;
-
-  base::WeakPtr<ProtectedBufferManager> weak_this_;
-  base::WeakPtrFactory<ProtectedBufferManager> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ProtectedBufferManager);
 };
