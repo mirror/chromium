@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d88d791_1f4f5c21",
+        "filename": "DEPS",
+        "patchSetId": 8
+      },
+      "lineNbr": 1348,
+      "author": {
+        "id": 1115956
+      },
+      "writtenOn": "2018-01-29T08:30:41Z",
+      "side": 1,
+      "message": "Could this hash be moved into the update_sdk.py script, similar to the update clang script?\n\nV8 auto-rolls src/build as a subrepro into its own DEPS. But other changes made in chromium are not seen by the auto-roller. If this hash was somewhere inside src/build, rolling deps to subprojects would work smoothly.\n\nOtherwise manual intervention is needed from time to time as in: https://chromium-review.googlesource.com/c/v8/v8/+/890367",
+      "range": {
+        "startLine": 1348,
+        "startChar": 6,
+        "endLine": 1348,
+        "endChar": 49
+      },
+      "revId": "3d0476a897f85ba83f7fa280f625160518c64487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
