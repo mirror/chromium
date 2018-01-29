@@ -370,9 +370,9 @@ NotificationButtonMD::CreateInkDropHighlight() const {
 // NotificationInputTextfieldMD ////////////////////////////////////////////////
 
 NotificationInputTextfieldMD::NotificationInputTextfieldMD(
-    NotificationInputDelegate* delegate)
-    : delegate_(delegate), index_(0) {
-  set_controller(this);
+    views::TextfieldController* controller)
+    : controller_(controller), index_(0) {
+  set_controller(controller_);
   SetTextColor(kInputTextColor);
   SetBackgroundColor(SK_ColorTRANSPARENT);
   set_placeholder_text_color(kInputPlaceholderColor);
@@ -380,41 +380,6 @@ NotificationInputTextfieldMD::NotificationInputTextfieldMD(
 }
 
 NotificationInputTextfieldMD::~NotificationInputTextfieldMD() = default;
-
-void NotificationInputTextfieldMD::CheckUpdateImage() {
-  if (is_empty_ && !text().empty()) {
-    is_empty_ = false;
-    delegate_->SetNormalImageToReplyButton();
-  } else if (!is_empty_ && text().empty()) {
-    is_empty_ = true;
-    delegate_->SetPlaceholderImageToReplyButton();
-  }
-}
-
-bool NotificationInputTextfieldMD::HandleKeyEvent(views::Textfield* sender,
-                                                  const ui::KeyEvent& event) {
-  CheckUpdateImage();
-  if (event.type() == ui::ET_KEY_PRESSED &&
-      event.key_code() == ui::VKEY_RETURN) {
-    delegate_->OnNotificationInputSubmit(index_, text());
-    return true;
-  }
-  return event.type() == ui::ET_KEY_RELEASED;
-}
-
-bool NotificationInputTextfieldMD::HandleMouseEvent(
-    views::Textfield* sender,
-    const ui::MouseEvent& event) {
-  CheckUpdateImage();
-  return event.type() == ui::ET_MOUSE_RELEASED;
-}
-
-bool NotificationInputTextfieldMD::HandleGestureEvent(
-    views::Textfield* sender,
-    const ui::GestureEvent& event) {
-  CheckUpdateImage();
-  return false;
-}
 
 void NotificationInputTextfieldMD::set_placeholder(
     const base::string16& placeholder) {
@@ -456,7 +421,7 @@ void NotificationInputReplyButtonMD::SetPlaceholderImage() {
 NotificationInputContainerMD::NotificationInputContainerMD(
     NotificationInputDelegate* delegate)
     : delegate_(delegate),
-      textfield_(new NotificationInputTextfieldMD(delegate)),
+      textfield_(new NotificationInputTextfieldMD(this)),
       button_(new NotificationInputReplyButtonMD(this)) {
   auto* layout = SetLayoutManager(std::make_unique<views::BoxLayout>(
       views::BoxLayout::kHorizontal, gfx::Insets(), 0));
@@ -466,6 +431,27 @@ NotificationInputContainerMD::NotificationInputContainerMD(
   layout->SetFlexForView(textfield_, 1);
 
   AddChildView(button_);
+}
+
+bool NotificationInputContainerMD::HandleKeyEvent(views::Textfield* sender,
+                                                  const ui::KeyEvent& event) {
+  if (event.type() == ui::ET_KEY_PRESSED &&
+      event.key_code() == ui::VKEY_RETURN) {
+    delegate_->OnNotificationInputSubmit(textfield_->index(),
+                                         textfield_->text());
+    return true;
+  }
+  return event.type() == ui::ET_KEY_RELEASED;
+}
+
+void NotificationInputContainerMD::OnAfterUserAction(views::Textfield* sender) {
+  if (textfield_is_empty_ && !textfield_->text().empty()) {
+    textfield_is_empty_ = false;
+    button_->SetNormalImage();
+  } else if (!textfield_is_empty_ && textfield_->text().empty()) {
+    textfield_is_empty_ = true;
+    button_->SetPlaceholderImage();
+  }
 }
 
 void NotificationInputContainerMD::ButtonPressed(views::Button* sender,
@@ -776,14 +762,6 @@ void NotificationViewMD::ButtonPressed(views::Button* sender,
     ToggleInlineSettings();
     return;
   }
-}
-
-void NotificationViewMD::SetNormalImageToReplyButton() {
-  inline_reply_->button()->SetNormalImage();
-}
-
-void NotificationViewMD::SetPlaceholderImageToReplyButton() {
-  inline_reply_->button()->SetPlaceholderImage();
 }
 
 void NotificationViewMD::OnNotificationInputSubmit(size_t index,
