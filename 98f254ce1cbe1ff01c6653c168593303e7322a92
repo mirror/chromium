@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f1cf7e5_8195b220",
+        "filename": "components/grpc_support/bidirectional_stream_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-01-29T22:13:28Z",
+      "side": 1,
+      "message": "As I understand, the method doesn\u0027t actually shuts down the server but only the current connections. Is it okay to keep the server alive?",
+      "range": {
+        "startLine": 543,
+        "startChar": 8,
+        "endLine": 543,
+        "endChar": 42
+      },
+      "revId": "98f254ce1cbe1ff01c6653c168593303e7322a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5be5d01c_3de954e2",
+        "filename": "components/grpc_support/test/quic_test_server.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-01-29T22:13:28Z",
+      "side": 1,
+      "message": "Can the comment be changed to something like: \"Shuts down the server dispatcher, which results in sending ConnectionClose frames to all connected clients\"?",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 68
+      },
+      "revId": "98f254ce1cbe1ff01c6653c168593303e7322a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
