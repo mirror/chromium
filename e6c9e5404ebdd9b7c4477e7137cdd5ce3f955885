@@ -124,6 +124,24 @@
       "revId": "e6c9e5404ebdd9b7c4477e7137cdd5ce3f955885",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34d20e52_93e751b7",
+        "filename": "third_party/WebKit/Source/platform/bindings/TraceWrapperMember.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-29T13:27:16Z",
+      "side": 1,
+      "message": "Another idea that might be easier: Would it be possible to hack GCInfoIndex so that HeapVectorBacking\u003cTraceWrapperMember\u003e and HeapVectorBacking\u003cMember\u003e get the same gcInfoIndex?",
+      "parentUuid": "1af785e8_8570b219",
+      "revId": "e6c9e5404ebdd9b7c4477e7137cdd5ce3f955885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
