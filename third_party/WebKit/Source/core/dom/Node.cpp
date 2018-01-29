@@ -700,6 +700,15 @@ LayoutRect Node::BoundingBox() const {
   return LayoutRect();
 }
 
+LayoutRect Node::BoundingBoxForScrollIntoView() const {
+  if (GetLayoutObject()) {
+    return LayoutRect(
+        GetLayoutObject()->AbsoluteBoundingBoxRectForScrollIntoView());
+  }
+
+  return LayoutRect();
+}
+
 #ifndef NDEBUG
 inline static ShadowRoot* GetShadowRootFor(const Node* node) {
   if (!node->IsElementNode())
