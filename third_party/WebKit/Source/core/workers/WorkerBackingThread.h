@@ -41,6 +41,8 @@ class CORE_EXPORT WorkerBackingThread final {
     return WTF::WrapUnique(new WorkerBackingThread(params, true));
   }
   static std::unique_ptr<WorkerBackingThread> CreateForTest(WebThread* thread) {
+    if (!thread)
+      return CreateForTest(WebThreadCreationParams(WebThreadType::kTestThread));
     return WTF::WrapUnique(new WorkerBackingThread(thread, true));
   }
 

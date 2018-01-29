@@ -15,21 +15,21 @@ namespace blink {
 
 std::unique_ptr<WebThreadSupportingGC> WebThreadSupportingGC::Create(
     const WebThreadCreationParams& params) {
-  return WTF::WrapUnique(new WebThreadSupportingGC(params, nullptr));
+  return WTF::WrapUnique(new WebThreadSupportingGC(&params, nullptr));
 }
 
 std::unique_ptr<WebThreadSupportingGC> WebThreadSupportingGC::CreateForThread(
     WebThread* thread) {
-  return WTF::WrapUnique(
-      new WebThreadSupportingGC(WebThreadCreationParams(nullptr), thread));
+  return WTF::WrapUnique(new WebThreadSupportingGC(nullptr, thread));
 }
 
 WebThreadSupportingGC::WebThreadSupportingGC(
-    const WebThreadCreationParams& params,
+    const WebThreadCreationParams* params,
     WebThread* thread)
     : thread_(thread) {
   DCHECK(IsMainThread());
-  DCHECK(!params.name || !thread);
+  DCHECK(!params || !thread);
+  DCHECK(params || thread);
 #if DCHECK_IS_ON()
   // We call this regardless of whether an existing thread is given or not,
   // as it means that blink is going to run with more than one thread.
@@ -37,7 +37,7 @@ WebThreadSupportingGC::WebThreadSupportingGC(
 #endif
   if (!thread_) {
     // If |thread| is not given, create a new one and own it.
-    owning_thread_ = Platform::Current()->CreateThread(params);
+    owning_thread_ = Platform::Current()->CreateThread(*params);
     thread_ = owning_thread_.get();
   }
   MemoryCoordinator::RegisterThread(thread_);
