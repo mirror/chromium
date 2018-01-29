@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "efff1df7_fe1cf999",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000313
+      },
+      "writtenOn": "2018-01-29T21:12:35Z",
+      "side": 1,
+      "message": "I would rename this to \"run on a Linux/intel desktop\" since it\u0027s intel-specific",
+      "revId": "409f2d586c66870aab9bcc1a2af5361cbe33222c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cde6286_44e8aff5",
         "filename": "services/ui/display/BUILD.gn",
         "patchSetId": 14
@@ -22,6 +39,23 @@
       "revId": "409f2d586c66870aab9bcc1a2af5361cbe33222c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d91867c7_8a363f33",
+        "filename": "third_party/minigbm/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000313
+      },
+      "writtenOn": "2018-01-29T21:12:35Z",
+      "side": 1,
+      "message": "why does it depend on pciaccess?",
+      "revId": "409f2d586c66870aab9bcc1a2af5361cbe33222c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
