@@ -283,6 +283,30 @@
       "revId": "eec434aae12077c74615074f9478c6d919cbc3e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f62d5b7d_99185880",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-29T10:22:24Z",
+      "side": 1,
+      "message": "GarbageCollected is currently non-virtual. Adding anything there might have big impact for overall memory consumption.",
+      "parentUuid": "b41fe57f_f67668f8",
+      "range": {
+        "startLine": 153,
+        "startChar": 11,
+        "endLine": 153,
+        "endChar": 29
+      },
+      "revId": "eec434aae12077c74615074f9478c6d919cbc3e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
