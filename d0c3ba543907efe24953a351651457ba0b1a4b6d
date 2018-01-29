@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d0b05e2_aa9c0474",
+        "filename": "chrome/browser/extensions/extension_protocols_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-01-29T23:51:36Z",
+      "side": 1,
+      "message": "nit: Can we use ExtensionBuilder?",
+      "range": {
+        "startLine": 642,
+        "startChar": 17,
+        "endLine": 642,
+        "endChar": 23
+      },
+      "revId": "d0c3ba543907efe24953a351651457ba0b1a4b6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
