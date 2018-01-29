@@ -21,11 +21,11 @@ public class UiRestrictionSkipCheck extends RestrictionSkipCheck {
     @Override
     protected boolean restrictionApplies(String restriction) {
         if (TextUtils.equals(restriction, UiRestriction.RESTRICTION_TYPE_PHONE)
-                && DeviceFormFactor.isTablet()) {
+                && DeviceFormFactor.isTabletLayout()) {
             return true;
         }
         if (TextUtils.equals(restriction, UiRestriction.RESTRICTION_TYPE_TABLET)
-                && !DeviceFormFactor.isTablet()) {
+                && !DeviceFormFactor.isTabletLayout()) {
             return true;
         }
         return false;

@@ -14,7 +14,6 @@ import org.chromium.chrome.browser.IntentHandler;
 import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.content_public.browser.LoadUrlParams;
-import org.chromium.ui.base.DeviceFormFactor;
 
 /**
  * Utility methods for the browsing history manager.
@@ -49,7 +48,7 @@ public class HistoryManagerUtils {
                 activity.getBottomSheetContentController().showContentAndOpenSheet(
                         R.id.action_history);
             }
-        } else if (DeviceFormFactor.isTablet()) {
+        } else if (activity.isTablet()) {
             // History shows up as a tab on tablets.
             LoadUrlParams params = new LoadUrlParams(UrlConstants.NATIVE_HISTORY_URL);
             tab.loadUrl(params);

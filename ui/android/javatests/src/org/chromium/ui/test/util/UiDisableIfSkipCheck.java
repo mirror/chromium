@@ -23,14 +23,16 @@ public class UiDisableIfSkipCheck extends DisableIfSkipCheck {
 
     @Override
     protected boolean deviceTypeApplies(String type) {
-        if (TextUtils.equals(type, UiDisableIf.PHONE) && !DeviceFormFactor.isTablet()) {
+        if (TextUtils.equals(type, UiDisableIf.PHONE)
+                && !DeviceFormFactor.isTabletLayout(mTargetContext)) {
             return true;
         }
-        if (TextUtils.equals(type, UiDisableIf.TABLET) && DeviceFormFactor.isTablet()) {
+        if (TextUtils.equals(type, UiDisableIf.TABLET)
+                && DeviceFormFactor.isTabletLayout(mTargetContext)) {
             return true;
         }
         if (TextUtils.equals(type, UiDisableIf.LARGETABLET)
-                && DeviceFormFactor.isLargeTablet(mTargetContext)) {
+                && DeviceFormFactor.isLargeTabletLayout(mTargetContext)) {
             return true;
         }
         return false;

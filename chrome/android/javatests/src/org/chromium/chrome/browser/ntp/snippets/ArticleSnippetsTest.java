@@ -109,7 +109,7 @@ public class ArticleSnippetsTest {
     private static List<ParameterSet> sClassParams = new ArrayList<>();
     static {
         sClassParams.add(new ParameterSet().name("ChromeHomeDisabled").value(false));
-        if (!DeviceFormFactor.isTablet()) {
+        if (!DeviceFormFactor.isTabletLayout()) {
             sClassParams.add(new ParameterSet().name("ChromeHomeEnabled").value(true));
         }
     }
