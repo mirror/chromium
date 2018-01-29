@@ -298,7 +298,7 @@ GpuVideoAcceleratorFactoriesImpl::VideoFrameOutputFormat(size_t bit_depth) {
   auto capabilities = context_provider_->ContextCapabilities();
   if (bit_depth > 8) {
     // If high bit depth rendering is enabled, bail here, otherwise try and use
-    // XR30 storage, and if not and we support RG textures, use those, albeit at
+    // XB30 storage, and if not and we support RG textures, use those, albeit at
     // a reduced bit depth of 8 bits per component.
     // TODO(mcasas): continue working on this, avoiding dropping information as
     // long as the hardware may support it https://crbug.com/798485.
@@ -310,7 +310,7 @@ GpuVideoAcceleratorFactoriesImpl::VideoFrameOutputFormat(size_t bit_depth) {
     // https://crbug.com/803451, https://crbug.com/803975.
     // TODO(mcasas): remove the |bit_depth| check when libyuv supports more than
     // just x010ToAR30 conversions, https://crbug.com/libyuv/751.
-    if (capabilities.image_xr30 && bit_depth == 10)
+    if (capabilities.image_xb30 && bit_depth == 10)
       return media::GpuVideoAcceleratorFactories::OutputFormat::XR30;
 #endif
     if (capabilities.texture_rg)

@@ -111,7 +111,7 @@ bool IsImageFromGpuMemoryBufferFormatSupported(
     case gfx::BufferFormat::UYVY_422:
       return capabilities.image_ycbcr_422;
     case gfx::BufferFormat::BGRX_1010102:
-      return capabilities.image_xr30;
+      return capabilities.image_xb30;
     case gfx::BufferFormat::BGR_565:
     case gfx::BufferFormat::RGBA_4444:
     case gfx::BufferFormat::RGBA_8888:
