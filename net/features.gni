@@ -13,7 +13,7 @@ declare_args() {
 
   # WebSockets and socket stream code are not used on iOS and are optional in
   # cronet.
-  enable_websockets = !is_ios
+  enable_websockets = false
   disable_ftp_support = is_ios || is_chromecast
 
   # Enable Kerberos authentication. It is disabled by default on iOS, Fuchsia
