@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2480202b_a3d30d3c",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 2461,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-29T09:18:21Z",
+      "side": 0,
+      "message": "For example we are keeping the ref part of the URL (i.e. if you visit foo.jp#hello the app will try to get foo.jp/favicon.ico#hello).",
+      "range": {
+        "startLine": 2461,
+        "startChar": 21,
+        "endLine": 2461,
+        "endChar": 31
+      },
+      "revId": "1daf04c3cf08ed00a3b81e1df77a758ff6ac67af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
