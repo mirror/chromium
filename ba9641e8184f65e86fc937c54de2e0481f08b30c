@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "70586dbd_c6114135",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-29T16:32:29Z",
+      "side": 1,
+      "message": "Yes, this is the moment where we update our parameters following the reception of the final response.",
+      "parentUuid": "23c771d5_a6821607",
+      "revId": "ba9641e8184f65e86fc937c54de2e0481f08b30c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d152d5c2_18ccfb8e",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 9
@@ -30,6 +48,30 @@
       "writtenOn": "2018-01-25T08:19:53Z",
       "side": 1,
       "message": "clamy: Something to consider for a followup: maybe we could consider caching this on NavigationHandle itself. There\u0027s already a few places that construct a temporary origin out of this—and if it\u0027s going to happen on many navigations, then we may as well just eat the cost once in NavigationHandle?",
+      "range": {
+        "startLine": 820,
+        "startChar": 10,
+        "endLine": 820,
+        "endChar": 59
+      },
+      "revId": "ba9641e8184f65e86fc937c54de2e0481f08b30c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79a23a47_55fccb19",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-29T16:32:29Z",
+      "side": 1,
+      "message": "Yes that\u0027s a good idea. Let\u0027s add a TODO.",
+      "parentUuid": "d152d5c2_18ccfb8e",
       "range": {
         "startLine": 820,
         "startChar": 10,
