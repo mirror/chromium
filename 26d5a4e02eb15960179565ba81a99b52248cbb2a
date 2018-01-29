@@ -16,6 +16,24 @@
       "revId": "26d5a4e02eb15960179565ba81a99b52248cbb2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63790b07_6e281852",
+        "filename": "build/android/gyp/javac.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2018-01-29T17:58:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6b0793b_59a6fcb3",
+      "revId": "26d5a4e02eb15960179565ba81a99b52248cbb2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
