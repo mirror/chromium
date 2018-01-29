@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4edd2a87_4079fd4b",
+        "filename": "third_party/WebKit/LayoutTests/external/WPT_BASE_MANIFEST.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 215391,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2018-01-29T09:28:18Z",
+      "side": 0,
+      "message": "Do we need to modify this file manually?",
+      "revId": "d26dcac0a6390fb039dee8eaec0906411164c7a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
