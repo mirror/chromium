@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ca5c3a39_2c66c31d",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1222,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-29T04:30:02Z",
+      "side": 1,
+      "message": "Oops, fixed!",
+      "parentUuid": "a51e3428_f1bba683",
+      "revId": "bfa3ba03ba3a62d230db7892ca7234605908f90a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f94a2af8_7d20f9ec",
         "filename": "chrome/browser/ui/browser_commands.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-28T00:15:30Z",
       "side": 1,
       "message": "Can you remind me why trusted_source should be true here?\n\nAlso, can you comment the last boolean please.",
+      "revId": "bfa3ba03ba3a62d230db7892ca7234605908f90a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8c86771_f8080a24",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1226,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-29T04:30:02Z",
+      "side": 1,
+      "message": "From browser.h:\n\n  // True if the source is trusted (i.e. we do not need to show the URL in a\n  // a popup window). Also used to determine which app windows to save and\n  // restore on Chrome OS.\n  bool is_trusted_source_;\n\n\nProbably not the best name TBH.",
+      "parentUuid": "f94a2af8_7d20f9ec",
       "revId": "bfa3ba03ba3a62d230db7892ca7234605908f90a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
