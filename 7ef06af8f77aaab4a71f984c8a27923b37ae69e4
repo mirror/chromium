@@ -16,6 +16,24 @@
       "revId": "7ef06af8f77aaab4a71f984c8a27923b37ae69e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbae1c1f_0f8a38ba",
+        "filename": "DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 1384,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-29T15:21:52Z",
+      "side": 1,
+      "message": "This work even if src/ios_internal/ is the primary repository because the value found through recursedeps (in src/ios_internal/DEPS.chromium) are compatible with those in src/ios_internal/DEPS.\n\nAdditionally, the entries in recursedeps are only considered if the corresponding dependency is fetched; so if target_os does not contain \"ios\" or checkout_google_internal is False, the deps does not exists and the recursedeps is ignored.\n\nTL;DR: AFAICT, this works in all configurations.",
+      "parentUuid": "818ff6ce_14ba9ec1",
+      "revId": "7ef06af8f77aaab4a71f984c8a27923b37ae69e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
