@@ -175,7 +175,8 @@ HonorEditingBoundaryAtOrBeforeTemplate(
 
   // Return empty position if |pos| is not somewhere inside the editable
   // region containing this position
-  if (highest_root && !pos.AnchorNode()->IsDescendantOf(highest_root))
+  if (highest_root &&
+      !highest_root->contains(pos.GetPosition().ComputeContainerNode()))
     return PositionWithAffinityTemplate<Strategy>();
 
   // Return |pos| itself if the two are from the very same editable region, or
@@ -243,7 +244,8 @@ HonorEditingBoundaryAtOrAfterTemplate(
 
   // Return empty position if |pos| is not somewhere inside the editable
   // region containing this position
-  if (highest_root && !pos.AnchorNode()->IsDescendantOf(highest_root))
+  if (highest_root &&
+      !highest_root->contains(pos.GetPosition().ComputeContainerNode()))
     return PositionWithAffinityTemplate<Strategy>();
 
   // Return |pos| itself if the two are from the very same editable region, or
