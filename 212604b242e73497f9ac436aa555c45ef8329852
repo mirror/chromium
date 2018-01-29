@@ -166,6 +166,30 @@
       "revId": "212604b242e73497f9ac436aa555c45ef8329852",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2bb3d60_0b39b4b8",
+        "filename": "skia/public/interfaces/bitmap_skbitmap_struct_traits.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-01-29T18:46:22Z",
+      "side": 1,
+      "message": "Presumably the authors or the folks in the OWNERS file?\n\n  per-file *_struct_traits*.*\u003dset noparent\n  per-file *_struct_traits*.*\u003dfile://ipc/SECURITY_OWNERS\n\n  per-file *.mojom\u003dset noparent\n  per-file *.mojom\u003dfile://ipc/SECURITY_OWNERS\n\n  per-file *.typemap\u003dset noparent\n  per-file *.typemap\u003dfile://ipc/SECURITY_OWNERS",
+      "parentUuid": "54a14bcc_637a382b",
+      "range": {
+        "startLine": 78,
+        "startChar": 7,
+        "endLine": 78,
+        "endChar": 30
+      },
+      "revId": "212604b242e73497f9ac436aa555c45ef8329852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
