@@ -994,6 +994,7 @@ void NotificationViewMD::CreateOrUpdateIconView(
   else
     icon = notification.icon().AsImageSkia();
   icon_view_->SetImage(icon, icon.size());
+  right_content_->SetVisible(!icon.isNull());
 
   // Hide the icon on the right side when the notification is expanded.
   hide_icon_on_expanded_ = use_image_for_icon;
