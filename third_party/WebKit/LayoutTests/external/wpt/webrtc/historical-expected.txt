@@ -12,6 +12,6 @@ PASS RTCPeerConnection member updateIce should not exist
 PASS mozRTCIceCandidate interface should not exist
 PASS mozRTCPeerConnection interface should not exist
 PASS mozRTCSessionDescription interface should not exist
-FAIL webkitRTCPeerConnection interface should not exist assert_false: expected false got true
+PASS webkitRTCPeerConnection interface should not exist
 Harness: the test ran to completion.
 
