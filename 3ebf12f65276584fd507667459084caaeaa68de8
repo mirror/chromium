@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed90c69d_df928ce2",
+        "filename": "media/blink/multibuffer_data_source.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2018-01-29T19:14:48Z",
+      "side": 1,
+      "message": "This seems really racy.\nThe next range might still be opaque, and can we guarantee that the canvas won\u0027t see and read back the result before someone calls this next time?",
+      "range": {
+        "startLine": 303,
+        "startChar": 8,
+        "endLine": 303,
+        "endChar": 30
+      },
+      "revId": "3ebf12f65276584fd507667459084caaeaa68de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89e9a283_d21296ea",
+        "filename": "media/blink/url_index.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2018-01-29T19:14:48Z",
+      "side": 1,
+      "message": "Is this really the right datatype for keeping tack of this?\nWouldn\u0027t a \"bool hasOpaqueData_;\" be sufficient? (and simpler)",
+      "revId": "3ebf12f65276584fd507667459084caaeaa68de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
