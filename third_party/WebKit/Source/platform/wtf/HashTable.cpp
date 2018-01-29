@@ -21,7 +21,6 @@
 
 #if DUMP_HASHTABLE_STATS || DUMP_HASHTABLE_STATS_PER_TABLE
 
-#include "platform/wtf/DataLog.h"
 #include "platform/wtf/ThreadingPrimitives.h"
 
 namespace WTF {
