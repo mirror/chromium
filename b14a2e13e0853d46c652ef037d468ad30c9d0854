@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc60131d_57776de1",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers_browser_proxy.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-29T22:53:06Z",
+      "side": 1,
+      "message": "s/ppd/PPD",
+      "range": {
+        "startLine": 124,
+        "startChar": 30,
+        "endLine": 124,
+        "endChar": 33
+      },
+      "revId": "b14a2e13e0853d46c652ef037d468ad30c9d0854",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36c3a264_7944aa97",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-29T22:53:06Z",
+      "side": 1,
+      "message": "+thestig\n\nI don\u0027t think it is OK to directly read a file from the browser thread. Shouldn\u0027t this be posted as a task? See similar example at [1].\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/ui/webui/extensions/extension_loader_handler.cc?l\u003d127-130",
+      "range": {
+        "startLine": 731,
+        "startChar": 2,
+        "endLine": 731,
+        "endChar": 29
+      },
+      "revId": "b14a2e13e0853d46c652ef037d468ad30c9d0854",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

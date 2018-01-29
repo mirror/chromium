@@ -202,6 +202,24 @@
     },
     {
       "key": {
+        "uuid": "09db8c18_e6068c4c",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_set_manufacturer_model_behavior.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-29T22:53:06Z",
+      "side": 1,
+      "message": "Can you clarify which of the two comments was \"DONE\". Looking at patch3 still don\u0027t see the single-line version.",
+      "parentUuid": "43aa41dc_0f7fb4d4",
+      "revId": "a6aa32433ea644a28966cf28ecd9aec68610053d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a91a95b5_8237b3c5",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
         "patchSetId": 2
