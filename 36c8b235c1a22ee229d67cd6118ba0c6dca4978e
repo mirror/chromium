@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "9091c292_ffc4c1af",
+        "filename": "components/arc/video_accelerator/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2018-01-29T07:34:03Z",
+      "side": 1,
+      "message": "\u003e Instead, GAVDA tries to get PBM shared_pointer by using GetInstance() all the time PBM is needed.\n\ns/shared_pointer/raw pointer/ in the patch 2.",
+      "parentUuid": "65c7ce6d_494194fe",
+      "range": {
+        "startLine": 147,
+        "startChar": 2,
+        "endLine": 147,
+        "endChar": 17
+      },
+      "revId": "36c8b235c1a22ee229d67cd6118ba0c6dca4978e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c6224c2_224d1cde",
         "filename": "components/arc/video_accelerator/protected_buffer_manager.h",
         "patchSetId": 1
