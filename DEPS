@@ -1225,6 +1225,16 @@ hooks = [
     ],
   },
   {
+    'name': 'Android Third Party Libraries CIPD Ensure',
+    'pattern': '.',
+    'condition': 'checkout_android',
+    'action': ['src/build/cipd/cipd_wrapper.py',
+               '--chromium-root', 'src/third_party/android_deps',
+               '--ensure-file', 'src/third_party/android_deps/android_deps.ensure',
+    ],
+  },
+
+  {
     'name': 'Fetch Android AFDO profile',
     'pattern': '.',
     'condition': 'checkout_android',
