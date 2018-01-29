@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de06f57c_28259eb2",
+        "filename": "chrome_elf/whitelist/whitelist_log_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:48:03Z",
+      "side": 1,
+      "message": "nit: omit \"return\" from end of void fn",
+      "revId": "0dca294379b249ab34c4cdc025e4c3254ee0959a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f76170dc_d07930d1",
+        "filename": "chrome_elf/whitelist/whitelist_log_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:48:03Z",
+      "side": 1,
+      "message": "lpParam is anti-style in that it uses camel case and abbreviations. how about handler_data or something like that?",
+      "range": {
+        "startLine": 190,
+        "startChar": 27,
+        "endLine": 190,
+        "endChar": 34
+      },
+      "revId": "0dca294379b249ab34c4cdc025e4c3254ee0959a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6c3090c_6b6f0c79",
+        "filename": "chrome_elf/whitelist/whitelist_log_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:48:03Z",
+      "side": 1,
+      "message": "isn\u0027t this leaked? could you use a base::win::ScopedHandle to hold it? alternatively (i know you won\u0027t like this ;-) ), use base::SimpleThread.",
+      "range": {
+        "startLine": 200,
+        "startChar": 9,
+        "endLine": 200,
+        "endChar": 15
+      },
+      "revId": "0dca294379b249ab34c4cdc025e4c3254ee0959a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b18e324_f0c03a7f",
+        "filename": "chrome_elf/whitelist/whitelist_packed_format.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:48:03Z",
+      "side": 1,
+      "message": "nit: the true/false language isn\u0027t quite accurate since an enum is now used.",
+      "range": {
+        "startLine": 89,
+        "startChar": 25,
+        "endLine": 89,
+        "endChar": 53
+      },
+      "revId": "0dca294379b249ab34c4cdc025e4c3254ee0959a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7404c3a8_383b63e8",
+        "filename": "chrome_elf/whitelist/whitelist_packed_format.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:48:03Z",
+      "side": 1,
+      "message": "nit: i would move the definition of |entry| down here (i.e., delete line 110 and make this \"LogEntry* entry \u003d ...\").",
+      "revId": "0dca294379b249ab34c4cdc025e4c3254ee0959a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

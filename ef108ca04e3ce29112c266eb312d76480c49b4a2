@@ -365,6 +365,24 @@
     },
     {
       "key": {
+        "uuid": "7b7da80a_78ec7c85",
+        "filename": "chrome_elf/whitelist/whitelist_log_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:48:03Z",
+      "side": 1,
+      "message": "I disagree. WaitableEvent is more widely understood by Chromium developers and shouldn\u0027t have any noticeable size or performance overhead. I\u0027m of the mind that being Windows-specific code isn\u0027t a reason to avoid using our common abstractions. I\u0027m open to discussing this on chromium-dev to see if others don\u0027t share my point of view.",
+      "parentUuid": "0c494cf2_bb18918d",
+      "revId": "ef108ca04e3ce29112c266eb312d76480c49b4a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27e04245_97d343b8",
         "filename": "chrome_elf/whitelist/whitelist_packed_format.h",
         "patchSetId": 9
@@ -394,6 +412,24 @@
       "side": 1,
       "message": "I\u0027ve flipped order for consistency across my code.  windows.h at the top.",
       "parentUuid": "27e04245_97d343b8",
+      "revId": "ef108ca04e3ce29112c266eb312d76480c49b4a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba3a7b23_995e07d1",
+        "filename": "chrome_elf/whitelist/whitelist_packed_format.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-29T12:48:03Z",
+      "side": 1,
+      "message": "sgtm",
+      "parentUuid": "c994ccb7_61815c36",
       "revId": "ef108ca04e3ce29112c266eb312d76480c49b4a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
