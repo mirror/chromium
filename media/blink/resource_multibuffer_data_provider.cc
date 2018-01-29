@@ -323,6 +323,11 @@ void ResourceMultiBufferDataProvider::DidReceiveResponse(
         url_data_->url_index()->TryInsert(destination_url_data);
   }
 
+  // This is vital for security! A service worker can respond with a response
+  // from a different origin, so this response type is needed to detect that.
+  destination_url_data->set_response_type_via_service_worker(
+      response.ResponseTypeViaServiceWorker());
+
   if (destination_url_data != url_data_) {
     // At this point, we've encountered a redirect, or found a better url data
     // instance for the data that we're about to download.
