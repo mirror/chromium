@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98fd00d1_aa165ab0",
+        "filename": "net/socket/ssl_client_socket_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1217,
+      "author": {
+        "id": 1135189
+      },
+      "writtenOn": "2018-01-29T21:05:35Z",
+      "side": 1,
+      "message": "SSLDowngradeTLS13Variants? Using both Draft and Experiment seems superfluous.",
+      "range": {
+        "startLine": 1217,
+        "startChar": 32,
+        "endLine": 1217,
+        "endChar": 64
+      },
+      "revId": "7dbc20b0a44afb2d0abcfddbf7a52f6b9b46cb2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
