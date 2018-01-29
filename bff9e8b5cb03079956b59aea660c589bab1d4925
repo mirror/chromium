@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0da89e4_014df42d",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8GCController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-29T17:37:35Z",
+      "side": 1,
+      "message": "IIUC, this could be as simple as\n\n  BasePage* const page \u003d PageFromObject(value);\n  HeapObjectHeader* const header \u003d\n      page-\u003eIsLargeObjectPage()\n          ? static_cast\u003cLargeObjectPage*\u003e(page)-\u003eGetHeapObjectHeader()\n          : static_cast\u003cNormalPage*\u003e(page)-\u003eFindHeaderFromAddress(\n                reinterpret_cast\u003cAddress\u003e(const_cast\u003cvoid*\u003e(value)));\n  return header-\u003eSize();\n\n(That\u0027s the completely dynamic version without adding further callbacks)",
+      "range": {
+        "startLine": 362,
+        "startChar": 11,
+        "endLine": 362,
+        "endChar": 22
+      },
+      "revId": "bff9e8b5cb03079956b59aea660c589bab1d4925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1dafdba_b03e6760",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8GCController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-29T17:37:35Z",
+      "side": 1,
+      "message": "nit: Move up above methods.",
+      "range": {
+        "startLine": 404,
+        "startChar": 9,
+        "endLine": 404,
+        "endChar": 21
+      },
+      "revId": "bff9e8b5cb03079956b59aea660c589bab1d4925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

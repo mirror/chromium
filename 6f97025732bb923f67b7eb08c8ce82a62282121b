@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ec1eee9b_882ec5ae",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-29T17:37:35Z",
+      "side": 0,
+      "message": "Maybe land separately if this one drags on too long.",
+      "parentUuid": "6daf1594_575f7a06",
+      "range": {
+        "startLine": 42,
+        "startChar": 3,
+        "endLine": 42,
+        "endChar": 70
+      },
+      "revId": "6f97025732bb923f67b7eb08c8ce82a62282121b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "64497bfc_34c8ba34",
         "filename": "third_party/WebKit/Source/platform/heap/TraceTraits.h",
         "patchSetId": 4
