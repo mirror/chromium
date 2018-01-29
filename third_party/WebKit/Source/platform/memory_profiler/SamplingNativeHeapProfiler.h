@@ -45,6 +45,9 @@ class PLATFORM_EXPORT SamplingNativeHeapProfiler : public SamplingHeapProfiler {
 
   std::vector<Sample> GetSamples(uint32_t profile_id);
 
+  static inline void MaybeRecordAlloc(void* address, size_t);
+  static inline void MaybeRecordFree(void* address);
+
   static SamplingNativeHeapProfiler* GetInstance();
 
  private:
@@ -54,51 +57,12 @@ class PLATFORM_EXPORT SamplingNativeHeapProfiler : public SamplingHeapProfiler {
   static bool InstallAllocatorHooks();
   static size_t GetNextSampleInterval(size_t base_interval);
 
-  static inline void MaybeRecordAlloc(void* address, size_t);
-  static inline void MaybeRecordFree(void* address);
   void RecordAlloc(size_t total_allocated,
                    size_t allocation_size,
                    void* address,
                    unsigned skip_frames);
   void RecordFree(void* address);
   void RecordStackTrace(Sample*, unsigned skip_frames);
-
-  static void* AllocFn(const base::allocator::AllocatorDispatch* self,
-                       size_t,
-                       void* context);
-  static void* AllocZeroInitializedFn(
-      const base::allocator::AllocatorDispatch* self,
-      size_t n,
-      size_t,
-      void* context);
-  static void* AllocAlignedFn(const base::allocator::AllocatorDispatch* self,
-                              size_t alignment,
-                              size_t,
-                              void* context);
-  static void* ReallocFn(const base::allocator::AllocatorDispatch* self,
-                         void* address,
-                         size_t,
-                         void* context);
-  static void FreeFn(const base::allocator::AllocatorDispatch* self,
-                     void* address,
-                     void* context);
-  static size_t GetSizeEstimateFn(
-      const base::allocator::AllocatorDispatch* self,
-      void* address,
-      void* context);
-  static unsigned BatchMallocFn(const base::allocator::AllocatorDispatch* self,
-                                size_t,
-                                void** results,
-                                unsigned num_requested,
-                                void* context);
-  static void BatchFreeFn(const base::allocator::AllocatorDispatch* self,
-                          void** to_be_freed,
-                          unsigned num_to_be_freed,
-                          void* context);
-  static void FreeDefiniteSizeFn(const base::allocator::AllocatorDispatch* self,
-                                 void* ptr,
-                                 size_t,
-                                 void* context);
 
   base::ThreadLocalBoolean entered_;
   base::Lock mutex_;
