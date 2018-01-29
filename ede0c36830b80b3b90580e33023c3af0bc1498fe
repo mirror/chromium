@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9e02196_e75c599a",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 2489,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-29T17:58:28Z",
+      "side": 1,
+      "message": "Removing this until a future CL should address mac/android.",
+      "range": {
+        "startLine": 2489,
+        "startChar": 6,
+        "endLine": 2489,
+        "endChar": 34
+      },
+      "revId": "ede0c36830b80b3b90580e33023c3af0bc1498fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eed6e3a9_cdd95b16",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 2610,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-29T17:58:28Z",
+      "side": 1,
+      "message": "same here.",
+      "range": {
+        "startLine": 2610,
+        "startChar": 2,
+        "endLine": 2610,
+        "endChar": 32
+      },
+      "revId": "ede0c36830b80b3b90580e33023c3af0bc1498fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

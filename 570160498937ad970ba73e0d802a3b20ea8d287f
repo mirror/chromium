@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2e54688_5446ae85",
+        "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-29T17:58:28Z",
+      "side": 1,
+      "message": "I don\u0027t think we this on the parent allocator (we don\u0027t use it in this CL).",
+      "range": {
+        "startLine": 24,
+        "startChar": 50,
+        "endLine": 24,
+        "endChar": 71
+      },
+      "revId": "570160498937ad970ba73e0d802a3b20ea8d287f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4851eccc_1a3d4087",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 2051,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-29T17:58:28Z",
+      "side": 1,
+      "message": "remember to remove this :D, and the #include \u003ciostream\u003e above.",
+      "range": {
+        "startLine": 2051,
+        "startChar": 16,
+        "endLine": 2051,
+        "endChar": 40
+      },
+      "revId": "570160498937ad970ba73e0d802a3b20ea8d287f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c392074_ede3e4a8",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-29T17:58:28Z",
+      "side": 1,
+      "message": "This should only be set if the parent ID we get is \u003e\u003d the one currently set. Otherwise a previous locally generated ID could re-set the parent ID to an earlier one than expected. Move to the if block below.",
+      "range": {
+        "startLine": 617,
+        "startChar": 38,
+        "endLine": 617,
+        "endChar": 39
+      },
+      "revId": "570160498937ad970ba73e0d802a3b20ea8d287f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4549280f_53b37033",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-29T17:58:28Z",
+      "side": 1,
+      "message": "AutoRezieCompositor will set local_surface_id_ to local_surface_id, negating anything done in HandlePotentialLocalSurfaceIdConflict. Pass |local_surface_id_| to autoResizeCompositor?",
+      "range": {
+        "startLine": 654,
+        "startChar": 4,
+        "endLine": 654,
+        "endChar": 24
+      },
+      "revId": "570160498937ad970ba73e0d802a3b20ea8d287f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "711451fb_1a4f3d4a",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 1358,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-29T17:58:28Z",
+      "side": 1,
+      "message": "This line conflicts with HandlePotentialLocalSurfaceIdConflict. remove it?",
+      "range": {
+        "startLine": 1358,
+        "startChar": 4,
+        "endLine": 1358,
+        "endChar": 21
+      },
+      "revId": "570160498937ad970ba73e0d802a3b20ea8d287f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
