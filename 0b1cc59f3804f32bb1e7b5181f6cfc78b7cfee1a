@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dc78f9d3_00b503d5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-29T16:03:23Z",
+      "side": 1,
+      "message": "the allocator shim needs to shim allocations at runtime. So does SyzyASAN. I believe they currently use the same mechanism, thus incompatible.",
+      "parentUuid": "2e71ce98_65f50d81",
+      "range": {
+        "startLine": 9,
+        "startChar": 64,
+        "endLine": 9,
+        "endChar": 77
+      },
+      "revId": "0b1cc59f3804f32bb1e7b5181f6cfc78b7cfee1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d98690ee_cacbcb44",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "0b1cc59f3804f32bb1e7b5181f6cfc78b7cfee1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23447aea_6e8f5336",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-29T16:03:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d98690ee_cacbcb44",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 9
+      },
+      "revId": "0b1cc59f3804f32bb1e7b5181f6cfc78b7cfee1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
