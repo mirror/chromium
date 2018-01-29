@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c96dced2_ddb184c3",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2018-01-29T07:58:31Z",
+      "side": 1,
+      "message": "nit: Maybe you can use base::BindOnce([] {}, ...); .",
+      "range": {
+        "startLine": 747,
+        "startChar": 40,
+        "endLine": 747,
+        "endChar": 66
+      },
+      "revId": "2938470ad333b69b8beb4737587dce44d163b5d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6bb3935_5ff13bd7",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2018-01-29T07:58:31Z",
+      "side": 1,
+      "message": "Don\u0027t we need to call a callback if the IME requests another setMode() before finishing hiding animation?",
+      "range": {
+        "startLine": 748,
+        "startChar": 40,
+        "endLine": 748,
+        "endChar": 74
+      },
+      "revId": "2938470ad333b69b8beb4737587dce44d163b5d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81592d94_cade3738",
+        "filename": "ui/keyboard/keyboard_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2018-01-29T07:58:31Z",
+      "side": 1,
+      "message": "Is this still needed?",
+      "range": {
+        "startLine": 178,
+        "startChar": 2,
+        "endLine": 178,
+        "endChar": 50
+      },
+      "revId": "2938470ad333b69b8beb4737587dce44d163b5d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0d34532_0beba8e5",
+        "filename": "ui/keyboard/keyboard_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2018-01-29T07:58:31Z",
+      "side": 1,
+      "message": "remove?",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 39
+      },
+      "revId": "2938470ad333b69b8beb4737587dce44d163b5d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ed362d2_d361a4c0",
+        "filename": "ui/keyboard/keyboard_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2018-01-29T07:58:31Z",
+      "side": 1,
+      "message": "Is this for debug?",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 247,
+        "endChar": 3
+      },
+      "revId": "2938470ad333b69b8beb4737587dce44d163b5d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
