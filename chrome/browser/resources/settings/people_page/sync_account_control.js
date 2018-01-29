@@ -16,33 +16,48 @@ Polymer({
      */
     syncStatus: Object,
 
-    /** @private {!settings.ProfileInfo} */
-    profileInfo_: Object,
+    authedAccounts_: Object,
+
+    shownAccount_: Object,
+
+    promoLabel: String,
+
+    promoSecondaryLabel: String,
+
+    shouldShowAvatarRow_: {
+      type: Boolean,
+      value: false,
+      computed: 'computeShouldShowAvatarRow_(authedAccounts_.*)'
+    }
   },
+
+  observers: [
+    'onShownAccountShouldChange_(authedAccounts_.*, syncStatus.*)',
+  ],
 
   /** @private {?settings.SyncBrowserProxy} */
   syncBrowserProxy_: null,
 
   /** @override */
   attached: function() {
-    const profileInfoProxy = settings.ProfileInfoBrowserProxyImpl.getInstance();
-    profileInfoProxy.getProfileInfo().then(this.handleProfileInfo_.bind(this));
-    this.addWebUIListener(
-        'profile-info-changed', this.handleProfileInfo_.bind(this));
     this.syncBrowserProxy_ = settings.SyncBrowserProxyImpl.getInstance();
     this.syncBrowserProxy_.getSyncStatus().then(
         this.handleSyncStatus_.bind(this));
     this.addWebUIListener(
         'sync-status-changed', this.handleSyncStatus_.bind(this));
+    this.addWebUIListener(
+        'authed-accounts-updated', this.handleAuthedAccounts_.bind(this));
+
+    // TODO(scottchen): use sync browser proxy
+    // TODO(scottchen): needs to have webui-listener to update the list when
+    // more accounts are available
+    cr.sendWithPromise('SyncSetupGetAuthedAccounts')
+        .then(this.handleAuthedAccounts_.bind(this));
   },
 
-  /**
-   * Handler for when the profile's icon and name is updated.
-   * @private
-   * @param {!settings.ProfileInfo} info
-   */
-  handleProfileInfo_: function(info) {
-    this.profileInfo_ = info;
+  /** @private */
+  handleAuthedAccounts_: function(accounts) {
+    this.authedAccounts_ = accounts;
   },
 
   /**
@@ -55,8 +70,19 @@ Polymer({
   },
 
   /** @private */
+  computeShouldShowAvatarRow_: function() {
+    return this.syncStatus.signedIn ||
+        (this.authedAccounts_ && this.authedAccounts_.length > 0);
+  },
+
+  /** @private */
   onSigninTap_: function() {
     this.syncBrowserProxy_.startSignIn();
+    /** @type {!CrActionMenuElement} */ (this.$$('#menu')).close();
+  },
+
+  onSyncButtonTap_: function() {
+    chrome.send('SyncSetupStartSyncingWithEmail', [this.shownAccount_.email]);
   },
 
   /** @private */
@@ -65,21 +91,34 @@ Polymer({
     settings.navigateTo(settings.routes.SIGN_OUT);
   },
 
-  /**
-   * @param {string} iconUrl
-   * @return {string} A CSS image-set for multiple scale factors.
-   * @private
-   */
-  getIcon_: function(iconUrl) {
-    return cr.icon.getImage(iconUrl);
+  /** @private */
+  onMenuButtonTap_: function() {
+    const actionMenu =
+        /** @type {!CrActionMenuElement} */ (this.$$('#menu'));
+    actionMenu.showAt(assert(this.$$('#dots')));
   },
 
   /**
-   * @param {!settings.SyncStatus} syncStatus
-   * @return {boolean} Whether to show the "Sign in to Chrome" button.
+   * @param {!Event}
    * @private
    */
-  showSignin_: function(syncStatus) {
-    return !!syncStatus.signinAllowed && !syncStatus.signedIn;
+  onAccountTap_: function(e) {
+    this.shownAccount_ = e.model.item;
+    /** @type {!CrActionMenuElement} */ (this.$$('#menu')).close();
   },
+
+  /** @private */
+  onShownAccountShouldChange_: function() {
+    if (this.syncStatus.signedIn) {
+      for (let i = 0; i < this.authedAccounts_.length; i++) {
+        if (this.authedAccounts_[i].email == this.syncStatus.signedInUsername) {
+          this.shownAccount_ = this.authedAccounts_[i];
+          return;
+        }
+      }
+    } else {
+      this.shownAccount_ =
+          this.authedAccounts_ ? this.authedAccounts_[0] : null;
+    }
+  }
 });

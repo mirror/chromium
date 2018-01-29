@@ -19,6 +19,8 @@ cr.exportPath('settings');
  *            setupInProgress: (boolean|undefined),
  *            signedIn: (boolean|undefined),
  *            signedInUsername: (string|undefined),
+ *            signedInFullName: (string|undefined),
+ *            signedInPictureUrl: (string|undefined),
  *            signinAllowed: (boolean|undefined),
  *            statusAction: (!settings.StatusAction),
  *            statusText: (string|undefined),
