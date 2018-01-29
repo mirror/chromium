@@ -48210,6 +48210,19 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>Time to complete a certificate verification (error case).</summary>
 </histogram>
 
+<histogram name="Net.SSLDraftDowngradeTLS13Experiment" enum="BooleanDowngrade">
+  <owner>davidben@chromium.org</owner>
+  <summary>
+    For each HTTPS connection to the TLS 1.3 experiment server set, whether the
+    TLS 1.3 anti-downgrade mechanism would have fired. This is to measure the
+    effects of non-compliant middleboxes on this otherwise safe security
+    feature. The numbers are only valid while the TLS 1.3 experiment set deploys
+    a TLS 1.3 draft version compatible with the corresponding Chrome version and
+    implement the our draft anti-downgrade signal. See
+    https://crbug.com/boringssl/226.
+  </summary>
+</histogram>
+
 <histogram name="Net.SSLFallbackErrorCode" enum="NetErrorCodes">
   <obsolete>
     Removed June 2016.
