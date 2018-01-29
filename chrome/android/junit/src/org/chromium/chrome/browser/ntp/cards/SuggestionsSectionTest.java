@@ -56,8 +56,6 @@ import org.chromium.chrome.browser.suggestions.SuggestionsEventReporter;
 import org.chromium.chrome.browser.suggestions.SuggestionsNavigationDelegate;
 import org.chromium.chrome.browser.suggestions.SuggestionsRanker;
 import org.chromium.chrome.browser.suggestions.SuggestionsUiDelegate;
-import org.chromium.chrome.browser.util.FeatureUtilities;
-import org.chromium.chrome.test.util.browser.ChromeHome;
 import org.chromium.chrome.test.util.browser.Features;
 import org.chromium.chrome.test.util.browser.offlinepages.FakeOfflinePageBridge;
 import org.chromium.chrome.test.util.browser.suggestions.ContentSuggestionsTestUtils.CategoryInfoBuilder;
@@ -78,17 +76,12 @@ import java.util.TreeSet;
  */
 @RunWith(LocalRobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
-// TODO(https://crbug.com/673092): Run as much as possible parameterized on ChromeHome state.
-@ChromeHome.Enable
 public class SuggestionsSectionTest {
     @Rule
     public DisableHistogramsRule mDisableHistogramsRule = new DisableHistogramsRule();
 
     @Rule
     public TestRule mFeatureProcessor = new Features.JUnitProcessor();
-
-    @Rule
-    public TestRule mChromeHomeRule = new ChromeHome.Processor();
 
     private static final int TEST_CATEGORY_ID = 42;
 
@@ -115,7 +108,6 @@ public class SuggestionsSectionTest {
     public void setUp() {
         RecordUserAction.setDisabledForTests(true);
         MockitoAnnotations.initMocks(this);
-        FeatureUtilities.resetChromeHomeEnabledForTests();
 
         mBridge = new FakeOfflinePageBridge();
 
@@ -133,12 +125,10 @@ public class SuggestionsSectionTest {
     @After
     public void tearDown() {
         RecordUserAction.setDisabledForTests(false);
-        FeatureUtilities.resetChromeHomeEnabledForTests();
     }
 
     @Test
     @Feature({"Ntp"})
-    @ChromeHome.Disable // Sections can't be dismissed in ChromeHome
     public void testDismissSibling() {
         List<SnippetArticle> snippets = createDummySuggestions(3, TEST_CATEGORY_ID);
         SuggestionsSection section = createSectionWithFetchAction(true);
@@ -165,7 +155,6 @@ public class SuggestionsSectionTest {
 
     @Test
     @Feature({"Ntp"})
-    @ChromeHome.Disable // Sections can't be dismissed in ChromeHome
     public void testGetDismissalGroupWithoutHeader() {
         SuggestionsSection section = createSectionWithFetchAction(true);
         section.setHeaderVisibility(false);
@@ -179,7 +168,6 @@ public class SuggestionsSectionTest {
 
     @Test
     @Feature({"Ntp"})
-    @ChromeHome.Disable // Sections can't be dismissed in ChromeHome
     public void testGetDismissalGroupWithoutAction() {
         SuggestionsSection section = createSectionWithFetchAction(false);
 
@@ -189,7 +177,6 @@ public class SuggestionsSectionTest {
 
     @Test
     @Feature({"Ntp"})
-    @ChromeHome.Disable // Sections can't be dismissed in ChromeHome
     public void testGetDismissalGroupActionAndHeader() {
         SuggestionsSection section = createSectionWithFetchAction(false);
         section.setHeaderVisibility(false);
@@ -200,7 +187,6 @@ public class SuggestionsSectionTest {
 
     @Test
     @Feature({"Ntp"})
-    @ChromeHome.Disable // Assumes status card on empty state, irrelevant in ChromeHome.
     public void testAddSuggestionsNotification() {
         final int suggestionCount = 5;
         List<SnippetArticle> snippets = createDummySuggestions(suggestionCount,
@@ -223,7 +209,6 @@ public class SuggestionsSectionTest {
 
     @Test
     @Feature({"Ntp"})
-    @ChromeHome.Disable // Assumes status card on empty state, irrelevant in ChromeHome.
     public void testSetStatusNotification() {
         final int suggestionCount = 5;
         List<SnippetArticle> snippets = createDummySuggestions(suggestionCount,
@@ -264,7 +249,6 @@ public class SuggestionsSectionTest {
 
     @Test
     @Feature({"Ntp"})
-    @ChromeHome.Disable // Assumes status card on empty state, irrelevant in ChromeHome.
     public void testRemoveSuggestionNotification() {
         final int suggestionCount = 2;
         List<SnippetArticle> snippets = createDummySuggestions(suggestionCount,
@@ -290,7 +274,6 @@ public class SuggestionsSectionTest {
 
     @Test
     @Feature({"Ntp"})
-    @ChromeHome.Disable // Assumes status card on empty state, irrelevant in ChromeHome.
     public void testRemoveSuggestionNotificationWithButton() {
         final int suggestionCount = 2;
         List<SnippetArticle> snippets = createDummySuggestions(suggestionCount,
@@ -322,7 +305,6 @@ public class SuggestionsSectionTest {
 
     @Test
     @Feature({"Ntp"})
-    @ChromeHome.Disable // Sections can't be dismissed in ChromeHome
     public void testDismissSection() {
         SuggestionsSection section = createSectionWithFetchAction(false);
         section.setStatus(CategoryStatus.AVAILABLE);
@@ -889,7 +871,6 @@ public class SuggestionsSectionTest {
 
     @Test
     @Feature({"Ntp"})
-    @ChromeHome.Disable // Assumes paired status card and action item, irrelevant in ChromeHome.
     public void testGetItemDismissalGroupWithActionItem() {
         SuggestionsSection section = createSectionWithFetchAction(true);
         assertThat(section.getItemDismissalGroup(1).size(), is(2));
@@ -898,7 +879,6 @@ public class SuggestionsSectionTest {
 
     @Test
     @Feature({"Ntp"})
-    @ChromeHome.Disable // Sections can't be dismissed in ChromeHome
     public void testGetItemDismissalGroupWithoutActionItem() {
         SuggestionsSection section = createSectionWithFetchAction(false);
         assertThat(section.getItemDismissalGroup(1).size(), is(1));
