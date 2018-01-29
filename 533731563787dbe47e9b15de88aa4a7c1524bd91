@@ -236,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "26fb7a92_fa5afb5f",
+        "filename": "third_party/android_crazy_linker/src/src/crazy_linker_pointer_set.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-29T16:41:50Z",
+      "side": 1,
+      "message": "Pardon, did not notice, it is called on |valid_handles| in GetValidDlopenHandlesForTesting(). Could it use GetValuesForTesting()?",
+      "parentUuid": "2f87a8b9_b4330770",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 60
+      },
+      "revId": "533731563787dbe47e9b15de88aa4a7c1524bd91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07f15cbc_a9e33c81",
         "filename": "third_party/android_crazy_linker/src/src/crazy_linker_pointer_set.h",
         "patchSetId": 3
