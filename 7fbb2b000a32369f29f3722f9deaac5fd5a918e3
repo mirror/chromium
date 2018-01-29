@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "472f4e40_3e139969",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2018-01-29T18:58:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36911d2b_d8d2c30d",
+      "range": {
+        "startLine": 128,
+        "startChar": 16,
+        "endLine": 128,
+        "endChar": 57
+      },
+      "revId": "7fbb2b000a32369f29f3722f9deaac5fd5a918e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2ded22a_ad08c493",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
         "patchSetId": 17
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6a79fe36_4f69c582",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2018-01-29T18:58:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2ded22a_ad08c493",
+      "range": {
+        "startLine": 208,
+        "startChar": 26,
+        "endLine": 209,
+        "endChar": 25
+      },
+      "revId": "7fbb2b000a32369f29f3722f9deaac5fd5a918e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "add4e11d_3328eaa2",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
         "patchSetId": 17
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-29T17:49:04Z",
       "side": 1,
       "message": "nit: can you put the rounding into GetPreferredSize (override that method)?",
+      "range": {
+        "startLine": 228,
+        "startChar": 17,
+        "endLine": 228,
+        "endChar": 37
+      },
+      "revId": "7fbb2b000a32369f29f3722f9deaac5fd5a918e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a0fdc7a_52151357",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2018-01-29T18:58:45Z",
+      "side": 1,
+      "message": "I would have preferred that as well, but it\u0027s not virtual.",
+      "parentUuid": "add4e11d_3328eaa2",
       "range": {
         "startLine": 228,
         "startChar": 17,
