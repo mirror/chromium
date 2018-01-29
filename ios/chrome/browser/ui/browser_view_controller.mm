@@ -4847,6 +4847,9 @@ bubblePresenterForFeature:(const base::Feature&)feature
   }
   [self updateVoiceSearchBarVisibilityAnimated:NO];
 
+  id<CRWWebViewProxy> webViewProxy = self.currentWebState->GetWebViewProxy();
+  [webViewProxy.scrollViewProxy setClipsToBound:NO];
+
   [_paymentRequestManager setActiveWebState:newTab.webState];
 
   [self tabSelected:newTab notifyToolbar:YES];
