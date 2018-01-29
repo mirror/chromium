@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9dbcc303_9a3d97d3",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers_browser_proxy.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2018-01-29T21:18:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "685857b1_44e33f71",
+      "range": {
+        "startLine": 126,
+        "startChar": 21,
+        "endLine": 126,
+        "endChar": 25
+      },
+      "revId": "a6aa32433ea644a28966cf28ecd9aec68610053d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58e4ed64_a724ef91",
         "filename": "chrome/browser/resources/settings/printing_page/cups_set_manufacturer_model_behavior.js",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "a6aa32433ea644a28966cf28ecd9aec68610053d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ab357b6_9bc5db54",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_set_manufacturer_model_behavior.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2018-01-29T21:18:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58e4ed64_a724ef91",
+      "range": {
+        "startLine": 90,
+        "startChar": 5,
+        "endLine": 90,
+        "endChar": 15
+      },
+      "revId": "a6aa32433ea644a28966cf28ecd9aec68610053d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -83,6 +131,24 @@
     },
     {
       "key": {
+        "uuid": "ec4b120e_f2735c21",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_set_manufacturer_model_behavior.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2018-01-29T21:18:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5217f810_f9241b82",
+      "revId": "a6aa32433ea644a28966cf28ecd9aec68610053d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c2150f0_48d956a2",
         "filename": "chrome/browser/resources/settings/printing_page/cups_set_manufacturer_model_behavior.js",
         "patchSetId": 2
@@ -118,6 +184,24 @@
     },
     {
       "key": {
+        "uuid": "43aa41dc_0f7fb4d4",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_set_manufacturer_model_behavior.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2018-01-29T21:18:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de0c6b2b_8e6afa82",
+      "revId": "a6aa32433ea644a28966cf28ecd9aec68610053d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a91a95b5_8237b3c5",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
         "patchSetId": 2
@@ -132,6 +216,24 @@
       "revId": "a6aa32433ea644a28966cf28ecd9aec68610053d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef67d6f8_1cb138da",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2018-01-29T21:18:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a91a95b5_8237b3c5",
+      "revId": "a6aa32433ea644a28966cf28ecd9aec68610053d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -158,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "7fd7c90e_f565b7ea",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2018-01-29T21:18:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "735c6971_279892fc",
+      "range": {
+        "startLine": 728,
+        "startChar": 2,
+        "endLine": 728,
+        "endChar": 48
+      },
+      "revId": "a6aa32433ea644a28966cf28ecd9aec68610053d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b111818_5cb52a52",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
         "patchSetId": 2
@@ -172,6 +298,24 @@
       "revId": "a6aa32433ea644a28966cf28ecd9aec68610053d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05fb9b2b_4b8a9033",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2018-01-29T21:18:07Z",
+      "side": 1,
+      "message": "I\u0027ve changed this to use the ReadFileToStringWithMaxSize() function and set the \"max_size\" parameter to kPpdMaxLineLength, so there should no longer be any issue with checking large files.",
+      "parentUuid": "9b111818_5cb52a52",
+      "revId": "a6aa32433ea644a28966cf28ecd9aec68610053d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -192,6 +336,24 @@
     },
     {
       "key": {
+        "uuid": "634e376f_22dbae33",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2018-01-29T21:18:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98132810_f414f4b5",
+      "revId": "a6aa32433ea644a28966cf28ecd9aec68610053d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e655354_0ec657e2",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
         "patchSetId": 2
@@ -206,6 +368,24 @@
       "revId": "a6aa32433ea644a28966cf28ecd9aec68610053d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62ad60f0_aeef0a79",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2018-01-29T21:18:07Z",
+      "side": 1,
+      "message": "I removed the code that references this constant as I realized that it\u0027s no longer necessary.",
+      "parentUuid": "3e655354_0ec657e2",
+      "revId": "a6aa32433ea644a28966cf28ecd9aec68610053d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +412,30 @@
     },
     {
       "key": {
+        "uuid": "c0fd1773_b4a6c00a",
+        "filename": "chromeos/printing/ppd_line_reader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2018-01-29T21:18:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2347b6f_7b3df519",
+      "range": {
+        "startLine": 30,
+        "startChar": 5,
+        "endLine": 30,
+        "endChar": 9
+      },
+      "revId": "a6aa32433ea644a28966cf28ecd9aec68610053d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7b04395_fe53365f",
         "filename": "chromeos/printing/ppd_line_reader.h",
         "patchSetId": 2
@@ -255,6 +459,30 @@
     },
     {
       "key": {
+        "uuid": "d4d653f4_8489f70b",
+        "filename": "chromeos/printing/ppd_line_reader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2018-01-29T21:18:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7b04395_fe53365f",
+      "range": {
+        "startLine": 31,
+        "startChar": 40,
+        "endLine": 31,
+        "endChar": 53
+      },
+      "revId": "a6aa32433ea644a28966cf28ecd9aec68610053d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f249f505_432692e9",
         "filename": "chromeos/printing/ppd_line_reader_unittest.cc",
         "patchSetId": 2
@@ -269,6 +497,24 @@
       "revId": "a6aa32433ea644a28966cf28ecd9aec68610053d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be173765_a85aa124",
+        "filename": "chromeos/printing/ppd_line_reader_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2018-01-29T21:18:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f249f505_432692e9",
+      "revId": "a6aa32433ea644a28966cf28ecd9aec68610053d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
