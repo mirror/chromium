@@ -2,6 +2,259 @@
   "comments": [
     {
       "key": {
+        "uuid": "1096a652_c0f46ff6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/PreviewFactory.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-29T21:55:40Z",
+      "side": 1,
+      "message": "nit: this goes on the other side",
+      "range": {
+        "startLine": 39,
+        "startChar": 40,
+        "endLine": 39,
+        "endChar": 55
+      },
+      "revId": "5200381c63237dad328abefc4e9594051e944921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2ca65bf_8b6a9e4d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/SourceFrame.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-29T21:55:40Z",
+      "side": 1,
+      "message": "_formattedContentPromise",
+      "range": {
+        "startLine": 47,
+        "startChar": 9,
+        "endLine": 47,
+        "endChar": 26
+      },
+      "revId": "5200381c63237dad328abefc4e9594051e944921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49893499_4dc94045",
+        "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/SourceFrame.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-29T21:55:40Z",
+      "side": 1,
+      "message": "/** @type {FormatterScriptMapping} */",
+      "range": {
+        "startLine": 48,
+        "startChar": 9,
+        "endLine": 48,
+        "endChar": 22
+      },
+      "revId": "5200381c63237dad328abefc4e9594051e944921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b5d44d2_44371ad3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/SourceFrame.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-29T21:55:40Z",
+      "side": 1,
+      "message": "you\u0027ll be able to drop _canPrettyPrint",
+      "range": {
+        "startLine": 100,
+        "startChar": 9,
+        "endLine": 100,
+        "endChar": 24
+      },
+      "revId": "5200381c63237dad328abefc4e9594051e944921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1086ed42_735da962",
+        "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/SourceFrame.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-29T21:55:40Z",
+      "side": 1,
+      "message": "can we have _shouldAutoPrettyPrint include the autoPrettyPrint? otherwise we seem to always check for it",
+      "range": {
+        "startLine": 101,
+        "startChar": 9,
+        "endLine": 101,
+        "endChar": 31
+      },
+      "revId": "5200381c63237dad328abefc4e9594051e944921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f501e7e4_19ab2806",
+        "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/SourceFrame.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-29T21:55:40Z",
+      "side": 1,
+      "message": "there should be always a formatter map",
+      "range": {
+        "startLine": 119,
+        "startChar": 18,
+        "endLine": 119,
+        "endChar": 31
+      },
+      "revId": "5200381c63237dad328abefc4e9594051e944921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aca8e9f_55f44ade",
+        "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/SourceFrame.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-29T21:55:40Z",
+      "side": 1,
+      "message": "does this reset history?",
+      "range": {
+        "startLine": 132,
+        "startChar": 11,
+        "endLine": 132,
+        "endChar": 21
+      },
+      "revId": "5200381c63237dad328abefc4e9594051e944921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11d333f8_f48bc25c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/SourceFrame.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-29T21:55:40Z",
+      "side": 1,
+      "message": "let\u0027s have two methods",
+      "range": {
+        "startLine": 143,
+        "startChar": 2,
+        "endLine": 143,
+        "endChar": 15
+      },
+      "revId": "5200381c63237dad328abefc4e9594051e944921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7368ec13_665f9286",
+        "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/SourceFrame.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-29T21:55:40Z",
+      "side": 1,
+      "message": "@param {string} content",
+      "range": {
+        "startLine": 217,
+        "startChar": 6,
+        "endLine": 217,
+        "endChar": 12
+      },
+      "revId": "5200381c63237dad328abefc4e9594051e944921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "979ab6d9_0213ee05",
+        "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/SourceFrame.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-29T21:55:40Z",
+      "side": 1,
+      "message": "drop and just use _rawContent",
+      "range": {
+        "startLine": 219,
+        "startChar": 27,
+        "endLine": 219,
+        "endChar": 34
+      },
+      "revId": "5200381c63237dad328abefc4e9594051e944921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f4e0c4e_88f6940c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/SourceFrame.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-29T21:55:40Z",
+      "side": 1,
+      "message": "let\u0027s use convertRange/convertLocation here to be consistent",
+      "range": {
+        "startLine": 642,
+        "startChar": 44,
+        "endLine": 642,
+        "endChar": 63
+      },
+      "revId": "5200381c63237dad328abefc4e9594051e944921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "67edc1b6_9a1f1142",
         "filename": "third_party/WebKit/Source/devtools/scripts/compile_frontend.py",
         "patchSetId": 1
