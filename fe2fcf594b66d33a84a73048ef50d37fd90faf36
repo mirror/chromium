@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a1a7367_705f0f0f",
+        "filename": "media/capture/video/file_video_capture_device.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-29T21:30:05Z",
+      "side": 1,
+      "message": "nit: {} if the body or the condition has \u003e1 line.",
+      "range": {
+        "startLine": 364,
+        "startChar": 62,
+        "endLine": 365,
+        "endChar": 11
+      },
+      "revId": "fe2fcf594b66d33a84a73048ef50d37fd90faf36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93c1c9ca_bbc0c469",
+        "filename": "media/capture/video/file_video_capture_device.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-29T21:30:05Z",
+      "side": 1,
+      "message": "nit: just bundle all these has_bla conditions?",
+      "range": {
+        "startLine": 370,
+        "startChar": 0,
+        "endLine": 400,
+        "endChar": 0
+      },
+      "revId": "fe2fcf594b66d33a84a73048ef50d37fd90faf36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
