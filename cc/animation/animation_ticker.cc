@@ -4,6 +4,8 @@
 
 #include "cc/animation/animation_ticker.h"
 
+#include <memory>
+
 #include "base/stl_util.h"
 #include "base/time/time.h"
 #include "cc/animation/animation.h"
@@ -30,7 +32,7 @@ AnimationTicker::~AnimationTicker() {
 }
 
 std::unique_ptr<AnimationTicker> AnimationTicker::Create(TickerId id) {
-  return base::MakeUnique<AnimationTicker>(id);
+  return std::make_unique<AnimationTicker>(id);
 }
 
 std::unique_ptr<AnimationTicker> AnimationTicker::CreateImplInstance() const {

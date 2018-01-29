@@ -4,6 +4,8 @@
 
 #include "cc/animation/animation_player.h"
 
+#include <memory>
+
 #include "base/strings/stringprintf.h"
 #include "cc/animation/animation_delegate.h"
 #include "cc/animation/animation_host.h"
@@ -150,7 +152,7 @@ class AnimationPlayerTest : public AnimationTimelinesTest {
 // See element_animations_unittest.cc for active/pending observers tests.
 
 TEST_F(AnimationPlayerTest, AttachDetachLayerIfTimelineAttached) {
-  player_->AddTicker(base::MakeUnique<AnimationTicker>(ticker_id_));
+  player_->AddTicker(std::make_unique<AnimationTicker>(ticker_id_));
   ASSERT_TRUE(player_->GetTickerById(ticker_id_));
   EXPECT_FALSE(player_->GetTickerById(ticker_id_)->needs_push_properties());
   CheckTickerAndTimelineNeedsPushProperties(false, ticker_id_);
@@ -219,7 +221,7 @@ TEST_F(AnimationPlayerTest, AttachDetachLayerIfTimelineAttached) {
 TEST_F(AnimationPlayerTest, AttachDetachTimelineIfLayerAttached) {
   host_->AddAnimationTimeline(timeline_);
 
-  player_->AddTicker(base::MakeUnique<AnimationTicker>(ticker_id_));
+  player_->AddTicker(std::make_unique<AnimationTicker>(ticker_id_));
   ASSERT_TRUE(player_->GetTickerById(ticker_id_));
 
   EXPECT_FALSE(player_->GetTickerById(ticker_id_)->element_animations());
@@ -257,7 +259,7 @@ TEST_F(AnimationPlayerTest, PropertiesMutate) {
 
   host_->AddAnimationTimeline(timeline_);
 
-  player_->AddTicker(base::MakeUnique<AnimationTicker>(ticker_id_));
+  player_->AddTicker(std::make_unique<AnimationTicker>(ticker_id_));
   ASSERT_TRUE(player_->GetTickerById(ticker_id_));
 
   timeline_->AttachPlayer(player_);
@@ -349,10 +351,10 @@ TEST_F(AnimationPlayerTest, AttachTwoPlayersToOneLayer) {
   scoped_refptr<AnimationPlayer> player2 = AnimationPlayer::Create(200);
 
   TickerId ticker_id1 = player1->NextTickerId();
-  player1->AddTicker(base::MakeUnique<AnimationTicker>(ticker_id1));
+  player1->AddTicker(std::make_unique<AnimationTicker>(ticker_id1));
   ASSERT_TRUE(player1->GetTickerById(ticker_id1));
   TickerId ticker_id2 = player2->NextTickerId();
-  player2->AddTicker(base::MakeUnique<AnimationTicker>(ticker_id2));
+  player2->AddTicker(std::make_unique<AnimationTicker>(ticker_id2));
   ASSERT_TRUE(player2->GetTickerById(ticker_id2));
 
   host_->AddAnimationTimeline(timeline_);
@@ -435,7 +437,7 @@ TEST_F(AnimationPlayerTest, AddRemoveAnimationToNonAttachedPlayer) {
   client_impl_.RegisterElement(element_id_, ElementListType::PENDING);
   client_impl_.RegisterElement(element_id_, ElementListType::ACTIVE);
 
-  player_->AddTicker(base::MakeUnique<AnimationTicker>(ticker_id_));
+  player_->AddTicker(std::make_unique<AnimationTicker>(ticker_id_));
   ASSERT_TRUE(player_->GetTickerById(ticker_id_));
 
   const double duration = 1.;
@@ -505,7 +507,7 @@ TEST_F(AnimationPlayerTest, AddRemoveAnimationToNonAttachedPlayer) {
 TEST_F(AnimationPlayerTest, AddRemoveAnimationCausesSetNeedsCommit) {
   client_.RegisterElement(element_id_, ElementListType::ACTIVE);
   host_->AddAnimationTimeline(timeline_);
-  player_->AddTicker(base::MakeUnique<AnimationTicker>(ticker_id_));
+  player_->AddTicker(std::make_unique<AnimationTicker>(ticker_id_));
   ASSERT_TRUE(player_->GetTickerById(ticker_id_));
 
   timeline_->AttachPlayer(player_);
@@ -532,7 +534,7 @@ TEST_F(AnimationPlayerTest, AddRemoveAnimationCausesSetNeedsCommit) {
 // impl-thread player must be switched as well.
 TEST_F(AnimationPlayerTest, SwitchToLayer) {
   host_->AddAnimationTimeline(timeline_);
-  player_->AddTicker(base::MakeUnique<AnimationTicker>(ticker_id_));
+  player_->AddTicker(std::make_unique<AnimationTicker>(ticker_id_));
   timeline_->AttachPlayer(player_);
   player_->AttachElementForTicker(element_id_, ticker_id_);
 
@@ -575,7 +577,7 @@ TEST_F(AnimationPlayerTest, SwitchToLayer) {
 }
 
 TEST_F(AnimationPlayerTest, ToString) {
-  player_->AddTicker(base::MakeUnique<AnimationTicker>(ticker_id_));
+  player_->AddTicker(std::make_unique<AnimationTicker>(ticker_id_));
   player_->AttachElementForTicker(element_id_, ticker_id_);
   EXPECT_EQ(
       base::StringPrintf("AnimationPlayer{id=%d, element_id=%s, animations=[]}",
@@ -610,7 +612,7 @@ TEST_F(AnimationPlayerTest, ToString) {
 
   TickerId second_ticker_id = player_->NextTickerId();
   ElementId second_element_id(NextTestLayerId());
-  player_->AddTicker(base::MakeUnique<AnimationTicker>(second_ticker_id));
+  player_->AddTicker(std::make_unique<AnimationTicker>(second_ticker_id));
   player_->AttachElementForTicker(second_element_id, second_ticker_id);
   player_->AddAnimationForTicker(
       Animation::Create(std::make_unique<FakeFloatAnimationCurve>(20), 48, 78,
@@ -639,12 +641,12 @@ TEST_F(AnimationPlayerTest, AddTwoTickersFromTheSameElementToOnePlayerTest) {
 
   TickerId ticker_id1 = player_->NextTickerId();
 
-  player_->AddTicker(base::MakeUnique<AnimationTicker>(ticker_id1));
+  player_->AddTicker(std::make_unique<AnimationTicker>(ticker_id1));
   ASSERT_TRUE(player_->GetTickerById(ticker_id1));
   EXPECT_FALSE(player_->GetTickerById(ticker_id1)->needs_push_properties());
 
   TickerId ticker_id2 = player_->NextTickerId();
-  player_->AddTicker(base::MakeUnique<AnimationTicker>(ticker_id2));
+  player_->AddTicker(std::make_unique<AnimationTicker>(ticker_id2));
   ASSERT_TRUE(player_->GetTickerById(ticker_id2));
   EXPECT_FALSE(player_->GetTickerById(ticker_id2)->needs_push_properties());
 
@@ -747,12 +749,12 @@ TEST_F(AnimationPlayerTest, AddTwoTickersFromDifferentElementsToOnePlayerTest) {
 
   TickerId ticker_id1 = player_->NextTickerId();
 
-  player_->AddTicker(base::MakeUnique<AnimationTicker>(ticker_id1));
+  player_->AddTicker(std::make_unique<AnimationTicker>(ticker_id1));
   ASSERT_TRUE(player_->GetTickerById(ticker_id1));
   EXPECT_FALSE(player_->GetTickerById(ticker_id1)->needs_push_properties());
 
   TickerId ticker_id2 = player_->NextTickerId();
-  player_->AddTicker(base::MakeUnique<AnimationTicker>(ticker_id2));
+  player_->AddTicker(std::make_unique<AnimationTicker>(ticker_id2));
   ASSERT_TRUE(player_->GetTickerById(ticker_id2));
   EXPECT_FALSE(player_->GetTickerById(ticker_id2)->needs_push_properties());
 
@@ -826,12 +828,12 @@ TEST_F(AnimationPlayerTest, TickingAnimationsFromTwoTickers) {
 
   TickerId ticker_id1 = player_->NextTickerId();
 
-  player_->AddTicker(base::MakeUnique<AnimationTicker>(ticker_id1));
+  player_->AddTicker(std::make_unique<AnimationTicker>(ticker_id1));
   ASSERT_TRUE(player_->GetTickerById(ticker_id1));
   EXPECT_FALSE(player_->GetTickerById(ticker_id1)->needs_push_properties());
 
   TickerId ticker_id2 = player_->NextTickerId();
-  player_->AddTicker(base::MakeUnique<AnimationTicker>(ticker_id2));
+  player_->AddTicker(std::make_unique<AnimationTicker>(ticker_id2));
   ASSERT_TRUE(player_->GetTickerById(ticker_id2));
   EXPECT_FALSE(player_->GetTickerById(ticker_id2)->needs_push_properties());
 
@@ -903,7 +905,7 @@ TEST_F(AnimationPlayerTest, TickerSyncToImplTest) {
   timeline_->AttachPlayer(player_);
 
   TickerId ticker_id1 = player_->NextTickerId();
-  player_->AddTicker(base::MakeUnique<AnimationTicker>(ticker_id1));
+  player_->AddTicker(std::make_unique<AnimationTicker>(ticker_id1));
   EXPECT_TRUE(player_->GetTickerById(ticker_id1));
   EXPECT_FALSE(player_->GetTickerById(ticker_id1)->needs_push_properties());
 
@@ -918,7 +920,7 @@ TEST_F(AnimationPlayerTest, TickerSyncToImplTest) {
   EXPECT_FALSE(timeline_->needs_push_properties());
 
   TickerId ticker_id2 = player_->NextTickerId();
-  player_->AddTicker(base::MakeUnique<AnimationTicker>(ticker_id2));
+  player_->AddTicker(std::make_unique<AnimationTicker>(ticker_id2));
   EXPECT_TRUE(timeline_->needs_push_properties());
 
   host_->PushPropertiesTo(host_impl_);

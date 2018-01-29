@@ -6,6 +6,7 @@
 
 #include <inttypes.h>
 #include <algorithm>
+#include <memory>
 
 #include "base/stl_util.h"
 #include "base/strings/stringprintf.h"
@@ -28,14 +29,14 @@ scoped_refptr<SingleTickerAnimationPlayer> SingleTickerAnimationPlayer::Create(
 SingleTickerAnimationPlayer::SingleTickerAnimationPlayer(int id)
     : AnimationPlayer(id) {
   DCHECK(id_);
-  AddTicker(base::MakeUnique<AnimationTicker>(NextTickerId()));
+  AddTicker(std::make_unique<AnimationTicker>(NextTickerId()));
 }
 
 SingleTickerAnimationPlayer::SingleTickerAnimationPlayer(int id,
                                                          size_t ticker_id)
     : AnimationPlayer(id) {
   DCHECK(id_);
-  AddTicker(base::MakeUnique<AnimationTicker>(ticker_id));
+  AddTicker(std::make_unique<AnimationTicker>(ticker_id));
 }
 
 SingleTickerAnimationPlayer::~SingleTickerAnimationPlayer() {}
