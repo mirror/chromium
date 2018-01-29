@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "b7bb6f80_c733624a",
+        "filename": "build/mac/should_use_hermetic_xcode.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2018-01-29T23:51:28Z",
+      "side": 1,
+      "message": "OK, thanks for the info! I\u0027ll try it out on my iOS-specific checkout then (since for Mac-only this should be a no-op).",
+      "parentUuid": "1aad92b6_e1ce321a",
+      "range": {
+        "startLine": 31,
+        "startChar": 43,
+        "endLine": 31,
+        "endChar": 44
+      },
+      "revId": "82d981d5477e95c0ab70a407ea80873a149be9e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b919a780_4d103277",
         "filename": "build/mac_toolchain.py",
         "patchSetId": 2
@@ -126,6 +150,24 @@
     },
     {
       "key": {
+        "uuid": "4085c6c3_88c7eeb0",
+        "filename": "build/mac_toolchain.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2018-01-29T23:51:28Z",
+      "side": 1,
+      "message": "I see. OK, then I\u0027ll have to support Xcode 8 before I can meaningfully test this.",
+      "parentUuid": "292f17e9_98934580",
+      "revId": "82d981d5477e95c0ab70a407ea80873a149be9e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5a4fffe_55c6698d",
         "filename": "build/mac_toolchain.py",
         "patchSetId": 2
@@ -173,6 +215,24 @@
       "side": 1,
       "message": "If you\u0027ve confirmed that it works in practice, then that\u0027s good enough for me.",
       "parentUuid": "a752562a_dad3a24b",
+      "revId": "82d981d5477e95c0ab70a407ea80873a149be9e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad22f0dc_b740d1b7",
+        "filename": "build/mac_toolchain.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2018-01-29T23:51:28Z",
+      "side": 1,
+      "message": "Yep, it has a corresponding unit test - https://chromium.googlesource.com/infra/infra/+/master/go/src/infra/cmd/mac_toolchain/install_test.go#114\nand is currently used in production for all iOS swarming and buildbot bots.",
+      "parentUuid": "0d2646de_2c05a19b",
       "revId": "82d981d5477e95c0ab70a407ea80873a149be9e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
