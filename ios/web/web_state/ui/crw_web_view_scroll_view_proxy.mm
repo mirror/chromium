@@ -64,6 +64,10 @@
   [_observers removeObserver:observer];
 }
 
+- (void)setClipsToBounds:(BOOL)clipsToBounds {
+  _scrollView.clipsToBounds = clipsToBounds;
+}
+
 - (void)setScrollView:(UIScrollView*)scrollView {
   if (_scrollView == scrollView)
     return;
