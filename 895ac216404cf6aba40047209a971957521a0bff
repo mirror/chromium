@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d13cdd25_e50695be",
+        "filename": "services/network/public/cpp/cors/cors.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-29T08:00:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd67b7fe_cec6a1a3",
+      "revId": "895ac216404cf6aba40047209a971957521a0bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a41f62a8_90babc82",
         "filename": "services/network/public/cpp/cors/cors.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "895ac216404cf6aba40047209a971957521a0bff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dd71fe2_27a4588d",
+        "filename": "services/network/public/cpp/cors/cors.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-29T08:00:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a41f62a8_90babc82",
+      "revId": "895ac216404cf6aba40047209a971957521a0bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "40af061f_3d10c0cf",
+        "filename": "services/network/public/cpp/cors/cors.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-29T08:00:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b828ea74_def0665b",
+      "revId": "895ac216404cf6aba40047209a971957521a0bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "272280c9_45848c6d",
         "filename": "services/network/public/cpp/cors/cors.cc",
         "patchSetId": 2
@@ -67,6 +121,47 @@
       "revId": "895ac216404cf6aba40047209a971957521a0bff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4acc2dfd_9b643619",
+        "filename": "services/network/public/cpp/cors/cors.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-29T08:00:43Z",
+      "side": 1,
+      "message": "This intends to replace https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/network/HTTPParsers.cpp?type\u003dcs\u0026l\u003d343 that roughly implements parsing \"media type\" of RFC2616 to extract \"mime type\" of RFC2045. So this does not implement a strict ABNF parser, but roughly removes parameters part so that net::ParseMimeTypeWithoutParameter can extract a valid MIME type part. This //net function implements a strict ABNF parser of RFC2045, token \"/\" token.\n\nAlternative choice is to use net::MatchesMimeType that can correctly ignore parameters that follows \";\". But we need to call it per type, and code would be something like\n\n return (net::MatchesMimeType(\"application/x-www-form-urlencoded\", media_type) ||\n     net::MatchesMimeType(\"multipart/form-data\", media_type) ||\n     net::MatchesMimeType(\"text/plain\", media_type));\n\nAnd I think it also just ignores parameters part, and does not implement a strict RFC2616 ABNF parser.\n\nProbably, we would have a discussion when we move this to //net ?",
+      "parentUuid": "272280c9_45848c6d",
+      "revId": "895ac216404cf6aba40047209a971957521a0bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61c222e0_d0732a2d",
+        "filename": "third_party/WebKit/Source/core/fetch/Headers.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-29T08:00:43Z",
+      "side": 1,
+      "message": "let me remove AtomicString conversion. Now that we use std::set, this conversion just costs.",
+      "range": {
+        "startLine": 103,
+        "startChar": 36,
+        "endLine": 103,
+        "endChar": 48
+      },
+      "revId": "895ac216404cf6aba40047209a971957521a0bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +182,24 @@
     },
     {
       "key": {
+        "uuid": "919f6466_28760d92",
+        "filename": "third_party/WebKit/Source/platform/loader/cors/CORS.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-29T08:00:43Z",
+      "side": 1,
+      "message": "Sounds nice.",
+      "parentUuid": "cf2177a6_f117e3b7",
+      "revId": "895ac216404cf6aba40047209a971957521a0bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9be4f11a_48da3a87",
         "filename": "third_party/WebKit/Source/platform/loader/cors/CORS.cpp",
         "patchSetId": 2
@@ -104,6 +217,24 @@
     },
     {
       "key": {
+        "uuid": "bd186a6e_c6d8cfc0",
+        "filename": "third_party/WebKit/Source/platform/loader/cors/CORS.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-29T08:00:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9be4f11a_48da3a87",
+      "revId": "895ac216404cf6aba40047209a971957521a0bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "505e9525_3719e738",
         "filename": "third_party/WebKit/Source/platform/loader/cors/CORS.cpp",
         "patchSetId": 2
@@ -118,6 +249,24 @@
       "revId": "895ac216404cf6aba40047209a971957521a0bff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4934551_8b5b9afd",
+        "filename": "third_party/WebKit/Source/platform/loader/cors/CORS.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-29T08:00:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "505e9525_3719e738",
+      "revId": "895ac216404cf6aba40047209a971957521a0bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
