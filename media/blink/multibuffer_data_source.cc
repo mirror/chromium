@@ -278,12 +278,30 @@ bool MultibufferDataSource::HasSingleOrigin() {
 bool MultibufferDataSource::DidPassCORSAccessCheck() const {
   if (url_data_->cors_mode() == UrlData::CORS_UNSPECIFIED)
     return false;
-  // If init_cb is set, we initialization is not finished yet.
+
+  // If init_cb is set, we know initialization is not finished yet.
   if (!init_cb_.is_null())
     return false;
   if (failed_)
     return false;
   return true;
+}
+
+bool MultibufferDataSource::DidGetOpaqueResponseViaServiceWorker() const {
+  switch (url_data_->response_type_via_service_worker()) {
+    case network::mojom::FetchResponseType::kDefault:
+    case network::mojom::FetchResponseType::kBasic:
+    case network::mojom::FetchResponseType::kCORS:
+      break;
+    case network::mojom::FetchResponseType::kError:
+    case network::mojom::FetchResponseType::kOpaque:
+    case network::mojom::FetchResponseType::kOpaqueRedirect:
+      return true;
+  }
+
+  // TODO(falken): Do we need to do something about |init_cb_| like
+  // in DidPassCORSAccessCheck()?
+  return false;
 }
 
 void MultibufferDataSource::MediaPlaybackRateChanged(double playback_rate) {
