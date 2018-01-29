@@ -16,6 +16,7 @@
 
 namespace arc {
 
+// TODO(hiroh): Remove ProtectedBufferHandle
 // A ProtectedBufferHandle is returned to the owning client that requested
 // the underlying ProtectedBuffer to be allocated.
 //
@@ -60,6 +61,29 @@ class ProtectedBufferManager {
   ProtectedBufferManager();
   ~ProtectedBufferManager();
 
+  // Return nullptr on failure.
+  static std::shared_ptr<ProtectedBufferManager> Create();
+
+  // Called from GpuArcVideoDecodeAccelerator.
+  // Return active ProtectedBuffermanager.
+  static ProtectedBufferManager* GetInstance();
+
+  // Allocate a ProtectedSharedMemory buffer of |size| bytes, to be referred to
+  // via |dummy_fd| as the dummy handle.
+  // Return whether or not allocating is successfully done or not.
+  bool AllocateProtectedSharedMemory(base::ScopedFD dummy_fd, size_t size);
+
+  // Allocate a ProtectedNativePixmap of |format| and |size|, to be referred to
+  // via |dummy_fd| as the dummy handle.
+  // Return whether or not allocating is successfully done or not.
+  bool AllocateProtectedNativePixmap(base::ScopedFD dummy_fd,
+                                     gfx::BufferFormat format,
+                                     const gfx::Size& size);
+
+  // Destroy ProtectedBufferHandle or NativePixmap associated with |dummy_fd|.
+  // Return false if if there is no such a protected buffer.
+  bool DeallocateProtectedBuffer(base::ScopedFD dummy_fd);
+
   // Allocate a ProtectedSharedMemory buffer of |size| bytes, to be referred to
   // via |dummy_fd| as the dummy handle, returning a ProtectedBufferHandle to
   // it.
@@ -68,7 +92,8 @@ class ProtectedBufferManager {
   // not free the underlying protected memory, which will remain valid as long
   // as any SharedMemoryHandles to it are still in use.
   // Return nullptr on failure.
-  std::unique_ptr<ProtectedBufferHandle> AllocateProtectedSharedMemory(
+  // TODO(hiroh): Remove.
+  std::unique_ptr<ProtectedBufferHandle> AllocateProtectedSharedMemoryDeprecated(
       base::ScopedFD dummy_fd,
       size_t size);
 
@@ -80,7 +105,8 @@ class ProtectedBufferManager {
   // not free the underlying protected memory, which will remain valid as long
   // as any NativePixmapHandles to it are still in use.
   // Return nullptr on failure.
-  std::unique_ptr<ProtectedBufferHandle> AllocateProtectedNativePixmap(
+  // TODO(hiroh): Remove.
+  std::unique_ptr<ProtectedBufferHandle> AllocateProtectedNativePixmapDeprecated(
       base::ScopedFD dummy_fd,
       gfx::BufferFormat format,
       const gfx::Size& size);
@@ -122,9 +148,21 @@ class ProtectedBufferManager {
   scoped_refptr<gfx::NativePixmap> ImportDummyFd(base::ScopedFD dummy_fd,
                                                  uint32_t* id) const;
 
+  // Deallocate all the protected buffers managed by ProtectedBufferManager.
+  // This is called from this destructor.
+  // Destroying the buffers will result in permanently disassociating
+  // the |dummy_fd| with the underlying ProtectedBuffer, but may not free
+  // the underlying protected memory, which will remain valid as long
+  // as any buffers to it are still in use.
+  bool DeallocateAllProtectedBuffers();
+
   // Removes an entry for given |id| from buffer_map_, to be called when the
   // last reference to the buffer is dropped.
+  // TODO(hiroh): Remove.
   void RemoveEntry(uint32_t id);
+
+  static std::weak_ptr<ProtectedBufferManager> protected_buffer_manager_;
+  static std::mutex pbm_mutex_;
 
   // A map of unique ids to the ProtectedBuffers associated with them.
   using ProtectedBufferMap =
@@ -132,6 +170,7 @@ class ProtectedBufferManager {
   ProtectedBufferMap buffer_map_;
   base::Lock buffer_map_lock_;
 
+  // TODO(hiroh): Remove.
   base::WeakPtr<ProtectedBufferManager> weak_this_;
   base::WeakPtrFactory<ProtectedBufferManager> weak_factory_;
 

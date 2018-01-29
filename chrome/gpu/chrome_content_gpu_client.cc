@@ -93,6 +93,10 @@ void ChromeContentGpuClient::InitializeRegistry(
     service_manager::BinderRegistry* registry) {
 #if defined(OS_CHROMEOS)
   registry->AddInterface(
+      base::Bind(&ChromeContentGpuClient::CreateArcVideoDecodeAcceleratorDeprecated,
+                 base::Unretained(this)),
+      base::ThreadTaskRunnerHandle::Get());
+  registry->AddInterface(
       base::Bind(&ChromeContentGpuClient::CreateArcVideoDecodeAccelerator,
                  base::Unretained(this)),
       base::ThreadTaskRunnerHandle::Get());
@@ -142,11 +146,18 @@ std::unique_ptr<media::CdmProxy> ChromeContentGpuClient::CreateCdmProxy(
 #endif
 
 #if defined(OS_CHROMEOS)
-void ChromeContentGpuClient::CreateArcVideoDecodeAccelerator(
+void ChromeContentGpuClient::CreateArcVideoDecodeAcceleratorDeprecated(
     ::arc::mojom::VideoDecodeAcceleratorRequest request) {
   mojo::MakeStrongBinding(
       base::MakeUnique<arc::GpuArcVideoDecodeAccelerator>(
           gpu_preferences_, protected_buffer_manager_.get()),
+      std::move(request));
+}
+
+void ChromeContentGpuClient::CreateArcVideoDecodeAccelerator(
+    ::arc::mojom::VideoDecodeAcceleratorRequest request) {
+  mojo::MakeStrongBinding(
+      base::MakeUnique<arc::GpuArcVideoDecodeAccelerator>(gpu_preferences_),
       std::move(request));
 }
 

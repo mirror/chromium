@@ -10,6 +10,9 @@ import "components/arc/common/video_encode_accelerator.mojom";
 
 interface Arc {
   // Create a new VideoDecodeAccelerator and binds it to |vda|.
+  CreateVideoDecodeAcceleratorDeprecated(arc.mojom.VideoDecodeAccelerator& vda);
+
+  // Create a new VideoDecodeAccelerator and binds it to |vda|.
   CreateVideoDecodeAccelerator(arc.mojom.VideoDecodeAccelerator& vda);
 
   // Create a new VideoEncodeAccelerator and binds it to |vea|.
