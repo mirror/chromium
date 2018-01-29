@@ -293,6 +293,24 @@
       "revId": "dbab8761266b501df0ae2eaffd9853c870d91b65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d538ca48_f3f844b1",
+        "filename": "ios/chrome/browser/ui/util/named_guide.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-29T14:59:37Z",
+      "side": 1,
+      "message": "Done.\nI have added it to the toolbar button and the adaptive toolbar VC.",
+      "parentUuid": "dfa0cb3e_46b7e104",
+      "revId": "dbab8761266b501df0ae2eaffd9853c870d91b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
