@@ -6,9 +6,10 @@
 <script src="../../../external/wpt/bluetooth/resources/bluetooth-helpers.js"></script>
 <script>
 'use strict';
-let test_desc = 'A device disconnecting after the BluetoothDevice object has ' +
-    'been gced should not access freed memory.';
+const test_desc = 'A device disconnecting after the BluetoothDevice object ' +
+    'has been GC\'ed should not access freed memory.';
 let fake_peripheral;
+
 bluetooth_test(() => getHealthThermometerDevice()
   .then(_ => ({fake_peripheral} = _))
   .then(() => {
