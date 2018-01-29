@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "506c071c_46c1dc65",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 5016,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2018-01-29T22:03:48Z",
+      "side": 1,
+      "message": "I\u0027ve manually tested the case of user issues navigates to a discarded tab and then does a second quick navigation. It is behaving correctly.\nLet me know if there\u0027s any specific test cases I should try to address your concern.",
+      "parentUuid": "a803ffc1_899f26de",
+      "revId": "d325ca3b55f69f1aaf0f4972d405abe827d6f9f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d20e603_c1ee5a1a",
         "filename": "content/common/navigation_params.h",
         "patchSetId": 10
@@ -51,6 +69,24 @@
       "revId": "d325ca3b55f69f1aaf0f4972d405abe827d6f9f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f84d042_60df14a1",
+        "filename": "content/common/navigation_params.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2018-01-29T22:03:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d20e603_c1ee5a1a",
+      "revId": "d325ca3b55f69f1aaf0f4972d405abe827d6f9f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
