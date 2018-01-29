@@ -22,6 +22,30 @@
       "revId": "24e0674b49c4cd71d7a92b1738e6ae1eeaec9c12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "388c2abb_a0e6fb9c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferencesTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 993,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2018-01-29T09:01:02Z",
+      "side": 1,
+      "message": "Thanks, that was exactly my intention!\n(Also thanks for go/avoidwe - I didn\u0027t even know it but it does make sense)",
+      "parentUuid": "4e43e078_f7f6a3c3",
+      "range": {
+        "startLine": 992,
+        "startChar": 76,
+        "endLine": 993,
+        "endChar": 38
+      },
+      "revId": "24e0674b49c4cd71d7a92b1738e6ae1eeaec9c12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
