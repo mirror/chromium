@@ -124,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "c818587b_96454fb9",
+        "filename": "chrome/browser/chromeos/extensions/wallpaper_manager_util.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-29T23:36:56Z",
+      "side": 1,
+      "message": "Sure. I\u0027ve got a CL for it. Thanks for review.",
+      "parentUuid": "542dabd9_c7184d8d",
+      "revId": "b9da3870aecbe1e290e0a2d82a346257a811eeec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bdb6771c_9a3ed0cb",
         "filename": "chrome/browser/chromeos/extensions/wallpaper_manager_util.cc",
         "patchSetId": 12
@@ -138,6 +156,24 @@
       "revId": "b9da3870aecbe1e290e0a2d82a346257a811eeec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f03dc366_92752ec0",
+        "filename": "chrome/browser/chromeos/extensions/wallpaper_manager_util.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-29T23:36:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bdb6771c_9a3ed0cb",
+      "revId": "b9da3870aecbe1e290e0a2d82a346257a811eeec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
