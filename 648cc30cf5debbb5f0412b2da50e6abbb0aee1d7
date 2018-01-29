@@ -16,6 +16,24 @@
       "revId": "648cc30cf5debbb5f0412b2da50e6abbb0aee1d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a1372ce_87521c6c",
+        "filename": "net/interfaces/address_family_traits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-29T18:33:48Z",
+      "side": 1,
+      "message": "Ack. I will upload a follow-up CL right away.",
+      "parentUuid": "3fa46c21_f7c122b1",
+      "revId": "648cc30cf5debbb5f0412b2da50e6abbb0aee1d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
