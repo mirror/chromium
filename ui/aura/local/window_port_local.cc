@@ -69,11 +69,12 @@ void WindowPortLocal::OnDeviceScaleFactorChanged(
     float old_device_scale_factor,
     float new_device_scale_factor) {
   if (last_device_scale_factor_ != new_device_scale_factor &&
-      local_surface_id_.is_valid()) {
+      parent_local_surface_id_allocator_.last_generated_id().is_valid()) {
     last_device_scale_factor_ = new_device_scale_factor;
-    local_surface_id_ = parent_local_surface_id_allocator_.GenerateId();
+    parent_local_surface_id_allocator_.GenerateId();
     if (frame_sink_)
-      frame_sink_->SetLocalSurfaceId(local_surface_id_);
+      frame_sink_->SetLocalSurfaceId(
+          parent_local_surface_id_allocator_.last_generated_id());
   }
 
   ScopedCursorHider hider(window_);
@@ -94,11 +95,13 @@ void WindowPortLocal::OnVisibilityChanged(bool visible) {}
 
 void WindowPortLocal::OnDidChangeBounds(const gfx::Rect& old_bounds,
                                         const gfx::Rect& new_bounds) {
-  if (last_size_ != new_bounds.size() && local_surface_id_.is_valid()) {
+  if (last_size_ != new_bounds.size() &&
+      parent_local_surface_id_allocator_.last_generated_id().is_valid()) {
     last_size_ = new_bounds.size();
-    local_surface_id_ = parent_local_surface_id_allocator_.GenerateId();
+    parent_local_surface_id_allocator_.GenerateId();
     if (frame_sink_)
-      frame_sink_->SetLocalSurfaceId(local_surface_id_);
+      frame_sink_->SetLocalSurfaceId(
+          parent_local_surface_id_allocator_.last_generated_id());
   }
 }
 
@@ -135,21 +138,23 @@ WindowPortLocal::CreateLayerTreeFrameSink() {
 }
 
 viz::SurfaceId WindowPortLocal::GetSurfaceId() const {
-  return viz::SurfaceId(frame_sink_id_, local_surface_id_);
+  return viz::SurfaceId(frame_sink_id_,
+                        parent_local_surface_id_allocator_.last_generated_id());
 }
 
 void WindowPortLocal::AllocateLocalSurfaceId() {
   last_device_scale_factor_ = ui::GetScaleFactorForNativeView(window_);
   last_size_ = window_->bounds().size();
-  local_surface_id_ = parent_local_surface_id_allocator_.GenerateId();
+  parent_local_surface_id_allocator_.GenerateId();
   if (frame_sink_)
-    frame_sink_->SetLocalSurfaceId(local_surface_id_);
+    frame_sink_->SetLocalSurfaceId(
+        parent_local_surface_id_allocator_.last_generated_id());
 }
 
 const viz::LocalSurfaceId& WindowPortLocal::GetLocalSurfaceId() {
-  if (!local_surface_id_.is_valid())
+  if (!parent_local_surface_id_allocator_.last_generated_id().is_valid())
     AllocateLocalSurfaceId();
-  return local_surface_id_;
+  return parent_local_surface_id_allocator_.last_generated_id();
 }
 
 viz::FrameSinkId WindowPortLocal::GetFrameSinkId() const {
@@ -170,7 +175,9 @@ void WindowPortLocal::OnEventTargetingPolicyChanged() {}
 
 void WindowPortLocal::OnSurfaceChanged(const viz::SurfaceInfo& surface_info) {
   DCHECK_EQ(surface_info.id().frame_sink_id(), frame_sink_id_);
-  DCHECK_EQ(surface_info.id().local_surface_id(), local_surface_id_);
+  DCHECK_EQ(surface_info.id().local_surface_id(),
+            parent_local_surface_id_allocator_.last_generated_id());
+
   window_->layer()->SetShowPrimarySurface(
       surface_info.id(), window_->bounds().size(), SK_ColorWHITE);
   window_->layer()->SetFallbackSurfaceId(surface_info.id());

@@ -322,9 +322,10 @@ const viz::LocalSurfaceId& WindowPortMus::GetOrAllocateLocalSurfaceId(
     UpdatePrimarySurfaceId();
 
   if (local_layer_tree_frame_sink_)
-    local_layer_tree_frame_sink_->SetLocalSurfaceId(local_surface_id_);
+    local_layer_tree_frame_sink_->SetLocalSurfaceId(
+        parent_local_surface_id_allocator_.last_generated_id());
 
-  return local_surface_id_;
+  return parent_local_surface_id_allocator_.last_generated_id();
 }
 
 void WindowPortMus::SetFallbackSurfaceInfo(
@@ -402,7 +403,7 @@ WindowPortMus::ChangeSource WindowPortMus::OnTransientChildRemoved(
 }
 
 void WindowPortMus::AllocateLocalSurfaceId() {
-  local_surface_id_ = parent_local_surface_id_allocator_.GenerateId();
+  parent_local_surface_id_allocator_.GenerateId();
 }
 
 const viz::LocalSurfaceId& WindowPortMus::GetLocalSurfaceId() {
@@ -460,9 +461,11 @@ void WindowPortMus::OnPreInit(Window* window) {
 
 void WindowPortMus::OnDeviceScaleFactorChanged(float old_device_scale_factor,
                                                float new_device_scale_factor) {
-  if (local_surface_id_.is_valid() && local_layer_tree_frame_sink_) {
-    local_surface_id_ = parent_local_surface_id_allocator_.GenerateId();
-    local_layer_tree_frame_sink_->SetLocalSurfaceId(local_surface_id_);
+  if (parent_local_surface_id_allocator_.last_generated_id().is_valid() &&
+      local_layer_tree_frame_sink_) {
+    parent_local_surface_id_allocator_.GenerateId();
+    local_layer_tree_frame_sink_->SetLocalSurfaceId(
+        parent_local_surface_id_allocator_.last_generated_id());
   }
   window_tree_client_->OnWindowMusDeviceScaleFactorChanged(
       this, old_device_scale_factor, new_device_scale_factor);

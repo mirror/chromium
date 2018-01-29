@@ -337,7 +337,8 @@ class SurfaceAggregatorValidSurfaceTest : public SurfaceAggregatorTest {
 
   void SetUp() override {
     SurfaceAggregatorTest::SetUp();
-    root_local_surface_id_ = allocator_.GenerateId();
+    allocator_.GenerateId();
+    root_local_surface_id_ = allocator_.last_generated_id();
     root_surface_ = manager_.surface_manager()->GetSurfaceForId(
         SurfaceId(support_->frame_sink_id(), root_local_surface_id_));
   }
@@ -449,9 +450,9 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, OpacityCopied) {
   auto embedded_support = std::make_unique<CompositorFrameSinkSupport>(
       nullptr, &manager_, kArbitraryFrameSinkId1, kRootIsRoot,
       kNeedsSyncPoints);
-  LocalSurfaceId embedded_local_surface_id = allocator_.GenerateId();
+  allocator_.GenerateId();
   SurfaceId embedded_surface_id(embedded_support->frame_sink_id(),
-                                embedded_local_surface_id);
+                                allocator_.last_generated_id());
 
   Quad embedded_quads[] = {Quad::SolidColorQuad(SK_ColorGREEN, gfx::Rect(5, 5)),
                            Quad::SolidColorQuad(SK_ColorBLUE, gfx::Rect(5, 5))};
@@ -460,8 +461,8 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, OpacityCopied) {
 
   constexpr float device_scale_factor = 1.0f;
   SubmitCompositorFrame(embedded_support.get(), embedded_passes,
-                        arraysize(embedded_passes), embedded_local_surface_id,
-                        device_scale_factor);
+                        arraysize(embedded_passes),
+                        allocator_.last_generated_id(), device_scale_factor);
 
   Quad quads[] = {Quad::SurfaceQuad(embedded_surface_id, InvalidSurfaceId(),
                                     SK_ColorWHITE, gfx::Rect(5, 5), .5f,
@@ -567,9 +568,9 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, SimpleSurfaceReference) {
   auto embedded_support = std::make_unique<CompositorFrameSinkSupport>(
       nullptr, &manager_, kArbitraryFrameSinkId1, kRootIsRoot,
       kNeedsSyncPoints);
-  LocalSurfaceId embedded_local_surface_id = allocator_.GenerateId();
+  allocator_.GenerateId();
   SurfaceId embedded_surface_id(embedded_support->frame_sink_id(),
-                                embedded_local_surface_id);
+                                allocator_.last_generated_id());
 
   Quad embedded_quads[] = {
       Quad::SolidColorQuad(SK_ColorGREEN, gfx::Rect(5, 5))};
@@ -578,8 +579,8 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, SimpleSurfaceReference) {
 
   constexpr float device_scale_factor = 1.0f;
   SubmitCompositorFrame(embedded_support.get(), embedded_passes,
-                        arraysize(embedded_passes), embedded_local_surface_id,
-                        device_scale_factor);
+                        arraysize(embedded_passes),
+                        allocator_.last_generated_id(), device_scale_factor);
 
   Quad root_quads[] = {
       Quad::SolidColorQuad(SK_ColorWHITE, gfx::Rect(5, 5)),
@@ -612,14 +613,17 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, FallbackSurfaceReference) {
   auto primary_child_support = std::make_unique<CompositorFrameSinkSupport>(
       nullptr, &manager_, kArbitraryFrameSinkId1, kChildIsRoot,
       kNeedsSyncPoints);
-  LocalSurfaceId primary_child_local_surface_id = allocator_.GenerateId();
+  allocator_.GenerateId();
+  primary_child_local_surface_id = allocator_.last_generated_id();
   SurfaceId primary_child_surface_id(primary_child_support->frame_sink_id(),
                                      primary_child_local_surface_id);
 
   auto fallback_child_support = std::make_unique<CompositorFrameSinkSupport>(
       nullptr, &manager_, kArbitraryFrameSinkId2, kChildIsRoot,
       kNeedsSyncPoints);
-  LocalSurfaceId fallback_child_local_surface_id = allocator_.GenerateId();
+  allocator_.GenerateId();
+  LocalSurfaceId fallback_child_local_surface_id =
+      allocator_.last_generated_id();
   SurfaceId fallback_child_surface_id(fallback_child_support->frame_sink_id(),
                                       fallback_child_local_surface_id);
 
@@ -1062,11 +1066,13 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, UnreferencedSurface) {
   auto parent_support = std::make_unique<CompositorFrameSinkSupport>(
       nullptr, &manager_, kArbitraryFrameSinkId2, kRootIsRoot,
       kNeedsSyncPoints);
-  LocalSurfaceId embedded_local_surface_id = allocator_.GenerateId();
+  allocator_.GenerateId();
+  LocalSurfaceId embedded_local_surface_id = allocator_.last_generated_id();
   SurfaceId embedded_surface_id(embedded_support->frame_sink_id(),
-                                embedded_local_surface_id);
+                                allocator_.last_generated_id());
+  allocator_.GenerateId();
   SurfaceId nonexistent_surface_id(support_->frame_sink_id(),
-                                   allocator_.GenerateId());
+                                   allocator_.last_generated_id());
 
   Quad embedded_quads[] = {
       Quad::SolidColorQuad(SK_ColorGREEN, gfx::Rect(5, 5))};
@@ -1081,7 +1087,8 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, UnreferencedSurface) {
   auto* copy_request_ptr = copy_request.get();
   embedded_support->RequestCopyOfSurface(std::move(copy_request));
 
-  LocalSurfaceId parent_local_surface_id = allocator_.GenerateId();
+  allocator_.GenerateId();
+  LocalSurfaceId parent_local_surface_id = allocator_.last_generated_id();
   SurfaceId parent_surface_id(parent_support->frame_sink_id(),
                               parent_local_surface_id);
 
@@ -1355,9 +1362,9 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, ValidSurfaceReferenceWithNoFrame) {
 // with no submitted frame. A SolidColorDrawQuad should be placed in lieu of a
 // frame.
 TEST_F(SurfaceAggregatorValidSurfaceTest, ValidFallbackWithNoFrame) {
-  const LocalSurfaceId empty_local_surface_id = allocator_.GenerateId();
+  allocator_.GenerateId();
   const SurfaceId surface_with_no_frame_id(support_->frame_sink_id(),
-                                           empty_local_surface_id);
+                                           allocator_.last_generated_id());
 
   Quad quads[] = {Quad::SurfaceQuad(surface_with_no_frame_id,
                                     surface_with_no_frame_id, SK_ColorYELLOW,

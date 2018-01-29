@@ -205,7 +205,8 @@ TEST_F(DisplayTest, DisplayDamaged) {
   display_->Initialize(&client, manager_.surface_manager());
   display_->SetColorSpace(color_space_1, color_space_1);
 
-  LocalSurfaceId local_surface_id(id_allocator_.GenerateId());
+  id_allocator_.GenerateId();
+  LocalSurfaceId local_surface_id = id_allocator_.last_generated_id();
   EXPECT_FALSE(scheduler_->damaged);
   EXPECT_FALSE(scheduler_->has_new_root_surface);
   display_->SetLocalSurfaceId(local_surface_id, 1.f);
@@ -296,8 +297,8 @@ TEST_F(DisplayTest, DisplayDamaged) {
   // Pass is wrong size so shouldn't be swapped. However, damage should
   // result in latency info being stored for the next swap.
   {
-    local_surface_id = id_allocator_.GenerateId();
-    display_->SetLocalSurfaceId(local_surface_id, 1.f);
+    id_allocator_.GenerateId();
+    display_->SetLocalSurfaceId(id_allocator_.last_generated_id(), 1.f);
 
     scheduler_->ResetDamageForTest();
 
@@ -308,7 +309,8 @@ TEST_F(DisplayTest, DisplayDamaged) {
                                 .AddLatencyInfo(ui::LatencyInfo())
                                 .Build();
 
-    support_->SubmitCompositorFrame(local_surface_id, std::move(frame));
+    support_->SubmitCompositorFrame(id_allocator_.last_generated_id(),
+                                    std::move(frame));
     EXPECT_TRUE(scheduler_->damaged);
     EXPECT_FALSE(scheduler_->display_resized_);
     EXPECT_FALSE(scheduler_->has_new_root_surface);

@@ -23,7 +23,7 @@ class VIZ_COMMON_EXPORT ParentLocalSurfaceIdAllocator {
   ParentLocalSurfaceIdAllocator() = default;
   ~ParentLocalSurfaceIdAllocator() = default;
 
-  const LocalSurfaceId& GenerateId();
+  void GenerateId();
   const LocalSurfaceId& LastGeneratedId() const { return last_generated_id_; }
 
  private:
