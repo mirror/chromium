@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b9c494bf_b0ed7972",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2018-01-29T19:09:38Z",
+      "side": 1,
+      "message": "Thanks for raising this!\n\nWell, dropping this allows concurrent requests and then this CL is not correct any more. The scheduler already makes sure it initiates no concurrent requests. The only conflict is between ReloadSuggestions() and the scheduler.\n\nI fully agree a DCHECK is not appropriate as it is a correct state. I propose returning a temporary error (the conflict itself should be pretty rare and waiting for the results from the previous fetch sounds good enough).",
+      "parentUuid": "b46571aa_89b31868",
+      "range": {
+        "startLine": 567,
+        "startChar": 54,
+        "endLine": 567,
+        "endChar": 0
+      },
+      "revId": "af21cd331c8a1a7aec338bf5f0476b5bf9665df1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "278bb6c5_b04a7da8",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "af21cd331c8a1a7aec338bf5f0476b5bf9665df1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb231dad_407a6dd9",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2018-01-29T19:09:38Z",
+      "side": 1,
+      "message": "Thanks, IN_PROGRESS_CANCELED sounds even better to me.",
+      "parentUuid": "278bb6c5_b04a7da8",
+      "range": {
+        "startLine": 732,
+        "startChar": 41,
+        "endLine": 732,
+        "endChar": 60
+      },
+      "revId": "af21cd331c8a1a7aec338bf5f0476b5bf9665df1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7fab626b_c5ab1795",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 919,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2018-01-29T19:09:38Z",
+      "side": 1,
+      "message": "It was meant to satisfy the DCHECK in FetchSuggestions. This is anyway solved by your suggestion below.",
+      "parentUuid": "5cc7c036_9049ea29",
+      "range": {
+        "startLine": 919,
+        "startChar": 19,
+        "endLine": 919,
+        "endChar": 20
+      },
+      "revId": "af21cd331c8a1a7aec338bf5f0476b5bf9665df1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eccdfc4e_1bdfebff",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "af21cd331c8a1a7aec338bf5f0476b5bf9665df1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7b701a5_d2215bc8",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2018-01-29T19:09:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eccdfc4e_1bdfebff",
+      "range": {
+        "startLine": 929,
+        "startChar": 13,
+        "endLine": 929,
+        "endChar": 14
+      },
+      "revId": "af21cd331c8a1a7aec338bf5f0476b5bf9665df1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "bbe68e48_fe2bdc60",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2018-01-29T19:09:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5ce18cd_0fa4212e",
+      "range": {
+        "startLine": 212,
+        "startChar": 9,
+        "endLine": 212,
+        "endChar": 0
+      },
+      "revId": "af21cd331c8a1a7aec338bf5f0476b5bf9665df1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a067369_75e7e0b5",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "af21cd331c8a1a7aec338bf5f0476b5bf9665df1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3075f5be_ba5c7172",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2018-01-29T19:09:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a067369_75e7e0b5",
+      "range": {
+        "startLine": 464,
+        "startChar": 36,
+        "endLine": 464,
+        "endChar": 0
+      },
+      "revId": "af21cd331c8a1a7aec338bf5f0476b5bf9665df1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "e6e05b25_43cee140",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2467,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2018-01-29T19:09:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9eba110_3455bad2",
+      "range": {
+        "startLine": 2467,
+        "startChar": 41,
+        "endLine": 2467,
+        "endChar": 0
+      },
+      "revId": "af21cd331c8a1a7aec338bf5f0476b5bf9665df1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b951d3d_f3209958",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
         "patchSetId": 2
@@ -174,6 +342,30 @@
       "writtenOn": "2018-01-23T12:35:42Z",
       "side": 1,
       "message": "i believe this method hurts readability. It hides setting an expectation on the fetcher which is crucial to understand the test (especially the last step of the test).",
+      "range": {
+        "startLine": 2477,
+        "startChar": 6,
+        "endLine": 2477,
+        "endChar": 44
+      },
+      "revId": "af21cd331c8a1a7aec338bf5f0476b5bf9665df1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "188306e0_7b7aa796",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2477,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2018-01-29T19:09:38Z",
+      "side": 1,
+      "message": "Two similar methods are used in 5 different tests. Do you ask me to remove them all?\n\nIsn\u0027t it just a naming/abstraction issue? What if there was also a separate helper function to finish the request as well (for the last step of the test)? E.g.\n\nauto fetch_callback \u003d InitiateRequestToFetchSuggestions(provider.get(), \n                                                        /*interactive_request\u003d*/false);\n\n...\n\nFinishRequest(std::move(fetch_callback), Status::Success(), std::vector\u003cFetchedCategory\u003e());",
+      "parentUuid": "8b951d3d_f3209958",
       "range": {
         "startLine": 2477,
         "startChar": 6,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "eabcefea_89a5c713",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2480,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2018-01-29T19:09:38Z",
+      "side": 1,
+      "message": "\"be notified\" for consistency with previous tests.",
+      "parentUuid": "59727dbb_68a7e9d7",
+      "range": {
+        "startLine": 2480,
+        "startChar": 26,
+        "endLine": 2480,
+        "endChar": 34
+      },
+      "revId": "af21cd331c8a1a7aec338bf5f0476b5bf9665df1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44aedaaf_47d0e6ab",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
         "patchSetId": 2
@@ -229,6 +445,30 @@
       "revId": "af21cd331c8a1a7aec338bf5f0476b5bf9665df1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c6b2721_fb31d509",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2486,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2018-01-29T19:09:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44aedaaf_47d0e6ab",
+      "range": {
+        "startLine": 2486,
+        "startChar": 15,
+        "endLine": 2486,
+        "endChar": 39
+      },
+      "revId": "af21cd331c8a1a7aec338bf5f0476b5bf9665df1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
