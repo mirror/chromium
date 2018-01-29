@@ -10,6 +10,7 @@
 
 #include "base/feature_list.h"
 #include "base/i18n/rtl.h"
+#include "base/metrics/field_trial_params.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "chrome/app/chrome_command_ids.h"
@@ -63,6 +64,7 @@
 #include "components/prefs/pref_service.h"
 #include "components/search_engines/template_url.h"
 #include "components/search_engines/template_url_service.h"
+#include "components/toolbar/toolbar_field_trial.h"
 #include "components/toolbar/toolbar_model.h"
 #include "components/toolbar/vector_icons.h"
 #include "components/translate/core/browser/language_state.h"
@@ -862,10 +864,7 @@ base::string16 LocationBarView::GetLocationIconText() const {
       return extension_name;
   }
 
-  bool has_ev_cert =
-      (GetToolbarModel()->GetSecurityLevel(false) == security_state::EV_SECURE);
-  return has_ev_cert ? GetToolbarModel()->GetEVCertName()
-                     : GetToolbarModel()->GetSecureVerboseText();
+  return GetToolbarModel()->GetSecureVerboseText();
 }
 
 bool LocationBarView::ShouldShowKeywordBubble() const {
@@ -881,6 +880,29 @@ bool LocationBarView::ShouldShowLocationIconText() const {
 
   using SecurityLevel = security_state::SecurityLevel;
   const SecurityLevel level = GetToolbarModel()->GetSecurityLevel(false);
+
+  // Security UI study (https://crbug.com/803138). Drop text if enabled.
+  if (base::FeatureList::IsEnabled(
+          toolbar::features::kSimplifyHttpsIndicator)) {
+    std::string parameter = base::GetFieldTrialParamValueByFeature(
+        toolbar::features::kSimplifyHttpsIndicator,
+        toolbar::features::kSimplifyHttpsIndicatorParameterName);
+    if (level == SecurityLevel::EV_SECURE &&
+        (parameter ==
+             toolbar::features::kSimplifyHttpsIndicatorParameterEVToLock ||
+         parameter ==
+             toolbar::features::kSimplifyHttpsIndicatorParameterBothToLock)) {
+      return false;
+    }
+    if (level == SecurityLevel::SECURE &&
+        (parameter ==
+             toolbar::features::kSimplifyHttpsIndicatorParameterSecureToLock ||
+         parameter ==
+             toolbar::features::kSimplifyHttpsIndicatorParameterBothToLock)) {
+      return false;
+    }
+  }
+
   return level == SecurityLevel::EV_SECURE || level == SecurityLevel::SECURE ||
          level == SecurityLevel::DANGEROUS ||
          level == SecurityLevel::HTTP_SHOW_WARNING;
