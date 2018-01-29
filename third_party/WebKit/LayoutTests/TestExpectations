@@ -64,7 +64,6 @@ crbug.com/769942 virtual/spv175/compositing/images/direct-image-dynamic-clip-pat
 crbug.com/769942 virtual/spv175/compositing/overflow/accelerated-scrolling-with-clip-path-text.html [ Failure ]
 crbug.com/769942 virtual/spv175/compositing/overflow/accelerated-scrolling-with-clip-path.html [ Failure ]
 crbug.com/769942 virtual/spv175/compositing/overflow/accelerated-scrolling-with-clip-reference.html [ Failure ]
-crbug.com/769942 virtual/spv175/fast/borders/border-image-fill-inline-no-border.html [ Failure ]
 crbug.com/769942 virtual/spv175/paint/clipath/clip-path-bigger-than-border-box-visual-rect.html [ Failure ]
 crbug.com/769942 virtual/spv175/paint/clipath/clip-path-bigger-than-visual-overflow.html [ Failure ]
 crbug.com/769942 virtual/spv175/paint/clipath/clip-path-with-background-and-box-behind.html [ Failure ]
@@ -81,9 +80,6 @@ crbug.com/769942 virtual/spv175/paint/invalidation/svg/mask-clip-target-transfor
 crbug.com/769942 virtual/spv175/paint/invalidation/svg/resource-invalidate-on-target-update.svg [ Failure ]
 
 crbug.com/771643 virtual/spv175/compositing/overflow/nested-border-radius-clipping.html [ Failure ]
-crbug.com/771643 virtual/spv175/fast/multicol/border-radius-clipped-layer.html [ Failure ]
-crbug.com/771643 virtual/spv175/fast/multicol/mixed-opacity-test.html [ Failure ]
-crbug.com/771643 virtual/spv175/fast/multicol/multicol-svg.html [ Failure ]
 crbug.com/771643 virtual/spv175/paint/invalidation/svg/absolute-sized-content-with-resources.xhtml [ Failure ]
 
 crbug.com/805049 [ Mac ] virtual/spv175/compositing/iframes/fixed-position-iframe.html [ Pass Crash ]
@@ -1154,8 +1150,6 @@ crbug.com/636239 [ Win7 ] media/video-zoom-controls.html [ Failure ]
 # Printing Layout broken in these tests.
 crbug.com/377696 printing/setPrinting.html [ Skip ]
 crbug.com/377696 printing/width-overflow.html [ Skip ]
-crbug.com/377696 virtual/spv175/printing/setPrinting.html [ Skip ]
-crbug.com/377696 virtual/spv175/printing/width-overflow.html [ Skip ]
 
 crbug.com/658305 css3/filters/buffer-offset.html [ Failure Pass ]
 crbug.com/658305 css3/filters/effect-all-on-background-hw.html [ Failure Pass ]
@@ -1204,7 +1198,6 @@ crbug.com/306222 fast/hidpi/image-srcset-relative-svg-canvas.html [ Skip ]
 crbug.com/306222 fast/hidpi/image-srcset-relative-svg-canvas-2x.html [ Skip ]
 
 crbug.com/467477 fast/multicol/vertical-rl/nested-columns.html [ Failure ]
-crbug.com/467477 virtual/spv175/fast/multicol/vertical-rl/nested-columns.html [ Skip ]
 
 crbug.com/674225 [ Mac ] fast/replaced/input-radio-height-inside-auto-container.html [ Failure ]
 
@@ -1252,7 +1245,6 @@ crbug.com/665577 [ Linux Win ] virtual/threaded/fast/scroll-behavior/smooth-scro
 
 crbug.com/599670 [ Win ] http/tests/devtools/resource-parameters-ipv6.js [ Timeout Pass ]
 crbug.com/472330 fast/borders/border-image-outset-split-inline-vertical-lr.html [ Failure ]
-crbug.com/472330 virtual/spv175/fast/borders/border-image-outset-split-inline-vertical-lr.html [ Skip ]
 crbug.com/472330 fast/writing-mode/box-shadow-vertical-lr.html [ Failure ]
 crbug.com/472330 fast/writing-mode/box-shadow-vertical-rl.html [ Failure ]
 
