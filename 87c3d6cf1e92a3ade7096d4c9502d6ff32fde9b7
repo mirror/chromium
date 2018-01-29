@@ -16,6 +16,24 @@
       "revId": "87c3d6cf1e92a3ade7096d4c9502d6ff32fde9b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f5a90e8_76862d3f",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/main_thread_task_queue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-29T11:28:32Z",
+      "side": 1,
+      "message": "kOther is not for UMA reporting, it\u0027s used for internal EQT calculations.",
+      "parentUuid": "2130d53f_e8f569b7",
+      "revId": "87c3d6cf1e92a3ade7096d4c9502d6ff32fde9b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
