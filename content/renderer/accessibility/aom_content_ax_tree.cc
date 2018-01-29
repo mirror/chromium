@@ -88,4 +88,85 @@ bool AomContentAxTree::GetIntAttributeForAXNode(int32_t axID,
   return node->data().GetIntAttribute(ax_attr, out_param);
 }
 
+bool AomContentAxTree::GetParentIdForAXNode(int32_t axID, int32_t* out_param) {
+  ui::AXNode* node = tree_.GetFromId(axID);
+  if (!node || !node->parent())
+    return false;
+  *out_param = node->parent()->id();
+  return true;
+}
+
+bool AomContentAxTree::GetFirstChildIdForAXNode(int32_t axID,
+                                                int32_t* out_param) {
+  ui::AXNode* node = tree_.GetFromId(axID);
+  if (!node || node->child_count() < 1)
+    return false;
+
+  ui::AXNode* child = node->ChildAtIndex(0);
+  if (!child)
+    return false;
+
+  *out_param = child->id();
+  return true;
+}
+
+bool AomContentAxTree::GetLastChildIdForAXNode(int32_t axID,
+                                               int32_t* out_param) {
+  ui::AXNode* node = tree_.GetFromId(axID);
+  if (!node || node->child_count() < 1)
+    return false;
+
+  ui::AXNode* child = node->ChildAtIndex(node->child_count() - 1);
+  if (!child)
+    return false;
+
+  *out_param = child->id();
+  return true;
+}
+
+// Sibling accessors
+// Do sibling relations wrap? i.e the previous sibling of the nth child is
+// the 0th child (for n children).
+bool AomContentAxTree::GetPreviousSiblingIdForAXNode(int32_t axID,
+                                                     int32_t* out_param) {
+  ui::AXNode* node = tree_.GetFromId(axID);
+  if (!node)
+    return false;
+  int index_in_parent = node->index_in_parent();
+
+  // Assumption: only when this node is the first child, does it not have a
+  // previous sibling.
+  if (index_in_parent == 0)
+    return false;
+
+  ui::AXNode* sibling = node->parent()->ChildAtIndex(index_in_parent - 1);
+
+  if (!sibling)
+    return false;
+
+  *out_param = sibling->id();
+  return true;
+}
+
+bool AomContentAxTree::GetNextSiblingIdForAXNode(int32_t axID,
+                                                 int32_t* out_param) {
+  ui::AXNode* node = tree_.GetFromId(axID);
+  if (!node)
+    return false;
+  int index_in_parent = node->index_in_parent();
+
+  // Assumption: When this node is the last child, it does not have a next
+  // sibling.
+  if (index_in_parent == (node->parent()->child_count() - 1))
+    return false;
+
+  ui::AXNode* sibling = node->parent()->ChildAtIndex(index_in_parent + 1);
+
+  if (!sibling)
+    return false;
+
+  *out_param = sibling->id();
+  return true;
+}
+
 }  // namespace content
