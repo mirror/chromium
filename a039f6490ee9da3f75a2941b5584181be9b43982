@@ -114,6 +114,53 @@
       "revId": "a039f6490ee9da3f75a2941b5584181be9b43982",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e5228af_c7d16f73",
+        "filename": "third_party/WebKit/LayoutTests/xr/resources/xr-device-mocking.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2018-01-29T18:44:45Z",
+      "side": 1,
+      "message": "Yes, but for the moment they\u0027re still backed by the same Mojo structures as the WebVR 1.1 frontend, so these values are appropriate.",
+      "parentUuid": "e0e93725_f0861e2f",
+      "range": {
+        "startLine": 39,
+        "startChar": 9,
+        "endLine": 39,
+        "endChar": 22
+      },
+      "revId": "a039f6490ee9da3f75a2941b5584181be9b43982",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "696cb26b_3bc84c0a",
+        "filename": "third_party/WebKit/LayoutTests/xr/xrViewport_valid.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2018-01-29T18:44:45Z",
+      "side": 1,
+      "message": "Ubernit: Remove accidental unnecessary whitespace",
+      "range": {
+        "startLine": 34,
+        "startChar": 1,
+        "endLine": 34,
+        "endChar": 5
+      },
+      "revId": "a039f6490ee9da3f75a2941b5584181be9b43982",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
