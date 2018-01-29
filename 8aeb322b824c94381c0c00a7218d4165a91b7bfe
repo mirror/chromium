@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "0cbe4d1d_e4b36c9a",
+        "filename": "base/time/time_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1017,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-29T21:37:35Z",
+      "side": 1,
+      "message": "At this point, it feels like this test (and ZeroMinMax) no longer execute anything at runtime. For efficiency\u0027s sake, perhaps we should make these namespaces? For example:\n\nnamespace TimeDelta_Magnitude {\n  ...body here...\n}  // namespace TimeDelta_Magnitude",
+      "range": {
+        "startLine": 1017,
+        "startChar": 0,
+        "endLine": 1017,
+        "endChar": 28
+      },
+      "revId": "8aeb322b824c94381c0c00a7218d4165a91b7bfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9723ccc_f21fcbe5",
         "filename": "base/time/time_unittest.cc",
         "patchSetId": 11
