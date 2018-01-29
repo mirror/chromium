@@ -546,6 +546,30 @@
     },
     {
       "key": {
+        "uuid": "6d0b5afd_08c412f1",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002525
+      },
+      "writtenOn": "2018-01-29T13:29:32Z",
+      "side": 1,
+      "message": "It doesn\u0027t seem to be as simple:\n\nIn file included from ../../third_party/WebKit/Source/modules/picture_in_picture/HTMLVideoElementPictureInPicture.cpp:9:\n../../third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.h:20:33: error: only virtual member functions can be marked \u0027override\u0027\n  ~PictureInPictureController() override;\n                                ^~~~~~~~\nIn file included from ../../third_party/WebKit/Source/modules/picture_in_picture/HTMLVideoElementPictureInPicture.cpp:5:\nIn file included from ../../third_party/WebKit/Source/modules/picture_in_picture/HTMLVideoElementPictureInPicture.h:9:\nIn file included from ../../third_party/WebKit/Source/platform/heap/Handle.h:34:\nIn file included from ../../third_party/WebKit/Source/platform/heap/Heap.h:39:\nIn file included from ../../third_party/WebKit/Source/platform/heap/GCInfo.h:8:\nIn file included from ../../third_party/WebKit/Source/platform/heap/Visitor.h:36:\n../../third_party/WebKit/Source/platform/heap/GarbageCollected.h:252:43: error: destructor called on non-final \u0027blink::PictureInPictureController\u0027 that has virtual functions but non-virtual destructor [-Werror,-Wdelete-non-virtual-dtor]\n  void FinalizeGarbageCollectedObject() { static_cast\u003cT*\u003e(this)-\u003e~T(); }",
+      "parentUuid": "3b817d33_a62397d9",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 9
+      },
+      "revId": "4d45095120b36ca181d931bd22f56b7c2d37d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d3cce31b_7880aa19",
         "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.h",
         "patchSetId": 12
@@ -575,6 +599,24 @@
       "side": 1,
       "message": "Did you also miss this miss?",
       "parentUuid": "d3cce31b_7880aa19",
+      "revId": "4d45095120b36ca181d931bd22f56b7c2d37d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb15a20a_b34db0f0",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002525
+      },
+      "writtenOn": "2018-01-29T13:29:32Z",
+      "side": 1,
+      "message": "Here\u0027s what I get when I add \"const\" sadly:\n\nIn file included from ../../third_party/WebKit/Source/modules/picture_in_picture/HTMLVideoElementPictureInPicture.cpp:9:\n../../third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.h:26:3: error: \u0027const\u0027 type qualifier on return type has no effect [-Werror,-Wignored-qualifiers]\n  const bool PictureInPictureEnabled();\n  ^~~~~~\n1 error generated.",
+      "parentUuid": "b93e4dd4_d26581b7",
       "revId": "4d45095120b36ca181d931bd22f56b7c2d37d6df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -613,6 +655,24 @@
       "revId": "4d45095120b36ca181d931bd22f56b7c2d37d6df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aab4136_054e950b",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002525
+      },
+      "writtenOn": "2018-01-29T13:29:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0fb3c7e_16a07a2d",
+      "revId": "4d45095120b36ca181d931bd22f56b7c2d37d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
