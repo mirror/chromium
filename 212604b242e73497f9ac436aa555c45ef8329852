@@ -142,6 +142,30 @@
       "revId": "212604b242e73497f9ac436aa555c45ef8329852",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54a14bcc_637a382b",
+        "filename": "skia/public/interfaces/bitmap_skbitmap_struct_traits.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-29T18:41:42Z",
+      "side": 1,
+      "message": "Who\u0027s responsible for maintaining these files then?",
+      "parentUuid": "e6750cd9_8d3dbe14",
+      "range": {
+        "startLine": 78,
+        "startChar": 7,
+        "endLine": 78,
+        "endChar": 30
+      },
+      "revId": "212604b242e73497f9ac436aa555c45ef8329852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
