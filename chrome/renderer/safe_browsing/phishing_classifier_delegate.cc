@@ -21,6 +21,7 @@
 #include "content/public/renderer/navigation_state.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/render_thread.h"
+#include "third_party/WebKit/common/associated_interfaces/associated_interface_registry.h"
 #include "third_party/WebKit/public/platform/WebURL.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
@@ -52,22 +53,21 @@ PhishingClassifierFilter* PhishingClassifierFilter::Create() {
   return new PhishingClassifierFilter();
 }
 
-PhishingClassifierFilter::PhishingClassifierFilter()
-    : RenderThreadObserver() {}
+void PhishingClassifierFilter::PhishingDetectionRequest(
+    mojom::PhishingDetectionRequest request) {
+  phishing_detection_bindings_.AddBinding(this, std::move(request));
+}
+
+PhishingClassifierFilter::PhishingClassifierFilter() : RenderThreadObserver() {
+  auto registry = base::MakeUnique<service_manager::BinderRegistry>();
+  registry->AddInterface(
+      base::BindRepeating(&PhishingClassifierFilter::PhishingDetectionRequest,
+                          base::Unretained(this)));
+}
 
 PhishingClassifierFilter::~PhishingClassifierFilter() {}
 
-bool PhishingClassifierFilter::OnControlMessageReceived(
-    const IPC::Message& message) {
-  bool handled = true;
-  IPC_BEGIN_MESSAGE_MAP(PhishingClassifierFilter, message)
-    IPC_MESSAGE_HANDLER(SafeBrowsingMsg_SetPhishingModel, OnSetPhishingModel)
-    IPC_MESSAGE_UNHANDLED(handled = false)
-  IPC_END_MESSAGE_MAP()
-  return handled;
-}
-
-void PhishingClassifierFilter::OnSetPhishingModel(const std::string& model) {
+void PhishingClassifierFilter::SetPhishingModel(const std::string& model) {
   safe_browsing::Scorer* scorer = NULL;
   // An empty model string means we should disable client-side phishing
   // detection.

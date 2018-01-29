@@ -11,8 +11,10 @@
 
 #include "base/macros.h"
 #include "base/strings/string16.h"
+#include "components/safe_browsing/common/safe_browsing.mojom.h"
 #include "content/public/renderer/render_frame_observer.h"
 #include "content/public/renderer/render_thread_observer.h"
+#include "mojo/public/cpp/bindings/binding_set.h"
 #include "ui/base/page_transition_types.h"
 #include "url/gurl.h"
 
@@ -21,16 +23,19 @@ class ClientPhishingRequest;
 class PhishingClassifier;
 class Scorer;
 
-class PhishingClassifierFilter : public content::RenderThreadObserver {
+class PhishingClassifierFilter : public content::RenderThreadObserver,
+                                 public mojom::PhishingDetection {
  public:
   static PhishingClassifierFilter* Create();
   ~PhishingClassifierFilter() override;
 
-  bool OnControlMessageReceived(const IPC::Message& message) override;
-
  private:
   PhishingClassifierFilter();
-  void OnSetPhishingModel(const std::string& model);
+  void SetPhishingModel(const std::string& model) override;
+
+  void PhishingDetectionRequest(mojom::PhishingDetectionRequest request);
+
+  mojo::BindingSet<mojom::PhishingDetection> phishing_detection_bindings_;
 
   DISALLOW_COPY_AND_ASSIGN(PhishingClassifierFilter);
 };
