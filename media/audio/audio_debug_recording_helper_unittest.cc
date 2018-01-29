@@ -61,6 +61,21 @@ void CreateFile(const base::FilePath& extensions,
   ASSERT_TRUE(base::DeleteFile(file_path, false));
 }
 
+// Function for creating a file, argument for EnableDebugRecording().
+// A valid file needs to be passed to |reply_callback| for the expected
+// MockAudioDebugFileWriter::Start() call to happen. However, the file is not
+// used (Start is mocked), so the file can be removed right away.
+void CreateFile(const base::FilePath& file_name,
+                base::OnceCallback<void(base::File)> reply_callback) {
+  base::FilePath temp_dir;
+  ASSERT_TRUE(base::GetTempDir(&temp_dir));
+  base::FilePath file_path(temp_dir.Append(file_name));
+  base::File debug_file(base::File(
+      file_path, base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE));
+  std::move(reply_callback).Run(std::move(debug_file));
+  ASSERT_TRUE(base::DeleteFile(file_path, false));
+}
+
 }  // namespace
 
 // Mock class for the audio file writer that the helper wraps.

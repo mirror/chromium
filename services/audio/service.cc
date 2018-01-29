@@ -9,6 +9,7 @@
 #include "base/single_thread_task_runner.h"
 #include "build/build_config.h"
 #include "media/audio/audio_manager.h"
+#include "services/audio/public/cpp/debug_recording.h"
 #include "services/audio/system_info.h"
 #include "services/service_manager/public/cpp/service_context.h"
 
@@ -28,6 +29,8 @@ void Service::OnStart() {
   DVLOG(4) << "audio::Service::OnStart";
   registry_.AddInterface<mojom::SystemInfo>(base::BindRepeating(
       &Service::BindSystemInfoRequest, base::Unretained(this)));
+  registry_.AddInterface<mojom::DebugRecording>(base::BindRepeating(
+      &Service::BindDebugRecordingRequest, base::Unretained(this)));
 }
 
 void Service::OnBindInterface(
@@ -54,6 +57,16 @@ void Service::BindSystemInfoRequest(mojom::SystemInfoRequest request) {
         audio_manager_accessor_->GetAudioManager());
   }
   system_info_->Bind(std::move(request));
+}
+
+void Service::BindDebugRecordingRequest(mojom::DebugRecordingRequest request) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  // Only accept one binding request at a time.
+  if (debug_recording_)
+    return;
+
+  debug_recording_ = std::make_unique<DebugRecording>(
+      std::move(request), audio_manager_accessor_->GetAudioManager());
 }
 
 }  // namespace audio

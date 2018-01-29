@@ -10,3 +10,7 @@ import "mojo/common/file_path.mojom";
 interface DebugRecordingFileProvider {
   Create(mojo.common.mojom.FilePath suffix) => (mojo.common.mojom.File? file);
 };
+
+interface DebugRecording {
+  Enable(DebugRecordingFileProvider file_provider);
+};
