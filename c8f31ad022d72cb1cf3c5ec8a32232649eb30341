@@ -731,6 +731,30 @@
     },
     {
       "key": {
+        "uuid": "139c64ef_19c0de57",
+        "filename": "chrome_server/chrome_server.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-29T22:43:51Z",
+      "side": 1,
+      "message": "Mark this as resolved for now unless Rob has more input.",
+      "parentUuid": "7df973d1_b93b6cd8",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 22
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "338b9cf8_dea60283",
         "filename": "chrome_server/chrome_server.cc",
         "patchSetId": 34
@@ -790,6 +814,30 @@
       "side": 1,
       "message": "while it may compile and link without it, it is required. this is a c-sytle function that must use the ordinary \"C\"-style calling conventions; see crt/src/vcruntime/vcstartup_internal.h.",
       "parentUuid": "b075843d_b779416d",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 11
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa80d663_b489e7b8",
+        "filename": "chrome_server/chrome_server.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-29T22:43:51Z",
+      "side": 1,
+      "message": "Okay, I\u0027ve added it back.",
+      "parentUuid": "a8a2849b_8b7ab611",
       "range": {
         "startLine": 21,
         "startChar": 0,
