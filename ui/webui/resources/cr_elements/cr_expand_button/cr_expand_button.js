@@ -35,13 +35,4 @@ Polymer({
   iconName_: function(expanded) {
     return expanded ? 'icon-expand-less' : 'icon-expand-more';
   },
-
-  /**
-   * @param {!Event} event
-   * @private
-   */
-  toggleExpand_: function(event) {
-    this.expanded = !this.expanded;
-    event.stopPropagation();
-  },
 });
