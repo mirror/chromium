@@ -1,6 +1,6 @@
 This is a testharness.js-based test.
 Harness Error. harness_status.status = 1 , harness_status.message = Uncaught TypeError: Illegal constructor: localName does not match the HTML element interface
-Found 442 tests; 307 PASS, 135 FAIL, 0 TIMEOUT, 0 NOTRUN.
+Found 442 tests; 315 PASS, 127 FAIL, 0 TIMEOUT, 0 NOTRUN.
 PASS a: Define a customized built-in element
 PASS a: Operator 'new' should instantiate a customized built-in element
 PASS a: document.createElement() should instantiate a customized built-in element
@@ -121,12 +121,8 @@ FAIL button: innerHTML should instantiate a customized built-in element assert_e
   }
 }" but got function "function HTMLButtonElement() { [native code] }"
 PASS canvas: Define a customized built-in element
-FAIL canvas: Operator 'new' should instantiate a customized built-in element Illegal constructor
-FAIL canvas: document.createElement() should instantiate a customized built-in element assert_equals: expected function "class MyCanvas extends HTMLCanvasElement {
-  constructor() {
-    super();
-  }
-}" but got function "function HTMLCanvasElement() { [native code] }"
+PASS canvas: Operator 'new' should instantiate a customized built-in element
+PASS canvas: document.createElement() should instantiate a customized built-in element
 FAIL canvas: innerHTML should instantiate a customized built-in element assert_equals: expected function "class MyCanvas extends HTMLCanvasElement {
   constructor() {
     super();
@@ -384,12 +380,8 @@ FAIL i: innerHTML should instantiate a customized built-in element assert_equals
   }
 }" but got function "function HTMLElement() { [native code] }"
 PASS iframe: Define a customized built-in element
-FAIL iframe: Operator 'new' should instantiate a customized built-in element Illegal constructor
-FAIL iframe: document.createElement() should instantiate a customized built-in element assert_equals: expected function "class MyIframe extends HTMLIFrameElement {
-  constructor() {
-    super();
-  }
-}" but got function "function HTMLIFrameElement() { [native code] }"
+PASS iframe: Operator 'new' should instantiate a customized built-in element
+PASS iframe: document.createElement() should instantiate a customized built-in element
 FAIL iframe: innerHTML should instantiate a customized built-in element assert_equals: expected function "class MyIframe extends HTMLIFrameElement {
   constructor() {
     super();
@@ -404,12 +396,8 @@ FAIL img: innerHTML should instantiate a customized built-in element assert_equa
   }
 }" but got function "function HTMLImageElement() { [native code] }"
 PASS input: Define a customized built-in element
-FAIL input: Operator 'new' should instantiate a customized built-in element Illegal constructor
-FAIL input: document.createElement() should instantiate a customized built-in element assert_equals: expected function "class MyInput extends HTMLInputElement {
-  constructor() {
-    super();
-  }
-}" but got function "function HTMLInputElement() { [native code] }"
+PASS input: Operator 'new' should instantiate a customized built-in element
+PASS input: document.createElement() should instantiate a customized built-in element
 FAIL input: innerHTML should instantiate a customized built-in element assert_equals: expected function "class MyInput extends HTMLInputElement {
   constructor() {
     super();
@@ -884,12 +872,8 @@ FAIL var: innerHTML should instantiate a customized built-in element assert_equa
   }
 }" but got function "function HTMLElement() { [native code] }"
 PASS video: Define a customized built-in element
-FAIL video: Operator 'new' should instantiate a customized built-in element Illegal constructor
-FAIL video: document.createElement() should instantiate a customized built-in element assert_equals: expected function "class MyVideo extends HTMLVideoElement {
-  constructor() {
-    super();
-  }
-}" but got function "function HTMLVideoElement() { [native code] }"
+PASS video: Operator 'new' should instantiate a customized built-in element
+PASS video: document.createElement() should instantiate a customized built-in element
 FAIL video: innerHTML should instantiate a customized built-in element assert_equals: expected function "class MyVideo extends HTMLVideoElement {
   constructor() {
     super();
