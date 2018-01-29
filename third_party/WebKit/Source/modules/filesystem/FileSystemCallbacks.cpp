@@ -33,6 +33,7 @@
 #include <memory>
 
 #include "base/memory/ptr_util.h"
+#include "bindings/core/v8/V8VoidCallback.h"
 #include "bindings/modules/v8/V8EntryCallback.h"
 #include "bindings/modules/v8/V8ErrorCallback.h"
 #include "bindings/modules/v8/V8FileCallback.h"
@@ -41,7 +42,6 @@
 #include "core/dom/ExecutionContext.h"
 #include "core/fileapi/File.h"
 #include "core/fileapi/FileError.h"
-#include "core/html/VoidCallback.h"
 #include "modules/filesystem/DOMFilePath.h"
 #include "modules/filesystem/DOMFileSystem.h"
 #include "modules/filesystem/DOMFileSystemBase.h"
@@ -468,8 +468,18 @@ void SnapshotFileCallback::DidCreateSnapshotFile(
 
 // VoidCallbacks --------------------------------------------------------------
 
+void VoidCallbacks::OnDidSucceedV8Impl::Trace(blink::Visitor* visitor) {
+  visitor->Trace(callback_);
+  OnDidSucceedCallback::Trace(visitor);
+}
+
+void VoidCallbacks::OnDidSucceedV8Impl::OnSuccess(
+    ExecutionContext* dummy_arg_for_sync_helper) {
+  callback_->handleEvent();
+}
+
 std::unique_ptr<AsyncFileSystemCallbacks> VoidCallbacks::Create(
-    VoidCallback* success_callback,
+    OnDidSucceedCallback* success_callback,
     ErrorCallbackBase* error_callback,
     ExecutionContext* context,
     DOMFileSystemBase* file_system) {
@@ -477,7 +487,7 @@ std::unique_ptr<AsyncFileSystemCallbacks> VoidCallbacks::Create(
                                             context, file_system));
 }
 
-VoidCallbacks::VoidCallbacks(VoidCallback* success_callback,
+VoidCallbacks::VoidCallbacks(OnDidSucceedCallback* success_callback,
                              ErrorCallbackBase* error_callback,
                              ExecutionContext* context,
                              DOMFileSystemBase* file_system)
@@ -485,8 +495,12 @@ VoidCallbacks::VoidCallbacks(VoidCallback* success_callback,
       success_callback_(success_callback) {}
 
 void VoidCallbacks::DidSucceed() {
-  if (success_callback_)
-    HandleEventOrScheduleCallback(success_callback_.Release());
+  if (!success_callback_)
+    return;
+
+  InvokeOrScheduleCallback(&OnDidSucceedCallback::OnSuccess,
+                           success_callback_.Release(),
+                           execution_context_.Get());
 }
 
 }  // namespace blink
