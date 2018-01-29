@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9dde10dd_8a35f1dc",
+        "filename": "chrome/browser/ui/tabs/window_activity_watcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-29T17:33:38Z",
+      "side": 1,
+      "message": "I\u0027m a little surprised that if you want to track counts you aren\u0027t also tracking the number of times the window was restored and iconified.",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 25
+      },
+      "revId": "39ab710f376cd379fc4583a9bb17effbc1528e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "586e3680_d3fab0a0",
+        "filename": "chrome/browser/ui/tabs/window_activity_watcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-29T17:33:38Z",
+      "side": 1,
+      "message": "Is there a reason why you need the two phase Update and then sanitize? Is there a reason Update can\u0027t call (or do) the sanitize step?",
+      "range": {
+        "startLine": 204,
+        "startChar": 9,
+        "endLine": 204,
+        "endChar": 35
+      },
+      "revId": "39ab710f376cd379fc4583a9bb17effbc1528e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
