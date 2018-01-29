@@ -47,6 +47,8 @@ class UDPSocket : public mojom::UDPSocket {
     virtual int Bind(const net::IPEndPoint& local_addr) = 0;
     virtual int SetSendBufferSize(uint32_t size) = 0;
     virtual int SetReceiveBufferSize(uint32_t size) = 0;
+    virtual int JoinGroup(const net::IPAddress& group_address) = 0;
+    virtual int LeaveGroup(const net::IPAddress& group_address) = 0;
     virtual int SendTo(net::IOBuffer* buf,
                        int buf_len,
                        const net::IPEndPoint& dest_addr,
@@ -59,6 +61,11 @@ class UDPSocket : public mojom::UDPSocket {
                          net::IPEndPoint* address,
                          const net::CompletionCallback& callback) = 0;
     virtual int GetLocalAddress(net::IPEndPoint* address) const = 0;
+
+    // Configures the socket with socket options specified in |options|. This
+    // needs to be called after Open() and before Bind()/Connect().
+    // Returns a net error code.
+    virtual int ConfigureOptions(mojom::UDPSocketOptionsPtr options) = 0;
   };
 
   UDPSocket(mojom::UDPSocketRequest request,
@@ -69,7 +76,9 @@ class UDPSocket : public mojom::UDPSocket {
   void set_connection_error_handler(base::OnceClosure handler);
 
   // UDPSocket implementation.
-  void Open(net::AddressFamily address_family, OpenCallback callback) override;
+  void Open(net::AddressFamily address_family,
+            mojom::UDPSocketOptionsPtr options,
+            OpenCallback callback) override;
   void Connect(const net::IPEndPoint& remote_addr,
                ConnectCallback callback) override;
   void Bind(const net::IPEndPoint& local_addr, BindCallback callback) override;
@@ -77,6 +86,10 @@ class UDPSocket : public mojom::UDPSocket {
                          SetSendBufferSizeCallback callback) override;
   void SetReceiveBufferSize(uint32_t size,
                             SetReceiveBufferSizeCallback callback) override;
+  void JoinGroup(const net::IPAddress& group_address,
+                 JoinGroupCallback callback) override;
+  void LeaveGroup(const net::IPAddress& group_address,
+                  LeaveGroupCallback callback) override;
   void ReceiveMore(uint32_t num_additional_datagrams) override;
   void SendTo(const net::IPEndPoint& dest_addr,
               base::span<const uint8_t> data,
