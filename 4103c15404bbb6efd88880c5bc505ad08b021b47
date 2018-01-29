@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e01e4bd1_375455e2",
+        "filename": "components/cronet/android/cronet_library_loader.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-29T17:53:10Z",
+      "side": 1,
+      "message": "Hmm this is a little weird, it doesn\u0027t completely prevent multiple initializations (like a dispatch_once sort of thing), nor does it wait until the first initialization is completely done (NCN may not have been created yet).  It also relies on the atomicity of a pointer, which is technically fine but subtle.  It looks like NativeInit() and ensureInitializedFromNative() are both fine with being called multiple times.  I think this deserves a comment and comments above the methods called indicating they can be called repeatedly.  Alternately you could make it a dispatch-once sort of thing like so:\nvoid EnsureInitialized() {\n  static struct A { A() { NativeInit(); } } a;\n}",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 11
+      },
+      "revId": "4103c15404bbb6efd88880c5bc505ad08b021b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad44476d_dc90a8fb",
+        "filename": "components/cronet/native/cronet.idl",
+        "patchSetId": 14
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-29T17:53:10Z",
+      "side": 1,
+      "message": "needs comment about what return value indicates",
+      "range": {
+        "startLine": 265,
+        "startChar": 69,
+        "endLine": 265,
+        "endChar": 0
+      },
+      "revId": "4103c15404bbb6efd88880c5bc505ad08b021b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a04cd1ce_bc3330cc",
+        "filename": "components/cronet/native/engine.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-29T17:53:10Z",
+      "side": 1,
+      "message": "can we simplify this to:\n  return in_use_storage_paths_.emplace(storage_path).second;",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 16
+      },
+      "revId": "4103c15404bbb6efd88880c5bc505ad08b021b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11c5f666_998c59ef",
+        "filename": "components/cronet/native/engine.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-29T17:53:10Z",
+      "side": 1,
+      "message": "CHECK_EQ(Cronet_RESULT_SUCCESS, result);",
+      "range": {
+        "startLine": 256,
+        "startChar": 4,
+        "endLine": 256,
+        "endChar": 43
+      },
+      "revId": "4103c15404bbb6efd88880c5bc505ad08b021b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef0209b8_6ad9bbfb",
+        "filename": "components/cronet/native/engine.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-29T17:53:10Z",
+      "side": 1,
+      "message": "dead?",
+      "range": {
+        "startLine": 289,
+        "startChar": 2,
+        "endLine": 289,
+        "endChar": 62
+      },
+      "revId": "4103c15404bbb6efd88880c5bc505ad08b021b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc162190_6394a3fa",
+        "filename": "components/cronet/native/engine_test.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-29T17:53:10Z",
+      "side": 1,
+      "message": "should all these ASSERTs be EXPECTs?",
+      "range": {
+        "startLine": 157,
+        "startChar": 2,
+        "endLine": 157,
+        "endChar": 14
+      },
+      "revId": "4103c15404bbb6efd88880c5bc505ad08b021b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a6efdf5_199bbb7b",
+        "filename": "components/cronet/url_request_context_config_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-29T17:53:10Z",
+      "side": 1,
+      "message": "can we add a test in here where we verify that context.http_user_agent_settings() contains the User-Agent and Accept-Language from the config?",
+      "revId": "4103c15404bbb6efd88880c5bc505ad08b021b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
