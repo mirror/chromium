@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9ff1da2_11f2c1ee",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ViewRectProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-29T16:04:35Z",
+      "side": 1,
+      "message": "I thought of a better name over the weekend -- I\u0027m thinking this should be called setIncludePadding() which sets whether padding should be included in the provided Rect.",
+      "revId": "ac9038fdfb2473153813a2fb00239810d2970520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
