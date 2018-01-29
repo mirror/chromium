@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6333d60_e845a100",
+        "filename": "content/public/browser/content_browser_client.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2018-01-29T14:53:23Z",
+      "side": 1,
+      "message": "why isn\u0027t this a method on RenderFrameHostDelegate, or WebContentsDelegate?\n\nWhy can\u0027t we conceptually have multiple PiP window controllers (like on a multi display setup, couldn\u0027t we have multiple different fullscreen videos playing?)",
+      "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
