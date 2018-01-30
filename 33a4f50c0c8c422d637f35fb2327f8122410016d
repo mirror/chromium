@@ -1,0 +1,164 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e84d8e3_661b5ba7",
+        "filename": "chrome/browser/chromeos/assistant/assistant_service_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T21:14:01Z",
+      "side": 1,
+      "message": "nit: move to initializer list if we use const pointer in declaration.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 71
+      },
+      "revId": "33a4f50c0c8c422d637f35fb2327f8122410016d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08eab4a8_57f59d44",
+        "filename": "chrome/browser/chromeos/assistant/assistant_service_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T21:14:01Z",
+      "side": 1,
+      "message": "nit: no (c) after copyright in new code.",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "33a4f50c0c8c422d637f35fb2327f8122410016d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "724c06cf_5a64cec8",
+        "filename": "chrome/browser/chromeos/assistant/assistant_service_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T21:14:01Z",
+      "side": 1,
+      "message": "nit: const pointer if they are not going to change during lifetime of the class.\ni.e.\n  assistant_client::AssistantManagerInternal* const ...;\n  AuthTokenProvider* const ...;",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 42
+      },
+      "revId": "33a4f50c0c8c422d637f35fb2327f8122410016d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "909f2e6a_6eefc64d",
+        "filename": "chrome/browser/chromeos/assistant/platform_api_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T21:14:01Z",
+      "side": 1,
+      "message": "It is a private nested class and seems not used?",
+      "range": {
+        "startLine": 41,
+        "startChar": 23,
+        "endLine": 41,
+        "endChar": 40
+      },
+      "revId": "33a4f50c0c8c422d637f35fb2327f8122410016d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc68e77d_de8dadfe",
+        "filename": "chrome/browser/chromeos/assistant/platform_api_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T21:14:01Z",
+      "side": 1,
+      "message": "nit: insert an empty line after",
+      "revId": "33a4f50c0c8c422d637f35fb2327f8122410016d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "133c19e4_686ea044",
+        "filename": "chrome/browser/chromeos/assistant/platform_api_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T21:14:01Z",
+      "side": 1,
+      "message": "nit: // assistant_client::AuthProvider",
+      "revId": "33a4f50c0c8c422d637f35fb2327f8122410016d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ac69d47_3b1ad7ae",
+        "filename": "chrome/browser/chromeos/assistant/platform_api_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T21:14:01Z",
+      "side": 1,
+      "message": "nit: Comment to make the section gap more explicit, like the one for DummyAuthProvider ?",
+      "revId": "33a4f50c0c8c422d637f35fb2327f8122410016d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aaa037a_fd205b15",
+        "filename": "chrome/browser/chromeos/assistant/platform_api_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T21:14:01Z",
+      "side": 1,
+      "message": "nit: insert an empty line after",
+      "revId": "33a4f50c0c8c422d637f35fb2327f8122410016d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
