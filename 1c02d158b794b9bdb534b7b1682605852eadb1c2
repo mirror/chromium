@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f2897483_306d1569",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2018-01-30T17:50:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e335207_45ba17ab",
+      "range": {
+        "startLine": 10,
+        "startChar": 9,
+        "endLine": 10,
+        "endChar": 13
+      },
+      "revId": "1c02d158b794b9bdb534b7b1682605852eadb1c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10a1c715_79b36e84",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2018-01-30T17:16:50Z",
       "side": 1,
       "message": "Maybe also put link here?\nhttps://wiki.samba.org/index.php/Samba_4.6_Features_added/changed#Kerberos_client_encryption_types",
+      "revId": "1c02d158b794b9bdb534b7b1682605852eadb1c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79e795d5_49944322",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 5073,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2018-01-30T17:50:19Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "10a1c715_79b36e84",
       "revId": "1c02d158b794b9bdb534b7b1682605852eadb1c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
