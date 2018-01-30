@@ -22,6 +22,30 @@
       "revId": "e21c061fd4207addb26de6913693364d19585248",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48e7f4b8_fccb2a77",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 3296,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-30T16:56:18Z",
+      "side": 0,
+      "message": "This is a leftover from the old history navigation code, which is now never set to true.",
+      "parentUuid": "cc9c298e_159f7d1e",
+      "range": {
+        "startLine": 3296,
+        "startChar": 43,
+        "endLine": 3296,
+        "endChar": 74
+      },
+      "revId": "e21c061fd4207addb26de6913693364d19585248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
