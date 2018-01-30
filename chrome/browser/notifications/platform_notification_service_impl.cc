@@ -478,7 +478,8 @@ PlatformNotificationServiceImpl::CreateNotificationFromData(
             notification_resources.action_icons.size());
 
   message_center::RichNotificationData optional_fields;
-#if defined(OS_CHROMEOS)
+
+#if defined(OS_CHROMEOS) || defined(OS_WIN)
   optional_fields.settings_button_handler =
       message_center::SettingsButtonHandler::TRAY;
 #else

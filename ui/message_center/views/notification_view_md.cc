@@ -428,6 +428,7 @@ views::View* NotificationViewMD::TargetForRect(views::View* root,
   if (settings_row_) {
     buttons.push_back(block_all_button_);
     buttons.push_back(dont_block_button_);
+    buttons.push_back(more_settings_button_);
     buttons.push_back(settings_done_button_);
   }
 
@@ -680,7 +681,11 @@ void NotificationViewMD::ButtonPressed(views::Button* sender,
     return;
   }
 
-  if (sender == settings_done_button_) {
+  if (sender == more_settings_button_) {
+    MessageCenter::Get()->ClickOnSettingsButton(id);
+    ToggleInlineSettings();
+    return;
+  } else if (sender == settings_done_button_) {
     if (block_all_button_->checked())
       MessageCenter::Get()->DisableNotification(id);
     ToggleInlineSettings();
@@ -1026,16 +1031,23 @@ void NotificationViewMD::CreateOrUpdateInlineSettingsViews(
   settings_row_->AddChildView(dont_block_button_);
   settings_row_->SetVisible(false);
 
-  settings_done_button_ = new NotificationButtonMD(
-      this, false, l10n_util::GetStringUTF16(IDS_MESSAGE_CENTER_SETTINGS_DONE),
-      base::EmptyString16());
   auto* settings_button_row = new views::View;
   auto settings_button_layout = std::make_unique<views::BoxLayout>(
       views::BoxLayout::kHorizontal, kSettingsButtonRowPadding, 0);
   settings_button_layout->set_main_axis_alignment(
       views::BoxLayout::MAIN_AXIS_ALIGNMENT_END);
   settings_button_row->SetLayoutManager(std::move(settings_button_layout));
+
+  more_settings_button_ = new NotificationButtonMD(
+      this, false, l10n_util::GetStringUTF16(IDS_MESSAGE_CENTER_MORE_SETTINGS),
+      base::EmptyString16());
+  settings_button_row->AddChildView(more_settings_button_);
+
+  settings_done_button_ = new NotificationButtonMD(
+      this, false, l10n_util::GetStringUTF16(IDS_MESSAGE_CENTER_SETTINGS_DONE),
+      base::EmptyString16());
   settings_button_row->AddChildView(settings_done_button_);
+
   settings_row_->AddChildView(settings_button_row);
 
   AddChildViewAt(settings_row_, GetIndexOf(actions_row_));
