@@ -242,7 +242,7 @@ component("bluetooth") {
     ]
   }
 
-  if (is_chromeos || is_linux) {
+  if (is_chromeos) {
     if (use_dbus) {
       sources += [
         "bluez/bluetooth_adapter_bluez.cc",
