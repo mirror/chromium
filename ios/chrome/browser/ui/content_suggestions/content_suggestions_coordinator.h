@@ -18,6 +18,7 @@ class ChromeBrowserState;
 @protocol OmniboxFocuser;
 @protocol FakeboxFocuser;
 @protocol SnackbarCommands;
+@protocol ToolbarCommands;
 @protocol UrlLoader;
 class WebStateList;
 
@@ -36,6 +37,7 @@ class WebStateList;
                               OmniboxFocuser,
                               FakeboxFocuser,
                               SnackbarCommands,
+                              ToolbarCommands,
                               UrlLoader>
     dispatcher;
 // Whether the Suggestions UI is displayed. If this is true, start is a no-op.
