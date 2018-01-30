@@ -86,6 +86,10 @@ class MESSAGE_CENTER_EXPORT NotificationList {
   Notifications GetNotificationsByNotifierId(const NotifierId& notifier_id);
 
   // Returns true if the notification exists and was updated.
+  bool SetNotificationAppId(const std::string& notification_id,
+                            const std::string& app_id);
+
+  // Returns true if the notification exists and was updated.
   bool SetNotificationIcon(const std::string& notification_id,
                            const gfx::Image& image);
 
