@@ -33,6 +33,24 @@
       "revId": "45095a0b20cfb85354228a93eb082d4eb7d97124",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d788e6ed_b39abbbe",
+        "filename": "components/viz/service/display_embedder/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-30T17:48:41Z",
+      "side": 1,
+      "message": "Hmm, there are a lot of dependencies in this direction.\n\ncomponents/viz/service/display/display_scheduler.h\ncomponents/viz/service/display/display.h\ncomponents/viz/service/display/output_surface_client.h\ncomponents/viz/service/display/output_surface_frame.h\ncomponents/viz/service/display/output_surface.h\ncomponents/viz/service/display/overlay_candidate_validator.h\ncomponents/viz/service/display/overlay_processor.h\ncomponents/viz/service/display/overlay_strategy_fullscreen.h\ncomponents/viz/service/display/overlay_strategy_single_on_top.h\ncomponents/viz/service/display/overlay_strategy_underlay_cast.h\ncomponents/viz/service/display/overlay_strategy_underlay.h\ncomponents/viz/service/display/software_output_device.h\n\nDoes that change things?",
+      "parentUuid": "1e51e713_d9b926a0",
+      "revId": "45095a0b20cfb85354228a93eb082d4eb7d97124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
