@@ -26,6 +26,7 @@
 #include "content/public/browser/resource_request_info.h"
 #include "content/public/common/content_paths.h"
 #include "content/public/common/resource_type.h"
+#include "content/public/test/controllable_http_response.h"
 #include "content/public/test/mock_resource_context.h"
 #include "content/public/test/test_browser_context.h"
 #include "content/public/test/test_browser_thread_bundle.h"
@@ -1588,6 +1589,134 @@ TEST_F(EffectiveConnectionTypeResourceLoaderTest, DoesNotBelongToMainFrame) {
   VerifyEffectiveConnectionType(RESOURCE_TYPE_OBJECT, false,
                                 net::EFFECTIVE_CONNECTION_TYPE_3G,
                                 net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN);
+}
+
+TEST_F(ResourceLoaderTest, PauseReadingBodyFromNetBeforeRespnoseHeaders) {
+  const char* const kPath = "/hello.html";
+  const char* const kBodyContents = "This is the data as you requested.";
+
+  net::EmbeddedTestServer server;
+  ControllableHttpResponse response_controller(&server, kPath);
+  ASSERT_TRUE(server.Start());
+
+  SetUpResourceLoaderForUrl(server.GetURL(kPath));
+  loader_->StartRequest();
+
+  // Pausing reading response body from network stops future reads from the
+  // underlying URLRequest. So no data should be sent using the response body
+  // data pipe.
+  loader_->PauseReadingBodyFromNet();
+
+  response_controller.WaitForRequest();
+  response_controller.Send(
+      "HTTP/1.1 200 OK\r\n"
+      "Content-Type: text/plain\r\n\r\n" +
+      std::string(kBodyContents));
+  response_controller.Done();
+
+  // We will still receive the response header, although there won't be any data
+  // available until ResumeReadBodyFromNet() is called.
+  raw_ptr_resource_handler_->WaitUntilResponseStarted();
+  EXPECT_EQ(1, raw_ptr_resource_handler_->on_response_started_called());
+  EXPECT_EQ(0, raw_ptr_resource_handler_->on_read_completed_called());
+
+  // Wait for a little amount of time so that if the loader mistakenly reads
+  // response body from the underlying URLRequest, it is easier to find out.
+  base::RunLoop run_loop;
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE, run_loop.QuitClosure(),
+      base::TimeDelta::FromMilliseconds(100));
+  run_loop.Run();
+
+  EXPECT_TRUE(raw_ptr_resource_handler_->body().empty());
+
+  loader_->ResumeReadingBodyFromNet();
+  raw_ptr_resource_handler_->WaitUntilResponseComplete();
+
+  EXPECT_EQ(kBodyContents, raw_ptr_resource_handler_->body());
+}
+
+TEST_F(ResourceLoaderTest, PauseReadingBodyFromNetWhenReadIsPending) {
+  const char* const kPath = "/hello.html";
+  const char* const kBodyContentsFirstHalf = "This is the first half.";
+  const char* const kBodyContentsSecondHalf = "This is the second half.";
+
+  net::EmbeddedTestServer server;
+  ControllableHttpResponse response_controller(&server, kPath);
+  ASSERT_TRUE(server.Start());
+
+  SetUpResourceLoaderForUrl(server.GetURL(kPath));
+  loader_->StartRequest();
+
+  response_controller.WaitForRequest();
+  response_controller.Send(
+      "HTTP/1.1 200 OK\r\n"
+      "Content-Type: text/plain\r\n\r\n" +
+      std::string(kBodyContentsFirstHalf));
+
+  raw_ptr_resource_handler_->WaitUntilResponseStarted();
+  EXPECT_EQ(1, raw_ptr_resource_handler_->on_response_started_called());
+
+  loader_->PauseReadingBodyFromNet();
+
+  response_controller.Send(kBodyContentsSecondHalf);
+  response_controller.Done();
+
+  // It is uncertain how much data has been read before reading is actually
+  // paused, because if there is a pending read when PauseReadingBodyFromNet()
+  // arrives, the pending read won't be cancelled. Therefore, this test only
+  // checks that after ResumeReadingBodyFromNet() we should be able to get the
+  // whole response body.
+  loader_->ResumeReadingBodyFromNet();
+  raw_ptr_resource_handler_->WaitUntilResponseComplete();
+
+  EXPECT_EQ(std::string(kBodyContentsFirstHalf) +
+                std::string(kBodyContentsSecondHalf),
+            raw_ptr_resource_handler_->body());
+}
+
+TEST_F(ResourceLoaderTest, MultiplePauseResumeReadingBodyFromNet) {
+  const char* const kPath = "/hello.html";
+  const char* const kBodyContentsFirstHalf = "This is the first half.";
+  const char* const kBodyContentsSecondHalf = "This is the second half.";
+
+  net::EmbeddedTestServer server;
+  ControllableHttpResponse response_controller(&server, kPath);
+  ASSERT_TRUE(server.Start());
+
+  SetUpResourceLoaderForUrl(server.GetURL(kPath));
+  loader_->StartRequest();
+
+  // It is okay to call ResumeReadingBodyFromNet() even if there is no prior
+  // PauseReadingBodyFromNet().
+  loader_->ResumeReadingBodyFromNet();
+
+  response_controller.WaitForRequest();
+  response_controller.Send(
+      "HTTP/1.1 200 OK\r\n"
+      "Content-Type: text/plain\r\n\r\n" +
+      std::string(kBodyContentsFirstHalf));
+
+  loader_->PauseReadingBodyFromNet();
+
+  raw_ptr_resource_handler_->WaitUntilResponseStarted();
+  EXPECT_EQ(1, raw_ptr_resource_handler_->on_response_started_called());
+
+  loader_->PauseReadingBodyFromNet();
+  loader_->PauseReadingBodyFromNet();
+
+  response_controller.Send(kBodyContentsSecondHalf);
+  response_controller.Done();
+
+  // One ResumeReadingBodyFromNet() call will resume reading even if there are
+  // multiple PauseReadingBodyFromNet() calls before it.
+  loader_->ResumeReadingBodyFromNet();
+
+  raw_ptr_resource_handler_->WaitUntilResponseComplete();
+
+  EXPECT_EQ(std::string(kBodyContentsFirstHalf) +
+                std::string(kBodyContentsSecondHalf),
+            raw_ptr_resource_handler_->body());
 }
 
 }  // namespace content
