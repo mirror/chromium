@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9b8df4b_2137e013",
+        "filename": "content/browser/appcache/appcache_request_handler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-30T03:30:42Z",
+      "side": 1,
+      "message": "non-null |loader| -\u003e non-null |handler|\nwith |loader| -\u003e with |handler|",
+      "revId": "be0d14eb130e0bb0143ce1e0c4fe812065a2e44b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6eb196d_521eaf4f",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-30T03:30:42Z",
+      "side": 1,
+      "message": "nit: |single_request_handler| is the request handler given by the ...\n\n(oops so many handlers)",
+      "revId": "be0d14eb130e0bb0143ce1e0c4fe812065a2e44b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
