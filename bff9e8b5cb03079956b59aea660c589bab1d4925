@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6594d618_253d4596",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8GCController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-30T07:55:33Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "e31edae4_0713e192",
+      "revId": "bff9e8b5cb03079956b59aea660c589bab1d4925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef537b6f_774b425b",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8GCController.cpp",
         "patchSetId": 4
@@ -64,6 +82,24 @@
       "writtenOn": "2018-01-30T05:07:26Z",
       "side": 1,
       "message": "(As I commented on the previous CL, I\u0027m not sure how useful it would be to dump names of TraceWrapperBases -- I guess it would be sufficient to dump names of ScriptWrappables. We could revisit this issue later.)",
+      "revId": "bff9e8b5cb03079956b59aea660c589bab1d4925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b63755b3_157d0f57",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8GCController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-30T07:55:33Z",
+      "side": 1,
+      "message": "I think the most benefit would come here from event listeners. They are not SW but traditionally involved in all interesting leaks and they usually show up close to the API boundary in the hierarchy. Personally, it helps me a lot if those classes get proper names.",
+      "parentUuid": "18e355f7_9b7d3fbb",
       "revId": "bff9e8b5cb03079956b59aea660c589bab1d4925",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
