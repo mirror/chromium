@@ -1,0 +1,354 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f16368da_1b2272da",
+        "filename": "chrome/android/java/res/xml/download_directory.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-30T15:28:31Z",
+      "side": 1,
+      "message": "This seems fairly close to the modern list item style defined in modern_list_item_view.xml. Any chance for re-use?",
+      "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dabe9df8_082b0064",
+        "filename": "chrome/android/java/res/xml/download_directory.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-30T15:28:31Z",
+      "side": 1,
+      "message": "15dp is a weird start margin. Is this what the UX spec called for?",
+      "range": {
+        "startLine": 17,
+        "startChar": 7,
+        "endLine": 17,
+        "endChar": 41
+      },
+      "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a50589e7_547b5f47",
+        "filename": "chrome/android/java/res/xml/download_directory.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-30T15:28:31Z",
+      "side": 1,
+      "message": "Please use a pre-defined text style in ui/android/java/res/values-v17/styles.xml",
+      "range": {
+        "startLine": 30,
+        "startChar": 12,
+        "endLine": 31,
+        "endChar": 35
+      },
+      "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aa52637_c67fbed0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-30T15:28:31Z",
+      "side": 1,
+      "message": "Typically we get the LayoutInflater from the context, e.g. LayoutInflater.from(context);",
+      "range": {
+        "startLine": 60,
+        "startChar": 16,
+        "endLine": 60,
+        "endChar": 91
+      },
+      "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0437728f_28e70177",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-30T15:28:31Z",
+      "side": 1,
+      "message": "Instead of hard-coding 19, use the equivalent Build.VERSION_CODES.",
+      "range": {
+        "startLine": 62,
+        "startChar": 37,
+        "endLine": 62,
+        "endChar": 39
+      },
+      "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f61d5abb_1c12a659",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-30T15:28:31Z",
+      "side": 1,
+      "message": "DownloadFilter.FILTER_DOCUMENT?",
+      "range": {
+        "startLine": 63,
+        "startChar": 84,
+        "endLine": 63,
+        "endChar": 86
+      },
+      "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48a1e081_887711b4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-30T15:28:31Z",
+      "side": 1,
+      "message": "DownloadFilter.FILTER_IMAGE? etc",
+      "range": {
+        "startLine": 66,
+        "startChar": 80,
+        "endLine": 66,
+        "endChar": 81
+      },
+      "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb499b51_72eb40d5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-30T15:28:31Z",
+      "side": 1,
+      "message": "nit: JavaDocs for this method and for #stop()",
+      "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d5caf62_9acb2163",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-30T15:28:31Z",
+      "side": 1,
+      "message": "nit: early return if \u003c 19 to remove one level of indentation",
+      "range": {
+        "startLine": 100,
+        "startChar": 8,
+        "endLine": 100,
+        "endChar": 42
+      },
+      "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "414e19a7_d7cffde9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-30T15:28:31Z",
+      "side": 1,
+      "message": "Is it possible that numAdditionalDirectories and mAdditionalDirectoryOptions are the same size but contain different items?",
+      "range": {
+        "startLine": 103,
+        "startChar": 16,
+        "endLine": 103,
+        "endChar": 78
+      },
+      "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8565f5c7_0a388975",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-30T15:28:31Z",
+      "side": 1,
+      "message": "Same nit here about early return to avoid indentation",
+      "range": {
+        "startLine": 103,
+        "startChar": 12,
+        "endLine": 103,
+        "endChar": 14
+      },
+      "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd203f99_3a6ca2b1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-30T15:28:31Z",
+      "side": 1,
+      "message": "If there are two SD cards, this will label them \"SD Card\" and \"SD Card 1\", is that correct?",
+      "range": {
+        "startLine": 120,
+        "startChar": 53,
+        "endLine": 120,
+        "endChar": 99
+      },
+      "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1e59374_eec72e75",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-30T15:28:31Z",
+      "side": 1,
+      "message": "nit: How about canonicalDirectoriesEndPosition or something like that since this isn\u0027t really the number of canonical directories?",
+      "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08d952b7_5077746f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-30T15:28:31Z",
+      "side": 1,
+      "message": "You should be able to set the padding in XML. Or provide a height for the image view and a scaleType that centers the icon.",
+      "range": {
+        "startLine": 177,
+        "startChar": 7,
+        "endLine": 180,
+        "endChar": 0
+      },
+      "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bae0b3b_e4bcdcc1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-30T15:28:31Z",
+      "side": 1,
+      "message": "We use a blue circle with a check mark to indicate selection in history, downloads and bookmarks rather than highlighting the row. Our UX designers should sync on whether this should follow suite, or explicitly acknowledge and approve the deviation. I left a comment on the mocks.\n\n\nIf we keep the highlight, this blue is too bright. We used to use a highlight view in history, et, al that used #804281f4 for the color and overlaid a rectangular view on top of the item view. It was removed in this patch:  https://chromium-review.googlesource.com/c/chromium/src/+/639151",
+      "range": {
+        "startLine": 201,
+        "startChar": 12,
+        "endLine": 201,
+        "endChar": 95
+      },
+      "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f2b2f4c_e383ee77",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-30T15:28:31Z",
+      "side": 1,
+      "message": "Do the items/contents of the list actually change when an item is clicked or is notifyDataSetChanged() being used to cause the views to get rebound and styles to be re-applied? If it\u0027s the latter, perhaps we can keep track of the previously selected item so that we can reset style on the previously selected and the newly selected without calling notifyDataSetchanged.",
+      "range": {
+        "startLine": 213,
+        "startChar": 8,
+        "endLine": 213,
+        "endChar": 31
+      },
+      "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
