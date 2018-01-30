@@ -16,6 +16,24 @@
       "revId": "5040cf61659e869524d7670b307f32ebcb01f12c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffe68026_c94a4f51",
+        "filename": "content/browser/devtools/devtools_session.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-30T22:47:16Z",
+      "side": 1,
+      "message": "It is expected for either both call_id and state to come, or both to be missing. Unfortunately, optional int32 is not a thing in Mojo, so I failed to express that.\n\nSplitting into event vs command response should be easy now (with Mojo). I will definitely follow up.",
+      "parentUuid": "1a018199_6c4fc2e7",
+      "revId": "5040cf61659e869524d7670b307f32ebcb01f12c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
