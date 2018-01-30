@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "faa5940b_b768eddd",
+        "filename": "chrome/test/vr/auto_bisect.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-30T21:45:51Z",
+      "side": 1,
+      "message": "In WAT we are moving away from the Clank repo. All but Ian seem to not have the Clank repo anymore already.",
+      "parentUuid": "2533d607_10019e49",
+      "range": {
+        "startLine": 55,
+        "startChar": 25,
+        "endLine": 55,
+        "endChar": 39
+      },
+      "revId": "b6e5a014ef23017b8adf70c0a7a857bf00cd4d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c2db0fab_20d93e5a",
         "filename": "chrome/test/vr/auto_bisect.py",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-30T21:18:52Z",
       "side": 1,
       "message": "This is all that\u0027s required for me, as I have gclient set to be managed. Not sure if being unmanaged is any different?",
+      "range": {
+        "startLine": 280,
+        "startChar": 2,
+        "endLine": 280,
+        "endChar": 73
+      },
+      "revId": "b6e5a014ef23017b8adf70c0a7a857bf00cd4d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "553bc354_67942a97",
+        "filename": "chrome/test/vr/auto_bisect.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-30T21:45:51Z",
+      "side": 1,
+      "message": "Mine is unmanaged and all I have to do is \u0027gclient sync\u0027. Also, I don\u0027t have the Clank repo. Can we make it support both?",
+      "parentUuid": "c2db0fab_20d93e5a",
       "range": {
         "startLine": 280,
         "startChar": 2,
