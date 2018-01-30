@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "df465607_b0c82b44",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 48
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-30T19:39:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6285d08_44b293d8",
+      "revId": "d44296643d823f3fd0bf596404843363790dd15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf64e8bf_60d91a7b",
         "filename": "chrome/installer/setup/install_worker.cc",
         "patchSetId": 48
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "930b1ac8_663bc9d6",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 48
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-30T19:39:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf64e8bf_60d91a7b",
+      "revId": "d44296643d823f3fd0bf596404843363790dd15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73c783ca_abe1def6",
         "filename": "chrome/installer/setup/install_worker.cc",
         "patchSetId": 48
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-30T13:31:35Z",
       "side": 1,
       "message": "i think |new_version| must always be valid. did you include this check for defensive programming, or was it in the old delegate execute code?",
+      "revId": "d44296643d823f3fd0bf596404843363790dd15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a47171f4_cb92a257",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 48
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-30T19:39:11Z",
+      "side": 1,
+      "message": "I was in the old delegate execute code, so I added it here.",
+      "parentUuid": "73c783ca_abe1def6",
       "revId": "d44296643d823f3fd0bf596404843363790dd15e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -100,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "7cff3409_35b0eee4",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 48
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-30T19:39:11Z",
+      "side": 1,
+      "message": "I have changed it back to string append. Seems that Rob is okay with both in his previous comment.",
+      "parentUuid": "7ac5b656_1eb83525",
+      "range": {
+        "startLine": 248,
+        "startChar": 12,
+        "endLine": 248,
+        "endChar": 22
+      },
+      "revId": "d44296643d823f3fd0bf596404843363790dd15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91bc3753_31af03ee",
         "filename": "chrome/installer/util/util_constants.h",
         "patchSetId": 48
@@ -114,6 +192,24 @@
       "revId": "d44296643d823f3fd0bf596404843363790dd15e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a597648_833ffe5f",
+        "filename": "chrome/installer/util/util_constants.h",
+        "patchSetId": 48
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-30T19:39:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91bc3753_31af03ee",
+      "revId": "d44296643d823f3fd0bf596404843363790dd15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "9169240b_681db608",
+        "filename": "notification_helper/BUILD.gn",
+        "patchSetId": 48
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-30T19:39:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb4d1520_0a72b9ab",
+      "revId": "d44296643d823f3fd0bf596404843363790dd15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7c39c33_eed2cf01",
         "filename": "notification_helper/BUILD.gn",
         "patchSetId": 48
@@ -148,6 +262,24 @@
       "revId": "d44296643d823f3fd0bf596404843363790dd15e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8326442f_f76783a3",
+        "filename": "notification_helper/BUILD.gn",
+        "patchSetId": 48
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-30T19:39:11Z",
+      "side": 1,
+      "message": "Removed as they are no long needed.",
+      "parentUuid": "b7c39c33_eed2cf01",
+      "revId": "d44296643d823f3fd0bf596404843363790dd15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -168,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "b263d303_051205dc",
+        "filename": "notification_helper/BUILD.gn",
+        "patchSetId": 48
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-30T19:39:11Z",
+      "side": 1,
+      "message": "Done. After moving the libs below, deps is enough.",
+      "parentUuid": "02bf8f78_12f599fc",
+      "revId": "d44296643d823f3fd0bf596404843363790dd15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79ed1086_431f92ea",
         "filename": "notification_helper/BUILD.gn",
         "patchSetId": 48
@@ -182,6 +332,24 @@
       "revId": "d44296643d823f3fd0bf596404843363790dd15e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ede18ac4_8fb46d98",
+        "filename": "notification_helper/BUILD.gn",
+        "patchSetId": 48
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-30T19:39:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79ed1086_431f92ea",
+      "revId": "d44296643d823f3fd0bf596404843363790dd15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -202,6 +370,24 @@
     },
     {
       "key": {
+        "uuid": "6e2eb421_0718133a",
+        "filename": "notification_helper/BUILD.gn",
+        "patchSetId": 48
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-30T19:39:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0cc2cf6_eab2d83a",
+      "revId": "d44296643d823f3fd0bf596404843363790dd15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1c2107a_7d3233ff",
         "filename": "notification_helper/BUILD.gn",
         "patchSetId": 48
@@ -216,6 +402,24 @@
       "revId": "d44296643d823f3fd0bf596404843363790dd15e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e211ae26_74100b72",
+        "filename": "notification_helper/BUILD.gn",
+        "patchSetId": 48
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-30T19:39:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1c2107a_7d3233ff",
+      "revId": "d44296643d823f3fd0bf596404843363790dd15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -239,6 +443,30 @@
       "revId": "d44296643d823f3fd0bf596404843363790dd15e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d585f03e_6e252b82",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 48
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-30T19:39:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e85f0a65_b6c2ef72",
+      "range": {
+        "startLine": 23,
+        "startChar": 36,
+        "endLine": 23,
+        "endChar": 38
+      },
+      "revId": "d44296643d823f3fd0bf596404843363790dd15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

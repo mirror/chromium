@@ -432,6 +432,24 @@
     },
     {
       "key": {
+        "uuid": "a8a0a885_c1dfd369",
+        "filename": "win_notification_helper/notification_activator.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-30T19:39:11Z",
+      "side": 1,
+      "message": "What you mentioned is confirmed by the local tests I did :-)",
+      "parentUuid": "f2b2c8a9_78636762",
+      "revId": "3fbf87081c8f87d21386aaf4e9cefc31ae8406bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8912368_12f8dbca",
         "filename": "win_notification_helper/notification_activator.cc",
         "patchSetId": 41
@@ -500,6 +518,24 @@
       "revId": "3fbf87081c8f87d21386aaf4e9cefc31ae8406bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eef7b1ca_89f8c237",
+        "filename": "win_notification_helper/notification_activator.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-30T19:39:11Z",
+      "side": 1,
+      "message": "Thanks Finnur! I have updated the comment.",
+      "parentUuid": "62620f8b_3a571a34",
+      "revId": "3fbf87081c8f87d21386aaf4e9cefc31ae8406bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
