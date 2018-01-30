@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61d6bd3b_ea44db7d",
+        "filename": "content/browser/android/synchronous_compositor_sync_call_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-30T17:38:51Z",
+      "side": 1,
+      "message": "Note that Chrome style disallows mutable references. Can this be pass by value?",
+      "revId": "56064798e8ce1ee5f5b088fb35f155a1c8577997",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61538cf8_94902e86",
+        "filename": "content/browser/android/synchronous_compositor_sync_call_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-30T17:38:51Z",
+      "side": 1,
+      "message": "Nit: combine the initialization and declaration.",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 45
+      },
+      "revId": "56064798e8ce1ee5f5b088fb35f155a1c8577997",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c461c4a_2011197a",
+        "filename": "content/browser/android/synchronous_compositor_sync_call_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-30T17:38:51Z",
+      "side": 1,
+      "message": "Out of curiosity, does this compile without base::Passed()? What about with std::move()? One of the advantages of BindOnce() is that it\u0027s supposed to be friendlier with move-only types.",
+      "range": {
+        "startLine": 74,
+        "startChar": 29,
+        "endLine": 74,
+        "endChar": 42
+      },
+      "revId": "56064798e8ce1ee5f5b088fb35f155a1c8577997",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "656cb780_f245bfbf",
+        "filename": "content/browser/android/synchronous_compositor_sync_call_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-30T17:38:51Z",
+      "side": 1,
+      "message": "Remove one layer of base::BindOnce.\n\n(I thought we had a nocompile test added in https://chromium.googlesource.com/chromium/src/+/172b6ad8f0213ba74d9447dbd08e32e1c7ce655a that ensured this failed to compile, but it must have broken.)",
+      "range": {
+        "startLine": 145,
+        "startChar": 27,
+        "endLine": 145,
+        "endChar": 42
+      },
+      "revId": "56064798e8ce1ee5f5b088fb35f155a1c8577997",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7c21677_8a9ce62a",
+        "filename": "content/browser/android/synchronous_compositor_sync_call_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-30T17:38:51Z",
+      "side": 1,
+      "message": "This is technically redundant right if begin_frame_response_valid_ is false already right? But I guess it\u0027s difficult to move it into the body of the if () without duplicating part of the DCHECK.",
+      "revId": "56064798e8ce1ee5f5b088fb35f155a1c8577997",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "444b8042_aef58cb1",
+        "filename": "content/browser/android/synchronous_compositor_sync_call_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-30T17:38:51Z",
+      "side": 1,
+      "message": "Can you help me understand what this previously corresponded to?",
+      "range": {
+        "startLine": 206,
+        "startChar": 0,
+        "endLine": 216,
+        "endChar": 1
+      },
+      "revId": "56064798e8ce1ee5f5b088fb35f155a1c8577997",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
