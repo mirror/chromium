@@ -67,7 +67,7 @@ const base::Feature kProtectSyncCredentialOnReauth = {
 
 // Controls the ability to export passwords from Chrome's settings page.
 const base::Feature kPasswordExport = {"PasswordExport",
-                                       base::FEATURE_DISABLED_BY_DEFAULT};
+                                       base::FEATURE_ENABLED_BY_DEFAULT};
 
 // Controls the ability to import passwords from Chrome's settings page.
 const base::Feature kPasswordImport = {"PasswordImport",
