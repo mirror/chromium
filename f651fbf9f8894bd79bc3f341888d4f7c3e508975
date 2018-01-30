@@ -45,6 +45,30 @@
       "revId": "f651fbf9f8894bd79bc3f341888d4f7c3e508975",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b590bd18_4e1b5745",
+        "filename": "chrome/test/data/policy/policy_test_cases.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 1149061
+      },
+      "writtenOn": "2018-01-30T03:10:49Z",
+      "side": 1,
+      "message": "Probably good to have this since ChromeDriver does work on ChromeOS: https://sites.google.com/a/chromium.org/chromedriver/getting-started/chromeos",
+      "parentUuid": "d6591bc9_48b2c096",
+      "range": {
+        "startLine": 868,
+        "startChar": 34,
+        "endLine": 868,
+        "endChar": 44
+      },
+      "revId": "f651fbf9f8894bd79bc3f341888d4f7c3e508975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
