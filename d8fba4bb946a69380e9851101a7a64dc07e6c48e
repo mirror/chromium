@@ -70,6 +70,30 @@
       "revId": "d8fba4bb946a69380e9851101a7a64dc07e6c48e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "424ed139_49165ad7",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2018-01-30T17:51:17Z",
+      "side": 1,
+      "message": "We\u0027ve got an issue already with SkImage::MakeFromRaster returning null inside StaticBotmapImage::Create methods, implying that the Create should fail. How would you feel about filing a bug to allow Create to fail and update the call sites.\n\nMeanwhile I\u0027ll land this.",
+      "parentUuid": "434efad4_099b093a",
+      "range": {
+        "startLine": 601,
+        "startChar": 30,
+        "endLine": 601,
+        "endChar": 36
+      },
+      "revId": "d8fba4bb946a69380e9851101a7a64dc07e6c48e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
