@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "25890174_9f21fbfb",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1202,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2018-01-30T16:16:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8dd961c_48cab92c",
+      "range": {
+        "startLine": 1198,
+        "startChar": 6,
+        "endLine": 1202,
+        "endChar": 59
+      },
+      "revId": "f651fbf9f8894bd79bc3f341888d4f7c3e508975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6591bc9_48b2c096",
         "filename": "chrome/test/data/policy/policy_test_cases.json",
         "patchSetId": 2
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "\u003e Probably good to have this since ChromeDriver does work on ChromeOS: https://sites.google.com/a/chromium.org/chromedriver/getting-started/chromeos\n\nAh, thanks for the pointer!  I didn\u0027t realize that.",
       "parentUuid": "b590bd18_4e1b5745",
+      "range": {
+        "startLine": 868,
+        "startChar": 34,
+        "endLine": 868,
+        "endChar": 44
+      },
+      "revId": "f651fbf9f8894bd79bc3f341888d4f7c3e508975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d8d20e44_256a16dc",
+        "filename": "chrome/test/data/policy/policy_test_cases.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2018-01-30T16:16:59Z",
+      "side": 1,
+      "message": "I don\u0027t think there is need to handle this collision though because turning on WebDriver is done through autotest on test images which presumably won\u0027t be enrolled into corp during the tests.\n\nHappy to dd this in a follow up CL if it turns out to be needed.",
+      "parentUuid": "e5cb1b66_05f790c5",
       "range": {
         "startLine": 868,
         "startChar": 34,
