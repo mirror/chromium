@@ -22,6 +22,30 @@
       "revId": "b66f44b7588b55fa797674aed93b121b5d8a0d82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ca9576b_72f7e80a",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-30T03:39:17Z",
+      "side": 1,
+      "message": "Even if you returned here after enabling it, we still need to keep the following if block since I think it is possible WCAX is in the state of initialized but later disabled, for which the if block is necessary to enable it again.",
+      "parentUuid": "261a6b72_92cf3447",
+      "range": {
+        "startLine": 235,
+        "startChar": 12,
+        "endLine": 235,
+        "endChar": 24
+      },
+      "revId": "b66f44b7588b55fa797674aed93b121b5d8a0d82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
