@@ -49,6 +49,54 @@
     },
     {
       "key": {
+        "uuid": "40149e60_10bddac9",
+        "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-30T18:57:29Z",
+      "side": 1,
+      "message": "I think we should update the child_sequence_number. I don\u0027t think this code is correct until we do.",
+      "parentUuid": "f2e54688_5446ae85",
+      "range": {
+        "startLine": 24,
+        "startChar": 50,
+        "endLine": 24,
+        "endChar": 71
+      },
+      "revId": "570160498937ad970ba73e0d802a3b20ea8d287f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77e73c35_65f9c844",
+        "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-30T18:57:29Z",
+      "side": 1,
+      "message": "I don\u0027t think we\u0027ll have correct behavior in all cases without incrementing both components. I don\u0027t think we should try to address the livelock case in this manner. If we end up ping ponging for too long then the renderer is misbehaving and we kill the renderer.",
+      "parentUuid": "1added25_615204e8",
+      "range": {
+        "startLine": 24,
+        "startChar": 50,
+        "endLine": 24,
+        "endChar": 71
+      },
+      "revId": "570160498937ad970ba73e0d802a3b20ea8d287f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4851eccc_1a3d4087",
         "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
         "patchSetId": 20
