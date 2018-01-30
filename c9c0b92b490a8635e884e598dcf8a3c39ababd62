@@ -16,6 +16,24 @@
       "revId": "c9c0b92b490a8635e884e598dcf8a3c39ababd62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c499c32f_4f1675b5",
+        "filename": "services/audio/public/cpp/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-30T12:04:48Z",
+      "side": 1,
+      "message": "Please see the CL description for the use cases I\u0027m trying to cover:\nA couple of browser tests want to mock some aspects of system info. Providing the whole mock service with an ability to configure mocking in it looks like an overkill, and overriding the global binder seems to be good enough there from my perspective.\n\naudio/common is introduced in this CL and is supposed to be a set of sources shared between the service and the client.\n\naudio::SystemInfo which resides there is an implementation of the corresponding mojo interface which redirects Mojo calls to an underlying media::AudioManager. It noes not depend on a specific AudioManager implementation. It\u0027s basically an adapter between audio::mojom::SystemInfo and media::AudioManager. So I\u0027m not quite sure why we are talking about \"service implementation details\" here?\n\nI\u0027m a bit concerned however by the fact that I\u0027m actually planning to introduce service refcounting in an upcoming CL [https://chromium-review.googlesource.com/c/chromium/src/+/873351/3/services/audio/system_info.h]\n\n\nAll in all, the questions:\n\n(1) Does global binder override in the browser tests above looks like an acceptable approach? If not, what would you recommend instead?\n\n(2) If (1) is fine, I\u0027d prefer to reuse audio::SystemInfo there. Would you recommend duplication its logic in cpp instead? Or do you have suggestions on how to better arrange the code to use audio::SystemInfo logic both in the service and in the global binder override?\n\nThanks!",
+      "parentUuid": "f0c2cb59_1bf0133f",
+      "revId": "c9c0b92b490a8635e884e598dcf8a3c39ababd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
