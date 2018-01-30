@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "aa54cd0f_a1d8c5fa",
+        "filename": "services/network/public/cpp/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-30T16:16:26Z",
+      "side": 1,
+      "message": "In general yeah, we should have alignment across all the names. I think i would again recommend cpp_base for public/cpp targets that mojom typemaps depend on, so we can establish some kind of convention.\n\nTo complete the bikeshedding, I would also prefer that we drop \"services\" and \"public\" from component names by default. My rationale is that we should generally try to avoid ambiguity between common library names (base, url, components/whatever) and service names anyway, so there should be few if any overlaps between them. And there should be very few targets which don\u0027t fit into either of those categories but are still component targets. In that world, \"services\" and \"public\" are mostly noise.\n\nGiven all of that, my proposed naming of things here would be:\n\n - target name: \"cpp_base\"\n - output name: \"network_cpp_base\" (and \"network_cpp\" above)\n - component macro: \"NETWORK_CPP_BASE\" (\"NETWORK_CPP\" ^)",
+      "parentUuid": "dc87471c_25281608",
+      "revId": "436f8a83af5141a5d7be92396af4b62ea744c0d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb181427_00a46f7e",
         "filename": "services/network/public/cpp/BUILD.gn",
         "patchSetId": 9
