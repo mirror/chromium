@@ -2,6 +2,7 @@
 
 <link rel="import" href="chrome://resources/cr_elements/hidden_style_css.html">
 <link rel="import" href="chrome://resources/html/action_link_css.html">
+<link rel="import" href="chrome://resources/html/highlight_utils.html">
 <link rel="import" href="chrome://resources/html/i18n_behavior.html">
 <link rel="import" href="../native_layer.html">
 <link rel="import" href="../data/destination.html">
@@ -191,15 +192,23 @@
       </div>
     </header>
     <ul>
-      <template is="dom-repeat" items="[[displayedDestinations_]]">
+      <template is="dom-repeat" items="[[destinations]]">
         <li class$="list-item [[getStaleCssClass_(item.isOfflineOrInvalid)]]"
              title="[[item.displayName]]"
-             hidden$="[[isDestinationHidden_(index, showAll_)]]"
+             hidden$="[[isDestinationHidden_(item, index, searchQuery,
+                                             lastDisplayedIndex_)]]"
              on-tap="onDestinationSelected_">
           <img class="destination-list-item-icon"
               src="[[item.iconUrl]]" srcset="[[item.srcSet]]">
-          <span class="destination-list-item-name">[[item.displayName]]</span>
-          <span class="search-hint">[[getSearchHint_(item, searchQuery)]]</span>
+          <span class="destination-list-item-name searchable">
+            [[item.displayName]]
+          </span>
+          <template is="dom-repeat" items="[[item.extraPropertiesToMatch]]">
+            <span class="search-hint searchable"
+                hidden$="[[isPropertyHidden_(item, searchQuery)]]">
+              [[item]]
+            </span>
+          </template>
           <span class="connection-status"
               hidden$="[[!item.isOfflineOrInvalid]]">
             [[item.connectionStatusText]]
@@ -215,7 +224,9 @@
           </span>
           <span class="extension-controlled-indicator"
               hidden$="[[!item.isExtension]]">
-            <span class="extension-name">[[item.extensionName]]</span>
+            <span class="extension-name searchable">
+              [[item.extensionName]]
+            </span>
             <span class="extension-icon" role="button" tabindex="0"></span>
           </span>
 <if expr="chromeos">
@@ -240,7 +251,7 @@
         $i18n{showAllButtonText}
       </button>
       <span class="total">
-        [[i18n('destinationCount', displayedDestinations_.length)]]
+        [[i18n('destinationCount', numMatchingDestinations_)]]
       </span>
     </footer>
   </template>
