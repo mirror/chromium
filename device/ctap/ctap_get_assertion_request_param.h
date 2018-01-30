@@ -27,6 +27,12 @@ class CTAPGetAssertionRequestParam : public CTAPRequestParam {
   ~CTAPGetAssertionRequestParam() override;
 
   base::Optional<std::vector<uint8_t>> Encode() const override;
+  bool CheckU2fInteropCriteria() const override;
+  std::vector<uint8_t> GetU2FApplicationParameter() const override;
+  std::vector<uint8_t> GetU2FChallengeParameter() const override;
+  std::vector<std::vector<uint8_t>> GetU2FRegisteredKeysParameter()
+      const override;
+
   CTAPGetAssertionRequestParam& SetUserVerificationRequired(
       bool user_verfication_required);
   CTAPGetAssertionRequestParam& SetUserPresenceRequired(
