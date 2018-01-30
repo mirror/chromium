@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.inputmethod.CursorAnchorInfo;
 
 import org.chromium.base.VisibleForTesting;
+import org.chromium.content_public.browser.ChromiumInputMethodManagerWrapper;
 
 import java.util.Arrays;
 
@@ -74,13 +75,13 @@ final class CursorAnchorInfoController {
             new CursorAnchorInfo.Builder();
 
     @Nullable
-    private InputMethodManagerWrapper mInputMethodManagerWrapper;
+    private ChromiumInputMethodManagerWrapper mInputMethodManagerWrapper;
     @Nullable
     private final ComposingTextDelegate mComposingTextDelegate;
     @Nonnull
     private final ViewDelegate mViewDelegate;
 
-    private CursorAnchorInfoController(InputMethodManagerWrapper inputMethodManagerWrapper,
+    private CursorAnchorInfoController(ChromiumInputMethodManagerWrapper inputMethodManagerWrapper,
             ComposingTextDelegate composingTextDelegate, ViewDelegate viewDelegate) {
         mInputMethodManagerWrapper = inputMethodManagerWrapper;
         mComposingTextDelegate = composingTextDelegate;
@@ -88,7 +89,7 @@ final class CursorAnchorInfoController {
     }
 
     public static CursorAnchorInfoController create(
-            InputMethodManagerWrapper inputMethodManagerWrapper,
+            ChromiumInputMethodManagerWrapper inputMethodManagerWrapper,
             ComposingTextDelegate composingTextDelegate) {
         return new CursorAnchorInfoController(inputMethodManagerWrapper,
                 composingTextDelegate, new ViewDelegate() {
@@ -100,8 +101,8 @@ final class CursorAnchorInfoController {
     }
 
     @VisibleForTesting
-    public void setInputMethodManagerWrapperForTest(
-            InputMethodManagerWrapper inputMethodManagerWrapper) {
+    public void setInputMethodManagerWrapper(
+            ChromiumInputMethodManagerWrapper inputMethodManagerWrapper) {
         mInputMethodManagerWrapper = inputMethodManagerWrapper;
     }
 

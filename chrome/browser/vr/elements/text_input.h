@@ -29,7 +29,6 @@ class TextInput : public UiElement {
   typedef base::RepeatingCallback<void(const TextInputInfo&)>
       OnInputCommittedCallback;
   TextInput(float font_height_meters,
-            OnFocusChangedCallback focus_changed_callback,
             OnInputEditedCallback input_edit_callback);
   ~TextInput() override;
 
@@ -39,6 +38,7 @@ class TextInput : public UiElement {
   void OnInputEdited(const TextInputInfo& info) override;
   void OnInputCommitted(const TextInputInfo& info) override;
 
+  void SetFocusChangeCallback(OnFocusChangedCallback);
   void RequestFocus();
   void RequestUnfocus();
   void UpdateInput(const TextInputInfo& info);

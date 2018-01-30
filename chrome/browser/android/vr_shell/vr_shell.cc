@@ -12,6 +12,7 @@
 #include "base/android/jni_string.h"
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/strings/utf_string_conversions.h"
 #include "base/threading/platform_thread.h"
 #include "base/threading/thread.h"
 #include "base/threading/thread_restrictions.h"
@@ -34,6 +35,7 @@
 #include "chrome/browser/vr/assets_loader.h"
 #include "chrome/browser/vr/metrics_helper.h"
 #include "chrome/browser/vr/model/omnibox_suggestions.h"
+#include "chrome/browser/vr/model/text_input_info.h"
 #include "chrome/browser/vr/toolbar_helper.h"
 #include "chrome/browser/vr/vr_tab_helper.h"
 #include "chrome/common/chrome_features.h"
@@ -620,6 +622,55 @@ void VrShell::LogUnsupportedModeUserMetric(JNIEnv* env,
                                            const JavaParamRef<jobject>& obj,
                                            int mode) {
   LogUnsupportedModeUserMetric((vr::UiUnsupportedMode)mode);
+}
+
+void VrShell::ShowSoftInput(JNIEnv* env,
+                            const base::android::JavaParamRef<jobject>& obj) {
+  ui_->ShowSoftInput();
+}
+
+void VrShell::HideSoftInput(JNIEnv* env,
+                            const base::android::JavaParamRef<jobject>& obj) {
+  ui_->HideSoftInput();
+}
+
+void VrShell::UpdateSelection(JNIEnv* env,
+                              const base::android::JavaParamRef<jobject>& obj,
+                              int selection_start,
+                              int selection_end) {
+  ui_->UpdateSelection(selection_start, selection_end);
+}
+
+void VrShell::UpdateComposition(JNIEnv* env,
+                                const base::android::JavaParamRef<jobject>& obj,
+                                int composition_start,
+                                int composition_end) {
+  ui_->UpdateComposition(composition_start, composition_end);
+}
+
+void VrShell::UpdateText(JNIEnv* env,
+                         const base::android::JavaParamRef<jobject>& obj,
+                         jstring jtext) {
+  std::string text;
+  base::android::ConvertJavaStringToUTF8(env, jtext, &text);
+  ui_->UpdateText(base::UTF8ToUTF16(text));
+}
+
+void VrShell::OnTextInputEdited(const vr::TextInputInfo info) {
+  JNIEnv* env = base::android::AttachCurrentThread();
+  return Java_VrShellImpl_onTextInputEdited(
+      env, j_vr_shell_,
+      base::android::ConvertUTF8ToJavaString(env, base::UTF16ToUTF8(info.text)),
+      info.selection_start, info.selection_end, info.composition_start,
+      info.composition_end);
+}
+
+void VrShell::OnTextInputCommitted(const vr::TextInputInfo info) {
+  JNIEnv* env = base::android::AttachCurrentThread();
+  return Java_VrShellImpl_onTextInputCommitted(
+      env, j_vr_shell_,
+      base::android::ConvertUTF8ToJavaString(env, base::UTF16ToUTF8(info.text)),
+      info.selection_start, info.selection_end, -1, -1);
 }
 
 void VrShell::LogUnsupportedModeUserMetric(vr::UiUnsupportedMode mode) {
