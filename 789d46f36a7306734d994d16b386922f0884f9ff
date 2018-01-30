@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57524484_f5de093f",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-30T01:51:24Z",
+      "side": 1,
+      "message": "nit: needs {} per style",
+      "revId": "789d46f36a7306734d994d16b386922f0884f9ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99231a99_3c36bb8e",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-30T01:51:24Z",
+      "side": 1,
+      "message": "nit: {}",
+      "revId": "789d46f36a7306734d994d16b386922f0884f9ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "275249a1_d87dbb53",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-30T01:51:24Z",
+      "side": 1,
+      "message": "Is local_frame_rect really in physical pixels? Even without zoom-for-dsf?",
+      "revId": "789d46f36a7306734d994d16b386922f0884f9ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
