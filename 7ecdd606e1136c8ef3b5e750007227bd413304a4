@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "203c6321_5d09fb3e",
+        "filename": "gpu/command_buffer/service/raster_decoder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2018-01-30T22:14:23Z",
+      "side": 1,
+      "message": "nit: Could you please group all new virtual methods?",
+      "revId": "7ecdd606e1136c8ef3b5e750007227bd413304a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4ff89c1_9398926b",
+        "filename": "gpu/command_buffer/service/raster_decoder_mock.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2018-01-30T22:14:23Z",
+      "side": 1,
+      "message": "nit: Header guard doesn\u0027t match the header\u0027s name here.",
+      "revId": "7ecdd606e1136c8ef3b5e750007227bd413304a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
