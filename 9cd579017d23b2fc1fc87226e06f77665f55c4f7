@@ -70,6 +70,24 @@
       "revId": "9cd579017d23b2fc1fc87226e06f77665f55c4f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "027f0074_0a10c2a1",
+        "filename": "net/http/http_request_info.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-30T16:40:50Z",
+      "side": 1,
+      "message": "Ah, interesting (regarding the test)\n\nCan you link to it? I certainly don\u0027t want to be requesting an overly broad amount of work, so if I\u0027m underestimating the impact/scope, feel free to push back (or to push towards solving this to make sure your needs are met)\n\nI would think mutable annotations could be assigned from existing mutable fields or from immutable fields, and that would address your concern about the random constant, right?\n\nI\u0027m mostly applying my (limited) experience with the Core Foundation Mutable/Immutable structs (e.g. CFArray vs CFMutableArray) and how those translations work, which seems like a reasonable enough design. However, that may not be applicable here, so push back or flag it if you\u0027re finding that it\u0027s adding significantly more work or developer ergonomic pain, and we can try to work out solutions :)",
+      "parentUuid": "89c636e5_ad9579ab",
+      "revId": "9cd579017d23b2fc1fc87226e06f77665f55c4f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
