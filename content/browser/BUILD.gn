@@ -109,6 +109,7 @@ jumbo_source_set("browser") {
     "//mojo/common",
     "//mojo/common:values_struct_traits",
     "//mojo/edk/system",
+    "//mojo/public/cpp/base:struct_traits",
     "//mojo/public/cpp/bindings",
     "//mojo/public/js:resources",
     "//net",
