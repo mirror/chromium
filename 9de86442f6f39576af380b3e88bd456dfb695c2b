@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "4a0e84aa_e5ca9176",
+        "filename": "chrome/browser/banners/app_banner_infobar_delegate_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2018-01-30T20:14:45Z",
+      "side": 1,
+      "message": "Ah ok, nice - this is a much better place for this!",
+      "parentUuid": "3b3478a5_001f0d33",
+      "range": {
+        "startLine": 197,
+        "startChar": 20,
+        "endLine": 197,
+        "endChar": 32
+      },
+      "revId": "9de86442f6f39576af380b3e88bd456dfb695c2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbacf1dc_610ad2ad",
         "filename": "chrome/browser/installable/pwa_ambient_badge_manager_android.h",
         "patchSetId": 4
@@ -166,6 +190,30 @@
       "side": 1,
       "message": "I did it this way because I didn\u0027t want to bloat the existing manager even more without refactoring, and I want to be able to have UX play with this asap.\n\nThe eventual structure I want to get to is that there is one installability manager which owns both the AppBannerManager and the PwaAmbientBadgeManager. That installability manager:\n\n1. checks for installability on page load\n2. tells PwaAmbientBadgeManager to show the badge or not\n3. tells AppBannerManager to start the banner pipeline\n\nAppBannerManager would then:\n\n1. check engagement / trigger when enough engagement\n2. interface with Blink for beforeinstallpromptevent\n\nSo I want to land this as a separate class because that\u0027s how I think it should ideally end up. The next step is teasing apart AppBannerManager into the installability manager and the actual AppBannerManager, and then refactoring. WDYT?",
       "parentUuid": "bbacf1dc_610ad2ad",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 35
+      },
+      "revId": "9de86442f6f39576af380b3e88bd456dfb695c2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f450dc1b_65a72c07",
+        "filename": "chrome/browser/installable/pwa_ambient_badge_manager_android.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2018-01-30T20:14:45Z",
+      "side": 1,
+      "message": "OK that structure makes sense. It would be good to move to the new structure quickly as I think getting the interaction with the banner right might be tricky.\n\nDid you consider adding it as a field to the AppBannerManager now? That way you don\u0027t need to create a new WebContentsObserver / add it to the list of global helpers, can integrate it a little to the AppBannerManager flow, but still keep the code separate / avoid bloating.",
+      "parentUuid": "8897019f_0fef08cd",
       "range": {
         "startLine": 18,
         "startChar": 6,
