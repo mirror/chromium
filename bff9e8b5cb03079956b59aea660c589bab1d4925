@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ebdeafe5_6b767a3c",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8GCController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-30T12:13:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6594d618_253d4596",
+      "revId": "bff9e8b5cb03079956b59aea660c589bab1d4925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef537b6f_774b425b",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8GCController.cpp",
         "patchSetId": 4
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "b35bd9a2_ac2a1092",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8GCController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-30T12:13:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef537b6f_774b425b",
+      "revId": "bff9e8b5cb03079956b59aea660c589bab1d4925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55825cca_b207c757",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8GCController.cpp",
         "patchSetId": 4
@@ -68,6 +104,24 @@
       "revId": "bff9e8b5cb03079956b59aea660c589bab1d4925",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d222422c_0fcb131e",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8GCController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-30T12:13:14Z",
+      "side": 1,
+      "message": "As discussed offline, we need to visit ActiveScriptWrappables because they are treated as roots by GC. We want to mirror what GC does so that the retaining path is correct.",
+      "parentUuid": "55825cca_b207c757",
+      "revId": "bff9e8b5cb03079956b59aea660c589bab1d4925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -124,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "a2df115c_d87bdae8",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8GCController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-30T12:13:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8535b8b2_7e5fc516",
+      "revId": "bff9e8b5cb03079956b59aea660c589bab1d4925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0da89e4_014df42d",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8GCController.cpp",
         "patchSetId": 4
@@ -135,6 +207,30 @@
       "writtenOn": "2018-01-29T17:37:35Z",
       "side": 1,
       "message": "IIUC, this could be as simple as\n\n  BasePage* const page \u003d PageFromObject(value);\n  HeapObjectHeader* const header \u003d\n      page-\u003eIsLargeObjectPage()\n          ? static_cast\u003cLargeObjectPage*\u003e(page)-\u003eGetHeapObjectHeader()\n          : static_cast\u003cNormalPage*\u003e(page)-\u003eFindHeaderFromAddress(\n                reinterpret_cast\u003cAddress\u003e(const_cast\u003cvoid*\u003e(value)));\n  return header-\u003eSize();\n\n(That\u0027s the completely dynamic version without adding further callbacks)",
+      "range": {
+        "startLine": 362,
+        "startChar": 11,
+        "endLine": 362,
+        "endChar": 22
+      },
+      "revId": "bff9e8b5cb03079956b59aea660c589bab1d4925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56267f6c_6aca03e4",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8GCController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-30T12:13:14Z",
+      "side": 1,
+      "message": "Thanks. I\u0027ll do this in a separate CL.",
+      "parentUuid": "c0da89e4_014df42d",
       "range": {
         "startLine": 362,
         "startChar": 11,
@@ -164,6 +260,24 @@
     },
     {
       "key": {
+        "uuid": "44abfed0_602c8fc0",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8GCController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-30T12:13:14Z",
+      "side": 1,
+      "message": "The node ownership is transferred implicitly to the graph_ during AddEdge. Destructor of graph_ releases all the nodes.\n\nI made this explicit now by introducing a separate AddNode function that accepts unique_ptr.\n\nThanks for the suggestion. I like explicit unique_ptr approach.",
+      "parentUuid": "0d93eee7_1935d76b",
+      "revId": "bff9e8b5cb03079956b59aea660c589bab1d4925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "472bdddb_c3c79d3f",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8GCController.cpp",
         "patchSetId": 4
@@ -178,6 +292,24 @@
       "revId": "bff9e8b5cb03079956b59aea660c589bab1d4925",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cebb7c65_87aee2fd",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8GCController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-30T12:13:14Z",
+      "side": 1,
+      "message": "The same as above.",
+      "parentUuid": "472bdddb_c3c79d3f",
+      "revId": "bff9e8b5cb03079956b59aea660c589bab1d4925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -201,6 +333,30 @@
       "revId": "bff9e8b5cb03079956b59aea660c589bab1d4925",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5b60302_0684dda9",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8GCController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-30T12:13:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1dafdba_b03e6760",
+      "range": {
+        "startLine": 404,
+        "startChar": 9,
+        "endLine": 404,
+        "endChar": 21
+      },
+      "revId": "bff9e8b5cb03079956b59aea660c589bab1d4925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -254,6 +410,24 @@
       "revId": "bff9e8b5cb03079956b59aea660c589bab1d4925",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db84bde7_56985f47",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8GCController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-30T12:13:14Z",
+      "side": 1,
+      "message": "Good to know. Done.",
+      "parentUuid": "0b7cc6b0_8906e343",
+      "revId": "bff9e8b5cb03079956b59aea660c589bab1d4925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
