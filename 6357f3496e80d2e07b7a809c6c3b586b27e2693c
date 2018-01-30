@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "46706b59_7e3aab3b",
+        "filename": "content/browser/renderer_host/legacy_render_widget_host_win.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-01-30T21:26:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c00a72c_6fbcc0c6",
+      "revId": "6357f3496e80d2e07b7a809c6c3b586b27e2693c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9497338_d4da3db5",
         "filename": "content/browser/renderer_host/legacy_render_widget_host_win.cc",
         "patchSetId": 36
@@ -33,6 +51,24 @@
       "revId": "6357f3496e80d2e07b7a809c6c3b586b27e2693c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa51c3c1_f9f38080",
+        "filename": "content/browser/renderer_host/legacy_render_widget_host_win.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-01-30T21:26:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9497338_d4da3db5",
+      "revId": "6357f3496e80d2e07b7a809c6c3b586b27e2693c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6522deba_4c53e720",
+        "filename": "content/browser/renderer_host/legacy_render_widget_host_win.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-01-30T21:26:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96966723_07c4eead",
+      "revId": "6357f3496e80d2e07b7a809c6c3b586b27e2693c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97b29c00_e5bcf04d",
         "filename": "content/browser/renderer_host/legacy_render_widget_host_win.cc",
         "patchSetId": 36
@@ -67,6 +121,24 @@
       "revId": "6357f3496e80d2e07b7a809c6c3b586b27e2693c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeecbeb6_31787820",
+        "filename": "content/browser/renderer_host/legacy_render_widget_host_win.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-01-30T21:26:55Z",
+      "side": 1,
+      "message": "It is null when Win version less than 10 or the feature is disabled.",
+      "parentUuid": "97b29c00_e5bcf04d",
+      "revId": "6357f3496e80d2e07b7a809c6c3b586b27e2693c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "0459fd4c_05d4d908",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-01-30T21:26:55Z",
+      "side": 1,
+      "message": "Remove this files\u0027 changes",
+      "parentUuid": "978cb404_b1ae3a25",
+      "revId": "6357f3496e80d2e07b7a809c6c3b586b27e2693c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "809ab7bd_9db8f22e",
         "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
         "patchSetId": 36
@@ -101,6 +191,24 @@
       "revId": "6357f3496e80d2e07b7a809c6c3b586b27e2693c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c88f624_598cd749",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-01-30T21:26:55Z",
+      "side": 1,
+      "message": "Remove this files\u0027 changes",
+      "parentUuid": "809ab7bd_9db8f22e",
+      "revId": "6357f3496e80d2e07b7a809c6c3b586b27e2693c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "b5bcceb9_3631bcd2",
+        "filename": "ui/base/win/direct_manipulation.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-01-30T21:26:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd8fe8f9_f1ff72b2",
+      "revId": "6357f3496e80d2e07b7a809c6c3b586b27e2693c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e472806_3c32f425",
         "filename": "ui/base/win/direct_manipulation.h",
         "patchSetId": 36
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "728be89d_5f1dcb93",
+        "filename": "ui/base/win/direct_manipulation.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-01-30T21:26:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e472806_3c32f425",
+      "revId": "6357f3496e80d2e07b7a809c6c3b586b27e2693c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b2b6a52_29059466",
         "filename": "ui/base/win/window_event_target.h",
         "patchSetId": 36
@@ -152,6 +296,24 @@
       "revId": "6357f3496e80d2e07b7a809c6c3b586b27e2693c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff8118c8_791fddd4",
+        "filename": "ui/base/win/window_event_target.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-01-30T21:26:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b2b6a52_29059466",
+      "revId": "6357f3496e80d2e07b7a809c6c3b586b27e2693c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
