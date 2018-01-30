@@ -16,6 +16,24 @@
       "revId": "91d0e52e5d5c74a6792f0b7058800fe78fbe3059",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "956a7602_4e7bb171",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 5434,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-01-30T15:42:05Z",
+      "side": 1,
+      "message": "That\u0027s why I took it out. My reasoning was more along the lines of that it\u0027s safe to say \"this is responsive\", as the actions that could be taken are safe ones (hide the dialog, etc).\n\nIn looking, it turns out that *I* added that (in https://codereview.chromium.org/1410313006) but I don\u0027t remember why.\n\nI\u0027m reasonably sure it\u0027s safe and simpler to reason about this way.",
+      "parentUuid": "cfff54a7_3d2b449d",
+      "revId": "91d0e52e5d5c74a6792f0b7058800fe78fbe3059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
