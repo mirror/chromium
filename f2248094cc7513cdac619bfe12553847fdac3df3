@@ -22,6 +22,30 @@
       "revId": "f2248094cc7513cdac619bfe12553847fdac3df3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "940a4b11_c3353244",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/remoteobjects/RemoteObjectImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-30T20:24:02Z",
+      "side": 1,
+      "message": "\u003e IllegalAccessException can happen if there\u0027s an annotated private method? I don\u0027t see we guard for things like private methods when looking up methods.\n\njava.lang.Class#getMethods is documented to return only public member methods. Methods with other access levels should not be added to |mMethods| in the first place.\n\nAdditionally, testHasMethodWithSafeAnnotationClass checks that this was never added to the list of known methods.\n\n\u003e IllegalArgumentException can still happen if the argument types don\u0027t match, right? we only checked for number of arguments, not types\n\nYes, but the yet-to-be-written argument coercion logic (which will match https://cs.chromium.org/chromium/src/content/browser/android/java/gin_java_script_to_java_types_coercion.cc) knows what the expected argument type is from the method\u0027s declared signature, and should produce a value of the correct type or fail. If it produces a value that isn\u0027t of the right Java type, it\u0027s a bug in that logic.\n\n\u003e NullPointerException is probably ok I think\n\nLMK if you think I should expand the comment below with some of the above details, or whether it\u0027s sufficient as-is.",
+      "parentUuid": "9cbcfcf3_7ad052e2",
+      "range": {
+        "startLine": 137,
+        "startChar": 17,
+        "endLine": 137,
+        "endChar": 66
+      },
+      "revId": "f2248094cc7513cdac619bfe12553847fdac3df3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
