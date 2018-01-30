@@ -13,12 +13,14 @@ class HitTestAggregatorDelegate {
   // updated (e.g. destroyed, reallocated etc.). |active_handle| and
   // |idle_handle| both must be valid.
   virtual void OnAggregatedHitTestRegionListUpdated(
+      const FrameSinkId& frame_sink_id,
       mojo::ScopedSharedBufferHandle active_handle,
       uint32_t active_handle_size,
       mojo::ScopedSharedBufferHandle idle_handle,
       uint32_t idle_handle_size) = 0;
 
   virtual void SwitchActiveAggregatedHitTestRegionList(
+      const FrameSinkId& frame_sink_id,
       uint8_t active_handle_index) = 0;
 
  protected:
