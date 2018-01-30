@@ -19,6 +19,8 @@ extern const wchar_t kInstallSourceChromeDir[];
 
 extern const wchar_t kMediaPlayerRegPath[];
 
+extern const wchar_t kNotificationHelperExe[];
+
 namespace switches {
 
 extern const char kDelay[];
