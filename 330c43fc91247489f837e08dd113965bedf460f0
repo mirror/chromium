@@ -189,6 +189,24 @@
     },
     {
       "key": {
+        "uuid": "4bace30c_fd46d261",
+        "filename": "chrome/browser/sessions/session_service.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-30T17:47:54Z",
+      "side": 1,
+      "message": "It looks like SessionService::ResetFromCurrentBrowsers() is the only way to properly remove tab history from sessions because otherwise session_service_commands keeps a log of changes that would reveal previously visited sites.\nI should probably just remove all events that I send to SessionService and call Reset once at the end.",
+      "parentUuid": "a2244f72_33efe8d6",
+      "revId": "330c43fc91247489f837e08dd113965bedf460f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2435d444_ab4b85c3",
         "filename": "components/browsing_data/core/features.cc",
         "patchSetId": 19
