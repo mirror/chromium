@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc784139_f12c513e",
+        "filename": "build/config/fuchsia/package.gni",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-30T01:30:26Z",
+      "side": 1,
+      "message": "What magic is this?  As a general rule, appending /.. onto paths is a bad sign... :P",
+      "range": {
+        "startLine": 20,
+        "startChar": 17,
+        "endLine": 20,
+        "endChar": 67
+      },
+      "revId": "014b62058f10f04ee37b2437245e8c25fae3356d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "329249b1_d56b849f",
+        "filename": "build/config/fuchsia/package.gni",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-30T01:30:26Z",
+      "side": 1,
+      "message": "Should this also be updated to match _manifest_file?",
+      "range": {
+        "startLine": 21,
+        "startChar": 50,
+        "endLine": 22,
+        "endChar": 43
+      },
+      "revId": "014b62058f10f04ee37b2437245e8c25fae3356d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e92a580_9485d18d",
+        "filename": "build/config/fuchsia/rules.gni",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-30T01:30:26Z",
+      "side": 1,
+      "message": "Ick; can we avoid the /.. suffix?\n\nShould we just be using one of the \"root_gen_dir\" or \"target_gen_dir\" labels here?",
+      "range": {
+        "startLine": 17,
+        "startChar": 34,
+        "endLine": 17,
+        "endChar": 86
+      },
+      "revId": "014b62058f10f04ee37b2437245e8c25fae3356d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15efe095_936e979b",
+        "filename": "build/fuchsia/runner_v2/common_args.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-30T01:30:26Z",
+      "side": 1,
+      "message": "nit: This doesn\u0027t necessarily enable logging - as per the doc comment it _configures_ or _initializes_ logging from |args|. :)",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 10
+      },
+      "revId": "014b62058f10f04ee37b2437245e8c25fae3356d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5344720_616c45bf",
+        "filename": "build/fuchsia/runner_v2/create_runner_script.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-30T01:30:26Z",
+      "side": 1,
+      "message": "This is setting the entire |mode| value for the file, not just the executable bit; we should be explicit about the permissions we\u0027re setting, as well as stating that our goal is to set the executable bit, so it\u0027s more obvious if some external property changes which means this choice is wrong.",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 55
+      },
+      "revId": "014b62058f10f04ee37b2437245e8c25fae3356d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cd0c705_c558465f",
+        "filename": "build/fuchsia/runner_v2/symbolizer.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-30T01:30:26Z",
+      "side": 1,
+      "message": "nit: Follow a doco-comment with a blank line here and below, as we do elsewhere.",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 0
+      },
+      "revId": "014b62058f10f04ee37b2437245e8c25fae3356d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1e89339_a73552f9",
+        "filename": "build/fuchsia/runner_v2/symbolizer.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-30T01:30:26Z",
+      "side": 1,
+      "message": "nit: What will the current working directory actually be, though?",
+      "range": {
+        "startLine": 78,
+        "startChar": 7,
+        "endLine": 81,
+        "endChar": 51
+      },
+      "revId": "014b62058f10f04ee37b2437245e8c25fae3356d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

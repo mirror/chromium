@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "333c2f68_4b846569",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-30T01:30:26Z",
+      "side": 1,
+      "message": "OK, but to be honest, it looks like a more-or-less completely new set of scripts, which inherit some of their implementation from the old ones. :)",
+      "parentUuid": "569bddfc_d2cf7dca",
+      "range": {
+        "startLine": 7,
+        "startChar": 9,
+        "endLine": 7,
+        "endChar": 34
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "883de604_fef2480f",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "9e782ff0_b3243b08",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-30T01:30:26Z",
+      "side": 1,
+      "message": "Doesn\u0027t seem to have been updated?",
+      "parentUuid": "814bb381_6985c62e",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 36
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5769ad94_20a577f9",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
@@ -140,6 +188,30 @@
       "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8426cb67_4d559528",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-30T01:30:26Z",
+      "side": 1,
+      "message": "Nor this :)",
+      "parentUuid": "ad1a3411_7f8dc6c2",
+      "range": {
+        "startLine": 13,
+        "startChar": 30,
+        "endLine": 13,
+        "endChar": 43
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -213,6 +285,30 @@
     },
     {
       "key": {
+        "uuid": "45e13811_1e29287d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-30T01:30:26Z",
+      "side": 1,
+      "message": "Ditto :)",
+      "parentUuid": "d68251fb_dd816386",
+      "range": {
+        "startLine": 15,
+        "startChar": 27,
+        "endLine": 15,
+        "endChar": 41
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "675b665e_cce19af8",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
@@ -271,6 +367,30 @@
       "side": 1,
       "message": "Something I chose, though now that you mention it I think I should adhere to the source directory structure that other gen rules use.\n\nSo now it writes to base/base_unittests.archive_manifest \u0026 base/base_unittests.far.",
       "parentUuid": "da7d7718_d1078052",
+      "range": {
+        "startLine": 20,
+        "startChar": 38,
+        "endLine": 20,
+        "endChar": 45
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "067921a5_dd14223e",
+        "filename": "build/config/fuchsia/package.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-30T01:30:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "60740638_d0857418",
       "range": {
         "startLine": 20,
         "startChar": 38,
@@ -529,6 +649,30 @@
       "side": 1,
       "message": "Builds a tarball. We might want to remove it when the old style runner scripts are deprecated, because the packages should suffice?",
       "parentUuid": "9c119646_23ee5f02",
+      "range": {
+        "startLine": 264,
+        "startChar": 0,
+        "endLine": 280,
+        "endChar": 3
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e94ac327_82d8a328",
+        "filename": "build/config/fuchsia/rules.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-30T01:30:26Z",
+      "side": 1,
+      "message": "We don\u0027t actually use the tarball at all, even with the old runner scripts; they package things up from the original binaries and files.  I think this was added for archival purposes, so the far is probably a sufficient replacement - we may need to update a bot-side artifact archival step for this file before we can remove it, though.",
+      "parentUuid": "5de656dd_d1dabfc4",
       "range": {
         "startLine": 264,
         "startChar": 0,
@@ -1704,6 +1848,30 @@
       "side": 1,
       "message": "It\u0027s really just checking for connectivity, and it\u0027s agnostic to the device type. So, Connect()?",
       "parentUuid": "003c9f64_9bf4a38f",
+      "range": {
+        "startLine": 103,
+        "startChar": 6,
+        "endLine": 103,
+        "endChar": 13
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d31437b_391dc18c",
+        "filename": "build/fuchsia/runner_v2/target.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-30T01:30:26Z",
+      "side": 1,
+      "message": "How about _CheckConnectivity or _IsConnectable or _IsReady or _WaitUntilReady()?",
+      "parentUuid": "745274de_b5a009d2",
       "range": {
         "startLine": 103,
         "startChar": 6,
