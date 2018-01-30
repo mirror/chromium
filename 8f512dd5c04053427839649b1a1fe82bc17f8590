@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "40869670_34517e39",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1261292
+      },
+      "writtenOn": "2018-01-30T13:53:25Z",
+      "side": 1,
+      "message": "Makes sense. Thanks.",
+      "parentUuid": "4732276d_f9de70ed",
+      "revId": "8f512dd5c04053427839649b1a1fe82bc17f8590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67aa0c6b_220d29f5",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSSelectorParserTest.cpp",
         "patchSetId": 1
@@ -105,6 +123,24 @@
       "revId": "8f512dd5c04053427839649b1a1fe82bc17f8590",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d81294d7_5ba12325",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSSelectorParserTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1261292
+      },
+      "writtenOn": "2018-01-30T13:53:25Z",
+      "side": 1,
+      "message": "Got into a bit of yak shaving here.\n\nhttps://crrev.com/c/892191\nhttps://crrev.com/c/892195\n\nThis is no longer an issue.",
+      "parentUuid": "35044860_bd8c5147",
+      "revId": "8f512dd5c04053427839649b1a1fe82bc17f8590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
