@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "147d3267_9f37b1b8",
+        "filename": "services/ui/display/BUILD.gn",
+        "patchSetId": 18
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2018-01-30T01:55:44Z",
+      "side": 1,
+      "message": "\u003d is_chromeos (and remove the assignment below)\n\nPossibly internal_window_mode is a better name here since that\u0027s what the code calls it.",
+      "range": {
+        "startLine": 9,
+        "startChar": 17,
+        "endLine": 9,
+        "endChar": 18
+      },
+      "revId": "7827cb2c7c2fcdf643a5f6f3871a0e6a9a01450c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c284a6cb_a9bdf575",
+        "filename": "services/ui/display/BUILD.gn",
+        "patchSetId": 18
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2018-01-30T01:55:44Z",
+      "side": 1,
+      "message": "I believe it\u0027s better to set defaults inside declare_args() since then you can override them.",
+      "range": {
+        "startLine": 30,
+        "startChar": 20,
+        "endLine": 30,
+        "endChar": 21
+      },
+      "revId": "7827cb2c7c2fcdf643a5f6f3871a0e6a9a01450c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56987e4f_c99a994c",
+        "filename": "services/ui/display/BUILD.gn",
+        "patchSetId": 18
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2018-01-30T01:55:44Z",
+      "side": 1,
+      "message": "I don\u0027t think this is correct; screen_manager_ozone_internal.cc includes \"chromeos/system/devicemode.h\" unconditionally and so the dependency is always needed when building that file.\n\nYou likely need to move those includes under #if defined(OS_CHROMEOS).",
+      "range": {
+        "startLine": 51,
+        "startChar": 19,
+        "endLine": 51,
+        "endChar": 20
+      },
+      "revId": "7827cb2c7c2fcdf643a5f6f3871a0e6a9a01450c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
