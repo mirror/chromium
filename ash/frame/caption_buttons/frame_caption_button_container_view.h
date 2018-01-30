@@ -146,8 +146,8 @@ class ASH_EXPORT FrameCaptionButtonContainerView
   // CaptionButtonIcon.
   std::map<CaptionButtonIcon, const gfx::VectorIcon*> button_icon_map_;
 
-  // Animation that affects the position of |minimize_button_| and the
-  // visibility of |size_button_|.
+  // Animation that affects the visibility of |size_button_| and the position of
+  // buttons to the left of it.
   std::unique_ptr<gfx::SlideAnimation> tablet_mode_animation_;
 
   DISALLOW_COPY_AND_ASSIGN(FrameCaptionButtonContainerView);
