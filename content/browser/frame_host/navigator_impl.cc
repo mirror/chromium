@@ -286,6 +286,12 @@ bool NavigatorImpl::NavigateToEntry(
                    << virtual_url.possibly_invalid_spec();
       return false;
     }
+
+    if (dest_url == GURL(kPluginNoneURL)) {
+      // Only a subframe inside an <embed> or <object> may navigate to
+      // plugin:none; certainly not a main frame.
+      return false;
+    }
   }
 
   // Don't attempt to navigate to non-empty invalid URLs.
