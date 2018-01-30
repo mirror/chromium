@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "bad2dd4f_0057ec49",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2018-01-30T20:16:15Z",
+      "side": 1,
+      "message": "Hi Tom,\n\nCan you share the design doc of the project which is going to use this MPRIS D-Bus client? I believe reviewers (including me) need more information about how the design decisions are made in the first place. :)\n\nCan you share the test steps taken?\n\nAnd it would be good to include the issue tracking the development as well.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 38
+      },
+      "revId": "381aa62297030b69cb533ac5827f8bc2fca06d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efbac6a9_f6c92084",
+        "filename": "components/dbus/dbus_thread_linux.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2018-01-30T20:16:15Z",
+      "side": 1,
+      "message": "qq: What is the intention of moving dbus_thread_linux.h from chrome/browser to compnents/dbus? Is dbus_thread_linux.h intended to be shared between chrome/browser and Blink (according to https://cs.corp.google.com/clankium/src/components/README)?",
+      "revId": "381aa62297030b69cb533ac5827f8bc2fca06d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ede6a50a_3dcdea94",
         "filename": "components/linux/mpris_client.h",
         "patchSetId": 1
