@@ -23,10 +23,12 @@ import android.util.AttributeSet;
 import android.util.Pair;
 import android.util.TypedValue;
 import android.view.GestureDetector;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.chromium.base.ApiCompatibilityUtils;
@@ -110,7 +112,7 @@ public class CustomTabToolbar extends ToolbarLayout implements LocationBar,
     private UrlBar mUrlBar;
     private TextView mTitleBar;
     private TintedImageButton mSecurityButton;
-    private ImageButton mCustomActionButton;
+    private LinearLayout mCustomActionButtons;
     private ImageButton mCloseButton;
 
     // Whether dark tint should be applied to icons and text.
@@ -154,8 +156,7 @@ public class CustomTabToolbar extends ToolbarLayout implements LocationBar,
         mTitleUrlContainer = findViewById(R.id.title_url_container);
         mTitleUrlContainer.setOnLongClickListener(this);
         mSecurityButton = (TintedImageButton) findViewById(R.id.security_button);
-        mCustomActionButton = (ImageButton) findViewById(R.id.action_button);
-        mCustomActionButton.setOnLongClickListener(this);
+        mCustomActionButtons = findViewById(R.id.action_buttons);
         mCloseButton = (ImageButton) findViewById(R.id.close_button);
         mCloseButton.setOnLongClickListener(this);
         mAnimDelegate = new CustomTabToolbarAnimationDelegate(mSecurityButton, mTitleUrlContainer);
@@ -198,9 +199,18 @@ public class CustomTabToolbar extends ToolbarLayout implements LocationBar,
     }
 
     @Override
-    public void setCustomActionButton(Drawable drawable, String description,
-            OnClickListener listener) {
+    public void clearCustomActionButtons() {
+        mCustomActionButtons.removeAllViews();
+    }
+
+    @Override
+    public void addCustomActionButton(
+            Drawable drawable, String description, OnClickListener listener) {
         Resources resources = getResources();
+
+        ImageButton button = (ImageButton) LayoutInflater.from(getContext())
+                                     .inflate(R.layout.custom_tabs_toolbar_button, null);
+        button.setOnLongClickListener(this);
 
         // The height will be scaled to match spec while keeping the aspect ratio, so get the scaled
         // width through that.
@@ -211,23 +221,27 @@ public class CustomTabToolbar extends ToolbarLayout implements LocationBar,
         int minPadding = resources.getDimensionPixelSize(R.dimen.min_toolbar_icon_side_padding);
 
         int sidePadding = Math.max((2 * sourceScaledHeight - sourceScaledWidth) / 2, minPadding);
-        int topPadding = mCustomActionButton.getPaddingTop();
-        int bottomPadding = mCustomActionButton.getPaddingBottom();
-        mCustomActionButton.setPadding(sidePadding, topPadding, sidePadding, bottomPadding);
-        mCustomActionButton.setImageDrawable(drawable);
+        int topPadding = button.getPaddingTop();
+        int bottomPadding = button.getPaddingBottom();
+        button.setPadding(sidePadding, topPadding, sidePadding, bottomPadding);
+        button.setImageDrawable(drawable);
 
-        mCustomActionButton.setContentDescription(description);
-        mCustomActionButton.setOnClickListener(listener);
-        mCustomActionButton.setVisibility(VISIBLE);
-        updateButtonsTint();
+        button.setContentDescription(description);
+        button.setOnClickListener(listener);
+        button.setVisibility(VISIBLE);
+        updateButtonTint(button);
+
+        // Add the view at the beginning of the child list.
+        mCustomActionButtons.addView(button, 0);
     }
 
     /**
-     * @return The custom action button. For test purpose only.
+     * @return The custom action button with the given {@code index}. For test purpose only.
+     * @param index The index of the custom action button to return.
      */
     @VisibleForTesting
-    public ImageButton getCustomActionButtonForTest() {
-        return mCustomActionButton;
+    public ImageButton getCustomActionButtonForTest(int index) {
+        return (ImageButton) mCustomActionButtons.getChildAt(index);
     }
 
     @Override
@@ -435,17 +449,18 @@ public class CustomTabToolbar extends ToolbarLayout implements LocationBar,
 
     private void updateButtonsTint() {
         mMenuButton.setTint(mUseDarkColors ? mDarkModeTint : mLightModeTint);
-        if (mCloseButton.getDrawable() instanceof TintedDrawable) {
-            ((TintedDrawable) mCloseButton.getDrawable()).setTint(
-                    mUseDarkColors ? mDarkModeTint : mLightModeTint);
+        updateButtonTint(mCloseButton);
+        int numCustomActionButtons = mCustomActionButtons.getChildCount();
+        for (int i = 0; i < numCustomActionButtons; i++) {
+            updateButtonTint((ImageButton) mCustomActionButtons.getChildAt(i));
         }
-        if (mCustomActionButton.getDrawable() instanceof TintedDrawable) {
-            ((TintedDrawable) mCustomActionButton.getDrawable()).setTint(
-                    mUseDarkColors ? mDarkModeTint : mLightModeTint);
-        }
-        if (mSecurityButton.getDrawable() instanceof TintedDrawable) {
-            ((TintedDrawable) mSecurityButton.getDrawable()).setTint(
-                    mUseDarkColors ? mDarkModeTint : mLightModeTint);
+        updateButtonTint(mSecurityButton);
+    }
+
+    private void updateButtonTint(ImageButton button) {
+        Drawable drawable = button.getDrawable();
+        if (drawable instanceof TintedDrawable) {
+            ((TintedDrawable) drawable).setTint(mUseDarkColors ? mDarkModeTint : mLightModeTint);
         }
     }
 
@@ -638,13 +653,11 @@ public class CustomTabToolbar extends ToolbarLayout implements LocationBar,
 
     @Override
     public boolean onLongClick(View v) {
-        if (v == mCloseButton) {
+        if (v == mCloseButton || v.getParent() == mCustomActionButtons) {
             return AccessibilityUtil.showAccessibilityToast(
-                    getContext(), v, getResources().getString(R.string.close_tab));
-        } else if (v == mCustomActionButton) {
-            return AccessibilityUtil.showAccessibilityToast(
-                    getContext(), v, mCustomActionButton.getContentDescription());
-        } else if (v == mTitleUrlContainer) {
+                    getContext(), v, v.getContentDescription());
+        }
+        if (v == mTitleUrlContainer) {
             ClipboardManager clipboard = (ClipboardManager) getContext()
                     .getSystemService(Context.CLIPBOARD_SERVICE);
             Tab tab = getCurrentTab();
