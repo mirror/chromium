@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5e2387f4_40913f72",
+        "filename": "chrome/browser/chromeos/printing/usb_printer_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2018-01-30T20:03:09Z",
+      "side": 1,
+      "message": "Are you saying to just make a free function which returns a mojom filter for identifying a printer?",
+      "parentUuid": "77a3f1dd_212af193",
+      "range": {
+        "startLine": 126,
+        "startChar": 3,
+        "endLine": 130,
+        "endChar": 60
+      },
+      "revId": "0efd8ce9deba2931a9fcb9f72597cc8b53b4c013",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81e96241_6a05610f",
         "filename": "chromeos/printing/printer_configuration.h",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "0efd8ce9deba2931a9fcb9f72597cc8b53b4c013",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "603b64cb_c9865810",
+        "filename": "chromeos/printing/printer_configuration.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2018-01-30T20:03:09Z",
+      "side": 1,
+      "message": "Have another CL with this change\nhttps://chromium-review.googlesource.com/c/chromium/src/+/857886",
+      "parentUuid": "81e96241_6a05610f",
+      "range": {
+        "startLine": 70,
+        "startChar": 4,
+        "endLine": 70,
+        "endChar": 12
+      },
+      "revId": "0efd8ce9deba2931a9fcb9f72597cc8b53b4c013",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
