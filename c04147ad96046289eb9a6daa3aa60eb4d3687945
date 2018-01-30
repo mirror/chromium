@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de3c756b_d6fef5ae",
+        "filename": "chrome/browser/ui/cocoa/notifications/notification_response_builder_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-30T18:05:55Z",
+      "side": 1,
+      "message": "I think you may need to update the BUILD.gn in this directory for the XPC \ntarget to include the header in it sources list.",
+      "revId": "c04147ad96046289eb9a6daa3aa60eb4d3687945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
