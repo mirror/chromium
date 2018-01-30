@@ -121,6 +121,12 @@ ResourceRequest::ResourceRequest(CrossThreadResourceRequestData* data)
   input_perf_metric_report_policy_ = data->input_perf_metric_report_policy_;
   redirect_status_ = data->redirect_status_;
   suggested_filename_ = data->suggested_filename_;
+  if (data->url_loader_factory_.is_valid()) {
+    url_loader_factory_ =
+        new base::RefCountedData<network::mojom::blink::URLLoaderFactoryPtr>(
+            network::mojom::blink::URLLoaderFactoryPtr(
+                std::move(data->url_loader_factory_)));
+  }
 }
 
 ResourceRequest::ResourceRequest(const ResourceRequest&) = default;
@@ -208,6 +214,8 @@ std::unique_ptr<CrossThreadResourceRequestData> ResourceRequest::CopyData()
   data->input_perf_metric_report_policy_ = input_perf_metric_report_policy_;
   data->redirect_status_ = redirect_status_;
   data->suggested_filename_ = suggested_filename_;
+  if (url_loader_factory_)
+    url_loader_factory_->data->Clone(MakeRequest(&data->url_loader_factory_));
   return data;
 }
 
