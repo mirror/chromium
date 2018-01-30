@@ -5,12 +5,14 @@
 package org.chromium.chrome.browser.webapps;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.os.SystemClock;
+import android.support.customtabs.CustomTabsIntent;
 import android.text.TextUtils;
 import android.util.Base64;
 
@@ -21,12 +23,14 @@ import org.chromium.base.Log;
 import org.chromium.chrome.browser.IntentHandler;
 import org.chromium.chrome.browser.ShortcutHelper;
 import org.chromium.chrome.browser.ShortcutSource;
+import org.chromium.chrome.browser.customtabs.CustomTabActivity;
 import org.chromium.chrome.browser.document.ChromeLauncherActivity;
 import org.chromium.chrome.browser.metrics.LaunchMetrics;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.util.IntentUtils;
 import org.chromium.webapk.lib.client.WebApkValidator;
 import org.chromium.webapk.lib.common.WebApkConstants;
+import org.chromium.webapk.lib.common.WebApkMetaDataKeys;
 
 import java.lang.ref.WeakReference;
 
@@ -72,7 +76,21 @@ public class WebappLauncherActivity extends Activity {
         // does not specify required values such as the uri.
         if (webappInfo == null) {
             String url = IntentUtils.safeGetStringExtra(intent, ShortcutHelper.EXTRA_URL);
-            launchInTab(url, ShortcutSource.UNKNOWN);
+            String webApkPackage = IntentUtils.safeGetStringExtra(
+                    intent, WebApkConstants.EXTRA_WEBAPK_PACKAGE_NAME);
+            if (webApkPackage.isEmpty()) {
+                launchInTab(url, ShortcutSource.UNKNOWN);
+                return;
+            }
+            Bundle metaData = ShortcutHelper.extractMetaData(webApkPackage);
+            if (metaData == null
+                    || !metaData.getBoolean(WebApkMetaDataKeys.DISABLE_FULL_SCREEN_MODE)) {
+                launchInTab(url, ShortcutSource.UNKNOWN);
+                return;
+            }
+            // For Enterprise WebAPKs that aren't be able to open in full screen mode, launch them
+            // in a Custom Tab. See https://crbug.com/806946.
+            launchInCCT(url);
             return;
         }
 
@@ -113,6 +131,16 @@ public class WebappLauncherActivity extends Activity {
         // The shortcut data doesn't match the current encoding. Change the intent action to
         // launch the URL with a VIEW Intent in the regular browser.
         launchInTab(webappUrl, webappSource);
+    }
+
+    /** Launches the URL in a Custom Tab. */
+    private void launchInCCT(String url) {
+        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+        CustomTabsIntent customTabsIntent = builder.build();
+
+        Context context = ContextUtils.getApplicationContext();
+        customTabsIntent.intent.setClassName(context, CustomTabActivity.class.getName());
+        customTabsIntent.launchUrl(context, Uri.parse(url));
     }
 
     // Gets the source of a WebAPK from the WebappDataStorage if the source has been stored before.
