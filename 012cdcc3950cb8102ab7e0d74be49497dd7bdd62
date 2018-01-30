@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63a7562a_573e74c6",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_foreground_animator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2018-01-30T22:03:53Z",
+      "side": 1,
+      "message": "is",
+      "range": {
+        "startLine": 11,
+        "startChar": 24,
+        "endLine": 11,
+        "endChar": 26
+      },
+      "revId": "012cdcc3950cb8102ab7e0d74be49497dd7bdd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca73016b_773b1e31",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_foreground_animator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2018-01-30T22:03:53Z",
+      "side": 1,
+      "message": "nit: Remove space?",
+      "range": {
+        "startLine": 11,
+        "startChar": 9,
+        "endLine": 11,
+        "endChar": 10
+      },
+      "revId": "012cdcc3950cb8102ab7e0d74be49497dd7bdd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea601923_09ffe5d0",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_system_notification_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2018-01-30T22:03:53Z",
+      "side": 1,
+      "message": "2018? Though this is kind of a renamed file.",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "012cdcc3950cb8102ab7e0d74be49497dd7bdd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a660e57b_c40d4aa7",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_system_notification_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2018-01-30T22:03:53Z",
+      "side": 1,
+      "message": "I think this causes the observer to stop listening for any kind of system notifications? Might be worth noting that if is the case.",
+      "range": {
+        "startLine": 28,
+        "startChar": 19,
+        "endLine": 28,
+        "endChar": 28
+      },
+      "revId": "012cdcc3950cb8102ab7e0d74be49497dd7bdd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc252de7_95dd960a",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_system_notification_observer.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2018-01-30T22:03:53Z",
+      "side": 1,
+      "message": "2018?",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "012cdcc3950cb8102ab7e0d74be49497dd7bdd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ae85996_b358373d",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_system_notification_observer.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2018-01-30T22:03:53Z",
+      "side": 1,
+      "message": "system",
+      "range": {
+        "startLine": 24,
+        "startChar": 55,
+        "endLine": 24,
+        "endChar": 62
+      },
+      "revId": "012cdcc3950cb8102ab7e0d74be49497dd7bdd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ed54907_1d0d13e0",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_system_notification_observer.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2018-01-30T22:03:53Z",
+      "side": 1,
+      "message": "Register",
+      "range": {
+        "startLine": 70,
+        "startChar": 7,
+        "endLine": 70,
+        "endChar": 15
+      },
+      "revId": "012cdcc3950cb8102ab7e0d74be49497dd7bdd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aa15ad9_3ace7c0e",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_ui_element.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2018-01-30T22:03:53Z",
+      "side": 1,
+      "message": "that",
+      "range": {
+        "startLine": 38,
+        "startChar": 67,
+        "endLine": 38,
+        "endChar": 71
+      },
+      "revId": "012cdcc3950cb8102ab7e0d74be49497dd7bdd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
