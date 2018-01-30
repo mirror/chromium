@@ -42,6 +42,12 @@ class LoginHandlerMac : public LoginHandler,
       : LoginHandler(auth_info, request) {
   }
 
+  LoginHandlerMac(
+      net::AuthChallengeInfo* auth_info,
+      net::URLRequestContext* context,
+      content::ResourceRequestInfo::WebContentsGetter web_contents_getter)
+      : LoginHandler(auth_info, context, web_contents_getter) {}
+
   // LoginModelObserver implementation.
   void OnAutofillDataAvailableInternal(
       const base::string16& username,
@@ -138,6 +144,17 @@ LoginHandler* LoginHandler::Create(net::AuthChallengeInfo* auth_info,
   if (chrome::ShowPilotDialogsWithViewsToolkit())
     return chrome::CreateLoginHandlerViews(auth_info, request);
   return new LoginHandlerMac(auth_info, request);
+}
+
+// static
+LoginHandler* LoginHandler::Create(
+    net::AuthChallengeInfo* auth_info,
+    net::URLRequestContext* context,
+    content::ResourceRequestInfo::WebContentsGetter web_contents_getter) {
+  if (chrome::ShowPilotDialogsWithViewsToolkit())
+    return chrome::CreateLoginHandlerViews(auth_info, context,
+                                           web_contents_getter);
+  return new LoginHandlerMac(auth_info, context, web_contents_getter);
 }
 
 // ----------------------------------------------------------------------------

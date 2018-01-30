@@ -92,6 +92,7 @@ class URLLoader : public mojom::URLLoader, public net::URLRequest::Delegate {
       const std::vector<uint16_t>& algorithm_preferences,
       mojom::SSLPrivateKeyPtr ssl_private_key,
       bool cancel_certificate_selection);
+  void OnAuthRequiredResponse(const net::AuthCredentials& credentials);
 
   NetworkContext* context_;
   int32_t options_;

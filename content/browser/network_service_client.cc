@@ -10,6 +10,8 @@
 #include "content/browser/ssl_private_key_impl.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/public/browser/browser_context.h"
+#include "content/public/browser/resource_context.h"
+#include "content/public/browser/resource_dispatcher_host_login_delegate.h"
 #include "content/public/browser/resource_request_info.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "net/ssl/client_cert_store.h"
@@ -141,6 +143,74 @@ class SSLClientAuthDelegate : public SSLClientAuthHandler::Delegate {
   std::unique_ptr<SSLClientAuthHandler> ssl_client_auth_handler_;
 };
 
+// This class is created on UI thread, and deleted by
+// BrowserThread::DeleteSoon() after the |callback_| runs. The |callback_|
+// needs to run on UI thread since it is called through the
+// NetworkServiceClient interface.
+//
+// The |login_delegate_| needs to be created on IO thread, and deleted
+// on the same thread by posting a BrowserThread::DeleteSoon() task to IO
+// thread.
+class LoginHandlerDelegate {
+ public:
+  LoginHandlerDelegate(
+      network::mojom::NetworkServiceClient::OnAuthRequiredCallback callback,
+      ResourceRequestInfo::WebContentsGetter web_contents_getter,
+      scoped_refptr<net::AuthChallengeInfo> auth_info,
+      const GURL& url,
+      int32_t load_flags)
+      : callback_(std::move(callback)),
+        auth_info_(auth_info),
+        url_(url),
+        load_flags_(load_flags),
+        web_contents_getter_(web_contents_getter) {
+    content::WebContents* web_contents = web_contents_getter.Run();
+    content::BrowserContext* browser_context =
+        web_contents->GetBrowserContext();
+    DCHECK(browser_context);
+    content::ResourceContext* resource_context =
+        browser_context->GetResourceContext();
+    DCHECK(resource_context);
+
+    BrowserThread::PostTask(
+        BrowserThread::IO, FROM_HERE,
+        base::Bind(&LoginHandlerDelegate::CreateLoginDelegate,
+                   base::Unretained(this), resource_context));
+  }
+
+ private:
+  void CreateLoginDelegate(content::ResourceContext* resource_context) {
+    net::URLRequestContext* url_request_context =
+        resource_context->GetRequestContext();
+
+    login_delegate_ = GetContentClient()->browser()->CreateLoginDelegate(
+        auth_info_.get(), url_request_context, web_contents_getter_,
+        load_flags_, url_);
+
+    login_delegate_->set_auth_required_callback(base::Bind(
+        &LoginHandlerDelegate::AuthRequiredCallback, base::Unretained(this)));
+  }
+
+  void AuthRequiredCallback(const net::AuthCredentials& auth_credentials) {
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::Bind(&LoginHandlerDelegate::RunCallback, base::Unretained(this),
+                   auth_credentials));
+  }
+
+  void RunCallback(const net::AuthCredentials& auth_credentials) {
+    std::move(callback_).Run(auth_credentials);
+    BrowserThread::DeleteSoon(BrowserThread::IO, FROM_HERE, this);
+  }
+
+  network::mojom::NetworkServiceClient::OnAuthRequiredCallback callback_;
+  scoped_refptr<net::AuthChallengeInfo> auth_info_;
+  GURL url_;
+  int32_t load_flags_;
+  ResourceRequestInfo::WebContentsGetter web_contents_getter_;
+  scoped_refptr<ResourceDispatcherHostLoginDelegate> login_delegate_;
+};
+
 }  // namespace
 
 NetworkServiceClient::NetworkServiceClient(
@@ -148,6 +218,28 @@ NetworkServiceClient::NetworkServiceClient(
     : binding_(this, std::move(network_service_client_request)) {}
 
 NetworkServiceClient::~NetworkServiceClient() = default;
+
+void NetworkServiceClient::OnAuthRequired(
+    uint32_t process_id,
+    uint32_t routing_id,
+    const GURL& url,
+    int32_t load_flags,
+    const scoped_refptr<net::AuthChallengeInfo>& auth_info,
+    network::mojom::NetworkServiceClient::OnAuthRequiredCallback callback) {
+  base::Callback<WebContents*(void)> web_contents_getter =
+      process_id ? base::Bind(WebContentsImpl::FromRenderFrameHostID,
+                              process_id, routing_id)
+                 : base::Bind(WebContents::FromFrameTreeNodeId, routing_id);
+
+  if (!web_contents_getter.Run()) {
+    net::AuthCredentials auth_credentials;
+    std::move(callback).Run(auth_credentials);
+    return;
+  }
+
+  new LoginHandlerDelegate(std::move(callback), web_contents_getter, auth_info,
+                           url, load_flags);  // deletes self
+}
 
 void NetworkServiceClient::OnCertificateRequested(
     uint32_t process_id,

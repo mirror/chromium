@@ -37,6 +37,16 @@ class LoginHandlerViews : public LoginHandler, public views::DialogDelegate {
     chrome::RecordDialogCreation(chrome::DialogIdentifier::LOGIN_HANDLER);
   }
 
+  LoginHandlerViews(
+      net::AuthChallengeInfo* auth_info,
+      net::URLRequestContext* context,
+      content::ResourceRequestInfo::WebContentsGetter web_contents_getter)
+      : LoginHandler(auth_info, context, web_contents_getter),
+        login_view_(NULL),
+        dialog_(NULL) {
+    chrome::RecordDialogCreation(chrome::DialogIdentifier::LOGIN_HANDLER);
+  }
+
   // LoginModelObserver:
   void OnAutofillDataAvailableInternal(
       const base::string16& username,
@@ -152,6 +162,13 @@ namespace chrome {
 LoginHandler* CreateLoginHandlerViews(net::AuthChallengeInfo* auth_info,
                                       net::URLRequest* request) {
   return new LoginHandlerViews(auth_info, request);
+}
+
+LoginHandler* CreateLoginHandlerViews(
+    net::AuthChallengeInfo* auth_info,
+    net::URLRequestContext* context,
+    content::ResourceRequestInfo::WebContentsGetter web_contents_getter) {
+  return new LoginHandlerViews(auth_info, context, web_contents_getter);
 }
 
 }  // namespace chrome
