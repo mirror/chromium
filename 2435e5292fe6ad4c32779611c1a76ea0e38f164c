@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01839c3a_49243bfd",
+        "filename": "services/shape_detection/face_detection_provider_mac.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-30T19:52:05Z",
+      "side": 1,
+      "message": "Can you put the implementation of this method in the .cc file as well?",
+      "revId": "2435e5292fe6ad4c32779611c1a76ea0e38f164c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
