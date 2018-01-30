@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e68245d8_c721ba72",
+        "filename": "net/socket/socket_bio_adapter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-30T19:31:47Z",
+      "side": 1,
+      "message": "The name and description here don\u0027t match the other bits. They are written assuming SocketBIOAdapter is a generic wrapper interface that may be used by anything, whereas everything else assumes it is only used for TLS.\n\n(It is only used for TLS. In fact later APIs will probably allow matching up the lower-level traffic with higher-level Connect, Read, and Write. That said, it appears a limitation of network traffic annotations is that we will always need this catch-all bucket for TLS handshake traffic because you all aren\u0027t providing the necessary socket tags on Connect.)",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 19
+      },
+      "revId": "acdf0ac48125f7d826380180d792206503b06782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60f64f02_fffa404b",
+        "filename": "net/socket/socket_bio_adapter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-30T19:31:47Z",
+      "side": 1,
+      "message": "This sentence is still false.\n\n(It also uses \"Socket interface\" where the preceding text uses \"Socket class\".)",
+      "range": {
+        "startLine": 33,
+        "startChar": 49,
+        "endLine": 35,
+        "endChar": 59
+      },
+      "revId": "acdf0ac48125f7d826380180d792206503b06782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "548ba441_7d7c18b9",
+        "filename": "net/socket/socket_bio_adapter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-30T19:31:47Z",
+      "side": 1,
+      "message": "\"socket connect\" and \"TLS handshake\" are the same situation.",
+      "range": {
+        "startLine": 36,
+        "startChar": 50,
+        "endLine": 37,
+        "endChar": 20
+      },
+      "revId": "acdf0ac48125f7d826380180d792206503b06782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79058c54_2cd18bcb",
+        "filename": "net/socket/socket_bio_adapter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-30T19:31:47Z",
+      "side": 1,
+      "message": "This uses SSL half the time and TLS the other half of the time. Chrome has not supported SSL for years. Please use TLS. (The rename is the TLS working group original sin. We\u0027re still stuck with it all over the place, sadly.)\n\nYou also use \"TLS socket\" and \"TLS connection\" interchangeably. Sockets are an API detail, connections are the networking concepts they implement. Let\u0027s say \"Socket class\" and \"TLS connection\".",
+      "range": {
+        "startLine": 39,
+        "startChar": 27,
+        "endLine": 39,
+        "endChar": 30
+      },
+      "revId": "acdf0ac48125f7d826380180d792206503b06782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef9be574_88d763be",
+        "filename": "net/socket/socket_bio_adapter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-30T19:31:47Z",
+      "side": 1,
+      "message": "This makes it sound like it\u0027s the user\u0027s host name. This is false. It\u0027s the remote server\u0027s host name.",
+      "range": {
+        "startLine": 46,
+        "startChar": 33,
+        "endLine": 46,
+        "endChar": 42
+      },
+      "revId": "acdf0ac48125f7d826380180d792206503b06782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1406d4df_7cd18473",
+        "filename": "net/socket/socket_bio_adapter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-30T19:31:47Z",
+      "side": 1,
+      "message": "How about:\n\nAll data sent or received over a TLS connection. This traffic may either be the handshake or application data. During the handshake, the target host name, user\u0027s IP, data related to previous handshake, client certificates, and channel ID, may be sent. When the connection is used to load an HTTPS URL, the application data includes cookies, request headers, and the response body.",
+      "range": {
+        "startLine": 47,
+        "startChar": 70,
+        "endLine": 47,
+        "endChar": 71
+      },
+      "revId": "acdf0ac48125f7d826380180d792206503b06782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
