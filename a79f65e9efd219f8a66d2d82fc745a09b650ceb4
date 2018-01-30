@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac887d6f_10e4268c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webvtt/api/VTTRegion/lines.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-30T09:31:39Z",
+      "side": 0,
+      "message": "Some of these are still interesting to test, so might as well just keep all of them. The spec reference above should describe how they are handled.",
+      "range": {
+        "startLine": 19,
+        "startChar": 5,
+        "endLine": 31,
+        "endChar": 38
+      },
+      "revId": "a79f65e9efd219f8a66d2d82fc745a09b650ceb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
