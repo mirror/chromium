@@ -37,7 +37,8 @@ class AURA_EXPORT WindowPortLocal : public WindowPort {
   void OnWillMoveChild(size_t current_index, size_t dest_index) override;
   void OnVisibilityChanged(bool visible) override;
   void OnDidChangeBounds(const gfx::Rect& old_bounds,
-                         const gfx::Rect& new_bounds) override;
+                         const gfx::Rect& new_bounds,
+                         const viz::LocalSurfaceId& id_for_autoresize) override;
   void OnDidChangeTransform(const gfx::Transform& old_transform,
                             const gfx::Transform& new_transform) override;
   std::unique_ptr<ui::PropertyData> OnWillChangeProperty(
@@ -48,6 +49,7 @@ class AURA_EXPORT WindowPortLocal : public WindowPort {
   std::unique_ptr<cc::LayerTreeFrameSink> CreateLayerTreeFrameSink() override;
   viz::SurfaceId GetSurfaceId() const override;
   void AllocateLocalSurfaceId() override;
+  void SetLocalSurfaceId(const viz::LocalSurfaceId& local_surface_id) override;
   const viz::LocalSurfaceId& GetLocalSurfaceId() override;
   viz::FrameSinkId GetFrameSinkId() const override;
   void OnWindowAddedToRootWindow() override;
