@@ -4,6 +4,9 @@
 
 #include "content/browser/webrtc/webrtc_remote_event_log_manager.h"
 
+#include <limits>
+
+#include "base/big_endian.h"
 #include "base/bind.h"
 #include "base/files/file.h"
 #include "base/files/file_enumerator.h"
@@ -22,6 +25,19 @@ namespace content {
 namespace {
 const base::FilePath::CharType kRemoteBoundLogSubDirectory[] =
     FILE_PATH_LITERAL("webrtc_event_logs");
+
+// The header consists of:
+// * One byte for the version.
+// * Three bytes for the length of the metadata.
+constexpr size_t kRemoteBoundLogHeaderLength = 4;
+
+const uint8_t kRemoteBoundLogEncodingVersion = 0;
+
+// Purge from local disk a log file which could not be properly started
+// (e.g. error encountered when attempting to write the log header).
+void DiscardLogFile(base::File* file, const base::FilePath& file_path) {
+  // TODO: !!!
+}
 }  // namespace
 
 const size_t kMaxActiveRemoteBoundWebRtcEventLogs = 3;
@@ -35,6 +51,8 @@ const base::TimeDelta kRemoteBoundWebRtcEventLogsMaxRetention =
 
 const base::FilePath::CharType kRemoteBoundLogExtension[] =
     FILE_PATH_LITERAL("log");
+
+const uint8_t kRemoteBoundLogVersion = 0;
 
 WebRtcRemoteEventLogManager::WebRtcRemoteEventLogManager(
     WebRtcRemoteEventLogsObserver* observer)
@@ -91,12 +109,26 @@ bool WebRtcRemoteEventLogManager::StartRemoteLogging(
     int render_process_id,
     int lid,
     const BrowserContext* browser_context,
-    size_t max_file_size_bytes) {
+    size_t max_file_size_bytes,
+    const std::string& metadata) {
   CHECK(!browser_context->IsOffTheRecord());
 
   // TODO(eladalon): Set a tighter limit (following discussion with rschriebman
   // and manj). https://crbug.com/775415
   if (max_file_size_bytes == kWebRtcEventLogManagerUnlimitedFileSize) {
+    return false;
+  }
+
+  if (metadata.length() > 0xFFFFFFu) {
+    // We use three bytes to encode the length of the metadata.
+    LOG(ERROR) << "Metadata must be less than 2^24 bytes.";
+    return false;
+  }
+
+  if (metadata.size() + kRemoteBoundLogHeaderLength > max_file_size_bytes) {
+    LOG(ERROR) << "[Metadata length (" << metadata.size()
+               << ") + header size] exceed max file size ("
+               << max_file_size_bytes << ").";
     return false;
   }
 
@@ -133,7 +165,7 @@ bool WebRtcRemoteEventLogManager::StartRemoteLogging(
   }
 
   return StartWritingLog(render_process_id, lid, browser_context,
-                         max_file_size_bytes);
+                         max_file_size_bytes, metadata);
 }
 
 bool WebRtcRemoteEventLogManager::EventLogWrite(int render_process_id,
@@ -249,7 +281,17 @@ bool WebRtcRemoteEventLogManager::StartWritingLog(
     int render_process_id,
     int lid,
     const BrowserContext* browser_context,
-    size_t max_file_size_bytes) {
+    size_t max_file_size_bytes,
+    const std::string& metadata) {
+  // WriteAtCurrentPos() only allows writing up to max-int at a time. We could
+  // iterate to do more, but we don't expect to ever need to, so it's easier
+  // to disallow it.
+  if (metadata.length() >
+      static_cast<size_t>(std::numeric_limits<int>::max())) {
+    LOG(WARNING) << "Metadata too long to write in one go.";
+    return false;
+  }
+
   // Randomize a new filename. In the highly unlikely event that this filename
   // is already taken, it will be treated the same way as any other failure
   // to start the log file.
@@ -269,6 +311,28 @@ bool WebRtcRemoteEventLogManager::StartWritingLog(
     return false;
   }
 
+  const uint32_t header_host_order = static_cast<uint32_t>(metadata.length()) |
+                                     (kRemoteBoundLogEncodingVersion << 24);
+  uint32_t header;
+  base::WriteBigEndian<uint32_t>(&header, header_host_order);
+
+  // TODO: !!! Delete file if can't write to it?
+  // TODO: !!! Avoid multiple casts to int.
+
+  const int metadata_length = static_cast<int>(metadata.length());
+  int header = file.WriteAtCurrentPos(metadata.c_str(), metadata_length);
+  if (written < 0 || written != metadata_length) {
+    LOG(WARNING) << "TODO: !!!";
+    DiscardLogFile(&file, file_path);
+    return false;
+  }
+  written = file.WriteAtCurrentPos(metadata.c_str(), metadata_length);
+  if (written < 0 || written != metadata_length) {
+    LOG(WARNING) << "TODO: !!!";
+    DiscardLogFile(&file, file_path);
+    return false;
+  }
+
   // Record that we're now writing this remote-bound log to this file.
   const PeerConnectionKey key(render_process_id, lid);
   const auto it = active_logs_.emplace(
@@ -278,6 +342,9 @@ bool WebRtcRemoteEventLogManager::StartWritingLog(
 
   observer_->OnRemoteLogStarted(PeerConnectionKey(render_process_id, lid),
                                 file_path);
+
+  // TODO: !!! OnRemoteLogStopped if maximum file size reached.
+  // TODO: !!! In previous CL, if maximum reached, do we OjnRemoteLogStopped?
 
   return true;
 }

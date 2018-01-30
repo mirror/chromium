@@ -150,6 +150,7 @@ void WebRtcEventLogManager::StartRemoteLogging(
     int render_process_id,
     int lid,
     size_t max_file_size_bytes,
+    const std::string& metadata,
     base::OnceCallback<void(bool)> reply) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   task_runner_->PostTask(
@@ -157,7 +158,7 @@ void WebRtcEventLogManager::StartRemoteLogging(
       base::BindOnce(&WebRtcEventLogManager::StartRemoteLoggingInternal,
                      base::Unretained(this), render_process_id, lid,
                      GetBrowserContext(render_process_id), max_file_size_bytes,
-                     std::move(reply)));
+                     metadata, std::move(reply)));
 }
 
 void WebRtcEventLogManager::OnWebRtcEventLogWrite(
@@ -351,6 +352,7 @@ void WebRtcEventLogManager::StartRemoteLoggingInternal(
     int lid,
     const BrowserContext* browser_context,
     size_t max_file_size_bytes,
+    const std::string& metadata,
     base::OnceCallback<void(bool)> reply) {
   DCHECK(task_runner_->RunsTasksInCurrentSequence());
   DCHECK(browser_context);
@@ -360,7 +362,7 @@ void WebRtcEventLogManager::StartRemoteLoggingInternal(
     result = false;
   } else {
     result = remote_logs_manager_.StartRemoteLogging(
-        render_process_id, lid, browser_context, max_file_size_bytes);
+        render_process_id, lid, browser_context, max_file_size_bytes, metadata);
   }
 
   if (reply) {
