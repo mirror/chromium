@@ -1172,7 +1172,7 @@ TEST_F(RenderWidgetHostTest, HiddenPaint) {
   const IPC::Message* restored = process_->sink().GetUniqueMessageMatching(
       ViewMsg_WasShown::ID);
   ASSERT_TRUE(restored);
-  std::tuple<bool, ui::LatencyInfo> needs_repaint;
+  std::tuple<bool, ui::LatencyInfo, base::Optional<ResizeParams>> needs_repaint;
   ViewMsg_WasShown::Read(restored, &needs_repaint);
   EXPECT_TRUE(std::get<0>(needs_repaint));
 }
