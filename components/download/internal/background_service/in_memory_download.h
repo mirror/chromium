@@ -98,6 +98,13 @@ class InMemoryDownload : public net::URLFetcherDelegate {
   const std::string& guid() const { return guid_; }
   uint64_t bytes_downloaded() const { return bytes_downloaded_; }
   State state() const { return state_; }
+  const base::Time& completion_time() const { return completion_time_; }
+  scoped_refptr<const net::HttpResponseHeaders> response_headers() const {
+    return response_headers_;
+  }
+
+  // Returns the estimate of dynamically allocated memory in bytes.
+  size_t EstimateMemoryUsage() const;
 
  private:
   // net::URLFetcherDelegate implementation.
@@ -147,6 +154,12 @@ class InMemoryDownload : public net::URLFetcherDelegate {
   scoped_refptr<base::SingleThreadTaskRunner> io_task_runner_;
 
   State state_;
+
+  // Completion time of download when data is saved as blob.
+  base::Time completion_time_;
+
+  // HTTP response headers.
+  scoped_refptr<const net::HttpResponseHeaders> response_headers_;
 
   Delegate* delegate_;
 
