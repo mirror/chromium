@@ -31,8 +31,31 @@ struct StructTraits<blink::mojom::blink::TransferableMessage::DataView,
     return result;
   }
 
+  static const blink::SerializedScriptValue::ArrayBufferContentsArray&
+  array_buffer_contents_array(const blink::BlinkCloneableMessage& input) {
+    return input.message->GetArrayBufferContentsArray();
+  }
+
+  static Vector<SkBitmap> image_bitmap_contents_array(
+      const blink::BlinkCloneableMessage& input);
+
   static bool Read(blink::mojom::blink::TransferableMessage::DataView,
                    blink::BlinkTransferableMessage* out);
+};
+
+template <>
+class StructTraits<blink::mojom::blink::SerializedArrayBufferContents::DataView,
+                   WTF::ArrayBufferContents> {
+ public:
+  static base::span<uint8_t> contents(
+      const WTF::ArrayBufferContents& array_buffer_contents) {
+    uint8_t* allocation_start =
+        static_cast<uint8_t*>(array_buffer_contents.Data());
+    return base::make_span(allocation_start,
+                           array_buffer_contents.DataLength());
+  }
+  static bool Read(blink::mojom::blink::SerializedArrayBufferContents::DataView,
+                   WTF::ArrayBufferContents* out);
 };
 
 }  // namespace mojo
