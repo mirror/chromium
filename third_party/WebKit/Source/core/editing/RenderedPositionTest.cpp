@@ -10,6 +10,7 @@
 #include "core/editing/testing/EditingTestBase.h"
 #include "core/frame/Settings.h"
 #include "core/html/forms/HTMLInputElement.h"
+#include "core/page/FocusController.h"
 #include "core/paint/compositing/CompositedSelection.h"
 
 namespace blink {
@@ -35,6 +36,9 @@ TEST_F(RenderedPositionTest, MAYBE_ComputeCompositedSelection) {
       ToHTMLInputElement(GetDocument().getElementById("target"));
   DCHECK(target);
   target->focus();
+  Selection().SetFrameIsFocused(true);
+  GetDocument().GetPage()->GetFocusController().SetActive(true);
+
   Selection().SetSelection(
       SelectionInDOMTree::Builder()
           .SelectAllChildren(*target->InnerEditorElement())

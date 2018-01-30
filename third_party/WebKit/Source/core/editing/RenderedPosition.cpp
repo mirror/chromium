@@ -406,7 +406,8 @@ bool LayoutObjectContainsPosition(LayoutObject* target,
 
 CompositedSelection RenderedPosition::ComputeCompositedSelection(
     const FrameSelection& frame_selection) {
-  if (!frame_selection.IsHandleVisible() || frame_selection.IsHidden())
+  if (!frame_selection.IsHandleVisible() || frame_selection.IsHidden() ||
+      !frame_selection.FrameIsFocusedAndActive())
     return {};
 
   // TODO(yoichio): Compute SelectionInDOMTree w/o VS canonicalization.
