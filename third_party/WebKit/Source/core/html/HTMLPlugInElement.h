@@ -176,6 +176,7 @@ class CORE_EXPORT HTMLPlugInElement
   // if it doesn't yet exist.
   virtual LayoutEmbeddedContent* ExistingLayoutEmbeddedContent() const = 0;
   virtual void UpdatePluginInternal() = 0;
+  virtual void ParametersForPlugin(PluginParameters& plugin_params) = 0;
 
   bool LoadPlugin(const KURL&,
                   const String& mime_type,

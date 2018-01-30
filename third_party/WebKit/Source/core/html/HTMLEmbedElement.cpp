@@ -141,36 +141,6 @@ void HTMLEmbedElement::ParametersForPlugin(PluginParameters& plugin_params) {
 // FIXME: This should be unified with HTMLObjectElement::updatePlugin and
 // moved down into HTMLPluginElement.cpp
 void HTMLEmbedElement::UpdatePluginInternal() {
-  DCHECK(!GetLayoutEmbeddedObject()->ShowsUnavailablePluginIndicator());
-  DCHECK(NeedsPluginUpdate());
-  SetNeedsPluginUpdate(false);
-
-  if (url_.IsEmpty() && service_type_.IsEmpty())
-    return;
-
-  // Note these pass m_url and m_serviceType to allow better code sharing with
-  // <object> which modifies url and serviceType before calling these.
-  if (!AllowedToLoadFrameURL(url_))
-    return;
-
-  PluginParameters plugin_params;
-  ParametersForPlugin(plugin_params);
-
-  // FIXME: Can we not have layoutObject here now that beforeload events are
-  // gone?
-  if (!GetLayoutObject())
-    return;
-
-  // Overwrites the URL and MIME type of a Flash embed to use an HTML5 embed.
-  KURL overriden_url =
-      GetDocument().GetFrame()->Client()->OverrideFlashEmbedWithHTML(
-          GetDocument().CompleteURL(url_));
-  if (!overriden_url.IsEmpty()) {
-    url_ = overriden_url.GetString();
-    service_type_ = "text/html";
-  }
-
-  RequestObject(plugin_params);
 }
 
 bool HTMLEmbedElement::LayoutObjectIsNeeded(const ComputedStyle& style) {

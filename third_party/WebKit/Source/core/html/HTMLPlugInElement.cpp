@@ -242,6 +242,52 @@ void HTMLPlugInElement::IntrinsicSizingInfoChanged() {
 }
 
 void HTMLPlugInElement::UpdatePlugin() {
+  DCHECK(!GetLayoutEmbeddedObject()->ShowsUnavailablePluginIndicator());
+  DCHECK(NeedsPluginUpdate());
+  SetNeedsPluginUpdate(false);
+  // TODO(schenney): crbug.com/572908 This should ASSERT
+  // isFinishedParsingChildren() instead.
+  if (!IsFinishedParsingChildren()) {
+    DispatchErrorEvent();
+    return;
+  }
+
+  // TODO(schenney): crbug.com/572908 I'm not sure it's ever possible to get
+  // into updateWidget during a removal, but just in case we should avoid
+  // loading the frame to prevent security bugs.
+  if (!SubframeLoadingDisabler::CanLoadFrame(*this)) {
+    DispatchErrorEvent();
+    return;
+  }
+
+  PluginParameters plugin_params;
+  ParametersForPlugin(plugin_params);
+
+  // Note: url is modified above by parametersForPlugin.
+  if (!AllowedToLoadFrameURL(url_)) {
+    DispatchErrorEvent();
+    return;
+  }
+
+  // TODO(schenney): crbug.com/572908 Is it possible to get here without a
+  // layoutObject now that we don't have beforeload events?
+  if (!GetLayoutObject())
+    return;
+
+  // Overwrites the URL and MIME type of a Flash embed to use an HTML5 embed.
+  KURL overriden_url =
+      GetDocument().GetFrame()->Client()->OverrideFlashEmbedWithHTML(
+          GetDocument().CompleteURL(url_));
+  if (!overriden_url.IsEmpty()) {
+    url_ = overriden_url.GetString();
+    service_type_ = "text/html";
+  }
+
+  if (RequestObject(plugin_params)) {
+    if (IsErrorplaceholder())
+      DispatchErrorEvent();
+  }
+
   UpdatePluginInternal();
   if (is_delaying_load_event_) {
     is_delaying_load_event_ = false;

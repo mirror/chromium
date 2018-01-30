@@ -55,7 +55,7 @@ class CORE_EXPORT HTMLEmbedElement final : public HTMLPlugInElement {
 
   void UpdatePluginInternal() override;
 
-  void ParametersForPlugin(PluginParameters& plugin_params);
+  void ParametersForPlugin(PluginParameters& plugin_params) override;
 
   NamedItemType GetNamedItemType() const override {
     return NamedItemType::kName;
