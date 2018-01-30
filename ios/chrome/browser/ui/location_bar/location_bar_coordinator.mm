@@ -149,17 +149,6 @@
   return omniboxViewIOS->IsPopupOpen();
 }
 
-- (void)focusOmniboxFromFakebox {
-  OmniboxEditModel* model = _locationBarController->GetLocationEntry()->model();
-  // Setting the caret visibility to false causes OmniboxEditModel to indicate
-  // that omnibox interaction was initiated from the fakebox. Note that
-  // SetCaretVisibility is a no-op unless OnSetFocus is called first.  Only
-  // set fakebox on iPad, where there is a distinction between the omnibox
-  // and the fakebox on the NTP.
-  model->OnSetFocus(false);
-  model->SetCaretVisibility(false);
-}
-
 - (BOOL)isOmniboxFirstResponder {
   return [self.locationBarView.textField isFirstResponder];
 }

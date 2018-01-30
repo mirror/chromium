@@ -365,16 +365,7 @@ void OmniboxViewIOS::OnDidBeginEditing() {
   // strip them out by calling setText (as opposed to setAttributedText).
   [field_ setText:[field_ text]];
   OnBeforePossibleChange();
-  // In the case where the user taps the fakebox on the Google landing page,
-  // the WebToolbarController invokes OnSetFocus before calling
-  // becomeFirstResponder on OmniboxTextFieldIOS (which leads to this method
-  // beting invoked) so there is no need to call OnSetFocus again. In fact,
-  // calling OnSetFocus again here would reset the caret visibility to true and
-  // it would be impossible to tell that the omnibox was focused by a tap in the
-  // fakebox instead of the omnibox.
-  if (!model()->has_focus()) {
-    model()->OnSetFocus(false);
-  }
+  model()->OnSetFocus(false);
 
   // If the omnibox is displaying a URL and the popup is not showing, set the
   // field into pre-editing state.  If the omnibox is displaying search terms,
