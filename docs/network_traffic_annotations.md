@@ -123,9 +123,6 @@ Each network traffic annotation should specify the following items:
      points to `OTHER`.
 * `TrafficPolicy`: These set of fields specify the controls that a user may have
   on disabling or limiting the network request and its trace.
-   * `empty_policy_justification`: If traffic policy cannot be specified, like
-     when the request originates from inside network stack and none of the below
-     control policies applies to it, a plain text here can specify it.
    * `cookies_allowed`: Specifies if this request stores and uses cookies or
      not. Use values `YES` or `NO`.
    * `cookies_store`: If a request sends or stores cookies/channel IDs/... (i.e.
