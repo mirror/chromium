@@ -17,6 +17,7 @@
 #include "base/time/time.h"
 #include "content/public/renderer/worker_thread.h"
 #include "ipc/ipc_message.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 #include "third_party/WebKit/public/platform/modules/cache_storage/cache_storage.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerCache.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerCacheStorage.h"
@@ -52,28 +53,27 @@ class CacheStorageDispatcher : public WorkerThread::Observer {
   bool OnMessageReceived(const IPC::Message& message);
 
   // Message handlers for CacheStorage messages from the browser process.
-  void OnCacheStorageHasSuccess(int thread_id, int request_id);
-  void OnCacheStorageOpenSuccess(int thread_id, int request_id, int cache_id);
-  void OnCacheStorageDeleteSuccess(int thread_id, int request_id);
-  void OnCacheStorageKeysSuccess(int thread_id,
+  // And callbacks called by Mojo implementation on Browser process.
+  void OnCacheStorageHasCallback(int thread_id,
                                  int request_id,
-                                 const std::vector<base::string16>& keys);
-  void OnCacheStorageMatchSuccess(int thread_id,
+                                 base::TimeTicks start_time,
+                                 blink::mojom::CacheStorageError result);
+  void OnCacheStorageOpenSuccess(int thread_id, int request_id, int cache_id);
+  void CacheStorageDeleteCallback(int thread_id,
                                   int request_id,
-                                  const ServiceWorkerResponse& response);
-
-  void OnCacheStorageHasError(int thread_id,
-                              int request_id,
-                              blink::mojom::CacheStorageError reason);
+                                  base::TimeTicks start_time,
+                                  blink::mojom::CacheStorageError result);
+  void KeysCallback(int thread_id,
+                    int request_id,
+                    base::TimeTicks start_time,
+                    const std::vector<base::string16>& keys);
+  void OnCacheStorageMatchCallback(int thread_id,
+                                   int request_id,
+                                   base::TimeTicks start_time,
+                                   blink::mojom::MatchResultPtr result);
   void OnCacheStorageOpenError(int thread_id,
                                int request_id,
                                blink::mojom::CacheStorageError reason);
-  void OnCacheStorageDeleteError(int thread_id,
-                                 int request_id,
-                                 blink::mojom::CacheStorageError reason);
-  void OnCacheStorageMatchError(int thread_id,
-                                int request_id,
-                                blink::mojom::CacheStorageError reason);
 
   // Message handlers for Cache messages from the browser process.
   void OnCacheMatchSuccess(int thread_id,
@@ -109,7 +109,8 @@ class CacheStorageDispatcher : public WorkerThread::Observer {
       std::unique_ptr<
           blink::WebServiceWorkerCacheStorage::CacheStorageCallbacks> callbacks,
       const url::Origin& origin,
-      const blink::WebString& cacheName);
+      const blink::WebString& cacheName,
+      service_manager::InterfaceProvider* provider);
   void dispatchOpen(
       std::unique_ptr<
           blink::WebServiceWorkerCacheStorage::CacheStorageWithCacheCallbacks>
@@ -120,19 +121,22 @@ class CacheStorageDispatcher : public WorkerThread::Observer {
       std::unique_ptr<
           blink::WebServiceWorkerCacheStorage::CacheStorageCallbacks> callbacks,
       const url::Origin& origin,
-      const blink::WebString& cacheName);
+      const blink::WebString& cacheName,
+      service_manager::InterfaceProvider* provider);
   void dispatchKeys(
       std::unique_ptr<
           blink::WebServiceWorkerCacheStorage::CacheStorageKeysCallbacks>
           callbacks,
-      const url::Origin& origin);
+      const url::Origin& origin,
+      service_manager::InterfaceProvider* provider);
   void dispatchMatch(
       std::unique_ptr<
           blink::WebServiceWorkerCacheStorage::CacheStorageMatchCallbacks>
           callbacks,
       const url::Origin& origin,
       const blink::WebServiceWorkerRequest& request,
-      const blink::WebServiceWorkerCache::QueryParams& query_params);
+      const blink::WebServiceWorkerCache::QueryParams& query_params,
+      service_manager::InterfaceProvider* provider);
 
   // These methods are used by WebCache to forward events to the browser
   // process.
@@ -195,6 +199,9 @@ class CacheStorageDispatcher : public WorkerThread::Observer {
   blink::WebVector<blink::WebServiceWorkerResponse> WebResponsesFromResponses(
       const std::vector<ServiceWorkerResponse>& responses);
 
+  // Sets up the Mojo InterfacePtr to send IPCs to browswer process.
+  void setupInterface(service_manager::InterfaceProvider* provider);
+
   scoped_refptr<ThreadSafeSender> thread_safe_sender_;
 
   CallbacksMap has_callbacks_;
@@ -203,10 +210,7 @@ class CacheStorageDispatcher : public WorkerThread::Observer {
   KeysCallbacksMap keys_callbacks_;
   StorageMatchCallbacksMap match_callbacks_;
 
-  TimeMap has_times_;
   TimeMap open_times_;
-  TimeMap delete_times_;
-  TimeMap keys_times_;
   TimeMap match_times_;
 
   // The individual caches created under this CacheStorage object.
@@ -218,6 +222,7 @@ class CacheStorageDispatcher : public WorkerThread::Observer {
   WithResponsesCallbacksMap cache_match_all_callbacks_;
   WithRequestsCallbacksMap cache_keys_callbacks_;
   BatchCallbacksMap cache_batch_callbacks_;
+  blink::mojom::CacheStoragePtr cache_storage_ptr_;
 
   TimeMap cache_match_times_;
   TimeMap cache_match_all_times_;
