@@ -7,6 +7,7 @@
 
 #include <memory>
 
+#include "base/component_export.h"
 #include "base/macros.h"
 #include "build/build_config.h"
 #include "net/proxy_resolution/dhcp_pac_file_fetcher_factory.h"
@@ -30,7 +31,8 @@ namespace network {
 // responsible for providing the proxy_resolver::mojom::ProxyResolverFactory.
 // If a ProxyResolutionService is set directly via the URLRequestContextBuilder
 // API, it will be used instead.
-class URLRequestContextBuilderMojo : public net::URLRequestContextBuilder {
+class COMPONENT_EXPORT(NETWORK_CPP) URLRequestContextBuilderMojo
+    : public net::URLRequestContextBuilder {
  public:
   URLRequestContextBuilderMojo();
   ~URLRequestContextBuilderMojo() override;
