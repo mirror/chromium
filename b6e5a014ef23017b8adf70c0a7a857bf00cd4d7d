@@ -73,6 +73,29 @@
     },
     {
       "key": {
+        "uuid": "3fabcfe8_7aa58f8e",
+        "filename": "chrome/test/vr/auto_bisect.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-30T22:05:03Z",
+      "side": 1,
+      "message": "I don\u0027t quite remember how the swarming worked. Can we have defaults for swarming arguments or a comment explaining how to use them?",
+      "range": {
+        "startLine": 60,
+        "startChar": 29,
+        "endLine": 60,
+        "endChar": 47
+      },
+      "revId": "b6e5a014ef23017b8adf70c0a7a857bf00cd4d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7bac012f_5fd095ba",
         "filename": "chrome/test/vr/auto_bisect.py",
         "patchSetId": 1
@@ -197,6 +220,47 @@
         "endLine": 280,
         "endChar": 73
       },
+      "revId": "b6e5a014ef23017b8adf70c0a7a857bf00cd4d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df7e702a_e44cc1b1",
+        "filename": "chrome/test/vr/auto_bisect.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-30T22:05:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2bd366a5_e20e5e43",
+      "range": {
+        "startLine": 280,
+        "startChar": 2,
+        "endLine": 280,
+        "endChar": 73
+      },
+      "revId": "b6e5a014ef23017b8adf70c0a7a857bf00cd4d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "79e86695_1227da3d",
+        "filename": "chrome/test/vr/auto_bisect.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-30T22:05:03Z",
+      "side": 1,
+      "message": "I\u0027m not a Python expert but wouldn\u0027t that be skipped if the previous line fails? Maybe do something like here (https://cs.chromium.org/chromium/src/chrome/browser/resources/vr/assets/push_assets_component.py?rcl\u003de669e93e73a58f7bd43d41bb632706a44377948c\u0026l\u003d58)?",
       "revId": "b6e5a014ef23017b8adf70c0a7a857bf00cd4d7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
