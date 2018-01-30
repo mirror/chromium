@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "15932679_c50ee3a5",
+        "filename": "tools/cygprofile/phased_orderfile.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-30T11:47:41Z",
+      "side": 1,
+      "message": "The variance of the startup threshold is going to be affected by how much gets pulled into the common group, so I don\u0027t know if this in fact big or not. Clearly these stability metrics need some refinement :)\n\nIf speedometer is run using devtools-triggered phase changes, the stability ratio is 1.01. But if it\u0027s triggered by time (the existing delayed dumper), the same speedometer benchmark has a stability of 1.26. Some recent runs using the delay-triggered phase changes show even less stability, which I\u0027m still evaluating (1.3-2.9 (!) on startup, 1.7-25.3 (!!) on interaction).\n\nThe exactly benchmark name is memory.top_10_mobile and speedometer, respectively.",
+      "parentUuid": "35be255c_eba97dfc",
+      "range": {
+        "startLine": 45,
+        "startChar": 32,
+        "endLine": 45,
+        "endChar": 35
+      },
+      "revId": "2823b8b099ee86bd99ed47b79041c55fdec80d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af54317e_0c4c1a59",
         "filename": "tools/cygprofile/phased_orderfile.py",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-29T16:24:40Z",
       "side": 1,
       "message": "should this be invoked somewhere or it is in future plans?",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 28
+      },
+      "revId": "2823b8b099ee86bd99ed47b79041c55fdec80d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cffc1f34_ce222a31",
+        "filename": "tools/cygprofile/phased_orderfile.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-30T11:47:41Z",
+      "side": 1,
+      "message": "Future plans. The idea is that if the profiles aren\u0027t stable, the orderfile bot can warn or error. I included it now so that the use of the thresholds is clear.",
+      "parentUuid": "af54317e_0c4c1a59",
       "range": {
         "startLine": 60,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a1b46a8a_c1188cf7",
+        "filename": "tools/cygprofile/phased_orderfile.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-30T11:47:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7513a1f4_29e36334",
+      "range": {
+        "startLine": 87,
+        "startChar": 22,
+        "endLine": 87,
+        "endChar": 32
+      },
+      "revId": "2823b8b099ee86bd99ed47b79041c55fdec80d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42fb3fc4_20cf8356",
         "filename": "tools/cygprofile/phased_orderfile.py",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "c6b6b2c0_1f5437e0",
+        "filename": "tools/cygprofile/phased_orderfile.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-30T11:47:41Z",
+      "side": 1,
+      "message": "I think like most user-defined types it\u0027s best to document the type at its definition rather than its use, otherwise maintenance is harder. For example see how the symbol_extractor.SymbolInfo type is used in this directory.",
+      "parentUuid": "42fb3fc4_20cf8356",
+      "range": {
+        "startLine": 127,
+        "startChar": 7,
+        "endLine": 127,
+        "endChar": 28
+      },
+      "revId": "2823b8b099ee86bd99ed47b79041c55fdec80d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4cd6e608_297a99b0",
         "filename": "tools/cygprofile/phased_orderfile.py",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2018-01-29T16:24:40Z",
       "side": 1,
       "message": "I thought maybe renaming it to GetPhaseOffsetsForMultipleRuns (or something) would be more readable as a name to replace GetRunGroupOffsets. Understanding the difference between a RunGroup and a Phase requires reading the entirety of the comments and implementation of the ProfileManager. I did it once, forgot entirely, now reading second time and ... not sure I\u0027d be able to keep it in memory for long. Maybe it\u0027s just me :)\n\nThe docsting for GetRunGroupOffsets() could also be improved to replace the reference to GetMergedOffsets() with explanation of what it does in terms of the toplevel terms introduced in the calss. It would also be useful, I think, to explain how the elements in the list of offset lists are ordered.",
+      "range": {
+        "startLine": 135,
+        "startChar": 44,
+        "endLine": 135,
+        "endChar": 62
+      },
+      "revId": "2823b8b099ee86bd99ed47b79041c55fdec80d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8533ccda_eeda9b6b",
+        "filename": "tools/cygprofile/phased_orderfile.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-30T11:47:41Z",
+      "side": 1,
+      "message": "When I here \"MultipleRuns\" I think there\u0027s some selection of which runs are selected; the current name correctly implies to me that it\u0027s getting the offsets for each run group.\n\nGetMergedOffsets is what determines the ordering of the offsets, and it seems to be the clearest place to describe how ordering is defined. Repeating that elsewhere would probably be a maintenance problem if the semantics of GetMergedOffsets were changed.\n\nAt any rate, this all seems like bikeshedding to me... :)",
+      "parentUuid": "4cd6e608_297a99b0",
       "range": {
         "startLine": 135,
         "startChar": 44,
