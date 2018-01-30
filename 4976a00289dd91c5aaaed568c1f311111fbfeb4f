@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8711e00_0dcf4467",
+        "filename": "chrome/browser/notifications/notification_common.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-30T14:52:03Z",
+      "side": 1,
+      "message": "Would it be better to split this out into its own file perhaps? Then they wouldn\u0027t need to be kept in sync.",
+      "revId": "4976a00289dd91c5aaaed568c1f311111fbfeb4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
