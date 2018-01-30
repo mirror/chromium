@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2844141d_7a8f6021",
+        "filename": "base/metrics/histogram_snapshot_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-30T16:09:24Z",
+      "side": 1,
+      "message": "Nit: Move about PrepareDelta() to match order in the .h file.",
+      "range": {
+        "startLine": 52,
+        "startChar": 45,
+        "endLine": 52,
+        "endChar": 0
+      },
+      "revId": "cc5923a8f447f0fc04b6c94bb569e95784ea2fb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
