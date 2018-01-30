@@ -220,6 +220,24 @@
     },
     {
       "key": {
+        "uuid": "fca1eb14_1bab15d1",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_set_manufacturer_model_behavior.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2018-01-30T01:12:31Z",
+      "side": 1,
+      "message": "Changed to use the single line version.",
+      "parentUuid": "09db8c18_e6068c4c",
+      "revId": "a6aa32433ea644a28966cf28ecd9aec68610053d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a91a95b5_8237b3c5",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
         "patchSetId": 2
