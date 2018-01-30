@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd2fbd3e_2deb3df9",
+        "filename": "ui/webui/resources/webui_resources.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-30T06:20:48Z",
+      "side": 1,
+      "message": "uses polymer",
+      "range": {
+        "startLine": 277,
+        "startChar": 6,
+        "endLine": 279,
+        "endChar": 35
+      },
+      "revId": "fb94cd18fc38701987c9cf1725ca1ffa02581f3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad51b99c_0a774bd6",
+        "filename": "ui/webui/resources/webui_resources.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-30T06:20:48Z",
+      "side": 1,
+      "message": "uses polymer",
+      "range": {
+        "startLine": 369,
+        "startChar": 0,
+        "endLine": 371,
+        "endChar": 54
+      },
+      "revId": "fb94cd18fc38701987c9cf1725ca1ffa02581f3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
