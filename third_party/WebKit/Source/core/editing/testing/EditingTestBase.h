@@ -63,6 +63,11 @@ class EditingTestBase : public PageTestBase {
   std::string GetSelectionTextInFlatTreeFromBody(
       const SelectionInFlatTree&) const;
 
+  std::string GetSelectionTextInFlatTreeFromBody(const Position&) const;
+
+  std::string GetSelectionTextInFlatTreeFromBody(
+      const PositionInFlatTree&) const;
+
   ShadowRoot* SetShadowContent(const char* shadow_content,
                                const char* shadow_host_id);
 

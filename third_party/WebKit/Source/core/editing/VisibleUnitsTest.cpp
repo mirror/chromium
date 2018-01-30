@@ -7,6 +7,7 @@
 #include "bindings/core/v8/V8BindingForTesting.h"
 #include "core/dom/Text.h"
 #include "core/editing/PositionWithAffinity.h"
+#include "core/editing/SelectionTemplate.h"
 #include "core/editing/VisiblePosition.h"
 #include "core/editing/testing/EditingTestBase.h"
 #include "core/html/forms/TextControlElement.h"
@@ -522,8 +523,8 @@ TEST_F(VisibleUnitsTest, endOfWord) {
   const char* body_content =
       "<a id=host><b id=one>1</b> <b id=two>22</b></a><i id=three>333</i>";
   const char* shadow_content =
-      "<p><u id=four>44444</u><content select=#two></content><span id=space> "
-      "</span><content select=#one></content><u id=five>55555</u></p>";
+      "<p><u id=four>44444</u><content select=#two></content>"
+      " <content select=#one></content><u id=five>55555</u></p>";
   SetBodyContent(body_content);
   ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
 
@@ -533,54 +534,107 @@ TEST_F(VisibleUnitsTest, endOfWord) {
   Node* four = shadow_root->getElementById("four")->firstChild();
   Node* five = shadow_root->getElementById("five")->firstChild();
 
+  // From "one"
   EXPECT_EQ(
-      Position(three, 3),
-      EndOfWord(CreateVisiblePositionInDOMTree(*one, 0)).DeepEquivalent());
+      "<a id=\"host\"><p><u id=\"four\">44444</u><b id=\"two\">22</b> <b "
+      "id=\"one\">1</b><u id=\"five\">55555</u></p></a><i "
+      "id=\"three\">333|</i>",
+      GetSelectionTextInFlatTreeFromBody(
+          EndOfWord(CreateVisiblePositionInDOMTree(*one, 0)).DeepEquivalent()));
   EXPECT_EQ(
-      PositionInFlatTree(five, 5),
-      EndOfWord(CreateVisiblePositionInFlatTree(*one, 0)).DeepEquivalent());
+      "<a id=\"host\"><p><u id=\"four\">44444</u><b id=\"two\">22</b> <b "
+      "id=\"one\">1</b><u id=\"five\">55555|</u></p></a><i "
+      "id=\"three\">333</i>",
+      GetSelectionTextInFlatTreeFromBody(
+          EndOfWord(CreateVisiblePositionInFlatTree(*one, 0))
+              .DeepEquivalent()));
 
   EXPECT_EQ(
-      Position(three, 3),
-      EndOfWord(CreateVisiblePositionInDOMTree(*one, 1)).DeepEquivalent());
+      "<a id=\"host\"><p><u id=\"four\">44444</u><b id=\"two\">22</b> <b "
+      "id=\"one\">1</b><u id=\"five\">55555</u></p></a><i "
+      "id=\"three\">333|</i>",
+      GetSelectionTextInFlatTreeFromBody(
+          EndOfWord(CreateVisiblePositionInDOMTree(*one, 1)).DeepEquivalent()));
   EXPECT_EQ(
-      PositionInFlatTree(five, 5),
-      EndOfWord(CreateVisiblePositionInFlatTree(*one, 1)).DeepEquivalent());
+      "<a id=\"host\"><p><u id=\"four\">44444</u><b id=\"two\">22</b> <b "
+      "id=\"one\">1</b><u id=\"five\">55555|</u></p></a><i "
+      "id=\"three\">333</i>",
+      GetSelectionTextInFlatTreeFromBody(
+          EndOfWord(CreateVisiblePositionInFlatTree(*one, 1))
+              .DeepEquivalent()));
+
+  // From "two"
+  EXPECT_EQ(
+      "<a id=\"host\"><p><u id=\"four\">44444</u><b id=\"two\">22</b> <b "
+      "id=\"one\">1</b><u id=\"five\">55555</u></p></a><i "
+      "id=\"three\">333|</i>",
+      GetSelectionTextInFlatTreeFromBody(
+          EndOfWord(CreateVisiblePositionInDOMTree(*two, 0)).DeepEquivalent()));
+  EXPECT_EQ(
+      "<a id=\"host\"><p><u id=\"four\">44444</u><b id=\"two\">22|</b> <b "
+      "id=\"one\">1</b><u id=\"five\">55555</u></p></a><i id=\"three\">333</i>",
+      GetSelectionTextInFlatTreeFromBody(
+          EndOfWord(CreateVisiblePositionInFlatTree(*two, 0))
+              .DeepEquivalent()));
 
   EXPECT_EQ(
-      Position(three, 3),
-      EndOfWord(CreateVisiblePositionInDOMTree(*two, 0)).DeepEquivalent());
+      "<a id=\"host\"><p><u id=\"four\">44444</u><b id=\"two\">22</b> <b "
+      "id=\"one\">1</b><u id=\"five\">55555</u></p></a><i "
+      "id=\"three\">333|</i>",
+      GetSelectionTextInFlatTreeFromBody(
+          EndOfWord(CreateVisiblePositionInDOMTree(*two, 1)).DeepEquivalent()));
   EXPECT_EQ(
-      PositionInFlatTree(two, 2),
-      EndOfWord(CreateVisiblePositionInFlatTree(*two, 0)).DeepEquivalent());
+      "<a id=\"host\"><p><u id=\"four\">44444</u><b id=\"two\">22|</b> <b "
+      "id=\"one\">1</b><u id=\"five\">55555</u></p></a><i id=\"three\">333</i>",
+      GetSelectionTextInFlatTreeFromBody(
+          EndOfWord(CreateVisiblePositionInFlatTree(*two, 1))
+              .DeepEquivalent()));
 
+  // From "three"
   EXPECT_EQ(
-      Position(three, 3),
-      EndOfWord(CreateVisiblePositionInDOMTree(*two, 1)).DeepEquivalent());
+      "<a id=\"host\"><p><u id=\"four\">44444</u><b id=\"two\">22</b> <b "
+      "id=\"one\">1</b><u id=\"five\">55555</u></p></a><i "
+      "id=\"three\">333|</i>",
+      GetSelectionTextInFlatTreeFromBody(
+          EndOfWord(CreateVisiblePositionInDOMTree(*three, 1))
+              .DeepEquivalent()));
   EXPECT_EQ(
-      PositionInFlatTree(two, 2),
-      EndOfWord(CreateVisiblePositionInFlatTree(*two, 1)).DeepEquivalent());
+      "<a id=\"host\"><p><u id=\"four\">44444</u><b id=\"two\">22</b> <b "
+      "id=\"one\">1</b><u id=\"five\">55555</u></p></a><i "
+      "id=\"three\">333|</i>",
+      GetSelectionTextInFlatTreeFromBody(
+          EndOfWord(CreateVisiblePositionInFlatTree(*three, 1))
+              .DeepEquivalent()));
 
+  // From "four"
   EXPECT_EQ(
-      Position(three, 3),
-      EndOfWord(CreateVisiblePositionInDOMTree(*three, 1)).DeepEquivalent());
+      "<a id=\"host\"><p><u id=\"four\">44444|</u><b id=\"two\">22</b> <b "
+      "id=\"one\">1</b><u id=\"five\">55555</u></p></a><i id=\"three\">333</i>",
+      GetSelectionTextInFlatTreeFromBody(
+          EndOfWord(CreateVisiblePositionInDOMTree(*four, 1))
+              .DeepEquivalent()));
   EXPECT_EQ(
-      PositionInFlatTree(three, 3),
-      EndOfWord(CreateVisiblePositionInFlatTree(*three, 1)).DeepEquivalent());
+      "<a id=\"host\"><p><u id=\"four\">44444</u><b id=\"two\">22|</b> <b "
+      "id=\"one\">1</b><u id=\"five\">55555</u></p></a><i id=\"three\">333</i>",
+      GetSelectionTextInFlatTreeFromBody(
+          EndOfWord(CreateVisiblePositionInFlatTree(*four, 1))
+              .DeepEquivalent()));
 
+  // From "five"
   EXPECT_EQ(
-      Position(four, 5),
-      EndOfWord(CreateVisiblePositionInDOMTree(*four, 1)).DeepEquivalent());
+      "<a id=\"host\"><p><u id=\"four\">44444</u><b id=\"two\">22</b> <b "
+      "id=\"one\">1</b><u id=\"five\">55555|</u></p></a><i "
+      "id=\"three\">333</i>",
+      GetSelectionTextInFlatTreeFromBody(
+          EndOfWord(CreateVisiblePositionInDOMTree(*five, 1))
+              .DeepEquivalent()));
   EXPECT_EQ(
-      PositionInFlatTree(two, 2),
-      EndOfWord(CreateVisiblePositionInFlatTree(*four, 1)).DeepEquivalent());
-
-  EXPECT_EQ(
-      Position(five, 5),
-      EndOfWord(CreateVisiblePositionInDOMTree(*five, 1)).DeepEquivalent());
-  EXPECT_EQ(
-      PositionInFlatTree(five, 5),
-      EndOfWord(CreateVisiblePositionInFlatTree(*five, 1)).DeepEquivalent());
+      "<a id=\"host\"><p><u id=\"four\">44444</u><b id=\"two\">22</b> <b "
+      "id=\"one\">1</b><u id=\"five\">55555|</u></p></a><i "
+      "id=\"three\">333</i>",
+      GetSelectionTextInFlatTreeFromBody(
+          EndOfWord(CreateVisiblePositionInFlatTree(*five, 1))
+              .DeepEquivalent()));
 }
 
 TEST_F(VisibleUnitsTest, isEndOfEditableOrNonEditableContent) {
