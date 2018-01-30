@@ -141,6 +141,14 @@ void WaylandWindow::ReleaseCapture() {
   NOTIMPLEMENTED();
 }
 
+void WaylandWindow::ReserveKeys() {
+  NOTIMPLEMENTED();
+}
+
+void WaylandWindow::ClearReservedKeys() {
+  NOTIMPLEMENTED();
+}
+
 void WaylandWindow::ToggleFullscreen() {
   DCHECK(xdg_surface_);
 

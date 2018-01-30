@@ -97,6 +97,12 @@ void DrmWindowHost::ReleaseCapture() {
   window_manager_->UngrabEvents(widget_);
 }
 
+void DrmWindowHost::ReserveKeys() {
+}
+
+void DrmWindowHost::ClearReservedKeys() {
+}
+
 void DrmWindowHost::ToggleFullscreen() {
 }
 

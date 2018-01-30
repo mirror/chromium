@@ -45,6 +45,10 @@ class PlatformWindow {
   virtual void SetCapture() = 0;
   virtual void ReleaseCapture() = 0;
 
+  // TODO: Support filtering specific keys.
+  virtual void ReserveKeys() = 0;
+  virtual void ClearReservedKeys() = 0;
+
   virtual void ToggleFullscreen() = 0;
   virtual void Maximize() = 0;
   virtual void Minimize() = 0;

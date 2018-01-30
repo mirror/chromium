@@ -140,6 +140,11 @@ class CONTENT_EXPORT RenderWidgetHostViewEventHandler
   bool LockMouse();
   void UnlockMouse();
 
+  // Lock/Unlock processing of future keyboard events.
+  // TODO: Allow reservation of specific keys.
+  void ReserveKeys();
+  void ClearReservedKeys();
+
   // ui::EventHandler:
   void OnKeyEvent(ui::KeyEvent* event) override;
   void OnMouseEvent(ui::MouseEvent* event) override;
