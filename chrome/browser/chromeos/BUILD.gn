@@ -1649,8 +1649,46 @@ source_set("chromeos") {
     ]
   }
 
+  defines = []
+  if (enable_cros_assistant) {
+    defines += [ "ENABLE_CROS_ASSISTANT" ]
+
+    sources += [
+      "assistant/assistant_service.cc",
+      "assistant/assistant_service.h",
+      "assistant/assistant_service_manager.cc",
+      "assistant/assistant_service_manager.h",
+      "assistant/internal/internal_constants.cc",
+      "assistant/internal/internal_constants.h",
+      "assistant/internal/internal_util.cc",
+      "assistant/internal/internal_util.h",
+      "assistant/platform_api_impl.cc",
+      "assistant/platform_api_impl.h",
+    ]
+
+    deps += [
+      "//libassistant/contrib/core",
+      "//libassistant/contrib/platform/audio",
+      "//libassistant/contrib/platform/auth",
+      "//libassistant/contrib/platform/file",
+      "//libassistant/contrib/platform/net",
+      "//libassistant/contrib/platform/resources",
+      "//libassistant/contrib/platform/system",
+      "//libassistant/internal/assistant/controller:libassistant_static",
+      "//libassistant/shared/internal_api/c:api_wrappers_for_caller_no_chromium",
+      "//libassistant/shared/proto:assistant_proto",
+      "//libassistant/shared/public",
+      "//libassistant/shared/public:export",
+    ]
+
+    include_dirs = [
+      "//libassistant/contrib",
+      "//libassistant/shared",
+    ]
+  }
+
   if (use_cras) {
-    defines = [ "USE_CRAS" ]
+    defines += [ "USE_CRAS" ]
   }
 }
 

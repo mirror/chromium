@@ -56,6 +56,12 @@ class UserActivityLoggingController;
 }  // namespace ml
 }  // namespace power
 
+#ifdef ENABLE_CROS_ASSISTANT
+namespace assistant {
+class AssistantService;
+}
+#endif
+
 // ChromeBrowserMainParts implementation for chromeos specific code.
 // NOTE: Chromeos UI (Ash) support should be added to
 // ChromeBrowserMainExtraPartsAsh instead. This class should not depend on
@@ -107,6 +113,10 @@ class ChromeBrowserMainPartsChromeos : public ChromeBrowserMainPartsLinux {
   scoped_refptr<chromeos::ExternalMetrics> external_metrics_;
 
   std::unique_ptr<arc::ArcServiceLauncher> arc_service_launcher_;
+
+#ifdef ENABLE_CROS_ASSISTANT
+  std::unique_ptr<assistant::AssistantService> assistant_service_;
+#endif
 
   std::unique_ptr<arc::VoiceInteractionControllerClient>
       arc_voice_interaction_controller_client_;

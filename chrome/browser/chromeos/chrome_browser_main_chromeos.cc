@@ -44,6 +44,7 @@
 #include "chrome/browser/chromeos/arc/arc_service_launcher.h"
 #include "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.h"
 #include "chrome/browser/chromeos/ash_config.h"
+#include "chrome/browser/chromeos/assistant/assistant_service.h"
 #include "chrome/browser/chromeos/boot_times_recorder.h"
 #include "chrome/browser/chromeos/dbus/chrome_component_updater_service_provider_delegate.h"
 #include "chrome/browser/chromeos/dbus/chrome_console_service_provider_delegate.h"
@@ -690,6 +691,10 @@ void ChromeBrowserMainPartsChromeos::PreMainMessageLoopRun() {
   arc_service_launcher_ = std::make_unique<arc::ArcServiceLauncher>();
   arc_voice_interaction_controller_client_ =
       std::make_unique<arc::VoiceInteractionControllerClient>();
+
+#ifdef ENABLE_CROS_ASSISTANT
+  assistant_service_launcher_ = std::make_unique<assistant::AssistantService>();
+#endif
 
   chromeos::ResourceReporter::GetInstance()->StartMonitoring(
       task_manager::TaskManagerInterface::GetTaskManager());
