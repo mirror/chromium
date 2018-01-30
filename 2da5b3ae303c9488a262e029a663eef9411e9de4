@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3c49fcb7_51dd4bf9",
+        "filename": "chrome/browser/android/shortcut_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-30T22:09:07Z",
+      "side": 1,
+      "message": "Yeah, the badge icon (if it exists) is used for notifications in WebAPKs.",
+      "parentUuid": "f38a5af6_b69f0df9",
+      "revId": "2da5b3ae303c9488a262e029a663eef9411e9de4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3b18b68_ee3ccd90",
         "filename": "chrome/browser/installable/pwa_ambient_badge_infobar_delegate_android.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-30T20:14:45Z",
       "side": 1,
       "message": "nit: Can you use std::make_unique instead of WrapUnique?",
+      "revId": "2da5b3ae303c9488a262e029a663eef9411e9de4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "918f15af_0d550ad7",
+        "filename": "chrome/browser/installable/pwa_ambient_badge_infobar_delegate_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-30T22:09:07Z",
+      "side": 1,
+      "message": "This doesn\u0027t work without making PwaAmbientBadgeInfoBarDelegateAndroid\u0027s constructor public (since std::make_unique needs to be able to call it). But you shouldn\u0027t be able to create one of these without adding it, hence keeping the constructor private and only exposing ::Create.\n\nI think the only way to do it without WrapUnique is wrapping the bare new in the std::unique_ptr constructor, which I\u0027m not sure is nicer.",
+      "parentUuid": "f3b18b68_ee3ccd90",
       "revId": "2da5b3ae303c9488a262e029a663eef9411e9de4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

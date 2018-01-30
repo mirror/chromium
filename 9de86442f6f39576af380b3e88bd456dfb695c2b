@@ -223,6 +223,30 @@
       "revId": "9de86442f6f39576af380b3e88bd456dfb695c2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c53bbd55_76d3f872",
+        "filename": "chrome/browser/installable/pwa_ambient_badge_manager_android.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-30T22:09:07Z",
+      "side": 1,
+      "message": "Ultimately, since this is now behind the experimental app banner flag, automatic banner prompting is off when the ambient badge is active, and vice-versa. This wouldn\u0027t launch until modal banners are implemented on Android as the two are inextricably tied together.\n\nHaving PwaAmbientBadgeManager on AppBannerManager right now is a little ugly because it\u0027s an Android-only class, so I\u0027ve put it on AppBannerManagerAndroid.",
+      "parentUuid": "f450dc1b_65a72c07",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 35
+      },
+      "revId": "9de86442f6f39576af380b3e88bd456dfb695c2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
