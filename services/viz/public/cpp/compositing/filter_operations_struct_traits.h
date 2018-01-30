@@ -14,18 +14,10 @@ template <>
 struct StructTraits<viz::mojom::FilterOperationsDataView,
                     cc::FilterOperations> {
   static const std::vector<cc::FilterOperation>& operations(
-      const cc::FilterOperations& operations) {
-    return operations.operations();
-  }
+      const cc::FilterOperations& operations);
 
   static bool Read(viz::mojom::FilterOperationsDataView data,
-                   cc::FilterOperations* out) {
-    std::vector<cc::FilterOperation> operations;
-    if (!data.ReadOperations(&operations))
-      return false;
-    *out = cc::FilterOperations(std::move(operations));
-    return true;
-  }
+                   cc::FilterOperations* out);
 };
 
 }  // namespace mojo
