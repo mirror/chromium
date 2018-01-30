@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a62aff3d_c4cee037",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 12429,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-01-30T16:24:18Z",
+      "side": 1,
+      "message": "just double checking - does this work for android as well? If not - please describe what platforms it works for.",
+      "revId": "d51a54bf92984cf1079a49d68cb604da9222c1c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
