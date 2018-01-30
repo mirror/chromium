@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "89956fd3_95fa69e3",
+        "filename": "chrome/test/vr/auto_bisect.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2018-01-30T22:14:11Z",
+      "side": 1,
+      "message": "The defaults for VR perf testing would be internal-only servers, so we probably don\u0027t want to have those. I can add some comments giving brief descriptions, though.\n\nI was also planning on writing up a short doc for VR perf sheriffing that could go into more specific details and provide the actual values you\u0027d generally want to use.",
+      "parentUuid": "3fabcfe8_7aa58f8e",
+      "range": {
+        "startLine": 60,
+        "startChar": 29,
+        "endLine": 60,
+        "endChar": 47
+      },
+      "revId": "b6e5a014ef23017b8adf70c0a7a857bf00cd4d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7bac012f_5fd095ba",
         "filename": "chrome/test/vr/auto_bisect.py",
         "patchSetId": 1
