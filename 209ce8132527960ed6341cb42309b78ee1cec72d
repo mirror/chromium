@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8ea0b4dc_de830cfe",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2018-01-30T06:26:30Z",
+      "side": 0,
+      "message": "I think all the clients consume geolocation via mojo now. \nAnd all non-mojo public interfaces are defined in GeolocationProvider.h, I search the whole project and found here is the last place to call the interface of GeolocationProvider directly. In patchset1 where I tried to move all those non-mojo interfaces to GeolocationProviderImpl and change them to non-public, everything works fine, which to some extent proves all usage of the geolocation is going through the Device Service.",
+      "parentUuid": "b838804d_09e38b71",
+      "range": {
+        "startLine": 506,
+        "startChar": 10,
+        "endLine": 506,
+        "endChar": 29
+      },
+      "revId": "209ce8132527960ed6341cb42309b78ee1cec72d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dde10833_c5fba4aa",
         "filename": "device/geolocation/geolocation_provider.h",
         "patchSetId": 4
