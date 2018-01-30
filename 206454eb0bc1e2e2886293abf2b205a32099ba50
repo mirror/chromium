@@ -70,6 +70,30 @@
       "revId": "206454eb0bc1e2e2886293abf2b205a32099ba50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9ce5ba0_93eaa7cd",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 6658,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-30T01:07:42Z",
+      "side": 0,
+      "message": "\u003e I am not sure to understand, so I here is what I am understanding:\n\u003e \n\u003e The behavior after this CL will be:\n\u003e CommitNavigation: Set the current state.\n\u003e DidCommitNavigation: Update the current state.\n\u003e \n\u003e What you would like to do is:\n\u003e CommitNavigation: Maybe reset/clear the state.\n\u003e DidCommitNavigation: Update the current state.\n\u003e \n\u003e Is it correct?\n\u003e \n\u003e How it works is still a bit unclear to me. If you want, after this CL, I can try to understand and clean all of this. I think it would be worth it.\n\u003e There are already a few layout test in http/tests/history/ with an incorrect behavior.\n\u003e For instance:\n\u003e https://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/http/tests/history/redirect-js-location-assign-2-seconds-expected.txt\n\nHmm, let\u0027s try to understand this a bit more, since I\u0027m concerned about potentially creating flaky tests.\n\nJochen added should_clear_history_list in https://codereview.chromium.org/14134003.  The intention was to reset session history for each layout test without using a new WebContents every time.  This meant that the renderer\u0027s notion of history length and offset must be reset when a navigation with this flag is seen.\n\nAlso, I was wrong about it not being used anymore-- it\u0027s still used in BlinkTestController::PrepareForLayoutTest.  That means we still need to support that case.\n\nThe code you\u0027re changing here is called during CommitNavigation.  It used to be the place where we reset the renderer\u0027s notion of history length/offset for the layout test case.  Apparently that no longer works in some cases?\n\nYou also refer to DidCommitNavigation as updating the current state.  I assume that means the code in RenderFrameImpl::UpdateNavigationHistory?  That code doesn\u0027t seem to take should_clear_history_list into account, so it wouldn\u0027t reset the length/offset in the cases above.\n\nAs a result, it sounds to me like we might be introducing a bug affecting layout tests, where sometimes they won\u0027t have the history length/offset reset between tests (i.e., exactly in the cases where you\u0027re seeing the failing CHECK).  That could manifest as (potentially flaky) failures involving back/forward, checking history.length, dumping the back/forward history, etc.\n\nIf that\u0027s not the case, can you let me know how the history length/offset is reset after your change and why layout tests are safe?  And can we reintroduce the check somewhere else, like at DidCommitNavigation time?",
+      "parentUuid": "4376885e_3fbf912d",
+      "range": {
+        "startLine": 6658,
+        "startChar": 3,
+        "endLine": 6658,
+        "endChar": 0
+      },
+      "revId": "206454eb0bc1e2e2886293abf2b205a32099ba50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "df6bc2a6_aba9c296",
+        "filename": "content/browser/browser_side_navigation_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 833,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-30T01:07:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5df1f0e0_61f1386b",
+      "revId": "6c8461d52a7fe9334dc6c1e254d61cb4a7b98287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ce773d5_82b5c19b",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 4
@@ -210,6 +228,24 @@
       "revId": "6c8461d52a7fe9334dc6c1e254d61cb4a7b98287",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0566f91c_4d82c608",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1249,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-30T01:07:42Z",
+      "side": 1,
+      "message": "\u003e There are 0 or 1 NavigationRequest per FrameTreeNode.\n\u003e We have an easy to get all the NavigationRequest (i.e. walk through the FrameTree)\n\u003e I don\u0027t think we want to proactively update every NavigationRequest though.\n\nThe motivation for that approach would be that it\u0027s pretty rare for this check to matter (i.e., that a new commit has arrived from the renderer in the meantime).  However, there\u0027s not much cost to it either (since it\u0027s not triggering an extra IPC), so I\u0027m fine with keeping it as is.",
+      "parentUuid": "91218946_afcd5371",
+      "revId": "6c8461d52a7fe9334dc6c1e254d61cb4a7b98287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -248,6 +284,30 @@
       "side": 1,
       "message": "I was thinking about the \"history.length\" javascript instruction, which is synchronous.\nAnyway, I will update the comment.",
       "parentUuid": "fad9ccd7_abb51662",
+      "range": {
+        "startLine": 299,
+        "startChar": 52,
+        "endLine": 299,
+        "endChar": 65
+      },
+      "revId": "6c8461d52a7fe9334dc6c1e254d61cb4a7b98287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff649a59_b0fd258c",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-30T01:07:42Z",
+      "side": 1,
+      "message": "\u003e I was thinking about the \"history.length\" javascript instruction, which is synchronous.\n\u003e Anyway, I will update the comment.\n\nOh, I didn\u0027t get that part.  Anyway, comment looks good now.",
+      "parentUuid": "3a05f9ac_fc245c05",
       "range": {
         "startLine": 299,
         "startChar": 52,
