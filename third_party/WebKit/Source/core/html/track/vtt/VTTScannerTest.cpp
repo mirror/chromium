@@ -240,45 +240,43 @@ TEST(VTTScannerTest, ExtractRestAsString) {
 void ScanDigits1(const String& input) {
   VTTScanner scanner(input);
   EXPECT_TRUE(scanner.Scan("foo"));
-  int number;
+
+  unsigned int number;
   EXPECT_EQ(scanner.ScanDigits(number), 0u);
-  EXPECT_EQ(number, 0);
+  EXPECT_EQ(number, 0u);
+
   EXPECT_TRUE(scanner.Scan(' '));
   EXPECT_EQ(scanner.ScanDigits(number), 3u);
   EXPECT_TRUE(scanner.Match(' '));
-  EXPECT_EQ(number, 123);
+  EXPECT_EQ(number, 123u);
 
   EXPECT_TRUE(scanner.Scan(' '));
   EXPECT_TRUE(scanner.Scan("bar"));
   EXPECT_TRUE(scanner.Scan(' '));
 
-  EXPECT_EQ(scanner.ScanDigits(number), 5u);
-  EXPECT_EQ(number, 45678);
+  EXPECT_EQ(scanner.ScanDigits(number), 10u);
+  EXPECT_EQ(number, 4294967295u);
 
   EXPECT_TRUE(scanner.IsAtEnd());
 }
 
 void ScanDigits2(const String& input) {
   VTTScanner scanner(input);
-  int number;
-  EXPECT_EQ(scanner.ScanDigits(number), 0u);
-  EXPECT_EQ(number, 0);
-  EXPECT_TRUE(scanner.Scan('-'));
+  unsigned int number;
   EXPECT_EQ(scanner.ScanDigits(number), 3u);
-  EXPECT_EQ(number, 654);
+  EXPECT_EQ(number, 654u);
 
   EXPECT_TRUE(scanner.Scan(' '));
-
-  EXPECT_EQ(scanner.ScanDigits(number), 19u);
-  EXPECT_EQ(number, std::numeric_limits<int>::max());
+  EXPECT_EQ(scanner.ScanDigits(number), 20u);
+  EXPECT_EQ(number, std::numeric_limits<unsigned int>::max());
 
   EXPECT_TRUE(scanner.IsAtEnd());
 }
 
 // Tests scanDigits().
 TEST(VTTScannerTest, ScanDigits) {
-  TEST_WITH(ScanDigits1, "foo 123 bar 45678");
-  TEST_WITH(ScanDigits2, "-654 1000000000000000000");
+  TEST_WITH(ScanDigits1, "foo 123 bar 4294967295");
+  TEST_WITH(ScanDigits2, "654 10000000000000000000");
 }
 
 void ScanDoubleValue(const String& input) {
