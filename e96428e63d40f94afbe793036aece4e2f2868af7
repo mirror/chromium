@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "3cad7d6f_bc30dd25",
+        "filename": "content/browser/download/download_file_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2018-01-30T22:13:15Z",
+      "side": 1,
+      "message": "Do we need to change the length of B to 0 or a further location that covers the range of C\nin that case? This means data downloaded by C is wasted, but probably that\u0027s better than an interrupted download.\n\nAlso I assume the error of C is socket error, not a invalid http response code. Invalid http response of C will work in this case.",
+      "parentUuid": "c88dc64e_5ee07e35",
+      "revId": "e96428e63d40f94afbe793036aece4e2f2868af7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e6851de_b2496a00",
         "filename": "content/browser/download/download_file_impl.h",
         "patchSetId": 5
