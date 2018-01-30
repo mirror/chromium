@@ -254,6 +254,8 @@ class SocketBindFunction : public SocketAsyncApiFunction {
   void AsyncWorkStart() override;
 
  private:
+  void OnCompleted(Socket* socket, int net_error);
+
   int socket_id_;
   std::string address_;
   uint16_t port_;
@@ -460,9 +462,11 @@ class SocketJoinGroupFunction : public SocketAsyncApiFunction {
 
   // AsyncApiFunction
   bool Prepare() override;
-  void Work() override;
+  void AsyncWorkStart() override;
 
  private:
+  void OnJoinGroupComplete(int result);
+
   std::unique_ptr<api::socket::JoinGroup::Params> params_;
 };
 
@@ -477,9 +481,11 @@ class SocketLeaveGroupFunction : public SocketAsyncApiFunction {
 
   // AsyncApiFunction
   bool Prepare() override;
-  void Work() override;
+  void AsyncWorkStart() override;
 
  private:
+  void OnLeaveGroupComplete(int result);
+
   std::unique_ptr<api::socket::LeaveGroup::Params> params_;
 };
 
