@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9106e7e_a5ec63f2",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-30T21:09:14Z",
+      "side": 1,
+      "message": "all these repeated stanzas make me think it would be nice if you turned the body into the body of a loop and iterated over some test case structs.",
+      "range": {
+        "startLine": 225,
+        "startChar": 2,
+        "endLine": 225,
+        "endChar": 3
+      },
+      "revId": "02e74016af4cdb69377baf192bc12756392c5f3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c89628cd_31fc4be3",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-30T21:09:14Z",
+      "side": 1,
+      "message": "nit: just base::string16()",
+      "range": {
+        "startLine": 256,
+        "startChar": 14,
+        "endLine": 256,
+        "endChar": 36
+      },
+      "revId": "02e74016af4cdb69377baf192bc12756392c5f3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eac956cb_f54c66a7",
+        "filename": "components/toolbar/toolbar_field_trial.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-30T21:09:14Z",
+      "side": 1,
+      "message": "nit: EvToSecure",
+      "range": {
+        "startLine": 25,
+        "startChar": 50,
+        "endLine": 25,
+        "endChar": 52
+      },
+      "revId": "02e74016af4cdb69377baf192bc12756392c5f3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
