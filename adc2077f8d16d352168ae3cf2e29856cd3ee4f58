@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09906bb6_65db84db",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-30T01:11:50Z",
+      "side": 1,
+      "message": "It honestly feels like you are reinventing a spinlock here. Although note that the conventional pattern for a spinlock is to first speculatively read in relaxed mode (i.e. NoBarrier_Load) and once the speculation succeeds acquire with load semantics (Acquire_Load)",
+      "range": {
+        "startLine": 274,
+        "startChar": 2,
+        "endLine": 275,
+        "endChar": 3
+      },
+      "revId": "adc2077f8d16d352168ae3cf2e29856cd3ee4f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de73a389_f2b97ef9",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-30T01:11:50Z",
+      "side": 1,
+      "message": "if this is NoBarrier it means that the .count() operation (or even part of it) can be reordered after g_operations_in_flight is reset to 0, hence concurrently with the samples_.insert() above.",
+      "range": {
+        "startLine": 290,
+        "startChar": 16,
+        "endLine": 290,
+        "endChar": 25
+      },
+      "revId": "adc2077f8d16d352168ae3cf2e29856cd3ee4f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bccaf916_5a42057a",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-30T01:11:50Z",
+      "side": 1,
+      "message": "out of curiosity did you measure that this actually gives a performance gain?\nYou have 3 atomic operations here, two of which are barriered, which sounds very close to the cost a mutex (the mutex cost really adds the PLT jumps to get into pthread_mutex_lock/unlock).",
+      "range": {
+        "startLine": 286,
+        "startChar": 2,
+        "endLine": 291,
+        "endChar": 20
+      },
+      "revId": "adc2077f8d16d352168ae3cf2e29856cd3ee4f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
