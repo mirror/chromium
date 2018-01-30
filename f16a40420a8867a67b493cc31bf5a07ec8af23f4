@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38fb790a_9674f5c5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-01-30T21:50:12Z",
+      "side": 1,
+      "message": "nit: you can set it to true here, so you don\u0027t need all the lines below that set it to true.",
+      "revId": "f16a40420a8867a67b493cc31bf5a07ec8af23f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
