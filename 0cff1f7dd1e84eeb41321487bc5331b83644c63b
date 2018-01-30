@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a790c75_8ec286d4",
+        "filename": "third_party/WebKit/LayoutTests/media/picture-in-picture/exit-picture-in-picture.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-30T15:25:00Z",
+      "side": 1,
+      "message": "That doesn\u0027t seem right. This should reject if there is no picture in picture element. Happy for you to do this in a follow-up though. My only concern is that this test would be broken so maybe do something like:\n```\nvideo.enterPictureInPictuer().then(() \u003d\u003e {\n  document.exitPictureInPicture();\n});\n```\n?",
+      "revId": "0cff1f7dd1e84eeb41321487bc5331b83644c63b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffc95aec_2051a182",
+        "filename": "third_party/WebKit/LayoutTests/media/picture-in-picture/picture-in-picture-element.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-30T15:25:00Z",
+      "side": 1,
+      "message": "style: leave an empty line above?",
+      "revId": "0cff1f7dd1e84eeb41321487bc5331b83644c63b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff0fdbb4_6fa248fb",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-30T15:25:00Z",
+      "side": 1,
+      "message": "This could be const :)",
+      "range": {
+        "startLine": 44,
+        "startChar": 20,
+        "endLine": 44,
+        "endChar": 43
+      },
+      "revId": "0cff1f7dd1e84eeb41321487bc5331b83644c63b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
