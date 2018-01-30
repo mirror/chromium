@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "54da3b31_ee477053",
+        "filename": "media/blink/multibuffer_data_source.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-30T07:36:41Z",
+      "side": 1,
+      "message": "With the caveat that I\u0027m a newcomer to this code, I think we might be OK. The tainting mechanism in Blink looks hinged upon blink::HTMLMediaElement::IsMediaDataCORSSameOrigin(). As long as that is called at an appropriate time, Blink should detect the most up-to-date cross origin status. With this patch we detect cross origin via:\n\n#1 0x7f1acaaf782d media::MultibufferDataSource::DidGetOpaqueResponseViaServiceWorker()\n#2 0x7f1ad179d632 blink::HTMLMediaElement::IsMediaDataCORSSameOrigin()\n#3 0x7f1ad17b0f70 blink::HTMLVideoElement::WouldTaintOrigin()\n#4 0x7f1ad16caacb blink::CanvasRenderingContext::WouldTaintOrigin()\n#5 0x7f1acf646fb3 blink::BaseRenderingContext2D::drawImage()\n#6 0x7f1acf64632e blink::BaseRenderingContext2D::drawImage()\n\nSo once canvas tries to read the data we\u0027d block it if an opaque response arrived by then.\n\nOne possible issue may be if the state for the current range didn\u0027t get propagated to MultibufferDataSource yet, because it\u0027s queuing up state or running on different threads?\n\nIf you have any ideas to make this not racy, would be good.",
+      "parentUuid": "ed90c69d_df928ce2",
+      "range": {
+        "startLine": 303,
+        "startChar": 8,
+        "endLine": 303,
+        "endChar": 30
+      },
+      "revId": "3ebf12f65276584fd507667459084caaeaa68de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d644ed2_217e68ae",
         "filename": "media/blink/url_index.cc",
         "patchSetId": 4
@@ -36,6 +60,24 @@
       "writtenOn": "2018-01-29T23:34:59Z",
       "side": 1,
       "message": "Can we have a test to check that receiving basic (cors and default) response after opaque response doesn\u0027t relax the restriction?",
+      "revId": "3ebf12f65276584fd507667459084caaeaa68de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ebbfe14_b57a0b50",
+        "filename": "media/blink/url_index.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-30T07:36:41Z",
+      "side": 1,
+      "message": "I\u0027ll add a unit test. I\u0027m not sure how to test multiple responses in an end-to-end WPT test.",
+      "parentUuid": "6d644ed2_217e68ae",
       "revId": "3ebf12f65276584fd507667459084caaeaa68de8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -56,6 +98,24 @@
       "revId": "3ebf12f65276584fd507667459084caaeaa68de8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dc7d299_3f79f517",
+        "filename": "media/blink/url_index.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-30T07:36:41Z",
+      "side": 1,
+      "message": "Yes I think you\u0027re right. We could just do a bool.",
+      "parentUuid": "89e9a283_d21296ea",
+      "revId": "3ebf12f65276584fd507667459084caaeaa68de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
