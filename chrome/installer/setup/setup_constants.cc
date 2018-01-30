@@ -19,6 +19,8 @@ const wchar_t kInstallSourceChromeDir[] = L"Chrome-bin";
 const wchar_t kMediaPlayerRegPath[] =
     L"Software\\Microsoft\\MediaPlayer\\ShimInclusionList";
 
+const wchar_t kNotificationHelperExe[] = L"notification_helper.exe";
+
 namespace switches {
 
 // Setting this will delay the operation of setup by the specified number of

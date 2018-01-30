@@ -37,6 +37,7 @@ void PersistentNotificationHandler::OnClick(
     const base::Optional<int>& action_index,
     const base::Optional<base::string16>& reply,
     base::OnceClosure completed_closure) {
+  ::MessageBoxW(NULL, L"PersistentNotificationHandler::OnClick", L"", MB_OK);
   DCHECK(origin.is_valid());
 
   PlatformNotificationServiceImpl::GetInstance()->OnPersistentNotificationClick(
