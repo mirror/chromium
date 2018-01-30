@@ -8,7 +8,6 @@
 #include "build/build_config.h"
 #include "cc/output/overlay_candidate.h"
 #include "cc/resources/resource_provider.h"
-#include "components/viz/common/resources/resource_fence.h"
 
 namespace viz {
 class SharedBitmapManager;
@@ -160,29 +159,6 @@ class CC_EXPORT DisplayResourceProvider : public ResourceProvider {
     DISALLOW_COPY_AND_ASSIGN(ScopedBatchReturnResources);
   };
 
-  class CC_EXPORT SynchronousFence : public viz::ResourceFence {
-   public:
-    explicit SynchronousFence(gpu::gles2::GLES2Interface* gl);
-
-    // viz::ResourceFence implementation.
-    void Set() override;
-    bool HasPassed() override;
-    void Wait() override;
-
-    // Returns true if fence has been set but not yet synchornized.
-    bool has_synchronized() const { return has_synchronized_; }
-
-   private:
-    ~SynchronousFence() override;
-
-    void Synchronize();
-
-    gpu::gles2::GLES2Interface* gl_;
-    bool has_synchronized_;
-
-    DISALLOW_COPY_AND_ASSIGN(SynchronousFence);
-  };
-
   // Sets the current read fence. If a resource is locked for read
   // and has read fences enabled, the resource will not allow writes
   // until this fence has passed.
@@ -234,7 +210,6 @@ class CC_EXPORT DisplayResourceProvider : public ResourceProvider {
   GLenum BindForSampling(viz::ResourceId resource_id,
                          GLenum unit,
                          GLenum filter);
-  bool ReadLockFenceHasPassed(const viz::internal::Resource* resource);
 #if defined(OS_ANDROID)
   void DeletePromotionHint(ResourceMap::iterator it, DeleteStyle style);
 #endif
