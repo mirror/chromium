@@ -31,7 +31,7 @@ bool ResourceMeetsSizeRequirements(const gfx::Size& requested_size,
                                    bool disallow_non_exact_reuse) {
   const float kReuseThreshold = 2.0f;
 
-  if (disallow_non_exact_reuse)
+  if (true || disallow_non_exact_reuse)
     return requested_size == actual_size;
 
   // Allocating new resources is expensive, and we'd like to re-use our

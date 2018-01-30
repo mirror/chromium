@@ -81,6 +81,7 @@ class ContextProviderCommandBuffer
   gpu::ContextResult BindToCurrentThread() override;
   gpu::gles2::GLES2Interface* ContextGL() override;
   gpu::raster::RasterInterface* RasterInterface() override;
+  void GL(gpu::gles2::GLES2Interface** gl) override;
   gpu::ContextSupport* ContextSupport() override;
   class GrContext* GrContext() override;
   viz::ContextCacheController* CacheController() override;

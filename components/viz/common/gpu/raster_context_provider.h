@@ -26,6 +26,9 @@ class Lock;
 namespace gpu {
 class ContextSupport;
 struct GpuFeatureInfo;
+namespace gles2 {
+class GLES2Interface;
+}
 
 namespace raster {
 class RasterInterface;
@@ -110,6 +113,7 @@ class VIZ_COMMON_EXPORT RasterContextProvider {
   // Get a Raster interface to the 3d context.  The context provider must have
   // been successfully bound to a thread before calling this.
   virtual gpu::raster::RasterInterface* RasterInterface() = 0;
+  virtual void GL(gpu::gles2::GLES2Interface** gl) {}
 
  protected:
   virtual ~RasterContextProvider() = default;
