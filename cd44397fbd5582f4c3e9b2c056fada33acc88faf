@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "340e48df_15cb51fa",
+        "filename": "ui/app_list/views/search_result_base_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-30T22:35:08Z",
+      "side": 1,
+      "message": "The compiler reports error when I replaced this with \u0027default\u0027.",
+      "parentUuid": "5dc3ffe7_b8506518",
+      "range": {
+        "startLine": 9,
+        "startChar": 60,
+        "endLine": 9,
+        "endChar": 62
+      },
+      "revId": "cd44397fbd5582f4c3e9b2c056fada33acc88faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db24a254_24e2268e",
         "filename": "ui/app_list/views/search_result_base_view.h",
         "patchSetId": 4
