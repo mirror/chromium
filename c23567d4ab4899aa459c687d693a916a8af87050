@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cd60a03_b9138f15",
+        "filename": "components/cbor/cbor_values.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-30T08:10:22Z",
+      "side": 1,
+      "message": "Please CHECK() if CBORValue object has correct type before accessing |bytestring_value|.",
+      "range": {
+        "startLine": 180,
+        "startChar": 2,
+        "endLine": 180,
+        "endChar": 49
+      },
+      "revId": "c23567d4ab4899aa459c687d693a916a8af87050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d3e4868_be1bed8a",
+        "filename": "components/cbor/cbor_values.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-30T08:10:22Z",
+      "side": 1,
+      "message": "nit: I think it would be more consistent to have this as a constructor instead of static method.\n\nJan, what do you think?",
+      "range": {
+        "startLine": 110,
+        "startChar": 10,
+        "endLine": 110,
+        "endChar": 55
+      },
+      "revId": "c23567d4ab4899aa459c687d693a916a8af87050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
