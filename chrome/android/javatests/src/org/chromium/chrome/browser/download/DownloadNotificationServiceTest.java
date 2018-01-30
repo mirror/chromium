@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.ServiceTestCase;
@@ -261,7 +262,7 @@ public class DownloadNotificationServiceTest
     @DisabledTest(message = "crbug.com/773346")
     public void testPausingWithOngoingDownloads() {
         setupService();
-        Context mockContext = new AdvancedMockContext(getSystemContext());
+        Context mockContext = new AdvancedMockContext(InstrumentationRegistry.getTargetContext());
         getService().setContext(mockContext);
         Set<String> notifications = new HashSet<>();
         notifications.add(buildEntryString(1, "test1", true, true));
@@ -295,7 +296,7 @@ public class DownloadNotificationServiceTest
     @DisabledTest(message = "crbug.com/773346")
     public void testAddingAndCancelingNotifications() {
         setupService();
-        Context mockContext = new AdvancedMockContext(getSystemContext());
+        Context mockContext = new AdvancedMockContext(InstrumentationRegistry.getTargetContext());
         getService().setContext(mockContext);
         Set<String> notifications = new HashSet<>();
         String guid1 = UUID.randomUUID().toString();
@@ -382,7 +383,7 @@ public class DownloadNotificationServiceTest
     @DisabledTest(message = "crbug.com/773346")
     public void testResumeAllPendingDownloads() throws Exception {
         setupService();
-        Context mockContext = new AdvancedMockContext(getSystemContext());
+        Context mockContext = new AdvancedMockContext(InstrumentationRegistry.getTargetContext());
         getService().setContext(mockContext);
         Set<String> notifications = new HashSet<>();
         String guid1 = UUID.randomUUID().toString();
@@ -402,8 +403,8 @@ public class DownloadNotificationServiceTest
         DownloadNotificationService service = bindNotificationService();
         DownloadManagerService.disableNetworkListenerForTest();
 
-        final MockDownloadManagerService manager =
-                new MockDownloadManagerService(getSystemContext().getApplicationContext());
+        final MockDownloadManagerService manager = new MockDownloadManagerService(
+                InstrumentationRegistry.getTargetContext().getApplicationContext());
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
@@ -431,7 +432,7 @@ public class DownloadNotificationServiceTest
     @DisabledTest(message = "crbug.com/773346")
     public void testIncognitoDownloadCanceledOnServiceShutdown() throws Exception {
         setupService();
-        Context mockContext = new AdvancedMockContext(getSystemContext());
+        Context mockContext = new AdvancedMockContext(InstrumentationRegistry.getTargetContext());
         getService().setContext(mockContext);
         Set<String> notifications = new HashSet<>();
         String uuid = UUID.randomUUID().toString();
