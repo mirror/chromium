@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04933fec_69fd40ac",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2018-01-30T15:46:04Z",
+      "side": 1,
+      "message": "IIUC while PlaybackImageProvider decodes the lazy decoded images for rasterization, it converts the images to the target color space upfront. If this is correct, using PlaybackImageProvider is expensive for canvas DrawImage, as we do not need/want early color conversion, especially if the image is sRGB and canvas is wide gamut (for which upfront color convetsion results in twice memory usage). The color conversion will be managed when drawing the image on the SkCanvas/SkSurface.",
+      "revId": "68819d877b389961b4f5499916e135fba9c17328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
