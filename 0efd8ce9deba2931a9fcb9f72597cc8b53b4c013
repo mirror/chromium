@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2c61b8fc_ddf5276a",
+        "filename": "chrome/browser/chromeos/printing/usb_printer_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2018-01-30T20:07:18Z",
+      "side": 1,
+      "message": "Yes please.",
+      "parentUuid": "5e2387f4_40913f72",
+      "range": {
+        "startLine": 126,
+        "startChar": 3,
+        "endLine": 130,
+        "endChar": 60
+      },
+      "revId": "0efd8ce9deba2931a9fcb9f72597cc8b53b4c013",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81e96241_6a05610f",
         "filename": "chromeos/printing/printer_configuration.h",
         "patchSetId": 5
