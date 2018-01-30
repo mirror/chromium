@@ -9,6 +9,7 @@
 #include "base/logging.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/trace_event/memory_usage_estimator.h"
 #include "base/values.h"
 
 TemplateURLData::TemplateURLData()
@@ -24,7 +25,13 @@ TemplateURLData::TemplateURLData()
       keyword_(base::ASCIIToUTF16("dummy")),
       url_("x") {}
 
-TemplateURLData::TemplateURLData(const TemplateURLData& other) = default;
+TemplateURLData::TemplateURLData(const TemplateURLData&) = default;
+TemplateURLData::TemplateURLData(TemplateURLData&&) = default;
+auto TemplateURLData::operator=(const TemplateURLData&)
+    -> TemplateURLData& = default;
+auto TemplateURLData::operator=(TemplateURLData &&)
+    -> TemplateURLData& = default;
+TemplateURLData::~TemplateURLData() = default;
 
 TemplateURLData::TemplateURLData(const base::string16& name,
                                  const base::string16& keyword,
@@ -72,9 +79,6 @@ TemplateURLData::TemplateURLData(const base::string16& name,
   }
 }
 
-TemplateURLData::~TemplateURLData() {
-}
-
 void TemplateURLData::SetShortName(const base::string16& short_name) {
   // Remove tabs, carriage returns, and the like, as they can corrupt
   // how the short name is displayed.
@@ -92,4 +96,28 @@ void TemplateURLData::SetKeyword(const base::string16& keyword) {
 void TemplateURLData::SetURL(const std::string& url) {
   DCHECK(!url.empty());
   url_ = url;
+}
+
+size_t TemplateURLData::EstimateMemoryUsage() const {
+  size_t res = 0;
+
+  res += base::trace_event::EstimateMemoryUsage(suggestions_url);
+  res += base::trace_event::EstimateMemoryUsage(image_url);
+  res += base::trace_event::EstimateMemoryUsage(new_tab_url);
+  res += base::trace_event::EstimateMemoryUsage(contextual_search_url);
+  res += base::trace_event::EstimateMemoryUsage(logo_url);
+  res += base::trace_event::EstimateMemoryUsage(doodle_url);
+  res += base::trace_event::EstimateMemoryUsage(search_url_post_params);
+  res += base::trace_event::EstimateMemoryUsage(suggestions_url_post_params);
+  res += base::trace_event::EstimateMemoryUsage(image_url_post_params);
+  res += base::trace_event::EstimateMemoryUsage(favicon_url);
+  res += base::trace_event::EstimateMemoryUsage(originating_url);
+  res += base::trace_event::EstimateMemoryUsage(input_encodings);
+  res += base::trace_event::EstimateMemoryUsage(sync_guid);
+  res += base::trace_event::EstimateMemoryUsage(alternate_urls);
+  res += base::trace_event::EstimateMemoryUsage(short_name_);
+  res += base::trace_event::EstimateMemoryUsage(keyword_);
+  res += base::trace_event::EstimateMemoryUsage(url_);
+
+  return res;
 }

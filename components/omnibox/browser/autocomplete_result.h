@@ -115,6 +115,8 @@ class AutocompleteResult {
   // Prepend missing tail suggestion prefixes in results, if present.
   void InlineTailPrefixes();
 
+  size_t EstimateMemoryUsage() const;
+
  private:
   friend class AutocompleteProviderTest;
 

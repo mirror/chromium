@@ -19,6 +19,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "base/time/time.h"
+#include "base/trace_event/memory_usage_estimator.h"
 #include "base/trace_event/trace_event.h"
 #include "components/bookmarks/browser/bookmark_utils.h"
 #include "components/history/core/browser/history_backend.h"
@@ -444,6 +445,18 @@ HistoryURLProviderParams::HistoryURLProviderParams(
 HistoryURLProviderParams::~HistoryURLProviderParams() {
 }
 
+size_t HistoryURLProviderParams::EstimateMemoryUsage() const {
+  size_t res = 0;
+
+  res += base::trace_event::EstimateMemoryUsage(input);
+  res += base::trace_event::EstimateMemoryUsage(what_you_typed_match);
+  res += base::trace_event::EstimateMemoryUsage(matches);
+  res += base::trace_event::EstimateMemoryUsage(default_search_provider);
+  // search_terms_data seems too small.
+
+  return res;
+}
+
 HistoryURLProvider::HistoryURLProvider(AutocompleteProviderClient* client,
                                        AutocompleteProviderListener* listener)
     : HistoryProvider(AutocompleteProvider::TYPE_HISTORY_URL, client),
@@ -558,6 +571,16 @@ void HistoryURLProvider::Stop(bool clear_cached_results,
 
   if (params_)
     params_->cancel_flag.Set();
+}
+
+size_t HistoryURLProvider::EstimateMemoryUsage() const {
+  size_t res = HistoryProvider::EstimateMemoryUsage();
+
+  if (params_)
+    res += base::trace_event::EstimateMemoryUsage(*params_);
+  res += base::trace_event::EstimateMemoryUsage(scoring_params_);
+
+  return res;
 }
 
 AutocompleteMatch HistoryURLProvider::SuggestExactInput(

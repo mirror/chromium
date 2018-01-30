@@ -227,6 +227,12 @@ class AutocompleteProvider
   // culling.
   static const size_t kMaxMatches;
 
+  // Estimates dynamic memory usage.
+  // See base/trace_event/memory_usage_estimator.h for more info.
+  //
+  // Note: subclasses should invoke the base class.
+  virtual size_t EstimateMemoryUsage() const;
+
  protected:
   friend class base::RefCountedThreadSafe<AutocompleteProvider>;
   FRIEND_TEST_ALL_PREFIXES(BookmarkProviderTest, InlineAutocompletion);

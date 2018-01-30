@@ -22,7 +22,12 @@ class ListValue;
 // whatever fields are desired, then create an immutable TemplateURL from it.
 struct TemplateURLData {
   TemplateURLData();
-  TemplateURLData(const TemplateURLData& other);
+  TemplateURLData(const TemplateURLData&);
+  TemplateURLData(TemplateURLData&&);
+  TemplateURLData& operator=(const TemplateURLData&);
+  TemplateURLData& operator=(TemplateURLData&&);
+  ~TemplateURLData();
+
   // Creates a TemplateURLData suitable for prepopulated engines.
   // Note that unlike in the default constructor, |safe_for_autoreplace| will
   // be set to true. date_created and last_modified will be set to null time
@@ -46,8 +51,6 @@ struct TemplateURLData {
                   const base::ListValue& alternate_urls_list,
                   int prepopulate_id);
 
-  ~TemplateURLData();
-
   // A short description of the template. This is the name we show to the user
   // in various places that use TemplateURLs. For example, the location bar
   // shows this when the user selects a substituting match.
@@ -62,6 +65,10 @@ struct TemplateURLData {
   // it requires substitutions first).  This must be non-empty.
   void SetURL(const std::string& url);
   const std::string& url() const { return url_; }
+
+  // Estimates dynamic memory usage.
+  // See base/trace_event/memory_usage_estimator.h for more info.
+  size_t EstimateMemoryUsage() const;
 
   // Optional additional raw URLs.
   std::string suggestions_url;
