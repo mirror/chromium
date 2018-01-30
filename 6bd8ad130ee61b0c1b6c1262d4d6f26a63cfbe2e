@@ -87,6 +87,24 @@
       "revId": "6bd8ad130ee61b0c1b6c1262d4d6f26a63cfbe2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "264934fe_914e104e",
+        "filename": "device/bluetooth/bluez/bluetooth_adapter_bluez.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2018-01-30T22:15:03Z",
+      "side": 1,
+      "message": "Ah, so this is just a prototype for Qiyu to work alongside the bluez part. Got it.",
+      "parentUuid": "22b7e34b_6cb51bf1",
+      "revId": "6bd8ad130ee61b0c1b6c1262d4d6f26a63cfbe2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
