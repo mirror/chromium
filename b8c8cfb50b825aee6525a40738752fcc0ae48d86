@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be32e3eb_2fc4fd06",
+        "filename": "third_party/WebKit/Source/core/css/RuleSet.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2018-01-30T09:37:30Z",
+      "side": 1,
+      "message": "Perhaps we should limit :matches expansion to 8192 instead of 10000.",
+      "revId": "b8c8cfb50b825aee6525a40738752fcc0ae48d86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
