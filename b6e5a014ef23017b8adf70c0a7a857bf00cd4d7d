@@ -117,6 +117,30 @@
       "revId": "b6e5a014ef23017b8adf70c0a7a857bf00cd4d7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bd366a5_e20e5e43",
+        "filename": "chrome/test/vr/auto_bisect.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-30T21:50:11Z",
+      "side": 1,
+      "message": "gclient sync src@... seems to work too.",
+      "parentUuid": "553bc354_67942a97",
+      "range": {
+        "startLine": 280,
+        "startChar": 2,
+        "endLine": 280,
+        "endChar": 73
+      },
+      "revId": "b6e5a014ef23017b8adf70c0a7a857bf00cd4d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
