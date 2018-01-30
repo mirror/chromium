@@ -22,6 +22,30 @@
       "revId": "8ae7f12487144f52b88846e8613515bc08aa2b1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "766589b0_d113ffc1",
+        "filename": "chrome/browser/extensions/lazy_background_page_apitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-30T00:17:22Z",
+      "side": 1,
+      "message": "Heh sounds like it\u0027s lucky we didn\u0027t regress here.  Thanks for catching and updating this!",
+      "parentUuid": "58411d5b_31e401c1",
+      "range": {
+        "startLine": 624,
+        "startChar": 2,
+        "endLine": 624,
+        "endChar": 27
+      },
+      "revId": "8ae7f12487144f52b88846e8613515bc08aa2b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
