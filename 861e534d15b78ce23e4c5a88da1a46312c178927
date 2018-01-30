@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "516a171b_3d1d49d3",
+        "filename": "chrome/tools/build/win/FILES.cfg",
+        "patchSetId": 50
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-30T23:19:09Z",
+      "side": 1,
+      "message": "Done. Included.",
+      "parentUuid": "1ebaae4d_38a273af",
+      "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c848ca8_ceca948e",
         "filename": "notification_helper/com_server_module.cc",
         "patchSetId": 50
@@ -71,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ab83b5bc_ab17ea93",
+        "filename": "notification_helper/com_server_module.h",
+        "patchSetId": 50
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-30T23:19:09Z",
+      "side": 1,
+      "message": "Done. I think it\u0027s a good idea to add a namespace for protection purpose.",
+      "parentUuid": "035f3ddc_550bb340",
+      "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ff0f304_e87fddc7",
         "filename": "notification_helper/com_server_module.h",
         "patchSetId": 50
@@ -88,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "76e5c2f0_7bb6d714",
+        "filename": "notification_helper/com_server_module.h",
+        "patchSetId": 50
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-30T23:19:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ff0f304_e87fddc7",
+      "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea0201ef_42902fd7",
         "filename": "notification_helper/notification_activator.cc",
         "patchSetId": 50
@@ -99,6 +153,24 @@
       "writtenOn": "2018-01-30T20:25:26Z",
       "side": 1,
       "message": "This is quite different from the data we\u0027d get from the activation handlers. Is there an opportunity to remove those when we fully support the helper?\n\nSpecifically, I\u0027d be interested to know what sort of data we get for button clicks, inline reply, the right-click context menu, etcetera. I suppose those would be included in |data|?",
+      "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73702f82_57eaf502",
+        "filename": "notification_helper/notification_activator.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-30T23:19:09Z",
+      "side": 1,
+      "message": "As for invoked_args, I would say it should be consistent with what will get from the activation handler, i.e., OnActivated(). The comment here and this Activate method will be upgraded in the following CLs when we support launching Chrome using command line here.\n\nFor the data from button clicks etc, I have not looked into yet. I would assume it should be in |data|. There are no other args to pass it via Activate() here.",
+      "parentUuid": "ea0201ef_42902fd7",
       "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -122,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "bfbf9c20_fa27e1ba",
+        "filename": "notification_helper/notification_activator.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-30T23:19:09Z",
+      "side": 1,
+      "message": "First, the comment I added here is sort of temporary. I wanted to share this information with the reviewers as the meaning of these args were not clear to them. \n\nWhen the browser instance which pushes out the notification is still on, we don\u0027t need to pass anything within this Activate method. By returning S_OK, the activation handler in Chrome will be invoked by Windows automatically with the same data. It\u0027s Windows/COM that talks to the two processes.\n\nWhen the browser instance is off (or even the profile changes), we do need to launch Chrome if we\u0027d like to process the information. Since the toast is profile specific, we may need to parse invoked_args here to get the profile information (profile  id + incognito), and append it to the command line to launch Chrome.\n\nIf we do need to do the parsing here, we definitely should come up with a better solution to avoid future misalignment. This should be addressed in the following CLs anyway.",
+      "parentUuid": "c26edcc4_e4fa24f5",
+      "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3989e76_edf0df4b",
         "filename": "notification_helper/notification_activator.h",
         "patchSetId": 50
@@ -136,6 +226,24 @@
       "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9a7b182_b9dd3502",
+        "filename": "notification_helper/notification_activator.h",
+        "patchSetId": 50
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-30T23:19:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3989e76_edf0df4b",
+      "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "888be8c8_aa1b753a",
+        "filename": "notification_helper/notification_helper.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-30T23:19:09Z",
+      "side": 1,
+      "message": "This is needed for base::CommandLine::ForCurrentProcess() below. Do I misunderstand something?",
+      "parentUuid": "8ccd7347_8414ae29",
+      "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9bcb911b_081be131",
         "filename": "notification_helper/notification_helper.cc",
         "patchSetId": 50
@@ -167,6 +293,24 @@
       "writtenOn": "2018-01-30T20:25:26Z",
       "side": 1,
       "message": "The comment for this process type says:\n\n\u003e\u003e We bundle the handler into chrome.exe on Windows because there is\n\u003e\u003e high probability of a \"new\" .exe being blocked or interfered with by\n\u003e\u003e application firewalls, AV software, etc.\n\nIs this something we should be concerned about? Can we track it?",
+      "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b50af38_629f315a",
+        "filename": "notification_helper/notification_helper.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-30T23:19:09Z",
+      "side": 1,
+      "message": "I will start a discussion in the design doc, and loop in the experts.",
+      "parentUuid": "9bcb911b_081be131",
       "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
