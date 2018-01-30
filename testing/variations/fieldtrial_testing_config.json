@@ -2289,10 +2289,15 @@
             ],
             "experiments": [
                 {
-                    "name": "HideSuggestionUrlSchemeAndTrivialSubdomains",
+                    "name": "UIExperiments",
+                    "params": {
+                        "UIVerticalMargin": "8"
+                    },
                     "enable_features": [
                         "OmniboxUIExperimentHideSuggestionUrlScheme",
-                        "OmniboxUIExperimentHideSuggestionUrlTrivialSubdomains"
+                        "OmniboxUIExperimentHideSuggestionUrlTrivialSubdomains",
+                        "OmniboxUIExperimentSwapTitleAndUrl",
+                        "OmniboxUIExperimentVerticalMargin"
                     ]
                 }
             ]
