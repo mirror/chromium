@@ -46,6 +46,30 @@
       "revId": "6da784dccf6e72993768c0c72cdd285f46a5aecc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a96c616_990199f3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/share/ShareHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-30T23:03:32Z",
+      "side": 1,
+      "message": "I looked through the bug and I don\u0027t see why we can\u0027t leave the subject off.  Did you test it and verify that it doesn\u0027t break anything?\n\nLooking at https://developer.android.com/training/sharing/send.html#send-text-content, it looks to me that EXTRA_TEXT is all that is really required, so sending this seems odd.\n\nIn particular, there is nothing to say that apps wouldn\u0027t blindly look at the presence of EXTRA_SUBJECT and not that it isn\u0027t empty.  And app could say \"SUBJECT - TEXT\" if both are present.  That could result in \"\u0027\u0027 - TEXT\" if we\u0027re passing \"\".\n\nIf you can verify that the apps you tested don\u0027t break with passing no subject at all, I would prefer that approach as it\u0027s harder to reason about here.",
+      "parentUuid": "a8d53608_30c32a10",
+      "range": {
+        "startLine": 628,
+        "startChar": 39,
+        "endLine": 628,
+        "endChar": 52
+      },
+      "revId": "6da784dccf6e72993768c0c72cdd285f46a5aecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
