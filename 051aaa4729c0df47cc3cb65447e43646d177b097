@@ -22,6 +22,30 @@
       "revId": "051aaa4729c0df47cc3cb65447e43646d177b097",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37679518_de799080",
+        "filename": "chrome/android/java/res/layout/tabular_context_menu_page.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2018-01-30T22:50:05Z",
+      "side": 1,
+      "message": "I believe this solution would only work when the image has a text. The issue here is that some icons don\u0027t have any text like the image in the original bug report. The space and header text should not be shown together.\nWith text, a 10 dp space below the text with the text + margin on top would place the image in the center vertically. \nWithout text, only the space is shown, and adding a 10 dp space would make the image off-centered vertically (30 dp on top vs 10 dp on bottom).\n\nWhat are your thoughts?\n\nI added a 30 dp space for now.",
+      "parentUuid": "b26467dc_e2944076",
+      "range": {
+        "startLine": 36,
+        "startChar": 9,
+        "endLine": 36,
+        "endChar": 17
+      },
+      "revId": "051aaa4729c0df47cc3cb65447e43646d177b097",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
