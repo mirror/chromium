@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0219b678_d78bc754",
+        "filename": "chrome/test/chromedriver/test/run_py_tests.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2018-01-30T20:00:42Z",
+      "side": 1,
+      "message": "Just noticed ChromeDriverTest.testAlertHandlingOnPageUnload failed on build 33570. Let\u0027s disable that one as well.",
+      "range": {
+        "startLine": 96,
+        "startChar": 22,
+        "endLine": 96,
+        "endChar": 44
+      },
+      "revId": "921a87c5a1d58f68627b95b60f013566d572a567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
