@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7f32477f_caab5a85",
+        "filename": "components/gcm_driver/gcm_client_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-30T19:05:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1416538f_2d18eed9",
+      "revId": "d042f0a9c969174ddfbc4ec72d9b39ab8023f183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ba35522_e1d10c09",
         "filename": "components/gcm_driver/gcm_client_impl_unittest.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "d042f0a9c969174ddfbc4ec72d9b39ab8023f183",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dface0a_01cb1952",
+        "filename": "components/gcm_driver/gcm_client_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-30T19:05:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ba35522_e1d10c09",
+      "revId": "d042f0a9c969174ddfbc4ec72d9b39ab8023f183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5e5a075f_8200f060",
+        "filename": "components/gcm_driver/gcm_client_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-30T19:05:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7051aad_05dc7794",
+      "revId": "d042f0a9c969174ddfbc4ec72d9b39ab8023f183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbec3b7c_ad1e875a",
         "filename": "components/gcm_driver/gcm_client_impl_unittest.cc",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "d042f0a9c969174ddfbc4ec72d9b39ab8023f183",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "591a970d_c3953754",
+        "filename": "components/gcm_driver/gcm_client_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-30T19:05:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbec3b7c_ad1e875a",
+      "revId": "d042f0a9c969174ddfbc4ec72d9b39ab8023f183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "6f43432e_3fd355e9",
+        "filename": "components/gcm_driver/gcm_client_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-30T19:05:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2356caa0_e1dcb89b",
+      "revId": "d042f0a9c969174ddfbc4ec72d9b39ab8023f183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2f09cc5_c7ade655",
         "filename": "components/gcm_driver/gcm_client_impl_unittest.cc",
         "patchSetId": 8
@@ -101,6 +191,24 @@
       "revId": "d042f0a9c969174ddfbc4ec72d9b39ab8023f183",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14f1f438_4b7de9fc",
+        "filename": "components/gcm_driver/gcm_client_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-30T19:05:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2f09cc5_c7ade655",
+      "revId": "d042f0a9c969174ddfbc4ec72d9b39ab8023f183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "49d9b8f3_2eb71e63",
+        "filename": "components/gcm_driver/registration_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-30T19:05:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0eef54c0_3d8a1551",
+      "revId": "d042f0a9c969174ddfbc4ec72d9b39ab8023f183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "771b8abf_4072e0b7",
         "filename": "components/gcm_driver/registration_info.cc",
         "patchSetId": 8
@@ -135,6 +261,24 @@
       "revId": "d042f0a9c969174ddfbc4ec72d9b39ab8023f183",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2fe9ead_9f80b122",
+        "filename": "components/gcm_driver/registration_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-30T19:05:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "771b8abf_4072e0b7",
+      "revId": "d042f0a9c969174ddfbc4ec72d9b39ab8023f183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "23e6f9a9_949ebd34",
+        "filename": "components/gcm_driver/registration_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-30T19:05:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "245e1813_bba7e245",
+      "revId": "d042f0a9c969174ddfbc4ec72d9b39ab8023f183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "765af76c_46eec0c3",
         "filename": "components/gcm_driver/registration_info.cc",
         "patchSetId": 8
@@ -166,6 +328,24 @@
       "writtenOn": "2018-01-30T15:01:16Z",
       "side": 1,
       "message": "To raise a question: what should |last_validated| default to if it doesn\u0027t have a value?",
+      "revId": "d042f0a9c969174ddfbc4ec72d9b39ab8023f183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e21ad386_71095e5d",
+        "filename": "components/gcm_driver/registration_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-30T19:05:17Z",
+      "side": 1,
+      "message": "It\u0027s the equivalent of an empty string -- uninitialized Time. You can check if time is uninitialized by using the is_null() method:\nhttps://cs.chromium.org/chromium/src/base/time/time.h?rcl\u003d7b49ae6dc5b0b69097467760b1042273c0ae0587\u0026l\u003d347",
+      "parentUuid": "765af76c_46eec0c3",
       "revId": "d042f0a9c969174ddfbc4ec72d9b39ab8023f183",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "3071e57a_b95e9424",
+        "filename": "components/gcm_driver/registration_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-30T19:05:17Z",
+      "side": 1,
+      "message": "yeah, that was mainly for my testing, will do.",
+      "parentUuid": "dc11a00e_b787b736",
+      "revId": "d042f0a9c969174ddfbc4ec72d9b39ab8023f183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e04f828_dfbbcbd9",
         "filename": "components/gcm_driver/registration_info.cc",
         "patchSetId": 8
@@ -203,6 +401,24 @@
       "revId": "d042f0a9c969174ddfbc4ec72d9b39ab8023f183",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e1ce8dc_a85268e7",
+        "filename": "components/gcm_driver/registration_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1259103
+      },
+      "writtenOn": "2018-01-30T19:05:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e04f828_dfbbcbd9",
+      "revId": "d042f0a9c969174ddfbc4ec72d9b39ab8023f183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
