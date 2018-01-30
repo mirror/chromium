@@ -271,6 +271,12 @@ bool ResourceLoader::WillFollowRedirect(
         resource_type, *new_request, new_url, options, reporting_policy,
         FetchParameters::kUseDefaultOriginRestrictionForType,
         ResourceRequest::RedirectStatus::kFollowedRedirect);
+
+    if (Context().GetIsAdForLastCheckedResource(
+            new_url, new_request->GetRequestContext())) {
+      new_request->SetIsAdResource(true);
+    }
+
     if (blocked_reason != ResourceRequestBlockedReason::kNone) {
       CancelForRedirectAccessCheckError(new_url, blocked_reason);
       return false;

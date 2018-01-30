@@ -273,6 +273,12 @@ class PLATFORM_EXPORT FetchContext
     return priority;
   }
 
+  virtual bool GetIsAdForLastCheckedResource(
+      const KURL& resource_url,
+      WebURLRequest::RequestContext request_context) const {
+    return false;
+  }
+
  protected:
   FetchContext();
 
