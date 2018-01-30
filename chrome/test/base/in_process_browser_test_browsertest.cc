@@ -126,28 +126,4 @@ class InProcessAccessibilityBrowserTest : public InProcessBrowserTest {
   }
 };
 
-// Test that an accessible page doesn't fail the accessibility audit.
-IN_PROC_BROWSER_TEST_F(
-    InProcessAccessibilityBrowserTest, DISABLED_VerifyAccessibilityPass) {
-  ASSERT_TRUE(NavigateToURL(kPassHTML));
-
-  std::string test_result;
-  EXPECT_TRUE(RunAccessibilityChecks(&test_result));
-
-  // No error message on success.
-  EXPECT_EQ("", test_result);
-}
-
-// Test that a page that is not accessible will fail the accessibility audit.
-IN_PROC_BROWSER_TEST_F(
-    InProcessAccessibilityBrowserTest, VerifyAccessibilityFail) {
-  ASSERT_TRUE(NavigateToURL(kFailHTML));
-
-  std::string test_result;
-  EXPECT_FALSE(RunAccessibilityChecks(&test_result));
-
-  // Error should NOT be empty on failure.
-  EXPECT_NE("", test_result);
-}
-
 }  // namespace
