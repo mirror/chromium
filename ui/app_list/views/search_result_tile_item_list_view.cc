@@ -101,14 +101,10 @@ views::View* SearchResultTileItemListView::GetSelectedView() const {
                                                  : nullptr;
 }
 
-views::View* SearchResultTileItemListView::GetFirstResultView() {
+SearchResultBaseView* SearchResultTileItemListView::GetFirstResultView() {
   DCHECK(!tile_views_.empty());
   return num_results() <= 0 ? nullptr : tile_views_[0];
 }
-
-// TODO(warx): This implementation is deprecated and should be removed as part
-// of removing "pseudo-focus" logic work (https://crbug.com/766807).
-void SearchResultTileItemListView::SetFirstResultSelected(bool selected) {}
 
 int SearchResultTileItemListView::DoUpdate() {
   std::vector<SearchResult*> display_results =

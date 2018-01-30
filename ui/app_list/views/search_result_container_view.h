@@ -16,6 +16,8 @@
 
 namespace app_list {
 
+class SearchResultBaseView;
+
 // SearchResultContainerView is a base class for views that contain multiple
 // search results. SearchPageView holds these in a list and manages which one is
 // selected. There can be one result within one SearchResultContainerView
@@ -91,10 +93,7 @@ class APP_LIST_EXPORT SearchResultContainerView : public views::View,
 
   // Returns the first result in the container view. Returns NULL if it does not
   // exist.
-  virtual views::View* GetFirstResultView() = 0;
-
-  // Sets the first result in this container view selected/unselected.
-  virtual void SetFirstResultSelected(bool selected) = 0;
+  virtual SearchResultBaseView* GetFirstResultView() = 0;
 
  private:
   // Schedules an Update call using |update_factory_|. Do nothing if there is a
