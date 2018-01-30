@@ -465,6 +465,7 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
   std::vector<ChromeContentBrowserClientParts*> extra_parts_;
 
   service_manager::BinderRegistry gpu_binder_registry_;
+  service_manager::BinderRegistry renderer_binder_registry_;
 
   scoped_refptr<safe_browsing::SafeBrowsingService> safe_browsing_service_;
   scoped_refptr<safe_browsing::UrlCheckerDelegate>
