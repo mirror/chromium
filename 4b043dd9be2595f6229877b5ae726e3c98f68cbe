@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb6063b5_0a826532",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-30T15:04:49Z",
+      "side": 1,
+      "message": "optional nit: The name of the method can be parsed in multiple ways, in particular: the bubble for cancelling should pop up. What about calling this ClearPopUpFlagForBubble or similar?",
+      "range": {
+        "startLine": 203,
+        "startChar": 7,
+        "endLine": 203,
+        "endChar": 30
+      },
+      "revId": "4b043dd9be2595f6229877b5ae726e3c98f68cbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
