@@ -176,6 +176,12 @@ class ContentSubresourceFilterThrottleManagerTest
     render_process_host->sink().ClearMessages();
   }
 
+  void ExpectFrameTaggedAsAd(content::RenderFrameHost* rfh,
+                             bool expect_ad_frame) {
+    EXPECT_EQ(expect_ad_frame,
+              throttle_manager_->IsFrameTaggedAsAdForTesting(rfh));
+  }
+
   // Helper methods:
 
   void CreateTestNavigation(const GURL& url,
@@ -743,6 +749,68 @@ TEST_P(ContentSubresourceFilterThrottleManagerTest,
   // but adding it here since we do tag even if its not a dryrun scenario.
   ExpectActivationSignalForFrame(subframe, false /* expect_activation */,
                                  true /* is_ad_subframe */);
+}
+
+TEST_P(ContentSubresourceFilterThrottleManagerTest,
+       DryRun_FrameTaggingAsAdPropagatesToChildFrame) {
+  // Commit a navigation that triggers page level activation.
+  NavigateAndCommitMainFrame(GURL(kTestURLWithDryRun));
+  ExpectActivationSignalForFrame(main_rfh(), true /* expect_activation */);
+
+  // A disallowed subframe navigation should not be filtered in dry-run mode.
+  CreateSubframeWithTestNavigation(
+      GURL("https://www.example.com/disallowed.html"), main_rfh());
+  SimulateStartAndExpectResult(content::NavigationThrottle::PROCEED);
+  content::RenderFrameHost* child =
+      SimulateCommitAndExpectResult(content::NavigationThrottle::PROCEED);
+  // But it should still be activated.
+  ExpectActivationSignalForFrame(child, true /* expect_activation */,
+                                 true /* is_ad_subframe */);
+  ExpectFrameTaggedAsAd(child, true /* expect_ad_frame */);
+
+  // Creat a subframe which is allowed as per ruleset but should still be tagged
+  // as ad because of its parent.
+  CreateSubframeWithTestNavigation(
+      GURL("https://www.example.com/allowed_by_ruleset.html"), child);
+  SimulateStartAndExpectResult(content::NavigationThrottle::PROCEED);
+  content::RenderFrameHost* child1 =
+      SimulateCommitAndExpectResult(content::NavigationThrottle::PROCEED);
+  ExpectActivationSignalForFrame(child1, true /* expect_activation */,
+                                 true /* is_ad_subframe */);
+  ExpectFrameTaggedAsAd(child1, true /* expect_ad_frame */);
+
+  EXPECT_EQ(0, disallowed_notification_count());
+}
+
+TEST_P(ContentSubresourceFilterThrottleManagerTest,
+       DryRun_AllowedFrameDoesNotImpactChildFrameTaggingAsAd) {
+  // Commit a navigation that triggers page level activation.
+  NavigateAndCommitMainFrame(GURL(kTestURLWithDryRun));
+  ExpectActivationSignalForFrame(main_rfh(), true /* expect_activation */);
+
+  // A disallowed subframe navigation should not be filtered in dry-run mode.
+  CreateSubframeWithTestNavigation(GURL("https://www.example.com/allowed.html"),
+                                   main_rfh());
+  SimulateStartAndExpectResult(content::NavigationThrottle::PROCEED);
+  content::RenderFrameHost* child =
+      SimulateCommitAndExpectResult(content::NavigationThrottle::PROCEED);
+  // But it should still be activated.
+  ExpectActivationSignalForFrame(child, true /* expect_activation */,
+                                 false /* is_ad_subframe */);
+  ExpectFrameTaggedAsAd(child, false /* expect_ad_frame */);
+
+  // Creat a subframe which is allowed as per ruleset but should still be tagged
+  // as ad because of its parent.
+  CreateSubframeWithTestNavigation(GURL("https://www.example.com/allowed.html"),
+                                   child);
+  SimulateStartAndExpectResult(content::NavigationThrottle::PROCEED);
+  content::RenderFrameHost* child1 =
+      SimulateCommitAndExpectResult(content::NavigationThrottle::PROCEED);
+  ExpectActivationSignalForFrame(child1, true /* expect_activation */,
+                                 false /* is_ad_subframe */);
+  ExpectFrameTaggedAsAd(child1, false /* expect_ad_frame */);
+
+  EXPECT_EQ(0, disallowed_notification_count());
 }
 
 // TODO(csharrison): Make sure the following conditions are exercised in tests:
