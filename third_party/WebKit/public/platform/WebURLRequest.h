@@ -343,6 +343,11 @@ class WebURLRequest {
   // is the value provided there.
   BLINK_PLATFORM_EXPORT base::Optional<WebString> GetSuggestedFilename() const;
 
+  // If this request is for an already resolved blob: URL, this returns a mojo
+  // message pipe for the corresponding URLLoaderFactry.
+  BLINK_PLATFORM_EXPORT mojo::ScopedMessagePipeHandle GetURLLoaderFactory()
+      const;
+
 #if INSIDE_BLINK
   BLINK_PLATFORM_EXPORT ResourceRequest& ToMutableResourceRequest();
   BLINK_PLATFORM_EXPORT const ResourceRequest& ToResourceRequest() const;
