@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "55f46c3b_58377113",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2018-01-30T18:00:18Z",
+      "side": 1,
+      "message": "Good point, I\u0027ve added check for all those conditions to avoid unnecessary calls to setReceivedUserGesture.",
+      "parentUuid": "7bc1a0a4_4706f16e",
+      "revId": "529f25f7aef142485fd4d74a50af3bafa519498a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c75caf4_327f4d4a",
         "filename": "third_party/WebKit/Source/core/exported/WebRemoteFrameImpl.cpp",
         "patchSetId": 18
@@ -39,6 +57,30 @@
       "revId": "529f25f7aef142485fd4d74a50af3bafa519498a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cb0b8bd_ae4fcc54",
+        "filename": "third_party/WebKit/Source/core/exported/WebRemoteFrameImpl.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2018-01-30T18:00:18Z",
+      "side": 1,
+      "message": "Turns out it isn\u0027t, Frame::NotifyUserActivation is already doing this for us, so I\u0027ve removed it here and in WebLocalFrameImpl.",
+      "parentUuid": "2c75caf4_327f4d4a",
+      "range": {
+        "startLine": 336,
+        "startChar": 0,
+        "endLine": 336,
+        "endChar": 17
+      },
+      "revId": "529f25f7aef142485fd4d74a50af3bafa519498a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
