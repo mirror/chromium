@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff37a541_59b0363e",
+        "filename": "net/http/http_request_info.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-30T16:02:41Z",
+      "side": 1,
+      "message": "As this is a struct, I don\u0027t believe these Getter/Setter methods are consistent with our coding style.\n\nI\u0027m not sure why these are necessary, versus having a member net::MutableNetworkTrafficAnnotationTag public member. Could you explain?",
+      "revId": "9cd579017d23b2fc1fc87226e06f77665f55c4f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
