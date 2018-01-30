@@ -386,8 +386,7 @@
     },
     {
       name: "ruby",
-      JSInterfaceName: "HTMLElement",
-      interfaceName: "HTMLRubyElement",
+      interfaceName: "HTMLElement",
     },
     {
       name: "s",

@@ -437,7 +437,7 @@ AccessibilityRole AXNodeObject::NativeAccessibilityRoleIgnoringAria() const {
   if (IsHTMLLegendElement(*GetNode()))
     return kLegendRole;
 
-  if (IsHTMLRubyElement(*GetNode()))
+  if (GetNode()->HasTagName(rubyTag))
     return kRubyRole;
 
   if (IsHTMLDListElement(*GetNode()))
