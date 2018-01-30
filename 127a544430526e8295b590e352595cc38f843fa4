@@ -42,6 +42,48 @@
     },
     {
       "key": {
+        "uuid": "d9a4422b_acb53f75",
+        "filename": "components/ui_devtools/views/ui_element.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2018-01-30T21:02:00Z",
+      "side": 1,
+      "message": "This one shows as HTML attributes in the hierarchy view i.e.\n\n\u003cWindow name\u003d\"StatusBubble\" active\u003d\"false\"\u003e...\u003c/Window\u003e\n\nThe method that was formerly GetCustomAttributes and I\u0027ve renamed to GetCustomProperties vends keys/values that appear in the styles panel when an element is selected\n\ni.e.\nelement.style {\n    height: 1098;\n    width: 1050;\n    x: 0;\n    y: 0;\n    visibility: 1;\n}\n\nI chose properties because that\u0027s what the protocol setter method refers to them as:\nhttps://cs.chromium.org/chromium/src/components/ui_devtools/views/css_agent.cc?q\u003df:css_agent\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d82",
+      "parentUuid": "4c54bf58_ef879d25",
+      "range": {
+        "startLine": 65,
+        "startChar": 56,
+        "endLine": 65,
+        "endChar": 69
+      },
+      "revId": "127a544430526e8295b590e352595cc38f843fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "471ff316_43c08b75",
+        "filename": "components/ui_devtools/views/ui_element.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2018-01-30T21:02:00Z",
+      "side": 1,
+      "message": "I have one in the .cc but happy to move to .h if you prefer.",
+      "parentUuid": "9947dc66_ff794c33",
+      "revId": "127a544430526e8295b590e352595cc38f843fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e917b06_7be0cb83",
         "filename": "components/ui_devtools/views/view_element.cc",
         "patchSetId": 2
@@ -56,6 +98,24 @@
       "revId": "127a544430526e8295b590e352595cc38f843fa4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb4736d7_9b7f0dde",
+        "filename": "components/ui_devtools/views/view_element.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2018-01-30T21:02:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e917b06_7be0cb83",
+      "revId": "127a544430526e8295b590e352595cc38f843fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
