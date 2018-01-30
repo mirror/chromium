@@ -12,14 +12,12 @@
 #include "ui/message_center/message_center_export.h"
 #include "ui/message_center/views/message_view.h"
 #include "ui/views/controls/button/button.h"
-#include "ui/views/controls/button/image_button.h"
 #include "ui/views/controls/button/label_button.h"
 #include "ui/views/controls/textfield/textfield.h"
 #include "ui/views/controls/textfield/textfield_controller.h"
 #include "ui/views/view_targeter_delegate.h"
 
 namespace views {
-class ImageButton;
 class Label;
 class LabelButton;
 class ProgressBar;
@@ -163,8 +161,6 @@ class NotificationInputTextfieldMD : public views::Textfield,
   void set_index(size_t index) { index_ = index; }
   void set_placeholder(const base::string16& placeholder);
 
-  size_t index() const { return index_; };
-
  private:
   NotificationInputDelegate* const delegate_;
 
@@ -177,9 +173,9 @@ class NotificationInputTextfieldMD : public views::Textfield,
   DISALLOW_COPY_AND_ASSIGN(NotificationInputTextfieldMD);
 };
 
-class NotificationInputReplyButtonMD : public views::ImageButton {
+class NotificationInputReplyButtonMD : public views::ImageView {
  public:
-  NotificationInputReplyButtonMD(views::ButtonListener* listener);
+  NotificationInputReplyButtonMD();
   ~NotificationInputReplyButtonMD() override;
 
   void SetNormalImage();
@@ -189,20 +185,15 @@ class NotificationInputReplyButtonMD : public views::ImageButton {
   DISALLOW_COPY_AND_ASSIGN(NotificationInputReplyButtonMD);
 };
 
-class NotificationInputContainerMD : public views::View,
-                                     public views::ButtonListener {
+class NotificationInputContainerMD : public views::View {
  public:
   NotificationInputContainerMD(NotificationInputDelegate* delegate);
   ~NotificationInputContainerMD() override;
-
-  void ButtonPressed(views::Button* sender, const ui::Event& event) override;
 
   NotificationInputTextfieldMD* textfield() const { return textfield_; };
   NotificationInputReplyButtonMD* button() const { return button_; };
 
  private:
-  NotificationInputDelegate* const delegate_;
-
   NotificationInputTextfieldMD* const textfield_;
   NotificationInputReplyButtonMD* const button_;
 

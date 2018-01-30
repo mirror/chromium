@@ -428,36 +428,31 @@ void NotificationInputTextfieldMD::set_placeholder(
 
 // NotificationInputReplyButtonMD //////////////////////////////////////////////
 
-NotificationInputReplyButtonMD::NotificationInputReplyButtonMD(
-    views::ButtonListener* listener)
-    : views::ImageButton(listener) {
+NotificationInputReplyButtonMD::NotificationInputReplyButtonMD() {
   SetPlaceholderImage();
   SetBorder(views::CreateEmptyBorder(kInputReplyButtonPadding));
-  SetImageAlignment(ALIGN_CENTER, ALIGN_MIDDLE);
 }
 
 NotificationInputReplyButtonMD::~NotificationInputReplyButtonMD() = default;
 
 void NotificationInputReplyButtonMD::SetNormalImage() {
-  SetImage(STATE_NORMAL, gfx::CreateVectorIcon(kNotificationInlineReplyIcon,
-                                               kInputReplyButtonSize,
-                                               kInputReplyButtonColor));
+  SetImage(gfx::CreateVectorIcon(kNotificationInlineReplyIcon,
+                                 kInputReplyButtonSize,
+                                 kInputReplyButtonColor));
 }
 
 void NotificationInputReplyButtonMD::SetPlaceholderImage() {
-  SetImage(
-      STATE_NORMAL,
-      gfx::CreateVectorIcon(kNotificationInlineReplyIcon, kInputReplyButtonSize,
-                            kInputReplyButtonPlaceholderColor));
+  SetImage(gfx::CreateVectorIcon(kNotificationInlineReplyIcon,
+                                 kInputReplyButtonSize,
+                                 kInputReplyButtonPlaceholderColor));
 }
 
 // NotificationInputContainerMD ////////////////////////////////////////////////
 
 NotificationInputContainerMD::NotificationInputContainerMD(
     NotificationInputDelegate* delegate)
-    : delegate_(delegate),
-      textfield_(new NotificationInputTextfieldMD(delegate)),
-      button_(new NotificationInputReplyButtonMD(this)) {
+    : textfield_(new NotificationInputTextfieldMD(delegate)),
+      button_(new NotificationInputReplyButtonMD()) {
   auto* layout = SetLayoutManager(std::make_unique<views::BoxLayout>(
       views::BoxLayout::kHorizontal, gfx::Insets(), 0));
   SetBackground(views::CreateSolidBackground(kInputContainerBackgroundColor));
@@ -466,14 +461,6 @@ NotificationInputContainerMD::NotificationInputContainerMD(
   layout->SetFlexForView(textfield_, 1);
 
   AddChildView(button_);
-}
-
-void NotificationInputContainerMD::ButtonPressed(views::Button* sender,
-                                                 const ui::Event& event) {
-  if (sender == button_) {
-    delegate_->OnNotificationInputSubmit(textfield_->index(),
-                                         textfield_->text());
-  }
 }
 
 NotificationInputContainerMD::~NotificationInputContainerMD() = default;
