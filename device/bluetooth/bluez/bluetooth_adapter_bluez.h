@@ -31,6 +31,10 @@
 #include "device/bluetooth/dbus/bluetooth_profile_manager_client.h"
 #include "device/bluetooth/dbus/bluetooth_profile_service_provider.h"
 
+#if defined(OS_CHROMEOS)
+#include "device/bluetooth/dbus/bluetooth_adapter_client.h"
+#endif  // defined(OS_CHROMEOS)
+
 namespace base {
 class SequencedTaskRunner;
 class TimeDelta;
@@ -69,7 +73,9 @@ class BluetoothPairingBlueZ;
 // When adding methods to this class verify shutdown behavior in
 // BluetoothBlueZTest, Shutdown.
 class DEVICE_BLUETOOTH_EXPORT BluetoothAdapterBlueZ
-    : public device::BluetoothAdapter,
+    : #if defined(OS_CHROMEOS) public chromeos::PowerManagerClient::Observer,
+#endif  // defined(OS_CHROMEOS)
+      public device::BluetoothAdapter,
       public bluez::BluetoothAdapterClient::Observer,
       public bluez::BluetoothDeviceClient::Observer,
       public bluez::BluetoothInputClient::Observer,
