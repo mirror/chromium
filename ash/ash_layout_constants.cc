@@ -16,12 +16,20 @@ gfx::Size GetAshLayoutSize(AshLayoutSize size) {
   const int kNonBrowserCaptionButtonWidth[] = {32, 32};
 
   const int mode = ui::MaterialDesignController::GetMode();
+  const bool is_touch_optimized =
+      ui::MaterialDesignController::IsTouchOptimizedUiEnabled();
   switch (size) {
     case AshLayoutSize::BROWSER_MAXIMIZED_CAPTION_BUTTON: {
+      if (is_touch_optimized)
+        return gfx::Size(32, 41);
+
       return gfx::Size(kBrowserMaximizedCaptionButtonWidth[mode],
                        kBrowserMaximizedCaptionButtonHeight[mode]);
     }
     case AshLayoutSize::BROWSER_RESTORED_CAPTION_BUTTON: {
+      if (is_touch_optimized)
+        return gfx::Size(32, 48);
+
       return gfx::Size(kBrowserRestoredCaptionButtonWidth[mode],
                        kBrowserRestoredCaptionButtonHeight[mode]);
     }

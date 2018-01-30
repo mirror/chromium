@@ -55,6 +55,9 @@ enum DistanceMetric {
   // other linked buttons.  This allows short buttons to have linked widths
   // without long buttons making things overly wide.
   DISTANCE_BUTTON_MAX_LINKABLE_WIDTH,
+  // The amount of spacing between caption buttons in the non-client frame view.
+  DISTANCE_CAPTION_BUTTONS_SPACING,
+  DISTANCE_CAPTION_BUTTONS_SPACING_TOUCH_OPTIMIZED,
   // The distance between a dialog's edge and the close button in the upper
   // trailing corner.
   DISTANCE_CLOSE_BUTTON_MARGIN,
