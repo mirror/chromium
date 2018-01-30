@@ -91,7 +91,10 @@ catalog("services_unittests_catalog") {
 
   # The division between "all platforms" and "!iOS" here needs to match that
   # for the main deps list in the services_unittests target above.
-  catalog_deps = [ "//services/identity:tests_catalog" ]
+  catalog_deps = [
+    "//services/identity:tests_catalog",
+    "//services/network:tests_catalog",
+  ]
 
   if (!is_ios) {
     catalog_deps += [
