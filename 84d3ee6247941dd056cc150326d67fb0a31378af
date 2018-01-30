@@ -16,6 +16,24 @@
       "revId": "84d3ee6247941dd056cc150326d67fb0a31378af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81818f3f_1e9d75ae",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResourceContent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-30T18:48:45Z",
+      "side": 1,
+      "message": "I think this should be updated at the same time that the Image is created - or at the very latest after the size of the image becomes known. Since this value affects the size used for image layout, setting it too late might lead to layout glitches. Maybe updating it in CreateImage would be reasonable?",
+      "parentUuid": "8f73ddf5_e20802ad",
+      "revId": "84d3ee6247941dd056cc150326d67fb0a31378af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
