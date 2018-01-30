@@ -22,6 +22,7 @@
 #include "build/build_config.h"
 #include "content/browser/child_process_security_policy_impl.h"
 #include "content/browser/frame_host/navigation_handle_impl.h"
+#include "content/browser/frame_host/navigation_request.h"
 #include "content/browser/frame_host/render_frame_host_impl.h"
 #include "content/browser/frame_host/render_frame_proxy_host.h"
 #include "content/browser/renderer_host/render_view_host_impl.h"
@@ -1802,6 +1803,110 @@ IN_PROC_BROWSER_TEST_F(
                         ->speculative_frame_host();
   CHECK(speculative_rfh);
   EXPECT_NE(site_instance_id, speculative_rfh->GetSiteInstance()->GetId());
+}
+
+IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest,
+                       ReloadDisablePreviewReloadsOriginalRequestURL) {
+  const std::string kOriginalPath = "/original.html";
+  const std::string kRedirectPath = "/redirect.html";
+  ControllableHttpResponse original_response1(embedded_test_server(),
+                                              kOriginalPath);
+  ControllableHttpResponse original_response2(embedded_test_server(),
+                                              kOriginalPath);
+  ControllableHttpResponse redirect_response1(embedded_test_server(),
+                                              kRedirectPath);
+  ControllableHttpResponse redirect_response2(embedded_test_server(),
+                                              kRedirectPath);
+  EXPECT_TRUE(embedded_test_server()->Start());
+
+  const GURL kOriginalURL =
+      embedded_test_server()->GetURL("a.com", kOriginalPath);
+  const GURL kRedirectURL =
+      embedded_test_server()->GetURL("b.com", kRedirectPath);
+  const GURL kReloadRedirectURL =
+      embedded_test_server()->GetURL("c.com", kRedirectPath);
+
+  // First navigate to the initial URL. This page will have a cross-site
+  // redirect to a 2nd domain.
+  shell()->LoadURL(kOriginalURL);
+  original_response1.WaitForRequest();
+  original_response1.Send(
+      "HTTP/1.1 302 FOUND\r\n"
+      "Location: " +
+      kRedirectURL.spec() +
+      "\r\n"
+      "\r\n");
+  original_response1.Done();
+  redirect_response1.WaitForRequest();
+  redirect_response1.Send(
+      "HTTP/1.1 200 OK\r\n"
+      "Content-Type: text/html; charset=utf-8\r\n"
+      "\r\n");
+  redirect_response1.Send(
+      "<html>"
+      "<body></body>"
+      "</html>");
+  redirect_response1.Done();
+  EXPECT_TRUE(WaitForLoadStop(shell()->web_contents()));
+  EXPECT_EQ(kRedirectURL, shell()->web_contents()->GetVisibleURL());
+
+  if (content::AreAllSitesIsolatedForTesting()) {
+    RenderFrameHostImpl* rfh =
+        static_cast<WebContentsImpl*>(shell()->web_contents())->GetMainFrame();
+    EXPECT_EQ(GURL("http://b.com"), rfh->GetSiteInstance()->GetSiteURL());
+  }
+
+  // Now simulate a 'Show original' reload via ReloadType::DISABLE_PREVIEWS.
+  // This reload will have a cross-site redirect to a 3rd domain.
+  TestNavigationManager reload(shell()->web_contents(), kOriginalURL);
+  shell()->web_contents()->GetController().Reload(ReloadType::DISABLE_PREVIEWS,
+                                                  false);
+  EXPECT_TRUE(reload.WaitForRequestStart());
+
+  // Verify reload is using the original request URL and no previews allowed.
+  EXPECT_EQ(kOriginalURL, reload.GetNavigationHandle()->GetURL());
+  NavigationRequest* navigation_request =
+      static_cast<WebContentsImpl*>(shell()->web_contents())
+          ->GetFrameTree()
+          ->root()
+          ->navigation_request();
+  CHECK(navigation_request);
+  EXPECT_EQ(content::PREVIEWS_NO_TRANSFORM,
+            navigation_request->common_params().previews_state);
+
+  reload.ResumeNavigation();
+  original_response2.WaitForRequest();
+  original_response2.Send(
+      "HTTP/1.1 302 FOUND\r\n"
+      "Location: " +
+      kReloadRedirectURL.spec() +
+      "\r\n"
+      "\r\n");
+  original_response2.Done();
+  redirect_response2.WaitForRequest();
+
+  // Verify now using new redirect URL.
+  EXPECT_EQ(kReloadRedirectURL, reload.GetNavigationHandle()->GetURL());
+
+  redirect_response2.Send(
+      "HTTP/1.1 200 OK\r\n"
+      "Content-Type: text/html; charset=utf-8\r\n"
+      "\r\n");
+  redirect_response2.Send(
+      "<html>"
+      "<body></body>"
+      "</html>");
+  redirect_response2.Done();
+  EXPECT_TRUE(reload.WaitForResponse());
+  reload.WaitForNavigationFinished();
+  EXPECT_TRUE(WaitForLoadStop(shell()->web_contents()));
+  EXPECT_EQ(kReloadRedirectURL, shell()->web_contents()->GetVisibleURL());
+
+  if (content::AreAllSitesIsolatedForTesting()) {
+    RenderFrameHostImpl* rfh =
+        static_cast<WebContentsImpl*>(shell()->web_contents())->GetMainFrame();
+    EXPECT_EQ(GURL("http://c.com"), rfh->GetSiteInstance()->GetSiteURL());
+  }
 }
 
 // Test for crbug.com/9682.  We should not show the URL for a pending renderer-
