@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "57de80b9_24b11102",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-30T23:47:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05c17a85_fd3d3035",
+      "revId": "c15bfbdc5276b593c0c7ceb54c416b7f05cd5a31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef149407_9271b9d2",
         "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-30T23:14:16Z",
       "side": 1,
       "message": "This needs a comment about why it\u0027s ok to send WasShown if we cannot resize. Why is shown different from resize?",
+      "revId": "c15bfbdc5276b593c0c7ceb54c416b7f05cd5a31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26d1f545_2d1ef4ef",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-30T23:47:31Z",
+      "side": 1,
+      "message": "There are already some comments for CanResize explaining when it can return false. Should I add comments here?",
+      "parentUuid": "ef149407_9271b9d2",
       "revId": "c15bfbdc5276b593c0c7ceb54c416b7f05cd5a31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
