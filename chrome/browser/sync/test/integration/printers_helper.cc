@@ -67,19 +67,7 @@ std::string PrinterId(int index) {
 
 chromeos::SyncedPrintersManager* GetPrinterStore(
     content::BrowserContext* context) {
-  chromeos::SyncedPrintersManager* manager =
-      chromeos::SyncedPrintersManagerFactory::GetForBrowserContext(context);
-
-  // TODO(sync): crbug.com/709094: Remove all of this once the bug is fixed.
-  // Must wait for ModelTypeStore initialization. It is fairly difficult to get
-  // to the particular SequencedTaskRunner created inside of ModelTypeStoreImpl,
-  // so run everything!
-  content::RunAllTasksUntilIdle();
-  // Wait for UI thread task completion to make sure PrintersSyncBridge received
-  // ModelTypeStore.
-  base::RunLoop().RunUntilIdle();
-
-  return manager;
+  return chromeos::SyncedPrintersManagerFactory::GetForBrowserContext(context);
 }
 
 }  // namespace
