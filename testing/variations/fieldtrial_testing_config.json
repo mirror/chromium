@@ -1498,6 +1498,16 @@
                     "enable_features": [
                         "PasswordProtectionGoogleBrandedPhishingWarning"
                     ]
+                },
+                {
+                    "name": "SofterWarningWarnOnLowReputation",
+                    "params": {
+                        "softer_warning": "true",
+                        "warn_on_low_reputation": "true"
+                    },
+                    "enable_features": [
+                        "PasswordProtectionGoogleBrandedPhishingWarning"
+                    ]
                 }
             ]
         }
