@@ -34,6 +34,24 @@
       "revId": "3f0818158db3cfc387fce917ac34184c89cb6263",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ff9dfe2_d78c8bf7",
+        "filename": "third_party/WebKit/Tools/lldb/lldb_webkit.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-30T23:38:20Z",
+      "side": 1,
+      "message": ".",
+      "parentUuid": "6fc87b39_ade9677f",
+      "revId": "3f0818158db3cfc387fce917ac34184c89cb6263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
