@@ -16,6 +16,24 @@
       "revId": "3512be4ee0c451ba6088f6c2f941423786bbb87c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fb08eef_62a38581",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_physical_fragment.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-30T00:44:23Z",
+      "side": 1,
+      "message": "If has_content is true, you should add a space. Furthermore, has_content should be set to true if you dump anything at all.",
+      "parentUuid": "92feb06f_ca37f40c",
+      "revId": "3512be4ee0c451ba6088f6c2f941423786bbb87c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
