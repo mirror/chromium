@@ -268,12 +268,13 @@ void CrossProcessFrameConnector::UnlockMouse() {
 
 void CrossProcessFrameConnector::OnUpdateResizeParams(
     const gfx::Rect& frame_rect,
+    const gfx::Size& physical_backing_size,
     const ScreenInfo& screen_info,
     uint64_t sequence_number,
     const viz::SurfaceId& surface_id) {
   // If the |frame_rect| or |screen_info| of the frame has changed, then the
   // viz::LocalSurfaceId must also change.
-  if ((last_received_frame_rect_.size() != frame_rect.size() ||
+  if ((last_received_physical_backing_size_ != physical_backing_size ||
        screen_info_ != screen_info) &&
       local_surface_id_ == surface_id.local_surface_id()) {
     bad_message::ReceivedBadMessage(
@@ -283,9 +284,10 @@ void CrossProcessFrameConnector::OnUpdateResizeParams(
   }
 
   screen_info_ = screen_info;
-  last_received_frame_rect_ = frame_rect;
+  last_received_physical_backing_size_ = physical_backing_size;
   local_surface_id_ = surface_id.local_surface_id();
   SetRect(frame_rect);
+  SetPhysicalBackingSize(physical_backing_size);
 
   if (!view_)
     return;
