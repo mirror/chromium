@@ -36,6 +36,7 @@ import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.browser.test.util.DOMUtils;
 import org.chromium.content.browser.test.util.JavaScriptUtils;
+import org.chromium.content_public.browser.ChromiumBaseInputConnection;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.base.ime.TextInputType;
 
