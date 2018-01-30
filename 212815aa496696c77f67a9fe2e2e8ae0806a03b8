@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01b60cc2_1ebe903e",
+        "filename": "chrome/browser/policy/policy_value_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-30T17:18:34Z",
+      "side": 1,
+      "message": "What about slightly more informative file name, like \"policy_initialization_browsertest.cc\" or \"policy_early_initialization_browsertest.cc\"?",
+      "revId": "212815aa496696c77f67a9fe2e2e8ae0806a03b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba4a5716_f8ddf626",
+        "filename": "chrome/browser/policy/policy_value_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-30T17:18:34Z",
+      "side": 1,
+      "message": "nit: Seems to be unused.",
+      "revId": "212815aa496696c77f67a9fe2e2e8ae0806a03b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6df38d28_afc722df",
+        "filename": "chrome/browser/policy/policy_value_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-30T17:18:34Z",
+      "side": 1,
+      "message": "nit: This relies on the pref default being |true|. If someone inverts this pref\u0027s default, the test will suddenly become no-op.\n\nSo suggesting either to add a check here that this isn\u0027t the default value of the pref, or add a separate test (or PRE_ test) that checks the local state when the policy is unset.",
+      "revId": "212815aa496696c77f67a9fe2e2e8ae0806a03b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5e7e1ef_eda49545",
+        "filename": "chrome/browser/policy/policy_value_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-30T17:18:34Z",
+      "side": 1,
+      "message": "nit: Unused.",
+      "revId": "212815aa496696c77f67a9fe2e2e8ae0806a03b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5495acc1_ea6a9314",
+        "filename": "chrome/browser/policy/policy_value_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-30T17:18:34Z",
+      "side": 1,
+      "message": "nit: #include #include \u003cwindows.h\u003e",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 8
+      },
+      "revId": "212815aa496696c77f67a9fe2e2e8ae0806a03b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fdef40f_888e1ecd",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1768,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-30T17:18:34Z",
+      "side": 1,
+      "message": "I think in the future we may add similar tests for other platforms - for instance, on Linux the expectation with loading platform policies is about the same.\nSo what about moving this file into the biggest bucket (\"!is_android\") and surrounding the windows-specific test code in #if defined(OS_WIN)?",
+      "revId": "212815aa496696c77f67a9fe2e2e8ae0806a03b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
