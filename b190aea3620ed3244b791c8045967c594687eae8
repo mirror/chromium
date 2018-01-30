@@ -33,6 +33,24 @@
       "revId": "b190aea3620ed3244b791c8045967c594687eae8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1778366c_b730fe59",
+        "filename": "media/capture/video/file_video_capture_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2018-01-30T22:35:39Z",
+      "side": 1,
+      "message": "According to this, don\u0027t we then have the same issue in VideoCaptureDeviceWin [1] and VideoCaptureDeviceMFWin [2] ?\n\n[1] https://cs.chromium.org/chromium/src/media/capture/video/win/video_capture_device_win.cc?l\u003d860\n[2] https://cs.chromium.org/chromium/src/media/capture/video/win/video_capture_device_mf_win.cc?l\u003d883",
+      "parentUuid": "e2ebdcd2_e4d13abd",
+      "revId": "b190aea3620ed3244b791c8045967c594687eae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
