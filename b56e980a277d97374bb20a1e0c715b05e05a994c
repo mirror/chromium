@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abf12b83_f69c5896",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 8580,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-30T20:10:28Z",
+      "side": 1,
+      "message": "tls1 (or tls1.1 or tls1.2)",
+      "range": {
+        "startLine": 8580,
+        "startChar": 24,
+        "endLine": 8580,
+        "endChar": 28
+      },
+      "revId": "b56e980a277d97374bb20a1e0c715b05e05a994c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2860d416_d8de7348",
+        "filename": "components/ssl_config/ssl_config_service_manager_pref_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-30T20:10:28Z",
+      "side": 1,
+      "message": "SSLVersionMin",
+      "range": {
+        "startLine": 189,
+        "startChar": 14,
+        "endLine": 189,
+        "endChar": 29
+      },
+      "revId": "b56e980a277d97374bb20a1e0c715b05e05a994c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
