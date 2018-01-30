@@ -162,8 +162,6 @@ public class ContentViewCoreImpl
     private SelectPopup mSelectPopup;
     private long mNativeSelectPopupSourceFrame;
 
-    private TextSuggestionHost mTextSuggestionHost;
-
     // Cached copy of all positions and scales as reported by the renderer.
     private RenderCoordinates mRenderCoordinates;
 
@@ -261,20 +259,8 @@ public class ContentViewCoreImpl
     }
 
     @VisibleForTesting
-    @Override
-    public TextSuggestionHost getTextSuggestionHostForTesting() {
-        return mTextSuggestionHost;
-    }
-
-    @VisibleForTesting
     void setWebContentsForTesting(WebContentsImpl webContents) {
         mWebContents = webContents;
-    }
-
-    @VisibleForTesting
-    @Override
-    public void setTextSuggestionHostForTesting(TextSuggestionHost textSuggestionHost) {
-        mTextSuggestionHost = textSuggestionHost;
     }
 
     /**
@@ -328,9 +314,9 @@ public class ContentViewCoreImpl
                 mWebContents, mContainerView, new InputMethodManagerWrapper(mContext));
         imeAdapter.addEventObserver(this);
         imeAdapter.addEventObserver(TapDisambiguator.create(mContext, mWebContents, containerView));
-        mTextSuggestionHost =
-                new TextSuggestionHost(mContext, mWebContents, windowAndroid, mContainerView);
-        addWindowAndroidChangedObserver(mTextSuggestionHost);
+        TextSuggestionHost textSuggestionHost =
+                TextSuggestionHost.create(mContext, mWebContents, windowAndroid, containerView);
+        addWindowAndroidChangedObserver(textSuggestionHost);
 
         mWebContentsObserver = new ContentViewWebContentsObserver(this);
 
@@ -341,7 +327,7 @@ public class ContentViewCoreImpl
 
         mWindowEventObservers.addObserver(controller);
         mWindowEventObservers.addObserver(getGestureListenerManager());
-        mWindowEventObservers.addObserver(mTextSuggestionHost);
+        mWindowEventObservers.addObserver(textSuggestionHost);
         mWindowEventObservers.addObserver(imeAdapter);
         mWindowEventObservers.addObserver(mWebContentsAccessibility);
     }
@@ -392,7 +378,7 @@ public class ContentViewCoreImpl
             if (mContainerView != null) {
                 hideSelectPopupWithCancelMessage();
                 getImeAdapter().setContainerView(containerView);
-                mTextSuggestionHost.setContainerView(containerView);
+                getTextSuggestionHost().setContainerView(containerView);
             }
 
             mContainerView = containerView;
@@ -419,6 +405,10 @@ public class ContentViewCoreImpl
         return TapDisambiguator.fromWebContents(mWebContents);
     }
 
+    private TextSuggestionHost getTextSuggestionHost() {
+        return TextSuggestionHost.fromWebContents(mWebContents);
+    }
+
     @CalledByNative
     private void onNativeContentViewCoreDestroyed(long nativeContentViewCore) {
         assert nativeContentViewCore == mNativeContentViewCore;
@@ -439,7 +429,7 @@ public class ContentViewCoreImpl
         mWebContentsObserver.destroy();
         mWebContentsObserver = null;
         getImeAdapter().resetAndHideKeyboard();
-        removeWindowAndroidChangedObserver(mTextSuggestionHost);
+        removeWindowAndroidChangedObserver(getTextSuggestionHost());
         mWindowEventObservers.clear();
         hidePopupsAndPreserveSelection();
         mWebContents = null;
@@ -564,8 +554,6 @@ public class ContentViewCoreImpl
     private void hidePopupsAndClearSelection() {
         if (mWebContents != null) {
             getSelectionPopupController().destroyActionModeAndUnselect();
-            destroyPastePopup();
-            getTapDisambiguator().hidePopup(false);
             mWebContents.dismissTextHandles();
         }
         hidePopups();
@@ -575,15 +563,17 @@ public class ContentViewCoreImpl
     private void hidePopupsAndPreserveSelection() {
         if (mWebContents != null) {
             getSelectionPopupController().destroyActionModeAndKeepSelection();
-            destroyPastePopup();
-            getTapDisambiguator().hidePopup(false);
         }
         hidePopups();
     }
 
     private void hidePopups() {
+        if (mWebContents != null) {
+            destroyPastePopup();
+            getTapDisambiguator().hidePopup(false);
+            getTextSuggestionHost().hidePopups();
+        }
         hideSelectPopupWithCancelMessage();
-        mTextSuggestionHost.hidePopups();
     }
 
     private void restoreSelectionPopupsIfNecessary() {
@@ -1201,7 +1191,7 @@ public class ContentViewCoreImpl
             hidePopupsAndPreserveSelection();
             getSelectionPopupController().showActionModeOrClearOnFailure();
         }
-        mTextSuggestionHost.hidePopups();
+        getTextSuggestionHost().hidePopups();
 
         int rotationDegrees = 0;
         switch (rotation) {
