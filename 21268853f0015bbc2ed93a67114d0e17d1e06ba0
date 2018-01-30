@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "877dfd21_069a416c",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathX86.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2018-01-30T20:32:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54b87204_b7744d17",
+      "revId": "21268853f0015bbc2ed93a67114d0e17d1e06ba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48e7fecf_8bf63bec",
         "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathX86.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "21268853f0015bbc2ed93a67114d0e17d1e06ba0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8cfddd1_400c131f",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathX86.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2018-01-30T20:32:59Z",
+      "side": 1,
+      "message": "\u003e This check appears to be common.  Shouldn\u0027t it be part of SplitFramesToProcess?  Or is this intended to ensure that i is updated the correct amount after running the SSE code?\n\nThe latter i.e. these checks are to ensure that call sites use all the counts in frame_counts.",
+      "parentUuid": "48e7fecf_8bf63bec",
+      "revId": "21268853f0015bbc2ed93a67114d0e17d1e06ba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
