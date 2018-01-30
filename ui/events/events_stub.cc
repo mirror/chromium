@@ -64,6 +64,11 @@ gfx::Vector2d GetMouseWheelOffset(const base::NativeEvent& native_event) {
   return gfx::Vector2d();
 }
 
+float GetPinchScaleFromNative(const base::NativeEvent& native_event) {
+  NOTIMPLEMENTED();
+  return 1.0;
+}
+
 base::NativeEvent CopyNativeEvent(const base::NativeEvent& event) {
   NOTIMPLEMENTED() <<
       "Don't know how to copy base::NativeEvent for this platform";

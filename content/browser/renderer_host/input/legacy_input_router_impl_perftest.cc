@@ -54,6 +54,11 @@ class NullInputDispositionHandler : public InputDispositionHandler {
                        InputEventAckState ack_result) override {
     ++ack_count_;
   }
+  void OnPinchEventAck(const ui::TouchpadPinchEvent& event,
+                       InputEventAckSource ack_source,
+                       InputEventAckState ack_result) override {
+    ++ack_count_;
+  }
   void OnTouchEventAck(const TouchEventWithLatencyInfo& event,
                        InputEventAckSource ack_source,
                        InputEventAckState ack_result) override {

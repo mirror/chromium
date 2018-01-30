@@ -207,6 +207,17 @@ void RenderWidgetHostViewBase::WheelEventAck(
     InputEventAckState ack_result) {
 }
 
+void RenderWidgetHostViewBase::PinchEventAck(
+    const ui::TouchpadPinchEvent& event,
+    InputEventAckState ack_result) {
+  // TODO(mcnee): Override in RenderWidgetHostViewChildFrame to send the pinch
+  // gesture to the main frame.
+  // TODO send gesture
+  // TODO web_input_event.h
+  LOG(ERROR) << "pinch acked: scale - " << event.scale() << ", disabled - "
+             << event.zoom_disabled() << ", ack - " << ack_result;
+}
+
 void RenderWidgetHostViewBase::GestureEventAck(
     const blink::WebGestureEvent& event,
     InputEventAckState ack_result) {

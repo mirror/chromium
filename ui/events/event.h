@@ -273,6 +273,8 @@ class EVENTS_EXPORT Event {
   MouseWheelEvent* AsMouseWheelEvent();
   const MouseWheelEvent* AsMouseWheelEvent() const;
 
+  // TODO AsTouchpadPinchEvent
+
   // Convenience methods to cast |this| to a PointerEvent. IsPointerEvent()
   // must be true as a precondition to calling these methods.
   PointerEvent* AsPointerEvent();
@@ -676,6 +678,26 @@ class EVENTS_EXPORT MouseWheelEvent : public MouseEvent {
 
  private:
   gfx::Vector2d offset_;
+};
+
+class EVENTS_EXPORT TouchpadPinchEvent : public LocatedEvent {
+ public:
+  explicit TouchpadPinchEvent(const base::NativeEvent& native_event);
+
+  TouchpadPinchEvent(EventType type,
+                     const gfx::Point& location,
+                     const gfx::Point& root_location,
+                     base::TimeTicks time_stamp,
+                     int flags,
+                     float scale,
+                     bool zoom_disabled);
+
+  float scale() const { return scale_; }
+  bool zoom_disabled() const { return zoom_disabled_; }
+
+ private:
+  float scale_;
+  bool zoom_disabled_;
 };
 
 // NOTE: Pen (stylus) events use TouchEvent with POINTER_TYPE_PEN. They were

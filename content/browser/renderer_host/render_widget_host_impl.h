@@ -392,6 +392,7 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   void ForwardWheelEventWithLatencyInfo(
       const blink::WebMouseWheelEvent& wheel_event,
       const ui::LatencyInfo& latency) override;
+  void ForwardTouchpadPinchEvent(const ui::TouchpadPinchEvent& pinch_event);
 
   // Returns an emulator for this widget. See TouchEmulator for more details.
   TouchEmulator* GetTouchEmulator();
@@ -668,6 +669,9 @@ class CONTENT_EXPORT RenderWidgetHostImpl
                        InputEventAckSource ack_source,
                        InputEventAckState ack_result) override;
   void OnWheelEventAck(const MouseWheelEventWithLatencyInfo& event,
+                       InputEventAckSource ack_source,
+                       InputEventAckState ack_result) override;
+  void OnPinchEventAck(const ui::TouchpadPinchEvent& event,
                        InputEventAckSource ack_source,
                        InputEventAckState ack_result) override;
   void OnTouchEventAck(const TouchEventWithLatencyInfo& event,

@@ -110,6 +110,10 @@ class MockInputRouter : public InputRouter {
       const NativeWebKeyboardEventWithLatencyInfo& key_event) override {
     sent_keyboard_event_ = true;
   }
+  void SendTouchpadPinchEvent(
+      const ui::TouchpadPinchEvent& pinch_event) override {
+    // TODO write tests
+  }
   void SendGestureEvent(
       const GestureEventWithLatencyInfo& gesture_event) override {
     sent_gesture_event_ = true;

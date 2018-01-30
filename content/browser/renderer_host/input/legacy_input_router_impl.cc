@@ -64,6 +64,7 @@ LegacyInputRouterImpl::LegacyInputRouterImpl(
       wheel_scroll_latching_enabled_(base::FeatureList::IsEnabled(
           features::kTouchpadAndWheelScrollLatching)),
       wheel_event_queue_(this, wheel_scroll_latching_enabled_),
+      touchpad_pinch_event_queue_(this),
       gesture_event_queue_(this, this, this, config.gesture_config),
       device_scale_factor_(1.f) {
   touch_event_queue_.reset(
@@ -125,6 +126,11 @@ void LegacyInputRouterImpl::SendKeyboardEvent(
 
   // Only forward the non-native portions of our event.
   FilterAndSendWebInputEvent(key_event.event, key_event.latency);
+}
+
+void LegacyInputRouterImpl::SendTouchpadPinchEvent(
+    const ui::TouchpadPinchEvent& pinch_event) {
+  touchpad_pinch_event_queue_.QueueEvent(pinch_event);
 }
 
 void LegacyInputRouterImpl::SendGestureEvent(
@@ -193,7 +199,8 @@ void LegacyInputRouterImpl::NotifySiteIsMobileOptimized(
 bool LegacyInputRouterImpl::HasPendingEvents() const {
   return !touch_event_queue_->Empty() || !gesture_event_queue_.empty() ||
          !key_queue_.empty() || !mouse_event_queue_.empty() ||
-         wheel_event_queue_.has_pending() || select_message_pending_ ||
+         wheel_event_queue_.has_pending() ||
+         touchpad_pinch_event_queue_.has_pending() || select_message_pending_ ||
          move_caret_pending_ || active_renderer_fling_count_ > 0;
 }
 
@@ -290,6 +297,17 @@ void LegacyInputRouterImpl::SendGeneratedWheelEvent(
 
 void LegacyInputRouterImpl::SetNeedsBeginFrameForFlingProgress() {
   client_->SetNeedsBeginFrameForFlingProgress();
+}
+
+void LegacyInputRouterImpl::SendMouseWheelEventForPinchImmediately(
+    const MouseWheelEventWithLatencyInfo& event) {
+  SendMouseWheelEventImmediately(event);
+}
+
+void LegacyInputRouterImpl::OnPinchEventAck(const ui::TouchpadPinchEvent& event,
+                                            InputEventAckSource ack_source,
+                                            InputEventAckState ack_result) {
+  disposition_handler_->OnPinchEventAck(event, ack_source, ack_result);
 }
 
 void LegacyInputRouterImpl::SendMouseWheelEventImmediately(
@@ -601,6 +619,8 @@ void LegacyInputRouterImpl::ProcessWheelAck(InputEventAckSource ack_source,
                                             InputEventAckState ack_result,
                                             const ui::LatencyInfo& latency) {
   wheel_event_queue_.ProcessMouseWheelAck(ack_source, ack_result, latency);
+  touchpad_pinch_event_queue_.ProcessMouseWheelAck(ack_source, ack_result,
+                                                   latency);
 }
 
 void LegacyInputRouterImpl::ProcessGestureAck(WebInputEvent::Type type,

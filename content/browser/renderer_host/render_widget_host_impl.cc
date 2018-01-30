@@ -1178,6 +1178,20 @@ void RenderWidgetHostImpl::ForwardWheelEventWithLatencyInfo(
   input_router_->SendWheelEvent(wheel_with_latency);
 }
 
+void RenderWidgetHostImpl::ForwardTouchpadPinchEvent(
+    const ui::TouchpadPinchEvent& pinch_event) {
+  TRACE_EVENT2("input", "RenderWidgetHostImpl::ForwardTouchpadPinchEvent",
+               "scale", pinch_event.scale(), "zoom_disabled",
+               pinch_event.zoom_disabled());
+
+  if (ShouldDropInputEvents())
+    return;
+
+  // TODO Do we want a ui event equivalent for
+  // |DispatchInputEventWithLatencyInfo|?
+  input_router_->SendTouchpadPinchEvent(pinch_event);
+}
+
 void RenderWidgetHostImpl::ForwardEmulatedGestureEvent(
     const blink::WebGestureEvent& gesture_event) {
   ForwardGestureEvent(gesture_event);
@@ -2419,6 +2433,17 @@ void RenderWidgetHostImpl::OnWheelEventAck(
     }
     view_->WheelEventAck(wheel_event.event, ack_result);
   }
+}
+
+void RenderWidgetHostImpl::OnPinchEventAck(const ui::TouchpadPinchEvent& event,
+                                           InputEventAckSource ack_source,
+                                           InputEventAckState ack_result) {
+  // TODO Do we want a ui event equivalent for |latency_tracker_| and
+  // |input_event_observers_|?
+
+  // TODO
+  if (view_)
+    view_->PinchEventAck(event, ack_result);
 }
 
 void RenderWidgetHostImpl::OnGestureEventAck(

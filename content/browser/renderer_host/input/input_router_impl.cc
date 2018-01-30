@@ -82,6 +82,7 @@ InputRouterImpl::InputRouterImpl(InputRouterImplClient* client,
           features::kTouchpadAndWheelScrollLatching)),
       wheel_event_queue_(this, wheel_scroll_latching_enabled_),
       touch_event_queue_(this, config.touch_config),
+      touchpad_pinch_event_queue_(this),
       gesture_event_queue_(this, this, this, config.gesture_config),
       device_scale_factor_(1.f),
       host_binding_(this),
@@ -122,6 +123,11 @@ void InputRouterImpl::SendKeyboardEvent(
       &InputRouterImpl::KeyboardEventHandled, weak_this_, key_event);
   FilterAndSendWebInputEvent(key_event.event, key_event.latency,
                              std::move(callback));
+}
+
+void InputRouterImpl::SendTouchpadPinchEvent(
+    const ui::TouchpadPinchEvent& pinch_event) {
+  touchpad_pinch_event_queue_.QueueEvent(pinch_event);
 }
 
 void InputRouterImpl::SendGestureEvent(
@@ -178,7 +184,9 @@ void InputRouterImpl::NotifySiteIsMobileOptimized(bool is_mobile_optimized) {
 
 bool InputRouterImpl::HasPendingEvents() const {
   return !touch_event_queue_.Empty() || !gesture_event_queue_.empty() ||
-         wheel_event_queue_.has_pending() || active_renderer_fling_count_ > 0;
+         wheel_event_queue_.has_pending() ||
+         touchpad_pinch_event_queue_.has_pending() ||
+         active_renderer_fling_count_ > 0;
 }
 
 void InputRouterImpl::SetDeviceScaleFactor(float device_scale_factor) {
@@ -388,6 +396,17 @@ void InputRouterImpl::ForwardGestureEventWithLatencyInfo(
   client_->ForwardGestureEventWithLatencyInfo(event, latency_info);
 }
 
+void InputRouterImpl::SendMouseWheelEventForPinchImmediately(
+    const MouseWheelEventWithLatencyInfo& event) {
+  SendMouseWheelEventImmediately(event);
+}
+
+void InputRouterImpl::OnPinchEventAck(const ui::TouchpadPinchEvent& event,
+                                      InputEventAckSource ack_source,
+                                      InputEventAckState ack_result) {
+  disposition_handler_->OnPinchEventAck(event, ack_source, ack_result);
+}
+
 void InputRouterImpl::FilterAndSendWebInputEvent(
     const WebInputEvent& input_event,
     const ui::LatencyInfo& latency_info,
@@ -538,6 +557,8 @@ void InputRouterImpl::MouseWheelEventHandled(
     DidOverscroll(overscroll.value());
 
   wheel_event_queue_.ProcessMouseWheelAck(source, state, event.latency);
+  touchpad_pinch_event_queue_.ProcessMouseWheelAck(source, state,
+                                                   event.latency);
 }
 
 void InputRouterImpl::OnHasTouchEventHandlers(bool has_handlers) {

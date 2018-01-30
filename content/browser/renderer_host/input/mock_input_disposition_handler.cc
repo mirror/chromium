@@ -54,6 +54,14 @@ void MockInputDispositionHandler::OnWheelEventAck(
   RecordAckCalled(event.event.GetType(), ack_result);
 }
 
+void MockInputDispositionHandler::OnPinchEventAck(
+    const ui::TouchpadPinchEvent& event,
+    InputEventAckSource ack_source,
+    InputEventAckState ack_result) {
+  VLOG(1) << __FUNCTION__ << " called!";
+  // TODO
+}
+
 void MockInputDispositionHandler::OnTouchEventAck(
     const TouchEventWithLatencyInfo& event,
     InputEventAckSource ack_source,

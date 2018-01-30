@@ -64,6 +64,9 @@ const char* EventTypeName(EventType type) {
     CASE_TYPE(ET_TOUCH_MOVED);
     CASE_TYPE(ET_TOUCH_CANCELLED);
     CASE_TYPE(ET_DROP_TARGET_EVENT);
+    CASE_TYPE(ET_TOUCHPAD_PINCH_BEGIN);
+    CASE_TYPE(ET_TOUCHPAD_PINCH_END);
+    CASE_TYPE(ET_TOUCHPAD_PINCH_UPDATE);
     CASE_TYPE(ET_POINTER_DOWN);
     CASE_TYPE(ET_POINTER_MOVED);
     CASE_TYPE(ET_POINTER_UP);
@@ -169,6 +172,9 @@ SourceEventType EventTypeToLatencySourceEventType(EventType type) {
     case ET_MOUSEWHEEL:
     case ET_POINTER_WHEEL_CHANGED:
     case ET_SCROLL:
+    case ET_TOUCHPAD_PINCH_BEGIN:
+    case ET_TOUCHPAD_PINCH_END:
+    case ET_TOUCHPAD_PINCH_UPDATE:
       return SourceEventType::WHEEL;
 
     case ET_LAST:
@@ -819,6 +825,35 @@ const int MouseWheelEvent::kWheelDelta = 120;
 // This value matches GTK+ wheel scroll amount.
 const int MouseWheelEvent::kWheelDelta = 53;
 #endif
+
+////////////////////////////////////////////////////////////////////////////////
+// TouchpadPinchEvent
+
+TouchpadPinchEvent::TouchpadPinchEvent(const base::NativeEvent& native_event)
+    : LocatedEvent(native_event),
+      scale_(GetPinchScaleFromNative(native_event)),
+      zoom_disabled_(false) {
+  latency()->AddLatencyNumberWithTimestamp(
+      INPUT_EVENT_LATENCY_ORIGINAL_COMPONENT, 0, 0, time_stamp(), 1);
+  latency()->AddLatencyNumber(INPUT_EVENT_LATENCY_UI_COMPONENT, 0, 0);
+}
+
+TouchpadPinchEvent::TouchpadPinchEvent(EventType type,
+                                       const gfx::Point& location,
+                                       const gfx::Point& root_location,
+                                       base::TimeTicks time_stamp,
+                                       int flags,
+                                       float scale,
+                                       bool zoom_disabled)
+    : LocatedEvent(type,
+                   gfx::PointF(location),
+                   gfx::PointF(root_location),
+                   time_stamp,
+                   flags),
+      scale_(scale),
+      zoom_disabled_(zoom_disabled) {
+  latency()->AddLatencyNumber(INPUT_EVENT_LATENCY_UI_COMPONENT, 0, 0);
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 // TouchEvent

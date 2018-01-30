@@ -31,6 +31,9 @@ class MockInputDispositionHandler : public InputDispositionHandler {
   void OnWheelEventAck(const MouseWheelEventWithLatencyInfo& event,
                        InputEventAckSource ack_source,
                        InputEventAckState ack_result) override;
+  void OnPinchEventAck(const ui::TouchpadPinchEvent& event,
+                       InputEventAckSource ack_source,
+                       InputEventAckState ack_result) override;
   void OnTouchEventAck(const TouchEventWithLatencyInfo& event,
                        InputEventAckSource ack_source,
                        InputEventAckState ack_result) override;

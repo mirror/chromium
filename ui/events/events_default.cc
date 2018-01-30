@@ -83,6 +83,13 @@ gfx::Vector2d GetMouseWheelOffset(const base::NativeEvent& native_event) {
   return event->offset();
 }
 
+float GetPinchScaleFromNative(const base::NativeEvent& native_event) {
+  const ui::TouchpadPinchEvent* event =
+      static_cast<const ui::TouchpadPinchEvent*>(native_event);
+  DCHECK(event->IsTouchpadPinchEvent());
+  return event->scale();
+}
+
 base::NativeEvent CopyNativeEvent(const base::NativeEvent& event) {
   return NULL;
 }

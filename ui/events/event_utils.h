@@ -106,6 +106,10 @@ EVENTS_EXPORT PointerDetails GetMousePointerDetailsFromNative(
 EVENTS_EXPORT gfx::Vector2d GetMouseWheelOffset(
     const base::NativeEvent& native_event);
 
+// Gets the pinch scale from a native event.
+EVENTS_EXPORT float GetPinchScaleFromNative(
+    const base::NativeEvent& native_event);
+
 // Returns a copy of |native_event|. Depending on the platform, this copy may
 // need to be deleted with ReleaseCopiedNativeEvent().
 base::NativeEvent CopyNativeEvent(

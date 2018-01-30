@@ -1555,14 +1555,39 @@ bool RenderWidgetHostViewMac::ShouldRouteEvent(
 
 void RenderWidgetHostViewMac::SendGesturePinchEvent(WebGestureEvent* event) {
   DCHECK(WebInputEvent::IsPinchGestureEventType(event->GetType()));
-  if (ShouldRouteEvent(*event)) {
-    DCHECK(event->source_device ==
-           blink::WebGestureDevice::kWebGestureDeviceTouchpad);
-    render_widget_host_->delegate()->GetInputEventRouter()->RouteGestureEvent(
-        this, event, ui::LatencyInfo(ui::SourceEventType::WHEEL));
-    return;
+  // TODO use ui events instead of web gesture events
+  /*
+   *if (ShouldRouteEvent(*event)) {
+   *  DCHECK(event->source_device ==
+   *         blink::WebGestureDevice::kWebGestureDeviceTouchpad);
+   *  render_widget_host_->delegate()->GetInputEventRouter()->RouteGestureEvent(
+   *      this, event, ui::LatencyInfo(ui::SourceEventType::WHEEL));
+   *  return;
+   *}
+   */
+  EventType type;
+  float scale = 0;
+  bool zoom_disabled = false;
+  switch (event->GetType()) {
+    case WebInputEvent::kGesturePinchBegin:
+      type = ET_GESTURE_PINCH_BEGIN;
+      break;
+    case WebInputEvent::kGesturePinchUpdate:
+      type = ET_GESTURE_PINCH_UPDATE;
+      scale = event->data.pinch_update.scale;
+      zoom_disabled = event->data.pinch_update.zoom_disabled;
+      break;
+    case WebInputEvent::kGesturePinchEnd:
+      type = ET_GESTURE_PINCH_END;
+      break;
+    default:
+      NOTREACHED();
   }
-  render_widget_host_->ForwardGestureEvent(*event);
+  ui::TouchpadPinchEvent pinch_event(
+      type, event->PositionInWidget(), event->PositionInScreen(),
+      base::TimeTicks(), 0, scale, zoom_disabled);
+  render_widget_host_->ForwardTouchpadPinchEvent(pinch_event);
+  // render_widget_host_->ForwardGestureEvent(*event);
 }
 
 bool RenderWidgetHostViewMac::TransformPointToLocalCoordSpace(

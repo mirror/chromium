@@ -50,6 +50,9 @@ EventType EventTypeFromNative(const base::NativeEvent& native_event) {
       return ET_MOUSE_EXITED;
     case NSEventTypeSwipe:
       return ET_SCROLL_FLING_START;
+    case NSEventTypeMagnify:
+      // TODO begin end gestures?
+      return ET_TOUCHPAD_PINCH_UPDATE;
     case NSAppKitDefined:
     case NSSystemDefined:
       return ET_UNKNOWN;
@@ -59,7 +62,6 @@ EventType EventTypeFromNative(const base::NativeEvent& native_event) {
     case NSTabletPoint:
     case NSTabletProximity:
     case NSEventTypeGesture:
-    case NSEventTypeMagnify:
     case NSEventTypeRotate:
     case NSEventTypeBeginGesture:
     case NSEventTypeEndGesture:
@@ -152,6 +154,18 @@ gfx::Vector2d GetMouseWheelOffset(const base::NativeEvent& event) {
     return gfx::Vector2d(kScrollbarPixelsPerCocoaTick * [event deltaX],
                          kScrollbarPixelsPerCocoaTick * [event deltaY]);
   }
+}
+
+float GetPinchScaleFromNative(const base::NativeEvent& native_event) {
+  // TODO gesture begin?
+  switch ([native_event type]) {
+    case NSEventTypeMagnify:
+      return [event magnification] + 1.0;
+    default:
+      NOTIMPLEMENTED();
+  }
+
+  return 1.0;
 }
 
 base::NativeEvent CopyNativeEvent(const base::NativeEvent& event) {

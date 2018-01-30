@@ -10,6 +10,7 @@
 #include "content/public/common/input_event_ack_source.h"
 #include "content/public/common/input_event_ack_state.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
+#include "ui/events/event.h"
 
 namespace content {
 
@@ -27,6 +28,9 @@ class CONTENT_EXPORT InputDispositionHandler {
                                InputEventAckSource ack_source,
                                InputEventAckState ack_result) = 0;
   virtual void OnWheelEventAck(const MouseWheelEventWithLatencyInfo& event,
+                               InputEventAckSource ack_source,
+                               InputEventAckState ack_result) = 0;
+  virtual void OnPinchEventAck(const ui::TouchpadPinchEvent& event,
                                InputEventAckSource ack_source,
                                InputEventAckState ack_result) = 0;
   virtual void OnTouchEventAck(const TouchEventWithLatencyInfo& event,
