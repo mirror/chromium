@@ -86,6 +86,12 @@ ResourceProvider::~ResourceProvider() {
 #endif  // DCHECK_IS_ON()
 }
 
+bool ResourceProvider::InUseByConsumer(viz::ResourceId id) {
+  viz::internal::Resource* resource = GetResource(id);
+  return resource->lock_for_read_count > 0 || resource->exported_count > 0 ||
+         resource->lost;
+}
+
 void ResourceProvider::DeleteResourceInternal(ResourceMap::iterator it,
                                               DeleteStyle style) {
   TRACE_EVENT0("cc", "ResourceProvider::DeleteResourceInternal");
