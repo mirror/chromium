@@ -77,6 +77,17 @@ std::string EditingTestBase::GetSelectionTextInFlatTreeFromBody(
                                                      selection);
 }
 
+std::string EditingTestBase::GetSelectionTextInFlatTreeFromBody(
+    const Position& position) const {
+  return GetSelectionTextInFlatTreeFromBody(ToPositionInFlatTree(position));
+}
+
+std::string EditingTestBase::GetSelectionTextInFlatTreeFromBody(
+    const PositionInFlatTree& position) const {
+  return GetSelectionTextInFlatTreeFromBody(
+      SelectionInFlatTree::Builder().Collapse(position).Build());
+}
+
 std::string EditingTestBase::GetCaretTextFromBody(
     const Position& position) const {
   DCHECK(position.IsValidFor(GetDocument()))
