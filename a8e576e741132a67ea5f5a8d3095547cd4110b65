@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80fabdb7_befd898b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-30T00:15:29Z",
+      "side": 1,
+      "message": "I think technically we\u0027re supposed to use @IntDef instead of enum.  Haven\u0027t been pushing it hard in patches but we should probably use it.",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 8
+      },
+      "revId": "a8e576e741132a67ea5f5a8d3095547cd4110b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af35ec36_55a492d2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-30T00:15:29Z",
+      "side": 1,
+      "message": "Will this break on restarts?",
+      "range": {
+        "startLine": 81,
+        "startChar": 8,
+        "endLine": 81,
+        "endChar": 56
+      },
+      "revId": "a8e576e741132a67ea5f5a8d3095547cd4110b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d833eb26_1de7b07b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-30T00:15:29Z",
+      "side": 1,
+      "message": "We could probably just always use this version of stopForegroundInternal and have that use ServiceCompat.stopForeground().  That seems more clear to me.",
+      "range": {
+        "startLine": 131,
+        "startChar": 16,
+        "endLine": 131,
+        "endChar": 63
+      },
+      "revId": "a8e576e741132a67ea5f5a8d3095547cd4110b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9281b14f_ebf1f48b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-30T00:15:29Z",
+      "side": 1,
+      "message": "Thanks for moving to an enum this is a lot clearer IMO.",
+      "range": {
+        "startLine": 230,
+        "startChar": 8,
+        "endLine": 239,
+        "endChar": 9
+      },
+      "revId": "a8e576e741132a67ea5f5a8d3095547cd4110b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

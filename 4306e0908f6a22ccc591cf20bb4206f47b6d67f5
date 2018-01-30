@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "70d484fe_9644750d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-30T00:15:29Z",
+      "side": 1,
+      "message": "Doesn\u0027t it only matter what this class thinks the old notification is?  e.g. if we haven\u0027t explicitly called startOrUpdateForegroundService() or stopDownloadForegroundService() with a notification we don\u0027t really have anything to fix?",
+      "parentUuid": "42219d48_141445ba",
+      "range": {
+        "startLine": 52,
+        "startChar": 12,
+        "endLine": 52,
+        "endChar": 63
+      },
+      "revId": "4306e0908f6a22ccc591cf20bb4206f47b6d67f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd3ffdb2_f7d9ef14",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
         "patchSetId": 6
@@ -507,6 +531,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "6448b553_3c149059",
+      "range": {
+        "startLine": 150,
+        "startChar": 12,
+        "endLine": 152,
+        "endChar": 58
+      },
+      "revId": "4306e0908f6a22ccc591cf20bb4206f47b6d67f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a548e16d_6fd74f0d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-30T00:15:29Z",
+      "side": 1,
+      "message": "I would just cache in onCreate() and assume it isn\u0027t null here.",
+      "parentUuid": "ce0a67c3_b6bf6e4d",
       "range": {
         "startLine": 150,
         "startChar": 12,
