@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfd07cf3_7da59bb9",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-01-30T15:04:07Z",
+      "side": 1,
+      "message": "The point of adding this function is that at some later point it\u0027s going to get more comlex? If so, I\u0027d prefer to introduce it in the same CL where you actually change the logic.",
+      "revId": "c256d1e7ee18506910a8a18d94712fc20b49ea82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
