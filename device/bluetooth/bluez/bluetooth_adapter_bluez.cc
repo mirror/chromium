@@ -170,6 +170,25 @@ base::WeakPtr<BluetoothAdapter> BluetoothAdapterBlueZ::CreateAdapter(
   return adapter->weak_ptr_factory_.GetWeakPtr();
 }
 
+#if defined(OS_CHROMEOS)
+void SuspendImminent(power_manager::SuspendImminent::Reason reason) {
+  bluez::BluezDBusManager::Get()->GetBluetoothAdapterClient()->StopDiscovery(
+      object_path_, base::Bind(&BluetoothAdapterBlueZ::OnStopDiscovery,
+                               weak_ptr_factory_.GetWeakPtr(), callback),
+      base::Bind(&BluetoothAdapterBlueZ::OnStopDiscoveryError,
+                 weak_ptr_factory_.GetWeakPtr(), error_callback));
+}
+
+void SuspendDone(const base::TimeDelta& sleep_duration) {
+  bluez::BluezDBusManager::Get()->GetBluetoothAdapterClient()->StartDiscovery(
+      object_path_,
+      base::Bind(&BluetoothAdapterBlueZ::OnStartDiscovery,
+                 weak_ptr_factory_.GetWeakPtr(), callback, error_callback),
+      base::Bind(&BluetoothAdapterBlueZ::OnStartDiscoveryError,
+                 weak_ptr_factory_.GetWeakPtr(), callback, error_callback));
+}
+#endif  // defined(OS_CHROMEOS)
+
 void BluetoothAdapterBlueZ::Shutdown() {
   if (dbus_is_shutdown_)
     return;
