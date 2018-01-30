@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e491844b_d3513f25",
+        "filename": "extensions/common/api/_permission_features.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1263483
+      },
+      "writtenOn": "2018-01-30T23:04:31Z",
+      "side": 1,
+      "message": "We can change to beta for now. If we change to kiosk as suggested below, should I just remove this section and add the 2 new apps right after line 343?",
+      "parentUuid": "7d2da236_a91f2ca1",
+      "revId": "866bac8fbcddbda80c6097bde77fa5ec01e338f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3dd676b8_43b42f19",
         "filename": "extensions/common/api/_permission_features.json",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-30T21:23:58Z",
       "side": 1,
       "message": "can we restrict this to kiosk, too?",
+      "revId": "866bac8fbcddbda80c6097bde77fa5ec01e338f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb5c3817_27ca0c63",
+        "filename": "extensions/common/api/_permission_features.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1263483
+      },
+      "writtenOn": "2018-01-30T23:04:31Z",
+      "side": 1,
+      "message": "Our devices are not run in Single App Kiosk Mode, but I can make our App kiosk_enabled. Is that change sufficient to enable kiosk mode here?",
+      "parentUuid": "3dd676b8_43b42f19",
       "revId": "866bac8fbcddbda80c6097bde77fa5ec01e338f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
