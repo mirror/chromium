@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41f32d97_80aaa3a9",
+        "filename": "services/service_manager/public/cpp/service_context.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-30T23:19:43Z",
+      "side": 1,
+      "message": "nit: -if",
+      "revId": "ff7df0c01d11bf0d4b7f0ec2869f0017c08d2413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "503b32e5_bf61b398",
+        "filename": "services/service_manager/public/cpp/service_context.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-30T23:19:43Z",
+      "side": 1,
+      "message": "I would actually be in favor of hiding RequestQuit() and exposing only this method as just GetQuitClosure() (GetRequestQuitClosure is a fairly confusing name to parse) with appropriate documentation.\n\nI don\u0027t really like the idea of developers having to make the choice between these too, because it\u0027s a difficult choice to make and they really shouldn\u0027t have to care.\n\nIf you don\u0027t mind updating all the other references of RequestQuit() in this CL (there are about 20-ish?), I\u0027d be happy to re-stamp that.",
+      "revId": "ff7df0c01d11bf0d4b7f0ec2869f0017c08d2413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
