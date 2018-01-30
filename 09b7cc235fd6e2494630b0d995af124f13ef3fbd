@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fe72ffd_f9a7a633",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/android.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1111,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-30T02:54:03Z",
+      "side": 1,
+      "message": "If you want the path relative to LayoutTests/ , you should use self.relative_test_filename().",
+      "revId": "09b7cc235fd6e2494630b0d995af124f13ef3fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
