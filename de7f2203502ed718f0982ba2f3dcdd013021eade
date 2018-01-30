@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcc41b19_43296f5c",
+        "filename": "services/network/public/cpp/cors/cors.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-30T09:18:21Z",
+      "side": 1,
+      "message": "const std::string\u0026 should be fine?",
+      "revId": "de7f2203502ed718f0982ba2f3dcdd013021eade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
