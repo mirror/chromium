@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "002ad23b_878513fa",
+        "filename": "third_party/WebKit/LayoutTests/media/picture-in-picture/disable-picture-in-picture.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-30T15:32:48Z",
+      "side": 1,
+      "message": "Can you add in this file TODO\u0027s for the tests that need to be added. For example, here we need to check that the element leaves PIP by checking for the event.",
+      "revId": "6735dda601d60af37e688790f909afac1aa59143",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "148a0872_778df02e",
+        "filename": "third_party/WebKit/LayoutTests/media/picture-in-picture/disable-picture-in-picture.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-30T15:32:48Z",
+      "side": 1,
+      "message": "Can you add basic reflection tests. Something like:\n```\nvar video \u003d document.createElement(\u0027video\u0027);\nassert_false(video.disablePictureInPicture); // default value\n\nvideo.setAttribute(\u0027disablepictureinpicture\u0027, \u0027foo\u0027);\nassert_true(video.disablePictureInPicture);\n\nvideo.removeAttribute(\u0027disablepictureinpicture\u0027);\nassert_false(video.disablePictureInPicture);\n\nvideo.disablePictureInPicture \u003d true;\nassert_equals(video.getAttribute(\u0027disablepictureinpicture\u0027), null);\n\nvideo.disablePictureInPicture \u003d false;\nassert_equals(video.getAttribute(\u0027disablepictureinpicture\u0027), undefined);\n```",
+      "revId": "6735dda601d60af37e688790f909afac1aa59143",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a54c17f_7ee70845",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/HTMLVideoElementPictureInPicture.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-30T15:32:48Z",
+      "side": 1,
+      "message": "Should this be part of `GetStatus()` instead?",
+      "revId": "6735dda601d60af37e688790f909afac1aa59143",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
