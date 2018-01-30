@@ -27,8 +27,8 @@
 #include "ash/shelf/shelf_button.h"
 #include "ash/shelf/shelf_constants.h"
 #include "ash/shelf/shelf_observer.h"
-#include "ash/shelf/shelf_tooltip_manager.h"
 #include "ash/shelf/shelf_view_test_api.h"
+#include "ash/shelf/shelf_view_tooltip_manager.h"
 #include "ash/shelf/shelf_widget.h"
 #include "ash/shell.h"
 #include "ash/shell_test_api.h"
@@ -1357,7 +1357,7 @@ TEST_F(ShelfViewTest, ShelfTooltipTest) {
   ShelfButton* app_button = GetButtonByID(app_button_id);
   ShelfButton* platform_button = GetButtonByID(platform_button_id);
 
-  ShelfTooltipManager* tooltip_manager = test_api_->tooltip_manager();
+  ShelfViewTooltipManager* tooltip_manager = test_api_->tooltip_manager();
   EXPECT_TRUE(test_api_->shelf_view()->GetWidget()->GetNativeWindow());
   ui::test::EventGenerator& generator = GetEventGenerator();
 
@@ -1396,7 +1396,7 @@ TEST_F(ShelfViewTest, ShelfTooltipTest) {
 // Verify a fix for crash caused by a tooltip update for a deleted shelf
 // button, see crbug.com/288838.
 TEST_F(ShelfViewTest, RemovingItemClosesTooltip) {
-  ShelfTooltipManager* tooltip_manager = test_api_->tooltip_manager();
+  ShelfViewTooltipManager* tooltip_manager = test_api_->tooltip_manager();
 
   // Add an item to the shelf.
   ShelfID app_button_id = AddAppShortcut();
@@ -1417,7 +1417,7 @@ TEST_F(ShelfViewTest, RemovingItemClosesTooltip) {
 
 // Changing the shelf alignment closes any open tooltip.
 TEST_F(ShelfViewTest, ShelfAlignmentClosesTooltip) {
-  ShelfTooltipManager* tooltip_manager = test_api_->tooltip_manager();
+  ShelfViewTooltipManager* tooltip_manager = test_api_->tooltip_manager();
 
   // Add an item to the shelf.
   ShelfID app_button_id = AddAppShortcut();
@@ -1508,7 +1508,7 @@ TEST_F(ShelfViewTest, ShouldHideTooltipWithAppListWindowTest) {
 // Test that by moving the mouse cursor off the button onto the bubble it closes
 // the bubble.
 TEST_F(ShelfViewTest, ShouldHideTooltipWhenHoveringOnTooltip) {
-  ShelfTooltipManager* tooltip_manager = test_api_->tooltip_manager();
+  ShelfViewTooltipManager* tooltip_manager = test_api_->tooltip_manager();
   tooltip_manager->set_timer_delay_for_test(0);
   ui::test::EventGenerator& generator = GetEventGenerator();
 

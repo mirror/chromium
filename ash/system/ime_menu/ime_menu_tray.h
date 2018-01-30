@@ -48,6 +48,9 @@ class ASH_EXPORT ImeMenuTray : public TrayBackgroundView,
   // opt-in IME menu.
   bool ShouldShowKeyboardToggle() const;
 
+  // views::View:
+  void SetTextToGivenTooltip(base::string16* tooltip) override;
+
   // TrayBackgroundView:
   base::string16 GetAccessibleNameForTray() override;
   void HideBubbleWithView(const views::TrayBubbleView* bubble_view) override;

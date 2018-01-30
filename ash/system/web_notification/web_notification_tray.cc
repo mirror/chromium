@@ -229,8 +229,6 @@ class WebNotificationImage : public WebNotificationItem {
            gfx::Size(kTrayItemInnerIconSize, kTrayItemInnerIconSize));
     view_ = new views::ImageView();
     view_->SetImage(image);
-    view_->SetTooltipText(
-        l10n_util::GetStringUTF16(IDS_ASH_MESSAGE_CENTER_FOOTER_TITLE));
     AddChildView(view_);
   }
 
@@ -435,6 +433,11 @@ bool WebNotificationTray::IsMessageCenterVisible() const {
     return message_center_bubble() &&
            message_center_bubble()->bubble()->IsVisible();
   }
+}
+
+void WebNotificationTray::SetTextToGivenTooltip(base::string16* tooltip) {
+  tooltip->assign(
+      l10n_util::GetStringUTF16(IDS_ASH_MESSAGE_CENTER_FOOTER_TITLE));
 }
 
 void WebNotificationTray::UpdateAfterShelfAlignmentChange() {
