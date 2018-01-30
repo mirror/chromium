@@ -3686,6 +3686,13 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableDisplayZoomSettingName,
      flag_descriptions::kEnableDisplayZoomSettingDescription, kOsCrOS,
      SINGLE_VALUE_TYPE(chromeos::switches::kEnableDisplayZoomSetting)},
+
+    {"ash-new-touch-support-for-screen-magnification",
+     flag_descriptions::kAshNewTouchSupportForScreenMagnificationName,
+     flag_descriptions::kAshNewTouchSupportForScreenMagnificationDescription,
+     kOsCrOS,
+     SINGLE_VALUE_TYPE(
+         ash::switches::kAshNewTouchSupportForScreenMagnification)},
 #endif  // defined(OS_CHROMEOS)
 
     // NOTE: Adding a new flag requires adding a corresponding entry to enum
