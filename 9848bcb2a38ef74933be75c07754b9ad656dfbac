@@ -118,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "f6532a02_e55741d4",
+        "filename": "chrome/browser/ui/browser_window_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-30T00:10:16Z",
+      "side": 1,
+      "message": "You\u0027re right, and that\u0027s one reason why it\u0027s OK to not include the actual ShowState value here -- observers will probably want to query IsFullscreen(), IsMaximized(), etc. instead of use a raw ShowState.\n\nWould observers for those functions make more sense? OnEnter/ExitFullscreen, OnMaximize, OnRestore, etc.?",
+      "parentUuid": "4d39206e_7c32dca1",
+      "range": {
+        "startLine": 14,
+        "startChar": 15,
+        "endLine": 14,
+        "endChar": 33
+      },
+      "revId": "9848bcb2a38ef74933be75c07754b9ad656dfbac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dbc62a84_70730413",
         "filename": "chrome/browser/ui/cocoa/browser_window_cocoa.h",
         "patchSetId": 2
@@ -164,6 +188,30 @@
     },
     {
       "key": {
+        "uuid": "deb33bed_6c591bd8",
+        "filename": "chrome/browser/ui/tabs/window_activity_watcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-30T00:10:16Z",
+      "side": 1,
+      "message": "Hrm, this will always be called from ~Browser, so the browser will never still be in BrowserList, so this never triggers. I\u0027ll change this to a DCHECK.\n\nIf someone were to create a BrowserWatcher and delete it while the browser is still alive, then we would want to remove the BrowserWindow observer. We can\u0027t just *always* call BrowserWindow::RemoveObserver because, in unit tests, the window is deleted before the browser, which is what led me to checking the BrowserList.",
+      "parentUuid": "09676d1e_8f90d21a",
+      "range": {
+        "startLine": 124,
+        "startChar": 4,
+        "endLine": 130,
+        "endChar": 5
+      },
+      "revId": "9848bcb2a38ef74933be75c07754b9ad656dfbac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1e98d39_0bbbfbdf",
         "filename": "chrome/browser/ui/views/frame/browser_view.cc",
         "patchSetId": 2
@@ -175,6 +223,30 @@
       "writtenOn": "2018-01-29T17:26:47Z",
       "side": 1,
       "message": "At least with views (and I suspect the mac side too), it\u0027s far better to send this notification in response to actual changes. That way you deal with the case of the OS triggering the state change vs only Chrome code triggering the change. I\u0027m specifically thinking of overriding OnNativeWidgetShowStateChanged in BrowserFrame.",
+      "range": {
+        "startLine": 844,
+        "startChar": 0,
+        "endLine": 857,
+        "endChar": 1
+      },
+      "revId": "9848bcb2a38ef74933be75c07754b9ad656dfbac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31bc4029_00198dcc",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-30T00:10:16Z",
+      "side": 1,
+      "message": "I think that\u0027s a fine idea -- just having trouble with the implementation.\n\nOnNativeWidgetWindowShowStateChanged is called only by NativeWidgetAura. In particular, on Linux, DesktopNativeWidgetAura *doesn\u0027t* call it; it\u0027s never called AFAICT (and I\u0027ve tested it). That\u0027s weird... CrOS seems to use NativeWidgetAura, but I\u0027m not sure which one Windows uses.\n\nOn Linux, SaveWindowPlacement() does get called via OnHostResized() and HandleActivationChanged(), so it ends up working, but there might be an edge case where the show state isn\u0027t saved.",
+      "parentUuid": "d1e98d39_0bbbfbdf",
       "range": {
         "startLine": 844,
         "startChar": 0,
