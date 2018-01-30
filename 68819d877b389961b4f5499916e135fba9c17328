@@ -16,6 +16,24 @@
       "revId": "68819d877b389961b4f5499916e135fba9c17328",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16a00d67_6c146cf2",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-30T18:54:17Z",
+      "side": 1,
+      "message": "Thanks for the review Mohammad. Yes, the PlaybackImageProvider decodes lazy images, uploads them and performs a color conversion. The aim is to cache the final result for the target color space in cc\u0027s cache, so it can be re-used across canvas draws. The skia code path that handles this does not cache the result from color conversion across draws (see crbug.com/791828). I\u0027m not sure I understand the twice memory usage scenario, since the image provided from cc\u0027s cache will already be a texture backed image in the target cs, SkCanvas will simply use it directly during the draw. Is there something I might be missing?\n\nAlso, the change that actually moved us to use cc\u0027s cache landed earlier. This change is only ensuring that we keep images locked during the duration of a draw, so the unlocking can be batched at the end. I\u0027ve added the unlocking of images when we flush a recording, which is where we would actually raster and lock any images, and in FinalizeFrame, so that if the canvas has deferral disabled and rasters directly when used by script, it flushes at the end of each task. Let me know if I might be missing a case where we should also unlock.",
+      "parentUuid": "04933fec_69fd40ac",
+      "revId": "68819d877b389961b4f5499916e135fba9c17328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
