@@ -185,7 +185,7 @@ void MIDIAccess::DidSetOutputPortState(unsigned port_index, PortState state) {
 void MIDIAccess::DidReceiveMIDIData(unsigned port_index,
                                     const unsigned char* data,
                                     size_t length,
-                                    double time_stamp) {
+                                    TimeTicks time_stamp) {
   DCHECK(IsMainThread());
   if (port_index >= inputs_.size())
     return;
@@ -211,16 +211,17 @@ void MIDIAccess::SendMIDIData(unsigned port_index,
   // the same time coordinate system as performance.now() into a time in seconds
   // which is based on the time coordinate system of
   // monotonicallyIncreasingTime().
-  double time_stamp;
+  TimeTicks time_stamp;
 
   if (!time_stamp_in_milliseconds) {
     // We treat a value of 0 (which is the default value) as special, meaning
     // "now".  We need to translate it exactly to 0 seconds.
-    time_stamp = 0;
+    time_stamp = TimeTicks();
   } else {
-    double document_start_time =
-        TimeTicksInSeconds(loader->GetTiming().ReferenceMonotonicTime());
-    time_stamp = document_start_time + 0.001 * time_stamp_in_milliseconds;
+    TimeTicks document_start_time =
+        loader->GetTiming().ReferenceMonotonicTime();
+    time_stamp = document_start_time +
+                 TimeDelta::FromMillisecondsD(time_stamp_in_milliseconds);
   }
 
   accessor_->SendMIDIData(port_index, data, length, time_stamp);

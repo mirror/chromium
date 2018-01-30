@@ -34,6 +34,7 @@
 #include <memory>
 #include "media/midi/midi_service.mojom-blink.h"
 #include "platform/wtf/Allocator.h"
+#include "platform/wtf/Time.h"
 #include "public/platform/modules/webmidi/WebMIDIAccessor.h"
 #include "public/platform/modules/webmidi/WebMIDIAccessorClient.h"
 
@@ -53,7 +54,7 @@ class MIDIAccessor final : public WebMIDIAccessorClient {
   void SendMIDIData(unsigned port_index,
                     const unsigned char* data,
                     size_t length,
-                    double time_stamp);
+                    TimeTicks time_stamp);
   // MIDIAccessInitializer and MIDIAccess are both MIDIAccessClient.
   // MIDIAccessInitializer is the first client and MIDIAccess takes over it
   // once the initialization successfully finishes.
@@ -78,7 +79,7 @@ class MIDIAccessor final : public WebMIDIAccessorClient {
   void DidReceiveMIDIData(unsigned port_index,
                           const unsigned char* data,
                           size_t length,
-                          double time_stamp) override;
+                          TimeTicks time_stamp) override;
 
  private:
   explicit MIDIAccessor(MIDIAccessorClient*);
