@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27e47f83_43e6f74c",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-30T10:06:39Z",
+      "side": 1,
+      "message": "signin_with_gaia_account_button_-\u003eaccount() is an optional, so it may not have a value. In your case, we can assume it always has a value, so you may add: \nDCHECK(signin_with_gaia_account_button_-\u003eaccount());",
+      "range": {
+        "startLine": 658,
+        "startChar": 18,
+        "endLine": 658,
+        "endChar": 50
+      },
+      "revId": "2bc39a23817f19a826a4a52a2d49ceef0891d1d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fd94323_1e3e3b2a",
+        "filename": "chrome/browser/ui/views/sync/dice_signin_button.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-30T10:06:39Z",
+      "side": 1,
+      "message": "It looks like the user cannot create a DiceSigninButton without an account and with a drop-down arrow. Please add this to the comment in the header file.\n\nAnd add here a DCHECK:\nDCHECK(account_ || !display_drop_down_arrow) \u003c\u003c \"Cannot display a drop down arrow when there is no account.\";",
+      "range": {
+        "startLine": 52,
+        "startChar": 6,
+        "endLine": 52,
+        "endChar": 14
+      },
+      "revId": "2bc39a23817f19a826a4a52a2d49ceef0891d1d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8c0c3af_38bbac7b",
+        "filename": "chrome/browser/ui/views/sync/dice_signin_button.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-30T10:06:39Z",
+      "side": 1,
+      "message": "This should be if(!arrow) as we only need the additional width for the arrow and divider when we have the arrow.",
+      "range": {
+        "startLine": 102,
+        "startChar": 20,
+        "endLine": 102,
+        "endChar": 26
+      },
+      "revId": "2bc39a23817f19a826a4a52a2d49ceef0891d1d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c52e8a6_5097ff5d",
+        "filename": "chrome/browser/ui/views/sync/dice_signin_button.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-30T10:06:39Z",
+      "side": 1,
+      "message": "This is really tricky as we need to correctly compute a preferred size that includes both the subtitle and the arrow if they are present. Maybe something like along the following lines (be careful, you must not call GetHeightForWidth from CalculatePrefSize as in views:view, GetHeightForWidth calls CalculatePrefSize, so this may lead to an infinite loop):\n\ngfx::Size parent_pref_size \u003d MdTextButton::CalculatePreferredSize();\nif (!account)\n  return parent_pref_size;\n\nint pref_width \u003d parent_pref_size.width();\nif (arrow_) {\n  // Additional width is needed for the divider and the drop-down arrow.\n  pref_width +\u003d GetDividerAndArrowReservedWidth();\n}\n\n// Additional height is needed for the subtitle.\nint pref_height_with_subtitle \u003d label()-\u003eCalculatePreferredSize().height() +\n                                subtitle_-\u003eCalculatePreferredSize().height() +\n                                GetInsets().height();\npref_height \u003d std::max(pref_height, pref_height_with_subtitle);\nreturn gfx::Size(pref_width, pref_height);",
+      "range": {
+        "startLine": 124,
+        "startChar": 23,
+        "endLine": 124,
+        "endChar": 45
+      },
+      "revId": "2bc39a23817f19a826a4a52a2d49ceef0891d1d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e08d1656_6672beb1",
+        "filename": "chrome/browser/ui/views/sync/dice_signin_button.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-30T10:06:39Z",
+      "side": 1,
+      "message": "s/Shink/Shrink",
+      "range": {
+        "startLine": 132,
+        "startChar": 64,
+        "endLine": 132,
+        "endChar": 69
+      },
+      "revId": "2bc39a23817f19a826a4a52a2d49ceef0891d1d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96ec5910_0fe1aded",
+        "filename": "chrome/browser/ui/views/sync/dice_signin_button.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-30T10:06:39Z",
+      "side": 1,
+      "message": "Nit: Add a blank line.",
+      "range": {
+        "startLine": 146,
+        "startChar": 23,
+        "endLine": 146,
+        "endChar": 38
+      },
+      "revId": "2bc39a23817f19a826a4a52a2d49ceef0891d1d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
