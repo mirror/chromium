@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "77a3f1dd_212af193",
+        "filename": "chrome/browser/chromeos/printing/usb_printer_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2018-01-30T01:52:44Z",
+      "side": 1,
+      "message": "nit: Extract this as a method so it can be shared.",
+      "range": {
+        "startLine": 126,
+        "startChar": 3,
+        "endLine": 130,
+        "endChar": 60
+      },
+      "revId": "0efd8ce9deba2931a9fcb9f72597cc8b53b4c013",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81e96241_6a05610f",
         "filename": "chromeos/printing/printer_configuration.h",
         "patchSetId": 5
