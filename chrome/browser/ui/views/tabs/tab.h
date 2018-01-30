@@ -190,6 +190,7 @@ class Tab : public gfx::AnimationDelegate,
   void ViewHierarchyChanged(
       const ViewHierarchyChangedDetails& details) override;
   void OnPaint(gfx::Canvas* canvas) override;
+  void PaintChildren(const views::PaintInfo& info) override;
   void Layout() override;
   void OnThemeChanged() override;
   const char* GetClassName() const override;
@@ -213,6 +214,8 @@ class Tab : public gfx::AnimationDelegate,
   // indicator for pinned tabs. The visual_width parameter is how wide the
   // icon looks (rather than how wide the bounds are).
   void MaybeAdjustLeftForPinnedTab(gfx::Rect* bounds, int visual_width) const;
+
+  void AlignCenterForInactiveTab(gfx::Rect* bounds, int visual_width) const;
 
   // Paints with the normal tab style.  If |clip| is non-empty, the tab border
   // should be clipped against it.
