@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8ef787f_1a6d13e4",
+        "filename": "chrome/test/chromedriver/test/run_py_tests.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2018-01-30T18:33:01Z",
+      "side": 1,
+      "message": "HEAD is currently 66. Please create a new section for 65.\n\nAlso, bug 764519 above should have been fixed. Please try those tests against HEAD. If they pass, please prepare another CL to enable them. Thanks.",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 46
+      },
+      "revId": "ce3298d50fbd5261d7e353e37a3ad7b614dbe7aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
