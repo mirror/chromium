@@ -143,8 +143,7 @@ def _CheckForForbiddenChromiumCode(input_api, output_api):
     results = []
     for f in input_api.AffectedFiles():
         path = f.LocalPath()
-        _, ext = os.path.splitext(path)
-        if ext not in ('.cc', '.cpp', '.h', '.mm'):
+        if audit_non_blink_usage.should_skip_path(path):
             continue
         errors = audit_non_blink_usage.check(path, [(i + 1, l) for i, l in enumerate(f.NewContents())])
         if errors:

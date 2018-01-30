@@ -256,13 +256,27 @@ def check(path, contents):
     return results
 
 
+def should_skip_path(path):
+    """Considers whether this file should be checked or skipped.
+
+    Args:
+        path: The path of the file to consider.
+
+    Returns:
+        True if the file should be skipped.
+    """
+    basename, ext = os.path.splitext(path)
+    if ext not in ('.cc', '.cpp', '.h', '.mm'):
+        return True
+    # Ignore test files.
+    if basename.endswith('Test'):
+        return True
+    return False
+
+
 def main():
     for path in sys.stdin.read().splitlines():
-        basename, ext = os.path.splitext(path)
-        if ext not in ('.cc', '.cpp', '.h', '.mm'):
-            continue
-        # Ignore test files.
-        if basename.endswith('Test'):
+        if should_skip_path(path):
             continue
         try:
             with open(path, 'r') as f:
