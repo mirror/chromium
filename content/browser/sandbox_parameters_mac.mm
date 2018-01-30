@@ -12,11 +12,13 @@
 #include "base/mac/bundle_locations.h"
 #include "base/mac/mac_util.h"
 #include "base/numerics/checked_math.h"
+#include "base/path_service.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/sys_info.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/common/pepper_plugin_info.h"
 #include "sandbox/mac/seatbelt_exec.h"
 #include "services/service_manager/sandbox/mac/sandbox_mac.h"
 
@@ -89,6 +91,40 @@ void SetupCommonSandboxParameters(sandbox::SeatbeltExecClient* client) {
       service_manager::SandboxMac::GetCanonicalPath(base::GetHomeDir()).value();
   CHECK(client->SetParameter(
       service_manager::SandboxMac::kSandboxHomedirAsLiteral, homedir));
+}
+
+void SetupPPAPISandboxParameters(sandbox::SeatbeltExecClient* client) {
+  SetupCommonSandboxParameters(client);
+
+  std::vector<content::PepperPluginInfo> plugins_list;
+  GetContentClient()->AddPepperPlugins(&plugins_list);
+
+  if (plugins_list.empty())
+    LOG(ERROR) << "plugins list is empty";
+  else
+    LOG(ERROR) << "plugins list is not empty";
+
+  const std::string param_base_name = "PPAPI_PATH_";
+  int separator = 0;
+
+  for (const auto& plugin : plugins_list) {
+    LOG(ERROR) << "path: " << plugin.path;
+    if (plugin.is_external) {
+      LOG(ERROR) << "Found external plugin";
+      std::string param_name = param_base_name + std::to_string(separator++);
+      LOG(ERROR) << "param_name: " << param_name;
+      CHECK(client->SetParameter(param_name, plugin.path.value()));
+    }
+  }
+
+  base::FilePath component_updated_dir;
+  CHECK(GetContentClient()->GetComponentUpdatedPepperFlashDir(
+      &component_updated_dir));
+  CHECK(client->SetParameter("COMPONENT_FLASH", component_updated_dir.value()));
+  LOG(ERROR) << "Allowed: " << component_updated_dir.value();
+
+  // The profile does not support more than 4 PPAPI plugins.
+  CHECK(separator <= 4);
 }
 
 void SetupCDMSandboxParameters(sandbox::SeatbeltExecClient* client) {

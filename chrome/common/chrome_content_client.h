@@ -101,6 +101,10 @@ class ChromeContentClient : public content::ContentClient {
   void OnServiceManagerConnected(
       content::ServiceManagerConnection* connection) override;
 
+  // Returns the path to the component updated
+  // Pepper Flash plugin base directory.
+  bool GetComponentUpdatedPepperFlashDir(base::FilePath* dir) override;
+
  private:
   // Used to lock when |origin_trial_policy_| is initialized.
   base::Lock origin_trial_policy_lock_;
