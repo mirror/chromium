@@ -22,6 +22,30 @@
       "revId": "bd086f1fae02b49fd322254f6edfe37bc10441f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "169c381e_efc81bf6",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2018-01-30T19:05:09Z",
+      "side": 1,
+      "message": "Keyboard events are mainly handled by AutofillPopupControllerImpl.\nThis tidbit was added nearly 4 years ago to ensure the popup gets dismissed by ENTER:\nhttps://codereview.chromium.org/209383002\n\nI\u0027m not sure if it\u0027s still necessary though. It doesn\u0027t look like the focus manager stuff in this class is being used when I run it",
+      "parentUuid": "ec998e13_d7bb68fe",
+      "range": {
+        "startLine": 53,
+        "startChar": 13,
+        "endLine": 53,
+        "endChar": 22
+      },
+      "revId": "bd086f1fae02b49fd322254f6edfe37bc10441f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
