@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "27d916ae_0139c40e",
+        "filename": "chrome/browser/ui/views/media_router/web_contents_display_observer_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2018-01-30T02:26:43Z",
+      "side": 1,
+      "message": "The event of the tab merging into a window itself doesn\u0027t cause a OnWidgetBoundsChanged() call, so if the tab is merged into a window before moving halfway over to the other display, |display_| would be inaccurate. Checking display change in this method as well to fix that.",
+      "parentUuid": "b97596fe_0797d750",
+      "revId": "5309951bdd67c16fb332cb930e500f272ac390ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a55d4acc_e57d00b8",
         "filename": "chrome/browser/ui/views/media_router/web_contents_display_observer_view.h",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "5309951bdd67c16fb332cb930e500f272ac390ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "591b6da8_1e5c0a7b",
+        "filename": "chrome/browser/ui/views/media_router/web_contents_display_observer_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2018-01-30T02:26:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a55d4acc_e57d00b8",
+      "revId": "5309951bdd67c16fb332cb930e500f272ac390ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "efe0c7a9_87766336",
+        "filename": "chrome/browser/ui/views/media_router/web_contents_display_observer_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2018-01-30T02:26:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cde1d1b5_f2a08507",
+      "revId": "5309951bdd67c16fb332cb930e500f272ac390ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05881324_7d1b4df8",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 10
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "3f9c7f4f_c5f7a674",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2018-01-30T02:26:43Z",
+      "side": 1,
+      "message": "Yes, fixing that would be good, also because if the user opens the dialog via the toolbar icon, wired presentations would enter the route-without-sink situation.\n\nLink to the bug (for my own reference):\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d697160",
+      "parentUuid": "05881324_7d1b4df8",
+      "revId": "5309951bdd67c16fb332cb930e500f272ac390ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72acf9bf_f630b62d",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 10
@@ -84,6 +156,24 @@
       "revId": "5309951bdd67c16fb332cb930e500f272ac390ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e801e4ce_693b0fbf",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2018-01-30T02:26:43Z",
+      "side": 1,
+      "message": "It\u0027s not. Removed.",
+      "parentUuid": "72acf9bf_f630b62d",
+      "revId": "5309951bdd67c16fb332cb930e500f272ac390ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "a8c4a22a_1f5f95e1",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2018-01-30T02:26:43Z",
+      "side": 1,
+      "message": "Right, removed.",
+      "parentUuid": "e747db04_64060b57",
+      "revId": "5309951bdd67c16fb332cb930e500f272ac390ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d3460eb_cdf29478",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 10
@@ -133,6 +241,24 @@
       "writtenOn": "2018-01-23T19:47:03Z",
       "side": 1,
       "message": "Would it be possible to check the provider id on the sink instead?",
+      "revId": "5309951bdd67c16fb332cb930e500f272ac390ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b3e10dd_8791a760",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1123,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2018-01-30T02:26:43Z",
+      "side": 1,
+      "message": "Given we assume sink IDs are unique across all MRPs, I\u0027m not sure if checking the provider ID here would be helpful. Or am I misunderstanding the question?",
+      "parentUuid": "6d3460eb_cdf29478",
       "revId": "5309951bdd67c16fb332cb930e500f272ac390ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -156,6 +282,24 @@
     },
     {
       "key": {
+        "uuid": "54451223_7d6ffc54",
+        "filename": "chrome/browser/ui/webui/media_router/web_contents_display_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2018-01-30T02:26:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7348c0d1_34bc16f5",
+      "revId": "5309951bdd67c16fb332cb930e500f272ac390ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "299188ab_2f4aebed",
         "filename": "chrome/browser/ui/webui/media_router/web_contents_display_observer.h",
         "patchSetId": 10
@@ -170,6 +314,24 @@
       "revId": "5309951bdd67c16fb332cb930e500f272ac390ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d93c4f2c_892f6b84",
+        "filename": "chrome/browser/ui/webui/media_router/web_contents_display_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2018-01-30T02:26:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "299188ab_2f4aebed",
+      "revId": "5309951bdd67c16fb332cb930e500f272ac390ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
