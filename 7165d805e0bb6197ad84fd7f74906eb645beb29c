@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8ae6d36_caa06c8e",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 912,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-30T23:16:24Z",
+      "side": 1,
+      "message": "It looks to me like this comment applies to the last statement in the function, if it applies anywhere at all?  Maybe it should just be removed.",
+      "revId": "7165d805e0bb6197ad84fd7f74906eb645beb29c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "751b9bf5_ec5705b0",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 918,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-30T23:16:24Z",
+      "side": 1,
+      "message": "Nit: No {} (file style)",
+      "revId": "7165d805e0bb6197ad84fd7f74906eb645beb29c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88916398_53369ed6",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-30T23:16:24Z",
+      "side": 1,
+      "message": "Nit: Initialize here rather than in initializer list, to be consistent with members above.",
+      "revId": "7165d805e0bb6197ad84fd7f74906eb645beb29c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
