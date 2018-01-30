@@ -242,7 +242,7 @@ component("bluetooth") {
     ]
   }
 
-  if (is_chromeos || is_linux) {
+  if (is_chromeos) {
     if (use_dbus) {
       sources += [
         "bluez/bluetooth_adapter_bluez.cc",
@@ -383,24 +383,8 @@ component("bluetooth") {
         "dbus/fake_bluetooth_profile_service_provider.cc",
         "dbus/fake_bluetooth_profile_service_provider.h",
       ]
-      if (is_linux) {
-        sources += [
-          "dbus/dbus_bluez_manager_wrapper_linux.cc",
-          "dbus/dbus_bluez_manager_wrapper_linux.h",
-          "dbus/dbus_thread_manager_linux.cc",
-          "dbus/dbus_thread_manager_linux.h",
-        ]
-      }
       deps += [ "//dbus" ]
     } else {  # !use_dbus
-      sources += [ "bluetooth_adapter_stub.cc" ]
-      if (is_linux) {
-        defines += [ "LINUX_WITHOUT_DBUS" ]
-        sources += [
-          "dbus/dbus_bluez_manager_wrapper_linux.h",
-          "dbus/dbus_bluez_manager_wrapper_stub_linux.cc",
-        ]
-      }
     }
   }
 }
