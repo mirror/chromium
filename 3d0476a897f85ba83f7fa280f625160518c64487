@@ -94,6 +94,30 @@
       "revId": "3d0476a897f85ba83f7fa280f625160518c64487",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20bcdfeb_292c3913",
+        "filename": "DEPS",
+        "patchSetId": 8
+      },
+      "lineNbr": 1348,
+      "author": {
+        "id": 1115956
+      },
+      "writtenOn": "2018-01-30T08:00:32Z",
+      "side": 1,
+      "message": "Please ping me when you did it, so that I can also update V8\u0027s DEPS.",
+      "parentUuid": "a3bfc527_7eb11262",
+      "range": {
+        "startLine": 1348,
+        "startChar": 6,
+        "endLine": 1348,
+        "endChar": 49
+      },
+      "revId": "3d0476a897f85ba83f7fa280f625160518c64487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
