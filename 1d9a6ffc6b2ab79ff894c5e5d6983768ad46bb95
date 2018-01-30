@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1ca58ae_352afecb",
+        "filename": "ui/message_center/views/notification_view_md.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2018-01-30T07:06:58Z",
+      "side": 1,
+      "message": "It looks not used in this CL. If you don\u0027t use it in this CL, remove this from this CL and add when you really need.",
+      "range": {
+        "startLine": 158,
+        "startChar": 2,
+        "endLine": 158,
+        "endChar": 48
+      },
+      "revId": "1d9a6ffc6b2ab79ff894c5e5d6983768ad46bb95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
