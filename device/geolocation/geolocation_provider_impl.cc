@@ -35,13 +35,10 @@ GeolocationProvider* GeolocationProvider::GetInstance() {
 }
 
 // static
-void GeolocationProvider::SetRequestContextProducer(
-    GeolocationProvider::RequestContextProducer request_context_producer) {
+void GeolocationProviderImpl::Initialize(
+    const GeolocationProvider::RequestContextProducer request_context_producer,
+    const std::string& api_key) {
   g_request_context_producer.Get() = request_context_producer;
-}
-
-// static
-void GeolocationProvider::SetApiKey(const std::string& api_key) {
   g_api_key.Get() = api_key;
 }
 

@@ -55,6 +55,13 @@ class DEVICE_GEOLOCATION_EXPORT GeolocationProviderImpl
   // instantiated on the same thread. Ownership is NOT returned.
   static GeolocationProviderImpl* GetInstance();
 
+  // Optional: Provide a callback to produce a request context for network
+  // geolocation requests. Provide a Google API key for network geolocation
+  // requests. Call before using Init() on the singleton GetInstance().
+  static void Initialize(const GeolocationProvider::RequestContextProducer
+                             request_context_producer,
+                         const std::string& api_key);
+
   // Optional: provide a callback which can return a custom location provider
   // from embedder. Call before using Init() on the singleton GetInstance(),
   // and call no more than once.
