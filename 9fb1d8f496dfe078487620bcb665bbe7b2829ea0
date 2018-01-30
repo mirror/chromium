@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "738afd44_946cf762",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/Persistence.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-30T23:56:54Z",
+      "side": 1,
+      "message": "As discussed offline, added addBindingForTest/removeBindingForTest to avoid legalizing the methods.",
+      "parentUuid": "528054d6_1a3182ff",
+      "revId": "9fb1d8f496dfe078487620bcb665bbe7b2829ea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c937270_eda18ef6",
         "filename": "third_party/WebKit/Source/devtools/front_end/persistence/Persistence.js",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-30T02:06:20Z",
       "side": 1,
       "message": "I\u0027m curios are ever disposing this object?",
+      "revId": "9fb1d8f496dfe078487620bcb665bbe7b2829ea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eab2202_850005a1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/Persistence.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-30T23:56:54Z",
+      "side": 1,
+      "message": "I don\u0027t think so :)",
+      "parentUuid": "5c937270_eda18ef6",
       "revId": "9fb1d8f496dfe078487620bcb665bbe7b2829ea0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
