@@ -53,8 +53,7 @@ class CC_EXPORT DisplayResourceProvider : public ResourceProvider {
 
   void WaitSyncToken(viz::ResourceId id);
 
-  // Checks whether a resource is in use.
-  bool InUse(viz::ResourceId id);
+  static GLint GetActiveTextureUnit(gpu::gles2::GLES2Interface* gl);
 
   // The following lock classes are part of the DisplayResourceProvider API and
   // are needed to read the resource contents. The user must ensure that they
