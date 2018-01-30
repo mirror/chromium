@@ -297,4 +297,10 @@ public interface TabObserver {
      * @param isInteractable Whether or not the tab is interactable.
      */
     public void onInteractabilityChanged(boolean isInteractable);
+
+    /**
+     * Called when the navigation entries of this tab have been pruned.
+     * @param tab The notifying {@link Tab}.
+     */
+    void onNavigationListPruned(Tab tab);
 }
