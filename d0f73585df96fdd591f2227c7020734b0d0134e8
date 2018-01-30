@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9f93701_5f734a96",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/device/gattserverdisconnected-event/disconnected.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-30T19:48:35Z",
+      "side": 1,
+      "message": ".then(({device, fake_peripheral}) \u003d\u003e {",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 15
+      },
+      "revId": "d0f73585df96fdd591f2227c7020734b0d0134e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de8a5283_1bb26959",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/device/gattserverdisconnected-event/disconnected_gc.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-30T19:48:35Z",
+      "side": 1,
+      "message": ".then(({fake_peripheral}) \u003d\u003e {",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 15
+      },
+      "revId": "d0f73585df96fdd591f2227c7020734b0d0134e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f11f99f_eced41e6",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/idl/idl-BluetoothDevice.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-30T19:48:35Z",
+      "side": 1,
+      "message": ".then(({device}) \u003d\u003e {",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 15
+      },
+      "revId": "d0f73585df96fdd591f2227c7020734b0d0134e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
