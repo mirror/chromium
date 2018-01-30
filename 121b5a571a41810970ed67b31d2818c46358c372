@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "017ff806_b7dcd93b",
+        "filename": "chrome/browser/prefs/chrome_pref_service_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-30T17:30:27Z",
+      "side": 1,
+      "message": "Actually, this does land in a scoped_refptr @ https://cs.chromium.org/chromium/src/components/prefs/pref_service.h?rcl\u003d0531e1c159fd0e45a8ac33f920374bae89b94cca\u0026l\u003d356\n\nSo instead an explicit reference should be passed and std::move()\u0027d all the way to its destination.",
+      "range": {
+        "startLine": 483,
+        "startChar": 32,
+        "endLine": 483,
+        "endChar": 45
+      },
+      "revId": "121b5a571a41810970ed67b31d2818c46358c372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
