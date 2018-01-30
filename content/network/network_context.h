@@ -35,6 +35,8 @@ class UDPSocketFactory;
 
 namespace content {
 class NetworkServiceImpl;
+class ResourceScheduler;
+class ResourceSchedulerClient;
 class URLLoader;
 class URLRequestContextBuilderMojo;
 
@@ -82,10 +84,17 @@ class CONTENT_EXPORT NetworkContext : public network::mojom::NetworkContext {
 
   NetworkServiceImpl* network_service() { return network_service_; }
 
+  ResourceScheduler* resource_scheduler() { return resource_scheduler_.get(); }
+
   // These are called by individual url loaders as they are being created and
   // destroyed.
   void RegisterURLLoader(URLLoader* url_loader);
   void DeregisterURLLoader(URLLoader* url_loader);
+
+  void CreateURLLoaderFactory(
+      network::mojom::URLLoaderFactoryRequest request,
+      uint32_t process_id,
+      scoped_refptr<ResourceSchedulerClient> resource_scheduler_client);
 
   // network::mojom::NetworkContext implementation:
   void CreateURLLoaderFactory(network::mojom::URLLoaderFactoryRequest request,
@@ -145,6 +154,8 @@ class CONTENT_EXPORT NetworkContext : public network::mojom::NetworkContext {
 
   net::URLRequestContext* url_request_context_ = nullptr;
 
+  std::unique_ptr<ResourceScheduler> resource_scheduler_;
+
   // Put it below |url_request_context_| so that it outlives all the
   // NetworkServiceURLLoaderFactory instances.
   mojo::StrongBindingSet<network::mojom::URLLoaderFactory>
@@ -163,6 +174,10 @@ class CONTENT_EXPORT NetworkContext : public network::mojom::NetworkContext {
   std::unique_ptr<network::CookieManager> cookie_manager_;
 
   std::unique_ptr<network::UDPSocketFactory> udp_socket_factory_;
+  int current_resource_scheduler_client_id_ = 0;
+
+  // TODO(yhirano): Consult with switches::kDisableResourceScheduler.
+  constexpr static bool enable_resource_scheduler_ = true;
 
   DISALLOW_COPY_AND_ASSIGN(NetworkContext);
 };
