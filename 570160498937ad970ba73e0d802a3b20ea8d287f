@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "fdbd9c6f_48e5f5a2",
+        "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-30T19:47:22Z",
+      "side": 1,
+      "message": "The live lock is addressed (whether we update child_sequence_number or not) by giving one side priority. That guarantees forward progress.\n\nA misbehaving renderer is a separate thing that would be solved elsewhere. That would be a problem that exists today.\n\nI\u0027ll go ahead and plumb the child_sequence_number. But the only benefit is debugability. It doesn\u0027t change behavior.",
+      "parentUuid": "77e73c35_65f9c844",
+      "range": {
+        "startLine": 24,
+        "startChar": 50,
+        "endLine": 24,
+        "endChar": 71
+      },
+      "revId": "570160498937ad970ba73e0d802a3b20ea8d287f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4851eccc_1a3d4087",
         "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
         "patchSetId": 20
