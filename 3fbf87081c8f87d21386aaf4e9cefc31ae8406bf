@@ -450,6 +450,24 @@
     },
     {
       "key": {
+        "uuid": "4b374c09_bbf69d2f",
+        "filename": "win_notification_helper/notification_activator.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-30T19:49:59Z",
+      "side": 1,
+      "message": "Hmm, actually it is more complicated than this. The notification is profile specific. It is the browser instance with the particular profile (if 2+ profiles exist) that will have OnActivate() invoked by that toast. \n\nFor example, I have one browser instance open with two profiles signed in. I use profile 1 to push out a notification and close the render page with that profile. Then I click the toast, will render page with profile 2 have OnActivate invoked? No.",
+      "parentUuid": "a8a0a885_c1dfd369",
+      "revId": "3fbf87081c8f87d21386aaf4e9cefc31ae8406bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8912368_12f8dbca",
         "filename": "win_notification_helper/notification_activator.cc",
         "patchSetId": 41
