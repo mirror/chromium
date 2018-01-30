@@ -94,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "b51b8e1f_0c7aab16",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2018-01-30T18:35:54Z",
+      "side": 1,
+      "message": "As in an assert?",
+      "parentUuid": "f8a206ff_54e23c23",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 120,
+        "endChar": 15
+      },
+      "revId": "fd81a8e8fdd7cb2028cde8f2111efd942f863cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "90871f14_87a3df3e",
         "filename": "net/disk_cache/simple/simple_file_tracker.cc",
         "patchSetId": 20
@@ -105,6 +129,30 @@
       "writtenOn": "2018-01-30T18:26:32Z",
       "side": 1,
       "message": "DCHECK_EQ",
+      "range": {
+        "startLine": 268,
+        "startChar": 6,
+        "endLine": 268,
+        "endChar": 12
+      },
+      "revId": "fd81a8e8fdd7cb2028cde8f2111efd942f863cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6b81aaf_1ce4ee58",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2018-01-30T18:35:54Z",
+      "side": 1,
+      "message": "I doubt that would compile (how would it print iterators), but will try.",
+      "parentUuid": "90871f14_87a3df3e",
       "range": {
         "startLine": 268,
         "startChar": 6,
@@ -140,6 +188,30 @@
     },
     {
       "key": {
+        "uuid": "505a54c8_ff72803e",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2018-01-30T18:35:54Z",
+      "side": 1,
+      "message": "Hmm, trying to make it clear that it might not be in the LRU at all beforehand, I feel like \u0027Move\u0027 would feel more like it\u0027s there already?",
+      "parentUuid": "590f8255_35895bf1",
+      "range": {
+        "startLine": 300,
+        "startChar": 24,
+        "endLine": 300,
+        "endChar": 42
+      },
+      "revId": "fd81a8e8fdd7cb2028cde8f2111efd942f863cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "845767dd_87ddfbf9",
         "filename": "net/disk_cache/simple/simple_file_tracker.cc",
         "patchSetId": 20
@@ -151,6 +223,30 @@
       "writtenOn": "2018-01-30T18:26:32Z",
       "side": 1,
       "message": "DCHECKing that std::list::push_front works seems a bit much.",
+      "range": {
+        "startLine": 303,
+        "startChar": 0,
+        "endLine": 304,
+        "endChar": 60
+      },
+      "revId": "fd81a8e8fdd7cb2028cde8f2111efd942f863cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3dc7dcb_7f21b1d9",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2018-01-30T18:35:54Z",
+      "side": 1,
+      "message": "Also redundant with line 309.",
+      "parentUuid": "845767dd_87ddfbf9",
       "range": {
         "startLine": 303,
         "startChar": 0,
