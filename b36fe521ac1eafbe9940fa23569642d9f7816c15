@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "48ca375c_2f7e89fb",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2018-01-30T18:29:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff1ba67d_b6d25da6",
+      "revId": "b36fe521ac1eafbe9940fa23569642d9f7816c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8cef59c0_c574597b",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
         "patchSetId": 4
@@ -83,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "5b903f7b_448cfe60",
+        "filename": "chromeos/printing/ppd_line_reader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2018-01-30T18:29:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90bb4af1_72ede492",
+      "revId": "b36fe521ac1eafbe9940fa23569642d9f7816c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9842789c_c4784f0e",
         "filename": "chromeos/printing/ppd_line_reader.cc",
         "patchSetId": 4
@@ -97,6 +133,24 @@
       "revId": "b36fe521ac1eafbe9940fa23569642d9f7816c15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab71515f_35674ba7",
+        "filename": "chromeos/printing/ppd_line_reader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2018-01-30T18:29:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9842789c_c4784f0e",
+      "revId": "b36fe521ac1eafbe9940fa23569642d9f7816c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "0984e60b_ebd0877d",
+        "filename": "chromeos/printing/ppd_line_reader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2018-01-30T18:29:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c9aad4a_a29b6a33",
+      "revId": "b36fe521ac1eafbe9940fa23569642d9f7816c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d58bc057_05ec79d1",
         "filename": "chromeos/printing/ppd_line_reader_unittest.cc",
         "patchSetId": 4
@@ -134,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "14dec9b3_792d3ad4",
+        "filename": "chromeos/printing/ppd_line_reader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2018-01-30T18:29:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d58bc057_05ec79d1",
+      "revId": "b36fe521ac1eafbe9940fa23569642d9f7816c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "922062d5_22333541",
         "filename": "chromeos/printing/ppd_line_reader_unittest.cc",
         "patchSetId": 4
@@ -148,6 +238,24 @@
       "revId": "b36fe521ac1eafbe9940fa23569642d9f7816c15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21142b13_45722ec7",
+        "filename": "chromeos/printing/ppd_line_reader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2018-01-30T18:29:45Z",
+      "side": 1,
+      "message": "Yeah I agree that they\u0027re a bit redundant, I included them per Sean\u0027s suggestion just to sanity check that we would also reject zip and exe files.\n\nI removed the test functions and moved the expect calls into the more general \"InvalidPpdMagicNumber\" test function.",
+      "parentUuid": "922062d5_22333541",
+      "revId": "b36fe521ac1eafbe9940fa23569642d9f7816c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
