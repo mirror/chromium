@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "8afc9eb9_554bcd67",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3420,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-30T01:04:12Z",
+      "side": 1,
+      "message": "I\u0027ve moved this to be under the experimental app banner flag.",
+      "parentUuid": "66033567_05a29fa6",
+      "revId": "9de86442f6f39576af380b3e88bd456dfb695c2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65b0f0c5_b3924eb3",
         "filename": "chrome/browser/banners/app_banner_infobar_delegate_android.cc",
         "patchSetId": 4
@@ -89,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "3b3478a5_001f0d33",
+        "filename": "chrome/browser/banners/app_banner_infobar_delegate_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-30T01:04:12Z",
+      "side": 1,
+      "message": "Yes, this change is part of moving the CreateShortcutInfo() method from the anonymous namespace in app_banner_manager_android.cc to a static method so that it can be used by the PwaAmbientInfobarManager. These lines of code were formerly in the anonymous method.",
+      "parentUuid": "65b0f0c5_b3924eb3",
+      "range": {
+        "startLine": 197,
+        "startChar": 20,
+        "endLine": 197,
+        "endChar": 32
+      },
+      "revId": "9de86442f6f39576af380b3e88bd456dfb695c2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbacf1dc_610ad2ad",
         "filename": "chrome/browser/installable/pwa_ambient_badge_manager_android.h",
         "patchSetId": 4
@@ -100,6 +142,30 @@
       "writtenOn": "2018-01-28T05:42:20Z",
       "side": 1,
       "message": "I would have thought we\u0027d add this functionality to the normal manager, since it seems quite linked to it. E.g. while it is an infobar, we might want to prevent showing it if the site prevents default or something.",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 35
+      },
+      "revId": "9de86442f6f39576af380b3e88bd456dfb695c2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8897019f_0fef08cd",
+        "filename": "chrome/browser/installable/pwa_ambient_badge_manager_android.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-30T01:04:12Z",
+      "side": 1,
+      "message": "I did it this way because I didn\u0027t want to bloat the existing manager even more without refactoring, and I want to be able to have UX play with this asap.\n\nThe eventual structure I want to get to is that there is one installability manager which owns both the AppBannerManager and the PwaAmbientBadgeManager. That installability manager:\n\n1. checks for installability on page load\n2. tells PwaAmbientBadgeManager to show the badge or not\n3. tells AppBannerManager to start the banner pipeline\n\nAppBannerManager would then:\n\n1. check engagement / trigger when enough engagement\n2. interface with Blink for beforeinstallpromptevent\n\nSo I want to land this as a separate class because that\u0027s how I think it should ideally end up. The next step is teasing apart AppBannerManager into the installability manager and the actual AppBannerManager, and then refactoring. WDYT?",
+      "parentUuid": "bbacf1dc_610ad2ad",
       "range": {
         "startLine": 18,
         "startChar": 6,
