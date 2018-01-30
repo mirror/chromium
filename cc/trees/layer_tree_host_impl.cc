@@ -861,11 +861,15 @@ bool LayerTreeHostImpl::HasDamage(bool handle_visibility_changed) const {
                             active_tree->hud_layer()->IsAnimatingHUDContents();
   bool must_always_swap =
       layer_tree_frame_sink_->capabilities().must_always_swap;
+  bool local_surface_id_changed =
+      settings_.enable_surface_synchronization &&
+      last_draw_local_surface_id_.is_valid() &&
+      (last_draw_local_surface_id_ != active_tree->local_surface_id());
 
   return !root_surface_has_contributing_layers ||
          !root_surface_has_no_visible_damage ||
          active_tree_->property_trees()->effect_tree.HasCopyRequests() ||
-         must_always_swap || hud_wants_to_draw_;
+         must_always_swap || hud_wants_to_draw_ || local_surface_id_changed;
 }
 
 DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
@@ -1929,6 +1933,7 @@ bool LayerTreeHostImpl::DrawLayers(FrameData* frame) {
       active_tree()->local_surface_id().is_valid()) {
     layer_tree_frame_sink_->SetLocalSurfaceId(
         active_tree()->local_surface_id());
+    last_draw_local_surface_id_ = active_tree()->local_surface_id();
   }
   if (const char* client_name = GetClientNameForMetrics()) {
     size_t total_quad_count = 0;
