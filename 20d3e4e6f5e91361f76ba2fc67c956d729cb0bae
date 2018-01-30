@@ -22,6 +22,30 @@
       "revId": "20d3e4e6f5e91361f76ba2fc67c956d729cb0bae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b5398ad_37763d93",
+        "filename": "third_party/zlib/names.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-30T02:22:52Z",
+      "side": 0,
+      "message": "Thanks for checking.  I see two possible options (I\u0027m not sure which is better) ... either 1) add x86_cpu_enable_ssse3 to the simd.patch, or else 2) retain it in the adler32.patch.",
+      "parentUuid": "d8c76a56_e4d64dbb",
+      "range": {
+        "startLine": 165,
+        "startChar": 31,
+        "endLine": 165,
+        "endChar": 37
+      },
+      "revId": "20d3e4e6f5e91361f76ba2fc67c956d729cb0bae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
