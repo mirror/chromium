@@ -212,7 +212,8 @@ class MojomProcessor(object):
             export_header=args.export_header,
             generate_non_variant_code=args.generate_non_variant_code,
             support_lazy_serialization=args.support_lazy_serialization,
-            allow_native_structs=args.allow_native_structs)
+            allow_native_structs=args.allow_native_structs,
+            disallow_interfaces=args.disallow_interfaces)
         filtered_args = []
         if hasattr(generator_module, 'GENERATOR_PREFIX'):
           prefix = '--' + generator_module.GENERATOR_PREFIX + '_'
@@ -380,6 +381,13 @@ def main():
       help="Allows the [Native] attribute to be specified on structs within "
       "the mojom file. Must not be specified on internal bindings mojom or "
       "other dependencies thereof.", action="store_true")
+  generate_parser.add_argument(
+      "--disallow_interfaces",
+      help="Disallows interface definitions within the mojom file. It is an "
+      "error to specify this flag when processing a mojom file which defines "
+      "any interface/. Must be specified when generating bindings for internal "
+      "bindings data structures, e.g. control message structures.",
+      action="store_true")
   generate_parser.set_defaults(func=_Generate)
 
   precompile_parser = subparsers.add_parser("precompile",

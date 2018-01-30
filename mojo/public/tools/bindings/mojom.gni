@@ -205,6 +205,11 @@ if (enable_mojom_typemapping) {
 #       be serialized and deserialized using a legacy IPC::ParamTraits
 #       specialization.
 #
+#   disallow_interfaces( (optional)
+#       If set to |true|, mojoms in this target may not define interfaces.
+#       Generates bindings with a smaller set of dependencies. Defaults to
+#       |false|.
+#
 #   scramble_message_ids (optional)
 #       If set to |true| (the default), generated mojom interfaces will use
 #       scrambled ordinal identifiers in encoded messages.
@@ -295,6 +300,10 @@ template("mojom") {
     assert(defined(invoker.component_deps_blink))
   }
 
+  require_full_cpp_deps =
+      !defined(invoker.allow_native_structs) || invoker.allow_native_structs ||
+      !defined(invoker.disallow_interfaces) || !invoker.disallow_interfaces
+
   all_deps = []
   if (defined(invoker.deps)) {
     all_deps += invoker.deps
@@ -358,6 +367,10 @@ template("mojom") {
 
     if (!defined(invoker.allow_native_structs) || invoker.allow_native_structs) {
       common_generator_args += [ "--allow_native_structs" ]
+    }
+
+    if (defined(invoker.disallow_interfaces) && invoker.disallow_interfaces) {
+      common_generator_args += [ "--disallow_interfaces" ]
     }
 
     if (defined(invoker.import_dirs)) {
@@ -481,9 +494,15 @@ template("mojom") {
           process_file_template(invoker.sources, generator_shared_cpp_outputs)
       deps += [ ":$generator_shared_target_name" ]
     }
-    public_deps = [
-      "//mojo/public/cpp/bindings",
-    ]
+    if (require_full_cpp_deps) {
+      public_deps = [
+        "//mojo/public/cpp/bindings",
+      ]
+    } else {
+      public_deps = [
+        "//mojo/public/cpp/bindings:bindings_base",
+      ]
+    }
     foreach(d, all_deps) {
       # Resolve the name, so that a target //mojo/something becomes
       # //mojo/something:something and we can append shared_cpp_sources_suffix
@@ -826,8 +845,13 @@ template("mojom") {
       public_deps = [
         ":$shared_cpp_library_target_name",
         "//base",
-        "//mojo/public/cpp/bindings",
       ]
+      if (require_full_cpp_deps) {
+        public_deps += [ "//mojo/public/cpp/bindings" ]
+      } else {
+        public_deps += [ "//mojo/public/cpp/bindings:bindings_base" ]
+      }
+
       if (enabled_sources != []) {
         public_deps += [ ":$generator_target_name" ]
       }
