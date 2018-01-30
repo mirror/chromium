@@ -15,6 +15,8 @@
 #include "base/strings/sys_string_conversions.h"
 #include "chrome/browser/platform_util_internal.h"
 #include "content/public/browser/browser_thread.h"
+#include "ui/gfx/geometry/rect.h"
+#import "ui/gfx/mac/coordinate_conversion.h"
 #include "url/gurl.h"
 
 namespace platform_util {
@@ -114,6 +116,10 @@ bool IsSwipeTrackingFromScrollEventsEnabled() {
   SEL selector = @selector(isSwipeTrackingFromScrollEventsEnabled);
   return [NSEvent respondsToSelector:selector]
       && [NSEvent performSelector:selector];
+}
+
+gfx::Rect GetWindowBounds(gfx::NativeWindow window) {
+  return gfx::ScreenRectFromNSRect([window frame]);
 }
 
 }  // namespace platform_util
