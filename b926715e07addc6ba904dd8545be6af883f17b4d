@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "0c79a6e6_c80b1e77",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-30T18:46:45Z",
+      "side": 1,
+      "message": "It has a cost in terms of code size, readability, and outputs a fair bit of console spam when someone is debugging some other feature of this file.  I generally feel like we should restrict DVLOGs to things core to the functionality of the file, or errors, so anyone enabling logging for the file is likely to care about them.",
+      "parentUuid": "4a69f856_bbbed52a",
+      "range": {
+        "startLine": 246,
+        "startChar": 19,
+        "endLine": 246,
+        "endChar": 43
+      },
+      "revId": "b926715e07addc6ba904dd8545be6af883f17b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0ec4ea4_ae4e7981",
         "filename": "content/browser/loader/resource_loader.cc",
         "patchSetId": 2
@@ -237,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "c2677311_fd63b78d",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-30T18:46:45Z",
+      "side": 1,
+      "message": "But |read_more_body_supressed_| are defer/resume are not orthogonal, I believe.  If we\u0027ve deferred a request, we won\u0027t try to read, so |read_more_body_supressed_| can\u0027t be set to true.  If read_more_body_suppressed_ is true, we won\u0027t try to advance the state of the request (Since we\u0027ve already deferred the next read, implicitly), so defer won\u0027t be set to true.",
+      "parentUuid": "20d2d8b9_72986de4",
+      "range": {
+        "startLine": 368,
+        "startChar": 25,
+        "endLine": 368,
+        "endChar": 0
+      },
+      "revId": "b926715e07addc6ba904dd8545be6af883f17b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c325957b_e1a712f1",
         "filename": "content/browser/loader/resource_loader.h",
         "patchSetId": 2
@@ -272,6 +320,30 @@
       "side": 1,
       "message": "Consistency is important: currently services/network/url_loader.{h,cc} records the uncompressed number, so I prefer |total_body_read_bytes_|.\n\nBut I am fine to change both to GetRawBodyBytes() if you think it makes more sense. (This histogram is used to measure how much data we write to cache before we realize that it may be unsafe and pause.) WDYT?",
       "parentUuid": "c325957b_e1a712f1",
+      "range": {
+        "startLine": 205,
+        "startChar": 10,
+        "endLine": 205,
+        "endChar": 32
+      },
+      "revId": "b926715e07addc6ba904dd8545be6af883f17b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cc62bcb_ca447d74",
+        "filename": "content/browser/loader/resource_loader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-30T18:46:45Z",
+      "side": 1,
+      "message": "I\u0027d prefer GetRawBodyBytes() in both places.  It also removes keeping around an extra int64 and the logic to calculate it - IMHO, the fewer different measures we track, the better, now that the computations here are complicated, it\u0027s one more moving part that can break, though.",
+      "parentUuid": "8cb78c82_e73742de",
       "range": {
         "startLine": 205,
         "startChar": 10,
