@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7658fcb4_425c608f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2018-01-30T17:38:57Z",
+      "side": 1,
+      "message": "+crbug number",
+      "revId": "08200b4e3ccd284ee734129b70dfdaad6aea639c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec8894be_165e0445",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/FetchContext.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2018-01-30T17:38:57Z",
+      "side": 1,
+      "message": "nit optional: calling GetLoadingTaskRunner() here might be clearer (not sure, purely a matter of taste).\nIt removes copy-pasted code here, and we can remove GetLoadingControlTaskRunner() overrides that are identical with corresponding GetLoadingTaskRunner() overrides (e.g. in MochFetchContext and WorkerFetchContext).",
+      "range": {
+        "startLine": 263,
+        "startChar": 11,
+        "endLine": 263,
+        "endChar": 68
+      },
+      "revId": "08200b4e3ccd284ee734129b70dfdaad6aea639c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "794cd337_29690ae8",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2018-01-30T17:38:57Z",
+      "side": 1,
+      "message": "Could you also mention briefly why this is applied only to ScriptResource?\nAlso having a crbug number is helpful for tracking this (possibly long-term) issue.",
+      "revId": "08200b4e3ccd284ee734129b70dfdaad6aea639c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
