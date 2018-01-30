@@ -42,9 +42,12 @@ TEST(StrAppend, 8Bit) {
   result = "foo";
   StrAppend(&result, {"1", "22", "333"});
   EXPECT_EQ("foo122333", result);
+
+  EXPECT_EQ(0, result[100000000]);
 }
 
 TEST(StrAppend, 16Bit) {
+  CHECK(false);
   string16 arg1 = ASCIIToUTF16("1");
   string16 arg2 = ASCIIToUTF16("22");
   string16 arg3 = ASCIIToUTF16("333");
