@@ -108,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "5bdc7903_5d5c5b88",
+        "filename": "services/ui/display/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1128690
+      },
+      "writtenOn": "2018-01-30T01:35:35Z",
+      "side": 1,
+      "message": "I addded ozone_internal variable to services/ui/display/BUILD.gn.\nThanks!",
+      "parentUuid": "4420536f_5baaaf0f",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 26
+      },
+      "revId": "409f2d586c66870aab9bcc1a2af5361cbe33222c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ee1ac58_d4bb7b84",
         "filename": "third_party/libdrm/BUILD.gn",
         "patchSetId": 14
