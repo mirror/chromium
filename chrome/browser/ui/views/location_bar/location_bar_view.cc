@@ -10,6 +10,7 @@
 
 #include "base/feature_list.h"
 #include "base/i18n/rtl.h"
+#include "base/metrics/field_trial_params.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "chrome/app/chrome_command_ids.h"
@@ -881,10 +882,7 @@ base::string16 LocationBarView::GetLocationIconText() const {
       return extension_name;
   }
 
-  bool has_ev_cert =
-      (GetToolbarModel()->GetSecurityLevel(false) == security_state::EV_SECURE);
-  return has_ev_cert ? GetToolbarModel()->GetEVCertName()
-                     : GetToolbarModel()->GetSecureVerboseText();
+  return GetToolbarModel()->GetSecureVerboseText();
 }
 
 bool LocationBarView::ShouldShowKeywordBubble() const {
@@ -898,11 +896,7 @@ bool LocationBarView::ShouldShowLocationIconText() const {
        GetToolbarModel()->GetURL().SchemeIs(extensions::kExtensionScheme)))
     return true;
 
-  using SecurityLevel = security_state::SecurityLevel;
-  const SecurityLevel level = GetToolbarModel()->GetSecurityLevel(false);
-  return level == SecurityLevel::EV_SECURE || level == SecurityLevel::SECURE ||
-         level == SecurityLevel::DANGEROUS ||
-         level == SecurityLevel::HTTP_SHOW_WARNING;
+  return !GetToolbarModel()->GetSecureVerboseText().empty();
 }
 
 bool LocationBarView::ShouldAnimateLocationIconTextVisibilityChange() const {
