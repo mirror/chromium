@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "04d01adb_2e72120d",
+        "filename": "ui/webui/resources/cr_elements/cr_expand_button/cr_expand_button.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-30T20:04:41Z",
+      "side": 1,
+      "message": "I don\u0027t understand this change. paper-icon-button is not an extension of \u0027paper-icon-button-light\u0027. There are two completely separate elements, and either one is used or the other as in\n\n1) \u003cpaper-icon-button\u003e...\u003c/paper-icon-button\u003e OR\n2) \u003cbutton is\u003d\"paper-icon-button-light\"\u003e....\u003c/button\u003e\n\nIn other words the \u003cbutton is\u003d...\"\u003e was not used by accident here.\n\nSee other usages at https://cs.chromium.org/search/?q\u003d%22is%3D%5C%22paper-icon-button-light%5C%22%22+-file:third_party+-file:infra\u0026type\u003dcs.",
+      "range": {
+        "startLine": 28,
+        "startChar": 7,
+        "endLine": 28,
+        "endChar": 53
+      },
+      "revId": "6e4fa42263c41f95be928d7a67a37a99d36f9233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a808a5eb_f92528f0",
         "filename": "ui/webui/resources/cr_elements/cr_expand_button/cr_expand_button.html",
         "patchSetId": 2
