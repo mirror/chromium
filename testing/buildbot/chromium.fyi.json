@@ -4684,7 +4684,7 @@
               "device_type": "bullhead"
             }
           ],
-          "hard_timeout": 960,
+          "hard_timeout": 7200,
           "output_links": [
             {
               "link": [
