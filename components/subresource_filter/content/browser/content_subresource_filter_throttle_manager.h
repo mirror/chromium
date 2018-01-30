@@ -84,6 +84,10 @@ class ContentSubresourceFilterThrottleManager
     return ruleset_handle_.get();
   }
 
+  bool IsFrameTaggedAsAdForTesting(content::RenderFrameHost* frame_host) {
+    return ad_frames_.count(frame_host) > 0;
+  }
+
  protected:
   // content::WebContentsObserver:
   void RenderFrameDeleted(content::RenderFrameHost* frame_host) override;
@@ -159,6 +163,10 @@ class ContentSubresourceFilterThrottleManager
 
   std::unordered_map<content::NavigationHandle*, OngoingThrottleInfo>
       ongoing_activation_throttles_;
+
+  // Set of frames that have been identified as ads, either through matching the
+  // ruleset or if their parent frame was an ad frame.
+  std::unordered_set<content::RenderFrameHost*> ad_frames_;
 
   ScopedObserver<SubresourceFilterObserverManager, SubresourceFilterObserver>
       scoped_observer_;
