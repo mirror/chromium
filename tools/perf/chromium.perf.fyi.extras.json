@@ -291,8 +291,10 @@
         ],
         "merge": {
           "args": [
+            "--configuration-name", "buildbot-test",
+            "--results-url", "https://chromeperf.appspot.com"
           ],
-          "script": "//tools/perf/upload_perf_results.py"
+          "script": "//tools/perf/process_perf_results.py"
         },
         "swarming": {
           "can_use_on_swarming_builders": true,
@@ -324,8 +326,10 @@
         ],
         "merge": {
           "args": [
+            "--configuration-name", "buildbot-test",
+            "--results-url", "https://chromeperf.appspot.com"
           ],
-          "script": "//tools/perf/upload_perf_results.py"
+          "script": "//tools/perf/process_perf_results.py"
         },
         "swarming": {
           "can_use_on_swarming_builders": true,
@@ -350,22 +354,19 @@
           "--browser=reference"
         ],
         "isolate_name": "performance_test_suite",
+        "merge": {
+          "args": [
+            "--configuration-name",
+            "buildbot-test",
+            "--results-url",
+            "https://chromeperf.appspot.com"
+          ],
+          "script": "//tools/perf/process_perf_results.py"
+        },
         "name": "performance_test_suite",
         "override_compile_targets": [
           "performance_test_suite"
         ],
-        "merge": {
-          "args": [
-          ],
-          "script": "//tools/perf/upload_perf_results.py"
-        },
-        "trigger_script": {
-          "args": [
-	    "--bot-id=swarm846-c4",
-	    "--bot-id=swarm847-c4"
-          ],
-          "script": "//tools/perf/perf_device_trigger.py"
-        },
         "swarming": {
           "can_use_on_swarming_builders": true,
           "dimension_sets": [
@@ -377,6 +378,13 @@
           "hard_timeout": 10800,
           "ignore_task_failure": false,
           "io_timeout": 3600
+        },
+        "trigger_script": {
+          "args": [
+            "--bot-id=swarm846-c4",
+            "--bot-id=swarm847-c4"
+          ],
+          "script": "//tools/perf/perf_device_trigger.py"
         }
       }
     ]
