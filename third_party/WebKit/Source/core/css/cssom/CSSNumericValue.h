@@ -55,7 +55,7 @@ class CORE_EXPORT CSSNumericValue : public CSSStyleValue {
   // Internal methods.
   // Arithmetic
   virtual CSSNumericValue* Negate();
-  virtual CSSNumericValue* Invert();
+  virtual CSSNumericValue* Invert(ExceptionState&);
 
   // Converts between compatible types.
   CSSUnitValue* to(CSSPrimitiveValue::UnitType) const;

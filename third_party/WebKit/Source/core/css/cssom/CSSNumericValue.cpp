@@ -425,7 +425,9 @@ CSSNumericValue* CSSNumericValue::div(
     ExceptionState& exception_state) {
   auto values = CSSNumberishesToNumericValues(numberishes);
   std::transform(values.begin(), values.end(), values.begin(),
-                 [](CSSNumericValue* v) { return v->Invert(); });
+                 [&exception_state](CSSNumericValue* v) {
+                   return v->Invert(exception_state);
+                 });
   PrependValueForArithmetic<kProductType>(values, this);
 
   if (CSSUnitValue* unit_value = MaybeMultiplyAsUnitValue(values))
@@ -469,7 +471,7 @@ CSSNumericValue* CSSNumericValue::Negate() {
   return CSSMathNegate::Create(this);
 }
 
-CSSNumericValue* CSSNumericValue::Invert() {
+CSSNumericValue* CSSNumericValue::Invert(ExceptionState&) {
   return CSSMathInvert::Create(this);
 }
 
