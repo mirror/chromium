@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78af8439_a08aa22c",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-30T16:43:38Z",
+      "side": 1,
+      "message": "nit: ternary operator",
+      "range": {
+        "startLine": 1026,
+        "startChar": 16,
+        "endLine": 1027,
+        "endChar": 18
+      },
+      "revId": "1bbf8a9885bcbf2adde75e6fe0372625b247832f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
