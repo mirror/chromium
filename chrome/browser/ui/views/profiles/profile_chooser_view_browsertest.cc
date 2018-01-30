@@ -497,8 +497,7 @@ IN_PROC_BROWSER_TEST_F(ProfileChooserViewExtensionsTest, InvokeUi_Guest) {
 // TODO: Flaking test crbug.com/802374
 // Shows the |ProfileChooserView| during a Guest browsing session when the DICE
 // flag is enabled.
-IN_PROC_BROWSER_TEST_F(ProfileChooserViewExtensionsTest,
-                       DISABLED_InvokeUi_DiceGuest) {
+IN_PROC_BROWSER_TEST_F(ProfileChooserViewExtensionsTest, InvokeUi_DiceGuest) {
   signin::ScopedAccountConsistencyDice scoped_dice;
   ShowAndVerifyUi();
 }
