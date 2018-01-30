@@ -1,0 +1,28 @@
+// Copyright 2018 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module blink.mojom;
+
+import "mojo/common/time.mojom";
+import "services/network/public/interfaces/fetch_api.mojom";
+import "third_party/WebKit/common/blob/blob.mojom";
+import "third_party/WebKit/common/service_worker/service_worker_error_type.mojom";
+import "url/mojo/url.mojom";
+
+
+struct FetchAPIResponse {
+  array<url.mojom.Url> url_list;
+  int32 status_code;
+  string? status_text;
+  network.mojom.FetchResponseType response_type;
+  map<string, string> headers;
+  string? blob_uuid;
+  uint64 blob_size;
+  Blob? blob;
+  ServiceWorkerResponseError error;
+  mojo.common.mojom.Time response_time;
+  string? cache_storage_cache_name;
+  array<string> cors_exposed_header_names;
+  bool is_in_cache_storage;
+};
