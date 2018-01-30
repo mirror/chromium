@@ -44,23 +44,33 @@ using session_manager::SessionState;
 namespace ash {
 namespace {
 
-LoginMetricsRecorder::LockScreenUserClickTarget GetUserClickTarget(
-    int button_id) {
-  // TODO(agawronska): Add metrics for login screen only buttons.
-  // https://crbug.com/798848
+void RecordUserClick(int button_id) {
+  LoginMetricsRecorder::ShelfButtonClickTarget target;
   switch (button_id) {
     case LoginShelfView::kShutdown:
-      return LoginMetricsRecorder::LockScreenUserClickTarget::kShutDownButton;
+      target = LoginMetricsRecorder::ShelfButtonClickTarget::kShutDownButton;
+      break;
     case LoginShelfView::kRestart:
-      return LoginMetricsRecorder::LockScreenUserClickTarget::kRestartButton;
+      target = LoginMetricsRecorder::ShelfButtonClickTarget::kRestartButton;
+      break;
     case LoginShelfView::kSignOut:
-      return LoginMetricsRecorder::LockScreenUserClickTarget::kSignOutButton;
+      target = LoginMetricsRecorder::ShelfButtonClickTarget::kSignOutButton;
+      break;
     case LoginShelfView::kCloseNote:
-      return LoginMetricsRecorder::LockScreenUserClickTarget::kCloseNoteButton;
+      target = LoginMetricsRecorder::ShelfButtonClickTarget::kCloseNoteButton;
+      break;
+    case LoginShelfView::kBrowseAsGuest:
+      target =
+          LoginMetricsRecorder::ShelfButtonClickTarget::kBrowseAsGuestButton;
+      break;
+    case LoginShelfView::kAddUser:
+      target = LoginMetricsRecorder::ShelfButtonClickTarget::kAddUserButton;
+      break;
     case LoginShelfView::kCancel:
-      return LoginMetricsRecorder::LockScreenUserClickTarget::kTargetCount;
+      target = LoginMetricsRecorder::ShelfButtonClickTarget::kCancelButton;
+      break;
   }
-  return LoginMetricsRecorder::LockScreenUserClickTarget::kTargetCount;
+  UserMetricsRecorder::RecordUserClickOnShelfButton(target);
 }
 
 // Spacing between the button image and label.
@@ -205,7 +215,7 @@ void LoginShelfView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
 
 void LoginShelfView::ButtonPressed(views::Button* sender,
                                    const ui::Event& event) {
-  UserMetricsRecorder::RecordUserClick(GetUserClickTarget(sender->id()));
+  RecordUserClick(sender->id());
   switch (sender->id()) {
     case kShutdown:
     case kRestart:

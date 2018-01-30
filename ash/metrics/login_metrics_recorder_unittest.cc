@@ -12,6 +12,7 @@
 #include "ash/login/ui/login_test_base.h"
 #include "ash/login/ui/login_test_utils.h"
 #include "ash/public/cpp/config.h"
+#include "ash/session/test_session_controller_client.h"
 #include "ash/shell.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "base/run_loop.h"
@@ -30,7 +31,8 @@ constexpr char kNumAttemptTilSuccessHistogramName[] =
     "Ash.Login.Lock.NumPasswordAttempts.UntilSuccess";
 constexpr char kNumAttemptTilFailureHistogramName[] =
     "Ash.Login.Lock.NumPasswordAttempts.UntilFailure";
-constexpr char kUserClicksHistogramName[] = "Ash.Login.Lock.UserClicks";
+constexpr char kUserClicksOnLockHistogramName[] = "Ash.Login.Lock.UserClicks";
+constexpr char kUserClicksOnLoginHistogramName[] = "Ash.Login.Login.UserClicks";
 constexpr char kAuthMethodSwitchHistogramName[] =
     "Ash.Login.Lock.AuthMethod.Switched";
 
@@ -79,6 +81,13 @@ class LoginMetricsRecorderTest : public LoginTestBase {
   void ExpectBucketCount(const std::string& name,
                          LoginMetricsRecorder::LockScreenUserClickTarget target,
                          int count) {
+    histogram_tester_->ExpectBucketCount(name, static_cast<int>(target), count);
+  }
+
+  void ExpectBucketCount(
+      const std::string& name,
+      LoginMetricsRecorder::LoginScreenUserClickTarget target,
+      int count) {
     histogram_tester_->ExpectBucketCount(name, static_cast<int>(target), count);
   }
 
@@ -170,6 +179,9 @@ TEST_F(LoginMetricsRecorderTest, UnlockAttempts) {
 
 // Verifies that click on the note action button is recorded correctly.
 TEST_F(LoginMetricsRecorderTest, NoteActionButtonClick) {
+  GetSessionControllerClient()->SetSessionState(
+      session_manager::SessionState::LOCKED);
+
   auto* contents = new LockContentsView(mojom::TrayActionState::kAvailable,
                                         data_dispatcher());
   SetUserCount(1);
@@ -183,9 +195,9 @@ TEST_F(LoginMetricsRecorderTest, NoteActionButtonClick) {
       test_api.note_action()->GetBoundsInScreen().CenterPoint());
   generator.ClickLeftButton();
 
-  histogram_tester_->ExpectTotalCount(kUserClicksHistogramName, 1);
+  histogram_tester_->ExpectTotalCount(kUserClicksOnLockHistogramName, 1);
   histogram_tester_->ExpectBucketCount(
-      kUserClicksHistogramName,
+      kUserClicksOnLockHistogramName,
       static_cast<int>(LoginMetricsRecorder::LockScreenUserClickTarget::
                            kLockScreenNoteActionButton),
       1);
@@ -291,71 +303,151 @@ TEST_F(LoginMetricsRecorderTest, RecordNumLoginAttempts) {
 
 // Verifies that user click events on the lock screen is recorded correctly.
 TEST_F(LoginMetricsRecorderTest, RecordUserClickEventOnLockScreen) {
-  histogram_tester_->ExpectTotalCount(kUserClicksHistogramName, 0);
-  metrics_recorder()->RecordUserClickEventOnLockScreen(
-      LoginMetricsRecorder::LockScreenUserClickTarget::kShutDownButton);
-  histogram_tester_->ExpectTotalCount(kUserClicksHistogramName, 1);
+  GetSessionControllerClient()->SetSessionState(
+      session_manager::SessionState::LOCKED);
+
+  // Clicks on shelf buttons visible during lock should be recorded.
+  histogram_tester_->ExpectTotalCount(kUserClicksOnLockHistogramName, 0);
+  metrics_recorder()->RecordUserShelfButtonClick(
+      LoginMetricsRecorder::ShelfButtonClickTarget::kShutDownButton);
+  histogram_tester_->ExpectTotalCount(kUserClicksOnLockHistogramName, 1);
   ExpectBucketCount(
-      kUserClicksHistogramName,
+      kUserClicksOnLockHistogramName,
       LoginMetricsRecorder::LockScreenUserClickTarget::kShutDownButton, 1);
+  histogram_tester_->ExpectTotalCount(kUserClicksOnLoginHistogramName, 0);
 
-  metrics_recorder()->RecordUserClickEventOnLockScreen(
-      LoginMetricsRecorder::LockScreenUserClickTarget::kRestartButton);
-  histogram_tester_->ExpectTotalCount(kUserClicksHistogramName, 2);
+  metrics_recorder()->RecordUserShelfButtonClick(
+      LoginMetricsRecorder::ShelfButtonClickTarget::kRestartButton);
+  histogram_tester_->ExpectTotalCount(kUserClicksOnLockHistogramName, 2);
   ExpectBucketCount(
-      kUserClicksHistogramName,
+      kUserClicksOnLockHistogramName,
       LoginMetricsRecorder::LockScreenUserClickTarget::kRestartButton, 1);
+  histogram_tester_->ExpectTotalCount(kUserClicksOnLoginHistogramName, 0);
 
-  metrics_recorder()->RecordUserClickEventOnLockScreen(
-      LoginMetricsRecorder::LockScreenUserClickTarget::kSignOutButton);
-  histogram_tester_->ExpectTotalCount(kUserClicksHistogramName, 3);
+  metrics_recorder()->RecordUserShelfButtonClick(
+      LoginMetricsRecorder::ShelfButtonClickTarget::kSignOutButton);
+  histogram_tester_->ExpectTotalCount(kUserClicksOnLockHistogramName, 3);
   ExpectBucketCount(
-      kUserClicksHistogramName,
+      kUserClicksOnLockHistogramName,
       LoginMetricsRecorder::LockScreenUserClickTarget::kSignOutButton, 1);
+  histogram_tester_->ExpectTotalCount(kUserClicksOnLoginHistogramName, 0);
 
-  metrics_recorder()->RecordUserClickEventOnLockScreen(
-      LoginMetricsRecorder::LockScreenUserClickTarget::kCloseNoteButton);
-  histogram_tester_->ExpectTotalCount(kUserClicksHistogramName, 4);
+  metrics_recorder()->RecordUserShelfButtonClick(
+      LoginMetricsRecorder::ShelfButtonClickTarget::kCloseNoteButton);
+  histogram_tester_->ExpectTotalCount(kUserClicksOnLockHistogramName, 4);
   ExpectBucketCount(
-      kUserClicksHistogramName,
+      kUserClicksOnLockHistogramName,
       LoginMetricsRecorder::LockScreenUserClickTarget::kCloseNoteButton, 1);
+  histogram_tester_->ExpectTotalCount(kUserClicksOnLoginHistogramName, 0);
 
-  metrics_recorder()->RecordUserClickEventOnLockScreen(
-      LoginMetricsRecorder::LockScreenUserClickTarget::kSystemTray);
-  histogram_tester_->ExpectTotalCount(kUserClicksHistogramName, 5);
+  // Clicks on tray elements visible during lock should be recorded.
+  metrics_recorder()->RecordUserTrayClick(
+      LoginMetricsRecorder::TrayClickTarget::kSystemTray);
+  histogram_tester_->ExpectTotalCount(kUserClicksOnLockHistogramName, 5);
   ExpectBucketCount(
-      kUserClicksHistogramName,
+      kUserClicksOnLockHistogramName,
       LoginMetricsRecorder::LockScreenUserClickTarget::kSystemTray, 1);
+  histogram_tester_->ExpectTotalCount(kUserClicksOnLoginHistogramName, 0);
 
-  metrics_recorder()->RecordUserClickEventOnLockScreen(
-      LoginMetricsRecorder::LockScreenUserClickTarget::kVirtualKeyboardTray);
-  histogram_tester_->ExpectTotalCount(kUserClicksHistogramName, 6);
+  metrics_recorder()->RecordUserTrayClick(
+      LoginMetricsRecorder::TrayClickTarget::kVirtualKeyboardTray);
+  histogram_tester_->ExpectTotalCount(kUserClicksOnLockHistogramName, 6);
   ExpectBucketCount(
-      kUserClicksHistogramName,
+      kUserClicksOnLockHistogramName,
       LoginMetricsRecorder::LockScreenUserClickTarget::kVirtualKeyboardTray, 1);
+  histogram_tester_->ExpectTotalCount(kUserClicksOnLoginHistogramName, 0);
 
-  metrics_recorder()->RecordUserClickEventOnLockScreen(
-      LoginMetricsRecorder::LockScreenUserClickTarget::kImeTray);
-  histogram_tester_->ExpectTotalCount(kUserClicksHistogramName, 7);
-  ExpectBucketCount(kUserClicksHistogramName,
+  metrics_recorder()->RecordUserTrayClick(
+      LoginMetricsRecorder::TrayClickTarget::kImeTray);
+  histogram_tester_->ExpectTotalCount(kUserClicksOnLockHistogramName, 7);
+  ExpectBucketCount(kUserClicksOnLockHistogramName,
                     LoginMetricsRecorder::LockScreenUserClickTarget::kImeTray,
                     1);
+  histogram_tester_->ExpectTotalCount(kUserClicksOnLoginHistogramName, 0);
 
-  metrics_recorder()->RecordUserClickEventOnLockScreen(
-      LoginMetricsRecorder::LockScreenUserClickTarget::kNotificationTray);
-  histogram_tester_->ExpectTotalCount(kUserClicksHistogramName, 8);
+  metrics_recorder()->RecordUserTrayClick(
+      LoginMetricsRecorder::TrayClickTarget::kNotificationTray);
+  histogram_tester_->ExpectTotalCount(kUserClicksOnLockHistogramName, 8);
   ExpectBucketCount(
-      kUserClicksHistogramName,
+      kUserClicksOnLockHistogramName,
       LoginMetricsRecorder::LockScreenUserClickTarget::kNotificationTray, 1);
+  histogram_tester_->ExpectTotalCount(kUserClicksOnLoginHistogramName, 0);
 
-  metrics_recorder()->RecordUserClickEventOnLockScreen(
-      LoginMetricsRecorder::LockScreenUserClickTarget::
-          kLockScreenNoteActionButton);
-  histogram_tester_->ExpectTotalCount(kUserClicksHistogramName, 9);
-  ExpectBucketCount(kUserClicksHistogramName,
+  metrics_recorder()->RecordUserTrayClick(
+      LoginMetricsRecorder::TrayClickTarget::kTrayActionNoteButton);
+  histogram_tester_->ExpectTotalCount(kUserClicksOnLockHistogramName, 9);
+  ExpectBucketCount(kUserClicksOnLockHistogramName,
                     LoginMetricsRecorder::LockScreenUserClickTarget::
                         kLockScreenNoteActionButton,
                     1);
+  histogram_tester_->ExpectTotalCount(kUserClicksOnLoginHistogramName, 0);
+}
+
+// Verifies that user click events on the login screen is recorded correctly.
+TEST_F(LoginMetricsRecorderTest, RecordUserClickEventOnLoginScreen) {
+  GetSessionControllerClient()->SetSessionState(
+      session_manager::SessionState::LOGIN_PRIMARY);
+
+  // Clicks on shelf buttons visible during login should be recorded.
+  histogram_tester_->ExpectTotalCount(kUserClicksOnLoginHistogramName, 0);
+  metrics_recorder()->RecordUserShelfButtonClick(
+      LoginMetricsRecorder::ShelfButtonClickTarget::kShutDownButton);
+  histogram_tester_->ExpectTotalCount(kUserClicksOnLoginHistogramName, 1);
+  ExpectBucketCount(
+      kUserClicksOnLoginHistogramName,
+      LoginMetricsRecorder::LoginScreenUserClickTarget::kShutDownButton, 1);
+  histogram_tester_->ExpectTotalCount(kUserClicksOnLockHistogramName, 0);
+
+  metrics_recorder()->RecordUserShelfButtonClick(
+      LoginMetricsRecorder::ShelfButtonClickTarget::kRestartButton);
+  histogram_tester_->ExpectTotalCount(kUserClicksOnLoginHistogramName, 2);
+  ExpectBucketCount(
+      kUserClicksOnLoginHistogramName,
+      LoginMetricsRecorder::LoginScreenUserClickTarget::kRestartButton, 1);
+  histogram_tester_->ExpectTotalCount(kUserClicksOnLockHistogramName, 0);
+
+  metrics_recorder()->RecordUserShelfButtonClick(
+      LoginMetricsRecorder::ShelfButtonClickTarget::kBrowseAsGuestButton);
+  histogram_tester_->ExpectTotalCount(kUserClicksOnLoginHistogramName, 3);
+  ExpectBucketCount(
+      kUserClicksOnLoginHistogramName,
+      LoginMetricsRecorder::LoginScreenUserClickTarget::kBrowseAsGuestButton,
+      1);
+  histogram_tester_->ExpectTotalCount(kUserClicksOnLockHistogramName, 0);
+
+  metrics_recorder()->RecordUserShelfButtonClick(
+      LoginMetricsRecorder::ShelfButtonClickTarget::kAddUserButton);
+  histogram_tester_->ExpectTotalCount(kUserClicksOnLoginHistogramName, 4);
+  ExpectBucketCount(
+      kUserClicksOnLoginHistogramName,
+      LoginMetricsRecorder::LoginScreenUserClickTarget::kAddUserButton, 1);
+  histogram_tester_->ExpectTotalCount(kUserClicksOnLockHistogramName, 0);
+
+  // Clicks on tray elements visible during login should be recorded.
+  metrics_recorder()->RecordUserTrayClick(
+      LoginMetricsRecorder::TrayClickTarget::kSystemTray);
+  histogram_tester_->ExpectTotalCount(kUserClicksOnLoginHistogramName, 5);
+  ExpectBucketCount(
+      kUserClicksOnLoginHistogramName,
+      LoginMetricsRecorder::LoginScreenUserClickTarget::kSystemTray, 1);
+  histogram_tester_->ExpectTotalCount(kUserClicksOnLockHistogramName, 0);
+
+  metrics_recorder()->RecordUserTrayClick(
+      LoginMetricsRecorder::TrayClickTarget::kVirtualKeyboardTray);
+  histogram_tester_->ExpectTotalCount(kUserClicksOnLoginHistogramName, 6);
+  ExpectBucketCount(
+      kUserClicksOnLoginHistogramName,
+      LoginMetricsRecorder::LoginScreenUserClickTarget::kVirtualKeyboardTray,
+      1);
+  histogram_tester_->ExpectTotalCount(kUserClicksOnLockHistogramName, 0);
+
+  metrics_recorder()->RecordUserTrayClick(
+      LoginMetricsRecorder::TrayClickTarget::kImeTray);
+  histogram_tester_->ExpectTotalCount(kUserClicksOnLoginHistogramName, 7);
+  ExpectBucketCount(kUserClicksOnLoginHistogramName,
+                    LoginMetricsRecorder::LoginScreenUserClickTarget::kImeTray,
+                    1);
+  histogram_tester_->ExpectTotalCount(kUserClicksOnLockHistogramName, 0);
 }
 
 }  // namespace ash
