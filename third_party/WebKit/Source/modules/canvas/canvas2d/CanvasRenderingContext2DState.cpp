@@ -560,8 +560,8 @@ const PaintFlags* CanvasRenderingContext2DState::GetFlags(
       break;
     default:
       NOTREACHED();
-      // no break on purpose: flags needs to be assigned to avoid compiler warning
-      // about uninitialized variable.
+      // no break on purpose: flags needs to be assigned to avoid compiler
+      // warning about uninitialized variable.
       FALLTHROUGH;
     case kFillPaintType:
       UpdateFillStyle();
