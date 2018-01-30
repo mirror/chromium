@@ -148,7 +148,7 @@ NotificationDisplayServiceImpl::NotificationDisplayServiceImpl(Profile* profile)
 NotificationDisplayServiceImpl::~NotificationDisplayServiceImpl() = default;
 
 void NotificationDisplayServiceImpl::ProcessNotificationOperation(
-    NotificationCommon::Operation operation,
+    NotificationOperation operation,
     NotificationHandler::Type notification_type,
     const GURL& origin,
     const std::string& notification_id,
@@ -168,19 +168,19 @@ void NotificationDisplayServiceImpl::ProcessNotificationOperation(
   base::OnceClosure completed_closure = base::BindOnce(&OperationCompleted);
 
   switch (operation) {
-    case NotificationCommon::CLICK:
+    case NOTIFICATION_OPERATION_CLICK:
       handler->OnClick(profile_, origin, notification_id, action_index, reply,
                        std::move(completed_closure));
       break;
-    case NotificationCommon::CLOSE:
+    case NOTIFICATION_OPERATION_CLOSE:
       DCHECK(by_user.has_value());
       handler->OnClose(profile_, origin, notification_id, by_user.value(),
                        std::move(completed_closure));
       break;
-    case NotificationCommon::DISABLE_PERMISSION:
+    case NOTIFICATION_OPERATION_DISABLE_PERMISSION:
       handler->DisableNotifications(profile_, origin);
       break;
-    case NotificationCommon::SETTINGS:
+    case NOTIFICATION_OPERATION_SETTINGS:
       handler->OpenSettings(profile_, origin);
       break;
   }
@@ -274,7 +274,7 @@ void NotificationDisplayServiceImpl::GetDisplayed(
 // Callback to run once the profile has been loaded in order to perform a
 // given |operation| in a notification.
 void NotificationDisplayServiceImpl::ProfileLoadedCallback(
-    NotificationCommon::Operation operation,
+    NotificationOperation operation,
     NotificationHandler::Type notification_type,
     const GURL& origin,
     const std::string& notification_id,

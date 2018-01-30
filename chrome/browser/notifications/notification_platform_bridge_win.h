@@ -49,7 +49,7 @@ class NotificationPlatformBridgeWin : public NotificationPlatformBridge {
   // Simulates a click/dismiss event. Only for use in testing.
   // Note: Ownership of |notification| and |args| is retained by the caller.
   void ForwardHandleEventForTesting(
-      NotificationCommon::Operation operation,
+      NotificationOperation operation,
       ABI::Windows::UI::Notifications::IToastNotification* notification,
       ABI::Windows::UI::Notifications::IToastActivatedEventArgs* args,
       const base::Optional<bool>& by_user);

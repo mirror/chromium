@@ -14,6 +14,7 @@
 #include "base/optional.h"
 #include "chrome/browser/notifications/notification_common.h"
 #include "chrome/browser/notifications/notification_display_service_impl.h"
+#include "chrome/browser/notifications/notification_operation.h"
 #include "ui/message_center/public/cpp/notification.h"
 
 namespace content {
@@ -33,7 +34,7 @@ class StubNotificationDisplayService : public NotificationDisplayServiceImpl {
       content::BrowserContext* browser_context);
 
   typedef base::RepeatingCallback<void(
-      NotificationCommon::Operation operation,
+      NotificationOperation operation,
       NotificationHandler::Type notification_type,
       const GURL& origin,
       const std::string& notification_id,
@@ -96,7 +97,7 @@ class StubNotificationDisplayService : public NotificationDisplayServiceImpl {
              const std::string& notification_id) override;
   void GetDisplayed(const DisplayedNotificationsCallback& callback) override;
   void ProcessNotificationOperation(
-      NotificationCommon::Operation operation,
+      NotificationOperation operation,
       NotificationHandler::Type notification_type,
       const GURL& origin,
       const std::string& notification_id,

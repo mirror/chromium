@@ -16,6 +16,7 @@
 #include "chrome/browser/notifications/notification_common.h"
 #include "chrome/browser/notifications/notification_display_service.h"
 #include "chrome/browser/notifications/notification_handler.h"
+#include "chrome/browser/notifications/notification_operation.h"
 
 class GURL;
 class NotificationPlatformBridge;
@@ -40,7 +41,7 @@ class NotificationDisplayServiceImpl : public NotificationDisplayService {
   //
   // TODO(peter): Remove this in favor of multiple targetted methods.
   virtual void ProcessNotificationOperation(
-      NotificationCommon::Operation operation,
+      NotificationOperation operation,
       NotificationHandler::Type notification_type,
       const GURL& origin,
       const std::string& notification_id,
@@ -70,7 +71,7 @@ class NotificationDisplayServiceImpl : public NotificationDisplayService {
              const std::string& notification_id) override;
   void GetDisplayed(const DisplayedNotificationsCallback& callback) override;
 
-  static void ProfileLoadedCallback(NotificationCommon::Operation operation,
+  static void ProfileLoadedCallback(NotificationOperation operation,
                                     NotificationHandler::Type notification_type,
                                     const GURL& origin,
                                     const std::string& notification_id,

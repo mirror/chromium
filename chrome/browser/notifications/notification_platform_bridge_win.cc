@@ -31,6 +31,7 @@
 #include "chrome/browser/notifications/notification_display_service_impl.h"
 #include "chrome/browser/notifications/notification_handler.h"
 #include "chrome/browser/notifications/notification_image_retainer.h"
+#include "chrome/browser/notifications/notification_operation.h"
 #include "chrome/browser/notifications/notification_template_builder.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/installer/util/install_util.h"
@@ -77,7 +78,7 @@ HRESULT CreateActivationFactory(wchar_t const (&class_name)[size], T** object) {
 }
 
 void ForwardNotificationOperationOnUiThread(
-    NotificationCommon::Operation operation,
+    NotificationOperation operation,
     NotificationHandler::Type notification_type,
     const GURL& origin,
     const std::string& notification_id,
@@ -477,7 +478,7 @@ class NotificationPlatformBridgeWinImpl
   }
 
   void HandleEvent(winui::Notifications::IToastNotification* notification,
-                   NotificationCommon::Operation operation,
+                   NotificationOperation operation,
                    const base::Optional<int>& action_index,
                    const base::Optional<bool>& by_user) {
     NotificationHandler::Type notification_type;
@@ -522,7 +523,7 @@ class NotificationPlatformBridgeWinImpl
   }
 
   void ForwardHandleEventForTesting(
-      NotificationCommon::Operation operation,
+      NotificationOperation operation,
       winui::Notifications::IToastNotification* notification,
       winui::Notifications::IToastActivatedEventArgs* args,
       const base::Optional<bool>& by_user) {
@@ -631,7 +632,7 @@ class NotificationPlatformBridgeWinImpl
     if (SUCCEEDED(hr))
       action_index = ParseActionIndex(args);
 
-    HandleEvent(notification, NotificationCommon::CLICK, action_index,
+    HandleEvent(notification, NOTIFICATION_OPERATION_CLICK, action_index,
                 /*by_user=*/base::nullopt);
     return S_OK;
   }
@@ -646,7 +647,7 @@ class NotificationPlatformBridgeWinImpl
         reason == winui::Notifications::ToastDismissalReason_UserCanceled) {
       by_user = true;
     }
-    HandleEvent(notification, NotificationCommon::CLOSE,
+    HandleEvent(notification, NOTIFICATION_OPERATION_CLOSE,
                 /*action_index=*/base::nullopt, by_user);
     return S_OK;
   }
@@ -753,7 +754,7 @@ void NotificationPlatformBridgeWin::SetReadyCallback(
 }
 
 void NotificationPlatformBridgeWin::ForwardHandleEventForTesting(
-    NotificationCommon::Operation operation,
+    NotificationOperation operation,
     winui::Notifications::IToastNotification* notification,
     winui::Notifications::IToastActivatedEventArgs* args,
     const base::Optional<bool>& by_user) {

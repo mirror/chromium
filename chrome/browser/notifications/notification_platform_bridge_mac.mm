@@ -65,7 +65,7 @@
 namespace {
 
 // Loads the profile and process the Notification response
-void DoProcessNotificationResponse(NotificationCommon::Operation operation,
+void DoProcessNotificationResponse(NotificationOperation operation,
                                    NotificationHandler::Type type,
                                    const std::string& profile_id,
                                    bool incognito,
@@ -365,8 +365,7 @@ void NotificationPlatformBridgeMac::ProcessNotificationResponse(
   content::BrowserThread::PostTask(
       content::BrowserThread::UI, FROM_HERE,
       base::Bind(DoProcessNotificationResponse,
-                 static_cast<NotificationCommon::Operation>(
-                     operation.unsignedIntValue),
+                 static_cast<NotificationOperation>(operation.unsignedIntValue),
                  static_cast<NotificationHandler::Type>(
                      notification_type.unsignedIntValue),
                  profile_id, [is_incognito boolValue],
@@ -408,7 +407,7 @@ bool NotificationPlatformBridgeMac::VerifyNotificationData(
     return false;
   }
 
-  if (operation.unsignedIntValue > NotificationCommon::OPERATION_MAX) {
+  if (operation.unsignedIntValue > NOTIFICATION_OPERATION_MAX) {
     LOG(ERROR) << operation.unsignedIntValue
                << " does not correspond to a valid operation.";
     return false;

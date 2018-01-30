@@ -28,6 +28,7 @@
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/dbus/dbus_thread_linux.h"
 #include "chrome/browser/notifications/notification_display_service_impl.h"
+#include "chrome/browser/notifications/notification_operation.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/shell_integration_linux.h"
 #include "chrome/grit/chrome_unscaled_resources.h"
@@ -182,7 +183,7 @@ bool ShouldAddCloseButton(const std::string& server_name) {
 }
 
 void ForwardNotificationOperationOnUiThread(
-    NotificationCommon::Operation operation,
+    NotificationOperation operation,
     NotificationHandler::Type notification_type,
     const GURL& origin,
     const std::string& notification_id,
@@ -766,7 +767,7 @@ class NotificationPlatformBridgeLinuxImpl
   }
 
   void ForwardNotificationOperation(NotificationData* data,
-                                    NotificationCommon::Operation operation,
+                                    NotificationOperation operation,
                                     const base::Optional<int>& action_index,
                                     const base::Optional<bool>& by_user) {
     DCHECK(task_runner_->RunsTasksInCurrentSequence());
@@ -791,11 +792,11 @@ class NotificationPlatformBridgeLinuxImpl
       return;
 
     if (action == kDefaultButtonId) {
-      ForwardNotificationOperation(data, NotificationCommon::CLICK,
+      ForwardNotificationOperation(data, NOTIFICATION_OPERATION_CLICK,
                                    base::nullopt /* action_index */,
                                    base::nullopt /* by_user */);
     } else if (action == kSettingsButtonId) {
-      ForwardNotificationOperation(data, NotificationCommon::SETTINGS,
+      ForwardNotificationOperation(data, NOTIFICATION_OPERATION_SETTINGS,
                                    base::nullopt /* action_index */,
                                    base::nullopt /* by_user */);
     } else if (action == kCloseButtonId) {
@@ -808,7 +809,7 @@ class NotificationPlatformBridgeLinuxImpl
       size_t id_zero_based = id - data->action_start;
       if (id_zero_based >= n_buttons)
         return;
-      ForwardNotificationOperation(data, NotificationCommon::CLICK,
+      ForwardNotificationOperation(data, NOTIFICATION_OPERATION_CLICK,
                                    id_zero_based, base::nullopt /* by_user */);
     }
   }
@@ -825,7 +826,7 @@ class NotificationPlatformBridgeLinuxImpl
       return;
 
     // TODO(peter): Can we support |by_user| appropriately here?
-    ForwardNotificationOperation(data, NotificationCommon::CLOSE,
+    ForwardNotificationOperation(data, NOTIFICATION_OPERATION_CLOSE,
                                  base::nullopt /* action_index */,
                                  true /* by_user */);
     notifications_.erase(data);

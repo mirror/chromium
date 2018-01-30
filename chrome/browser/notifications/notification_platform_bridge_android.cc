@@ -22,6 +22,7 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/notifications/notification_common.h"
 #include "chrome/browser/notifications/notification_display_service_impl.h"
+#include "chrome/browser/notifications/notification_operation.h"
 #include "chrome/browser/notifications/platform_notification_service_impl.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/common/chrome_switches.h"
@@ -175,7 +176,7 @@ void NotificationPlatformBridgeAndroid::OnNotificationClicked(
   profile_manager->LoadProfile(
       profile_id, incognito,
       base::Bind(&NotificationDisplayServiceImpl::ProfileLoadedCallback,
-                 NotificationCommon::CLICK,
+                 NOTIFICATION_OPERATION_CLICK,
                  NotificationHandler::Type::WEB_PERSISTENT, origin,
                  notification_id, std::move(action_index), std::move(reply),
                  base::nullopt /* by_user */));
@@ -221,7 +222,7 @@ void NotificationPlatformBridgeAndroid::OnNotificationClosed(
   profile_manager->LoadProfile(
       profile_id, incognito,
       base::Bind(&NotificationDisplayServiceImpl::ProfileLoadedCallback,
-                 NotificationCommon::CLOSE,
+                 NOTIFICATION_OPERATION_CLOSE,
                  NotificationHandler::Type::WEB_PERSISTENT,
                  GURL(ConvertJavaStringToUTF8(env, java_origin)),
                  notification_id, base::nullopt /* action index */,

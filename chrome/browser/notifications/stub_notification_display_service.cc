@@ -11,6 +11,7 @@
 #include "base/callback_helpers.h"
 #include "base/run_loop.h"
 #include "chrome/browser/notifications/notification_handler.h"
+#include "chrome/browser/notifications/notification_operation.h"
 #include "chrome/browser/profiles/profile.h"
 
 // static
@@ -221,7 +222,7 @@ void StubNotificationDisplayService::GetDisplayed(
 }
 
 void StubNotificationDisplayService::ProcessNotificationOperation(
-    NotificationCommon::Operation operation,
+    NotificationOperation operation,
     NotificationHandler::Type notification_type,
     const GURL& origin,
     const std::string& notification_id,

@@ -9,6 +9,7 @@
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/notifications/chrome_ash_message_center_client.h"
 #include "chrome/browser/notifications/notification_display_service_impl.h"
+#include "chrome/browser/notifications/notification_operation.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/ui/app_icon_loader.h"
@@ -98,7 +99,7 @@ void NotificationPlatformBridgeChromeOs::HandleNotificationClosed(
   ProfileNotification* notification = iter->second.get();
   NotificationDisplayServiceImpl::GetForProfile(notification->profile())
       ->ProcessNotificationOperation(
-          NotificationCommon::CLOSE, notification->type(),
+          NOTIFICATION_OPERATION_CLOSE, notification->type(),
           notification->notification().origin_url(),
           notification->original_id(), base::nullopt, base::nullopt, by_user);
   active_notifications_.erase(iter);
@@ -108,7 +109,7 @@ void NotificationPlatformBridgeChromeOs::HandleNotificationClicked(
     const std::string& id) {
   ProfileNotification* notification = GetProfileNotification(id);
   NotificationDisplayServiceImpl::GetForProfile(notification->profile())
-      ->ProcessNotificationOperation(NotificationCommon::CLICK,
+      ->ProcessNotificationOperation(NOTIFICATION_OPERATION_CLICK,
                                      notification->type(),
                                      notification->notification().origin_url(),
                                      notification->original_id(), base::nullopt,
@@ -120,7 +121,7 @@ void NotificationPlatformBridgeChromeOs::HandleNotificationButtonClicked(
     int button_index) {
   ProfileNotification* notification = GetProfileNotification(id);
   NotificationDisplayServiceImpl::GetForProfile(notification->profile())
-      ->ProcessNotificationOperation(NotificationCommon::CLICK,
+      ->ProcessNotificationOperation(NOTIFICATION_OPERATION_CLICK,
                                      notification->type(),
                                      notification->notification().origin_url(),
                                      notification->original_id(), button_index,

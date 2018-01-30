@@ -13,6 +13,7 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/notifications/mock_itoastnotification.h"
 #include "chrome/browser/notifications/notification_display_service_tester.h"
+#include "chrome/browser/notifications/notification_operation.h"
 #include "chrome/browser/notifications/notification_platform_bridge_win.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/test/base/in_process_browser_test.h"
@@ -48,7 +49,7 @@ class NotificationPlatformBridgeWinUITest : public InProcessBrowserTest {
   void TearDownOnMainThread() override { display_service_tester_.reset(); }
 
   void HandleOperation(const base::RepeatingClosure& quit_task,
-                       NotificationCommon::Operation operation,
+                       NotificationOperation operation,
                        NotificationHandler::Type notification_type,
                        const GURL& origin,
                        const std::string& notification_id,
@@ -74,7 +75,7 @@ class NotificationPlatformBridgeWinUITest : public InProcessBrowserTest {
   }
 
  protected:
-  bool ValidateNotificationValues(NotificationCommon::Operation operation,
+  bool ValidateNotificationValues(NotificationOperation operation,
                                   NotificationHandler::Type notification_type,
                                   const GURL& origin,
                                   const std::string& notification_id,
@@ -90,7 +91,7 @@ class NotificationPlatformBridgeWinUITest : public InProcessBrowserTest {
 
   std::unique_ptr<NotificationDisplayServiceTester> display_service_tester_;
 
-  NotificationCommon::Operation last_operation_;
+  NotificationOperation last_operation_;
   NotificationHandler::Type last_notification_type_;
   GURL last_origin_;
   std::string last_notification_id_;
@@ -172,13 +173,13 @@ IN_PROC_BROWSER_TEST_F(NotificationPlatformBridgeWinUITest, HandleEvent) {
   NotificationPlatformBridgeWin* bridge =
       reinterpret_cast<NotificationPlatformBridgeWin*>(
           g_browser_process->notification_platform_bridge());
-  bridge->ForwardHandleEventForTesting(NotificationCommon::CLICK, &toast, &args,
-                                       base::nullopt);
+  bridge->ForwardHandleEventForTesting(NOTIFICATION_OPERATION_CLICK, &toast,
+                                       &args, base::nullopt);
   run_loop.Run();
 
   // Validate the click values.
   base::Optional<int> action_index = 1;
-  EXPECT_EQ(NotificationCommon::CLICK, last_operation_);
+  EXPECT_EQ(NOTIFICATION_OPERATION_CLICK, last_operation_);
   EXPECT_EQ(NotificationHandler::Type::WEB_PERSISTENT, last_notification_type_);
   EXPECT_EQ(GURL("https://example.com/"), last_origin_);
   EXPECT_EQ("notification_id", last_notification_id_);

@@ -9,6 +9,7 @@
 #include "base/memory/scoped_refptr.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/notifications/notification_display_service_impl.h"
+#include "chrome/browser/notifications/notification_operation.h"
 #include "chrome/browser/notifications/notification_ui_manager.h"
 #include "content/public/browser/browser_thread.h"
 #include "ui/message_center/public/cpp/notification.h"
@@ -34,7 +35,7 @@ class PassThroughDelegate : public message_center::NotificationDelegate {
   void SettingsClick() override {
     NotificationDisplayServiceImpl::GetForProfile(profile_)
         ->ProcessNotificationOperation(
-            NotificationCommon::SETTINGS, notification_type_,
+            NOTIFICATION_OPERATION_SETTINGS, notification_type_,
             notification_.origin_url(), notification_.id(), base::nullopt,
             base::nullopt, base::nullopt /* by_user */);
   }
@@ -42,7 +43,7 @@ class PassThroughDelegate : public message_center::NotificationDelegate {
   void DisableNotification() override {
     NotificationDisplayServiceImpl::GetForProfile(profile_)
         ->ProcessNotificationOperation(
-            NotificationCommon::DISABLE_PERMISSION, notification_type_,
+            NOTIFICATION_OPERATION_DISABLE_PERMISSION, notification_type_,
             notification_.origin_url(), notification_.id(),
             base::nullopt /* action_index */, base::nullopt /* reply */,
             base::nullopt /* by_user */);
@@ -51,7 +52,7 @@ class PassThroughDelegate : public message_center::NotificationDelegate {
   void Close(bool by_user) override {
     NotificationDisplayServiceImpl::GetForProfile(profile_)
         ->ProcessNotificationOperation(
-            NotificationCommon::CLOSE, notification_type_,
+            NOTIFICATION_OPERATION_CLOSE, notification_type_,
             notification_.origin_url(), notification_.id(),
             base::nullopt /* action_index */, base::nullopt /* reply */,
             by_user);
@@ -60,7 +61,7 @@ class PassThroughDelegate : public message_center::NotificationDelegate {
   void Click() override {
     NotificationDisplayServiceImpl::GetForProfile(profile_)
         ->ProcessNotificationOperation(
-            NotificationCommon::CLICK, notification_type_,
+            NOTIFICATION_OPERATION_CLICK, notification_type_,
             notification_.origin_url(), notification_.id(),
             base::nullopt /* action_index */, base::nullopt /* reply */,
             base::nullopt /* by_user */);
@@ -69,7 +70,7 @@ class PassThroughDelegate : public message_center::NotificationDelegate {
   void ButtonClick(int action_index) override {
     NotificationDisplayServiceImpl::GetForProfile(profile_)
         ->ProcessNotificationOperation(
-            NotificationCommon::CLICK, notification_type_,
+            NOTIFICATION_OPERATION_CLICK, notification_type_,
             notification_.origin_url(), notification_.id(), action_index,
             base::nullopt /* reply */, base::nullopt /* by_user */);
   }
@@ -78,7 +79,7 @@ class PassThroughDelegate : public message_center::NotificationDelegate {
                             const base::string16& reply) override {
     NotificationDisplayServiceImpl::GetForProfile(profile_)
         ->ProcessNotificationOperation(
-            NotificationCommon::CLICK, notification_type_,
+            NOTIFICATION_OPERATION_CLICK, notification_type_,
             notification_.origin_url(), notification_.id(), action_index, reply,
             base::nullopt /* by_user */);
   }
