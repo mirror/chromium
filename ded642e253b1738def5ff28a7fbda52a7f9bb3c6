@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45d5dbda_149b6236",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-30T14:09:18Z",
+      "side": 1,
+      "message": "GetNewTabId()\n\nsince it returns a TabID",
+      "range": {
+        "startLine": 22,
+        "startChar": 25,
+        "endLine": 22,
+        "endChar": 44
+      },
+      "revId": "ded642e253b1738def5ff28a7fbda52a7f9bb3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5532fc2_1445b7ca",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-30T14:09:18Z",
+      "side": 1,
+      "message": "Put this in an auto\u0026, so that you don\u0027t have a lookup for each property changed in this method.",
+      "range": {
+        "startLine": 202,
+        "startChar": 2,
+        "endLine": 202,
+        "endChar": 25
+      },
+      "revId": "ded642e253b1738def5ff28a7fbda52a7f9bb3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "047c451e_84f77a02",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-30T14:09:18Z",
+      "side": 1,
+      "message": "I initially thought that this was a TabStripModelObserver method. A name such as \"OnInitialOrInsertedTab()\" might make it easier to understand when this is called.",
+      "range": {
+        "startLine": 264,
+        "startChar": 22,
+        "endLine": 264,
+        "endChar": 32
+      },
+      "revId": "ded642e253b1738def5ff28a7fbda52a7f9bb3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09d6eaed_8eb15cfc",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-30T14:09:18Z",
+      "side": 1,
+      "message": "Comment on when this condition is false (e.g. after a tab is dragged to a new window).",
+      "range": {
+        "startLine": 266,
+        "startChar": 6,
+        "endLine": 266,
+        "endChar": 69
+      },
+      "revId": "ded642e253b1738def5ff28a7fbda52a7f9bb3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cb2bc05_fdc53c56",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-30T14:09:18Z",
+      "side": 1,
+      "message": "OnTabRemoved() is only called from OnWebContentsDestroyed(). I find that moving the code of OnTabRemoved() into OnWebContentsDestroyed() would make it easier to understand in which context it runs without adding code duplication.\n\nI let you decide.",
+      "range": {
+        "startLine": 276,
+        "startChar": 2,
+        "endLine": 279,
+        "endChar": 52
+      },
+      "revId": "ded642e253b1738def5ff28a7fbda52a7f9bb3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "883a4b2d_3e3c82d4",
+        "filename": "chrome/browser/metrics/tab_stats_tracker_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-30T14:09:18Z",
+      "side": 1,
+      "message": "ASSERT_TRUE(",
+      "range": {
+        "startLine": 100,
+        "startChar": 2,
+        "endLine": 100,
+        "endChar": 52
+      },
+      "revId": "ded642e253b1738def5ff28a7fbda52a7f9bb3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
