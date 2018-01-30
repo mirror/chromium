@@ -36,12 +36,12 @@ WildcardLoginChecker::~WildcardLoginChecker() {}
 
 void WildcardLoginChecker::StartWithSigninContext(
     scoped_refptr<net::URLRequestContextGetter> signin_context,
-    StatusCallback callback) {
+    const StatusCallback& callback) {
   CHECK(!token_fetcher_);
   CHECK(!user_info_fetcher_);
 
   start_timestamp_ = base::Time::Now();
-  callback_ = std::move(callback);
+  callback_ = callback;
 
   token_fetcher_.reset(PolicyOAuth2TokenFetcher::CreateInstance());
   token_fetcher_->StartWithSigninContext(
@@ -52,12 +52,12 @@ void WildcardLoginChecker::StartWithSigninContext(
 
 void WildcardLoginChecker::StartWithRefreshToken(
     const std::string& refresh_token,
-    StatusCallback callback) {
+    const StatusCallback& callback) {
   CHECK(!token_fetcher_);
   CHECK(!user_info_fetcher_);
 
   start_timestamp_ = base::Time::Now();
-  callback_ = std::move(callback);
+  callback_ = callback;
 
   token_fetcher_.reset(PolicyOAuth2TokenFetcher::CreateInstance());
   token_fetcher_->StartWithRefreshToken(
@@ -66,13 +66,14 @@ void WildcardLoginChecker::StartWithRefreshToken(
                  base::Unretained(this)));
 }
 
-void WildcardLoginChecker::StartWithAccessToken(const std::string& access_token,
-                                                StatusCallback callback) {
+void WildcardLoginChecker::StartWithAccessToken(
+    const std::string& access_token,
+    const StatusCallback& callback) {
   CHECK(!token_fetcher_);
   CHECK(!user_info_fetcher_);
 
   start_timestamp_ = base::Time::Now();
-  callback_ = std::move(callback);
+  callback_ = callback;
 
   StartUserInfoFetcher(access_token);
 }
@@ -125,7 +126,7 @@ void WildcardLoginChecker::StartUserInfoFetcher(
 
 void WildcardLoginChecker::OnCheckCompleted(Result result) {
   if (!callback_.is_null())
-    std::move(callback_).Run(result);
+    callback_.Run(result);
 }
 
 }  // namespace policy
