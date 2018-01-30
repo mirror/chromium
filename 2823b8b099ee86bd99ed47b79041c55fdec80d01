@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2452b43d_88fb685a",
+        "filename": "tools/cygprofile/phased_orderfile.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-30T12:27:10Z",
+      "side": 1,
+      "message": "Thank you for the details! This is quite interesting and suggests to move out of the time based profiles for more predictability (in the future).",
+      "parentUuid": "15932679_c50ee3a5",
+      "range": {
+        "startLine": 45,
+        "startChar": 32,
+        "endLine": 45,
+        "endChar": 35
+      },
+      "revId": "2823b8b099ee86bd99ed47b79041c55fdec80d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af54317e_0c4c1a59",
         "filename": "tools/cygprofile/phased_orderfile.py",
         "patchSetId": 2
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Future plans. The idea is that if the profiles aren\u0027t stable, the orderfile bot can warn or error. I included it now so that the use of the thresholds is clear.",
       "parentUuid": "af54317e_0c4c1a59",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 28
+      },
+      "revId": "2823b8b099ee86bd99ed47b79041c55fdec80d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7492ca23_fcaa3113",
+        "filename": "tools/cygprofile/phased_orderfile.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-30T12:27:10Z",
+      "side": 1,
+      "message": "Thanks! It is good to know the context. Thank you for adding a test for it, this makes me confident that the code will not rot.",
+      "parentUuid": "cffc1f34_ce222a31",
       "range": {
         "startLine": 60,
         "startChar": 2,
@@ -190,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "acb58e94_0a3d7823",
+        "filename": "tools/cygprofile/phased_orderfile.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-30T12:27:10Z",
+      "side": 1,
+      "message": "I think this is how easier maintenance can hurt readability. Without strict typing it becomes difficult to follow all method implementations that produce values of a type.\n\nIf you do expect |OrderfilePhaseOffsets| to be used differently than namedtuple of lists (namedtuple of namedtuples? dictionaries?), then I don\u0027t obviously see what the right balance is. Otherwise, I see value in describing the primary use at the point of |OrderfilePhaseOffsets| definition.\n\nFor symbol_extractor.SymbolInfo the primary use is to carry the data for one symbol, that is why it does not need more explanation. I\u0027m actually surprised, I missed/forgot the places where it is used differently.\n\nAgain, maybe it\u0027s just me getting used to python occasionally taking a decade :)",
+      "parentUuid": "c6b6b2c0_1f5437e0",
+      "range": {
+        "startLine": 127,
+        "startChar": 7,
+        "endLine": 127,
+        "endChar": 28
+      },
+      "revId": "2823b8b099ee86bd99ed47b79041c55fdec80d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4cd6e608_297a99b0",
         "filename": "tools/cygprofile/phased_orderfile.py",
         "patchSetId": 2
@@ -225,6 +297,30 @@
       "side": 1,
       "message": "When I here \"MultipleRuns\" I think there\u0027s some selection of which runs are selected; the current name correctly implies to me that it\u0027s getting the offsets for each run group.\n\nGetMergedOffsets is what determines the ordering of the offsets, and it seems to be the clearest place to describe how ordering is defined. Repeating that elsewhere would probably be a maintenance problem if the semantics of GetMergedOffsets were changed.\n\nAt any rate, this all seems like bikeshedding to me... :)",
       "parentUuid": "4cd6e608_297a99b0",
+      "range": {
+        "startLine": 135,
+        "startChar": 44,
+        "endLine": 135,
+        "endChar": 62
+      },
+      "revId": "2823b8b099ee86bd99ed47b79041c55fdec80d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90c8d3d1_d93d5856",
+        "filename": "tools/cygprofile/phased_orderfile.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-30T12:27:10Z",
+      "side": 1,
+      "message": "I\u0027m glad that you liked the discussion :)\n\nI am at fundamental disagreement with the argument about minimising the repetitions in the documentation. If we follow it to the extreme, we would not be able to separate pieces into modules and use incapsulation.\n\nFor this specific issue my suggestion is not better in an obvious way, so I asked for help and opinion, which seems to have hit a fundamental disagreement in principles of software development among us. I am intentionally exaggerating here to demonstrate the irony of our process :)\n\nNo big deal, let\u0027s have it as you suggest.",
+      "parentUuid": "8533ccda_eeda9b6b",
       "range": {
         "startLine": 135,
         "startChar": 44,
