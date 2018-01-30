@@ -182,8 +182,13 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider
             if (!mNativeAccessibilityAllowed || mWebContents == null) return null;
             mNativeObj = nativeInit(mWebContents);
             onNativeInit();
+            nativeEnable(mNativeObj);
+            return null;
         }
-        if (!isEnabled()) nativeEnable(mNativeObj);
+        if (!isEnabled()) {
+            nativeEnable(mNativeObj);
+            return null;
+        }
         return this;
     }
 
