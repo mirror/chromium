@@ -15,6 +15,8 @@ namespace gpu {
 class DecoderClient;
 
 namespace gles2 {
+class GLES2Util;
+class Logger;
 class Outputter;
 }  // namespace gles2
 
@@ -32,6 +34,19 @@ class GPU_GLES2_EXPORT RasterDecoder : public DecoderContext,
 
   ~RasterDecoder() override;
 
+  virtual gles2::GLES2Util* GetGLES2Util() = 0;
+
+  // DecoderContext implementation.
+  bool initialized() const override;
+  TextureBase* GetTextureBase(uint32_t client_id) override;
+  void BeginDecoding() override;
+  void EndDecoding() override;
+  base::StringPiece GetLogPrefix() override;
+
+  virtual gles2::Logger* GetLogger() = 0;
+
+  void set_initialized() { initialized_ = true; }
+
   bool debug() const { return debug_; }
 
   // Set to true to call glGetError after every command.
@@ -42,10 +57,13 @@ class GPU_GLES2_EXPORT RasterDecoder : public DecoderContext,
   // Set to true to LOG every command.
   void set_log_commands(bool log_commands) { log_commands_ = log_commands; }
 
+  virtual void SetIgnoreCachedStateForTest(bool ignore) = 0;
+
  protected:
   RasterDecoder(CommandBufferServiceBase* command_buffer_service);
 
  private:
+  bool initialized_;
   bool debug_;
   bool log_commands_;
 
