@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "65fef633_05f7f4f0",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-01-30T10:20:22Z",
+      "side": 1,
+      "message": "1. The events observed here are reactive (triggered by peer connections being removed/added) , so I think it\u0027s possible to call SetRemoteLogsObserver() reliably before those events.\n2. Currently, and as far as I can plan, WebRtcEventLogManager::remote_logs_observer_ is only used by unit tests (but not named as such because there\u0027s no necessity for it to be only for unit tests). Those unit tests are tasked with calling SetRemoteLogsObserver() at an appropriate time. Namely, I call this function before I start adding/removing peer connections.\n3. The design is to only call the observer on state changes. Otherwise, we\u0027d have to add code to fire off a list of states (pc1 enabled, pc2 disabled, pc3 enabled) when we register a new remote-logs observer, but, since this bit is only ever used by unit tests, it would be unnecessary code.",
+      "parentUuid": "4d07da29_bf099dad",
+      "range": {
+        "startLine": 407,
+        "startChar": 26,
+        "endLine": 407,
+        "endChar": 34
+      },
+      "revId": "f34531a853dcdcbaff2452c1253c06a2fcb67aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36095a85_aa8b1382",
         "filename": "content/browser/webrtc/webrtc_event_log_uploader.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2e050bad_35902c7c",
+        "filename": "content/browser/webrtc/webrtc_event_log_uploader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-01-30T10:20:22Z",
+      "side": 1,
+      "message": "I agree that we want to track and report failures of WebRTC event logging/uploading in general. This specific LOG() refers to inability to delete the file (possibly due to malicious user interference - changing of the file permissions). I think we probably want to make it a sub-discussion of error-tracking and reporting in general, where inability to upload the file is the more common and concerning failure case? We probably want to open that for discussion after the upcoming CL that introduces the code for actual uploading (this implementation is just a placeholder) is ready?",
+      "parentUuid": "36095a85_aa8b1382",
+      "range": {
+        "startLine": 28,
+        "startChar": 55,
+        "endLine": 28,
+        "endChar": 0
+      },
+      "revId": "f34531a853dcdcbaff2452c1253c06a2fcb67aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb7b14eb_987eb1c3",
         "filename": "content/browser/webrtc/webrtc_remote_event_log_manager.cc",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-29T19:01:34Z",
       "side": 1,
       "message": "What happens if the user closes the browser during upload? Seems like cleaner to have an uploading and mark as completed only once it\u0027s completed?",
+      "range": {
+        "startLine": 350,
+        "startChar": 61,
+        "endLine": 350,
+        "endChar": 0
+      },
+      "revId": "f34531a853dcdcbaff2452c1253c06a2fcb67aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08b49d2c_16c9f9cd",
+        "filename": "content/browser/webrtc/webrtc_remote_event_log_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-01-30T10:20:22Z",
+      "side": 1,
+      "message": "If the user closes the browser, the file will still be in the same location on disk, so when Chrome is restarted and the BrowserContext re-initialized, WebRtcRemoteEventManager will find it again, and if it\u0027s not expired, will try to upload it again. There\u0027s a known theoretical edge case, where the upload might be bugged and causing the browser to hang (or just overuses bandwidth), prompting the user to close Chrome and repeat the process. One idea we\u0027ve been toying with as a solution to that, is to move \"pending\" logs files into another folder before uploading them, and check that folder (or make it temporary) when starting up Chrome, purging it from any files it might have from previous runs. I think we can consider this action-item covered by the TODO on lines 351-354, which we\u0027ll have to resolve (or at least consider resolving) before the feature is considered launched. Wdyt?",
+      "parentUuid": "bb7b14eb_987eb1c3",
       "range": {
         "startLine": 350,
         "startChar": 61,
