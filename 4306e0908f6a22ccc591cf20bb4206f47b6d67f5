@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "76cbad21_ed687fec",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-30T01:03:00Z",
+      "side": 1,
+      "message": "I\u0027m not quite sure what you mean, so this is what I mean:\n\nFor example, the case that we need to startOrUpdateForegroundService and handle relaunching a notification is likely when there are multiple downloads and Download1, the one that was originally pinned to the foreground finishes and so we need to switch the foreground to pin to the next download, Download2 that is still continuing. In this case, the last call this class got from Download1 was the original in-progress notification from when that download was just starting, but since then, that download has been completed and a complete notification has been built. This is the notification we want to relaunch, not the original starting notification. DownloadForegroundServiceManager is getting an update every time the notification is getting updated and has the latest/newest notification, so we will just have it pass that notification.\n\nLet me know if this addresses your point or if there is something else! /We can talk in person!",
+      "parentUuid": "70d484fe_9644750d",
+      "range": {
+        "startLine": 52,
+        "startChar": 12,
+        "endLine": 52,
+        "endChar": 63
+      },
+      "revId": "4306e0908f6a22ccc591cf20bb4206f47b6d67f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd3ffdb2_f7d9ef14",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
         "patchSetId": 6
@@ -555,6 +579,30 @@
       "side": 1,
       "message": "I would just cache in onCreate() and assume it isn\u0027t null here.",
       "parentUuid": "ce0a67c3_b6bf6e4d",
+      "range": {
+        "startLine": 150,
+        "startChar": 12,
+        "endLine": 152,
+        "endChar": 58
+      },
+      "revId": "4306e0908f6a22ccc591cf20bb4206f47b6d67f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "205b07d6_a62bfec3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-30T01:03:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a548e16d_6fd74f0d",
       "range": {
         "startLine": 150,
         "startChar": 12,

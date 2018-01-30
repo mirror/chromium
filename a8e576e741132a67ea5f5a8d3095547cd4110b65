@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "addfb387_8259099a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-30T01:03:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80fabdb7_befd898b",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 8
+      },
+      "revId": "a8e576e741132a67ea5f5a8d3095547cd4110b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af35ec36_55a492d2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "bb9b16e7_b21dcfde",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-30T01:03:00Z",
+      "side": 1,
+      "message": "True :/ Okay will remove.",
+      "parentUuid": "af35ec36_55a492d2",
+      "range": {
+        "startLine": 81,
+        "startChar": 8,
+        "endLine": 81,
+        "endChar": 56
+      },
+      "revId": "a8e576e741132a67ea5f5a8d3095547cd4110b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d833eb26_1de7b07b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
         "patchSetId": 9
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-30T00:15:29Z",
       "side": 1,
       "message": "We could probably just always use this version of stopForegroundInternal and have that use ServiceCompat.stopForeground().  That seems more clear to me.",
+      "range": {
+        "startLine": 131,
+        "startChar": 16,
+        "endLine": 131,
+        "endChar": 63
+      },
+      "revId": "a8e576e741132a67ea5f5a8d3095547cd4110b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb295689_a62ecec8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-30T01:03:00Z",
+      "side": 1,
+      "message": "I\u0027m getting warnings on my Android Studio that the flag itself (STOP_FOREGROUND_DETACH) is API \u003e\u003d 24. Do you know if this is true? Also the ServiceCompat was added in API 25.",
+      "parentUuid": "d833eb26_1de7b07b",
       "range": {
         "startLine": 131,
         "startChar": 16,
@@ -91,6 +163,30 @@
       "revId": "a8e576e741132a67ea5f5a8d3095547cd4110b65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79510d15_98703dd2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-30T01:03:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9281b14f_ebf1f48b",
+      "range": {
+        "startLine": 230,
+        "startChar": 8,
+        "endLine": 239,
+        "endChar": 9
+      },
+      "revId": "a8e576e741132a67ea5f5a8d3095547cd4110b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
