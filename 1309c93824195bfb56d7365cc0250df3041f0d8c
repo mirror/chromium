@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95f519ae_ea2f6ad9",
+        "filename": "content/common/service_worker/service_worker_fetch_response_struct_traits.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1250573
+      },
+      "writtenOn": "2018-01-30T07:38:52Z",
+      "side": 1,
+      "message": "Is this the right way to pass an interface pointer?",
+      "range": {
+        "startLine": 47,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 31
+      },
+      "revId": "1309c93824195bfb56d7365cc0250df3041f0d8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66d8b8b9_8c058ff6",
+        "filename": "content/common/service_worker/service_worker_fetch_response_struct_traits.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1250573
+      },
+      "writtenOn": "2018-01-30T07:38:52Z",
+      "side": 1,
+      "message": "Is this the right way to pass the interface pointer here?",
+      "range": {
+        "startLine": 37,
+        "startChar": 6,
+        "endLine": 37,
+        "endChar": 60
+      },
+      "revId": "1309c93824195bfb56d7365cc0250df3041f0d8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53c77fc3_e00fc03c",
+        "filename": "content/renderer/cache_storage/cache_storage_dispatcher.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1250573
+      },
+      "writtenOn": "2018-01-30T07:38:52Z",
+      "side": 1,
+      "message": "Before we would save this time only for successful calls. Do we want to ignore the measurement for errors?",
+      "range": {
+        "startLine": 267,
+        "startChar": 22,
+        "endLine": 267,
+        "endChar": 58
+      },
+      "revId": "1309c93824195bfb56d7365cc0250df3041f0d8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "167deff7_46b84a67",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/InspectorCacheStorageAgent.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1250573
+      },
+      "writtenOn": "2018-01-30T07:38:52Z",
+      "side": 1,
+      "message": "Is this the right way to get the execution context here?",
+      "range": {
+        "startLine": 99,
+        "startChar": 2,
+        "endLine": 99,
+        "endChar": 71
+      },
+      "revId": "1309c93824195bfb56d7365cc0250df3041f0d8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
