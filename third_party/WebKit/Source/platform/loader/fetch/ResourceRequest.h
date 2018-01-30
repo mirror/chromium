@@ -361,6 +361,17 @@ class PLATFORM_EXPORT ResourceRequest final {
   }
   bool IsSameDocumentNavigation() const { return is_same_document_navigation_; }
 
+  // Used for blob URLs to specify a specific URLLoaderFactory rather than
+  // whatever factory the system might otherwise use.
+  network::mojom::blink::URLLoaderFactory* GetURLLoaderFactory() const {
+    return url_loader_factory_ ? url_loader_factory_->data.get() : nullptr;
+  }
+  void SetURLLoaderFactory(network::mojom::blink::URLLoaderFactoryPtr factory) {
+    url_loader_factory_ =
+        new base::RefCountedData<network::mojom::blink::URLLoaderFactoryPtr>(
+            std::move(factory));
+  }
+
  private:
   const CacheControlHeader& GetCacheControlHeader() const;
 
@@ -407,6 +418,9 @@ class PLATFORM_EXPORT ResourceRequest final {
   InputToLoadPerfMetricReportPolicy input_perf_metric_report_policy_;
   RedirectStatus redirect_status_;
   WTF::Optional<String> suggested_filename_;
+  scoped_refptr<
+      base::RefCountedData<network::mojom::blink::URLLoaderFactoryPtr>>
+      url_loader_factory_;
 
   mutable CacheControlHeader cache_control_header_cache_;
 
@@ -468,6 +482,7 @@ struct CrossThreadResourceRequestData {
   InputToLoadPerfMetricReportPolicy input_perf_metric_report_policy_;
   ResourceRequest::RedirectStatus redirect_status_;
   base::Optional<String> suggested_filename_;
+  network::mojom::blink::URLLoaderFactoryPtrInfo url_loader_factory_;
 };
 
 }  // namespace blink
