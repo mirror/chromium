@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f71bff4_52d62f48",
+        "filename": "content/browser/download/download_file_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-01-30T19:43:10Z",
+      "side": 1,
+      "message": "while(preceding_neighbor\u003dFindPrecedingNeighbor(source_stream)), so we can remove the same statement at the end of the while loop?",
+      "revId": "e96428e63d40f94afbe793036aece4e2f2868af7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c88dc64e_5ee07e35",
+        "filename": "content/browser/download/download_file_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-01-30T19:43:10Z",
+      "side": 1,
+      "message": "This is not correct.\nFor example, we have 4 workers, A, B, C And D, in that order.\nif A, B and D started early, both A and B will have their length capped.\nNow if C come and immediately fails, B should actually be able to receive the data for B and C.",
+      "revId": "e96428e63d40f94afbe793036aece4e2f2868af7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e6851de_b2496a00",
+        "filename": "content/browser/download/download_file_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-01-30T19:43:10Z",
+      "side": 1,
+      "message": "you can use IsDownloadCompleted()?",
+      "revId": "e96428e63d40f94afbe793036aece4e2f2868af7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
