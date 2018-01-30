@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "048adf7d_69194069",
+        "filename": "third_party/WebKit/Source/core/script/ClassicPendingScript.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2018-01-30T19:10:12Z",
+      "side": 1,
+      "message": "IIUC CachedMetadatas handled by WrappingCacheMetadataHandler and ones handled by normal (ScriptResources\u0027) CachedMetadataHandlers are not mixed because MAP_DATA_TYPE doesn\u0027t conflict the data_types used by ScriptResources\u0027 CachedMetadataHandlers, right?",
+      "revId": "a3fa559ceac28512db0cb2a3242cae8b7f0db6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cfd285d_9d04f253",
+        "filename": "third_party/WebKit/Source/core/script/ClassicPendingScript.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2018-01-30T19:10:12Z",
+      "side": 1,
+      "message": "Using Bytes() causes hash values can be different depending on whether the string is represented in a 8-bit or 16-bit buffer.\n\nProbably practically this is not a problem, because a string with 8-bit characters only are expected to be represented in a 8-bit buffer, and returning different hash values for 8-bit and 16-bit versions of the same string content doesn\u0027t affect the correctness in this case.\n\nHowever, I feel it\u0027s better to make this independent from the 8-bit/16-bit representations inside StringImpl and not to expose String::Bytes().\n(Perhaps we can do similar things to what is done by StringHash, but I\u0027m not familiar with how StringHash is implemented.)",
+      "revId": "a3fa559ceac28512db0cb2a3242cae8b7f0db6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e8519c4_ae8d2ef6",
+        "filename": "third_party/WebKit/Source/core/script/ClassicPendingScript.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2018-01-30T19:10:12Z",
+      "side": 1,
+      "message": "IIUC caching the code for non-kInline scripts doesn\u0027t affect the correctness, but caching non-kInline scripts will have much less performance win (and thus wasting memory and time), so this condition is for performance optimization.\nIf correct, adding a comment is helpful.",
+      "revId": "a3fa559ceac28512db0cb2a3242cae8b7f0db6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
