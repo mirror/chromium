@@ -96,6 +96,7 @@ interface VideoDecodeAccelerator {
   Initialize@0(VideoDecodeAcceleratorConfig config,
                VideoDecodeClient client) => (Result result);
 
+  // TODO(hiroh): Remove.
   // Allocate protected input buffer with |handle_fd| and aligned |size|.
   // This function can be called only in secure mode.
   // If this is succeeded, this returns true. Otherwise, returns false.

@@ -50,6 +50,9 @@ class ChromeContentGpuClient : public content::ContentGpuClient {
 
   void CreateProtectedBufferManager(
       ::arc::mojom::ProtectedBufferManagerRequest request);
+
+  void CreateProtectedBufferAllocator(
+      ::arc::mojom::ProtectedBufferAllocatorRequest request);
 #endif
 
   // Used to profile process startup.
