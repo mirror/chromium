@@ -244,6 +244,10 @@ class InProcessBrowserTest : public content::BrowserTestBase {
   // if successful.
   virtual bool CreateUserDataDirectory() WARN_UNUSED_RESULT;
 
+  // Run subsets of accessibility tests.
+  bool RunContentAccessibilityChecks(std::string* error_message);
+  bool RunUIAccessibilityChecks(std::string* error_message);
+
   // Quits all open browsers and waits until there are no more browsers.
   void QuitBrowsers();
 
