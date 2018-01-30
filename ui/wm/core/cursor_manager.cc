@@ -80,7 +80,8 @@ CursorManager::CursorManager(std::unique_ptr<NativeCursorManager> delegate)
       current_state_(new internal::CursorState),
       state_on_unlock_(new internal::CursorState) {
   // Restore the last cursor visibility state.
-  current_state_->SetVisible(last_cursor_visibility_state_);
+  if (last_cursor_visibility_state_)
+    ShowCursor();
 }
 
 CursorManager::~CursorManager() {
