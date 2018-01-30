@@ -82,7 +82,11 @@ class VizMainImpl : public gpu::GpuSandboxHelper, public mojom::VizMain {
   // So this must be called from a different thread.
   // TODO(crbug.com/609317): After the process split, we should revisit to make
   // this cleaner.
-  void TearDown();
+  void TearDownFromExternalThread();
+
+  // Destroy objects for GPU and compositor thread, to be called from the GPU
+  // thread.
+  void TearDownFromGpuThread(base::WaitableEvent* wait);
 
   // mojom::VizMain implementation:
   void CreateGpuService(mojom::GpuServiceRequest request,
@@ -101,9 +105,7 @@ class VizMainImpl : public gpu::GpuSandboxHelper, public mojom::VizMain {
   void CreateFrameSinkManagerOnCompositorThread(
       mojom::FrameSinkManagerParamsPtr params);
 
-  void CloseVizMainBindingOnGpuThread(base::WaitableEvent* wait);
-  void TearDownOnCompositorThread(base::WaitableEvent* wait);
-  void TearDownOnGpuThread(base::WaitableEvent* wait);
+  void TearDownOnCompositorThread(base::RepeatingClosure callback);
 
   // gpu::GpuSandboxHelper:
   void PreSandboxStartup() override;

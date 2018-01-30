@@ -83,7 +83,7 @@ DefaultGpuHost::~DefaultGpuHost() {
   // posted in the constructor to run InitializeVizMain() has actually run).
   if (gpu_thread_.IsRunning()) {
     viz_main_wait_.Wait();
-    viz_main_impl_->TearDown();
+    viz_main_impl_->TearDownFromExternalThread();
     gpu_thread_.task_runner()->DeleteSoon(FROM_HERE, std::move(viz_main_impl_));
     gpu_thread_.Stop();
   }
