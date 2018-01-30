@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bdf7f77_1039eb58",
+        "filename": "services/network/test/OWNERS",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-30T19:52:16Z",
+      "side": 1,
+      "message": "maybe *_manifest.json to future-proof it.",
+      "range": {
+        "startLine": 1,
+        "startChar": 10,
+        "endLine": 1,
+        "endChar": 25
+      },
+      "revId": "bc371de7b5239917d0e05bdc0b498f6f65db61a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
