@@ -199,10 +199,11 @@ class WebRtcEventLogManagerTest : public ::testing::TestWithParam<bool> {
 
   bool StartRemoteLogging(int render_process_id,
                           int lid,
-                          size_t max_size_bytes = kArbitraryVeryLargeFileSize) {
+                          size_t max_size_bytes = kArbitraryVeryLargeFileSize,
+                          const std::string& metadata = "") {
     bool result;
     manager_->StartRemoteLogging(render_process_id, lid, max_size_bytes,
-                                 BoolReplyClosure(&result));
+                                 metadata, BoolReplyClosure(&result));
     WaitForReply();
     return result;
   }
@@ -325,6 +326,16 @@ class WebRtcEventLogManagerTest : public ::testing::TestWithParam<bool> {
     DCHECK(upload_suppressing_rph_) << "Uploading not suppressed.";
     ASSERT_TRUE(PeerConnectionRemoved(upload_suppressing_rph_->GetID(), 0));
     upload_suppressing_rph_.reset();
+  }
+
+  void ExpectFileContents(const base::FilePath& file_path,
+                          const std::string& expected_contents) {
+    std::string file_contents;
+    if (!base::ReadFileToString(file_path, &file_contents)) {
+      EXPECT_TRUE(false);
+      return;
+    }
+    EXPECT_EQ(file_contents, expected_contents);
   }
 
   static const size_t kArbitraryVeryLargeFileSize = 1000 * 1000 * 1000;
@@ -724,9 +735,7 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogCreatesEmptyFileWhenStarted) {
   // Make sure the file would be closed, so that we could safely read it.
   ASSERT_TRUE(PeerConnectionRemoved(key.render_process_id, key.lid));
 
-  std::string file_contents;
-  ASSERT_TRUE(base::ReadFileToString(*file_path, &file_contents));
-  EXPECT_EQ(file_contents, "");
+  ExpectFileContents(*file_path, "");
 }
 
 TEST_F(WebRtcEventLogManagerTest, LocalLogCreateAndWriteToFile) {
@@ -751,9 +760,7 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogCreateAndWriteToFile) {
   // Make sure the file would be closed, so that we could safely read it.
   ASSERT_TRUE(PeerConnectionRemoved(key.render_process_id, key.lid));
 
-  std::string file_contents;
-  ASSERT_TRUE(base::ReadFileToString(*file_path, &file_contents));
-  EXPECT_EQ(file_contents, log);
+  ExpectFileContents(*file_path, log);
 }
 
 TEST_F(WebRtcEventLogManagerTest, LocalLogMultipleWritesToSameFile) {
@@ -783,10 +790,9 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogMultipleWritesToSameFile) {
   // Make sure the file would be closed, so that we could safely read it.
   ASSERT_TRUE(PeerConnectionRemoved(key.render_process_id, key.lid));
 
-  std::string file_contents;
-  ASSERT_TRUE(base::ReadFileToString(*file_path, &file_contents));
-  EXPECT_EQ(file_contents,
-            std::accumulate(std::begin(logs), std::end(logs), std::string()));
+  ExpectFileContents(
+      *file_path,
+      std::accumulate(std::begin(logs), std::end(logs), std::string()));
 }
 
 TEST_F(WebRtcEventLogManagerTest, LocalLogFileSizeLimitNotExceeded) {
@@ -818,9 +824,7 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogFileSizeLimitNotExceeded) {
   ASSERT_EQ(OnWebRtcEventLogWrite(key.render_process_id, key.lid, "ignored"),
             std::make_pair(false, false));
 
-  std::string file_contents;
-  ASSERT_TRUE(base::ReadFileToString(*file_path, &file_contents));
-  EXPECT_EQ(file_contents, log.substr(0, file_size_limit_bytes));
+  ExpectFileContents(*file_path, log.substr(0, file_size_limit_bytes));
 }
 
 TEST_F(WebRtcEventLogManagerTest, LocalLogSanityOverUnlimitedFileSizes) {
@@ -848,9 +852,7 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogSanityOverUnlimitedFileSizes) {
   // Make sure the file would be closed, so that we could safely read it.
   ASSERT_TRUE(PeerConnectionRemoved(key.render_process_id, key.lid));
 
-  std::string file_contents;
-  ASSERT_TRUE(base::ReadFileToString(*file_path, &file_contents));
-  EXPECT_EQ(file_contents, log1 + log2);
+  ExpectFileContents(*file_path, log1 + log2);
 }
 
 TEST_F(WebRtcEventLogManagerTest, LocalLogNoWriteAfterLogStopped) {
@@ -878,9 +880,7 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogNoWriteAfterLogStopped) {
   ASSERT_EQ(OnWebRtcEventLogWrite(key.render_process_id, key.lid, log_after),
             std::make_pair(false, false));
 
-  std::string file_contents;
-  ASSERT_TRUE(base::ReadFileToString(*file_path, &file_contents));
-  EXPECT_EQ(file_contents, log_before);
+  ExpectFileContents(*file_path, log_before);
 }
 
 TEST_F(WebRtcEventLogManagerTest, LocalLogOnlyWritesTheLogsAfterStarted) {
@@ -915,9 +915,7 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogOnlyWritesTheLogsAfterStarted) {
   // Make sure the file would be closed, so that we could safely read it.
   ASSERT_TRUE(PeerConnectionRemoved(rph_->GetID(), kPeerConnectionId));
 
-  std::string file_contents;
-  ASSERT_TRUE(base::ReadFileToString(*file_path, &file_contents));
-  EXPECT_EQ(file_contents, log2);
+  ExpectFileContents(*file_path, log2);
 }
 
 // Note: This test also covers the scenario LocalLogExistingFilesNotOverwritten,
@@ -946,9 +944,7 @@ TEST_F(WebRtcEventLogManagerTest, LocalLoggingRestartCreatesNewFile) {
   }
 
   for (size_t i = 0; i < logs.size(); i++) {
-    std::string file_contents;
-    ASSERT_TRUE(base::ReadFileToString(*file_paths[i], &file_contents));
-    EXPECT_EQ(file_contents, logs[i]);
+    ExpectFileContents(*file_paths[i], logs[i]);
   }
 }
 
@@ -990,9 +986,7 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogMultipleActiveFiles) {
   ASSERT_TRUE(DisableLocalLogging());
 
   for (size_t i = 0; i < keys.size(); i++) {
-    std::string file_contents;
-    ASSERT_TRUE(base::ReadFileToString(*file_paths[i], &file_contents));
-    EXPECT_EQ(file_contents, logs[i]);
+    ExpectFileContents(*file_paths[i], logs[i]);
   }
 }
 
@@ -1153,10 +1147,9 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogEmptyStringHandledGracefully) {
   }
   ASSERT_TRUE(DisableLocalLogging());
 
-  std::string file_contents;
-  ASSERT_TRUE(base::ReadFileToString(*file_path, &file_contents));
-  EXPECT_EQ(file_contents,
-            std::accumulate(std::begin(logs), std::end(logs), std::string()));
+  ExpectFileContents(
+      *file_path,
+      std::accumulate(std::begin(logs), std::end(logs), std::string()));
 }
 
 TEST_F(WebRtcEventLogManagerTest, LocalLogFilenameMatchesExpectedFormat) {
@@ -1359,9 +1352,7 @@ TEST_F(WebRtcEventLogManagerTest, StartRemoteLoggingCreatesEmptyFile) {
   ASSERT_TRUE(PeerConnectionAdded(rph_->GetID(), kPeerConnectionId));
   ASSERT_TRUE(StartRemoteLogging(rph_->GetID(), kPeerConnectionId));
 
-  std::string file_contents;
-  EXPECT_TRUE(base::ReadFileToString(*file_path, &file_contents));
-  EXPECT_EQ(file_contents, "");
+  ExpectFileContents(*file_path, "");
 }
 
 TEST_F(WebRtcEventLogManagerTest, RemoteLogFileCreatedInCorrectDirectory) {
@@ -1416,10 +1407,18 @@ TEST_F(WebRtcEventLogManagerTest,
   EXPECT_EQ(OnWebRtcEventLogWrite(rph_->GetID(), kPeerConnectionId, output),
             std::make_pair(false, true));
 
-  std::string file_contents;
-  EXPECT_TRUE(base::ReadFileToString(*file_path, &file_contents));
-  EXPECT_EQ(file_contents, output);
+  ExpectFileContents(*file_path, output);
 }
+
+// TODO: !!! Unit tests include:
+// 1. Wrong version byte
+// 2. Zero length metadata
+// 3. Normal metadata
+// 4. Metadata exceeds length of maximum allowed file
+// 5. Metadata is exactly the length of the allowed file
+
+// TODO: !!! Unit test for what happens if maximum file size reached, on the
+// next call to Write().
 
 TEST_F(WebRtcEventLogManagerTest, WriteToBothLocalAndRemoteFiles) {
   const PeerConnectionKey key(rph_->GetID(), kPeerConnectionId);
@@ -1455,10 +1454,7 @@ TEST_F(WebRtcEventLogManagerTest, WriteToBothLocalAndRemoteFiles) {
   ASSERT_TRUE(PeerConnectionRemoved(key.render_process_id, key.lid));
 
   for (base::Optional<base::FilePath> file_path : {local_path, remote_path}) {
-    std::string file_contents;
-    ASSERT_TRUE(file_path);
-    ASSERT_TRUE(base::ReadFileToString(*file_path, &file_contents));
-    EXPECT_EQ(file_contents, log);
+    ExpectFileContents(*file_path, log);
   }
 }
 
@@ -1486,10 +1482,9 @@ TEST_F(WebRtcEventLogManagerTest, MultipleWritesToSameRemoteBoundLogfile) {
   // Make sure the file would be closed, so that we could safely read it.
   ASSERT_TRUE(PeerConnectionRemoved(key.render_process_id, key.lid));
 
-  std::string file_contents;
-  ASSERT_TRUE(base::ReadFileToString(*file_path, &file_contents));
-  EXPECT_EQ(file_contents,
-            std::accumulate(std::begin(logs), std::end(logs), std::string()));
+  ExpectFileContents(
+      *file_path,
+      std::accumulate(std::begin(logs), std::end(logs), std::string()));
 }
 
 TEST_F(WebRtcEventLogManagerTest, RemoteLogFileSizeLimitNotExceeded) {
@@ -1518,10 +1513,7 @@ TEST_F(WebRtcEventLogManagerTest, RemoteLogFileSizeLimitNotExceeded) {
   ASSERT_EQ(OnWebRtcEventLogWrite(key.render_process_id, key.lid, "ignored"),
             std::make_pair(false, false));
 
-  std::string file_contents;
-  ASSERT_TRUE(file_path);
-  ASSERT_TRUE(base::ReadFileToString(*file_path, &file_contents));
-  EXPECT_EQ(file_contents, log.substr(0, file_size_limit_bytes));
+  ExpectFileContents(*file_path, log.substr(0, file_size_limit_bytes));
 }
 
 TEST_F(WebRtcEventLogManagerTest,
@@ -1557,9 +1549,7 @@ TEST_F(WebRtcEventLogManagerTest,
   }
 
   for (size_t i = 0; i < keys.size(); i++) {
-    std::string file_contents;
-    ASSERT_TRUE(base::ReadFileToString(*file_paths[i], &file_contents));
-    EXPECT_EQ(file_contents, logs[i]);
+    ExpectFileContents(*file_paths[i], logs[i]);
   }
 }
 
@@ -1606,9 +1596,7 @@ TEST_F(WebRtcEventLogManagerTest,
   }
 
   for (size_t i = 0; i < keys.size(); i++) {
-    std::string file_contents;
-    ASSERT_TRUE(base::ReadFileToString(*file_paths[i], &file_contents));
-    EXPECT_EQ(file_contents, logs[i]);
+    ExpectFileContents(*file_paths[i], logs[i]);
   }
 }
 
@@ -1644,10 +1632,8 @@ TEST_F(WebRtcEventLogManagerTest, DifferentRemoteLogsMayHaveDifferentMaximums) {
   }
 
   for (size_t i = 0; i < keys.size(); i++) {
-    std::string file_contents;
-    ASSERT_TRUE(file_paths[i]);
-    ASSERT_TRUE(base::ReadFileToString(*file_paths[i], &file_contents));
-    EXPECT_EQ(file_contents, log.substr(0, file_size_limits_bytes[i]));
+    ExpectFileContents(*file_paths[i],
+                       log.substr(0, file_size_limits_bytes[i]));
   }
 }
 
@@ -2125,10 +2111,9 @@ TEST_F(WebRtcEventLogManagerTest, RemoteLogEmptyStringHandledGracefully) {
   }
   ASSERT_TRUE(PeerConnectionRemoved(key.render_process_id, key.lid));
 
-  std::string file_contents;
-  ASSERT_TRUE(base::ReadFileToString(*file_path, &file_contents));
-  EXPECT_EQ(file_contents,
-            std::accumulate(std::begin(logs), std::end(logs), std::string()));
+  ExpectFileContents(
+      *file_path,
+      std::accumulate(std::begin(logs), std::end(logs), std::string()));
 }
 
 #if defined(OS_POSIX) && !defined(OS_FUCHSIA)
@@ -2368,15 +2353,8 @@ TEST_F(WebRtcEventLogManagerTest, LogAllPossibleCharacters) {
   // Make sure the file would be closed, so that we could safely read it.
   ASSERT_TRUE(PeerConnectionRemoved(key.render_process_id, key.lid));
 
-  std::string local_log_file_contents;
-  ASSERT_TRUE(
-      base::ReadFileToString(*local_log_file_path, &local_log_file_contents));
-  EXPECT_EQ(local_log_file_contents, all_chars);
-
-  std::string remote_log_file_contents;
-  ASSERT_TRUE(
-      base::ReadFileToString(*remote_log_file_path, &remote_log_file_contents));
-  EXPECT_EQ(remote_log_file_contents, all_chars);
+  ExpectFileContents(*local_log_file_path, all_chars);
+  ExpectFileContents(*remote_log_file_path, all_chars);
 }
 
 INSTANTIATE_TEST_CASE_P(UploadCompleteResult,
