@@ -6,6 +6,7 @@
 #define COMPONENTS_SYNC_DRIVER_ABOUT_SYNC_UTIL_H_
 
 #include <memory>
+#include <string>
 
 #include "components/signin/core/browser/account_info.h"
 #include "components/version_info/version_info.h"
@@ -84,7 +85,7 @@ std::unique_ptr<base::DictionaryValue> ConstructAboutInformation_DEPRECATED(
 // not available for any other reason.
 std::unique_ptr<base::DictionaryValue> ConstructAboutInformation(
     SyncService* service,
-    AccountInfo primary_account_info,
+    std::string syncing_account_id,
     version_info::Channel channel);
 
 }  // namespace sync_ui_util

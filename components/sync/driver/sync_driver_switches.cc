@@ -4,6 +4,8 @@
 
 #include "components/sync/driver/sync_driver_switches.h"
 
+#include "components/signin/core/browser/profile_management_switches.h"
+
 namespace switches {
 
 // Allows overriding the deferred init fallback timeout.
@@ -68,5 +70,10 @@ const base::Feature kSyncUSSBookmarks{"SyncUSSBookmarks",
 // Enables USS implementation of typed URL datatype.
 const base::Feature kSyncUSSTypedURL{"SyncUSSTypedURL",
                                      base::FEATURE_DISABLED_BY_DEFAULT};
+
+bool IsAutosyncEnabled() {
+  // TODO: Should this be IsDiceEnabledForProfile? Also add our own feature.
+  return signin::IsDiceMigrationEnabled();
+}
 
 }  // namespace switches
