@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e2337b6_4a097676",
+        "filename": "ios/web/navigation/wk_based_restore_session_util.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-30T21:14:49Z",
+      "side": 1,
+      "message": "Optional nit: Consider reformatting this somehow (like create a local variable, or use if statement).",
+      "range": {
+        "startLine": 47,
+        "startChar": 9,
+        "endLine": 47,
+        "endChar": 21
+      },
+      "revId": "62b114da33bdbefea51f729495986976740c3bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
