@@ -12,8 +12,9 @@ const base::Feature kNativeCrxBindings{"NativeCrxBindings",
                                        base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Enables splitting content script injections into multiple tasks.
+// TODO(ksakamoto): Remove this feature flag in M67.
 const base::Feature kYieldBetweenContentScriptRuns{
-    "YieldBetweenContentScriptRuns", base::FEATURE_DISABLED_BY_DEFAULT};
+    "YieldBetweenContentScriptRuns", base::FEATURE_ENABLED_BY_DEFAULT};
 
 }  // namespace features
 }  // namespace extensions
