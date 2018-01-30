@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54cc3015_8ee9a7f4",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2018-01-30T13:53:05Z",
+      "side": 1,
+      "message": "nit: would it make sense to test against !\u003d NONE ?",
+      "range": {
+        "startLine": 731,
+        "startChar": 6,
+        "endLine": 731,
+        "endChar": 21
+      },
+      "revId": "9160d108ffa7868a8df9197066cd32a2c9f016d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "67234897_de8c6f67",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2018-01-30T13:53:05Z",
+      "side": 1,
+      "message": "cool. final nit:\nadd a comment like:\n// We cannot rule out concurrent requests although they are rare as the user has to trigger ReloadSuggestions() while the scheduler decides for a background fetch. Although preventing concurrent fetches would be desireable, it\u0027s not worth the effort (also see TODO() in OnFetchFinished()).",
+      "parentUuid": "0bb9f5ef_d2339899",
+      "range": {
+        "startLine": 576,
+        "startChar": 50,
+        "endLine": 576,
+        "endChar": 51
+      },
+      "revId": "7d454305e2d1cbce1611d9c8e408929316a4e4ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f31b892_b5aaaeb8",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
         "patchSetId": 4
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Although I personally prefer British, I try to use US spelling in code / emails at Google. One \u0027l\u0027 is preferred in the US for this word (https://www.grammarly.com/blog/canceled-vs-cancelled/). Interestingly, the use of both variants in chromium is roughly equal, so both is acceptable.",
       "parentUuid": "2f31b892_b5aaaeb8",
+      "range": {
+        "startLine": 221,
+        "startChar": 18,
+        "endLine": 221,
+        "endChar": 26
+      },
+      "revId": "7d454305e2d1cbce1611d9c8e408929316a4e4ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7027c42_d97d533b",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2018-01-30T13:53:05Z",
+      "side": 1,
+      "message": "hehe, that\u0027s funny. I personally prefer the US spelling and thought it was always written with two \u0027l\u0027 :)\n\nIn that case, I apologize and leave the choice up to you.",
+      "parentUuid": "f3a10c6d_e37d0618",
       "range": {
         "startLine": 221,
         "startChar": 18,
