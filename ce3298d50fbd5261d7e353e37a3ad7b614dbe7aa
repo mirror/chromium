@@ -22,6 +22,30 @@
       "revId": "ce3298d50fbd5261d7e353e37a3ad7b614dbe7aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2e3303a_14742c49",
+        "filename": "chrome/test/chromedriver/test/run_py_tests.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1246609
+      },
+      "writtenOn": "2018-01-30T19:54:12Z",
+      "side": 1,
+      "message": "OK, thanks",
+      "parentUuid": "c8ef787f_1a6d13e4",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 46
+      },
+      "revId": "ce3298d50fbd5261d7e353e37a3ad7b614dbe7aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
