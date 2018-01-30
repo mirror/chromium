@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c800dc2a_874cd336",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-30T21:43:41Z",
+      "side": 1,
+      "message": "I wonder if we should simply disable WmToplevelWindowEventHandler\u0027s drag/resize capability in table mode?",
+      "revId": "c684309c6f7e34055357635d87c9525c63c4e4a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
