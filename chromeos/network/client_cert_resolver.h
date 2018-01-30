@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 
+#include "base/containers/flat_map.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
@@ -37,8 +38,6 @@ class CHROMEOS_EXPORT ClientCertResolver : public NetworkStateHandlerObserver,
                                            public CertLoader::Observer,
                                            public NetworkPolicyObserver {
  public:
-  struct NetworkAndMatchingCert;
-
   class Observer {
    public:
     // Called every time resolving of client certificate patterns finishes,
@@ -84,6 +83,10 @@ class CHROMEOS_EXPORT ClientCertResolver : public NetworkStateHandlerObserver,
       base::DictionaryValue* shill_properties);
 
  private:
+  struct NetworkAndMatchingCert;
+  struct CertResolvingStatus;
+  struct NetworkAndCertPattern;
+
   // NetworkStateHandlerObserver overrides
   void NetworkListChanged() override;
   void NetworkConnectionStateChanged(const NetworkState* network) override;
@@ -104,10 +107,18 @@ class CHROMEOS_EXPORT ClientCertResolver : public NetworkStateHandlerObserver,
   // ResolveRequestCompleted notification, even if the queue is empty.
   void ResolvePendingNetworks();
 
+  // Searches for matches between |networks| and |certs| and writes matches to
+  // |matches|. Because this calls NSS functions and is potentially slow, it
+  // must be run on a worker thread.
+  static std::vector<NetworkAndMatchingCert> FindCertificateMatches(
+      net::ScopedCERTCertificateList all_certs,
+      net::ScopedCERTCertificateList system_certs,
+      const std::vector<NetworkAndCertPattern>* networks,
+      base::Time now);
+
   // |matches| contains networks for which a matching certificate was found.
   // Configures these networks.
-  void ConfigureCertificates(
-      std::unique_ptr<std::vector<NetworkAndMatchingCert>> matches);
+  void ConfigureCertificates(std::vector<NetworkAndMatchingCert> matches);
 
   // Trigger a ResolveRequestCompleted event on all observers.
   void NotifyResolveRequestCompleted();
@@ -119,9 +130,10 @@ class CHROMEOS_EXPORT ClientCertResolver : public NetworkStateHandlerObserver,
 
   base::ObserverList<Observer, true> observers_;
 
-  // The set of networks that were checked/resolved in previous passes. These
-  // networks are skipped in the NetworkListChanged notification.
-  std::set<std::string> resolved_networks_;
+  // Stores the current client certificate resolution status for each network.
+  // The key is the network's service path. If a network is not present, it is
+  // not known yet (or disappeared from the list of known networks again).
+  base::flat_map<std::string, CertResolvingStatus> networks_status_;
 
   // The list of network paths that still have to be resolved.
   std::set<std::string> queued_networks_to_resolve_;
