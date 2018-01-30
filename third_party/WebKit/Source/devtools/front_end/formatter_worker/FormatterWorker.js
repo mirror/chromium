@@ -296,6 +296,10 @@ FormatterWorker.format = function(mimeType, text, indentString) {
         formatter.format(text, lineEndings, 0, text.length);
         break;
       case 'text/javascript':
+      case 'text/ecmascript':
+      case 'application/javascript':
+      case 'application/x-javascript':
+      case 'application/ecmascript':
         var formatter = new FormatterWorker.JavaScriptFormatter(builder);
         formatter.format(text, lineEndings, 0, text.length);
         break;
