@@ -205,6 +205,19 @@ bool ImageResource::CanReuse(const FetchParameters& params) const {
       placeholder_option_ != PlaceholderOption::kDoNotReloadPlaceholder)
     return false;
 
+  // Resource instance contains CORSStatus that is used to detect tainted
+  // images. But the CORSStatus depends on the requester origin, and should not
+  // be shared. To avoid sharing the CORSStatus among different origins, reject
+  // ImageResource reuse here.
+  // TODO(toyoshim): Consider to have a CORSStatus in ResourceClient side rather
+  // than Resource to share Resource instances. See https://crbug.com/799477.
+  const ResourceRequest& request = params.GetResourceRequest();
+  if (request.GetFetchRequestMode() ==
+          network::mojom::FetchRequestMode::kNoCORS &&
+      IsSameOriginOrCORSSuccessful() ==
+          request.RequestorOrigin()->TaintsCanvas(GetResponse().Url())) {
+    return false;
+  }
   return Resource::CanReuse(params);
 }
 
