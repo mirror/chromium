@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2f59388_136d54b2",
+        "filename": "extensions/common/permissions/permissions_data.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-01-30T05:29:36Z",
+      "side": 1,
+      "message": "We were using MatchesSecurityOrigin earlier, MatchesURL should also suffice, since the path of explicit hosts is always *.",
+      "range": {
+        "startLine": 431,
+        "startChar": 44,
+        "endLine": 431,
+        "endChar": 54
+      },
+      "revId": "288e0f2c537624e75915c0599d7a4db5d3b40e91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
