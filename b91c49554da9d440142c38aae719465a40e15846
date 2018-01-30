@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "1f6f3813_806df980",
+        "filename": "components/cronet/ios/cronet_global_state_ios.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-30T14:43:18Z",
+      "side": 1,
+      "message": "Hrm, that\u0027s an interesting idea! \n\nDo you suggest android/cronet_library_loader be renamed into android/cronet_global_state_android? That would also trigger corresponding java rename and seems like something I\u0027d rather do in separate CL.\n\nAlternatively, should some code be split into android/cronet_global_state_android? That sounds reasonable, but needs access to g_init_message_loop across modules. \n\nWDYT?",
+      "parentUuid": "c10e654d_f99af1fe",
+      "range": {
+        "startLine": 44,
+        "startChar": 5,
+        "endLine": 44,
+        "endChar": 17
+      },
+      "revId": "b91c49554da9d440142c38aae719465a40e15846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "acf58ad6_28acef69",
         "filename": "components/cronet/ios/cronet_global_state_ios.mm",
         "patchSetId": 15
