@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2082688_686f9c5c",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 2455,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-01-30T09:26:35Z",
+      "side": 1,
+      "message": "If this is deleted with USAGE_DATA and HISTORY, this test should ideally test both to prevent regressions. But if you intend to merge this ASAP, I\u0027m fine with landing as-is and fixing this in a separate CL.",
+      "range": {
+        "startLine": 2455,
+        "startChar": 41,
+        "endLine": 2455,
+        "endChar": 66
+      },
+      "revId": "990af16fdeb62b5f42c9a7fa9695bf6266fe9f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
