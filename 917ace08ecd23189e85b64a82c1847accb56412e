@@ -307,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "4b09913e_57dd0d50",
+        "filename": "components/spellcheck/renderer/platform_spelling_engine.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2018-01-30T20:54:24Z",
+      "side": 1,
+      "message": "I recommend removing both the DHCECK and the comment. See also:\n\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#check_dcheck_and-notreached\n\n\u003e Use DCHECK() or NOTREACHED() as assertions, e.g. to document pre- and post-conditions. A DCHECK() means “this condition must always be true”, not “this condition is normally true, but perhaps not in exceptional cases.”",
+      "parentUuid": "6045e84d_973da2e1",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 29
+      },
+      "revId": "917ace08ecd23189e85b64a82c1847accb56412e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65a977ea_74c5ec93",
         "filename": "components/spellcheck/renderer/platform_spelling_engine.h",
         "patchSetId": 47
@@ -468,6 +492,54 @@
       "revId": "917ace08ecd23189e85b64a82c1847accb56412e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ece8087_65d1799a",
+        "filename": "components/spellcheck/renderer/platform_spelling_engine.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2018-01-30T20:54:24Z",
+      "side": 1,
+      "message": "https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#object-ownership-and-calling-conventions states the following:\n\n\u003e Conventions for return values are similar: return raw pointers when the caller does not take ownership, and return smart pointers by value otherwise, potentially in conjunction with std::move().\n\nChromium coding style is based on Google\u0027s, but is more restrictive. https://google.github.io/styleguide/cppguide.html#Reference_Arguments is worth a read.\n\nKeep in mind that Blink conventions are slightly different from the rest of Chromium\u0027s code, although they are slowly converging.\n\nSince you\u0027re following an existing convention, it\u0027s OK to leave this as-is, if you wish.",
+      "parentUuid": "a4340618_8b65a95e",
+      "range": {
+        "startLine": 27,
+        "startChar": 35,
+        "endLine": 27,
+        "endChar": 36
+      },
+      "revId": "917ace08ecd23189e85b64a82c1847accb56412e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc38fbde_f04ca62c",
+        "filename": "components/spellcheck/renderer/platform_spelling_engine.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2018-01-30T20:54:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "78318b3f_31c30871",
+      "range": {
+        "startLine": 27,
+        "startChar": 37,
+        "endLine": 27,
+        "endChar": 54
+      },
+      "revId": "917ace08ecd23189e85b64a82c1847accb56412e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
