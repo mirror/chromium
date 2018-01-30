@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "261a6b72_92cf3447",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1241685
+      },
+      "writtenOn": "2018-01-30T03:18:54Z",
+      "side": 1,
+      "message": "Considering after initialization it will always be not enabled and enter the next if(!isEnabled()) and return null. If not, then we need to enable it and return null even from this condition.",
+      "range": {
+        "startLine": 235,
+        "startChar": 12,
+        "endLine": 235,
+        "endChar": 24
+      },
+      "revId": "b66f44b7588b55fa797674aed93b121b5d8a0d82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
