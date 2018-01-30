@@ -5431,8 +5431,12 @@ error::Error GLES2DecoderImpl::HandleResizeCHROMIUM(
   GLboolean has_alpha = c.alpha;
   TRACE_EVENT2("gpu", "glResizeChromium", "width", width, "height", height);
 
-  width = std::max(1U, width);
-  height = std::max(1U, height);
+  // gfx::Size uses integers, make sure width and height do not overflow
+  static_assert(sizeof(GLuint) >= sizeof(int), "Unexpected GLuint size.");
+  static const GLuint kMaxDimension =
+      static_cast<GLuint>(std::numeric_limits<int>::max());
+  width = std::min(std::max(1U, width), kMaxDimension);
+  height = std::min(std::max(1U, height), kMaxDimension);
 
   gl::GLSurface::ColorSpace surface_color_space =
       gl::GLSurface::ColorSpace::UNSPECIFIED;
