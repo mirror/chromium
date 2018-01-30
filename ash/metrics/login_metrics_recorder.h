@@ -54,6 +54,41 @@ class ASH_EXPORT LoginMetricsRecorder {
     kTargetCount,
   };
 
+  // User clicks target on the login screen. This enum is used to back an UMA
+  // histogram and new values should be inserted immediately above kTargetCount.
+  enum class LoginScreenUserClickTarget {
+    kShutDownButton = 0,
+    kRestartButton,
+    kBrowseAsGuestButton,
+    kAddUserButton,
+    kSystemTray,
+    kVirtualKeyboardTray,
+    kImeTray,
+    kTargetCount,
+  };
+
+  // Helper enumeration for tray related user click targets on login and lock
+  // screens. Values are translated to UMA histogram enums.
+  enum class TrayClickTarget {
+    kSystemTray,
+    kVirtualKeyboardTray,
+    kImeTray,
+    kNotificationTray,
+    kTrayActionNoteButton,
+  };
+
+  // Helper enumeration for shelf buttons user click targets on login and lock
+  // screens. Values are translated to UMA histogram enums.
+  enum class ShelfButtonClickTarget {
+    kShutDownButton,
+    kRestartButton,
+    kSignOutButton,
+    kBrowseAsGuestButton,
+    kAddUserButton,
+    kCloseNoteButton,
+    kCancelButton,
+  };
+
   LoginMetricsRecorder();
   ~LoginMetricsRecorder();
 
@@ -65,7 +100,8 @@ class ASH_EXPORT LoginMetricsRecorder {
 
   // Used to record UMA stats.
   void RecordNumLoginAttempts(int num_attempt, bool success);
-  void RecordUserClickEventOnLockScreen(LockScreenUserClickTarget target);
+  void RecordUserTrayClick(TrayClickTarget target);
+  void RecordUserShelfButtonClick(ShelfButtonClickTarget target);
 
   void EnableForTesting();
   bool enabled_for_testing() { return enabled_for_testing_; };

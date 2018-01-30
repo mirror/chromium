@@ -184,15 +184,27 @@ UserMetricsRecorder::~UserMetricsRecorder() {
 }
 
 // static
-void UserMetricsRecorder::RecordUserClick(
-    LoginMetricsRecorder::LockScreenUserClickTarget target) {
+void UserMetricsRecorder::RecordUserClickOnTray(
+    LoginMetricsRecorder::TrayClickTarget target) {
   DCHECK(Shell::HasInstance());
   LoginMetricsRecorder* recorder =
       Shell::Get()->metrics()->login_metrics_recorder();
   if (!LockScreen::IsShown() && !recorder->enabled_for_testing())
     return;
 
-  recorder->RecordUserClickEventOnLockScreen(target);
+  recorder->RecordUserTrayClick(target);
+}
+
+// static
+void UserMetricsRecorder::RecordUserClickOnShelfButton(
+    LoginMetricsRecorder::ShelfButtonClickTarget target) {
+  DCHECK(Shell::HasInstance());
+  LoginMetricsRecorder* recorder =
+      Shell::Get()->metrics()->login_metrics_recorder();
+  if (!LockScreen::IsShown() && !recorder->enabled_for_testing())
+    return;
+
+  recorder->RecordUserShelfButtonClick(target);
 }
 
 void UserMetricsRecorder::RecordUserMetricsAction(UserMetricsAction action) {
