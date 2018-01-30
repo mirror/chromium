@@ -60,6 +60,10 @@ base::Optional<mojom::CORSError> CheckExternalPreflight(
 
 bool IsCORSEnabledRequestMode(mojom::FetchRequestMode mode);
 
+bool IsCORSSafelistedMethod(const std::string& method);
+bool IsCORSSafelistedContentType(const std::string& name);
+bool IsCORSSafelistedHeader(const std::string& name, const std::string& value);
+
 }  // namespace cors
 
 }  // namespace network
