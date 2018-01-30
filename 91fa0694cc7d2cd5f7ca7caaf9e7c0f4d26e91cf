@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7f3493c_530a0d6b",
+        "filename": "ui/events/event.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-30T18:46:17Z",
+      "side": 1,
+      "message": "This seems like it is the inverse of https://cs.chromium.org/chromium/src/ui/events/event_constants.h?q\u003devent_cons\u0026sq\u003dpackage:chromium\u0026l\u003d135\n\nProbably should be a EF_FLAG",
+      "revId": "91fa0694cc7d2cd5f7ca7caaf9e7c0f4d26e91cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
