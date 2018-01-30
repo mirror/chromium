@@ -250,7 +250,8 @@ bool SendKeyEvent(const std::string type,
       SendProcessKeyEvent(ui::ET_KEY_PRESSED, host);
 
       ui::KeyEvent char_event(key_value, code, ui::EF_NONE);
-      tic->InsertChar(char_event);
+      if (tic)
+        tic->InsertChar(char_event);
       SendProcessKeyEvent(ui::ET_KEY_RELEASED, host);
     }
   } else {
