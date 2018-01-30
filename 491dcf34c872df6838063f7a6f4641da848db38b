@@ -111,6 +111,30 @@
       "revId": "491dcf34c872df6838063f7a6f4641da848db38b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98870473_b997f6ef",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-30T05:22:04Z",
+      "side": 1,
+      "message": "to expand a bit on my earlier reply, this was intended as a way to show that we don\u0027t need this logic in the network service and can leave it to the embedder.\n\nas you point out, there are a few places in content/ where this would apply. those could call a shared routine to check, which would avoid the duplication issue you mention right?",
+      "parentUuid": "ef1617a7_232ccc20",
+      "range": {
+        "startLine": 192,
+        "startChar": 24,
+        "endLine": 192,
+        "endChar": 36
+      },
+      "revId": "491dcf34c872df6838063f7a6f4641da848db38b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
