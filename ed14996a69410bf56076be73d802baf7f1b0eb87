@@ -22,6 +22,30 @@
       "revId": "ed14996a69410bf56076be73d802baf7f1b0eb87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b78a45c_199ccfae",
+        "filename": "media/filters/source_buffer_stream.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1605,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2018-01-30T21:37:35Z",
+      "side": 1,
+      "message": "Yes, I\u0027ll add a test.\nNo, fudge room is the time allowed *before* range start time (which itself might be before the first buffer in the range\u0027s time).\n\nQuick example:\nSeek(0); --\u003e seek is pending\nOnStartOfCodedFrameGroup(10 seconds);\nAppend(1 opus buffer timestamp 2 seconds, duration 5 seconds); --\u003e fudge room is now 2*5\u003d10 seconds\nDuring the append, assuming the opus seek_preroll \u003c 2 seconds in this example, previous code would result with:\nRange[2,7) *can* be seeked using time 0 (since 0 is within fudge room distance of 2)\npreroll_dts \u003d max(0-seek_preroll,10 seconds) \u003d\u003d 10 seconds\nseek_dts is still 0 seconds, from the original Seek(0)\npreroll_dts \u003e seek_dts: DCHECK fails in SBRBy{Pts,Dts}::SameConfigThruRange()\n\nI\u0027ll be OoO this afternoon; will have another patch set with unit test for you tomorrow.",
+      "parentUuid": "97ae0d0d_0beeba63",
+      "range": {
+        "startLine": 1605,
+        "startChar": 0,
+        "endLine": 1605,
+        "endChar": 80
+      },
+      "revId": "ed14996a69410bf56076be73d802baf7f1b0eb87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
