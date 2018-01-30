@@ -52,6 +52,24 @@
       "revId": "312099e6bb635591943c7153d8da18ce2ae80133",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3586f7c_53ab6785",
+        "filename": "ui/gl/gl_image_memory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-30T16:34:41Z",
+      "side": 1,
+      "message": "PS6 follows the correction in crrev.com/c/891521 and corrects\ntwo points here:\n- the internal format for XR30 should be GL_RGB10_A2_EXT\n- the data format is indeed GL_BGRA (and not GL_RGBA as in PS5).",
+      "parentUuid": "201b8a80_b5f68b38",
+      "revId": "312099e6bb635591943c7153d8da18ce2ae80133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
