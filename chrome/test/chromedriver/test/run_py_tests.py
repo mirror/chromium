@@ -91,6 +91,11 @@ _VERSION_SPECIFIC_FILTER['HEAD'] = [
     'MobileEmulationCapabilityTest.testNetworkConnectionTypeIsAppliedToAllTabsImmediately',
 ]
 
+_VERSION_SPECIFIC_FILTER['65'] = [
+    # https://bugs.chromium.org/p/chromium/issues/detail?id=803678
+    'ChromeDriverTest.testGoBackAndGoForward',
+]
+
 _VERSION_SPECIFIC_FILTER['64'] = [
     # These tests are implemented to run on the latest versions of Chrome > 64
     'HeadlessInvalidCertificateTest.*',
