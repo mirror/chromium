@@ -16,6 +16,24 @@
       "revId": "1920aa5ebe65e8cb533001c6c07d22cb9c8c374a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a4f6d11_5f15f105",
+        "filename": "headless/lib/browser/headless_devtools_manager_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1249702
+      },
+      "writtenOn": "2018-01-30T17:19:30Z",
+      "side": 1,
+      "message": "Thanks for your review! I really need to form the habit of not relying on formatter...",
+      "parentUuid": "5bf5b082_f701ef88",
+      "revId": "1920aa5ebe65e8cb533001c6c07d22cb9c8c374a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
