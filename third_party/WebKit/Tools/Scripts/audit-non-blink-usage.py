@@ -121,6 +121,14 @@ _CONFIG = [
         ],
     },
     {
+        'paths': ['third_party/WebKit/Source/core/css/parser'],
+        'allowed': [
+            # Not actually a C++ namespace but this audit script cannot tell the difference
+            # between code and string literals. DO NOT SUBMIT
+            'host::.+',
+        ],
+    },
+    {
         'paths': [
             'third_party/WebKit/Source/modules/device_orientation/',
             'third_party/WebKit/Source/modules/gamepad/',
