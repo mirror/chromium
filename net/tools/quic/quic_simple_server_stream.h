@@ -8,11 +8,13 @@
 #include <string>
 
 #include "base/macros.h"
+#include "net/http/http_response_headers.h"
 #include "net/quic/core/quic_packets.h"
 #include "net/quic/core/quic_spdy_stream.h"
 #include "net/quic/platform/api/quic_string_piece.h"
 #include "net/spdy/core/spdy_framer.h"
-#include "net/tools/quic/quic_http_response_cache.h"
+#include "net/tools/quic/quic_backend_response.h"
+#include "net/tools/quic/quic_simple_server_backend.h"
 #include "net/tools/quic/quic_spdy_server_stream_base.h"
 
 namespace net {
@@ -21,13 +23,17 @@ namespace test {
 class QuicSimpleServerStreamPeer;
 }  // namespace test
 
+typedef QuicSimpleServerBackend::QuicServerStreamDelegate
+    QuicServerStreamDelegate;
+
 // All this does right now is aggregate data, and on fin, send an HTTP
 // response.
-class QuicSimpleServerStream : public QuicSpdyServerStreamBase {
+class QuicSimpleServerStream : public QuicSpdyServerStreamBase,
+                               public QuicServerStreamDelegate {
  public:
   QuicSimpleServerStream(QuicStreamId id,
                          QuicSpdySession* session,
-                         QuicHttpResponseCache* response_cache);
+                         QuicSimpleServerBackend* quic_simple_server_backend);
   ~QuicSimpleServerStream() override;
 
   // QuicSpdyStream
@@ -51,6 +57,15 @@ class QuicSimpleServerStream : public QuicSpdyServerStreamBase {
   static const char* const kErrorResponseBody;
   static const char* const kNotFoundResponseBody;
 
+  // Implements QuicServerStreamDelegate callbacks
+  QuicConnectionId connection_id() const override;
+  QuicStreamId stream_id() const override;
+  std::string peer_host() const override;
+  void OnResponseBackendComplete(const QuicBackendResponse* response) override;
+  void OnResponseBackendComplete(
+      const QuicBackendResponse* response,
+      std::list<QuicBackendResponse::ServerPushInfo> resources) override;
+
  protected:
   // Sends a basic 200 response using SendHeaders for the headers and WriteData
   // for the body.
@@ -59,6 +74,7 @@ class QuicSimpleServerStream : public QuicSpdyServerStreamBase {
   // Sends a basic 500 response using SendHeaders for the headers and WriteData
   // for the body.
   virtual void SendErrorResponse();
+  void SendErrorResponse(int resp_code);
 
   // Sends a basic 404 response using SendHeaders for the headers and WriteData
   // for the body.
@@ -82,7 +98,7 @@ class QuicSimpleServerStream : public QuicSpdyServerStreamBase {
   int64_t content_length_;
   std::string body_;
 
-  QuicHttpResponseCache* response_cache_;  // Not owned.
+  QuicSimpleServerBackend* quic_simple_server_backend_;  // Not owned.
 
   DISALLOW_COPY_AND_ASSIGN(QuicSimpleServerStream);
 };

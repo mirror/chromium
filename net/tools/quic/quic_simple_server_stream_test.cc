@@ -20,7 +20,8 @@
 #include "net/quic/test_tools/quic_stream_peer.h"
 #include "net/quic/test_tools/quic_test_utils.h"
 #include "net/test/gtest_util.h"
-#include "net/tools/quic/quic_http_response_cache.h"
+#include "net/tools/quic/quic_backend_response.h"
+#include "net/tools/quic/quic_memory_cache_backend.h"
 #include "net/tools/quic/quic_simple_server_session.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -40,10 +41,12 @@ size_t kFakeFrameLen = 60;
 
 class QuicSimpleServerStreamPeer : public QuicSimpleServerStream {
  public:
-  QuicSimpleServerStreamPeer(QuicStreamId stream_id,
-                             QuicSpdySession* session,
-                             QuicHttpResponseCache* response_cache)
-      : QuicSimpleServerStream(stream_id, session, response_cache) {}
+  QuicSimpleServerStreamPeer(
+      QuicStreamId stream_id,
+      QuicSpdySession* session,
+      QuicSimpleServerBackend* quic_simple_server_backend)
+      : QuicSimpleServerStream(stream_id, session, quic_simple_server_backend) {
+  }
 
   ~QuicSimpleServerStreamPeer() override = default;
 
@@ -51,6 +54,7 @@ class QuicSimpleServerStreamPeer : public QuicSimpleServerStream {
   using QuicSimpleServerStream::SendResponse;
 
   SpdyHeaderBlock* mutable_headers() { return &request_headers_; }
+  void set_body(std::string body) { body_ = std::move(body); }
 
   static void SendResponse(QuicSimpleServerStream* stream) {
     stream->SendResponse();
@@ -85,14 +89,14 @@ class MockQuicSimpleServerSession : public QuicSimpleServerSession {
       MockQuicCryptoServerStreamHelper* helper,
       QuicCryptoServerConfig* crypto_config,
       QuicCompressedCertsCache* compressed_certs_cache,
-      QuicHttpResponseCache* response_cache)
+      QuicSimpleServerBackend* quic_simple_server_backend)
       : QuicSimpleServerSession(DefaultQuicConfig(),
                                 connection,
                                 owner,
                                 helper,
                                 crypto_config,
                                 compressed_certs_cache,
-                                response_cache) {
+                                quic_simple_server_backend) {
     set_max_open_incoming_streams(kMaxStreamsForTest);
     set_max_open_outgoing_streams(kMaxStreamsForTest);
     ON_CALL(*this, WritevData(_, _, _, _, _))
@@ -145,7 +149,7 @@ class MockQuicSimpleServerSession : public QuicSimpleServerSession {
   // Matchers cannot be used on non-copyable types like SpdyHeaderBlock.
   void PromisePushResources(
       const string& request_url,
-      const std::list<QuicHttpResponseCache::ServerPushInfo>& resources,
+      const std::list<QuicBackendResponse::ServerPushInfo>& resources,
       QuicStreamId original_stream_id,
       const SpdyHeaderBlock& original_request_headers) override {
     original_request_headers_ = original_request_headers.Clone();
@@ -154,7 +158,7 @@ class MockQuicSimpleServerSession : public QuicSimpleServerSession {
   }
   MOCK_METHOD4(PromisePushResourcesMock,
                void(const string&,
-                    const std::list<QuicHttpResponseCache::ServerPushInfo>&,
+                    const std::list<QuicBackendResponse::ServerPushInfo>&,
                     QuicStreamId,
                     const SpdyHeaderBlock&));
 
@@ -186,7 +190,8 @@ class QuicSimpleServerStreamTest : public QuicTestWithParam<ParsedQuicVersion> {
                  &session_helper_,
                  crypto_config_.get(),
                  &compressed_certs_cache_,
-                 &response_cache_),
+                 &memory_cache_backend_),
+        quic_response_(new QuicBackendResponse),
         body_("hello world") {
     header_list_.OnHeaderBlockStart();
     header_list_.OnHeader(":authority", "www.google.com");
@@ -204,7 +209,7 @@ class QuicSimpleServerStreamTest : public QuicTestWithParam<ParsedQuicVersion> {
         kInitialSessionFlowControlWindowForTest);
     stream_ = new QuicSimpleServerStreamPeer(
         QuicSpdySessionPeer::GetNthClientInitiatedStreamId(session_, 0),
-        &session_, &response_cache_);
+        &session_, &memory_cache_backend_);
     // Register stream_ in dynamic_stream_map_ and pass ownership to session_.
     session_.ActivateStream(QuicWrapUnique(stream_));
   }
@@ -225,9 +230,10 @@ class QuicSimpleServerStreamTest : public QuicTestWithParam<ParsedQuicVersion> {
   StrictMock<MockQuicCryptoServerStreamHelper> session_helper_;
   std::unique_ptr<QuicCryptoServerConfig> crypto_config_;
   QuicCompressedCertsCache compressed_certs_cache_;
-  QuicHttpResponseCache response_cache_;
+  QuicMemoryCacheBackend memory_cache_backend_;
   StrictMock<MockQuicSimpleServerSession> session_;
   QuicSimpleServerStreamPeer* stream_;  // Owned by session_.
+  QuicBackendResponse* quic_response_;
   string body_;
   QuicHeaderList header_list_;
 };
@@ -312,8 +318,8 @@ TEST_P(QuicSimpleServerStreamTest, SendResponseWithIllegalResponseStatus) {
   response_headers_[":status"] = "200 OK";
   response_headers_["content-length"] = "5";
   string body = "Yummm";
-  response_cache_.AddResponse("www.google.com", "/bar",
-                              std::move(response_headers_), body);
+  memory_cache_backend_.AddResponse("www.google.com", "/bar",
+                                    std::move(response_headers_), body);
 
   stream_->set_fin_received(true);
 
@@ -342,8 +348,8 @@ TEST_P(QuicSimpleServerStreamTest, SendResponseWithIllegalResponseStatus2) {
   response_headers_[":status"] = "+200";
   response_headers_["content-length"] = "5";
   string body = "Yummm";
-  response_cache_.AddResponse("www.google.com", "/bar",
-                              std::move(response_headers_), body);
+  memory_cache_backend_.AddResponse("www.google.com", "/bar",
+                                    std::move(response_headers_), body);
 
   stream_->set_fin_received(true);
 
@@ -362,7 +368,7 @@ TEST_P(QuicSimpleServerStreamTest, SendResponseWithIllegalResponseStatus2) {
 TEST_P(QuicSimpleServerStreamTest, SendPushResponseWith404Response) {
   // Create a new promised stream with even id().
   QuicSimpleServerStreamPeer* promised_stream =
-      new QuicSimpleServerStreamPeer(2, &session_, &response_cache_);
+      new QuicSimpleServerStreamPeer(2, &session_, &memory_cache_backend_);
   session_.ActivateStream(QuicWrapUnique(promised_stream));
 
   // Send a push response with response status 404, which will be regarded as
@@ -377,8 +383,8 @@ TEST_P(QuicSimpleServerStreamTest, SendPushResponseWith404Response) {
   response_headers_[":status"] = "404";
   response_headers_["content-length"] = "8";
   string body = "NotFound";
-  response_cache_.AddResponse("www.google.com", "/bar",
-                              std::move(response_headers_), body);
+  memory_cache_backend_.AddResponse("www.google.com", "/bar",
+                                    std::move(response_headers_), body);
 
   InSequence s;
   EXPECT_CALL(session_,
@@ -399,8 +405,8 @@ TEST_P(QuicSimpleServerStreamTest, SendResponseWithValidHeaders) {
   response_headers_[":status"] = "200";
   response_headers_["content-length"] = "5";
   string body = "Yummm";
-  response_cache_.AddResponse("www.google.com", "/bar",
-                              std::move(response_headers_), body);
+  memory_cache_backend_.AddResponse("www.google.com", "/bar",
+                                    std::move(response_headers_), body);
   stream_->set_fin_received(true);
 
   InSequence s;
@@ -422,11 +428,11 @@ TEST_P(QuicSimpleServerStreamTest, SendReponseWithPushResources) {
   string host = "www.google.com";
   string request_path = "/foo";
   string body = "Yummm";
-  QuicHttpResponseCache::ServerPushInfo push_info(
+  QuicBackendResponse::ServerPushInfo push_info(
       QuicUrl(host, "/bar"), SpdyHeaderBlock(), kDefaultPriority, "Push body");
-  std::list<QuicHttpResponseCache::ServerPushInfo> push_resources;
+  std::list<QuicBackendResponse::ServerPushInfo> push_resources;
   push_resources.push_back(push_info);
-  response_cache_.AddSimpleResponseWithServerPushResources(
+  memory_cache_backend_.AddSimpleResponseWithServerPushResources(
       host, request_path, 200, body, push_resources);
 
   SpdyHeaderBlock* request_headers = stream_->mutable_headers();
@@ -467,7 +473,7 @@ TEST_P(QuicSimpleServerStreamTest, PushResponseOnServerInitiatedStream) {
   // Create a server initiated stream and pass it to session_.
   QuicSimpleServerStreamPeer* server_initiated_stream =
       new QuicSimpleServerStreamPeer(kServerInitiatedStreamId, &session_,
-                                     &response_cache_);
+                                     &memory_cache_backend_);
   session_.ActivateStream(QuicWrapUnique(server_initiated_stream));
 
   const string kHost = "www.foo.com";
@@ -482,8 +488,8 @@ TEST_P(QuicSimpleServerStreamTest, PushResponseOnServerInitiatedStream) {
   response_headers_[":status"] = "200";
   response_headers_["content-length"] = "5";
   const string kBody = "Hello";
-  response_cache_.AddResponse(kHost, kPath, std::move(response_headers_),
-                              kBody);
+  memory_cache_backend_.AddResponse(kHost, kPath, std::move(response_headers_),
+                                    kBody);
 
   // Call PushResponse() should trigger stream to fetch response from cache
   // and send it back.

@@ -32,6 +32,8 @@
 #include "net/quic/test_tools/quic_sustained_bandwidth_recorder_peer.h"
 #include "net/quic/test_tools/quic_test_utils.h"
 #include "net/test/gtest_util.h"
+#include "net/tools/quic/quic_backend_response.h"
+#include "net/tools/quic/quic_memory_cache_backend.h"
 #include "net/tools/quic/quic_simple_server_stream.h"
 #include "net/tools/quic/test_tools/mock_quic_session_visitor.h"
 
@@ -126,20 +128,21 @@ class MockQuicConnectionWithSendStreamData : public MockQuicConnection {
 
 class MockQuicSimpleServerSession : public QuicSimpleServerSession {
  public:
-  MockQuicSimpleServerSession(const QuicConfig& config,
-                              QuicConnection* connection,
-                              QuicSession::Visitor* visitor,
-                              QuicCryptoServerStream::Helper* helper,
-                              const QuicCryptoServerConfig* crypto_config,
-                              QuicCompressedCertsCache* compressed_certs_cache,
-                              QuicHttpResponseCache* response_cache)
+  MockQuicSimpleServerSession(
+      const QuicConfig& config,
+      QuicConnection* connection,
+      QuicSession::Visitor* visitor,
+      QuicCryptoServerStream::Helper* helper,
+      const QuicCryptoServerConfig* crypto_config,
+      QuicCompressedCertsCache* compressed_certs_cache,
+      QuicSimpleServerBackend* quic_simple_server_backend)
       : QuicSimpleServerSession(config,
                                 connection,
                                 visitor,
                                 helper,
                                 crypto_config,
                                 compressed_certs_cache,
-                                response_cache) {}
+                                quic_simple_server_backend) {}
   // Methods taking non-copyable types like SpdyHeaderBlock by value cannot be
   // mocked directly.
   size_t WritePushPromise(QuicStreamId original_stream_id,
@@ -202,7 +205,7 @@ class QuicSimpleServerSessionTest
         SupportedVersions(GetParam()));
     session_.reset(new MockQuicSimpleServerSession(
         config_, connection_, &owner_, &stream_helper_, &crypto_config_,
-        &compressed_certs_cache_, &response_cache_));
+        &compressed_certs_cache_, &memory_cache_backend_));
     MockClock clock;
     handshake_message_.reset(crypto_config_.AddDefaultConfig(
         QuicRandom::GetInstance(), &clock,
@@ -229,7 +232,7 @@ class QuicSimpleServerSessionTest
   QuicConfig config_;
   QuicCryptoServerConfig crypto_config_;
   QuicCompressedCertsCache compressed_certs_cache_;
-  QuicHttpResponseCache response_cache_;
+  QuicMemoryCacheBackend memory_cache_backend_;
   std::unique_ptr<MockQuicSimpleServerSession> session_;
   std::unique_ptr<CryptoHandshakeMessage> handshake_message_;
   QuicConnectionVisitorInterface* visitor_;
@@ -475,7 +478,7 @@ class QuicSimpleServerSessionServerPushTest
         SupportedVersions(GetParam()));
     session_.reset(new MockQuicSimpleServerSession(
         config_, connection_, &owner_, &stream_helper_, &crypto_config_,
-        &compressed_certs_cache_, &response_cache_));
+        &compressed_certs_cache_, &memory_cache_backend_));
     session_->Initialize();
     // Needed to make new session flow control window and server push work.
     session_->OnConfigNegotiated();
@@ -506,7 +509,7 @@ class QuicSimpleServerSessionServerPushTest
     SpdyHeaderBlock request_headers;
     string resource_host = "www.google.com";
     string partial_push_resource_path = "/server_push_src";
-    std::list<QuicHttpResponseCache::ServerPushInfo> push_resources;
+    std::list<QuicBackendResponse::ServerPushInfo> push_resources;
     string scheme = "http";
     for (unsigned int i = 1; i <= num_resources; ++i) {
       QuicStreamId stream_id = GetNthServerInitiatedId(i - 1);
@@ -515,8 +518,8 @@ class QuicSimpleServerSessionServerPushTest
       string url = scheme + "://" + resource_host + path;
       QuicUrl resource_url = QuicUrl(url);
       string body(body_size, 'a');
-      response_cache_.AddSimpleResponse(resource_host, path, 200, body);
-      push_resources.push_back(QuicHttpResponseCache::ServerPushInfo(
+      memory_cache_backend_.AddSimpleResponse(resource_host, path, 200, body);
+      push_resources.push_back(QuicBackendResponse::ServerPushInfo(
           resource_url, SpdyHeaderBlock(), kDefaultPriority, body));
       // PUSH_PROMISED are sent for all the resources.
       EXPECT_CALL(*session_, WritePushPromiseMock(GetNthClientInitiatedId(0),

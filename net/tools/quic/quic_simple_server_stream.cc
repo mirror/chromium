@@ -15,7 +15,6 @@
 #include "net/quic/platform/api/quic_map_util.h"
 #include "net/quic/platform/api/quic_text_utils.h"
 #include "net/spdy/core/spdy_protocol.h"
-#include "net/tools/quic/quic_http_response_cache.h"
 #include "net/tools/quic/quic_simple_server_session.h"
 
 using std::string;
@@ -25,12 +24,14 @@ namespace net {
 QuicSimpleServerStream::QuicSimpleServerStream(
     QuicStreamId id,
     QuicSpdySession* session,
-    QuicHttpResponseCache* response_cache)
+    QuicSimpleServerBackend* quic_simple_server_backend)
     : QuicSpdyServerStreamBase(id, session),
       content_length_(-1),
-      response_cache_(response_cache) {}
+      quic_simple_server_backend_(quic_simple_server_backend) {}
 
-QuicSimpleServerStream::~QuicSimpleServerStream() = default;
+QuicSimpleServerStream::~QuicSimpleServerStream() {
+  quic_simple_server_backend_->CloseBackendResponseStream(this);
+}
 
 void QuicSimpleServerStream::OnInitialHeadersComplete(
     bool fin,
@@ -127,27 +128,56 @@ void QuicSimpleServerStream::SendResponse() {
     return;
   }
 
-  // Find response in cache. If not found, send error response.
-  const QuicHttpResponseCache::Response* response = nullptr;
-  auto authority = request_headers_.find(":authority");
-  auto path = request_headers_.find(":path");
-  if (authority != request_headers_.end() && path != request_headers_.end()) {
-    response = response_cache_->GetResponse(authority->second, path->second);
-  }
+  // Fetch the response from the backend interface and wait for callback once
+  // response is ready
+  quic_simple_server_backend_->FetchResponseFromBackend(this, request_headers_,
+                                                        body_);
+}
+
+QuicConnectionId QuicSimpleServerStream::connection_id() const {
+  return spdy_session()->connection_id();
+}
+
+QuicStreamId QuicSimpleServerStream::stream_id() const {
+  return id();
+}
+
+std::string QuicSimpleServerStream::peer_host() const {
+  return spdy_session()->peer_address().host().ToString();
+}
+
+void QuicSimpleServerStream::OnResponseBackendComplete(
+    const QuicBackendResponse* response) {
+  std::list<QuicBackendResponse::ServerPushInfo> empty_resources;
+  return OnResponseBackendComplete(response, empty_resources);
+}
+
+void QuicSimpleServerStream::OnResponseBackendComplete(
+    const QuicBackendResponse* response,
+    std::list<QuicBackendResponse::ServerPushInfo> resources) {
   if (response == nullptr) {
     QUIC_DVLOG(1) << "Response not found in cache.";
     SendNotFoundResponse();
     return;
   }
 
-  if (response->response_type() == QuicHttpResponseCache::CLOSE_CONNECTION) {
+  if (response->response_type() == QuicBackendResponse::CLOSE_CONNECTION) {
     QUIC_DVLOG(1) << "Special response: closing connection.";
     CloseConnectionWithDetails(QUIC_NO_ERROR, "Toy server forcing close");
     return;
   }
 
-  if (response->response_type() == QuicHttpResponseCache::IGNORE_REQUEST) {
+  if (response->response_type() == QuicBackendResponse::IGNORE_REQUEST) {
     QUIC_DVLOG(1) << "Special response: ignoring request.";
+    return;
+  }
+
+  if (response->response_type() == QuicBackendResponse::BACKEND_ERR_RESPONSE) {
+    QUIC_DVLOG(1) << "Quic Proxy: Backend connection error.";
+    /*502 Bad Gateway
+      The server was acting as a gateway or proxy and received an
+      invalid response from the upstream server.*/
+    SendErrorResponse(502);
     return;
   }
 
@@ -185,12 +215,10 @@ void QuicSimpleServerStream::SendResponse() {
       return;
     }
   }
-  std::list<QuicHttpResponseCache::ServerPushInfo> resources =
-      response_cache_->GetServerPushResources(request_url);
-  QUIC_DVLOG(1) << "Stream " << id() << " found " << resources.size()
-                << " push resources.";
 
   if (!resources.empty()) {
+    QUIC_DVLOG(1) << "Stream " << id() << " found " << resources.size()
+                  << " push resources.";
     QuicSimpleServerSession* session =
         static_cast<QuicSimpleServerSession*>(spdy_session());
     session->PromisePushResources(request_url, resources, id(),
@@ -212,9 +240,17 @@ void QuicSimpleServerStream::SendNotFoundResponse() {
 }
 
 void QuicSimpleServerStream::SendErrorResponse() {
+  SendErrorResponse(0);
+}
+
+void QuicSimpleServerStream::SendErrorResponse(int resp_code) {
   QUIC_DVLOG(1) << "Stream " << id() << " sending error response.";
   SpdyHeaderBlock headers;
-  headers[":status"] = "500";
+  if (resp_code <= 0) {
+    headers[":status"] = "500";
+  } else {
+    headers[":status"] = QuicTextUtils::Uint64ToString(resp_code);
+  }
   headers["content-length"] =
       QuicTextUtils::Uint64ToString(strlen(kErrorResponseBody));
   SendHeadersAndBody(std::move(headers), kErrorResponseBody);
