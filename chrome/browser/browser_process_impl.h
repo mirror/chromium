@@ -174,16 +174,13 @@ class BrowserProcessImpl : public BrowserProcess,
   void CreateWatchdogThread();
   void CreateProfileManager();
   void CreateLocalState();
-  void CreateViewedPageTracker();
   void CreateIconManager();
   void CreateIntranetRedirectDetector();
   void CreateNotificationPlatformBridge();
   void CreateNotificationUIManager();
-  void CreateStatusTrayManager();
   void CreatePrintPreviewDialogController();
   void CreateBackgroundPrintingManager();
   void CreateSafeBrowsingService();
-  void CreateSafeBrowsingDetectionService();
   void CreateSubresourceFilterRulesetService();
   void CreateOptimizationGuideService();
   void CreateStatusTray();
