@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0f2ce40_d13c1666",
+        "filename": "device/u2f/u2f_register.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-30T13:29:00Z",
+      "side": 1,
+      "message": "nit: Unused.",
+      "revId": "5b8ea0d803c5d3500079ff3240c60cb23d36a6c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1457c08_19c527bb",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-30T13:29:00Z",
+      "side": 1,
+      "message": "nit: Would this be formatted ugly by clang-format if we simply inlined discovery.get() here? Otherwise we could save that line, plus apparently we are not using the return value of SetDiscoveryForTesting anywhere (it would be too late), so maybe we can optimize that out too? :)",
+      "range": {
+        "startLine": 517,
+        "startChar": 26,
+        "endLine": 517,
+        "endChar": 39
+      },
+      "revId": "5b8ea0d803c5d3500079ff3240c60cb23d36a6c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45aafae3_a666d529",
+        "filename": "device/u2f/u2f_request.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-30T13:29:00Z",
+      "side": 1,
+      "message": "nit: const auto",
+      "range": {
+        "startLine": 23,
+        "startChar": 7,
+        "endLine": 23,
+        "endChar": 11
+      },
+      "revId": "5b8ea0d803c5d3500079ff3240c60cb23d36a6c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac59686a_e506468c",
+        "filename": "device/u2f/u2f_request.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-30T13:29:00Z",
+      "side": 1,
+      "message": "super nit: |discovery|",
+      "revId": "5b8ea0d803c5d3500079ff3240c60cb23d36a6c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00746db1_9d3d5cac",
+        "filename": "device/u2f/u2f_request.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-30T13:29:00Z",
+      "side": 1,
+      "message": "Can I has unittests with two discoveries running at the same time, discovering devices in various order/combinations? (go/jiimx)",
+      "range": {
+        "startLine": 41,
+        "startChar": 16,
+        "endLine": 41,
+        "endChar": 38
+      },
+      "revId": "5b8ea0d803c5d3500079ff3240c60cb23d36a6c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbae2c8e_ed711b56",
+        "filename": "device/u2f/u2f_transport_protocol.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-30T13:29:00Z",
+      "side": 1,
+      "message": "nit: Have  you considered naming these verbosely kBluetoothLowEnergy and k{Usb|USB}HumanInterfaceDevice and then simply omitting the comments?",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 6
+      },
+      "revId": "5b8ea0d803c5d3500079ff3240c60cb23d36a6c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
