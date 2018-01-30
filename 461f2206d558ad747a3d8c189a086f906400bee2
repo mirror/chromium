@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "9e712fad_85e98647",
+        "filename": "content/browser/loader/merkle_integrity_source_stream.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2018-01-30T11:00:59Z",
+      "side": 1,
+      "message": "Can we note a FIXME that this should shift iterator/StringPiece for the input_ instead?\nIIUC this will result in memmove",
+      "revId": "461f2206d558ad747a3d8c189a086f906400bee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b3075ca_7e91951b",
+        "filename": "content/browser/loader/merkle_integrity_source_stream.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2018-01-30T11:00:59Z",
+      "side": 1,
+      "message": "This and below too.",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 79
+      },
+      "revId": "461f2206d558ad747a3d8c189a086f906400bee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "526cb49d_f1e77629",
         "filename": "content/browser/loader/merkle_integrity_source_stream.cc",
         "patchSetId": 4
