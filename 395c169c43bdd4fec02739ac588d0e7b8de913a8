@@ -16,6 +16,74 @@
       "revId": "395c169c43bdd4fec02739ac588d0e7b8de913a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deb23c12_3327d014",
+        "filename": "ash/frame/caption_buttons/frame_caption_button_container_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-30T17:36:25Z",
+      "side": 1,
+      "message": "nit: views::View instead of auto",
+      "revId": "395c169c43bdd4fec02739ac588d0e7b8de913a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26b36c8f_a2bcc0aa",
+        "filename": "ash/frame/caption_buttons/frame_caption_button_container_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-30T17:36:25Z",
+      "side": 1,
+      "message": "nit: Here (and maybe elsewhere) I think you should mention the PWA menu as the reason for this generalization. I don\u0027t see anywhere in this file or the .cc file that provides a list of all the buttons that might show up in the top-right corner.",
+      "revId": "395c169c43bdd4fec02739ac588d0e7b8de913a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d639a2a2_5b9a0bb7",
+        "filename": "ash/frame/caption_buttons/frame_caption_button_container_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-30T17:36:25Z",
+      "side": 1,
+      "message": "For example, this might be a good place to say it simulates the PWA menu.",
+      "revId": "395c169c43bdd4fec02739ac588d0e7b8de913a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a68befdf_ceed18cd",
+        "filename": "ash/frame/caption_buttons/frame_caption_button_container_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-30T17:36:25Z",
+      "side": 1,
+      "message": "Thanks for adding test coverage!",
+      "revId": "395c169c43bdd4fec02739ac588d0e7b8de913a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
