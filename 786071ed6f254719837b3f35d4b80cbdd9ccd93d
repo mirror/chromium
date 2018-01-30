@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "1283b76b_e8c279cd",
+        "filename": "components/subresource_filter/core/common/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-01-30T16:38:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ea2110b6_068f8b36",
+      "revId": "786071ed6f254719837b3f35d4b80cbdd9ccd93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "697a2876_65f787f0",
         "filename": "components/subresource_filter/core/common/test_ruleset_utils.h",
         "patchSetId": 6
@@ -269,6 +287,24 @@
       "revId": "786071ed6f254719837b3f35d4b80cbdd9ccd93d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ccd8272_7ce00218",
+        "filename": "components/subresource_filter/core/common/tools/indexing_tool_main.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-01-30T16:38:26Z",
+      "side": 1,
+      "message": "Not at all. Done.",
+      "parentUuid": "e7c335a8_9e1266d4",
+      "revId": "786071ed6f254719837b3f35d4b80cbdd9ccd93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
