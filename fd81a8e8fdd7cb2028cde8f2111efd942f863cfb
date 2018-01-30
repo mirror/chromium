@@ -118,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "aec2f0c4_53df1d2b",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-01-30T18:43:02Z",
+      "side": 1,
+      "message": "I was hoping there was an invariant that if TrackedFiles is in the LRU then it has an open file, otherwise not. If so, we could just return in_lru. But now I see that this function is a dependency to determine if in_lru should be false. So nevermind :)",
+      "parentUuid": "b51b8e1f_0c7aab16",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 120,
+        "endChar": 15
+      },
+      "revId": "fd81a8e8fdd7cb2028cde8f2111efd942f863cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "90871f14_87a3df3e",
         "filename": "net/disk_cache/simple/simple_file_tracker.cc",
         "patchSetId": 20
@@ -165,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "585ceeae_40b95a30",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-01-30T18:43:02Z",
+      "side": 1,
+      "message": "Worth a try. My mind had remapped \u0027i\u0027 to an integer when I looked at this.",
+      "parentUuid": "c6b81aaf_1ce4ee58",
+      "range": {
+        "startLine": 268,
+        "startChar": 6,
+        "endLine": 268,
+        "endChar": 12
+      },
+      "revId": "fd81a8e8fdd7cb2028cde8f2111efd942f863cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "590f8255_35895bf1",
         "filename": "net/disk_cache/simple/simple_file_tracker.cc",
         "patchSetId": 20
@@ -200,6 +248,30 @@
       "side": 1,
       "message": "Hmm, trying to make it clear that it might not be in the LRU at all beforehand, I feel like \u0027Move\u0027 would feel more like it\u0027s there already?",
       "parentUuid": "590f8255_35895bf1",
+      "range": {
+        "startLine": 300,
+        "startChar": 24,
+        "endLine": 300,
+        "endChar": 42
+      },
+      "revId": "fd81a8e8fdd7cb2028cde8f2111efd942f863cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "918db03b_d9e18bea",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-01-30T18:43:02Z",
+      "side": 1,
+      "message": "Agreed, leave the name.",
+      "parentUuid": "505a54c8_ff72803e",
       "range": {
         "startLine": 300,
         "startChar": 24,
