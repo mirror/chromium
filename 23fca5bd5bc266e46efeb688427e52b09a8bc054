@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f8e6cd3_a4352422",
+        "filename": "ios/chrome/browser/ui/settings/password_exporter.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1251006
+      },
+      "writtenOn": "2018-01-30T10:28:36Z",
+      "side": 1,
+      "message": "|data| is an object stored in an ivar on PasswordExporter. In this case, it ends up being referenced from two different threads, although it is only used from one at a time. \n\nShould I create a local variable with a copy of the string to avoid referencing it from 2 different threads?",
+      "revId": "23fca5bd5bc266e46efeb688427e52b09a8bc054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
