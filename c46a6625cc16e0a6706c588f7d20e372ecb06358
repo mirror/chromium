@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a03fbe9_f2f4a7d4",
+        "filename": "extensions/renderer/i18n_custom_bindings.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-30T15:32:59Z",
+      "side": 1,
+      "message": "super-nit: Or you could remove the destructor above and DISALLOW_COPY_AND_ASSIGN to get it implicitly (the only reason it was not created for you here is that you have a non-default destructor). (I\u0027m not really sold on the value of making simple data structs uncopyable.)\n\n(It\u0027s a little funny here as you\u0027ve made it move-constructible but not move-assignable. But not a big deal to fix if it ever mattered.)",
+      "revId": "c46a6625cc16e0a6706c588f7d20e372ecb06358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b40cb45_92b52c01",
+        "filename": "extensions/renderer/i18n_custom_bindings.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-30T15:32:59Z",
+      "side": 1,
+      "message": "This seems to be assuming the context to be current (based on the way it uses v8::Array::New and gin::DataObjectBuilder). Consider one of:\n\n- use a v8::Context::Scope to make the provided one current\n- DCHECK that it is already current\n- take an isolate and explicitly use the isolate-\u003eGetCurrentContext()",
+      "revId": "c46a6625cc16e0a6706c588f7d20e372ecb06358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "259e6edd_fd62a1ea",
+        "filename": "extensions/renderer/i18n_custom_bindings.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-30T15:32:59Z",
+      "side": 1,
+      "message": "This is a functionality change. Before, if an individual |lang_result.is_reliable| was false, |*is_reliable| would be false (line 137). Here you\u0027re making it true.",
+      "revId": "c46a6625cc16e0a6706c588f7d20e372ecb06358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
