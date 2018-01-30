@@ -16,6 +16,24 @@
       "revId": "12e7de24256ebf0aa42103e8895108f68f16d710",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb6d6f33_5ea59b89",
+        "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-30T20:08:00Z",
+      "side": 1,
+      "message": "Yes, in patch set 4 [1].\nLater, in patch set 5 you suggested this [2].\n\n\nProgress on that returning void started here:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/892027\n\nIt requires carefully checking each call sites and updating them.\nIf the call site doesn\u0027t actually need to store the last generated id, we can move to this new API.\nBut some call sites really do need to store it. Hence why it is careful work.\n\nIf we land this patch, we maintain existing behavior.\n\nThat patch to return void can be split into multiple smaller patches to avoid a megapatch that requires 100 approvals. That would maintain existing behavior and piece-wise move areas of code over to the void system.\n\n[1] https://chromium-review.googlesource.com/c/chromium/src/+/815679/4/components/viz/common/surfaces/parent_local_surface_id_allocator.h\n[2] https://chromium-review.googlesource.com/c/chromium/src/+/815679/5/components/viz/common/surfaces/parent_local_surface_id_allocator.h",
+      "parentUuid": "909adc36_d005287a",
+      "revId": "12e7de24256ebf0aa42103e8895108f68f16d710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
