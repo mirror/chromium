@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "db5ffc6a_24dec79d",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 5016,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-30T12:59:22Z",
+      "side": 1,
+      "message": "Did you also test for when the second navigation comes before the first one commits or while a renderer is trying to commit the first one? For how to simulate this kind of situation in browser tests, you can have a look at the RenderFrameHostManagerTests ResetVisibleURLOnCrossProcessNavigationInterrupted and DeleteSpeculativeRFHPendingCommitOfPendingEntryOnInterrupted*. In general, using a combination of TestNavigationManager + ControllableHTTPResponse should put you in the right race conditions reliably.",
+      "parentUuid": "506c071c_46c1dc65",
+      "revId": "d325ca3b55f69f1aaf0f4972d405abe827d6f9f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d20e603_c1ee5a1a",
         "filename": "content/common/navigation_params.h",
         "patchSetId": 10
