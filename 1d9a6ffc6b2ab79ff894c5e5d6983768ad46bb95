@@ -46,6 +46,30 @@
       "revId": "1d9a6ffc6b2ab79ff894c5e5d6983768ad46bb95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "44369951_8b507332",
+        "filename": "ui/message_center/views/notification_view_md.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1260022
+      },
+      "writtenOn": "2018-01-30T07:58:06Z",
+      "side": 1,
+      "message": "I am sorry for the double reply.\n\n|controller_| is used below.\n\n  ui/message_center/views/notification_view_md.h, Line 375\n\n  set_controller(controller_);\n\nI think setting controller in this way is needed so that NotificationInputContainerMD can see if textfield is empty or not.",
+      "parentUuid": "b9e8ccd2_0a71a9aa",
+      "range": {
+        "startLine": 158,
+        "startChar": 2,
+        "endLine": 158,
+        "endChar": 48
+      },
+      "revId": "1d9a6ffc6b2ab79ff894c5e5d6983768ad46bb95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
