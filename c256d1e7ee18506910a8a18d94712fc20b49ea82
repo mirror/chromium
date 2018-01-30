@@ -16,6 +16,24 @@
       "revId": "c256d1e7ee18506910a8a18d94712fc20b49ea82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f280e54_b31f962c",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-30T23:03:29Z",
+      "side": 1,
+      "message": "Done (replaced IsTouchable() with the IsEnabled check). Another possibility would be to include a check on features::kTouchableChrome in IsNarrow() -- that feature flag already exists but doesn\u0027t do anything yet. That can just come with later CLs though.",
+      "parentUuid": "bfd07cf3_7da59bb9",
+      "revId": "c256d1e7ee18506910a8a18d94712fc20b49ea82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
