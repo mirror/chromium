@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "44b67e65_7554d39f",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_manager.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-30T22:06:47Z",
+      "side": 1,
+      "message": "Never mind, I mixed up with ending tablet mode, sorry.",
+      "parentUuid": "135b8e32_90d34367",
+      "revId": "ca6231bbd7020a63d3ee3ae7aff26275d8655bb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49e5ab2b_b2af97bb",
         "filename": "components/exo/client_controlled_shell_surface.h",
         "patchSetId": 19
