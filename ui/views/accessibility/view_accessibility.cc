@@ -75,13 +75,15 @@ void ViewAccessibility::GetAccessibleNodeData(ui::AXNodeData* data) const {
   data->AddStringAttribute(ax::mojom::StringAttribute::kClassName,
                            owner_view_->GetClassName());
 
-  if (owner_view_->IsAccessibilityFocusable())
+  const bool is_focusable = owner_view_->IsAccessibilityFocusable();
+  if (is_focusable)
     data->AddState(ax::mojom::State::kFocusable);
 
   if (!owner_view_->enabled())
     data->SetRestriction(ax::mojom::Restriction::kDisabled);
 
-  if (!owner_view_->visible())
+  const bool is_visible = !owner_view_->IsDrawn();
+  if (!is_visible)
     data->AddState(ax::mojom::State::kInvisible);
 
   if (owner_view_->context_menu_controller())
