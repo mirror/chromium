@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7a71ebe_8c9fc4a0",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/thirdparty/wpt/wpt/tools/manifest/vcs.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-30T05:35:29Z",
+      "side": 1,
+      "message": "Why do we return an Exception?  Is it safe to continue to run even after the Exception?",
+      "revId": "37eaae0460d4ee695957de85fa21dc2a51cdf81c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
