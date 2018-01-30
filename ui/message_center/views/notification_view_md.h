@@ -342,6 +342,7 @@ class MESSAGE_CENTER_EXPORT NotificationViewMD
   // Views for inline settings.
   views::RadioButton* block_all_button_ = nullptr;
   views::RadioButton* dont_block_button_ = nullptr;
+  views::LabelButton* more_settings_button_ = nullptr;
   views::LabelButton* settings_done_button_ = nullptr;
 
   std::unique_ptr<ui::EventHandler> click_activator_;
