@@ -39,6 +39,17 @@ template("support_lib_alias") {
   }
 }
 
+template("ext_support_lib_alias") {
+  # TODO(dgn): Merge this template "support_lib_alias" and add a build flag
+  # to switch the library set to use.
+  java_group(target_name) {
+    forward_variables_from(invoker, [ "testonly" ])
+    deps = [
+      "//third_party/android_deps:$target_name",
+    ]
+  }
+}
+
 support_lib_alias("android_support_chromium_java") {
   testonly = true
 }
@@ -46,55 +57,55 @@ support_lib_alias("android_gcm_java") {
 }
 support_lib_alias("emma_device_java") {
 }
-support_lib_alias("android_arch_lifecycle_common_java") {
+ext_support_lib_alias("android_arch_lifecycle_common_java") {
 }
-support_lib_alias("android_arch_lifecycle_runtime_java") {
+ext_support_lib_alias("android_arch_lifecycle_runtime_java") {
 }
-support_lib_alias("android_support_multidex_java") {
+ext_support_lib_alias("android_support_multidex_java") {
 }
-support_lib_alias("android_support_annotations_java") {
+ext_support_lib_alias("android_support_annotations_java") {
 }
-support_lib_alias("android_support_cardview_java") {
+ext_support_lib_alias("android_support_cardview_java") {
 }
-support_lib_alias("android_support_compat_java") {
+ext_support_lib_alias("android_support_compat_java") {
 }
-support_lib_alias("android_support_core_ui_java") {
+ext_support_lib_alias("android_support_core_ui_java") {
 }
-support_lib_alias("android_support_core_utils_java") {
+ext_support_lib_alias("android_support_core_utils_java") {
 }
-support_lib_alias("android_support_design_java") {
+ext_support_lib_alias("android_support_design_java") {
 }
-support_lib_alias("android_support_fragment_java") {
+ext_support_lib_alias("android_support_fragment_java") {
 }
-support_lib_alias("android_support_media_compat_java") {
+ext_support_lib_alias("android_support_media_compat_java") {
 }
-support_lib_alias("android_support_transition_java") {
+ext_support_lib_alias("android_support_transition_java") {
 }
-support_lib_alias("android_support_v4_java") {
+ext_support_lib_alias("android_support_v4_java") {
 }
-support_lib_alias("android_support_v7_appcompat_java") {
+ext_support_lib_alias("android_support_v7_appcompat_java") {
 }
-support_lib_alias("android_support_v7_appcompat_java_internal") {
+ext_support_lib_alias("android_support_v7_appcompat_java_internal") {
 }
-support_lib_alias("android_support_v7_gridlayout_java") {
+ext_support_lib_alias("android_support_v7_gridlayout_java") {
 }
-support_lib_alias("android_support_v7_mediarouter_java") {
+ext_support_lib_alias("android_support_v7_mediarouter_java") {
 }
-support_lib_alias("android_support_v7_palette_java") {
+ext_support_lib_alias("android_support_v7_palette_java") {
 }
-support_lib_alias("android_support_v7_preference_java") {
+ext_support_lib_alias("android_support_v7_preference_java") {
 }
-support_lib_alias("android_support_v7_recyclerview_java") {
+ext_support_lib_alias("android_support_v7_recyclerview_java") {
 }
-support_lib_alias("android_support_v13_java") {
+ext_support_lib_alias("android_support_v13_java") {
 }
-support_lib_alias("android_support_v14_preference_java") {
+ext_support_lib_alias("android_support_v14_preference_java") {
 }
-support_lib_alias("android_support_v17_leanback_java") {
+ext_support_lib_alias("android_support_v17_leanback_java") {
 }
-support_lib_alias("android_support_v17_preference_java") {
+ext_support_lib_alias("android_support_v17_preference_java") {
 }
-support_lib_alias("android_support_vector_drawable_java") {
+ext_support_lib_alias("android_support_vector_drawable_java") {
 }
 
 # TODO(dgn): Use the POM files instead of hardcoding the dependencies.
