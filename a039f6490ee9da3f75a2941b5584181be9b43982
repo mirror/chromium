@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c0f3be9a_fc868750",
+        "filename": "third_party/WebKit/LayoutTests/xr/events_deviceconnect.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-30T00:56:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9eb1ee5_66bc8c55",
+      "range": {
+        "startLine": 10,
+        "startChar": 13,
+        "endLine": 10,
+        "endChar": 14
+      },
+      "revId": "a039f6490ee9da3f75a2941b5584181be9b43982",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09cf01d9_da7aa199",
         "filename": "third_party/WebKit/LayoutTests/xr/events_session_end.html",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "a039f6490ee9da3f75a2941b5584181be9b43982",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "108894b0_4a4d3c98",
+        "filename": "third_party/WebKit/LayoutTests/xr/events_session_end.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-30T00:56:58Z",
+      "side": 1,
+      "message": "It has something to do with the eventWatcher. With it it works, without it it doesn\u0027t. No idea why.",
+      "parentUuid": "09cf01d9_da7aa199",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 10
+      },
+      "revId": "a039f6490ee9da3f75a2941b5584181be9b43982",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "04eb15b2_69bbf6f1",
+        "filename": "third_party/WebKit/LayoutTests/xr/resources/xr-device-mocking.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-30T00:56:58Z",
+      "side": 1,
+      "message": "Modified to be more accurate.",
+      "parentUuid": "21af692a_fb990283",
+      "range": {
+        "startLine": 5,
+        "startChar": 33,
+        "endLine": 6,
+        "endChar": 7
+      },
+      "revId": "a039f6490ee9da3f75a2941b5584181be9b43982",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c28e432_fc5ae665",
         "filename": "third_party/WebKit/LayoutTests/xr/resources/xr-device-mocking.js",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "a039f6490ee9da3f75a2941b5584181be9b43982",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a44c51a2_c0f30e68",
+        "filename": "third_party/WebKit/LayoutTests/xr/resources/xr-device-mocking.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-30T00:56:58Z",
+      "side": 1,
+      "message": "In theory, if there are multiple devices, we have no way of knowing which one will be returned because at this point that will be decided per platform, but if we want to do tests with poses it makes more sense to supply only one device so you know what\u0027s going to be used. However, this whole thing might have to change depending on what is decided for the test API.",
+      "parentUuid": "4c28e432_fc5ae665",
+      "range": {
+        "startLine": 29,
+        "startChar": 25,
+        "endLine": 29,
+        "endChar": 30
+      },
+      "revId": "a039f6490ee9da3f75a2941b5584181be9b43982",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +257,30 @@
       "revId": "a039f6490ee9da3f75a2941b5584181be9b43982",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "667030a7_c301b28c",
+        "filename": "third_party/WebKit/LayoutTests/xr/xrViewport_valid.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-01-30T00:56:58Z",
+      "side": 1,
+      "message": "Sigh. I always miss at least one...",
+      "parentUuid": "696cb26b_3bc84c0a",
+      "range": {
+        "startLine": 34,
+        "startChar": 1,
+        "endLine": 34,
+        "endChar": 5
+      },
+      "revId": "a039f6490ee9da3f75a2941b5584181be9b43982",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
