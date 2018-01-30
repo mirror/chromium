@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "e70a5b90_91223680",
+        "filename": "components/cronet/ios/cronet_global_state_ios.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-01-30T16:09:47Z",
+      "side": 1,
+      "message": "I agree. It can be done in a separate CL. I just think that treating the header file as an interface and the corresponding \".cc\" files as the implementation makes code more structured and provides some encapsulation. Anyways, refactoring can be done in a future CL. This CL is already big enough.",
+      "parentUuid": "1f6f3813_806df980",
+      "range": {
+        "startLine": 44,
+        "startChar": 5,
+        "endLine": 44,
+        "endChar": 17
+      },
+      "revId": "b91c49554da9d440142c38aae719465a40e15846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acf58ad6_28acef69",
         "filename": "components/cronet/ios/cronet_global_state_ios.mm",
         "patchSetId": 15
