@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ede6a50a_3dcdea94",
+        "filename": "components/linux/mpris_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2018-01-30T10:11:06Z",
+      "side": 1,
+      "message": "Client -\u003e Service?\nIIUC this class is not used to make method calls, but to handle them.",
+      "revId": "381aa62297030b69cb533ac5827f8bc2fca06d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
