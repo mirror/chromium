@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "590559c3_b02b4f1c",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2018-01-30T15:00:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67234897_de8c6f67",
+      "range": {
+        "startLine": 576,
+        "startChar": 50,
+        "endLine": 576,
+        "endChar": 51
+      },
+      "revId": "7d454305e2d1cbce1611d9c8e408929316a4e4ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f31b892_b5aaaeb8",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
         "patchSetId": 4
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "hehe, that\u0027s funny. I personally prefer the US spelling and thought it was always written with two \u0027l\u0027 :)\n\nIn that case, I apologize and leave the choice up to you.",
       "parentUuid": "f3a10c6d_e37d0618",
+      "range": {
+        "startLine": 221,
+        "startChar": 18,
+        "endLine": 221,
+        "endChar": 26
+      },
+      "revId": "7d454305e2d1cbce1611d9c8e408929316a4e4ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7374a07d_3c91d012",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2018-01-30T15:00:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a7027c42_d97d533b",
       "range": {
         "startLine": 221,
         "startChar": 18,
