@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d6a9397_8438588b",
+        "filename": "content/renderer/media/gpu/rtc_video_encoder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1234969
+      },
+      "writtenOn": "2018-01-30T19:41:36Z",
+      "side": 1,
+      "message": "Nit: This may be a little inconsistent with what we do in webrtc: rtc timestamp is always 32-bit wrapped 90*capture_timestamp_ms. In your case it may differ. You may want to consider calculating capture_timestamp_ms first and rtp_timestamp from it. Or change the order of operations in line 527 to take a division first and then multiply it by 90.\n\nNot that it matters to much, since both rtp and capture timestamps are generated here.",
+      "range": {
+        "startLine": 526,
+        "startChar": 4,
+        "endLine": 530,
+        "endChar": 0
+      },
+      "revId": "9092cbfc76325abf87e4ed33ece5c5d6a866b886",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
