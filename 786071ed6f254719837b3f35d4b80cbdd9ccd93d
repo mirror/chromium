@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ea2110b6_068f8b36",
+        "filename": "components/subresource_filter/core/common/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-30T16:05:18Z",
+      "side": 1,
+      "message": "thanks, windows dev is already pretty annoying without arbitrary restrictions :)",
+      "parentUuid": "e4e26da5_a91fe0b0",
+      "revId": "786071ed6f254719837b3f35d4b80cbdd9ccd93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "697a2876_65f787f0",
         "filename": "components/subresource_filter/core/common/test_ruleset_utils.h",
         "patchSetId": 6
@@ -230,6 +248,24 @@
       "side": 1,
       "message": "Eek. Thanks for that. Fixed.",
       "parentUuid": "9a92dc02_f608c77c",
+      "revId": "786071ed6f254719837b3f35d4b80cbdd9ccd93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7c335a8_9e1266d4",
+        "filename": "components/subresource_filter/core/common/tools/indexing_tool_main.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-30T16:05:18Z",
+      "side": 1,
+      "message": "Too much trouble to ask for a test for it? :)",
+      "parentUuid": "477844ef_2d5c49cd",
       "revId": "786071ed6f254719837b3f35d4b80cbdd9ccd93d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
