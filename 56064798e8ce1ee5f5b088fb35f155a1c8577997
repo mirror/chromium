@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ee06dca4_326b8d6f",
+        "filename": "content/browser/android/synchronous_compositor_sync_call_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-30T18:14:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61d6bd3b_ea44db7d",
+      "revId": "56064798e8ce1ee5f5b088fb35f155a1c8577997",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61538cf8_94902e86",
         "filename": "content/browser/android/synchronous_compositor_sync_call_bridge.cc",
         "patchSetId": 7
@@ -39,6 +57,30 @@
       "revId": "56064798e8ce1ee5f5b088fb35f155a1c8577997",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d11370e_7dd55ea7",
+        "filename": "content/browser/android/synchronous_compositor_sync_call_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-30T18:14:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61538cf8_94902e86",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 45
+      },
+      "revId": "56064798e8ce1ee5f5b088fb35f155a1c8577997",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "0adee84b_56afa082",
+        "filename": "content/browser/android/synchronous_compositor_sync_call_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-30T18:14:27Z",
+      "side": 1,
+      "message": "Can compile without the passed. with std::move it fails with epsilon copy issue.",
+      "parentUuid": "6c461c4a_2011197a",
+      "range": {
+        "startLine": 74,
+        "startChar": 29,
+        "endLine": 74,
+        "endChar": 42
+      },
+      "revId": "56064798e8ce1ee5f5b088fb35f155a1c8577997",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "656cb780_f245bfbf",
         "filename": "content/browser/android/synchronous_compositor_sync_call_bridge.cc",
         "patchSetId": 7
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "52797b03_c1544d61",
+        "filename": "content/browser/android/synchronous_compositor_sync_call_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-30T18:14:27Z",
+      "side": 1,
+      "message": "Wow. Sorry I missed that. Ugh.",
+      "parentUuid": "656cb780_f245bfbf",
+      "range": {
+        "startLine": 145,
+        "startChar": 27,
+        "endLine": 145,
+        "endChar": 42
+      },
+      "revId": "56064798e8ce1ee5f5b088fb35f155a1c8577997",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7c21677_8a9ce62a",
         "filename": "content/browser/android/synchronous_compositor_sync_call_bridge.cc",
         "patchSetId": 7
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "35231225_09772a93",
+        "filename": "content/browser/android/synchronous_compositor_sync_call_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-30T18:14:27Z",
+      "side": 1,
+      "message": "I think it is readable this way.",
+      "parentUuid": "f7c21677_8a9ce62a",
+      "revId": "56064798e8ce1ee5f5b088fb35f155a1c8577997",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "444b8042_aef58cb1",
         "filename": "content/browser/android/synchronous_compositor_sync_call_bridge.cc",
         "patchSetId": 7
@@ -116,6 +224,30 @@
       "writtenOn": "2018-01-30T17:38:51Z",
       "side": 1,
       "message": "Can you help me understand what this previously corresponded to?",
+      "range": {
+        "startLine": 206,
+        "startChar": 0,
+        "endLine": 216,
+        "endChar": 1
+      },
+      "revId": "56064798e8ce1ee5f5b088fb35f155a1c8577997",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03c0234c_c5cb563d",
+        "filename": "content/browser/android/synchronous_compositor_sync_call_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-30T18:14:27Z",
+      "side": 1,
+      "message": "So previously the future map would still stay alive even though the host isn\u0027t unregistered. I\u0027ve actually removed the word host and changed it to SyncCallBridge that should help clarify it.",
+      "parentUuid": "444b8042_aef58cb1",
       "range": {
         "startLine": 206,
         "startChar": 0,
