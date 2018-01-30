@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "71005ba2_a4357f88",
+        "filename": "extensions/renderer/i18n_custom_bindings.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-30T17:17:56Z",
+      "side": 1,
+      "message": "In some ways, I like the comfort of knowing (at a compilation level) that we won\u0027t do unnecessary copies here, but I suppose this struct is probably simple enough that it doesn\u0027t really matter.  Removed the dtor and disallow_copy_and_assign.\n\n\u003e (It\u0027s a little funny here as you\u0027ve made it move-constructible but not move-assignable. But not a big deal to fix if it ever mattered.)\n\nI figured, why add more than we need?",
+      "parentUuid": "2a03fbe9_f2f4a7d4",
+      "revId": "c46a6625cc16e0a6706c588f7d20e372ecb06358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b40cb45_92b52c01",
         "filename": "extensions/renderer/i18n_custom_bindings.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b28fdeef_45f974bf",
+        "filename": "extensions/renderer/i18n_custom_bindings.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-30T17:17:56Z",
+      "side": 1,
+      "message": "This should only be called in response to JS running, and I think that should mean that the context passed in is already active.  But I\u0027ve added a dcheck for extra documentation/certainty.",
+      "parentUuid": "2b40cb45_92b52c01",
+      "revId": "c46a6625cc16e0a6706c588f7d20e372ecb06358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "259e6edd_fd62a1ea",
         "filename": "extensions/renderer/i18n_custom_bindings.cc",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "c46a6625cc16e0a6706c588f7d20e372ecb06358",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63d4100d_918c1eee",
+        "filename": "extensions/renderer/i18n_custom_bindings.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-30T17:17:56Z",
+      "side": 1,
+      "message": "Good catch!  Fixed.",
+      "parentUuid": "259e6edd_fd62a1ea",
+      "revId": "c46a6625cc16e0a6706c588f7d20e372ecb06358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
