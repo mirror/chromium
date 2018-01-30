@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c906ffdd_f74777bb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2018-01-30T20:33:33Z",
+      "side": 1,
+      "message": "\u003e Hi Tom,\n\u003e \n\u003e Can you share the design doc of the project which is going to use this MPRIS D-Bus client? I believe reviewers (including me) need more information about how the design decisions are made in the first place. :)\n\u003e\n\nOh, I don\u0027t actually need a full review of this CL, I just want to know why the DBus object I\u0027m trying to create isn\u0027t getting created, and this CL is just uploaded for reference\n\n\u003e Can you share the test steps taken?\n\n1. Build chrome and launch with --enable-mpris-client\n2. Use d-feet to examine org.mpris.MediaPlayer2.chromium.xxxxx.  There should be a /org/mpris/MediaPlayer2 object available.\n\n\u003e And it would be good to include the issue tracking the development as well.\n\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d804121\nThe real CL is https://chromium-review.googlesource.com/c/chromium/src/+/882390",
+      "parentUuid": "bad2dd4f_0057ec49",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 38
+      },
+      "revId": "381aa62297030b69cb533ac5827f8bc2fca06d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "efbac6a9_f6c92084",
         "filename": "components/dbus/dbus_thread_linux.h",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2018-01-30T20:16:15Z",
       "side": 1,
       "message": "qq: What is the intention of moving dbus_thread_linux.h from chrome/browser to compnents/dbus? Is dbus_thread_linux.h intended to be shared between chrome/browser and Blink (according to https://cs.corp.google.com/clankium/src/components/README)?",
+      "revId": "381aa62297030b69cb533ac5827f8bc2fca06d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "320490fb_65585859",
+        "filename": "components/dbus/dbus_thread_linux.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2018-01-30T20:33:33Z",
+      "side": 1,
+      "message": "thestig@ said that MprisClient should be a component, so that forces dbus_thread_linux to be a component as well (to avoid a circular build dependency)",
+      "parentUuid": "efbac6a9_f6c92084",
       "revId": "381aa62297030b69cb533ac5827f8bc2fca06d4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
