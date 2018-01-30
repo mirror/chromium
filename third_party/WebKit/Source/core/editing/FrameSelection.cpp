@@ -1110,13 +1110,13 @@ bool FrameSelection::SelectWordAroundCaret() {
   if (!selection.IsCaret())
     return false;
   const VisiblePosition& position = selection.VisibleStart();
-  static const EWordSide kWordSideList[2] = {kNextWordIfOnBoundary,
-                                             kPreviousWordIfOnBoundary};
-  for (EWordSide word_side : kWordSideList) {
+  for (int index = 0; index < 1; ++index) {
     // TODO(yoichio): We should have Position version of |start/endOfWord|
     // for avoiding unnecessary canonicalization.
-    VisiblePosition start = StartOfWord(position, word_side);
-    VisiblePosition end = EndOfWord(position, word_side);
+    VisiblePosition start =
+        index == 0 ? StartOfWord(position) : StartOfWordBackward(position);
+    VisiblePosition end =
+        index == 0 ? EndOfWord(position) : EndOfWordBackward(position);
     String text =
         PlainText(EphemeralRange(start.DeepEquivalent(), end.DeepEquivalent()));
     if (!text.IsEmpty() && !IsSeparator(text.CharacterStartingAt(0))) {

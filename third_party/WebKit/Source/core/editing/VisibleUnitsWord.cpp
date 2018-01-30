@@ -58,22 +58,24 @@ unsigned EndWordBoundary(
 
 template <typename Strategy>
 PositionTemplate<Strategy> EndOfWordAlgorithm(
-    const VisiblePositionTemplate<Strategy>& c,
-    EWordSide side) {
-  DCHECK(c.IsValid()) << c;
-  VisiblePositionTemplate<Strategy> p = c;
-  if (side == kPreviousWordIfOnBoundary) {
-    if (IsStartOfParagraph(c))
-      return c.DeepEquivalent();
+    const VisiblePositionTemplate<Strategy>& position) {
+  DCHECK(position.IsValid()) << position;
+  if (IsEndOfParagraph(position))
+    return position.DeepEquivalent();
+  return NextBoundary(position, EndWordBoundary);
+}
 
-    p = PreviousPositionOf(c);
-    if (p.IsNull())
-      return c.DeepEquivalent();
-  } else if (IsEndOfParagraph(c)) {
-    return c.DeepEquivalent();
-  }
-
-  return NextBoundary(p, EndWordBoundary);
+template <typename Strategy>
+PositionTemplate<Strategy> EndOfWordBackwardAlgorithm(
+    const VisiblePositionTemplate<Strategy>& position) {
+  DCHECK(position.IsValid()) << position;
+  if (IsStartOfParagraph(position))
+    return position.DeepEquivalent();
+  const VisiblePositionTemplate<Strategy>& previous_position =
+      PreviousPositionOf(position);
+  if (previous_position.IsNull())
+    return position.DeepEquivalent();
+  return NextBoundary(previous_position, EndWordBoundary);
 }
 
 unsigned NextWordPositionBoundary(
@@ -127,43 +129,64 @@ unsigned StartWordBoundary(
 
 template <typename Strategy>
 PositionTemplate<Strategy> StartOfWordAlgorithm(
-    const VisiblePositionTemplate<Strategy>& c,
-    EWordSide side) {
-  DCHECK(c.IsValid()) << c;
-  // TODO(yosin) This returns a null VP for c at the start of the document
-  // and |side| == |kPreviousWordIfOnBoundary|
-  VisiblePositionTemplate<Strategy> p = c;
-  if (side == kNextWordIfOnBoundary) {
-    // at paragraph end, the startofWord is the current position
-    if (IsEndOfParagraph(c))
-      return c.DeepEquivalent();
+    const VisiblePositionTemplate<Strategy>& position) {
+  DCHECK(position.IsValid()) << position;
+  if (IsEndOfParagraph(position))
+    return position.DeepEquivalent();
+  const VisiblePositionTemplate<Strategy>& next_position =
+      NextPositionOf(position);
+  if (next_position.IsNull())
+    return position.DeepEquivalent();
+  return PreviousBoundary(next_position, StartWordBoundary);
+}
 
-    p = NextPositionOf(c);
-    if (p.IsNull())
-      return c.DeepEquivalent();
-  }
-  return PreviousBoundary(p, StartWordBoundary);
+template <typename Strategy>
+PositionTemplate<Strategy> StartOfWordBackwardAlgorithm(
+    const VisiblePositionTemplate<Strategy>& position) {
+  DCHECK(position.IsValid()) << position;
+  // TODO(yosin) This returns a null VP for c at the start of the document at
+  // paragraph end, the startofWord is the current position
+  return PreviousBoundary(position, StartWordBoundary);
 }
 
 }  // namespace
 
-Position EndOfWordPosition(const VisiblePosition& position, EWordSide side) {
-  return EndOfWordAlgorithm<EditingStrategy>(position, side);
+Position EndOfWordPosition(const VisiblePosition& position) {
+  return EndOfWordAlgorithm<EditingStrategy>(position);
 }
 
-VisiblePosition EndOfWord(const VisiblePosition& position, EWordSide side) {
-  return CreateVisiblePosition(EndOfWordPosition(position, side),
+Position EndOfWordPositionBackward(const VisiblePosition& position) {
+  return EndOfWordBackwardAlgorithm<EditingStrategy>(position);
+}
+
+VisiblePosition EndOfWord(const VisiblePosition& position) {
+  return CreateVisiblePosition(EndOfWordPosition(position),
                                TextAffinity::kUpstreamIfPossible);
 }
 
-PositionInFlatTree EndOfWordPosition(const VisiblePositionInFlatTree& position,
-                                     EWordSide side) {
-  return EndOfWordAlgorithm<EditingInFlatTreeStrategy>(position, side);
+VisiblePosition EndOfWordBackward(const VisiblePosition& position) {
+  return CreateVisiblePosition(EndOfWordPositionBackward(position),
+                               TextAffinity::kUpstreamIfPossible);
 }
 
-VisiblePositionInFlatTree EndOfWord(const VisiblePositionInFlatTree& position,
-                                    EWordSide side) {
-  return CreateVisiblePosition(EndOfWordPosition(position, side),
+PositionInFlatTree EndOfWordPosition(
+    const VisiblePositionInFlatTree& position) {
+  return EndOfWordAlgorithm<EditingInFlatTreeStrategy>(position);
+}
+
+PositionInFlatTree EndOfWordPositionBackward(
+    const VisiblePositionInFlatTree& position) {
+  return EndOfWordBackwardAlgorithm<EditingInFlatTreeStrategy>(position);
+}
+
+VisiblePositionInFlatTree EndOfWord(const VisiblePositionInFlatTree& position) {
+  return CreateVisiblePosition(EndOfWordPosition(position),
+                               TextAffinity::kUpstreamIfPossible);
+}
+
+VisiblePositionInFlatTree EndOfWordBackward(
+    const VisiblePositionInFlatTree& position) {
+  return CreateVisiblePosition(EndOfWordPositionBackward(position),
                                TextAffinity::kUpstreamIfPossible);
 }
 
@@ -182,23 +205,40 @@ VisiblePosition PreviousWordPosition(const VisiblePosition& c) {
   return HonorEditingBoundaryAtOrBefore(prev, c.DeepEquivalent());
 }
 
-Position StartOfWordPosition(const VisiblePosition& position, EWordSide side) {
-  return StartOfWordAlgorithm<EditingStrategy>(position, side);
+Position StartOfWordPosition(const VisiblePosition& position) {
+  return StartOfWordAlgorithm<EditingStrategy>(position);
 }
 
-VisiblePosition StartOfWord(const VisiblePosition& position, EWordSide side) {
-  return CreateVisiblePosition(StartOfWordPosition(position, side));
+Position StartOfWordPositionBackward(const VisiblePosition& position) {
+  return StartOfWordBackwardAlgorithm<EditingStrategy>(position);
+}
+
+VisiblePosition StartOfWord(const VisiblePosition& position) {
+  return CreateVisiblePosition(StartOfWordPosition(position));
+}
+
+VisiblePosition StartOfWordBackward(const VisiblePosition& position) {
+  return CreateVisiblePosition(StartOfWordPositionBackward(position));
 }
 
 PositionInFlatTree StartOfWordPosition(
-    const VisiblePositionInFlatTree& position,
-    EWordSide side) {
-  return StartOfWordAlgorithm<EditingInFlatTreeStrategy>(position, side);
+    const VisiblePositionInFlatTree& position) {
+  return StartOfWordAlgorithm<EditingInFlatTreeStrategy>(position);
 }
 
-VisiblePositionInFlatTree StartOfWord(const VisiblePositionInFlatTree& position,
-                                      EWordSide side) {
-  return CreateVisiblePosition(StartOfWordPosition(position, side));
+PositionInFlatTree StartOfWordPositionBackward(
+    const VisiblePositionInFlatTree& position) {
+  return StartOfWordBackwardAlgorithm<EditingInFlatTreeStrategy>(position);
+}
+
+VisiblePositionInFlatTree StartOfWord(
+    const VisiblePositionInFlatTree& position) {
+  return CreateVisiblePosition(StartOfWordPosition(position));
+}
+
+VisiblePositionInFlatTree StartOfWordBackward(
+    const VisiblePositionInFlatTree& position) {
+  return CreateVisiblePosition(StartOfWordPositionBackward(position));
 }
 
 }  // namespace blink
