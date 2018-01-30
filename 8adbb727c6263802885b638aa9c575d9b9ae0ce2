@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "89b787ee_afa39175",
+        "filename": "mojo/common/big_string.typemap",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-30T22:40:30Z",
+      "side": 1,
+      "message": "I defer to Ken here, since I have no idea about lazy serialization and storage/call interfaces.",
+      "parentUuid": "0f693a7e_b3acf9a8",
+      "range": {
+        "startLine": 14,
+        "startChar": 18,
+        "endLine": 14,
+        "endChar": 59
+      },
+      "revId": "8adbb727c6263802885b638aa9c575d9b9ae0ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02d5ab8e_3c7a32b9",
         "filename": "mojo/common/big_string_struct_traits.cc",
         "patchSetId": 1
@@ -60,6 +84,24 @@
       "writtenOn": "2018-01-30T16:06:20Z",
       "side": 1,
       "message": "This is trivially true isn\u0027t it? I suppose the compiler will probably optimize it out.",
+      "revId": "8adbb727c6263802885b638aa9c575d9b9ae0ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e433a31a_e0a5bee1",
+        "filename": "mojo/common/big_string_struct_traits.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-30T22:40:30Z",
+      "side": 1,
+      "message": "Yeah, I guess it\u0027s always true, but I think it brings clarity. Not sure we care about performance that much here (event if compiler does not optimize this out), given that BigString is already big.",
+      "parentUuid": "02d5ab8e_3c7a32b9",
       "revId": "8adbb727c6263802885b638aa9c575d9b9ae0ce2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -83,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "25b06974_1706dfcc",
+        "filename": "third_party/WebKit/Source/platform/mojo/BigStringStructTraits.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-30T22:40:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53fe87cd_58e75986",
+      "revId": "8adbb727c6263802885b638aa9c575d9b9ae0ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "481ca14c_456469c6",
         "filename": "third_party/WebKit/Source/platform/mojo/BigStringStructTraits.cpp",
         "patchSetId": 1
@@ -94,6 +154,24 @@
       "writtenOn": "2018-01-30T16:06:20Z",
       "side": 1,
       "message": "Isn\u0027t this always trivially true?",
+      "revId": "8adbb727c6263802885b638aa9c575d9b9ae0ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6e8d131_172f0be1",
+        "filename": "third_party/WebKit/Source/platform/mojo/BigStringStructTraits.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-30T22:40:30Z",
+      "side": 1,
+      "message": "Same as in other place. I can remove this if you feel it\u0027s important.",
+      "parentUuid": "481ca14c_456469c6",
       "revId": "8adbb727c6263802885b638aa9c575d9b9ae0ce2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -117,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "d9159726_b57528d6",
+        "filename": "third_party/WebKit/Source/platform/mojo/BigStringStructTraits.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-30T22:40:30Z",
+      "side": 1,
+      "message": "FromUTF8 returns null string if passed nullptr data, while we need an empty string.",
+      "parentUuid": "80cb35f5_6ad7d976",
+      "revId": "8adbb727c6263802885b638aa9c575d9b9ae0ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8cb5a56_3a5e7420",
         "filename": "third_party/WebKit/Source/platform/mojo/BigStringStructTraits.cpp",
         "patchSetId": 1
@@ -134,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "988d2f95_96819688",
+        "filename": "third_party/WebKit/Source/platform/mojo/BigStringStructTraits.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-30T22:40:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8cb5a56_3a5e7420",
+      "revId": "8adbb727c6263802885b638aa9c575d9b9ae0ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7630ede1_b301a4cf",
         "filename": "third_party/WebKit/Source/platform/mojo/BigStringStructTraitsTest.cpp",
         "patchSetId": 1
@@ -148,6 +262,24 @@
       "revId": "8adbb727c6263802885b638aa9c575d9b9ae0ce2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "867038e5_26f56b83",
+        "filename": "third_party/WebKit/Source/platform/mojo/BigStringStructTraitsTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-30T22:40:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7630ede1_b301a4cf",
+      "revId": "8adbb727c6263802885b638aa9c575d9b9ae0ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
