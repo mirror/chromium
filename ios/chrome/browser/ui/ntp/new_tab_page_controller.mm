@@ -83,6 +83,7 @@ const CGFloat kToolbarHeight = 56;
                               OmniboxFocuser,
                               FakeboxFocuser,
                               SnackbarCommands,
+                              ToolbarCommands,
                               UrlLoader>
     dispatcher;
 
@@ -121,6 +122,7 @@ const CGFloat kToolbarHeight = 56;
                              OmniboxFocuser,
                              FakeboxFocuser,
                              SnackbarCommands,
+                             ToolbarCommands,
                              UrlLoader>)dispatcher
            safeAreaInset:(UIEdgeInsets)safeAreaInset {
   self = [super initWithNibName:nil url:url];
