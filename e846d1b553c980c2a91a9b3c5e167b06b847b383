@@ -70,6 +70,30 @@
       "revId": "e846d1b553c980c2a91a9b3c5e167b06b847b383",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d088e2ef_44a6168b",
+        "filename": "build/util/lib/common/chrome_test_server_spawner.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2018-01-30T02:22:44Z",
+      "side": 1,
+      "message": "I gave that a try, but the remapping doesn\u0027t work as is (even though there are no visible errors from adb, it doesn\u0027t seem to actually remap). If I add a self.port_forwarder.Unmap(device_ocsp_port) before the second Map() call it does work, though I guess that does open up a small race condition where something else could bind that port between the unmap and remap.\n\nAlso, this needs some condition to happen for the android case and not the fuchsia case, I\u0027m not sure if the chrome_test_server_spawner currently is aware of the difference.\n\nI uploaded my wip version (it works if you manually set should_do_the_thing_on_android_but_not_fucschia to 1 on android or 0 on fuchsia). I\u0027m not sure avoiding the extra proxying step on android is worth making the spawner more confusing and introducing the small race condition though.",
+      "parentUuid": "8c9bbccd_97d99b74",
+      "range": {
+        "startLine": 260,
+        "startChar": 26,
+        "endLine": 260,
+        "endChar": 27
+      },
+      "revId": "e846d1b553c980c2a91a9b3c5e167b06b847b383",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
