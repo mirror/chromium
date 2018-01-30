@@ -21,6 +21,15 @@ class VisibleUnitsWordTest : public EditingTestBase {
             .Build());
   }
 
+  std::string DoStartOfWordBackward(const std::string& selection_text) {
+    const Position position = SetSelectionTextToBody(selection_text).Base();
+    return GetSelectionTextFromBody(
+        SelectionInDOMTree::Builder()
+            .Collapse(StartOfWordBackward(CreateVisiblePosition(position))
+                          .DeepEquivalent())
+            .Build());
+  }
+
   std::string DoEndOfWord(const std::string& selection_text) {
     const Position position = SetSelectionTextToBody(selection_text).Base();
     return GetSelectionTextFromBody(
@@ -46,6 +55,37 @@ TEST_F(VisibleUnitsWordTest, StartOfWordBasic) {
   EXPECT_EQ("<p> (1) abc |def</p>", DoStartOfWord("<p> (1) abc de|f</p>"));
   EXPECT_EQ("<p> (1) abc def|</p>", DoStartOfWord("<p> (1) abc def|</p>"));
   EXPECT_EQ("<p> (1) abc def|</p>", DoStartOfWord("<p> (1) abc def</p>|"));
+}
+
+TEST_F(VisibleUnitsWordTest, StartOfWordBackwardBasic) {
+  EXPECT_EQ("<p> |(1) abc def</p>",
+            DoStartOfWordBackward("<p>| (1) abc def</p>"));
+  EXPECT_EQ("<p> |(1) abc def</p>",
+            DoStartOfWordBackward("<p> |(1) abc def</p>"));
+  EXPECT_EQ("<p> |(1) abc def</p>",
+            DoStartOfWordBackward("<p> (|1) abc def</p>"));
+  EXPECT_EQ("<p> (|1) abc def</p>",
+            DoStartOfWordBackward("<p> (1|) abc def</p>"));
+  EXPECT_EQ("<p> (1|) abc def</p>",
+            DoStartOfWordBackward("<p> (1)| abc def</p>"));
+  EXPECT_EQ("<p> (1)| abc def</p>",
+            DoStartOfWordBackward("<p> (1) |abc def</p>"));
+  EXPECT_EQ("<p> (1) |abc def</p>",
+            DoStartOfWordBackward("<p> (1) a|bc def</p>"));
+  EXPECT_EQ("<p> (1) |abc def</p>",
+            DoStartOfWordBackward("<p> (1) ab|c def</p>"));
+  EXPECT_EQ("<p> (1) |abc def</p>",
+            DoStartOfWordBackward("<p> (1) abc| def</p>"));
+  EXPECT_EQ("<p> (1) abc| def</p>",
+            DoStartOfWordBackward("<p> (1) abc |def</p>"));
+  EXPECT_EQ("<p> (1) abc |def</p>",
+            DoStartOfWordBackward("<p> (1) abc d|ef</p>"));
+  EXPECT_EQ("<p> (1) abc |def</p>",
+            DoStartOfWordBackward("<p> (1) abc de|f</p>"));
+  EXPECT_EQ("<p> (1) abc |def</p>",
+            DoStartOfWordBackward("<p> (1) abc def|</p>"));
+  EXPECT_EQ("<p> (1) abc |def</p>",
+            DoStartOfWordBackward("<p> (1) abc def</p>|"));
 }
 
 TEST_F(VisibleUnitsWordTest, StartOfWordCrossing) {
