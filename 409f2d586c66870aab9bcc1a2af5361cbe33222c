@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "4420536f_5baaaf0f",
+        "filename": "services/ui/display/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2018-01-30T01:30:44Z",
+      "side": 1,
+      "message": "It would be best to make the decision at runtime.\n\nIt\u0027s a layering violation to make this decision at compile time based on the ozone_platform_* flags, and will cause problems (suppose you also compile in x11 - now turning gbm on or off will affect this code\u0027s behavior even when using the x11 platform, when they are supposed to be independent).\n\nIf you need to decide at compile time, then adding a special GN arg for services/ui/display would also work. That way makes sense for decisions that can be made independently of compiled in platforms.",
+      "parentUuid": "9ec3d447_1916cd59",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 26
+      },
+      "revId": "409f2d586c66870aab9bcc1a2af5361cbe33222c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ee1ac58_d4bb7b84",
         "filename": "third_party/libdrm/BUILD.gn",
         "patchSetId": 14
