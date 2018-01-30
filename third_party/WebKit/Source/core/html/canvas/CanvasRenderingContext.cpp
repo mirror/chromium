@@ -27,6 +27,7 @@
 
 #include "core/html/canvas/CanvasContextCreationAttributes.h"
 #include "core/html/canvas/CanvasImageSource.h"
+#include "core/origin_trials/origin_trials.h"
 #include "platform/runtime_enabled_features.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "public/platform/Platform.h"
@@ -55,8 +56,8 @@ CanvasRenderingContext::CanvasRenderingContext(
     color_params_.SetOpacityMode(kOpaque);
   }
 
-  if (!RuntimeEnabledFeatures::LowLatencyCanvasEnabled() &&
-      creation_attributes_.hasLowLatency())
+  if (creation_attributes_.hasLowLatency() &&
+      !OriginTrials::lowLatencyCanvasEnabled(host->GetTopExecutionContext()))
     creation_attributes_.setLowLatency(false);
 
   // Make m_creationAttributes reflect the effective colorSpace and pixelFormat
