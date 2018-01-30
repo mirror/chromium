@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4f227078_b37cf614",
+        "filename": "services/network/public/cpp/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-30T18:48:13Z",
+      "side": 1,
+      "message": "Me too. But hey, it compiled. Ship it! I\u0027ll add it in.",
+      "parentUuid": "7878ed80_ec8c8da7",
+      "revId": "436f8a83af5141a5d7be92396af4b62ea744c0d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc87471c_25281608",
         "filename": "services/network/public/cpp/BUILD.gn",
         "patchSetId": 9
@@ -108,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "9a9493d9_f7e1165e",
+        "filename": "services/network/public/cpp/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-30T18:48:13Z",
+      "side": 1,
+      "message": "I\u0027ll just so with the proposal.\n\nThe output_name needs to be unique enough to make liboutputnamevalue.so not collide with other files on disk. e.g. can\u0027t have two libcpp.so files.\n\nIt is not used in any other GN files to reference the target. So it can be verbose without issues.",
+      "parentUuid": "55287926_ba73e1d4",
+      "revId": "436f8a83af5141a5d7be92396af4b62ea744c0d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb181427_00a46f7e",
         "filename": "services/network/public/cpp/BUILD.gn",
         "patchSetId": 9
@@ -119,6 +155,24 @@
       "writtenOn": "2018-01-30T15:52:08Z",
       "side": 1,
       "message": "curious why this wouldn\u0027t be IS_SERVICES_NETWORK_CPP_TYPES_IMPL?",
+      "revId": "436f8a83af5141a5d7be92396af4b62ea744c0d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3073ca9e_4f5e6665",
+        "filename": "services/network/public/cpp/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-30T18:48:13Z",
+      "side": 1,
+      "message": "It\u0027s what rockot suggested. I don\u0027t have any preference for the naming.",
+      "parentUuid": "eb181427_00a46f7e",
       "revId": "436f8a83af5141a5d7be92396af4b62ea744c0d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
