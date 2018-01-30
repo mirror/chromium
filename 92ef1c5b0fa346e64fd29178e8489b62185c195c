@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8679422_0cc82229",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-30T01:38:41Z",
+      "side": 1,
+      "message": "nit: This implies we\u0027re including them _in addition to_ unstripped binaries.\n\nPerhaps \"Construct Fuchsia package using stripped binaries.\"?",
+      "range": {
+        "startLine": 7,
+        "startChar": 9,
+        "endLine": 7,
+        "endChar": 46
+      },
+      "revId": "92ef1c5b0fa346e64fd29178e8489b62185c195c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5854a546_30c0fe77",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-30T01:38:41Z",
+      "side": 1,
+      "message": "nit: Suggest stating explicitly that we leave the unstripped binaries as the ones listed in runtime_deps, so that they\u0027ll be passed included in what is passed to swarming isolates, to support symbolization.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 14
+      },
+      "revId": "92ef1c5b0fa346e64fd29178e8489b62185c195c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10e7ec88_d6f8f748",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-30T01:38:41Z",
+      "side": 1,
+      "message": "Is this rule valid? I had a vague recollection that we built some Mojo service so\u0027s with a .service suffix? Or are those also executables?",
+      "range": {
+        "startLine": 139,
+        "startChar": 5,
+        "endLine": 139,
+        "endChar": 26
+      },
+      "revId": "92ef1c5b0fa346e64fd29178e8489b62185c195c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d849c7a7_f53cec62",
+        "filename": "build/fuchsia/runner_v2/symbolizer.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-30T01:38:41Z",
+      "side": 1,
+      "message": "nit: Suggest |bin_path|.  For the comment, suggest \"Returns the path to the unstripped version of the binary at |bin_path|.\"",
+      "range": {
+        "startLine": 22,
+        "startChar": 23,
+        "endLine": 22,
+        "endChar": 27
+      },
+      "revId": "92ef1c5b0fa346e64fd29178e8489b62185c195c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6a329f8_65f15c67",
+        "filename": "build/toolchain/fuchsia/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-30T01:38:41Z",
+      "side": 1,
+      "message": "nit: Consider leaving a one-line comment to clarify that we want to build \u0026 strip, but retain the unstripped binaries in runtime_deps to make them available to isolates.",
+      "range": {
+        "startLine": 16,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 44
+      },
+      "revId": "92ef1c5b0fa346e64fd29178e8489b62185c195c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbbf1da9_d1f74a9c",
+        "filename": "build/toolchain/gcc_toolchain.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-30T01:38:41Z",
+      "side": 1,
+      "message": "Why do we need to add this? Wasn\u0027t Android already using it? Or is that still a GCC build...?",
+      "range": {
+        "startLine": 612,
+        "startChar": 29,
+        "endLine": 612,
+        "endChar": 64
+      },
+      "revId": "92ef1c5b0fa346e64fd29178e8489b62185c195c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
