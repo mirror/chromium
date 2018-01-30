@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "99a505b4_86c7e6b7",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-01-30T05:23:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14fcb603_73432143",
+      "range": {
+        "startLine": 498,
+        "startChar": 0,
+        "endLine": 501,
+        "endChar": 45
+      },
+      "revId": "7dd4294f9d3bf467375f45c18939dd63db38315b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "326ffa25_787b1fbb",
         "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
         "patchSetId": 9
@@ -36,6 +60,24 @@
       "writtenOn": "2018-01-17T17:47:08Z",
       "side": 1,
       "message": "Looks like this might not be enough. :(\n\nCan we also add an ASSERT_TRUE to ensure the profile prefs is considered as initialized, just in case the mock does not do its job?\n\nProfile* user_profile \u003d ProfileHelper::GetProfileByUserIdHashForTest(...);\nASSERT_TRUE(user_profile-\u003eGetPrefs()-\u003eGetAllPrefStoresInitializationStatus() \u003d\u003d INITIALIZATION_STATUS_SUCCESS);",
+      "revId": "7dd4294f9d3bf467375f45c18939dd63db38315b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7d0f698_5cf5e45c",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-01-30T05:23:08Z",
+      "side": 1,
+      "message": "I added ASSERT_TRUE here.",
+      "parentUuid": "326ffa25_787b1fbb",
       "revId": "7dd4294f9d3bf467375f45c18939dd63db38315b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
