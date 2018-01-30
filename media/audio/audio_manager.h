@@ -20,8 +20,9 @@
 #include "media/base/audio_parameters.h"
 
 namespace base {
-class FilePath;
 class SingleThreadTaskRunner;
+class File;
+class FilePath;
 }
 
 namespace media {
@@ -175,7 +176,10 @@ class MEDIA_EXPORT AudioManager {
 
   // Enable debug recording. InitializeDebugRecording() must be called before
   // this function.
-  virtual void EnableDebugRecording(const base::FilePath& base_file_name) = 0;
+  virtual void EnableDebugRecording(
+      const base::RepeatingCallback<void(const base::FilePath&,
+                                         base::OnceCallback<void(base::File)>)>&
+          create_file_callback) = 0;
 
   // Disable debug recording.
   virtual void DisableDebugRecording() = 0;

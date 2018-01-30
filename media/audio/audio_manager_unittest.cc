@@ -614,7 +614,11 @@ class MockAudioDebugRecordingManager : public AudioDebugRecordingManager {
 
   ~MockAudioDebugRecordingManager() override = default;
 
-  MOCK_METHOD1(EnableDebugRecording, void(const base::FilePath&));
+  MOCK_METHOD1(
+      EnableDebugRecording,
+      void(base::RepeatingCallback<void(const base::FilePath&,
+                                        base::OnceCallback<void(base::File)>)>
+               create_file_callback));
   MOCK_METHOD0(DisableDebugRecording, void());
 
  private:
@@ -742,9 +746,10 @@ TEST_F(AudioManagerTest, AudioDebugRecording) {
   EXPECT_CALL(*mock_debug_recording_manager, DisableDebugRecording());
   audio_manager_->DisableDebugRecording();
 
-  base::FilePath file_path(FILE_PATH_LITERAL("path"));
-  EXPECT_CALL(*mock_debug_recording_manager, EnableDebugRecording(file_path));
-  audio_manager_->EnableDebugRecording(file_path);
+  EXPECT_CALL(*mock_debug_recording_manager, EnableDebugRecording(testing::_));
+  audio_manager_->EnableDebugRecording(
+      base::BindRepeating([](const base::FilePath& file_path,
+                             base::OnceCallback<void(base::File)>) {}));
 
   EXPECT_CALL(*mock_debug_recording_manager, DisableDebugRecording());
   audio_manager_->DisableDebugRecording();
