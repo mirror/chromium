@@ -64,7 +64,7 @@ class CORE_EXPORT CSSUnitValue final : public CSSNumericValue {
 
   // From CSSNumericValue
   CSSNumericValue* Negate() final;
-  CSSNumericValue* Invert() final;
+  CSSNumericValue* Invert(ExceptionState&) final;
 
   double value_;
   CSSPrimitiveValue::UnitType unit_;
