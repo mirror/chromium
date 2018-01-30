@@ -421,7 +421,7 @@ class ErrorInjectionDownloadFile : public DownloadFileImpl {
   }
 
   DownloadInterruptReason HandleStreamCompletionStatus(
-      SourceStream* source_stream) override {
+      DownloadSourceStream* source_stream) override {
     if (source_stream->offset() == error_stream_offset_ &&
         source_stream->bytes_written() >= error_stream_length_) {
       return DOWNLOAD_INTERRUPT_REASON_SERVER_FAILED;

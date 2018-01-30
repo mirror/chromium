@@ -902,4 +902,13 @@ SDK.PageDispatcher = class {
    */
   windowOpen(url, windowName, windowFeatures, userGesture) {
   }
+
+  /**
+   * @override
+   * @param {!Protocol.IO.StreamHandle} stream
+   * @param {string} fileName
+   * @param {string} mimeType
+   */
+  downloadStarted(stream, fileName, mimeType) {
+  }
 };
