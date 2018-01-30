@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "4732276d_f9de70ed",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-30T00:58:13Z",
+      "side": 1,
+      "message": "Because the spec didn\u0027t use to allow it, other browsers doesn\u0027t allow it, so enabling it for older pseudo elements like ::before/::after etc would actually require effort from someone to send an intent-to-ship, evaluating interop risks, contacting other browser vendors about implementing it, etc.",
+      "parentUuid": "69f86aa0_0ccf375d",
+      "revId": "8f512dd5c04053427839649b1a1fe82bc17f8590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "67aa0c6b_220d29f5",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSSelectorParserTest.cpp",
         "patchSetId": 1
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "The problem is that audit-non-blink-usage.py finds anything that looks like\n\n\u003csymbol\u003e::\u003csymbol\u003e\n\nso using a div or prefixing with : doesn\u0027t help (the presubmit also complains about \".a::content\" on line 119 if you introduce a diff there.\n\nI just realized that there are 2 copies of very similar code\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Tools/Scripts/audit-non-blink-usage.py?l\u003d277\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/PRESUBMIT.py?l\u003d155\n\naudit-non-blink-usage.py ignores Test files but PRESUBMIT.py doesn\u0027t. Is there a reason for the WebKit one to also check Test files or is it just an oversight? Can I just update the WebKit PRESUBMIT to ignore Tests also?",
       "parentUuid": "67aa0c6b_220d29f5",
+      "revId": "8f512dd5c04053427839649b1a1fe82bc17f8590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35044860_bd8c5147",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSSelectorParserTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-30T00:58:13Z",
+      "side": 1,
+      "message": "I don\u0027t know the rationale. Wonder if this is new as I\u0027ve written a bunch of unit tests with pseudo element selectors without seeing this problem before.",
+      "parentUuid": "74bbc08f_9adbdea7",
       "revId": "8f512dd5c04053427839649b1a1fe82bc17f8590",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
