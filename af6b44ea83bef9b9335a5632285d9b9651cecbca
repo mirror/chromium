@@ -39,6 +39,30 @@
       "revId": "af6b44ea83bef9b9335a5632285d9b9651cecbca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c37b0e7c_7e36f888",
+        "filename": "ui/compositor/layer.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-30T00:43:47Z",
+      "side": 1,
+      "message": "The last time I did that I broke windows bots when surface sync was on (but it wasn\u0027t on by default) and spent a day trying to figure out what broke when I turned it on by default. I\u0027ll avoid default params for now.",
+      "parentUuid": "f89d5fba_196fe6fb",
+      "range": {
+        "startLine": 310,
+        "startChar": 29,
+        "endLine": 310,
+        "endChar": 70
+      },
+      "revId": "af6b44ea83bef9b9335a5632285d9b9651cecbca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
