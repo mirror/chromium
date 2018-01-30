@@ -21,6 +21,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/trace_event/memory_usage_estimator.h"
 #include "build/build_config.h"
 #include "components/google/core/browser/google_util.h"
 #include "components/search_engines/search_engines_switches.h"
@@ -192,8 +193,31 @@ TemplateURLRef::SearchTermsArgs::SearchTermsArgs(
 
 TemplateURLRef::SearchTermsArgs::SearchTermsArgs(const SearchTermsArgs& other) =
     default;
+TemplateURLRef::SearchTermsArgs::SearchTermsArgs(SearchTermsArgs&& other) =
+    default;
+auto TemplateURLRef::SearchTermsArgs::SearchTermsArgs::operator=(
+    const SearchTermsArgs& other) -> SearchTermsArgs& = default;
+auto TemplateURLRef::SearchTermsArgs::SearchTermsArgs::operator=(
+    SearchTermsArgs&& other) -> SearchTermsArgs& = default;
 
-TemplateURLRef::SearchTermsArgs::~SearchTermsArgs() {
+TemplateURLRef::SearchTermsArgs::~SearchTermsArgs() = default;
+
+size_t TemplateURLRef::SearchTermsArgs::EstimateMemoryUsage() const {
+  size_t res = 0;
+
+  res += base::trace_event::EstimateMemoryUsage(search_terms);
+  res += base::trace_event::EstimateMemoryUsage(original_query);
+  res += base::trace_event::EstimateMemoryUsage(assisted_query_stats);
+  res += base::trace_event::EstimateMemoryUsage(current_page_url);
+  res += base::trace_event::EstimateMemoryUsage(session_token);
+  res += base::trace_event::EstimateMemoryUsage(prefetch_query);
+  res += base::trace_event::EstimateMemoryUsage(prefetch_query_type);
+  res += base::trace_event::EstimateMemoryUsage(suggest_query_params);
+  res += base::trace_event::EstimateMemoryUsage(image_thumbnail_content);
+  res += base::trace_event::EstimateMemoryUsage(image_url);
+  res += base::trace_event::EstimateMemoryUsage(contextual_search_params);
+
+  return res;
 }
 
 TemplateURLRef::SearchTermsArgs::ContextualSearchParams::
@@ -211,9 +235,21 @@ TemplateURLRef::SearchTermsArgs::ContextualSearchParams::ContextualSearchParams(
 
 TemplateURLRef::SearchTermsArgs::ContextualSearchParams::ContextualSearchParams(
     const ContextualSearchParams& other) = default;
+TemplateURLRef::SearchTermsArgs::ContextualSearchParams::ContextualSearchParams(
+    ContextualSearchParams&& other) = default;
+
+auto TemplateURLRef::SearchTermsArgs::ContextualSearchParams::operator=(
+    const ContextualSearchParams& other) -> ContextualSearchParams& = default;
+auto TemplateURLRef::SearchTermsArgs::ContextualSearchParams::operator=(
+    ContextualSearchParams&& other) -> ContextualSearchParams& = default;
 
 TemplateURLRef::SearchTermsArgs::ContextualSearchParams::
-    ~ContextualSearchParams() {
+    ~ContextualSearchParams() = default;
+
+size_t
+TemplateURLRef::SearchTermsArgs::ContextualSearchParams::EstimateMemoryUsage()
+    const {
+  return base::trace_event::EstimateMemoryUsage(home_country);
 }
 
 // TemplateURLRef -------------------------------------------------------------
@@ -280,6 +316,32 @@ bool TemplateURLRef::UsesPOSTMethod(
     const SearchTermsData& search_terms_data) const {
   ParseIfNecessary(search_terms_data);
   return !post_params_.empty();
+}
+
+size_t TemplateURLRef::EstimateMemoryUsage() const {
+  size_t res = 0;
+
+  res += base::trace_event::EstimateMemoryUsage(parsed_url_);
+  res += base::trace_event::EstimateMemoryUsage(replacements_);
+  res += base::trace_event::EstimateMemoryUsage(host_);
+  res += base::trace_event::EstimateMemoryUsage(port_);
+  res += base::trace_event::EstimateMemoryUsage(path_);
+  res += base::trace_event::EstimateMemoryUsage(search_term_key_);
+  res += base::trace_event::EstimateMemoryUsage(search_term_value_prefix_);
+  res += base::trace_event::EstimateMemoryUsage(search_term_value_suffix_);
+  res += base::trace_event::EstimateMemoryUsage(post_params_);
+
+  return res;
+}
+
+size_t TemplateURLRef::PostParam::EstimateMemoryUsage() const {
+  size_t res = 0;
+
+  res += base::trace_event::EstimateMemoryUsage(name);
+  res += base::trace_event::EstimateMemoryUsage(value);
+  res += base::trace_event::EstimateMemoryUsage(content_type);
+
+  return res;
 }
 
 bool TemplateURLRef::EncodeFormData(const PostParams& post_params,
@@ -1153,6 +1215,10 @@ TemplateURL::AssociatedExtensionInfo::AssociatedExtensionInfo(
 TemplateURL::AssociatedExtensionInfo::~AssociatedExtensionInfo() {
 }
 
+size_t TemplateURL::AssociatedExtensionInfo::EstimateMemoryUsage() const {
+  return base::trace_event::EstimateMemoryUsage(extension_id);
+}
+
 TemplateURL::TemplateURL(const TemplateURLData& data, Type type)
     : data_(data),
       suggestions_url_ref_(this, TemplateURLRef::SUGGEST),
@@ -1446,6 +1512,20 @@ void TemplateURL::InvalidateCachedValues() const {
   image_url_ref_.InvalidateCachedValues();
   new_tab_url_ref_.InvalidateCachedValues();
   contextual_search_url_ref_.InvalidateCachedValues();
+}
+
+size_t TemplateURL::EstimateMemoryUsage() const {
+  size_t res = 0;
+
+  res += base::trace_event::EstimateMemoryUsage(data_);
+  res += base::trace_event::EstimateMemoryUsage(url_refs_);
+  res += base::trace_event::EstimateMemoryUsage(suggestions_url_ref_);
+  res += base::trace_event::EstimateMemoryUsage(image_url_ref_);
+  res += base::trace_event::EstimateMemoryUsage(new_tab_url_ref_);
+  res += base::trace_event::EstimateMemoryUsage(contextual_search_url_ref_);
+  res += base::trace_event::EstimateMemoryUsage(extension_info_);
+
+  return res;
 }
 
 void TemplateURL::ResizeURLRefVector() {
