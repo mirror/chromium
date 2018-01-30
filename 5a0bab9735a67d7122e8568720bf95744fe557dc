@@ -492,6 +492,74 @@
       "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "278562c0_729e5e15",
+        "filename": "chrome/browser/vr/elements/ui_element_name.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-30T16:26:49Z",
+      "side": 1,
+      "message": "nit: kNativeUiQuad or kHostedUiQuad? (just to disambiguate since all of this stuff is ui). I\u0027m not particular about native vs hosted (or anything other qualifier), but please use the same terminology with kHostedDialogBackplane.",
+      "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2afcadf6_cc15c679",
+        "filename": "chrome/browser/vr/model/model.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-30T16:26:49Z",
+      "side": 1,
+      "message": "nit: native_ui_texture_id. here and elsewhere.",
+      "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe2686d6_8c7748d2",
+        "filename": "chrome/browser/vr/model/native_ui_model.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-30T16:26:49Z",
+      "side": 1,
+      "message": "nit: why can\u0027t the texture id live here? If it could, it wouldn\u0027t the \"native\" prefix.",
+      "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4649bf26_85a3be63",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-30T16:26:49Z",
+      "side": 1,
+      "message": "VR_BIND_VISIBILITY(backplane, model-\u003enative_ui.alert_dialog_enabled);\n\nWhy is this method named generally (hosted dialog), but the model property is for the specific alert dialog? Can the model be made more general? Will we ever have to host more than one dialog simultaneously?",
+      "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
