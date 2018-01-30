@@ -290,6 +290,7 @@ class Generator(generator.Generator):
 
     return {
       "all_enums": all_enums,
+      "allow_interfaces": not self.disallow_interfaces,
       "allow_native_structs": self.allow_native_structs,
       "enums": self.module.enums,
       "export_attribute": self.export_attribute,
