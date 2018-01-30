@@ -1,0 +1,220 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6285d08_44b293d8",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 48
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-30T13:31:35Z",
+      "side": 1,
+      "message": "nit: put these two calls inline below -- i think the function call obscures what is happening.",
+      "revId": "d44296643d823f3fd0bf596404843363790dd15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf64e8bf_60d91a7b",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 48
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-30T13:31:35Z",
+      "side": 1,
+      "message": "this comment is a little misleading since it implies that deletion is needed for the architecture migration. it\u0027s really needed for the probe below. if arch migration was the only issue, only the \"opposite\" value would need to be deleted.",
+      "revId": "d44296643d823f3fd0bf596404843363790dd15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73c783ca_abe1def6",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 48
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-30T13:31:35Z",
+      "side": 1,
+      "message": "i think |new_version| must always be valid. did you include this check for defensive programming, or was it in the old delegate execute code?",
+      "revId": "d44296643d823f3fd0bf596404843363790dd15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55beb864_568a2036",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 48
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-30T13:31:35Z",
+      "side": 1,
+      "message": "JoinString seems like overkill -- this will stuff strings in a vector and then pull them out again. why not use + or stringprintf?",
+      "range": {
+        "startLine": 248,
+        "startChar": 12,
+        "endLine": 248,
+        "endChar": 22
+      },
+      "revId": "d44296643d823f3fd0bf596404843363790dd15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91bc3753_31af03ee",
+        "filename": "chrome/installer/util/util_constants.h",
+        "patchSetId": 48
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-30T13:31:35Z",
+      "side": 1,
+      "message": "it looks like this constant is only used by setup.exe. if this is the case, please move it to setup/setup_constants.{cc,h}.",
+      "revId": "d44296643d823f3fd0bf596404843363790dd15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb4d1520_0a72b9ab",
+        "filename": "notification_helper/BUILD.gn",
+        "patchSetId": 48
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-30T13:31:35Z",
+      "side": 1,
+      "message": "this needs //base",
+      "revId": "d44296643d823f3fd0bf596404843363790dd15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7c39c33_eed2cf01",
+        "filename": "notification_helper/BUILD.gn",
+        "patchSetId": 48
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-30T13:31:35Z",
+      "side": 1,
+      "message": "are these needed?",
+      "revId": "d44296643d823f3fd0bf596404843363790dd15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02bf8f78_12f599fc",
+        "filename": "notification_helper/BUILD.gn",
+        "patchSetId": 48
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-30T13:31:35Z",
+      "side": 1,
+      "message": "i think plain-old deps is more appropriate here",
+      "revId": "d44296643d823f3fd0bf596404843363790dd15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79ed1086_431f92ea",
+        "filename": "notification_helper/BUILD.gn",
+        "patchSetId": 48
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-30T13:31:35Z",
+      "side": 1,
+      "message": "see comments below",
+      "revId": "d44296643d823f3fd0bf596404843363790dd15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0cc2cf6_eab2d83a",
+        "filename": "notification_helper/BUILD.gn",
+        "patchSetId": 48
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-30T13:31:35Z",
+      "side": 1,
+      "message": "this is needed by the .exe, not by the .lib, no?",
+      "revId": "d44296643d823f3fd0bf596404843363790dd15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1c2107a_7d3233ff",
+        "filename": "notification_helper/BUILD.gn",
+        "patchSetId": 48
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-30T13:31:35Z",
+      "side": 1,
+      "message": "this, too, seems to be needed by the .exe rather than the .lib",
+      "revId": "d44296643d823f3fd0bf596404843363790dd15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e85f0a65_b6c2ef72",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 48
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-30T13:31:35Z",
+      "side": 1,
+      "message": "\u003d default;?",
+      "range": {
+        "startLine": 23,
+        "startChar": 36,
+        "endLine": 23,
+        "endChar": 38
+      },
+      "revId": "d44296643d823f3fd0bf596404843363790dd15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

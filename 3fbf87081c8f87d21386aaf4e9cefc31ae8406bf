@@ -261,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "512b4b55_34b5d463",
+        "filename": "chrome/installer/setup/setup_util.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-30T13:31:35Z",
+      "side": 1,
+      "message": "the codebase is wrong. :-) the guid is in a null-terminated string. it is a string with a terminator, the terminator happens to be a zero (the null character). calling it the \"null terminator\" doesn\u0027t make sense. it\u0027s the terminator for a string, not a terminator for a null. i would be equally happy with simply \"the terminator\" since the context is pretty obvious.",
+      "parentUuid": "67ea662a_d550a460",
+      "range": {
+        "startLine": 862,
+        "startChar": 27,
+        "endLine": 862,
+        "endChar": 31
+      },
+      "revId": "3fbf87081c8f87d21386aaf4e9cefc31ae8406bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c242a300_135f1de1",
         "filename": "chrome/installer/setup/setup_util.cc",
         "patchSetId": 41
@@ -384,6 +408,24 @@
       "side": 1,
       "message": "I am not sure if I have understood your question correctly.\n\nSay a browser instance pushes out a toast notification and remains running. When the user acts on it, OnActivated() will be invoked in this instance. If this instance shuts down after pushing out the notification followed by a new instance created by the user, will OnActivated still be invoked in the new instance? No.",
       "parentUuid": "ba94ae9a_7a030f29",
+      "revId": "3fbf87081c8f87d21386aaf4e9cefc31ae8406bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2b2c8a9_78636762",
+        "filename": "win_notification_helper/notification_activator.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-30T13:31:35Z",
+      "side": 1,
+      "message": "that\u0027s my question -- i have no idea if browser process #2 will have its OnActivated method invoked upon user interaction with a toast created by browser process #1. it\u0027s not obvious to me that it would. it was my understanding that OnActivated is invoked on some object representing the toast. browser process #2 doesn\u0027t know anything about a toast opened by a previous browser process, does it? i don\u0027t really know what i\u0027m talking about, hence the question. :-)",
+      "parentUuid": "0eb626fa_8df52de7",
       "revId": "3fbf87081c8f87d21386aaf4e9cefc31ae8406bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
