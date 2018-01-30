@@ -228,6 +228,10 @@ bool IconLabelBubbleView::OnMousePressed(const ui::MouseEvent& event) {
   return Button::OnMousePressed(event);
 }
 
+bool IconLabelBubbleView::IsDrawn() const {
+  return Button::IsDrawn() && IsBubbleShowing();
+}
+
 void IconLabelBubbleView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   label_->GetAccessibleNodeData(node_data);
 }
