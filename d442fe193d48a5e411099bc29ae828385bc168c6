@@ -22,6 +22,30 @@
       "revId": "d442fe193d48a5e411099bc29ae828385bc168c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4e49da5_7f49a99c",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-01-30T16:55:34Z",
+      "side": 1,
+      "message": "Ah, didn\u0027t know about .NTPBackgroundColor, that\u0027s certainly better.  I expect this method may change incrementally as we tighten up the NTP for refresh.",
+      "parentUuid": "e9357ed0_19d0f9a7",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 51
+      },
+      "revId": "d442fe193d48a5e411099bc29ae828385bc168c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
