@@ -32,7 +32,6 @@ import org.chromium.content.browser.accessibility.captioning.CaptioningBridgeFac
 import org.chromium.content.browser.accessibility.captioning.SystemCaptioningBridge;
 import org.chromium.content.browser.accessibility.captioning.TextTrackSettings;
 import org.chromium.content.browser.input.ImeAdapterImpl;
-import org.chromium.content.browser.input.InputMethodManagerWrapper;
 import org.chromium.content.browser.input.SelectPopup;
 import org.chromium.content.browser.input.SelectPopupDialog;
 import org.chromium.content.browser.input.SelectPopupDropdown;
@@ -326,8 +325,8 @@ public class ContentViewCoreImpl
         setContainerViewInternals(internalDispatcher);
 
         mPopupZoomer = new PopupZoomer(mContext, mWebContents, mContainerView);
-        ImeAdapterImpl imeAdapter = ImeAdapterImpl.create(
-                mWebContents, mContainerView, new InputMethodManagerWrapper(mContext));
+        ImeAdapterImpl imeAdapter = ImeAdapterImpl.create(mWebContents, mContainerView,
+                ImeAdapterImpl.createDefaultInputMethodManagerWrapper(mContext));
         imeAdapter.addEventObserver(this);
         mTextSuggestionHost =
                 new TextSuggestionHost(mContext, mWebContents, windowAndroid, mContainerView);

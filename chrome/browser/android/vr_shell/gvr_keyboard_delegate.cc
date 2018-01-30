@@ -62,6 +62,10 @@ void GvrKeyboardDelegate::SetUiInterface(vr::KeyboardUiInterface* ui) {
 }
 
 void GvrKeyboardDelegate::OnBeginFrame() {
+  // Pause keyboard updates until previous updates from the keyboard are ack-ed.
+  if (waiting_for_ack) {
+    return;
+  }
   gvr::ClockTimePoint target_time = gvr::GvrApi::GetTimePointNow();
   gvr_keyboard_set_frame_time(gvr_keyboard_, &target_time);
   gvr_keyboard_advance_frame(gvr_keyboard_);
@@ -128,9 +132,14 @@ void GvrKeyboardDelegate::OnButtonUp(const gfx::PointF& position) {
 }
 
 void GvrKeyboardDelegate::UpdateInput(const vr::TextInputInfo& info) {
+  cached_text_input_info_ = info;
+  LOG(ERROR) << "lolk UpdateInput: " << info.ToString();
   gvr_keyboard_set_text(gvr_keyboard_, base::UTF16ToUTF8(info.text).c_str());
   gvr_keyboard_set_selection_indices(gvr_keyboard_, info.selection_start,
                                      info.selection_end);
+  gvr_keyboard_set_composing_indices(gvr_keyboard_, info.composition_start,
+                                     info.composition_end);
+  waiting_for_ack = false;
 }
 
 void GvrKeyboardDelegate::OnGvrKeyboardEvent(EventType event) {
@@ -153,9 +162,17 @@ void GvrKeyboardDelegate::OnGvrKeyboardEvent(EventType event) {
     case GVR_KEYBOARD_HIDDEN:
       ui_->OnKeyboardHidden();
       break;
-    case GVR_KEYBOARD_TEXT_UPDATED:
-      ui_->OnInputEdited(GetTextInfo());
+    case GVR_KEYBOARD_TEXT_UPDATED: {
+      auto info = GetTextInfo();
+      LOG(ERROR) << "lolk GVR_KEYBOARD_TEXT_UPDATED: " << info.ToString();
+      LOG(ERROR) << "lolk cached: " << cached_text_input_info_.ToString();
+      if (!waiting_for_ack && info != cached_text_input_info_) {
+        ui_->OnInputEdited(GetTextInfo());
+        waiting_for_ack = true;
+        LOG(ERROR) << "lolk waiting for ack";
+      }
       break;
+    }
     case GVR_KEYBOARD_TEXT_COMMITTED:
       ui_->OnInputCommitted(GetTextInfo());
       break;
@@ -175,6 +192,13 @@ vr::TextInputInfo GvrKeyboardDelegate::GetTextInfo() {
   gvr_keyboard_get_selection_indices(gvr_keyboard_, &start, &end);
   info.selection_start = start;
   info.selection_end = end;
+  gvr_keyboard_get_composing_indices(gvr_keyboard_, &start, &end);
+  info.composition_start = start;
+  info.composition_end = end;
+  if (info.composition_start == info.composition_end) {
+    info.composition_start = vr::TextInputInfo::kDefaultCompositionIndex;
+    info.composition_end = vr::TextInputInfo::kDefaultCompositionIndex;
+  }
   return info;
 }
 

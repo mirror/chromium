@@ -126,6 +126,20 @@ void VrGLThread::ForwardEvent(std::unique_ptr<blink::WebInputEvent> event,
                             base::Passed(std::move(event)), content_id));
 }
 
+void VrGLThread::OnTextInputEdited(const vr::TextInputInfo& info) {
+  DCHECK(OnGlThread());
+  main_thread_task_runner_->PostTask(
+      FROM_HERE,
+      base::BindOnce(&VrShell::OnTextInputEdited, weak_vr_shell_, info));
+}
+
+void VrGLThread::OnTextInputCommitted(const vr::TextInputInfo& info) {
+  DCHECK(OnGlThread());
+  main_thread_task_runner_->PostTask(
+      FROM_HERE,
+      base::BindOnce(&VrShell::OnTextInputCommitted, weak_vr_shell_, info));
+}
+
 void VrGLThread::ForceExitVr() {
   DCHECK(OnGlThread());
   main_thread_task_runner_->PostTask(
@@ -362,6 +376,43 @@ void VrGLThread::OnAssetsComponentReady() {
       FROM_HERE,
       base::BindRepeating(&vr::BrowserUiInterface::OnAssetsComponentReady,
                           browser_ui_));
+}
+
+void VrGLThread::ShowSoftInput() {
+  DCHECK(OnMainThread());
+  task_runner()->PostTask(
+      FROM_HERE,
+      base::BindRepeating(&vr::BrowserUiInterface::ShowSoftInput, browser_ui_));
+}
+
+void VrGLThread::HideSoftInput() {
+  DCHECK(OnMainThread());
+  task_runner()->PostTask(
+      FROM_HERE,
+      base::BindRepeating(&vr::BrowserUiInterface::HideSoftInput, browser_ui_));
+}
+
+void VrGLThread::UpdateSelection(int selection_start, int selection_end) {
+  DCHECK(OnMainThread());
+  task_runner()->PostTask(
+      FROM_HERE,
+      base::BindRepeating(&vr::BrowserUiInterface::UpdateSelection, browser_ui_,
+                          selection_start, selection_end));
+}
+
+void VrGLThread::UpdateComposition(int composition_start, int composition_end) {
+  DCHECK(OnMainThread());
+  task_runner()->PostTask(
+      FROM_HERE,
+      base::BindRepeating(&vr::BrowserUiInterface::UpdateComposition,
+                          browser_ui_, composition_start, composition_end));
+}
+
+void VrGLThread::UpdateText(const base::string16& text) {
+  DCHECK(OnMainThread());
+  task_runner()->PostTask(
+      FROM_HERE, base::BindRepeating(&vr::BrowserUiInterface::UpdateText,
+                                     browser_ui_, text));
 }
 
 bool VrGLThread::OnMainThread() const {

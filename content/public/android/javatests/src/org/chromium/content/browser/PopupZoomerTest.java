@@ -107,7 +107,7 @@ public class PopupZoomerTest {
                 mContentViewCore.setWebContentsForTesting((WebContentsImpl) webContents);
                 ViewGroup containerView = mActivityTestRule.getContentViewCore().getContainerView();
                 ImeAdapter imeAdapter = ImeAdapter.fromWebContents(webContents);
-                imeAdapter.setInputMethodManagerWrapperForTest(
+                imeAdapter.setInputMethodManagerWrapper(
                         TestInputMethodManagerWrapper.create(imeAdapter));
                 mPopupZoomer = createPopupZoomerForTest(
                         InstrumentationRegistry.getTargetContext(), webContents, containerView);

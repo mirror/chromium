@@ -6,6 +6,7 @@
 
 #include "chrome/browser/vr/controller_mesh.h"
 #include "chrome/browser/vr/model/controller_model.h"
+#include "chrome/browser/vr/model/text_input_info.h"
 #include "chrome/browser/vr/ui_element_renderer.h"
 
 namespace vr {
@@ -129,6 +130,12 @@ void Keyboard::UpdateDelegateVisibility() {
     delegate_->ShowKeyboard();
   else
     delegate_->HideKeyboard();
+}
+
+void Keyboard::UpdateInput(const TextInputInfo& info) {
+  if (!delegate_)
+    return;
+  delegate_->UpdateInput(info);
 }
 
 }  // namespace vr
