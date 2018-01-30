@@ -23,6 +23,7 @@ function eventLogger(e) {
     debug("Received " + e.type + " in main frame");
 }
 
+document.addEventListener('touchstart', eventLogger);
 document.addEventListener('mousemove', eventLogger);
 document.addEventListener('mousedown', eventLogger);
 document.addEventListener('mouseup', eventLogger);
@@ -36,7 +37,7 @@ var point = {
     x: rect.right - 4,
     y: rect.top + rect.height / 2
 };
-
+var event_id = 1;
 function doTap(type)
 {
     return new Promise(function(resolve, reject) {
@@ -48,10 +49,12 @@ function doTap(type)
             debug('Test case: Tap on consistent scrollbar');
         }
 
-        eventSender.gestureTapDown(point.x, point.y);
-        eventSender.gestureShowPress(point.x, point.y);
+        eventSender.addTouchPoint(point.x, point.y, 15, 15);
+        eventSender.touchStart(event_id + 1);
+        eventSender.gestureTapDown(point.x, point.y, event_id + 1);
+        eventSender.gestureShowPress(point.x, point.y, event_id + 2);
         debug("Sending GestureTap");
-        eventSender.gestureTap(point.x, point.y);
+        eventSender.gestureTap(point.x, point.y, event_id + 3);
 
         setTimeout(function() {
             debug('');
