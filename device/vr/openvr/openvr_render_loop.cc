@@ -47,7 +47,7 @@ void OpenVRRenderLoop::SubmitFrameWithTextureHandle(
   texture_helper_.SetSourceTexture(
       base::win::ScopedHandle(reinterpret_cast<HANDLE>(platform_handle.value)));
   texture_helper_.AllocateBackBuffer();
-  bool copy_successful = texture_helper_.CopyTextureToBackBuffer(true);
+  bool copy_successful = texture_helper_.CopyTextureToBackBuffer(false);
   if (copy_successful) {
     vr::Texture_t texture;
     texture.handle = texture_helper_.GetBackbuffer().Get();
