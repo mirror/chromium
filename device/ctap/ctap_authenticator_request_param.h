@@ -35,7 +35,6 @@ class CTAPAuthenticatorRequestParam : public CTAPRequestParam {
 
  private:
   explicit CTAPAuthenticatorRequestParam(CTAPRequestCommand cmd);
-
   CTAPRequestCommand cmd_;
 
   DISALLOW_COPY_AND_ASSIGN(CTAPAuthenticatorRequestParam);
