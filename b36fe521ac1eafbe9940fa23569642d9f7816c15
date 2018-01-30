@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cef59c0_c574597b",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-30T01:46:14Z",
+      "side": 1,
+      "message": "Is this the appropriate priority level? Is the user blocked in a modal dialog while waiting for verification? Please add a comment explaining this choice for future reference. FWIW, I see only 1 occurrence of this priority in chrome/browser/ui/webui, as opposed to 13 for USER_VISIBLE.\n\nhttps://cs.chromium.org/search/?q\u003dUSER_VISIBLE+file:%5Esrc/chrome/browser/ui/webui/+package:%5Echromium$\u0026type\u003dcs",
+      "range": {
+        "startLine": 745,
+        "startChar": 56,
+        "endLine": 745,
+        "endChar": 69
+      },
+      "revId": "b36fe521ac1eafbe9940fa23569642d9f7816c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
