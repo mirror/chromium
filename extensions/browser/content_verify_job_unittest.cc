@@ -225,10 +225,16 @@ TEST_F(ContentVerifyJobUnittest, DeletedAndMissingFiles) {
     // extension's verified_contents.json. Verification should result in
     // NO_HASHES_FOR_FILE since the extension is trying to load a file the
     // extension should not have.
+    // Verification of the folder should skip the request as if the resource
+    // were non-existent. See https://crbug.com/791929.
+    const base::FilePath::CharType kUnexpectedFolder[] =
+        FILE_PATH_LITERAL("bar/");
     const base::FilePath::CharType kUnexpectedResource[] =
-        FILE_PATH_LITERAL("foo.js");
+        FILE_PATH_LITERAL("bar/foo.js");
+    base::FilePath unexpected_folder_path(kUnexpectedFolder);
     base::FilePath unexpected_resource_path(kUnexpectedResource);
 
+    base::CreateDirectory(unzipped_path.Append(unexpected_folder_path));
     base::FilePath full_path =
         unzipped_path.Append(base::FilePath(unexpected_resource_path));
     base::WriteFile(full_path, "42", sizeof("42"));
@@ -238,6 +244,11 @@ TEST_F(ContentVerifyJobUnittest, DeletedAndMissingFiles) {
     EXPECT_EQ(ContentVerifyJob::NO_HASHES_FOR_FILE,
               RunContentVerifyJob(*extension.get(), unexpected_resource_path,
                                   contents));
+
+    std::string empty_contents;
+    EXPECT_EQ(ContentVerifyJob::NONE,
+              RunContentVerifyJob(*extension.get(), unexpected_folder_path,
+                                  empty_contents));
   }
 
   {

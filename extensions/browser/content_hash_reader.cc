@@ -53,11 +53,12 @@ bool ContentHashReader::Init() {
   if (!verified_contents.HasTreeHashRoot(relative_path_)) {
     // Making a request to a non-existent resource should not result in
     // content verification failure.
-    // TODO(proberge): The relative_path_.empty() check should be moved higher
-    // in the execution flow for performance wins by saving on costly IO
-    // operations and calculations.
-    if (relative_path_.empty() ||
-        !base::PathExists(extension_root_.Append(relative_path_)))
+    // TODO(proberge): This logic could be simplified if |content_verify_job|
+    // kept track of whether the file being verified was successfully read.
+    // A content verification failure should be triggered if there is a mismatch
+    // between the file read state and the existence of verification hashes.
+    if (!base::PathExists(extension_root_.Append(relative_path_)) ||
+        base::DirectoryExists(extension_root_.Append(relative_path_)))
       file_missing_from_verified_contents_ = true;
 
     return false;
