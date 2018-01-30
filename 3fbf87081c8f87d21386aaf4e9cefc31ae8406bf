@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "67ea662a_d550a460",
+        "filename": "chrome/installer/setup/setup_util.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-30T01:09:44Z",
+      "side": 1,
+      "message": "Hi Greg, how does \"null string terminator\" sound to you?",
+      "parentUuid": "44db2b8d_9a26066e",
+      "range": {
+        "startLine": 862,
+        "startChar": 27,
+        "endLine": 862,
+        "endChar": 31
+      },
+      "revId": "3fbf87081c8f87d21386aaf4e9cefc31ae8406bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c242a300_135f1de1",
         "filename": "chrome/installer/setup/setup_util.cc",
         "patchSetId": 41
@@ -395,6 +419,24 @@
       "side": 1,
       "message": "Comments on the second argument invokedArgs From MSDN: Arguments from the invoked button. NULL if the toast indicates the default activation and no launch arguments were specified in the XML payload.\n\nI will check with finnur@ for this as he was implementing the display stuff.",
       "parentUuid": "a8912368_12f8dbca",
+      "revId": "3fbf87081c8f87d21386aaf4e9cefc31ae8406bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "578a3435_fef2e76a",
+        "filename": "win_notification_helper/notification_activator.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-30T01:09:44Z",
+      "side": 1,
+      "message": "I have figured out the meaning of this |invokedArgs| argument. I have added comment here to explain all these in the new patch set. I will create another CL to experiment with launching Chrome with this args.",
+      "parentUuid": "990be20b_5a853355",
       "revId": "3fbf87081c8f87d21386aaf4e9cefc31ae8406bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
