@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "72fefd05_bb623ead",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2018-01-30T15:36:18Z",
+      "side": 1,
+      "message": "Yeah, I didn\u0027t do that since UserCloudPolicyManagerChromeOS::PolicyEnforcement everywhere in the code is so verbose. But OK, done:\n\n  UserCloudPolicyManagerChromeOS::PolicyEnforcement enforcement_type \u003d\n      UserCloudPolicyManagerChromeOS::PolicyEnforcement::kPolicyOptional;",
+      "parentUuid": "a1c1f7d3_a98e09b1",
+      "revId": "ad881c355d544cac1cdeb5e1bb249baf73e1c75a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b128a836_34db3a0e",
         "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.h",
         "patchSetId": 20
@@ -33,6 +51,24 @@
       "revId": "ad881c355d544cac1cdeb5e1bb249baf73e1c75a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40523b0e_af3fe351",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2018-01-30T15:36:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b128a836_34db3a0e",
+      "revId": "ad881c355d544cac1cdeb5e1bb249baf73e1c75a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "0fb68ec6_c8451558",
+        "filename": "chrome/browser/chromeos/policy/user_policy_manager_factory_chromeos.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2018-01-30T15:36:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b1c7604_62a20e2a",
+      "range": {
+        "startLine": 212,
+        "startChar": 30,
+        "endLine": 212,
+        "endChar": 45
+      },
+      "revId": "ad881c355d544cac1cdeb5e1bb249baf73e1c75a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34b4a2df_56a44bb4",
         "filename": "chrome/browser/chromeos/policy/user_policy_manager_factory_chromeos.cc",
         "patchSetId": 20
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "7f47c4b7_1c21b9df",
+        "filename": "chrome/browser/chromeos/policy/user_policy_manager_factory_chromeos.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2018-01-30T15:36:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34b4a2df_56a44bb4",
+      "revId": "ad881c355d544cac1cdeb5e1bb249baf73e1c75a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6f67e2f_0a2d827f",
         "filename": "chrome/browser/chromeos/policy/user_policy_manager_factory_chromeos.cc",
         "patchSetId": 20
@@ -90,6 +168,24 @@
       "revId": "ad881c355d544cac1cdeb5e1bb249baf73e1c75a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5caccaf_2b01d884",
+        "filename": "chrome/browser/chromeos/policy/user_policy_manager_factory_chromeos.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2018-01-30T15:36:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6f67e2f_0a2d827f",
+      "revId": "ad881c355d544cac1cdeb5e1bb249baf73e1c75a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "e97bae32_1d4cc392",
+        "filename": "chrome/browser/chromeos/policy/user_policy_manager_factory_chromeos.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2018-01-30T15:36:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83b27fd2_24ed5864",
+      "range": {
+        "startLine": 306,
+        "startChar": 18,
+        "endLine": 306,
+        "endChar": 46
+      },
+      "revId": "ad881c355d544cac1cdeb5e1bb249baf73e1c75a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "917231b4_340215ac",
         "filename": "chrome/browser/chromeos/policy/user_policy_manager_factory_chromeos.cc",
         "patchSetId": 20
@@ -127,6 +247,30 @@
       "writtenOn": "2018-01-22T19:37:37Z",
       "side": 1,
       "message": "nit: Couldn\u0027t this part of the condition be omitted, for simplifying the logic here?\n\nIt only brings is two additional constraints: \"\u0026\u0026 !force_immediate_load\" and \"\u0026\u0026 !is_stub_user\". The first one shouldn\u0027t make any difference (the check in UserCloudPolicyManagerChromeOS::Connect() comes earlier). I\u0027m only missing context on the second constraint - is it maybe important for tests?",
+      "range": {
+        "startLine": 307,
+        "startChar": 6,
+        "endLine": 307,
+        "endChar": 45
+      },
+      "revId": "ad881c355d544cac1cdeb5e1bb249baf73e1c75a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aafdd256_07b431a2",
+        "filename": "chrome/browser/chromeos/policy/user_policy_manager_factory_chromeos.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2018-01-30T15:36:18Z",
+      "side": 1,
+      "message": "No, because we really don\u0027t want to pass in a refresh timeout if we\u0027re doing a synchronous load - ever doing this is a logic error which is why I\u0027m explicitly preventing it with this check.",
+      "parentUuid": "917231b4_340215ac",
       "range": {
         "startLine": 307,
         "startChar": 6,
@@ -156,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "d132ebce_1c11f586",
+        "filename": "chromeos/chromeos_switches.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2018-01-30T15:36:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "512df02f_ad212f46",
+      "revId": "ad881c355d544cac1cdeb5e1bb249baf73e1c75a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7df6384_6c57c079",
         "filename": "components/user_manager/known_user.cc",
         "patchSetId": 20
@@ -170,6 +332,24 @@
       "revId": "ad881c355d544cac1cdeb5e1bb249baf73e1c75a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "857625d5_52189aa0",
+        "filename": "components/user_manager/known_user.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2018-01-30T15:36:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7df6384_6c57c079",
+      "revId": "ad881c355d544cac1cdeb5e1bb249baf73e1c75a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
