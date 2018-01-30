@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "22e57eef_8c772f73",
+        "filename": "cc/raster/zero_copy_raster_buffer_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2018-01-30T21:21:18Z",
+      "side": 1,
+      "message": "Won\u0027t owned_gpu_memory_buffer_ be null if a GMB was available when we started so no GMB is created in Playback? ResourceProvider handles this by moving the GMB unique_ptr to the lock on creation and then moving it back on destruction.\n\nMaybe GpuBacking itself should be a move-only type that\u0027s lent to raster buffers for raster and taken back when raster is complete? WDYT?",
+      "revId": "b500da8dd7dd9c872ed3337fa0f8932d7860f638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7eb79535_dbaf1986",
         "filename": "cc/raster/zero_copy_raster_buffer_provider.cc",
         "patchSetId": 9
@@ -13,6 +30,24 @@
       "writtenOn": "2018-01-30T20:09:09Z",
       "side": 1,
       "message": "Notable? change here is that we make a sync token for each texture, instead of doing it in OrderingBarrier() once. Before we were making a single sync token in ResourceProvider at the time of sending to parent, I believe.\n\nI should probably resolve that before landing, though if we move this to the worker thread then we\u0027ll make a sync token per resource there? Would you rather me put my time on that?",
+      "revId": "b500da8dd7dd9c872ed3337fa0f8932d7860f638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d7cdb18_e73c9e80",
+        "filename": "cc/raster/zero_copy_raster_buffer_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2018-01-30T21:21:18Z",
+      "side": 1,
+      "message": "For GL texture resources, we make one sync token per resource on the raster thread, so it should be ok here too. If I\u0027m not mistaken this is the only case that needs ResourceProvider to generate the sync token in PrepareSendToParent.\n\nI don\u0027t understand the part of your question about OrderingBarrier. RBP::OrderingBarrier is called before tasks are scheduled. This code runs after the task has run, and when the RasterBuffer is destroyed. I think you meant to say PrepareSendToParent instead of OrderingBarrier?",
+      "parentUuid": "7eb79535_dbaf1986",
       "revId": "b500da8dd7dd9c872ed3337fa0f8932d7860f638",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
