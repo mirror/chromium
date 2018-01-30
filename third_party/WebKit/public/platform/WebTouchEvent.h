@@ -34,6 +34,10 @@ class WebTouchEvent : public WebInputEvent {
   // touch-point has moved (by whatever amount).
   bool moved_beyond_slop_region;
 
+  // True for devices like some pens when they support hovering over
+  // digitizer and they send events while hovering.
+  bool supports_hover;
+
   // Whether this touch event is a touchstart or a first touchmove event per
   // scroll.
   bool touch_start_or_first_touch_move;

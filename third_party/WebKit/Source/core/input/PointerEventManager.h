@@ -160,7 +160,9 @@ class CORE_EXPORT PointerEventManager
       const EventHandlingUtil::PointerEventTarget&);
 
   // Returns whether the event is consumed or not.
-  WebInputEventResult SendTouchPointerEvent(EventTarget*, PointerEvent*);
+  WebInputEventResult SendTouchPointerEvent(EventTarget*,
+                                            PointerEvent*,
+                                            bool scroll_capable);
 
   void SendBoundaryEvents(EventTarget* exited_target,
                           EventTarget* entered_target,
