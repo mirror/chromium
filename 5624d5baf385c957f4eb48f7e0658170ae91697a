@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16af0bea_a9859f6d",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2018-01-30T05:10:59Z",
+      "side": 1,
+      "message": "Please avoid using reinterpret_cast when possible. For this case, we have event-\u003eAsLocatedEvent().",
+      "revId": "5624d5baf385c957f4eb48f7e0658170ae91697a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aa54d38_8606f4bf",
+        "filename": "ui/message_center/views/notification_view_md.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2018-01-30T05:10:59Z",
+      "side": 1,
+      "message": "cosmetic nit: let\u0027s also move this line above L198.",
+      "revId": "5624d5baf385c957f4eb48f7e0658170ae91697a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8d7e8b7_695d56e4",
+        "filename": "ui/message_center/views/notification_view_md.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2018-01-30T05:10:59Z",
+      "side": 1,
+      "message": "Let\u0027s remove set_ink_drop_base_color() and |ink_drop_base_color_|. We can simply return kInputContainerBackgroundColor in GetInkDropBaseColor.",
+      "revId": "5624d5baf385c957f4eb48f7e0658170ae91697a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
