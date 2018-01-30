@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "6f680bc9_74f0a813",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-30T19:38:29Z",
+      "side": 1,
+      "message": "I think so? It\u0027s the output directory used by the \"solink\" and \"solink_module\" tools.",
+      "parentUuid": "10e7ec88_d6f8f748",
+      "range": {
+        "startLine": 139,
+        "startChar": 5,
+        "endLine": 139,
+        "endChar": 26
+      },
+      "revId": "92ef1c5b0fa346e64fd29178e8489b62185c195c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d849c7a7_f53cec62",
         "filename": "build/fuchsia/runner_v2/symbolizer.py",
         "patchSetId": 5
@@ -117,6 +141,30 @@
     },
     {
       "key": {
+        "uuid": "19a12e50_79d54e81",
+        "filename": "build/toolchain/fuchsia/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-30T19:38:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6a329f8_65f15c67",
+      "range": {
+        "startLine": 16,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 44
+      },
+      "revId": "92ef1c5b0fa346e64fd29178e8489b62185c195c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbbf1da9_d1f74a9c",
         "filename": "build/toolchain/gcc_toolchain.gni",
         "patchSetId": 5
@@ -137,6 +185,30 @@
       "revId": "92ef1c5b0fa346e64fd29178e8489b62185c195c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "017f89c0_90b5f3e9",
+        "filename": "build/toolchain/gcc_toolchain.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-30T19:38:29Z",
+      "side": 1,
+      "message": "Yes, Android is still gcc. This parameter must be proxied through the clang_toolchain template layer.",
+      "parentUuid": "dbbf1da9_d1f74a9c",
+      "range": {
+        "startLine": 612,
+        "startChar": 29,
+        "endLine": 612,
+        "endChar": 64
+      },
+      "revId": "92ef1c5b0fa346e64fd29178e8489b62185c195c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
