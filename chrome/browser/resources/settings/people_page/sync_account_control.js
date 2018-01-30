@@ -77,6 +77,15 @@ Polymer({
   },
 
   /**
+   * @param {string} encodedImage
+   * @return {!string}
+   * @private
+   */
+  getAccountImageCSS_: function(encodedImage) {
+    return encodedImage ? 'background-image: url(' + encodedImage + ')' : '';
+  },
+
+  /**
    * @param {!Array<!settings.StoredAccount>} accounts
    * @private
    */
