@@ -22,6 +22,30 @@
       "revId": "84c9782040d0ec847680afe3cd6bc28508c11b13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35b4fc2c_1779a797",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 3
+      },
+      "lineNbr": 3401,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2018-01-30T21:26:32Z",
+      "side": 1,
+      "message": "I was just being defensive in anticipation of reverting, but I guess if we\u0027re sure we\u0027ll never want to roll this patch out, then it\u0027s all moot.  Maybe it\u0027s moot anyways.",
+      "parentUuid": "4206323e_eed60abe",
+      "range": {
+        "startLine": 3401,
+        "startChar": 31,
+        "endLine": 3401,
+        "endChar": 35
+      },
+      "revId": "84c9782040d0ec847680afe3cd6bc28508c11b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
