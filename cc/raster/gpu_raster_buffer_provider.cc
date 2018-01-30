@@ -25,6 +25,8 @@
 #include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/command_buffer/client/raster_interface.h"
+#include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
+#include "skia/ext/texture_handle.h"
 #include "third_party/skia/include/core/SkMultiPictureDraw.h"
 #include "third_party/skia/include/core/SkPictureRecorder.h"
 #include "third_party/skia/include/core/SkSurface.h"
@@ -32,6 +34,127 @@
 #include "ui/gfx/geometry/axis_transform2d.h"
 
 namespace cc {
+
+class UnpremultiplyEffect {
+ public:
+  UnpremultiplyEffect(gpu::gles2::GLES2Interface* gl) {
+    LOG(ERROR) << "HI";
+    const char* kVertexShader =
+        "attribute vec4 in_position;\n"
+        "void main() {\n"
+        "  gl_Position = in_position;\n"
+        "}\n";
+
+    const char* kFragmentShader =
+        "precision highp float;\n"
+        "uniform sampler2D tex;\n"
+        "uniform vec2 tex_size;\n"
+        "void main() {\n"
+        "  vec2 tex_coord = gl_FragCoord.xy / tex_size;\n"
+        "  tex_coord.y = 1.0 - tex_coord.y;\n"
+        "  vec4 in_color = texture2D(tex, tex_coord);\n"
+        "  gl_FragColor = vec4((in_color.rgb + vec3(0.5/16.0, 0.5/16.0, "
+        "0.5/16.0)) * (1.0 / in_color.a), in_color.a);\n"
+        "}\n";
+
+    const GLfloat kVertices[] = {-1.0f, 1.0f, -1.0f, -1.0f,
+                                 1.0f,  1.0f, 1.0f,  -1.0f};
+
+    // gl->EnableVertexAttribArray(0);
+    // gl->GenVertexArraysOES(1, &vao_id_);
+    // gl->BindVertexArrayOES(vao_id_);
+    gl->GenBuffers(1, &vbo_id_);
+    gl->BindBuffer(GL_ARRAY_BUFFER, vbo_id_);
+    gl->BufferData(GL_ARRAY_BUFFER, 8 * sizeof(GLfloat), kVertices,
+                   GL_STATIC_DRAW);
+    // gl->VertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
+
+    GLuint vsh_id = gl->CreateShader(GL_VERTEX_SHADER);
+    gl->ShaderSource(vsh_id, 1, &kVertexShader, nullptr);
+    gl->CompileShader(vsh_id);
+
+    GLint is_compiled = GL_FALSE;
+    gl->GetShaderiv(vsh_id, GL_COMPILE_STATUS, &is_compiled);
+    if (is_compiled == GL_FALSE) {
+      GLint max_length = 0;
+      gl->GetShaderiv(vsh_id, GL_INFO_LOG_LENGTH, &max_length);
+
+      // The maxLength includes the NULL character
+      std::vector<GLchar> info_log(max_length);
+      GLint real_length = 0;
+      gl->GetShaderInfoLog(vsh_id, max_length, &real_length, info_log.data());
+
+      LOG(ERROR) << std::string(info_log.data(), real_length);
+      return;
+    }
+    GLuint fsh_id = gl->CreateShader(GL_FRAGMENT_SHADER);
+    gl->ShaderSource(fsh_id, 1, &kFragmentShader, nullptr);
+    gl->CompileShader(fsh_id);
+    is_compiled = GL_FALSE;
+    gl->GetShaderiv(fsh_id, GL_COMPILE_STATUS, &is_compiled);
+    if (is_compiled == GL_FALSE) {
+      GLint max_length = 0;
+      gl->GetShaderiv(fsh_id, GL_INFO_LOG_LENGTH, &max_length);
+
+      // The maxLength includes the NULL character
+      std::vector<GLchar> info_log(max_length);
+      GLint real_length = 0;
+      gl->GetShaderInfoLog(fsh_id, max_length, &real_length, &info_log[0]);
+
+      LOG(ERROR) << std::string(info_log.data(), real_length);
+      return;
+    }
+
+    program_id_ = gl->CreateProgram();
+    gl->AttachShader(program_id_, vsh_id);
+    gl->AttachShader(program_id_, fsh_id);
+    gl->LinkProgram(program_id_);
+    texture_id_ = gl->GetUniformLocation(program_id_, "tex");
+    size_id_ = gl->GetUniformLocation(program_id_, "tex_size");
+
+    gl->DetachShader(program_id_, vsh_id);
+    gl->DetachShader(program_id_, fsh_id);
+    gl->GenFramebuffers(1, &framebuffer_id_);
+  }
+  void Unpremultiply(gpu::gles2::GLES2Interface* gl,
+                     GLuint in_texture,
+                     GLuint out_texture,
+                     GLfloat width,
+                     GLfloat height) {
+    gl->EnableVertexAttribArray(0);
+    gl->BindBuffer(GL_ARRAY_BUFFER, vbo_id_);
+    gl->VertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    // gl->BindVertexArrayOES(vao_id_);
+    gl->UseProgram(program_id_);
+    gl->ActiveTexture(GL_TEXTURE0);
+    gl->BindTexture(GL_TEXTURE_2D, in_texture);
+    gl->ActiveTexture(GL_TEXTURE1);
+    gl->BindTexture(GL_TEXTURE_2D, 0);
+    gl->BindFramebuffer(GL_FRAMEBUFFER, framebuffer_id_);
+    gl->FramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
+                             GL_TEXTURE_2D, out_texture, 0);
+    // gl->ClearColor(1,1,0,1);
+    // gl->Clear(GL_COLOR_BUFFER_BIT);
+    gl->Viewport(0, 0, width, height);
+    gl->Disable(GL_CULL_FACE);
+    gl->Disable(GL_STENCIL_TEST);
+    gl->Disable(GL_BLEND);
+    gl->Uniform1i(texture_id_, 0);
+    gl->Uniform2f(size_id_, width, height);
+    gl->DrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    gl->BindFramebuffer(GL_FRAMEBUFFER, 0);
+    // gl->DeleteFramebuffers(1, &framebuffer_id);
+  }
+
+ private:
+  GLuint program_id_;
+  // GLuint vao_id_;
+  GLuint texture_id_ = 0;
+  GLuint size_id_ = 0;
+  GLuint framebuffer_id_ = 0;
+  GLuint vbo_id_;
+};
+
 namespace {
 
 static void RasterizeSourceOOP(
@@ -97,19 +220,18 @@ static void RasterizeSource(
     viz::RasterContextProvider* context_provider,
     LayerTreeResourceProvider::ScopedWriteLockRaster* resource_lock,
     bool use_distance_field_text,
-    int msaa_sample_count) {
+    int msaa_sample_count,
+    UnpremultiplyEffect* unpremultiply_effect) {
   ScopedGrContextAccess gr_context_access(context_provider);
 
   gpu::raster::RasterInterface* ri = context_provider->RasterInterface();
   GLuint texture_id = resource_lock->ConsumeTexture(ri);
 
   {
-    LayerTreeResourceProvider::ScopedSkSurface scoped_surface(
-        context_provider->GrContext(), texture_id, resource_lock->target(),
-        resource_lock->size(), resource_lock->format(), use_distance_field_text,
-        playback_settings.use_lcd_text, msaa_sample_count);
-
-    SkSurface* surface = scoped_surface.surface();
+    SkImageInfo n32Info = SkImageInfo::MakeN32Premul(
+        resource_lock->size().width(), resource_lock->size().height());
+    sk_sp<SkSurface> surface = SkSurface::MakeRenderTarget(
+        context_provider->GrContext(), SkBudgeted::kYes, n32Info);
 
     // Allocating an SkSurface will fail after a lost context.  Pretend we
     // rasterized, as the contents of the resource don't matter anymore.
@@ -127,6 +249,18 @@ static void RasterizeSource(
     raster_source->PlaybackToCanvas(
         canvas, resource_lock->color_space_for_raster(), raster_full_rect,
         playback_rect, transform, playback_settings);
+
+    GrBackendObject handle =
+        surface->getTextureHandle(SkSurface::kFlushRead_BackendHandleAccess);
+    const GrGLTextureInfo* info =
+        skia::GrBackendObjectToGrGLTextureInfo(handle);
+    context_provider->GrContext()->flush();
+    unpremultiply_effect->Unpremultiply(
+        static_cast<viz::ContextProvider*>(
+            static_cast<ui::ContextProviderCommandBuffer*>(context_provider))
+            ->ContextGL(),
+        info->fID, texture_id, resource_lock->size().width(),
+        resource_lock->size().height());
   }
 
   ri->DeleteTextures(1, &texture_id);
@@ -299,11 +433,19 @@ void GpuRasterBufferProvider::PlaybackOnWorkerThread(
   ri->WaitSyncTokenCHROMIUM(sync_token.GetConstData());
 
   gfx::Rect playback_rect = raster_full_rect;
-  if (resource_has_previous_content) {
+  if (false && resource_has_previous_content) {
     playback_rect.Intersect(raster_dirty_rect);
   }
   DCHECK(!playback_rect.IsEmpty())
       << "Why are we rastering a tile that's not dirty?";
+
+  if (!unpremultiply_effect_) {
+    unpremultiply_effect_.reset(new UnpremultiplyEffect(
+        static_cast<viz::ContextProvider*>(
+            static_cast<ui::ContextProviderCommandBuffer*>(
+                worker_context_provider_))
+            ->ContextGL()));
+  }
 
   // Log a histogram of the percentage of pixels that were saved due to
   // partial raster.
@@ -329,8 +471,8 @@ void GpuRasterBufferProvider::PlaybackOnWorkerThread(
     RasterizeSource(raster_source, resource_has_previous_content,
                     resource_lock->size(), raster_full_rect, playback_rect,
                     transform, playback_settings, worker_context_provider_,
-                    resource_lock, use_distance_field_text_,
-                    msaa_sample_count_);
+                    resource_lock, use_distance_field_text_, msaa_sample_count_,
+                    unpremultiply_effect_.get());
   }
 
   // Generate sync token for cross context synchronization.
