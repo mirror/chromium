@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac5cb01c_9b36616a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 110564,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-30T22:30:10Z",
+      "side": 1,
+      "message": "Please leave the previous affected-histogram line as well, so that historical data remains viewable.  (Because the histogram itself is obsolete, its suffixed versions will be as well.)",
+      "range": {
+        "startLine": 110563,
+        "startChar": 0,
+        "endLine": 110564,
+        "endChar": 67
+      },
+      "revId": "e7cce22b66e820ed8bcea2a959151005dac604f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "085ba0d2_234cb04d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 110586,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-30T22:30:10Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 110586,
+        "startChar": 65,
+        "endLine": 110586,
+        "endChar": 0
+      },
+      "revId": "e7cce22b66e820ed8bcea2a959151005dac604f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
