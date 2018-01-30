@@ -106,6 +106,24 @@
       "revId": "9cd579017d23b2fc1fc87226e06f77665f55c4f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb67f488_91284ecb",
+        "filename": "net/http/http_request_info.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-30T17:07:56Z",
+      "side": 1,
+      "message": "SGTM, and understandable about the apprehension for exposing the mutability :)",
+      "parentUuid": "3576a578_de39e666",
+      "revId": "9cd579017d23b2fc1fc87226e06f77665f55c4f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
