@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1219492_2217b24e",
+        "filename": "content/browser/loader/redirect_to_file_resource_handler_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-30T18:57:40Z",
+      "side": 1,
+      "message": "Why didn\u0027t this need changing?",
+      "range": {
+        "startLine": 30,
+        "startChar": 19,
+        "endLine": 30,
+        "endChar": 38
+      },
+      "revId": "9e973a038dd9c8057f1e25c9c55d3f21f3410929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "148683c0_8ad3c92f",
+        "filename": "net/base/mock_file_stream.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-30T18:57:40Z",
+      "side": 1,
+      "message": "Why isn\u0027t the appropriate header file for OnceClosure in this list?  Isn\u0027t that an IWYU violation?",
+      "range": {
+        "startLine": 16,
+        "startChar": 19,
+        "endLine": 16,
+        "endChar": 29
+      },
+      "revId": "9e973a038dd9c8057f1e25c9c55d3f21f3410929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
