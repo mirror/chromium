@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad84d65e_3db9e232",
+        "filename": "ash/frame/caption_buttons/frame_caption_button_container_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-30T05:57:05Z",
+      "side": 1,
+      "message": "I\u0027m surprised all these animation constants are here given that other things animate during the tablet mode transition...",
+      "revId": "395c169c43bdd4fec02739ac588d0e7b8de913a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
