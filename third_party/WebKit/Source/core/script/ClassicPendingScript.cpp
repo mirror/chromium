@@ -8,14 +8,20 @@
 #include "bindings/core/v8/ScriptStreamer.h"
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "core/dom/Document.h"
+#include "core/dom/ScriptableDocumentParser.h"
 #include "core/frame/LocalFrame.h"
 #include "core/loader/AllowedByNosniff.h"
+#include "core/loader/DocumentLoader.h"
 #include "core/loader/SubresourceIntegrityHelper.h"
 #include "core/loader/resource/ScriptResource.h"
 #include "core/script/DocumentWriteIntervention.h"
 #include "core/script/ScriptLoader.h"
 #include "platform/bindings/ScriptState.h"
+#include "platform/loader/fetch/CachedMetadata.h"
 #include "platform/loader/fetch/MemoryCache.h"
+#include "platform/loader/fetch/RawResource.h"
+#include "platform/loader/fetch/ResourceClient.h"
+#include "platform/wtf/text/Base64.h"
 #include "public/platform/TaskType.h"
 
 namespace blink {
@@ -217,6 +223,308 @@ void ClassicPendingScript::Trace(blink::Visitor* visitor) {
   PendingScript::Trace(visitor);
 }
 
+static const size_t kKeySize = 32;
+static const size_t kKeyEntrySize =
+    kKeySize + sizeof(uint32_t) + sizeof(size_t);
+class CORE_EXPORT WrappingCacheMetadataHandler : public CachedMetadataHandler {
+  static const uint32_t MAP_DATA_TYPE = 0xff;
+
+ public:
+  // Encoding of keyed map:
+  //   - num_keys
+  //     - key 1
+  //     - type data 1
+  //     - len data 1
+  //       ...
+  //     - key N
+  //     - type data N
+  //     - len data N
+  //   - data for key 1
+  //     ...
+  //   - data for key N
+
+  WrappingCacheMetadataHandler(CachedMetadataHandler* parent,
+                               const DigestValue& key)
+      : parent_(parent) {
+    DCHECK_EQ(key.size(), kKeySize);
+    memcpy(key_, key.data(), kKeySize);
+  }
+
+  void Trace(blink::Visitor* visitor) override {
+    visitor->Trace(parent_);
+    CachedMetadataHandler::Trace(visitor);
+  }
+
+  static std::string KeyStr(const uint8_t key[kKeySize]) {
+    Vector<char> result;
+    WTF::Base64Encode(reinterpret_cast<const char*>(key), kKeySize, result);
+    return {result.data(), result.size()};
+  }
+
+  void SetCachedMetadata(uint32_t data_type_id,
+                         const char* new_key_data,
+                         size_t new_key_data_size,
+                         CacheType cache_type = kSendToPlatform) override {
+    VLOG(4) << "CacheMux::SetCachedMetadata " << KeyStr(key_) << " "
+            << data_type_id;
+
+    scoped_refptr<CachedMetadata> parent_data = ParentData();
+    Vector<char> new_data;
+
+    if (!parent_data) {
+      VLOG(4) << "CacheMux::SetCachedMetadata creating new parent data";
+      new_data.ReserveInitialCapacity(sizeof(int) + kKeyEntrySize +
+                                      new_key_data_size);
+
+      int new_num_keys = 1;
+      new_data.Append(reinterpret_cast<char*>(&new_num_keys), sizeof(int));
+      new_data.Append(reinterpret_cast<char*>(key_), kKeySize);
+      new_data.Append(reinterpret_cast<char*>(&data_type_id), sizeof(uint32_t));
+      new_data.Append(reinterpret_cast<char*>(&new_key_data_size),
+                      sizeof(size_t));
+      new_data.Append(new_key_data, new_key_data_size);
+    } else {
+      VLOG(4) << "CacheMux::SetCachedMetadata modifying parent data";
+      LogParentHeader(parent_data->Data(), parent_data->size());
+      CHECK_GE(parent_data->size(), sizeof(int));
+
+      const char* data = parent_data->Data();
+      int num_keys = *reinterpret_cast<const int*>(data);
+      data += sizeof(int);
+      CHECK_GT(num_keys, 0);
+      CHECK_GE(parent_data->size(), sizeof(int) + num_keys * kKeyEntrySize);
+
+      size_t data_offset = 0;
+      size_t data_len = 0;
+
+      int i;
+      for (i = 0; i < num_keys; ++i) {
+        const uint8_t* key = reinterpret_cast<const uint8_t*>(data);
+        data += kKeySize;
+        // Ignore type
+        data += sizeof(uint32_t);
+        size_t key_data_len = *reinterpret_cast<const size_t*>(data);
+        data += sizeof(size_t);
+
+        if (memcmp(key, key_, kKeySize) == 0) {
+          data_len = key_data_len;
+          break;
+        }
+
+        data_offset += key_data_len;
+      }
+      size_t new_size = parent_data->size() - data_len + new_key_data_size;
+      if (i == num_keys)
+        new_size += kKeyEntrySize;
+
+      new_data.ReserveInitialCapacity(new_size);
+
+      if (i == num_keys) {
+        int new_num_keys = num_keys + 1;
+        new_data.Append(reinterpret_cast<char*>(&new_num_keys), sizeof(int));
+        new_data.Append(parent_data->Data() + sizeof(int), i * kKeyEntrySize);
+      } else {
+        new_data.Append(parent_data->Data(), sizeof(int) + i * kKeyEntrySize);
+      }
+      new_data.Append(reinterpret_cast<char*>(key_), kKeySize);
+      new_data.Append(reinterpret_cast<char*>(&data_type_id), sizeof(uint32_t));
+      new_data.Append(reinterpret_cast<char*>(&new_key_data_size),
+                      sizeof(size_t));
+      if (i == num_keys) {
+        new_data.AppendRange(
+            parent_data->Data() + sizeof(int) + num_keys * kKeyEntrySize,
+            parent_data->Data() + sizeof(int) + num_keys * kKeyEntrySize +
+                data_offset);
+      } else {
+        new_data.AppendRange(
+            parent_data->Data() + sizeof(int) + (i + 1) * kKeyEntrySize,
+            parent_data->Data() + sizeof(int) + num_keys * kKeyEntrySize +
+                data_offset);
+      }
+      new_data.Append(new_key_data, new_key_data_size);
+      new_data.AppendRange(parent_data->Data() + sizeof(int) +
+                               num_keys * kKeyEntrySize + data_offset +
+                               data_len,
+                           parent_data->Data() + parent_data->size());
+
+      CHECK_EQ(new_data.size(), new_size);
+    }
+
+    LogParentHeader(new_data.data(), new_data.size());
+
+    if (parent_data) {
+      parent_->ClearCachedMetadata(kCacheLocally);
+    }
+    parent_->SetCachedMetadata(MAP_DATA_TYPE, new_data.data(), new_data.size(),
+                               cache_type);
+  }
+
+  void ClearCachedMetadata(CacheType cache_type = kCacheLocally) override {
+    VLOG(4) << "CacheMux::ClearCachedMetadata";
+
+    scoped_refptr<CachedMetadata> parent_data = ParentData();
+    if (!parent_data)
+      return;
+
+    CHECK_GE(parent_data->size(), sizeof(int));
+
+    const char* data = parent_data->Data();
+    int num_keys = *reinterpret_cast<const int*>(data);
+    data += sizeof(int);
+    CHECK_GT(num_keys, 0);
+    CHECK_GE(parent_data->size(), sizeof(int) + num_keys * kKeyEntrySize);
+
+    size_t data_offset = 0;
+    size_t data_len = 0;
+
+    int i;
+    for (i = 0; i < num_keys; ++i) {
+      const uint8_t* key = reinterpret_cast<const uint8_t*>(data);
+      data += kKeySize;
+      data += sizeof(uint32_t);
+      size_t key_data_len = *reinterpret_cast<const size_t*>(data);
+      data += sizeof(size_t);
+
+      if (memcmp(key, key_, kKeySize) == 0) {
+        data_len = key_data_len;
+        break;
+      }
+
+      data_offset += key_data_len;
+    }
+    if (i == num_keys)
+      return;
+
+    if (num_keys == 1)
+      return parent_->ClearCachedMetadata(cache_type);
+
+    VLOG(4) << "CacheMux::ClearCachedMetadata modifying parent data";
+
+    Vector<char> new_data;
+    new_data.ReserveInitialCapacity(parent_data->size() - kKeyEntrySize -
+                                    data_len);
+    int new_num_keys = num_keys - 1;
+    new_data.Append(reinterpret_cast<char*>(&new_num_keys), sizeof(int));
+    new_data.AppendRange(parent_data->Data() + sizeof(int),
+                         parent_data->Data() + sizeof(int) + i * kKeyEntrySize);
+    new_data.AppendRange(
+        parent_data->Data() + sizeof(int) + (i + 1) * kKeyEntrySize,
+        parent_data->Data() + sizeof(int) + num_keys * kKeyEntrySize +
+            data_offset);
+    new_data.AppendRange(parent_data->Data() + sizeof(int) +
+                             num_keys * kKeyEntrySize + data_offset + data_len,
+                         parent_data->Data() + parent_data->size());
+
+    CHECK_EQ(new_data.size(), parent_data->size() - kKeyEntrySize - data_len);
+
+    LogParentHeader(parent_data->Data(), parent_data->size());
+    LogParentHeader(new_data.data(), new_data.size());
+
+    parent_->ClearCachedMetadata(kCacheLocally);
+    parent_->SetCachedMetadata(MAP_DATA_TYPE, new_data.data(), new_data.size(),
+                               cache_type);
+  }
+
+  scoped_refptr<CachedMetadata> GetCachedMetadata(
+      uint32_t data_type_id) const override {
+    VLOG(4) << "CacheMux::GetCachedMetadata " << KeyStr(key_) << " "
+            << data_type_id;
+
+    scoped_refptr<CachedMetadata> parent_data = ParentData();
+    if (!parent_data)
+      return nullptr;
+
+    VLOG(4) << "CacheMux::GetCachedMetadata found parent_data";
+    LogParentHeader(parent_data->Data(), parent_data->size());
+
+    CHECK_GE(parent_data->size(), sizeof(int));
+
+    const char* data = parent_data->Data();
+    int num_keys = *reinterpret_cast<const int*>(data);
+    data += sizeof(int);
+    CHECK_GT(num_keys, 0);
+    CHECK_GE(parent_data->size(), sizeof(int) + num_keys * kKeyEntrySize);
+
+    VLOG(4) << "CacheMux::GetCachedMetadata parent has " << num_keys << " keys";
+
+    size_t data_offset = 0;
+    size_t data_len = 0;
+    int i;
+    for (i = 0; i < num_keys; ++i) {
+      const uint8_t* key = reinterpret_cast<const uint8_t*>(data);
+      data += kKeySize;
+      uint32_t key_data_type = *reinterpret_cast<const uint32_t*>(data);
+      data += sizeof(uint32_t);
+      size_t key_data_len = *reinterpret_cast<const size_t*>(data);
+      data += sizeof(size_t);
+
+      VLOG(4) << "CacheMux::GetCachedMetadata parent has " << KeyStr(key)
+              << " with data_type " << key_data_type;
+
+      if (memcmp(key, key_, kKeySize) == 0) {
+        if (key_data_type != data_type_id)
+          return nullptr;
+        data_len = key_data_len;
+        break;
+      }
+
+      data_offset += key_data_len;
+    }
+    if (i == num_keys)
+      return nullptr;
+
+    VLOG(4) << "CacheMux::GetCachedMetadata found data";
+
+    data = parent_data->Data() + sizeof(int) + num_keys * kKeyEntrySize +
+           data_offset;
+    CHECK_GE(parent_data->size(),
+             sizeof(int) + num_keys * kKeyEntrySize + data_offset + data_len);
+
+    return CachedMetadata::Create(data_type_id, data, data_len);
+  }
+
+  String Encoding() const override { return parent_->Encoding(); }
+
+  bool IsServedFromCacheStorage() const override {
+    return parent_->IsServedFromCacheStorage();
+  }
+
+  void LogParentHeader(const char* data, size_t size) const {
+    int num_keys = *reinterpret_cast<const int*>(data);
+    data += sizeof(int);
+    CHECK_GT(num_keys, 0);
+    CHECK_GE(size, sizeof(int) + num_keys * kKeyEntrySize);
+
+    VLOG(4) << "CacheMux::LogParentHeader | num_keys: " << num_keys;
+
+    int i;
+    for (i = 0; i < num_keys; ++i) {
+      const uint8_t* key = reinterpret_cast<const uint8_t*>(data);
+      data += kKeySize;
+      uint32_t key_data_type = *reinterpret_cast<const uint32_t*>(data);
+      data += sizeof(uint32_t);
+      size_t key_data_len = *reinterpret_cast<const size_t*>(data);
+      data += sizeof(size_t);
+
+      if (memcmp(key, key_, kKeySize) == 0) {
+        VLOG(4) << "CacheMux::LogParentHeader | * " << KeyStr(key) << "["
+                << key_data_type << "," << key_data_len << "]";
+      } else {
+        VLOG(4) << "CacheMux::LogParentHeader | - " << KeyStr(key) << "["
+                << key_data_type << "," << key_data_len << "]";
+      }
+    }
+  }
+
+ private:
+  Member<CachedMetadataHandler> parent_;
+  uint8_t key_[kKeySize];
+
+  scoped_refptr<CachedMetadata> ParentData() const {
+    return parent_->GetCachedMetadata(MAP_DATA_TYPE);
+  }
+};
+
 bool ClassicPendingScript::CheckMIMETypeBeforeRunScript(
     Document* context_document) const {
   if (!is_external_)
@@ -226,6 +534,23 @@ bool ClassicPendingScript::CheckMIMETypeBeforeRunScript(
                                             GetResource()->GetResponse());
 }
 
+static CachedMetadataHandler* GetInlineCacheHandler(const String& source,
+                                                    Document& document) {
+  CachedMetadataHandler* document_cache_handler =
+      document.GetScriptableDocumentParser()->GetInlineScriptCacheHandler();
+
+  if (!document_cache_handler)
+    return nullptr;
+
+  DigestValue digest_value;
+  if (!ComputeDigest(kHashAlgorithmSha256,
+                     static_cast<const char*>(source.Bytes()), source.length(),
+                     digest_value))
+    return nullptr;
+
+  return new WrappingCacheMetadataHandler(document_cache_handler, digest_value);
+}
+
 ClassicScript* ClassicPendingScript::GetSource(const KURL& document_url,
                                                bool& error_occurred) const {
   CheckState();
@@ -233,9 +558,14 @@ ClassicScript* ClassicPendingScript::GetSource(const KURL& document_url,
 
   error_occurred = ErrorOccurred();
   if (!is_external_) {
-    ScriptSourceCode source_code(
-        GetElement()->TextFromChildren(), source_location_type_,
-        nullptr /* cache_handler */, document_url, StartingPosition());
+    CachedMetadataHandler* cache_handler = nullptr;
+    String source = GetElement()->TextFromChildren();
+    if (source_location_type_ == ScriptSourceLocationType::kInline) {
+      cache_handler =
+          GetInlineCacheHandler(source, GetElement()->GetDocument());
+    }
+    ScriptSourceCode source_code(source, source_location_type_, cache_handler,
+                                 document_url, StartingPosition());
     return ClassicScript::Create(source_code, base_url_for_inline_script_,
                                  options_, kSharableCrossOrigin);
   }

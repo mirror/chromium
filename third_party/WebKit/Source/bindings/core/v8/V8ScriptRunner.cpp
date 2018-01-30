@@ -217,7 +217,8 @@ uint32_t CacheTag(CacheTagKind kind, const String& encoding) {
   // about encodings, but the cached data is specific to one encoding. If we
   // later load the script from the cache and interpret it with a different
   // encoding, the cached data is not valid for that encoding.
-  return (v8_cache_data_version | kind) + StringHash::GetHash(encoding);
+  return (v8_cache_data_version | kind) +
+         (encoding.IsNull() ? 0 : StringHash::GetHash(encoding));
 }
 
 // Check previously stored timestamp.
@@ -428,6 +429,7 @@ V8ScriptRunner::GetCompileOptions(V8CacheOptions cache_options,
       scoped_refptr<CachedMetadata> code_cache =
           cache_handler->GetCachedMetadata(code_cache_tag);
       if (code_cache) {
+        VLOG(2) << "Found code cache";
         return std::make_tuple(v8::ScriptCompiler::kConsumeCodeCache,
                                ProduceCacheOptions::kNoProduceCache,
                                no_cache_reason);
@@ -435,6 +437,7 @@ V8ScriptRunner::GetCompileOptions(V8CacheOptions cache_options,
       if (cache_options != kV8CacheOptionsCodeWithoutHeatCheck &&
           cache_options != kV8CacheOptionsFullCodeWithoutHeatCheck &&
           !IsResourceHotForCaching(cache_handler, kHotHours)) {
+        VLOG(2) << "Setting cache timestamp";
         return std::make_tuple(v8::ScriptCompiler::kNoCompileOptions,
                                ProduceCacheOptions::kSetTimeStamp,
                                v8::ScriptCompiler::kNoCacheBecauseCacheTooCold);
@@ -503,6 +506,9 @@ v8::MaybeLocal<v8::Script> V8ScriptRunner::CompileScript(
       v8::False(isolate),  // is_wasm
       v8::False(isolate),  // is_module
       referrer_info.ToV8HostDefinedOptions(isolate));
+
+  VLOG(4) << "Compile script with source in " << file_name << ":"
+          << script_start_position;
 
   CompileFn compile_fn =
       streamer ? SelectCompileFunction(compile_options, cache_handler, streamer)

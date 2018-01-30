@@ -32,6 +32,7 @@
 #include <memory>
 #include "core/dom/Document.h"
 #include "core/dom/DocumentParser.h"
+#include "core/dom/ScriptableDocumentParser.h"
 #include "core/dom/UserGestureIndicator.h"
 #include "core/dom/WeakIdentifierMap.h"
 #include "core/dom/events/Event.h"
@@ -1110,6 +1111,12 @@ void DocumentLoader::InstallNewDocument(
       document, response_.HttpHeaderField(HTTPNames::Origin_Trial));
 
   parser_ = document->OpenForNavigation(parsing_policy, mime_type, encoding);
+
+  // If there is a resource, register its cache handler with the parser.
+  if (GetResource()) {
+    parser_->AsScriptableDocumentParser()->SetInlineScriptCacheHandler(
+        GetResource()->CacheHandler());
+  }
 
   // FeaturePolicy is reset in the browser process on commit, so this needs to
   // be initialized and replicated to the browser process after commit messages

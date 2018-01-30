@@ -33,8 +33,12 @@
 
 namespace blink {
 
+class CachedMetadataHandler;
+
 class CORE_EXPORT ScriptableDocumentParser : public DecodedDataDocumentParser {
  public:
+  virtual void Trace(blink::Visitor*);
+
   // Only used by Document::open for deciding if its safe to act on a
   // JavaScript document.open() call right now, or it should be ignored.
   virtual bool IsExecutingScript() const { return false; }
@@ -61,6 +65,13 @@ class CORE_EXPORT ScriptableDocumentParser : public DecodedDataDocumentParser {
     return parser_content_policy_;
   }
 
+  void SetInlineScriptCacheHandler(CachedMetadataHandler* cache_handler) {
+    inline_script_cache_handler_ = cache_handler;
+  }
+  CachedMetadataHandler* GetInlineScriptCacheHandler() const {
+    return inline_script_cache_handler_;
+  }
+
  protected:
   explicit ScriptableDocumentParser(
       Document&,
@@ -68,6 +79,8 @@ class CORE_EXPORT ScriptableDocumentParser : public DecodedDataDocumentParser {
 
  private:
   ScriptableDocumentParser* AsScriptableDocumentParser() final { return this; }
+
+  Member<CachedMetadataHandler> inline_script_cache_handler_;
 
   // http://www.whatwg.org/specs/web-apps/current-work/#script-created-parser
   bool was_created_by_script_;
