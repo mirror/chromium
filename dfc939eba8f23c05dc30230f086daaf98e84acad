@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f5a2f16_7186cfdd",
+        "filename": "components/cronet/tools/cr_cronet.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-01-30T17:46:24Z",
+      "side": 1,
+      "message": "Just small observation. In most of the places we add a space before and after the added arguments, which seems redundant. I think a better rule would be always add space in front and none at the end.",
+      "range": {
+        "startLine": 120,
+        "startChar": 17,
+        "endLine": 120,
+        "endChar": 19
+      },
+      "revId": "dfc939eba8f23c05dc30230f086daaf98e84acad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
