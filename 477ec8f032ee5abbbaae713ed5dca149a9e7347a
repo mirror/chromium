@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a7883aa_998c07e2",
+        "filename": "chrome/browser/notifications/notification_display_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-30T18:50:14Z",
+      "side": 1,
+      "message": "s/fall back to/use/ ? \u0027fall back\u0027 implies that we look for a logged in user profile first.",
+      "revId": "477ec8f032ee5abbbaae713ed5dca149a9e7347a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6df5d276_53303485",
+        "filename": "chrome/browser/notifications/notification_display_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-30T18:50:14Z",
+      "side": 1,
+      "message": "I\u0027m a little nervous about using LoadProfileByPath here. On the one hand it simplifies things, but on the other hand, especially on CrOS, I worry that an early notification could conceivably trigger a profile load too early.\n\nI think a safer approach would be to queue notifications to display here and observe chrome::NOTIFICATION_PROFILE_ADDED. That said, I will defer to xiyuan@ on this WRT CrOS behavior.",
+      "revId": "477ec8f032ee5abbbaae713ed5dca149a9e7347a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9b84e5a_7718e17f",
+        "filename": "chrome/browser/notifications/notification_display_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-30T18:50:14Z",
+      "side": 1,
+      "message": "The other disadvantage to the above approach is that if a notification is opened then closed before the profile is loaded (an edge case for certain), it would still be displayed.",
+      "revId": "477ec8f032ee5abbbaae713ed5dca149a9e7347a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c30f93c4_01f4b7fe",
+        "filename": "chrome/browser/notifications/notification_display_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-30T18:50:14Z",
+      "side": 1,
+      "message": "Should this cancel a pending notification display if the profile is not loaded?",
+      "revId": "477ec8f032ee5abbbaae713ed5dca149a9e7347a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
