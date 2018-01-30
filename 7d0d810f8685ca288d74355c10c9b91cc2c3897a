@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da7ca7fe_20e95a45",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2018-01-30T14:37:47Z",
+      "side": 1,
+      "message": "Bug: internal b/72666690\n(otherwise it links to crbug.com/72666690)",
+      "revId": "7d0d810f8685ca288d74355c10c9b91cc2c3897a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e658494_39ee2266",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2018-01-30T14:37:47Z",
+      "side": 1,
+      "message": "not clear why this is a warning.",
+      "revId": "7d0d810f8685ca288d74355c10c9b91cc2c3897a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "997fac74_d38ffee6",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2018-01-30T14:37:47Z",
+      "side": 1,
+      "message": "I don\u0027t think these are warnings?  Look at the comment, it sounds like part of normal flow.",
+      "revId": "7d0d810f8685ca288d74355c10c9b91cc2c3897a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
