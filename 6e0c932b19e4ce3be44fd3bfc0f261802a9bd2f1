@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87b1c7e1_b42eb6d5",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2018-01-30T05:48:54Z",
+      "side": 1,
+      "message": "It seems we don\u0027t need |textfield_is_empty_|. It looks okay to call SetImage multiple times. If there\u0027s a performance problem that users can notice, let me know.\n\n  if (textfield_-\u003etext().empty()) {\n    button_-\u003eSetPlaceholderImage();\n  } else {\n    button_-\u003eSetNormalImage();\n  }",
+      "revId": "6e0c932b19e4ce3be44fd3bfc0f261802a9bd2f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
