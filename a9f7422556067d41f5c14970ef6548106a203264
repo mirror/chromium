@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18c4a288_8a136a5a",
+        "filename": "components/version_ui/resources/about_version.css",
+        "patchSetId": 22
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2018-01-30T22:46:14Z",
+      "side": 1,
+      "message": "Please don\u0027t run words together. For a class, use \"-\" like version-wide.\n(For other code use Camel case or an underscore or similar).",
+      "revId": "a9f7422556067d41f5c14970ef6548106a203264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ab7ab42_8002ce70",
+        "filename": "components/version_ui_strings.grdp",
+        "patchSetId": 22
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2018-01-30T22:46:14Z",
+      "side": 1,
+      "message": "I asked* srahim@  and they suggested making this \n\"Command-line variations\"\nWDYT?\n\n*(about the whether we should use a hyphen here)",
+      "revId": "a9f7422556067d41f5c14970ef6548106a203264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
