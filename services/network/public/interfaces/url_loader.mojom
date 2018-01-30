@@ -63,6 +63,13 @@ interface URLLoader {
   // methods to pause/resume reading the response body from network. Otherwise,
   // these methods could be no-ops.
   //
+  // Note that PauseReadingBodyFromNet() is asynchronous and only pauses *if*
+  // the response body is fetched from the network. This means:
+  // - any data in flight before PauseReadingBodyFromNet() is processed will
+  //   still be sent.
+  // - a response body not from the network, e.g. from blob, will not be paused
+  //   at all.
+  //
   // It is allowed to call Pause/ResumeReadingBodyFromNet before response body
   // is available.
   PauseReadingBodyFromNet();

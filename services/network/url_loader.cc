@@ -307,20 +307,6 @@ URLLoader::URLLoader(NetworkContext* context,
 
 URLLoader::~URLLoader() {
   context_->DeregisterURLLoader(this);
-
-  if (update_body_read_before_paused_)
-    UpdateBodyReadBeforePaused();
-  if (body_read_before_paused_ != -1) {
-    if (!body_may_be_from_cache_) {
-      UMA_HISTOGRAM_COUNTS_1M("Network.URLLoader.BodyReadFromNetBeforePaused",
-                              body_read_before_paused_);
-    } else {
-      DVLOG(1) << "The request has been paused, but "
-               << "Network.URLLoader.BodyReadFromNetBeforePaused is not "
-               << "reported because the response body may be from cache. "
-               << "body_read_before_paused_: " << body_read_before_paused_;
-    }
-  }
 }
 
 void URLLoader::Cleanup() {
@@ -352,6 +338,10 @@ void URLLoader::PauseReadingBodyFromNet() {
   DVLOG(1) << "URLLoader pauses fetching response body for "
            << (url_request_ ? url_request_->original_url().spec()
                             : "a URL that has completed loading or failed.");
+
+  if (!url_request_)
+    return;
+
   // Please note that we pause reading body in all cases. Even if the URL
   // request indicates that the response was cached, there could still be
   // network activity involved. For example, the response was only partially
@@ -362,10 +352,10 @@ void URLLoader::PauseReadingBodyFromNet() {
   // avoids polluting the histogram data with data points from cached responses.
   should_pause_reading_body_ = true;
 
-  if (url_request_ && url_request_->status().is_io_pending()) {
+  if (url_request_->status().is_io_pending()) {
     update_body_read_before_paused_ = true;
   } else {
-    UpdateBodyReadBeforePaused();
+    body_read_before_paused_ = url_request_->GetRawBodyBytes();
   }
 }
 
@@ -463,8 +453,6 @@ void URLLoader::OnResponseStarted(net::URLRequest* url_request, int net_error) {
     raw_response_headers_ = nullptr;
   }
 
-  body_may_be_from_cache_ = url_request_->was_cached();
-
   mojo::DataPipe data_pipe(kDefaultAllocationSize);
   response_body_stream_ = std::move(data_pipe.producer_handle);
   consumer_handle_ = std::move(data_pipe.consumer_handle);
@@ -542,7 +530,7 @@ void URLLoader::DidRead(int num_bytes, bool completed_synchronously) {
     pending_write_buffer_offset_ += num_bytes;
   if (update_body_read_before_paused_) {
     update_body_read_before_paused_ = false;
-    UpdateBodyReadBeforePaused();
+    body_read_before_paused_ = url_request_->GetRawBodyBytes();
   }
 
   bool complete_read = true;
@@ -645,14 +633,29 @@ void URLLoader::OnResponseBodyStreamReady(MojoResult result) {
 }
 
 void URLLoader::CloseResponseBodyStreamProducer() {
-  url_request_.reset();
+  if (url_request_) {
+    if (update_body_read_before_paused_)
+      body_read_before_paused_ = url_request_->GetRawBodyBytes();
+    if (body_read_before_paused_ != -1) {
+      if (!url_request_->was_cached()) {
+        UMA_HISTOGRAM_COUNTS_1M("Network.URLLoader.BodyReadFromNetBeforePaused",
+                                body_read_before_paused_);
+      } else {
+        DVLOG(1) << "The request has been paused, but "
+                 << "Network.URLLoader.BodyReadFromNetBeforePaused is not "
+                 << "reported because the response body may be from cache. "
+                 << "body_read_before_paused_: " << body_read_before_paused_;
+      }
+    }
+
+    url_request_.reset();
+  }
+
   peer_closed_handle_watcher_.Cancel();
   writable_handle_watcher_.Cancel();
   response_body_stream_.reset();
 
-  // |pending_write_buffer_offset_| is intentionally not reset, so that
-  // |total_written_bytes_ + pending_write_buffer_offset_| always reflects the
-  // total bytes read from |url_request_|.
+  pending_write_buffer_offset_ = 0;
   pending_write_ = nullptr;
 
   // Make sure if a ResumeReadingBodyFromNet() call is received later, we don't
@@ -700,13 +703,6 @@ void URLLoader::CompletePendingWrite() {
 void URLLoader::SetRawResponseHeaders(
     scoped_refptr<const net::HttpResponseHeaders> headers) {
   raw_response_headers_ = headers;
-}
-
-void URLLoader::UpdateBodyReadBeforePaused() {
-  DCHECK_GE(pending_write_buffer_offset_ + total_written_bytes_,
-            body_read_before_paused_);
-  body_read_before_paused_ =
-      pending_write_buffer_offset_ + total_written_bytes_;
 }
 
 void URLLoader::SendUploadProgress(const net::UploadProgress& progress) {
