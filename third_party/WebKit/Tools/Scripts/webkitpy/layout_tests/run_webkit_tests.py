@@ -416,6 +416,12 @@ def parse_args(args):
                       '"only" == only run the SKIP tests, '
                       '"always" == always skip, even if listed on the command line.')),
             optparse.make_option(
+                '--gtest_also_run_disabled_tests',
+                action='store_true',
+                default=False,  # Consistent with the default value of --skipped
+                help=('equivalent to --skipped=ignore. This option overrides '
+                      '--skipped if both are given.')),
+            optparse.make_option(
                 '--skip-failing-tests',
                 action='store_true',
                 default=False,
@@ -569,7 +575,9 @@ def _set_up_derived_options(port, options, args):
         if not options.skipped:
             options.skipped = 'always'
 
-    if not options.skipped:
+    if options.gtest_also_run_disabled_tests:
+        options.skipped = 'ignore'
+    elif not options.skipped:
         options.skipped = 'default'
 
     if not options.total_shards and 'GTEST_TOTAL_SHARDS' in port.host.environ:
