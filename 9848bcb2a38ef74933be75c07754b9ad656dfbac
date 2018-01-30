@@ -142,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "bb995419_41831930",
+        "filename": "chrome/browser/ui/browser_window_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-30T03:30:53Z",
+      "side": 1,
+      "message": "I prefer a single function.",
+      "parentUuid": "f6532a02_e55741d4",
+      "range": {
+        "startLine": 14,
+        "startChar": 15,
+        "endLine": 14,
+        "endChar": 33
+      },
+      "revId": "9848bcb2a38ef74933be75c07754b9ad656dfbac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dbc62a84_70730413",
         "filename": "chrome/browser/ui/cocoa/browser_window_cocoa.h",
         "patchSetId": 2
@@ -247,6 +271,30 @@
       "side": 1,
       "message": "I think that\u0027s a fine idea -- just having trouble with the implementation.\n\nOnNativeWidgetWindowShowStateChanged is called only by NativeWidgetAura. In particular, on Linux, DesktopNativeWidgetAura *doesn\u0027t* call it; it\u0027s never called AFAICT (and I\u0027ve tested it). That\u0027s weird... CrOS seems to use NativeWidgetAura, but I\u0027m not sure which one Windows uses.\n\nOn Linux, SaveWindowPlacement() does get called via OnHostResized() and HandleActivationChanged(), so it ends up working, but there might be an edge case where the show state isn\u0027t saved.",
       "parentUuid": "d1e98d39_0bbbfbdf",
+      "range": {
+        "startLine": 844,
+        "startChar": 0,
+        "endLine": 857,
+        "endChar": 1
+      },
+      "revId": "9848bcb2a38ef74933be75c07754b9ad656dfbac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "affedad7_fc2c1f79",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-30T03:30:53Z",
+      "side": 1,
+      "message": "That\u0027s a bummer!\nWindows and Linux use DesktopNativeWidgetAura, with platform implementations in DesktopWindowTreeHostWin and DesktopWindowTreeHostLinux. I think you\u0027ll need to add some logic to both places. If you only care about ChromeOS you can file bugs for the other implementations and add TODOs.",
+      "parentUuid": "31bc4029_00198dcc",
       "range": {
         "startLine": 844,
         "startChar": 0,
