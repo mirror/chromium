@@ -145,7 +145,10 @@ void AutocompleteInput::Init(
       canonicalized_url.is_valid() &&
       (!canonicalized_url.IsStandard() || canonicalized_url.SchemeIsFile() ||
        canonicalized_url.SchemeIsFileSystem() ||
-       !canonicalized_url.host().empty()))
+       !canonicalized_url.host().empty()) &&
+      !net::registry_controlled_domains::IsRegistry(
+          canonicalized_url,
+          net::registry_controlled_domains::EXCLUDE_PRIVATE_REGISTRIES))
     canonicalized_url_ = canonicalized_url;
 }
 
