@@ -16,6 +16,24 @@
       "revId": "91fa0694cc7d2cd5f7ca7caaf9e7c0f4d26e91cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48becb5f_d7f48f33",
+        "filename": "ui/events/event.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2018-01-30T19:02:18Z",
+      "side": 1,
+      "message": "I personally find those flags a little confusing. Particularly when they diverge for different types. I can make another structure for TouchEventFlags and add a flag to that but IMO adding an explicit field is better. Do you still insist on adding it through flags?",
+      "parentUuid": "a7f3493c_530a0d6b",
+      "revId": "91fa0694cc7d2cd5f7ca7caaf9e7c0f4d26e91cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
