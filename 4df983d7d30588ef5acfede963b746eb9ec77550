@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a72a6e67_a90336fb",
+        "filename": "content/browser/android/synchronous_compositor_sync_call_bridge.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-30T23:06:00Z",
+      "side": 1,
+      "message": "to manage",
+      "range": {
+        "startLine": 23,
+        "startChar": 23,
+        "endLine": 23,
+        "endChar": 30
+      },
+      "revId": "4df983d7d30588ef5acfede963b746eb9ec77550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9ecf344_282a5c22",
+        "filename": "content/browser/android/synchronous_compositor_sync_call_bridge.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-30T23:06:00Z",
+      "side": 1,
+      "message": "I only see a CV, and no WaitableEvent?",
+      "range": {
+        "startLine": 24,
+        "startChar": 40,
+        "endLine": 24,
+        "endChar": 54
+      },
+      "revId": "4df983d7d30588ef5acfede963b746eb9ec77550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3eae91d_94bc8d3d",
+        "filename": "content/browser/android/synchronous_compositor_sync_call_bridge.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-30T23:06:00Z",
+      "side": 1,
+      "message": "What would be nice to also add is something that documents a sample timeline of IPC messages between the browser and the renderer (i.e. the compositor wants to generate a new frame, sends a begin frame to the renderer, does other stuff, if the renderer is not complete, block on the cv, once the cv is signalled, either abort if the renderer is gone or finish processing), ideally mentioning what thread various things can happen on in the browser as well.\n\n(The specific details I leave up to you, and it\u0027s likely my brief example above is completely wrong, but that\u0027s the general idea of what I think could be helpful)",
+      "revId": "4df983d7d30588ef5acfede963b746eb9ec77550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
