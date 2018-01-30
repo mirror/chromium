@@ -16,6 +16,24 @@
       "revId": "436ecac22fc16feb0720d09fe0d91ff238a41bed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c110107a_f7524762",
+        "filename": "base/optional_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-30T18:22:40Z",
+      "side": 1,
+      "message": "Actually this is not a move ctor, but a ctor from Test*1*\u0026\u0026, I think?\nThis is for testing if Optional\u003cT\u003e(Optional\u003cU\u003e\u0026\u0026) works if there is T(U\u0026\u0026) ctor.",
+      "parentUuid": "170eead1_95a90fd9",
+      "revId": "436ecac22fc16feb0720d09fe0d91ff238a41bed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
