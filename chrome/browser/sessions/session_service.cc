@@ -376,6 +376,26 @@ void SessionService::SetWindowAppName(
   ScheduleCommand(sessions::CreateSetWindowAppNameCommand(window_id, app_name));
 }
 
+void SessionService::TabNavigationPathPrunedAtIndex(const SessionID& window_id,
+                                                    const SessionID& tab_id,
+                                                    int index) {
+  if (!ShouldTrackChangesToWindow(window_id))
+    return;
+
+  // Update the range of indices.
+  if (tab_to_available_range_.find(tab_id.id()) !=
+      tab_to_available_range_.end()) {
+    std::pair<int, int>& range = tab_to_available_range_[tab_id.id()];
+    if (range.first > index)
+      range.first = std::max(0, range.first - 1);
+    if (range.second > index)
+      range.second = std::max(0, range.second - 1);
+  }
+
+  ScheduleCommand(
+      sessions::CreateTabNavigationPathPrunedAtIndexCommand(tab_id, index));
+}
+
 void SessionService::TabNavigationPathPrunedFromBack(const SessionID& window_id,
                                                      const SessionID& tab_id,
                                                      int count) {
