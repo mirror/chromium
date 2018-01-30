@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "1dcf32d2_fa84b8a7",
+        "filename": "device/ctap/device_response_converter.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-30T03:16:50Z",
+      "side": 1,
+      "message": "True, good point. You need the handle returned by std::find_if. Fine as is :)",
+      "parentUuid": "763de2ae_d14a80ff",
+      "range": {
+        "startLine": 32,
+        "startChar": 9,
+        "endLine": 32,
+        "endChar": 14
+      },
+      "revId": "7f046d1bc038134a636978da2a23d04423ffcd80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6402a3f_93345fd1",
         "filename": "device/ctap/device_response_converter.cc",
         "patchSetId": 23
