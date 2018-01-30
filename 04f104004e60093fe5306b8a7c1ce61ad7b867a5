@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8436b690_0540bd61",
+        "filename": "ash/system/user/tray_user.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-30T21:29:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b94f5171_17b4db54",
+      "revId": "04f104004e60093fe5306b8a7c1ce61ad7b867a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e98d79c_effe8118",
         "filename": "ash/system/user/tray_user.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-30T21:11:13Z",
       "side": 1,
       "message": "isn\u0027t this false by default?",
+      "revId": "04f104004e60093fe5306b8a7c1ce61ad7b867a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32030602_b9e04950",
+        "filename": "ash/system/user/tray_user.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-30T21:29:37Z",
+      "side": 1,
+      "message": "IsUserChild() implies IsUserSupervised() is also true.",
+      "parentUuid": "8e98d79c_effe8118",
       "revId": "04f104004e60093fe5306b8a7c1ce61ad7b867a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
