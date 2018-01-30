@@ -771,8 +771,9 @@ class TextureLayerImplWithResourceTest : public TextureLayerTest {
 // Test conditions for results of TextureLayerImpl::WillDraw under
 // different configurations of different mailbox, texture_id, and draw_mode.
 TEST_F(TextureLayerImplWithResourceTest, TestWillDraw) {
-  EXPECT_CALL(test_data_.mock_callback_,
-              Release(test_data_.mailbox_name1_, gpu::SyncToken(), false))
+  EXPECT_CALL(
+      test_data_.mock_callback_,
+      Release(test_data_.mailbox_name1_, test_data_.sync_token1_, false))
       .Times(AnyNumber());
   EXPECT_CALL(
       test_data_.mock_callback_,
@@ -849,8 +850,9 @@ TEST_F(TextureLayerImplWithResourceTest, TestImplLayerCallbacks) {
 
   // Test multiple commits without an activation. The resource wasn't used so no
   // sync token is returned.
-  EXPECT_CALL(test_data_.mock_callback_,
-              Release(test_data_.mailbox_name1_, gpu::SyncToken(), false))
+  EXPECT_CALL(
+      test_data_.mock_callback_,
+      Release(test_data_.mailbox_name1_, test_data_.sync_token1_, false))
       .Times(1);
   pending_layer->SetTransferableResource(
       test_data_.resource2_,
