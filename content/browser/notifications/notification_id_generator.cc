@@ -87,4 +87,20 @@ std::string NotificationIdGenerator::GenerateForNonPersistentNotification(
   return stream.str();
 }
 
+std::string NotificationIdGenerator::GenerateForNonPersistentNotification(
+    const GURL& origin,
+    const std::string& token) const {
+  DCHECK(origin.is_valid());
+  DCHECK_EQ(origin, origin.GetOrigin());
+
+  std::stringstream stream;
+
+  stream << kNonPersistentNotificationPrefix << kNotificationTagSeparator;
+  stream << origin;
+  stream << kNotificationTagSeparator;
+  stream << token;
+
+  return stream.str();
+}
+
 }  // namespace content

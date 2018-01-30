@@ -70,6 +70,12 @@ class CONTENT_EXPORT NotificationIdGenerator {
                                                    int request_id,
                                                    int render_process_id) const;
 
+  // Generates an id for a non-persistent notification given the notification's
+  // origin and token.
+  std::string GenerateForNonPersistentNotification(
+      const GURL& origin,
+      const std::string& token) const;
+
  private:
   DISALLOW_COPY_AND_ASSIGN(NotificationIdGenerator);
 };
