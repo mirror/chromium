@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "42cd120e_22df537b",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2018-01-30T06:13:25Z",
+      "side": 1,
+      "message": "will do",
+      "parentUuid": "c96dced2_ddb184c3",
+      "range": {
+        "startLine": 747,
+        "startChar": 40,
+        "endLine": 747,
+        "endChar": 66
+      },
+      "revId": "2938470ad333b69b8beb4737587dce44d163b5d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6bb3935_5ff13bd7",
         "filename": "ui/keyboard/keyboard_controller.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "2938470ad333b69b8beb4737587dce44d163b5d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb443041_8f98d382",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2018-01-30T06:13:25Z",
+      "side": 1,
+      "message": "In which case, the original QueuedContainerBehavior will go out of scope, its callback will get invoked, and since the active container behavior type doesn\u0027t match, it\u0027ll correctly report a failure to the extension.",
+      "parentUuid": "c6bb3935_5ff13bd7",
+      "range": {
+        "startLine": 748,
+        "startChar": 40,
+        "endLine": 748,
+        "endChar": 74
+      },
+      "revId": "2938470ad333b69b8beb4737587dce44d163b5d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b81be4e5_ad4110b6",
+        "filename": "ui/keyboard/keyboard_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2018-01-30T06:13:25Z",
+      "side": 1,
+      "message": "Only temporarily, at least until the next CL lands that plumbs the callback to the Keyboard Controller.",
+      "parentUuid": "81592d94_cade3738",
+      "range": {
+        "startLine": 178,
+        "startChar": 2,
+        "endLine": 178,
+        "endChar": 50
+      },
+      "revId": "2938470ad333b69b8beb4737587dce44d163b5d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0d34532_0beba8e5",
         "filename": "ui/keyboard/keyboard_util.cc",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "9e593c66_021f97c2",
+        "filename": "ui/keyboard/keyboard_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2018-01-30T06:13:25Z",
+      "side": 1,
+      "message": "OH SNAP",
+      "parentUuid": "d0d34532_0beba8e5",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 39
+      },
+      "revId": "2938470ad333b69b8beb4737587dce44d163b5d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ed362d2_d361a4c0",
         "filename": "ui/keyboard/keyboard_util.cc",
         "patchSetId": 3
@@ -114,6 +210,30 @@
       "revId": "2938470ad333b69b8beb4737587dce44d163b5d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbea02be_f7f4054a",
+        "filename": "ui/keyboard/keyboard_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2018-01-30T06:13:25Z",
+      "side": 1,
+      "message": "yeah...this whole file was not meant to be committed. Sorry about that.",
+      "parentUuid": "8ed362d2_d361a4c0",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 247,
+        "endChar": 3
+      },
+      "revId": "2938470ad333b69b8beb4737587dce44d163b5d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
