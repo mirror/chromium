@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1810d208_7a994a50",
+        "filename": "third_party/WebKit/LayoutTests/fast/loader/document-open-iframe-then-detach.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2018-01-30T11:08:39Z",
+      "side": 1,
+      "message": "Why do people do these things?! :)",
+      "revId": "aaf14e2ce7665d026364af5cd3949675b8db1c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "279362ef_a3966db0",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 991,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2018-01-30T11:08:39Z",
+      "side": 1,
+      "message": "Oh. Cool. I didn\u0027t know this existed.",
+      "range": {
+        "startLine": 991,
+        "startChar": 2,
+        "endLine": 991,
+        "endChar": 11
+      },
+      "revId": "aaf14e2ce7665d026364af5cd3949675b8db1c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
