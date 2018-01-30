@@ -96,9 +96,13 @@ public class CastWebContentsActivity extends Activity {
 
     protected void handleIntent(Intent intent) {
         final Bundle bundle = intent.getExtras();
+        if (bundle == null) {
+            Log.w(TAG, "Intent without bundle received!");
+            return;
+        }
         final String uriString = bundle.getString(CastWebContentsComponent.INTENT_EXTRA_URI);
         if (uriString == null) {
-            Log.i(TAG, "Intent without uri received!");
+            Log.w(TAG, "Intent without uri received!");
             return;
         }
         final Uri uri = Uri.parse(uriString);
@@ -107,7 +111,7 @@ public class CastWebContentsActivity extends Activity {
         // activity to the foreground.
         if (mSurfaceHelper.getInstanceId() != null
                 && mSurfaceHelper.getInstanceId().equals(uri.getPath())) {
-            Log.i(TAG, "Duplicated intent received!");
+            Log.w(TAG, "Duplicated intent received!");
             return;
         }
 
