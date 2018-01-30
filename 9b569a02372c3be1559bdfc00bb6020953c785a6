@@ -1,0 +1,648 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecc160d6_2d621b84",
+        "filename": "device/ctap/ctap_constants.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-30T21:02:47Z",
+      "side": 1,
+      "message": "nit: single space",
+      "range": {
+        "startLine": 151,
+        "startChar": 24,
+        "endLine": 151,
+        "endChar": 25
+      },
+      "revId": "9b569a02372c3be1559bdfc00bb6020953c785a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e23ca8ab_ea9dac51",
+        "filename": "device/ctap/ctap_constants.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-30T21:02:47Z",
+      "side": 1,
+      "message": "nit: add trailing period, also applies below.",
+      "range": {
+        "startLine": 157,
+        "startChar": 34,
+        "endLine": 157,
+        "endChar": 35
+      },
+      "revId": "9b569a02372c3be1559bdfc00bb6020953c785a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97f51f91_f40e52c9",
+        "filename": "device/ctap/ctap_hid_message.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-30T21:02:47Z",
+      "side": 1,
+      "message": "nit: not necessary once initialized in the header file",
+      "range": {
+        "startLine": 103,
+        "startChar": 31,
+        "endLine": 103,
+        "endChar": 60
+      },
+      "revId": "9b569a02372c3be1559bdfc00bb6020953c785a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d101b9e1_71629560",
+        "filename": "device/ctap/ctap_hid_message.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-30T21:02:47Z",
+      "side": 1,
+      "message": "nit: I\u0027d make this\n\n  if (packets_.empty())\n    return {};\n\n  std::vector\u003cuint8_t\u003e data \u003d packets_.front()-\u003eGetSerializedData();\n  packets_.pop_front();\n  return data;\n\nThat way you avoid construction followed by assignment and can directly move construct data",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 147,
+        "endChar": 1
+      },
+      "revId": "9b569a02372c3be1559bdfc00bb6020953c785a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02c9c0f8_81453cad",
+        "filename": "device/ctap/ctap_hid_message.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-30T21:02:47Z",
+      "side": 1,
+      "message": "nit: auto",
+      "range": {
+        "startLine": 151,
+        "startChar": 2,
+        "endLine": 151,
+        "endChar": 43
+      },
+      "revId": "9b569a02372c3be1559bdfc00bb6020953c785a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18bcd79d_506b0e56",
+        "filename": "device/ctap/ctap_hid_message.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-30T21:02:47Z",
+      "side": 1,
+      "message": "nit: simply `!cont_packet`",
+      "range": {
+        "startLine": 155,
+        "startChar": 6,
+        "endLine": 155,
+        "endChar": 17
+      },
+      "revId": "9b569a02372c3be1559bdfc00bb6020953c785a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ccf75a8_aa15b772",
+        "filename": "device/ctap/ctap_hid_message.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-30T21:02:47Z",
+      "side": 1,
+      "message": "this could potentially lead to a lot of memory allocations. Ideally we call `data.reserve()` before this loop. the reserved size can either be kMaxMessageSize (which is likely wasteful), or you compute it with another loop. For that you could use `std::accumulate`.",
+      "range": {
+        "startLine": 172,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 74
+      },
+      "revId": "9b569a02372c3be1559bdfc00bb6020953c785a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6a0cb63_5a109385",
+        "filename": "device/ctap/ctap_hid_message.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-30T21:02:47Z",
+      "side": 1,
+      "message": "Since all of these methods just forward the corresponding CTAPHIDDeviceCommand can\u0027t you just make CTAPHidMessage::Create public and get rid of these methods? You would need to add some more error handling to create, but I think this is overall cleaner.",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 25
+      },
+      "revId": "9b569a02372c3be1559bdfc00bb6020953c785a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "097cef5a_a1309c98",
+        "filename": "device/ctap/ctap_hid_message.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-30T21:02:47Z",
+      "side": 1,
+      "message": "Having both public factory methods and constructors does not make much sense to me. Could you make these private instead?",
+      "range": {
+        "startLine": 50,
+        "startChar": 1,
+        "endLine": 54,
+        "endChar": 40
+      },
+      "revId": "9b569a02372c3be1559bdfc00bb6020953c785a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cd6d2f4_ed4c166f",
+        "filename": "device/ctap/ctap_hid_message.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-30T21:02:47Z",
+      "side": 1,
+      "message": "Do we really need these iterators? Ideally I\u0027d make packets_ a `base::queue`, but that class doesn\u0027t expose these iterators.",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 0
+      },
+      "revId": "9b569a02372c3be1559bdfc00bb6020953c785a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "751021b5_c13c3b09",
+        "filename": "device/ctap/ctap_hid_message.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-30T21:02:47Z",
+      "side": 1,
+      "message": "can you turn all `const std::vector\u003cuint8_t\u003e\u0026` into `base::span\u003cconst uint8_t\u003e`?",
+      "range": {
+        "startLine": 79,
+        "startChar": 6,
+        "endLine": 79,
+        "endChar": 33
+      },
+      "revId": "9b569a02372c3be1559bdfc00bb6020953c785a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72ef8863_ac8a71c5",
+        "filename": "device/ctap/ctap_hid_message.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-30T21:02:47Z",
+      "side": 1,
+      "message": "please give channel_id_, cmd_ and remaining_size_ default values",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 25
+      },
+      "revId": "9b569a02372c3be1559bdfc00bb6020953c785a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43c08fd5_5f4e83fd",
+        "filename": "device/ctap/ctap_hid_message_fuzzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-30T21:02:47Z",
+      "side": 1,
+      "message": "Don\u0027t update this for files that are basically just moved around.\nAlso applies to other files in this CL.",
+      "range": {
+        "startLine": 1,
+        "startChar": 16,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "9b569a02372c3be1559bdfc00bb6020953c785a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4f5010a_2eec50cb",
+        "filename": "device/ctap/ctap_hid_message_fuzzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-30T21:02:47Z",
+      "side": 1,
+      "message": "nit: auto",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 41
+      },
+      "revId": "9b569a02372c3be1559bdfc00bb6020953c785a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "173a89dc_4c164a0c",
+        "filename": "device/ctap/ctap_hid_message_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-30T21:02:47Z",
+      "side": 1,
+      "message": "I think you can just delete this line and replace `TEST_F` with `TEST` below",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 51
+      },
+      "revId": "9b569a02372c3be1559bdfc00bb6020953c785a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1a38be3_782cbf06",
+        "filename": "device/ctap/ctap_hid_message_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-30T21:02:47Z",
+      "side": 1,
+      "message": "can be `auto`, also applies below",
+      "range": {
+        "startLine": 74,
+        "startChar": 18,
+        "endLine": 74,
+        "endChar": 35
+      },
+      "revId": "9b569a02372c3be1559bdfc00bb6020953c785a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d672a110_5ca187ea",
+        "filename": "device/ctap/ctap_hid_packet.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-30T21:02:47Z",
+      "side": 1,
+      "message": "take data by value and move it within the constructor",
+      "range": {
+        "startLine": 24,
+        "startChar": 16,
+        "endLine": 24,
+        "endChar": 48
+      },
+      "revId": "9b569a02372c3be1559bdfc00bb6020953c785a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07daa783_69fcf7b6",
+        "filename": "device/ctap/ctap_hid_packet.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-30T21:02:47Z",
+      "side": 1,
+      "message": "can probably be marked `const` as well",
+      "range": {
+        "startLine": 27,
+        "startChar": 31,
+        "endLine": 27,
+        "endChar": 48
+      },
+      "revId": "9b569a02372c3be1559bdfc00bb6020953c785a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9007d0a6_9ab5bb4a",
+        "filename": "device/ctap/ctap_hid_packet.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-30T21:02:47Z",
+      "side": 1,
+      "message": "mark const",
+      "range": {
+        "startLine": 29,
+        "startChar": 11,
+        "endLine": 29,
+        "endChar": 21
+      },
+      "revId": "9b569a02372c3be1559bdfc00bb6020953c785a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8cb406d_3503b807",
+        "filename": "device/ctap/ctap_hid_packet.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-30T21:02:47Z",
+      "side": 1,
+      "message": "can you make this a CTAPHIDDeviceCommand instead? It\u0027s better for type safety and allows you remove casts between CTAPHIDDeviceCommand and uint8_t",
+      "range": {
+        "startLine": 50,
+        "startChar": 20,
+        "endLine": 50,
+        "endChar": 27
+      },
+      "revId": "9b569a02372c3be1559bdfc00bb6020953c785a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f43a398_a7218a31",
+        "filename": "device/ctap/ctap_hid_packet.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-30T21:02:47Z",
+      "side": 1,
+      "message": "take by value",
+      "range": {
+        "startLine": 51,
+        "startChar": 20,
+        "endLine": 51,
+        "endChar": 47
+      },
+      "revId": "9b569a02372c3be1559bdfc00bb6020953c785a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23d0f13d_c32b01cb",
+        "filename": "device/ctap/ctap_hid_packet.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-30T21:02:47Z",
+      "side": 1,
+      "message": "take by value",
+      "range": {
+        "startLine": 53,
+        "startChar": 20,
+        "endLine": 53,
+        "endChar": 46
+      },
+      "revId": "9b569a02372c3be1559bdfc00bb6020953c785a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fdfa587_ef9d9ba3",
+        "filename": "device/ctap/ctap_hid_packet.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-30T21:02:47Z",
+      "side": 1,
+      "message": "here again it doesn\u0027t make sense to have the factory method and corresponding constructor both public. I\u0027d suggest making the corresponding constructor private. Also this should be moved up to match the declaration order style guide.",
+      "range": {
+        "startLine": 61,
+        "startChar": 44,
+        "endLine": 61,
+        "endChar": 68
+      },
+      "revId": "9b569a02372c3be1559bdfc00bb6020953c785a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "279d3fd2_b9fb771a",
+        "filename": "device/ctap/ctap_hid_packet.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-30T21:02:47Z",
+      "side": 1,
+      "message": "mark const",
+      "range": {
+        "startLine": 64,
+        "startChar": 1,
+        "endLine": 66,
+        "endChar": 55
+      },
+      "revId": "9b569a02372c3be1559bdfc00bb6020953c785a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f09c1fce_3e44f77b",
+        "filename": "device/ctap/ctap_hid_packet.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-30T21:02:47Z",
+      "side": 1,
+      "message": "data should be passed by value, serialized should be a base::span\u003cconst uint8_t\u003e",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 67
+      },
+      "revId": "9b569a02372c3be1559bdfc00bb6020953c785a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "422446a9_d37e557f",
+        "filename": "device/ctap/ctap_hid_packet.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-30T21:02:47Z",
+      "side": 1,
+      "message": "mark const",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 0
+      },
+      "revId": "9b569a02372c3be1559bdfc00bb6020953c785a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2427ef24_b996b5fa",
+        "filename": "device/u2f/u2f_hid_device.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-30T21:02:47Z",
+      "side": 1,
+      "message": "can you keep the forward declaration instead?",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 41
+      },
+      "revId": "9b569a02372c3be1559bdfc00bb6020953c785a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "574f0cce_03db1142",
+        "filename": "device/u2f/u2f_hid_device_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-30T21:02:47Z",
+      "side": 1,
+      "message": "whats the reason for adding this?",
+      "range": {
+        "startLine": 366,
+        "startChar": 7,
+        "endLine": 366,
+        "endChar": 26
+      },
+      "revId": "9b569a02372c3be1559bdfc00bb6020953c785a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
