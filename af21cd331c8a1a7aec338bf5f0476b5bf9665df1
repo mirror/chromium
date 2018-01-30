@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f1f34d82_267669cd",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2018-01-30T07:32:57Z",
+      "side": 1,
+      "message": "left another comment. I just rememberd that FetchMore doesn\u0027t share code with this call, so that\u0027s one less issue to worry about. happy to chat offline about this later.\n\nIt feels a bit imbalanced that we only do this for FetchSuggestions but not FetchMore, but I guess we can live with that (maybe we have to clarify this in the member variable\u0027s declaration). But i guess that\u0027s fine. Let me know what you think about the counter proposal (other comment).",
+      "parentUuid": "b9c494bf_b0ed7972",
+      "range": {
+        "startLine": 567,
+        "startChar": 54,
+        "endLine": 567,
+        "endChar": 0
+      },
+      "revId": "af21cd331c8a1a7aec338bf5f0476b5bf9665df1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "278bb6c5_b04a7da8",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 2
@@ -366,6 +390,30 @@
       "side": 1,
       "message": "Two similar methods are used in 5 different tests. Do you ask me to remove them all?\n\nIsn\u0027t it just a naming/abstraction issue? What if there was also a separate helper function to finish the request as well (for the last step of the test)? E.g.\n\nauto fetch_callback \u003d InitiateRequestToFetchSuggestions(provider.get(), \n                                                        /*interactive_request\u003d*/false);\n\n...\n\nFinishRequest(std::move(fetch_callback), Status::Success(), std::vector\u003cFetchedCategory\u003e());",
       "parentUuid": "8b951d3d_f3209958",
+      "range": {
+        "startLine": 2477,
+        "startChar": 6,
+        "endLine": 2477,
+        "endChar": 44
+      },
+      "revId": "af21cd331c8a1a7aec338bf5f0476b5bf9665df1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8623ca93_79d54d5a",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2477,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2018-01-30T07:32:57Z",
+      "side": 1,
+      "message": "There might be tests where that abstraction makes sense (because we don\u0027t care about what requests get send to the fetcher). In this particular test, it is a crucial thing, that\u0027s why I don\u0027t think it\u0027s a good use in your test.\n\nWhen reading tests, helpers are important to hide noise, but not the main issues you want to verify.\n\nIn your test, you want to explicitly verify which requests actually get send out, i.e. which FetchSnippets() calls are we expect to observe on the fetcher. Hiding parts of these in helper methods makes it very hard to understand the test without reading all the helper methods.\n(this totw gives some more background: https://g3doc.corp.google.com/devtools/library_club/g3doc/totw/97.md?cl\u003dhead).",
+      "parentUuid": "188306e0_7b7aa796",
       "range": {
         "startLine": 2477,
         "startChar": 6,

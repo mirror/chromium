@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3e0ce25_1a553279",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2018-01-30T07:32:57Z",
+      "side": 1,
+      "message": "I\u0027m sorry to be picky, but this is adding new functionality to de-duplicate requests.\nWhile I like the idea, I honestly don\u0027t know how other parts in the system will handle this.\nI\u0027m afraid we\u0027re changing more than we absolutely have to.\n\nI see two ways:\n1) we figure out how this effects other parts of the system, i.e. where the result codes from the FetchSuggestion\u0027s callback get processed. I\u0027m really concerned about false error messages or retries.\n2) we aim a little lower and accept that there are multiple requests in flight at the same time.\nThis means, when a request finishes, we need to assume a different request just finished before (and hence the state might be NONE). This would reduce the introduced enum to something like\nenum PostFetchAction {\n  NOTHING,\n  IGNORE_RESULT,\n  REFETCH\n};\n\nI\u0027m leaning to the latter as it\u0027s much simpler. Your proposed solution as the nice benefit of de-duping calls, but I\u0027m not convinced it\u0027s an actual problem.\n\nSorry for the back and forth!\n\n(just saw your other comment. multiple in-flight fetches seem unlikely. One thing to keep in mind though is that ReloadSuggestions() gets called from the UI when the remote section is empty and the user clicks Refresh()/FetchMore()).",
+      "range": {
+        "startLine": 576,
+        "startChar": 50,
+        "endLine": 576,
+        "endChar": 51
+      },
+      "revId": "7d454305e2d1cbce1611d9c8e408929316a4e4ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f31b892_b5aaaeb8",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2018-01-30T07:32:57Z",
+      "side": 1,
+      "message": "cancelled",
+      "range": {
+        "startLine": 221,
+        "startChar": 18,
+        "endLine": 221,
+        "endChar": 26
+      },
+      "revId": "7d454305e2d1cbce1611d9c8e408929316a4e4ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b6c4c6d_4da2d02b",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2018-01-30T07:32:57Z",
+      "side": 1,
+      "message": "cancelled",
+      "range": {
+        "startLine": 223,
+        "startChar": 4,
+        "endLine": 223,
+        "endChar": 24
+      },
+      "revId": "7d454305e2d1cbce1611d9c8e408929316a4e4ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
