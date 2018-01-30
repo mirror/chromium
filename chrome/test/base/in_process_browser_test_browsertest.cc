@@ -8,9 +8,11 @@
 #include "base/files/file_util.h"
 #include "base/macros.h"
 #include "base/path_service.h"
+#include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/after_startup_task_utils.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
+#include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/ui_test_utils.h"
 #include "content/public/browser/navigation_handle.h"
@@ -20,6 +22,7 @@
 #include "net/base/filename_util.h"
 #include "net/base/net_errors.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/views/controls/button/image_button.h"
 
 namespace {
 
@@ -127,27 +130,58 @@ class InProcessAccessibilityBrowserTest : public InProcessBrowserTest {
 };
 
 // Test that an accessible page doesn't fail the accessibility audit.
-IN_PROC_BROWSER_TEST_F(
-    InProcessAccessibilityBrowserTest, DISABLED_VerifyAccessibilityPass) {
+IN_PROC_BROWSER_TEST_F(InProcessAccessibilityBrowserTest,
+                       DISABLED_VerifyContentAccessibilityPass) {
   ASSERT_TRUE(NavigateToURL(kPassHTML));
 
   std::string test_result;
-  EXPECT_TRUE(RunAccessibilityChecks(&test_result));
+  EXPECT_TRUE(RunContentAccessibilityChecks(&test_result));
 
   // No error message on success.
   EXPECT_EQ("", test_result);
 }
 
 // Test that a page that is not accessible will fail the accessibility audit.
-IN_PROC_BROWSER_TEST_F(
-    InProcessAccessibilityBrowserTest, VerifyAccessibilityFail) {
+IN_PROC_BROWSER_TEST_F(InProcessAccessibilityBrowserTest,
+                       VerifyContentAccessibilityFail) {
   ASSERT_TRUE(NavigateToURL(kFailHTML));
 
   std::string test_result;
-  EXPECT_FALSE(RunAccessibilityChecks(&test_result));
+  EXPECT_FALSE(RunContentAccessibilityChecks(&test_result));
 
   // Error should NOT be empty on failure.
   EXPECT_NE("", test_result);
+}
+
+class TestImageButton : public views::ImageButton {
+ public:
+  TestImageButton() : views::ImageButton(nullptr) {}
+
+ private:
+  // To ensure IsFocusable() returns true.
+  bool IsDrawn() const override { return true; }
+};
+
+// Test that a view that is not accessible will fail the accessibility audit.
+IN_PROC_BROWSER_TEST_F(InProcessAccessibilityBrowserTest,
+                       VerifyUIAccessibilityFailAndPass) {
+  BrowserWindow* browser_window = browser()->window();
+  BrowserView* browser_view = static_cast<BrowserView*>(browser_window);
+
+  // Create nameless accessibility button and add to browser view.
+  // UI accessibility check should fail.
+  TestImageButton* button = new TestImageButton();
+  button->SetFocusBehavior(BrowserNonClientFrameView::FocusBehavior::ALWAYS);
+  browser_view->AddChildView(button);
+  std::string test_result_nameless;
+  EXPECT_FALSE(RunUIAccessibilityChecks(&test_result_nameless));
+  EXPECT_NE("", test_result_nameless);
+
+  // Give it an accessible name. UI accessibility check should pass now.
+  std::string test_result_name;
+  button->SetAccessibleName(base::ASCIIToUTF16("Some name"));
+  EXPECT_TRUE(RunUIAccessibilityChecks(&test_result_name));
+  EXPECT_EQ("", test_result_name);
 }
 
 }  // namespace
