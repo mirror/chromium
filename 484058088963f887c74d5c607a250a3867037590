@@ -34,6 +34,24 @@
       "revId": "484058088963f887c74d5c607a250a3867037590",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "896510eb_53c12027",
+        "filename": "content/renderer/pepper/content_renderer_pepper_host_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-30T15:41:33Z",
+      "side": 1,
+      "message": "Actually I went ahead and updated this CL to do this. It doesn\u0027t change behavior, since the function would\u0027ve just returned nullptr at a later point as-is.",
+      "parentUuid": "4ee3607b_8e742d0e",
+      "revId": "484058088963f887c74d5c607a250a3867037590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
