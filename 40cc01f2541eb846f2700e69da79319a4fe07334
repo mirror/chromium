@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c1a818e_743e87ed",
+        "filename": "device/vr/openvr/openvr_render_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-30T02:06:51Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused. https://cs.chromium.org/chromium/src/device/vr/oculus/oculus_render_loop.cc?sq\u003dpackage:chromium\u0026l\u003d78\u0026dr\u003dC currently has:\n\n  texture_helper_.CopyTextureToBackBuffer(false)\n\nDoes that mean that the OpenVR path was doing a Y flip here but Oculus wasn\u0027t? If that\u0027s the case, and if you\u0027re now unconditionally doing a Y flip in GpuMemoryBufferImageCopy::CopyImage, wouldn\u0027t that mean that the image will now be upside down in the Oculus path? Or am I missing something?",
+      "range": {
+        "startLine": 50,
+        "startChar": 41,
+        "endLine": 50,
+        "endChar": 71
+      },
+      "revId": "40cc01f2541eb846f2700e69da79319a4fe07334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33b9f49b_d5b0dff4",
+        "filename": "third_party/WebKit/Source/platform/graphics/GpuMemoryBufferImageCopy.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-30T02:06:51Z",
+      "side": 1,
+      "message": "This is unpackFlipY\u003dtrue, right?\n\nIt seems a bit surprising to implicitly do a Y flip as part of copying the image here. Would it be clearer to add a flipY boolean arg to this method and use that here?",
+      "range": {
+        "startLine": 88,
+        "startChar": 30,
+        "endLine": 88,
+        "endChar": 34
+      },
+      "revId": "40cc01f2541eb846f2700e69da79319a4fe07334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
