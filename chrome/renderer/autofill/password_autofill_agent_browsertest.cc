@@ -236,6 +236,16 @@ const char kTwoNoUsernameFormsHTML[] =
     "  <INPUT type='submit' value='Login'/>"
     "</FORM>";
 
+const char kDivWrappedFormHTML[] =
+    "<DIV id='outer'>"
+    "  <DIV id='inner'>"
+    "    <FORM id='form' action='http://www.bidule.com'>"
+    "      <INPUT type='text' id='username'/>"
+    "      <INPUT type='password' id='password'/>"
+    "    </FORM>"
+    "  </DIV>"
+    "</DIV>";
+
 // Sets the "readonly" attribute of |element| to the value given by |read_only|.
 void SetElementReadOnly(WebInputElement& element, bool read_only) {
   element.SetAttribute(WebString::FromUTF8("readonly"),
@@ -2525,6 +2535,51 @@ TEST_F(PasswordAutofillAgentTest,
       "password.style = 'display:none';"
       "var username = document.getElementById('username');"
       "username.style = 'display:none';";
+  ExecuteJavaScriptForTests(hide_elements.c_str());
+
+  base::RunLoop().RunUntilIdle();
+
+  ExpectInPageNavigationWithUsernameAndPasswords(
+      "Bob", "mypassword", "",
+      PasswordForm::SubmissionIndicatorEvent::DOM_MUTATION_AFTER_XHR);
+}
+
+TEST_F(PasswordAutofillAgentTest,
+       NoForm_PromptForAJAXSubmitWithoutNavigation_3) {
+  LoadHTML(kDivWrappedFormHTML);
+  UpdateUsernameAndPasswordElements();
+
+  SimulateUsernameTyping("Bob");
+  SimulatePasswordTyping("mypassword");
+
+  FireAjaxSucceeded();
+
+  std::string hide_elements =
+      "var outerDiv = document.getElementById('outer');"
+      "outerDiv.style = 'display:none';";
+  ExecuteJavaScriptForTests(hide_elements.c_str());
+
+  base::RunLoop().RunUntilIdle();
+
+  ExpectInPageNavigationWithUsernameAndPasswords(
+      "Bob", "mypassword", "",
+      PasswordForm::SubmissionIndicatorEvent::DOM_MUTATION_AFTER_XHR);
+}
+
+TEST_F(PasswordAutofillAgentTest,
+       NoForm_PromptForAJAXSubmitWithoutNavigation_4) {
+  LoadHTML(kDivWrappedFormHTML);
+  UpdateUsernameAndPasswordElements();
+
+  SimulateUsernameTyping("Bob");
+  SimulatePasswordTyping("mypassword");
+
+  FireAjaxSucceeded();
+
+  std::string hide_elements =
+      "var outerDiv = document.getElementById('outer');"
+      "var innerDiv = document.getElementById('inner');"
+      "outerDiv.removeChild(innerDiv);";
   ExecuteJavaScriptForTests(hide_elements.c_str());
 
   base::RunLoop().RunUntilIdle();
