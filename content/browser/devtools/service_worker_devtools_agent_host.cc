@@ -5,7 +5,6 @@
 #include "content/browser/devtools/service_worker_devtools_agent_host.h"
 
 #include "base/strings/stringprintf.h"
-#include "content/browser/devtools/devtools_session.h"
 #include "content/browser/devtools/protocol/inspector_handler.h"
 #include "content/browser/devtools/protocol/network_handler.h"
 #include "content/browser/devtools/protocol/protocol.h"
@@ -15,6 +14,7 @@
 #include "content/browser/service_worker/service_worker_version.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_process_host.h"
+#include "content/public/common/child_process_host.h"
 
 namespace content {
 
@@ -51,7 +51,8 @@ ServiceWorkerDevToolsAgentHost::ServiceWorkerDevToolsAgentHost(
     const GURL& scope,
     bool is_installed_version,
     const base::UnguessableToken& devtools_worker_token)
-    : DevToolsAgentHostImpl(devtools_worker_token.ToString()),
+    : DevToolsAgentHostImpl(devtools_worker_token.ToString(),
+                            false /* browser_only */),
       state_(WORKER_NOT_READY),
       devtools_worker_token_(devtools_worker_token),
       worker_process_id_(worker_process_id),
@@ -115,34 +116,31 @@ ServiceWorkerDevToolsAgentHost::~ServiceWorkerDevToolsAgentHost() {
   ServiceWorkerDevToolsManager::GetInstance()->AgentHostDestroyed(this);
 }
 
-void ServiceWorkerDevToolsAgentHost::AttachSession(DevToolsSession* session) {
-  if (state_ == WORKER_READY) {
-    if (sessions().size() == 1) {
-      BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
-                              base::BindOnce(&SetDevToolsAttachedOnIO,
-                                             context_weak_, version_id_, true));
-    }
-    session->SetRenderer(worker_process_id_, nullptr);
-    session->AttachToAgent(agent_ptr_);
-  }
-  session->AddHandler(base::WrapUnique(new protocol::InspectorHandler()));
-  session->AddHandler(base::WrapUnique(new protocol::NetworkHandler(GetId())));
-  session->AddHandler(base::WrapUnique(new protocol::SchemaHandler()));
+void ServiceWorkerDevToolsAgentHost::OnAttached() {
+  BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
+                          base::BindOnce(&SetDevToolsAttachedOnIO,
+                                         context_weak_, version_id_, true));
 }
 
-void ServiceWorkerDevToolsAgentHost::DetachSession(DevToolsSession* session) {
-  // Destroying session automatically detaches in renderer.
-  if (state_ == WORKER_READY && sessions().empty()) {
-    BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
-                            base::BindOnce(&SetDevToolsAttachedOnIO,
-                                           context_weak_, version_id_, false));
-  }
+void ServiceWorkerDevToolsAgentHost::OnDetached() {
+  BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
+                          base::BindOnce(&SetDevToolsAttachedOnIO,
+                                         context_weak_, version_id_, false));
 }
 
-void ServiceWorkerDevToolsAgentHost::DispatchProtocolMessage(
-    DevToolsSession* session,
-    const std::string& message) {
-  session->DispatchProtocolMessage(message);
+std::vector<std::unique_ptr<protocol::DevToolsDomainHandler>>
+ServiceWorkerDevToolsAgentHost::CreateProtocolHandlers(
+    DevToolsIOContext* io_context) {
+  std::vector<std::unique_ptr<protocol::DevToolsDomainHandler>> handlers;
+  handlers.push_back(base::WrapUnique(new protocol::InspectorHandler()));
+  handlers.push_back(base::WrapUnique(new protocol::NetworkHandler(GetId())));
+  handlers.push_back(base::WrapUnique(new protocol::SchemaHandler()));
+  return handlers;
+}
+
+blink::mojom::DevToolsAgentAssociatedPtr*
+ServiceWorkerDevToolsAgentHost::EnsureAgentPtr() {
+  return agent_ptr_.is_bound() ? &agent_ptr_ : nullptr;
 }
 
 void ServiceWorkerDevToolsAgentHost::WorkerReadyForInspection(
@@ -150,16 +148,7 @@ void ServiceWorkerDevToolsAgentHost::WorkerReadyForInspection(
   DCHECK_EQ(WORKER_NOT_READY, state_);
   state_ = WORKER_READY;
   agent_ptr_.Bind(std::move(devtools_agent_ptr_info));
-  if (!sessions().empty()) {
-    BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
-                            base::BindOnce(&SetDevToolsAttachedOnIO,
-                                           context_weak_, version_id_, true));
-  }
-
-  for (DevToolsSession* session : sessions()) {
-    session->SetRenderer(worker_process_id_, nullptr);
-    session->AttachToAgent(agent_ptr_);
-  }
+  SetRenderer(worker_process_id_, nullptr);
 }
 
 void ServiceWorkerDevToolsAgentHost::WorkerRestarted(int worker_process_id,
@@ -170,8 +159,6 @@ void ServiceWorkerDevToolsAgentHost::WorkerRestarted(int worker_process_id,
   worker_route_id_ = worker_route_id;
   for (auto* inspector : protocol::InspectorHandler::ForAgentHost(this))
     inspector->TargetReloadedAfterCrash();
-  for (DevToolsSession* session : sessions())
-    session->SetRenderer(worker_process_id_, nullptr);
 }
 
 void ServiceWorkerDevToolsAgentHost::WorkerDestroyed() {
@@ -180,8 +167,7 @@ void ServiceWorkerDevToolsAgentHost::WorkerDestroyed() {
   agent_ptr_.reset();
   for (auto* inspector : protocol::InspectorHandler::ForAgentHost(this))
     inspector->TargetCrashed();
-  for (DevToolsSession* session : sessions())
-    session->SetRenderer(-1, nullptr);
+  SetRenderer(ChildProcessHost::kInvalidUniqueID, nullptr);
 }
 
 }  // namespace content

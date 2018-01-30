@@ -4,7 +4,6 @@
 
 #include "content/browser/devtools/shared_worker_devtools_agent_host.h"
 
-#include "content/browser/devtools/devtools_session.h"
 #include "content/browser/devtools/protocol/inspector_handler.h"
 #include "content/browser/devtools/protocol/network_handler.h"
 #include "content/browser/devtools/protocol/protocol.h"
@@ -15,13 +14,15 @@
 #include "content/browser/shared_worker/shared_worker_service_impl.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_process_host.h"
+#include "content/public/common/child_process_host.h"
 
 namespace content {
 
 SharedWorkerDevToolsAgentHost::SharedWorkerDevToolsAgentHost(
     SharedWorkerHost* worker_host,
     const base::UnguessableToken& devtools_worker_token)
-    : DevToolsAgentHostImpl(devtools_worker_token.ToString()),
+    : DevToolsAgentHostImpl(devtools_worker_token.ToString(),
+                            false /* browser_only */),
       state_(WORKER_NOT_READY),
       worker_host_(worker_host),
       devtools_worker_token_(devtools_worker_token),
@@ -66,23 +67,24 @@ bool SharedWorkerDevToolsAgentHost::Close() {
   return true;
 }
 
-void SharedWorkerDevToolsAgentHost::AttachSession(DevToolsSession* session) {
-  session->AddHandler(std::make_unique<protocol::InspectorHandler>());
-  session->AddHandler(std::make_unique<protocol::NetworkHandler>(GetId()));
-  session->AddHandler(std::make_unique<protocol::SchemaHandler>());
-  session->SetRenderer(worker_host_ ? worker_host_->process_id() : -1, nullptr);
-  if (state_ == WORKER_READY)
-    session->AttachToAgent(EnsureAgent());
+std::vector<std::unique_ptr<protocol::DevToolsDomainHandler>>
+SharedWorkerDevToolsAgentHost::CreateProtocolHandlers(
+    DevToolsIOContext* io_context) {
+  std::vector<std::unique_ptr<protocol::DevToolsDomainHandler>> handlers;
+  handlers.push_back(std::make_unique<protocol::InspectorHandler>());
+  handlers.push_back(std::make_unique<protocol::NetworkHandler>(GetId()));
+  handlers.push_back(std::make_unique<protocol::SchemaHandler>());
+  return handlers;
 }
 
-void SharedWorkerDevToolsAgentHost::DetachSession(DevToolsSession* session) {
-  // Destroying session automatically detaches in renderer.
-}
-
-void SharedWorkerDevToolsAgentHost::DispatchProtocolMessage(
-    DevToolsSession* session,
-    const std::string& message) {
-  session->DispatchProtocolMessage(message);
+blink::mojom::DevToolsAgentAssociatedPtr*
+SharedWorkerDevToolsAgentHost::EnsureAgentPtr() {
+  if (state_ != WORKER_READY)
+    return nullptr;
+  DCHECK(worker_host_);
+  if (!agent_ptr_.is_bound())
+    worker_host_->BindDevToolsAgent(mojo::MakeRequest(&agent_ptr_));
+  return &agent_ptr_;
 }
 
 bool SharedWorkerDevToolsAgentHost::Matches(SharedWorkerHost* worker_host) {
@@ -93,8 +95,7 @@ void SharedWorkerDevToolsAgentHost::WorkerReadyForInspection() {
   DCHECK_EQ(WORKER_NOT_READY, state_);
   DCHECK(worker_host_);
   state_ = WORKER_READY;
-  for (DevToolsSession* session : sessions())
-    session->AttachToAgent(EnsureAgent());
+  SetRenderer(worker_host_->process_id(), nullptr);
 }
 
 void SharedWorkerDevToolsAgentHost::WorkerRestarted(
@@ -105,8 +106,6 @@ void SharedWorkerDevToolsAgentHost::WorkerRestarted(
   worker_host_ = worker_host;
   for (auto* inspector : protocol::InspectorHandler::ForAgentHost(this))
     inspector->TargetReloadedAfterCrash();
-  for (DevToolsSession* session : sessions())
-    session->SetRenderer(worker_host_->process_id(), nullptr);
 }
 
 void SharedWorkerDevToolsAgentHost::WorkerDestroyed() {
@@ -115,19 +114,9 @@ void SharedWorkerDevToolsAgentHost::WorkerDestroyed() {
   state_ = WORKER_TERMINATED;
   for (auto* inspector : protocol::InspectorHandler::ForAgentHost(this))
     inspector->TargetCrashed();
-  for (DevToolsSession* session : sessions())
-    session->SetRenderer(-1, nullptr);
   worker_host_ = nullptr;
   agent_ptr_.reset();
-}
-
-const blink::mojom::DevToolsAgentAssociatedPtr&
-SharedWorkerDevToolsAgentHost::EnsureAgent() {
-  DCHECK_EQ(WORKER_READY, state_);
-  DCHECK(worker_host_);
-  if (!agent_ptr_)
-    worker_host_->BindDevToolsAgent(mojo::MakeRequest(&agent_ptr_));
-  return agent_ptr_;
+  SetRenderer(ChildProcessHost::kInvalidUniqueID, nullptr);
 }
 
 }  // namespace content

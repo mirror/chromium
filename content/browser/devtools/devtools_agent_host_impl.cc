@@ -27,6 +27,7 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/devtools_external_agent_proxy_delegate.h"
+#include "content/public/common/child_process_host.h"
 
 namespace content {
 
@@ -114,7 +115,13 @@ DevToolsAgentHost::List DevToolsAgentHost::GetOrCreateAll() {
   return result;
 }
 
-DevToolsAgentHostImpl::DevToolsAgentHostImpl(const std::string& id) : id_(id) {
+DevToolsAgentHostImpl::DevToolsAgentHostImpl(const std::string& id,
+                                             bool browser_only)
+    : id_(id),
+      browser_only_(browser_only),
+      suspended_sending_messages_to_agent_(false),
+      process_host_id_(ChildProcessHost::kInvalidUniqueID),
+      frame_host_(nullptr) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 }
 
@@ -169,19 +176,19 @@ bool DevToolsAgentHostImpl::HandleCertificateError(WebContents* web_contents,
   return !callback;
 }
 
-DevToolsSession* DevToolsAgentHostImpl::SessionByClient(
-    DevToolsAgentHostClient* client) {
-  auto it = session_by_client_.find(client);
-  return it == session_by_client_.end() ? nullptr : it->second.get();
-}
-
 void DevToolsAgentHostImpl::InnerAttachClient(DevToolsAgentHostClient* client) {
   scoped_refptr<DevToolsAgentHostImpl> protect(this);
-  DevToolsSession* session = new DevToolsSession(this, client);
-  sessions_.insert(session);
-  session_by_client_[client].reset(session);
-  AttachSession(session);
-  if (sessions_.size() == 1)
+  bool is_first = sessions_.empty();
+  if (is_first)
+    OnAttached();
+  DevToolsSession* session = new DevToolsSession(
+      this, client, browser_only_, CreateProtocolHandlers(&io_context_));
+  if (suspended_sending_messages_to_agent_)
+    session->SuspendSendingMessagesToAgent();
+  if (!browser_only_)
+    session->SetRenderer(process_host_id_, frame_host_, EnsureAgentPtr());
+  sessions_[client].reset(session);
+  if (is_first)
     NotifyAttached();
   DevToolsManager* manager = DevToolsManager::GetInstance();
   if (manager->delegate())
@@ -189,13 +196,13 @@ void DevToolsAgentHostImpl::InnerAttachClient(DevToolsAgentHostClient* client) {
 }
 
 void DevToolsAgentHostImpl::AttachClient(DevToolsAgentHostClient* client) {
-  if (SessionByClient(client))
+  if (sessions_.find(client) != sessions_.end())
     return;
   InnerAttachClient(client);
 }
 
 void DevToolsAgentHostImpl::ForceAttachClient(DevToolsAgentHostClient* client) {
-  if (SessionByClient(client))
+  if (sessions_.find(client) != sessions_.end())
     return;
   scoped_refptr<DevToolsAgentHostImpl> protect(this);
   if (!sessions_.empty())
@@ -205,9 +212,8 @@ void DevToolsAgentHostImpl::ForceAttachClient(DevToolsAgentHostClient* client) {
 }
 
 bool DevToolsAgentHostImpl::DetachClient(DevToolsAgentHostClient* client) {
-  if (!SessionByClient(client))
+  if (sessions_.find(client) == sessions_.end())
     return false;
-
   scoped_refptr<DevToolsAgentHostImpl> protect(this);
   InnerDetachClient(client);
   return true;
@@ -216,23 +222,22 @@ bool DevToolsAgentHostImpl::DetachClient(DevToolsAgentHostClient* client) {
 bool DevToolsAgentHostImpl::DispatchProtocolMessage(
     DevToolsAgentHostClient* client,
     const std::string& message) {
-  DevToolsSession* session = SessionByClient(client);
-  if (!session)
+  auto it = sessions_.find(client);
+  if (it == sessions_.end())
     return false;
-  DispatchProtocolMessage(session, message);
+  it->second->DispatchProtocolMessage(message);
   return true;
 }
 
 void DevToolsAgentHostImpl::InnerDetachClient(DevToolsAgentHostClient* client) {
-  std::unique_ptr<DevToolsSession> session =
-      std::move(session_by_client_[client]);
-  sessions_.erase(session.get());
-  session_by_client_.erase(client);
-  DetachSession(session.get());
+  sessions_.erase(client);
+  bool is_last = sessions_.empty();
+  if (is_last)
+    OnDetached();
   DevToolsManager* manager = DevToolsManager::GetInstance();
   if (manager->delegate())
     manager->delegate()->ClientDetached(this, client);
-  if (sessions_.empty()) {
+  if (is_last) {
     io_context_.DiscardAllStreams();
     NotifyDetached();
   }
@@ -299,20 +304,46 @@ bool DevToolsAgentHostImpl::Inspect() {
 
 void DevToolsAgentHostImpl::ForceDetachAllClients() {
   scoped_refptr<DevToolsAgentHostImpl> protect(this);
-  while (!session_by_client_.empty()) {
-    DevToolsAgentHostClient* client = session_by_client_.begin()->first;
+  while (!sessions_.empty()) {
+    DevToolsAgentHostClient* client = sessions_.begin()->first;
     InnerDetachClient(client);
     client->AgentHostClosed(this);
   }
 }
 
-void DevToolsAgentHostImpl::AttachSession(DevToolsSession* session) {}
+void DevToolsAgentHostImpl::SetRenderer(int process_host_id,
+                                        RenderFrameHostImpl* frame_host) {
+  process_host_id_ = process_host_id;
+  frame_host_ = frame_host;
+  for (auto& it : sessions_)
+    it.second->SetRenderer(process_host_id, frame_host, EnsureAgentPtr());
+}
 
-void DevToolsAgentHostImpl::DetachSession(DevToolsSession* session) {}
+void DevToolsAgentHostImpl::SuspendSendingMessagesToAgent() {
+  suspended_sending_messages_to_agent_ = true;
+  for (auto& it : sessions_)
+    it.second->SuspendSendingMessagesToAgent();
+}
 
-void DevToolsAgentHostImpl::DispatchProtocolMessage(
-    DevToolsSession* session,
-    const std::string& message) {}
+void DevToolsAgentHostImpl::ResumeSendingMessagesToAgent() {
+  suspended_sending_messages_to_agent_ = false;
+  for (auto& it : sessions_)
+    it.second->ResumeSendingMessagesToAgent();
+}
+
+void DevToolsAgentHostImpl::OnAttached() {}
+
+void DevToolsAgentHostImpl::OnDetached() {}
+
+std::vector<std::unique_ptr<protocol::DevToolsDomainHandler>>
+DevToolsAgentHostImpl::CreateProtocolHandlers(DevToolsIOContext* io_context) {
+  return std::vector<std::unique_ptr<protocol::DevToolsDomainHandler>>();
+}
+
+blink::mojom::DevToolsAgentAssociatedPtr*
+DevToolsAgentHostImpl::EnsureAgentPtr() {
+  return nullptr;
+}
 
 // static
 void DevToolsAgentHost::DetachAllClients() {

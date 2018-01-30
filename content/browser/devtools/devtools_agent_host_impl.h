@@ -22,6 +22,11 @@ namespace content {
 
 class BrowserContext;
 class DevToolsSession;
+class RenderFrameHostImpl;
+
+namespace protocol {
+class DevToolsDomainHandler;
+}
 
 // Describes interface for managing devtools agents from the browser process.
 class CONTENT_EXPORT DevToolsAgentHostImpl : public DevToolsAgentHost {
@@ -34,6 +39,7 @@ class CONTENT_EXPORT DevToolsAgentHostImpl : public DevToolsAgentHost {
                                      int cert_error,
                                      const GURL& request_url,
                                      CertErrorCallback callback);
+  bool Inspect();
 
   // DevToolsAgentHost implementation.
   void AttachClient(DevToolsAgentHostClient* client) override;
@@ -55,25 +61,25 @@ class CONTENT_EXPORT DevToolsAgentHostImpl : public DevToolsAgentHost {
   void DisconnectWebContents() override;
   void ConnectWebContents(WebContents* wc) override;
 
-  bool Inspect();
-
  protected:
-  DevToolsAgentHostImpl(const std::string& id);
+  DevToolsAgentHostImpl(const std::string& id, bool browser_only);
   ~DevToolsAgentHostImpl() override;
 
+  // These methods are overridden in subclasses.
+  virtual void OnAttached();
+  virtual void OnDetached();
+  virtual std::vector<std::unique_ptr<protocol::DevToolsDomainHandler>>
+  CreateProtocolHandlers(DevToolsIOContext* io_context);
+  virtual blink::mojom::DevToolsAgentAssociatedPtr* EnsureAgentPtr();
+
+  // These methods are called from subclasses.
   static bool ShouldForceCreation();
-
-  virtual void AttachSession(DevToolsSession* session);
-  virtual void DetachSession(DevToolsSession* session);
-  virtual void DispatchProtocolMessage(DevToolsSession* session,
-                                       const std::string& message);
-
   void NotifyCreated();
   void NotifyNavigated();
   void ForceDetachAllClients();
-  DevToolsIOContext* GetIOContext() { return &io_context_; }
-
-  base::flat_set<DevToolsSession*>& sessions() { return sessions_; }
+  void SetRenderer(int process_host_id, RenderFrameHostImpl* frame_host);
+  void SuspendSendingMessagesToAgent();
+  void ResumeSendingMessagesToAgent();
 
  private:
   friend class DevToolsAgentHost; // for static methods
@@ -83,12 +89,14 @@ class CONTENT_EXPORT DevToolsAgentHostImpl : public DevToolsAgentHost {
   void NotifyAttached();
   void NotifyDetached();
   void NotifyDestroyed();
-  DevToolsSession* SessionByClient(DevToolsAgentHostClient* client);
 
   const std::string id_;
-  base::flat_set<DevToolsSession*> sessions_;
+  const bool browser_only_;
+  bool suspended_sending_messages_to_agent_;
+  int process_host_id_;
+  RenderFrameHostImpl* frame_host_;
   base::flat_map<DevToolsAgentHostClient*, std::unique_ptr<DevToolsSession>>
-      session_by_client_;
+      sessions_;
   DevToolsIOContext io_context_;
   static int s_force_creation_count_;
 };

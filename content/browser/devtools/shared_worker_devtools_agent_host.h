@@ -33,10 +33,9 @@ class SharedWorkerDevToolsAgentHost : public DevToolsAgentHostImpl {
   bool Close() override;
 
   // DevToolsAgentHostImpl overrides.
-  void AttachSession(DevToolsSession* session) override;
-  void DetachSession(DevToolsSession* session) override;
-  void DispatchProtocolMessage(DevToolsSession* session,
-                               const std::string& message) override;
+  std::vector<std::unique_ptr<protocol::DevToolsDomainHandler>>
+  CreateProtocolHandlers(DevToolsIOContext* io_context) override;
+  blink::mojom::DevToolsAgentAssociatedPtr* EnsureAgentPtr() override;
 
   bool Matches(SharedWorkerHost* worker_host);
   void WorkerReadyForInspection();
@@ -49,7 +48,6 @@ class SharedWorkerDevToolsAgentHost : public DevToolsAgentHostImpl {
 
  private:
   ~SharedWorkerDevToolsAgentHost() override;
-  const blink::mojom::DevToolsAgentAssociatedPtr& EnsureAgent();
 
   enum WorkerState {
     WORKER_NOT_READY,

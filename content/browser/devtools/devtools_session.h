@@ -24,19 +24,18 @@ class RenderFrameHostImpl;
 class DevToolsSession : public protocol::FrontendChannel,
                         public blink::mojom::DevToolsSessionHost {
  public:
-  DevToolsSession(DevToolsAgentHostImpl* agent_host,
-                  DevToolsAgentHostClient* client);
-  ~DevToolsSession() override;
-
   // Browser-only sessions do not talk to mojom::DevToolsAgent, but instead
   // handle all protocol messages locally in the browser process.
-  void SetBrowserOnly(bool browser_only);
+  DevToolsSession(
+      DevToolsAgentHostImpl* agent_host,
+      DevToolsAgentHostClient* client,
+      bool browser_only,
+      std::vector<std::unique_ptr<protocol::DevToolsDomainHandler>> handlers);
+  ~DevToolsSession() override;
 
-  void AddHandler(std::unique_ptr<protocol::DevToolsDomainHandler> handler);
-  // TODO(dgozman): maybe combine this with AttachToAgent?
-  void SetRenderer(int process_host_id, RenderFrameHostImpl* frame_host);
-
-  void AttachToAgent(const blink::mojom::DevToolsAgentAssociatedPtr& agent);
+  void SetRenderer(int process_host_id,
+                   RenderFrameHostImpl* frame_host,
+                   blink::mojom::DevToolsAgentAssociatedPtr* agent_ptr);
   void DispatchProtocolMessage(const std::string& message);
   void SuspendSendingMessagesToAgent();
   void ResumeSendingMessagesToAgent();
@@ -46,9 +45,10 @@ class DevToolsSession : public protocol::FrontendChannel,
       DevToolsAgentHostImpl* agent_host,
       const std::string& name) {
     std::vector<Handler*> result;
-    if (agent_host->sessions().empty())
+    if (agent_host->sessions_.empty())
       return result;
-    for (DevToolsSession* session : agent_host->sessions()) {
+    for (auto& session_it : agent_host->sessions_) {
+      DevToolsSession* session = session_it.second.get();
       auto it = session->handlers_.find(name);
       if (it != session->handlers_.end())
         result.push_back(static_cast<Handler*>(it->second.get()));
@@ -81,11 +81,11 @@ class DevToolsSession : public protocol::FrontendChannel,
   blink::mojom::DevToolsSessionPtr io_session_ptr_;
   DevToolsAgentHostImpl* agent_host_;
   DevToolsAgentHostClient* client_;
-  bool browser_only_ = false;
+  const bool browser_only_;
   base::flat_map<std::string, std::unique_ptr<protocol::DevToolsDomainHandler>>
       handlers_;
   int process_host_id_;
-  RenderFrameHostImpl* host_;
+  RenderFrameHostImpl* frame_host_;
   std::unique_ptr<protocol::UberDispatcher> dispatcher_;
 
   // These messages were queued after suspending, not sent to the agent,

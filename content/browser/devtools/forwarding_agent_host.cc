@@ -5,7 +5,6 @@
 #include "content/browser/devtools/forwarding_agent_host.h"
 
 #include "base/bind.h"
-#include "content/browser/devtools/devtools_session.h"
 #include "content/browser/devtools/protocol/inspector_handler.h"
 #include "content/public/browser/devtools_external_agent_proxy.h"
 #include "content/public/browser/devtools_external_agent_proxy_delegate.h"
@@ -43,8 +42,8 @@ class ForwardingAgentHost::SessionProxy : public DevToolsExternalAgentProxy {
 ForwardingAgentHost::ForwardingAgentHost(
     const std::string& id,
     std::unique_ptr<DevToolsExternalAgentProxyDelegate> delegate)
-      : DevToolsAgentHostImpl(id),
-        delegate_(std::move(delegate)) {
+    : DevToolsAgentHostImpl(id, true /* browser_only */),
+      delegate_(std::move(delegate)) {
   NotifyCreated();
 }
 

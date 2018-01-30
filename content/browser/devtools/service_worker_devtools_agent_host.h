@@ -47,10 +47,11 @@ class ServiceWorkerDevToolsAgentHost : public DevToolsAgentHostImpl {
   bool Close() override;
 
   // DevToolsAgentHostImpl overrides.
-  void AttachSession(DevToolsSession* session) override;
-  void DetachSession(DevToolsSession* session) override;
-  void DispatchProtocolMessage(DevToolsSession* session,
-                               const std::string& message) override;
+  void OnAttached() override;
+  void OnDetached() override;
+  std::vector<std::unique_ptr<protocol::DevToolsDomainHandler>>
+  CreateProtocolHandlers(DevToolsIOContext* io_context) override;
+  blink::mojom::DevToolsAgentAssociatedPtr* EnsureAgentPtr() override;
 
   void WorkerRestarted(int worker_process_id, int worker_route_id);
   void WorkerReadyForInspection(

@@ -8,7 +8,6 @@
 #include "base/guid.h"
 #include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
-#include "content/browser/devtools/devtools_session.h"
 #include "content/browser/devtools/protocol/browser_handler.h"
 #include "content/browser/devtools/protocol/io_handler.h"
 #include "content/browser/devtools/protocol/memory_handler.h"
@@ -38,7 +37,7 @@ BrowserDevToolsAgentHost::BrowserDevToolsAgentHost(
     scoped_refptr<base::SingleThreadTaskRunner> tethering_task_runner,
     const CreateServerSocketCallback& socket_callback,
     bool only_discovery)
-    : DevToolsAgentHostImpl(base::GenerateGUID()),
+    : DevToolsAgentHostImpl(base::GenerateGUID(), true /* browser_only */),
       tethering_task_runner_(tethering_task_runner),
       socket_callback_(socket_callback),
       only_discovery_(only_discovery) {
@@ -48,28 +47,27 @@ BrowserDevToolsAgentHost::BrowserDevToolsAgentHost(
 BrowserDevToolsAgentHost::~BrowserDevToolsAgentHost() {
 }
 
-void BrowserDevToolsAgentHost::AttachSession(DevToolsSession* session) {
-  session->SetBrowserOnly(true);
-  session->AddHandler(
+std::vector<std::unique_ptr<protocol::DevToolsDomainHandler>>
+BrowserDevToolsAgentHost::CreateProtocolHandlers(
+    DevToolsIOContext* io_context) {
+  std::vector<std::unique_ptr<protocol::DevToolsDomainHandler>> handlers;
+  handlers.push_back(
       base::WrapUnique(new protocol::TargetHandler(true /* browser_only */)));
   if (only_discovery_)
-    return;
+    return handlers;
 
-  session->AddHandler(base::WrapUnique(new protocol::BrowserHandler()));
-  session->AddHandler(base::WrapUnique(new protocol::IOHandler(
-      GetIOContext())));
-  session->AddHandler(base::WrapUnique(new protocol::MemoryHandler()));
-  session->AddHandler(base::WrapUnique(new protocol::SecurityHandler()));
-  session->AddHandler(base::WrapUnique(new protocol::SystemInfoHandler()));
-  session->AddHandler(base::WrapUnique(new protocol::TetheringHandler(
+  handlers.push_back(base::WrapUnique(new protocol::BrowserHandler()));
+  handlers.push_back(base::WrapUnique(new protocol::IOHandler(io_context)));
+  handlers.push_back(base::WrapUnique(new protocol::MemoryHandler()));
+  handlers.push_back(base::WrapUnique(new protocol::SecurityHandler()));
+  handlers.push_back(base::WrapUnique(new protocol::SystemInfoHandler()));
+  handlers.push_back(base::WrapUnique(new protocol::TetheringHandler(
       socket_callback_, tethering_task_runner_)));
-  session->AddHandler(base::WrapUnique(new protocol::TracingHandler(
-      protocol::TracingHandler::Browser,
-      FrameTreeNode::kFrameTreeNodeInvalidId,
-      GetIOContext())));
+  handlers.push_back(base::WrapUnique(new protocol::TracingHandler(
+      protocol::TracingHandler::Browser, FrameTreeNode::kFrameTreeNodeInvalidId,
+      io_context)));
+  return handlers;
 }
-
-void BrowserDevToolsAgentHost::DetachSession(DevToolsSession* session) {}
 
 std::string BrowserDevToolsAgentHost::GetType() {
   return kTypeBrowser;
@@ -92,12 +90,6 @@ bool BrowserDevToolsAgentHost::Close() {
 }
 
 void BrowserDevToolsAgentHost::Reload() {
-}
-
-void BrowserDevToolsAgentHost::DispatchProtocolMessage(
-    DevToolsSession* session,
-    const std::string& message) {
-  session->DispatchProtocolMessage(message);
 }
 
 }  // content

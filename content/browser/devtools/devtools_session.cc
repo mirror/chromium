@@ -29,16 +29,25 @@ bool ShouldSendOnIO(const std::string& method) {
 
 }  // namespace
 
-DevToolsSession::DevToolsSession(DevToolsAgentHostImpl* agent_host,
-                                 DevToolsAgentHostClient* client)
+DevToolsSession::DevToolsSession(
+    DevToolsAgentHostImpl* agent_host,
+    DevToolsAgentHostClient* client,
+    bool browser_only,
+    std::vector<std::unique_ptr<protocol::DevToolsDomainHandler>> handlers)
     : binding_(this),
       agent_host_(agent_host),
       client_(client),
+      browser_only_(browser_only),
       process_host_id_(ChildProcessHost::kInvalidUniqueID),
-      host_(nullptr),
+      frame_host_(nullptr),
       dispatcher_(new protocol::UberDispatcher(this)),
       weak_factory_(this) {
-  dispatcher_->setFallThroughForNotFound(true);
+  dispatcher_->setFallThroughForNotFound(!browser_only);
+  for (std::unique_ptr<protocol::DevToolsDomainHandler>& handler : handlers) {
+    handler->Wire(dispatcher_.get());
+    handler->SetRenderer(process_host_id_, frame_host_);
+    handlers_[handler->name()] = std::move(handler);
+  }
 }
 
 DevToolsSession::~DevToolsSession() {
@@ -48,33 +57,28 @@ DevToolsSession::~DevToolsSession() {
   handlers_.clear();
 }
 
-void DevToolsSession::AddHandler(
-    std::unique_ptr<protocol::DevToolsDomainHandler> handler) {
-  handler->Wire(dispatcher_.get());
-  handler->SetRenderer(process_host_id_, host_);
-  handlers_[handler->name()] = std::move(handler);
-}
-
-void DevToolsSession::SetRenderer(int process_host_id,
-                                  RenderFrameHostImpl* frame_host) {
-  process_host_id_ = process_host_id;
-  host_ = frame_host;
+void DevToolsSession::SetRenderer(
+    int process_host_id,
+    RenderFrameHostImpl* frame_host,
+    blink::mojom::DevToolsAgentAssociatedPtr* agent_ptr) {
+  frame_host_ = frame_host;
+  process_host_id_ =
+      frame_host ? frame_host->GetProcess()->GetID() : process_host_id;
   for (auto& pair : handlers_)
-    pair.second->SetRenderer(process_host_id_, host_);
-}
+    pair.second->SetRenderer(process_host_id_, frame_host_);
 
-void DevToolsSession::SetBrowserOnly(bool browser_only) {
-  browser_only_ = browser_only;
-  dispatcher_->setFallThroughForNotFound(!browser_only);
-}
+  if (!agent_ptr) {
+    MojoConnectionDestroyed();
+    return;
+  }
 
-void DevToolsSession::AttachToAgent(
-    const blink::mojom::DevToolsAgentAssociatedPtr& agent) {
+  DCHECK(agent_ptr->is_bound());
   blink::mojom::DevToolsSessionHostAssociatedPtrInfo host_ptr_info;
   binding_.Bind(mojo::MakeRequest(&host_ptr_info));
-  agent->AttachDevToolsSession(
-      std::move(host_ptr_info), mojo::MakeRequest(&session_ptr_),
-      mojo::MakeRequest(&io_session_ptr_), state_cookie_);
+  (*agent_ptr)
+      ->AttachDevToolsSession(
+          std::move(host_ptr_info), mojo::MakeRequest(&session_ptr_),
+          mojo::MakeRequest(&io_session_ptr_), state_cookie_);
   session_ptr_.set_connection_error_handler(base::BindOnce(
       &DevToolsSession::MojoConnectionDestroyed, base::Unretained(this)));
 
