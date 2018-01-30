@@ -113,6 +113,18 @@ void WindowTreeHostPlatform::ReleaseCapture() {
   platform_window_->ReleaseCapture();
 }
 
+void WindowTreeHostPlatform::ReserveKeys() {
+  if (platform_window_) {
+    platform_window_->ReserveKeys();
+  }
+}
+
+void WindowTreeHostPlatform::ClearReservedKeys() {
+  if (platform_window_) {
+    platform_window_->ClearReservedKeys();
+  }
+}
+
 void WindowTreeHostPlatform::SetCursorNative(gfx::NativeCursor cursor) {
   if (cursor == current_cursor_)
     return;

@@ -197,6 +197,11 @@ class AURA_EXPORT WindowTreeHost : public ui::internal::InputMethodDelegate,
   // Releases OS capture of the root window.
   virtual void ReleaseCapture() = 0;
 
+  // TODO: Make this an interface?
+  // KeyboardLock implementation.
+  virtual void ReserveKeys();
+  virtual void ClearReservedKeys();
+
  protected:
   friend class TestScreen;  // TODO(beng): see if we can remove/consolidate.
 

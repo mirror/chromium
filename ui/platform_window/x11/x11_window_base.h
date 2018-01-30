@@ -37,6 +37,8 @@ class X11_WINDOW_EXPORT X11WindowBase : public PlatformWindow {
   void SetTitle(const base::string16& title) override;
   void SetCapture() override;
   void ReleaseCapture() override;
+  void ReserveKeys() override;
+  void ClearReservedKeys() override;
   void ToggleFullscreen() override;
   void Maximize() override;
   void Minimize() override;

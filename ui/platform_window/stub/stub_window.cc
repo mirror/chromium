@@ -53,6 +53,10 @@ void StubWindow::SetCapture() {
 void StubWindow::ReleaseCapture() {
 }
 
+void StubWindow::ReserveKeys() {}
+
+void StubWindow::ClearReservedKeys() {}
+
 void StubWindow::ToggleFullscreen() {
 }
 
