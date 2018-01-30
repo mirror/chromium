@@ -10,6 +10,7 @@
 #include "platform/runtime_enabled_features.h"
 #include "platform/scheduler/base/real_time_domain.h"
 #include "platform/scheduler/base/virtual_time_domain.h"
+#include "platform/scheduler/child/features.h"
 #include "platform/scheduler/child/web_task_runner_impl.h"
 #include "platform/scheduler/renderer/auto_advancing_virtual_time_domain.h"
 #include "platform/scheduler/renderer/budget_pool.h"
@@ -124,7 +125,13 @@ namespace {
 void CleanUpQueue(MainThreadTaskQueue* queue) {
   if (!queue)
     return;
-  queue->DetachFromRendererScheduler();
+  static bool should_run_tasks_after_frame_detach =
+      base::FeatureList::IsEnabled(kBlinkSchedulerRunTasksAfterFrameDetach);
+  if (should_run_tasks_after_frame_detach) {
+    queue->DetachFromRendererScheduler();
+  } else {
+    queue->ShutdownTaskQueue();
+  }
   queue->SetFrameScheduler(nullptr);
   queue->SetBlameContext(nullptr);
   queue->SetQueuePriority(TaskQueue::QueuePriority::kLowPriority);
@@ -227,14 +234,22 @@ WebFrameScheduler::FrameType WebFrameSchedulerImpl::GetFrameType() const {
 scoped_refptr<base::SingleThreadTaskRunner>
 WebFrameSchedulerImpl::GetTaskRunner(TaskType type) {
   // TODO(haraken): Optimize the mapping from TaskTypes to task runners.
+  static bool use_default_queue =
+      !base::FeatureList::IsEnabled(kBlinkSchedulerRunTasksAfterFrameDetach);
   switch (type) {
     case TaskType::kJavascriptTimer:
       return WebTaskRunnerImpl::Create(ThrottleableTaskQueue(), type);
     case TaskType::kUnspecedLoading:
     case TaskType::kNetworking:
-      return WebTaskRunnerImpl::Create(LoadingTaskQueue(), type);
+      return WebTaskRunnerImpl::Create(
+          use_default_queue ? renderer_scheduler_->DefaultTaskQueue()
+                            : LoadingTaskQueue(),
+          type);
     case TaskType::kNetworkingControl:
-      return WebTaskRunnerImpl::Create(LoadingControlTaskQueue(), type);
+      return WebTaskRunnerImpl::Create(
+          use_default_queue ? renderer_scheduler_->DefaultTaskQueue()
+                            : LoadingControlTaskQueue(),
+          type);
     // Throttling following tasks may break existing web pages, so tentatively
     // these are unthrottled.
     // TODO(nhiroki): Throttle them again after we're convinced that it's safe
@@ -258,7 +273,10 @@ WebFrameSchedulerImpl::GetTaskRunner(TaskType type) {
     case TaskType::kUnspecedTimer:
     case TaskType::kMiscPlatformAPI:
       // TODO(altimin): Move appropriate tasks to throttleable task queue.
-      return WebTaskRunnerImpl::Create(DeferrableTaskQueue(), type);
+      return WebTaskRunnerImpl::Create(
+          use_default_queue ? renderer_scheduler_->DefaultTaskQueue()
+                            : DeferrableTaskQueue(),
+          type);
     // PostedMessage can be used for navigation, so we shouldn't defer it
     // when expecting a user gesture.
     case TaskType::kPostedMessage:
@@ -269,11 +287,17 @@ WebFrameSchedulerImpl::GetTaskRunner(TaskType type) {
     case TaskType::kMediaElementEvent:
     case TaskType::kInternalIndexedDB:
     case TaskType::kInternalMedia:
-      return WebTaskRunnerImpl::Create(PausableTaskQueue(), type);
+      return WebTaskRunnerImpl::Create(
+          use_default_queue ? renderer_scheduler_->DefaultTaskQueue()
+                            : PausableTaskQueue(),
+          type);
     case TaskType::kUnthrottled:
     case TaskType::kInternalTest:
     case TaskType::kInternalWebCrypto:
-      return WebTaskRunnerImpl::Create(UnpausableTaskQueue(), type);
+      return WebTaskRunnerImpl::Create(
+          use_default_queue ? renderer_scheduler_->DefaultTaskQueue()
+                            : UnpausableTaskQueue(),
+          type);
     case TaskType::kCount:
       NOTREACHED();
       break;
