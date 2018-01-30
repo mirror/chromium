@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "792a4cf8_813a9373",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 3029,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-30T23:55:57Z",
+      "side": 1,
+      "message": "Should we do this before calling into the delegate as was before? To have consistent state in case the delegate re-enters.",
+      "revId": "2221a0d3b0dd7b6c44d02806f9e8d030145b0111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
