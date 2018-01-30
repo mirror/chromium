@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 
+#include "base/bind.h"
 #include "base/files/file.h"
 #include "base/files/file_enumerator.h"
 #include "base/files/file_path.h"
@@ -336,6 +337,55 @@ TEST_F(ZipTest, UnzipEvil2) {
   base::FilePath evil_file = output_dir;
   evil_file = evil_file.AppendASCII("../evil.txt");
   ASSERT_FALSE(base::PathExists(evil_file));
+}
+
+TEST_F(ZipTest, UnzipWithFilter) {
+  auto filter = base::BindRepeating([](const base::FilePath& path) {
+    return path.BaseName().MaybeAsASCII().find("foo.txt") == 0;
+  });
+  base::FilePath path;
+  ASSERT_TRUE(GetTestDataDirectory(&path));
+  ASSERT_TRUE(zip::UnzipWithFilterCallback(path.AppendASCII("test.zip"),
+                                           test_dir_, filter, false));
+  ASSERT_TRUE(base::PathExists(test_dir_.AppendASCII("foo.txt")));
+  ASSERT_FALSE(base::PathExists(test_dir_.AppendASCII("foo")));
+  ASSERT_FALSE(
+      base::PathExists(test_dir_.AppendASCII("foo").AppendASCII("bar.txt")));
+}
+
+TEST_F(ZipTest, UnzipWithDelegates) {
+  auto filter =
+      base::BindRepeating([](const base::FilePath& path) { return true; });
+  auto dir_creator = base::BindRepeating(
+      [](const base::FilePath& extract_dir, const base::FilePath& entry_path) {
+        return base::CreateDirectory(extract_dir.Append(entry_path));
+      },
+      test_dir_);
+  auto writer = base::BindRepeating(
+      [](const base::FilePath& extract_dir, const base::FilePath& entry_path)
+          -> std::unique_ptr<zip::WriterDelegate> {
+        return std::make_unique<zip::FilePathWriterDelegate>(
+            extract_dir.Append(entry_path));
+      },
+      test_dir_);
+  base::FilePath path;
+  ASSERT_TRUE(GetTestDataDirectory(&path));
+  base::File file(path.AppendASCII("test.zip"),
+                  base::File::Flags::FLAG_OPEN | base::File::Flags::FLAG_READ);
+  ASSERT_TRUE(zip::UnzipWithFilterAndWriters(file.GetPlatformFile(), writer,
+                                             dir_creator, filter, false));
+  ASSERT_TRUE(base::PathExists(test_dir_.AppendASCII("foo.txt")));
+  ASSERT_TRUE(base::PathExists(test_dir_.AppendASCII("foo")));
+  ASSERT_TRUE(
+      base::PathExists(test_dir_.AppendASCII("foo").AppendASCII("bar.txt")));
+  ASSERT_TRUE(
+      base::PathExists(test_dir_.AppendASCII("foo").AppendASCII("bar")));
+  ASSERT_TRUE(base::PathExists(
+      test_dir_.AppendASCII("foo").AppendASCII("bar").AppendASCII(".hidden")));
+  ASSERT_TRUE(base::PathExists(
+      test_dir_.AppendASCII("foo").AppendASCII("bar").AppendASCII("baz.txt")));
+  ASSERT_TRUE(base::PathExists(
+      test_dir_.AppendASCII("foo").AppendASCII("bar").AppendASCII("quux.txt")));
 }
 
 TEST_F(ZipTest, Zip) {
