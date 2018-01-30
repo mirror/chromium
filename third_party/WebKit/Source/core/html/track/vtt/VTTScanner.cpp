@@ -136,6 +136,33 @@ unsigned VTTScanner::ScanDigits(int& number) {
   return num_digits;
 }
 
+unsigned VTTScanner::ScanDigits(unsigned int& number) {
+  Run run_of_digits = CollectWhile<IsASCIIDigit>();
+  if (run_of_digits.IsEmpty()) {
+    number = 0;
+    return 0;
+  }
+  bool valid_number;
+  size_t num_digits = run_of_digits.length();
+  if (is8_bit_) {
+    number = CharactersToUInt(data_.characters8, num_digits,
+                              WTF::NumberParsingOptions::kNone, &valid_number);
+  } else {
+    number = CharactersToUInt(data_.characters16, num_digits,
+                              WTF::NumberParsingOptions::kNone, &valid_number);
+  }
+
+  // Since we know that scanDigits only scanned valid (ASCII) digits (and
+  // hence that's what got passed to charactersToInt()), the remaining
+  // failure mode for charactersToInt() is overflow, so if |validNumber| is
+  // not true, then set |number| to the maximum int value.
+  if (!valid_number)
+    number = std::numeric_limits<unsigned int>::max();
+  // Consume the digits.
+  SeekTo(run_of_digits.end());
+  return num_digits;
+}
+
 bool VTTScanner::ScanDouble(double& number) {
   Run integer_run = CollectWhile<IsASCIIDigit>();
   SeekTo(integer_run.end());

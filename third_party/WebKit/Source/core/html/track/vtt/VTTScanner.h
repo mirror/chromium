@@ -135,6 +135,12 @@ class CORE_EXPORT VTTScanner {
   // Note: Does not handle sign.
   unsigned ScanDigits(int& number);
 
+  // Scan a set of ASCII digits from the input. Return the number of digits
+  // scanned, and set |number| to the computed value. If the digits make up a
+  // number that does not fit the 'unsigned int' type, |number| is set to
+  // UINT_MAX.
+  unsigned ScanDigits(unsigned int& number);
+
   // Scan a floating point value on one of the forms: \d+\.? \d+\.\d+ \.\d+
   bool ScanDouble(double& number);
 
