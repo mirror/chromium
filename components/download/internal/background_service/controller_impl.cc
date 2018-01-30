@@ -597,7 +597,7 @@ base::Optional<LogSource::EntryDetails> ControllerImpl::GetServiceDownload(
 
 bool ControllerImpl::OnMemoryDump(const base::trace_event::MemoryDumpArgs& args,
                                   base::trace_event::ProcessMemoryDump* pmd) {
-  auto* dump = pmd->GetOrCreateAllocatorDump("components/download");
+  auto* dump = pmd->CreateAllocatorDump("components/download");
 
   size_t memory_cost =
       base::trace_event::EstimateMemoryUsage(externally_active_downloads_);
