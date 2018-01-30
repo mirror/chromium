@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5da846a8_8fb34e1c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-30T19:48:47Z",
+      "side": 1,
+      "message": "This is the bit that is ambiguous/misleading; can we just say \"generates an alternative runner script for each test target, with a \"_v2\" suffix, e.g. run_base_unittests_v2\", for example?\n\nNote that the comma in the sentence is important, to disambiguate whether we\u0027re talking about \"targets that end in v2\" versus \"we\u0027ll create a runner than ends in v2\".",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 12
+      },
+      "revId": "4c16067cc39db979754d0301968807040d58665f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
