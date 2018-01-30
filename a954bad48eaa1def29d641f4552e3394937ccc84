@@ -22,6 +22,30 @@
       "revId": "a954bad48eaa1def29d641f4552e3394937ccc84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c3aa135_cfb9067a",
+        "filename": "base/metrics/bucket_ranges.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2018-01-30T23:19:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf6aeab1_c97d2802",
+      "range": {
+        "startLine": 83,
+        "startChar": 48,
+        "endLine": 83,
+        "endChar": 0
+      },
+      "revId": "a954bad48eaa1def29d641f4552e3394937ccc84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
