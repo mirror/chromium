@@ -75,6 +75,7 @@ ProgramKey ProgramKey::Tile(TexCoordPrecision precision,
   result.is_opaque_ = is_opaque;
   result.has_tex_clamp_rect_ = has_tex_clamp_rect;
   result.has_tint_color_matrix_ = tint_color;
+  result.premultiplied_alpha_ = NON_PREMULTIPLIED_ALPHA;
   return result;
 }
 
