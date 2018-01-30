@@ -9,6 +9,7 @@
 namespace base {
 
 TEST(StrCat, 8Bit) {
+  CHECK(false);
   EXPECT_EQ("", StrCat({""}));
   EXPECT_EQ("1", StrCat({"1"}));
   EXPECT_EQ("122", StrCat({"1", "22"}));
@@ -30,6 +31,10 @@ TEST(StrCat, 16Bit) {
 
 TEST(StrAppend, 8Bit) {
   std::string result;
+
+  std::vector<int> b;
+  // nullptr dereference;
+  EXPECT_EQ(1, b.data()[100]);
 
   result = "foo";
   StrAppend(&result, {std::string()});
