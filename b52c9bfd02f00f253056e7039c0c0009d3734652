@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f54e1b5_cb95960b",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathImpl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2018-01-30T21:00:39Z",
+      "side": 1,
+      "message": "What does the NS in VECTOR_MATH_SIMD_NS mean?",
+      "revId": "b52c9bfd02f00f253056e7039c0c0009d3734652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f3c8639_d31adab1",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathImpl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2018-01-30T21:00:39Z",
+      "side": 1,
+      "message": "I don\u0027t understand what \n\nmax(max(...) for all k, max)\n\nmeans. Can you clarify that?",
+      "revId": "b52c9bfd02f00f253056e7039c0c0009d3734652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b45c612c_46052298",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathSSE.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2018-01-30T21:00:39Z",
+      "side": 1,
+      "message": "Ditto. I don\u0027t know what this max(max(...), max) means.",
+      "revId": "b52c9bfd02f00f253056e7039c0c0009d3734652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
