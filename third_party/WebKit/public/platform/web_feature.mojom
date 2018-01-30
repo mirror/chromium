@@ -1862,6 +1862,13 @@ enum WebFeature {
   kV8HTMLElement_Autocapitalize_AttributeGetter = 2349,
   kV8HTMLElement_Autocapitalize_AttributeSetter = 2350,
   kCSSLegacyAlignment = 2351,
+  kCSSBasicShape = 2352,
+  kCSSGradient = 2353,
+  kCSSPaintFunction = 2354,
+  kWebkitCrossFade = 2355,
+  kV8PaintWorkletGlobalScope_DevicePixelRatio_AttributeGetter = 2356,
+  kV8PaintWorkletGlobalScope_RegisterPaint_Method = 2357,
+  kV8CSS_PaintWorklet_AttributeGetter = 2358,
 
   // Add new features immediately above this line. Don't change assigned
   // numbers of any item, and don't reuse removed slots.

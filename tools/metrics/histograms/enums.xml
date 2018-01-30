@@ -17704,6 +17704,14 @@ Called by update_net_error_codes.py.-->
   <int value="2349" label="V8HTMLElement_Autocapitalize_AttributeGetter"/>
   <int value="2350" label="V8HTMLElement_Autocapitalize_AttributeSetter"/>
   <int value="2351" label="CSSLegacyAlignment"/>
+  <int value="2352" label="CSSBasicShape"/>
+  <int value="2353" label="CSSGradient"/>
+  <int value="2354" label="CSSPaintFunction"/>
+  <int value="2355" label="WebkitCrossFade"/>
+  <int value="2356"
+      label="V8PaintWorkletGlobalScope_DevicePixelRatio_AttributeGetter"/>
+  <int value="2357" label="V8PaintWorkletGlobalScope_RegisterPaint_Method"/>
+  <int value="2358" label="V8CSS_PaintWorklet_AttributeGetter"/>
 </enum>
 
 <enum name="FeedbackSource">
