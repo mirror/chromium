@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "c9b78fe9_a2535e77",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2018-01-30T12:58:45Z",
+      "side": 1,
+      "message": "Added a comment to the member variable declaration.",
+      "parentUuid": "f1f34d82_267669cd",
+      "range": {
+        "startLine": 567,
+        "startChar": 54,
+        "endLine": 567,
+        "endChar": 0
+      },
+      "revId": "af21cd331c8a1a7aec338bf5f0476b5bf9665df1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "278bb6c5_b04a7da8",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 2
@@ -423,6 +447,30 @@
       "revId": "af21cd331c8a1a7aec338bf5f0476b5bf9665df1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d73c92c_098bfa96",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2477,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2018-01-30T12:58:45Z",
+      "side": 1,
+      "message": "I get your point, thanks for the explanation!\n\nI\u0027ve left the helper function around for the second added test as this kind of confusion does not appear there.",
+      "parentUuid": "8623ca93_79d54d5a",
+      "range": {
+        "startLine": 2477,
+        "startChar": 6,
+        "endLine": 2477,
+        "endChar": 44
+      },
+      "revId": "af21cd331c8a1a7aec338bf5f0476b5bf9665df1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0bb9f5ef_d2339899",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2018-01-30T12:58:45Z",
+      "side": 1,
+      "message": "I lean towards 2) as the potential issues are rare\u0026mild. I cannot reduce the enum as I need to distinguish the state that there surely is at least one request in progress from the state that there probably is no request in progress (used to flip the action to ignore/refetch when clearing history/cache).\n\nI\u0027ve added a TODO around the potential inconsistency here.",
+      "parentUuid": "c3e0ce25_1a553279",
+      "range": {
+        "startLine": 576,
+        "startChar": 50,
+        "endLine": 576,
+        "endChar": 51
+      },
+      "revId": "7d454305e2d1cbce1611d9c8e408929316a4e4ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f31b892_b5aaaeb8",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f3a10c6d_e37d0618",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2018-01-30T12:58:45Z",
+      "side": 1,
+      "message": "Although I personally prefer British, I try to use US spelling in code / emails at Google. One \u0027l\u0027 is preferred in the US for this word (https://www.grammarly.com/blog/canceled-vs-cancelled/). Interestingly, the use of both variants in chromium is roughly equal, so both is acceptable.",
+      "parentUuid": "2f31b892_b5aaaeb8",
+      "range": {
+        "startLine": 221,
+        "startChar": 18,
+        "endLine": 221,
+        "endChar": 26
+      },
+      "revId": "7d454305e2d1cbce1611d9c8e408929316a4e4ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b6c4c6d_4da2d02b",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "7d454305e2d1cbce1611d9c8e408929316a4e4ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e5984f5_65db5bcd",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2018-01-30T12:58:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3b6c4c6d_4da2d02b",
+      "range": {
+        "startLine": 223,
+        "startChar": 4,
+        "endLine": 223,
+        "endChar": 24
+      },
+      "revId": "7d454305e2d1cbce1611d9c8e408929316a4e4ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
