@@ -13,6 +13,9 @@ namespace scheduler {
 const base::Feature kHighPriorityInput{"BlinkSchedulerHighPriorityInput",
                                        base::FEATURE_DISABLED_BY_DEFAULT};
 
+const base::Feature kBlinkSchedulerRunTasksAfterFrameDetach{
+    "BlinkSchedulerRunTasksAfterFrameDetach", base::FEATURE_ENABLED_BY_DEFAULT};
+
 }  // namespace scheduler
 }  // namespace blink
 
