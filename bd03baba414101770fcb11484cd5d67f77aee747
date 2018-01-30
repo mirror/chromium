@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b77b1583_3367a02b",
+        "filename": "chrome/browser/signin/account_consistency_mode_manager.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-30T12:11:13Z",
+      "side": 1,
+      "message": "No, there is no AccountConsistencyModeManager for incognito profiles. See DCHECK on line 94 above.\n\nNote that we could change that and instantiate it for incognito profiles... however profile keyed services by default are null in incognito and most services in Chrome behave like this.",
+      "parentUuid": "a6f32645_485aa1e4",
+      "range": {
+        "startLine": 129,
+        "startChar": 36,
+        "endLine": 129,
+        "endChar": 49
+      },
+      "revId": "bd03baba414101770fcb11484cd5d67f77aee747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab7839f3_3f6fbdf6",
         "filename": "chrome/browser/signin/account_consistency_mode_manager.h",
         "patchSetId": 31
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-30T10:22:50Z",
       "side": 1,
       "message": "Can we make these method private and only keep the static ones public?",
+      "range": {
+        "startLine": 29,
+        "startChar": 11,
+        "endLine": 29,
+        "endChar": 40
+      },
+      "revId": "bd03baba414101770fcb11484cd5d67f77aee747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90d95e6d_2915ca8e",
+        "filename": "chrome/browser/signin/account_consistency_mode_manager.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-30T12:11:13Z",
+      "side": 1,
+      "message": "I made private the function that had both a static and a non-static version, so that only the static version is public.\n\nI did not make SetReadyForDiceMigration() private, because there is no static function, and I don\u0027t really see the point of creating one.\n\nI did not make the constructor private either, because it would require exporting the symbols for the factory (to make it a friend).",
+      "parentUuid": "ab7839f3_3f6fbdf6",
       "range": {
         "startLine": 29,
         "startChar": 11,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9f919929_aceb38da",
+        "filename": "components/signin/core/browser/signin_header_helper.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-30T12:11:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3461644_e51421c8",
+      "range": {
+        "startLine": 184,
+        "startChar": 36,
+        "endLine": 184,
+        "endChar": 54
+      },
+      "revId": "bd03baba414101770fcb11484cd5d67f77aee747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e6fcbea_e9717cba",
         "filename": "components/signin/ios/browser/account_consistency_service.mm",
         "patchSetId": 31
@@ -91,6 +163,30 @@
       "revId": "bd03baba414101770fcb11484cd5d67f77aee747",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "002f9234_df13c1b6",
+        "filename": "components/signin/ios/browser/account_consistency_service.mm",
+        "patchSetId": 31
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-30T12:11:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e6fcbea_e9717cba",
+      "range": {
+        "startLine": 366,
+        "startChar": 18,
+        "endLine": 366,
+        "endChar": 36
+      },
+      "revId": "bd03baba414101770fcb11484cd5d67f77aee747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
