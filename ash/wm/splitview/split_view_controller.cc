@@ -170,7 +170,7 @@ void SplitViewController::SnapWindow(aura::Window* window,
     splitview_start_time_ = base::Time::Now();
   }
 
-  State previous_state = state_;
+  previous_state_ = state_;
   if (snap_position == LEFT) {
     if (left_window_ != window) {
       StopObserving(left_window_);
@@ -196,17 +196,6 @@ void SplitViewController::SnapWindow(aura::Window* window,
   const wm::WMEvent event((snap_position == LEFT) ? wm::WM_EVENT_SNAP_LEFT
                                                   : wm::WM_EVENT_SNAP_RIGHT);
   wm::GetWindowState(window)->OnWMEvent(&event);
-  wm::ActivateWindow(window);
-
-  // Stack the other snapped window below the current active window so that
-  // the snapped two windows are always the top two windows while resizing.
-  aura::Window* stacking_target =
-      (window == left_window_) ? right_window_ : left_window_;
-  if (stacking_target)
-    window->parent()->StackChildBelow(stacking_target, window);
-
-  NotifySplitViewStateChanged(previous_state, state_);
-  base::RecordAction(base::UserMetricsAction("SplitView_SnapWindow"));
 }
 
 void SplitViewController::SwapWindows() {
@@ -384,9 +373,9 @@ void SplitViewController::EndSplitView() {
   default_snap_position_ = NONE;
   divider_position_ = -1;
 
-  State previous_state = state_;
+  previous_state_ = state_;
   state_ = NO_SNAP;
-  NotifySplitViewStateChanged(previous_state, state_);
+  NotifySplitViewStateChanged(previous_state_, state_);
 
   Shell::Get()->NotifySplitViewModeEnded();
   base::RecordAction(base::UserMetricsAction("SplitView_EndSplitView"));
@@ -413,7 +402,20 @@ void SplitViewController::OnPostWindowStateTypeChange(
     ash::mojom::WindowStateType old_type) {
   DCHECK(IsSplitViewModeActive());
 
-  if (window_state->IsFullscreen() || window_state->IsMaximized()) {
+  if (window_state->IsSnapped()) {
+    aura::Window* window = window_state->window();
+    wm::ActivateWindow(window);
+
+    // Stack the other snapped window below the current active window so that
+    // the snapped two windows are always the top two windows while resizing.
+    aura::Window* stacking_target =
+        (window == left_window_) ? right_window_ : left_window_;
+    if (stacking_target)
+      window->parent()->StackChildBelow(stacking_target, window);
+
+    NotifySplitViewStateChanged(previous_state_, state_);
+    base::RecordAction(base::UserMetricsAction("SplitView_SnapWindow"));
+  } else if (window_state->IsFullscreen() || window_state->IsMaximized()) {
     // End split view mode if one of the snapped windows gets maximized /
     // full-screened. Also end overview mode if overview mode is active at the
     // moment.
@@ -461,7 +463,7 @@ void SplitViewController::OnOverviewModeStarting() {
 
   // If split view mode is active, reset |state_| to make it be able to select
   // another window from overview window grid.
-  State previous_state = state_;
+  previous_state_ = state_;
   if (default_snap_position_ == LEFT) {
     StopObserving(right_window_);
     right_window_ = nullptr;
@@ -471,7 +473,7 @@ void SplitViewController::OnOverviewModeStarting() {
     left_window_ = nullptr;
     state_ = RIGHT_SNAPPED;
   }
-  NotifySplitViewStateChanged(previous_state, state_);
+  NotifySplitViewStateChanged(previous_state_, state_);
 }
 
 void SplitViewController::OnOverviewModeEnded() {
@@ -808,10 +810,10 @@ void SplitViewController::OnSnappedWindowMinimizedOrDestroyed(
   } else {
     // If there is still one snapped window after minimizing/closing one snapped
     // window, update its snap state and open overview window grid.
-    State previous_state = state_;
+    previous_state_ = state_;
     state_ = left_window_ ? LEFT_SNAPPED : RIGHT_SNAPPED;
     default_snap_position_ = left_window_ ? LEFT : RIGHT;
-    NotifySplitViewStateChanged(previous_state, state_);
+    NotifySplitViewStateChanged(previous_state_, state_);
     StartOverview();
   }
 }

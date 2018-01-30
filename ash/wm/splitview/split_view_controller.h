@@ -268,6 +268,9 @@ class ASH_EXPORT SplitViewController : public aura::WindowObserver,
   // Current snap state.
   State state_ = NO_SNAP;
 
+  // Previous snap state.
+  State previous_state_ = NO_SNAP;
+
   // The default snap position. It's decided by the first snapped window. If the
   // first window was snapped left, then |default_snap_position_| equals LEFT,
   // i.e., all the other windows will open snapped on the right side - and vice
