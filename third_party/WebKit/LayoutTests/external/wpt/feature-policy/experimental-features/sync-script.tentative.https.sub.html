@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<body>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<iframe></iframe>
+<script>
+assert_unreached("sync script should not be run");
+</script>
+<script src="/feature-policy/experimental-features/resources/unreachable-script.js"></script>
+<script async src="feature-policy/experimental-features/resources/reachable-script.js"></script>
+<script defer src="feature-policy/experimental-features/resources/reachable-script.js"></script>
+</body>

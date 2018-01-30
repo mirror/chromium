@@ -213,6 +213,7 @@ bool IsSupportedInFeaturePolicy(FeaturePolicyFeature feature) {
     case FeaturePolicyFeature::kMagnetometer:
     case FeaturePolicyFeature::kSyncXHR:
       return true;
+    case FeaturePolicyFeature::kSyncScript:
     case FeaturePolicyFeature::kVibrate:
     case FeaturePolicyFeature::kUnsizedMedia:
       return RuntimeEnabledFeatures::FeaturePolicyExperimentalFeaturesEnabled();
