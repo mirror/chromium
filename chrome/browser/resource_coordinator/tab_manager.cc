@@ -50,6 +50,8 @@
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/url_constants.h"
+#include "components/assist_ranker/example_preprocessing.h"
+#include "components/assist_ranker/proto/ranker_example.pb.h"
 #include "components/metrics/system_memory_stats_recorder.h"
 #include "components/variations/variations_associated_data.h"
 #include "content/public/browser/browser_thread.h"
@@ -69,6 +71,8 @@
 #include "chrome/browser/resource_coordinator/tab_manager_delegate_chromeos.h"
 #endif
 
+using assist_ranker::ExamplePreprocessor;
+using assist_ranker::RankerExample;
 using base::TimeDelta;
 using base::TimeTicks;
 using content::BrowserThread;
@@ -180,6 +184,34 @@ std::unique_ptr<base::trace_event::ConvertableToTraceFormat> DataAsTraceValue(
   data->SetInteger("num_of_pending_navigations", num_of_pending_navigations);
   data->SetInteger("num_of_loading_contents", num_of_loading_contents);
   return std::move(data);
+}
+
+RankerExample TabStatsToRankerExample(const TabStats& tab_stats) {
+  RankerExample example;
+  auto& features = *example.mutable_featues();
+  features["HasFormEntry"].set_int32_value(tab_stats.has_form_entry);
+  features["IsPinned"].set_int32_value(tab_stats.is_pinned);
+}
+
+void DiscarderModel::Preprocess(RamlerExample* const example) {
+  ExamplePreprocessor().Process(example, true);
+}
+
+bool DiscarderModel::Predict(example) {
+  const auto& features =
+      example.features()
+          .at(ExamplePreprocessor::kVectorizedFeatureDefaultName)
+          .float_list()
+          .float_value();
+  std::vector<float> inputs;
+  std::copy(features.begin(), features.end(), inputs.begin());
+  return DiscarderModel::PredictByTfNatives(inputs);
+}
+
+bool CanDiscardTabPredictionByDiscarderModel(const TabStats& tab_stats) {
+  RankerExample example = TabStatsToRankerExample(tab_stats);
+  DiscarderModelPreprocess(&example);
+  return DiscarderModelPredict(example);
 }
 
 }  // namespace
