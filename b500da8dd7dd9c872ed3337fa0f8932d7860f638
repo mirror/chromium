@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7eb79535_dbaf1986",
+        "filename": "cc/raster/zero_copy_raster_buffer_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-30T20:09:09Z",
+      "side": 1,
+      "message": "Notable? change here is that we make a sync token for each texture, instead of doing it in OrderingBarrier() once. Before we were making a single sync token in ResourceProvider at the time of sending to parent, I believe.\n\nI should probably resolve that before landing, though if we move this to the worker thread then we\u0027ll make a sync token per resource there? Would you rather me put my time on that?",
+      "revId": "b500da8dd7dd9c872ed3337fa0f8932d7860f638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2668d15_5b462ac1",
+        "filename": "cc/raster/zero_copy_raster_buffer_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-30T20:09:09Z",
+      "side": 1,
+      "message": "This now creates the GMB on the worker thread.",
+      "revId": "b500da8dd7dd9c872ed3337fa0f8932d7860f638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
