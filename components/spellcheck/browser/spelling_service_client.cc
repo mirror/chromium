@@ -58,7 +58,8 @@ bool SpellingServiceClient::RequestTextCheck(
     const base::string16& text,
     TextCheckCompleteCallback callback) {
   DCHECK(type == SUGGEST || type == SPELLCHECK);
-  if (!context || !IsAvailable(context, type)) {
+  if (!context || 
+      !IsAvailable(context, type)) {
     std::move(callback).Run(false, text, std::vector<SpellCheckResult>());
     return false;
   }
