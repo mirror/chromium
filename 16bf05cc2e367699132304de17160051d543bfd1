@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41f642e6_77d953b5",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_tools_menu_button.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-30T16:01:09Z",
+      "side": 1,
+      "message": "This is an odd choice, but was here before too. Id\u0027 be curious to know the rationale.",
+      "range": {
+        "startLine": 26,
+        "startChar": 36,
+        "endLine": 26,
+        "endChar": 38
+      },
+      "revId": "16bf05cc2e367699132304de17160051d543bfd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "def9e253_fd014ffa",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_tools_menu_button.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-30T16:01:09Z",
+      "side": 1,
+      "message": "Leftmost, or leading-most? (??)",
+      "range": {
+        "startLine": 29,
+        "startChar": 19,
+        "endLine": 29,
+        "endChar": 26
+      },
+      "revId": "16bf05cc2e367699132304de17160051d543bfd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e18d2f1_446277c3",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_tools_menu_button.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-30T16:01:09Z",
+      "side": 1,
+      "message": "Horizontal",
+      "range": {
+        "startLine": 32,
+        "startChar": 3,
+        "endLine": 32,
+        "endChar": 11
+      },
+      "revId": "16bf05cc2e367699132304de17160051d543bfd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "904536e1_cdafa686",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_tools_menu_button.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-30T16:01:09Z",
+      "side": 1,
+      "message": "height",
+      "range": {
+        "startLine": 34,
+        "startChar": 15,
+        "endLine": 34,
+        "endChar": 20
+      },
+      "revId": "16bf05cc2e367699132304de17160051d543bfd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
