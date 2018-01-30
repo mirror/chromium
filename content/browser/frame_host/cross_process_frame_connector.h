@@ -131,6 +131,7 @@ class CONTENT_EXPORT CrossProcessFrameConnector
 
   // Handlers for messages received from the parent frame.
   void OnUpdateResizeParams(const gfx::Rect& frame_rect,
+                            const gfx::Size& local_frame_size,
                             const ScreenInfo& screen_info,
                             uint64_t sequence_number,
                             const viz::SurfaceId& surface_id);
@@ -158,9 +159,10 @@ class CONTENT_EXPORT CrossProcessFrameConnector
 
   bool is_scroll_bubbling_;
 
-  // The last frame rect received from the parent renderer.
-  // |last_received_frame_rect_| may be in DIP if use zoom for DSF is off.
-  gfx::Rect last_received_frame_rect_;
+  // The last pre-transform frame size received from the parent renderer.
+  // |last_received_local_frame_size_| may be in DIP if use zoom for DSF is
+  // off.
+  gfx::Size last_received_local_frame_size_;
 
   DISALLOW_COPY_AND_ASSIGN(CrossProcessFrameConnector);
 };

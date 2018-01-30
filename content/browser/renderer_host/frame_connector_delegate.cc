@@ -64,6 +64,19 @@ bool FrameConnectorDelegate::IsSubtreeThrottled() const {
   return false;
 }
 
+void FrameConnectorDelegate::SetLocalFrameSize(
+    const gfx::Size& local_frame_size) {
+  if (use_zoom_for_device_scale_factor_) {
+    local_frame_size_in_pixels_ = local_frame_size;
+    local_frame_size_in_dip_ = gfx::ScaleToCeiledSize(
+        local_frame_size, 1.f / screen_info_.device_scale_factor);
+  } else {
+    local_frame_size_in_dip_ = local_frame_size;
+    local_frame_size_in_pixels_ = gfx::ScaleToCeiledSize(
+        local_frame_size, screen_info_.device_scale_factor);
+  }
+}
+
 void FrameConnectorDelegate::SetRect(const gfx::Rect& frame_rect) {
   if (use_zoom_for_device_scale_factor_) {
     frame_rect_in_pixels_ = frame_rect;
