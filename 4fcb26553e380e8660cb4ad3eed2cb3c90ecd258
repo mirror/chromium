@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "77126e7f_aa2f65f7",
+        "filename": "content/renderer/accessibility/aom_content_ax_tree.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2018-01-30T02:42:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d24087c_b66a090e",
+      "revId": "4fcb26553e380e8660cb4ad3eed2cb3c90ecd258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "caa94232_afb0ed18",
         "filename": "content/renderer/accessibility/aom_content_ax_tree.h",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4596c400_ddfbadb2",
+        "filename": "content/renderer/accessibility/aom_content_ax_tree.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2018-01-30T02:42:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "caa94232_afb0ed18",
+      "revId": "4fcb26553e380e8660cb4ad3eed2cb3c90ecd258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f82e8a47_567b84f0",
         "filename": "third_party/WebKit/public/platform/WebComputedAXTree.h",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "4fcb26553e380e8660cb4ad3eed2cb3c90ecd258",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42367a19_15240c62",
+        "filename": "third_party/WebKit/public/platform/WebComputedAXTree.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2018-01-30T02:42:22Z",
+      "side": 1,
+      "message": "Good catch, missed this one. All of the accessors now do the same thing regardless of type, so I\u0027ve made the explanation a comment applying to all of them.",
+      "parentUuid": "f82e8a47_567b84f0",
+      "revId": "4fcb26553e380e8660cb4ad3eed2cb3c90ecd258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
