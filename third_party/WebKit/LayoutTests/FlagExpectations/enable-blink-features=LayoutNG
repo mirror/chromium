@@ -4,12 +4,6 @@
 # Need support for getBoundingClientRect() with LayoutNG.
 crbug.com/755750 accessibility/selection-affinity.html [ Failure ]
 
-# We currently write back whitespace-collapsed strings to LayoutText, causing
-# the following failures. Once we can paint inlines directly from fragment tree,
-# we can stop the writeback.
-
-# Editing does not completely work with LayoutNG yet.
-
 ## Reverse hosting of editable block
 crbug.com/707656 editing/execCommand/format-block-crash.html [ Crash ]
 crbug.com/707656 editing/input/scroll-viewport-page-up-down.html [ Failure ]
@@ -27,7 +21,6 @@ crbug.com/591099 fast/text/apply-start-width-after-skipped-text.html [ Skip ]
 
 # Slow when run with LayoutNG
 crbug.com/591099 external/wpt/css/css-color/color-resolving-hsl.html [ Timeout ]
-
 
 # New passes
 crbug.com/626703 external/wpt/css/css-ui/text-overflow-021.html [ Failure ]
