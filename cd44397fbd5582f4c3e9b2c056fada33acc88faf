@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a962bb5_8c889429",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1034,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2018-01-30T18:20:35Z",
+      "side": 1,
+      "message": "nit: Can you avoid static_cast and do the same as L1007",
+      "range": {
+        "startLine": 1034,
+        "startChar": 6,
+        "endLine": 1034,
+        "endChar": 17
+      },
+      "revId": "cd44397fbd5582f4c3e9b2c056fada33acc88faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f43f129_6c16eac7",
+        "filename": "ui/app_list/views/search_result_base_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2018-01-30T18:20:35Z",
+      "side": 1,
+      "message": "nit: \u003d default;",
+      "range": {
+        "startLine": 9,
+        "startChar": 60,
+        "endLine": 9,
+        "endChar": 62
+      },
+      "revId": "cd44397fbd5582f4c3e9b2c056fada33acc88faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db24a254_24e2268e",
+        "filename": "ui/app_list/views/search_result_base_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2018-01-30T18:20:35Z",
+      "side": 1,
+      "message": "nit: Add protected ~SearchResultBaseView()",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 22
+      },
+      "revId": "cd44397fbd5582f4c3e9b2c056fada33acc88faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e16c297e_1779857a",
+        "filename": "ui/app_list/views/search_result_base_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2018-01-30T18:20:35Z",
+      "side": 1,
+      "message": "Please add DISALLOW_COPY_AND_ASSIGN(...)",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 0
+      },
+      "revId": "cd44397fbd5582f4c3e9b2c056fada33acc88faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a367d622_dced4eeb",
+        "filename": "ui/app_list/views/search_result_list_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2018-01-30T18:20:35Z",
+      "side": 1,
+      "message": "Can we avoid static_cast?\nWhat is about creating std::vector\u003cSearchResultView*\u003e unowned_search_result_views_; and accessing it?",
+      "range": {
+        "startLine": 98,
+        "startChar": 34,
+        "endLine": 98,
+        "endChar": 52
+      },
+      "revId": "cd44397fbd5582f4c3e9b2c056fada33acc88faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
