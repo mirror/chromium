@@ -12,6 +12,7 @@ import org.chromium.mojo.system.MojoException;
 
 import java.lang.annotation.Annotation;
 import java.lang.ref.WeakReference;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -133,9 +134,15 @@ class RemoteObjectImpl implements RemoteObject {
         Object result = null;
         try {
             result = method.invoke(target, args);
-        } catch (Exception e) {
-            // TODO(jbroman): Handle this. (IllegalAccessException and ones thrown by the method
-            // internally.)
+        } catch (IllegalAccessException | IllegalArgumentException | NullPointerException e) {
+            // This should never happen. This object should ensure that it only calls public methods
+            // with valid arguments on non-null object references, assuming that |mTarget| is
+            // properly kept alive.
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            e.getCause().printStackTrace();
+            callback.call(makeErrorResult(RemoteInvocationError.EXCEPTION_THROWN));
+            return;
         }
 
         RemoteInvocationResult mojoResult = convertResult(result);
