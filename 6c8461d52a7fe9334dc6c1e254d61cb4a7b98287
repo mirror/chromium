@@ -249,6 +249,24 @@
     },
     {
       "key": {
+        "uuid": "d797552c_6e97211f",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1249,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-30T17:31:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0566f91c_4d82c608",
+      "revId": "6c8461d52a7fe9334dc6c1e254d61cb4a7b98287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fad9ccd7_abb51662",
         "filename": "content/browser/frame_host/navigation_request.h",
         "patchSetId": 4
@@ -308,6 +326,30 @@
       "side": 1,
       "message": "\u003e I was thinking about the \"history.length\" javascript instruction, which is synchronous.\n\u003e Anyway, I will update the comment.\n\nOh, I didn\u0027t get that part.  Anyway, comment looks good now.",
       "parentUuid": "3a05f9ac_fc245c05",
+      "range": {
+        "startLine": 299,
+        "startChar": 52,
+        "endLine": 299,
+        "endChar": 65
+      },
+      "revId": "6c8461d52a7fe9334dc6c1e254d61cb4a7b98287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9633b8ff_d8729123",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-30T17:31:08Z",
+      "side": 1,
+      "message": "Ack.\nWhat I meant was: javascript\"history.length\" is an synchronous call. It happens in the Renderer process, but that\u0027s the browser which is the source of truth about history. So there must be some work to keep this state in sync.\nBut yes, whatever.",
+      "parentUuid": "ff649a59_b0fd258c",
       "range": {
         "startLine": 299,
         "startChar": 52,

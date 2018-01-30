@@ -94,6 +94,30 @@
       "revId": "206454eb0bc1e2e2886293abf2b205a32099ba50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "114a8ada_67041af8",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 6658,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-30T17:31:08Z",
+      "side": 0,
+      "message": "\u003e The code you\u0027re changing here is called during CommitNavigation.  It used to be the place where we reset the renderer\u0027s notion of history length/offset for the layout test case.  Apparently that no longer works in some cases?\nWhy do you think it no longer works? Layout test are not failing.\nBut, Yes I understand what you think. I don\u0027t know why it is still working.\nI think we should clear the history if request_params.should_clear_history_list is true in DidCommitProvisionalLoad().\n\n\u003e You also refer to DidCommitNavigation as updating the current state. I assume that means the code in RenderFrameImpl::UpdateNavigationHistory?  That code doesn\u0027t seem to take should_clear_history_list into account, so it wouldn\u0027t reset the length/offset in the cases above.\n\nAccording to me, the RenderViewImpl\u0027s history is updated by the RenderFrameImpl in two places:\n\n1) Commit(Failed)?Navigation() -\u003e PrepareRenderViewForNavigation()\n2) DidCommitProvisionalLoad()  -\u003e UpdateNavigationEntry()\n\nIn 1) the current state is copied from the browser.\nIn 2) the new state is computed:\n      * new navigation \u003d\u003e (offset++, length \u003d offset + 1)\n      * history navigation \u003d\u003e (offset \u003d pending_history_list_offset)\n\nI think we should add:\n      * should_clear_history_list \u003d\u003e (offset \u003d 0, length \u003d 1)",
+      "parentUuid": "f9ce5ba0_93eaa7cd",
+      "range": {
+        "startLine": 6658,
+        "startChar": 3,
+        "endLine": 6658,
+        "endChar": 0
+      },
+      "revId": "206454eb0bc1e2e2886293abf2b205a32099ba50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
