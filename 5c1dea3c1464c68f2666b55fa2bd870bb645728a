@@ -16,6 +16,24 @@
       "revId": "5c1dea3c1464c68f2666b55fa2bd870bb645728a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93c70935_beb40ee6",
+        "filename": "sql/vfs_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-30T18:38:35Z",
+      "side": 1,
+      "message": "We will, after https://crrev.com/c/882961",
+      "parentUuid": "065e32ff_49ea8106",
+      "revId": "5c1dea3c1464c68f2666b55fa2bd870bb645728a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
