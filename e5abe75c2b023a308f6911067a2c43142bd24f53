@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "7b3e512a_867538ae",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-30T19:36:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "333c2f68_4b846569",
+      "range": {
+        "startLine": 7,
+        "startChar": 9,
+        "endLine": 7,
+        "endChar": 34
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "883de604_fef2480f",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
@@ -144,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "b2d0e894_dee4580a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-30T19:36:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e782ff0_b3243b08",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 36
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5769ad94_20a577f9",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
@@ -212,6 +260,30 @@
       "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86397411_372f1906",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-30T19:36:03Z",
+      "side": 1,
+      "message": "I think I typed these changes into a separate window and then didn\u0027t hit SAVE for some reason. :|",
+      "parentUuid": "8426cb67_4d559528",
+      "range": {
+        "startLine": 13,
+        "startChar": 30,
+        "endLine": 13,
+        "endChar": 43
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -309,6 +381,54 @@
     },
     {
       "key": {
+        "uuid": "6c6c40a4_ff04090c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-30T19:36:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "906babc5_8ae654a4",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 25
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb74d3ab_60f921ea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-30T19:36:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45e13811_1e29287d",
+      "range": {
+        "startLine": 15,
+        "startChar": 27,
+        "endLine": 15,
+        "endChar": 41
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "675b665e_cce19af8",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
@@ -329,6 +449,30 @@
       "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47461c3b_ff7086e1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-30T19:36:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "675b665e_cce19af8",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 51
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -470,6 +614,30 @@
       "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2893944b_2baf6e18",
+        "filename": "build/config/fuchsia/rules.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-30T19:36:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d4430923_512a4c2b",
+      "range": {
+        "startLine": 17,
+        "startChar": 39,
+        "endLine": 17,
+        "endChar": 48
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -673,6 +841,30 @@
       "side": 1,
       "message": "We don\u0027t actually use the tarball at all, even with the old runner scripts; they package things up from the original binaries and files.  I think this was added for archival purposes, so the far is probably a sufficient replacement - we may need to update a bot-side artifact archival step for this file before we can remove it, though.",
       "parentUuid": "5de656dd_d1dabfc4",
+      "range": {
+        "startLine": 264,
+        "startChar": 0,
+        "endLine": 280,
+        "endChar": 3
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fba91e54_2545042e",
+        "filename": "build/config/fuchsia/rules.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-30T19:36:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e94ac327_82d8a328",
       "range": {
         "startLine": 264,
         "startChar": 0,
@@ -1881,6 +2073,30 @@
       "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17335bab_0066c610",
+        "filename": "build/fuchsia/runner_v2/target.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-30T19:36:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d31437b_391dc18c",
+      "range": {
+        "startLine": 103,
+        "startChar": 6,
+        "endLine": 103,
+        "endChar": 13
+      },
+      "revId": "e5abe75c2b023a308f6911067a2c43142bd24f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
