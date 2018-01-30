@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f73ddf5_e20802ad",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResourceContent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2018-01-30T18:21:28Z",
+      "side": 1,
+      "message": "This is referenced inside LayoutImage::ImageChanged() which can be called inside NotifyObservers().\n\n(*A) Therefore, this block should be moved at least before Line 468 (i.e. before NotifyObservers()).\n\n(*B) Probably this block should be moved earlier (e.g. the head of this UpdateImage() method), because currently ImageChanged() can be also called from ImageResourceObserver::AddObserver().\nOtherwise, if we early-exit UpdateImage() at Line 441 and then AddObserver() is called, has_device_pixel_ratio_header_value_ is referenced (in ImageChanged() called from AddObserver()) before this block is executed. (I\u0027m not so sure whether this has real observable impact though)\n\nAlternatively to (*B), we might want to modify AddObserver() in a separate CL (e.g. only call UpdateImage() only when IsLoaded() is true; I feel this is a little cleaner in terms of ImageResourceContent implementation, but not so sure about its implication and behavior changes).\n(Even in this case, (*A) should be done)",
+      "revId": "84d3ee6247941dd056cc150326d67fb0a31378af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
