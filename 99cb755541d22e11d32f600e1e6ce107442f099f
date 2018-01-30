@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1560820c_2e42d582",
+        "filename": "third_party/WebKit/Source/modules/canvas/canvas2d/BaseRenderingContext2D.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2018-01-30T18:38:43Z",
+      "side": 1,
+      "message": "The two fix here look like we are only fixing the canvas/OffscreenCanvas image source being zero and disregard other image source, such as SVG, CSSImage, ImageBitmap and so on. They can be zero-sized too, aren\u0027t they?",
+      "revId": "99cb755541d22e11d32f600e1e6ce107442f099f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
