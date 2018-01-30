@@ -261,8 +261,9 @@ void FrameCaptionButtonContainerView::AnimationProgressed(
 
     double tweened_value_slide =
         gfx::Tween::CalculateValue(gfx::Tween::EASE_OUT, current_value);
-    minimize_x = gfx::Tween::LinearIntValueBetween(tweened_value_slide,
-                                                   size_button_->x(), 0);
+    minimize_x = gfx::Tween::LinearIntValueBetween(
+        tweened_value_slide, size_button_->x(),
+        size_button_->x() - minimize_button_->width());
   } else {
     double scaled_value_alpha =
         CapAnimationValue((1.0f - current_value) / SizeButtonHideDuration());
@@ -274,8 +275,9 @@ void FrameCaptionButtonContainerView::AnimationProgressed(
         (HidePositionStartValue() - current_value) / HidePositionStartValue());
     double tweened_value_position =
         gfx::Tween::CalculateValue(gfx::Tween::EASE_OUT, scaled_value_position);
-    minimize_x = gfx::Tween::LinearIntValueBetween(tweened_value_position, 0,
-                                                   size_button_->x());
+    minimize_x = gfx::Tween::LinearIntValueBetween(
+        tweened_value_position, size_button_->x() - minimize_button_->width(),
+        size_button_->x());
   }
   size_button_->SetAlpha(size_alpha);
   minimize_button_->SetX(minimize_x);
