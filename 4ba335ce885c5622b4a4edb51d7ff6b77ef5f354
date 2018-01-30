@@ -16,6 +16,24 @@
       "revId": "4ba335ce885c5622b4a4edb51d7ff6b77ef5f354",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4aba3b4_70260cd5",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2018-01-30T11:09:39Z",
+      "side": 1,
+      "message": "It\u0027s surprising that this would have caused a perf regression, but stranger things have happened. LGTM!",
+      "parentUuid": "204e24db_7f211b67",
+      "revId": "4ba335ce885c5622b4a4edb51d7ff6b77ef5f354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
