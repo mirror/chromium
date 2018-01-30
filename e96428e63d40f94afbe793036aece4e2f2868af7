@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "06262bf6_1a529563",
+        "filename": "content/browser/download/download_file_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2018-01-30T23:03:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f71bff4_52d62f48",
+      "revId": "e96428e63d40f94afbe793036aece4e2f2868af7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c88dc64e_5ee07e35",
         "filename": "content/browser/download/download_file_impl.cc",
         "patchSetId": 5
@@ -68,6 +86,24 @@
       "revId": "e96428e63d40f94afbe793036aece4e2f2868af7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a992c8ed_9faa9155",
+        "filename": "content/browser/download/download_file_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2018-01-30T23:03:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e6851de_b2496a00",
+      "revId": "e96428e63d40f94afbe793036aece4e2f2868af7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
