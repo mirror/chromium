@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a3ba535_4333ea5a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ShortcutHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2018-01-30T22:15:48Z",
+      "side": 1,
+      "message": "+yfriedman@ for his wisdom and geniusdom\n\nThis function should be somewhere more generic e.g. PackageManagerUtil.java in base/android\nIf you move the function to PackageManagerUtil.java I will change all the other callers to use the new function :)\n(e.g. RemoteMediaPlayerController.java)",
+      "revId": "44f36febe7f33cef1ac8198a7dcebaf0e3d9956c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efe02473_2d2d287d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappLauncherActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2018-01-30T22:15:48Z",
+      "side": 1,
+      "message": "I think that things would be clearer if you moved the logic to determine whether a CCT should be launched to a separate function\nshouldLaunchInvalidWebappInCct()\n\nMy suggestion:\n\nString webappMac \u003d IntentUtils.safeGetStringExtra(intent, ShortcutHelper.EXTRA_MAC);\nif (webappInfo \u003d\u003d null || (!isValidMacForUrl(webappUrl, webappMac) \u0026\u0026 !wasIntentFromChrome(intent))) {\n    if (shouldLaunchInvalidWebappInCct(intent, webappInfo)) {\n        launchInCCT(url);\n        return;\n    }\n    launchInTab(url, webappInfo \u003d\u003d NULL ? ShortcutSource.UNKNOWN : webappInfo.source());\n    return;\n}\n\n...",
+      "revId": "44f36febe7f33cef1ac8198a7dcebaf0e3d9956c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f02c8ba_8860fb58",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappLauncherActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2018-01-30T22:15:48Z",
+      "side": 1,
+      "message": "- Is setting the class name necessary?\n- Do you need to set the package name? (e.g. multiple channels of Chrome are installed)\n- I don\u0027t know what value EXTRA_SEND_TO_EXTERNAL_DEFAULT_HANDLER should have. I will investigate.",
+      "revId": "44f36febe7f33cef1ac8198a7dcebaf0e3d9956c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
