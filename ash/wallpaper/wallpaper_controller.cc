@@ -1063,6 +1063,19 @@ bool WallpaperController::GetPathFromCache(const AccountId& account_id,
   return false;
 }
 
+bool WallpaperController::ShouldSetDevicePolicyWallpaper() const {
+  // Only allow the device wallpaper if the policy is in effect for enterprise
+  // managed devices.
+  if (!is_device_wallpaper_policy_enforced_)
+    return false;
+
+  // Only set the device wallpaper if we're at the login screen.
+  if (Shell::Get()->session_controller()->IsActiveUserSessionStarted())
+    return false;
+
+  return true;
+}
+
 void WallpaperController::Init(
     mojom::WallpaperControllerClientPtr client,
     const base::FilePath& user_data_path,
@@ -1215,9 +1228,20 @@ void WallpaperController::UpdateCustomWallpaperLayout(
 void WallpaperController::ShowUserWallpaper(
     mojom::WallpaperUserInfoPtr user_info) {
   current_user_ = std::move(user_info);
+  const user_manager::UserType user_type = current_user_->type;
+
+  if (user_type == user_manager::USER_TYPE_KIOSK_APP ||
+      user_type == user_manager::USER_TYPE_ARC_KIOSK_APP) {
+    return;
+  }
+
+  if (ShouldSetDevicePolicyWallpaper()) {
+    SetDevicePolicyWallpaper();
+    return;
+  }
+
   const AccountId account_id = current_user_->account_id;
   const bool is_persistent = !current_user_->is_ephemeral;
-
   // Guest user or regular user in ephemeral mode.
   // TODO(wzang/xdai): Check if the wallpaper info for ephemeral users should
   // be saved to local state.
@@ -1293,6 +1317,7 @@ void WallpaperController::ShowUserWallpaper(
 }
 
 void WallpaperController::ShowSigninWallpaper() {
+  current_user_.reset();
   if (ShouldSetDevicePolicyWallpaper()) {
     SetDevicePolicyWallpaper();
   } else {
@@ -1804,19 +1829,6 @@ bool WallpaperController::IsDevicePolicyWallpaper() const {
            wallpaper::WallpaperType::DEVICE;
   }
   return false;
-}
-
-bool WallpaperController::ShouldSetDevicePolicyWallpaper() const {
-  // Only allow the device wallpaper if the policy is in effect for enterprise
-  // managed devices.
-  if (!is_device_wallpaper_policy_enforced_)
-    return false;
-
-  // Only set the device wallpaper if we're at the login screen.
-  if (Shell::Get()->session_controller()->IsActiveUserSessionStarted())
-    return false;
-
-  return true;
 }
 
 void WallpaperController::SetDevicePolicyWallpaper() {

@@ -303,10 +303,10 @@ class WallpaperManagerPolicyTest : public LoginManagerTest,
     fake_session_manager_client_->OnPropertyChangeComplete(true /* success */);
   }
 
-  bool ShouldSetDeviceWallpaper(const AccountId& account_id) {
-    std::string url, hash;
-    return WallpaperManager::Get()->ShouldSetDeviceWallpaper(account_id, &url,
-                                                             &hash);
+  bool ShouldSetDeviceWallpaper() {
+    return ash::Shell::Get()
+        ->wallpaper_controller()
+        ->ShouldSetDevicePolicyWallpaper();
   }
 
   // Obtain WallpaperInfo for |user_number| from WallpaperManager.
@@ -422,7 +422,7 @@ IN_PROC_BROWSER_TEST_F(WallpaperManagerPolicyTest, DevicePolicyTest) {
   // wallpaper shows up in the login screen.
   InjectDevicePolicy(kRedImageFileName);
   RunUntilWallpaperChangeCount(1);
-  EXPECT_TRUE(ShouldSetDeviceWallpaper(user_manager::SignInAccountId()));
+  EXPECT_TRUE(ShouldSetDeviceWallpaper());
   EXPECT_EQ(kRedImageColor, GetAverageWallpaperColor());
 
   // Log in a test user and set the user wallpaper policy. The user policy
@@ -437,8 +437,7 @@ IN_PROC_BROWSER_TEST_F(WallpaperManagerPolicyTest, DevicePolicyTest) {
   // Set the device wallpaper policy inside the user session. That that the
   // user wallpaper doesn't change.
   InjectDevicePolicy(kBlueImageFileName);
-  EXPECT_FALSE(ShouldSetDeviceWallpaper(
-      user_manager::UserManager::Get()->GetActiveUser()->GetAccountId()));
+  EXPECT_FALSE(ShouldSetDeviceWallpaper());
   EXPECT_EQ(kGreenImageColor, GetAverageWallpaperColor());
 }
 
