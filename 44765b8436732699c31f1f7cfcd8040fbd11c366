@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f77cf8b3_39fca5b2",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintWorklet.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2018-01-30T13:13:18Z",
+      "side": 1,
+      "message": "I am a bit confused. Isn\u0027t this already measuring the usage?",
+      "range": {
+        "startLine": 10,
+        "startChar": 4,
+        "endLine": 10,
+        "endChar": 26
+      },
+      "revId": "44765b8436732699c31f1f7cfcd8040fbd11c366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
