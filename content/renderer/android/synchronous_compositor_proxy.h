@@ -131,6 +131,10 @@ class SynchronousCompositorProxy : public ui::SynchronousInputHandler,
   uint32_t need_invalidate_count_;
   uint32_t did_activate_pending_tree_count_;
 
+  // True if OnComputeScroll is called via ipc, and false during calls to
+  // OnComputeScroll that originate from this object.
+  bool compute_scroll_called_via_ipc_;
+
   DISALLOW_COPY_AND_ASSIGN(SynchronousCompositorProxy);
 };
 

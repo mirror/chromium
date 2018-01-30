@@ -58,7 +58,8 @@ SynchronousCompositorHost::SynchronousCompositorHost(
       renderer_param_version_(0u),
       need_animate_scroll_(false),
       need_invalidate_count_(0u),
-      did_activate_pending_tree_count_(0u) {
+      did_activate_pending_tree_count_(0u),
+      did_send_compute_scroll_(false) {
   client_->DidInitializeCompositor(this, process_id_, routing_id_);
 }
 
@@ -356,6 +357,9 @@ void SynchronousCompositorHost::SynchronouslyZoomBy(float zoom_delta,
 
 void SynchronousCompositorHost::OnComputeScroll(
     base::TimeTicks animation_time) {
+  if (did_send_compute_scroll_)
+    return;
+
   if (!need_animate_scroll_)
     return;
   need_animate_scroll_ = false;
@@ -364,6 +368,7 @@ void SynchronousCompositorHost::OnComputeScroll(
   sender_->Send(
       new SyncCompositorMsg_ComputeScroll(routing_id_, animation_time));
   compute_scroll_needs_synchronous_draw_ = true;
+  did_send_compute_scroll_ = true;  // Only send the ipc once.
 }
 
 void SynchronousCompositorHost::DidOverscroll(

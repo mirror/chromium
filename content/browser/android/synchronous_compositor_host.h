@@ -116,6 +116,9 @@ class SynchronousCompositorHost : public SynchronousCompositor {
   uint32_t need_invalidate_count_;
   uint32_t did_activate_pending_tree_count_;
 
+  // Indicates whether a ComputeScroll ipc has been sent.
+  bool did_send_compute_scroll_;
+
   DISALLOW_COPY_AND_ASSIGN(SynchronousCompositorHost);
 };
 

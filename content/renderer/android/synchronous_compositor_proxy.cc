@@ -42,7 +42,8 @@ SynchronousCompositorProxy::SynchronousCompositorProxy(
       max_page_scale_factor_(0.f),
       need_animate_scroll_(false),
       need_invalidate_count_(0u),
-      did_activate_pending_tree_count_(0u) {
+      did_activate_pending_tree_count_(0u),
+      compute_scroll_called_via_ipc_(false) {
   DCHECK(input_handler_proxy_);
   input_handler_proxy_->SetOnlySynchronouslyAnimateRootFlings(this);
 }
@@ -367,6 +368,12 @@ void SynchronousCompositorProxy::SetNeedsBeginFrames(bool needs_begin_frames) {
 
 void SynchronousCompositorProxy::OnComputeScroll(
     base::TimeTicks animation_time) {
+  // Don't tick here if the call is from ipc. We will tick in OnBeginFrame
+  // instead.
+  if (compute_scroll_called_via_ipc_)
+    return;
+  compute_scroll_called_via_ipc_ = true;
+
   if (need_animate_scroll_) {
     need_animate_scroll_ = false;
     input_handler_proxy_->SynchronouslyAnimate(animation_time);
@@ -380,6 +387,14 @@ void SynchronousCompositorProxy::OnSetBeginFrameSourcePaused(bool paused) {
 }
 
 void SynchronousCompositorProxy::OnBeginFrame(const viz::BeginFrameArgs& args) {
+  if (compute_scroll_called_via_ipc_) {
+    // If OnComputeScroll is being called at all (via ipc), tick flings here
+    // instead, marking |compute_scroll_called_via_ipc_| as false during this
+    // call.
+    compute_scroll_called_via_ipc_ = false;
+    OnComputeScroll(args.frame_time);
+  }
+
   if (layer_tree_frame_sink_)
     layer_tree_frame_sink_->BeginFrame(args);
 }
