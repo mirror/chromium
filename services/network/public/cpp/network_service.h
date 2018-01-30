@@ -7,6 +7,7 @@
 
 #include <memory>
 
+#include "base/component_export.h"
 #include "services/network/public/interfaces/network_service.mojom.h"
 
 namespace net {
@@ -19,7 +20,8 @@ namespace network {
 class URLRequestContextBuilderMojo;
 
 // Allows an in-process NetworkService to be set up.
-class NetworkService : public network::mojom::NetworkService {
+class COMPONENT_EXPORT(NETWORK_CPP) NetworkService
+    : public network::mojom::NetworkService {
  public:
   // Creates a NetworkService instance on the current thread, optionally using
   // the passed-in NetLog. Does not take ownership of |net_log|. Must be

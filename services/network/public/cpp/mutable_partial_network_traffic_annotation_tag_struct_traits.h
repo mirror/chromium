@@ -5,6 +5,7 @@
 #ifndef SERVICES_NETWORK_PUBLIC_CPP_MUTABLE_PARTIAL_NETWORK_TRAFFIC_ANNOTATION_TAG_STRUCT_TRAITS_H_
 #define SERVICES_NETWORK_PUBLIC_CPP_MUTABLE_PARTIAL_NETWORK_TRAFFIC_ANNOTATION_TAG_STRUCT_TRAITS_H_
 
+#include "base/component_export.h"
 #include "mojo/common/common_custom_types_struct_traits.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "services/network/public/interfaces/mutable_partial_network_traffic_annotation_tag.mojom.h"
@@ -12,7 +13,7 @@
 namespace mojo {
 
 template <>
-struct StructTraits<
+struct COMPONENT_EXPORT(NETWORK_CPP) StructTraits<
     network::mojom::MutablePartialNetworkTrafficAnnotationTagDataView,
     net::MutablePartialNetworkTrafficAnnotationTag> {
   static int32_t unique_id_hash_code(
