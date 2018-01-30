@@ -34,6 +34,24 @@
       "revId": "99cb755541d22e11d32f600e1e6ce107442f099f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9967156_6926e170",
+        "filename": "third_party/WebKit/Source/modules/canvas/canvas2d/BaseRenderingContext2D.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2018-01-30T18:54:47Z",
+      "side": 1,
+      "message": "junov@: Do you think we should do this zero-size detection in all canvas image source?\n\nAlso, I found out from the spec git pull that it only modifies the regular canvas and not the OffscreenCanvas. I think you might want to create a TODO task somewhere to change the spec for OffscreenCanvas image source as well.",
+      "parentUuid": "e1edc9f9_87666282",
+      "revId": "99cb755541d22e11d32f600e1e6ce107442f099f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
