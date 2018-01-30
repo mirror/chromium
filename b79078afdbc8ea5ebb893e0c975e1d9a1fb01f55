@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "271e4389_574ecad7",
+        "filename": "content/shell/browser/layout_test/blink_test_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 833,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-30T13:32:58Z",
+      "side": 1,
+      "message": "We seem to force RGBA in the following call - do you know how we end up with BGRA elsewhere?\n\nhttps://cs.chromium.org/chromium/src/content/renderer/gpu/render_widget_compositor.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d1055",
+      "revId": "b79078afdbc8ea5ebb893e0c975e1d9a1fb01f55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
