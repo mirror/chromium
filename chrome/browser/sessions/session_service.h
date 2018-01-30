@@ -162,6 +162,11 @@ class SessionService : public sessions::BaseSessionServiceDelegate,
   void SetWindowAppName(const SessionID& window_id,
                         const std::string& app_name);
 
+  // Invoked when the NavigationController has removed entries at |index|.
+  void TabNavigationPathPrunedAtIndex(const SessionID& window_id,
+                                      const SessionID& tab_id,
+                                      int index);
+
   // Invoked when the NavigationController has removed entries from the back of
   // the list. |count| gives the number of entries in the navigation controller.
   void TabNavigationPathPrunedFromBack(const SessionID& window_id,
