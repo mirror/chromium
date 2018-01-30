@@ -388,6 +388,14 @@ int SimpleBackendImpl::OpenEntry(const std::string& key,
   scoped_refptr<SimpleEntryImpl> simple_entry =
       CreateOrFindActiveOrDoomedEntry(entry_hash, key, &post_doom);
   if (!simple_entry) {
+    if (post_doom->empty() &&
+        entry_operations_mode_ == SimpleEntryImpl::OPTIMISTIC_OPERATIONS) {
+      // ### net_log?
+      // If we're start behind a doom, and we're the first such op, clearly
+      // the open will fail.
+      return net::ERR_FAILED;
+    }
+
     Callback<int(const net::CompletionCallback&)> operation =
         base::Bind(&SimpleBackendImpl::OpenEntry,
                    base::Unretained(this), key, entry);
