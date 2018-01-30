@@ -83,7 +83,8 @@ class InMemoryDownloadTest : public testing::Test {
     download_ = std::make_unique<InMemoryDownload>(
         base::GenerateGUID(), request_params, TRAFFIC_ANNOTATION_FOR_TESTS,
         delegate(), request_context_getter_,
-        base::BindOnce(&BlobStorageContextGetter, blob_storage_context_.get()),
+        base::BindRepeating(&BlobStorageContextGetter,
+                            blob_storage_context_.get()),
         io_thread_->task_runner());
   }
 
