@@ -22,6 +22,30 @@
       "revId": "ac03afb80b859b77ba90ef82ec67d1587e1071ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41e8616e_165b1e49",
+        "filename": "tools/traffic_annotation/scripts/check_annotations.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-30T09:17:24Z",
+      "side": 1,
+      "message": "Yes, I wanted to land the update separately from the activation code, so that if someone reverts the CL that activates the test, this change won\u0027t be reverted.",
+      "parentUuid": "8af8c9ad_53df01ac",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 42
+      },
+      "revId": "ac03afb80b859b77ba90ef82ec67d1587e1071ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
