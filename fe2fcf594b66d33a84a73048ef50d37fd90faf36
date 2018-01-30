@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b13c4a9f_1833fe06",
+        "filename": "media/capture/video/file_video_capture_device.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2018-01-30T15:24:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a1a7367_705f0f0f",
+      "range": {
+        "startLine": 364,
+        "startChar": 62,
+        "endLine": 365,
+        "endChar": 11
+      },
+      "revId": "fe2fcf594b66d33a84a73048ef50d37fd90faf36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93c1c9ca_bbc0c469",
         "filename": "media/capture/video/file_video_capture_device.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "fe2fcf594b66d33a84a73048ef50d37fd90faf36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee46d2b1_f5fec446",
+        "filename": "media/capture/video/file_video_capture_device.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2018-01-30T15:24:12Z",
+      "side": 1,
+      "message": "I find it more clear like this, but ok.\nDone",
+      "parentUuid": "93c1c9ca_bbc0c469",
+      "range": {
+        "startLine": 370,
+        "startChar": 0,
+        "endLine": 400,
+        "endChar": 0
+      },
+      "revId": "fe2fcf594b66d33a84a73048ef50d37fd90faf36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
