@@ -577,7 +577,7 @@ void ChromeContentRendererClient::RenderFrameCreated(
   SandboxStatusExtension::Create(render_frame);
 #endif
 
-  new NetErrorHelper(render_frame);
+  new NetErrorHelper(render_frame, chrome_observer_->is_online());
 
   new page_load_metrics::MetricsRenderFrameObserver(render_frame);
 
