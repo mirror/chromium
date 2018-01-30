@@ -763,6 +763,13 @@ void FetchManager::Loader::PerformHTTPFetch() {
     }
     request.SetKeepalive(true);
   }
+
+  if (request_->Blob()) {
+    mojom::blink::BlobPtr blob_clone;
+    request_->Blob()->Clone(MakeRequest(&blob_clone));
+    request.SetBlob(std::move(blob_clone));
+  }
+
   // "3. Append `Host`, ..."
   // FIXME: Implement this when the spec is fixed.
 

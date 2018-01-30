@@ -63,6 +63,16 @@ void BlobURLStoreImpl::Resolve(const GURL& url, ResolveCallback callback) {
   std::move(callback).Run(std::move(blob));
 }
 
+void BlobURLStoreImpl::Resolve2(const GURL& url,
+                                blink::mojom::BlobRequest blob) {
+  if (!context_)
+    return;
+  std::unique_ptr<BlobDataHandle> blob_handle =
+      context_->GetBlobDataFromPublicURL(url);
+  if (blob_handle)
+    BlobImpl::Create(std::move(blob_handle), std::move(blob));
+}
+
 void BlobURLStoreImpl::RegisterWithUUID(blink::mojom::BlobPtr blob,
                                         const GURL& url,
                                         RegisterCallback callback,

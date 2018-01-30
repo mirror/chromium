@@ -21,4 +21,5 @@ interface BlobURLStore {
 
   // Resolves a public Blob URL.
   Resolve(url.mojom.Url url) => (blink.mojom.Blob? blob);
+  Resolve2(url.mojom.Url url, blink.mojom.Blob& blob);
 };

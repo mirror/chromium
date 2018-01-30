@@ -155,6 +155,17 @@ void PublicURLManager::Revoke(const KURL& url) {
   url_to_registry_.erase(it);
 }
 
+void PublicURLManager::Resolve(const KURL& url,
+                               mojom::blink::BlobRequest blob) {
+  DCHECK(RuntimeEnabledFeatures::MojoBlobURLsEnabled());
+  DCHECK(url.ProtocolIs("blob"));
+  if (!url_store_) {
+    BlobDataHandle::GetBlobRegistry()->URLStoreForOrigin(
+        GetExecutionContext()->GetSecurityOrigin(), MakeRequest(&url_store_));
+  }
+  url_store_->Resolve2(url, std::move(blob));
+}
+
 void PublicURLManager::ContextDestroyed(ExecutionContext*) {
   if (is_stopped_)
     return;

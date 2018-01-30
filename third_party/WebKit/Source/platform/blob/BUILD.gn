@@ -32,6 +32,10 @@ blink_platform_sources("blob") {
     "BlobURL.cpp",
     "BlobURL.h",
   ]
+
+  deps = [
+    "//services/network/public/interfaces:interfaces_blink",
+  ]
 }
 
 jumbo_source_set("unit_tests") {

@@ -34,6 +34,7 @@
 #include "content/public/common/service_worker_modes.h"
 #include "content/public/renderer/fixed_received_data.h"
 #include "content/public/renderer/request_peer.h"
+#include "content/renderer/blob_storage/blob_url_loader_factory.h"
 #include "content/renderer/loader/ftp_directory_listing_response_delegate.h"
 #include "content/renderer/loader/request_extra_data.h"
 #include "content/renderer/loader/resource_dispatcher.h"
@@ -735,13 +736,23 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
     extra_data = &empty_extra_data;
   extra_data->CopyToResourceRequest(resource_request.get());
 
+  scoped_refptr<SharedURLLoaderFactory> url_loader_factory =
+      url_loader_factory_;
+  mojo::ScopedMessagePipeHandle blob_handle = request.GetBlob();
+  if (blob_handle.is_valid()) {
+    blink::mojom::BlobPtr blob(blink::mojom::BlobPtrInfo(
+        std::move(blob_handle), blink::mojom::Blob::Version_));
+    url_loader_factory =
+        base::MakeRefCounted<RendererBlobURLLoaderFactory>(std::move(blob));
+  }
+
   if (sync_load_response) {
     DCHECK(defers_loading_ == NOT_DEFERRING);
 
     resource_dispatcher_->StartSync(
         std::move(resource_request), request.RequestorID(),
         extra_data->frame_origin(), GetTrafficAnnotationTag(request),
-        sync_load_response, url_loader_factory_,
+        sync_load_response, std::move(url_loader_factory),
         extra_data->TakeURLLoaderThrottles());
     return;
   }
@@ -758,7 +769,7 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
   request_id_ = resource_dispatcher_->StartAsync(
       std::move(resource_request), request.RequestorID(), task_runner_,
       extra_data->frame_origin(), GetTrafficAnnotationTag(request),
-      false /* is_sync */, std::move(peer), url_loader_factory_,
+      false /* is_sync */, std::move(peer), std::move(url_loader_factory),
       extra_data->TakeURLLoaderThrottles(),
       std::move(url_loader_client_endpoints));
 

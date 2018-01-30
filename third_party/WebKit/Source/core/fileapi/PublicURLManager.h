@@ -55,6 +55,8 @@ class CORE_EXPORT PublicURLManager final
   String RegisterURL(URLRegistrable*);
   // Revokes the given URL.
   void Revoke(const KURL&);
+  // When mojo Blob URLs are enabled this resolves the provided URL to a Blob.
+  void Resolve(const KURL&, mojom::blink::BlobRequest);
 
   // ContextLifecycleObserver interface.
   void ContextDestroyed(ExecutionContext*) override;

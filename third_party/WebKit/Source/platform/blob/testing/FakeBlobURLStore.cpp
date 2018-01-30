@@ -29,4 +29,12 @@ void FakeBlobURLStore::Resolve(const KURL& url, ResolveCallback callback) {
   std::move(callback).Run(std::move(blob));
 }
 
+void FakeBlobURLStore::Resolve2(const KURL& url,
+                                mojom::blink::BlobRequest blob) {
+  auto it = registrations.find(url);
+  if (it == registrations.end())
+    return;
+  it->value->Clone(std::move(blob));
+}
+
 }  // namespace blink

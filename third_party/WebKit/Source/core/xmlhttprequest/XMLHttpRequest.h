@@ -304,6 +304,7 @@ class XMLHttpRequest final : public XMLHttpRequestEventTarget,
   Member<XMLHttpRequestUpload> upload_;
 
   KURL url_;
+  mojom::blink::BlobPtr url_blob_;
   AtomicString method_;
   HTTPHeaderMap request_headers_;
   // Not converted to ASCII lowercase. Must be lowered later or compared

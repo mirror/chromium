@@ -361,6 +361,15 @@ class PLATFORM_EXPORT ResourceRequest final {
   }
   bool IsSameDocumentNavigation() const { return is_same_document_navigation_; }
 
+  // Non-null for blob: URL fetches, if the URL has already succesfully been
+  // resolved.
+  mojom::blink::Blob* GetBlob() const {
+    return blob_ ? blob_->data.get() : nullptr;
+  }
+  void SetBlob(mojom::blink::BlobPtr blob) {
+    blob_ = new base::RefCountedData<mojom::blink::BlobPtr>(std::move(blob));
+  }
+
  private:
   const CacheControlHeader& GetCacheControlHeader() const;
 
@@ -407,6 +416,7 @@ class PLATFORM_EXPORT ResourceRequest final {
   InputToLoadPerfMetricReportPolicy input_perf_metric_report_policy_;
   RedirectStatus redirect_status_;
   WTF::Optional<String> suggested_filename_;
+  scoped_refptr<base::RefCountedData<mojom::blink::BlobPtr>> blob_;
 
   mutable CacheControlHeader cache_control_header_cache_;
 
@@ -468,6 +478,7 @@ struct CrossThreadResourceRequestData {
   InputToLoadPerfMetricReportPolicy input_perf_metric_report_policy_;
   ResourceRequest::RedirectStatus redirect_status_;
   base::Optional<String> suggested_filename_;
+  mojom::blink::BlobPtrInfo blob_;
 };
 
 }  // namespace blink

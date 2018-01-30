@@ -435,6 +435,14 @@ base::Optional<WebString> WebURLRequest::GetSuggestedFilename() const {
       resource_request_->GetSuggestedFilename().value());
 }
 
+mojo::ScopedMessagePipeHandle WebURLRequest::GetBlob() const {
+  if (!resource_request_->GetBlob())
+    return mojo::ScopedMessagePipeHandle();
+  mojom::blink::BlobPtr blob_clone;
+  resource_request_->GetBlob()->Clone(MakeRequest(&blob_clone));
+  return blob_clone.PassInterface().PassHandle();
+}
+
 const ResourceRequest& WebURLRequest::ToResourceRequest() const {
   DCHECK(resource_request_);
   return *resource_request_;

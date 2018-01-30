@@ -9,6 +9,7 @@
 #include "core/fetch/BodyStreamBuffer.h"
 #include "core/fetch/FetchManager.h"
 #include "core/fetch/RequestInit.h"
+#include "core/fileapi/PublicURLManager.h"
 #include "core/loader/ThreadableLoader.h"
 #include "platform/bindings/V8PrivateProperty.h"
 #include "platform/loader/fetch/FetchUtils.h"
@@ -48,6 +49,11 @@ FetchRequestData* CreateCopyOfFetchRequestDataForFetch(
   request->SetRedirect(original->Redirect());
   request->SetIntegrity(original->Integrity());
   request->SetKeepalive(original->Keepalive());
+  if (original->Blob()) {
+    mojom::blink::BlobPtr blob_clone;
+    original->Blob()->Clone(MakeRequest(&blob_clone));
+    request->SetBlob(std::move(blob_clone));
+  }
   return request;
 }
 
@@ -127,6 +133,16 @@ Request* Request::CreateRequestWithRequestOrString(
     // "Set |request|'s url to |parsedURL| and replace |request|'s url list
     // single URL with a copy of |parsedURL|."
     request->SetURL(parsed_url);
+
+    // Parsing URLs should also resolve blob URLs.
+    if (parsed_url.ProtocolIs("blob") &&
+        RuntimeEnabledFeatures::MojoBlobURLsEnabled()) {
+      mojom::blink::BlobPtr blob;
+      ExecutionContext::From(script_state)
+          ->GetPublicURLManager()
+          .Resolve(parsed_url, MakeRequest(&blob));
+      request->SetBlob(std::move(blob));
+    }
 
     // We don't use fallback values. We set these flags directly in below.
     // - "Set |fallbackMode| to "cors"."

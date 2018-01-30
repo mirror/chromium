@@ -90,6 +90,9 @@ class FetchRequestData final
   bool Keepalive() const { return keepalive_; }
   void SetKeepalive(bool b) { keepalive_ = b; }
 
+  mojom::blink::Blob* Blob() const { return blob_.get(); }
+  void SetBlob(mojom::blink::BlobPtr blob) { blob_ = std::move(blob); }
+
   // We use these strings instead of "no-referrer" and "client" in the spec.
   static AtomicString NoReferrerString() { return AtomicString(); }
   static AtomicString ClientReferrerString() {
@@ -131,6 +134,8 @@ class FetchRequestData final
   String mime_type_;
   String integrity_;
   bool keepalive_;
+  // Blob if this is a request for a blob: URL.
+  mojom::blink::BlobPtr blob_;
 
   DISALLOW_COPY_AND_ASSIGN(FetchRequestData);
 };
