@@ -97,8 +97,14 @@ class ContentVerifyJob : public base::RefCountedThreadSafe<ContentVerifyJob> {
 
   static void SetObserverForTests(TestObserver* observer);
 
- private:
+ protected:
   virtual ~ContentVerifyJob();
+
+  // Called when our ContentHashReader has finished initializing.
+  // Overridden in tests.
+  virtual void OnHashesReady(bool success);
+
+ private:
   friend class base::RefCountedThreadSafe<ContentVerifyJob>;
 
   // Called each time we're done adding bytes for the current block, and are
@@ -109,9 +115,6 @@ class ContentVerifyJob : public base::RefCountedThreadSafe<ContentVerifyJob> {
 
   // Dispatches the failure callback with the given reason.
   void DispatchFailureCallback(FailureReason reason);
-
-  // Called when our ContentHashReader has finished initializing.
-  void OnHashesReady(bool success);
 
   // Indicates whether the caller has told us they are done calling BytesRead.
   bool done_reading_;
