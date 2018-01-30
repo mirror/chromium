@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "682e9876_b3cf6549",
+        "filename": "third_party/WebKit/Source/core/html/canvas/HTMLCanvasElement.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-30T21:59:37Z",
+      "side": 1,
+      "message": "I wouldn\u0027t worry about this call happening before flushing recorded commands. For cases where we use use a recording canvas and raster during the main frame, this should be a no-op since images are decoded only when using the raster canvas and unlocked each time the recording is flushed. There shouldn\u0027t be anything to unlock in that case.\n\nThe only case I am afraid FlushRecording won\u0027t handle is where the canvas is not operating in deferral mode. The consequence of that would be that we unlock everything once the cache is filled to the limit, and I was wondering if we should have another hook for that case where we proactively flush.",
+      "parentUuid": "6c64bf64_5032c46e",
+      "revId": "68819d877b389961b4f5499916e135fba9c17328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04933fec_69fd40ac",
         "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
         "patchSetId": 7
