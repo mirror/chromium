@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "957a8219_3ed1ad82",
+        "filename": "base/test/scoped_task_environment_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-30T20:43:04Z",
+      "side": 1,
+      "message": "Why is 1s \"no\" delay?",
+      "range": {
+        "startLine": 213,
+        "startChar": 30,
+        "endLine": 213,
+        "endChar": 43
+      },
+      "revId": "82f8570aa56901fb8fcc78cd257336c01528f07d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f9d0ab9_c38e238e",
+        "filename": "base/test/scoped_task_environment_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-30T20:43:04Z",
+      "side": 1,
+      "message": "Doesn\u0027t seem like you\u0027re doing anything with |counter|? Just use base::DoNothing?",
+      "range": {
+        "startLine": 240,
+        "startChar": 20,
+        "endLine": 244,
+        "endChar": 26
+      },
+      "revId": "82f8570aa56901fb8fcc78cd257336c01528f07d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6371426a_678888d7",
+        "filename": "base/test/scoped_task_environment_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-30T20:43:04Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 258,
+        "startChar": 28,
+        "endLine": 258,
+        "endChar": 41
+      },
+      "revId": "82f8570aa56901fb8fcc78cd257336c01528f07d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bc2e964_446e071a",
+        "filename": "base/test/scoped_task_environment_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-30T20:43:04Z",
+      "side": 1,
+      "message": "static_assert if all args are constexpr",
+      "range": {
+        "startLine": 259,
+        "startChar": 2,
+        "endLine": 259,
+        "endChar": 11
+      },
+      "revId": "82f8570aa56901fb8fcc78cd257336c01528f07d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
