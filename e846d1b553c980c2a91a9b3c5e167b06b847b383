@@ -94,6 +94,30 @@
       "revId": "e846d1b553c980c2a91a9b3c5e167b06b847b383",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ee9368f_04f26ea6",
+        "filename": "build/util/lib/common/chrome_test_server_spawner.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-30T02:31:57Z",
+      "side": 1,
+      "message": "Ok. Thanks for trying it. Then your original solution (Patch set 4) LGTM. It may be worth adding comments in remote_test_server.cc to mention that the connection may be forwarded twice for OCSP.",
+      "parentUuid": "d088e2ef_44a6168b",
+      "range": {
+        "startLine": 260,
+        "startChar": 26,
+        "endLine": 260,
+        "endChar": 27
+      },
+      "revId": "e846d1b553c980c2a91a9b3c5e167b06b847b383",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
