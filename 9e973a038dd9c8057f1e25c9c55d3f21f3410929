@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bd39e164_fbc3d706",
+        "filename": "content/browser/loader/redirect_to_file_resource_handler_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-30T19:15:08Z",
+      "side": 1,
+      "message": "My mistake.  Fixed.",
+      "parentUuid": "a1219492_2217b24e",
+      "range": {
+        "startLine": 30,
+        "startChar": 19,
+        "endLine": 30,
+        "endChar": 38
+      },
+      "revId": "9e973a038dd9c8057f1e25c9c55d3f21f3410929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "148683c0_8ad3c92f",
         "filename": "net/base/mock_file_stream.h",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "9e973a038dd9c8057f1e25c9c55d3f21f3410929",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82f70a3a_68f3e4d4",
+        "filename": "net/base/mock_file_stream.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-30T19:15:08Z",
+      "side": 1,
+      "message": "My mistake, done.",
+      "parentUuid": "148683c0_8ad3c92f",
+      "range": {
+        "startLine": 16,
+        "startChar": 19,
+        "endLine": 16,
+        "endChar": 29
+      },
+      "revId": "9e973a038dd9c8057f1e25c9c55d3f21f3410929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
