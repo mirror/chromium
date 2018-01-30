@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c96d95de_77b5b667",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1195,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-01-30T01:36:15Z",
+      "side": 1,
+      "message": "nit: s/IntRect/const IntRect/",
+      "range": {
+        "startLine": 1195,
+        "startChar": 2,
+        "endLine": 1195,
+        "endChar": 9
+      },
+      "revId": "cd1141f3f582057b5483398b59a1f75946d6c745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
