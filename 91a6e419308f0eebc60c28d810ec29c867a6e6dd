@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9893587f_33b4551d",
+        "filename": "ui/message_center/message_center_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2018-01-30T15:51:46Z",
+      "side": 1,
+      "message": "With the tray, the click is intercepted before reaching this function, but I call it in this CL when the More Settings button is clicked. \n\nThis can maybe be handled better, but it gets the prototype going. I was tempted just to open a tab to chrome://settings/content/notifications, because the way to handle the settings button seems a bit convoluted. :)",
+      "range": {
+        "startLine": 539,
+        "startChar": 2,
+        "endLine": 539,
+        "endChar": 14
+      },
+      "revId": "91a6e419308f0eebc60c28d810ec29c867a6e6dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
