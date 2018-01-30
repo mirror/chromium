@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4337129c_6905442c",
+        "filename": "chrome/browser/policy/chrome_browser_policy_connector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-30T16:44:02Z",
+      "side": 1,
+      "message": "BrowserPolicyConnector::CreatePolicyProviders() doesn\u0027t add any so it doesn\u0027t matter. But that could change. Updated.",
+      "parentUuid": "45542c62_abe92ac2",
+      "revId": "deb759ab784b155ba40ba5f03ce3c6a36eb4480a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd553470_790dc334",
         "filename": "chrome/browser/policy/chrome_browser_policy_connector.h",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1e88601c_ec89fa4e",
+        "filename": "chrome/browser/policy/chrome_browser_policy_connector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-30T16:44:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd553470_790dc334",
+      "revId": "deb759ab784b155ba40ba5f03ce3c6a36eb4480a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9eeb5650_1f96f8b3",
         "filename": "components/policy/core/browser/browser_policy_connector_base.cc",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "deb759ab784b155ba40ba5f03ce3c6a36eb4480a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b52caf4a_fb02836b",
+        "filename": "components/policy/core/browser/browser_policy_connector_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-30T16:44:02Z",
+      "side": 1,
+      "message": "I assume you mean DCHECK(!is_initialized_)?",
+      "parentUuid": "9eeb5650_1f96f8b3",
+      "revId": "deb759ab784b155ba40ba5f03ce3c6a36eb4480a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -73,6 +127,30 @@
       "revId": "deb759ab784b155ba40ba5f03ce3c6a36eb4480a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5683192_06dd9fd1",
+        "filename": "components/policy/core/browser/browser_policy_connector_base.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-30T16:44:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f606405a_3ed161b8",
+      "range": {
+        "startLine": 76,
+        "startChar": 68,
+        "endLine": 76,
+        "endChar": 69
+      },
+      "revId": "deb759ab784b155ba40ba5f03ce3c6a36eb4480a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -120,6 +198,30 @@
       "revId": "deb759ab784b155ba40ba5f03ce3c6a36eb4480a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e394a1b8_1fa51339",
+        "filename": "components/policy/core/browser/browser_policy_connector_base.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-30T16:44:02Z",
+      "side": 1,
+      "message": "I went with something slightly different. Hopefully you like it.",
+      "parentUuid": "626ead11_55eee9d0",
+      "range": {
+        "startLine": 91,
+        "startChar": 7,
+        "endLine": 91,
+        "endChar": 23
+      },
+      "revId": "deb759ab784b155ba40ba5f03ce3c6a36eb4480a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
