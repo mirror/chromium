@@ -34,6 +34,24 @@
       "revId": "cd6eb1d24666632445ea7ab32424fcc2dd1428bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f4659c4_19f03eb1",
+        "filename": "chrome/browser/page_load_metrics/observers/service_worker_page_load_metrics_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2018-01-30T03:34:49Z",
+      "side": 1,
+      "message": "This looks fine to me, thanks for asking. :) Parse start should be only very shortly after commit - should be nearly the same time.\n\nIf you decide to move to OnCommit in the future that is also fine.",
+      "parentUuid": "a5b68dfb_ebfde3f2",
+      "revId": "cd6eb1d24666632445ea7ab32424fcc2dd1428bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
