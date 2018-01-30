@@ -27,6 +27,10 @@ blink_core_sources("fileapi") {
     "URLFileAPI.h",
     "URLRegistry.h",
   ]
+
+  deps = [
+    "//services/network/public/interfaces:interfaces_blink",
+  ]
 }
 
 jumbo_source_set("unit_tests") {
