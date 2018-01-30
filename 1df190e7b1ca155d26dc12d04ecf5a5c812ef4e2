@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df2d62c1_2c2c4ae1",
+        "filename": "chrome/browser/chromeos/attestation/attestation_ca_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2018-01-30T15:48:37Z",
+      "side": 1,
+      "message": "can",
+      "range": {
+        "startLine": 137,
+        "startChar": 57,
+        "endLine": 137,
+        "endChar": 60
+      },
+      "revId": "1df190e7b1ca155d26dc12d04ecf5a5c812ef4e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
