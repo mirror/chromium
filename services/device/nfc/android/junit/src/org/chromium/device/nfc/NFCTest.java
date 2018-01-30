@@ -43,6 +43,7 @@ import org.robolectric.shadows.ShadowLooper;
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.Callback;
 import org.chromium.base.ContextUtils;
+import org.chromium.base.test.BaseRobolectricTestRunner;
 import org.chromium.base.test.util.Feature;
 import org.chromium.device.mojom.Nfc.CancelAllWatchesResponse;
 import org.chromium.device.mojom.Nfc.CancelPushResponse;
@@ -60,7 +61,6 @@ import org.chromium.device.mojom.NfcRecordType;
 import org.chromium.device.mojom.NfcRecordTypeFilter;
 import org.chromium.device.mojom.NfcWatchMode;
 import org.chromium.device.mojom.NfcWatchOptions;
-import org.chromium.testing.local.LocalRobolectricTestRunner;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -68,7 +68,7 @@ import java.io.UnsupportedEncodingException;
 /**
  * Unit tests for NfcImpl and NfcTypeConverter classes.
  */
-@RunWith(LocalRobolectricTestRunner.class)
+@RunWith(BaseRobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
 public class NFCTest {
     private TestNfcDelegate mDelegate;

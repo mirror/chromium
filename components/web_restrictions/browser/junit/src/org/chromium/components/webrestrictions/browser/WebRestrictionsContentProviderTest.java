@@ -27,13 +27,14 @@ import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowContentResolver;
 
-import org.chromium.components.webrestrictions.browser.WebRestrictionsContentProvider.WebRestrictionsResult;
-import org.chromium.testing.local.LocalRobolectricTestRunner;
+import org.chromium.base.test.BaseRobolectricTestRunner;
+import org.chromium.components.webrestrictions.browser.WebRestrictionsContentProvider
+        .WebRestrictionsResult;
 
 /**
  * Tests of WebRestrictionsContentProvider.
  */
-@RunWith(LocalRobolectricTestRunner.class)
+@RunWith(BaseRobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
 public class WebRestrictionsContentProviderTest {
     private static final String AUTHORITY = "org.chromium.browser.DummyProvider";

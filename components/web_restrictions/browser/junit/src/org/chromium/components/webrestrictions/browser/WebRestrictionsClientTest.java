@@ -29,12 +29,12 @@ import org.robolectric.android.controller.ContentProviderController;
 import org.robolectric.annotation.Config;
 
 import org.chromium.base.ContextUtils;
-import org.chromium.testing.local.LocalRobolectricTestRunner;
+import org.chromium.base.test.BaseRobolectricTestRunner;
 
 /**
  * Tests of WebRestrictionsClient.
  */
-@RunWith(LocalRobolectricTestRunner.class)
+@RunWith(BaseRobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
 public class WebRestrictionsClientTest {
     private static final String TEST_CONTENT_PROVIDER = "example.com";

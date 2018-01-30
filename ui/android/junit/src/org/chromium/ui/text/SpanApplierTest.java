@@ -9,17 +9,18 @@ import android.text.style.BulletSpan;
 import android.text.style.QuoteSpan;
 import android.text.style.ScaleXSpan;
 
-import org.chromium.testing.local.LocalRobolectricTestRunner;
-import org.chromium.ui.text.SpanApplier.SpanInfo;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.annotation.Config;
 
+import org.chromium.base.test.BaseRobolectricTestRunner;
+import org.chromium.ui.text.SpanApplier.SpanInfo;
+
 /**
  * Tests public methods in SpanApplier.
  */
-@RunWith(LocalRobolectricTestRunner.class)
+@RunWith(BaseRobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
 public class SpanApplierTest {
 

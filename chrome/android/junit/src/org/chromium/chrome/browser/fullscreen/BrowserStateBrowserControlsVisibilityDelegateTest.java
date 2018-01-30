@@ -9,7 +9,8 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import static org.chromium.chrome.browser.fullscreen.BrowserStateBrowserControlsVisibilityDelegate.MINIMUM_SHOW_DURATION_MS;
+import static org.chromium.chrome.browser.fullscreen
+        .BrowserStateBrowserControlsVisibilityDelegate.MINIMUM_SHOW_DURATION_MS;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,13 +21,13 @@ import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowLooper;
 import org.robolectric.shadows.ShadowSystemClock;
 
+import org.chromium.base.test.BaseRobolectricTestRunner;
 import org.chromium.base.test.util.Feature;
-import org.chromium.testing.local.LocalRobolectricTestRunner;
 
 /**
  * Unit tests for the BrowserStateBrowserControlsVisibilityDelegate.
  */
-@RunWith(LocalRobolectricTestRunner.class)
+@RunWith(BaseRobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
 public class BrowserStateBrowserControlsVisibilityDelegateTest {
     @Mock private Runnable mCallback;

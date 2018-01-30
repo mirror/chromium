@@ -6,14 +6,15 @@ package org.chromium.chrome.browser.tabstate;
 
 import static org.junit.Assert.assertEquals;
 
-import org.chromium.base.StreamUtil;
-import org.chromium.chrome.browser.TabState;
-import org.chromium.testing.local.LocalRobolectricTestRunner;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
 import org.robolectric.annotation.Config;
+
+import org.chromium.base.StreamUtil;
+import org.chromium.base.test.BaseRobolectricTestRunner;
+import org.chromium.chrome.browser.TabState;
 
 import java.io.DataOutputStream;
 import java.io.File;
@@ -25,7 +26,7 @@ import java.nio.channels.FileChannel;
 /**
  * Unit tests for TabState.
  */
-@RunWith(LocalRobolectricTestRunner.class)
+@RunWith(BaseRobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
 public class TabStateUnitTest {
 
