@@ -129,7 +129,7 @@ QUIC_FLAG(bool,
 // enabled.
 QUIC_FLAG(bool,
           FLAGS_quic_reloadable_flag_quic_2rtt_drop_client_cached_certs,
-          false)
+          true)
 
 // If true, limit quic stream length to be below 2^62.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_stream_too_long, false)
