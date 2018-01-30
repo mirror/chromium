@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "68d5fb2b_6f4ba41d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1128690
+      },
+      "writtenOn": "2018-01-30T01:01:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efff1df7_fe1cf999",
+      "revId": "409f2d586c66870aab9bcc1a2af5361cbe33222c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cde6286_44e8aff5",
         "filename": "services/ui/display/BUILD.gn",
         "patchSetId": 14
@@ -30,6 +48,30 @@
       "writtenOn": "2018-01-29T17:19:23Z",
       "side": 1,
       "message": "What does this do since there are no corresponding code changes?\n\nNeeding to use the platform variables outside of ui/ozone is a problem - we shouldn\u0027t have to do that.",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 26
+      },
+      "revId": "409f2d586c66870aab9bcc1a2af5361cbe33222c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ec3d447_1916cd59",
+        "filename": "services/ui/display/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1128690
+      },
+      "writtenOn": "2018-01-30T01:01:50Z",
+      "side": 1,
+      "message": "We need to include ScreenManagerOzoneInternal instead of ScreenManagerOzoneExternal so that we can run ozone_demo without a window manager.\n\nCan I add ozone_internal variable to build/config/BUILDCONFIG.gn?",
+      "parentUuid": "6cde6286_44e8aff5",
       "range": {
         "startLine": 26,
         "startChar": 8,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "ba4ef267_442148ab",
+        "filename": "third_party/libdrm/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1128690
+      },
+      "writtenOn": "2018-01-30T01:01:50Z",
+      "side": 1,
+      "message": "Thanks for the information. I will update the CL.",
+      "parentUuid": "9ee1ac58_d4bb7b84",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 7
+      },
+      "revId": "409f2d586c66870aab9bcc1a2af5361cbe33222c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d91867c7_8a363f33",
         "filename": "third_party/minigbm/BUILD.gn",
         "patchSetId": 14
@@ -76,6 +142,24 @@
       "writtenOn": "2018-01-29T21:12:35Z",
       "side": 1,
       "message": "why does it depend on pciaccess?",
+      "revId": "409f2d586c66870aab9bcc1a2af5361cbe33222c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df9230ac_2acbed9c",
+        "filename": "third_party/minigbm/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1128690
+      },
+      "writtenOn": "2018-01-30T01:01:50Z",
+      "side": 1,
+      "message": "I will remove this because we don\u0027t need to enable DRM i915 driver.",
+      "parentUuid": "d91867c7_8a363f33",
       "revId": "409f2d586c66870aab9bcc1a2af5361cbe33222c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
