@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2f62747_5d5866ad",
+        "filename": "content/public/browser/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-30T06:37:33Z",
+      "side": 1,
+      "message": "nit: accidental edit?",
+      "revId": "47c390b84855e4fc92e9e4a696e9f0c900f54b27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
