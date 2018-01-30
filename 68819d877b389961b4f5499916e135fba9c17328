@@ -34,6 +34,24 @@
       "revId": "68819d877b389961b4f5499916e135fba9c17328",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc5153d6_bc6868ee",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2018-01-30T21:03:54Z",
+      "side": 1,
+      "message": "I see. Regarding the double memory usage, I misunderstood how CanvasResourceProvider is used.",
+      "parentUuid": "16a00d67_6c146cf2",
+      "revId": "68819d877b389961b4f5499916e135fba9c17328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
