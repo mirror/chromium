@@ -106,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "8535b8b2_7e5fc516",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8GCController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-30T08:06:18Z",
+      "side": 1,
+      "message": "Makes sense. I\u0027m fine with it at the moment but want to think more when we add names to more objects.\n\n(FWIW we already have WTF_HEAP_PROFILER_TYPE_NAME(T) for GarbageCollected objects to get class names from type T. However we disable the macro on official builds because the string bloats binary (so it won\u0027t be useful for your snapshot visitor). The macro is used for the heap profiler.)",
+      "parentUuid": "b63755b3_157d0f57",
+      "revId": "bff9e8b5cb03079956b59aea660c589bab1d4925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0da89e4_014df42d",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8GCController.cpp",
         "patchSetId": 4
