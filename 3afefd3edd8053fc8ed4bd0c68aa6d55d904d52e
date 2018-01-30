@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee2bb162_5859e965",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1233,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-30T17:51:07Z",
+      "side": 1,
+      "message": "nit: move line 1231 and line 1233 below the if-clause of ShouldSetDevicePolicyWallpaper()?",
+      "revId": "3afefd3edd8053fc8ed4bd0c68aa6d55d904d52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
