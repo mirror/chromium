@@ -99,6 +99,7 @@ class CONTENT_EXPORT URLLoader : public network::mojom::URLLoader,
   uint32_t process_id_;
   uint32_t render_frame_id_;
   bool connected_;
+  const bool keepalive_;
   std::unique_ptr<net::URLRequest> url_request_;
   mojo::Binding<network::mojom::URLLoader> binding_;
   network::mojom::URLLoaderClientPtr url_loader_client_;
