@@ -70,6 +70,24 @@
       "revId": "da315962acdc4d8973154c063801a59882b91613",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21f80774_8ee0675d",
+        "filename": "DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 1352,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2018-01-30T20:08:10Z",
+      "side": 1,
+      "message": "Discussed offline. This is indeed broken because of the current android cipd hook. So this is blocked on getting it removed (ie https://chromium-review.googlesource.com/c/chromium/src/+/879177)",
+      "parentUuid": "f9940d87_03cc9858",
+      "revId": "da315962acdc4d8973154c063801a59882b91613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
