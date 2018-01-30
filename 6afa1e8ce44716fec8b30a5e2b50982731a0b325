@@ -215,6 +215,30 @@
     },
     {
       "key": {
+        "uuid": "48bbd94c_673d4a2b",
+        "filename": "remoting/protocol/ssl_hmac_channel_authenticator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-30T12:56:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "751226b7_c4413766",
+      "range": {
+        "startLine": 59,
+        "startChar": 21,
+        "endLine": 59,
+        "endChar": 0
+      },
+      "revId": "6afa1e8ce44716fec8b30a5e2b50982731a0b325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb01ad9c_1f84e32e",
         "filename": "remoting/protocol/ssl_hmac_channel_authenticator.cc",
         "patchSetId": 1
@@ -307,6 +331,30 @@
       "revId": "6afa1e8ce44716fec8b30a5e2b50982731a0b325",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b2a10c2_a2339929",
+        "filename": "remoting/protocol/ssl_hmac_channel_authenticator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-30T12:56:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbc15127_bab12ea3",
+      "range": {
+        "startLine": 69,
+        "startChar": 25,
+        "endLine": 69,
+        "endChar": 0
+      },
+      "revId": "6afa1e8ce44716fec8b30a5e2b50982731a0b325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
