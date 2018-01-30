@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "22ea1b94_245309d6",
+        "filename": "base/task_scheduler/task_tracker.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-30T18:40:15Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand the comment. Can you clarify?\n\nThe three main clauses are...\n\nMain clause: Calls |flush_callback_for_testing_|\nConditional clause: if one is available\nPrepositional clause: in a lock-safe manner.",
+      "parentUuid": "981f8b84_fc005c36",
+      "revId": "089b37fd14d1de4ce71e10842ed1bdb689392b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "999a7084_fc7adb55",
         "filename": "base/task_scheduler/task_tracker.h",
         "patchSetId": 8
@@ -30,6 +48,30 @@
       "writtenOn": "2018-01-25T09:21:37Z",
       "side": 1,
       "message": "nit: same comment adjustment here",
+      "range": {
+        "startLine": 258,
+        "startChar": 64,
+        "endLine": 258,
+        "endChar": 72
+      },
+      "revId": "089b37fd14d1de4ce71e10842ed1bdb689392b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9184c544_9631eb44",
+        "filename": "base/task_scheduler/task_tracker.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-30T18:40:15Z",
+      "side": 1,
+      "message": "Similarly...\nMain clause: Invoked\nConditional clause: \n  Subclause 1: if one is available\n    Conditional subclause: when |num_incomplete_undelayed_tasks_| is zero\n  Conjunction: or\n  Subclause 2: when shutdown completes",
+      "parentUuid": "999a7084_fc7adb55",
       "range": {
         "startLine": 258,
         "startChar": 64,
