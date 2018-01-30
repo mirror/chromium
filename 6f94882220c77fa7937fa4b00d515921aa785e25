@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a6231bf3_17773a90",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-30T23:29:56Z",
+      "side": 1,
+      "message": "So you\u0027re saying we don\u0027t send the LocalSurfaceId to the renderer? I talked to Fady; I think what\u0027s more likely is that DelegatedFrameHost does not embed the new LocalSurfaceId that we generated. Maybe we should call WasResized on DelegatedFrameHost in BrowserCompositorMac::DidNavigate?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 58
+      },
+      "revId": "6f94882220c77fa7937fa4b00d515921aa785e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d495bfb_b0b02be8",
         "filename": "content/browser/renderer_host/browser_compositor_view_mac.mm",
         "patchSetId": 1
