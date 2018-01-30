@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f0dd54c_3878f5a3",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapterImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-30T22:11:12Z",
+      "side": 1,
+      "message": "I think it\u0027s best to hide keyboard when we change the mode to NONE. Otherwise, state update from physical hardware will keep calling hideKeyboard().\n\nHow about adding keeping boolean hide \u003d false and then\nset it here:\nif (textInputMode \u003d\u003d NONE) hide \u003d true;",
+      "range": {
+        "startLine": 429,
+        "startChar": 16,
+        "endLine": 429,
+        "endChar": 36
+      },
+      "revId": "282fa8c890b0d05b384d34461baad15e49e98b5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57f278f3_6e6579b3",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapterImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-30T22:11:12Z",
+      "side": 1,
+      "message": "Could you add\n\nif (textInputType \u003d\u003d NONE) hide \u003d true; ?",
+      "range": {
+        "startLine": 433,
+        "startChar": 16,
+        "endLine": 433,
+        "endChar": 36
+      },
+      "revId": "282fa8c890b0d05b384d34461baad15e49e98b5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a1e2f66_2c11f6fe",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapterImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-30T22:11:12Z",
+      "side": 1,
+      "message": "if (hide)",
+      "range": {
+        "startLine": 458,
+        "startChar": 17,
+        "endLine": 458,
+        "endChar": 25
+      },
+      "revId": "282fa8c890b0d05b384d34461baad15e49e98b5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d11d6d23_b6a68ca1",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapterImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-30T22:11:12Z",
+      "side": 1,
+      "message": "if (showIfNeeded \u0026\u0026 editableByVirtualKeyboard) {",
+      "range": {
+        "startLine": 462,
+        "startChar": 16,
+        "endLine": 466,
+        "endChar": 23
+      },
+      "revId": "282fa8c890b0d05b384d34461baad15e49e98b5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9042b68_a551d573",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapterImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-30T22:11:12Z",
+      "side": 1,
+      "message": "Wow... A good catch! Could you add a test case for detaching hardware keyboard?",
+      "range": {
+        "startLine": 596,
+        "startChar": 12,
+        "endLine": 598,
+        "endChar": 23
+      },
+      "revId": "282fa8c890b0d05b384d34461baad15e49e98b5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf9cd740_a90e081f",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/input/ImeInputModeTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-30T22:11:12Z",
+      "side": 1,
+      "message": "any way we can reuse this in ImeActivityTestRule?",
+      "range": {
+        "startLine": 38,
+        "startChar": 18,
+        "endLine": 38,
+        "endChar": 39
+      },
+      "revId": "282fa8c890b0d05b384d34461baad15e49e98b5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b7ae5ff_2cdab9d9",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/input/ImeInputModeTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-30T22:11:12Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 47,
+        "startChar": 17,
+        "endLine": 47,
+        "endChar": 39
+      },
+      "revId": "282fa8c890b0d05b384d34461baad15e49e98b5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "879fabf5_eb29db81",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/input/ImeInputModeTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-30T22:11:12Z",
+      "side": 1,
+      "message": "This is a little bit subtle, but I think:\n\n1) If a physical keyboard is attached while a text input form is focused, then we should still call showSoftKeyboard, in case the user may be using both a virtual keyboard and a physical keyboard.\n\n2) When inputmode\u003d\u0027none\u0027 is set, then we should not call showSoftKeyboard() because we should not show a virtual keyboard (even hide it) even when the user is using both a virtual keyboard and a physical keyboard. But InputConnection should still be there. For virtual keyboard, this should work same as non-editable text.",
+      "range": {
+        "startLine": 152,
+        "startChar": 11,
+        "endLine": 152,
+        "endChar": 73
+      },
+      "revId": "282fa8c890b0d05b384d34461baad15e49e98b5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "232714c0_9c6bbfc0",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/input/ImeInputModeTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-30T22:11:12Z",
+      "side": 1,
+      "message": "I think this should be 0, 2, 2. (if we allow for redundant hideSoftKeyboard)\nAlso, could you check Assert.assertNotNull(mRule.getInputMethodManagerWrapper().getInputConnection()); after this?",
+      "range": {
+        "startLine": 157,
+        "startChar": 36,
+        "endLine": 157,
+        "endChar": 43
+      },
+      "revId": "282fa8c890b0d05b384d34461baad15e49e98b5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cdefc93_d4f58b3a",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/input/ImeInputModeTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-30T22:11:12Z",
+      "side": 1,
+      "message": "1, 2, 3?",
+      "range": {
+        "startLine": 163,
+        "startChar": 36,
+        "endLine": 163,
+        "endChar": 43
+      },
+      "revId": "282fa8c890b0d05b384d34461baad15e49e98b5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b754dcc_6a8608b3",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/input/ImeInputModeTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-30T22:11:12Z",
+      "side": 1,
+      "message": "1, 3, 4? You need to make sure that we hide soft keyboard in this case.\n\nAlso you need\nAssert.assertNotNull(mRule.getInputMethodManagerWrapper().getInputConnection()); after this, to ensure that physical keyboard is still usable.",
+      "range": {
+        "startLine": 175,
+        "startChar": 36,
+        "endLine": 175,
+        "endChar": 43
+      },
+      "revId": "282fa8c890b0d05b384d34461baad15e49e98b5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
