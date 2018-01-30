@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a83a524_07e7fab1",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-30T22:22:18Z",
+      "side": 1,
+      "message": "Nit (optional): s/numMatchingDestinations_/matchingDestinationsCount_/\n\nI find fooCount clearer than numFoo, just because it\u0027s not abbreviated.",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 28
+      },
+      "revId": "50337e1c9b9ad28c71ca49ac32e571c2325625d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d72485ef_5fcf9c02",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-30T22:22:18Z",
+      "side": 1,
+      "message": "I am  wondering if we can  simplify the search logic. Currently IIUC, there are two (redundant?) searches.\n\n1) To calculate the count of the matching destinations.\n2) isDestinationHidden_() is called on every destination.\n\nCan you take a look at how MD Extensions does filtering, which seems like a very similar case. Specifically it uses the built-in |filter| functionality of dom-repeat, see more details at [1]. \n\nThe count can be exctracted from the dom-repeat as rendered-item-count, see [1] line 78. You can try MD Extensions search locally by passing the --enable-features\u003dMaterialDesignExtensions flag.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/resources/md_extensions/item_list.html?l\u003d77,78.",
+      "revId": "50337e1c9b9ad28c71ca49ac32e571c2325625d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e44f3e9_53bdfdc6",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-30T22:22:18Z",
+      "side": 1,
+      "message": "Nit: Add empty line after early return.",
+      "revId": "50337e1c9b9ad28c71ca49ac32e571c2325625d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6b4fbed_f11f54c2",
+        "filename": "chrome/browser/resources/settings/search_settings.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-30T22:22:18Z",
+      "side": 1,
+      "message": "How about we leave these lines unchanged, and revert the rename of findAndRemoveHighlights_(). Then simply call  cr.search_highlight_utils.findAndRemoveHighlights(this.node) after line 58?",
+      "revId": "50337e1c9b9ad28c71ca49ac32e571c2325625d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c96322b9_c8840d05",
+        "filename": "ui/webui/resources/js/search_highlight_utils.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-30T22:22:18Z",
+      "side": 1,
+      "message": "This part of the comment seems obsolete, since the node is actually kept in the tree but hidden (lines 35-38).",
+      "range": {
+        "startLine": 17,
+        "startChar": 65,
+        "endLine": 18,
+        "endChar": 40
+      },
+      "revId": "50337e1c9b9ad28c71ca49ac32e571c2325625d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
