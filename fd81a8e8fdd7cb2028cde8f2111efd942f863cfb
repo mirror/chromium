@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5fa74cc7_eef5b0f0",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2018-01-30T18:58:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49f97417_2b0184a3",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 17
+      },
+      "revId": "fd81a8e8fdd7cb2028cde8f2111efd942f863cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c19280a_c7696ea8",
         "filename": "net/disk_cache/simple/simple_file_tracker.cc",
         "patchSetId": 20
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "dffc8ffa_8224383c",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2018-01-30T18:58:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c19280a_c7696ea8",
+      "range": {
+        "startLine": 104,
+        "startChar": 2,
+        "endLine": 104,
+        "endChar": 17
+      },
+      "revId": "fd81a8e8fdd7cb2028cde8f2111efd942f863cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5efdeb0_5bb38efd",
         "filename": "net/disk_cache/simple/simple_file_tracker.cc",
         "patchSetId": 20
@@ -68,6 +116,30 @@
       "revId": "fd81a8e8fdd7cb2028cde8f2111efd942f863cfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57920396_fa21be67",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2018-01-30T18:58:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5efdeb0_5bb38efd",
+      "range": {
+        "startLine": 107,
+        "startChar": 34,
+        "endLine": 107,
+        "endChar": 46
+      },
+      "revId": "fd81a8e8fdd7cb2028cde8f2111efd942f863cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -142,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "b0bb063d_b98ac2a9",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2018-01-30T18:58:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "aec2f0c4_53df1d2b",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 120,
+        "endChar": 15
+      },
+      "revId": "fd81a8e8fdd7cb2028cde8f2111efd942f863cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90871f14_87a3df3e",
         "filename": "net/disk_cache/simple/simple_file_tracker.cc",
         "patchSetId": 20
@@ -210,6 +306,30 @@
       "revId": "fd81a8e8fdd7cb2028cde8f2111efd942f863cfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "082f3e81_a19fa7d7",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2018-01-30T18:58:57Z",
+      "side": 1,
+      "message": "Doesn\u0027t build w/DCHECK_EQ, as suspected:\n../../base/logging.h:709:3: error: no matching function for call to \u0027MakeCheckOpValueString\u0027\n  MakeCheckOpValueString(\u0026ss, v1);\n  ^~~~~~~~~~~~~~~~~~~~~~\n../../base/logging.h:757:1: note: in instantiation of function template specialization \u0027logging::MakeCheckOpString\u003cstd::__1::__list_iterator\u003cdisk_cache::SimpleFileTracker::TrackedFiles *, void *\u003e, std::__1::__list_iterator\u003cdisk_cache::SimpleFileTracker::TrackedFiles *, void *\u003e \u003e\u0027 requested here",
+      "parentUuid": "585ceeae_40b95a30",
+      "range": {
+        "startLine": 268,
+        "startChar": 6,
+        "endLine": 268,
+        "endChar": 12
+      },
+      "revId": "fd81a8e8fdd7cb2028cde8f2111efd942f863cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -284,6 +404,30 @@
     },
     {
       "key": {
+        "uuid": "78f8285b_0408a286",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2018-01-30T18:58:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "918db03b_d9e18bea",
+      "range": {
+        "startLine": 300,
+        "startChar": 24,
+        "endLine": 300,
+        "endChar": 42
+      },
+      "revId": "fd81a8e8fdd7cb2028cde8f2111efd942f863cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "845767dd_87ddfbf9",
         "filename": "net/disk_cache/simple/simple_file_tracker.cc",
         "patchSetId": 20
@@ -331,6 +475,30 @@
     },
     {
       "key": {
+        "uuid": "688a201e_e7b5aafb",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2018-01-30T18:58:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3dc7dcb_7f21b1d9",
+      "range": {
+        "startLine": 303,
+        "startChar": 0,
+        "endLine": 304,
+        "endChar": 60
+      },
+      "revId": "fd81a8e8fdd7cb2028cde8f2111efd942f863cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e382ae0_7a1ee685",
         "filename": "net/disk_cache/simple/simple_file_tracker_unittest.cc",
         "patchSetId": 20
@@ -351,6 +519,30 @@
       "revId": "fd81a8e8fdd7cb2028cde8f2111efd942f863cfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0484dd3e_9eda3798",
+        "filename": "net/disk_cache/simple/simple_file_tracker_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2018-01-30T18:58:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e382ae0_7a1ee685",
+      "range": {
+        "startLine": 288,
+        "startChar": 48,
+        "endLine": 288,
+        "endChar": 49
+      },
+      "revId": "fd81a8e8fdd7cb2028cde8f2111efd942f863cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
