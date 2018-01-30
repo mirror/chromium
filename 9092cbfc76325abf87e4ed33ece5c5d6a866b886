@@ -22,6 +22,30 @@
       "revId": "9092cbfc76325abf87e4ed33ece5c5d6a866b886",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab5ab0e0_ddef1a0c",
+        "filename": "content/renderer/media/gpu/rtc_video_encoder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2018-01-30T19:54:16Z",
+      "side": 1,
+      "message": "Done. Multiplication first should yield more accurate result, but since we are generating stuff for webrtc here it is better to be in sync.",
+      "parentUuid": "6d6a9397_8438588b",
+      "range": {
+        "startLine": 526,
+        "startChar": 4,
+        "endLine": 530,
+        "endChar": 0
+      },
+      "revId": "9092cbfc76325abf87e4ed33ece5c5d6a866b886",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
