@@ -52,6 +52,15 @@ namespace cbor {
 
 class CBOR_EXPORT CBORReader {
  public:
+  enum class Mode {
+    // Expect CTAP CBOR, where keys in a dictionary is ordered as in
+    // CTAP spec 2.0.
+    CTAP,
+    // Expect Canonical CBOR, as defined in
+    // https://tools.ietf.org/html/rfc7049#section-3.9.
+    CANONICAL,
+  };
+
   enum class DecoderError {
     CBOR_NO_ERROR = 0,
     UNSUPPORTED_MAJOR_TYPE,
@@ -78,17 +87,19 @@ class CBOR_EXPORT CBORReader {
   // formats is violated -including unknown additional info and incomplete
   // CBOR data- then an empty optional is returned. Optional |error_code_out|
   // can be provided by the caller to obtain additional information about
-  // decoding failures.
+  // decoding failures. Optional |mode| specifies the CBOR dialect to expect.
   static base::Optional<CBORValue> Read(base::span<const uint8_t> input_data,
                                         DecoderError* error_code_out = nullptr,
-                                        int max_nesting_level = kCBORMaxDepth);
+                                        int max_nesting_level = kCBORMaxDepth,
+                                        Mode mode = Mode::CTAP);
 
   // Translates errors to human-readable error messages.
   static const char* ErrorCodeToString(DecoderError error_code);
 
  private:
   CBORReader(base::span<const uint8_t>::const_iterator it,
-             const base::span<const uint8_t>::const_iterator end);
+             const base::span<const uint8_t>::const_iterator end,
+             Mode mode);
   base::Optional<CBORValue> DecodeCBOR(int max_nesting_level);
   base::Optional<CBORValue> DecodeValueToNegative(uint64_t value);
   base::Optional<CBORValue> DecodeValueToUnsigned(uint64_t value);
@@ -104,7 +115,8 @@ class CBOR_EXPORT CBORReader {
   void CheckExtraneousData();
   bool CheckDuplicateKey(const CBORValue& new_key, CBORValue::MapValue* map);
   bool HasValidUTF8Format(const std::string& string_data);
-  bool CheckOutOfOrderKey(const CBORValue& new_key, CBORValue::MapValue* map);
+  bool CheckOutOfCTAPOrderKey(const CBORValue& new_key,
+                              CBORValue::MapValue* map);
   bool CheckMinimalEncoding(uint8_t additional_bytes, uint64_t uint_data);
 
   DecoderError GetErrorCode();
@@ -112,6 +124,7 @@ class CBOR_EXPORT CBORReader {
   base::span<const uint8_t>::const_iterator it_;
   const base::span<const uint8_t>::const_iterator end_;
   DecoderError error_code_;
+  Mode mode_;
 
   DISALLOW_COPY_AND_ASSIGN(CBORReader);
 };

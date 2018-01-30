@@ -44,8 +44,8 @@ class CBOR_EXPORT CBORValue {
     // types are compared first. Thus the shortest key sorts first by the RFC
     // rules (irrespective of the major type), but may not by CTAP rules.
     bool operator()(const CBORValue& a, const CBORValue& b) const {
-      DCHECK((a.is_integer() || a.is_string()) &&
-             (b.is_integer() || b.is_string()));
+      DCHECK((a.is_integer() || a.is_string() || a.is_bytestring()) &&
+             (b.is_integer() || b.is_string() || b.is_bytestring()));
       if (a.type() != b.type())
         return a.type() < b.type();
       switch (a.type()) {
@@ -57,6 +57,13 @@ class CBOR_EXPORT CBORValue {
           const auto& a_str = a.GetString();
           const size_t a_length = a_str.size();
           const auto& b_str = b.GetString();
+          const size_t b_length = b_str.size();
+          return std::tie(a_length, a_str) < std::tie(b_length, b_str);
+        }
+        case Type::BYTE_STRING: {
+          const auto& a_str = a.GetBytestring();
+          const size_t a_length = a_str.size();
+          const auto& b_str = b.GetBytestring();
           const size_t b_length = b_str.size();
           return std::tie(a_length, a_str) < std::tie(b_length, b_str);
         }
@@ -107,6 +114,7 @@ class CBOR_EXPORT CBORValue {
 
   explicit CBORValue(const BinaryValue& in_bytes);
   explicit CBORValue(BinaryValue&& in_bytes) noexcept;
+  static CBORValue BytestringFromString(base::StringPiece in_string) noexcept;
 
   explicit CBORValue(const char* in_string);
   explicit CBORValue(std::string&& in_string) noexcept;
@@ -152,6 +160,7 @@ class CBOR_EXPORT CBORValue {
   const int64_t& GetUnsigned() const;
   const int64_t& GetNegative() const;
   const BinaryValue& GetBytestring() const;
+  base::StringPiece GetBytestringAsString() const;
   // Returned string may contain NUL characters.
   const std::string& GetString() const;
   const ArrayValue& GetArray() const;

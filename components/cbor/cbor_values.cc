@@ -69,6 +69,11 @@ CBORValue::CBORValue(const BinaryValue& in_bytes)
 CBORValue::CBORValue(BinaryValue&& in_bytes) noexcept
     : type_(Type::BYTE_STRING), bytestring_value_(std::move(in_bytes)) {}
 
+CBORValue CBORValue::BytestringFromString(
+    base::StringPiece in_string) noexcept {
+  return CBORValue(BinaryValue(in_string.begin(), in_string.end()));
+}
+
 CBORValue::CBORValue(const char* in_string)
     : CBORValue(std::string(in_string)) {}
 
@@ -169,6 +174,13 @@ const std::string& CBORValue::GetString() const {
 const CBORValue::BinaryValue& CBORValue::GetBytestring() const {
   CHECK(is_bytestring());
   return bytestring_value_;
+}
+
+base::StringPiece CBORValue::GetBytestringAsString() const {
+  const auto& bytestring_value = GetBytestring();
+  return base::StringPiece(
+      reinterpret_cast<const char*>(bytestring_value.data()),
+      bytestring_value.size());
 }
 
 const CBORValue::ArrayValue& CBORValue::GetArray() const {
