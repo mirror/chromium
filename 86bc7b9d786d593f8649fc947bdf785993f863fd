@@ -16,6 +16,24 @@
       "revId": "86bc7b9d786d593f8649fc947bdf785993f863fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9bd3a0c_0c9cdf88",
+        "filename": "content/browser/sandbox_parameters_mac.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-30T15:21:46Z",
+      "side": 1,
+      "message": "Can you insert plugins from:\n\n  std::vector\u003ccontent::WebPluginInfo\u003e plugins;\n  PluginService::GetInstance()-\u003eGetInternalPlugins(\u0026plugins);\n\ninstead? WebPluginInfo has a path member.\n\nAddPepperPlugins only picks up component-updated plugins on Linux, since it\u0027s only meant to run once during the browser process start-up, and then the component updater usually replaces the internal-not-yet-present Flash plugin with component-updated Flash moments later.",
+      "parentUuid": "f7e4b254_d344f508",
+      "revId": "86bc7b9d786d593f8649fc947bdf785993f863fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
