@@ -1842,6 +1842,7 @@ enum WebFeature {
   kColorInputTypeChooserByUntrustedClick = 2333,
   kCSSTypedOMStylePropertyMap = 2334,
 
+  kDisablePictureInPictureAttribute = 2351,
   // Add new features immediately above this line. Don't change assigned
   // numbers of any item, and don't reuse removed slots.
   // Also, run update_use_counter_feature_enum.py in
