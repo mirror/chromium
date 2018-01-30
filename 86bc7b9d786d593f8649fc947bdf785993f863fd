@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7e4b254_d344f508",
+        "filename": "content/browser/sandbox_parameters_mac.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2018-01-30T00:15:14Z",
+      "side": 1,
+      "message": "Joshua, this uploaded CL is a WIP, but can you help me understand what\u0027s happening here? To support any non internal PPAPI plugin, whether that\u0027s command line Flash or component updated Flash, I add each plugin to the sandbox profile.\n\nBut when AddPepperPlugins() is called, Flash is still internal-not-yet-present, which I find weird because I would expect PPAPI to be launched after component Flash is downloaded and registered?\n\nSee the log output:\n\n[70157:85251:0129/160628.430173:ERROR:sandbox_parameters_mac.mm(105)] plugins list is not empty\n[70157:85251:0129/160628.430200:ERROR:sandbox_parameters_mac.mm(111)] path: internal-pdf-viewer\n[70157:85251:0129/160628.430211:ERROR:sandbox_parameters_mac.mm(111)] path: /Users/kerrnel/chromium/src/out/Official/Google Chrome.app/Contents/Versions/66.0.3329.0/Google Chrome Framework.framework/Internet Plug-Ins/internal-nacl-plugin\n[70157:85251:0129/160628.430221:ERROR:sandbox_parameters_mac.mm(111)] path: internal-not-yet-present\n\nAs a work around I added the call to explicitly get the component updated Flash base directory, but it feels like a hack and I would prefer to avoid doing that.",
+      "revId": "86bc7b9d786d593f8649fc947bdf785993f863fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
