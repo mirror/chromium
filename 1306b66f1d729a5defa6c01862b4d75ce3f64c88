@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3b9a54e_1b30f5f3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2018-01-30T18:29:02Z",
+      "side": 1,
+      "message": "It looks like you\u0027re using wrong setTag overload here - this one will treat R.string.sync_confirmation_personalize_services_body_child_account as ID and null as an actual tag value.",
+      "range": {
+        "startLine": 596,
+        "startChar": 49,
+        "endLine": 596,
+        "endChar": 55
+      },
+      "revId": "1306b66f1d729a5defa6c01862b4d75ce3f64c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8099b19e_aa8dacf6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2018-01-30T18:29:02Z",
+      "side": 1,
+      "message": "Is there any reason to use different string format in these two branches?",
+      "range": {
+        "startLine": 770,
+        "startChar": 20,
+        "endLine": 770,
+        "endChar": 71
+      },
+      "revId": "1306b66f1d729a5defa6c01862b4d75ce3f64c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a0107a0_ebe72fe9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2018-01-30T18:29:02Z",
+      "side": 1,
+      "message": "Chrome already sets tag for some View objects (https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/ItemChooserDialog.java?l\u003d338\u0026rcl\u003dfb27199b5bbf8706ca90fc0c6a6d42c21092f686). This method will try to get consent text from these objects if these objects are used in AccountSigninView (this is not possible now, but it looks like a brittle approach).",
+      "range": {
+        "startLine": 787,
+        "startChar": 16,
+        "endLine": 787,
+        "endChar": 37
+      },
+      "revId": "1306b66f1d729a5defa6c01862b4d75ce3f64c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9662405_ac869f0d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 833,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2018-01-30T18:29:02Z",
+      "side": 1,
+      "message": "Why should we delay consent recording? User consented as soon as he pressed the button. The downside of current implementation is that this class will leak AccountSigninView object if signin fails for any reason.",
+      "range": {
+        "startLine": 833,
+        "startChar": 42,
+        "endLine": 833,
+        "endChar": 71
+      },
+      "revId": "1306b66f1d729a5defa6c01862b4d75ce3f64c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
