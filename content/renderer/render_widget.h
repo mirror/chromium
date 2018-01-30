@@ -519,6 +519,10 @@ class CONTENT_EXPORT RenderWidget
   // Close the underlying WebWidget.
   virtual void Close();
 
+  virtual blink::WebView* GetWebView();
+
+  void UpdateWebViewWithDeviceScaleFactor();
+
   // Used to force the size of a window when running layout tests.
   void SetWindowRectSynchronously(const gfx::Rect& new_window_rect);
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
