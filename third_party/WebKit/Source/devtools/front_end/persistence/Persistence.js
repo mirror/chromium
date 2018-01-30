@@ -22,15 +22,23 @@ Persistence.Persistence = class extends Common.Object {
 
     var linkDecorator = new Persistence.PersistenceUtils.LinkDecorator(this);
     Components.Linkifier.setLinkDecorator(linkDecorator);
-    this._mapping =
-        new Persistence.Automapping(workspace, this._onBindingAdded.bind(this), this._onBindingRemoved.bind(this));
+    this._mapping = null;
+    this.setAutomappingEnabled(true);
   }
 
   /**
    * @param {boolean} enabled
    */
   setAutomappingEnabled(enabled) {
-    this._mapping.setEnabled(enabled);
+    if (enabled === !!this._mapping)
+      return;
+    if (!enabled) {
+      this._mapping.dispose();
+      this._mapping = null;
+    } else {
+      this._mapping = new Persistence.Automapping(
+          this._workspace, this._onBindingAdded.bind(this), this._onBindingRemoved.bind(this));
+    }
   }
 
   /**
@@ -45,14 +53,6 @@ Persistence.Persistence = class extends Common.Object {
    */
   removeBinding(binding) {
     this._innerRemoveBinding(binding);
-  }
-
-  /**
-   * @param {function(function(!Persistence.AutomappingBinding), function(!Persistence.AutomappingBinding)):!Persistence.MappingSystem} mappingFactory
-   */
-  _setMappingForTest(mappingFactory) {
-    this._mapping.dispose();
-    this._mapping = mappingFactory(this._onBindingAdded.bind(this), this._onBindingRemoved.bind(this));
   }
 
   /**
@@ -347,7 +347,10 @@ Persistence.Persistence = class extends Common.Object {
   }
 
   dispose() {
-    this._mapping.dispose();
+    if (this._mapping) {
+      this._mapping.dispose();
+      this._mapping = null;
+    }
   }
 };
 
