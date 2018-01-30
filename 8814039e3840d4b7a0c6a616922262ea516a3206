@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3054eda8_41615da3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/scene_layer/TabListSceneLayer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-30T21:59:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b2df9907_2b40ac6c",
+      "range": {
+        "startLine": 80,
+        "startChar": 16,
+        "endLine": 80,
+        "endChar": 45
+      },
+      "revId": "8814039e3840d4b7a0c6a616922262ea516a3206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "baa5bda0_6eb268e0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "8814039e3840d4b7a0c6a616922262ea516a3206",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4c0e307_0ebedb05",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1493,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-30T21:59:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baa5bda0_6eb268e0",
+      "range": {
+        "startLine": 1493,
+        "startChar": 4,
+        "endLine": 1493,
+        "endChar": 49
+      },
+      "revId": "8814039e3840d4b7a0c6a616922262ea516a3206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7dd49cb7_4f7dd0b6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2032,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-30T21:59:51Z",
+      "side": 1,
+      "message": "Yes, it does. I played around with changing the search engine in a second window while on the NTP in the top window w/ and w/out the omnibox focused and the alpha is getting reset correctly. resetNtpAnimationValues and updateNtpTransitionAnimation also update the toolbar shadow alpha.",
+      "parentUuid": "34291585_a25ad823",
+      "range": {
+        "startLine": 2032,
+        "startChar": 47,
+        "endLine": 2032,
+        "endChar": 70
+      },
+      "revId": "8814039e3840d4b7a0c6a616922262ea516a3206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64ac29d0_4019ffce",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "8814039e3840d4b7a0c6a616922262ea516a3206",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b6c9bf2_052c0f77",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2276,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-30T21:59:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64ac29d0_4019ffce",
+      "range": {
+        "startLine": 2276,
+        "startChar": 3,
+        "endLine": 2276,
+        "endChar": 60
+      },
+      "revId": "8814039e3840d4b7a0c6a616922262ea516a3206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
