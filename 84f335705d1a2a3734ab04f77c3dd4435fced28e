@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8340f799_5a8450c7",
+        "filename": "components/cast_channel/cast_message_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-30T08:00:14Z",
+      "side": 1,
+      "message": "Can we have a brief list of items that are sent through this? \"Serialized protobuf message\" is too general.",
+      "range": {
+        "startLine": 31,
+        "startChar": 15,
+        "endLine": 31,
+        "endChar": 42
+      },
+      "revId": "84f335705d1a2a3734ab04f77c3dd4435fced28e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
