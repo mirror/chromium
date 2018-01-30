@@ -195,6 +195,9 @@ class NET_EXPORT HttpServerPropertiesImpl
   // ".googlevideo.com", ".googleusercontent.com") of canonical hostnames.
   CanonicalSufficList canonical_suffixes_;
 
+  // NOTE(pauljensen): QuicSocketTag in QuicServerId key is cleared to the
+  // default QuicSocketTag as the tag is not relevant to identifying the
+  // physical server.
   QuicServerInfoMap quic_server_info_map_;
 
   // Maps canonical suffixes to host names that have the same canonical suffix

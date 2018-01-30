@@ -628,6 +628,7 @@ int QuicStreamRequest::Request(const HostPortPair& destination,
                                QuicTransportVersion quic_version,
                                PrivacyMode privacy_mode,
                                RequestPriority priority,
+                               const SocketTag& socket_tag,
                                int cert_verify_flags,
                                const GURL& url,
                                const NetLogWithSource& net_log,
@@ -640,7 +641,8 @@ int QuicStreamRequest::Request(const HostPortPair& destination,
   DCHECK(factory_);
 
   net_error_details_ = net_error_details;
-  server_id_ = QuicServerId(HostPortPair::FromURL(url), privacy_mode);
+  server_id_ =
+      QuicServerId(HostPortPair::FromURL(url), privacy_mode, socket_tag);
 
   int rv = factory_->Create(server_id_, destination, quic_version, priority,
                             cert_verify_flags, url, net_log, this);
@@ -944,7 +946,8 @@ bool QuicStreamFactory::CanUseExistingSession(const QuicServerId& server_id,
   for (const auto& key_value : active_sessions_) {
     QuicChromiumClientSession* session = key_value.second;
     if (destination.Equals(all_sessions_[session].destination()) &&
-        session->CanPool(server_id.host(), server_id.privacy_mode())) {
+        session->CanPool(server_id.host(), server_id.privacy_mode(),
+                         server_id.socket_tag())) {
       return true;
     }
   }
@@ -1017,7 +1020,8 @@ int QuicStreamFactory::Create(const QuicServerId& server_id,
     for (const auto& key_value : active_sessions_) {
       QuicChromiumClientSession* session = key_value.second;
       if (destination.Equals(all_sessions_[session].destination()) &&
-          session->CanPool(server_id.host(), server_id.privacy_mode())) {
+          session->CanPool(server_id.host(), server_id.privacy_mode(),
+                           server_id.socket_tag())) {
         request->SetSession(session->CreateHandle(destination));
         return OK;
       }
@@ -1092,7 +1096,8 @@ bool QuicStreamFactory::HasMatchingIpSession(const QuicSessionKey& key,
 
     const SessionSet& sessions = ip_aliases_[address];
     for (QuicChromiumClientSession* session : sessions) {
-      if (!session->CanPool(server_id.host(), server_id.privacy_mode()))
+      if (!session->CanPool(server_id.host(), server_id.privacy_mode(),
+                            server_id.socket_tag()))
         continue;
       active_sessions_[server_id] = session;
       session_aliases_[session].insert(key);
@@ -1372,7 +1377,8 @@ bool QuicStreamFactory::HasActiveCertVerifierJob(
 
 int QuicStreamFactory::ConfigureSocket(DatagramClientSocket* socket,
                                        IPEndPoint addr,
-                                       NetworkHandle network) {
+                                       NetworkHandle network,
+                                       const SocketTag& socket_tag) {
   socket->UseNonBlockingIO();
 
   int rv;
@@ -1393,6 +1399,8 @@ int QuicStreamFactory::ConfigureSocket(DatagramClientSocket* socket,
     HistogramCreateSessionFailure(CREATION_ERROR_CONNECTING_SOCKET);
     return rv;
   }
+
+  socket->ApplySocketTag(socket_tag);
 
   rv = socket->SetReceiveBufferSize(kQuicSocketReceiveBufferSize);
   if (rv != OK) {
@@ -1450,7 +1458,8 @@ int QuicStreamFactory::CreateSession(const QuicSessionKey& key,
 
   // Passing in kInvalidNetworkHandle binds socket to default network.
   int rv = ConfigureSocket(socket.get(), addr,
-                           NetworkChangeNotifier::kInvalidNetworkHandle);
+                           NetworkChangeNotifier::kInvalidNetworkHandle,
+                           server_id.socket_tag());
   if (rv != OK)
     return rv;
 

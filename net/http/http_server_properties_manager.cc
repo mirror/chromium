@@ -14,6 +14,7 @@
 #include "net/base/ip_address.h"
 #include "net/base/port_util.h"
 #include "net/quic/platform/api/quic_hostname_utils.h"
+#include "net/socket/socket_tag.h"
 #include "url/gurl.h"
 
 namespace net {
@@ -91,9 +92,10 @@ QuicServerId QuicServerIdFromString(const std::string& str) {
   if (!url.is_valid()) {
     return QuicServerId();
   }
-  return QuicServerId(HostPortPair::FromURL(url), url.path_piece() == "/private"
-                                                      ? PRIVACY_MODE_ENABLED
-                                                      : PRIVACY_MODE_DISABLED);
+  return QuicServerId(HostPortPair::FromURL(url),
+                      url.path_piece() == "/private" ? PRIVACY_MODE_ENABLED
+                                                     : PRIVACY_MODE_DISABLED,
+                      SocketTag());
 }
 
 }  // namespace

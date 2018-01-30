@@ -9,6 +9,7 @@
 #include "net/base/net_errors.h"
 #include "net/http/http_server_properties_impl.h"
 #include "net/quic/core/quic_server_id.h"
+#include "net/socket/socket_tag.h"
 #include "net/test/gtest_util.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -29,7 +30,7 @@ const char kCertB[] = "cert_b";
 class PropertiesBasedQuicServerInfoTest : public ::testing::Test {
  protected:
   PropertiesBasedQuicServerInfoTest()
-      : server_id_("www.google.com", 443, PRIVACY_MODE_DISABLED),
+      : server_id_("www.google.com", 443, PRIVACY_MODE_DISABLED, SocketTag()),
         server_info_(server_id_, &http_server_properties_) {}
 
   // Initialize |server_info_| object and persist it.

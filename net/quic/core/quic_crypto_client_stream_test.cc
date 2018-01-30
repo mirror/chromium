@@ -16,6 +16,7 @@
 #include "net/quic/core/tls_server_handshaker.h"
 #include "net/quic/platform/api/quic_arraysize.h"
 #include "net/quic/platform/api/quic_flags.h"
+#include "net/quic/platform/api/quic_socket_tag.h"
 #include "net/quic/platform/api/quic_test.h"
 #include "net/quic/test_tools/crypto_test_utils.h"
 #include "net/quic/test_tools/quic_stream_peer.h"
@@ -38,7 +39,10 @@ class QuicCryptoClientStreamTest : public QuicTest {
  public:
   QuicCryptoClientStreamTest()
       : supported_versions_(AllSupportedVersions()),
-        server_id_(kServerHostname, kServerPort, PRIVACY_MODE_DISABLED),
+        server_id_(kServerHostname,
+                   kServerPort,
+                   PRIVACY_MODE_DISABLED,
+                   QuicSocketTag()),
         crypto_config_(crypto_test_utils::ProofVerifierForTesting(),
                        TlsClientHandshaker::CreateSslCtx()) {
     CreateConnection();
@@ -368,7 +372,8 @@ TEST_F(QuicCryptoClientStreamTest, TokenBindingNotNegotiated) {
 TEST_F(QuicCryptoClientStreamTest, NoTokenBindingInPrivacyMode) {
   server_options_.token_binding_params = QuicTagVector{kTB10};
   crypto_config_.tb_key_params = QuicTagVector{kTB10};
-  server_id_ = QuicServerId(kServerHostname, kServerPort, PRIVACY_MODE_ENABLED);
+  server_id_ = QuicServerId(kServerHostname, kServerPort, PRIVACY_MODE_ENABLED,
+                            QuicSocketTag());
   CreateConnection();
 
   CompleteCryptoHandshake();
@@ -388,7 +393,10 @@ class QuicCryptoClientStreamStatelessTest : public QuicTest {
                               TlsServerHandshaker::CreateSslCtx()),
         server_compressed_certs_cache_(
             QuicCompressedCertsCache::kQuicCompressedCertsCacheSize),
-        server_id_(kServerHostname, kServerPort, PRIVACY_MODE_DISABLED) {
+        server_id_(kServerHostname,
+                   kServerPort,
+                   PRIVACY_MODE_DISABLED,
+                   QuicSocketTag()) {
     TestQuicSpdyClientSession* client_session = nullptr;
     CreateClientSessionForTest(server_id_,
                                /* supports_stateless_rejects= */ true,

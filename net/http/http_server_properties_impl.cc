@@ -17,6 +17,7 @@
 #include "base/strings/string_util.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/values.h"
+#include "net/socket/socket_tag.h"
 
 namespace net {
 
@@ -138,6 +139,7 @@ void HttpServerPropertiesImpl::SetQuicServerInfoMap(
   // Add the entries from the memory cache.
   for (QuicServerInfoMap::reverse_iterator it = quic_server_info_map->rbegin();
        it != quic_server_info_map->rend(); ++it) {
+    DCHECK(it->first.socket_tag() == SocketTag());
     if (quic_server_info_map_.Get(it->first) == quic_server_info_map_.end()) {
       quic_server_info_map_.Put(it->first, it->second);
     }
@@ -585,22 +587,26 @@ HttpServerPropertiesImpl::server_network_stats_map() const {
 bool HttpServerPropertiesImpl::SetQuicServerInfo(
     const QuicServerId& server_id,
     const std::string& server_info) {
-  QuicServerInfoMap::iterator it = quic_server_info_map_.Peek(server_id);
+  QuicServerId server_id_no_tag(server_id.host_port_pair(),
+                                server_id.privacy_mode(), SocketTag());
+  QuicServerInfoMap::iterator it = quic_server_info_map_.Peek(server_id_no_tag);
   bool changed =
       (it == quic_server_info_map_.end() || it->second != server_info);
-  quic_server_info_map_.Put(server_id, server_info);
-  UpdateCanonicalServerInfoMap(server_id);
+  quic_server_info_map_.Put(server_id_no_tag, server_info);
+  UpdateCanonicalServerInfoMap(server_id_no_tag);
   return changed;
 }
 
 const std::string* HttpServerPropertiesImpl::GetQuicServerInfo(
     const QuicServerId& server_id) {
-  QuicServerInfoMap::iterator it = quic_server_info_map_.Get(server_id);
+  QuicServerId server_id_no_tag(server_id.host_port_pair(),
+                                server_id.privacy_mode(), SocketTag());
+  QuicServerInfoMap::iterator it = quic_server_info_map_.Get(server_id_no_tag);
   if (it != quic_server_info_map_.end()) {
     // Since |canonical_server_info_map_| should always map to the most
     // recent host, update it with the one that became MRU in
     // |quic_server_info_map_|.
-    UpdateCanonicalServerInfoMap(server_id);
+    UpdateCanonicalServerInfoMap(server_id_no_tag);
     return &it->second;
   }
 
@@ -669,6 +675,7 @@ void HttpServerPropertiesImpl::SetMaxServerConfigsStoredInProperties(
 
 void HttpServerPropertiesImpl::UpdateCanonicalServerInfoMap(
     const QuicServerId& server) {
+  DCHECK(server.socket_tag() == SocketTag());
   const std::string* suffix = GetCanonicalSuffix(server.host());
   if (suffix) {
     HostPortPair canonical_pair(*suffix, server.port());

@@ -5,6 +5,7 @@
 #include "net/quic/core/tls_client_handshaker.h"
 #include "net/quic/core/tls_server_handshaker.h"
 #include "net/quic/platform/api/quic_arraysize.h"
+#include "net/quic/platform/api/quic_socket_tag.h"
 #include "net/quic/platform/api/quic_test.h"
 #include "net/quic/test_tools/crypto_test_utils.h"
 #include "net/quic/test_tools/fake_proof_source.h"
@@ -183,7 +184,7 @@ class TestQuicCryptoClientStream : public TestQuicCryptoStream {
         handshaker_(new TlsClientHandshaker(
             this,
             session,
-            QuicServerId("test.example.com", 443),
+            QuicServerId("test.example.com", 443, QuicSocketTag()),
             proof_verifier_.get(),
             ssl_ctx_.get(),
             crypto_test_utils::ProofVerifyContextForTesting())) {}
