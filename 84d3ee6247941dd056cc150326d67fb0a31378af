@@ -34,6 +34,24 @@
       "revId": "84d3ee6247941dd056cc150326d67fb0a31378af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85379378_425ae5a8",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResourceContent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2018-01-30T19:41:04Z",
+      "side": 1,
+      "message": "\u003e Maybe updating it in CreateImage would be reasonable?\n\nLooks good (CreateImage() already have a call to GetResponse(), so moving this block into CreateImage() also further centralizes the calls to GetResponse()).",
+      "parentUuid": "81818f3f_1e9d75ae",
+      "revId": "84d3ee6247941dd056cc150326d67fb0a31378af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
