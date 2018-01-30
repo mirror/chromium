@@ -686,6 +686,34 @@ TEST_F(BluetoothTest, DiscoverMultipleLowEnergyDevices) {
 }
 #endif  // defined(OS_ANDROID) || defined(OS_MACOSX) || defined(OS_WIN)
 
+#if defined(OS_MACOSX)
+// Discovers multiple devices when addresses vary.
+TEST_F(BluetoothTest, DiscoverLowEnergyDeviceWithFilteredUUID) {
+  if (!PlatformSupportsLowEnergy()) {
+    LOG(WARNING) << "Low Energy Bluetooth unavailable, skipping unit test.";
+    return;
+  }
+  InitWithFakeAdapter();
+  TestBluetoothAdapterObserver observer(adapter_);
+
+  // Start discovery with filter for U2F service.
+  StartLowEnergyDiscoverySessionWithFilteredUUIDs(
+      {device::BluetoothUUID(kTestUUIDLinkLoss)});
+
+  // Device with ordinal 1 does not advertise the link loss service.
+  SimulateLowEnergyDevice(1);
+  EXPECT_EQ(0, observer.device_added_count());
+  EXPECT_EQ(0, observer.device_changed_count());
+  EXPECT_EQ(0u, adapter_->GetDevices().size());
+
+  // Device with ordinal 2 does advertise the link loss service.
+  BluetoothDevice* device = SimulateLowEnergyDevice(2);
+  EXPECT_EQ(1, observer.device_added_count());
+  EXPECT_EQ(1u, adapter_->GetDevices().size());
+  EXPECT_EQ(device, observer.last_device());
+}
+#endif  // defined(OS_MACOSX)
+
 // TODO(https://crbug.com/804356): Enable this test on Windows as well.
 #if defined(OS_WIN)
 #define MAYBE_TogglePowerFakeAdapter DISABLED_TogglePowerFakeAdapter

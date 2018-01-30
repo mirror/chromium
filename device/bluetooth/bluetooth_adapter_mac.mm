@@ -469,9 +469,12 @@ bool BluetoothAdapterMac::StartDiscovery(
   if (transport & BLUETOOTH_TRANSPORT_LE) {
     // Begin a low energy discovery session or update it if one is already
     // running.
-    if (IsLowEnergyAvailable())
+    if (IsLowEnergyAvailable()) {
+      std::set<BluetoothUUID> uuids;
+      discovery_filter->GetUUIDs(uuids);
       low_energy_discovery_manager_->StartDiscovery(
-          BluetoothDevice::UUIDList());
+          BluetoothDevice::UUIDList(uuids.begin(), uuids.end()));
+    }
   }
   return true;
 }

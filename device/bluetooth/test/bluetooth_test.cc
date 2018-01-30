@@ -12,6 +12,7 @@
 #include "base/run_loop.h"
 #include "device/bluetooth/bluetooth_adapter.h"
 #include "device/bluetooth/bluetooth_common.h"
+#include "device/bluetooth/bluetooth_uuid.h"
 
 namespace device {
 
@@ -70,6 +71,19 @@ void BluetoothTestBase::StartLowEnergyDiscoverySession() {
   adapter_->StartDiscoverySessionWithFilter(
       std::make_unique<BluetoothDiscoveryFilter>(BLUETOOTH_TRANSPORT_LE),
       GetDiscoverySessionCallback(Call::EXPECTED),
+      GetErrorCallback(Call::NOT_EXPECTED));
+  base::RunLoop().RunUntilIdle();
+}
+
+void BluetoothTestBase::StartLowEnergyDiscoverySessionWithFilteredUUIDs(
+    const std::vector<BluetoothUUID>& uuids) {
+  auto filter =
+      std::make_unique<BluetoothDiscoveryFilter>(BLUETOOTH_TRANSPORT_LE);
+  for (const auto& uuid : uuids)
+    filter->AddUUID(uuid);
+
+  adapter_->StartDiscoverySessionWithFilter(
+      std::move(filter), GetDiscoverySessionCallback(Call::EXPECTED),
       GetErrorCallback(Call::NOT_EXPECTED));
   base::RunLoop().RunUntilIdle();
 }

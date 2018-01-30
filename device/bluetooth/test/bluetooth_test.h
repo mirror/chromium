@@ -31,6 +31,7 @@ class BluetoothAdapter;
 class BluetoothDevice;
 class BluetoothLocalGattCharacteristic;
 class BluetoothLocalGattDescriptor;
+class BluetoothUUID;
 
 // A test fixture for Bluetooth that abstracts platform specifics for creating
 // and controlling fake low level objects.
@@ -123,6 +124,13 @@ class BluetoothTestBase : public testing::Test {
   // and this fixture's callbacks expecting success.
   // Then RunLoop().RunUntilIdle().
   virtual void StartLowEnergyDiscoverySession();
+
+  // Calls adapter_->StartDiscoverySessionWithFilter with Low Energy transport,
+  // whitelisted UUIDs from |uuids|, and this fixture's callbacks expecting
+  // success.
+  // Then RunLoop().RunUntilIdle().
+  virtual void StartLowEnergyDiscoverySessionWithFilteredUUIDs(
+      const std::vector<BluetoothUUID>& uuids);
 
   // Calls adapter_->StartDiscoverySessionWithFilter with Low Energy transport,
   // and this fixture's callbacks expecting error.
