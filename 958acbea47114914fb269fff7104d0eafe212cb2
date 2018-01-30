@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd30cafd_a92b0ae1",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ClientHintsPreferences.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-30T13:03:53Z",
+      "side": 1,
+      "message": "nit: please add a lightweight document to KURL, and also note that |this| will not be updated if IsClientHintsAllowed returned false for the KURL",
+      "revId": "958acbea47114914fb269fff7104d0eafe212cb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
