@@ -88,6 +88,24 @@
       "revId": "9cd579017d23b2fc1fc87226e06f77665f55c4f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3576a578_de39e666",
+        "filename": "net/http/http_request_info.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-30T17:06:17Z",
+      "side": 1,
+      "message": "This is a sample of cases that should be found and banned:\n  net::MutableNetworkTrafficAnnotationTag tag1;\n  tag1.unique_id_hash_code \u003d 1;\nIt is already part of the clang tool, and it has no effect on run-time.\n\nGenerally I am OK with this approach. I just preferred to hide mutable types as much as possible and always use the normal one. But it seems that we don\u0027t have a better solution here.\nSo SGTU?",
+      "parentUuid": "027f0074_0a10c2a1",
+      "revId": "9cd579017d23b2fc1fc87226e06f77665f55c4f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
