@@ -33,6 +33,12 @@
             android:maxHeight="@dimen/context_menu_header_image_max_height"
             android:adjustViewBounds="true"
             android:visibility="gone"/>
+        <Space
+            android:id="@+id/image_text_placeholder"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
         <TextView
             android:id="@+id/context_header_text"
             android:layout_marginBottom="10dp"

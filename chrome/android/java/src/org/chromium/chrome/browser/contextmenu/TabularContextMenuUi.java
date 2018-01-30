@@ -194,9 +194,7 @@ public class TabularContextMenuUi implements ContextMenuUi, AdapterView.OnItemCl
         final TextView headerTextView =
                 (TextView) baseLayout.findViewById(R.id.context_header_text);
         if (TextUtils.isEmpty(headerText)) {
-            baseLayout.findViewById(R.id.context_header_layout).setVisibility(View.GONE);
-            headerTextView.setVisibility(View.GONE);
-            baseLayout.findViewById(R.id.context_divider).setVisibility(View.GONE);
+            baseLayout.findViewById(R.id.image_text_placeholder).setVisibility(View.VISIBLE);
             return;
         }
         headerTextView.setVisibility(View.VISIBLE);
