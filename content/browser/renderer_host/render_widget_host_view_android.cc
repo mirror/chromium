@@ -964,7 +964,7 @@ bool RenderWidgetHostViewAndroid::OnTouchEvent(
     return false;
 
   blink::WebTouchEvent web_event = ui::CreateWebTouchEventFromMotionEvent(
-      event, result.moved_beyond_slop_region);
+      event, result.moved_beyond_slop_region, false);
   if (web_event.GetType() == blink::WebInputEvent::kUndefined)
     return false;
 
