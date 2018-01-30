@@ -34,11 +34,8 @@ ChromeDownloadManagerDelegate*
 DownloadCoreServiceImpl::GetDownloadManagerDelegate() {
   DownloadManager* manager = BrowserContext::GetDownloadManager(profile_);
   // If we've already created the delegate, just return it.
-  if (download_manager_created_) {
-    DCHECK(static_cast<DownloadManagerDelegate*>(manager_delegate_.get()) ==
-           manager->GetDelegate());
+  if (download_manager_created_)
     return manager_delegate_.get();
-  }
   download_manager_created_ = true;
 
   // In case the delegate has already been set by
