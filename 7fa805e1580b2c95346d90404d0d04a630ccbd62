@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "16472f99_4580640e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-scroll-snap/snap-at-gesture-scroll-end-manual.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2018-01-30T04:41:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b0660ec_1a5e13da",
+      "range": {
+        "startLine": 35,
+        "startChar": 42,
+        "endLine": 35,
+        "endChar": 58
+      },
+      "revId": "7fa805e1580b2c95346d90404d0d04a630ccbd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f82e2e7d_f32aed5c",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-scroll-snap/snap-at-gesture-scroll-end-manual.html",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "7fa805e1580b2c95346d90404d0d04a630ccbd62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48a63da9_1cf683d0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-scroll-snap/snap-at-gesture-scroll-end-manual.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2018-01-30T04:41:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f82e2e7d_f32aed5c",
+      "range": {
+        "startLine": 38,
+        "startChar": 52,
+        "endLine": 38,
+        "endChar": 66
+      },
+      "revId": "7fa805e1580b2c95346d90404d0d04a630ccbd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "18b8cb8f_a66675fa",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-scroll-snap/snap-at-gesture-scroll-end-manual.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2018-01-30T04:41:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71850a30_34a23506",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 2
+      },
+      "revId": "7fa805e1580b2c95346d90404d0d04a630ccbd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "854cc89f_aa5b4693",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-scroll-snap/snap-at-gesture-scroll-end-manual.html",
         "patchSetId": 12
@@ -91,6 +163,30 @@
       "revId": "7fa805e1580b2c95346d90404d0d04a630ccbd62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a26eba35_7d37dd52",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-scroll-snap/snap-at-gesture-scroll-end-manual.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2018-01-30T04:41:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "854cc89f_aa5b4693",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 66
+      },
+      "revId": "7fa805e1580b2c95346d90404d0d04a630ccbd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "011cef5e_f31528be",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-scroll-snap/snap-at-gesture-scroll-end-manual.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2018-01-30T04:41:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "967cc4eb_a77d99ad",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 22
+      },
+      "revId": "7fa805e1580b2c95346d90404d0d04a630ccbd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82cce7c5_7756c11d",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-scroll-snap/snap-at-gesture-scroll-end-manual.html",
         "patchSetId": 12
@@ -128,6 +248,30 @@
       "writtenOn": "2018-01-29T18:04:32Z",
       "side": 1,
       "message": "nit: Why is this necessary? Is it because the test result may not be visible otherwise?",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 30
+      },
+      "revId": "7fa805e1580b2c95346d90404d0d04a630ccbd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7e2b00f_62354f3c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-scroll-snap/snap-at-gesture-scroll-end-manual.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2018-01-30T04:41:40Z",
+      "side": 1,
+      "message": "Yes, the result may not be visible otherwise. I found similar usages in other layout tests as well.",
+      "parentUuid": "82cce7c5_7756c11d",
       "range": {
         "startLine": 82,
         "startChar": 0,
@@ -160,6 +304,30 @@
       "revId": "7fa805e1580b2c95346d90404d0d04a630ccbd62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dc338cf_1ce7cf6a",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2018-01-30T04:41:40Z",
+      "side": 1,
+      "message": "I consulted David about this and he suggested to call the methods from LocalFrameView which handles whether RootLayerScrolling is enabled or not.",
+      "parentUuid": "5ed19d5a_61e0a43f",
+      "range": {
+        "startLine": 298,
+        "startChar": 3,
+        "endLine": 299,
+        "endChar": 62
+      },
+      "revId": "7fa805e1580b2c95346d90404d0d04a630ccbd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
