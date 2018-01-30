@@ -898,6 +898,9 @@ void Fullscreen::FullscreenElementChanged(Element* old_element,
       if (LocalFrameView* frame_view = frame->View())
         frame_view->SetNeedsPaintPropertyUpdate();
     }
+
+    frame->SetIsInert(GetDocument()->LocalOwner() &&
+                      GetDocument()->LocalOwner()->IsInert());
   }
 
   // TODO(foolip): This should not call |UpdateStyleAndLayoutTree()|.
