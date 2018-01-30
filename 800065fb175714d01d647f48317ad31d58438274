@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d982a1a2_464b25ed",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1237329
+      },
+      "writtenOn": "2018-01-30T10:09:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82f577ed_550f1d57",
+      "revId": "800065fb175714d01d647f48317ad31d58438274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0adc5ec7_05179aaf",
         "filename": "content/public/browser/content_browser_client.h",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "800065fb175714d01d647f48317ad31d58438274",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cf6fe93_8fb3b6fe",
+        "filename": "content/public/browser/content_browser_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1030,
+      "author": {
+        "id": 1237329
+      },
+      "writtenOn": "2018-01-30T10:09:27Z",
+      "side": 1,
+      "message": "Done, I also change \"browser main loop\" to BrowserMainLoop in previous lines to keep one style.",
+      "parentUuid": "0adc5ec7_05179aaf",
+      "range": {
+        "startLine": 1030,
+        "startChar": 64,
+        "endLine": 1030,
+        "endChar": 78
+      },
+      "revId": "800065fb175714d01d647f48317ad31d58438274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
