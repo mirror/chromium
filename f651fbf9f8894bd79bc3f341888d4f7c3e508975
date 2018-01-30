@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8dd961c_48cab92c",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1202,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-30T02:49:31Z",
+      "side": 1,
+      "message": "Minor nits: Maybe pull this whole block out into a should_skip_policy_for_webdriver boolean to make it easier to read?  Also, is the HasSwitch call cheaper?  Seems like we could do that first to eliminate the other two calls in the vast majority of cases.\n\nSomething like:\n\nbool should_skip_policy_for_webdriver \u003d\n    command_line-\u003eHasSwitch(switches::kEnableAutomation) \u0026\u0026\n    local_state-\u003eIsManagedPreference(\n            prefs::kWebDriverOverridesIncompatiblePolicies) \u0026\u0026\n    local_state-\u003eGetBoolean(\n            prefs::kWebDriverOverridesIncompatiblePolicies);\nif (!should_skip_policy_for_webdriver) {\n  // Add Site Isolation switches...\n}",
+      "range": {
+        "startLine": 1198,
+        "startChar": 6,
+        "endLine": 1202,
+        "endChar": 59
+      },
+      "revId": "f651fbf9f8894bd79bc3f341888d4f7c3e508975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6591bc9_48b2c096",
+        "filename": "chrome/test/data/policy/policy_test_cases.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-30T02:49:31Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this on ChromeOS-- does WebDriver work there?",
+      "range": {
+        "startLine": 868,
+        "startChar": 34,
+        "endLine": 868,
+        "endChar": 44
+      },
+      "revId": "f651fbf9f8894bd79bc3f341888d4f7c3e508975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
