@@ -542,6 +542,24 @@
     },
     {
       "key": {
+        "uuid": "f586a17f_63aa0a88",
+        "filename": "chrome/test/data/banners/main.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-30T18:04:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2aff2199_7e57b6d6",
+      "revId": "d74706bc105733ead8abe075abb8609f573372d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c8722c6_417ccc94",
         "filename": "chrome/test/data/banners/main.js",
         "patchSetId": 1
