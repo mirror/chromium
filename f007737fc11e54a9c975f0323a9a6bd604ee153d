@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0383a330_fd67990c",
+        "filename": "content/browser/tracing/arc_tracing_agent_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-30T06:53:41Z",
+      "side": 1,
+      "message": "is this Arc as in how we run  android apps on chromeos?\n\nIf so, this is not a web platform feature, so what is it doing in src/content?",
+      "revId": "f007737fc11e54a9c975f0323a9a6bd604ee153d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
