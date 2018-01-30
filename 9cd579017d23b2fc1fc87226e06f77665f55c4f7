@@ -52,6 +52,24 @@
       "revId": "9cd579017d23b2fc1fc87226e06f77665f55c4f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89c636e5_ad9579ab",
+        "filename": "net/http/http_request_info.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-30T16:36:33Z",
+      "side": 1,
+      "message": "The tests are only for assigning numbers to mutables. The clang tools check all assignments to mutable annotations, and ensure that it is from an immutable one and not a random constant number.\n\nOK. So I will proceed with removing get/set, not converting to class, and every user of this structure should assign an annotation for cases that require it (we don\u0027t put it in constructor).",
+      "parentUuid": "a881ae2d_bba65cb9",
+      "revId": "9cd579017d23b2fc1fc87226e06f77665f55c4f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
