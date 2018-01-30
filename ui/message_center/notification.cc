@@ -198,6 +198,10 @@ void Notification::CopyState(Notification* base) {
   optional_fields_.never_timeout = base->never_timeout();
 }
 
+void Notification::set_app_id(const std::string& app_id) {
+  notifier_id_.id = app_id;
+}
+
 void Notification::SetButtonIcon(size_t index, const gfx::Image& icon) {
   if (index >= optional_fields_.buttons.size())
     return;

@@ -14,6 +14,10 @@
 #include "mojo/public/cpp/bindings/associated_binding.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
+namespace arc {
+class ArcNotificationManager;
+}
+
 namespace message_center {
 struct NotifierId;
 }
@@ -67,15 +71,24 @@ class ASH_EXPORT MessageCenterController
   // display.
   void SetNotifierSettingsListener(NotifierSettingsListener* listener);
 
+  void GetAppIdToPackageNameMap(
+      arc::ArcNotificationManager* arc_notification_manager,
+      std::string package_name,
+      std::string key,
+      const std::string& notification_id);
+
  private:
+  // Callback for GetAppIDToPackageNameMap.
+  void OnGotAppId(const std::string& key, const std::vector<std::string>& info);
+
   // Callback for GetNotifierList.
   void OnGotNotifierList(std::vector<mojom::NotifierUiDataPtr> ui_data);
 
   FullscreenNotificationBlocker fullscreen_notification_blocker_;
   InactiveUserNotificationBlocker inactive_user_notification_blocker_;
   SessionStateNotificationBlocker session_state_notification_blocker_;
-
   NotifierSettingsListener* notifier_id_ = nullptr;
+  std::string notification_id_;
 
   mojo::Binding<mojom::AshMessageCenterController> binding_;
 
