@@ -1,0 +1,232 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a18c02e9_bb4c7ef4",
+        "filename": "components/subresource_filter/core/common/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-30T15:46:09Z",
+      "side": 1,
+      "message": "Why only linux and mac? Can you include a comment?",
+      "revId": "786071ed6f254719837b3f35d4b80cbdd9ccd93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "697a2876_65f787f0",
+        "filename": "components/subresource_filter/core/common/test_ruleset_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-30T15:46:09Z",
+      "side": 1,
+      "message": "optional nit: slightly prefer adding another method that takes two params rather than making a default arg.",
+      "revId": "786071ed6f254719837b3f35d4b80cbdd9ccd93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46ed0c83_19e92918",
+        "filename": "components/subresource_filter/core/common/tools/indexing_tool.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-30T15:46:09Z",
+      "side": 1,
+      "message": "#include \"base/numerics/safe_conversions.h\"",
+      "range": {
+        "startLine": 42,
+        "startChar": 24,
+        "endLine": 42,
+        "endChar": 36
+      },
+      "revId": "786071ed6f254719837b3f35d4b80cbdd9ccd93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40ea354c_273fec6a",
+        "filename": "components/subresource_filter/core/common/tools/indexing_tool.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-30T15:46:09Z",
+      "side": 1,
+      "message": "I think the naming can be improved. Maybe IndexAndWriteRuleset? Convert implies we\u0027re transforming something in-place.",
+      "range": {
+        "startLine": 14,
+        "startChar": 5,
+        "endLine": 14,
+        "endChar": 28
+      },
+      "revId": "786071ed6f254719837b3f35d4b80cbdd9ccd93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50990707_a6495ad1",
+        "filename": "components/subresource_filter/core/common/tools/indexing_tool_main.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-30T15:46:09Z",
+      "side": 1,
+      "message": "s/servicetool/subresource_indexing_tool ?",
+      "revId": "786071ed6f254719837b3f35d4b80cbdd9ccd93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a92dc02_f608c77c",
+        "filename": "components/subresource_filter/core/common/tools/indexing_tool_main.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-30T15:46:09Z",
+      "side": 1,
+      "message": "Does DirectoryExists return true if there is no file in |indexed_path|?",
+      "revId": "786071ed6f254719837b3f35d4b80cbdd9ccd93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9526cde9_c1bab677",
+        "filename": "components/subresource_filter/core/common/tools/indexing_tool_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-30T15:46:09Z",
+      "side": 1,
+      "message": "include base/numerics/safe_conversions.h",
+      "range": {
+        "startLine": 26,
+        "startChar": 24,
+        "endLine": 26,
+        "endChar": 36
+      },
+      "revId": "786071ed6f254719837b3f35d4b80cbdd9ccd93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6b9b018_cd44bd78",
+        "filename": "components/subresource_filter/core/common/tools/indexing_tool_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-30T15:46:09Z",
+      "side": 1,
+      "message": "#include scoped_temp_dir",
+      "range": {
+        "startLine": 37,
+        "startChar": 8,
+        "endLine": 37,
+        "endChar": 24
+      },
+      "revId": "786071ed6f254719837b3f35d4b80cbdd9ccd93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9389a9c6_0a488d6d",
+        "filename": "components/subresource_filter/core/common/tools/indexing_tool_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-30T15:46:09Z",
+      "side": 1,
+      "message": "Does this need to be a unique_ptr?",
+      "revId": "786071ed6f254719837b3f35d4b80cbdd9ccd93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50373822_20e3800a",
+        "filename": "components/subresource_filter/core/common/tools/indexing_tool_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-30T15:46:09Z",
+      "side": 1,
+      "message": "nit: just inline this in the test. Other tests may require different rulesets.",
+      "revId": "786071ed6f254719837b3f35d4b80cbdd9ccd93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7aad7bd_eea07a6f",
+        "filename": "components/subresource_filter/core/common/tools/indexing_tool_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-30T15:46:09Z",
+      "side": 1,
+      "message": "base/macros",
+      "revId": "786071ed6f254719837b3f35d4b80cbdd9ccd93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "068b8a67_b410d8ea",
+        "filename": "components/subresource_filter/core/common/tools/indexing_tool_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-30T15:46:09Z",
+      "side": 1,
+      "message": "const?",
+      "revId": "786071ed6f254719837b3f35d4b80cbdd9ccd93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
