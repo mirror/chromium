@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6bd13444_fca6af60",
+        "filename": "media/cast/sender/external_video_encoder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-30T03:59:12Z",
+      "side": 1,
+      "message": "This is a private nested class, so the one caller is known. I confirmed it is constructed with a non-null VEA (see ExternalVideoEncoder::OnCreateVideoEncodeAccelerator()).",
+      "parentUuid": "2b698c16_5fa153d9",
+      "revId": "3756142ea2784fd9ecf3b9c1f2ac330678e82502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b412bf5a_41876d64",
         "filename": "media/cast/sender/external_video_encoder.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-30T02:30:55Z",
       "side": 1,
       "message": "nit: This seems was checked before calling video_encode_accelerator_-\u003eencode(). Though it doesn\u0027t hurt to check it again.",
+      "revId": "3756142ea2784fd9ecf3b9c1f2ac330678e82502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d93c2c93_905209b1",
+        "filename": "media/cast/sender/external_video_encoder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-30T03:59:12Z",
+      "side": 1,
+      "message": "|encoder_active_| may have become false during the async operation. Also, note that this method is a callback from VEA, and it might be called for a prior frame even after we\u0027ve stopped encoding new frames. So, it makes sense to check again. :)",
+      "parentUuid": "b412bf5a_41876d64",
       "revId": "3756142ea2784fd9ecf3b9c1f2ac330678e82502",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
