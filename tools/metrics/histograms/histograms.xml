@@ -49877,6 +49877,24 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Network.KeepaliveStatisticsRecorder.PeakInflightRequests"
+    units="requests">
+  <owner>yhirano@chromium.org</owner>
+  <summary>
+    The peak number of outstanding requests with keepalive specified.
+  </summary>
+</histogram>
+
+<histogram
+    name="Network.KeepaliveStatisticsRecorder.PeakInflightRequestsPerProcess"
+    units="requests">
+  <owner>yhirano@chromium.org</owner>
+  <summary>
+    The peak number of outstanding requests with keepalive specified per
+    process.
+  </summary>
+</histogram>
+
 <histogram name="Network.MigrationNssToPem"
     enum="MigrationNssToPemNetworkTypes">
   <obsolete>
