@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84ad9209_913fd0d3",
+        "filename": "third_party/WebKit/Source/core/fullscreen/Fullscreen.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-30T00:55:40Z",
+      "side": 1,
+      "message": "Just to be sure, this doesn\u0027t intend to measure top-layer usage by modal \u003cdialog\u003e correct? As that issue points out, some of the complexity about top-layer is for multiple fullscreen elements and/or multiple modal dialogs . I don\u0027t believe modal dialogs come to this function (but i haven\u0027t been following code changes). \n\nI just want to ensure we understand what the use counter is measuring when making decisions about whether to remove nested support.",
+      "revId": "af90cbd10405efac9ffad9a61861fb1adff53213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "314288f0_f0b5bff4",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 17581,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-30T00:55:40Z",
+      "side": 1,
+      "message": "Ah, I guess pretty-print removed this? It\u0027s fine for this CL, but probably the corresponding type in web_feature.mojom should be commented out instead of just marked (obsolete) in a comment. But it looks like no one else does that...",
+      "revId": "af90cbd10405efac9ffad9a61861fb1adff53213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
