@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40636b70_4f528343",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-30T22:17:35Z",
+      "side": 1,
+      "message": "DCHECK(hit_test_aggregator_);",
+      "revId": "9475c85b5d9b29d422bbbb48f8628243c7f1e26a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d5bcb00_4b88678f",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-30T22:17:35Z",
+      "side": 1,
+      "message": "I think you can just check if |hit_test_aggregator_| is null instead of having this variable.",
+      "revId": "9475c85b5d9b29d422bbbb48f8628243c7f1e26a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
