@@ -1,0 +1,215 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04b909d3_3d68c1ed",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-30T22:33:07Z",
+      "side": 1,
+      "message": "Optional: I think base::ContainsKey might be more standard. No need for the parens wrapping the expression.",
+      "range": {
+        "startLine": 236,
+        "startChar": 25,
+        "endLine": 236,
+        "endChar": 41
+      },
+      "revId": "c18b32a50527acf23a287411dfdc93f88cdc2100",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d97e45ce_f608b5b6",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-30T22:33:07Z",
+      "side": 1,
+      "message": "nit: can you just use std::set? If you want to, you can change the unordered_maps to just std::map as well. The unordered ones are not recommended in Chromium for small workloads.",
+      "revId": "c18b32a50527acf23a287411dfdc93f88cdc2100",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fcb9319_8574c406",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-30T22:33:07Z",
+      "side": 1,
+      "message": "nit: prefer to just inline the EXPECT, which will give you actual line numbers during test failure.",
+      "revId": "c18b32a50527acf23a287411dfdc93f88cdc2100",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8822cf24_6fd04275",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-30T22:33:07Z",
+      "side": 1,
+      "message": "EXPECT_TRUE(child);",
+      "revId": "c18b32a50527acf23a287411dfdc93f88cdc2100",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1667a231_2fbe1089",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-30T22:33:07Z",
+      "side": 1,
+      "message": "Create",
+      "range": {
+        "startLine": 771,
+        "startChar": 5,
+        "endLine": 771,
+        "endChar": 10
+      },
+      "revId": "c18b32a50527acf23a287411dfdc93f88cdc2100",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06b77569_f5b5399f",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-30T22:33:07Z",
+      "side": 1,
+      "message": "s/child/grandchild.\nAlso, EXPECT_TRUE(grandchild);",
+      "revId": "c18b32a50527acf23a287411dfdc93f88cdc2100",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bef8dffa_565f03d1",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 791,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-30T22:33:07Z",
+      "side": 1,
+      "message": "Comment is out of date",
+      "revId": "c18b32a50527acf23a287411dfdc93f88cdc2100",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1762ef8f_aafcf29f",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-30T22:33:07Z",
+      "side": 1,
+      "message": "EXPECT_TRUE(child)",
+      "revId": "c18b32a50527acf23a287411dfdc93f88cdc2100",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b748a85_cfbf9c01",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-30T22:33:07Z",
+      "side": 1,
+      "message": "Comment is out of date",
+      "range": {
+        "startLine": 802,
+        "startChar": 5,
+        "endLine": 802,
+        "endChar": 10
+      },
+      "revId": "c18b32a50527acf23a287411dfdc93f88cdc2100",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6b2983a_39f95ad1",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 804,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-30T22:33:07Z",
+      "side": 1,
+      "message": "use another name, as \"allowed\" could be confused for a site on a whitelist",
+      "range": {
+        "startLine": 804,
+        "startChar": 65,
+        "endLine": 804,
+        "endChar": 72
+      },
+      "revId": "c18b32a50527acf23a287411dfdc93f88cdc2100",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "670ba65f_b2f166ee",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-30T22:33:07Z",
+      "side": 1,
+      "message": "s/child1/grandchild and EXPECT_TRUE",
+      "revId": "c18b32a50527acf23a287411dfdc93f88cdc2100",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
