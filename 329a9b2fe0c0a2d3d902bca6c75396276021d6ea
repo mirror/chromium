@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dae3e014_5b8d965c",
+        "filename": "build/toolchain/win/tool_wrapper.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2018-01-30T19:12:57Z",
+      "side": 1,
+      "message": "I don\u0027t know. I\u0027ve managed to not know anything about vpython. I just noted the symptoms.",
+      "parentUuid": "3a145ed9_393134f4",
+      "revId": "329a9b2fe0c0a2d3d902bca6c75396276021d6ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b28faf5_a13c18b4",
         "filename": "build/toolchain/win/tool_wrapper.py",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "329a9b2fe0c0a2d3d902bca6c75396276021d6ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64a5033a_3725bc43",
+        "filename": "build/toolchain/win/tool_wrapper.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2018-01-30T19:12:57Z",
+      "side": 1,
+      "message": "The plan is for lld-link.exe to include a call to FlushFileBuffers, so this won\u0027t be a problem. Zach and I discussed making the python flush conditional on the linker type and decided there was no real advantage - better safe than sorry, until we are sure lld-link.exe has the fix also.",
+      "parentUuid": "8b28faf5_a13c18b4",
+      "revId": "329a9b2fe0c0a2d3d902bca6c75396276021d6ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -64,6 +100,24 @@
       "writtenOn": "2018-01-30T19:10:07Z",
       "side": 1,
       "message": "\u003e win32file sorta sucks... maybe ctypes it instead since there\u0027s only a few functions to call? i.e.:\n\u003e \n\u003e def DoFlush(filename):\n\u003e   import ctypes\n\u003e   import ctypes.wintypes\n\u003e \n\u003e   kernel32 \u003d ctypes.WinDLL(\u0027kernel32\u0027)\n\u003e \n\u003e   CreateFileA \u003d kernel32.CreateFileA\n\u003e   CreateFileA.restype \u003d ctypes.wintypes.HANDLE\n\u003e   CreateFileA.argtypes \u003d [ctypes.wintypes.LPCSTR,\n\u003e                           ctypes.wintypes.DWORD,\n\u003e                           ctypes.wintypes.DWORD,\n\u003e                           ctypes.wintypes.LPVOID,\n\u003e                           ctypes.wintypes.DWORD,\n\u003e                           ctypes.wintypes.DWORD,\n\u003e                           ctypes.wintypes.HANDLE]\n\nNit to self, \\n between declarations here.\n\n\u003e   FlushFileBuffers \u003d kernel32.FlushFileBuffers\n\u003e   FlushFileBuffers \u003d kernel32.FlushFileBuffers\n\u003e   FlushFileBuffers.restype \u003d ctypes.wintypes.BOOL\n\u003e   FlushFileBuffers.argtypes \u003d [ctypes.wintypes.HANDLE]\n\u003e \n\u003e   CloseHandle \u003d kernel32.CloseHandle\n\u003e   CloseHandle.restype \u003d ctypes.wintypes.BOOL\n\u003e   CloseHandle.argtypes \u003d [ctypes.wintypes.HANDLE]\n\u003e \n\u003e   GENERIC_WRITE \u003d 0x40000000\n\u003e   OPEN_EXISTING \u003d 3\n\u003e \n\u003e   handle \u003d CreateFileA(filename, GENERIC_WRITE, 0, None, OPEN_EXISTING, 0, 0)\n\u003e   if handle \u003c 0:\n\u003e     return False\n\u003e   if not FlushFileBuffers(handle):\n\u003e     return False\n\u003e   return CloseHandle(handle) !\u003d 0\n\u003e \n\u003e \n\u003e Up to you.",
+      "parentUuid": "36817477_6110184e",
+      "revId": "329a9b2fe0c0a2d3d902bca6c75396276021d6ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d29b522f_adb96396",
+        "filename": "build/toolchain/win/tool_wrapper.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2018-01-30T19:12:57Z",
+      "side": 1,
+      "message": "Seems like a lot of code - what\u0027s the upside? Given that we have win32file available I\u0027m inclined to just use it unless there is a clear advantage to avoiding it.",
       "parentUuid": "36817477_6110184e",
       "revId": "329a9b2fe0c0a2d3d902bca6c75396276021d6ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
