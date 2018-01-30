@@ -89,6 +89,8 @@ _VERSION_SPECIFIC_FILTER['HEAD'] = [
     'MobileEmulationCapabilityTest.testDeviceName',
     'MobileEmulationCapabilityTest.testNetworkConnectionTypeIsAppliedToAllTabs',
     'MobileEmulationCapabilityTest.testNetworkConnectionTypeIsAppliedToAllTabsImmediately',
+    # https://bugs.chromium.org/p/chromium/issues/detail?id=803678
+    'ChromeDriverTest.testGoBackAndGoForward',
 ]
 
 _VERSION_SPECIFIC_FILTER['64'] = [
