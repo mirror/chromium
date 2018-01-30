@@ -8,11 +8,15 @@
 #include "chrome/browser/download/download_item_model.h"
 #include "chrome/grit/generated_resources.h"
 #include "content/public/common/content_features.h"
-#include "extensions/common/extension.h"
+#include "extensions/features/features.h"
 #include "ui/base/l10n/l10n_util.h"
 
 #if defined(OS_WIN)
 #include "chrome/browser/ui/pdf/adobe_reader_info_win.h"
+#endif
+
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+#include "extensions/common/extension.h"
 #endif
 
 using content::DownloadItem;

@@ -9,8 +9,11 @@
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/time/time.h"
-#include "chrome/services/media_gallery_util/public/interfaces/constants.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
+
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+#include "chrome/services/media_gallery_util/public/interfaces/constants.mojom.h"
+#endif
 
 SafeAudioVideoChecker::SafeAudioVideoChecker(
     base::File file,

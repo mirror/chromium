@@ -26,7 +26,10 @@
 #include "components/storage_monitor/storage_monitor.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
+
+#if BUILDFLAG(ENABLE_EXTENSIONS)
 #include "extensions/common/extension.h"
+#endif
 
 using content::BrowserContext;
 using content::BrowserThread;

@@ -127,7 +127,7 @@ void DownloadCoreServiceImpl::SetDownloadManagerDelegateForTesting(
 }
 
 bool DownloadCoreServiceImpl::IsShelfEnabled() {
-#if defined(OS_ANDROID)
+#if defined(OS_ANDROID) && !BUILDFLAG(ENABLE_EXTENSIONS)
   return true;
 #else
   return !extension_event_router_ || extension_event_router_->IsShelfEnabled();

@@ -11,9 +11,12 @@
 #include "chrome/browser/ui/chrome_pages.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/chrome_switches.h"
-#include "extensions/browser/api/feedback_private/feedback_private_api.h"
+#include "extensions/features/features.h"
 
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+#include "extensions/browser/api/feedback_private/feedback_private_api.h"
 namespace feedback_private = extensions::api::feedback_private;
+#endif
 
 namespace chrome {
 
@@ -38,6 +41,7 @@ void ShowFeedbackPage(Browser* browser,
   UMA_HISTOGRAM_ENUMERATION("Feedback.RequestSource", source,
                             kFeedbackSourceCount);
 
+#if BUILDFLAG(ENABLE_EXTENSIONS)
   extensions::FeedbackPrivateAPI* api =
       extensions::FeedbackPrivateAPI::GetFactoryInstance()->Get(profile);
 
@@ -46,6 +50,7 @@ void ShowFeedbackPage(Browser* browser,
       source == kFeedbackSourceSadTabPage
           ? feedback_private::FeedbackFlow::FEEDBACK_FLOW_SADTABCRASH
           : feedback_private::FeedbackFlow::FEEDBACK_FLOW_REGULAR);
+#endif
 }
 
 }  // namespace chrome

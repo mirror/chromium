@@ -29,7 +29,6 @@
 #include "chrome/browser/devtools/devtools_protocol.h"
 #include "chrome/browser/devtools/global_confirm_info_bar.h"
 #include "chrome/browser/devtools/url_constants.h"
-#include "chrome/browser/extensions/chrome_extension_web_contents_observer.h"
 #include "chrome/browser/infobars/infobar_service.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
@@ -37,7 +36,6 @@
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/chrome_switches.h"
-#include "chrome/common/extensions/chrome_manifest_url_handlers.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/generated_resources.h"
@@ -61,9 +59,6 @@
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/renderer_preferences.h"
 #include "content/public/common/url_constants.h"
-#include "extensions/browser/extension_registry.h"
-#include "extensions/common/constants.h"
-#include "extensions/common/permissions/permissions_data.h"
 #include "ipc/ipc_channel.h"
 #include "net/base/escape.h"
 #include "net/base/io_buffer.h"
@@ -77,6 +72,14 @@
 #include "third_party/WebKit/public/public_features.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/page_transition_types.h"
+
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+#include "chrome/browser/extensions/chrome_extension_web_contents_observer.h"
+#include "chrome/common/extensions/chrome_manifest_url_handlers.h"
+#include "extensions/browser/extension_registry.h"
+#include "extensions/common/constants.h"
+#include "extensions/common/permissions/permissions_data.h"
+#endif
 
 using base::DictionaryValue;
 using content::BrowserThread;
@@ -573,8 +576,10 @@ DevToolsUIBindings::DevToolsUIBindings(content::WebContents* web_contents)
 
   file_helper_.reset(new DevToolsFileHelper(web_contents_, profile_, this));
   file_system_indexer_ = new DevToolsFileSystemIndexer();
+#if BUILDFLAG(ENABLE_EXTENSIONS)
   extensions::ChromeExtensionWebContentsObserver::CreateForWebContents(
       web_contents_);
+#endif
 
   // Register on-load actions.
   embedder_message_dispatcher_.reset(
@@ -1266,6 +1271,7 @@ void DevToolsUIBindings::ShowDevToolsConfirmInfoBar(
   GlobalConfirmInfoBar::Show(std::move(delegate));
 }
 
+#if BUILDFLAG(ENABLE_EXTENSIONS)
 void DevToolsUIBindings::AddDevToolsExtensionsToClient() {
   const extensions::ExtensionRegistry* registry =
       extensions::ExtensionRegistry::Get(profile_->GetOriginalProfile());
@@ -1302,6 +1308,7 @@ void DevToolsUIBindings::AddDevToolsExtensionsToClient() {
   CallClientFunction("DevToolsAPI.addExtensions",
                      &results, NULL, NULL);
 }
+#endif
 
 void DevToolsUIBindings::RegisterExtensionsAPI(const std::string& origin,
                                                const std::string& script) {
@@ -1431,5 +1438,7 @@ void DevToolsUIBindings::FrontendLoaded() {
   // Call delegate first - it seeds importants bit of information.
   delegate_->OnLoadCompleted();
 
+#if BUILDFLAG(ENABLE_EXTENSIONS)
   AddDevToolsExtensionsToClient();
+#endif
 }
