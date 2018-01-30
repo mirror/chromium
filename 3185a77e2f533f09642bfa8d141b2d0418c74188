@@ -1,0 +1,249 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07261859_0510c1d0",
+        "filename": "ash/login/ui/lock_debug_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T23:22:47Z",
+      "side": 1,
+      "message": "nit: This is not a toggle button. It starts the Gaia flow. How about just call it |show_gaia_signin_|?",
+      "range": {
+        "startLine": 287,
+        "startChar": 2,
+        "endLine": 287,
+        "endChar": 19
+      },
+      "revId": "3185a77e2f533f09642bfa8d141b2d0418c74188",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5da43317_09d26867",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T23:22:47Z",
+      "side": 1,
+      "message": "nit: document. And use GetUsers as its name since it is not an inline getter.",
+      "revId": "3185a77e2f533f09642bfa8d141b2d0418c74188",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6279b53b_4e77f4bf",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T23:22:47Z",
+      "side": 1,
+      "message": "nit: add \"return\" after L173 and remove \"else\"",
+      "revId": "3185a77e2f533f09642bfa8d141b2d0418c74188",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b73813ef_4627c23f",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T23:22:47Z",
+      "side": 1,
+      "message": "nit: get rid of |signin_profile| and call ProfileHelper::GetSigninProfile() in place.",
+      "revId": "3185a77e2f533f09642bfa8d141b2d0418c74188",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4e00903_083145ac",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T23:22:47Z",
+      "side": 1,
+      "message": "Can we move |dialog_view_| and widget creation into GaiaDialogDelegate?",
+      "revId": "3185a77e2f533f09642bfa8d141b2d0418c74188",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "105728aa_cea4d8df",
+        "filename": "chrome/browser/resources/chromeos/login/screen_gaia_signin.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T23:22:47Z",
+      "side": 1,
+      "message": "nit: doc",
+      "revId": "3185a77e2f533f09642bfa8d141b2d0418c74188",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90c8dfa2_3abf1e9d",
+        "filename": "chrome/browser/resources/chromeos/login/screen_gaia_signin.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T23:22:47Z",
+      "side": 1,
+      "message": "Let\u0027s not create another entry point. Move \"loaded\" into initialize method in md_login.js (since this looks like one being used).",
+      "revId": "3185a77e2f533f09642bfa8d141b2d0418c74188",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eedd7d7a_a0eb4435",
+        "filename": "chrome/browser/ui/webui/chromeos/gaia_dialog_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T23:22:47Z",
+      "side": 1,
+      "message": "nit: const -\u003e constexpr",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 5
+      },
+      "revId": "3185a77e2f533f09642bfa8d141b2d0418c74188",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3ff2298_f54ec8a8",
+        "filename": "chrome/browser/ui/webui/chromeos/gaia_dialog_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T23:22:47Z",
+      "side": 1,
+      "message": "nit: put this on initializer list",
+      "revId": "3185a77e2f533f09642bfa8d141b2d0418c74188",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2c75a2b_361ee3f7",
+        "filename": "chrome/browser/ui/webui/chromeos/gaia_dialog_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T23:22:47Z",
+      "side": 1,
+      "message": "nit: *size \u003d size_; ?",
+      "revId": "3185a77e2f533f09642bfa8d141b2d0418c74188",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3715edf1_ac1bd914",
+        "filename": "chrome/browser/ui/webui/chromeos/gaia_dialog_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T23:22:47Z",
+      "side": 1,
+      "message": "nit: This can move to cc and forward declare views::Widget in h",
+      "revId": "3185a77e2f533f09642bfa8d141b2d0418c74188",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46aa705a_cee92510",
+        "filename": "chrome/browser/ui/webui/chromeos/gaia_dialog_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T23:22:47Z",
+      "side": 1,
+      "message": "#include \"base/memory/weak_ptr.h\"",
+      "range": {
+        "startLine": 50,
+        "startChar": 8,
+        "endLine": 50,
+        "endChar": 15
+      },
+      "revId": "3185a77e2f533f09642bfa8d141b2d0418c74188",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2faef691_4ee5b359",
+        "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T23:22:47Z",
+      "side": 1,
+      "message": "nit: Move this to gaia_view.h and no need to document here for an overridden method.",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 0
+      },
+      "revId": "3185a77e2f533f09642bfa8d141b2d0418c74188",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
