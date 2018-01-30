@@ -4,35 +4,59 @@
 
 #include "device/u2f/u2f_request.h"
 
-#include <string>
 #include <utility>
 
 #include "base/bind.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "device/u2f/u2f_ble_discovery.h"
+#include "device/u2f/u2f_hid_discovery.h"
+#include "services/service_manager/public/cpp/connector.h"
 
 namespace device {
 
 U2fRequest::U2fRequest(std::string relying_party_id,
-                       std::vector<U2fDiscovery*> discoveries)
+                       service_manager::Connector* connector,
+                       const base::flat_set<U2fTransportProtocol>& protocols)
     : state_(State::INIT),
       relying_party_id_(std::move(relying_party_id)),
-      discoveries_(std::move(discoveries)),
       weak_factory_(this) {
-  for (auto* discovery : discoveries_)
+  for (auto protocol : protocols) {
+    std::unique_ptr<U2fDiscovery> discovery;
+    switch (protocol) {
+      case U2fTransportProtocol::kHid:
+        DCHECK(connector);
+        discovery = std::make_unique<U2fHidDiscovery>(connector);
+        break;
+      case U2fTransportProtocol::kBle:
+        discovery = std::make_unique<U2fBleDiscovery>();
+        break;
+    }
+
     discovery->AddObserver(this);
+    discoveries_.push_back(std::move(discovery));
+  }
 }
 
 U2fRequest::~U2fRequest() {
-  for (auto* discovery : discoveries_)
+  for (auto& discovery : discoveries_)
     discovery->RemoveObserver(this);
 }
 
 void U2fRequest::Start() {
   if (state_ == State::INIT) {
     state_ = State::BUSY;
-    for (auto* discovery : discoveries_)
+    for (auto& discovery : discoveries_) {
       discovery->Start();
+    }
   }
+}
+
+U2fDiscovery* U2fRequest::SetDiscoveryForTesting(
+    std::unique_ptr<U2fDiscovery> discovery) {
+  discoveries_.clear();
+  discovery->AddObserver(this);
+  discoveries_.push_back(std::move(discovery));
+  return discoveries_.back().get();
 }
 
 void U2fRequest::Transition() {
