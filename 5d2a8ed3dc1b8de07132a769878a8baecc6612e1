@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3756ab01_2d172ed9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-30T22:04:03Z",
+      "side": 1,
+      "message": "nit: thread pool thread?",
+      "revId": "5d2a8ed3dc1b8de07132a769878a8baecc6612e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "660cc4c8_d6b071f9",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-30T22:04:03Z",
+      "side": 1,
+      "message": "out of curiosity - any reason this can\u0027t be CreateSequencedTaskRunnerWithTraits, using the same traits? i.e. do you really need thread affinity, or just sequencing?",
+      "revId": "5d2a8ed3dc1b8de07132a769878a8baecc6612e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
