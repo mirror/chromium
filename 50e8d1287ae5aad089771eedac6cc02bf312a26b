@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "738f736f_4932859c",
+        "filename": "third_party/WebKit/Source/core/frame/LocalDOMWindow.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1215,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-01-30T20:02:09Z",
+      "side": 1,
+      "message": "Added scrollingElement.scroll{Top, Left, By, To, IntoView, IntoViewIfNeed}.",
+      "parentUuid": "93e11a91_8c7be169",
+      "revId": "50e8d1287ae5aad089771eedac6cc02bf312a26b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c1fe8ac_32dab918",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
