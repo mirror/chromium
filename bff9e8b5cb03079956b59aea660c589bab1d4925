@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "e31edae4_0713e192",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8GCController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-30T05:07:26Z",
+      "side": 1,
+      "message": "Shall we move this class to a separate file? V8GCController is getting larger...",
+      "revId": "bff9e8b5cb03079956b59aea660c589bab1d4925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef537b6f_774b425b",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8GCController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-30T05:07:26Z",
+      "side": 1,
+      "message": "Drop explicit.",
+      "revId": "bff9e8b5cb03079956b59aea660c589bab1d4925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55825cca_b207c757",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8GCController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-30T05:07:26Z",
+      "side": 1,
+      "message": "Why do we need to visit ActiveScriptWrappables?\n\nAll ActiveScriptWrappables reachable from V8 should have already been traced by VisitPersistentHandle, right?",
+      "revId": "bff9e8b5cb03079956b59aea660c589bab1d4925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18e355f7_9b7d3fbb",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8GCController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-30T05:07:26Z",
+      "side": 1,
+      "message": "(As I commented on the previous CL, I\u0027m not sure how useful it would be to dump names of TraceWrapperBases -- I guess it would be sufficient to dump names of ScriptWrappables. We could revisit this issue later.)",
+      "revId": "bff9e8b5cb03079956b59aea660c589bab1d4925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0da89e4_014df42d",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8GCController.cpp",
         "patchSetId": 4
@@ -25,6 +93,40 @@
     },
     {
       "key": {
+        "uuid": "0d93eee7_1935d76b",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8GCController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-30T05:07:26Z",
+      "side": 1,
+      "message": "Who releases the EmbedderNode?\n\nI think you should use std::unique_ptr.",
+      "revId": "bff9e8b5cb03079956b59aea660c589bab1d4925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "472bdddb_c3c79d3f",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8GCController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-30T05:07:26Z",
+      "side": 1,
+      "message": "Ditto. I guess EmbedderRootNode will leak.",
+      "revId": "bff9e8b5cb03079956b59aea660c589bab1d4925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1dafdba_b03e6760",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8GCController.cpp",
         "patchSetId": 4
@@ -42,6 +144,23 @@
         "endLine": 404,
         "endChar": 21
       },
+      "revId": "bff9e8b5cb03079956b59aea660c589bab1d4925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10805861_1e0c0eba",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8GCController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-30T05:07:26Z",
+      "side": 1,
+      "message": "Do not use std:: maps/sets/stacks in Blink. Use WTF::HashMap, WTF::HashSet and WTF::Deque.",
       "revId": "bff9e8b5cb03079956b59aea660c589bab1d4925",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
