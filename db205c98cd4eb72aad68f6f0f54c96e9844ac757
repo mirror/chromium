@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e2f6f9e_c2233fba",
+        "filename": "extensions/browser/content_verify_job.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2018-01-30T22:28:40Z",
+      "side": 1,
+      "message": "FYI: I missed this bail out code to match it with previous code. Also, this is necessary for ExtensionBrowserTests to not flake.",
+      "range": {
+        "startLine": 160,
+        "startChar": 2,
+        "endLine": 160,
+        "endChar": 38
+      },
+      "revId": "db205c98cd4eb72aad68f6f0f54c96e9844ac757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
