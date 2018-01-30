@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97ae0d0d_0beeba63",
+        "filename": "media/filters/source_buffer_stream.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1605,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2018-01-30T20:39:45Z",
+      "side": 1,
+      "message": "I wasn\u0027t able to construct an example where this is true. Can you make a test to demonstrate?\n\nIIUC, by fudge room, you really mean the gap between CFG-based range-start vs the range\u0027s actual first buffer? \n\nI believe RangeGetStartTimestamp(itr-\u003eget()) will return the CFG-based range-start time, so if we\u0027ve already passed CanSeekTo() checks, then seek_dts is \u003e\u003d RangeGetStartTimestamp(). Which means that preroll_dts will be \u003c\u003d seek_dts because of the max call on line 1603.",
+      "range": {
+        "startLine": 1605,
+        "startChar": 0,
+        "endLine": 1605,
+        "endChar": 80
+      },
+      "revId": "ed14996a69410bf56076be73d802baf7f1b0eb87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
