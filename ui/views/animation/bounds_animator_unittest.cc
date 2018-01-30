@@ -25,8 +25,9 @@ class TestBoundsAnimator : public BoundsAnimator {
   }
 
  protected:
-  SlideAnimation* CreateAnimation() override {
-    SlideAnimation* animation = BoundsAnimator::CreateAnimation();
+  std::unique_ptr<SlideAnimation> CreateAnimation() override {
+    std::unique_ptr<SlideAnimation> animation =
+        BoundsAnimator::CreateAnimation();
     animation->SetSlideDuration(10);
     return animation;
   }
