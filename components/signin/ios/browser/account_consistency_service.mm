@@ -363,7 +363,8 @@ void AccountConsistencyService::ApplyCookieRequests() {
   switch (cookie_requests_.front().request_type) {
     case ADD_CHROME_CONNECTED_COOKIE:
       cookie_value = signin::BuildMirrorRequestCookieIfPossible(
-          url, signin_manager_->GetAuthenticatedAccountInfo().gaia,
+          true /* is_mirror_enabled */, url,
+          signin_manager_->GetAuthenticatedAccountInfo().gaia,
           cookie_settings_.get(), signin::PROFILE_MODE_DEFAULT);
       if (cookie_value.empty()) {
         // Don't add the cookie. Tentatively correct |last_cookie_update_map_|.
