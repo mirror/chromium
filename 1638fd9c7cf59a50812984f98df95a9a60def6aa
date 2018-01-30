@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9fa27b3_5712b34b",
+        "filename": "components/translate/core/browser/translate_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2018-01-30T01:16:53Z",
+      "side": 1,
+      "message": "This means every place using translate manager now pulls in a pb file. Which is a 1,000-line file, pulling in 10+ protobuf header files. Sure we want to do that?",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 57
+      },
+      "revId": "1638fd9c7cf59a50812984f98df95a9a60def6aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93fc2272_ef92406d",
+        "filename": "components/translate/core/browser/translate_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2018-01-30T01:16:53Z",
+      "side": 1,
+      "message": "Should that return a reference? (If I were to API-nitpick, modifying a mutable member should happen by passing in a lambda that modifies the member, to guarantee lifetime, but... there\u0027s only so many uphill fights worth taking on at a time ;)",
+      "range": {
+        "startLine": 61,
+        "startChar": 12,
+        "endLine": 61,
+        "endChar": 28
+      },
+      "revId": "1638fd9c7cf59a50812984f98df95a9a60def6aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
