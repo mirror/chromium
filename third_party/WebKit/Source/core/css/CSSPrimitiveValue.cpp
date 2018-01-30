@@ -547,7 +547,7 @@ const char* CSSPrimitiveValue::UnitTypeToString(UnitType type) {
     case UnitType::kCentimeters:
       return "cm";
     case UnitType::kDotsPerPixel:
-      return "dppx";
+      return "x";
     case UnitType::kDotsPerInch:
       return "dpi";
     case UnitType::kDotsPerCentimeter:

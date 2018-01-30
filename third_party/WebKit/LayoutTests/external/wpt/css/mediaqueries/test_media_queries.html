@@ -347,6 +347,8 @@ function run() {
       expression_should_be_parseable(feature + ":3dpi");
       expression_should_be_parseable(feature + ": 3.0dpi");
       expression_should_be_parseable(feature + ": 3.4dpi");
+      expression_should_be_parseable(feature + ": 0.01dppx");
+      expression_should_be_parseable(feature + ": 0.01x");
       expression_should_be_parseable(feature + "\t: 120dpcm");
       expression_should_not_be_parseable(feature + ": 0dpi");
       expression_should_not_be_parseable(feature + ": -3dpi");
