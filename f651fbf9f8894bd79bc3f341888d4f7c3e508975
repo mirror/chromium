@@ -141,6 +141,30 @@
       "revId": "f651fbf9f8894bd79bc3f341888d4f7c3e508975",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1adb9f90_691e9f26",
+        "filename": "chrome/test/data/policy/policy_test_cases.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 1149061
+      },
+      "writtenOn": "2018-01-30T16:45:38Z",
+      "side": 1,
+      "message": "I thought that the code in this CL already handles the ChromeOS case? Is that not true? What \"collision\"?\n\n1. If it is difficult to handle ChromeOS, then you could definitely skip it. I\u0027m sure there are a few tests that run on Corp Chromebooks, but not a lot. Sometimes small teams will have their own custom testing harnesses, and it\u0027s nice not to break them. However, we haven\u0027t heard about any of these, and maybe they don\u0027t even use OOPIFs.\n\n2. If it is easy to handle ChromeOS, then there\u0027s no reason not to.\n\nWhat is \"dd\"?",
+      "parentUuid": "d8d20e44_256a16dc",
+      "range": {
+        "startLine": 868,
+        "startChar": 34,
+        "endLine": 868,
+        "endChar": 44
+      },
+      "revId": "f651fbf9f8894bd79bc3f341888d4f7c3e508975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
