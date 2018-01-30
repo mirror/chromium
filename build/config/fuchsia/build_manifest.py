@@ -70,7 +70,7 @@ def MakePackagePath(file_path, roots):
   raise Exception('Error: no matching root paths found for \'%s\'.' % file_path)
 
 
-def _GetStrippedPath(bin_path):
+def GetStrippedPath(bin_path):
   """Finds the stripped version of the binary |bin_path| in the build
   output directory."""
 
@@ -83,7 +83,7 @@ def _GetStrippedPath(bin_path):
                                        os.path.basename(bin_path)))
 
 
-def _IsBinary(path):
+def IsBinary(path):
   """Checks if the file at |path| is an ELF executable by inspecting its FourCC
   header."""
 
@@ -113,8 +113,8 @@ def BuildManifest(root_dir, out_dir, app_name, runtime_deps_file, output_path):
     # Format and write out the manifest contents.
     app_found = False
     for next_file in expanded_files:
-      if _IsBinary(next_file):
-        next_file = _GetStrippedPath(next_file)
+      if IsBinary(next_file):
+        next_file = GetStrippedPath(next_file)
 
       in_package_path = MakePackagePath(os.path.join(out_dir, next_file),
                                         [root_dir, out_dir])
