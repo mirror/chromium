@@ -204,7 +204,8 @@ class UpdateResizeParamsMessageFilter : public content::BrowserMessageFilter {
   ~UpdateResizeParamsMessageFilter() override;
 
  private:
-  void OnUpdateResizeParams(const gfx::Rect& rect,
+  void OnUpdateResizeParams(const gfx::Rect& frame_rect,
+                            const gfx::Size& physical_backing_size,
                             const ScreenInfo& screen_info,
                             uint64_t sequence_number,
                             const viz::SurfaceId& surface_id);

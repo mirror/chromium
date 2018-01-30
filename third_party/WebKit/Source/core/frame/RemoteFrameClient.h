@@ -32,7 +32,8 @@ class RemoteFrameClient : public FrameClient {
                                   scoped_refptr<const SecurityOrigin> target,
                                   LocalFrame* source_frame) const = 0;
 
-  virtual void FrameRectsChanged(const IntRect& frame_rect) = 0;
+  virtual void FrameRectsChanged(const IntRect& local_frame_rect,
+                                 const IntRect& transformed_frame_rect) = 0;
 
   virtual void UpdateRemoteViewportIntersection(
       const IntRect& viewport_intersection) = 0;
