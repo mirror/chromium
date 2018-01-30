@@ -22,6 +22,30 @@
       "revId": "170bd57f511d031cadaa36eb83faa16ae384479c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cb897e0_bb2ec516",
+        "filename": "services/identity/public/cpp/identity_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-01-30T10:00:06Z",
+      "side": 1,
+      "message": "As we discussed offline, destruction of KeyedServices happens in dependency order, just like shutdown does (and thus there is no risk that |signin_manager_| is already destroyed here). Per our offline discussion, I will change this to happen in shutdown as it seems like that\u0027s more in the spirit of KeyedServices, but I\u0027ll do that in a separate CL as it\u0027s orthogonal to this CL.",
+      "parentUuid": "2b0c0495_bb0cf6c9",
+      "range": {
+        "startLine": 22,
+        "startChar": 18,
+        "endLine": 22,
+        "endChar": 33
+      },
+      "revId": "170bd57f511d031cadaa36eb83faa16ae384479c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
