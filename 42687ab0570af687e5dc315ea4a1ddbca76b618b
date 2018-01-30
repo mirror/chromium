@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "463f6f0a_d386bc51",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-30T01:46:19Z",
+      "side": 1,
+      "message": "Why do we even have that lever?",
+      "range": {
+        "startLine": 11,
+        "startChar": 48,
+        "endLine": 12,
+        "endChar": 33
+      },
+      "revId": "42687ab0570af687e5dc315ea4a1ddbca76b618b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f5d91164_c54f986f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/query.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-30T01:46:19Z",
+      "side": 1,
+      "message": "Optional: I\u0027d move this test to its own file, because it\u0027s an edge case.",
+      "revId": "42687ab0570af687e5dc315ea4a1ddbca76b618b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
