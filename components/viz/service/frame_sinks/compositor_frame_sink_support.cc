@@ -22,17 +22,25 @@ CompositorFrameSinkSupport::CompositorFrameSinkSupport(
     FrameSinkManagerImpl* frame_sink_manager,
     const FrameSinkId& frame_sink_id,
     bool is_root,
-    bool needs_sync_tokens)
+    bool needs_sync_tokens,
+    bool use_viz_hit_test)
     : client_(client),
       frame_sink_manager_(frame_sink_manager),
       surface_manager_(frame_sink_manager->surface_manager()),
       frame_sink_id_(frame_sink_id),
       surface_resource_holder_(this),
+      use_viz_hit_test_(use_viz_hit_test),
       is_root_(is_root),
       needs_sync_tokens_(needs_sync_tokens),
       weak_factory_(this) {
   // This may result in SetBeginFrameSource() being called.
   frame_sink_manager_->RegisterCompositorFrameSinkSupport(frame_sink_id_, this);
+
+  if (is_root && use_viz_hit_test) {
+    hit_test_aggregator_ = std::make_unique<HitTestAggregator>(
+        frame_sink_manager_->hit_test_manager(), frame_sink_manager_,
+        frame_sink_id_);
+  }
 }
 
 CompositorFrameSinkSupport::~CompositorFrameSinkSupport() {
@@ -438,6 +446,12 @@ void CompositorFrameSinkSupport::RequestCopyOfSurface(
   ack.has_damage = true;
   if (current_surface->HasActiveFrame())
     surface_manager_->SurfaceModified(current_surface->surface_id(), ack);
+}
+
+HitTestAggregator* CompositorFrameSinkSupport::GetHitTestAggregator() {
+  auto* aggregator = hit_test_aggregator_.get();
+  DCHECK(is_root_ && (!use_viz_hit_test_ || aggregator != nullptr));
+  return aggregator;
 }
 
 Surface* CompositorFrameSinkSupport::GetCurrentSurfaceForTesting() {

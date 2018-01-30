@@ -18,6 +18,7 @@
 #include "components/viz/service/frame_sinks/surface_resource_holder.h"
 #include "components/viz/service/frame_sinks/surface_resource_holder_client.h"
 #include "components/viz/service/frame_sinks/video_capture/capturable_frame_sink.h"
+#include "components/viz/service/hit_test/hit_test_aggregator.h"
 #include "components/viz/service/surfaces/surface_client.h"
 #include "components/viz/service/viz_service_export.h"
 #include "services/viz/public/interfaces/compositing/compositor_frame_sink.mojom.h"
@@ -42,11 +43,14 @@ class VIZ_SERVICE_EXPORT CompositorFrameSinkSupport
 
   static const uint64_t kFrameIndexStart = 2;
 
+  // |use_viz_hit_test| is set to false on platforms (only android webview at
+  // this moment) that cannot use Viz style hit-testing.
   CompositorFrameSinkSupport(mojom::CompositorFrameSinkClient* client,
                              FrameSinkManagerImpl* frame_sink_manager,
                              const FrameSinkId& frame_sink_id,
                              bool is_root,
-                             bool needs_sync_tokens);
+                             bool needs_sync_tokens,
+                             bool use_viz_hit_test = true);
   ~CompositorFrameSinkSupport() override;
 
   const FrameSinkId& frame_sink_id() const { return frame_sink_id_; }
@@ -108,6 +112,8 @@ class VIZ_SERVICE_EXPORT CompositorFrameSinkSupport
   void RequestCopyOfSurface(
       std::unique_ptr<CopyOutputRequest> request) override;
 
+  HitTestAggregator* GetHitTestAggregator();
+
   Surface* GetCurrentSurfaceForTesting();
 
  private:
@@ -157,6 +163,11 @@ class VIZ_SERVICE_EXPORT CompositorFrameSinkSupport
   base::Optional<LocalSurfaceId> referenced_local_surface_id_;
 
   SurfaceResourceHolder surface_resource_holder_;
+
+  // This has a HitTestAggregator if and only if (|is_root_| &&
+  // |use_viz_hit_test_|) is true.
+  std::unique_ptr<HitTestAggregator> hit_test_aggregator_;
+  bool use_viz_hit_test_ = true;
 
   // Counts the number of CompositorFrames that have been submitted and have not
   // yet received an ACK.

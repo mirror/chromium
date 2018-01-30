@@ -61,7 +61,7 @@ SurfacesInstance::SurfacesInstance()
   constexpr bool needs_sync_points = true;
   support_ = std::make_unique<viz::CompositorFrameSinkSupport>(
       this, frame_sink_manager_.get(), frame_sink_id_, is_root,
-      needs_sync_points);
+      needs_sync_points, false /* use_viz_hit_test */);
 
   begin_frame_source_.reset(new viz::StubBeginFrameSource);
   std::unique_ptr<ParentOutputSurface> output_surface_holder(
