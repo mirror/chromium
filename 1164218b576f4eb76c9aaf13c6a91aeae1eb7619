@@ -33,6 +33,57 @@
       "revId": "1164218b576f4eb76c9aaf13c6a91aeae1eb7619",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71ac78c5_37af60e2",
+        "filename": "content/browser/loader/merkle_integrity_source_stream.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-30T09:46:18Z",
+      "side": 1,
+      "message": "Will there be a possibility to skip copying if not necessary in a later follow-up (maybe not needed now, just asking for now)?",
+      "revId": "1164218b576f4eb76c9aaf13c6a91aeae1eb7619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc650311_4724ed1d",
+        "filename": "content/browser/loader/merkle_integrity_source_stream.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-30T09:46:18Z",
+      "side": 1,
+      "message": "nit: // net::FilterSourceStream:",
+      "revId": "1164218b576f4eb76c9aaf13c6a91aeae1eb7619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbd9f53c_a2aceb27",
+        "filename": "content/browser/loader/merkle_integrity_source_stream_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-30T09:46:18Z",
+      "side": 1,
+      "message": "great",
+      "revId": "1164218b576f4eb76c9aaf13c6a91aeae1eb7619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
