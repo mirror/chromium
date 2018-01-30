@@ -34,6 +34,24 @@
       "revId": "9cd579017d23b2fc1fc87226e06f77665f55c4f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a881ae2d_bba65cb9",
+        "filename": "net/http/http_request_info.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-01-30T16:29:38Z",
+      "side": 1,
+      "message": "I don\u0027t think we\u0027d want to convert to a class, because that would also create a lot of challenges (both in forward declarations and in the style guide)\n\nCould you explain more about the clang tooling testing? It seems like forcing the callsites to do the mutability wrapping, rather than these helpers, would work to your advantage for your goals.\n\nI would think Mutable-\u003eImmutable would be a toll-free bridge of conversion, while Immutable assigned to a Mutable would be the same. That is, put differently, I would think that the following patterns would all be fine:\nImmutable cast to Mutable - does not work\nImmutable assigned to Mutable - just works\nMutable assigned to Mutable - just works\n\nMutable cast to Immutable - implicit\nMutable assigned to Immutable - does not work\nImmutable assigned to Immutable - does not work",
+      "parentUuid": "cbbee27e_4396ae09",
+      "revId": "9cd579017d23b2fc1fc87226e06f77665f55c4f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
