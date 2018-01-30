@@ -70,6 +70,9 @@ public class SavePasswordsPreferences
     // Used to pass the password id into a new activity.
     public static final String PASSWORD_LIST_ID = "id";
 
+    // The key for saving |mSearchQuery| to instance bundle.
+    private static final String SAVED_STATE_SEARCH_QUERY = "saved-state-search-query";
+
     // The key for saving |mExportRequested| to instance bundle.
     private static final String SAVED_STATE_EXPORT_REQUESTED = "saved-state-export-requested";
 
@@ -144,6 +147,9 @@ public class SavePasswordsPreferences
             } else {
                 mExportFileUri = Uri.parse(uriString);
             }
+        }
+        if (savedInstanceState.containsKey(SAVED_STATE_SEARCH_QUERY)) {
+            mSearchQuery = savedInstanceState.getString(SAVED_STATE_SEARCH_QUERY);
         }
     }
 
@@ -567,6 +573,9 @@ public class SavePasswordsPreferences
         outState.putBoolean(SAVED_STATE_EXPORT_REQUESTED, mExportRequested);
         if (mExportFileUri != null) {
             outState.putString(SAVED_STATE_EXPORT_FILE_URI, mExportFileUri.toString());
+        }
+        if (mSearchQuery != null) {
+            outState.putString(SAVED_STATE_SEARCH_QUERY, mSearchQuery);
         }
     }
 
