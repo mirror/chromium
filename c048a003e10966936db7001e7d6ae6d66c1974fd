@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c14768b_3722af65",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1511,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-30T22:31:50Z",
+      "side": 1,
+      "message": "Only the first listed experiment will actually be used for testing; any others will be ignored. If the intent is only to silence Finch analyzer warnings, then this CL is fine to land as-is.  But, I\u0027ll encourage you to think about which configuration should be the default for testing – which ought to be the configuration that you think is most likely to launch – and to list that configuration first.",
+      "range": {
+        "startLine": 1502,
+        "startChar": 0,
+        "endLine": 1511,
+        "endChar": 17
+      },
+      "revId": "c048a003e10966936db7001e7d6ae6d66c1974fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
