@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b698c16_5fa153d9",
+        "filename": "media/cast/sender/external_video_encoder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-30T02:30:55Z",
+      "side": 1,
+      "message": "nit: Check whether |video_encoder_accelerator_| is null before this call? Or add a DCHECK if the caller should guarantee that this VEAClientImpl is created with a non-null |vea|.",
+      "revId": "3756142ea2784fd9ecf3b9c1f2ac330678e82502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b412bf5a_41876d64",
+        "filename": "media/cast/sender/external_video_encoder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-30T02:30:55Z",
+      "side": 1,
+      "message": "nit: This seems was checked before calling video_encode_accelerator_-\u003eencode(). Though it doesn\u0027t hurt to check it again.",
+      "revId": "3756142ea2784fd9ecf3b9c1f2ac330678e82502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
