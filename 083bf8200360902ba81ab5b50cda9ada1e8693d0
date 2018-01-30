@@ -1,0 +1,248 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15f55e37_95809686",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-30T02:26:56Z",
+      "side": 1,
+      "message": "I\u0027d remove this paragraph, as it is not clear to me this fix is insufficient.",
+      "revId": "083bf8200360902ba81ab5b50cda9ada1e8693d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c91e1f8d_35cbbb38",
+        "filename": "content/browser/frame_host/cross_process_frame_connector.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-30T02:26:56Z",
+      "side": 1,
+      "message": "s/frame_rect/screen_space_rect/",
+      "revId": "083bf8200360902ba81ab5b50cda9ada1e8693d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0961fa8a_68f018f1",
+        "filename": "content/browser/frame_host/cross_process_frame_connector.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-30T02:26:56Z",
+      "side": 1,
+      "message": "s/frame_rect/screen_space_rect/",
+      "revId": "083bf8200360902ba81ab5b50cda9ada1e8693d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3bd0096_4b4a6d4b",
+        "filename": "content/browser/renderer_host/frame_connector_delegate.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-30T02:26:56Z",
+      "side": 1,
+      "message": "local_frame_size_in_dip_",
+      "range": {
+        "startLine": 82,
+        "startChar": 11,
+        "endLine": 82,
+        "endChar": 38
+      },
+      "revId": "083bf8200360902ba81ab5b50cda9ada1e8693d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d66d8303_8ad4d254",
+        "filename": "content/browser/renderer_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-30T02:26:56Z",
+      "side": 1,
+      "message": "Isn\u0027t this used for a number of use cases that assume it is the \"screen space rect\"?\nThat one should include transforms, no?",
+      "revId": "083bf8200360902ba81ab5b50cda9ada1e8693d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3483889e_899acdb0",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 1474,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-30T02:26:56Z",
+      "side": 1,
+      "message": "s/frame_rect/screen_space_rect/",
+      "revId": "083bf8200360902ba81ab5b50cda9ada1e8693d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "912832a2_c0a140e7",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-30T02:26:56Z",
+      "side": 1,
+      "message": "s/frame_rect/screen_space_rect/ ?",
+      "revId": "083bf8200360902ba81ab5b50cda9ada1e8693d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "584932e7_61744b08",
+        "filename": "content/renderer/render_frame_proxy.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-30T02:26:56Z",
+      "side": 1,
+      "message": "s/transformed_rect/screen_space_rect/ ?",
+      "revId": "083bf8200360902ba81ab5b50cda9ada1e8693d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c989e9b5_6a77b67f",
+        "filename": "content/test/content_browser_test_utils_internal.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-30T02:26:56Z",
+      "side": 1,
+      "message": "s/frame_rect/screen_space_rect/",
+      "revId": "083bf8200360902ba81ab5b50cda9ada1e8693d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a451aafa_77c8d586",
+        "filename": "content/test/content_browser_test_utils_internal.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-30T02:26:56Z",
+      "side": 1,
+      "message": "s/frame_rect/screen_space_rect/",
+      "revId": "083bf8200360902ba81ab5b50cda9ada1e8693d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e5b8efa_b858e2b1",
+        "filename": "third_party/WebKit/Source/core/frame/RemoteFrameClient.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-30T02:26:56Z",
+      "side": 1,
+      "message": "s/transformed_frame_rect/screen_space_rect/\n\nAlso add a brief comment about what the parameters mean.",
+      "revId": "083bf8200360902ba81ab5b50cda9ada1e8693d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20cc7ec1_b497fd84",
+        "filename": "third_party/WebKit/Source/core/frame/RemoteFrameClientImpl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-30T02:26:56Z",
+      "side": 1,
+      "message": "s/transformed_frame_rect/screen_space_rect/",
+      "revId": "083bf8200360902ba81ab5b50cda9ada1e8693d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d4b57cd_41de4e84",
+        "filename": "third_party/WebKit/Source/core/frame/RemoteFrameView.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-30T02:26:56Z",
+      "side": 1,
+      "message": "s/transformed_frame_rect/screen_space_rect/",
+      "revId": "083bf8200360902ba81ab5b50cda9ada1e8693d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab6d0289_289fd3ae",
+        "filename": "third_party/WebKit/public/web/WebRemoteFrameClient.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-30T02:26:56Z",
+      "side": 1,
+      "message": "s/transformed_frame_rect/screen_space_rect/",
+      "revId": "083bf8200360902ba81ab5b50cda9ada1e8693d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
