@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdad1246_c1e57828",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 4257,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-30T05:57:33Z",
+      "side": 1,
+      "message": "Rather than updating the config with a new launch group, could you simply remove the feature flag at ToT?",
+      "range": {
+        "startLine": 4240,
+        "startChar": 0,
+        "endLine": 4257,
+        "endChar": 6
+      },
+      "revId": "582fb032ef427266fc2617defafaf20bf28b839c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
