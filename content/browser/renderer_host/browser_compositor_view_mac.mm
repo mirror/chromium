@@ -256,7 +256,6 @@ void BrowserCompositorMac::CopyFromCompositingSurface(
     const ReadbackRequestCallback& callback,
     SkColorType preferred_color_type) {
   DCHECK(delegated_frame_host_);
-  DCHECK(state_ == HasAttachedCompositor);
   outstanding_copy_count_ += 1;
 
   auto callback_with_decrement =
