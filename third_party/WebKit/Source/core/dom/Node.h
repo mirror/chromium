@@ -938,6 +938,9 @@ class CORE_EXPORT Node : public EventTarget {
                                      Document& new_document);
   virtual void DidMoveToNewDocument(Document& old_document);
 
+  virtual void IncrementTypeCountInDocument() const {}
+  virtual void DecrementTypeCountInDocument() const {}
+
   void AddedEventListener(const AtomicString& event_type,
                           RegisteredEventListener&) override;
   void RemovedEventListener(const AtomicString& event_type,

@@ -924,6 +924,8 @@ void HTMLElement::setDir(const AtomicString& value) {
 }
 
 HTMLFormElement* HTMLElement::FindFormAncestor() const {
+  if (isConnected() && !GetDocument().FormCount())
+    return nullptr;
   return Traversal<HTMLFormElement>::FirstAncestor(*this);
 }
 

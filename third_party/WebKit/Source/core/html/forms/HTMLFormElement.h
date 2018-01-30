@@ -127,6 +127,14 @@ class CORE_EXPORT HTMLFormElement final : public HTMLElement {
   void SubmitDialog(FormSubmission*);
   void Submit(Event*, HTMLFormControlElement* submit_button);
 
+  void IncrementTypeCountInDocument() const final {
+    GetDocument().IncrementFormCount();
+  }
+
+  void DecrementTypeCountInDocument() const final {
+    GetDocument().DecrementFormCount();
+  }
+
   void ScheduleFormSubmission(FormSubmission*);
 
   void CollectListedElements(Node& root, ListedElement::List&) const;

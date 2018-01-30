@@ -4297,6 +4297,7 @@ Node::InsertionNotificationRequest Node::InsertedInto(
   if (insertion_point->isConnected()) {
     SetFlag(kIsConnectedFlag);
     insertion_point->GetDocument().IncrementNodeCount();
+    IncrementTypeCountInDocument();
   }
   if (ParentOrShadowHostNode()->IsInShadowTree())
     SetFlag(kIsInShadowTreeFlag);
@@ -4312,6 +4313,7 @@ void Node::RemovedFrom(ContainerNode* insertion_point) {
   if (insertion_point->isConnected()) {
     ClearFlag(kIsConnectedFlag);
     insertion_point->GetDocument().DecrementNodeCount();
+    DecrementTypeCountInDocument();
   }
   if (IsInShadowTree() && !ContainingTreeScope().RootNode().IsShadowRoot())
     ClearFlag(kIsInShadowTreeFlag);
