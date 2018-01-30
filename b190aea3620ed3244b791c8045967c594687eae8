@@ -51,6 +51,24 @@
       "revId": "b190aea3620ed3244b791c8045967c594687eae8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "262905da_a193929f",
+        "filename": "media/capture/video/file_video_capture_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-30T22:50:26Z",
+      "side": 1,
+      "message": "Good catch. Looks like we do.\nWe should probably fix that.\nCreated issue https://bugs.chromium.org/p/chromium/issues/detail?id\u003d807441 for this.",
+      "parentUuid": "1778366c_b730fe59",
+      "revId": "b190aea3620ed3244b791c8045967c594687eae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
