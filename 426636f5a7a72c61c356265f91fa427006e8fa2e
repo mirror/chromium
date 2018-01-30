@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9f4d0cb_78f4e12c",
+        "filename": "ash/wm/overview/overview_window_mask.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-30T18:26:44Z",
+      "side": 1,
+      "message": "nit: which -\u003e where?",
+      "revId": "426636f5a7a72c61c356265f91fa427006e8fa2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
