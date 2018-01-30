@@ -423,6 +423,9 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
 
   WebRuntimeFeatures::EnablePictureInPicture(
       base::FeatureList::IsEnabled(media::kPictureInPicture));
+
+  WebRuntimeFeatures::EnableCodeCacheAfterExecute(
+      base::FeatureList::IsEnabled(features::kCodeCacheAfterExecute));
 };
 
 }  // namespace content
