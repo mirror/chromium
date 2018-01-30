@@ -12,6 +12,7 @@ namespace client_hints {
 
 void GetAllowedClientHintsFromSource(
     const GURL& url,
+    const GURL& document_url,
     const ContentSettingsForOneType& client_hints_rules,
     blink::WebEnabledClientHints* client_hints) {
   if (client_hints_rules.empty())
@@ -21,6 +22,8 @@ void GetAllowedClientHintsFromSource(
     return;
 
   const GURL& origin = url.GetOrigin();
+  if (origin != document_url)
+    return;
 
   for (const auto& rule : client_hints_rules) {
     // Look for an exact match since persisted client hints are disabled by

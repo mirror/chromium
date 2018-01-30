@@ -20,6 +20,7 @@ namespace client_hints {
 // |client_hints_rules| contains the content settings for the client hints.
 void GetAllowedClientHintsFromSource(
     const GURL& url,
+    const GURL& document_url,
     const ContentSettingsForOneType& client_hints_rules,
     blink::WebEnabledClientHints* client_hints);
 

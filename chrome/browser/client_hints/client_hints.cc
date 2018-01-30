@@ -71,7 +71,7 @@ GetAdditionalNavigationRequestClientHintsHeaders(
 
   blink::WebEnabledClientHints web_client_hints;
 
-  GetAllowedClientHintsFromSource(url, client_hints_host_settings,
+  GetAllowedClientHintsFromSource(url, url, client_hints_host_settings,
                                   &web_client_hints);
 
   std::unique_ptr<net::HttpRequestHeaders> additional_headers(
