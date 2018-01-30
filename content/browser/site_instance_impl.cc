@@ -331,6 +331,7 @@ bool SiteInstanceImpl::IsSameWebSite(BrowserContext* browser_context,
       should_compare_effective_urls
           ? SiteInstanceImpl::GetEffectiveURL(browser_context, real_src_url)
           : real_src_url;
+
   GURL dest_url =
       should_compare_effective_urls
           ? SiteInstanceImpl::GetEffectiveURL(browser_context, real_dest_url)
@@ -355,6 +356,14 @@ bool SiteInstanceImpl::IsSameWebSite(BrowserContext* browser_context,
   // same site.
   GURL blank_page(url::kAboutBlankURL);
   if (dest_url == blank_page)
+    return true;
+
+  // If the source and destination URLs are equal excluding the hash, they have
+  // the same site.  This matters for file URLs, where SameDomainOrHost() would
+  // otherwise return false below.
+  //
+  // TODO: add a unit test for this.
+  if (src_url.EqualsIgnoringRef(dest_url))
     return true;
 
   url::Origin src_origin = url::Origin::Create(src_url);
