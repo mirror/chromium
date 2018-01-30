@@ -443,6 +443,24 @@
     },
     {
       "key": {
+        "uuid": "62620f8b_3a571a34",
+        "filename": "win_notification_helper/notification_activator.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2018-01-30T10:52:31Z",
+      "side": 1,
+      "message": "The invokedArgs param contains the template ID string encoded by us (via NotificationPlatformBridgeWin::EncodeTemplateId). We add it to the launch argument and get it back via invokedArgs. We need the data to be able to look up the notification on our side and it would be good to document here where this value comes from.\n\nIf you are curious, the string contains this structure: \n\nnotification_type|profile_id|incognito|origin_url|notification_id\n\n... where notification_id is everything after the last pipe (\"p#https://tests.peter.sh/#01\" in the example above).",
+      "parentUuid": "578a3435_fef2e76a",
+      "revId": "3fbf87081c8f87d21386aaf4e9cefc31ae8406bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "526a4433_dcbd9c55",
         "filename": "win_notification_helper/notification_activator.h",
         "patchSetId": 41
