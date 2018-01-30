@@ -372,9 +372,10 @@ IPC_MESSAGE_ROUTED0(ViewMsg_WasHidden)
 // render view is expected to respond with a full repaint if needs_repainting
 // is true. If needs_repainting is false, then this message does not trigger a
 // message in response.
-IPC_MESSAGE_ROUTED2(ViewMsg_WasShown,
+IPC_MESSAGE_ROUTED3(ViewMsg_WasShown,
                     bool /* needs_repainting */,
-                    ui::LatencyInfo /* latency_info */)
+                    ui::LatencyInfo /* latency_info */,
+                    base::Optional<content::ResizeParams> /* resize_params */)
 
 // Tells the renderer to focus the first (last if reverse is true) focusable
 // node.
