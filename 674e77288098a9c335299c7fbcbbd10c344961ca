@@ -46,6 +46,30 @@
       "revId": "674e77288098a9c335299c7fbcbbd10c344961ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3cba535_c6ef8f81",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-30T01:19:18Z",
+      "side": 1,
+      "message": "\u003e That is exactly the purpose of this patch. I\u0027m replacing two variables g_threshold and g_cumulative_counter that had to be kept in sync with just one g_bytes_left which is counted towards zero.\n\u003e \n\u003e It is not that I\u0027m afraid of using mutexes ;-).\n\u003e I just need to make sure the lock-free part which runs independent of mutex state is kept in the valid state.\n\nWell why not just using one instead of trying making this lockfree? You have more atomics than what would require for a mutex.\n\n\n\u003e I have to use MemoryBarrier because there\u0027s no Barrier_AtomicExchange function.\nAre you sure you don\u0027t really need a *_CompareAndSwap there? Do you really intend to exchange without checking the previous value? (asking because the logic itself you intend to achieve is not fully clear)",
+      "parentUuid": "aa0ad287_b1d609eb",
+      "range": {
+        "startLine": 250,
+        "startChar": 1,
+        "endLine": 264,
+        "endChar": 73
+      },
+      "revId": "674e77288098a9c335299c7fbcbbd10c344961ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
