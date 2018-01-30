@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9130b8f3_1a58276e",
+        "filename": "chrome/browser/resources/print_preview/new/destination_dialog.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-30T01:05:48Z",
+      "side": 1,
+      "message": "Added this per earlier offline discussion - restores 20px top and bottom gaps for dialog.",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 38
+      },
+      "revId": "911e6ae08b99bf4462fdfe9dde821b8f24ac1b85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
