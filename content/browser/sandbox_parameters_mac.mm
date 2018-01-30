@@ -15,8 +15,10 @@
 #include "base/strings/sys_string_conversions.h"
 #include "base/sys_info.h"
 #include "content/public/browser/content_browser_client.h"
+#include "content/public/browser/plugin_service.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/common/pepper_plugin_info.h"
 #include "sandbox/mac/seatbelt_exec.h"
 #include "services/service_manager/sandbox/mac/sandbox_mac.h"
 
@@ -89,6 +91,30 @@ void SetupCommonSandboxParameters(sandbox::SeatbeltExecClient* client) {
       service_manager::SandboxMac::GetCanonicalPath(base::GetHomeDir()).value();
   CHECK(client->SetParameter(
       service_manager::SandboxMac::kSandboxHomedirAsLiteral, homedir));
+}
+
+void SetupPPAPISandboxParameters(sandbox::SeatbeltExecClient* client) {
+  SetupCommonSandboxParameters(client);
+
+  std::vector<content::WebPluginInfo> plugins;
+  PluginService::GetInstance()->GetInternalPlugins(&plugins);
+
+  base::FilePath bundle_path = service_manager::SandboxMac::GetCanonicalPath(
+      base::mac::MainBundlePath());
+
+  const std::string param_base_name = "PPAPI_PATH_";
+  size_t index = 0;
+  for (const auto& plugin : plugins) {
+    // Only log exceptions for plugins not in Chrome's bundle.
+    if (!bundle_path.IsParent(plugin.path) && plugin.path.IsAbsolute()) {
+      std::string param_name = param_base_name + std::to_string(index++);
+      CHECK(client->SetParameter(param_name, plugin.path.value()));
+    }
+  }
+
+  // The profile does not support more than 4 PPAPI plugins, but it will be set
+  // to n+1 more than the plugins added.
+  CHECK(index <= 5);
 }
 
 void SetupCDMSandboxParameters(sandbox::SeatbeltExecClient* client) {
