@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6b966079_08d28cc6",
+        "filename": "content/renderer/accessibility/aom_content_ax_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2018-01-30T04:04:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46e14d85_993c5bd6",
+      "range": {
+        "startLine": 102,
+        "startChar": 35,
+        "endLine": 102,
+        "endChar": 38
+      },
+      "revId": "044cb39d83c7960600408d9c3e42c61478055ec1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24b065a9_d15c3e96",
         "filename": "content/renderer/accessibility/aom_content_ax_tree.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "044cb39d83c7960600408d9c3e42c61478055ec1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ab77e04_894a84bf",
+        "filename": "content/renderer/accessibility/aom_content_ax_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2018-01-30T04:04:16Z",
+      "side": 1,
+      "message": "I think this was more of a careful check on my part. Looking at the implementation of ChildAtIndex, it doesn\u0027t perform any bounds checking on the index (uses [] operator on a vector) so I think I was just being careful of undefined behaviour, but you are correct. The check above makes sure that there is at least one node in the child, so it shouldn\u0027t be undefined.",
+      "parentUuid": "24b065a9_d15c3e96",
+      "range": {
+        "startLine": 107,
+        "startChar": 11,
+        "endLine": 107,
+        "endChar": 16
+      },
+      "revId": "044cb39d83c7960600408d9c3e42c61478055ec1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0e822f2b_f5c1b974",
+        "filename": "content/renderer/accessibility/aom_content_ax_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2018-01-30T04:04:16Z",
+      "side": 1,
+      "message": "Haha, yes it is! I left it in there as a reminder to clarify this point. You answered this question yesterday so I\u0027ve removed the comment, sorry!",
+      "parentUuid": "48128983_9c8ed57e",
+      "range": {
+        "startLine": 128,
+        "startChar": 24,
+        "endLine": 128,
+        "endChar": 28
+      },
+      "revId": "044cb39d83c7960600408d9c3e42c61478055ec1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66f1f679_f1167c93",
         "filename": "content/renderer/accessibility/aom_content_ax_tree.cc",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2018-01-30T00:20:50Z",
       "side": 1,
       "message": "Similarly, how could this happen?",
+      "range": {
+        "startLine": 144,
+        "startChar": 7,
+        "endLine": 144,
+        "endChar": 14
+      },
+      "revId": "044cb39d83c7960600408d9c3e42c61478055ec1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fc35ea4_e1ef8b98",
+        "filename": "content/renderer/accessibility/aom_content_ax_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2018-01-30T04:04:16Z",
+      "side": 1,
+      "message": "Yeah you are correct on pretty much all of these. Ive swapped them to DCHECK, let me know if incorrect!",
+      "parentUuid": "66f1f679_f1167c93",
       "range": {
         "startLine": 144,
         "startChar": 7,
