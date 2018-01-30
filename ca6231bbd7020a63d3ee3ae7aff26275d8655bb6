@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef3168c6_85544d6d",
+        "filename": "ash/wm/client_controlled_state.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-30T21:38:24Z",
+      "side": 1,
+      "message": "Can you just add  the state instead of adding a new method?",
+      "revId": "ca6231bbd7020a63d3ee3ae7aff26275d8655bb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "135b8e32_90d34367",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_manager.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-30T21:38:24Z",
+      "side": 1,
+      "message": "I wonder if the restoring is more consistent?",
+      "revId": "ca6231bbd7020a63d3ee3ae7aff26275d8655bb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49e5ab2b_b2af97bb",
+        "filename": "components/exo/client_controlled_shell_surface.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-30T21:38:24Z",
+      "side": 1,
+      "message": "can you add a new state type instead?",
+      "revId": "ca6231bbd7020a63d3ee3ae7aff26275d8655bb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
