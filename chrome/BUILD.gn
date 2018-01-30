@@ -205,6 +205,7 @@ if (!is_android && !is_mac) {
           "//content:sandbox_helper_win",
           "//content/public/common:static_switches",
           "//crypto",
+          "//notification_helper",
           "//sandbox",
           "//third_party/breakpad:breakpad_handler",
           "//third_party/breakpad:breakpad_sender",
