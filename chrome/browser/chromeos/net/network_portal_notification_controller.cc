@@ -73,8 +73,7 @@ Profile* GetProfileForPrimaryUser() {
 }
 
 void CloseNotification() {
-  NotificationDisplayService::GetForSystemNotifications()->Close(
-      NotificationHandler::Type::TRANSIENT,
+  NotificationDisplayService::CloseSystemNotification(
       NetworkPortalNotificationController::kNotificationId);
 }
 
@@ -293,8 +292,8 @@ void NetworkPortalNotificationController::OnPortalDetectionCompleted(
         network->guid());
   }
 
-  NotificationDisplayService::GetForSystemNotifications()->Display(
-      NotificationHandler::Type::TRANSIENT, *GetNotification(network, state));
+  NotificationDisplayService::DisplaySystemNotification(
+      *GetNotification(network, state));
   UMA_HISTOGRAM_ENUMERATION(
       NetworkPortalNotificationController::kNotificationMetric,
       NetworkPortalNotificationController::NOTIFICATION_METRIC_DISPLAYED,
