@@ -8,6 +8,7 @@
 #include <stddef.h>
 
 #include <algorithm>
+#include <limits>
 #include <memory>
 #include <utility>
 
@@ -358,9 +359,13 @@ PDFiumPage::Area PDFiumPage::GetLinkTarget(FPDF_LINK link, LinkTarget* target) {
 PDFiumPage::Area PDFiumPage::GetDestinationTarget(FPDF_DEST destination,
                                                   LinkTarget* target) {
   if (!target)
-    return DOCLINK_AREA;
+    return NONSELECTABLE_AREA;
 
-  target->page = FPDFDest_GetPageIndex(engine_->doc(), destination);
+  unsigned long page_index = FPDFDest_GetPageIndex(engine_->doc(), destination);
+  if (page_index == std::numeric_limits<unsigned long>::max() ||
+      page_index > std::numeric_limits<int>::max())
+    return NONSELECTABLE_AREA;
+  target->page = page_index;
 
   base::Optional<std::pair<float, float>> xy = GetPageXYTarget(destination);
   if (!xy)
