@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "86a3a083_1db18e0e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/banners/AppBannerManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-30T07:01:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "99ef1e52_ae5be4d7",
+      "revId": "d74706bc105733ead8abe075abb8609f573372d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9444d22f_06f5ba2c",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/banners/AppBannerManagerTest.java",
         "patchSetId": 1
@@ -86,6 +104,30 @@
       "revId": "d74706bc105733ead8abe075abb8609f573372d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ada4d4c5_c188b792",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/banners/AppBannerManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-30T07:01:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9444d22f_06f5ba2c",
+      "range": {
+        "startLine": 636,
+        "startChar": 12,
+        "endLine": 636,
+        "endChar": 30
+      },
+      "revId": "d74706bc105733ead8abe075abb8609f573372d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +163,24 @@
       "revId": "d74706bc105733ead8abe075abb8609f573372d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63658489_c6d68033",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/banners/AppBannerManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-30T07:01:51Z",
+      "side": 1,
+      "message": "OK. I\u0027m happy with having added the second test.",
+      "parentUuid": "f1579106_ec4c9d87",
+      "revId": "d74706bc105733ead8abe075abb8609f573372d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -288,6 +348,24 @@
     },
     {
       "key": {
+        "uuid": "45869423_10c733cb",
+        "filename": "chrome/test/data/banners/main.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-30T07:01:51Z",
+      "side": 1,
+      "message": "Yes, I know, hence why I wrote the disclaimer up front :)",
+      "parentUuid": "2405eba8_58b08587",
+      "revId": "d74706bc105733ead8abe075abb8609f573372d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfebf1ee_48939364",
         "filename": "chrome/test/data/banners/main.js",
         "patchSetId": 1
@@ -393,6 +471,24 @@
     },
     {
       "key": {
+        "uuid": "94d05e4a_2c31485f",
+        "filename": "chrome/test/data/banners/main.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-30T07:01:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6d545728_9111e387",
+      "revId": "d74706bc105733ead8abe075abb8609f573372d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05d2583e_79729bfb",
         "filename": "chrome/test/data/banners/main.js",
         "patchSetId": 1
@@ -422,6 +518,24 @@
       "side": 1,
       "message": "Both errors would show up in the exact same place (log output of the failing test), so I don\u0027t think changing the error here would make it much better. WDYT?",
       "parentUuid": "05d2583e_79729bfb",
+      "revId": "d74706bc105733ead8abe075abb8609f573372d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aff2199_7e57b6d6",
+        "filename": "chrome/test/data/banners/main.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-30T07:01:51Z",
+      "side": 1,
+      "message": "Yeah, but the error might be confusing. Maybe just:\n\n    if (stashedEvent \u003d\u003d\u003d null)\n      throw new Error(\u0027No event was previously stashed\u0027);",
+      "parentUuid": "498fcffe_61183da5",
       "revId": "d74706bc105733ead8abe075abb8609f573372d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -475,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "eab28e82_38cdd03b",
+        "filename": "chrome/test/data/banners/main.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-30T07:01:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "603ee353_91661b39",
+      "range": {
+        "startLine": 68,
+        "startChar": 19,
+        "endLine": 68,
+        "endChar": 29
+      },
+      "revId": "d74706bc105733ead8abe075abb8609f573372d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aee1b2b_89d68997",
         "filename": "chrome/test/data/banners/main.js",
         "patchSetId": 1
@@ -507,6 +645,24 @@
       "revId": "d74706bc105733ead8abe075abb8609f573372d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8456d35d_3b3db6c3",
+        "filename": "chrome/test/data/banners/main.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-30T07:01:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e29a1355_d0b0944c",
+      "revId": "d74706bc105733ead8abe075abb8609f573372d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
