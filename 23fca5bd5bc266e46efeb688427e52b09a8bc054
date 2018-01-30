@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "2d630061_4eeec72c",
+        "filename": "ios/chrome/browser/ui/settings/password_exporter.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-30T16:24:11Z",
+      "side": 1,
+      "message": "\"enum\" leaks theirs enumerator in the enclosing namespace (here the global namespace). This mean that the SUCCESS could collide with another enumerator by the same name.\n\nIn general, I think it is best to namespace enumerators. Pre-c++11 this was done by putting the name of the enum in the enumerator name (i.e. WRITE_TO_URL_STATUS_SUCCESS, ...), but with c++11, an alternative is to use \"enum class\" that scope the enumerator to the enum itself (so you have to use WriteToURLStatus::SUCCESS, ...).\n\nCan you change this to either use \"enum class\" or prefix the enumerator names with the enum name?",
+      "revId": "23fca5bd5bc266e46efeb688427e52b09a8bc054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c703a93_b6e50b7a",
+        "filename": "ios/chrome/browser/ui/settings/password_exporter.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-30T16:24:11Z",
+      "side": 1,
+      "message": "It looks like PasswordExporter -startExportFlow: clone the content of the vector and then pass a reference, owned by a block to this method. I personally think that passing const reference to std::unique_ptr\u003c\u003e (even if it is via a container) is weird, and the style guide seems to agree.\n\n\u003e - If the function does not modify t\u0027s ownership, declare the param as T*. The caller is expected to ensure t stays alive as long as necessary, generally through the duration of the call. Exception: In rare cases (e.g. using lambdas with STL algorithms over containers of unique_ptr\u003c\u003es), you may be forced to declare the param as const std::unique_ptr\u003cT\u003e\u0026. Do this only when required.\n\u003e \n\u003e - In short, functions should never take ownership of parameters passed as raw pointers, and there should rarely be a need to pass smart pointers by const ref.\n\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#object-ownership-and-calling-conventions\n\nSince std::unique_ptr\u003c\u003e is not copyable but only moveable, I think we can change all this code to pass the ownership of \"std::vector\u003cstd::unique_ptr\u003cautofill::PasswordForm\u003e\u003e\" by removing the \"const \u0026\" from all those methods. Then the caller or PasswordExporter -startExportFlow: will have to clone the vector (but this make sense).\n\nThis IMO also make it easier to reason about the ownership of the vector and its content.\n\nSo, here the code would become:\n\n  - (void)serializePassword:(std::vector\u003cstd::unique_ptr\u003cautofill::PasswordForm\u003e\u003e)passwords\n                    handler:(void (^)(std::string))serializedPasswordsHandler;",
+      "revId": "23fca5bd5bc266e46efeb688427e52b09a8bc054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa93952a_f9596c9f",
+        "filename": "ios/chrome/browser/ui/settings/password_exporter.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-30T16:24:11Z",
+      "side": 1,
+      "message": "ditto, I think the vector should be passed by value and the caller expected to make the copy (make it easier to reason about if caller wants to make modification to the vector while save is in progress).",
+      "revId": "23fca5bd5bc266e46efeb688427e52b09a8bc054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b30138e_a83d2a36",
+        "filename": "ios/chrome/browser/ui/settings/password_exporter.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-30T16:24:11Z",
+      "side": 1,
+      "message": "This is a C++ function, so the variable should use cpp_naming_convention:\n\n      const std::vector\u003cstd::unique_ptr\u003cautofill::PasswordForm\u003e\u003e\u0026 password_list) {\n    std::vector\u003cstd::unique_ptr\u003cautofill::PasswordForm\u003e\u003e password_list_copy;\n    ...",
+      "revId": "23fca5bd5bc266e46efeb688427e52b09a8bc054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f8e6cd3_a4352422",
         "filename": "ios/chrome/browser/ui/settings/password_exporter.mm",
         "patchSetId": 9
@@ -13,6 +81,144 @@
       "writtenOn": "2018-01-30T10:28:36Z",
       "side": 1,
       "message": "|data| is an object stored in an ivar on PasswordExporter. In this case, it ends up being referenced from two different threads, although it is only used from one at a time. \n\nShould I create a local variable with a copy of the string to avoid referencing it from 2 different threads?",
+      "revId": "23fca5bd5bc266e46efeb688427e52b09a8bc054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "827f5080_1a41399e",
+        "filename": "ios/chrome/browser/ui/settings/password_exporter.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-30T16:24:11Z",
+      "side": 1,
+      "message": "I would do a copy as the copy is generally cheap. If the NSString is immutable, then -copy is just doing a -retain; if the string is mutable, then an immutable copy is created and returned. In all case, this guarantee the code is safe.",
+      "parentUuid": "5f8e6cd3_a4352422",
+      "revId": "23fca5bd5bc266e46efeb688427e52b09a8bc054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61b2d272_b822a078",
+        "filename": "ios/chrome/browser/ui/settings/password_exporter.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-30T16:24:11Z",
+      "side": 1,
+      "message": "Why do you need to write this and not just \"base::BindBlockArc(writeToFile)\"?\n\nIs this because of https://bugs.chromium.org/p/chromium/issues/detail?id\u003d701275? If so, could you paste the compilation error? If not, can you use the simpler syntax or, if it does not compile, file a new bug (and assign it to me).",
+      "range": {
+        "startLine": 82,
+        "startChar": 6,
+        "endLine": 82,
+        "endChar": 77
+      },
+      "revId": "23fca5bd5bc266e46efeb688427e52b09a8bc054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cea228e9_fb31b5ea",
+        "filename": "ios/chrome/browser/ui/settings/password_exporter.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-30T16:24:11Z",
+      "side": 1,
+      "message": "Yuck, I don\u0027t like that we have no better way to wait for two separate asynchronous tasks to complete than to use ivars.",
+      "revId": "23fca5bd5bc266e46efeb688427e52b09a8bc054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e3f1a43_bd8c5038",
+        "filename": "ios/chrome/browser/ui/settings/password_exporter.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-30T16:24:11Z",
+      "side": 1,
+      "message": "self.reauthenticationSuccessful",
+      "range": {
+        "startLine": 207,
+        "startChar": 32,
+        "endLine": 207,
+        "endChar": 59
+      },
+      "revId": "23fca5bd5bc266e46efeb688427e52b09a8bc054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efb2f0cd_6c5f0711",
+        "filename": "ios/chrome/browser/ui/settings/password_exporter.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-30T16:24:11Z",
+      "side": 1,
+      "message": "self.serializingFinished",
+      "range": {
+        "startLine": 207,
+        "startChar": 7,
+        "endLine": 207,
+        "endChar": 27
+      },
+      "revId": "23fca5bd5bc266e46efeb688427e52b09a8bc054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b4c0b55_dda1fcd5",
+        "filename": "ios/chrome/browser/ui/settings/password_exporter.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-30T16:24:11Z",
+      "side": 1,
+      "message": "I think we should reset _serializingFinished, _serializedPasswords and _reauthenticationSuccessful here (or just before calling -writeData:toURL:handler:).\n\n  NSString* serializedPasswords \u003d self.serializedPasswords;\n  self.serializingFinished \u003d NO;\n  self.serializedPasswords \u003d nil;\n  self.reauthenticationSuccessfull \u003d NO;\n\n  [_passwordFileWriter writeData:serializedPasswords\n                           toUrl:tempPasswordsFileURL\n                         handler:onFileWritten];\n\nThis also mean that we do not have to worry about \"data\" parameter of passwordFileWriter being accessed from multiple threads.",
+      "revId": "23fca5bd5bc266e46efeb688427e52b09a8bc054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de30161c_da946b4b",
+        "filename": "ios/chrome/browser/ui/settings/save_passwords_collection_view_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-30T16:24:11Z",
+      "side": 1,
+      "message": "This is where the copy of the vector should go.",
       "revId": "23fca5bd5bc266e46efeb688427e52b09a8bc054",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
