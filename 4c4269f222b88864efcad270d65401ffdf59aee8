@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08e38172_08abebaf",
+        "filename": "ui/message_center/views/notification_view_md.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2018-01-30T07:08:26Z",
+      "side": 1,
+      "message": "nit: please make this const.",
+      "range": {
+        "startLine": 215,
+        "startChar": 0,
+        "endLine": 215,
+        "endChar": 51
+      },
+      "revId": "4c4269f222b88864efcad270d65401ffdf59aee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
