@@ -55,6 +55,7 @@ RTCDTMFSender* RTCDTMFSender::Create(
   std::unique_ptr<WebRTCDTMFSenderHandler> handler = base::WrapUnique(
       peer_connection_handler->CreateDTMFSender(track->Component()));
   if (!handler) {
+    // TODO(hbos): asdasdasd
     exception_state.ThrowDOMException(kNotSupportedError,
                                       "The MediaStreamTrack provided is not an "
                                       "element of a MediaStream that's "
