@@ -91,7 +91,7 @@ TEST_F(VisibleSelectionTest, expandUsingGranularity) {
       "<span id=host><a id=one>1</a><a id=two>22</a></span>";
   const char* shadow_content =
       "<p><b id=three>333</b><content select=#two></content><b "
-      "id=four>4444</b><span id=space>  </span><content "
+      "id=four>4444</b> <content "
       "select=#one></content><b id=five>55555</b></p>";
   SetBodyContent(body_content);
   ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
@@ -118,13 +118,20 @@ TEST_F(VisibleSelectionTest, expandUsingGranularity) {
 
   EXPECT_EQ(selection.Start(), selection.Base());
   EXPECT_EQ(selection.End(), selection.Extent());
-  EXPECT_EQ(Position(one, 0), selection.Start());
-  EXPECT_EQ(Position(two, 2), selection.End());
+  EXPECT_EQ(
+      "<span id=\"host\"><p><b id=\"three\">333</b><a id=\"two\">22|</a><b "
+      "id=\"four\">4444</b> <a id=\"one\">^1</a><b "
+      "id=\"five\">55555</b></p></span>",
+      GetSelectionTextInFlatTreeFromBody(
+          ConvertToSelectionInFlatTree(selection.AsSelection())));
 
   EXPECT_EQ(selection_in_flat_tree.Start(), selection_in_flat_tree.Base());
   EXPECT_EQ(selection_in_flat_tree.End(), selection_in_flat_tree.Extent());
-  EXPECT_EQ(PositionInFlatTree(one, 0), selection_in_flat_tree.Start());
-  EXPECT_EQ(PositionInFlatTree(five, 5), selection_in_flat_tree.End());
+  EXPECT_EQ(
+      "<span id=\"host\"><p><b id=\"three\">333</b><a id=\"two\">22</a><b "
+      "id=\"four\">4444</b> <a id=\"one\">^1</a><b "
+      "id=\"five\">55555|</b></p></span>",
+      GetSelectionTextInFlatTreeFromBody(selection_in_flat_tree.AsSelection()));
 
   // From a position at distributed node
   selection = CreateVisibleSelection(
@@ -139,13 +146,20 @@ TEST_F(VisibleSelectionTest, expandUsingGranularity) {
 
   EXPECT_EQ(selection.Start(), selection.Base());
   EXPECT_EQ(selection.End(), selection.Extent());
-  EXPECT_EQ(Position(one, 0), selection.Start());
-  EXPECT_EQ(Position(two, 2), selection.End());
+  EXPECT_EQ(
+      "<span id=\"host\"><p><b id=\"three\">333</b><a id=\"two\">22|</a><b "
+      "id=\"four\">4444</b> <a id=\"one\">^1</a><b "
+      "id=\"five\">55555</b></p></span>",
+      GetSelectionTextInFlatTreeFromBody(
+          ConvertToSelectionInFlatTree(selection.AsSelection())));
 
   EXPECT_EQ(selection_in_flat_tree.Start(), selection_in_flat_tree.Base());
   EXPECT_EQ(selection_in_flat_tree.End(), selection_in_flat_tree.Extent());
-  EXPECT_EQ(PositionInFlatTree(three, 0), selection_in_flat_tree.Start());
-  EXPECT_EQ(PositionInFlatTree(four, 4), selection_in_flat_tree.End());
+  EXPECT_EQ(
+      "<span id=\"host\"><p><b id=\"three\">^333</b><a id=\"two\">22</a><b "
+      "id=\"four\">4444|</b> <a id=\"one\">1</a><b "
+      "id=\"five\">55555</b></p></span>",
+      GetSelectionTextInFlatTreeFromBody(selection_in_flat_tree.AsSelection()));
 
   // From a position at node in shadow tree
   selection = CreateVisibleSelection(
@@ -160,13 +174,20 @@ TEST_F(VisibleSelectionTest, expandUsingGranularity) {
 
   EXPECT_EQ(selection.Start(), selection.Base());
   EXPECT_EQ(selection.End(), selection.Extent());
-  EXPECT_EQ(Position(three, 0), selection.Start());
-  EXPECT_EQ(Position(four, 4), selection.End());
+  EXPECT_EQ(
+      "<span id=\"host\"><p><b id=\"three\">^333</b><a id=\"two\">22</a><b "
+      "id=\"four\">4444|</b> <a id=\"one\">1</a><b "
+      "id=\"five\">55555</b></p></span>",
+      GetSelectionTextInFlatTreeFromBody(
+          ConvertToSelectionInFlatTree(selection.AsSelection())));
 
   EXPECT_EQ(selection_in_flat_tree.Start(), selection_in_flat_tree.Base());
   EXPECT_EQ(selection_in_flat_tree.End(), selection_in_flat_tree.Extent());
-  EXPECT_EQ(PositionInFlatTree(three, 0), selection_in_flat_tree.Start());
-  EXPECT_EQ(PositionInFlatTree(four, 4), selection_in_flat_tree.End());
+  EXPECT_EQ(
+      "<span id=\"host\"><p><b id=\"three\">^333</b><a id=\"two\">22</a><b "
+      "id=\"four\">4444|</b> <a id=\"one\">1</a><b "
+      "id=\"five\">55555</b></p></span>",
+      GetSelectionTextInFlatTreeFromBody(selection_in_flat_tree.AsSelection()));
 
   // From a position at node in shadow tree
   selection = CreateVisibleSelection(
@@ -181,13 +202,20 @@ TEST_F(VisibleSelectionTest, expandUsingGranularity) {
 
   EXPECT_EQ(selection.Start(), selection.Base());
   EXPECT_EQ(selection.End(), selection.Extent());
-  EXPECT_EQ(Position(three, 0), selection.Start());
-  EXPECT_EQ(Position(four, 4), selection.End());
+  EXPECT_EQ(
+      "<span id=\"host\"><p><b id=\"three\">^333</b><a id=\"two\">22</a><b "
+      "id=\"four\">4444|</b> <a id=\"one\">1</a><b "
+      "id=\"five\">55555</b></p></span>",
+      GetSelectionTextInFlatTreeFromBody(
+          ConvertToSelectionInFlatTree(selection.AsSelection())));
 
   EXPECT_EQ(selection_in_flat_tree.Start(), selection_in_flat_tree.Base());
   EXPECT_EQ(selection_in_flat_tree.End(), selection_in_flat_tree.Extent());
-  EXPECT_EQ(PositionInFlatTree(three, 0), selection_in_flat_tree.Start());
-  EXPECT_EQ(PositionInFlatTree(four, 4), selection_in_flat_tree.End());
+  EXPECT_EQ(
+      "<span id=\"host\"><p><b id=\"three\">^333</b><a id=\"two\">22</a><b "
+      "id=\"four\">4444|</b> <a id=\"one\">1</a><b "
+      "id=\"five\">55555</b></p></span>",
+      GetSelectionTextInFlatTreeFromBody(selection_in_flat_tree.AsSelection()));
 
   // From a position at node in shadow tree
   selection = CreateVisibleSelection(
@@ -202,13 +230,20 @@ TEST_F(VisibleSelectionTest, expandUsingGranularity) {
 
   EXPECT_EQ(selection.Start(), selection.Base());
   EXPECT_EQ(selection.End(), selection.Extent());
-  EXPECT_EQ(Position(five, 0), selection.Start());
-  EXPECT_EQ(Position(five, 5), selection.End());
+  EXPECT_EQ(
+      "<span id=\"host\"><p><b id=\"three\">333</b><a id=\"two\">22</a><b "
+      "id=\"four\">4444</b> <a id=\"one\">1</a><b "
+      "id=\"five\">^55555|</b></p></span>",
+      GetSelectionTextInFlatTreeFromBody(
+          ConvertToSelectionInFlatTree(selection.AsSelection())));
 
   EXPECT_EQ(selection_in_flat_tree.Start(), selection_in_flat_tree.Base());
   EXPECT_EQ(selection_in_flat_tree.End(), selection_in_flat_tree.Extent());
-  EXPECT_EQ(PositionInFlatTree(one, 0), selection_in_flat_tree.Start());
-  EXPECT_EQ(PositionInFlatTree(five, 5), selection_in_flat_tree.End());
+  EXPECT_EQ(
+      "<span id=\"host\"><p><b id=\"three\">333</b><a id=\"two\">22</a><b "
+      "id=\"four\">4444</b> <a id=\"one\">^1</a><b "
+      "id=\"five\">55555|</b></p></span>",
+      GetSelectionTextInFlatTreeFromBody(selection_in_flat_tree.AsSelection()));
 }
 
 // For http://wkb.ug/32622
