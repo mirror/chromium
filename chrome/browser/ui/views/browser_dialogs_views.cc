@@ -32,6 +32,15 @@ LoginHandler* LoginHandler::Create(net::AuthChallengeInfo* auth_info,
 }
 
 // static
+LoginHandler* LoginHandler::Create(
+    net::AuthChallengeInfo* auth_info,
+    net::URLRequestContext* context,
+    content::ResourceRequestInfo::WebContentsGetter web_contents_getter) {
+  return chrome::CreateLoginHandlerViews(auth_info, context,
+                                         web_contents_getter);
+}
+
+// static
 void BookmarkEditor::Show(gfx::NativeWindow parent_window,
                           Profile* profile,
                           const EditDetails& details,
