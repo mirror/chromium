@@ -22,6 +22,30 @@
       "revId": "674e77288098a9c335299c7fbcbbd10c344961ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa0ad287_b1d609eb",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-30T01:07:20Z",
+      "side": 1,
+      "message": "That is exactly the purpose of this patch. I\u0027m replacing two variables g_threshold and g_cumulative_counter that had to be kept in sync with just one g_bytes_left which is counted towards zero.\n\nIt is not that I\u0027m afraid of using mutexes ;-).\nI just need to make sure the lock-free part which runs independent of mutex state is kept in the valid state.\n\nI have to use MemoryBarrier because there\u0027s no Barrier_AtomicExchange function.",
+      "parentUuid": "21725291_65619b66",
+      "range": {
+        "startLine": 250,
+        "startChar": 1,
+        "endLine": 264,
+        "endChar": 73
+      },
+      "revId": "674e77288098a9c335299c7fbcbbd10c344961ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
