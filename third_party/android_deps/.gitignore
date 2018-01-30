@@ -1,0 +1,5 @@
+# Ignore all the content of repository except the README files.
+# Other files will be fetched via CIPD.
+
+repository/*/*
+!repository/*/README.chromium
