@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "5f5d70bb_50e600fb",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_foreground_animator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2018-01-30T23:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63a7562a_573e74c6",
+      "range": {
+        "startLine": 11,
+        "startChar": 24,
+        "endLine": 11,
+        "endChar": 26
+      },
+      "revId": "012cdcc3950cb8102ab7e0d74be49497dd7bdd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dea35490_624bfbcf",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_foreground_animator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2018-01-30T23:33:14Z",
+      "side": 1,
+      "message": "Double spaces at the beginning of sentences in monospaced fonts is a *somewhat* common practice.  I do it for all my other comments in the fullscreen/ directory, so I\u0027ll keep it consistent here.",
+      "parentUuid": "ca73016b_773b1e31",
+      "range": {
+        "startLine": 11,
+        "startChar": 9,
+        "endLine": 11,
+        "endChar": 10
+      },
+      "revId": "012cdcc3950cb8102ab7e0d74be49497dd7bdd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea601923_09ffe5d0",
         "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_system_notification_observer.h",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "012cdcc3950cb8102ab7e0d74be49497dd7bdd62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f895dc47_5337ab8b",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_system_notification_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2018-01-30T23:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea601923_09ffe5d0",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "012cdcc3950cb8102ab7e0d74be49497dd7bdd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "5ce9f546_4c8bbab0",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_system_notification_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2018-01-30T23:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a660e57b_c40d4aa7",
+      "range": {
+        "startLine": 28,
+        "startChar": 19,
+        "endLine": 28,
+        "endChar": 28
+      },
+      "revId": "012cdcc3950cb8102ab7e0d74be49497dd7bdd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc252de7_95dd960a",
         "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_system_notification_observer.mm",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "012cdcc3950cb8102ab7e0d74be49497dd7bdd62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1f7f6f0_284adc54",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_system_notification_observer.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2018-01-30T23:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc252de7_95dd960a",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "012cdcc3950cb8102ab7e0d74be49497dd7bdd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "311cf90e_affc2315",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_system_notification_observer.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2018-01-30T23:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ae85996_b358373d",
+      "range": {
+        "startLine": 24,
+        "startChar": 55,
+        "endLine": 24,
+        "endChar": 62
+      },
+      "revId": "012cdcc3950cb8102ab7e0d74be49497dd7bdd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ed54907_1d0d13e0",
         "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_system_notification_observer.mm",
         "patchSetId": 2
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "642dd70a_926a81dd",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_system_notification_observer.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2018-01-30T23:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ed54907_1d0d13e0",
+      "range": {
+        "startLine": 70,
+        "startChar": 7,
+        "endLine": 70,
+        "endChar": 15
+      },
+      "revId": "012cdcc3950cb8102ab7e0d74be49497dd7bdd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6aa15ad9_3ace7c0e",
         "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_ui_element.h",
         "patchSetId": 2
@@ -183,6 +351,30 @@
       "revId": "012cdcc3950cb8102ab7e0d74be49497dd7bdd62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6da28fdc_26f4fc96",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_ui_element.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2018-01-30T23:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6aa15ad9_3ace7c0e",
+      "range": {
+        "startLine": 38,
+        "startChar": 67,
+        "endLine": 38,
+        "endChar": 71
+      },
+      "revId": "012cdcc3950cb8102ab7e0d74be49497dd7bdd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
