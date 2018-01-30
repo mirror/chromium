@@ -5,7 +5,6 @@
 package org.chromium.chrome.browser.webapps;
 
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -97,7 +96,7 @@ public class WebApkInfo extends WebappInfo {
         // package name and the ShortcutSource from the launch intent and extract the remaining data
         // from the <meta-data> in the WebAPK's Android manifest.
 
-        Bundle bundle = extractWebApkMetaData(webApkPackageName);
+        Bundle bundle = ShortcutHelper.extractMetaData(webApkPackageName);
         if (bundle == null) {
             return null;
         }
@@ -258,22 +257,6 @@ public class WebApkInfo extends WebappInfo {
         intent.putExtra(ShortcutHelper.EXTRA_SOURCE, source());
         intent.putExtra(WebApkConstants.EXTRA_WEBAPK_PACKAGE_NAME, apkPackageName());
         intent.putExtra(ShortcutHelper.EXTRA_FORCE_NAVIGATION, shouldForceNavigation());
-    }
-
-    /**
-     * Extracts meta data from a WebAPK's Android Manifest.
-     * @param webApkPackageName WebAPK's package name.
-     * @return Bundle with the extracted meta data.
-     */
-    private static Bundle extractWebApkMetaData(String webApkPackageName) {
-        PackageManager packageManager = ContextUtils.getApplicationContext().getPackageManager();
-        try {
-            ApplicationInfo appInfo = packageManager.getApplicationInfo(
-                    webApkPackageName, PackageManager.GET_META_DATA);
-            return appInfo.metaData;
-        } catch (PackageManager.NameNotFoundException e) {
-            return null;
-        }
     }
 
     /**
