@@ -190,6 +190,7 @@
     {
       'target_name': 'destination_list',
       'dependencies': [
+        '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:highlight_utils',
         '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:i18n_behavior',
         '../compiled_resources2.gyp:native_layer',
         '../data/compiled_resources2.gyp:destination',

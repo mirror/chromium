@@ -41,52 +41,58 @@ Polymer({
       value: false,
     },
 
-    /** @private {!Array<!print_preview.Destination>} */
-    displayedDestinations_: {
-      type: Array,
-      computed: 'computeDisplayedDestinations_(destinations, searchQuery)',
+    /** @private {number} */
+    numMatchingDestinations_: {
+      type: Number,
+      computed: 'computeNumMatchingDestinations_(destinations, searchQuery)',
+    },
+
+    /** @private {number} */
+    lastDisplayedIndex_: {
+      type: Number,
+      computed: 'computeLastDisplayedIndex_(' +
+          'destinations, numMatchingDestinations_, showAll_, searchQuery)',
     },
 
     /** @type {boolean} */
     footerHidden_: {
       type: Boolean,
-      computed: 'computeFooterHidden_(displayedDestinations_, showAll_)',
+      computed: 'computeFooterHidden_(numMatchingDestinations_, showAll_)',
     },
 
     /** @private {boolean} */
     hasDestinations_: {
       type: Boolean,
-      computed: 'computeHasDestinations_(displayedDestinations_)',
+      computed: 'computeHasDestinations_(numMatchingDestinations_)',
     },
   },
 
+  observers: [
+    'highlightListItems_(lastDisplayedIndex_, searchQuery)',
+  ],
+
   /**
-   * @return {!Array<!print_preview.Destination>}
+   * @return {number}
    * @private
    */
-  computeDisplayedDestinations_: function() {
+  computeNumMatchingDestinations_: function() {
     if (!this.searchQuery)
-      return assert(this.destinations);
-    return this.destinations.filter(destination => {
-      return destination.matches(assert(this.searchQuery));
-    });
+      return assert(this.destinations).length;
+    return this.destinations
+        .filter(destination => {
+          return destination.matches(assert(this.searchQuery));
+        })
+        .length;
   },
 
   /**
-   * @param {!print_preview.Destination} destination The destination to get the
-   *     search hint for.
-   * @return {string} The property or properties matching the search query.
+   * @return {boolean} Whether the property should be hidden.
    * @private
    */
-  getSearchHint_: function(destination) {
+  isPropertyHidden_: function(property) {
     if (!this.searchQuery)
-      return '';
-    let hint = '';
-    destination.extraPropertiesToMatch.some(property => {
-      if (property.match(this.searchQuery))
-        hint += property;
-    });
-    return hint;
+      return true;
+    return !property.match(this.searchQuery);
   },
 
   /**
@@ -94,7 +100,7 @@ Polymer({
    * @private
    */
   computeFooterHidden_: function() {
-    return this.displayedDestinations_.length < SHORT_DESTINATION_LIST_SIZE ||
+    return this.numMatchingDestinations_ < SHORT_DESTINATION_LIST_SIZE ||
         this.showAll_;
   },
 
@@ -103,16 +109,43 @@ Polymer({
    * @private
    */
   computeHasDestinations_: function() {
-    return this.displayedDestinations_.length > 0;
+    return this.numMatchingDestinations_ > 0;
   },
 
   /**
-   * @param {number} index The index of the destination in the list.
-   * @return {boolean}
+   * @return {number}
    * @private
    */
-  isDestinationHidden_: function(index) {
-    return index >= SHORT_DESTINATION_LIST_SIZE && !this.showAll_;
+  computeLastDisplayedIndex_: function() {
+    if (this.showAll_) {
+      return this.destinations.length;
+    }
+
+    const numToDisplay =
+        Math.min(this.numMatchingDestinations_, SHORT_DESTINATION_LIST_SIZE);
+    if (!this.searchQuery)
+      return numToDisplay - 1;
+
+    let startIndex = 0;
+    for (let i = 0; i < numToDisplay; i++) {
+      let newIndex =
+          this.destinations.slice(startIndex).findIndex(destination => {
+            return destination.matches(assert(this.searchQuery));
+          });
+      startIndex += newIndex + 1;
+    }
+    return startIndex - 1;
+  },
+
+  /**
+   * @param {!print_preview.Destination} destination The destination.
+   * @param {number} index The index of the destination in the list.
+   * @return {boolean} Whether the destination should be hidden
+   * @private
+   */
+  isDestinationHidden_: function(destination, index) {
+    return index > this.lastDisplayedIndex_ ||
+        (!!this.searchQuery && !destination.matches(this.searchQuery));
   },
 
   /**
@@ -142,6 +175,33 @@ Polymer({
   onDestinationSelected_: function(e) {
     this.fire(
         'destination-selected', /** @type {!{model: Object}} */ (e).model.item);
+  },
+
+  highlightListItems_: function() {
+    findAndRemoveHighlights(this);
+    if (!this.searchQuery)
+      return;
+    this.shadowRoot.querySelectorAll('.searchable').forEach(element => {
+      element.childNodes.forEach(node => {
+        if (node.nodeType != Node.TEXT_NODE)
+          return;
+
+        const textContent = node.nodeValue.trim();
+        if (textContent.length == 0)
+          return;
+
+        if (this.searchQuery.test(textContent)) {
+          // Don't highlight <select> nodes, yellow rectangles can't be
+          // displayed within an <option>.
+          // TODO(rbpotter): solve issue below before adding advanced
+          // settings so that this function can be re-used.
+          // TODO(dpapad): highlight <select> controls with a search bubble
+          // instead.
+          if (node.parentNode.nodeName != 'OPTION')
+            highlight(node, textContent.split(this.searchQuery));
+        }
+      });
+    });
   },
 
   reset: function() {
