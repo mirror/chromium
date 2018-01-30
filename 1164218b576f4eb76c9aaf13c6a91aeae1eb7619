@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "29494587_d7feb73b",
+        "filename": "content/browser/loader/merkle_integrity_source_stream.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2018-01-30T09:57:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b83daf1d_0896533e",
+      "revId": "1164218b576f4eb76c9aaf13c6a91aeae1eb7619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9be92a07_81be25e3",
         "filename": "content/browser/loader/merkle_integrity_source_stream.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "1164218b576f4eb76c9aaf13c6a91aeae1eb7619",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d396db0_29f2aec6",
+        "filename": "content/browser/loader/merkle_integrity_source_stream.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2018-01-30T09:57:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9be92a07_81be25e3",
+      "revId": "1164218b576f4eb76c9aaf13c6a91aeae1eb7619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "08ec606f_d1c9aac2",
+        "filename": "content/browser/loader/merkle_integrity_source_stream.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2018-01-30T09:57:16Z",
+      "side": 1,
+      "message": "Yeah, it could be done later. Added a TODO comment.",
+      "parentUuid": "71ac78c5_37af60e2",
+      "revId": "1164218b576f4eb76c9aaf13c6a91aeae1eb7619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc650311_4724ed1d",
         "filename": "content/browser/loader/merkle_integrity_source_stream.h",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "1164218b576f4eb76c9aaf13c6a91aeae1eb7619",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51866e6b_151abd1c",
+        "filename": "content/browser/loader/merkle_integrity_source_stream.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2018-01-30T09:57:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc650311_4724ed1d",
+      "revId": "1164218b576f4eb76c9aaf13c6a91aeae1eb7619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
