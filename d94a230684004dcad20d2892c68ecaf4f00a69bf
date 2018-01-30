@@ -16,6 +16,24 @@
       "revId": "d94a230684004dcad20d2892c68ecaf4f00a69bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ecd483d_6bd97412",
+        "filename": "base/files/dir_reader_posix_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-30T09:16:50Z",
+      "side": 1,
+      "message": "Yes, that\u0027s correct. Thanks (the perils of being clank sheriff, I forget about the other platforms :)\n\nI\u0027ll make a CL to restrict to android.",
+      "parentUuid": "0d9c3e6f_48e0c27c",
+      "revId": "d94a230684004dcad20d2892c68ecaf4f00a69bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
