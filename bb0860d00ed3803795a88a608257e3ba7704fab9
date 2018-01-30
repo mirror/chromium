@@ -22,6 +22,30 @@
       "revId": "bb0860d00ed3803795a88a608257e3ba7704fab9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c97296d_4998fb86",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webvtt/api/VTTRegion/lines.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2018-01-30T12:44:12Z",
+      "side": 0,
+      "message": "moved these values to valid cases and updated test case.",
+      "parentUuid": "6fd1e122_e30f519c",
+      "range": {
+        "startLine": 31,
+        "startChar": 5,
+        "endLine": 31,
+        "endChar": 38
+      },
+      "revId": "bb0860d00ed3803795a88a608257e3ba7704fab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
