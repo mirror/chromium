@@ -22,6 +22,30 @@
       "revId": "84f335705d1a2a3734ab04f77c3dd4435fced28e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12a03bff_43742e89",
+        "filename": "components/cast_channel/cast_message_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-30T23:13:26Z",
+      "side": 1,
+      "message": "I listed a few examples of Cast protocol messages that are most frequently used. If you need more background on this, I can locate the spec (and maybe put a link to it in a README.md in the folder after cleaning it up for public view, since we are opening sourcing the Cast protocol).",
+      "parentUuid": "8340f799_5a8450c7",
+      "range": {
+        "startLine": 31,
+        "startChar": 15,
+        "endLine": 31,
+        "endChar": 42
+      },
+      "revId": "84f335705d1a2a3734ab04f77c3dd4435fced28e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
