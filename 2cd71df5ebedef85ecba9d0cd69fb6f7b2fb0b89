@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1eb6c78f_9e02951c",
+        "filename": "third_party/WebKit/Source/core/origin_trials/OriginTrialContext.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-30T01:38:21Z",
+      "side": 1,
+      "message": "Nit: IsOriginatingDocumentSecureContext() ?",
+      "revId": "2cd71df5ebedef85ecba9d0cd69fb6f7b2fb0b89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ee5edc3_e54f2782",
+        "filename": "third_party/WebKit/Source/core/workers/GlobalScopeCreationParams.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-30T01:38:21Z",
+      "side": 1,
+      "message": "Nit: originating_document_is_secure_context",
+      "revId": "2cd71df5ebedef85ecba9d0cd69fb6f7b2fb0b89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10eb16c7_e7f991c4",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletGlobalScope.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-30T01:38:21Z",
+      "side": 1,
+      "message": "Nit: originating_document_security_origin_",
+      "revId": "2cd71df5ebedef85ecba9d0cd69fb6f7b2fb0b89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "714b45fc_d0072d55",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletGlobalScope.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-30T01:38:21Z",
+      "side": 1,
+      "message": "Nit: originating_document_secure_context_",
+      "revId": "2cd71df5ebedef85ecba9d0cd69fb6f7b2fb0b89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
