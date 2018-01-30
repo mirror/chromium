@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8ca6fd5_f1cb7457",
+        "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-30T22:04:48Z",
+      "side": 1,
+      "message": "Disregard this, copy paste fail.",
+      "range": {
+        "startLine": 690,
+        "startChar": 0,
+        "endLine": 690,
+        "endChar": 50
+      },
+      "revId": "90fd2689266d68983b26585b911fbfb7e1e6f2a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ac82b96_ec5daa86",
+        "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-30T22:04:48Z",
+      "side": 1,
+      "message": "This is how I imagine a unit test for this could look like. Unfortunately, this currently doesn\u0027t work, since BluetoothTestMac::SimulateLowEnergyDevice directly calls into central_manager_delegate didDiscoverPeripheral [1]. didDiscoverPeripheral seems to be the lowest layer of abstraction on Mac [2], and an actual central_manager_delegate\u0027s didDiscoverPeripheral would not be called from a real adapter if a supplied filter does not match a given peripheral.\n\nThe only solution I can see is implementing some filtering logic for tests on our own, but that seems not clean and I also wouldn\u0027t know where this should go. Do you have a good idea here?\n\n[1] https://codesearch.chromium.org/chromium/src/device/bluetooth/test/bluetooth_test_mac.mm?l\u003d260\n[2] https://developer.apple.com/documentation/corebluetooth/cbcentralmanagerdelegate/1518937-centralmanager?language\u003dobjc",
+      "revId": "90fd2689266d68983b26585b911fbfb7e1e6f2a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
