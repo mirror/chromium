@@ -46,6 +46,30 @@
       "revId": "bfd0bcbeab9670ef1492c22e35a0542013130a02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2de9938d_06b5133e",
+        "filename": "third_party/WebKit/Source/core/messaging/BlinkCloneableMessageStructTraits.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-30T00:41:25Z",
+      "side": 1,
+      "message": "Sounds good. Thanks for looking into this.",
+      "parentUuid": "44799dd0_a68fe484",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 16
+      },
+      "revId": "bfd0bcbeab9670ef1492c22e35a0542013130a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
