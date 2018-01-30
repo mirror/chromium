@@ -373,6 +373,8 @@ class CORE_EXPORT LocalFrameView final
                                       const LayoutPoint&) const;
   LayoutPoint ConvertToLayoutObject(const LayoutObject&,
                                     const LayoutPoint&) const;
+  FloatPoint ConvertToLayoutObject(const LayoutObject&,
+                                   const FloatPoint&) const;
 
   bool IsFrameViewScrollCorner(LayoutScrollbarPart* scroll_corner) const {
     return scroll_corner_ == scroll_corner;
@@ -1080,6 +1082,7 @@ class CORE_EXPORT LocalFrameView final
   IntPoint ConvertFromContainingEmbeddedContentView(const IntPoint&) const;
   LayoutPoint ConvertFromContainingEmbeddedContentView(
       const LayoutPoint&) const;
+  FloatPoint ConvertFromContainingEmbeddedContentView(const FloatPoint&) const;
 
   void DidChangeGlobalRootScroller() override;
 

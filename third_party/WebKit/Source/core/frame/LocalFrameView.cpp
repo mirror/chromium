@@ -3649,6 +3649,17 @@ LayoutPoint LocalFrameView::ConvertToLayoutObject(
       layout_object.AbsoluteToLocal(FloatPoint(point), kUseTransforms));
 }
 
+FloatPoint LocalFrameView::ConvertToLayoutObject(
+    const LayoutObject& layout_object,
+    const FloatPoint& frame_point) const {
+  FloatPoint point = frame_point;
+
+  // Convert from LocalFrameView coords into page ("absolute") coordinates.
+  point += FloatPoint(ScrollX(), ScrollY());
+
+  return layout_object.AbsoluteToLocal(point, kUseTransforms);
+}
+
 IntPoint LocalFrameView::ConvertSelfToChild(const EmbeddedContentView& child,
                                             const IntPoint& point) const {
   IntPoint new_point = point;
@@ -3781,6 +3792,26 @@ LayoutPoint LocalFrameView::ConvertFromContainingEmbeddedContentView(
     // Subtract borders and padding
     point.Move((-layout_object->BorderLeft() - layout_object->PaddingLeft()),
                (-layout_object->BorderTop() - layout_object->PaddingTop()));
+    return point;
+  }
+
+  return parent_point;
+}
+
+FloatPoint LocalFrameView::ConvertFromContainingEmbeddedContentView(
+    const FloatPoint& parent_point) const {
+  if (LocalFrameView* parent = ParentFrameView()) {
+    // Get our layoutObject in the parent view
+    auto* layout_object = frame_->OwnerLayoutObject();
+    if (!layout_object)
+      return parent_point;
+
+    FloatPoint point =
+        parent->ConvertToLayoutObject(*layout_object, parent_point);
+    // Subtract borders and padding
+    point.Move(
+        (-layout_object->BorderLeft() - layout_object->PaddingLeft()).ToFloat(),
+        (-layout_object->BorderTop() - layout_object->PaddingTop()).ToFloat());
     return point;
   }
 
@@ -5052,24 +5083,11 @@ LayoutPoint LocalFrameView::ConvertFromRootFrame(
 
 FloatPoint LocalFrameView::ConvertFromRootFrame(
     const FloatPoint& point_in_root_frame) const {
-  // FrameViews / windows are required to be IntPoint aligned, but we may
-  // need to convert FloatPoint values within them (eg. for event
-  // co-ordinates).
-  IntPoint floored_point = FlooredIntPoint(point_in_root_frame);
-  FloatPoint parent_point = ConvertFromRootFrame(floored_point);
-  FloatSize window_fraction = point_in_root_frame - floored_point;
-  // Use linear interpolation handle any fractional value (eg. for iframes
-  // subject to a transform beyond just a simple translation).
-  // FIXME: Add FloatPoint variants of all co-ordinate space conversion APIs.
-  if (!window_fraction.IsEmpty()) {
-    const int kFactor = 1000;
-    IntPoint parent_line_end = ConvertFromRootFrame(
-        floored_point + RoundedIntSize(window_fraction.ScaledBy(kFactor)));
-    FloatSize parent_fraction =
-        (parent_line_end - parent_point).ScaledBy(1.0f / kFactor);
-    parent_point.Move(parent_fraction);
+  if (LocalFrameView* parent = ParentFrameView()) {
+    FloatPoint parent_point = parent->ConvertFromRootFrame(point_in_root_frame);
+    return ConvertFromContainingEmbeddedContentView(parent_point);
   }
-  return parent_point;
+  return point_in_root_frame;
 }
 
 IntPoint LocalFrameView::ConvertFromContainingEmbeddedContentViewToScrollbar(
