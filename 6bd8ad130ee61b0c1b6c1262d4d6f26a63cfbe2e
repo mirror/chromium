@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6af6997_c5d1e8d7",
+        "filename": "device/bluetooth/bluez/bluetooth_adapter_bluez.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-30T21:42:13Z",
+      "side": 1,
+      "message": "nit: move this down to the existing #if",
+      "revId": "6bd8ad130ee61b0c1b6c1262d4d6f26a63cfbe2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3dbfd92_4bd5dccb",
+        "filename": "device/bluetooth/bluez/bluetooth_adapter_bluez.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-30T21:42:13Z",
+      "side": 1,
+      "message": "there\u0027s no guarantee that the system will stay awake long enough for this to finish. please see the suggestion that i made on the bug to save a suspend readiness callback here and run it asynchronously after bluez acknowledges your StopDiscovery call.",
+      "revId": "6bd8ad130ee61b0c1b6c1262d4d6f26a63cfbe2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
