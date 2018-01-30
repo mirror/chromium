@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "f2d83885_bed3a564",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/heap-profiler/heap-snapshot-with-detached-dom-tree.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-30T17:11:56Z",
+      "side": 0,
+      "message": "We no longer have \"Detached DOM tree\" group.\n\nWe could add artificial root node, but that would mess up retaining paths for detached nodes.",
+      "revId": "6f97025732bb923f67b7eb08c8ce82a62282121b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6daf1594_575f7a06",
         "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
         "patchSetId": 4
