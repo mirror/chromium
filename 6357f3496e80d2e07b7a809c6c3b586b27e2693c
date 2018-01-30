@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c00a72c_6fbcc0c6",
+        "filename": "content/browser/renderer_host/legacy_render_widget_host_win.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-30T17:00:41Z",
+      "side": 1,
+      "message": "Some better wording? e.g.\n\nDirectManipulation needs to poll for new events every frame once touch starts.",
+      "revId": "6357f3496e80d2e07b7a809c6c3b586b27e2693c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9497338_d4da3db5",
+        "filename": "content/browser/renderer_host/legacy_render_widget_host_win.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-30T17:00:41Z",
+      "side": 1,
+      "message": "Check for non-null compositor_animation_observer_ instead of direction_manipulation_helper_.",
+      "revId": "6357f3496e80d2e07b7a809c6c3b586b27e2693c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96966723_07c4eead",
+        "filename": "content/browser/renderer_host/legacy_render_widget_host_win.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-30T17:00:41Z",
+      "side": 1,
+      "message": "Maybe instead of asking the host, it could add the observer directly? host_-\u003eGetNativeView() gives the aura::Window. From there, you can get the ui::Compositor.",
+      "revId": "6357f3496e80d2e07b7a809c6c3b586b27e2693c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97b29c00_e5bcf04d",
+        "filename": "content/browser/renderer_host/legacy_render_widget_host_win.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-30T17:00:41Z",
+      "side": 1,
+      "message": "When can this be null?",
+      "revId": "6357f3496e80d2e07b7a809c6c3b586b27e2693c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "978cb404_b1ae3a25",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-30T17:00:41Z",
+      "side": 1,
+      "message": "DCHECK here.",
+      "revId": "6357f3496e80d2e07b7a809c6c3b586b27e2693c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "809ab7bd_9db8f22e",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-30T17:00:41Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "6357f3496e80d2e07b7a809c6c3b586b27e2693c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd8fe8f9_f1ff72b2",
+        "filename": "ui/base/win/direct_manipulation.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-30T17:00:41Z",
+      "side": 1,
+      "message": "\u0027Return need begin frame.\u0027 does not make a lot of sense. Can you clarify?",
+      "revId": "6357f3496e80d2e07b7a809c6c3b586b27e2693c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e472806_3c32f425",
+        "filename": "ui/base/win/direct_manipulation.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-30T17:00:41Z",
+      "side": 1,
+      "message": "same here.",
+      "revId": "6357f3496e80d2e07b7a809c6c3b586b27e2693c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b2b6a52_29059466",
+        "filename": "ui/base/win/window_event_target.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-30T17:00:41Z",
+      "side": 1,
+      "message": "Does it matter where the scale/scroll is coming from? (i.e. why not just \u0027ApplyScale\u0027/\u0027ApplyScroll\u0027)?",
+      "revId": "6357f3496e80d2e07b7a809c6c3b586b27e2693c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
