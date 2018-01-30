@@ -52,6 +52,14 @@ let ModelsInfo;
 
 /**
  * @typedef {{
+ *   path: string,
+ *   valid: boolean
+ * }}
+ */
+let PpdInfo;
+
+/**
+ * @typedef {{
  *   manufacturer: string,
  *   model: string,
  *   makeAndModel: string,
@@ -112,9 +120,10 @@ cr.define('settings', function() {
     removeCupsPrinter(printerId, printerName) {}
 
     /**
-     * @return {!Promise<string>} The full path of the printer PPD file.
+     * @return {!Promise<!PpdInfo>} The full path of the printer PPD file and
+     *     whether or not the ppd is valid.
      */
-    getCupsPrinterPPDPath() {}
+    getCupsPrinterPPDInfo() {}
 
     /**
      * @param {!CupsPrinterInfo} newPrinter
@@ -184,7 +193,7 @@ cr.define('settings', function() {
     }
 
     /** @override */
-    getCupsPrinterPPDPath() {
+    getCupsPrinterPPDInfo() {
       return cr.sendWithPromise('selectPPDFile');
     }
 
