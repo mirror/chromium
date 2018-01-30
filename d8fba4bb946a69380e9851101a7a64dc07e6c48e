@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae5a8818_761f58f4",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2018-01-30T04:06:32Z",
+      "side": 1,
+      "message": "Nit: did you consider adding the check in StaticBitmapImage::Create() instead?  It may protect more call sites.",
+      "range": {
+        "startLine": 601,
+        "startChar": 30,
+        "endLine": 601,
+        "endChar": 36
+      },
+      "revId": "d8fba4bb946a69380e9851101a7a64dc07e6c48e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
