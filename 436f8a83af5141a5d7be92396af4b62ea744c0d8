@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c4345f9e_77cee437",
+        "filename": "services/network/public/cpp/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-30T16:37:13Z",
+      "side": 1,
+      "message": "Can we avoid special conventions for services unless necessary?  i.e. if this wasn\u0027t in services/, what is the convention if any?",
+      "parentUuid": "aa54cd0f_a1d8c5fa",
+      "revId": "436f8a83af5141a5d7be92396af4b62ea744c0d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb181427_00a46f7e",
         "filename": "services/network/public/cpp/BUILD.gn",
         "patchSetId": 9
