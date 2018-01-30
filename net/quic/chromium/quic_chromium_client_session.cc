@@ -664,6 +664,7 @@ QuicChromiumClientSession::QuicChromiumClientSession(
     int max_migrations_to_non_default_network_on_path_degrading,
     int yield_after_packets,
     QuicTime::Delta yield_after_duration,
+    bool headers_include_h2_stream_dependency,
     int cert_verify_flags,
     const QuicConfig& config,
     QuicCryptoClientConfig* crypto_config,
@@ -742,6 +743,8 @@ QuicChromiumClientSession::QuicChromiumClientSession(
   }
   connect_timing_.dns_start = dns_resolution_start_time;
   connect_timing_.dns_end = dns_resolution_end_time;
+  set_headers_include_h2_stream_dependency(
+      headers_include_h2_stream_dependency);
 }
 
 QuicChromiumClientSession::~QuicChromiumClientSession() {
