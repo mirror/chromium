@@ -1367,6 +1367,20 @@ config("default_warnings") {
   }
 }
 
+# warn_fallthrough ------------------------------------------------------------
+#
+# Only in a separate config so that some chromium_code not in src.git can
+# disable -Wimplicit-fallthrough.
+config("warn_fallthrough") {
+  # Warn on missing break statements at the end of switch cases.
+  # For intentional fallthrough, use FALLTHROUGH; from base/compiler_specific.h
+  if (is_clang) {
+    # TODO(thakis): Enable this once the codebase is ready,
+    # https://crbug.com/177475
+    cflags = [ "-Wimplicit-fallthrough" ]
+  }
+}
+
 # chromium_code ---------------------------------------------------------------
 #
 # Toggles between higher and lower warnings for code that is (or isn't)
@@ -1419,17 +1433,6 @@ config("chromium_code") {
     }
   }
 
-  # Warn on missing break statements at the end of switch cases.
-  # For intentional fallthrough, use FALLTHROUGH; from base/compiler_specific.h
-  if (is_clang) {
-    # TODO(thakis): Enable this once the codebase is ready,
-    # https://crbug.com/177475
-    # cflags_cc = [ "-Wimplicit-fallthrough" ]
-    if (is_mac || is_ios) {
-      # cflags_objcc += [ "-Wimplicit-fallthrough" ]
-    }
-  }
-
   configs = [ ":default_warnings" ]
 }
 
@@ -1468,6 +1471,9 @@ config("no_chromium_code") {
       # Lots of third-party libraries have unused variables. Instead of
       # suppressing them individually, we just blanket suppress them here.
       "-Wno-unused-variable",
+
+      # TODO(thakis): comment, https://crbug.com/177475
+      "-Wno-implicit-fallthrough",
     ]
   }
 

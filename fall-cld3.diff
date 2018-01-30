@@ -1,0 +1,12 @@
+diff --git a/src/BUILD.gn b/src/BUILD.gn
+index cf2a75c..ae197ae 100644
+--- a/src/BUILD.gn
++++ b/src/BUILD.gn
+@@ -92,6 +92,7 @@ static_library("cld_3") {
+   deps = [
+     ":protos",
+   ]
++  configs -= [ "//build/config/compiler:warn_fallthrough" ]
+ }
+ 
+ # The executables below are functional. Uncomment to use.

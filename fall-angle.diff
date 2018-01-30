@@ -1,0 +1,47 @@
+diff --git a/BUILD.gn b/BUILD.gn
+index f3ad6db65..45540712f 100644
+--- a/BUILD.gn
++++ b/BUILD.gn
+@@ -112,7 +112,10 @@ if (is_win) {
+   }
+ }
+ 
+-angle_undefine_configs = [ "//build/config/compiler:default_include_dirs" ]
++angle_undefine_configs = [
++  "//build/config/compiler:default_include_dirs",
++  "//build/config/compiler:warn_fallthrough",
++ ]
+ 
+ # Holds the shared includes so we only need to list them once.
+ source_set("includes") {
+diff --git a/src/vulkan_support/BUILD.gn b/src/vulkan_support/BUILD.gn
+index 24f5a3a3b..0be3da64e 100644
+--- a/src/vulkan_support/BUILD.gn
++++ b/src/vulkan_support/BUILD.gn
+@@ -21,7 +21,9 @@ raw_vulkan_layers_dir = rebase_path(vulkan_layers_dir, root_build_dir)
+ # Subdirectory to place data files (e.g. layer JSON files).
+ data_dir = "angledata"
+ 
+-vulkan_undefine_configs = []
++vulkan_undefine_configs = [
++  "//build/config/compiler:warn_fallthrough",
++]
+ if (is_win) {
+   vulkan_undefine_configs += [
+     "//build/config/win:nominmax",
+@@ -538,6 +540,7 @@ static_library("spirv_tools") {
+     "$spirv_tools_dir/source/validate_type_unique.cpp",
+   ]
+   public_configs = [ ":spirv_tools_config" ]
++  configs -= [ "//build/config/compiler:warn_fallthrough" ]
+ 
+   foreach(target_name, spvtools_vendor_tables) {
+     deps += [ ":$target_name" ]
+@@ -648,6 +651,7 @@ static_library("glslang") {
+     "$glslang_dir/glslang/Public/ShaderLang.h",
+   ]
+   public_configs = [ ":glslang_config" ]
++  configs -= [ "//build/config/compiler:warn_fallthrough" ]
+   configs += [ ":glslang_internal_config" ]
+ 
+   if (is_win) {
