@@ -173,6 +173,24 @@
     },
     {
       "key": {
+        "uuid": "11311c05_0b67a661",
+        "filename": "cc/raster/zero_copy_raster_buffer_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-30T01:06:35Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "2f2879fb_33ea6774",
+      "revId": "95cb5704e05a40bf1f0fae958e92abe2808cfc8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d768a94a_b5636b4b",
         "filename": "cc/raster/zero_copy_raster_buffer_provider.h",
         "patchSetId": 7
@@ -184,6 +202,23 @@
       "writtenOn": "2018-01-29T22:31:57Z",
       "side": 1,
       "message": "nit: gpu_memory_buffer_manager (no underscore)",
+      "revId": "95cb5704e05a40bf1f0fae958e92abe2808cfc8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5240dec7_fe970c8c",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-30T01:06:35Z",
+      "side": 1,
+      "message": "This DCHECK turns out to be a bad idea, the sync token can be empty if the context that generated it was lost. Since we don\u0027t know what context that was here, we can\u0027t check for that as an alternate condition. Removing it.",
       "revId": "95cb5704e05a40bf1f0fae958e92abe2808cfc8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
