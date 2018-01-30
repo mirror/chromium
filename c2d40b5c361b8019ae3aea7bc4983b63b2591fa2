@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be6c42c5_422a8fee",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/run_webkit_tests_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2018-01-30T19:12:08Z",
+      "side": 1,
+      "message": "Nit: I think that this could be tested in a separate method, based on the principle of writing minimal tests that test exactly one behavior.",
+      "range": {
+        "startLine": 418,
+        "startChar": 0,
+        "endLine": 422,
+        "endChar": 0
+      },
+      "revId": "c2d40b5c361b8019ae3aea7bc4983b63b2591fa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
