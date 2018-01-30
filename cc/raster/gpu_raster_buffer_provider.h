@@ -18,6 +18,7 @@ class RasterContextProvider;
 }  // namespace viz
 
 namespace cc {
+class UnpremultiplyEffect;
 
 class CC_EXPORT GpuRasterBufferProvider : public RasterBufferProvider {
  public:
@@ -98,6 +99,7 @@ class CC_EXPORT GpuRasterBufferProvider : public RasterBufferProvider {
   const int msaa_sample_count_;
   const viz::ResourceFormat preferred_tile_format_;
   const bool enable_oop_rasterization_;
+  std::unique_ptr<UnpremultiplyEffect> unpremultiply_effect_;
 
   std::set<RasterBufferImpl*> pending_raster_buffers_;
 

@@ -370,8 +370,8 @@ gpu::gles2::GLES2Interface* ContextProviderCommandBuffer::ContextGL() {
   CheckValidThreadOrLockAcquired();
 
   if (!attributes_.enable_gles2_interface) {
-    DLOG(ERROR) << "Unexpected access to ContextGL()";
-    return nullptr;
+    // DLOG(ERROR) << "Unexpected access to ContextGL()";
+    // return nullptr;
   }
 
   if (trace_impl_)
