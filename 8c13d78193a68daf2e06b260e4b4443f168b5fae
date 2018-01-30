@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "296e13ae_899def7f",
+        "filename": "net/quic/chromium/quic_chromium_client_session_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1083,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2018-01-30T18:27:02Z",
+      "side": 1,
+      "message": "Why is this android-specific?",
+      "range": {
+        "startLine": 1083,
+        "startChar": 6,
+        "endLine": 1083,
+        "endChar": 0
+      },
+      "revId": "8c13d78193a68daf2e06b260e4b4443f168b5fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90e69bdf_1e886072",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1403,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2018-01-30T18:27:02Z",
+      "side": 1,
+      "message": "This looks like the critical piece of this CL, if I\u0027m understanding things correctly. Do we have a test for this?",
+      "range": {
+        "startLine": 1403,
+        "startChar": 37,
+        "endLine": 1403,
+        "endChar": 0
+      },
+      "revId": "8c13d78193a68daf2e06b260e4b4443f168b5fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e17c2961_fe075bfa",
+        "filename": "net/quic/chromium/quic_stream_factory_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 6091,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2018-01-30T18:27:02Z",
+      "side": 1,
+      "message": "What\u0027s the android-specific part of this? I don\u0027t love #ifdef\u0027d tests because they\u0027re not built by most developers, so if I were, for example, to make a change to QuicStreamRequest\u0027s constructor I wouldn\u0027t be told by the compiler that I\u0027d need to change this method.\n\nThis is not the end of the world, but if there\u0027s any may to make this compile by default, that would rock.\n\n(And I assume this tests the apply_tag() code in quic_stream_factory.cc that I asked about, right?)",
+      "range": {
+        "startLine": 6091,
+        "startChar": 23,
+        "endLine": 6091,
+        "endChar": 0
+      },
+      "revId": "8c13d78193a68daf2e06b260e4b4443f168b5fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aba0a9f_4db532d9",
+        "filename": "net/quic/core/crypto/quic_crypto_client_config.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2018-01-30T18:27:02Z",
+      "side": 1,
+      "message": "Hm. I read this in your CL description and it makes me reconsider the choice to add this field to QuicServerId. Conceptually, that makes perfect sense, but since we used QuicServerId in places like this where we don\u0027t want the socket tag, it makes me think we would be better off doing something like:\n\nstruct QuicSessionKey {\n  QuicServerId server_id;\n  SocketTag socket_tag;\n}\n\nAnd then use QuicSessionKey as the key to the sessions in QuicStreamFactory, but not the other places that we currently use QuicServerId. Your observation that server ID is really for the \"physical machine\" strikes me as a good one, and we probably need something different for talking about the session. Make sense?",
+      "range": {
+        "startLine": 379,
+        "startChar": 21,
+        "endLine": 379,
+        "endChar": 0
+      },
+      "revId": "8c13d78193a68daf2e06b260e4b4443f168b5fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c8fe427_476e5001",
+        "filename": "net/socket/socket_test_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1455,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2018-01-30T18:27:02Z",
+      "side": 1,
+      "message": "This seems totally fine. But it makes me curious if we could do something like:\n\nDCHECK(!data_transferred_);\n\nBut perhaps that\u0027s not actually valid?",
+      "range": {
+        "startLine": 1455,
+        "startChar": 0,
+        "endLine": 1455,
+        "endChar": 71
+      },
+      "revId": "8c13d78193a68daf2e06b260e4b4443f168b5fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92b68944_310afa5f",
+        "filename": "net/socket/socket_test_util.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 1163,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2018-01-30T18:27:02Z",
+      "side": 1,
+      "message": "What motivates the need to split out UDP vs TCP sockets in this method? It seems like a plausible thing to do, I\u0027m just curious about the usecase.",
+      "revId": "8c13d78193a68daf2e06b260e4b4443f168b5fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
