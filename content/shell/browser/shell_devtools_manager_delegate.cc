@@ -12,6 +12,7 @@
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/files/file_path.h"
+#include "base/json/json_writer.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
@@ -23,6 +24,7 @@
 #include "content/public/browser/devtools_socket_factory.h"
 #include "content/public/browser/favicon_status.h"
 #include "content/public/browser/navigation_entry.h"
+#include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_switches.h"
@@ -151,6 +153,33 @@ std::unique_ptr<content::DevToolsSocketFactory> CreateSocketFactory() {
 #endif
 }
 
+const char kIdParam[] = "id";
+const char kMethodParam[] = "method";
+const char kParamsParam[] = "params";
+const char kResultParam[] = "result";
+
+const char kBrowserGetWindowForTarget[] = "Browser.getWindowForTarget";
+const char kBrowserSetWindowBounds[] = "Browser.setWindowBounds";
+const int kServerError = -32000;
+const int kDefaultWindowId = 1;
+
+void BuildError(int id, const std::string& message, std::string* output) {
+  base::Value error_value(base::Value::Type::DICTIONARY);
+  error_value.SetKey("message", base::Value(message));
+  error_value.SetKey("code", base::Value(kServerError));
+  base::Value message_value(base::Value::Type::DICTIONARY);
+  message_value.SetKey("error", std::move(error_value));
+  message_value.SetKey(kIdParam, base::Value(id));
+  base::JSONWriter::Write(message_value, output);
+}
+
+Shell* ShellForDevToolsAgentHost(DevToolsAgentHost* agent_host) {
+  WebContents* web_contents = agent_host->GetWebContents();
+  RenderViewHost* render_view_host =
+      web_contents ? web_contents->GetRenderViewHost() : nullptr;
+  return render_view_host ? Shell::FromRenderViewHost(render_view_host)
+                          : nullptr;
+}
 } //  namespace
 
 // ShellDevToolsManagerDelegate ----------------------------------------------
@@ -218,6 +247,115 @@ std::string ShellDevToolsManagerDelegate::GetFrontendResource(
 #else
   return content::DevToolsFrontendHost::GetFrontendResource(path).as_string();
 #endif
+}
+
+bool ShellDevToolsManagerDelegate::HandleCommand(
+    DevToolsAgentHost* agent_host,
+    DevToolsAgentHostClient* client,
+    base::DictionaryValue* command_dict) {
+  if (!command_dict)
+    return false;
+
+  base::Value* id =
+      command_dict->FindKeyOfType(kIdParam, base::Value::Type::INTEGER);
+  if (!id || id->GetInt() < 0)
+    return false;
+
+  base::Value* method_value =
+      command_dict->FindKeyOfType(kMethodParam, base::Value::Type::STRING);
+  if (!method_value)
+    return false;
+
+  std::string method = method_value->GetString();
+  if (method != kBrowserGetWindowForTarget && method != kBrowserSetWindowBounds)
+    return false;
+
+  Shell* shell = ShellForDevToolsAgentHost(agent_host);
+  if (!shell) {
+    BuildError(id->GetInt(), "No shell in the target", &message);
+    client->DispatchProtocolMessage(agent_host, message);
+    return true;
+  }
+
+  base::Value* params =
+      command_dict->FindKeyOfType(kParamsParam, base::Value::Type::DICTIONARY);
+  if (method == kBrowserGetWindowForTarget) {
+    std::string message;
+    base::Value* target_id =
+        params ? params->FindKeyOfType("targetId", base::Value::Type::STRING)
+               : nullptr;
+    if (!target_id || agent_host->GetId() != target_id->GetString()) {
+      BuildError(id->GetInt(), "Invalid targetId", &message);
+      client->DispatchProtocolMessage(agent_host, message);
+      return true;
+    }
+
+    gfx::Rect rect = shell->GetRestoredBounds();
+    base::Value dict(base::Value::Type::DICTIONARY);
+    dict.SetKey(kIdParam, base::Value(id->GetInt()));
+
+    base::Value bounds(base::Value::Type::DICTIONARY);
+    bounds.SetKey("left", base::Value(rect.x()));
+    bounds.SetKey("right", base::Value(rect.right()));
+    bounds.SetKey("top", base::Value(rect.y()));
+    bounds.SetKey("bottom", base::Value(rect.bottom()));
+
+    base::Value result(base::Value::Type::DICTIONARY);
+    result.SetKey("bounds", std::move(bounds));
+    result.SetKey("windowId", base::Value(kDefaultWindowId));
+    dict.SetKey(kResultParam, std::move(result));
+
+    base::JSONWriter::Write(dict, &message);
+
+    client->DispatchProtocolMessage(agent_host, message);
+    return true;
+  } else if (method == kBrowserSetWindowBounds) {
+    std::string message;
+    base::Value* window_id =
+        params ? params->FindKeyOfType("windowId", base::Value::Type::INTEGER)
+               : nullptr;
+    if (!window_id || window_id->GetInt() != kDefaultWindowId) {
+      BuildError(id->GetInt(), "Invalid windowId", &message);
+      client->DispatchProtocolMessage(agent_host, message);
+      return true;
+    }
+    base::Value* bounds =
+        params->FindKeyOfType("bounds", base::Value::Type::DICTIONARY);
+    if (!bounds) {
+      BuildError(id->GetInt(), "Invalid bounds", &message);
+      client->DispatchProtocolMessage(agent_host, message);
+      return true;
+    }
+    base::Value* left =
+        bounds->FindKeyOfType("left", base::Value::Type::INTEGER);
+    base::Value* right =
+        bounds->FindKeyOfType("right", base::Value::Type::INTEGER);
+    base::Value* top = bounds->FindKeyOfType("top", base::Value::Type::INTEGER);
+    base::Value* bottom =
+        bounds->FindKeyOfType("bottom", base::Value::Type::INTEGER);
+    if (!left || !right || !top || !bottom) {
+      BuildError(id->GetInt(), "Invalid bounds", &message);
+      client->DispatchProtocolMessage(agent_host, message);
+      return true;
+    }
+
+    gfx::Rect rect(left->GetInt(), top->GetInt(),
+                   right->GetInt() - left->GetInt(),
+                   bottom->GetInt() - top->GetInt());
+    shell->SetBounds(rect);
+
+    base::Value dict(base::Value::Type::DICTIONARY);
+    dict.SetKey(kIdParam, base::Value(id->GetInt()));
+
+    base::Value result(base::Value::Type::DICTIONARY);
+    dict.SetKey(kResultParam, std::move(result));
+
+    base::JSONWriter::Write(dict, &message);
+
+    client->DispatchProtocolMessage(agent_host, message);
+    return true;
+  }
+  return false;
 }
 
 }  // namespace content

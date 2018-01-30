@@ -171,6 +171,9 @@ class Shell : public WebContentsDelegate,
 
   static gfx::Size GetShellDefaultSize();
 
+  gfx::Rect GetRestoredBounds() const;
+  void SetBounds(const gfx::Rect& bounds);
+
  private:
   enum UIControl {
     BACK_BUTTON,

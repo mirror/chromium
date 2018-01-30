@@ -44,6 +44,8 @@
 #include "media/media_features.h"
 #include "third_party/WebKit/public/web/WebPresentationReceiverFlags.h"
 
+#include "ui/views/widget/widget.h"
+
 namespace content {
 
 const int kDefaultTestWindowWidthDip = 800;
@@ -542,6 +544,14 @@ void Shell::TitleWasSet(NavigationEntry* entry) {
 void Shell::OnDevToolsWebContentsDestroyed() {
   devtools_observer_.reset();
   devtools_frontend_ = nullptr;
+}
+
+gfx::Rect Shell::GetRestoredBounds() const {
+  return window_widget_->GetRestoredBounds();
+}
+
+void Shell::SetBounds(const gfx::Rect& bounds) {
+  window_widget_->SetBounds(bounds);
 }
 
 }  // namespace content
