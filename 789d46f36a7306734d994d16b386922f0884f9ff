@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f4df07d8_54acaf8b",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-30T02:07:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57524484_f5de093f",
+      "revId": "789d46f36a7306734d994d16b386922f0884f9ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99231a99_3c36bb8e",
         "filename": "content/renderer/render_frame_proxy.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d7fad925_5f74994b",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-30T02:07:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99231a99_3c36bb8e",
+      "revId": "789d46f36a7306734d994d16b386922f0884f9ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "275249a1_d87dbb53",
         "filename": "content/renderer/render_frame_proxy.cc",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-30T01:51:24Z",
       "side": 1,
       "message": "Is local_frame_rect really in physical pixels? Even without zoom-for-dsf?",
+      "revId": "789d46f36a7306734d994d16b386922f0884f9ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75d5d812_3db7db99",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-30T02:07:11Z",
+      "side": 1,
+      "message": "The name is bad. Renamed to local_frame_size.",
+      "parentUuid": "275249a1_d87dbb53",
       "revId": "789d46f36a7306734d994d16b386922f0884f9ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
