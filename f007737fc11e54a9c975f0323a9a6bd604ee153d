@@ -16,6 +16,24 @@
       "revId": "f007737fc11e54a9c975f0323a9a6bd604ee153d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bad18ef4_47803107",
+        "filename": "content/browser/tracing/arc_tracing_agent_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2018-01-30T20:44:38Z",
+      "side": 1,
+      "message": "I think this is a very good question :) We should probably define The ARC agent in chrome/browser/chromeos and add it there too.\n\n+shunhsingou@ (creator of ArcTracingAgent), +oysteine (reviewer and Tracing expert): Is ther a special reason why ARC code is in content, not chrome? Should I move it?",
+      "parentUuid": "0383a330_fd67990c",
+      "revId": "f007737fc11e54a9c975f0323a9a6bd604ee153d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
