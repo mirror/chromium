@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f72489a6_951a38bf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-30T02:10:52Z",
+      "side": 1,
+      "message": "I guess this comment is obsolete now, so I removed it \u003d)",
+      "revId": "d2d5f26ba0fc2d2022f011112b6b98677720c9b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ab668b6_4c4792c7",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/RootScrollerTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1518,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-30T02:10:52Z",
+      "side": 1,
+      "message": "Would it be possible to do this with a navigation? Detach() isn\u0027t meant to be used on the main frame.",
+      "revId": "d2d5f26ba0fc2d2022f011112b6b98677720c9b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
