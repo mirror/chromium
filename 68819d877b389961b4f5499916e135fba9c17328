@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "6c64bf64_5032c46e",
+        "filename": "third_party/WebKit/Source/core/html/canvas/HTMLCanvasElement.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2018-01-30T21:45:40Z",
+      "side": 1,
+      "message": "In cases when we\u0027re not inside a requestAnimationFrame callback, FinalizeFrame() gets called before recorded draw commands get flushed. So I am not sure this is a great hook. In some case (e.g. drawing in response to a pointer event, network event, etc.) it may unlock images prematurely.  I think the hook you put in Canvas2DLayerBridge makes more sense and is a reasonable catch all.  I would recommend removing this bit from this CL.  We could try adding it later, in isolation, to see how the perf test react to it.",
+      "revId": "68819d877b389961b4f5499916e135fba9c17328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04933fec_69fd40ac",
         "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
         "patchSetId": 7
