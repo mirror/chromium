@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77cfe150_96fe31fa",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewChromium.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-30T20:19:44Z",
+      "side": 0,
+      "message": "this was coded this way specifically to make enableSlowWholeDocumentDraw be a no-op after initialization. I\u0027d like to keep that..",
+      "revId": "3a4ee0f0aeef1c6e03d8772a52efbf9684310826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
