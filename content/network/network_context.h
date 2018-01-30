@@ -19,6 +19,7 @@
 #include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/bindings/strong_binding_set.h"
 #include "services/network/cookie_manager.h"
+#include "services/network/public/cpp/keepalive_statistics_recorder.h"
 #include "services/network/public/interfaces/network_service.mojom.h"
 #include "services/network/public/interfaces/udp_socket.mojom.h"
 #include "services/network/public/interfaces/url_loader_factory.mojom.h"
@@ -81,6 +82,10 @@ class CONTENT_EXPORT NetworkContext : public network::mojom::NetworkContext {
   net::URLRequestContext* url_request_context() { return url_request_context_; }
 
   NetworkServiceImpl* network_service() { return network_service_; }
+
+  network::KeepaliveStatisticsRecorder* keepalive_statistics_recorder() {
+    return &keepalive_statistics_recorder_;
+  }
 
   // These are called by individual url loaders as they are being created and
   // destroyed.
@@ -155,6 +160,8 @@ class CONTENT_EXPORT NetworkContext : public network::mojom::NetworkContext {
   // net::URLRequests held by URLLoaders have to be gone when
   // net::URLRequestContext (held by NetworkContext) is destroyed.
   std::set<URLLoader*> url_loaders_;
+
+  network::KeepaliveStatisticsRecorder keepalive_statistics_recorder_;
 
   network::mojom::NetworkContextParamsPtr params_;
 
