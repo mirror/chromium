@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "base/debug/stack_trace.h"
 #include "base/memory/ptr_util.h"
 #include "base/optional.h"
 #include "base/strings/string_util.h"
@@ -426,6 +427,8 @@ NavigationRequest::~NavigationRequest() {
 }
 
 void NavigationRequest::BeginNavigation() {
+  base::debug::StackTrace().Print();
+
   DCHECK(!loader_);
   DCHECK(state_ == NOT_STARTED || state_ == WAITING_FOR_RENDERER_RESPONSE);
   TRACE_EVENT_ASYNC_STEP_INTO0("navigation", "NavigationRequest", this,
@@ -1159,6 +1162,11 @@ void NavigationRequest::OnWillProcessResponseChecksComplete(
     // DownloadManager, and cancel the navigation.
     if (is_download_ &&
         base::FeatureList::IsEnabled(network::features::kNetworkService)) {
+      if (common_params_.should_squelch_downloads) {
+        OnRequestFailed(false, net::ERR_ABORTED, base::nullopt);
+        return;
+      }
+
       // TODO(arthursonzogni): Pass the real ResourceRequest. For the moment
       // only these 4 parameters will be used, but it may evolve quickly.
       auto resource_request = std::make_unique<network::ResourceRequest>();

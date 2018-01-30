@@ -551,6 +551,7 @@ void RenderViewTest::Reload(const GURL& url) {
       base::Optional<SourceLocation>(),
       CSPDisposition::CHECK /* should_check_main_world_csp */,
       false /* started_from_context_menu */, false /* has_user_gesture */,
+      false /* should_squelch_downloads */,
       base::nullopt /* suggested_filename */);
   RenderViewImpl* impl = static_cast<RenderViewImpl*>(view_);
   TestRenderFrame* frame =
@@ -694,6 +695,7 @@ void RenderViewTest::GoToOffset(int offset,
       base::Optional<SourceLocation>(),
       CSPDisposition::CHECK /* should_check_main_world_csp */,
       false /* started_from_context_menu */, false /* has_user_gesture */,
+      false /* should_squelch_downloads */,
       base::nullopt /* suggested_filename */);
   RequestNavigationParams request_params;
   request_params.page_state = state;
