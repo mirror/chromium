@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d495bfb_b0b02be8",
+        "filename": "content/browser/renderer_host/browser_compositor_view_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-30T23:17:04Z",
+      "side": 1,
+      "message": "This is a security problem, I think. We need to make sure that every navigation gets a new surface.",
+      "revId": "6f94882220c77fa7937fa4b00d515921aa785e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
