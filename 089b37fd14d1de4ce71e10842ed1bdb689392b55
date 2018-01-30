@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0c791735_03ba1e22",
+        "filename": "base/task_scheduler/task_tracker.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-30T20:24:29Z",
+      "side": 1,
+      "message": "Right, I know that\u0027s how you intend for it to read. The commas just make it explicit. Otherwise \"in a lock safe manner\" can apply to \"if one is available\" rather than to \"calls\"",
+      "parentUuid": "22ea1b94_245309d6",
+      "revId": "089b37fd14d1de4ce71e10842ed1bdb689392b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "999a7084_fc7adb55",
         "filename": "base/task_scheduler/task_tracker.h",
         "patchSetId": 8
