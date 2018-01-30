@@ -1,0 +1,5 @@
+CONSOLE MESSAGE: line 13: 1) true
+CONSOLE MESSAGE: line 15: 2) false
+CONSOLE MESSAGE: line 17: 3) true
+CONSOLE MESSAGE: line 19: 4) false
+

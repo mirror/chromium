@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<script>
+if (window.testRunner) {
+  testRunner.dumpAsText();
+  console.log("1: " + document.hasFocus());
+  testRunner.setWindowIsKey(false);
+  console.log("2: " + document.hasFocus());
+  testRunner.setWindowIsKey(true);
+  console.log("3: " + document.hasFocus());
+  testRunner.setWindowIsKey(false);
+  console.log("4: " + document.hasFocus());
+}
+</script>

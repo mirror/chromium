@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<iframe id="frame" srcdoc="
+  <!DOCTYPE html>
+  <input id='input' />
+"></iframe>
+<script>
+if (window.internals) {
+  testRunner.dumpAsText();
+  const frame = document.getElementById("frame");
+  frame.addEventListener("load", () => {
+    const input = frame.contentDocument.getElementById("input");
+    input.focus();
+    console.log("1) " + frame.contentDocument.hasFocus());
+    frame.contentWindow.internals.setFocused(false);
+    console.log("2) " + frame.contentDocument.hasFocus());
+    frame.contentWindow.internals.setFocused(true);
+    console.log("3) " + frame.contentDocument.hasFocus());
+    frame.contentWindow.internals.setFocused(false);
+    console.log("4) " + frame.contentDocument.hasFocus());
+  });
+}
+</script>
