@@ -61,6 +61,12 @@ class SocketWrapperImpl : public UDPSocket::SocketWrapper {
       const net::NetworkTrafficAnnotationTag& traffic_annotation) override {
     return socket_.SendTo(buf, buf_len, dest_addr, callback);
   }
+  int JoinGroup(const net::IPAddress& group_address) override {
+    return socket_.JoinGroup(group_address);
+  }
+  int LeaveGroup(const net::IPAddress& group_address) override {
+    return socket_.LeaveGroup(group_address);
+  }
   int Write(
       net::IOBuffer* buf,
       int buf_len,
@@ -76,6 +82,19 @@ class SocketWrapperImpl : public UDPSocket::SocketWrapper {
   }
   int GetLocalAddress(net::IPEndPoint* address) const override {
     return socket_.GetLocalAddress(address);
+  }
+
+  int ConfigureOptions(mojom::UDPSocketOptionsPtr options) override {
+    int result = net::OK;
+    if (options->allow_address_reuse)
+      result = socket_.AllowAddressReuse();
+    if (result == net::OK && options->multicast_interface != 0)
+      result = socket_.SetMulticastInterface(options->multicast_interface);
+    if (result == net::OK && !options->multicast_loopback_mode)
+      result = socket_.SetMulticastInterface(options->multicast_interface);
+    if (result == net::OK && options->multicast_time_to_live != 1)
+      result = socket_.SetMulticastTimeToLive(options->multicast_time_to_live);
+    return result;
   }
 
  private:
@@ -112,13 +131,17 @@ void UDPSocket::set_connection_error_handler(base::OnceClosure handler) {
   binding_.set_connection_error_handler(std::move(handler));
 }
 
-void UDPSocket::Open(net::AddressFamily address_family, OpenCallback callback) {
+void UDPSocket::Open(net::AddressFamily address_family,
+                     mojom::UDPSocketOptionsPtr options,
+                     OpenCallback callback) {
   if (is_opened_) {
     std::move(callback).Run(net::ERR_UNEXPECTED);
     return;
   }
   int result = wrapped_socket_->Open(address_family);
   is_opened_ = (result == net::OK);
+  if (is_opened_ && options)
+    result = wrapped_socket_->ConfigureOptions(std::move(options));
   std::move(callback).Run(result);
 }
 
@@ -185,6 +208,26 @@ void UDPSocket::SetReceiveBufferSize(uint32_t size,
   }
   int net_result = wrapped_socket_->SetReceiveBufferSize(
       base::saturated_cast<int32_t>(size));
+  std::move(callback).Run(net_result);
+}
+
+void UDPSocket::JoinGroup(const net::IPAddress& group_address,
+                          JoinGroupCallback callback) {
+  if (!IsConnectedOrBound()) {
+    std::move(callback).Run(net::ERR_UNEXPECTED);
+    return;
+  }
+  int net_result = wrapped_socket_->JoinGroup(group_address);
+  std::move(callback).Run(net_result);
+}
+
+void UDPSocket::LeaveGroup(const net::IPAddress& group_address,
+                           LeaveGroupCallback callback) {
+  if (!IsConnectedOrBound()) {
+    std::move(callback).Run(net::ERR_UNEXPECTED);
+    return;
+  }
+  int net_result = wrapped_socket_->LeaveGroup(group_address);
   std::move(callback).Run(net_result);
 }
 
