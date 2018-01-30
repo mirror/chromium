@@ -417,7 +417,8 @@ WebInputEventResult PointerEventManager::DispatchTouchPointerEvent(
             : nullptr);
 
     result =
-        SendTouchPointerEvent(pointer_event_target.target_node, pointer_event);
+        SendTouchPointerEvent(pointer_event_target.target_node, pointer_event,
+                              web_pointer_event.scroll_capable);
 
     // If a pointerdown has been canceled, queue the unique id to allow
     // suppressing mouse events from gesture events. For mouse events
@@ -437,7 +438,8 @@ WebInputEventResult PointerEventManager::DispatchTouchPointerEvent(
 
 WebInputEventResult PointerEventManager::SendTouchPointerEvent(
     EventTarget* target,
-    PointerEvent* pointer_event) {
+    PointerEvent* pointer_event,
+    bool scroll_capable) {
   if (scroll_capable_pointers_canceled_)
     return WebInputEventResult::kNotHandled;
 
@@ -455,11 +457,15 @@ WebInputEventResult PointerEventManager::SendTouchPointerEvent(
       pointer_event->type() == EventTypeNames::pointercancel) {
     ReleasePointerCapture(pointer_event->pointerId());
 
-    // Sending the leave/out events and lostpointercapture because the next
-    // touch event will have a different id.
-    ProcessCaptureAndPositionOfPointerEvent(pointer_event, nullptr);
+    // If the pointer is scroll capable it implies that pointerup also means
+    // leaving the screen and we should send bounday events as well.
+    if (scroll_capable) {
+      // Sending the leave/out events and lostpointercapture because the next
+      // touch event will have a different id.
+      ProcessCaptureAndPositionOfPointerEvent(pointer_event, nullptr);
 
-    RemovePointer(pointer_event);
+      RemovePointer(pointer_event);
+    }
   }
 
   return result;
