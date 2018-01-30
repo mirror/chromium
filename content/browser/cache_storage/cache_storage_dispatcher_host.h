@@ -17,7 +17,10 @@
 #include "content/browser/bad_message.h"
 #include "content/browser/cache_storage/cache_storage.h"
 #include "content/browser/cache_storage/cache_storage_index.h"
+#include "content/public/browser/browser_associated_interface.h"
 #include "content/public/browser/browser_message_filter.h"
+#include "mojo/public/cpp/bindings/associated_binding_set.h"
+#include "mojo/public/cpp/bindings/strong_associated_binding_set.h"
 
 namespace url {
 class Origin;
@@ -30,12 +33,17 @@ class CacheStorageContextImpl;
 // Handles Cache Storage related messages sent to the browser process from
 // child processes. One host instance exists per child process. All
 // messages are processed on the IO thread.
-class CONTENT_EXPORT CacheStorageDispatcherHost : public BrowserMessageFilter {
+class CONTENT_EXPORT CacheStorageDispatcherHost
+    : public BrowserMessageFilter,
+      public blink::mojom::CacheStorage {
  public:
   CacheStorageDispatcherHost();
 
   // Runs on UI thread.
   void Init(CacheStorageContextImpl* context);
+
+  // Binds Mojo request to this instance, should be called on IO thread.
+  void AddBinding(blink::mojom::CacheStorageRequest request);
 
   // BrowserMessageFilter implementation
   void OnDestruct() const override;
@@ -57,26 +65,47 @@ class CONTENT_EXPORT CacheStorageDispatcherHost : public BrowserMessageFilter {
   void CreateCacheListener(CacheStorageContextImpl* context);
 
   // The message receiver functions for the CacheStorage API:
-  void OnCacheStorageHas(int thread_id,
-                         int request_id,
-                         const url::Origin& origin,
-                         const base::string16& cache_name);
   void OnCacheStorageOpen(int thread_id,
                           int request_id,
                           const url::Origin& origin,
                           const base::string16& cache_name);
-  void OnCacheStorageDelete(int thread_id,
-                            int request_id,
-                            const url::Origin& origin,
-                            const base::string16& cache_name);
-  void OnCacheStorageKeys(int thread_id,
-                          int request_id,
-                          const url::Origin& origin);
   void OnCacheStorageMatch(int thread_id,
                            int request_id,
                            const url::Origin& origin,
                            const ServiceWorkerFetchRequest& request,
                            const CacheStorageCacheQueryParams& match_params);
+
+  // Mojo CacheStorage Interface implementation:
+  void Keys(const url::Origin& origin,
+            blink::mojom::CacheStorage::KeysCallback callback) override;
+
+  void Delete(const url::Origin& origin,
+              const base::string16& cache_name,
+              blink::mojom::CacheStorage::DeleteCallback callback) override;
+  void Has(const url::Origin& origin,
+           const base::string16& cache_name,
+           blink::mojom::CacheStorage::HasCallback callback) override;
+  void Match(const url::Origin& origin,
+             const content::ServiceWorkerFetchRequest& request,
+             const content::CacheStorageCacheQueryParams& match_params,
+             blink::mojom::CacheStorage::MatchCallback callback) override;
+
+  // Callbacks used by Mojo implementation:
+  void OnCacheStorageKeysCallback(
+      blink::mojom::CacheStorage::KeysCallback callback,
+      const CacheStorageIndex& cache_index);
+  void OnCacheStorageDeleteCallback(
+      blink::mojom::CacheStorage::DeleteCallback callback,
+      blink::mojom::CacheStorageError error);
+  void OnCacheStorageHasCallback(
+      blink::mojom::CacheStorage::HasCallback callback,
+      bool has_cache,
+      blink::mojom::CacheStorageError error);
+  void OnCacheStorageMatchCallback(
+      blink::mojom::CacheStorage::MatchCallback callback,
+      blink::mojom::CacheStorageError error,
+      std::unique_ptr<ServiceWorkerResponse> response,
+      std::unique_ptr<storage::BlobDataHandle> blob_data_handle);
 
   // The message receiver functions for the Cache API:
   void OnCacheMatch(int thread_id,
@@ -97,27 +126,10 @@ class CONTENT_EXPORT CacheStorageDispatcherHost : public BrowserMessageFilter {
   void OnBlobDataHandled(const std::string& uuid);
 
   // CacheStorageManager callbacks
-  void OnCacheStorageHasCallback(int thread_id,
-                                 int request_id,
-                                 bool has_cache,
-                                 blink::mojom::CacheStorageError error);
   void OnCacheStorageOpenCallback(int thread_id,
                                   int request_id,
                                   CacheStorageCacheHandle cache_handle,
                                   blink::mojom::CacheStorageError error);
-  void OnCacheStorageDeleteCallback(int thread_id,
-                                    int request_id,
-                                    bool deleted,
-                                    blink::mojom::CacheStorageError error);
-  void OnCacheStorageKeysCallback(int thread_id,
-                                  int request_id,
-                                  const CacheStorageIndex& cache_index);
-  void OnCacheStorageMatchCallback(
-      int thread_id,
-      int request_id,
-      blink::mojom::CacheStorageError error,
-      std::unique_ptr<ServiceWorkerResponse> response,
-      std::unique_ptr<storage::BlobDataHandle> blob_data_handle);
 
   // Cache callbacks.
   void OnCacheMatchCallback(
@@ -176,6 +188,8 @@ class CONTENT_EXPORT CacheStorageDispatcherHost : public BrowserMessageFilter {
   UUIDToBlobDataHandleList blob_handle_store_;
 
   scoped_refptr<CacheStorageContextImpl> context_;
+  // TODO(lucmult): When a binding is removed from this set?
+  mojo::BindingSet<blink::mojom::CacheStorage> bindings_;
 
   DISALLOW_COPY_AND_ASSIGN(CacheStorageDispatcherHost);
 };

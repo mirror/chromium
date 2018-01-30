@@ -1772,10 +1772,10 @@ void RenderProcessHostImpl::CreateMessageFilters() {
   AddFilter(new TextInputClientMessageFilter());
 #endif
 
-  scoped_refptr<CacheStorageDispatcherHost> cache_storage_filter =
-      new CacheStorageDispatcherHost();
-  cache_storage_filter->Init(storage_partition_impl_->GetCacheStorageContext());
-  AddFilter(cache_storage_filter.get());
+  cache_storage_dispatcher_host_ = new CacheStorageDispatcherHost();
+  cache_storage_dispatcher_host_->Init(
+      storage_partition_impl_->GetCacheStorageContext());
+  AddFilter(cache_storage_dispatcher_host_.get());
 
   scoped_refptr<ServiceWorkerDispatcherHost> service_worker_filter =
       new ServiceWorkerDispatcherHost(GetID(), resource_context);
@@ -1805,6 +1805,18 @@ void RenderProcessHostImpl::CreateMessageFilters() {
       new SynchronousCompositorBrowserFilter(GetID());
   AddFilter(synchronous_compositor_filter_.get());
 #endif
+}
+
+void RenderProcessHostImpl::BindCacheStorage(
+    blink::mojom::CacheStorageRequest request) {
+  // Sends the binding to IO thread, because Cache Storage handles Mojo IPC on
+  // IO thread entirely.
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&CacheStorageDispatcherHost::AddBinding,
+                     cache_storage_dispatcher_host_.get(), std::move(request)));
 }
 
 void RenderProcessHostImpl::RegisterMojoInterfaces() {
