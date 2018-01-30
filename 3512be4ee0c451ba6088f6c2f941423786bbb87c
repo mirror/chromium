@@ -52,6 +52,24 @@
       "revId": "3512be4ee0c451ba6088f6c2f941423786bbb87c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "65ad492f_94c2c8bc",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_physical_fragment.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-30T04:40:16Z",
+      "side": 1,
+      "message": "Yes, that\u0027s what it means. Probably deserves some documentation. Or a completely different, and better, solution. :)\n\nAnyway, I failed to spot that your new flag depends on NGPhysicalFragment::DumpType being set, so we can actually be sure to \"have content\" at this point. Is the flag really necessary then? Couldn\u0027t we always dump this, if DumpType is set?",
+      "parentUuid": "2cf2af0c_a9a77962",
+      "revId": "3512be4ee0c451ba6088f6c2f941423786bbb87c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
