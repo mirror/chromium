@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0f693a7e_b3acf9a8",
+        "filename": "mojo/common/big_string.typemap",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-30T16:19:07Z",
+      "side": 1,
+      "message": "If you typemap BigString to StringPiece, you can\u0027t use BigString with lazy serialization. We can do this if/when we implement support for separate typemapping for storage vs call interfaces.",
+      "parentUuid": "b3778748_c64eafa2",
+      "range": {
+        "startLine": 14,
+        "startChar": 18,
+        "endLine": 14,
+        "endChar": 59
+      },
+      "revId": "8adbb727c6263802885b638aa9c575d9b9ae0ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02d5ab8e_3c7a32b9",
         "filename": "mojo/common/big_string_struct_traits.cc",
         "patchSetId": 1
