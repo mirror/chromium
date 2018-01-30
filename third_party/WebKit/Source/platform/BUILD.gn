@@ -1316,6 +1316,8 @@ jumbo_component("platform") {
     "mojo/FetchAPIRequestStructTraits.cpp",
     "mojo/InterfaceInvalidator.cpp",
     "mojo/InterfaceInvalidator.h",
+    #"mojo/FetchAPIRequestStructTraits.cpp",
+    "mojo/ServiceWorkerStructTraits.cpp",
     "mojo/MojoHelper.h",
     "mojo/NotificationStructTraits.cpp",
     "mojo/NotificationStructTraits.h",
