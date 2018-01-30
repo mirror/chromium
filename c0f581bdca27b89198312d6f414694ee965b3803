@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eaf8ed57_01fde0e5",
+        "filename": "chrome/browser/policy/configuration_policy_handler_list_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2018-01-30T08:13:05Z",
+      "side": 1,
+      "message": "Just wondering isn\u0027t !defined(OS_ANDROID) here enough?",
+      "range": {
+        "startLine": 749,
+        "startChar": 0,
+        "endLine": 749,
+        "endChar": 66
+      },
+      "revId": "c0f581bdca27b89198312d6f414694ee965b3803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f6e5e8a_78916075",
+        "filename": "chrome/test/data/policy/policy_test_cases.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 2299,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2018-01-30T08:13:05Z",
+      "side": 1,
+      "message": "A tab char sneaked in here.",
+      "range": {
+        "startLine": 2299,
+        "startChar": 0,
+        "endLine": 2299,
+        "endChar": 1
+      },
+      "revId": "c0f581bdca27b89198312d6f414694ee965b3803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7b9aed7_8d64b12c",
+        "filename": "chrome/test/data/policy/policy_test_cases.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 2309,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2018-01-30T08:13:05Z",
+      "side": 1,
+      "message": "A tab char sneaked in here.",
+      "range": {
+        "startLine": 2309,
+        "startChar": 0,
+        "endLine": 2309,
+        "endChar": 1
+      },
+      "revId": "c0f581bdca27b89198312d6f414694ee965b3803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da1abf57_cf7341ea",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 11020,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2018-01-30T08:13:05Z",
+      "side": 1,
+      "message": "Didn\u0027t 65 branch already. I think you should go for 66 here.",
+      "range": {
+        "startLine": 11020,
+        "startChar": 34,
+        "endLine": 11020,
+        "endChar": 35
+      },
+      "revId": "c0f581bdca27b89198312d6f414694ee965b3803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "452a51fc_853d717b",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 11026,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2018-01-30T08:13:05Z",
+      "side": 1,
+      "message": "can you move the description as last thing in the policy - this way all other props are close to each other and easy to read.",
+      "range": {
+        "startLine": 11026,
+        "startChar": 6,
+        "endLine": 11026,
+        "endChar": 12
+      },
+      "revId": "c0f581bdca27b89198312d6f414694ee965b3803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee680d9c_445b6ed9",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 11029,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2018-01-30T08:13:05Z",
+      "side": 1,
+      "message": "I know this looks ugly but leave the whole paragraph be one line.",
+      "range": {
+        "startLine": 11028,
+        "startChar": 81,
+        "endLine": 11029,
+        "endChar": 57
+      },
+      "revId": "c0f581bdca27b89198312d6f414694ee965b3803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0561fc8e_c6991859",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 11031,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2018-01-30T08:13:05Z",
+      "side": 1,
+      "message": "Refer to the symbolic names here rather then the values.",
+      "range": {
+        "startLine": 11031,
+        "startChar": 66,
+        "endLine": 11031,
+        "endChar": 67
+      },
+      "revId": "c0f581bdca27b89198312d6f414694ee965b3803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7c8f754_df263c87",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 11033,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2018-01-30T08:13:05Z",
+      "side": 1,
+      "message": "ditto.",
+      "range": {
+        "startLine": 11033,
+        "startChar": 59,
+        "endLine": 11033,
+        "endChar": 60
+      },
+      "revId": "c0f581bdca27b89198312d6f414694ee965b3803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fb685f4_06524f75",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 11036,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2018-01-30T08:13:05Z",
+      "side": 1,
+      "message": "put this in a ph tag to prevent it from getting brutalized^H localized into something incomprehensible during translation. See various examples around this file.",
+      "range": {
+        "startLine": 11036,
+        "startChar": 25,
+        "endLine": 11036,
+        "endChar": 50
+      },
+      "revId": "c0f581bdca27b89198312d6f414694ee965b3803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24e21c18_21ed854b",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 11062,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2018-01-30T08:13:05Z",
+      "side": 1,
+      "message": "6",
+      "range": {
+        "startLine": 11062,
+        "startChar": 34,
+        "endLine": 11062,
+        "endChar": 35
+      },
+      "revId": "c0f581bdca27b89198312d6f414694ee965b3803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6497ca5b_5801fed3",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 11067,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2018-01-30T08:13:05Z",
+      "side": 1,
+      "message": "Just curious 12 weeks as in 2 releases of Chrome?",
+      "range": {
+        "startLine": 11067,
+        "startChar": 19,
+        "endLine": 11067,
+        "endChar": 23
+      },
+      "revId": "c0f581bdca27b89198312d6f414694ee965b3803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99b979b5_ad1413f6",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 11075,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2018-01-30T08:13:05Z",
+      "side": 1,
+      "message": "same as above put this in ph tag.",
+      "range": {
+        "startLine": 11075,
+        "startChar": 13,
+        "endLine": 11075,
+        "endChar": 32
+      },
+      "revId": "c0f581bdca27b89198312d6f414694ee965b3803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
