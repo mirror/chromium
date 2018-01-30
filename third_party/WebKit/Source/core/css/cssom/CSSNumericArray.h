@@ -36,6 +36,12 @@ class CORE_EXPORT CSSNumericArray final : public ScriptWrappable {
     return nullptr;
   }
 
+  CSSNumericValue* componentAtIndex(unsigned index) {
+    if (index < values_.size())
+      return values_[index].Get();
+    return nullptr;
+  }
+
   const CSSNumericValueVector& Values() const { return values_; }
 
  private:
