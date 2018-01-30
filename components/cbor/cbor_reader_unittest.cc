@@ -383,6 +383,48 @@ TEST(CBORReaderTest, TestReadMapWithArray) {
   }
 }
 
+TEST(CBORReaderTest, TestReadCanonicalMap) {
+  static const std::vector<uint8_t> kCanonicalMapTestCase{
+      // clang-format off
+      0xa2,  // map of 2 pairs
+        0x41, 'k',
+        0x41, 'v',
+
+        0x43, 'f', 'o', 'o',
+        0x43, 'b', 'a', 'r',
+      // clang-format on
+  };
+
+  CBORReader::DecoderError error_code;
+  base::Optional<CBORValue> canonical_cbor =
+      CBORReader::Read(kCanonicalMapTestCase, &error_code,
+                       CBORReader::kCBORMaxDepth, CBORReader::Mode::CANONICAL);
+  ASSERT_TRUE(canonical_cbor.has_value());
+  ASSERT_EQ(canonical_cbor->type(), CBORValue::Type::MAP);
+  ASSERT_EQ(canonical_cbor->GetMap().size(), 2u);
+
+  const CBORValue key_k(std::vector<uint8_t>{'k'});
+  ASSERT_EQ(canonical_cbor->GetMap().count(key_k), 1u);
+  ASSERT_EQ(canonical_cbor->GetMap().find(key_k)->second.type(),
+            CBORValue::Type::BYTE_STRING);
+  EXPECT_EQ(canonical_cbor->GetMap().find(key_k)->second.GetBytestring(),
+            std::vector<uint8_t>{'v'});
+
+  const CBORValue key_foo(std::vector<uint8_t>{'f', 'o', 'o'});
+  ASSERT_EQ(canonical_cbor->GetMap().count(key_foo), 1u);
+  ASSERT_EQ(canonical_cbor->GetMap().find(key_foo)->second.type(),
+            CBORValue::Type::BYTE_STRING);
+  static const std::vector<uint8_t> kBarBytes{'b', 'a', 'r'};
+  EXPECT_EQ(canonical_cbor->GetMap().find(key_foo)->second.GetBytestring(),
+            kBarBytes);
+
+  base::Optional<CBORValue> ctap_cbor =
+      CBORReader::Read(kCanonicalMapTestCase, &error_code,
+                       CBORReader::kCBORMaxDepth, CBORReader::Mode::CTAP);
+  ASSERT_FALSE(ctap_cbor.has_value());
+  EXPECT_EQ(error_code, CBORReader::DecoderError::INCORRECT_MAP_KEY_TYPE);
+}
+
 TEST(CBORReaderTest, TestReadNestedMap) {
   static const std::vector<uint8_t> kNestedMapTestCase = {
       // clang-format off

@@ -56,15 +56,21 @@ const char kOutOfRangeIntegerValue[] =
 }  // namespace
 
 CBORReader::CBORReader(base::span<const uint8_t>::const_iterator it,
-                       const base::span<const uint8_t>::const_iterator end)
-    : it_(it), end_(end), error_code_(DecoderError::CBOR_NO_ERROR) {}
+                       const base::span<const uint8_t>::const_iterator end,
+                       CBORReader::Mode mode)
+    : it_(it),
+      end_(end),
+      error_code_(DecoderError::CBOR_NO_ERROR),
+      mode_(mode) {}
+
 CBORReader::~CBORReader() {}
 
 // static
 base::Optional<CBORValue> CBORReader::Read(base::span<uint8_t const> data,
                                            DecoderError* error_code_out,
-                                           int max_nesting_level) {
-  CBORReader reader(data.cbegin(), data.cend());
+                                           int max_nesting_level,
+                                           CBORReader::Mode mode) {
+  CBORReader reader(data.cbegin(), data.cend(), mode);
   base::Optional<CBORValue> decoded_cbor = reader.DecodeCBOR(max_nesting_level);
 
   if (decoded_cbor)
@@ -241,15 +247,35 @@ base::Optional<CBORValue> CBORReader::ReadCBORMap(uint64_t length,
     if (!key.has_value() || !value.has_value())
       return base::nullopt;
 
-    // Only CBOR maps with integer or string type keys are allowed.
-    if (key.value().type() != CBORValue::Type::STRING &&
-        key.value().type() != CBORValue::Type::UNSIGNED) {
-      error_code_ = DecoderError::INCORRECT_MAP_KEY_TYPE;
-      return base::nullopt;
+    switch (key.value().type()) {
+      // Only CBOR maps with integer or string type keys are currently
+      // supported.
+      case CBORValue::Type::STRING:
+      case CBORValue::Type::UNSIGNED:
+        break;
+      case CBORValue::Type::BYTE_STRING:
+        // CTAP CBOR doesn't allow bytestring type keys.
+        if (mode_ == CBORReader::Mode::CTAP) {
+          error_code_ = DecoderError::INCORRECT_MAP_KEY_TYPE;
+          return base::nullopt;
+        }
+        break;
+      default:
+        error_code_ = DecoderError::INCORRECT_MAP_KEY_TYPE;
+        return base::nullopt;
     }
-    if (!CheckDuplicateKey(key.value(), &cbor_map) ||
-        !CheckOutOfOrderKey(key.value(), &cbor_map)) {
-      return base::nullopt;
+
+    switch (mode_) {
+      case CBORReader::Mode::CTAP:
+        if (!CheckDuplicateKey(key.value(), &cbor_map) ||
+            !CheckOutOfCTAPOrderKey(key.value(), &cbor_map)) {
+          return base::nullopt;
+        }
+        break;
+      case CBORReader::Mode::CANONICAL:
+        // TODO(803774) Check that |key| is larger or equal to previous |key| in
+        // Canonical CBOR key sorting rule.
+        break;
     }
 
     cbor_map.insert_or_assign(std::move(key.value()), std::move(value.value()));
@@ -297,8 +323,8 @@ bool CBORReader::HasValidUTF8Format(const std::string& string_data) {
   return true;
 }
 
-bool CBORReader::CheckOutOfOrderKey(const CBORValue& new_key,
-                                    CBORValue::MapValue* map) {
+bool CBORReader::CheckOutOfCTAPOrderKey(const CBORValue& new_key,
+                                        CBORValue::MapValue* map) {
   auto comparator = map->key_comp();
   if (!map->empty() && comparator(new_key, map->rbegin()->first)) {
     error_code_ = DecoderError::OUT_OF_ORDER_KEY;
