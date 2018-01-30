@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2df9907_2b40ac6c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/scene_layer/TabListSceneLayer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-30T18:57:20Z",
+      "side": 1,
+      "message": "This check is obsolete, but we can remove it in a follow-up.",
+      "range": {
+        "startLine": 80,
+        "startChar": 16,
+        "endLine": 80,
+        "endChar": 45
+      },
+      "revId": "8814039e3840d4b7a0c6a616922262ea516a3206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baa5bda0_6eb268e0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1493,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-30T18:57:20Z",
+      "side": 1,
+      "message": "nit: doc",
+      "range": {
+        "startLine": 1493,
+        "startChar": 4,
+        "endLine": 1493,
+        "endChar": 49
+      },
+      "revId": "8814039e3840d4b7a0c6a616922262ea516a3206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64ac29d0_4019ffce",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2276,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-30T18:57:20Z",
+      "side": 1,
+      "message": "nit: doc",
+      "range": {
+        "startLine": 2276,
+        "startChar": 3,
+        "endLine": 2276,
+        "endChar": 60
+      },
+      "revId": "8814039e3840d4b7a0c6a616922262ea516a3206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
