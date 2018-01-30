@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "ff1ba67d_b6d25da6",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-30T06:16:51Z",
+      "side": 1,
+      "message": "Why line 739-742? ReadFileToStringWithMaxSize() should not be called on UI thread? Besides, |contents| seems not be used?",
+      "revId": "b36fe521ac1eafbe9940fa23569642d9f7816c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8cef59c0_c574597b",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
         "patchSetId": 4
@@ -43,6 +60,91 @@
         "endLine": 745,
         "endChar": 69
       },
+      "revId": "b36fe521ac1eafbe9940fa23569642d9f7816c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90bb4af1_72ede492",
+        "filename": "chromeos/printing/ppd_line_reader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-30T06:16:51Z",
+      "side": 1,
+      "message": "nit: constexpr",
+      "revId": "b36fe521ac1eafbe9940fa23569642d9f7816c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9842789c_c4784f0e",
+        "filename": "chromeos/printing/ppd_line_reader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-30T06:16:51Z",
+      "side": 1,
+      "message": "// static",
+      "revId": "b36fe521ac1eafbe9940fa23569642d9f7816c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c9aad4a_a29b6a33",
+        "filename": "chromeos/printing/ppd_line_reader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-30T06:16:51Z",
+      "side": 1,
+      "message": "Since you used 255 in several places, better to extract it to a constexpr.\nAlso, could you add a brief description for each tests?",
+      "revId": "b36fe521ac1eafbe9940fa23569642d9f7816c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d58bc057_05ec79d1",
+        "filename": "chromeos/printing/ppd_line_reader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-30T06:16:51Z",
+      "side": 1,
+      "message": "nit: const",
+      "revId": "b36fe521ac1eafbe9940fa23569642d9f7816c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "922062d5_22333541",
+        "filename": "chromeos/printing/ppd_line_reader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-30T06:16:51Z",
+      "side": 1,
+      "message": "Looks like the following three tests do the same thing. I think it may be only necessary to keep one.",
       "revId": "b36fe521ac1eafbe9940fa23569642d9f7816c15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
