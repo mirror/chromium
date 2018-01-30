@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "740460d5_37620c59",
+        "filename": "extensions/common/manifest_handlers/permissions_parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2018-01-30T03:52:11Z",
+      "side": 1,
+      "message": "nit: remove",
+      "revId": "3b04b1351eac4ac80cf637fee9e881e24803ce4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
