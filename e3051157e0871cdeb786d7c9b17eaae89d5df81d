@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "67c9ad72_c83db01b",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2458,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-30T20:52:43Z",
+      "side": 1,
+      "message": "Uh tough question :).\n\nFirst, we get here only by calling WebViewFrameWidget::ScrollFocusedEditableElementIntoView(). So definitely a WebLocalFrameImpl exists at the time. But this does not prove MainFrameImpl() is not nullptr since the frame could be provisional.\n\nNow the concern could be whether it is possible to get here on a RenderFrameImpl which is provisional. This IPC is input related coming from FrameInputHandler.\n\nAs I understand the two call sites are RenderWidgetHostViewAura and WebContentsViewAndroid and both use:\nGetFocusedFrame()-\u003eGetFrameInputHandler()-\u003eScrollFocusedEditableNodeIntoRect().\n\nI don\u0027t think a provisional frame can be returned as focused but am not sure.\n\nAlso, a newer way to trigger this method is to call RWHVAura::SetInsets() which would indirectly call ScrollFocusedEditableNodeIntoRect() though the WasResized IPC. For that as well I can guarantee we don\u0027t hit MainFrameImpl().\n\nSo all in all I think we should guard against MainFrameImpl() -- and perhaps leave a TODO to fix the issue later.\n\nalexmos@: Would you say the hypothesis here makes sense or basically, is it currently plausible to hit MainFrameImpl() \u003d\u003d nullptr?",
+      "parentUuid": "3bb1c549_1c87cb65",
+      "range": {
+        "startLine": 2458,
+        "startChar": 7,
+        "endLine": 2458,
+        "endChar": 20
+      },
+      "revId": "e3051157e0871cdeb786d7c9b17eaae89d5df81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2b19a46_dc6e6b22",
         "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.h",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "e3051157e0871cdeb786d7c9b17eaae89d5df81d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7d60d39_85bf06c9",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-30T20:52:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b2b19a46_dc6e6b22",
+      "range": {
+        "startLine": 381,
+        "startChar": 7,
+        "endLine": 381,
+        "endChar": 46
+      },
+      "revId": "e3051157e0871cdeb786d7c9b17eaae89d5df81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "66add0f7_5a0136b6",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-30T20:52:43Z",
+      "side": 1,
+      "message": "Thanks. This one actually does not belong here (WebFrameWidgetImpl only) and the declaration was left by mistake. Thanks!",
+      "parentUuid": "f4138df3_d97a3e4c",
+      "range": {
+        "startLine": 388,
+        "startChar": 7,
+        "endLine": 388,
+        "endChar": 47
+      },
+      "revId": "e3051157e0871cdeb786d7c9b17eaae89d5df81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c87c60f3_5b5ef667",
         "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.h",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "e3051157e0871cdeb786d7c9b17eaae89d5df81d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4d64b72_bc1228b1",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-30T20:52:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c87c60f3_5b5ef667",
+      "range": {
+        "startLine": 487,
+        "startChar": 7,
+        "endLine": 487,
+        "endChar": 41
+      },
+      "revId": "e3051157e0871cdeb786d7c9b17eaae89d5df81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "cce8c1b9_f017c429",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1177,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-30T20:52:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0acb550_2de2d365",
+      "range": {
+        "startLine": 1177,
+        "startChar": 10,
+        "endLine": 1177,
+        "endChar": 29
+      },
+      "revId": "e3051157e0871cdeb786d7c9b17eaae89d5df81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61a9c00f_c010284d",
         "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
         "patchSetId": 6
@@ -128,6 +248,30 @@
       "writtenOn": "2018-01-25T17:37:47Z",
       "side": 1,
       "message": "Why the union? Shouldn\u0027t the carret already be bounded by the element bounds?",
+      "range": {
+        "startLine": 1180,
+        "startChar": 25,
+        "endLine": 1180,
+        "endChar": 34
+      },
+      "revId": "e3051157e0871cdeb786d7c9b17eaae89d5df81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d825790_f73e92e5",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1180,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-30T20:52:43Z",
+      "side": 1,
+      "message": "Not necessarily. Bigger caret could exist although it would not visually exceed the element bounds. Example:\n\n\u003cinput style\u003d\"font-size: 30px; height: 10px;\"/\u003e\n\nwould lead to a caret bound: x, y 1x33.\n\nNow I think for \u003cinput\u003e and \u003ctextarea\u003e the larger caret is not painted outside the bounds of the element, but for \u003cdiv contenteditable\u003d\"true\"\u003e it is possible.\n\nAll in all I don\u0027t think it would be a big deal to ignore caret bounds altogether (I don\u0027t see a legitimate reason for having huge font-size or something). So whatever you suggest :).",
+      "parentUuid": "61a9c00f_c010284d",
       "range": {
         "startLine": 1180,
         "startChar": 25,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "e37cf48d_1a33379b",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1192,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-30T20:52:43Z",
+      "side": 1,
+      "message": "\u003e This is hard to follow, it looks like you\u0027re just making sure maximal_rect doesn\u0027t spill outside the frame rect?\n\nYes exactly. Basically I want to make sure the rectangle is visible. The actual logic for main frame case uses VisualViewport but I don\u0027t think I can use that here -- for one thing we do not have the PageScaleFactor() correctly setup and can\u0027t or shouldn\u0027t decide on the zoom value from an OOPIF since it only happens in the root (I actually do not understand visual viewport for OOPIFs). So instead I am trying to makes sure the rect I am scrolling into view is moderately sized and definitely makes the caret visible (inside its own frame). Since we usually scroll into view in response to touch/tap then the caret would be guaranteed to be visible at the end.\n\n\u003e \n\u003e IntRect frame_rect \u003d IntRect(IntPoint(), frame_view-\u003eSize());\n\u003e maximal_rect.Intersect(frame_rect);\n\nWhat about this:\n\u003cinput style\u003d\"width: 40px; padding-left: 5000px;\"\u003e\nInside an \u003ciframe src\u003d\"oopif.com\" style\u003d\"width: 400px\"\u003e\u003c/iframe\u003e.\n\nI see (by logging inside the code here that) the element and caret bounds are way off and the intersection is empty. But the actual input fits inside the frame after scrolling.",
+      "parentUuid": "6c11c7a7_919c5c55",
+      "range": {
+        "startLine": 1182,
+        "startChar": 2,
+        "endLine": 1192,
+        "endChar": 3
+      },
+      "revId": "e3051157e0871cdeb786d7c9b17eaae89d5df81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "489f62e3_ab10843b",
         "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
         "patchSetId": 6
@@ -183,6 +351,30 @@
       "revId": "e3051157e0871cdeb786d7c9b17eaae89d5df81d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07c7980e_c02ba9e2",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1193,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-30T20:52:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "489f62e3_ab10843b",
+      "range": {
+        "startLine": 1193,
+        "startChar": 2,
+        "endLine": 1193,
+        "endChar": 16
+      },
+      "revId": "e3051157e0871cdeb786d7c9b17eaae89d5df81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "c08b64ad_137c5855",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1202,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-30T20:52:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0ae8c958_e84ec64c",
+      "range": {
+        "startLine": 1202,
+        "startChar": 33,
+        "endLine": 1202,
+        "endChar": 45
+      },
+      "revId": "e3051157e0871cdeb786d7c9b17eaae89d5df81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7785e85c_06dacdf6",
         "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
         "patchSetId": 6
@@ -220,6 +436,30 @@
       "writtenOn": "2018-01-25T17:37:47Z",
       "side": 1,
       "message": "Why are you using proportions here (i.e. dividing by the maximal_rect size)? Couldn\u0027t you just store the caret_rect with location relative to maximal_rect (unscaled) and size as-is?",
+      "range": {
+        "startLine": 1204,
+        "startChar": 51,
+        "endLine": 1204,
+        "endChar": 52
+      },
+      "revId": "e3051157e0871cdeb786d7c9b17eaae89d5df81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b9c1cf1_e3ec2b7a",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1204,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-30T20:52:43Z",
+      "side": 1,
+      "message": "\u003e Why are you using proportions here (i.e. dividing by the maximal_rect size)?\n\nThanks for asking this! Yes I am normalizing the caret bounds to the dimensions of the maximal rect (which is the rect we would have at the end) so that we can reconstruct the caret bounds (with good precision).\n\n\u003e Couldn\u0027t you just store the caret_rect with location relative to maximal_rect (unscaled) and size as-is?\n\nI was not quite sure how \"transforms\" would work in this case. Essentially lines of code like this:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/exported/WebRemoteFrameImpl.cpp?rcl\u003dd372280b432c74f278faeddfcd5ec59f65fe17cf\u0026l\u003d357\n\nseems to be taking into account some transforms before converting the coordinates. Would all these transforms be just translates? I was not sure if they could contain scale and rotations in which case the offset alone would not do the job.",
+      "parentUuid": "7785e85c_06dacdf6",
       "range": {
         "startLine": 1204,
         "startChar": 51,
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "357b3e62_c4efb3c9",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-30T20:52:43Z",
+      "side": 1,
+      "message": "No. Thanks for the suggestion.",
+      "parentUuid": "3370ea2c_20b3600c",
+      "range": {
+        "startLine": 753,
+        "startChar": 7,
+        "endLine": 753,
+        "endChar": 69
+      },
+      "revId": "e3051157e0871cdeb786d7c9b17eaae89d5df81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a626ab3e_79b6836e",
         "filename": "third_party/WebKit/public/platform/WebScrollIntoViewParams.h",
         "patchSetId": 6
@@ -266,6 +530,30 @@
       "writtenOn": "2018-01-25T17:37:47Z",
       "side": 1,
       "message": "This comment should be for zoom_into_final_rect and should say:\n\n\"If true, once the root frame scrolls into view it will zoom into the final scroll rect\"\n\nI\u0027m a bit confused as to the \"final scroll rect\", I\u0027m assuming it has something to do with relative_rect_of_interest? You should clarify in comments.",
+      "range": {
+        "startLine": 74,
+        "startChar": 5,
+        "endLine": 75,
+        "endChar": 31
+      },
+      "revId": "e3051157e0871cdeb786d7c9b17eaae89d5df81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17e90a31_2c8bedbd",
+        "filename": "third_party/WebKit/public/platform/WebScrollIntoViewParams.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-30T20:52:43Z",
+      "side": 1,
+      "message": "Done. By final I meant what we eventually get at the last call to LayoutBox::ScrollRectToVisibleRecrusive. I removed the word as it was ambiguous.",
+      "parentUuid": "a626ab3e_79b6836e",
       "range": {
         "startLine": 74,
         "startChar": 5,
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "4895a940_f36cd3ab",
+        "filename": "third_party/WebKit/public/platform/WebScrollIntoViewParams.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-30T20:52:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ea409978_69d2e805",
+      "range": {
+        "startLine": 77,
+        "startChar": 15,
+        "endLine": 77,
+        "endChar": 40
+      },
+      "revId": "e3051157e0871cdeb786d7c9b17eaae89d5df81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8843a483_6c0f3d86",
         "filename": "third_party/WebKit/public/web/WebFrameWidget.h",
         "patchSetId": 6
@@ -312,6 +624,30 @@
       "writtenOn": "2018-01-25T17:37:47Z",
       "side": 1,
       "message": "nit: editable element",
+      "range": {
+        "startLine": 139,
+        "startChar": 17,
+        "endLine": 139,
+        "endChar": 24
+      },
+      "revId": "e3051157e0871cdeb786d7c9b17eaae89d5df81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31c956ce_b61a5a9a",
+        "filename": "third_party/WebKit/public/web/WebFrameWidget.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-30T20:52:43Z",
+      "side": 1,
+      "message": "Done. Thanks.",
+      "parentUuid": "8843a483_6c0f3d86",
       "range": {
         "startLine": 139,
         "startChar": 17,
