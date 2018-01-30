@@ -7,6 +7,7 @@
 
 #include <memory>
 
+#include "base/component_export.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "net/ssl/ssl_config.h"
@@ -22,7 +23,8 @@ namespace network {
 
 class ProxyResolvingClientSocket;
 
-class ProxyResolvingClientSocketFactory {
+class COMPONENT_EXPORT(SERVICES_NETWORK_PUBLIC_CPP)
+    ProxyResolvingClientSocketFactory {
  public:
   // Constructs a new ProxyResolvingClientSocket. |socket_factory| is the
   // ClientSocketFactory that will be used by the underlying HttpNetworkSession.
