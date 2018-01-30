@@ -226,10 +226,15 @@ class BASE_EXPORT HistogramBase {
   virtual bool ValidateHistogramContents(bool crash_if_invalid,
                                          int corrupted_count) const;
 
+  // Produce a representation of this histogram, to be serialized. Caller may
+  // specify via |verbosity_level| whether some fields should be ommitted. This
+  // is implemented with the help of GetParameters and GetCountAndBucketData;
+  // overwrite them to customize the output.
+  std::unique_ptr<base::DictionaryValue> ToDictionaryValue(
+      JSONVerbosityLevel verbosity_level = JSON_VERBOSITY_LEVEL_FULL) const;
+
   // Produce a JSON representation of the histogram with |verbosity_level| as
-  // the serialization verbosity. This is implemented with the help of
-  // GetParameters and GetCountAndBucketData; overwrite them to customize the
-  // output.
+  // the serialization verbosity. See ToDictionaryValue().
   void WriteJSON(std::string* output, JSONVerbosityLevel verbosity_level) const;
 
  protected:
