@@ -41,6 +41,7 @@ bool IsPlayStoreAppSearchEnabled() {
 }
 
 bool IsTouchableAppContextMenuEnabled() {
+  return true;
   return switches::IsTouchableAppContextMenuEnabled() ||
          base::FeatureList::IsEnabled(kEnableTouchableAppContextMenu);
 }
