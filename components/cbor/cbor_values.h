@@ -107,6 +107,7 @@ class CBOR_EXPORT CBORValue {
 
   explicit CBORValue(const BinaryValue& in_bytes);
   explicit CBORValue(BinaryValue&& in_bytes) noexcept;
+  static CBORValue BytestringFromString(base::StringPiece in_string) noexcept;
 
   explicit CBORValue(const char* in_string);
   explicit CBORValue(std::string&& in_string) noexcept;
@@ -152,6 +153,7 @@ class CBOR_EXPORT CBORValue {
   const int64_t& GetUnsigned() const;
   const int64_t& GetNegative() const;
   const BinaryValue& GetBytestring() const;
+  base::StringPiece GetBytestringAsString() const;
   // Returned string may contain NUL characters.
   const std::string& GetString() const;
   const ArrayValue& GetArray() const;
