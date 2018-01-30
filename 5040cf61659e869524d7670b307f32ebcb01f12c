@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a018199_6c4fc2e7",
+        "filename": "content/browser/devtools/devtools_session.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-30T00:20:55Z",
+      "side": 1,
+      "message": "Per the mojom, are there illegal combinations of arguments?\n\nFor example: is it legal to not erase anything if this is a command response?\nIs it legal to erase a waiting for response entry but have a null state?\nIs it legal to have a non-null state but not erase anything?\n\nI\u0027m thinking maybe this should be split into a protocol event vs command response method in the mojom.",
+      "revId": "5040cf61659e869524d7670b307f32ebcb01f12c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
