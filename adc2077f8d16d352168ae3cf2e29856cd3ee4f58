@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "691fc809_6c63ed34",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-30T02:19:15Z",
+      "side": 1,
+      "message": "Thanks. Done.",
+      "parentUuid": "09906bb6_65db84db",
+      "range": {
+        "startLine": 274,
+        "startChar": 2,
+        "endLine": 275,
+        "endChar": 3
+      },
+      "revId": "adc2077f8d16d352168ae3cf2e29856cd3ee4f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de73a389_f2b97ef9",
         "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "dbacc3a8_7ffc7893",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-30T02:19:15Z",
+      "side": 1,
+      "message": "Good point. Fixed.",
+      "parentUuid": "de73a389_f2b97ef9",
+      "range": {
+        "startLine": 290,
+        "startChar": 16,
+        "endLine": 290,
+        "endChar": 25
+      },
+      "revId": "adc2077f8d16d352168ae3cf2e29856cd3ee4f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bccaf916_5a42057a",
         "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-30T01:11:50Z",
       "side": 1,
       "message": "out of curiosity did you measure that this actually gives a performance gain?\nYou have 3 atomic operations here, two of which are barriered, which sounds very close to the cost a mutex (the mutex cost really adds the PLT jumps to get into pthread_mutex_lock/unlock).",
+      "range": {
+        "startLine": 286,
+        "startChar": 2,
+        "endLine": 291,
+        "endChar": 20
+      },
+      "revId": "adc2077f8d16d352168ae3cf2e29856cd3ee4f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe8ecf3b_5473768e",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-30T02:19:15Z",
+      "side": 1,
+      "message": "Yeah. It gives me 2+% boost on Octane. The reason is that there are lots of free operations is being run in parallel, so locking a mutex does really block a lot. I also consider investigating impact of moving \u0027insert\u0027 out of the critical section. But I don\u0027t expect that much gain there, as we insert only on recording a sample, and those events are quite rare.",
+      "parentUuid": "bccaf916_5a42057a",
       "range": {
         "startLine": 286,
         "startChar": 2,
