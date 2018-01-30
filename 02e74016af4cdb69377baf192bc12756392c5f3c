@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "93a61100_5c5d6509",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2018-01-30T22:46:32Z",
+      "side": 1,
+      "message": "Done. Let me know what you think of the new layout of the tests.",
+      "parentUuid": "f9106e7e_a5ec63f2",
+      "range": {
+        "startLine": 225,
+        "startChar": 2,
+        "endLine": 225,
+        "endChar": 3
+      },
+      "revId": "02e74016af4cdb69377baf192bc12756392c5f3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c89628cd_31fc4be3",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_view_browsertest.cc",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "357446ea_d1f817c4",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2018-01-30T22:46:32Z",
+      "side": 1,
+      "message": "Done (as part of test refactor)",
+      "parentUuid": "c89628cd_31fc4be3",
+      "range": {
+        "startLine": 256,
+        "startChar": 14,
+        "endLine": 256,
+        "endChar": 36
+      },
+      "revId": "02e74016af4cdb69377baf192bc12756392c5f3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eac956cb_f54c66a7",
         "filename": "components/toolbar/toolbar_field_trial.h",
         "patchSetId": 9
@@ -68,6 +116,30 @@
       "revId": "02e74016af4cdb69377baf192bc12756392c5f3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7a0fd59_3fa8841d",
+        "filename": "components/toolbar/toolbar_field_trial.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2018-01-30T22:46:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eac956cb_f54c66a7",
+      "range": {
+        "startLine": 25,
+        "startChar": 50,
+        "endLine": 25,
+        "endChar": 52
+      },
+      "revId": "02e74016af4cdb69377baf192bc12756392c5f3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
