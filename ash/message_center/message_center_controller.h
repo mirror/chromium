@@ -67,14 +67,20 @@ class ASH_EXPORT MessageCenterController
   // display.
   void SetNotifierSettingsListener(NotifierSettingsListener* listener);
 
+  void UpdateNotificationAppId(const std::string& package_name,
+                               const std::string& notification_id);
+
  private:
+  // Callback for GetAppId.
+  void OnGotAppId(const std::string& notification_id,
+                  const std::string& app_id);
+
   // Callback for GetNotifierList.
   void OnGotNotifierList(std::vector<mojom::NotifierUiDataPtr> ui_data);
 
   FullscreenNotificationBlocker fullscreen_notification_blocker_;
   InactiveUserNotificationBlocker inactive_user_notification_blocker_;
   SessionStateNotificationBlocker session_state_notification_blocker_;
-
   NotifierSettingsListener* notifier_id_ = nullptr;
 
   mojo::Binding<mojom::AshMessageCenterController> binding_;

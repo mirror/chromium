@@ -48,6 +48,8 @@ class ChromeAshMessageCenterClient : public NotificationPlatformBridge,
   void SetNotifierEnabled(const message_center::NotifierId& notifier_id,
                           bool enabled) override;
   void GetNotifierList(GetNotifierListCallback callback) override;
+  void GetAppId(const std::string& package_name,
+                GetAppIdCallback callback) override;
 
   // NotifierController::Observer:
   void OnIconImageUpdated(const message_center::NotifierId& notifier_id,

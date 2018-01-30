@@ -73,6 +73,7 @@ class ASH_EXPORT ShelfController : public message_center::MessageCenterObserver,
   void OnNotificationAdded(const std::string& notification_id) override;
   void OnNotificationRemoved(const std::string& notification_id,
                              bool by_user) override;
+  void OnNotificationUpdated(const std::string& notification_id);
 
   void FlushForTesting();
 
