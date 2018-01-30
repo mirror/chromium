@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b278f193_fa567c45",
+        "filename": "third_party/WebKit/Source/core/css/CSSSelector.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1058,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-30T00:29:06Z",
+      "side": 1,
+      "message": "Doesn\u0027t this method need to look into selector parameters. E.g. :not(:matches(...))?",
+      "revId": "edfc7c4daf6e2e8b83823250159d86f70f8c3ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c359f6b_028c31bc",
+        "filename": "third_party/WebKit/Source/core/css/CSSSelector.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-30T00:29:06Z",
+      "side": 1,
+      "message": "I can\u0027t see that this method is used in this patch set.",
+      "revId": "edfc7c4daf6e2e8b83823250159d86f70f8c3ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee49779d_63786877",
+        "filename": "third_party/WebKit/Source/core/css/CSSSelector.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-30T00:29:06Z",
+      "side": 1,
+      "message": "Why not just use one setter with a parameter?",
+      "revId": "edfc7c4daf6e2e8b83823250159d86f70f8c3ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a88a86a_375d4b31",
+        "filename": "third_party/WebKit/Source/core/css/CSSSelector.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-30T00:29:06Z",
+      "side": 1,
+      "message": "One setter with a parameter?",
+      "revId": "edfc7c4daf6e2e8b83823250159d86f70f8c3ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "113efa65_7116203a",
+        "filename": "third_party/WebKit/Source/core/css/CSSSelectorList.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-30T00:29:06Z",
+      "side": 1,
+      "message": "This method is used multiple times in time-critical code. I don\u0027t think we should linearly walk all selectors only to find that we should\u0027ve started from the first item in the common case. We only need the original for CSSOM output, right? How about putting the expanded selector first instead?",
+      "revId": "edfc7c4daf6e2e8b83823250159d86f70f8c3ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7bbfabd_d5012df8",
+        "filename": "third_party/WebKit/Source/core/css/CSSSelectorList.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-30T00:29:06Z",
+      "side": 1,
+      "message": "Since this is a special purpose method and not a general concatenation of two selector lists, we should use a more descriptive name.",
+      "revId": "edfc7c4daf6e2e8b83823250159d86f70f8c3ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a134620a_98dda127",
+        "filename": "third_party/WebKit/Source/core/css/CSSSelectorList.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-30T00:29:06Z",
+      "side": 1,
+      "message": "ExpandFirstMatchesPseudo()?",
+      "revId": "edfc7c4daf6e2e8b83823250159d86f70f8c3ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88c2a421_058860b8",
+        "filename": "third_party/WebKit/Source/core/css/CSSSelectorList.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-30T00:29:06Z",
+      "side": 1,
+      "message": "TransformedList() sounds like an accessor. E.g. TransformForMatches()?",
+      "revId": "edfc7c4daf6e2e8b83823250159d86f70f8c3ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0470bda3_ed3b2d5f",
+        "filename": "third_party/WebKit/Source/core/css/CSSSelectorList.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-30T00:29:06Z",
+      "side": 1,
+      "message": "I\u0027d make this test check for both last in original or transformed and then make a method FirstForCSSOM() traversing up until last in original or transformed and return last+1 if the flag was last in transformed. (Given my other comment about putting the transformed selectors first).",
+      "revId": "edfc7c4daf6e2e8b83823250159d86f70f8c3ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8e9d0af_4a9a731d",
+        "filename": "third_party/WebKit/Source/core/css/RuleSetTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-30T00:29:06Z",
+      "side": 1,
+      "message": "Too large for what? Could you write a comment in the test explaining the limitation here?",
+      "revId": "edfc7c4daf6e2e8b83823250159d86f70f8c3ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff36e1b2_e640b013",
+        "filename": "third_party/WebKit/Source/core/css/RuleSetTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-30T00:29:06Z",
+      "side": 1,
+      "message": "Doesn\u0027t this need a block to qualify as a rule for this api?",
+      "revId": "edfc7c4daf6e2e8b83823250159d86f70f8c3ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
