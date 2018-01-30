@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a997588c_d084cf6b",
+        "filename": "ui/base/resource/resource_bundle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-30T02:51:44Z",
+      "side": 1,
+      "message": "Can we not have so may ifdefs? Maybe start with this one and then move 748 into the #else block followed by #ifdef on 761?",
+      "range": {
+        "startLine": 750,
+        "startChar": 0,
+        "endLine": 750,
+        "endChar": 19
+      },
+      "revId": "8a5ab888246ec1afd6d0c5e2032fb9d2dc0b0a9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
