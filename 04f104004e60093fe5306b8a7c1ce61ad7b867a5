@@ -69,6 +69,24 @@
       "revId": "04f104004e60093fe5306b8a7c1ce61ad7b867a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33283572_ddc7b4e5",
+        "filename": "ash/system/user/tray_user.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-30T22:34:46Z",
+      "side": 1,
+      "message": "I see. I\u0027d suggest to change to\n\nbool need_label \u003d session-\u003eIsUserSupervised();",
+      "parentUuid": "32030602_b9e04950",
+      "revId": "04f104004e60093fe5306b8a7c1ce61ad7b867a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
