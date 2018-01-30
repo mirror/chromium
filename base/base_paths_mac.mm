@@ -109,6 +109,13 @@ bool PathProviderMac(int key, base::FilePath* result) {
 #else
       return base::mac::GetUserDirectory(NSDesktopDirectory, result);
 #endif
+    case base::DIR_ASSETS:
+      if (!base::mac::AmIBundled()) {
+        return PathService::Get(base::DIR_MODULE, result);
+      }
+      *result = base::mac::FrameworkBundlePath().Append(
+          FILE_PATH_LITERAL("Resources"));
+      return true;
     case base::DIR_CACHE:
       return base::mac::GetUserDirectory(NSCachesDirectory, result);
     default:

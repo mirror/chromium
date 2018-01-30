@@ -94,19 +94,7 @@ void LazyInitIcuDataFile() {
 #endif  // defined(OS_ANDROID)
 #if !defined(OS_MACOSX)
   FilePath data_path;
-#if defined(OS_WIN)
-  // The data file will be in the same directory as the current module.
-  bool path_ok = PathService::Get(DIR_MODULE, &data_path);
-#elif defined(OS_ANDROID)
-  bool path_ok = PathService::Get(DIR_ANDROID_APP_DATA, &data_path);
-#elif defined(OS_FUCHSIA)
-  bool path_ok = PathService::Get(DIR_FUCHSIA_RESOURCES, &data_path);
-#else
-  // For now, expect the data file to be alongside the executable.
-  // This is sufficient while we work on unit tests, but will eventually
-  // likely live in a data directory.
-  bool path_ok = PathService::Get(DIR_EXE, &data_path);
-#endif
+  bool path_ok = PathService::Get(DIR_ASSETS, &data_path);
   DCHECK(path_ok);
   data_path = data_path.AppendASCII(kIcuDataFileName);
 #else
@@ -223,9 +211,8 @@ bool InitializeICU() {
 
   bool result;
 #if (ICU_UTIL_DATA_IMPL == ICU_UTIL_DATA_SHARED)
-  // We expect to find the ICU data module alongside the current module.
   FilePath data_path;
-  PathService::Get(DIR_MODULE, &data_path);
+  PathService::Get(DIR_ASSETS, &data_path);
   data_path = data_path.AppendASCII(ICU_UTIL_DATA_SHARED_MODULE_NAME);
 
   HMODULE module = LoadLibrary(data_path.value().c_str());
