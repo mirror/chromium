@@ -11,6 +11,7 @@
 #include <string>
 
 #include "base/callback_forward.h"
+#include "base/files/file_path.h"
 #include "base/macros.h"
 #include "chrome/browser/notifications/notification_common.h"
 #include "chrome/browser/notifications/notification_handler.h"
@@ -44,10 +45,20 @@ class NotificationDisplayService : public KeyedService {
   // Returns an instance of the display service for the given |profile|.
   static NotificationDisplayService* GetForProfile(Profile* profile);
 
-  // Returns the NDS for system notifications which aren't tied to a particular
-  // user. Currently only implemented on Chrome OS. TODO(estade): implement
-  // elsewhere as needed.
-  static NotificationDisplayService* GetForSystemNotifications();
+  // Returns the path for a non-user-specific profile. This will be used for
+  // the NDS for system notifications which aren't tied to a particular
+  // user.
+  static base::FilePath GetProfilePathForSystemNotifications();
+
+  // Displays a notification which isn't tied to a particular user. The
+  // notification will be displayed asynchronously if the user-agnostic profile
+  // has not yet been loaded.
+  static void DisplaySystemNotification(
+      const message_center::Notification& notification);
+
+  // Closes a notification which isn't tied to a particular user. If the
+  // user-agnostic profile isn't loaded, do nothing.
+  static void CloseSystemNotification(const std::string& id);
 
   // Displays the |notification| of type |notification_type|. The |metadata|
   // may be provided for certain notification types that require additional

@@ -91,8 +91,7 @@ void ShowErrorNotification(const std::string& service_path,
           GetErrorNotificationVectorIcon(network_type),
           message_center::SystemNotificationWarningLevel::CRITICAL_WARNING);
   notification->set_priority(message_center::SYSTEM_PRIORITY);
-  NotificationDisplayService::GetForSystemNotifications()->Display(
-      NotificationHandler::Type::TRANSIENT, *notification);
+  NotificationDisplayService::DisplaySystemNotification(*notification);
 }
 
 bool ShouldConnectFailedNotificationBeShown(const std::string& error_name,
@@ -288,8 +287,7 @@ void NetworkStateNotifier::UpdateCellularActivating(
           cellular->network_technology() == shill::kNetworkTechnologyLte
               ? IDR_AURA_UBER_TRAY_NETWORK_NOTIFICATION_LTE
               : IDR_AURA_UBER_TRAY_NETWORK_NOTIFICATION_3G);
-  NotificationDisplayService::GetForSystemNotifications()->Display(
-      NotificationHandler::Type::TRANSIENT,
+  NotificationDisplayService::DisplaySystemNotification(
       *message_center::Notification::CreateSystemNotification(
           kNetworkActivateNotificationId,
           l10n_util::GetStringUTF16(IDS_NETWORK_CELLULAR_ACTIVATED_TITLE),
@@ -326,8 +324,7 @@ void NetworkStateNotifier::ShowMobileActivationErrorForGuid(
                    << guid;
     return;
   }
-  NotificationDisplayService::GetForSystemNotifications()->Display(
-      NotificationHandler::Type::TRANSIENT,
+  NotificationDisplayService::DisplaySystemNotification(
       *message_center::Notification::CreateSystemNotification(
           kNetworkActivateNotificationId,
           l10n_util::GetStringUTF16(IDS_NETWORK_ACTIVATION_ERROR_TITLE),
@@ -341,8 +338,8 @@ void NetworkStateNotifier::ShowMobileActivationErrorForGuid(
 }
 
 void NetworkStateNotifier::RemoveConnectNotification() {
-  NotificationDisplayService::GetForSystemNotifications()->Close(
-      NotificationHandler::Type::TRANSIENT, kNetworkConnectNotificationId);
+  NotificationDisplayService::CloseSystemNotification(
+      kNetworkConnectNotificationId);
 }
 
 void NetworkStateNotifier::ConnectErrorPropertiesSucceeded(

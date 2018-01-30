@@ -68,8 +68,8 @@ void LowDiskNotification::LowDiskSpace(uint64_t free_disk_bytes) {
   if (severity != last_notification_severity_ ||
       (severity == HIGH &&
        now - last_notification_time_ > notification_interval_)) {
-    NotificationDisplayService::GetForSystemNotifications()->Display(
-        NotificationHandler::Type::TRANSIENT, *CreateNotification(severity));
+    NotificationDisplayService::DisplaySystemNotification(
+        *CreateNotification(severity));
     last_notification_time_ = now;
     last_notification_severity_ = severity;
   }
