@@ -12,8 +12,10 @@
 #include "base/metrics/field_trial_param_associator.h"
 #include "base/metrics/field_trial_params.h"
 #include "base/strings/stringprintf.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/test/simple_test_tick_clock.h"
 #include "components/viz/test/ordered_simple_task_runner.h"
+#include "platform/scheduler/child/features.h"
 #include "platform/scheduler/renderer/renderer_scheduler_impl.h"
 #include "platform/scheduler/renderer/web_frame_scheduler_impl.h"
 #include "platform/scheduler/test/create_task_queue_manager_for_test.h"
@@ -35,6 +37,7 @@ class WebViewSchedulerImplTest : public ::testing::Test {
   ~WebViewSchedulerImplTest() override = default;
 
   void SetUp() override {
+    feature_list_.Init();
     clock_.Advance(base::TimeDelta::FromMicroseconds(5000));
     mock_task_runner_ =
         base::MakeRefCounted<cc::OrderedSimpleTaskRunner>(&clock_, true);
@@ -81,6 +84,7 @@ class WebViewSchedulerImplTest : public ::testing::Test {
   }
 
   base::SimpleTestTickClock clock_;
+  base::test::ScopedFeatureList feature_list_;
   scoped_refptr<cc::OrderedSimpleTaskRunner> mock_task_runner_;
   std::unique_ptr<RendererSchedulerImpl> scheduler_;
   std::unique_ptr<WebViewSchedulerImpl> web_view_scheduler_;
@@ -489,7 +493,11 @@ TEST_F(WebViewSchedulerImplTest, DeleteThrottledQueue_InTask) {
                                     base::TimeDelta::FromMilliseconds(9990));
 
   mock_task_runner_->RunForPeriod(base::TimeDelta::FromSeconds(100));
-  EXPECT_EQ(90015, run_count);
+  if (base::FeatureList::IsEnabled(kBlinkSchedulerRunTasksAfterFrameDetach)) {
+    EXPECT_EQ(90015, run_count);
+  } else {
+    EXPECT_EQ(10, run_count);
+  }
 }
 
 TEST_F(WebViewSchedulerImplTest, VirtualTimePauseCount_DETERMINISTIC_LOADING) {

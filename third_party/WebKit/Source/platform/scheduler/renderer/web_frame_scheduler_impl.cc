@@ -10,6 +10,7 @@
 #include "platform/runtime_enabled_features.h"
 #include "platform/scheduler/base/real_time_domain.h"
 #include "platform/scheduler/base/virtual_time_domain.h"
+#include "platform/scheduler/child/features.h"
 #include "platform/scheduler/child/web_task_runner_impl.h"
 #include "platform/scheduler/renderer/auto_advancing_virtual_time_domain.h"
 #include "platform/scheduler/renderer/budget_pool.h"
@@ -124,7 +125,13 @@ namespace {
 void CleanUpQueue(MainThreadTaskQueue* queue) {
   if (!queue)
     return;
-  queue->DetachFromRendererScheduler();
+  static bool should_run_tasks_after_frame_detach =
+      base::FeatureList::IsEnabled(kBlinkSchedulerRunTasksAfterFrameDetach);
+  if (should_run_tasks_after_frame_detach) {
+    queue->DetachFromRendererScheduler();
+  } else {
+    queue->ShutdownTaskQueue();
+  }
   queue->SetFrameScheduler(nullptr);
   queue->SetBlameContext(nullptr);
   queue->SetQueuePriority(TaskQueue::QueuePriority::kLowPriority);
