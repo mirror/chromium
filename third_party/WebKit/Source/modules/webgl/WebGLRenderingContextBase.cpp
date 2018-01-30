@@ -818,6 +818,14 @@ scoped_refptr<StaticBitmapImage> WebGLRenderingContextBase::MakeImageSnapshot(
       surface->makeImageSnapshot(), std::move(shared_context_wrapper));
 }
 
+ScriptPromise WebGLRenderingContextBase::setCompatibleXRDevice(
+    ScriptState* script_state,
+    const XRDevice* xr_device) {
+  return ScriptPromise::RejectWithDOMException(
+      script_state,
+      DOMException::Create(kNotSupportedError, "Method not implemented yet"));
+}
+
 namespace {
 
 // Exposed by GL_ANGLE_depth_texture
