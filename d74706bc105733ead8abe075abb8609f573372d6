@@ -1,0 +1,272 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55ada18f_40973249",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/banners/AppBannerManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-30T04:30:54Z",
+      "side": 1,
+      "message": "I think this should just be a null-check (not isEmpty). That way you can call it with null when you don\u0027t want it, rather than \"\" (which is natural for C++, quite unnatural for Java).",
+      "range": {
+        "startLine": 348,
+        "startChar": 13,
+        "endLine": 348,
+        "endChar": 32
+      },
+      "revId": "d74706bc105733ead8abe075abb8609f573372d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99ef1e52_ae5be4d7",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/banners/AppBannerManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-30T04:30:54Z",
+      "side": 1,
+      "message": "I\u0027m not sure why this was split off into a separate test. This reduces the amount of testing that\u0027s going on, because you only check for the appinstalled event in one case, instead of in all four permutations that we had in the old code.\n\nContinuing on...",
+      "revId": "d74706bc105733ead8abe075abb8609f573372d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9444d22f_06f5ba2c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/banners/AppBannerManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-30T04:30:54Z",
+      "side": 1,
+      "message": "... I see that the *reason* you split off the appinstalled check into a separate test is because otherwise you couldn\u0027t handle a custom setupScript here. However .... (continuing below)",
+      "range": {
+        "startLine": 636,
+        "startChar": 12,
+        "endLine": 636,
+        "endChar": 30
+      },
+      "revId": "d74706bc105733ead8abe075abb8609f573372d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "667fb00c_50ffaf98",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/banners/AppBannerManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-30T04:30:54Z",
+      "side": 1,
+      "message": "... why are you adding a custom setup script here. The old code doesn\u0027t call setTimeout(callPrompt) for this test.\n\nSo can you:\n\n1. Remove the setupScript parameter from runWebAppBannerAndCheckInstallEvent,\n2. Remove the setupScript code from this and the next test, and\n3. Move the veryfyAppInstalledEvents setup script code back into runWebAppBannerAndCheckInstallEvent, and\n4. Move the TabTitleObserver for appinstalled back into runWebAppBannerAndCheckInstallEvent, and\n5. Delete the new testAppInstalledEvent?",
+      "revId": "d74706bc105733ead8abe075abb8609f573372d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b33a2412_d0d79e40",
+        "filename": "chrome/browser/banners/app_banner_manager_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-30T04:30:54Z",
+      "side": 1,
+      "message": "You seem to have removed this parameter, making it always PAGE_TRANSITION_LINK.\n\nBut the default value was PAGE_TRANSITION_TYPED. So this changes behaviour. Is that intended?",
+      "range": {
+        "startLine": 242,
+        "startChar": 53,
+        "endLine": 242,
+        "endChar": 73
+      },
+      "revId": "d74706bc105733ead8abe075abb8609f573372d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd3d98bc_7167c51f",
+        "filename": "chrome/browser/banners/app_banner_manager_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-30T04:30:54Z",
+      "side": 1,
+      "message": "I think style guide says this should be std::string(). (Not \"\".)",
+      "range": {
+        "startLine": 324,
+        "startChar": 35,
+        "endLine": 324,
+        "endChar": 37
+      },
+      "revId": "d74706bc105733ead8abe075abb8609f573372d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa59983e_419e73db",
+        "filename": "chrome/test/data/banners/main.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-30T04:30:54Z",
+      "side": 1,
+      "message": "Note: A lot of the comments here also apply to the \"old\" code (so I know you aren\u0027t introducing these issues here). However, I think now is a good time to address them, and they\u0027re all very minor.",
+      "revId": "d74706bc105733ead8abe075abb8609f573372d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25581991_5c859c3e",
+        "filename": "chrome/test/data/banners/main.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-30T04:30:54Z",
+      "side": 1,
+      "message": "Why 1? Can this be null?",
+      "revId": "d74706bc105733ead8abe075abb8609f573372d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfebf1ee_48939364",
+        "filename": "chrome/test/data/banners/main.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-30T04:30:54Z",
+      "side": 1,
+      "message": "Keep the comment \"// These blanks will get filled in when each event comes through.\"\n\nAlso I know I wrote this, but this is a bit brittle. Can you define \u0027listener\u0027 and \u0027attr\u0027 in constants at the top, then here, write:\n\n    var gotEventsFrom \u003d [\u0027_\u0027.repeat(LISTENER.length),\n                         \u0027_\u0027.repeat(ATTR.length)]",
+      "revId": "d74706bc105733ead8abe075abb8609f573372d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61a1bd7f_57395f63",
+        "filename": "chrome/test/data/banners/main.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-30T04:30:54Z",
+      "side": 1,
+      "message": "This function could take the name of the event as a parameter (\u0027appinstalled\u0027 or \u0027beforeinstallprompt\u0027) and avoid duplicating most of the functionality.",
+      "revId": "d74706bc105733ead8abe075abb8609f573372d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7040d0c6_2703bcbe",
+        "filename": "chrome/test/data/banners/main.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-30T04:30:54Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this. It isn\u0027t used externally, only by the code in addPromptListener. It can be inlined below.",
+      "revId": "d74706bc105733ead8abe075abb8609f573372d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05d2583e_79729bfb",
+        "filename": "chrome/test/data/banners/main.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-30T04:30:54Z",
+      "side": 1,
+      "message": "Should this null-check (or 1-check???) stashedEvent to produce a better error than \"Cannot read property \u0027prompt\u0027 of null\"?",
+      "revId": "d74706bc105733ead8abe075abb8609f573372d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c8722c6_417ccc94",
+        "filename": "chrome/test/data/banners/main.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-30T04:30:54Z",
+      "side": 1,
+      "message": "setTimeout(() \u003d\u003e e.prompt(), 0);\n\n(No need to pass \"e\" as a parameter when it\u0027s available from the closure on the lambda.)",
+      "range": {
+        "startLine": 68,
+        "startChar": 19,
+        "endLine": 68,
+        "endChar": 29
+      },
+      "revId": "d74706bc105733ead8abe075abb8609f573372d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aee1b2b_89d68997",
+        "filename": "chrome/test/data/banners/main.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-01-30T04:30:54Z",
+      "side": 1,
+      "message": "e.prompt()",
+      "revId": "d74706bc105733ead8abe075abb8609f573372d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
