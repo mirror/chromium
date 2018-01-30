@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b83daf1d_0896533e",
+        "filename": "content/browser/loader/merkle_integrity_source_stream.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2018-01-30T08:27:59Z",
+      "side": 1,
+      "message": "Add ns {constexpr char kMiSha256Header[] \u003d \"mi-sha256\";} here.",
+      "revId": "1164218b576f4eb76c9aaf13c6a91aeae1eb7619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9be92a07_81be25e3",
+        "filename": "content/browser/loader/merkle_integrity_source_stream.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2018-01-30T08:27:59Z",
+      "side": 1,
+      "message": "use sizeof(kMiSha256Header) instead of 10",
+      "revId": "1164218b576f4eb76c9aaf13c6a91aeae1eb7619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
