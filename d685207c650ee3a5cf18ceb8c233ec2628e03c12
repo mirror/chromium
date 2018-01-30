@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18613696_c90aef85",
+        "filename": "net/network_error_logging/network_error_logging_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1242160
+      },
+      "writtenOn": "2018-01-30T14:34:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94d6f9b7_5249c550",
+      "revId": "d685207c650ee3a5cf18ceb8c233ec2628e03c12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
