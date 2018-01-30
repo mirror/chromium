@@ -7,6 +7,7 @@
 #include "core/css/CSSCustomPropertyDeclaration.h"
 #include "core/css/CSSVariableData.h"
 #include "core/css/ComputedStyleCSSValueMapping.h"
+#include "core/css/cssom/StyleValueFactory.h"
 #include "core/dom/Document.h"
 #include "core/dom/PseudoElement.h"
 #include "core/style/ComputedStyle.h"
@@ -92,6 +93,11 @@ void ComputedStylePropertyMap::ForEachProperty(
       }
     }
   }
+}
+
+CSSStyleValueVector ComputedStylePropertyMap::ToStyleValues(
+    const CSSValue& value) const {
+  return StyleValueFactory::CssValueToStyleValueVector(value, StyledNode());
 }
 
 }  // namespace blink

@@ -80,7 +80,7 @@ CSSStyleValueVector StylePropertyMapReadOnly::getAll(
   if (!value)
     return CSSStyleValueVector();
 
-  return StyleValueFactory::CssValueToStyleValueVector(property_id, *value);
+  return ToStyleValues(*value);
 }
 
 bool StylePropertyMapReadOnly::has(const String& property_name,
@@ -127,6 +127,11 @@ StylePropertyMapReadOnly::StartIteration(ScriptState*, ExceptionState&) {
     return ComparePropertyNames(a.first, b.first);
   });
   return new StylePropertyMapIterationSource(result);
+}
+
+CSSStyleValueVector StylePropertyMapReadOnly::ToStyleValues(
+    const CSSValue& value) const {
+  return StyleValueFactory::CssValueToStyleValueVector(value);
 }
 
 }  // namespace blink

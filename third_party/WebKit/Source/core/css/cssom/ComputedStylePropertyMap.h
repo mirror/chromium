@@ -42,6 +42,8 @@ class CORE_EXPORT ComputedStylePropertyMap : public StylePropertyMapReadOnly {
   const CSSValue* GetCustomProperty(AtomicString) override;
   void ForEachProperty(const IterationCallback&) override;
 
+  CSSStyleValueVector ToStyleValues(const CSSValue&) const final;
+
  private:
   // TODO: Pseudo-element support requires reintroducing Element.pseudo(...).
   // See
