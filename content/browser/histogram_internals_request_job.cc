@@ -48,7 +48,7 @@ std::string HistogramInternalsRequestJob::GenerateHTML(const GURL& url) {
   data.append("<!DOCTYPE html>\n<html>\n<head>\n");
   data.append(
       "<meta http-equiv=\"Content-Security-Policy\" "
-      "content=\"object-src 'none'; script-src 'none'\">");
+      "content=\"object-src 'none'\">");
   data.append("<title>");
   data.append(net::EscapeForHTML(unescaped_title));
   data.append("</title>\n");
@@ -57,6 +57,26 @@ std::string HistogramInternalsRequestJob::GenerateHTML(const GURL& url) {
   // Display any stats for which we sent off requests the last time.
   data.append("<p>Stats accumulated from browser startup to previous ");
   data.append("page load; reload to get stats as of this page load.</p>\n");
+
+  // A simple interactive form that allows the user to filter by histogram name.
+  // The main purpose of this form is to make this feature discoverable.
+  data.append(
+      "<form><p>Filter (substring of histogram name): <input id=\"filter\" /> "
+      "<input type=\"submit\" onclick=\"return applyFilter()\" "
+      "value=\"Submit\" /></p></form>\n");
+
+  // TODO(mgiuca): This has escaping issues. DO NOT SUBMIT.
+  data.append("<script type=\"text/javascript\">\n");
+  data.append("  document.querySelector('#filter').value = '");
+  data.append(unescaped_query);
+  data.append("';\n");
+  data.append("  function applyFilter(e) {\n");
+  data.append("    document.location = encodeURIComponent(\n");
+  data.append("        document.querySelector('#filter').value);\n");
+  data.append("    return false;\n");
+  data.append("  }\n");
+  data.append("</script>\n");
+
   data.append("<table width=\"100%\">\n");
 
   base::StatisticsRecorder::WriteHTMLGraph(unescaped_query, &data);
