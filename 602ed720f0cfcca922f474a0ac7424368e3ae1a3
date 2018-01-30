@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6722b4f8_a228cfd2",
+        "filename": "chrome/browser/resources/md_bookmarks/command_manager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2018-01-30T11:01:52Z",
+      "side": 0,
+      "message": "I think that this causes a slight regression in behavior:\n\nWhen I click on a sidebar node and press Ctrl-C, it should copy that folder node. With this change, I think it will instead copy whatever is selected in the list.\n\nAny ideas on how to fix this? Leaving these in would probably fix it for the keyboard shortcut case, but not for the chrome menu case. We have the whole dance to plumb through key events from different areas of the page, but we probably don\u0027t want to do that for all these different events:\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/md_bookmarks/folder_node.js?q\u003dfolder_node\u0026sq\u003dpackage:chromium\u0026l\u003d124",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 59
+      },
+      "revId": "602ed720f0cfcca922f474a0ac7424368e3ae1a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
