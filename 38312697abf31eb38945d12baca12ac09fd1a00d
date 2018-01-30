@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f152cdc_dd8a6c45",
+        "filename": "chrome/browser/resources/settings/search_settings.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-30T03:46:15Z",
+      "side": 1,
+      "message": "This has also been moved to the new file. If you still need to use it here, export it from the util file (something like cr.search.SEARCH_BUBBLE_CSS_CLASS).",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 31
+      },
+      "revId": "38312697abf31eb38945d12baca12ac09fd1a00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f87963cd_0ecd4174",
+        "filename": "ui/webui/resources/js/highlight_utils.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-30T03:46:15Z",
+      "side": 1,
+      "message": "Can we put those helpers under some namespace? Similar to cr.icon at https://cs.chromium.org/chromium/src/ui/webui/resources/js/icon.js?l\u003d5.",
+      "range": {
+        "startLine": 27,
+        "startChar": 9,
+        "endLine": 27,
+        "endChar": 18
+      },
+      "revId": "38312697abf31eb38945d12baca12ac09fd1a00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2df1e5e_0f796355",
+        "filename": "ui/webui/resources/js/highlight_utils.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-30T03:46:15Z",
+      "side": 1,
+      "message": "The highlight code above does not add search bubbles (only search_settings.js adds them), but this code deals with removing them. This is a bit inconsistent. Perhaps we can keep that logic in search_settings.js only?",
+      "range": {
+        "startLine": 74,
+        "startChar": 2,
+        "endLine": 77,
+        "endChar": 30
+      },
+      "revId": "38312697abf31eb38945d12baca12ac09fd1a00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
