@@ -16,6 +16,24 @@
       "revId": "4a01f668c00486eb34ae9aab1eca6f346ca1405c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dfe768f_dec369ba",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-30T19:18:12Z",
+      "side": 1,
+      "message": "There are four scenarios here:\na.Open lid: [359, 1, 5, 30, ...]\nb.Close lid: [30, 5, 1, 359, close lid event]\nc.Rotate lid to fully opened: [320, 359, 1, |tablet_mode_switch_is_on_|\u003dtrue]\nd.Rotate lid from fully opened: [|tablet_mode_switch_is_on_|\u003dfalse, 240, 230, ...]\n\nWhen |tablet_mode_switch_is_on_|\u003dtrue, lid angle will not be handled, it seems to be turned on when lid angle goes larger than 300 (?) and turned off when lid angle goes less than 240 (?).\n\nBased on above scenarios, the lid angle will never fall in incorrect zone for a long time. So fluctuation between 359 and 1 is not possible.\n\nHowever, I found my current solution won\u0027t solve scenario c (although it never occurs in my eve.). While the solution in patch set 6 can solve all scenario6.\n\nAlso, I found that closing lid hardly may trigger an angle outside [355,360] (e.g. 352), so I think we should still use the existing unstable zone [340, 360], [0, 20].\n\nIn summary, how do you think about switching to the solution in patch set 6?",
+      "parentUuid": "7b941ab2_0e212c4b",
+      "revId": "4a01f668c00486eb34ae9aab1eca6f346ca1405c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

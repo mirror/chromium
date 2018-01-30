@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "9e9a8a23_908366ba",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-30T19:18:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5d648caf_53533e5b",
+      "revId": "aece28e532d15096180f095452a320ed643572a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0110258a_75b66e3f",
         "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
         "patchSetId": 8
