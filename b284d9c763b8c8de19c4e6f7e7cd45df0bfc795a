@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "31fe1cc3_9bc1f377",
+        "filename": "ios/chrome/browser/ui/download/download_manager_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-30T16:56:24Z",
+      "side": 1,
+      "message": "Thanks. I will send a mediator in a separate CL.",
+      "parentUuid": "6bf76c49_ffdfdb96",
+      "range": {
+        "startLine": 152,
+        "startChar": 8,
+        "endLine": 152,
+        "endChar": 28
+      },
+      "revId": "b284d9c763b8c8de19c4e6f7e7cd45df0bfc795a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d15c561b_1cc5ef40",
         "filename": "ios/chrome/browser/ui/download/download_manager_coordinator.mm",
         "patchSetId": 2
