@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "84355def_b7d80c96",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTRegion.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2018-01-30T11:36:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bde4674c_f3128e9d",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 15
+      },
+      "revId": "48e7604ee901b551bd7ffe648c90419d408eeeb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a802962_40c20f87",
         "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTScannerTest.cpp",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "48e7604ee901b551bd7ffe648c90419d408eeeb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef5203b0_4e1486e4",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTScannerTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2018-01-30T11:36:36Z",
+      "side": 1,
+      "message": "reverted the changes. updated only types and max values.",
+      "parentUuid": "4a802962_40c20f87",
+      "range": {
+        "startLine": 244,
+        "startChar": 2,
+        "endLine": 279,
+        "endChar": 53
+      },
+      "revId": "48e7604ee901b551bd7ffe648c90419d408eeeb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
