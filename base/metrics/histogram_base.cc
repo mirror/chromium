@@ -108,8 +108,8 @@ bool HistogramBase::ValidateHistogramContents(bool crash_if_invalid,
   return true;
 }
 
-void HistogramBase::WriteJSON(std::string* output,
-                              JSONVerbosityLevel verbosity_level) const {
+std::unique_ptr<base::DictionaryValue> HistogramBase::ToDictionaryValue(
+    JSONVerbosityLevel verbosity_level) const {
   Count count;
   int64_t sum;
   std::unique_ptr<ListValue> buckets(new ListValue());
@@ -117,17 +117,23 @@ void HistogramBase::WriteJSON(std::string* output,
   std::unique_ptr<DictionaryValue> parameters(new DictionaryValue());
   GetParameters(parameters.get());
 
-  JSONStringValueSerializer serializer(output);
-  DictionaryValue root;
-  root.SetString("name", histogram_name());
-  root.SetInteger("count", count);
-  root.SetDouble("sum", static_cast<double>(sum));
-  root.SetInteger("flags", flags());
-  root.Set("params", std::move(parameters));
+  std::unique_ptr<DictionaryValue> root = std::make_unique<DictionaryValue>();
+  root->SetString("name", histogram_name());
+  root->SetInteger("count", count);
+  root->SetDouble("sum", static_cast<double>(sum));
+  root->SetInteger("flags", flags());
+  root->Set("params", std::move(parameters));
   if (verbosity_level != JSON_VERBOSITY_LEVEL_OMIT_BUCKETS)
-    root.Set("buckets", std::move(buckets));
-  root.SetInteger("pid", GetUniqueIdForProcess());
-  serializer.Serialize(root);
+    root->Set("buckets", std::move(buckets));
+  root->SetInteger("pid", GetUniqueIdForProcess());
+  return root;
+}
+
+void HistogramBase::WriteJSON(std::string* output,
+                              JSONVerbosityLevel verbosity_level) const {
+  JSONStringValueSerializer serializer(output);
+  std::unique_ptr<DictionaryValue> root = ToDictionaryValue(verbosity_level);
+  serializer.Serialize(*root);
 }
 
 void HistogramBase::FindAndRunCallback(HistogramBase::Sample sample) const {
