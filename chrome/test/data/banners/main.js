@@ -2,11 +2,82 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+var PromptAction = {
+  CALL_PROMPT_DELAYED: 0,
+  CALL_PROMPT_IN_HANDLER: 1,
+  CANCEL_PROMPT: 2,
+  STASH_EVENT: 3,
+};
+
+var stashedEvent = 1;
+
+var gotEventsFrom = ['________', '____'];
+
 function initialize() {
   navigator.serviceWorker.register('service_worker.js');
+}
+
+function verifyAppInstalledEvents() {
+  function setTitle() {
+    window.document.title = 'Got appinstalled: ' +
+      gotEventsFrom.join(', ');
+  }
 
   window.addEventListener('appinstalled', () => {
-    window.document.title = 'Got appinstalled';
+    gotEventsFrom[0] = 'listener';
+    setTitle();
+  });
+  window.onappinstalled = () => {
+    gotEventsFrom[1] = 'attr';
+    setTitle();
+  };
+}
+
+function verifyBeforeInstallPromptEvents() {
+  function setTitle() {
+    window.document.title = 'Got beforeinstallprompt: ' +
+      gotEventsFrom.join(', ');
+  }
+
+  // Test both the addEventListener and onX attribute versions.
+  // When a prompt is shown, each should fire once.
+  window.addEventListener('beforeinstallprompt', () => {
+    gotEventsFrom[0] = 'listener';
+    setTitle();
+  });
+  window.onbeforeinstallprompt = () => {
+    gotEventsFrom[1] = 'attr';
+    setTitle();
+  };
+}
+
+function callPrompt(event) {
+  event.prompt();
+}
+
+function callStashedPrompt() {
+  stashedEvent.prompt();
+}
+
+function addPromptListener(promptAction) {
+  window.addEventListener('beforeinstallprompt', function(e) {
+    e.preventDefault();
+
+    switch (promptAction) {
+      case PromptAction.CALL_PROMPT_DELAYED:
+        setTimeout(callPrompt, 0, e);
+        break;
+      case PromptAction.CALL_PROMPT_IN_HANDLER:
+        callPrompt(e);
+        break;
+      case PromptAction.CANCEL_PROMPT:
+        // Navigate the window to trigger the banner cancellation.
+        window.location.href = "/";
+        break;
+      case PromptAction.STASH_EVENT:
+        stashedEvent = e;
+        break;
+    }
   });
 }
 
