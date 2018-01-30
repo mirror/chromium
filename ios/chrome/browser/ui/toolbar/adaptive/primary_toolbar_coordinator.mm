@@ -57,9 +57,7 @@
   self.viewController.buttonFactory = [self buttonFactoryWithType:PRIMARY];
 
   [self setUpLocationBar];
-  self.viewController.locationBarView =
-      self.locationBarCoordinator.locationBarView;
-
+  self.viewController.locationBarView = self.locationBarCoordinator.view;
   [super start];
 
   _fullscreenObserver =
@@ -98,8 +96,7 @@
 }
 
 - (BOOL)isOmniboxFirstResponder {
-  return
-      [self.locationBarCoordinator.locationBarView.textField isFirstResponder];
+  return [self.locationBarCoordinator isOmniboxFirstResponder];
 }
 
 - (BOOL)showingOmniboxPopup {
@@ -156,16 +153,16 @@
 
   // Don't do anything for a live non-ntp tab.
   if (webState == self.webStateList->GetActiveWebState() && !isNTP) {
-    [self.locationBarCoordinator.locationBarView setHidden:NO];
+    [self.locationBarCoordinator.view setHidden:NO];
   } else {
     self.viewController.view.hidden = NO;
-    [self.locationBarCoordinator.locationBarView setHidden:YES];
+    [self.locationBarCoordinator.view setHidden:YES];
   }
 }
 
 - (void)resetToolbarAfterSideSwipeSnapshot {
   [super resetToolbarAfterSideSwipeSnapshot];
-  [self.locationBarCoordinator.locationBarView setHidden:NO];
+  [self.locationBarCoordinator.view setHidden:NO];
 }
 
 #pragma mark - Private
