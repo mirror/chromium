@@ -5,6 +5,7 @@
 #ifndef CHROME_BROWSER_CERTIFICATE_VIEWER_H_
 #define CHROME_BROWSER_CERTIFICATE_VIEWER_H_
 
+#include "build/build_config.h"
 #include "ui/gfx/native_widget_types.h"
 
 namespace content {
