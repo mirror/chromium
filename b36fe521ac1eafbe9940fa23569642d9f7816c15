@@ -22,6 +22,30 @@
       "revId": "b36fe521ac1eafbe9940fa23569642d9f7816c15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1feba36b_198b5391",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2018-01-30T02:02:36Z",
+      "side": 1,
+      "message": "Based on the comments regarding each priority level, it seems that this priority is the correct one, since it is a task that immediately affects the UI after a user interaction.\n\nhttps://cs.chromium.org/chromium/src/base/task_scheduler/task_traits.h?type\u003dcs\u0026l\u003d35",
+      "parentUuid": "8cef59c0_c574597b",
+      "range": {
+        "startLine": 745,
+        "startChar": 56,
+        "endLine": 745,
+        "endChar": 69
+      },
+      "revId": "b36fe521ac1eafbe9940fa23569642d9f7816c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
