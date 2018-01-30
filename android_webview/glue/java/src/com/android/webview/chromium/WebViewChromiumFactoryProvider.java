@@ -536,7 +536,7 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
 
                     @Override
                     public void enableSlowWholeDocumentDraw() {
-                        WebViewChromium.enableSlowWholeDocumentDraw();
+                        AwContentsStatics.setRecordFullDocument(true);
                     }
 
                     @Override

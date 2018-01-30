@@ -108,11 +108,6 @@ class WebViewChromium implements WebViewProvider, WebViewProvider.ScrollDelegate
 
     private final boolean mShouldDisableThreadChecking;
 
-    private static boolean sRecordWholeDocumentEnabledByApi;
-    static void enableSlowWholeDocumentDraw() {
-        sRecordWholeDocumentEnabledByApi = true;
-    }
-
     // This does not touch any global / non-threadsafe state, but note that
     // init is ofter called right after and is NOT threadsafe.
     public WebViewChromium(WebViewChromiumFactoryProvider factory, WebView webView,
@@ -233,8 +228,9 @@ class WebViewChromium implements WebViewProvider, WebViewProvider.ScrollDelegate
     }
 
     private void initForReal() {
-        AwContentsStatics.setRecordFullDocument(sRecordWholeDocumentEnabledByApi
-                || mAppTargetSdkVersion < Build.VERSION_CODES.LOLLIPOP);
+        if (mAppTargetSdkVersion < Build.VERSION_CODES.LOLLIPOP) {
+            AwContentsStatics.setRecordFullDocument(true);
+        }
 
         mAwContents = new AwContents(mFactory.getBrowserContextOnUiThread(), mWebView, mContext,
                 new InternalAccessAdapter(), new WebViewNativeDrawGLFunctorFactory(),
