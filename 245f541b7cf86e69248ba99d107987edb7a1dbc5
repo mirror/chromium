@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e386a20d_18da495b",
+        "filename": "content/browser/sandbox_parameters_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-30T22:37:18Z",
+      "side": 1,
+      "message": "log?",
+      "range": {
+        "startLine": 108,
+        "startChar": 12,
+        "endLine": 108,
+        "endChar": 15
+      },
+      "revId": "245f541b7cf86e69248ba99d107987edb7a1dbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a3ea967_668710b2",
+        "filename": "content/browser/sandbox_parameters_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-30T22:37:18Z",
+      "side": 1,
+      "message": "This is disallowed (https://chromium-cpp.appspot.com/). Use base::StringPrintf instead.",
+      "range": {
+        "startLine": 110,
+        "startChar": 49,
+        "endLine": 110,
+        "endChar": 63
+      },
+      "revId": "245f541b7cf86e69248ba99d107987edb7a1dbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c8cedb8_0559071e",
+        "filename": "services/service_manager/sandbox/mac/common_v2.sb",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-30T22:37:18Z",
+      "side": 1,
+      "message": "Unused?",
+      "revId": "245f541b7cf86e69248ba99d107987edb7a1dbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c235f874_bedf7b8f",
+        "filename": "services/service_manager/sandbox/mac/sandbox_mac.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-30T22:37:18Z",
+      "side": 1,
+      "message": "Unused?",
+      "revId": "245f541b7cf86e69248ba99d107987edb7a1dbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
