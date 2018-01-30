@@ -10,7 +10,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/timer/timer.h"
-#include "ui/events/event_handler.h"
+#include "ui/views/bubble/bubble_border.h"
 #include "ui/views/pointer_watcher.h"
 
 namespace views {
@@ -19,18 +19,14 @@ class View;
 }
 
 namespace ash {
-class ShelfView;
+class Shelf;
 
-// ShelfTooltipManager manages the tooltip bubble that appears for shelf items.
-class ASH_EXPORT ShelfTooltipManager : public ui::EventHandler,
-                                       public views::PointerWatcher,
+// The base class of ShelfTooltipManager and StatusAreaTooltipManager.
+class ASH_EXPORT ShelfTooltipManager : public views::PointerWatcher,
                                        public ShelfObserver {
  public:
-  explicit ShelfTooltipManager(ShelfView* shelf_view);
+  explicit ShelfTooltipManager(Shelf* shelf);
   ~ShelfTooltipManager() override;
-
-  // Initializes the tooltip manager once the shelf is shown.
-  void Init();
 
   // Closes the tooltip.
   void Close();
@@ -38,42 +34,43 @@ class ASH_EXPORT ShelfTooltipManager : public ui::EventHandler,
   // Returns true if the tooltip is currently visible.
   bool IsVisible() const;
 
-  // Returns the view to which the tooltip bubble is anchored. May be null.
-  views::View* GetCurrentAnchorView() const;
+  // Shows the tooltip bubble for the specified view.
+  virtual void ShowTooltip(views::View* view) = 0;
 
-  // Show the tooltip bubble for the specified view.
-  void ShowTooltip(views::View* view);
+  // Shows the tooltip bubble for the specified view with delay.
   void ShowTooltipWithDelay(views::View* view);
 
-  // Set the timer delay in ms for testing.
+  // Returns true if should show tooltip for the given |view|.
+  virtual bool ShouldShowTooltipForView(views::View* view) = 0;
+
+  // Sets the timer delay in ms for testing.
   void set_timer_delay_for_test(int timer_delay) { timer_delay_ = timer_delay; }
 
  protected:
-  // ui::EventHandler overrides:
-  void OnMouseEvent(ui::MouseEvent* event) override;
+  // A help function for showing the tooltip. Called by ShowTooltip with |text|
+  // and |asymmetrical_border|.
+  void ShowTooltipWithText(views::View* view,
+                           const base::string16& text,
+                           bool asymmetrical_border);
 
-  // views::PointerWatcher overrides:
+  // views::PointerWatcher:
   void OnPointerEventObserved(const ui::PointerEvent& event,
                               const gfx::Point& location_in_screen,
                               gfx::NativeView target) override;
 
-  // ShelfObserver overrides:
+  // ShelfObserver:
   void WillChangeVisibilityState(ShelfVisibilityState new_state) override;
   void OnAutoHideStateChanged(ShelfAutoHideState new_state) override;
 
+  views::BubbleDialogDelegateView* bubble_ = nullptr;
+  base::OneShotTimer timer_;
+  int timer_delay_;
+
  private:
   class ShelfTooltipBubble;
-  friend class ShelfViewTest;
   friend class ShelfTooltipManagerTest;
 
-  // A helper function to check for shelf visibility and view validity.
-  bool ShouldShowTooltipForView(views::View* view);
-
-  int timer_delay_;
-  base::OneShotTimer timer_;
-
-  ShelfView* shelf_view_;
-  views::BubbleDialogDelegateView* bubble_;
+  Shelf* shelf_;  // Not owned.
 
   base::WeakPtrFactory<ShelfTooltipManager> weak_factory_;
 
