@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08508736_3a73e584",
+        "filename": "components/omnibox/browser/autocomplete_match.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2018-01-30T22:47:54Z",
+      "side": 1,
+      "message": "Update the comment to include the new parameter. Suggested text:\n\nIf |is_bookmark| is true, returns a bookmark icon rather than what the type would determine.",
+      "revId": "a2375164fd8073061bc4188fcfbb56839732738e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
