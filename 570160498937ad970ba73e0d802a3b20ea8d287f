@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1added25_615204e8",
+        "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-30T17:57:23Z",
+      "side": 1,
+      "message": "We don\u0027t currently. You\u0027re right.\n\nThis came up in patch set 2 [1] and patch set 10 [2].\n\nWhen a conflict happens, we have to give one side priority to prevent a live lock. For the sake of fixing the live lock, it doesn\u0027t really matter which side we give priority to (parent or child). I seem to recall Fady had a case that would require us to give the child priority but I can\u0027t remember it.\n\nAnyway, the method I had in mind to handle conflicting LocalSurfaceId allocations is any time the parent allocates a new one it sets the child sequence number to 0. The parent gets priority and cannot care about the child. The child then has to take the greatest parent sequence number before it can increment its child sequence number.\n\nFor example:\nParent allocates initial (1, 1)\nChild allocates (1, 2)\nParent allocates (2, 1)\n\nThat is what this patch currently does.\n\n\nAnother way this could work is each side increments its own component:\nParent allocates initial (1, 1)\nChild allocates (1, 2)\nParent allocates (2, 2)\n\nThat is what Fady had in mind. Both solutions handle conflict resolution. The only real difference is potentially easier debugging this way at the cost of a bit more plumbing.\nAny time we call window_-\u003eAllocateLocalSurfaceId() we would probably need to plumb the existing LocalSurfaceId down so it can reuse the child component if valid. [3]\n\n[1] https://chromium-review.googlesource.com/c/chromium/src/+/861643/2/components/viz/common/surfaces/parent_local_surface_id_allocator.h\n[2] https://chromium-review.googlesource.com/c/chromium/src/+/861643/10/components/viz/common/surfaces/parent_local_surface_id_allocator.h\n[3] https://chromium-review.googlesource.com/c/chromium/src/+/861643/20/content/browser/renderer_host/render_widget_host_view_aura.cc#2057",
+      "parentUuid": "f2e54688_5446ae85",
+      "range": {
+        "startLine": 24,
+        "startChar": 50,
+        "endLine": 24,
+        "endChar": 71
+      },
+      "revId": "570160498937ad970ba73e0d802a3b20ea8d287f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4851eccc_1a3d4087",
         "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
         "patchSetId": 20
