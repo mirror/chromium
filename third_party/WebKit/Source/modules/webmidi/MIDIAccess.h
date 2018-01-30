@@ -115,7 +115,7 @@ class MIDIAccess final : public EventTargetWithInlineData,
   void DidReceiveMIDIData(unsigned port_index,
                           const unsigned char* data,
                           size_t length,
-                          double time_stamp) override;
+                          TimeTicks time_stamp) override;
 
   // |timeStampInMilliseconds| is in the same time coordinate system as
   // performance.now().

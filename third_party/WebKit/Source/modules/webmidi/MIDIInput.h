@@ -65,7 +65,7 @@ class MIDIInput final : public MIDIPort {
   void DidReceiveMIDIData(unsigned port_index,
                           const unsigned char* data,
                           size_t length,
-                          double time_stamp);
+                          TimeTicks time_stamp);
 
   virtual void Trace(blink::Visitor*);
 
