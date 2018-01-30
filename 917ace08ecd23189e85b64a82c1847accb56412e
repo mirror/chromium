@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0bbfdb83_09a9d15d",
+        "filename": "components/spellcheck/browser/spell_check_host_impl.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-30T20:07:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1e5996f_f987484e",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 1
+      },
+      "revId": "917ace08ecd23189e85b64a82c1847accb56412e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e7d6f20_49a81711",
         "filename": "components/spellcheck/browser/spell_check_host_impl.h",
         "patchSetId": 47
@@ -45,6 +69,30 @@
       "revId": "917ace08ecd23189e85b64a82c1847accb56412e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d591496a_2c2779ec",
+        "filename": "components/spellcheck/browser/spell_check_host_impl.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-30T20:07:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e7d6f20_49a81711",
+      "range": {
+        "startLine": 49,
+        "startChar": 3,
+        "endLine": 49,
+        "endChar": 61
+      },
+      "revId": "917ace08ecd23189e85b64a82c1847accb56412e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2d8f2f27_9d3a2543",
+        "filename": "components/spellcheck/browser/spellchecker_session_bridge_android.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-30T20:07:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5037baa7_707db0e8",
+      "range": {
+        "startLine": 56,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 46
+      },
+      "revId": "917ace08ecd23189e85b64a82c1847accb56412e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e6fbb66_1de235e9",
         "filename": "components/spellcheck/common/spellcheck.mojom",
         "patchSetId": 47
@@ -82,6 +154,30 @@
       "writtenOn": "2018-01-30T17:23:18Z",
       "side": 1,
       "message": "Did you mean to put your username here, or is this a TODO that\u0027s moved from somewhere else?",
+      "range": {
+        "startLine": 64,
+        "startChar": 10,
+        "endLine": 64,
+        "endChar": 15
+      },
+      "revId": "917ace08ecd23189e85b64a82c1847accb56412e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44415184_e6d7ce1b",
+        "filename": "components/spellcheck/common/spellcheck.mojom",
+        "patchSetId": 47
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-30T20:07:37Z",
+      "side": 1,
+      "message": "It\u0027s moved from spellcheck_messages.h:\n\nhttps://chromium.googlesource.com/chromium/src/+/2878b8438ba613edbffa86ad0950d941a84a5de8/components/spellcheck/common/spellcheck_messages.h#43",
+      "parentUuid": "1e6fbb66_1de235e9",
       "range": {
         "startLine": 64,
         "startChar": 10,
@@ -117,6 +213,53 @@
     },
     {
       "key": {
+        "uuid": "2a682d1a_439952e1",
+        "filename": "components/spellcheck/common/spellcheck.mojom",
+        "patchSetId": 47
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-30T20:07:37Z",
+      "side": 1,
+      "message": "It\u0027s converted from a sync IPC message SpellCheckHostMsg_CheckSpelling, sent in platform_spelling_engine.cc.\n\nChanging it to async is out of the scope of this patch.",
+      "parentUuid": "a434b677_cd347092",
+      "range": {
+        "startLine": 65,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 9
+      },
+      "revId": "917ace08ecd23189e85b64a82c1847accb56412e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54d2fb84_cd6525db",
+        "filename": "components/spellcheck/common/spellcheck.mojom",
+        "patchSetId": 47
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-30T20:07:37Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 70,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 8
+      },
+      "revId": "917ace08ecd23189e85b64a82c1847accb56412e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1f673540_6aa198f4",
         "filename": "components/spellcheck/renderer/platform_spelling_engine.cc",
         "patchSetId": 47
@@ -128,6 +271,30 @@
       "writtenOn": "2018-01-30T17:23:18Z",
       "side": 1,
       "message": "DCHECK should be used for conditions that are never true, not even in unit tests.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 29
+      },
+      "revId": "917ace08ecd23189e85b64a82c1847accb56412e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6045e84d_973da2e1",
+        "filename": "components/spellcheck/renderer/platform_spelling_engine.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-30T20:07:37Z",
+      "side": 1,
+      "message": "As |embedder_provider_| is always non-null in production code, DCHECK allows us to assume non-null SpellCheckHost and simplify the callers of GetSpellCheckHost().\n\nI changed to comment to the following:\n\n// |embedder_provider_| is always non-null in production code, but may be null\n// in unit tests when not provided. This DCHECK catches anyone who wants to test\n// GetOrBindSpellCheckHost() without providing |embedder_provider_|.\n\nDoes this look acceptable?",
+      "parentUuid": "1f673540_6aa198f4",
       "range": {
         "startLine": 27,
         "startChar": 0,
@@ -160,6 +327,30 @@
       "revId": "917ace08ecd23189e85b64a82c1847accb56412e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "529e665c_5193f942",
+        "filename": "components/spellcheck/renderer/platform_spelling_engine.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-30T20:07:37Z",
+      "side": 1,
+      "message": "Done.\n\nIn current code, |embedder_provider_| is the ContentRendererClient, which does outlive PlatformSpellingEngine. Not sure what it\u0027s going to be in the future...",
+      "parentUuid": "65a977ea_74c5ec93",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 64
+      },
+      "revId": "917ace08ecd23189e85b64a82c1847accb56412e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +423,54 @@
     },
     {
       "key": {
+        "uuid": "a4340618_8b65a95e",
+        "filename": "components/spellcheck/renderer/platform_spelling_engine.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-30T20:07:37Z",
+      "side": 1,
+      "message": "I\u0027m following the pattern of SpellCheckProvider::GetSpellCheckHost().\n\nNot sure about Chromium, but it\u0027s pretty common in Blink to return a non-const ref. Is there any style guide to follow?",
+      "parentUuid": "740c591d_f11f4ed7",
+      "range": {
+        "startLine": 27,
+        "startChar": 35,
+        "endLine": 27,
+        "endChar": 36
+      },
+      "revId": "917ace08ecd23189e85b64a82c1847accb56412e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78318b3f_31c30871",
+        "filename": "components/spellcheck/renderer/platform_spelling_engine.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-30T20:07:37Z",
+      "side": 1,
+      "message": "Good catch!\n\nChanged to GetOrBindSpellCheckHost, which seems to make more sense to me.",
+      "parentUuid": "3395cf35_32f44e70",
+      "range": {
+        "startLine": 27,
+        "startChar": 37,
+        "endLine": 27,
+        "endChar": 54
+      },
+      "revId": "917ace08ecd23189e85b64a82c1847accb56412e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c33732b_3a686b82",
         "filename": "components/spellcheck/renderer/spellcheck_provider.cc",
         "patchSetId": 47
@@ -243,6 +482,30 @@
       "writtenOn": "2018-01-30T17:23:18Z",
       "side": 1,
       "message": "It would be preferable to use base::WeakPtr here, unless you know for sure that a SpellCheckProvider object always outlives all Mojo responses from SpellCheckHost.",
+      "range": {
+        "startLine": 99,
+        "startChar": 27,
+        "endLine": 99,
+        "endChar": 49
+      },
+      "revId": "917ace08ecd23189e85b64a82c1847accb56412e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc301de5_a1ab4fcb",
+        "filename": "components/spellcheck/renderer/spellcheck_provider.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-30T20:07:37Z",
+      "side": 1,
+      "message": "You are right, this can happen if the RenderFrame is gone while we are waiting for reply.\n\nI\u0027ll fix this first. Thanks for catching!",
+      "parentUuid": "7c33732b_3a686b82",
       "range": {
         "startLine": 99,
         "startChar": 27,
