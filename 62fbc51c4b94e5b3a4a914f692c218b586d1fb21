@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "346c0272_3288f5f3",
+        "filename": "testing/libfuzzer/fuzzers/skia_image_filter_proto_fuzzer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1123509
+      },
+      "writtenOn": "2018-01-30T07:13:58Z",
+      "side": 1,
+      "message": "Might as well flush it here with \"\u003c\u003c std::flush\"",
+      "revId": "62fbc51c4b94e5b3a4a914f692c218b586d1fb21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39588513_5d5b6ead",
+        "filename": "testing/libfuzzer/fuzzers/skia_image_filter_proto_fuzzer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1123509
+      },
+      "writtenOn": "2018-01-30T07:13:58Z",
+      "side": 1,
+      "message": "Seems a bit cleaner to return after 57 if !flattenable.",
+      "revId": "62fbc51c4b94e5b3a4a914f692c218b586d1fb21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a156f14_3a17b744",
+        "filename": "testing/libfuzzer/proto/skia_image_filter.proto",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1123509
+      },
+      "writtenOn": "2018-01-30T07:13:58Z",
+      "side": 1,
+      "message": "I didn\u0027t review this file too closely, so if there are any particular bits you\u0027d like me to take a closer look at let me know.",
+      "revId": "62fbc51c4b94e5b3a4a914f692c218b586d1fb21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2e37dfc_eb7a85ac",
+        "filename": "testing/libfuzzer/proto/skia_image_filter_proto_converter.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1123509
+      },
+      "writtenOn": "2018-01-30T07:13:58Z",
+      "side": 1,
+      "message": "I guess these just aren\u0027t exported?",
+      "revId": "62fbc51c4b94e5b3a4a914f692c218b586d1fb21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
