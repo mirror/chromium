@@ -22,6 +22,30 @@
       "revId": "121b5a571a41810970ed67b31d2818c46358c372",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e19c5e9_e6ed84dd",
+        "filename": "chrome/browser/prefs/chrome_pref_service_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2018-01-30T23:12:56Z",
+      "side": 1,
+      "message": "True.\n\nBut that would require changing PrefService\u0027s constructor, which is currently taking a PrefRegistry by naked pointer.\n\nAlso, the fact that PrefService is keeping a PrefRegistry by scoped_refptr is an implementation detail that might not need to perspire through PrefService\u0027s API.\n\nThis CL doesn\u0027t introduce any runtime pessimization (or optimization). It doesn\u0027t change the number of AddRef and Release being called.\n\nWe might be able to optimize the number of AddRef/Release using the technique you described.",
+      "parentUuid": "017ff806_b7dcd93b",
+      "range": {
+        "startLine": 483,
+        "startChar": 32,
+        "endLine": 483,
+        "endChar": 45
+      },
+      "revId": "121b5a571a41810970ed67b31d2818c46358c372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
