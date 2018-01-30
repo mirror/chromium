@@ -16,6 +16,7 @@
 #include "base/path_service.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/strings/stringprintf.h"
 #include "base/test/test_file_util.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
@@ -40,6 +41,7 @@
 #include "chrome/browser/ui/browser_tabstrip.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
+#include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_paths.h"
@@ -61,7 +63,10 @@
 #include "content/public/test/test_launcher.h"
 #include "content/public/test/test_navigation_observer.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
+#include "ui/accessibility/ax_node_data.cc"
 #include "ui/display/display_switches.h"
+#include "ui/views/accessibility/view_accessibility.h"
+#include "ui/views/view.h"
 
 #if defined(OS_MACOSX)
 #include "base/mac/scoped_nsautorelease_pool.h"
@@ -299,7 +304,8 @@ void InProcessBrowserTest::SetUpDefaultCommandLine(
     command_line->AppendArg(url::kAboutBlankURL);
 }
 
-bool InProcessBrowserTest::RunAccessibilityChecks(std::string* error_message) {
+bool InProcessBrowserTest::RunContentAccessibilityChecks(
+    std::string* error_message) {
   base::ScopedAllowBlockingForTesting allow_blocking;
   if (!browser()) {
     *error_message = "browser is NULL";
@@ -348,6 +354,72 @@ bool InProcessBrowserTest::RunAccessibilityChecks(std::string* error_message) {
 
   // Test result should be empty if there are no errors.
   return error_message->empty();
+}
+
+// TOOD(aleventhal) Move to external class if it gets complex.
+bool CheckViewAccessibility(views::View* view, std::string* error_message) {
+  if (!view->IsFocusable())
+    return true;  // No accessibility checks for unfocusable views.
+
+  // Focusable nodes must have an accessible name, otherwise screen reader users
+  // will not know what they landed on. For example, the reload button should
+  // have an accessible name of "Reload".
+  views::ViewAccessibility& view_ax = view->GetViewAccessibility();
+  ui::AXNodeData node_data;
+  view_ax.GetAccessibleNodeData(&node_data);
+  if (!node_data.HasStringAttribute(ax::mojom::StringAttribute::kName)) {
+    *error_message = base::StringPrintf(
+        "Accessibility error: every focusable view must provide an accessible "
+        "name: %s",
+        view->GetClassName());
+    return false;
+  }
+
+  return true;  // One view passed all checks.
+}
+
+bool CheckViewSubtreeAccessibility(views::View* view,
+                                   std::string* error_message) {
+  if (!CheckViewAccessibility(view, error_message))
+    return false;
+  for (int i = 0; i < view->child_count(); ++i) {
+    if (!CheckViewSubtreeAccessibility(view, error_message))
+      return false;
+  }
+
+  return true;  // All views in this subtree passed all checks.
+}
+
+bool InProcessBrowserTest::RunUIAccessibilityChecks(
+    std::string* error_message) {
+  // Check native UI for accessibility violations.
+  base::ScopedAllowBlockingForTesting allow_blocking;
+  if (!browser()) {
+    *error_message = "browser is NULL";
+    return false;
+  }
+
+  BrowserWindow* browser_window = browser()->window();
+  if (!browser_window) {
+    *error_message = "browser window is NULL";
+    return false;
+  }
+  BrowserView* browser_view = static_cast<BrowserView*>(browser_window);
+
+  CheckViewSubtreeAccessibility(browser_view, error_message);
+
+  // Test result should be empty if there are no errors.
+  return error_message->empty();
+}
+
+bool InProcessBrowserTest::RunAccessibilityChecks(std::string* error_message) {
+  if (!RunContentAccessibilityChecks(error_message))
+    return false;
+#if defined(OS_MACOSX) && !BUILDFLAG(MAC_VIEWS_BROWSER)
+  return true;
+#else
+  return RunUIAccessibilityChecks(error_message);
+#endif
 }
 
 bool InProcessBrowserTest::CreateUserDataDirectory() {
