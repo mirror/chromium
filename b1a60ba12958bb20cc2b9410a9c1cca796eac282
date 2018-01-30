@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3642f715_b82d692f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 23858,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2018-01-30T17:11:06Z",
+      "side": 1,
+      "message": "Thank you for correcting this. I think my wording is incorrect.",
+      "parentUuid": "80d78c57_60713406",
+      "revId": "b1a60ba12958bb20cc2b9410a9c1cca796eac282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8edb05d_50c491a7",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-30T16:21:56Z",
       "side": 1,
       "message": "I\u0027m not sure the wording is right here - this isn\u0027t emitting \"counts\". I would describe the histogram as a single emission. WHat exactly is this measuring for each input to the histogram",
+      "revId": "b1a60ba12958bb20cc2b9410a9c1cca796eac282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "288abaae_49d83f5d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 23877,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2018-01-30T17:11:06Z",
+      "side": 1,
+      "message": "This measures the counts of different update results as described in ExtensionUpdateerUpdateResult enum.",
+      "parentUuid": "e8edb05d_50c491a7",
       "revId": "b1a60ba12958bb20cc2b9410a9c1cca796eac282",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
