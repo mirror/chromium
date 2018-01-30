@@ -132,8 +132,8 @@ void SocketAsyncApiFunction::OpenFirewallHole(const std::string& address,
 
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
-        base::Bind(&SocketAsyncApiFunction::OpenFirewallHoleOnUIThread, this,
-                   type, local_address.port(), socket_id));
+        base::BindRepeating(&SocketAsyncApiFunction::OpenFirewallHoleOnUIThread,
+                            this, type, local_address.port(), socket_id));
     return;
   }
 #endif
@@ -153,8 +153,8 @@ void SocketAsyncApiFunction::OpenFirewallHoleOnUIThread(
       manager->Open(type, port, extension_id()).release());
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
-      base::Bind(&SocketAsyncApiFunction::OnFirewallHoleOpened, this, socket_id,
-                 base::Passed(&hole)));
+      base::BindRepeating(&SocketAsyncApiFunction::OnFirewallHoleOpened, this,
+                          socket_id, base::Passed(&hole)));
 }
 
 void SocketAsyncApiFunction::OnFirewallHoleOpened(
@@ -205,7 +205,8 @@ void SocketExtensionWithDnsLookupFunction::StartDnsLookup(
   net::HostResolver::RequestInfo request_info(host_port_pair);
   int resolve_result = host_resolver->Resolve(
       request_info, net::DEFAULT_PRIORITY, &addresses_,
-      base::Bind(&SocketExtensionWithDnsLookupFunction::OnDnsLookup, this),
+      base::BindRepeating(&SocketExtensionWithDnsLookupFunction::OnDnsLookup,
+                          this),
       &request_, net::NetLogWithSource());
 
   if (resolve_result != net::ERR_IO_PENDING)
@@ -250,7 +251,7 @@ void SocketCreateFunction::Work() {
   if (socket_type_ == kSocketTypeTCP) {
     socket = new TCPSocket(extension_->id());
   } else if (socket_type_ == kSocketTypeUDP) {
-    socket = new UDPSocket(extension_->id());
+    socket = new UDPSocket(browser_context(), extension_->id());
   }
   DCHECK(socket);
 
@@ -341,7 +342,7 @@ void SocketConnectFunction::StartConnect() {
   }
 
   socket->Connect(addresses_,
-                  base::Bind(&SocketConnectFunction::OnConnect, this));
+                  base::BindRepeating(&SocketConnectFunction::OnConnect, this));
 }
 
 void SocketConnectFunction::OnConnect(int result) {
@@ -403,13 +404,18 @@ void SocketBindFunction::AsyncWorkStart() {
     return;
   }
 
-  int result = socket->Bind(address_, port_);
-  SetResult(std::make_unique<base::Value>(result));
-  if (result != net::OK) {
+  // FIXME: figure out whether Unretained is safe.
+  socket->Bind(
+      address_, port_,
+      base::BindRepeating(&SocketBindFunction::OnCompleted,
+                          base::Unretained(this), base::Unretained(socket)));
+}
+void SocketBindFunction::OnCompleted(Socket* socket, int net_result) {
+  SetResult(std::make_unique<base::Value>(net_result));
+  if (net_result != net::OK) {
     AsyncWorkCompleted();
     return;
   }
-
   OpenFirewallHole(address_, socket_id_, socket);
 }
 
@@ -467,7 +473,7 @@ bool SocketAcceptFunction::Prepare() {
 void SocketAcceptFunction::AsyncWorkStart() {
   Socket* socket = GetSocket(params_->socket_id);
   if (socket) {
-    socket->Accept(base::Bind(&SocketAcceptFunction::OnAccept, this));
+    socket->Accept(base::BindRepeating(&SocketAcceptFunction::OnAccept, this));
   } else {
     error_ = kSocketNotFoundError;
     OnAccept(-1, NULL);
@@ -508,7 +514,7 @@ void SocketReadFunction::AsyncWorkStart() {
   }
 
   socket->Read(params_->buffer_size.get() ? *params_->buffer_size : 4096,
-               base::Bind(&SocketReadFunction::OnCompleted, this));
+               base::BindRepeating(&SocketReadFunction::OnCompleted, this));
 }
 
 void SocketReadFunction::OnCompleted(int bytes_read,
@@ -557,9 +563,8 @@ void SocketWriteFunction::AsyncWorkStart() {
     return;
   }
 
-  socket->Write(io_buffer_,
-                io_buffer_size_,
-                base::Bind(&SocketWriteFunction::OnCompleted, this));
+  socket->Write(io_buffer_, io_buffer_size_,
+                base::BindRepeating(&SocketWriteFunction::OnCompleted, this));
 }
 
 void SocketWriteFunction::OnCompleted(int bytes_written) {
@@ -588,8 +593,9 @@ void SocketRecvFromFunction::AsyncWorkStart() {
     return;
   }
 
-  socket->RecvFrom(params_->buffer_size.get() ? *params_->buffer_size : 4096,
-                   base::Bind(&SocketRecvFromFunction::OnCompleted, this));
+  socket->RecvFrom(
+      params_->buffer_size.get() ? *params_->buffer_size : 4096,
+      base::BindRepeating(&SocketRecvFromFunction::OnCompleted, this));
 }
 
 void SocketRecvFromFunction::OnCompleted(int bytes_read,
@@ -689,7 +695,7 @@ void SocketSendToFunction::StartSendTo() {
   }
 
   socket->SendTo(io_buffer_, io_buffer_size_, addresses_.front(),
-                 base::Bind(&SocketSendToFunction::OnCompleted, this));
+                 base::BindRepeating(&SocketSendToFunction::OnCompleted, this));
 }
 
 void SocketSendToFunction::OnCompleted(int bytes_written) {
@@ -796,8 +802,8 @@ bool SocketGetNetworkListFunction::RunAsync() {
       FROM_HERE,
       {base::MayBlock(), base::TaskPriority::USER_VISIBLE,
        base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
-      base::Bind(&SocketGetNetworkListFunction::GetNetworkListOnFileThread,
-                 this));
+      base::BindRepeating(
+          &SocketGetNetworkListFunction::GetNetworkListOnFileThread, this));
   return true;
 }
 
@@ -807,15 +813,16 @@ void SocketGetNetworkListFunction::GetNetworkListOnFileThread() {
                      net::INCLUDE_HOST_SCOPE_VIRTUAL_INTERFACES)) {
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
-        base::Bind(&SocketGetNetworkListFunction::SendResponseOnUIThread, this,
-                   interface_list));
+        base::BindRepeating(
+            &SocketGetNetworkListFunction::SendResponseOnUIThread, this,
+            interface_list));
     return;
   }
 
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
-      base::Bind(&SocketGetNetworkListFunction::HandleGetNetworkListError,
-                 this));
+      base::BindRepeating(
+          &SocketGetNetworkListFunction::HandleGetNetworkListError, this));
 }
 
 void SocketGetNetworkListFunction::HandleGetNetworkListError() {
@@ -852,18 +859,20 @@ bool SocketJoinGroupFunction::Prepare() {
   return true;
 }
 
-void SocketJoinGroupFunction::Work() {
+void SocketJoinGroupFunction::AsyncWorkStart() {
   int result = -1;
   Socket* socket = GetSocket(params_->socket_id);
   if (!socket) {
     error_ = kSocketNotFoundError;
     SetResult(std::make_unique<base::Value>(result));
+    AsyncWorkCompleted();
     return;
   }
 
   if (socket->GetSocketType() != Socket::TYPE_UDP) {
     error_ = kMulticastSocketTypeError;
     SetResult(std::make_unique<base::Value>(result));
+    AsyncWorkCompleted();
     return;
   }
 
@@ -876,14 +885,22 @@ void SocketJoinGroupFunction::Work() {
           APIPermission::kSocket, &param)) {
     error_ = kPermissionError;
     SetResult(std::make_unique<base::Value>(result));
+    AsyncWorkCompleted();
     return;
   }
 
-  result = static_cast<UDPSocket*>(socket)->JoinGroup(params_->address);
-  if (result != 0) {
+  static_cast<UDPSocket*>(socket)->JoinGroup(
+      params_->address,
+      base::BindRepeating(&SocketJoinGroupFunction::OnJoinGroupComplete,
+                          base::Unretained(this)));
+}
+
+void SocketJoinGroupFunction::OnJoinGroupComplete(int result) {
+  if (result != net::OK) {
     error_ = net::ErrorToString(result);
   }
   SetResult(std::make_unique<base::Value>(result));
+  AsyncWorkCompleted();
 }
 
 SocketLeaveGroupFunction::SocketLeaveGroupFunction() {}
@@ -896,19 +913,21 @@ bool SocketLeaveGroupFunction::Prepare() {
   return true;
 }
 
-void SocketLeaveGroupFunction::Work() {
+void SocketLeaveGroupFunction::AsyncWorkStart() {
   int result = -1;
   Socket* socket = GetSocket(params_->socket_id);
 
   if (!socket) {
     error_ = kSocketNotFoundError;
     SetResult(std::make_unique<base::Value>(result));
+    AsyncWorkCompleted();
     return;
   }
 
   if (socket->GetSocketType() != Socket::TYPE_UDP) {
     error_ = kMulticastSocketTypeError;
     SetResult(std::make_unique<base::Value>(result));
+    AsyncWorkCompleted();
     return;
   }
 
@@ -920,13 +939,21 @@ void SocketLeaveGroupFunction::Work() {
           APIPermission::kSocket, &param)) {
     error_ = kPermissionError;
     SetResult(std::make_unique<base::Value>(result));
+    AsyncWorkCompleted();
     return;
   }
 
-  result = static_cast<UDPSocket*>(socket)->LeaveGroup(params_->address);
-  if (result != 0)
+  static_cast<UDPSocket*>(socket)->LeaveGroup(
+      params_->address,
+      base::BindRepeating(&SocketLeaveGroupFunction::OnLeaveGroupComplete,
+                          base::Unretained(this)));
+}
+
+void SocketLeaveGroupFunction::OnLeaveGroupComplete(int result) {
+  if (result != net::OK)
     error_ = net::ErrorToString(result);
   SetResult(std::make_unique<base::Value>(result));
+  AsyncWorkCompleted();
 }
 
 SocketSetMulticastTimeToLiveFunction::SocketSetMulticastTimeToLiveFunction() {}
@@ -1090,7 +1117,7 @@ void SocketSecureFunction::AsyncWorkStart() {
       url_request_context->cert_transparency_verifier(),
       url_request_context->ct_policy_enforcer(), extension_id(),
       params_->options.get(),
-      base::Bind(&SocketSecureFunction::TlsConnectDone, this));
+      base::BindRepeating(&SocketSecureFunction::TlsConnectDone, this));
 }
 
 void SocketSecureFunction::TlsConnectDone(std::unique_ptr<TLSSocket> socket,
