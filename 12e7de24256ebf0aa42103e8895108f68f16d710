@@ -34,6 +34,24 @@
       "revId": "12e7de24256ebf0aa42103e8895108f68f16d710",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc470a19_fcece671",
+        "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-30T23:36:25Z",
+      "side": 1,
+      "message": "Your other patch appears to be going in the right direction. I can LGTM the patch, then you can add others. You can even maybe TBR others since it\u0027s a mechanical change.",
+      "parentUuid": "fb6d6f33_5ea59b89",
+      "revId": "12e7de24256ebf0aa42103e8895108f68f16d710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
