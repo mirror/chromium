@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8c76a56_e4d64dbb",
+        "filename": "third_party/zlib/names.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-30T01:29:08Z",
+      "side": 0,
+      "message": "Just double checking:\n\nBecause this wasn\u0027t in the simd.patch, as-is this information would get lost. Just like it would get lost without this CL.\n\nSo this CL doesn\u0027t harm anything. But it is something I might want to be aware of...probably want to update the simd.patch to include it when I can, right?",
+      "range": {
+        "startLine": 165,
+        "startChar": 31,
+        "endLine": 165,
+        "endChar": 37
+      },
+      "revId": "20d3e4e6f5e91361f76ba2fc67c956d729cb0bae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
