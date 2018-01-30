@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b7c8b55f_427925ea",
+        "filename": "chrome/android/java/res/xml/download_directory.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-30T19:25:06Z",
+      "side": 1,
+      "message": "Oh awesome! I couldn\u0027t find this. Have changed to use this layout.",
+      "parentUuid": "f16368da_1b2272da",
+      "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabe9df8_082b0064",
         "filename": "chrome/android/java/res/xml/download_directory.xml",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7178344d_1f242aea",
+        "filename": "chrome/android/java/res/xml/download_directory.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-30T19:25:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dabe9df8_082b0064",
+      "range": {
+        "startLine": 17,
+        "startChar": 7,
+        "endLine": 17,
+        "endChar": 41
+      },
+      "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "1baa224f_8dfd24a1",
+        "filename": "chrome/android/java/res/xml/download_directory.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-30T19:25:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a50589e7_547b5f47",
+      "range": {
+        "startLine": 30,
+        "startChar": 12,
+        "endLine": 31,
+        "endChar": 35
+      },
+      "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8aa52637_c67fbed0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryAdapter.java",
         "patchSetId": 3
@@ -85,6 +151,30 @@
       "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf667242_b5cd84d1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-30T19:25:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8aa52637_c67fbed0",
+      "range": {
+        "startLine": 60,
+        "startChar": 16,
+        "endLine": 60,
+        "endChar": 91
+      },
+      "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "50915c9c_6865f759",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-30T19:25:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0437728f_28e70177",
+      "range": {
+        "startLine": 62,
+        "startChar": 37,
+        "endLine": 62,
+        "endChar": 39
+      },
+      "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f61d5abb_1c12a659",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryAdapter.java",
         "patchSetId": 3
@@ -131,6 +245,30 @@
       "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c27d2f1a_4db0d5e5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-30T19:25:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f61d5abb_1c12a659",
+      "range": {
+        "startLine": 63,
+        "startChar": 84,
+        "endLine": 63,
+        "endChar": 86
+      },
+      "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "2a992c49_92260913",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-30T19:25:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48a1e081_887711b4",
+      "range": {
+        "startLine": 66,
+        "startChar": 80,
+        "endLine": 66,
+        "endChar": 81
+      },
+      "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb499b51_72eb40d5",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryAdapter.java",
         "patchSetId": 3
@@ -171,6 +333,24 @@
       "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "783680e2_9bb00483",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-30T19:25:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb499b51_72eb40d5",
+      "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -194,6 +374,30 @@
       "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "968ecba9_a64f5d3f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-30T19:25:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d5caf62_9acb2163",
+      "range": {
+        "startLine": 100,
+        "startChar": 8,
+        "endLine": 100,
+        "endChar": 42
+      },
+      "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -243,6 +447,54 @@
     },
     {
       "key": {
+        "uuid": "a4ae4c97_dd9b205e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-30T19:25:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8565f5c7_0a388975",
+      "range": {
+        "startLine": 103,
+        "startChar": 12,
+        "endLine": 103,
+        "endChar": 14
+      },
+      "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e83a8d94_98cbfa29",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-30T19:25:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "414e19a7_d7cffde9",
+      "range": {
+        "startLine": 103,
+        "startChar": 16,
+        "endLine": 103,
+        "endChar": 78
+      },
+      "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd203f99_3a6ca2b1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryAdapter.java",
         "patchSetId": 3
@@ -266,6 +518,30 @@
     },
     {
       "key": {
+        "uuid": "cae359d6_dcc09162",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-30T19:25:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd203f99_3a6ca2b1",
+      "range": {
+        "startLine": 120,
+        "startChar": 53,
+        "endLine": 120,
+        "endChar": 99
+      },
+      "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1e59374_eec72e75",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryAdapter.java",
         "patchSetId": 3
@@ -280,6 +556,24 @@
       "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d46f0af_3ec8d9de",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-30T19:25:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1e59374_eec72e75",
+      "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -306,6 +600,30 @@
     },
     {
       "key": {
+        "uuid": "e324555b_1850c449",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-30T19:25:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08d952b7_5077746f",
+      "range": {
+        "startLine": 177,
+        "startChar": 7,
+        "endLine": 180,
+        "endChar": 0
+      },
+      "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bae0b3b_e4bcdcc1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryAdapter.java",
         "patchSetId": 3
@@ -329,6 +647,30 @@
     },
     {
       "key": {
+        "uuid": "02d43483_60296994",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-30T19:25:06Z",
+      "side": 1,
+      "message": "Okay--I\u0027ll use the blue checkmark for now and depending on UI review/etc will update the selection mechanism. Thanks for letting me know!",
+      "parentUuid": "5bae0b3b_e4bcdcc1",
+      "range": {
+        "startLine": 201,
+        "startChar": 12,
+        "endLine": 201,
+        "endChar": 95
+      },
+      "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f2b2f4c_e383ee77",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryAdapter.java",
         "patchSetId": 3
@@ -349,6 +691,30 @@
       "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed256489_09f511d2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-30T19:25:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f2b2f4c_e383ee77",
+      "range": {
+        "startLine": 213,
+        "startChar": 8,
+        "endLine": 213,
+        "endChar": 31
+      },
+      "revId": "b79a9f9187f03554093482210f22273d9b24ef3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
