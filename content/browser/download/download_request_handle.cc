@@ -6,6 +6,8 @@
 
 #include "base/bind.h"
 #include "base/strings/stringprintf.h"
+#include "content/browser/devtools/protocol/devtools_download_manager.h"
+#include "content/browser/devtools/protocol/devtools_download_manager_helper.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
@@ -39,6 +41,17 @@ DownloadManager* DownloadRequestHandle::GetDownloadManager() const {
   BrowserContext* context = web_contents->GetBrowserContext();
   if (context == nullptr)
     return nullptr;
+  // Check if this is a DevTools associated download.
+  protocol::DevToolsDownloadManagerHelper* download_helper =
+      protocol::DevToolsDownloadManagerHelper::FromWebContents(web_contents);
+  if (download_helper &&
+      download_helper->GetDownloadBehavior() ==
+          protocol::DevToolsDownloadManagerHelper::DownloadBehavior::STREAM) {
+    protocol::DevToolsDownloadManager* devtools_download_manager =
+        protocol::DevToolsDownloadManager::FromBrowserContext(context);
+    if (devtools_download_manager)
+      return devtools_download_manager;
+  }
   return BrowserContext::GetDownloadManager(context);
 }
 
