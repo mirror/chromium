@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3eef7319_c84ddcf8",
+        "filename": "components/omnibox/browser/omnibox_edit_model.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-30T22:01:19Z",
+      "side": 1,
+      "message": "Here or later, can you see if you hide this function (make it private, only accessible to tests)?  It looks like it\u0027s not used much aside from tests.",
+      "revId": "5587c4deaab61e23b1a8b424d405463b2e91577e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e1e018c_d92c1c25",
+        "filename": "components/omnibox/browser/omnibox_edit_model.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-30T22:01:19Z",
+      "side": 1,
+      "message": "Does this need to be public?",
+      "revId": "5587c4deaab61e23b1a8b424d405463b2e91577e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e79bf3ae_08bbe0a9",
+        "filename": "components/omnibox/browser/omnibox_edit_model.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-30T22:01:19Z",
+      "side": 1,
+      "message": "Does this need to be public?",
+      "revId": "5587c4deaab61e23b1a8b424d405463b2e91577e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
