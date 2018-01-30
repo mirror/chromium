@@ -46,6 +46,47 @@
       "revId": "e6207decab74f25775eba9993ff35d5706cabda0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5242120d_037d6712",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericArray.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2018-01-30T21:16:16Z",
+      "side": 1,
+      "message": "See my question below.",
+      "parentUuid": "e5ef93d1_f7fc0eff",
+      "range": {
+        "startLine": 39,
+        "startChar": 19,
+        "endLine": 39,
+        "endChar": 35
+      },
+      "revId": "e6207decab74f25775eba9993ff35d5706cabda0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4c972382_4f36ca8f",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericArray.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2018-01-30T21:16:16Z",
+      "side": 1,
+      "message": "hmm, my understanding was that AnonymousIndexedGetter already implements this, so I don\u0027t think you need componentAtIndex?",
+      "revId": "e6207decab74f25775eba9993ff35d5706cabda0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
