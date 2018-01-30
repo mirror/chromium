@@ -16,6 +16,24 @@
       "revId": "9cd579017d23b2fc1fc87226e06f77665f55c4f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbbee27e_4396ae09",
+        "filename": "net/http/http_request_info.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-30T16:22:28Z",
+      "side": 1,
+      "message": "If we don\u0027t have get/set function, one needs to convert annotation tags to mutable and then assign them here. Having get/set makes that easier.\nAlso as a side note, I\u0027ve tried to use mutables as few as possible in the code as they are more susceptible to misuse and are should be tested by the clang tool.\n\nCan I convert the struct to class?",
+      "parentUuid": "ff37a541_59b0363e",
+      "revId": "9cd579017d23b2fc1fc87226e06f77665f55c4f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
