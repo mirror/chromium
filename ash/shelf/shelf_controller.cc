@@ -390,8 +390,6 @@ void ShelfController::OnNotificationAdded(const std::string& notification_id) {
   message_center::Notification* notification =
       message_center::MessageCenter::Get()->FindVisibleNotificationById(
           notification_id);
-
-  // TODO(newcomer): Support ARC app notifications.
   if (!notification || notification->notifier_id().type !=
                            message_center::NotifierId::APPLICATION)
     return;
@@ -405,6 +403,25 @@ void ShelfController::OnNotificationRemoved(const std::string& notification_id,
     return;
 
   model_.RemoveNotificationRecord(notification_id);
+}
+
+void ShelfController::OnNotificationUpdated(
+    const std::string& notification_id) {
+  if (!is_touchable_app_context_menu_enabled_)
+    return;
+  message_center::Notification* notification =
+      message_center::MessageCenter::Get()->FindVisibleNotificationById(
+          notification_id);
+  if (!notification || notification->notifier_id().type !=
+                           message_center::NotifierId::ARC_APPLICATION)
+    return;
+
+  if (notification->notifier_id().id == "ARC_NOTIFICATION") {
+    LOG(ERROR) << "Huh??ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ";
+    return;
+  }
+
+  model_.AddNotificationRecord(notification->notifier_id().id, notification_id);
 }
 
 }  // namespace ash

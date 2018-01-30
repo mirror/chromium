@@ -178,6 +178,8 @@ class ArcAppListPrefs : public KeyedService,
   static std::string GetAppId(const std::string& package_name,
                               const std::string& activity);
 
+  std::string GetAppId(const std::string& package_name);
+
   // It is called from chrome/browser/prefs/browser_prefs.cc.
   static void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry);
 

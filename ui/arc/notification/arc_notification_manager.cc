@@ -7,6 +7,7 @@
 #include <memory>
 #include <utility>
 
+#include "ash/message_center/message_center_controller.h"
 #include "ash/shell.h"
 #include "ash/system/toast/toast_manager.h"
 #include "base/memory/ptr_util.h"
@@ -92,6 +93,7 @@ ArcNotificationManager::ArcNotificationManager(
     : arc_bridge_service_(bridge_service),
       main_profile_id_(main_profile_id),
       message_center_(message_center) {
+  message_center_controller_ = ash::Shell::Get()->message_center_controller();
   arc_bridge_service_->notifications()->SetHost(this);
   arc_bridge_service_->notifications()->AddObserver(this);
   if (!message_center::MessageViewFactory::HasCustomNotificationViewFactory())
@@ -126,20 +128,28 @@ void ArcNotificationManager::OnNotificationPosted(
     VLOG(3) << "Posted notification was ignored.";
     return;
   }
-
   const std::string& key = data->key;
+
+  data_ptr_ = std::move(data);
+
+  std::string notification_id;
   auto it = items_.find(key);
   if (it == items_.end()) {
-    // Show a notification on the primary logged-in user's desktop.
-    // TODO(yoshiki): Reconsider when ARC supports multi-user.
+    // create notification.
     auto item = std::make_unique<ArcNotificationItemImpl>(
         this, message_center_, key, main_profile_id_);
+    notification_id = item->GetNotificationId();
     // TODO(yoshiki): Use emplacement for performance when it's available.
     auto result = items_.insert(std::make_pair(key, std::move(item)));
     DCHECK(result.second);
     it = result.first;
+
+    // pass notification id to GetAppIdToPackageNameMap.
+    message_center_controller_->GetAppIdToPackageNameMap(
+        this, data_ptr_->package_name.value(), key, notification_id);
   }
-  it->second->OnUpdatedFromAndroid(std::move(data));
+
+  it->second->OnUpdatedFromAndroid(std::move(data_ptr_));
 }
 
 void ArcNotificationManager::OnNotificationUpdated(
