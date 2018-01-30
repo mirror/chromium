@@ -5,7 +5,9 @@
 #ifndef ASH_WM_WINDOW_STATE_H_
 #define ASH_WM_WINDOW_STATE_H_
 
+#include <stdint.h>
 #include <memory>
+#include <utility>
 
 #include "ash/ash_export.h"
 #include "ash/public/interfaces/window_state_type.mojom.h"
@@ -255,6 +257,14 @@ class ASH_EXPORT WindowState : public aura::WindowObserver {
   }
   void SetPreAddedToWorkspaceWindowBounds(const gfx::Rect& bounds);
 
+  // Gets/Sets the persistent window info that is used on restoring persistent
+  // window bounds in multi-displays scenario.
+  base::Optional<std::pair<int64_t, gfx::Rect>> persistent_window_info() const {
+    return persistent_window_info_;
+  }
+  void SetPersistentWindowInfo(
+      const std::pair<int64_t, gfx::Rect>& persistent_window_info);
+
   // Layout related properties
 
   void AddObserver(WindowStateObserver* observer);
@@ -432,6 +442,11 @@ class ASH_EXPORT WindowState : public aura::WindowObserver {
   // A property which resets when bounds is changed by user and sets when it is
   // nullptr, and window is removing from a workspace.
   base::Optional<gfx::Rect> pre_added_to_workspace_window_bounds_;
+
+  // A property to remember the window bounds in screen and associated display
+  // id before display is about to change, so that window bounds can get
+  // restored when display is restored.
+  base::Optional<std::pair<int64_t, gfx::Rect>> persistent_window_info_;
 
   base::ObserverList<WindowStateObserver> observer_list_;
 
