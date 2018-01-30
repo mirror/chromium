@@ -69,6 +69,30 @@
       "revId": "c23567d4ab4899aa459c687d693a916a8af87050",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d5fd946_c6929260",
+        "filename": "components/cbor/cbor_values.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2018-01-30T08:16:20Z",
+      "side": 1,
+      "message": "Since we already have CBORValue(base::StringPiece), would you want something like CBORValue(base::StringPiece, Type)? or CBORValue(base::StringPiece, as_bytestring_t)?",
+      "parentUuid": "1d3e4868_be1bed8a",
+      "range": {
+        "startLine": 110,
+        "startChar": 10,
+        "endLine": 110,
+        "endChar": 55
+      },
+      "revId": "c23567d4ab4899aa459c687d693a916a8af87050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
