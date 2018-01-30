@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46e14d85_993c5bd6",
+        "filename": "content/renderer/accessibility/aom_content_ax_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2018-01-30T00:20:50Z",
+      "side": 1,
+      "message": "!node-\u003echild_count() is more typical for Chrome code",
+      "range": {
+        "startLine": 102,
+        "startChar": 35,
+        "endLine": 102,
+        "endChar": 38
+      },
+      "revId": "044cb39d83c7960600408d9c3e42c61478055ec1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24b065a9_d15c3e96",
+        "filename": "content/renderer/accessibility/aom_content_ax_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2018-01-30T00:20:50Z",
+      "side": 1,
+      "message": "This seems like an impossible case, perhaps it should be a DCHECK?",
+      "range": {
+        "startLine": 107,
+        "startChar": 11,
+        "endLine": 107,
+        "endChar": 16
+      },
+      "revId": "044cb39d83c7960600408d9c3e42c61478055ec1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48128983_9c8ed57e",
+        "filename": "content/renderer/accessibility/aom_content_ax_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2018-01-30T00:20:50Z",
+      "side": 1,
+      "message": "This comment is problematic!",
+      "range": {
+        "startLine": 128,
+        "startChar": 24,
+        "endLine": 128,
+        "endChar": 28
+      },
+      "revId": "044cb39d83c7960600408d9c3e42c61478055ec1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66f1f679_f1167c93",
+        "filename": "content/renderer/accessibility/aom_content_ax_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2018-01-30T00:20:50Z",
+      "side": 1,
+      "message": "Similarly, how could this happen?",
+      "range": {
+        "startLine": 144,
+        "startChar": 7,
+        "endLine": 144,
+        "endChar": 14
+      },
+      "revId": "044cb39d83c7960600408d9c3e42c61478055ec1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e850844_099d2c84",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/aom-computed-relation-accessors.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2018-01-30T00:20:50Z",
+      "side": 1,
+      "message": "\u003d\u003d\u003d",
+      "range": {
+        "startLine": 30,
+        "startChar": 32,
+        "endLine": 30,
+        "endChar": 34
+      },
+      "revId": "044cb39d83c7960600408d9c3e42c61478055ec1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
