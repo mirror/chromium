@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9357ed0_19d0f9a7",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-30T08:42:05Z",
+      "side": 1,
+      "message": "I think this is not a good idea.\nYou are not resetting it when you stop taking the snapshot, and it is probably not working on incognito.\n\nMaybe you can use self.buttonFactory.toolbarConfiguration.NTPBackgroundColor here and self.buttonFactory.toolbarConfiguration.backgroundColor in resetAfterSideSwipeSnapshot?\nCan you try it also in incognito and after taking the side swipe snapshot (cancelled and completed)?",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 51
+      },
+      "revId": "d442fe193d48a5e411099bc29ae828385bc168c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
