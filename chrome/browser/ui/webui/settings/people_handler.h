@@ -21,6 +21,10 @@
 #include "components/signin/core/browser/signin_manager_base.h"
 #include "components/sync/driver/sync_service_observer.h"
 
+#if !defined(OS_CHROMEOS)
+#include "components/signin/core/browser/account_tracker_service.h"
+#endif
+
 class LoginUIService;
 class SigninManagerBase;
 
@@ -45,6 +49,9 @@ namespace settings {
 class PeopleHandler : public SettingsPageUIHandler,
                       public SigninManagerBase::Observer,
                       public SyncStartupTracker::Observer,
+#if !defined(OS_CHROMEOS)
+                      public AccountTrackerService::Observer,
+#endif
                       public LoginUIService::LoginUI,
                       public syncer::SyncServiceObserver {
  public:
@@ -122,6 +129,12 @@ class PeopleHandler : public SettingsPageUIHandler,
   // syncer::SyncServiceObserver implementation.
   void OnStateChanged(syncer::SyncService* sync) override;
 
+#if !defined(OS_CHROMEOS)
+  // AccountTrackerService::Observer implementation.
+  void OnAccountUpdated(const AccountInfo& info) override;
+  void OnAccountRemoved(const AccountInfo& info) override;
+#endif
+
   // Returns a newly created dictionary with a number of properties that
   // correspond to the status of sync.
   std::unique_ptr<base::DictionaryValue> GetSyncStatusDictionary();
@@ -148,6 +161,9 @@ class PeopleHandler : public SettingsPageUIHandler,
 #if !defined(OS_CHROMEOS)
   // Displays the GAIA login form.
   void DisplayGaiaLogin(signin_metrics::AccessPoint access_point);
+  void HandleGetStoredAccounts(const base::ListValue* args);
+  void HandleStartSyncingWithEmail(const base::ListValue* args);
+  std::unique_ptr<base::ListValue> GetStoredAccountsList();
 
   // When web-flow is enabled, displays the Gaia login form in a new tab.
   // This function is virtual so that tests can override.
@@ -210,6 +226,11 @@ class PeopleHandler : public SettingsPageUIHandler,
   ScopedObserver<SigninManagerBase, PeopleHandler> signin_observer_;
   ScopedObserver<browser_sync::ProfileSyncService, PeopleHandler>
       sync_service_observer_;
+
+#if !defined(OS_CHROMEOS)
+  ScopedObserver<AccountTrackerService, PeopleHandler>
+      account_tracker_observer_;
+#endif
 
   DISALLOW_COPY_AND_ASSIGN(PeopleHandler);
 };
