@@ -34,6 +34,24 @@
       "revId": "7a4ae003cbae7ed2c495c674014ef3e16619a5e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4981af31_e69273ff",
+        "filename": "chrome/browser/ui/webui/settings/browser_lifetime_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115562
+      },
+      "writtenOn": "2018-01-30T18:25:22Z",
+      "side": 1,
+      "message": "\u003e hopefully understand better what the problem is\n\nOpen the developer console on a guest mode chromebook and type\nchrome.send(\u0027factoryReset\u0027, [true]);\n\nIIUC, it will go ahead and erase everything on the device (including other non-guest accounts). It should not allow this to happen. Basically, should not have a UI check only to enforce this restriction. A C++ check should exist.\n\nWill file a bug and assign to mnissler@.",
+      "parentUuid": "1afd5071_2dffda2e",
+      "revId": "7a4ae003cbae7ed2c495c674014ef3e16619a5e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
