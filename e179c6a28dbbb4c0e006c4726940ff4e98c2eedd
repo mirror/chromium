@@ -16,6 +16,24 @@
       "revId": "e179c6a28dbbb4c0e006c4726940ff4e98c2eedd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7a57b42_96ed713e",
+        "filename": "third_party/WebKit/LayoutTests/fast/multicol/border-radius-clipped-layer-expected.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2018-01-30T00:46:37Z",
+      "side": 0,
+      "message": "It seems to be some numerical error with ClipRRect+AA in Skia.\nChanging the reference to only clip top and bottom while leaving a margin on the left and right cleared the difference. Try this patch: https://pastebin.com/4NFGDp9M",
+      "parentUuid": "e51eae19_0ccc361f",
+      "revId": "e179c6a28dbbb4c0e006c4726940ff4e98c2eedd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
