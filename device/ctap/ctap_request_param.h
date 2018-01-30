@@ -17,6 +17,15 @@ class CTAPRequestParam {
   CTAPRequestParam();
   virtual ~CTAPRequestParam();
   virtual base::Optional<std::vector<uint8_t>> Encode() const = 0;
+  virtual bool CheckU2fInteropCriteria() const;
+  virtual std::vector<uint8_t> GetU2FApplicationParameter() const;
+  virtual std::vector<uint8_t> GetU2FChallengeParameter() const;
+
+  // The application parameter is the SHA-256 hash of the UTF-8 encoding of
+  // the application identity (i.e. relying_party_id) of the application
+  // requesting the registration.
+  virtual std::vector<std::vector<uint8_t>> GetU2FRegisteredKeysParameter()
+      const;
 };
 
 }  // namespace device
