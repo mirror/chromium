@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4206323e_eed60abe",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 3
+      },
+      "lineNbr": 3401,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2018-01-30T21:15:32Z",
+      "side": 1,
+      "message": "I\u0027m not sure why we need a warning like this... shouldn\u0027t everyone be free to update these expectations the same way anything else in this file gets updated?",
+      "range": {
+        "startLine": 3401,
+        "startChar": 31,
+        "endLine": 3401,
+        "endChar": 35
+      },
+      "revId": "84c9782040d0ec847680afe3cd6bc28508c11b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
