@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "243c91fe_822f38f2",
+        "filename": "third_party/WebKit/Source/modules/canvas/canvas2d/CanvasRenderingContext2DTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2018-01-30T16:34:31Z",
+      "side": 1,
+      "message": "Please use an enum instead of a bool to make the call sites more readable.",
+      "range": {
+        "startLine": 268,
+        "startChar": 31,
+        "endLine": 268,
+        "endChar": 48
+      },
+      "revId": "a5375c8fb9f3e54467e2d5e782cfa47809fb7422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "204ecaff_1b931d9e",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2018-01-30T16:34:31Z",
+      "side": 1,
+      "message": "This method does not add much value IMHO.  Callsite could just do Canvas()-\u003edrawImage",
+      "range": {
+        "startLine": 475,
+        "startChar": 5,
+        "endLine": 475,
+        "endChar": 24
+      },
+      "revId": "a5375c8fb9f3e54467e2d5e782cfa47809fb7422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
