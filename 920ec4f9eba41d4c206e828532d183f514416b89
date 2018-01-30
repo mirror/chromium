@@ -22,6 +22,30 @@
       "revId": "920ec4f9eba41d4c206e828532d183f514416b89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1c8ec16_42b7a47b",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/externalnav/ExternalNavigationHandlerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1064,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2018-01-30T03:39:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "211fe753_cf8935cf",
+      "range": {
+        "startLine": 1064,
+        "startChar": 49,
+        "endLine": 1064,
+        "endChar": 56
+      },
+      "revId": "920ec4f9eba41d4c206e828532d183f514416b89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
