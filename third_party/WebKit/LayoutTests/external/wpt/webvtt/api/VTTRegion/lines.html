@@ -28,10 +28,5 @@ test(function() {
         assert_equals(region.lines, expected);
     });
 
-    [-1, -100, -2147483648, 2147483648 /* wraps to -2147483648 */].forEach(function (invalid) {
-        assert_throws('IndexSizeError', function() {
-          region.lines = invalid;
-        }, invalid);
-    });
 }, document.title + ' script-created region');
 </script>
