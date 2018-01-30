@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "08074e1f_55db5bc5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-30T07:43:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93a71940_9fa63a40",
+      "revId": "0f4c4f51173ae1492e974089ebd223a2d63c2459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf85e196_e96fabe4",
         "filename": "third_party/WebKit/Source/modules/webdatabase/sqlite/SQLiteFileSystem.cpp",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "0f4c4f51173ae1492e974089ebd223a2d63c2459",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdfbe0c6_45fb8db2",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/sqlite/SQLiteFileSystem.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-30T07:43:39Z",
+      "side": 1,
+      "message": "I\u0027d rather not add a period here, if you\u0027re OK with that. DCHECK adds a period at the end of the message [1], so we\u0027d end up with two periods.\n\n[1] https://cs.chromium.org/chromium/src/base/logging.h?type\u003dcs\u0026q\u003dDCHECK%5C(condition%5C)",
+      "parentUuid": "bf85e196_e96fabe4",
+      "revId": "0f4c4f51173ae1492e974089ebd223a2d63c2459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b33ed397_a29c1705",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/sqlite/SQLiteFileSystem.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-30T07:43:39Z",
+      "side": 1,
+      "message": "Done.\n\nThank you very much for catching this!",
+      "parentUuid": "1ceb58d7_c73b658d",
+      "revId": "0f4c4f51173ae1492e974089ebd223a2d63c2459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98723723_7441110f",
         "filename": "third_party/sqlite/BUILD.gn",
         "patchSetId": 6
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "4a3e36e4_f61dbdb2",
+        "filename": "third_party/sqlite/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-30T07:43:39Z",
+      "side": 1,
+      "message": "Done.\n\nThe refactoring CL is https://crrev.com/c/892096",
+      "parentUuid": "98723723_7441110f",
+      "revId": "0f4c4f51173ae1492e974089ebd223a2d63c2459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72406a1d_d624d119",
         "filename": "third_party/sqlite/BUILD.gn",
         "patchSetId": 6
@@ -84,6 +156,24 @@
       "revId": "0f4c4f51173ae1492e974089ebd223a2d63c2459",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c8b9efb_1a36d5e7",
+        "filename": "third_party/sqlite/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-30T07:43:39Z",
+      "side": 1,
+      "message": "I\u0027ll send you a follow-up CL, in the interest of keeping this CL focused.",
+      "parentUuid": "72406a1d_d624d119",
+      "revId": "0f4c4f51173ae1492e974089ebd223a2d63c2459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

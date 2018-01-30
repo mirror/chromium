@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4193ddb5_0284cfbf",
+        "filename": "sql/vfs_wrapper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-30T07:43:39Z",
+      "side": 1,
+      "message": "The diff for this file is all in https://crrev.com/c/892484 so it will go away from this CL after landing 892484 and rebasing this against it.",
+      "revId": "e953af76f3c254d37e092c2154c3bb750009d922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
