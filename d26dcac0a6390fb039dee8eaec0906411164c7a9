@@ -16,6 +16,24 @@
       "revId": "d26dcac0a6390fb039dee8eaec0906411164c7a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0269480_e3810407",
+        "filename": "third_party/WebKit/LayoutTests/external/WPT_BASE_MANIFEST.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 215391,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2018-01-30T04:13:51Z",
+      "side": 0,
+      "message": "I\u0027ve reverted this file.\nIt\u0027s unfortunate that we get complaints without this change when we run tests locally. :(",
+      "parentUuid": "4edd2a87_4079fd4b",
+      "revId": "d26dcac0a6390fb039dee8eaec0906411164c7a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
