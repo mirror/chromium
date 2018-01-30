@@ -34,6 +34,24 @@
       "revId": "4a01f668c00486eb34ae9aab1eca6f346ca1405c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "379ad750_0cfd31f5",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-30T19:29:48Z",
+      "side": 1,
+      "message": "(Sorry, please ignore my above comment, because current solution can solve scenario c because unstable angle won\u0027t be used to exit tablet mode [1]\n\n[1] https://cs.chromium.org/chromium/src/ash/wm/tablet_mode/tablet_mode_controller.cc?dr\u0026l\u003d365)\n\nThere are four scenarios here:\na.Open lid: [359, 1, 5, 30, ...]\nb.Close lid: [30, 5, 1, 359, close lid event]\nc.Rotate lid to fully opened: [320, 359, 1, |tablet_mode_switch_is_on_|\u003dtrue]\nd.Rotate lid from fully opened: [|tablet_mode_switch_is_on_|\u003dfalse, 240, 230, ...]\n\nWhen |tablet_mode_switch_is_on_|\u003dtrue, lid angle will not be handled, it seems to be turned on when lid angle goes larger than 300 (?) and turned off when lid angle goes less than 240 (?).\n\nBased on above scenarios, the lid angle will never fall in incorrect zone for a long time. So fluctuation between 359 and 1 is not possible.\n\nAlso, I found that closing lid hardly may trigger an angle outside [355,360] (e.g. 352), so I think we should still use the existing unstable zone [340, 360] instead of [355, 360].\n\nI will make the change and upload a new patch set.",
+      "parentUuid": "5dfe768f_dec369ba",
+      "revId": "4a01f668c00486eb34ae9aab1eca6f346ca1405c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
