@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "08d96f38_f940c435",
+        "filename": "media/blink/url_index.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2018-01-30T18:40:10Z",
+      "side": 1,
+      "message": "Easiest way is probably to hack the server to not return the whole file, even if asked to. Media code will happily re-open the connection as long as there was some progress from last time.",
+      "parentUuid": "1ebbfe14_b57a0b50",
+      "revId": "3ebf12f65276584fd507667459084caaeaa68de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89e9a283_d21296ea",
         "filename": "media/blink/url_index.h",
         "patchSetId": 4
