@@ -13,6 +13,7 @@
 #include "base/run_loop.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
+#include "build/build_config.h"
 #include "ui/accessibility/ax_enums.h"
 #include "ui/gfx/animation/animation_delegate.h"
 #include "ui/gfx/animation/slide_animation.h"
@@ -58,7 +59,7 @@ MessagePopupCollection::MessagePopupCollection(
   defer_timer_.reset(new base::OneShotTimer);
   message_center_->AddObserver(this);
   alignment_delegate_->set_collection(this);
-#if !defined(OS_CHROMEOS)
+#if !defined(OS_CHROMEOS) && !defined(OS_WIN)
   context_menu_controller_.reset(new MessageViewContextMenuController());
 #endif
 }
