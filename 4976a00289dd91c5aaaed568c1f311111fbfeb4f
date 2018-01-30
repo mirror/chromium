@@ -16,6 +16,24 @@
       "revId": "4976a00289dd91c5aaaed568c1f311111fbfeb4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8244a999_e14321ce",
+        "filename": "chrome/browser/notifications/notification_common.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-30T14:56:23Z",
+      "side": 1,
+      "message": "Yes and no:\n  - Where would it live? It\u0027s used on all platforms, not just Mac. We\u0027d need the XPC service to be able to access it. Although I guess we can rely on the compiler inlining scalars?\n  - We\u0027re trying to get rid of NotificationOperation altogether in the following CL:\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/822434",
+      "parentUuid": "d8711e00_0dcf4467",
+      "revId": "4976a00289dd91c5aaaed568c1f311111fbfeb4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
