@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9b3bcb7_9186a66f",
+        "filename": "chrome/browser/permissions/permission_uma_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-30T21:05:54Z",
+      "side": 1,
+      "message": "It does seem like something simpler may suffice here? Could we just record the raw counts?",
+      "revId": "7b2f856fc848fd02711f14e904d60a7e38c32654",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c521bea_d767e340",
+        "filename": "chrome/browser/permissions/permission_uma_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-30T21:05:54Z",
+      "side": 1,
+      "message": "Is there a way we can verify this matches the above comment?",
+      "revId": "7b2f856fc848fd02711f14e904d60a7e38c32654",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74137b40_c6faf796",
+        "filename": "chrome/browser/permissions/permission_uma_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-30T21:05:54Z",
+      "side": 1,
+      "message": "nit: arraysize?",
+      "revId": "7b2f856fc848fd02711f14e904d60a7e38c32654",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0beea1b4_e54d29ca",
+        "filename": "chrome/browser/permissions/permission_uma_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-30T21:05:54Z",
+      "side": 1,
+      "message": "nit: arraysize?",
+      "revId": "7b2f856fc848fd02711f14e904d60a7e38c32654",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73e1d04e_aa017713",
+        "filename": "chrome/browser/permissions/permission_uma_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-30T21:05:54Z",
+      "side": 1,
+      "message": "I don\u0027t like assignments within conditionals as I find them confusing. I\u0027m not sure if it\u0027s specified in the style but I don\u0027t think it\u0027s at all common in Chrome. I\u0027d suggest pulling it out but if it\u0027s not mandated I won\u0027t force you.",
+      "revId": "7b2f856fc848fd02711f14e904d60a7e38c32654",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62b25dfa_db12a52f",
+        "filename": "chrome/browser/permissions/permission_uma_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-30T21:05:54Z",
+      "side": 1,
+      "message": "Is this kind of bucketing suggested with UKM? I don\u0027t know much about it.",
+      "revId": "7b2f856fc848fd02711f14e904d60a7e38c32654",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
