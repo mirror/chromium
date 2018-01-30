@@ -9,20 +9,20 @@ index 7a24999..4eefcba 100644
 -<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic">
 -<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,700">
 +<link rel="stylesheet" href="chrome://resources/css/roboto.css">
-diff --git a/components-chromium/paper-input/paper-textarea-extracted.js b/components-chromium/paper-input/paper-textarea-extracted.js
-index 78a2a9ec621c..8b776dd790ea 100644
+diff --git a/components-chromium/paper-input/paper-textarea-extracted.js b/third_party/polymer/v1_0/components-chromium/paper-input/paper-textarea-extracted.js
+index 11bc05a37471..8d425e02c30b 100644
 --- a/components-chromium/paper-input/paper-textarea-extracted.js
 +++ b/components-chromium/paper-input/paper-textarea-extracted.js
-@@ -43,8 +43,8 @@ Polymer({
-       }
+@@ -57,8 +57,8 @@ Polymer({
+       this.$.input.textarea.selectionEnd = end;
      },
-
+ 
 -    _ariaLabelledByChanged: function(ariaLabelledBy) {
--      this.$.input.textarea.setAttribute('aria-labelledby', ariaLabelledBy);
+-      this._focusableElement.setAttribute('aria-labelledby', ariaLabelledBy);
 +    _ariaLabelledByChanged: function() {
 +      this.$.input.textarea.setAttribute('aria-label', this.label);
      },
-
+ 
      _ariaDescribedByChanged: function(ariaDescribedBy) {
 diff --git a/components-chromium/iron-list/iron-list-extracted.js b/components-chromium/iron-list/iron-list-extracted.js
 index c9e0a9fd5330..bb2f6aad64e8 100644
