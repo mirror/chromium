@@ -437,13 +437,13 @@ TEST_F(ClientControlledShellSurfaceTest, CompositorLockInRotation) {
   std::unique_ptr<Surface> surface(new Surface);
   auto shell_surface =
       exo_test_helper()->CreateClientControlledShellSurface(surface.get());
-  ash::Shell* shell = ash::Shell::Get();
-  shell->tablet_mode_controller()->EnableTabletModeWindowManager(true);
-
   // Start in maximized.
   shell_surface->SetMaximized();
   surface->Attach(buffer.get());
   surface->Commit();
+
+  ash::Shell* shell = ash::Shell::Get();
+  shell->tablet_mode_controller()->EnableTabletModeWindowManager(true);
 
   gfx::Rect maximum_bounds =
       display::Screen::GetScreen()->GetPrimaryDisplay().bounds();
