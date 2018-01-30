@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b77142a_3215a15a",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLFormElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-30T03:07:43Z",
+      "side": 1,
+      "message": ".IsolatedCopy() isn\u0027t necessary.",
+      "revId": "1fbecb287ea9f3766e0fdb25c392542dac58b7c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
