@@ -143,6 +143,11 @@ void ArcBridgeHostImpl::OnCrashCollectorInstanceReady(
                   std::move(crash_collector_ptr));
 }
 
+void ArcBridgeHostImpl::OnCupsPrintInstanceReady(
+    mojom::CupsPrintInstancePtr cups_print_ptr) {
+  OnInstanceReady(arc_bridge_service_->cups_print(), std::move(cups_print_ptr));
+}
+
 void ArcBridgeHostImpl::OnEnterpriseReportingInstanceReady(
     mojom::EnterpriseReportingInstancePtr enterprise_reporting_ptr) {
   OnInstanceReady(arc_bridge_service_->enterprise_reporting(),
