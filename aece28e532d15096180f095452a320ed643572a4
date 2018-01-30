@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5d648caf_53533e5b",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-30T16:34:52Z",
+      "side": 1,
+      "message": "Right, but I think these represent the same concept. This is the angle range for which we don\u0027t fully trust an angle reading.",
+      "parentUuid": "899e2c19_78b3d21e",
+      "revId": "aece28e532d15096180f095452a320ed643572a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0110258a_75b66e3f",
         "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
         "patchSetId": 8

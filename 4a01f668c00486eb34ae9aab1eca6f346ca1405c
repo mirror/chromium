@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b941ab2_0e212c4b",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-30T16:34:52Z",
+      "side": 1,
+      "message": "Is it possible for this to indefinitely delay entering tablet mode? The accelerometer readings in this case could fluctuate between 359 -\u003e 1 -\u003e 359 etc.",
+      "revId": "4a01f668c00486eb34ae9aab1eca6f346ca1405c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
