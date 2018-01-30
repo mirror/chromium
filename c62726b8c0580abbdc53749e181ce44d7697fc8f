@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7c12bf8e_8b6a270c",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/items_to_remove_list.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2018-01-30T23:14:37Z",
+      "side": 1,
+      "message": "This function should only be invoked once both params are not undefined (see observers declaration in line 93). Replaced this.X with X, to make improve readability.",
+      "parentUuid": "4dc836f1_c010317f",
+      "range": {
+        "startLine": 119,
+        "startChar": 32,
+        "endLine": 119,
+        "endChar": 62
+      },
+      "revId": "c62726b8c0580abbdc53749e181ce44d7697fc8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b312035_8b20d1d1",
         "filename": "chrome/test/data/webui/settings/chrome_cleanup_page_test.js",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "c62726b8c0580abbdc53749e181ce44d7697fc8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f04300b_270708ca",
+        "filename": "chrome/test/data/webui/settings/chrome_cleanup_page_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2018-01-30T23:14:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b312035_8b20d1d1",
+      "range": {
+        "startLine": 171,
+        "startChar": 10,
+        "endLine": 171,
+        "endChar": 26
+      },
+      "revId": "c62726b8c0580abbdc53749e181ce44d7697fc8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

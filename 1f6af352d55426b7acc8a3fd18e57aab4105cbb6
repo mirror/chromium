@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "db8f5a8c_d76adb62",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2018-01-30T23:14:37Z",
+      "side": 1,
+      "message": "This is covered by browser tests (see test file added in patch #3). I needed to run it manually with a screen reader to make sure it was really working, and listening to those numbers is much more efficient than a list of file paths. These are no longer needed.",
+      "parentUuid": "32606c13_2eb5c338",
+      "range": {
+        "startLine": 519,
+        "startChar": 63,
+        "endLine": 519,
+        "endChar": 0
+      },
+      "revId": "1f6af352d55426b7acc8a3fd18e57aab4105cbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bad3d03_8553733f",
         "filename": "chrome/browser/resources/settings/chrome_cleanup_page/items_to_remove_list.js",
         "patchSetId": 1
