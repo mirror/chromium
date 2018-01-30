@@ -16,6 +16,24 @@
       "revId": "0595c4d499e667842991af8d879b0e55b4058984",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "104e344c_f1099679",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/resources/fetch-canvas-tainting-tests.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-30T04:06:49Z",
+      "side": 1,
+      "message": "Yes promise_tests are run sequentially in order. This is the first promise_test so it runs first before the other ones created by the canvas_taint_test.",
+      "parentUuid": "24ad26cf_26a8919d",
+      "revId": "0595c4d499e667842991af8d879b0e55b4058984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
