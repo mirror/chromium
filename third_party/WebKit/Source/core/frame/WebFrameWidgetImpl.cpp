@@ -76,13 +76,18 @@
 #include "platform/wtf/AutoReset.h"
 #include "platform/wtf/Optional.h"
 #include "platform/wtf/PtrUtil.h"
+#include "public/platform/WebScrollIntoViewParams.h"
 #include "public/web/WebAutofillClient.h"
+#include "public/web/WebElement.h"
 #include "public/web/WebPlugin.h"
 #include "public/web/WebRange.h"
 #include "public/web/WebWidgetClient.h"
 #include "third_party/WebKit/common/page/page_visibility_state.mojom-blink.h"
 
 namespace blink {
+namespace {
+const int kCaretPadding = 10;
+}
 
 // WebFrameWidget ------------------------------------------------------------
 
@@ -517,6 +522,23 @@ WebFrameWidgetImpl::GetActiveWebInputMethodController() const {
   WebLocalFrameImpl* local_frame =
       WebLocalFrameImpl::FromFrame(FocusedLocalFrameInWidget());
   return local_frame ? local_frame->GetInputMethodController() : nullptr;
+}
+
+bool WebFrameWidgetImpl::ScrollFocusedEditableElementIntoView() {
+  Element* element = FocusedElement();
+
+  if (!element || !WebElement(element).IsEditable())
+    return false;
+
+  if (!element->GetLayoutObject())
+    return false;
+
+  LayoutRect rect_to_scroll;
+  WebScrollIntoViewParams params;
+  GetScrollParamsForFocusedEditableElement(*element, &rect_to_scroll, &params);
+  element->GetLayoutObject()->ScrollRectToVisible(rect_to_scroll, params);
+
+  return true;
 }
 
 void WebFrameWidgetImpl::ScheduleAnimation() {
@@ -1149,6 +1171,54 @@ LocalFrame* WebFrameWidgetImpl::FocusedLocalFrameAvailableForIme() const {
   if (!ime_accept_events_)
     return nullptr;
   return FocusedLocalFrameInWidget();
+}
+
+void WebFrameWidgetImpl::GetScrollParamsForFocusedEditableElement(
+    const Element& element,
+    LayoutRect* rect_to_scroll,
+    WebScrollIntoViewParams* params) {
+  DCHECK(rect_to_scroll && params);
+  LocalFrameView* frame_view = element.GetDocument().View();
+  IntRect element_bounds = frame_view->AbsoluteToRootFrame(
+      PixelSnappedIntRect(element.BoundingBox()));
+  WebRect caret_in_viewport, unused;
+  WebLocalFrameImpl::FromFrame(element.GetDocument().GetFrame())
+      ->FrameWidget()
+      ->SelectionBounds(caret_in_viewport, unused);
+  IntRect caret_in_root_frame =
+      GetPage()->GetVisualViewport().ViewportToRootFrame(caret_in_viewport);
+
+  IntRect maximal_rect = UnionRect(element_bounds, caret_in_root_frame);
+  IntRect frame_rect = frame_view->FrameRect();
+  IntSize max_visible_size(
+      std::min<int>(maximal_rect.Width(), frame_rect.Width()),
+      std::min<int>(maximal_rect.Height(), frame_rect.Height()));
+  if (max_visible_size != maximal_rect.Size()) {
+    // The ideal maximal rect exceeds the bounds of the frame. We should limit
+    // the bounds to what the frame can actually show.
+    maximal_rect.SetLocation(
+        IntPoint(kCaretPadding + caret_in_root_frame.MaxXMaxYCorner().X() -
+                     max_visible_size.Width(),
+                 kCaretPadding + caret_in_root_frame.MaxXMaxYCorner().Y() -
+                     max_visible_size.Height()));
+    maximal_rect.SetSize(max_visible_size);
+  }
+  rect_to_scroll->SetLocation(LayoutPoint(maximal_rect.Location()));
+  rect_to_scroll->SetSize(LayoutSize(maximal_rect.Size()));
+
+  params->zoom_into_rect = View()->ShouldZoomToLegibleScale(element);
+  // Send the caret position as a rect relative to |rect_to_scroll| so that the
+  // approximate position of the bounds can be reconstructed in the main frame's
+  // process. Currently, this value will only used if |zoom_into_rect| is
+  // set.
+  params->relative_rect_of_interest = FloatRect(
+      (caret_in_root_frame.X() - rect_to_scroll->X()) /
+          static_cast<float>(rect_to_scroll->Width()),
+      (caret_in_root_frame.Y() - rect_to_scroll->Y()) /
+          static_cast<float>(rect_to_scroll->Height()),
+      caret_in_root_frame.Width() / static_cast<float>(rect_to_scroll->Width()),
+      caret_in_root_frame.Height() /
+          static_cast<float>(rect_to_scroll->Height()));
 }
 
 }  // namespace blink
