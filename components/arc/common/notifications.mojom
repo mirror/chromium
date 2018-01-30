@@ -137,6 +137,8 @@ struct ArcNotificationData {
   Rect? swipe_input_rect;
   [MinVersion=15]
   string? package_name;
+  [MinVersion=16]
+  string? app_id;
 };
 
 [MinVersion=2]

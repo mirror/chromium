@@ -59,6 +59,8 @@ class MESSAGE_CENTER_EXPORT MessageCenterImpl
   void RemoveNotification(const std::string& id, bool by_user) override;
   void RemoveNotificationsForNotifierId(const NotifierId& notifier_id) override;
   void RemoveAllNotifications(bool by_user, RemoveType type) override;
+  void SetNotificationAppId(const std::string& notification_id,
+                            const std::string& app_id) override;
   void SetNotificationIcon(const std::string& notification_id,
                            const gfx::Image& image) override;
   void SetNotificationImage(const std::string& notification_id,
