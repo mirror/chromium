@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfc9a2d0_3ee4a2b5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-30T15:08:41Z",
+      "side": 1,
+      "message": "Nit: remove \u0027s\u0027",
+      "range": {
+        "startLine": 9,
+        "startChar": 25,
+        "endLine": 9,
+        "endChar": 26
+      },
+      "revId": "c22b89e6a8f5975b01f5105699a759daed39c690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12366b9c_afc64dd6",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-30T15:08:41Z",
+      "side": 1,
+      "message": "Missing call to super.",
+      "range": {
+        "startLine": 59,
+        "startChar": 21,
+        "endLine": 59,
+        "endChar": 0
+      },
+      "revId": "c22b89e6a8f5975b01f5105699a759daed39c690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f308aed_c07a5d8b",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-30T15:08:41Z",
+      "side": 1,
+      "message": "Out of curiosity, why the tools menu button doesn\u0027t cancel the omnibox?",
+      "range": {
+        "startLine": 153,
+        "startChar": 37,
+        "endLine": 153,
+        "endChar": 54
+      },
+      "revId": "c22b89e6a8f5975b01f5105699a759daed39c690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
