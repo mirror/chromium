@@ -11,6 +11,7 @@
 #include <wrl/event.h>
 #include <wrl/wrappers/corewrappers.h>
 #include <memory>
+#include <string>
 #include <utility>
 
 #include "base/bind.h"
@@ -493,6 +494,18 @@ class NotificationPlatformBridgeWinImpl
       LOG(ERROR) << "Failed to decode template ID for operation " << operation;
       return;
     }
+
+    ::MessageBoxA(NULL,
+                  ("notification_type : " +
+                   std::to_string(static_cast<int>(notification_type)))
+                      .c_str(),
+                  "", MB_OK);
+    ::MessageBoxA(NULL, ("toast_id : " + toast_id).c_str(), "", MB_OK);
+    ::MessageBoxA(NULL, ("notification_id : " + notification_id).c_str(), "",
+                  MB_OK);
+    ::MessageBoxA(NULL, ("profile_id : " + profile_id).c_str(), "", MB_OK);
+    ::MessageBoxA(NULL, ("origin_url : " + origin_url.spec()).c_str(), "",
+                  MB_OK);
 
     content::BrowserThread::PostTask(
         content::BrowserThread::UI, FROM_HERE,
