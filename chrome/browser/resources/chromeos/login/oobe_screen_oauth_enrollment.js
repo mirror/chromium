@@ -151,8 +151,8 @@ login.createScreen('OAuthEnrollmentScreen', 'oauth-enrollment', function() {
         this.activeDirectoryMachine_ = e.detail.machinename;
         this.activeDirectoryUsername_ = e.detail.username;
         chrome.send('oauthEnrollAdCompleteLogin', [
-          e.detail.machinename, e.detail.distinguished_name, e.detail.username,
-          e.detail.password
+          e.detail.machinename, e.detail.distinguished_name,
+          e.detail.encryption_type, e.detail.username, e.detail.password
         ]);
       }.bind(this));
 
