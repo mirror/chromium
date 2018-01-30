@@ -3100,6 +3100,12 @@ crbug.com/757165 [ Win ] virtual/gpu/fast/canvas/canvas-scale-drawImage-shadow.h
 crbug.com/757165 [ Win ] virtual/gpu/fast/canvas/canvas-strokeRect-alpha-shadow.html [ Skip ]
 crbug.com/757165 [ Win ] virtual/gpu/fast/canvas/image-object-in-canvas.html [ Skip ]
 
+crbug.com/806994 fast/webgl/texImage-imageBitmap-from-image-resize.html [ Skip ]
+crbug.com/806994 fast/webgl/texImage-imageBitmap-from-blob-resize.html [ Skip ]
+crbug.com/806994 fast/webgl/texImage-imageBitmap-from-imageData-resize.html [ Skip ]
+crbug.com/806994 fast/webgl/texImage-imageBitmap-from-canvas-resize.html [ Skip ]
+crbug.com/806994 fast/webgl/texImage-imageBitmap-from-offscreen-canvas-resize.html [ Skip ]
+
 crbug.com/766129 svg/wicd/test-rightsizing-b.xhtml [ Failure Pass ]
 
 # RSA key generation is intrinsically very slow. Even when marked as [ Slow ], these tests can still time out.
