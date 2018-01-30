@@ -22,6 +22,17 @@ component("base") {
   ]
 }
 
+source_set("struct_traits") {
+  sources = [
+    "big_string_struct_traits.cc",
+    "big_string_struct_traits.h",
+  ]
+  deps = [
+    ":base",
+    "//mojo/public/cpp/system",
+  ]
+}
+
 # Normally typemap traits sources should be build directly into mojom targets
 # via the typemap file. This target is for typemapped mojo_base types whose
 # traits are shared between chromium and blink variants.
@@ -46,11 +57,13 @@ source_set("tests") {
 
   sources = [
     "big_buffer_unittest.cc",
+    "big_string_unittest.cc",
   ]
 
   public_deps = [
     ":base",
     ":shared_typemap_traits",
+    ":struct_traits",
     "//base",
     "//mojo/public/cpp/test_support:test_utils",
     "//mojo/public/mojom/base",
