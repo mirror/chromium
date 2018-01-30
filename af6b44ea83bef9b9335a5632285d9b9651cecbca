@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f89d5fba_196fe6fb",
+        "filename": "ui/compositor/layer.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-30T00:34:28Z",
+      "side": 1,
+      "message": "I\u0027m tempted to suggest this should be a optional, but I leave that to you.",
+      "range": {
+        "startLine": 310,
+        "startChar": 29,
+        "endLine": 310,
+        "endChar": 70
+      },
+      "revId": "af6b44ea83bef9b9335a5632285d9b9651cecbca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
