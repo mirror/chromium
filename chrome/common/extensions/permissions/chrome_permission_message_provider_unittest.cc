@@ -39,7 +39,7 @@ class ChromePermissionMessageProviderUnittest : public testing::Test {
     return message_provider_->GetPermissionMessages(
         message_provider_->GetAllPermissionIDs(
             PermissionSet(permissions, ManifestPermissionSet(), URLPatternSet(),
-                          URLPatternSet()),
+                          URLPatternSet(), URLPatternSet()),
             type));
   }
 
@@ -47,9 +47,9 @@ class ChromePermissionMessageProviderUnittest : public testing::Test {
                            const APIPermissionSet& new_permissions) {
     return message_provider_->IsPrivilegeIncrease(
         PermissionSet(old_permissions, ManifestPermissionSet(), URLPatternSet(),
-                      URLPatternSet()),
+                      URLPatternSet(), URLPatternSet()),
         PermissionSet(new_permissions, ManifestPermissionSet(), URLPatternSet(),
-                      URLPatternSet()),
+                      URLPatternSet(), URLPatternSet()),
         Manifest::TYPE_EXTENSION);
   }
 
@@ -173,7 +173,7 @@ TEST_F(ChromePermissionMessageProviderUnittest,
       URLPattern(URLPattern::SCHEME_ALL, "https://*.ɡoogle.com/"));
   extensions::PermissionSet permissions(APIPermissionSet(),
                                         ManifestPermissionSet(), explicit_hosts,
-                                        URLPatternSet());
+                                        URLPatternSet(), URLPatternSet());
 
   PermissionMessages messages = message_provider()->GetPermissionMessages(
       message_provider()->GetAllPermissionIDs(permissions,

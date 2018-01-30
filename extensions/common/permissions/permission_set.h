@@ -32,13 +32,15 @@ class PermissionSet {
   PermissionSet();
 
   // Creates a new permission set based on the specified data: the API
-  // permissions, manifest key permissions, host permissions, and scriptable
-  // hosts. The effective hosts of the newly created permission set will be
-  // inferred from the given host permissions.
+  // permissions, manifest key permissions, host permissions, scriptable hosts
+  // and hosts for the Declarative Net Request API. The effective hosts of the
+  // newly created permission set will be inferred from the given host
+  // permissions.
   PermissionSet(const APIPermissionSet& apis,
                 const ManifestPermissionSet& manifest_permissions,
                 const URLPatternSet& explicit_hosts,
-                const URLPatternSet& scriptable_hosts);
+                const URLPatternSet& scriptable_hosts,
+                const URLPatternSet& dnr_hosts);
   ~PermissionSet();
 
   // Creates a new permission set equal to |set1| - |set2|.
@@ -120,6 +122,8 @@ class PermissionSet {
 
   const URLPatternSet& scriptable_hosts() const { return scriptable_hosts_; }
 
+  const URLPatternSet& dnr_hosts() const { return dnr_hosts_; }
+
  private:
   FRIEND_TEST_ALL_PREFIXES(PermissionsTest, GetWarningMessages_AudioVideo);
   FRIEND_TEST_ALL_PREFIXES(PermissionsTest, AccessToDevicesMessages);
@@ -151,6 +155,10 @@ class PermissionSet {
   // The list of hosts that can be scripted by content scripts.
   // TODO(jstritar): Rename to "user_script_hosts_"?
   URLPatternSet scriptable_hosts_;
+
+  // The list of hosts that can be accessed using the Declarative Net Request
+  // API.
+  URLPatternSet dnr_hosts_;
 
   // The list of hosts this effectively grants access to.
   URLPatternSet effective_hosts_;

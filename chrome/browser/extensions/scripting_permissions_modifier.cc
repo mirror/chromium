@@ -164,6 +164,7 @@ void ScriptingPermissionsModifier::GrantHostPermission(const GURL& url) {
   GURL origin = url.GetOrigin();
   URLPatternSet new_explicit_hosts;
   URLPatternSet new_scriptable_hosts;
+  URLPatternSet new_dnr_hosts;
 
   const PermissionSet& withheld_permissions =
       extension_->permissions_data()->withheld_permissions();
@@ -174,11 +175,15 @@ void ScriptingPermissionsModifier::GrantHostPermission(const GURL& url) {
     new_scriptable_hosts.AddOrigin(UserScript::ValidUserScriptSchemes(),
                                    origin);
   }
+  if (withheld_permissions.dnr_hosts().MatchesURL(url)) {
+    new_dnr_hosts.AddOrigin(UserScript::ValidUserScriptSchemes(), origin);
+  }
 
   PermissionsUpdater(browser_context_)
       .AddPermissions(extension_.get(),
                       PermissionSet(APIPermissionSet(), ManifestPermissionSet(),
-                                    new_explicit_hosts, new_scriptable_hosts));
+                                    new_explicit_hosts, new_scriptable_hosts,
+                                    new_dnr_hosts));
 }
 
 bool ScriptingPermissionsModifier::HasGrantedHostPermission(const GURL& url) {
@@ -208,18 +213,21 @@ void ScriptingPermissionsModifier::RemoveGrantedHostPermission(
   GURL origin = url.GetOrigin();
   URLPatternSet explicit_hosts;
   URLPatternSet scriptable_hosts;
+  URLPatternSet dnr_hosts;
   const PermissionSet& active_permissions =
       extension_->permissions_data()->active_permissions();
   if (active_permissions.explicit_hosts().MatchesURL(url))
     explicit_hosts.AddOrigin(UserScript::ValidUserScriptSchemes(), origin);
   if (active_permissions.scriptable_hosts().MatchesURL(url))
     scriptable_hosts.AddOrigin(UserScript::ValidUserScriptSchemes(), origin);
+  if (active_permissions.dnr_hosts().MatchesURL(url))
+    dnr_hosts.AddOrigin(UserScript::ValidUserScriptSchemes(), origin);
 
   PermissionsUpdater(browser_context_)
       .RemovePermissions(
           extension_.get(),
           PermissionSet(APIPermissionSet(), ManifestPermissionSet(),
-                        explicit_hosts, scriptable_hosts),
+                        explicit_hosts, scriptable_hosts, dnr_hosts),
           PermissionsUpdater::REMOVE_HARD);
 }
 
@@ -262,18 +270,22 @@ void ScriptingPermissionsModifier::WithholdPermissions(
   URLPatternSet withheld_explicit_hosts;
   URLPatternSet granted_scriptable_hosts;
   URLPatternSet withheld_scriptable_hosts;
+  URLPatternSet granted_dnr_hosts;
+  URLPatternSet withheld_dnr_hosts;
   segregate_url_permissions(permissions.explicit_hosts(),
                             &granted_explicit_hosts, &withheld_explicit_hosts);
   segregate_url_permissions(permissions.scriptable_hosts(),
                             &granted_scriptable_hosts,
                             &withheld_scriptable_hosts);
+  segregate_url_permissions(permissions.dnr_hosts(), &granted_dnr_hosts,
+                            &withheld_dnr_hosts);
 
-  granted_permissions_out->reset(
-      new PermissionSet(permissions.apis(), permissions.manifest_permissions(),
-                        granted_explicit_hosts, granted_scriptable_hosts));
-  withheld_permissions_out->reset(
-      new PermissionSet(APIPermissionSet(), ManifestPermissionSet(),
-                        withheld_explicit_hosts, withheld_scriptable_hosts));
+  granted_permissions_out->reset(new PermissionSet(
+      permissions.apis(), permissions.manifest_permissions(),
+      granted_explicit_hosts, granted_scriptable_hosts, granted_dnr_hosts));
+  withheld_permissions_out->reset(new PermissionSet(
+      APIPermissionSet(), ManifestPermissionSet(), withheld_explicit_hosts,
+      withheld_scriptable_hosts, withheld_dnr_hosts));
 }
 
 void ScriptingPermissionsModifier::GrantWithheldImpliedAllHosts() {
@@ -283,7 +295,8 @@ void ScriptingPermissionsModifier::GrantWithheldImpliedAllHosts() {
   PermissionSet permissions(
       APIPermissionSet(), ManifestPermissionSet(),
       FilterImpliedAllHostsPatterns(withheld.explicit_hosts()),
-      FilterImpliedAllHostsPatterns(withheld.scriptable_hosts()));
+      FilterImpliedAllHostsPatterns(withheld.scriptable_hosts()),
+      FilterImpliedAllHostsPatterns(withheld.dnr_hosts()));
   PermissionsUpdater(browser_context_)
       .AddPermissions(extension_.get(), permissions);
 }
@@ -294,7 +307,8 @@ void ScriptingPermissionsModifier::WithholdImpliedAllHosts() {
   PermissionSet permissions(
       APIPermissionSet(), ManifestPermissionSet(),
       FilterImpliedAllHostsPatterns(active.explicit_hosts()),
-      FilterImpliedAllHostsPatterns(active.scriptable_hosts()));
+      FilterImpliedAllHostsPatterns(active.scriptable_hosts()),
+      FilterImpliedAllHostsPatterns(active.dnr_hosts()));
   PermissionsUpdater(browser_context_)
       .RemovePermissions(extension_.get(), permissions,
                          PermissionsUpdater::REMOVE_HARD);

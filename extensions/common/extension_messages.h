@@ -317,6 +317,7 @@ struct ExtensionMsg_PermissionSetStruct {
   extensions::ManifestPermissionSet manifest_permissions;
   extensions::URLPatternSet explicit_hosts;
   extensions::URLPatternSet scriptable_hosts;
+  extensions::URLPatternSet dnr_hosts;
 };
 
 struct ExtensionMsg_Loaded_Params {

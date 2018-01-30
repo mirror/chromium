@@ -124,8 +124,11 @@ void ActiveTabPermissionGranter::GrantIfRequested(const Extension* extension) {
 
   if (!new_apis.empty() || !new_hosts.is_empty()) {
     granted_extensions_.Insert(extension);
+    // Grant both explicit host access and also access to the Declarative Net
+    // Request API.
     PermissionSet new_permissions(new_apis, ManifestPermissionSet(), new_hosts,
-                                  new_hosts);
+                                  new_hosts, new_hosts);
+
     permissions_data->UpdateTabSpecificPermissions(tab_id_, new_permissions);
     const content::NavigationEntry* navigation_entry =
         web_contents()->GetController().GetVisibleEntry();

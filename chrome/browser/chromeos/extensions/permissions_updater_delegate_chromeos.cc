@@ -37,7 +37,7 @@ void PermissionsUpdaterDelegateChromeOS::InitializePermissions(
   *granted_permissions = PermissionSet::CreateDifference(
       **granted_permissions,
       PermissionSet(api_permission_set, ManifestPermissionSet(),
-                    URLPatternSet(), URLPatternSet()));
+                    URLPatternSet(), URLPatternSet(), URLPatternSet()));
 }
 
 }  // namespace extensions

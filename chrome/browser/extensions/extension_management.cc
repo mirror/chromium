@@ -240,7 +240,7 @@ std::unique_ptr<const PermissionSet> ExtensionManagement::GetBlockedPermissions(
   // Only api permissions are supported currently.
   return std::unique_ptr<const PermissionSet>(new PermissionSet(
       GetBlockedAPIPermissions(extension), ManifestPermissionSet(),
-      URLPatternSet(), URLPatternSet()));
+      URLPatternSet(), URLPatternSet(), URLPatternSet()));
 }
 
 bool ExtensionManagement::IsPermissionSetAllowed(

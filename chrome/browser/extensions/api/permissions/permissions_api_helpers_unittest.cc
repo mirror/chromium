@@ -43,7 +43,7 @@ TEST(ExtensionPermissionsAPIHelpers, Pack) {
   AddPattern(&hosts, "http://b.com/*");
 
   PermissionSet permission_set(apis, ManifestPermissionSet(), hosts,
-                               URLPatternSet());
+                               URLPatternSet(), URLPatternSet());
 
   // Pack the permission set to value and verify its contents.
   std::unique_ptr<Permissions> permissions(PackPermissionSet(permission_set));

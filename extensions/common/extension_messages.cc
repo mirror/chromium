@@ -35,8 +35,8 @@ ExtensionMsg_PermissionSetStruct::ExtensionMsg_PermissionSetStruct(
     : apis(permissions.apis()),
       manifest_permissions(permissions.manifest_permissions()),
       explicit_hosts(permissions.explicit_hosts()),
-      scriptable_hosts(permissions.scriptable_hosts()) {
-}
+      scriptable_hosts(permissions.scriptable_hosts()),
+      dnr_hosts(permissions.dnr_hosts()) {}
 
 ExtensionMsg_PermissionSetStruct::ExtensionMsg_PermissionSetStruct(
     const ExtensionMsg_PermissionSetStruct& other) = default;
@@ -46,8 +46,8 @@ ExtensionMsg_PermissionSetStruct::~ExtensionMsg_PermissionSetStruct() {
 
 std::unique_ptr<const PermissionSet>
 ExtensionMsg_PermissionSetStruct::ToPermissionSet() const {
-  return base::WrapUnique(new PermissionSet(apis, manifest_permissions,
-                                            explicit_hosts, scriptable_hosts));
+  return base::WrapUnique(new PermissionSet(
+      apis, manifest_permissions, explicit_hosts, scriptable_hosts, dnr_hosts));
 }
 
 ExtensionMsg_Loaded_Params::ExtensionMsg_Loaded_Params()
@@ -292,6 +292,7 @@ void ParamTraits<ExtensionMsg_PermissionSetStruct>::Write(base::Pickle* m,
   WriteParam(m, p.manifest_permissions);
   WriteParam(m, p.explicit_hosts);
   WriteParam(m, p.scriptable_hosts);
+  WriteParam(m, p.dnr_hosts);
 }
 
 bool ParamTraits<ExtensionMsg_PermissionSetStruct>::Read(
@@ -301,7 +302,8 @@ bool ParamTraits<ExtensionMsg_PermissionSetStruct>::Read(
   return ReadParam(m, iter, &p->apis) &&
          ReadParam(m, iter, &p->manifest_permissions) &&
          ReadParam(m, iter, &p->explicit_hosts) &&
-         ReadParam(m, iter, &p->scriptable_hosts);
+         ReadParam(m, iter, &p->scriptable_hosts) &&
+         ReadParam(m, iter, &p->dnr_hosts);
 }
 
 void ParamTraits<ExtensionMsg_PermissionSetStruct>::Log(const param_type& p,
@@ -310,6 +312,7 @@ void ParamTraits<ExtensionMsg_PermissionSetStruct>::Log(const param_type& p,
   LogParam(p.manifest_permissions, l);
   LogParam(p.explicit_hosts, l);
   LogParam(p.scriptable_hosts, l);
+  LogParam(p.dnr_hosts, l);
 }
 
 void ParamTraits<ExtensionMsg_Loaded_Params>::Write(base::Pickle* m,
