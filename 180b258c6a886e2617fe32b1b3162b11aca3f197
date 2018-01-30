@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "71e1f765_8349e907",
+        "filename": "content/common/media/media_player_delegate_messages.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2018-01-30T10:56:06Z",
+      "side": 1,
+      "message": "Can you elaborate a bit on the risks of allowing the renderer to specify the IDs here? Is the nonce meant to make it impossible for the renderer to take over an existing PiP surface? If so, where is that check performed? It looks like it makes two `viz::LocalSurfaceId` objects not `\u003d\u003d` each other, is that the extent of the work it\u0027s doing?\n\nIf there\u0027s only one PiP for a given renderer, could we store the data on the browser side instead (perhaps on the frame tree?) so that we don\u0027t need to trust the renderer to pass the IDs up to the browser?",
+      "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6333d60_e845a100",
         "filename": "content/public/browser/content_browser_client.h",
         "patchSetId": 15
