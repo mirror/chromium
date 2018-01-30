@@ -2730,6 +2730,13 @@ TEST_F(PasswordAutofillAgentTest,
       "  <INPUT type='submit' />"
       "</FORM>";
 
+  const char kFormWithMultipleAnonymousTextFields[] =
+      "<FORM action='http://www.bidule.com'>"
+      "<INPUT type='text' placeholder='username'/>"
+      "<INPUT type='password' placeholder='Password'/>"
+      "<INPUT type='text' placeholder='captcha'/>"
+      "</FORM>";
+
   const struct {
     const char* html_form;
     bool is_possible_change_password_form;
@@ -2776,6 +2783,10 @@ TEST_F(PasswordAutofillAgentTest,
       {kChangePasswordFormButNoAutocompleteAttribute, true, true,
        kDummyUsernameField, kDummyPasswordField, kAliceUsername, kAlicePassword,
        true, true},
+
+      // Sign-in form with multiple anonymous text fields.
+      {kFormWithMultipleAnonymousTextFields, false, true, kDummyUsernameField,
+       kDummyPasswordField, kAliceUsername, kAlicePassword, true, true},
   };
 
   for (const auto& test_case : test_cases) {
@@ -2795,6 +2806,7 @@ TEST_F(PasswordAutofillAgentTest,
     WebFormElement form_element = forms[0];
     std::vector<blink::WebFormControlElement> control_elements =
         form_util::ExtractAutofillableElementsInForm(form_element);
+
     bool has_fillable_username =
         (kEmpty != test_case.fill_data_username_field_name);
     if (has_fillable_username) {
@@ -2803,8 +2815,8 @@ TEST_F(PasswordAutofillAgentTest,
     } else {
       password_element_ = control_elements[0].To<WebInputElement>();
     }
-
     UpdateOriginForHTML(test_case.html_form);
+
     if (test_case.does_trigger_autocomplete_on_fill) {
       // Prepare |fill_data_| to trigger autocomplete.
       fill_data_.is_possible_change_password_form =
