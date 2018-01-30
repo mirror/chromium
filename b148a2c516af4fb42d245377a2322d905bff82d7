@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77929501_218af09b",
+        "filename": "content/browser/notifications/notification_id_generator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-30T18:47:25Z",
+      "side": 1,
+      "message": "DCHECK(!token.empty());\n\nSome token should be generated if no tag was supplied, so an empty token isn\u0027t a valid value to receive here.",
+      "revId": "b148a2c516af4fb42d245377a2322d905bff82d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7684aba8_a91182f8",
+        "filename": "content/browser/notifications/notification_id_generator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-30T18:47:25Z",
+      "side": 1,
+      "message": "nit: This is now simple enough that I\u0027d consider base::StringPrintf()",
+      "revId": "b148a2c516af4fb42d245377a2322d905bff82d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "476a405c_e34f45e7",
+        "filename": "content/browser/notifications/notification_id_generator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-30T18:47:25Z",
+      "side": 1,
+      "message": "Please document what a token is. (Not necessarily here, just somewhere.)",
+      "revId": "b148a2c516af4fb42d245377a2322d905bff82d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
