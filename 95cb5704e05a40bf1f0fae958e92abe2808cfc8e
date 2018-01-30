@@ -382,6 +382,24 @@
       "revId": "95cb5704e05a40bf1f0fae958e92abe2808cfc8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d60894f_1654a958",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-30T20:00:36Z",
+      "side": 1,
+      "message": "If we tried to store this SyncToken in returned_sync_token, it would get overridden by an empty one when the resource was returned from ResourceProvider. I think the call here is to make the ResourceProvider contract such that it gives back the SyncToken you gave it if it doesn\u0027t get a different one from a display compositor.\n\nI will add that and a test for it.",
+      "parentUuid": "063a293a_27557f5a",
+      "revId": "95cb5704e05a40bf1f0fae958e92abe2808cfc8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "075b04ad_2bddd83c",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-30T20:00:36Z",
+      "side": 1,
+      "message": "ColorSpace problem is that we\u0027re not setting the color_space on the TransferableResource here. ResourceProvider used to own it all so it did that. I\u0027ve fixed it.",
+      "revId": "964993f0486763bf1172cfc5b6037211de911cf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
