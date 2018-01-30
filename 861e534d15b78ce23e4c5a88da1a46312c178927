@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "8eea4e8c_bd6d5def",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-30T23:06:39Z",
+      "side": 1,
+      "message": "Hi Peter. We\u0027ve been chatting about this. We can\u0027t use base/logging without initializing it. This small .exe could initialize logging, or it could use this (which boils down to OutputDebugString; see https://msdn.microsoft.com/library/windows/desktop/aa363362.aspx). We\u0027ll likely have some code duplication if we initialize logging in here. To be honest, I haven\u0027t poked around looking for other .exes to see how they handle it. Maybe it\u0027s not such a bad thing for the sake of consistency.\n\nNow that I think of it, maybe we should also do some of these in here:\n  base::EnableTerminationOnHeapCorruption();\n  base::EnableTerminationOnOutOfMemory();\n  base::win::RegisterInvalidParamHandler();\n  base::win::SetupCRT(cmd_line);\n\nsetup.exe does these all in one place. I think chrome.exe has them spread out in a few places.",
+      "parentUuid": "6c848ca8_ceca948e",
+      "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "035f3ddc_550bb340",
         "filename": "notification_helper/com_server_module.h",
         "patchSetId": 50
