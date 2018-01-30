@@ -53,6 +53,40 @@
     },
     {
       "key": {
+        "uuid": "bf94d0c5_918a4eaf",
+        "filename": "chrome/browser/notifications/notification_display_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-30T18:57:43Z",
+      "side": 1,
+      "message": "I\u0027d much prefer this to be private. Perhaps we can friend NotificationDisplayServiceTester and have a nullptr Profile* there mean we (synchronously) load from this path?",
+      "revId": "477ec8f032ee5abbbaae713ed5dca149a9e7347a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ec82b5e_b513d4b3",
+        "filename": "chrome/browser/notifications/notification_display_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-30T18:57:43Z",
+      "side": 1,
+      "message": "If you prefer going the static method route, then I would suggest adding a SystemNotificationDisplayService with the needed statics which does the asynchronous work (if necessary) and then forwards to the NotificationDisplayService.\n\nIt avoids complexity for the reader of this API, as profile-less notifications should ideally be quite rare.",
+      "revId": "477ec8f032ee5abbbaae713ed5dca149a9e7347a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c30f93c4_01f4b7fe",
         "filename": "chrome/browser/notifications/notification_display_service.h",
         "patchSetId": 4
@@ -64,6 +98,40 @@
       "writtenOn": "2018-01-30T18:50:14Z",
       "side": 1,
       "message": "Should this cancel a pending notification display if the profile is not loaded?",
+      "revId": "477ec8f032ee5abbbaae713ed5dca149a9e7347a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f987562a_ccd6020c",
+        "filename": "chrome/browser/notifications/notification_display_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-30T18:57:43Z",
+      "side": 1,
+      "message": "nit: |notification_id| for consistency",
+      "revId": "477ec8f032ee5abbbaae713ed5dca149a9e7347a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a26ad55c_adb41f77",
+        "filename": "chrome/browser/usb/web_usb_detector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-30T18:57:43Z",
+      "side": 1,
+      "message": "It seems sensible to DCHECK_EQ(notification.priority(), SYSTEM_PRIORITY) for calls to DisplaySystemNotification?",
       "revId": "477ec8f032ee5abbbaae713ed5dca149a9e7347a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
