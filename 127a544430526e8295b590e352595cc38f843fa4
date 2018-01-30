@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9947dc66_ff794c33",
+        "filename": "components/ui_devtools/views/ui_element.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-30T20:10:15Z",
+      "side": 1,
+      "message": "Do we need a default impl for this?",
+      "revId": "127a544430526e8295b590e352595cc38f843fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c54bf58_ef879d25",
+        "filename": "components/ui_devtools/views/ui_element.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-30T20:10:15Z",
+      "side": 1,
+      "message": "What\u0027s the reason for using Attributes here, but Properties above?",
+      "range": {
+        "startLine": 65,
+        "startChar": 56,
+        "endLine": 65,
+        "endChar": 69
+      },
+      "revId": "127a544430526e8295b590e352595cc38f843fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e917b06_7be0cb83",
+        "filename": "components/ui_devtools/views/view_element.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-30T20:10:15Z",
+      "side": 1,
+      "message": "You can use auto, e.g.\n\n  auto attributes \u003d protocol::Array\u003cstd::string\u003e::create();",
+      "revId": "127a544430526e8295b590e352595cc38f843fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
