@@ -93,6 +93,30 @@
       "revId": "c23567d4ab4899aa459c687d693a916a8af87050",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8298c575_412b4cc9",
+        "filename": "components/cbor/cbor_values.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-30T08:33:48Z",
+      "side": 1,
+      "message": "Ah, thanks for the catch! Then, I would be fine either 1) using static method as currently is or 2) using CBORValue(base::StringPiece, Type). \n\nIf you choose to use static method, please put the static method(both in the header and .cc file) above the constructors per https://google.github.io/styleguide/cppguide.html#Declaration_Order.\n\nBut please wait for Jochen\u0027s confirmation. :)",
+      "parentUuid": "7d5fd946_c6929260",
+      "range": {
+        "startLine": 110,
+        "startChar": 10,
+        "endLine": 110,
+        "endChar": 55
+      },
+      "revId": "c23567d4ab4899aa459c687d693a916a8af87050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
