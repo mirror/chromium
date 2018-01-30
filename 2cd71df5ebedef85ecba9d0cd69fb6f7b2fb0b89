@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f505b2c3_783be9c9",
+        "filename": "third_party/WebKit/Source/core/origin_trials/OriginTrialContext.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2018-01-30T20:34:12Z",
+      "side": 1,
+      "message": "As in my other comment, will leave as is.",
+      "parentUuid": "1eb6c78f_9e02951c",
+      "revId": "2cd71df5ebedef85ecba9d0cd69fb6f7b2fb0b89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ee5edc3_e54f2782",
         "filename": "third_party/WebKit/Source/core/workers/GlobalScopeCreationParams.h",
         "patchSetId": 5
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "e4e80f07_c0965adc",
+        "filename": "third_party/WebKit/Source/core/workers/GlobalScopeCreationParams.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2018-01-30T20:34:12Z",
+      "side": 1,
+      "message": "For the record, leaving as starter_secure_context to emphasize the value should be provided from the document, same as starter_origin. Added a more explicit comment to that effect.",
+      "parentUuid": "39cc5ae8_51e7f1c8",
+      "revId": "2cd71df5ebedef85ecba9d0cd69fb6f7b2fb0b89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10eb16c7_e7f991c4",
         "filename": "third_party/WebKit/Source/core/workers/WorkletGlobalScope.h",
         "patchSetId": 5
@@ -89,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "76395380_ab079e42",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletGlobalScope.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2018-01-30T20:34:12Z",
+      "side": 1,
+      "message": "I don\u0027t feel the longer name clarifies enough, but did expand the comment.",
+      "parentUuid": "10eb16c7_e7f991c4",
+      "revId": "2cd71df5ebedef85ecba9d0cd69fb6f7b2fb0b89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "714b45fc_d0072d55",
         "filename": "third_party/WebKit/Source/core/workers/WorkletGlobalScope.h",
         "patchSetId": 5
@@ -103,6 +157,24 @@
       "revId": "2cd71df5ebedef85ecba9d0cd69fb6f7b2fb0b89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11127801_4c45c48c",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletGlobalScope.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2018-01-30T20:34:12Z",
+      "side": 1,
+      "message": "I don\u0027t feel the longer name clarifies enough, but did expand the comment.",
+      "parentUuid": "714b45fc_d0072d55",
+      "revId": "2cd71df5ebedef85ecba9d0cd69fb6f7b2fb0b89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
