@@ -679,10 +679,21 @@ class Generator(generator.Generator):
     return self._GetCppWrapperType(kind, add_same_module_namespaces=True)
 
   def _MethodSupportsLazySerialization(self, method):
+    if not self.support_lazy_serialization:
+      return False
+
     # TODO(crbug.com/753433): Support lazy serialization for methods which pass
     # associated handles.
-    return (self.support_lazy_serialization and
-        not mojom.MethodPassesAssociatedKinds(method))
+    if mojom.MethodPassesAssociatedKinds(method):
+      return False
+
+    all_params = method.parameters + (method.response_parameters or [])
+    def should_force_serialize(param):
+      if not self._IsTypemappedKind(param.kind):
+        return False
+      return self.typemap[self._GetFullMojomNameForKind(param.kind)][
+          "force_serialize"]
+    return not any(should_force_serialize(param) for param in all_params)
 
   def _TranslateConstants(self, token, kind):
     if isinstance(token, mojom.NamedValue):

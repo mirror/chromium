@@ -170,6 +170,26 @@ class UnionWithTraitsStruct : public UnionWithTraitsBase {
   NestedStructWithTraitsImpl struct_;
 };
 
+class StructForceSerializeImpl {
+ public:
+  StructForceSerializeImpl();
+  ~StructForceSerializeImpl();
+
+  void set_value(int32_t value) { value_ = value; }
+  int32_t value() const { return value_; }
+
+  void set_was_serialized() const { was_serialized_ = true; }
+  bool was_serialized() const { return was_serialized_; }
+
+  void set_was_deserialized() { was_deserialized_ = true; }
+  bool was_deserialized() const { return was_deserialized_; }
+
+ private:
+  int32_t value_ = 0;
+  mutable bool was_serialized_ = false;
+  bool was_deserialized_ = false;
+};
+
 }  // namespace test
 }  // namespace mojo
 

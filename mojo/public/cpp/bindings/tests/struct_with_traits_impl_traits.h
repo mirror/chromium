@@ -202,6 +202,22 @@ struct UnionTraits<test::UnionWithTraitsDataView,
   }
 };
 
+template <>
+struct StructTraits<test::StructForceSerializeDataView,
+                    test::StructForceSerializeImpl> {
+  static int32_t value(const test::StructForceSerializeImpl& impl) {
+    impl.set_was_serialized();
+    return impl.value();
+  }
+
+  static bool Read(test::StructForceSerializeDataView data,
+                   test::StructForceSerializeImpl* out) {
+    out->set_value(data.value());
+    out->set_was_deserialized();
+    return true;
+  }
+};
+
 }  // namespace mojo
 
 #endif  // MOJO_PUBLIC_CPP_BINDINGS_TESTS_STRUCT_WITH_TRAITS_IMPL_TRAITS_H_
