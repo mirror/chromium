@@ -26,6 +26,9 @@ class ShellDevToolsManagerDelegate : public DevToolsManagerDelegate {
   scoped_refptr<DevToolsAgentHost> CreateNewTarget(const GURL& url) override;
   std::string GetDiscoveryPageHTML() override;
   std::string GetFrontendResource(const std::string& path) override;
+  bool HandleCommand(DevToolsAgentHost* agent_host,
+                     DevToolsAgentHostClient* client,
+                     base::DictionaryValue* command) override;
 
  private:
   BrowserContext* browser_context_;
