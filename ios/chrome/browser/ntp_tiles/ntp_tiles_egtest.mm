@@ -24,10 +24,10 @@
 using web::test::HttpServer;
 
 // Test case for NTP tiles.
-@interface NTPTilesTest : ChromeTestCase
+@interface NTPTilesTestCase : ChromeTestCase
 @end
 
-@implementation NTPTilesTest
+@implementation NTPTilesTestCase
 
 - (void)tearDown {
   chrome_test_util::ClearBrowsingHistory();

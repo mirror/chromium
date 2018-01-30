@@ -45,11 +45,11 @@ const char kContactDetailsFreeShippingPage[] =
 
 // Various tests to validate that the use stats for the autofill cards and
 // profiles used in a Payment Request are properly updated upon completion.
-@interface PaymentRequestPaymentUseStatsEGTest : PaymentRequestEGTestBase
+@interface PaymentRequestPaymentUseStatsTestCase : PaymentRequestEGTestBase
 
 @end
 
-@implementation PaymentRequestPaymentUseStatsEGTest
+@implementation PaymentRequestPaymentUseStatsTestCase
 
 #pragma mark - Helper methods
 

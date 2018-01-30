@@ -62,10 +62,10 @@ std::unique_ptr<net::test_server::HttpResponse> GetResponse(
 }  // namespace
 
 // Tests PassKit file download.
-@interface PassKitEGTest : ChromeTestCase
+@interface PassKitTestCase : ChromeTestCase
 @end
 
-@implementation PassKitEGTest
+@implementation PassKitTestCase
 
 - (void)setUp {
   [super setUp];

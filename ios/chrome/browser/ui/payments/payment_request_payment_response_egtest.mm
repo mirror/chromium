@@ -46,12 +46,12 @@ const char kRequestEmailPage[] =
 
 // Various tests for the validity of the payment response generated with an
 // autofill payment instrument.
-@interface PaymentRequestPaymentResponseAutofillPaymentInstrumentEGTest
+@interface PaymentRequestPaymentResponseAutofillPaymentInstrumentTestCase
     : PaymentRequestEGTestBase
 
 @end
 
-@implementation PaymentRequestPaymentResponseAutofillPaymentInstrumentEGTest
+@implementation PaymentRequestPaymentResponseAutofillPaymentInstrumentTestCase
 
 #pragma mark - Tests
 

@@ -83,11 +83,11 @@ id<GREYMatcher> RequiredSelectorEditorFieldMatcher(int string_id) {
 }  // namespace
 
 // Various accessibility tests for Payment Request.
-@interface PaymentRequestAccessibilityEGTest : PaymentRequestEGTestBase
+@interface PaymentRequestAccessibilityTestCase : PaymentRequestEGTestBase
 
 @end
 
-@implementation PaymentRequestAccessibilityEGTest {
+@implementation PaymentRequestAccessibilityTestCase {
   autofill::AutofillProfile _profile;
   autofill::CreditCard _creditCard1;
   autofill::CreditCard _creditCard2;

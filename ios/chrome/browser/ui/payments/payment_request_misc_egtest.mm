@@ -24,11 +24,11 @@ const char kMultipleRequestsPage[] =
 }  // namepsace
 
 // Miscellaneous tests for the Payment Request.
-@interface PaymentRequestMiscellaneousEGTest : PaymentRequestEGTestBase
+@interface PaymentRequestMiscellaneousTestCase : PaymentRequestEGTestBase
 
 @end
 
-@implementation PaymentRequestMiscellaneousEGTest
+@implementation PaymentRequestMiscellaneousTestCase
 
 #pragma mark - Tests
 

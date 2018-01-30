@@ -21,10 +21,10 @@ using payments::JourneyLogger;
 }  // namespace
 
 // Journey logger tests for Payment Request.
-@interface PaymentRequestJourneyLoggerEGTest : PaymentRequestEGTestBase
+@interface PaymentRequestJourneyLoggerTestCase : PaymentRequestEGTestBase
 @end
 
-@implementation PaymentRequestJourneyLoggerEGTest {
+@implementation PaymentRequestJourneyLoggerTestCase {
   autofill::AutofillProfile _profile1;
   autofill::AutofillProfile _profile2;
   autofill::CreditCard _creditCard1;

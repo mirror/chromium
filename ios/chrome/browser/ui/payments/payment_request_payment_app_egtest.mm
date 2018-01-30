@@ -21,11 +21,11 @@ const char kBobPayPage[] =
 }  // namepsace
 
 // Tests for a merchant that requests payment apps as the payment method.
-@interface PaymentRequestPaymentAppEGTest : PaymentRequestEGTestBase
+@interface PaymentRequestPaymentAppTestCase : PaymentRequestEGTestBase
 
 @end
 
-@implementation PaymentRequestPaymentAppEGTest
+@implementation PaymentRequestPaymentAppTestCase
 
 #pragma mark - Tests
 

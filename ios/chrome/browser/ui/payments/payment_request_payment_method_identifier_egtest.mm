@@ -29,12 +29,12 @@ const char kPaymentMethodIdentifierPage[] =
 
 // Various tests to ensure that the payment method identifiers are correctly
 // parsed.
-@interface PaymentRequestPaymentMethodIdentifierEGTest
+@interface PaymentRequestPaymentMethodIdentifierTestCase
     : PaymentRequestEGTestBase
 
 @end
 
-@implementation PaymentRequestPaymentMethodIdentifierEGTest
+@implementation PaymentRequestPaymentMethodIdentifierTestCase
 
 #pragma mark - Tests
 

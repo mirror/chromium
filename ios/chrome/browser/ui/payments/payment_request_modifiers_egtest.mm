@@ -50,11 +50,11 @@ id<GREYMatcher> PaymentMethodCellMatcher(
 }  // namepsace
 
 // Tests for the PaymentDetailsModifier.
-@interface PaymentRequestModifiersEGTest : PaymentRequestEGTestBase
+@interface PaymentRequestModifiersTestCase : PaymentRequestEGTestBase
 
 @end
 
-@implementation PaymentRequestModifiersEGTest {
+@implementation PaymentRequestModifiersTestCase {
   autofill::AutofillProfile _profile;
   autofill::CreditCard _localCard;
   autofill::CreditCard _serverCard;
