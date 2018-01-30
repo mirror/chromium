@@ -2,7 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "net/tools/quic/quic_http_response_cache.h"
+#include "net/tools/quic/quic_memory_cache_backend.h"
+#include "net/tools/quic/quic_backend_response.h"
 
 #include "base/files/file_path.h"
 #include "base/path_service.h"
@@ -17,11 +18,11 @@ namespace net {
 namespace test {
 
 namespace {
-typedef QuicHttpResponseCache::Response Response;
-typedef QuicHttpResponseCache::ServerPushInfo ServerPushInfo;
+typedef QuicBackendResponse Response;
+typedef QuicBackendResponse::ServerPushInfo ServerPushInfo;
 };  // namespace
 
-class QuicHttpResponseCacheTest : public QuicTest {
+class QuicMemoryCacheBackendTest : public QuicTest {
  protected:
   void CreateRequest(string host, string path, SpdyHeaderBlock* headers) {
     (*headers)[":method"] = "GET";
@@ -39,30 +40,29 @@ class QuicHttpResponseCacheTest : public QuicTest {
     return path.MaybeAsASCII();
   }
 
-  QuicHttpResponseCache cache_;
+  QuicMemoryCacheBackend cache_;
 };
 
-TEST_F(QuicHttpResponseCacheTest, GetResponseNoMatch) {
-  const QuicHttpResponseCache::Response* response =
+TEST_F(QuicMemoryCacheBackendTest, GetResponseNoMatch) {
+  const Response* response =
       cache_.GetResponse("mail.google.com", "/index.html");
   ASSERT_FALSE(response);
 }
 
-TEST_F(QuicHttpResponseCacheTest, AddSimpleResponseGetResponse) {
+TEST_F(QuicMemoryCacheBackendTest, AddSimpleResponseGetResponse) {
   string response_body("hello response");
   cache_.AddSimpleResponse("www.google.com", "/", 200, response_body);
 
   SpdyHeaderBlock request_headers;
   CreateRequest("www.google.com", "/", &request_headers);
-  const QuicHttpResponseCache::Response* response =
-      cache_.GetResponse("www.google.com", "/");
+  const Response* response = cache_.GetResponse("www.google.com", "/");
   ASSERT_TRUE(response);
   ASSERT_TRUE(QuicContainsKey(response->headers(), ":status"));
   EXPECT_EQ("200", response->headers().find(":status")->second);
   EXPECT_EQ(response_body.size(), response->body().length());
 }
 
-TEST_F(QuicHttpResponseCacheTest, AddResponse) {
+TEST_F(QuicMemoryCacheBackendTest, AddResponse) {
   const string kRequestHost = "www.foo.com";
   const string kRequestPath = "/";
   const string kResponseBody("hello response");
@@ -81,16 +81,15 @@ TEST_F(QuicHttpResponseCacheTest, AddResponse) {
   cache_.AddResponse(kRequestHost, "/", response_headers.Clone(), kResponseBody,
                      response_trailers.Clone());
 
-  const QuicHttpResponseCache::Response* response =
-      cache_.GetResponse(kRequestHost, kRequestPath);
+  const Response* response = cache_.GetResponse(kRequestHost, kRequestPath);
   EXPECT_EQ(response->headers(), response_headers);
   EXPECT_EQ(response->body(), kResponseBody);
   EXPECT_EQ(response->trailers(), response_trailers);
 }
 
-TEST_F(QuicHttpResponseCacheTest, ReadsCacheDir) {
-  cache_.InitializeFromDirectory(CacheDirectory());
-  const QuicHttpResponseCache::Response* response =
+TEST_F(QuicMemoryCacheBackendTest, ReadsCacheDir) {
+  cache_.InitializeBackend(CacheDirectory());
+  const Response* response =
       cache_.GetResponse("test.example.com", "/index.html");
   ASSERT_TRUE(response);
   ASSERT_TRUE(QuicContainsKey(response->headers(), ":status"));
@@ -100,23 +99,23 @@ TEST_F(QuicHttpResponseCacheTest, ReadsCacheDir) {
   EXPECT_LT(0U, response->body().length());
 }
 
-TEST_F(QuicHttpResponseCacheTest, ReadsCacheDirWithServerPushResource) {
-  cache_.InitializeFromDirectory(CacheDirectory() + "_with_push");
+TEST_F(QuicMemoryCacheBackendTest, ReadsCacheDirWithServerPushResource) {
+  cache_.InitializeBackend(CacheDirectory() + "_with_push");
   std::list<ServerPushInfo> resources =
       cache_.GetServerPushResources("test.example.com/");
   ASSERT_EQ(1UL, resources.size());
 }
 
-TEST_F(QuicHttpResponseCacheTest, ReadsCacheDirWithServerPushResources) {
-  cache_.InitializeFromDirectory(CacheDirectory() + "_with_push");
+TEST_F(QuicMemoryCacheBackendTest, ReadsCacheDirWithServerPushResources) {
+  cache_.InitializeBackend(CacheDirectory() + "_with_push");
   std::list<ServerPushInfo> resources =
       cache_.GetServerPushResources("test.example.com/index2.html");
   ASSERT_EQ(2UL, resources.size());
 }
 
-TEST_F(QuicHttpResponseCacheTest, UsesOriginalUrl) {
-  cache_.InitializeFromDirectory(CacheDirectory());
-  const QuicHttpResponseCache::Response* response =
+TEST_F(QuicMemoryCacheBackendTest, UsesOriginalUrl) {
+  cache_.InitializeBackend(CacheDirectory());
+  const Response* response =
       cache_.GetResponse("test.example.com", "/site_map.html");
   ASSERT_TRUE(response);
   ASSERT_TRUE(QuicContainsKey(response->headers(), ":status"));
@@ -126,10 +125,9 @@ TEST_F(QuicHttpResponseCacheTest, UsesOriginalUrl) {
   EXPECT_LT(0U, response->body().length());
 }
 
-TEST_F(QuicHttpResponseCacheTest, DefaultResponse) {
+TEST_F(QuicMemoryCacheBackendTest, DefaultResponse) {
   // Verify GetResponse returns nullptr when no default is set.
-  const QuicHttpResponseCache::Response* response =
-      cache_.GetResponse("www.google.com", "/");
+  const Response* response = cache_.GetResponse("www.google.com", "/");
   ASSERT_FALSE(response);
 
   // Add a default response.
@@ -137,8 +135,7 @@ TEST_F(QuicHttpResponseCacheTest, DefaultResponse) {
   response_headers[":version"] = "HTTP/1.1";
   response_headers[":status"] = "200";
   response_headers["content-length"] = "0";
-  QuicHttpResponseCache::Response* default_response =
-      new QuicHttpResponseCache::Response;
+  Response* default_response = new Response;
   default_response->set_headers(std::move(response_headers));
   cache_.AddDefaultResponse(default_response);
 
@@ -162,12 +159,12 @@ TEST_F(QuicHttpResponseCacheTest, DefaultResponse) {
   EXPECT_EQ("200", response->headers().find(":status")->second);
 }
 
-TEST_F(QuicHttpResponseCacheTest, AddSimpleResponseWithServerPushResources) {
+TEST_F(QuicMemoryCacheBackendTest, AddSimpleResponseWithServerPushResources) {
   string request_host = "www.foo.com";
   string response_body("hello response");
   const size_t kNumResources = 5;
   int NumResources = 5;
-  std::list<QuicHttpResponseCache::ServerPushInfo> push_resources;
+  std::list<ServerPushInfo> push_resources;
   string scheme = "http";
   for (int i = 0; i < NumResources; ++i) {
     string path = "/server_push_src" + QuicTextUtils::Uint64ToString(i);
@@ -199,14 +196,14 @@ TEST_F(QuicHttpResponseCacheTest, AddSimpleResponseWithServerPushResources) {
   }
 }
 
-TEST_F(QuicHttpResponseCacheTest, GetServerPushResourcesAndPushResponses) {
+TEST_F(QuicMemoryCacheBackendTest, GetServerPushResourcesAndPushResponses) {
   string request_host = "www.foo.com";
   string response_body("hello response");
   const size_t kNumResources = 4;
   int NumResources = 4;
   string scheme = "http";
   string push_response_status[kNumResources] = {"200", "200", "301", "404"};
-  std::list<QuicHttpResponseCache::ServerPushInfo> push_resources;
+  std::list<ServerPushInfo> push_resources;
   for (int i = 0; i < NumResources; ++i) {
     string path = "/server_push_src" + QuicTextUtils::Uint64ToString(i);
     string url = scheme + "://" + request_host + path;
@@ -231,8 +228,7 @@ TEST_F(QuicHttpResponseCacheTest, GetServerPushResourcesAndPushResponses) {
     QuicUrl url = resources.front().request_url;
     string host = url.host();
     string path = url.path();
-    const QuicHttpResponseCache::Response* response =
-        cache_.GetResponse(host, path);
+    const Response* response = cache_.GetResponse(host, path);
     ASSERT_TRUE(response);
     ASSERT_TRUE(QuicContainsKey(response->headers(), ":status"));
     EXPECT_EQ(push_response_status[i++],

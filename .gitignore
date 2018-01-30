@@ -1,3 +1,4 @@
+*.arcconfig
 *.gypcmd
 *.mk
 *.ncb
