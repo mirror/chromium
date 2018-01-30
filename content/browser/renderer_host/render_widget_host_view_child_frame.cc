@@ -282,6 +282,12 @@ gfx::Rect RenderWidgetHostViewChildFrame::GetViewBounds() const {
       // Translate frame_rect by the parent's RenderWidgetHostView offset.
       rect.Offset(parent_view->GetViewBounds().OffsetFromOrigin());
     }
+    // TODO(fsamuel): GetViewBounds is a bit of a mess. It's used to determine
+    // the size of the renderer content and where to place context menus and so
+    // on. We want the location of the frame in screen coordinates to place
+    // popups but we want the size in local coordinates to produce the right-
+    // sized CompositorFrames.
+    rect.set_size(frame_connector_->local_frame_size_in_dip());
   }
   return rect;
 }
@@ -346,7 +352,7 @@ SkColor RenderWidgetHostViewChildFrame::background_color() const {
 
 gfx::Size RenderWidgetHostViewChildFrame::GetPhysicalBackingSize() const {
   if (frame_connector_)
-    return frame_connector_->frame_rect_in_pixels().size();
+    return frame_connector_->local_frame_size_in_pixels();
   return gfx::Size();
 }
 
