@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a2258a6_246c3549",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-scroll-snap/snap-at-user-scroll-end-manual.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-30T16:51:06Z",
+      "side": 1,
+      "message": "nit: Assert description should be a bit more descriptive! e.g., \u0027window.scrollX should be at snapped position\u0027",
+      "range": {
+        "startLine": 76,
+        "startChar": 52,
+        "endLine": 76,
+        "endChar": 59
+      },
+      "revId": "da11200ee2a2f243b3a5c69ec051a18d99e0d05d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e923d78f_7032505d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-scroll-snap/snap-at-user-scroll-end-manual.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-30T16:51:06Z",
+      "side": 1,
+      "message": "nit: unnecessary blank line!",
+      "revId": "da11200ee2a2f243b3a5c69ec051a18d99e0d05d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
