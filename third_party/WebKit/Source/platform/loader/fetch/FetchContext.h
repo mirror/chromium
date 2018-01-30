@@ -273,6 +273,15 @@ class PLATFORM_EXPORT FetchContext
     return priority;
   }
 
+  // Returns if the resource_url is identified as ad. Note that since this is
+  // backed by a single element cache, it should only be invoked after
+  // CanRequest.
+  virtual bool IsAdResource(
+      const KURL& resource_url,
+      WebURLRequest::RequestContext request_context) const {
+    return false;
+  }
+
  protected:
   FetchContext();
 
