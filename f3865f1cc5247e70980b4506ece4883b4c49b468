@@ -2,6 +2,108 @@
   "comments": [
     {
       "key": {
+        "uuid": "27a92409_3c8bad78",
+        "filename": "chromeos/network/client_cert_resolver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-30T20:03:44Z",
+      "side": 1,
+      "message": "The name of this confused me some. Maybe name this MatchingCertAndResolveStatus ?",
+      "revId": "f3865f1cc5247e70980b4506ece4883b4c49b468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5757f31_8b3ee12f",
+        "filename": "chromeos/network/client_cert_resolver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-30T20:03:44Z",
+      "side": 1,
+      "message": "nit: This would be a little more clear as an enum, { RESOLVING, RESOLVED }.",
+      "revId": "f3865f1cc5247e70980b4506ece4883b4c49b468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30661934_188fc542",
+        "filename": "chromeos/network/client_cert_resolver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-30T20:03:44Z",
+      "side": 1,
+      "message": "s/settings/properties/ ?",
+      "revId": "f3865f1cc5247e70980b4506ece4883b4c49b468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45e26431_879a051f",
+        "filename": "chromeos/network/client_cert_resolver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-30T20:03:44Z",
+      "side": 1,
+      "message": "Sorry that I am late to this, but moving this makes it pretty dfficult to review. If this is primarily to make ClientCertResolver::NetworkAndMatchingCert private, I would just move NetworkAndMatchingCert out of to ClientCertResolver an internal:: namespace and forward declare it in the header.",
+      "revId": "f3865f1cc5247e70980b4506ece4883b4c49b468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d785a4bb_2d2dc7ee",
+        "filename": "chromeos/network/client_cert_resolver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-30T20:03:44Z",
+      "side": 1,
+      "message": "nit:\n  matches.push_back(NetworkAndMatchingCert(network_and_pattern, nullptr));\n  continue;",
+      "revId": "f3865f1cc5247e70980b4506ece4883b4c49b468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "790d7969_e010a340",
+        "filename": "chromeos/network/client_cert_resolver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-30T20:03:44Z",
+      "side": 1,
+      "message": "Can we just pass a network_and_pattern (by \u0026) to NetworkAndMatchingCert() ?",
+      "revId": "f3865f1cc5247e70980b4506ece4883b4c49b468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "91c7bf15_5e8fa8b9",
         "filename": "chromeos/network/client_cert_resolver.h",
         "patchSetId": 6
@@ -13,6 +115,30 @@
       "writtenOn": "2018-01-30T14:15:06Z",
       "side": 1,
       "message": "nit: It\u0027s a pointer-to-const - can\u0027t it be a const-ref, i.e. is Owned() actually useful here?\nWould be nice to avoid it.",
+      "range": {
+        "startLine": 116,
+        "startChar": 6,
+        "endLine": 116,
+        "endChar": 47
+      },
+      "revId": "f3865f1cc5247e70980b4506ece4883b4c49b468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f1f8ba0_0f5f3c6d",
+        "filename": "chromeos/network/client_cert_resolver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-30T20:03:44Z",
+      "side": 1,
+      "message": "+1, this code has evolved (likely from before base::Bind), I would convert to const\u0026.\n\nAlso, see my other comment, I would prefer to keep this file local.",
+      "parentUuid": "91c7bf15_5e8fa8b9",
       "range": {
         "startLine": 116,
         "startChar": 6,
