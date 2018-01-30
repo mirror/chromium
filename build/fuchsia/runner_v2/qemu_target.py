@@ -117,7 +117,7 @@ class QemuTarget(target.Target):
         qemu_command, stdout=open(os.devnull), stdin=open(os.devnull),
         stderr=open(os.devnull))
 
-    self._WaitUntilReady();
+    self._Connect();
 
   def Shutdown(self):
     logging.info('Shutting down QEMU.')

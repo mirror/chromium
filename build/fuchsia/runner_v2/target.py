@@ -100,7 +100,7 @@ class Target(object):
   def _AssertIsStarted(self):
     assert self.IsStarted()
 
-  def _WaitUntilReady(self, retries=_ATTACH_MAX_RETRIES):
+  def _Connect(self, retries=_ATTACH_MAX_RETRIES):
     logging.debug('Connecting to Fuchsia using SSH.')
     for _ in xrange(retries+1):
       host, port = self._GetEndpoint()

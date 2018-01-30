@@ -19,11 +19,25 @@ _BACKTRACE_ENTRY_RE = re.compile(
     r'(?: \((?P<binary>\S+),(?P<pc_offset>0x[0-9a-f]+)\))?$')
 
 
+def _GetUnstrippedPath(path):
+  """Computes the path to the unstripped binary stored at |path|."""
+
+  if path.endswith('.so'):
+    return os.path.normpath(
+        os.path.join(path, os.path.pardir, 'lib.unstripped',
+                     os.path.basename(path)))
+  else:
+    return os.path.normpath(
+        os.path.join(path, os.path.pardir, 'exe.unstripped',
+                     os.path.basename(path)))
+
+
 def FilterStream(stream, manifest_path, output_dir):
   """Looks for backtrace lines from an iterable |stream| and symbolizes them.
   Yields a stream of strings with symbolized entries replaced."""
 
   return _SymbolizerFilter(manifest_path, output_dir).SymbolizeStream(stream)
+
 
 class _SymbolizerFilter(object):
   """Adds backtrace symbolization capabilities to a process output stream."""
@@ -36,13 +50,14 @@ class _SymbolizerFilter(object):
     for next_line in open(manifest_path):
       split = next_line.strip().split('=')
       target = split[0]
-      source = os.path.join(output_dir, split[1])
 
+      source = os.path.join(output_dir, split[1])
       with open(source, 'rb') as f:
         file_tag = f.read(4)
       if file_tag != '\x7fELF':
         continue
 
+      source = _GetUnstrippedPath(source)
       self._symbols_mapping[os.path.basename(target)] = source
       self._symbols_mapping[target] = source
       logging.debug('Symbols: %s -> %s' % (source, target))
@@ -51,7 +66,6 @@ class _SymbolizerFilter(object):
     """Symbolizes the parsed backtrace |entries| by calling addr2line.
 
     Returns a set of (frame_id, result) pairs."""
-
     filename_re = re.compile(r'at ([-._a-zA-Z0-9/+]+):(\d+)')
 
     # Use addr2line to symbolize all the |pc_offset|s in |entries| in one go.
@@ -76,8 +90,7 @@ class _SymbolizerFilter(object):
       else:
         output_line = addr2line_output.pop(0)
 
-        # Relativize path to the current working (output) directory if we see
-        # a filename.
+        # Relativize path to the current working directory if we see a filename.
         def RelativizePath(m):
           relpath = os.path.relpath(os.path.normpath(m.group(1)))
           return 'at ' + relpath + ':' + m.group(2)
@@ -102,7 +115,6 @@ class _SymbolizerFilter(object):
   def _LookupDebugBinary(self, entry):
     """Looks up the binary listed in |entry| in the |_symbols_mapping|.
     Returns the corresponding host-side binary's filename, or None."""
-
     binary = entry['binary']
     if not binary:
       return None

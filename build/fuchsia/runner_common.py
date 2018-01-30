@@ -133,6 +133,19 @@ def _ExpandDirectories(file_mapping, mapper):
   return expanded
 
 
+def _GetUnstrippedPath(path):
+  """Computes the path to the unstripped binary stored at |path|."""
+
+  if path.endswith('.so'):
+    return os.path.normpath(
+        os.path.join(path, os.path.pardir, 'lib.unstripped',
+                     os.path.basename(path)))
+  else:
+    return os.path.normpath(
+        os.path.join(path, os.path.pardir, 'exe.unstripped',
+                     os.path.basename(path)))
+
+
 def _GetSymbolsMapping(dry_run, file_mapping):
   """Generates symbols mapping from |file_mapping| by filtering out all files
   that are not ELF binaries."""
@@ -143,6 +156,7 @@ def _GetSymbolsMapping(dry_run, file_mapping):
     if file_tag != '\x7fELF':
       continue
 
+    source = _GetUnstrippedPath(source)
     symbols_mapping[os.path.basename(target)] = source
     symbols_mapping[target] = source
 

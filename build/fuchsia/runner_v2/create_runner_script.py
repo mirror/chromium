@@ -80,8 +80,7 @@ def main(args):
         runner_args=repr(runner_args),
         runner_path_args=repr(runner_path_args)))
 
-  # Sets the mode of the generated script so that it is executable by the
-  # current user.
+  # Turn on the executable bit of the generated script.
   os.chmod(args.script_output_path, 0750)
 
 
