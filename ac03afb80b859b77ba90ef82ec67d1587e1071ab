@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8af8c9ad_53df01ac",
+        "filename": "tools/traffic_annotation/scripts/check_annotations.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-01-30T09:15:41Z",
+      "side": 1,
+      "message": "Is this intentional?",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 42
+      },
+      "revId": "ac03afb80b859b77ba90ef82ec67d1587e1071ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
