@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b26467dc_e2944076",
+        "filename": "chrome/android/java/res/layout/tabular_context_menu_page.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-30T20:41:56Z",
+      "side": 1,
+      "message": "Why a TextView?\n\nConversely, could we just add a \u003cSpace\u003e element that is 10dp that exists below the context_header_text that is show any time the image is shown?  We\u0027d get rid of the margin bottom from the element below.",
+      "range": {
+        "startLine": 36,
+        "startChar": 9,
+        "endLine": 36,
+        "endChar": 17
+      },
+      "revId": "051aaa4729c0df47cc3cb65447e43646d177b097",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
