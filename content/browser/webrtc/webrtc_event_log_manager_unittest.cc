@@ -199,10 +199,11 @@ class WebRtcEventLogManagerTest : public ::testing::TestWithParam<bool> {
 
   bool StartRemoteLogging(int render_process_id,
                           int lid,
-                          size_t max_size_bytes = kArbitraryVeryLargeFileSize) {
+                          size_t max_size_bytes = kArbitraryVeryLargeFileSize,
+                          const std::string& metadata = "") {
     bool result;
     manager_->StartRemoteLogging(render_process_id, lid, max_size_bytes,
-                                 BoolReplyClosure(&result));
+                                 metadata, BoolReplyClosure(&result));
     WaitForReply();
     return result;
   }
@@ -1420,6 +1421,13 @@ TEST_F(WebRtcEventLogManagerTest,
   EXPECT_TRUE(base::ReadFileToString(*file_path, &file_contents));
   EXPECT_EQ(file_contents, output);
 }
+
+// TODO: !!! Unit tests include:
+// 1. Wrong version byte
+// 2. Zero length metadata
+// 3. Normal metadata
+// 4. Metadata exceeds length of maximum allowed file
+// 5. Metadata is exactly the length of the allowed file
 
 TEST_F(WebRtcEventLogManagerTest, WriteToBothLocalAndRemoteFiles) {
   const PeerConnectionKey key(rph_->GetID(), kPeerConnectionId);

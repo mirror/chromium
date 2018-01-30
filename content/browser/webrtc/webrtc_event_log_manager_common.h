@@ -45,6 +45,10 @@ CONTENT_EXPORT extern const size_t kMaxPendingRemoteBoundWebRtcEventLogs;
 // kept on local disk.
 CONTENT_EXPORT extern const base::FilePath::CharType kRemoteBoundLogExtension[];
 
+// Version of the remote-bound log. Refers to the version of the event logs'
+// encoding, method for separation of metadata from the WebRTC event log, etc.
+CONTENT_EXPORT extern const uint8_t kRemoteBoundLogVersion;
+
 // Remote-bound event logs will not be uploaded if the time since their last
 // modification (meaning the time when they were completed) exceeds this value.
 // Such expired files will be purged from disk when examined.
