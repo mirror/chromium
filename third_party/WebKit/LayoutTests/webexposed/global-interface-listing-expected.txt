@@ -3072,6 +3072,7 @@ interface HTMLMediaElement : HTMLElement
     getter currentTime
     getter defaultMuted
     getter defaultPlaybackRate
+    getter disablePictureInPicture
     getter disableRemotePlayback
     getter duration
     getter ended
@@ -3114,6 +3115,7 @@ interface HTMLMediaElement : HTMLElement
     setter currentTime
     setter defaultMuted
     setter defaultPlaybackRate
+    setter disablePictureInPicture
     setter disableRemotePlayback
     setter loop
     setter muted
