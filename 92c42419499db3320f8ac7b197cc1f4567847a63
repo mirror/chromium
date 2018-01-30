@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ef6ee4cb_f61fdcc5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2018-01-30T02:16:22Z",
+      "side": 1,
+      "message": "I tried to describe it as other CLs did and checked https://www.chromium.org/developers/contributing-code#TOC-Writing-commit-descriptions, but I am not sure my description is looking good. PTAL.",
+      "parentUuid": "25599d8b_53eff63b",
+      "range": {
+        "startLine": 12,
+        "startChar": 12,
+        "endLine": 12,
+        "endChar": 80
+      },
+      "revId": "92c42419499db3320f8ac7b197cc1f4567847a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a9eb517_490e3f5d",
         "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "92c42419499db3320f8ac7b197cc1f4567847a63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3333f5aa_bf092817",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2018-01-30T02:16:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a9eb517_490e3f5d",
+      "range": {
+        "startLine": 1469,
+        "startChar": 17,
+        "endLine": 1469,
+        "endChar": 20
+      },
+      "revId": "92c42419499db3320f8ac7b197cc1f4567847a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "caca46a2_cf2993de",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1477,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2018-01-30T02:16:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05a92efb_b6edb7a5",
+      "range": {
+        "startLine": 1477,
+        "startChar": 29,
+        "endLine": 1477,
+        "endChar": 49
+      },
+      "revId": "92c42419499db3320f8ac7b197cc1f4567847a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5eaa761_3db16622",
         "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "92c42419499db3320f8ac7b197cc1f4567847a63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d73e2a7b_3cf77cbb",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1478,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2018-01-30T02:16:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5eaa761_3db16622",
+      "range": {
+        "startLine": 1478,
+        "startChar": 34,
+        "endLine": 1478,
+        "endChar": 45
+      },
+      "revId": "92c42419499db3320f8ac7b197cc1f4567847a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
