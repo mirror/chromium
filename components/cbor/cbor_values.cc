@@ -12,6 +12,11 @@
 
 namespace cbor {
 
+CBORValue CBORValue::BytestringFromString(
+    base::StringPiece in_string) noexcept {
+  return CBORValue(BinaryValue(in_string.begin(), in_string.end()));
+}
+
 CBORValue::CBORValue() noexcept : type_(Type::NONE) {}
 
 CBORValue::CBORValue(CBORValue&& that) noexcept {
@@ -169,6 +174,14 @@ const std::string& CBORValue::GetString() const {
 const CBORValue::BinaryValue& CBORValue::GetBytestring() const {
   CHECK(is_bytestring());
   return bytestring_value_;
+}
+
+base::StringPiece CBORValue::GetBytestringAsString() const {
+  CHECK(is_bytestring());
+  const auto& bytestring_value = GetBytestring();
+  return base::StringPiece(
+      reinterpret_cast<const char*>(bytestring_value.data()),
+      bytestring_value.size());
 }
 
 const CBORValue::ArrayValue& CBORValue::GetArray() const {

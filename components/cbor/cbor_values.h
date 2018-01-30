@@ -93,6 +93,8 @@ class CBOR_EXPORT CBORValue {
     UNDEFINED = 23,
   };
 
+  static CBORValue BytestringFromString(base::StringPiece in_string) noexcept;
+
   CBORValue(CBORValue&& that) noexcept;
   CBORValue() noexcept;  // A NONE value.
 
@@ -152,6 +154,7 @@ class CBOR_EXPORT CBORValue {
   const int64_t& GetUnsigned() const;
   const int64_t& GetNegative() const;
   const BinaryValue& GetBytestring() const;
+  base::StringPiece GetBytestringAsString() const;
   // Returned string may contain NUL characters.
   const std::string& GetString() const;
   const ArrayValue& GetArray() const;
