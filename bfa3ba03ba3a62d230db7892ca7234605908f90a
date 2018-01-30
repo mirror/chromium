@@ -69,6 +69,24 @@
       "revId": "bfa3ba03ba3a62d230db7892ca7234605908f90a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "255fbc4a_a8262390",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1226,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2018-01-30T03:10:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b8c86771_f8080a24",
+      "revId": "bfa3ba03ba3a62d230db7892ca7234605908f90a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
