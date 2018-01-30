@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "44848ab1_597c403c",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-30T16:24:56Z",
+      "side": 1,
+      "message": "Doesn\u0027t this override the inline definition in the header?",
+      "revId": "5b8ea0d803c5d3500079ff3240c60cb23d36a6c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0f2ce40_d13c1666",
         "filename": "device/u2f/u2f_register.cc",
         "patchSetId": 5
@@ -13,6 +30,75 @@
       "writtenOn": "2018-01-30T13:29:00Z",
       "side": 1,
       "message": "nit: Unused.",
+      "revId": "5b8ea0d803c5d3500079ff3240c60cb23d36a6c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61be2eda_999aaf24",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-30T16:24:56Z",
+      "side": 1,
+      "message": "std::move unnecessary since cb.callback() is already an r-value.",
+      "range": {
+        "startLine": 334,
+        "startChar": 32,
+        "endLine": 334,
+        "endChar": 41
+      },
+      "revId": "5b8ea0d803c5d3500079ff3240c60cb23d36a6c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd1b14d5_e8fcecc1",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-30T16:24:56Z",
+      "side": 1,
+      "message": "std::move unnecessary since cb.callback() is already an r-value.",
+      "range": {
+        "startLine": 367,
+        "startChar": 32,
+        "endLine": 367,
+        "endChar": 41
+      },
+      "revId": "5b8ea0d803c5d3500079ff3240c60cb23d36a6c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d0788bb_b636871c",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-30T16:24:56Z",
+      "side": 1,
+      "message": "std::move unnecessary since cb.callback() is already an r-value.",
+      "range": {
+        "startLine": 459,
+        "startChar": 32,
+        "endLine": 459,
+        "endChar": 41
+      },
       "revId": "5b8ea0d803c5d3500079ff3240c60cb23d36a6c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -42,6 +128,121 @@
     },
     {
       "key": {
+        "uuid": "21014cee_58b059a0",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-30T16:24:56Z",
+      "side": 1,
+      "message": "std::move unnecessary since cb.callback() is already an r-value.",
+      "range": {
+        "startLine": 524,
+        "startChar": 32,
+        "endLine": 524,
+        "endChar": 41
+      },
+      "revId": "5b8ea0d803c5d3500079ff3240c60cb23d36a6c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00022562_a969021e",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-30T16:24:56Z",
+      "side": 1,
+      "message": "std::move unnecessary since cb.callback() is already an r-value.",
+      "range": {
+        "startLine": 582,
+        "startChar": 32,
+        "endLine": 582,
+        "endChar": 41
+      },
+      "revId": "5b8ea0d803c5d3500079ff3240c60cb23d36a6c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f00760d_87149394",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-30T16:24:56Z",
+      "side": 1,
+      "message": "std::move unnecessary since cb.callback() is already an r-value.",
+      "range": {
+        "startLine": 651,
+        "startChar": 32,
+        "endLine": 651,
+        "endChar": 41
+      },
+      "revId": "5b8ea0d803c5d3500079ff3240c60cb23d36a6c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42fe3a3f_337833fe",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-30T16:24:56Z",
+      "side": 1,
+      "message": "This call site needs to be updated.",
+      "range": {
+        "startLine": 786,
+        "startChar": 29,
+        "endLine": 786,
+        "endChar": 41
+      },
+      "revId": "5b8ea0d803c5d3500079ff3240c60cb23d36a6c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec69b5b3_78254dae",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-30T16:24:56Z",
+      "side": 1,
+      "message": "std::move unnecessary since cb.callback() is already an r-value.",
+      "range": {
+        "startLine": 788,
+        "startChar": 32,
+        "endLine": 788,
+        "endChar": 41
+      },
+      "revId": "5b8ea0d803c5d3500079ff3240c60cb23d36a6c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45aafae3_a666d529",
         "filename": "device/u2f/u2f_request.cc",
         "patchSetId": 5
@@ -58,6 +259,29 @@
         "startChar": 7,
         "endLine": 23,
         "endChar": 11
+      },
+      "revId": "5b8ea0d803c5d3500079ff3240c60cb23d36a6c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6f86540_d3180d69",
+        "filename": "device/u2f/u2f_request.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-30T16:24:56Z",
+      "side": 1,
+      "message": "nit: no {}",
+      "range": {
+        "startLine": 48,
+        "startChar": 41,
+        "endLine": 48,
+        "endChar": 42
       },
       "revId": "5b8ea0d803c5d3500079ff3240c60cb23d36a6c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -98,6 +322,144 @@
         "startChar": 16,
         "endLine": 41,
         "endChar": 38
+      },
+      "revId": "5b8ea0d803c5d3500079ff3240c60cb23d36a6c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ff7d223_3c3089d3",
+        "filename": "device/u2f/u2f_sign_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-30T16:24:56Z",
+      "side": 1,
+      "message": "std::move is unnecessary here because cb.callback() is already an r-value.",
+      "range": {
+        "startLine": 148,
+        "startChar": 32,
+        "endLine": 148,
+        "endChar": 41
+      },
+      "revId": "5b8ea0d803c5d3500079ff3240c60cb23d36a6c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4d8c38c_637b62f0",
+        "filename": "device/u2f/u2f_sign_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-30T16:24:56Z",
+      "side": 1,
+      "message": "std::move is unnecessary here because cb.callback() is already an r-value.",
+      "range": {
+        "startLine": 185,
+        "startChar": 32,
+        "endLine": 185,
+        "endChar": 41
+      },
+      "revId": "5b8ea0d803c5d3500079ff3240c60cb23d36a6c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3b1f522_3b5e7ccf",
+        "filename": "device/u2f/u2f_sign_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-30T16:24:56Z",
+      "side": 1,
+      "message": "std::move is unnecessary here because cb.callback() is already an r-value.",
+      "range": {
+        "startLine": 231,
+        "startChar": 6,
+        "endLine": 231,
+        "endChar": 15
+      },
+      "revId": "5b8ea0d803c5d3500079ff3240c60cb23d36a6c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "209c72c4_761a776f",
+        "filename": "device/u2f/u2f_sign_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-30T16:24:56Z",
+      "side": 1,
+      "message": "std::move is unnecessary here because cb.callback() is already an r-value.",
+      "range": {
+        "startLine": 278,
+        "startChar": 6,
+        "endLine": 278,
+        "endChar": 15
+      },
+      "revId": "5b8ea0d803c5d3500079ff3240c60cb23d36a6c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afd1f53d_fef5b0e4",
+        "filename": "device/u2f/u2f_sign_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-30T16:24:56Z",
+      "side": 1,
+      "message": "std::move is unnecessary here because cb.callback() is already an r-value.",
+      "range": {
+        "startLine": 328,
+        "startChar": 6,
+        "endLine": 328,
+        "endChar": 15
+      },
+      "revId": "5b8ea0d803c5d3500079ff3240c60cb23d36a6c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b92cb011_382c7aab",
+        "filename": "device/u2f/u2f_sign_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-30T16:24:56Z",
+      "side": 1,
+      "message": "std::move is unnecessary here because cb.callback() is already an r-value.",
+      "range": {
+        "startLine": 416,
+        "startChar": 32,
+        "endLine": 416,
+        "endChar": 41
       },
       "revId": "5b8ea0d803c5d3500079ff3240c60cb23d36a6c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
