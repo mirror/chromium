@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "d8d94c41_86bf3cf9",
+        "filename": "chrome/test/vr/auto_bisect.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2018-01-30T22:03:57Z",
+      "side": 1,
+      "message": "How about by default bailing, but adding a switch to allow this behavior?",
+      "parentUuid": "7bac012f_5fd095ba",
+      "revId": "b6e5a014ef23017b8adf70c0a7a857bf00cd4d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c2db0fab_20d93e5a",
         "filename": "chrome/test/vr/auto_bisect.py",
         "patchSetId": 1
