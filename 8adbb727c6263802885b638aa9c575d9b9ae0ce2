@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3778748_c64eafa2",
+        "filename": "mojo/common/big_string.typemap",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-30T16:06:20Z",
+      "side": 1,
+      "message": "Part of me wonders if it\u0027d make sense to map this as a base::StringPiece to reduce copying--and if callers need to take ownership, they can create a copy themselves.",
+      "range": {
+        "startLine": 14,
+        "startChar": 18,
+        "endLine": 14,
+        "endChar": 59
+      },
+      "revId": "8adbb727c6263802885b638aa9c575d9b9ae0ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02d5ab8e_3c7a32b9",
+        "filename": "mojo/common/big_string_struct_traits.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-30T16:06:20Z",
+      "side": 1,
+      "message": "This is trivially true isn\u0027t it? I suppose the compiler will probably optimize it out.",
+      "revId": "8adbb727c6263802885b638aa9c575d9b9ae0ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53fe87cd_58e75986",
+        "filename": "third_party/WebKit/Source/platform/mojo/BigStringStructTraits.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-30T16:06:20Z",
+      "side": 1,
+      "message": "There\u0027s no need to create a context anymore, since each serialization getter is only invoked once now. So let\u0027s just inline the adaptor creation directly into the data() getter.",
+      "revId": "8adbb727c6263802885b638aa9c575d9b9ae0ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "481ca14c_456469c6",
+        "filename": "third_party/WebKit/Source/platform/mojo/BigStringStructTraits.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-30T16:06:20Z",
+      "side": 1,
+      "message": "Isn\u0027t this always trivially true?",
+      "revId": "8adbb727c6263802885b638aa9c575d9b9ae0ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80cb35f5_6ad7d976",
+        "filename": "third_party/WebKit/Source/platform/mojo/BigStringStructTraits.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-30T16:06:20Z",
+      "side": 1,
+      "message": "Does FromUTF8 CHECK if data() is empty? I would have expected it to just work if size \u003d\u003d 0.",
+      "revId": "8adbb727c6263802885b638aa9c575d9b9ae0ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8cb5a56_3a5e7420",
+        "filename": "third_party/WebKit/Source/platform/mojo/BigStringStructTraits.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-30T16:06:20Z",
+      "side": 1,
+      "message": "No need to swap(): just assign directly to out.",
+      "revId": "8adbb727c6263802885b638aa9c575d9b9ae0ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7630ede1_b301a4cf",
+        "filename": "third_party/WebKit/Source/platform/mojo/BigStringStructTraitsTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-30T16:06:20Z",
+      "side": 1,
+      "message": "Perhaps ASSERT_FALSE(!str.Is8Bit()) here.",
+      "revId": "8adbb727c6263802885b638aa9c575d9b9ae0ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
