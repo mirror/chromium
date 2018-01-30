@@ -31,9 +31,33 @@ class GURL;
 namespace extensions {
 class InfoMap;
 
-using ExtensionProtocolTestHandler =
-    base::Callback<void(base::FilePath* directory_path,
-                        base::FilePath* relative_path)>;
+// A protocol handler for the chrome-extension:// scheme, which handles serving
+// resources from disk.
+class ExtensionProtocolHandler
+    : public net::URLRequestJobFactory::ProtocolHandler {
+ public:
+  ExtensionProtocolHandler(bool is_incognito, InfoMap* extension_info_map);
+  ~ExtensionProtocolHandler() override;
+
+  // net::URLRequestJobFactory::ProtocolHandler:
+  net::URLRequestJob* MaybeCreateJob(
+      net::URLRequest* request,
+      net::NetworkDelegate* network_delegate) const override;
+
+  using TestHandler =
+      base::RepeatingCallback<void(base::FilePath* directory_path,
+                                   base::FilePath* relative_path)>;
+  // Allows tests to set a special handler for chrome-extension:// urls. Note
+  // that this goes through all the normal security checks; it's essentially a
+  // way to map extra resources to be included in extensions.
+  static void SetTestHandler(TestHandler* handler);
+
+ private:
+  const bool is_incognito_;
+  InfoMap* const extension_info_map_;
+
+  DISALLOW_COPY_AND_ASSIGN(ExtensionProtocolHandler);
+};
 
 // Builds HTTP headers for an extension request. Hashes the time to avoid
 // exposing the exact user installation time of the extension.
@@ -41,17 +65,6 @@ scoped_refptr<net::HttpResponseHeaders> BuildHttpHeaders(
     const std::string& content_security_policy,
     bool send_cors_header,
     const base::Time& last_modified_time);
-
-// Creates the handlers for the chrome-extension:// scheme. Pass true for
-// |is_incognito| only for incognito profiles and not for Chrome OS guest mode
-// profiles.
-std::unique_ptr<net::URLRequestJobFactory::ProtocolHandler>
-CreateExtensionProtocolHandler(bool is_incognito, InfoMap* extension_info_map);
-
-// Allows tests to set a special handler for chrome-extension:// urls. Note
-// that this goes through all the normal security checks; it's essentially a
-// way to map extra resources to be included in extensions.
-void SetExtensionProtocolTestHandler(ExtensionProtocolTestHandler* handler);
 
 // Creates a new network::mojom::URLLoaderFactory implementation suitable for
 // handling navigation requests to extension URLs.

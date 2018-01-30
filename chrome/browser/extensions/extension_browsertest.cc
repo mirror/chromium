@@ -218,13 +218,13 @@ void ExtensionBrowserTest::SetUpOnMainThread() {
   test_root_path = test_root_path.AppendASCII("extensions");
   test_protocol_handler_ =
       base::Bind(&ExtensionProtocolTestHandler, test_root_path);
-  extensions::SetExtensionProtocolTestHandler(&test_protocol_handler_);
+  extensions::ExtensionProtocolHandler::SetTestHandler(&test_protocol_handler_);
 }
 
 void ExtensionBrowserTest::TearDownOnMainThread() {
   ExtensionMessageBubbleFactory::set_override_for_tests(
       ExtensionMessageBubbleFactory::NO_OVERRIDE);
-  extensions::SetExtensionProtocolTestHandler(nullptr);
+  extensions::ExtensionProtocolHandler::SetTestHandler(nullptr);
 }
 
 const Extension* ExtensionBrowserTest::LoadExtension(

@@ -412,7 +412,7 @@ class ExtensionBrowserTest : virtual public InProcessBrowserTest {
 
   // An override so that chrome-extensions://<extension_id>/_test_resources/foo
   // maps to chrome/test/data/extensions/foo.
-  extensions::ExtensionProtocolTestHandler test_protocol_handler_;
+  extensions::ExtensionProtocolHandler::TestHandler test_protocol_handler_;
 
   // Conditionally disable content verification.
   std::unique_ptr<extensions::ScopedIgnoreContentVerifierForTest>

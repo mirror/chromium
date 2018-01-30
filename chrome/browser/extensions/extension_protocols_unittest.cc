@@ -214,9 +214,8 @@ class ExtensionProtocolsTest : public testing::Test {
     net::URLRequestContext* request_context =
         resource_context_.GetRequestContext();
     job_factory_.SetProtocolHandler(
-        kExtensionScheme,
-        CreateExtensionProtocolHandler(is_incognito,
-                                       extension_info_map_.get()));
+        kExtensionScheme, std::make_unique<ExtensionProtocolHandler>(
+                              is_incognito, extension_info_map_.get()));
     request_context->set_job_factory(&job_factory_);
   }
 

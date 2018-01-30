@@ -89,7 +89,7 @@ using extensions::SharedModuleInfo;
 namespace extensions {
 namespace {
 
-ExtensionProtocolTestHandler* g_test_handler = nullptr;
+ExtensionProtocolHandler::TestHandler* g_test_handler = nullptr;
 
 void GenerateBackgroundPageContents(const Extension* extension,
                                     std::string* mime_type,
@@ -510,147 +510,6 @@ bool IsBackgroundPageURL(const GURL& url) {
   return path.size() > 1 && path.substr(1) == kGeneratedBackgroundPageFilename;
 }
 
-class ExtensionProtocolHandler
-    : public net::URLRequestJobFactory::ProtocolHandler {
- public:
-  ExtensionProtocolHandler(bool is_incognito,
-                           extensions::InfoMap* extension_info_map)
-      : is_incognito_(is_incognito), extension_info_map_(extension_info_map) {}
-
-  ~ExtensionProtocolHandler() override {}
-
-  net::URLRequestJob* MaybeCreateJob(
-      net::URLRequest* request,
-      net::NetworkDelegate* network_delegate) const override;
-
- private:
-  const bool is_incognito_;
-  extensions::InfoMap* const extension_info_map_;
-  DISALLOW_COPY_AND_ASSIGN(ExtensionProtocolHandler);
-};
-
-// Creates URLRequestJobs for extension:// URLs.
-net::URLRequestJob*
-ExtensionProtocolHandler::MaybeCreateJob(
-    net::URLRequest* request, net::NetworkDelegate* network_delegate) const {
-  // chrome-extension://extension-id/resource/path.js
-  std::string extension_id = request->url().host();
-  const Extension* extension =
-      extension_info_map_->extensions().GetByID(extension_id);
-  const ResourceRequestInfo* info = ResourceRequestInfo::ForRequest(request);
-  const bool enabled_in_incognito =
-      extension_info_map_->IsIncognitoEnabled(extension_id);
-
-  // We have seen crashes where info is NULL: crbug.com/52374.
-  if (!info) {
-    // SeviceWorker net requests created through ServiceWorkerWriteToCacheJob
-    // do not have ResourceRequestInfo associated with them. So skip logging
-    // spurious errors below.
-    // TODO(falken): Either consider attaching ResourceRequestInfo to these or
-    // finish refactoring ServiceWorkerWriteToCacheJob so that it doesn't spawn
-    // a new URLRequest.
-    if (!ResourceRequestInfo::OriginatedFromServiceWorker(request)) {
-      LOG(ERROR) << "Allowing load of " << request->url().spec()
-                 << "from unknown origin. Could not find user data for "
-                 << "request.";
-    }
-  } else if (!AllowExtensionResourceLoad(
-                 request->url(), info->GetResourceType(),
-                 info->GetPageTransition(), info->GetChildID(), is_incognito_,
-                 extension, enabled_in_incognito,
-                 extension_info_map_->extensions(),
-                 extension_info_map_->process_map())) {
-    return new net::URLRequestErrorJob(request, network_delegate,
-                                       net::ERR_BLOCKED_BY_CLIENT);
-  }
-
-  base::FilePath directory_path;
-  if (!GetDirectoryForExtensionURL(request->url(), extension_id, extension,
-                                   extension_info_map_->disabled_extensions(),
-                                   &directory_path)) {
-    return nullptr;
-  }
-
-  // Set up content security policy.
-  std::string content_security_policy;
-  bool send_cors_header = false;
-  bool follow_symlinks_anywhere = false;
-  if (extension) {
-    GetSecurityPolicyForURL(request->url(), extension,
-                            IsWebViewRequest(request), &content_security_policy,
-                            &send_cors_header, &follow_symlinks_anywhere);
-  }
-
-  // Create a job for a generated background page.
-  if (IsBackgroundPageURL(request->url())) {
-    return new GeneratedBackgroundPageJob(
-        request, network_delegate, extension, content_security_policy);
-  }
-
-  // Component extension resources may be part of the embedder's resource files,
-  // for example component_extension_resources.pak in Chrome.
-  net::URLRequestJob* resource_bundle_job =
-      extensions::ExtensionsBrowserClient::Get()
-          ->MaybeCreateResourceBundleRequestJob(request,
-                                                network_delegate,
-                                                directory_path,
-                                                content_security_policy,
-                                                send_cors_header);
-  if (resource_bundle_job)
-    return resource_bundle_job;
-
-  base::FilePath relative_path =
-      extensions::file_util::ExtensionURLToRelativeFilePath(request->url());
-
-  // Do not allow requests for resources in the _metadata folder, since any
-  // files there are internal implementation details that should not be
-  // considered part of the extension.
-  if (base::FilePath(kMetadataFolder).IsParent(relative_path))
-    return nullptr;
-
-  // Handle shared resources (extension A loading resources out of extension B).
-  std::string path = request->url().path();
-  if (SharedModuleInfo::IsImportedPath(path)) {
-    std::string new_extension_id;
-    std::string new_relative_path;
-    SharedModuleInfo::ParseImportedPath(path, &new_extension_id,
-                                        &new_relative_path);
-    const Extension* new_extension =
-        extension_info_map_->extensions().GetByID(new_extension_id);
-
-    if (SharedModuleInfo::ImportsExtensionById(extension, new_extension_id) &&
-        new_extension) {
-      directory_path = new_extension->path();
-      extension_id = new_extension_id;
-      relative_path = base::FilePath::FromUTF8Unsafe(new_relative_path);
-    } else {
-      return NULL;
-    }
-  }
-
-  if (g_test_handler)
-    g_test_handler->Run(&directory_path, &relative_path);
-
-  ContentVerifyJob* verify_job = nullptr;
-  ContentVerifier* verifier = extension_info_map_->content_verifier();
-  if (verifier) {
-    verify_job =
-        verifier->CreateJobFor(extension_id, directory_path, relative_path);
-    if (verify_job)
-      verify_job->Start();
-  }
-
-  return new URLRequestExtensionJob(request,
-                                    network_delegate,
-                                    extension_id,
-                                    directory_path,
-                                    relative_path,
-                                    content_security_policy,
-                                    send_cors_header,
-                                    follow_symlinks_anywhere,
-                                    verify_job);
-}
-
 class FileLoaderObserver : public content::FileURLLoaderObserver {
  public:
   explicit FileLoaderObserver(scoped_refptr<ContentVerifyJob> verify_job)
@@ -937,6 +796,131 @@ class ExtensionURLLoaderFactory : public network::mojom::URLLoaderFactory {
 
 }  // namespace
 
+ExtensionProtocolHandler::ExtensionProtocolHandler(bool is_incognito,
+                                                   InfoMap* extension_info_map)
+    : is_incognito_(is_incognito), extension_info_map_(extension_info_map) {}
+
+ExtensionProtocolHandler::~ExtensionProtocolHandler() = default;
+
+// Creates URLRequestJobs for extension:// URLs.
+net::URLRequestJob* ExtensionProtocolHandler::MaybeCreateJob(
+    net::URLRequest* request,
+    net::NetworkDelegate* network_delegate) const {
+  // chrome-extension://extension-id/resource/path.js
+  std::string extension_id = request->url().host();
+  const Extension* extension =
+      extension_info_map_->extensions().GetByID(extension_id);
+  const ResourceRequestInfo* info = ResourceRequestInfo::ForRequest(request);
+  const bool enabled_in_incognito =
+      extension_info_map_->IsIncognitoEnabled(extension_id);
+
+  // We have seen crashes where info is NULL: crbug.com/52374.
+  if (!info) {
+    // SeviceWorker net requests created through ServiceWorkerWriteToCacheJob
+    // do not have ResourceRequestInfo associated with them. So skip logging
+    // spurious errors below.
+    // TODO(falken): Either consider attaching ResourceRequestInfo to these or
+    // finish refactoring ServiceWorkerWriteToCacheJob so that it doesn't spawn
+    // a new URLRequest.
+    if (!ResourceRequestInfo::OriginatedFromServiceWorker(request)) {
+      LOG(ERROR) << "Allowing load of " << request->url().spec()
+                 << "from unknown origin. Could not find user data for "
+                 << "request.";
+    }
+  } else if (!AllowExtensionResourceLoad(
+                 request->url(), info->GetResourceType(),
+                 info->GetPageTransition(), info->GetChildID(), is_incognito_,
+                 extension, enabled_in_incognito,
+                 extension_info_map_->extensions(),
+                 extension_info_map_->process_map())) {
+    return new net::URLRequestErrorJob(request, network_delegate,
+                                       net::ERR_BLOCKED_BY_CLIENT);
+  }
+
+  base::FilePath directory_path;
+  if (!GetDirectoryForExtensionURL(request->url(), extension_id, extension,
+                                   extension_info_map_->disabled_extensions(),
+                                   &directory_path)) {
+    return nullptr;
+  }
+
+  // Set up content security policy.
+  std::string content_security_policy;
+  bool send_cors_header = false;
+  bool follow_symlinks_anywhere = false;
+  if (extension) {
+    GetSecurityPolicyForURL(request->url(), extension,
+                            IsWebViewRequest(request), &content_security_policy,
+                            &send_cors_header, &follow_symlinks_anywhere);
+  }
+
+  // Create a job for a generated background page.
+  if (IsBackgroundPageURL(request->url())) {
+    return new GeneratedBackgroundPageJob(request, network_delegate, extension,
+                                          content_security_policy);
+  }
+
+  // Component extension resources may be part of the embedder's resource files,
+  // for example component_extension_resources.pak in Chrome.
+  net::URLRequestJob* resource_bundle_job =
+      extensions::ExtensionsBrowserClient::Get()
+          ->MaybeCreateResourceBundleRequestJob(
+              request, network_delegate, directory_path,
+              content_security_policy, send_cors_header);
+  if (resource_bundle_job)
+    return resource_bundle_job;
+
+  base::FilePath relative_path =
+      extensions::file_util::ExtensionURLToRelativeFilePath(request->url());
+
+  // Do not allow requests for resources in the _metadata folder, since any
+  // files there are internal implementation details that should not be
+  // considered part of the extension.
+  if (base::FilePath(kMetadataFolder).IsParent(relative_path))
+    return nullptr;
+
+  // Handle shared resources (extension A loading resources out of extension B).
+  std::string path = request->url().path();
+  if (SharedModuleInfo::IsImportedPath(path)) {
+    std::string new_extension_id;
+    std::string new_relative_path;
+    SharedModuleInfo::ParseImportedPath(path, &new_extension_id,
+                                        &new_relative_path);
+    const Extension* new_extension =
+        extension_info_map_->extensions().GetByID(new_extension_id);
+
+    if (SharedModuleInfo::ImportsExtensionById(extension, new_extension_id) &&
+        new_extension) {
+      directory_path = new_extension->path();
+      extension_id = new_extension_id;
+      relative_path = base::FilePath::FromUTF8Unsafe(new_relative_path);
+    } else {
+      return NULL;
+    }
+  }
+
+  if (g_test_handler)
+    g_test_handler->Run(&directory_path, &relative_path);
+
+  ContentVerifyJob* verify_job = nullptr;
+  ContentVerifier* verifier = extension_info_map_->content_verifier();
+  if (verifier) {
+    verify_job =
+        verifier->CreateJobFor(extension_id, directory_path, relative_path);
+    if (verify_job)
+      verify_job->Start();
+  }
+
+  return new URLRequestExtensionJob(request, network_delegate, extension_id,
+                                    directory_path, relative_path,
+                                    content_security_policy, send_cors_header,
+                                    follow_symlinks_anywhere, verify_job);
+}
+
+void ExtensionProtocolHandler::SetTestHandler(TestHandler* handler) {
+  g_test_handler = handler;
+}
+
 scoped_refptr<net::HttpResponseHeaders> BuildHttpHeaders(
     const std::string& content_security_policy,
     bool send_cors_header,
@@ -973,17 +957,6 @@ scoped_refptr<net::HttpResponseHeaders> BuildHttpHeaders(
 
   raw_headers.append(2, '\0');
   return new net::HttpResponseHeaders(raw_headers);
-}
-
-std::unique_ptr<net::URLRequestJobFactory::ProtocolHandler>
-CreateExtensionProtocolHandler(bool is_incognito,
-                               extensions::InfoMap* extension_info_map) {
-  return std::make_unique<ExtensionProtocolHandler>(is_incognito,
-                                                    extension_info_map);
-}
-
-void SetExtensionProtocolTestHandler(ExtensionProtocolTestHandler* handler) {
-  g_test_handler = handler;
 }
 
 std::unique_ptr<network::mojom::URLLoaderFactory>

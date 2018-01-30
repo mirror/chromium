@@ -1301,8 +1301,8 @@ ProfileIOData::SetUpJobFactoryDefaults(
   bool is_incognito = profile_type() == Profile::INCOGNITO_PROFILE;
   set_protocol = job_factory->SetProtocolHandler(
       extensions::kExtensionScheme,
-      extensions::CreateExtensionProtocolHandler(is_incognito,
-                                                 extension_info_map_.get()));
+      std::make_unique<extensions::ExtensionProtocolHandler>(
+          is_incognito, extension_info_map_.get()));
   DCHECK(set_protocol);
 #endif
   set_protocol = job_factory->SetProtocolHandler(
@@ -1367,9 +1367,10 @@ void ProfileIOData::SetUpJobFactoryDefaultsForBuilder(
   DCHECK(extension_info_map_.get());
   // Check only for incognito (and not Chrome OS guest mode GUEST_PROFILE).
   bool is_incognito = profile_type() == Profile::INCOGNITO_PROFILE;
-  builder->SetProtocolHandler(extensions::kExtensionScheme,
-                              extensions::CreateExtensionProtocolHandler(
-                                  is_incognito, extension_info_map_.get()));
+  builder->SetProtocolHandler(
+      extensions::kExtensionScheme,
+      std::make_unique<extensions::ExtensionProtocolHandler>(
+          is_incognito, extension_info_map_.get()));
 #endif
 #if defined(OS_CHROMEOS)
   if (profile_params_) {
