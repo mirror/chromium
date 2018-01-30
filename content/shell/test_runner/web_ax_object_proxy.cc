@@ -1132,7 +1132,18 @@ float WebAXObjectProxy::FontSize() {
 
 std::string WebAXObjectProxy::Autocomplete() {
   accessibility_object_.UpdateLayoutAndCheckValidity();
-  return accessibility_object_.AriaAutoComplete().Utf8();
+  switch (accessibility_object_.AriaAutoComplete()) {
+    case blink::kWebAXAutoCompleteNone:
+      return "none";
+    case blink::kWebAXAutoCompleteInline:
+      return "inline";
+    case blink::kWebAXAutoCompleteList:
+      return "list";
+    case blink::kWebAXAutoCompleteBoth:
+      return "both";
+    default:
+      return "none";
+  }
 }
 
 std::string WebAXObjectProxy::Current() {

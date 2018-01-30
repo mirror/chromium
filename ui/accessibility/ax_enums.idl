@@ -338,7 +338,6 @@
     access_key,
     // Only used when invalid_state == invalid_state_other.
     aria_invalid_value,
-    auto_complete,
     chrome_channel,  // Automation only.
     class_name, // views and Android
     container_live_relevant,
@@ -443,6 +442,9 @@
     aria_current_state,
 
     // Text attributes.
+
+    // DJKim
+    auto_complete,
 
     // Foreground and background color in RGBA.
     background_color,
@@ -655,6 +657,12 @@
     unclipped_location,
     date,
     time
+  };
+
+  enum AXAutoComplete {
+    inline,
+    list,
+    both
   };
 
   enum AXInvalidState {

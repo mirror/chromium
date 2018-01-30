@@ -53,6 +53,9 @@ ui::AXDescriptionFrom AXDescriptionFromFromBlink(
 
 ui::AXTextAffinity AXTextAffinityFromBlink(blink::WebAXTextAffinity affinity);
 
+ui::AXAutoComplete AXAutoCompleteFromBlink(
+	blink::WebAXAutoComplete autocomplete);
+
 }  // namespace content
 
 #endif  // CONTENT_RENDERER_ACCESSIBILITY_BLINK_AX_ENUM_CONVERSION_H_

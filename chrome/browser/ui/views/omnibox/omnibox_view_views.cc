@@ -739,7 +739,9 @@ bool OmniboxViewViews::SkipDefaultKeyEventProcessing(
 void OmniboxViewViews::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   node_data->role = ui::AX_ROLE_TEXT_FIELD;
   node_data->SetName(l10n_util::GetStringUTF8(IDS_ACCNAME_LOCATION));
-  node_data->AddStringAttribute(ui::AX_ATTR_AUTO_COMPLETE, "both");
+  node_data->AddIntAttribute(
+      ui::AX_ATTR_AUTO_COMPLETE, ui::AX_AUTO_COMPLETE_BOTH);
+
 // Expose keyboard shortcut where it makes sense.
 #if defined(OS_MACOSX)
   // Use cloverleaf symbol for command key.

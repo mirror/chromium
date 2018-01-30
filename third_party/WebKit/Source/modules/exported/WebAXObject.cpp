@@ -247,11 +247,11 @@ bool WebAXObject::IsAnchor() const {
   return private_->IsAnchor();
 }
 
-WebString WebAXObject::AriaAutoComplete() const {
+WebAXAutoComplete WebAXObject::AriaAutoComplete() const {
   if (IsDetached())
-    return WebString();
+    return kWebAXAutoCompleteNone;
 
-  return private_->AriaAutoComplete();
+  return static_cast<WebAXAutoComplete>(private_->AriaAutoComplete());
 }
 
 WebAXAriaCurrentState WebAXObject::AriaCurrentState() const {

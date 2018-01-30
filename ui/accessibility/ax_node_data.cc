@@ -144,6 +144,7 @@ bool IsNodeIdIntAttribute(AXIntAttribute attr) {
     case AX_ATTR_ARIA_CELL_COLUMN_INDEX:
     case AX_ATTR_ARIA_ROW_COUNT:
     case AX_ATTR_ARIA_CELL_ROW_INDEX:
+    case AX_ATTR_AUTO_COMPLETE:
       return false;
   }
 
@@ -804,6 +805,22 @@ std::string AXNodeData::ToString() const {
         break;
       case AX_INT_ATTRIBUTE_NONE:
         break;
+      case AX_ATTR_AUTO_COMPLETE:
+        switch (int_attributes[i].second) {
+          case AX_AUTO_COMPLETE_INLINE:
+            result += " autocomplete=inline";
+            break;
+          case AX_AUTO_COMPLETE_LIST:
+            result += " autocomplete=list";
+            break;
+          case AX_AUTO_COMPLETE_BOTH:
+            result += " autocomplete=both";
+            break;
+          default:
+            result += " autocomplete=none";
+            break;
+        }
+        break;
     }
   }
 
@@ -815,9 +832,6 @@ std::string AXNodeData::ToString() const {
         break;
       case AX_ATTR_ARIA_INVALID_VALUE:
         result += " aria_invalid_value=" + value;
-        break;
-      case AX_ATTR_AUTO_COMPLETE:
-        result += " autocomplete=" + value;
         break;
       case AX_ATTR_CHROME_CHANNEL:
         result += " chrome_channel=" + value;

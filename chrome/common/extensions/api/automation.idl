@@ -643,9 +643,6 @@
     // Miscellaneous attributes.
     //
 
-    // Aria auto complete.
-    DOMString? autoComplete;
-
     // The name of the programmatic backing object.
     DOMString? className;
 

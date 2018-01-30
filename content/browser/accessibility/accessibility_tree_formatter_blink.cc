@@ -81,6 +81,8 @@ std::string AccessibilityTreeFormatterBlink::IntAttrToString(
       return ui::ToString(static_cast<ui::AXSortDirection>(value));
     case ui::AX_ATTR_TEXT_DIRECTION:
       return ui::ToString(static_cast<ui::AXTextDirection>(value));
+    case ui::AX_ATTR_AUTO_COMPLETE:
+      return ui::ToString(static_cast<ui::AXAutoComplete>(value));
     // No pretty printing necessary for these:
     case ui::AX_ATTR_ACTIVEDESCENDANT_ID:
     case ui::AX_ATTR_ARIA_CELL_COLUMN_INDEX:
