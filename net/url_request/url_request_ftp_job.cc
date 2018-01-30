@@ -108,6 +108,7 @@ void URLRequestFtpJob::Start() {
   DCHECK(!proxy_resolve_request_);
   DCHECK(!ftp_transaction_);
   DCHECK(!http_transaction_);
+  DCHECK(request_->socket_tag() == SocketTag());
 
   int rv = OK;
   if (request_->load_flags() & LOAD_BYPASS_PROXY) {
