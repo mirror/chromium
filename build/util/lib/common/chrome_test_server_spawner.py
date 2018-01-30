@@ -14,6 +14,7 @@ import json
 import logging
 import os
 import select
+import socket
 import struct
 import subprocess
 import sys
@@ -235,6 +236,22 @@ class TestServerThread(threading.Thread):
     else:
       command = [os.path.join(command, 'net', 'tools', 'testserver',
                               'testserver.py')] + self.command_line
+
+    if (should_do_the_thing_on_android_but_not_fucschia and
+        'https' in self.arguments and
+        ('aia-intermediate' in self.arguments or
+         'ocsp' in self.arguments)):
+      dummy_listen_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+      dummy_listen_socket.bind(('127.0.0.1', 0))
+      dummy_listen_socket.listen(1)
+      dummy_host_port = dummy_listen_socket.getsockname()[1]
+      self.port_forwarder.Map([(0, dummy_host_port)])
+      device_ocsp_port = self.port_forwarder.GetDevicePortForHostPort(
+          dummy_host_port)
+      command += ['--ocsp-proxy-port-number=' + str(device_ocsp_port)]
+    else:
+      device_ocsp_port = 0
+
     logging.info('Running: %s', command)
 
     # Disable PYTHONUNBUFFERED because it has a bad interaction with the
@@ -257,7 +274,10 @@ class TestServerThread(threading.Thread):
     if self.is_ready:
       port_map = [(0, self.host_port)]
       if self.host_ocsp_port:
-        port_map.append([(0, self.host_ocsp_port)])
+        if device_ocsp_port:
+          self.port_forwarder.Unmap(device_ocsp_port)
+          dummy_listen_socket.close()
+        port_map.extend([(device_ocsp_port, self.host_ocsp_port)])
       self.port_forwarder.Map(port_map)
 
       self.forwarder_device_port = \
@@ -265,7 +285,6 @@ class TestServerThread(threading.Thread):
       if self.host_ocsp_port:
         self.forwarder_ocsp_device_port = \
             self.port_forwarder.GetDevicePortForHostPort(self.host_ocsp_port)
-
       # Check whether the forwarder is ready on the device.
       self.is_ready = self.forwarder_device_port and \
           self.port_forwarder.WaitDevicePortReady(self.forwarder_device_port)
