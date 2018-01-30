@@ -279,6 +279,24 @@
     },
     {
       "key": {
+        "uuid": "48d547b9_a18db58c",
+        "filename": "ash/frame/default_frame_header.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-30T01:44:34Z",
+      "side": 1,
+      "message": "Thanks for bringing this up. Talked to UX and agreed to remove all paddings.",
+      "parentUuid": "9b529f39_2d346870",
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32ae7f99_967c3006",
         "filename": "chrome/browser/ui/views/frame/browser_frame_header_ash.cc",
         "patchSetId": 1
@@ -364,6 +382,24 @@
       "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "175da991_21825908",
+        "filename": "chrome/browser/ui/views/frame/browser_frame_header_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-30T01:44:34Z",
+      "side": 1,
+      "message": "Yes, makes sense. However, we don\u0027t need this anymore, since we agreed to remove all the padding.",
+      "parentUuid": "02f5887a_b39186a6",
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -768,6 +804,30 @@
       "side": 1,
       "message": "By \"switch\" I actually meant any conditionalizing at all.  My question was whether we could just piecemeal ship-by-default the various parts of this spec without having to gate it under some kind of oracle function that might return false in some cases.  That works if the pieces you check in make sense individually and are improvements to the overall state of the world, not so much if you check in something that will feel terrible until some other piece lands.\n\nThe less code is switch-gated, the more we can refactor immediately to remove old/dead codepaths, and the more we gain test coverage/developer usage of the new code.  But it might not be possible.",
       "parentUuid": "069f9606_e02ab139",
+      "range": {
+        "startLine": 43,
+        "startChar": 14,
+        "endLine": 43,
+        "endChar": 41
+      },
+      "revId": "8d7cdc4e76a6d007ff76711f2a424233cfd48298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "064f1863_657c277e",
+        "filename": "ui/base/material_design/material_design_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-30T01:44:34Z",
+      "side": 1,
+      "message": "Yes, I understand what you mean now. Right now we don\u0027t want to change the behavior on all platforms (even Chrome OS -- not until all the pieces and changes are in and we decide to ship it). For this CL in particular, the changes won\u0027t make sense until the tab and tabstrip changes are in. So unfortunately we still need the conditionals.",
+      "parentUuid": "8f33c107_5a199a5b",
       "range": {
         "startLine": 43,
         "startChar": 14,

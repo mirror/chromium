@@ -34,6 +34,24 @@
       "revId": "9bd5a8c57a0f50fc9aef985e7e1b7df19c58536b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03003ece_bcdf321b",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-30T01:44:34Z",
+      "side": 1,
+      "message": "This is currently the case because we didn\u0027t change the tab\u0027s height in this CL to match the increased height in the caption buttons. Malay will be working on this part. I can wait until he lands his change and rebase on his work, or he has to change this test in his CL.\nI added a TODO for this.",
+      "parentUuid": "2c6b674f_f00a621a",
+      "revId": "9bd5a8c57a0f50fc9aef985e7e1b7df19c58536b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
