@@ -5,12 +5,15 @@
 #include "chrome/browser/ui/views/frame/contents_web_view.h"
 
 #include "chrome/browser/themes/theme_properties.h"
+#include "chrome/browser/ui/sad_tab_helper.h"
+#include "chrome/browser/ui/views/sad_tab_view.h"
 #include "chrome/browser/ui/views/status_bubble_views.h"
 #include "content/public/browser/render_widget_host_view.h"
 #include "content/public/browser/web_contents.h"
 #include "ui/base/theme_provider.h"
 #include "ui/compositor/layer_tree_owner.h"
 #include "ui/views/background.h"
+#include "ui/views/widget/widget.h"
 
 #if defined(USE_AURA)
 #include "ui/aura/window.h"
@@ -92,6 +95,19 @@ std::unique_ptr<ui::Layer> ContentsWebView::RecreateLayer() {
   }
 
   return old_layer;
+}
+
+views::FocusTraversable* ContentsWebView::GetFocusTraversable() {
+  // If the sad tab is showing, focus should traverse into the sad tab
+  // widget rather than focusing the web contents.
+  SadTabHelper* sad_tab_helper = SadTabHelper::FromWebContents(web_contents());
+  if (sad_tab_helper) {
+    SadTabView* sad_tab = static_cast<SadTabView*>(sad_tab_helper->sad_tab());
+    if (sad_tab)
+      return sad_tab->GetWidget()->GetFocusTraversable();
+  }
+
+  return WebView::GetFocusTraversable();
 }
 
 void ContentsWebView::CloneWebContentsLayer() {
