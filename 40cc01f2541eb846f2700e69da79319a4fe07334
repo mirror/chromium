@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7d3d5e33_3076084c",
+        "filename": "device/vr/openvr/openvr_render_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2018-01-30T18:47:37Z",
+      "side": 1,
+      "message": "You are correct.  I was moving the texture flip into ANGLE, so the texture we get out doesn\u0027t need to be flipped (ie - its the natural directx orientation).  Oculus does flip on submit, and it is currently doing an extra (but it is behind a compiler flag and has a build break currently so nobody will notice).\n\nThe flip change was just to set us up to avoid an extra copy, but doesn\u0027t actually remove that copy.  I\u0027ll take this part of the change out for now, and add back when I actually remove the copy.",
+      "parentUuid": "8c1a818e_743e87ed",
+      "range": {
+        "startLine": 50,
+        "startChar": 41,
+        "endLine": 50,
+        "endChar": 71
+      },
+      "revId": "40cc01f2541eb846f2700e69da79319a4fe07334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33b9f49b_d5b0dff4",
         "filename": "third_party/WebKit/Source/platform/graphics/GpuMemoryBufferImageCopy.cpp",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "40cc01f2541eb846f2700e69da79319a4fe07334",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9176151d_818d4f53",
+        "filename": "third_party/WebKit/Source/platform/graphics/GpuMemoryBufferImageCopy.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2018-01-30T18:47:37Z",
+      "side": 1,
+      "message": "yes, this should be plumbed through as a VRDisplayFrameTransportOptions",
+      "parentUuid": "33b9f49b_d5b0dff4",
+      "range": {
+        "startLine": 88,
+        "startChar": 30,
+        "endLine": 88,
+        "endChar": 34
+      },
+      "revId": "40cc01f2541eb846f2700e69da79319a4fe07334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
