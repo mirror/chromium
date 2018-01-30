@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1cfeb36f_2ab9d81d",
+        "filename": "content/browser/loader/resource_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-30T18:24:08Z",
+      "side": 1,
+      "message": "Thanks Matt.\n\nThe purpose is to \"pause reading from the network, so we don\u0027t cache more network data\", which is different from \"immediately stop passing data to the renderer\".\n\nThis behaves the same as services/network/url_loader.{h,cc}.\n\nI updated the url_loader.mojom comments. Hopefully it makes it API contract more clear.",
+      "parentUuid": "9f4ca7f7_c0f7bc3c",
+      "range": {
+        "startLine": 59,
+        "startChar": 48,
+        "endLine": 59,
+        "endChar": 49
+      },
+      "revId": "b926715e07addc6ba904dd8545be6af883f17b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9198eb44_c50063da",
         "filename": "content/browser/loader/resource_loader.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-30T17:30:16Z",
       "side": 1,
       "message": "I don\u0027t think we need to keep these debugging lines?",
+      "range": {
+        "startLine": 246,
+        "startChar": 19,
+        "endLine": 246,
+        "endChar": 43
+      },
+      "revId": "b926715e07addc6ba904dd8545be6af883f17b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a69f856_bbbed52a",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-30T18:24:08Z",
+      "side": 1,
+      "message": "This is a DVLOG which doesn\u0027t have a cost for release builds. It seems useful to me to just look at logging output to find out which of the three cases has happened:\n- no output: the body wasn\u0027t paused.\n- output of line 245: paused and histogram recorded.\n- output of line 251: paused but not recorded.\n\nIf you don\u0027t mind, I would like to keep this. WDYT?\n\n(I have the exact same thing in url_loader.{h,cc})",
+      "parentUuid": "9198eb44_c50063da",
       "range": {
         "startLine": 246,
         "startChar": 19,
@@ -94,6 +142,54 @@
     },
     {
       "key": {
+        "uuid": "c4657cb5_6923ba29",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-30T18:24:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db5d9bf3_e1427d1d",
+      "range": {
+        "startLine": 343,
+        "startChar": 22,
+        "endLine": 343,
+        "endChar": 24
+      },
+      "revId": "b926715e07addc6ba904dd8545be6af883f17b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d31662b9_44b522d4",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-30T18:24:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0ec4ea4_ae4e7981",
+      "range": {
+        "startLine": 343,
+        "startChar": 25,
+        "endLine": 343,
+        "endChar": 30
+      },
+      "revId": "b926715e07addc6ba904dd8545be6af883f17b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d4cd214_4afe7285",
         "filename": "content/browser/loader/resource_loader.cc",
         "patchSetId": 2
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "20d2d8b9_72986de4",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-30T18:24:08Z",
+      "side": 1,
+      "message": "\"Defer/resume\" and \"pause/resume reading from network\" are orthogonal. For example, while the resource is being loaded (sending request, following redirect, ...), if SafeBrowsing determines that the URL may not be safe and it needs more time to check with the SB server, it can call PauseReadingBodyFromNet() to pause caching more response body data. However, it will not do \"defer\" on the entire request, because we still want sending request, following redirects, reading response headers to proceed. When SafeBrowsing gets URL check result from server and determines to ResumeReadingBodyFromNet(), because the request is not deferred, it may already reach the state of |read_more_body_supressed_|.",
+      "parentUuid": "7d4cd214_4afe7285",
+      "range": {
+        "startLine": 368,
+        "startChar": 25,
+        "endLine": 368,
+        "endChar": 0
+      },
+      "revId": "b926715e07addc6ba904dd8545be6af883f17b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c325957b_e1a712f1",
         "filename": "content/browser/loader/resource_loader.h",
         "patchSetId": 2
@@ -128,6 +248,30 @@
       "writtenOn": "2018-01-30T17:30:16Z",
       "side": 1,
       "message": "Do we need this, or can we just use GetRawBodyBytes()?  It\u0027s compressed, rather than uncompressed bytes, but I\u0027m not sure how much that matters?  It does make it more accurate - maybe we have 16k in the gzip buffer, which decompresses to 128k.  If we pause in the middle of the read and then resume, we\u0027ll likely report 32k of decompressed bytes (Since that\u0027s how much we\u0027ll read from the URLRequest, though it could provide us with 128k decompressed bytes), so this measure is inaccurate, since we\u0027ve read 128k of decompressible body data from the network.\n\nGetRawBodyBytes() will return the correct value of 16k compressed bytes.",
+      "range": {
+        "startLine": 205,
+        "startChar": 10,
+        "endLine": 205,
+        "endChar": 32
+      },
+      "revId": "b926715e07addc6ba904dd8545be6af883f17b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cb78c82_e73742de",
+        "filename": "content/browser/loader/resource_loader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-30T18:24:08Z",
+      "side": 1,
+      "message": "Consistency is important: currently services/network/url_loader.{h,cc} records the uncompressed number, so I prefer |total_body_read_bytes_|.\n\nBut I am fine to change both to GetRawBodyBytes() if you think it makes more sense. (This histogram is used to measure how much data we write to cache before we realize that it may be unsafe and pause.) WDYT?",
+      "parentUuid": "c325957b_e1a712f1",
       "range": {
         "startLine": 205,
         "startChar": 10,
