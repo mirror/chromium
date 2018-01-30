@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbae3112_2ea5a055",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-30T06:36:11Z",
+      "side": 1,
+      "message": "can you document these params?",
+      "range": {
+        "startLine": 237,
+        "startChar": 59,
+        "endLine": 237,
+        "endChar": 73
+      },
+      "revId": "928d30938930b256da00b1923b65dfc245196753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "715bdcfa_d6e61bbf",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-30T06:36:11Z",
+      "side": 1,
+      "message": "embedders",
+      "range": {
+        "startLine": 244,
+        "startChar": 17,
+        "endLine": 244,
+        "endChar": 26
+      },
+      "revId": "928d30938930b256da00b1923b65dfc245196753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afbe7e05_3c5b01bf",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-30T06:36:11Z",
+      "side": 1,
+      "message": "How hard would it be to move this class and other PaymentHandler support to its own .h/.cc file like payment_handler_support.h?\n\nPaymentHandler is not part of the core service worker spec, so it\u0027s a bit odd to have a lot of code in service_worker_version for it.\n\nOn a related note, I\u0027m feeling the implementation of ServiceWorkerHost may be better in SWProviderHost than SWVersion. SWVersion should be more about the installed state of the service worker. But SWProviderHost is already very big. We can iterate on that later.",
+      "revId": "928d30938930b256da00b1923b65dfc245196753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f243f362_7ea4b6c0",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1298,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-30T06:36:11Z",
+      "side": 1,
+      "message": "Can we use the API like BadMessageReceived so we don\u0027t need to do the DVLOG thing?",
+      "revId": "928d30938930b256da00b1923b65dfc245196753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f01c32a0_0a07ad52",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-30T06:36:11Z",
+      "side": 1,
+      "message": "Let\u0027s keep these in alphabetical order.",
+      "revId": "928d30938930b256da00b1923b65dfc245196753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5e00d44_c28c737b",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-30T06:36:11Z",
+      "side": 1,
+      "message": "Just OpenWindow() sounds better.",
+      "revId": "928d30938930b256da00b1923b65dfc245196753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a781901_035486c1",
+        "filename": "third_party/WebKit/common/service_worker/service_worker.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-30T06:36:11Z",
+      "side": 1,
+      "message": "I\u0027m not sure I like the distinction between tab and window in these function names, but I see the existing code already does it.\n\nClients describe windows (as in DOM Window) not tabs (as in browser UI). I think maybe just \"contains service worker client information for the newly created window\".",
+      "range": {
+        "startLine": 35,
+        "startChar": 37,
+        "endLine": 35,
+        "endChar": 40
+      },
+      "revId": "928d30938930b256da00b1923b65dfc245196753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd2e6906_f4e50d72",
+        "filename": "third_party/WebKit/common/service_worker/service_worker.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-30T06:36:11Z",
+      "side": 1,
+      "message": "Generally try to avoid spec links with \"TR/\" in them, they are easily outdated. Use https://w3c.github.io/payment-handler/#openwindow-method isntead.",
+      "revId": "928d30938930b256da00b1923b65dfc245196753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
