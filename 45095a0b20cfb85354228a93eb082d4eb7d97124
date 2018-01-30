@@ -51,6 +51,24 @@
       "revId": "45095a0b20cfb85354228a93eb082d4eb7d97124",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76185208_7b9c4e30",
+        "filename": "components/viz/service/display_embedder/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-30T18:05:10Z",
+      "side": 1,
+      "message": "The strategies should probably be in embedder, they are impls of an interface for display (ie OverlayProcessor::Strategy) that are platform specific.\n\ndisplay{_scheduler}.h is the kinda thing i\u0027m wary of: like we dont want consumers of display to need to know about display embedder and go thru it to get to the display. display_embedder is impls of things consumed inside display. In that case it\u0027s for GpuDisplayProvider which should probably just return an OutputSurface instead of a concrete Display.\n\nThe rest look like interfaces or for data types used in interfaces (OutputSurfaceFrame, OverlayProcessor::StrategyList - should probably be its own header then).",
+      "parentUuid": "d788e6ed_b39abbbe",
+      "revId": "45095a0b20cfb85354228a93eb082d4eb7d97124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
