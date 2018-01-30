@@ -407,7 +407,7 @@ TEST_F('EditingTest', 'RichTextImageByCharacter', function() {
   var mockFeedback = this.createMockFeedback();
   this.runWithLoadedTree(function() {/*!
     <p id="go" contenteditable>
-      <img alt="dog"></img> is a <img alt="cat"</img> test
+      <img alt="dog"></img> is a <img alt="cat"></img> test
     </p>
     <script>
       document.getElementById('go').addEventListener('click', function() {
@@ -429,7 +429,7 @@ TEST_F('EditingTest', 'RichTextImageByCharacter', function() {
           .expectSpeech('dog', 'Image', ' is a ', 'cat', 'Image', ' test')
           .expectBraille('dog img is a cat img test')
           .call(moveByChar)
-          .expectSpeech('dog', 'Image')
+          .expectSpeech('dog')
           .expectBraille(lineText, {startIndex: 3, endIndex: 3})
           .call(moveByChar)
           .expectSpeech('i')

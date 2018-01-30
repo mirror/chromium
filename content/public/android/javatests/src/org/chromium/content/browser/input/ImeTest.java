@@ -798,16 +798,17 @@ public class ImeTest {
     public void testImeStaysOnLongPressingDifferentNonEmptyInputs() throws Exception {
         DOMUtils.focusNode(mRule.getWebContents(), "input_text");
         mRule.assertWaitForKeyboardStatus(true);
+        mRule.waitAndVerifyUpdateSelection(0, 0, 0, -1, -1);
 
         mRule.commitText("Sample Text", 1);
         // We should wait to avoid race condition.
-        mRule.waitAndVerifyUpdateSelection(0, 11, 11, -1, -1);
+        mRule.waitAndVerifyUpdateSelection(1, 11, 11, -1, -1);
 
         DOMUtils.focusNode(mRule.getWebContents(), "textarea");
-        mRule.waitAndVerifyUpdateSelection(1, 0, 0, -1, -1);
+        mRule.waitAndVerifyUpdateSelection(2, 0, 0, -1, -1);
 
         mRule.commitText("Sample Text", 1);
-        mRule.waitAndVerifyUpdateSelection(2, 11, 11, -1, -1);
+        mRule.waitAndVerifyUpdateSelection(3, 11, 11, -1, -1);
 
         DOMUtils.longPressNode(mRule.getContentViewCore(), "input_text");
         mRule.assertWaitForKeyboardStatus(true);
