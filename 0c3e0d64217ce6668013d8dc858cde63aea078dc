@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9507667_cd1f710b",
+        "filename": "media/audio/audio_debug_recording_helper.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-30T12:44:12Z",
+      "side": 1,
+      "message": "The meaning of |file_name_extensions| is not quite clear. I would read plural as a vector of elements. I\u0027m bad at naming so cannot really suggest a better option. Maybe |file_name_ending|, or something like that?",
+      "revId": "0c3e0d64217ce6668013d8dc858cde63aea078dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f775f251_9a09fb55",
+        "filename": "media/audio/audio_debug_recording_manager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-30T12:44:12Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused. Why removing it from helper and placing it here? I think we discussed leaving it there? Also \"media/audio/audio_debug_recording_helper.h\" in already included here so you can rely on the helper\u0027s definition of callback, can\u0027t you?",
+      "revId": "0c3e0d64217ce6668013d8dc858cde63aea078dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da0673e5_5a003809",
+        "filename": "media/audio/audio_debug_recording_manager_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-30T12:44:12Z",
+      "side": 1,
+      "message": "Could you update the comment?",
+      "revId": "0c3e0d64217ce6668013d8dc858cde63aea078dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "465bda28_b4530863",
+        "filename": "media/audio/audio_debug_recording_manager_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-30T12:44:12Z",
+      "side": 1,
+      "message": "Could you pass CreateFile() as MockCallback everywhere and set expectations on it?",
+      "revId": "0c3e0d64217ce6668013d8dc858cde63aea078dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cf215a7_b9468f6a",
+        "filename": "media/audio/audio_debug_recording_session.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-30T12:44:12Z",
+      "side": 1,
+      "message": "Why is it here? It\u0027s already in the header, isn\u0027t it?",
+      "revId": "0c3e0d64217ce6668013d8dc858cde63aea078dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66c720bd_f9ed2502",
+        "filename": "media/audio/audio_debug_recording_session.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-30T12:44:12Z",
+      "side": 1,
+      "message": "Not needed.",
+      "revId": "0c3e0d64217ce6668013d8dc858cde63aea078dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26310d28_3ecf235b",
+        "filename": "media/audio/audio_manager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-30T12:44:12Z",
+      "side": 1,
+      "message": "Could we just have GetDebugRecordingManager() instead?",
+      "revId": "0c3e0d64217ce6668013d8dc858cde63aea078dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
