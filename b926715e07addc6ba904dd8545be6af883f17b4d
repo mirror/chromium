@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f4ca7f7_c0f7bc3c",
+        "filename": "content/browser/loader/resource_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-30T17:30:16Z",
+      "side": 1,
+      "message": "As-is, we can still pass data to the renderer after this call - if another ResourceHandler is in the middle of asynchronously processing data, it will continue reading data and may eventually pass it down to this layer.\n\nWhat these methods do is not undocumented in the mojom file, so it\u0027s not clear if this violates the API contract or not.  Clarify the API contract, and update this code if appropriate?\n\nAlso unclear what happens if this is called multiple times.",
+      "range": {
+        "startLine": 59,
+        "startChar": 48,
+        "endLine": 59,
+        "endChar": 49
+      },
+      "revId": "b926715e07addc6ba904dd8545be6af883f17b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9198eb44_c50063da",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-30T17:30:16Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to keep these debugging lines?",
+      "range": {
+        "startLine": 246,
+        "startChar": 19,
+        "endLine": 246,
+        "endChar": 43
+      },
+      "revId": "b926715e07addc6ba904dd8545be6af883f17b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0ec4ea4_ae4e7981",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-30T17:30:16Z",
+      "side": 1,
+      "message": "nit:  \"reading body\" -\u003e \"reading the body\"",
+      "range": {
+        "startLine": 343,
+        "startChar": 25,
+        "endLine": 343,
+        "endChar": 30
+      },
+      "revId": "b926715e07addc6ba904dd8545be6af883f17b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db5d9bf3_e1427d1d",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-30T17:30:16Z",
+      "side": 1,
+      "message": "Please avoid \"we\" in comments, due to ambiguity (We this object, we the chrome devs, etc)",
+      "range": {
+        "startLine": 343,
+        "startChar": 22,
+        "endLine": 343,
+        "endChar": 24
+      },
+      "revId": "b926715e07addc6ba904dd8545be6af883f17b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d4cd214_4afe7285",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-30T17:30:16Z",
+      "side": 1,
+      "message": "Can this happen, if read_more_body_supressed_ is true?  If so, how?",
+      "range": {
+        "startLine": 368,
+        "startChar": 25,
+        "endLine": 368,
+        "endChar": 0
+      },
+      "revId": "b926715e07addc6ba904dd8545be6af883f17b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c325957b_e1a712f1",
+        "filename": "content/browser/loader/resource_loader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-30T17:30:16Z",
+      "side": 1,
+      "message": "Do we need this, or can we just use GetRawBodyBytes()?  It\u0027s compressed, rather than uncompressed bytes, but I\u0027m not sure how much that matters?  It does make it more accurate - maybe we have 16k in the gzip buffer, which decompresses to 128k.  If we pause in the middle of the read and then resume, we\u0027ll likely report 32k of decompressed bytes (Since that\u0027s how much we\u0027ll read from the URLRequest, though it could provide us with 128k decompressed bytes), so this measure is inaccurate, since we\u0027ve read 128k of decompressible body data from the network.\n\nGetRawBodyBytes() will return the correct value of 16k compressed bytes.",
+      "range": {
+        "startLine": 205,
+        "startChar": 10,
+        "endLine": 205,
+        "endChar": 32
+      },
+      "revId": "b926715e07addc6ba904dd8545be6af883f17b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
