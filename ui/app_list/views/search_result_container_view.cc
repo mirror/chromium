@@ -8,6 +8,7 @@
 #include "base/location.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "ui/app_list/views/search_result_base_view.h"
 
 namespace app_list {
 

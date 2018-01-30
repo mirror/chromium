@@ -1000,11 +1000,11 @@ TEST_F(AppListViewFocusTest, FirstResultNotSelectedAfterQuicklyHittingTab) {
       contents_view()
           ->search_result_list_view_for_test()
           ->results_container_for_test();
-  views::View* first_result_view =
+  SearchResultBaseView* first_result_view =
       contents_view()->search_results_page_view()->first_result_view();
   EXPECT_EQ(search_box_view()->search_box(), focused_view());
   EXPECT_EQ(results_container->child_at(0), first_result_view);
-  EXPECT_TRUE(static_cast<SearchResultView*>(first_result_view)->selected());
+  EXPECT_TRUE(first_result_view->background_highlighted());
 
   // Type something else.
   search_box_view()->search_box()->InsertText(base::ASCIIToUTF16("test2"));
@@ -1016,7 +1016,7 @@ TEST_F(AppListViewFocusTest, FirstResultNotSelectedAfterQuicklyHittingTab) {
   EXPECT_EQ(search_box_view()->close_button(), focused_view());
   SimulateKeyPress(ui::VKEY_TAB, false);
   EXPECT_EQ(results_container->child_at(0), focused_view());
-  EXPECT_TRUE(static_cast<SearchResultView*>(first_result_view)->selected());
+  EXPECT_TRUE(first_result_view->background_highlighted());
 
   // Update search results, both list and tile results are populated.
   const int kTileResults = 3;
@@ -1029,9 +1029,9 @@ TEST_F(AppListViewFocusTest, FirstResultNotSelectedAfterQuicklyHittingTab) {
       contents_view()->search_results_page_view()->first_result_view();
   EXPECT_EQ(results_container->child_at(0), focused_view());
   EXPECT_EQ(tile_views[0], first_result_view);
-  EXPECT_FALSE(
-      static_cast<SearchResultTileItemView*>(first_result_view)->HasFocus());
-  EXPECT_TRUE(static_cast<SearchResultView*>(focused_view())->selected());
+  EXPECT_FALSE(first_result_view->HasFocus());
+  EXPECT_TRUE(
+      static_cast<SearchResultView*>(focused_view())->background_highlighted());
 }
 
 // Tests hitting Enter key when focus is on search box.
