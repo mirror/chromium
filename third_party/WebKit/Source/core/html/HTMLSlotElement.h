@@ -47,12 +47,15 @@ class CORE_EXPORT HTMLSlotElement final : public HTMLElement {
   static HTMLSlotElement* CreateUserAgentCustomAssignSlot(Document&);
 
   const HeapVector<Member<Node>>& AssignedNodes() const;
+  // TODO(hayato): Make this private function
   const HeapVector<Member<Node>>& GetDistributedNodes();
   const HeapVector<Member<Node>> AssignedNodesForBinding(
       const AssignedNodesOptions&);
   const HeapVector<Member<Element>> AssignedElements();
   const HeapVector<Member<Element>> AssignedElementsForBinding(
       const AssignedNodesOptions&);
+
+  const HeapVector<Member<Node>> FlattenedAssignedNodes();
 
   Node* FirstAssignedNode() const {
     return assigned_nodes_.IsEmpty() ? nullptr : assigned_nodes_.front().Get();
@@ -62,11 +65,13 @@ class CORE_EXPORT HTMLSlotElement final : public HTMLElement {
   }
 
   Node* FirstDistributedNode() const {
+    DCHECK(!RuntimeEnabledFeatures::IncrementalShadowDOMEnabled());
     DCHECK(SupportsAssignment());
     return distributed_nodes_.IsEmpty() ? nullptr
                                         : distributed_nodes_.front().Get();
   }
   Node* LastDistributedNode() const {
+    DCHECK(!RuntimeEnabledFeatures::IncrementalShadowDOMEnabled());
     DCHECK(SupportsAssignment());
     return distributed_nodes_.IsEmpty() ? nullptr
                                         : distributed_nodes_.back().Get();
