@@ -146,6 +146,7 @@ void HTMLPlugInElement::SetFocused(bool focused, WebFocusType focus_type) {
 
 bool HTMLPlugInElement::RequestObjectInternal(
     const PluginParameters& plugin_params) {
+  DCHECK(!ContentFrame());
   if (url_.IsEmpty() && service_type_.IsEmpty())
     return false;
 
@@ -310,6 +311,21 @@ ParsedFeaturePolicy HTMLPlugInElement::ConstructContainerPolicy(Vector<String>*,
   whitelist.matches_all_origins = false;
   container_policy.push_back(whitelist);
   return container_policy;
+}
+
+bool HTMLPlugInElement::AllowsNavigationToPluginNone() const {
+  return true;
+}
+
+void HTMLPlugInElement::ReadyToLoadPlugin() {
+  DCHECK(ContentFrame());
+  // We can only get here after the navigation to 'plugin:none' has committed
+  // and/or loading stopped. It is quite safe to detach the frame now.
+  ContentFrame()->Detach(FrameDetachType::kRemove);
+  SetNeedsPluginUpdate(true);
+  // Continue the deferred reattachment.
+  LazyReattachIfNeeded();
+  GetDocument().UpdateStyleAndLayout();
 }
 
 void HTMLPlugInElement::DetachLayoutTree(const AttachContext& context) {
@@ -566,6 +582,13 @@ LayoutEmbeddedObject* HTMLPlugInElement::GetLayoutEmbeddedObject() const {
 // depending on <param> values.
 bool HTMLPlugInElement::AllowedToLoadFrameURL(const String& url) {
   KURL complete_url = GetDocument().CompleteURL(url);
+
+  if (complete_url.IsPluginNoneURL()) {
+    // 'plugin:none' is an internal destination used to properly clean frame
+    // state before each update.
+    return false;
+  }
+
   return !(ContentFrame() && complete_url.ProtocolIsJavaScript() &&
            !GetDocument().GetSecurityOrigin()->CanAccess(
                ContentFrame()->GetSecurityContext()->GetSecurityOrigin()));
@@ -719,7 +742,21 @@ bool HTMLPlugInElement::UseFallbackContent() const {
 void HTMLPlugInElement::LazyReattachIfNeeded() {
   if (!UseFallbackContent() && NeedsPluginUpdate() && GetLayoutObject() &&
       !IsImageType()) {
-    LazyReattachIfAttached();
+    if (ContentFrame()) {
+      // ContentFrame() clean-up should happen through navigation for two major
+      // reasons:
+      //  a- If it is a RemoteFrame, SetEmbeddedContentView(nullptr) will not
+      //     clear the OOPIF process. Navigation however does it cleanly.
+      //  b- 'onbeforeunload' handlers are called and respected this way.
+      // For this purpose we first navigate the ContentFrame() to 'plugin:none'
+      // which will eventually detach the ContentFrame(). At that point a new
+      // call to HTMLPlugInElement::UpdatePlugin() will restart the loading
+      // process.
+      update_plugin_after_detach_ = true;
+      LoadOrRedirectSubframe(PluginNoneURL(), GetNameAttribute(), true);
+    } else {
+      LazyReattachIfAttached();
+    }
     SetPersistedPlugin(nullptr);
   }
 }

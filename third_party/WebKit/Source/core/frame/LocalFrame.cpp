@@ -257,6 +257,11 @@ void LocalFrame::Navigate(Document& origin_document,
                           const KURL& url,
                           bool replace_current_item,
                           UserGestureStatus user_gesture_status) {
+  if (url.IsPluginNoneURL() &&
+      (!DeprecatedLocalOwner() ||
+       !DeprecatedLocalOwner()->AllowsNavigationToPluginNone())) {
+    return;
+  }
   navigation_scheduler_->ScheduleFrameNavigation(&origin_document, url,
                                                  replace_current_item);
 }

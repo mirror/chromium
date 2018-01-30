@@ -54,6 +54,12 @@ void RemoteFrame::Navigate(Document& origin_document,
                            const KURL& url,
                            bool replace_current_item,
                            UserGestureStatus user_gesture_status) {
+  if (url.IsPluginNoneURL() &&
+      (!DeprecatedLocalOwner() ||
+       !DeprecatedLocalOwner()->AllowsNavigationToPluginNone())) {
+    return;
+  }
+
   FrameLoadRequest frame_request(&origin_document, ResourceRequest(url));
   frame_request.SetReplacesCurrentItem(replace_current_item);
   frame_request.GetResourceRequest().SetHasUserGesture(

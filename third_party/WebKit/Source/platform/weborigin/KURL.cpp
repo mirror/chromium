@@ -177,8 +177,17 @@ const KURL& BlankURL() {
   return static_blank_url;
 }
 
+const KURL& PluginNoneURL() {
+  DEFINE_STATIC_LOCAL(KURL, static_plugin_none_url, ("plugin:none"));
+  return static_plugin_none_url;
+}
+
 bool KURL::IsAboutBlankURL() const {
   return *this == BlankURL();
+}
+
+bool KURL::IsPluginNoneURL() const {
+  return *this == PluginNoneURL();
 }
 
 const KURL& SrcdocURL() {
