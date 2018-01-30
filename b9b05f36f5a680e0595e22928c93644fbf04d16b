@@ -261,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "3822ecde_e8dc01f2",
+        "filename": "base/threading/thread_local_storage.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1146127
+      },
+      "writtenOn": "2018-01-30T15:12:14Z",
+      "side": 1,
+      "message": "I\u0027ve had a look at lazy_instance_helpers. A possible option would be to wrap slot_/other member variable and g_tls_metadata manipulations with NeedsLazyInstance/CompleteLazyInstance even as they are now. However, given that the initialization scenario requires an AutoLock anyway, don\u0027t you think that a second synchronization mechanism looks redundant? \n\nGiven that racing StaticSlot initializations are rare they are unlikely to add much wait for the lock during other StaticSlot initializations. Which, if it was the case, could be a motivation for another sync mechanism. Or am I missing something?\n\nIt seems that the use case for the StaticSlot is static storage duration variables. And yeah, LazyInstance of the non-static Slot looks a working option as well.",
+      "parentUuid": "b71bd848_aded6765",
+      "range": {
+        "startLine": 133,
+        "startChar": 39,
+        "endLine": 133,
+        "endChar": 40
+      },
+      "revId": "b9b05f36f5a680e0595e22928c93644fbf04d16b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a26bd57_32856554",
         "filename": "base/threading/thread_local_storage.h",
         "patchSetId": 1
