@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3725dec4_29c3ad69",
+        "filename": "content/common/media/media_player_delegate_messages.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-01-30T20:10:13Z",
+      "side": 1,
+      "message": "Also why not use base::UnguessableToken directly here?",
+      "parentUuid": "71e1f765_8349e907",
+      "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6333d60_e845a100",
         "filename": "content/public/browser/content_browser_client.h",
         "patchSetId": 15
@@ -84,6 +102,40 @@
       "side": 1,
       "message": "still, ContentBrowserClient is a last-resort interface. I\u0027d rather have this on RenderFrameHostDelegate",
       "parentUuid": "14eb7494_51019d2d",
+      "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6b5e947_c66b078b",
+        "filename": "content/renderer/media/renderer_webmediaplayer_delegate.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-01-30T20:10:13Z",
+      "side": 1,
+      "message": "I don\u0027t think you need to manually serialize, I see other message files using the token directly.",
+      "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6043d8f_72d545b3",
+        "filename": "media/blink/webmediaplayer_delegate.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-01-30T20:10:13Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is the right place for this. It seems this should talk to the external surfaces code directly instead of going through the delegate?",
       "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
