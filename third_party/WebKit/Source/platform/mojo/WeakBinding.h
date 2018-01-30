@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef MOJO_PUBLIC_CPP_BINDINGS_BINDING_H_
-#define MOJO_PUBLIC_CPP_BINDINGS_BINDING_H_
+#ifndef WeakBinding_h
+#define WeakBinding_h
 
 #include <string>
 #include <utility>
@@ -19,99 +19,70 @@
 #include "mojo/public/cpp/bindings/lib/binding_state.h"
 #include "mojo/public/cpp/bindings/raw_ptr_impl_ref_traits.h"
 #include "mojo/public/cpp/system/core.h"
+#include "platform/mojo/InterfaceInvalidator.h"
 
-namespace mojo {
+namespace blink {
 
 class MessageReceiver;
 
-// Represents the binding of an interface implementation to a message pipe.
-// When the |Binding| object is destroyed, the binding between the message pipe
-// and the interface is torn down and the message pipe is closed, leaving the
-// interface implementation in an unbound state. Once the |Binding| object is
-// destroyed, it is guaranteed that no more method calls are dispatched to the
-// implementation and the connection error handler (if registered) won't be
-// called.
+// WeakBinding is a wrapper around a Binding that has to be tied to an
+// InterfaceInvalidator when bound to a message pipe. The underlying connection
+// is closed once the InterfaceInvalidator is destroyed, and the interface will
+// behave as if its peer had closed the connection. This is useful for tying the
+// lifetime of mojo interfaces to another object.
 //
-// Example:
-//
-//   #include "foo.mojom.h"
-//
-//   class FooImpl : public Foo {
-//    public:
-//     explicit FooImpl(InterfaceRequest<Foo> request)
-//         : binding_(this, std::move(request)) {}
-//
-//     // Foo implementation here.
-//
-//    private:
-//     Binding<Foo> binding_;
-//   };
-//
-//   class MyFooFactory : public InterfaceFactory<Foo> {
-//    public:
-//     void Create(..., InterfaceRequest<Foo> request) override {
-//       auto f = new FooImpl(std::move(request));
-//       // Do something to manage the lifetime of |f|. Use StrongBinding<> to
-//       // delete FooImpl on connection errors.
-//     }
-//   };
-//
-// This class is thread hostile while bound to a message pipe. All calls to this
-// class must be from the sequence that bound it. The interface implementation's
-// methods will be called from the sequence that bound this. If a Binding is not
-// bound to a message pipe, it may be bound or destroyed on any sequence.
-//
-// When you bind this class to a message pipe, optionally you can specify a
-// base::SingleThreadTaskRunner. This task runner must belong to the same
-// thread. It will be used to dispatch incoming method calls and connection
-// error notification. It is useful when you attach multiple task runners to a
-// single thread for the purposes of task scheduling. Please note that
-// incoming synchrounous method calls may not be run from this task runner, when
-// they reenter outgoing synchrounous calls on the same thread.
+// TODO(austinct): Add set_connection_error_with_reason_handler(),
+// CloseWithReason(), ReportBadMessage() and GetBadMessageCallback() methods if
+// needed. Undesirable for now because of the std::string parameter.
 template <typename Interface,
-          typename ImplRefTraits = RawPtrImplRefTraits<Interface>>
-class Binding {
+          typename ImplRefTraits = mojo::RawPtrImplRefTraits<Interface>>
+class WeakBinding : public InterfaceInvalidator::Observer {
  public:
   using ImplPointerType = typename ImplRefTraits::PointerType;
 
   // Constructs an incomplete binding that will use the implementation |impl|.
   // The binding may be completed with a subsequent call to the |Bind| method.
   // Does not take ownership of |impl|, which must outlive the binding.
-  explicit Binding(ImplPointerType impl) : internal_state_(std::move(impl)) {}
+  explicit WeakBinding(ImplPointerType impl) : binding_(std::move(impl)) {}
 
   // Constructs a completed binding of |impl| to the message pipe endpoint in
   // |request|, taking ownership of the endpoint. Does not take ownership of
-  // |impl|, which must outlive the binding.
-  Binding(ImplPointerType impl,
-          InterfaceRequest<Interface> request,
-          scoped_refptr<base::SingleThreadTaskRunner> runner = nullptr)
-      : Binding(std::move(impl)) {
-    Bind(std::move(request), std::move(runner));
+  // |impl|, which must outlive the binding. Ties the lifetime of the binding to
+  // |invalidator|.
+  WeakBinding(ImplPointerType impl,
+              mojo::InterfaceRequest<Interface> request,
+              InterfaceInvalidator* invalidator,
+              scoped_refptr<base::SingleThreadTaskRunner> runner = nullptr)
+      : WeakBinding(std::move(impl)) {
+    Bind(std::move(request), invalidator, std::move(runner));
   }
 
   // Tears down the binding, closing the message pipe and leaving the interface
   // implementation unbound.
-  ~Binding() {}
+  ~WeakBinding() { SetInvalidator(nullptr); }
 
   // Completes a binding that was constructed with only an interface
   // implementation by removing the message pipe endpoint from |request| and
-  // binding it to the previously specified implementation.
-  void Bind(InterfaceRequest<Interface> request,
+  // binding it to the previously specified implementation. Ties the lifetime of
+  // the binding to |invalidator|.
+  void Bind(mojo::InterfaceRequest<Interface> request,
+            InterfaceInvalidator* invalidator,
             scoped_refptr<base::SingleThreadTaskRunner> runner = nullptr) {
-    internal_state_.Bind(request.PassMessagePipe(), std::move(runner));
+    DCHECK(invalidator);
+    binding_.Bind(std::move(request), std::move(runner));
+    SetInvalidator(invalidator);
   }
 
   // Adds a message filter to be notified of each incoming message before
   // dispatch. If a filter returns |false| from Accept(), the message is not
   // dispatched and the pipe is closed. Filters cannot be removed.
   void AddFilter(std::unique_ptr<MessageReceiver> filter) {
-    DCHECK(is_bound());
-    internal_state_.AddFilter(std::move(filter));
+    binding_.AddFilter(std::move(filter));
   }
 
   // Whether there are any associated interfaces running on the pipe currently.
   bool HasAssociatedInterfaces() const {
-    return internal_state_.HasAssociatedInterfaces();
+    return binding_.HasAssociatedInterfaces();
   }
 
   // Stops processing incoming messages until
@@ -123,11 +94,10 @@ class Binding {
   // This method may only be called if the object has been bound to a message
   // pipe and there are no associated interfaces running.
   void PauseIncomingMethodCallProcessing() {
-    CHECK(!HasAssociatedInterfaces());
-    internal_state_.PauseIncomingMethodCallProcessing();
+    binding_.PauseIncomingMethodCallProcessing();
   }
   void ResumeIncomingMethodCallProcessing() {
-    internal_state_.ResumeIncomingMethodCallProcessing();
+    binding_.ResumeIncomingMethodCallProcessing();
   }
 
   // Blocks the calling sequence until either a call arrives on the previously
@@ -139,16 +109,14 @@ class Binding {
   // interface or any associated interfaces.
   bool WaitForIncomingMethodCall(
       MojoDeadline deadline = MOJO_DEADLINE_INDEFINITE) {
-    return internal_state_.WaitForIncomingMethodCall(deadline);
+    return binding_.WaitForIncomingMethodCall(deadline);
   }
 
   // Closes the message pipe that was previously bound. Put this object into a
   // state where it can be rebound to a new pipe.
-  void Close() { internal_state_.Close(); }
-
-  // Similar to the method above, but also specifies a disconnect reason.
-  void CloseWithReason(uint32_t custom_reason, const std::string& description) {
-    internal_state_.CloseWithReason(custom_reason, description);
+  void Close() {
+    SetInvalidator(nullptr);
+    binding_.Close();
   }
 
   // Unbinds the underlying pipe from this binding and returns it so it can be
@@ -163,44 +131,34 @@ class Binding {
   // on to associated interface endpoint handles at both sides of the
   // message pipe in order to call this method. We need a way to forcefully
   // invalidate associated interface endpoint handles.
-  InterfaceRequest<Interface> Unbind() {
-    CHECK(!HasAssociatedInterfaces());
-    return internal_state_.Unbind();
+  mojo::InterfaceRequest<Interface> Unbind() {
+    SetInvalidator(nullptr);
+    return binding_.Unbind();
   }
 
   // Sets an error handler that will be called if a connection error occurs on
   // the bound message pipe.
   //
-  // This method may only be called after this Binding has been bound to a
-  // message pipe. The error handler will be reset when this Binding is unbound
-  // or closed.
+  // This method may only be called after this WeakBinding has been bound to a
+  // message pipe. The error handler will be reset when this WeakBinding is
+  // unbound, closed or invalidated.
   void set_connection_error_handler(base::OnceClosure error_handler) {
-    DCHECK(is_bound());
-    internal_state_.set_connection_error_handler(std::move(error_handler));
-  }
-
-  void set_connection_error_with_reason_handler(
-      ConnectionErrorWithReasonCallback error_handler) {
-    DCHECK(is_bound());
-    internal_state_.set_connection_error_with_reason_handler(
-        std::move(error_handler));
+    binding_.set_connection_error_handler(std::move(error_handler));
   }
 
   // Returns the interface implementation that was previously specified. Caller
   // does not take ownership.
-  Interface* impl() { return internal_state_.impl(); }
+  Interface* impl() { return binding_.impl(); }
 
   // Indicates whether the binding has been completed (i.e., whether a message
   // pipe has been bound to the implementation).
-  bool is_bound() const { return internal_state_.is_bound(); }
+  explicit operator bool() const { return static_cast<bool>(binding_); }
 
-  explicit operator bool() const { return internal_state_.is_bound(); }
-
-  // Returns the value of the handle currently bound to this Binding which can
-  // be used to make explicit Wait/WaitMany calls. Requires that the Binding be
-  // bound. Ownership of the handle is retained by the Binding, it is not
-  // transferred to the caller.
-  MessagePipeHandle handle() const { return internal_state_.handle(); }
+  // Returns the value of the handle currently bound to this WeakBinding which
+  // can be used to make explicit Wait/WaitMany calls. Requires that the
+  // WeakBinding be bound. Ownership of the handle is retained by the
+  // WeakBinding, it is not transferred to the caller.
+  mojo::MessagePipeHandle handle() const { return binding_.handle(); }
 
   // Reports the currently dispatching Message as bad and closes this binding.
   // Note that this is only legal to call from directly within the stack frame
@@ -216,40 +174,60 @@ class Binding {
   // from directly within the stack frame of a message dispatch, but the
   // returned callback may be called exactly once any time thereafter to report
   // the message as bad. This may only be called once per message. The returned
-  // callback must be called on the Binding's own sequence.
-  ReportBadMessageCallback GetBadMessageCallback() {
-    return internal_state_.GetBadMessageCallback();
+  // callback must be called on the WeakBinding's own sequence.
+  mojo::ReportBadMessageCallback GetBadMessageCallback() {
+    return binding_.GetBadMessageCallback();
   }
 
   // Sends a no-op message on the underlying message pipe and runs the current
   // message loop until its response is received. This can be used in tests to
   // verify that no message was sent on a message pipe in response to some
   // stimulus.
-  void FlushForTesting() { internal_state_.FlushForTesting(); }
+  void FlushForTesting() { binding_.FlushForTesting(); }
 
   // Exposed for testing, should not generally be used.
-  void EnableTestingMode() { internal_state_.EnableTestingMode(); }
+  void EnableTestingMode() { binding_.EnableTestingMode(); }
 
-  scoped_refptr<internal::MultiplexRouter> RouterForTesting() {
-    return internal_state_.RouterForTesting();
+  scoped_refptr<mojo::internal::MultiplexRouter> RouterForTesting() {
+    return binding_.RouterForTesting();
   }
 
   // Allows test code to swap the interface implementation.
   ImplPointerType SwapImplForTesting(ImplPointerType new_impl) {
-    return internal_state_.SwapImplForTesting(new_impl);
-  }
-
-  // DO NOT USE. Exposed only for internal use and for testing.
-  internal::BindingState<Interface, ImplRefTraits>* internal_state() {
-    return &internal_state_;
+    return binding_.SwapImplForTesting(new_impl);
   }
 
  private:
-  internal::BindingState<Interface, ImplRefTraits> internal_state_;
+  // InterfaceInvalidator::Observer
+  void OnInvalidate() override {
+    if (binding_) {
+      binding_.internal_state()->RaiseError();
+    }
+    if (invalidator_) {
+      invalidator_->RemoveObserver(this);
+    }
+    invalidator_.reset();
+  }
 
-  DISALLOW_COPY_AND_ASSIGN(Binding);
+  // Replaces the existing invalidator with a new invalidator and changes the
+  // invalidator being observed.
+  void SetInvalidator(InterfaceInvalidator* invalidator) {
+    if (invalidator_)
+      invalidator_->RemoveObserver(this);
+
+    invalidator_.reset();
+    if (invalidator) {
+      invalidator_ = invalidator->GetWeakPtr();
+      invalidator_->AddObserver(this);
+    }
+  }
+
+  mojo::Binding<Interface, ImplRefTraits> binding_;
+  base::WeakPtr<InterfaceInvalidator> invalidator_;
+
+  DISALLOW_COPY_AND_ASSIGN(WeakBinding);
 };
 
-}  // namespace mojo
+}  // namespace blink
 
-#endif  // MOJO_PUBLIC_CPP_BINDINGS_BINDING_H_
+#endif  // WeakBinding_h
