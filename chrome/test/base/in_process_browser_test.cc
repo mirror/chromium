@@ -16,6 +16,7 @@
 #include "base/path_service.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/strings/stringprintf.h"
 #include "base/test/test_file_util.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
@@ -40,6 +41,7 @@
 #include "chrome/browser/ui/browser_tabstrip.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
+#include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_paths.h"
@@ -61,7 +63,10 @@
 #include "content/public/test/test_launcher.h"
 #include "content/public/test/test_navigation_observer.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
+#include "ui/accessibility/ax_node_data.h"
 #include "ui/display/display_switches.h"
+#include "ui/views/accessibility/view_accessibility.h"
+#include "ui/views/view.h"
 
 #if defined(OS_MACOSX)
 #include "base/mac/scoped_nsautorelease_pool.h"
@@ -144,11 +149,12 @@ InProcessBrowserTest::InProcessBrowserTest()
     : browser_(NULL),
       exit_when_last_browser_closes_(true),
       open_about_blank_on_browser_launch_(true),
-      run_accessibility_checks_for_test_case_(false)
+      run_content_accessibility_checks_for_test_case_(false)
 #if defined(OS_MACOSX)
-      , autorelease_pool_(NULL)
+      ,
+      autorelease_pool_(NULL)
 #endif  // OS_MACOSX
-    {
+{
 #if defined(OS_MACOSX)
   // TODO(phajdan.jr): Make browser_tests self-contained on Mac, remove this.
   // Before we run the browser, we have to hack the path to the exe to match
@@ -299,7 +305,8 @@ void InProcessBrowserTest::SetUpDefaultCommandLine(
     command_line->AppendArg(url::kAboutBlankURL);
 }
 
-bool InProcessBrowserTest::RunAccessibilityChecks(std::string* error_message) {
+bool InProcessBrowserTest::RunContentAccessibilityChecks(
+    std::string* error_message) {
   base::ScopedAllowBlockingForTesting allow_blocking;
   if (!browser()) {
     *error_message = "browser is NULL";
@@ -348,6 +355,75 @@ bool InProcessBrowserTest::RunAccessibilityChecks(std::string* error_message) {
 
   // Test result should be empty if there are no errors.
   return error_message->empty();
+}
+
+std::string GetViewAncestry(views::View* view) {
+  std::string view_ancestry;  // e.g. BrowserView>OmniboxView.
+  while (view) {
+    view_ancestry = view_ancestry + ">" + view->GetClassName();
+    view = view->parent();
+  }
+  return view_ancestry.substr(1);  // Remove first '>'
+}
+
+// TODO(aleventhal) Move to external class if it gets complex.
+bool CheckViewAccessibility(views::View* view, std::string* error_message) {
+  if (!view->IsFocusable())
+    return true;  // No accessibility checks for unfocusable views.
+
+  // Focusable nodes must have an accessible name, otherwise screen reader users
+  // will not know what they landed on. For example, the reload button should
+  // have an accessible name of "Reload".
+  // Note: explictly setting the name to "" is allowed.
+  views::ViewAccessibility& view_ax = view->GetViewAccessibility();
+  ui::AXNodeData node_data;
+  view_ax.GetAccessibleNodeData(&node_data);
+  std::string name;
+  if (!node_data.HasStringAttribute(ax::mojom::StringAttribute::kName)) {
+    *error_message = base::StringPrintf(
+        "Accessibility error: every focusable view must provide an accessible "
+        "name: %s",
+        GetViewAncestry(view).c_str());
+    return false;
+  }
+
+  return true;  // One view passed all checks.
+}
+
+bool CheckViewSubtreeAccessibility(views::View* view,
+                                   std::string* error_message) {
+  if (!CheckViewAccessibility(view, error_message))
+    return false;
+  for (int i = 0; i < view->child_count(); ++i) {
+    if (!CheckViewSubtreeAccessibility(view->child_at(i), error_message))
+      return false;
+  }
+
+  return true;  // All views in this subtree passed all checks.
+}
+
+bool InProcessBrowserTest::RunUIAccessibilityChecks(
+    std::string* error_message) {
+#if defined(OS_MACOSX) && !BUILDFLAG(MAC_VIEWS_BROWSER)
+  return true;
+#else
+  // Check native UI for accessibility violations.
+  base::ScopedAllowBlockingForTesting allow_blocking;
+  if (!browser())
+    return true;  // Nothing to test.
+
+  BrowserWindow* browser_window = browser()->window();
+  if (!browser_window) {
+    *error_message = "browser window is NULL";
+    return false;
+  }
+  BrowserView* browser_view = static_cast<BrowserView*>(browser_window);
+
+  CheckViewSubtreeAccessibility(browser_view, error_message);
+
+  // Test result should be empty if there are no errors.
+  return error_message->empty();
+#endif  // OS_MACOSX && !BUILDFLAG(MAC_VIEWS_BROWSER)
 }
 
 bool InProcessBrowserTest::CreateUserDataDirectory() {
@@ -563,10 +639,10 @@ void InProcessBrowserTest::PreRunTestOnMainThread() {
   // browser.
   content::RunAllPendingInMessageLoop();
 
-  // run_accessibility_checks_for_test_case_ must be set before calling
+  // run_content_accessibility_checks_for_test_case_ must be set before calling
   // SetUpOnMainThread or RunTestOnMainThread so that one or all tests can
   // enable/disable the accessibility audit.
-  run_accessibility_checks_for_test_case_ = false;
+  run_content_accessibility_checks_for_test_case_ = false;
 
   if (browser_ && global_browser_set_up_function_)
     ASSERT_TRUE(global_browser_set_up_function_(browser_));
@@ -585,12 +661,16 @@ void InProcessBrowserTest::PostRunTestOnMainThread() {
   autorelease_pool_->Recycle();
 #endif
 
-  if (run_accessibility_checks_for_test_case_) {
+  if (run_content_accessibility_checks_for_test_case_) {
     std::string error_message;
-    EXPECT_TRUE(RunAccessibilityChecks(&error_message));
+    EXPECT_TRUE(RunContentAccessibilityChecks(&error_message));
     EXPECT_EQ("", error_message);
   }
 
+  // Currently we always run UI accessibility checks.
+  std::string error_message;
+  EXPECT_TRUE(RunUIAccessibilityChecks(&error_message));
+  EXPECT_EQ("", error_message);
 #if defined(OS_MACOSX)
   autorelease_pool_->Recycle();
 #endif

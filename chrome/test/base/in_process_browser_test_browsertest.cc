@@ -132,7 +132,7 @@ IN_PROC_BROWSER_TEST_F(
   ASSERT_TRUE(NavigateToURL(kPassHTML));
 
   std::string test_result;
-  EXPECT_TRUE(RunAccessibilityChecks(&test_result));
+  EXPECT_TRUE(RunContentAccessibilityChecks(&test_result));
 
   // No error message on success.
   EXPECT_EQ("", test_result);
@@ -144,7 +144,7 @@ IN_PROC_BROWSER_TEST_F(
   ASSERT_TRUE(NavigateToURL(kFailHTML));
 
   std::string test_result;
-  EXPECT_FALSE(RunAccessibilityChecks(&test_result));
+  EXPECT_FALSE(RunContentAccessibilityChecks(&test_result));
 
   // Error should NOT be empty on failure.
   EXPECT_NE("", test_result);
