@@ -184,6 +184,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   TouchSelectionControllerClientManager*
   GetTouchSelectionControllerClientManager() override;
   viz::LocalSurfaceId GetLocalSurfaceId() const override;
+  void WidgetRoutingChannelChanged() override;
 
   // ui::ViewClient implementation.
   bool OnTouchEvent(const ui::MotionEventAndroid& m) override;

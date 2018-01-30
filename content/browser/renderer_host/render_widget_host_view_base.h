@@ -509,6 +509,11 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
 
   virtual void DidNavigate() {}
 
+  // Called when the RenderWidgetHostImpl's widget routing channel
+  // has been rebound. Associated channels might need to be reattached
+  // to the new channel.
+  virtual void WidgetRoutingChannelChanged() {}
+
  protected:
   // Interface class only, do not construct.
   RenderWidgetHostViewBase();
