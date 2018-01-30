@@ -34,6 +34,24 @@
       "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14eb7494_51019d2d",
+        "filename": "content/public/browser/content_browser_client.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-30T10:40:22Z",
+      "side": 1,
+      "message": "Surprisingly, we handle more than one fullscreen (one per display). I\u0027m quite surprised :)\n\nThough, we are focusing on one PIP element at once because contrary to fullscreen, they can be moved around and there are system limitations. We might change that later depending on usage.",
+      "parentUuid": "7440e4da_57b67dad",
+      "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
