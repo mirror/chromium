@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "95f2df3f_ae38b5c8",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-30T21:26:10Z",
+      "side": 1,
+      "message": "For the webview case, we\u0027ll still call this function trying to get the HTA but this is going to return nullptr (and so it won\u0027t call HTA\u0027s Aggregate()). I added a DCHECK that if |use_viz_hit_test_| is true then we must have a valid HTA.",
+      "parentUuid": "3d01168c_2b984db8",
+      "revId": "319df55c7157e03ea5ae2b7dadb34fa9f3afcbda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60ea23ca_07fa7c11",
         "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.h",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-29T18:55:07Z",
       "side": 1,
       "message": "I\u0027m not a huge fan of the optional parameter, but I can\u0027t think of anything better off the top of my head. Any ideas? Otherwise, can |use_viz_hit_test| be better documented?",
+      "revId": "319df55c7157e03ea5ae2b7dadb34fa9f3afcbda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4c186cb_ddbc959c",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-30T21:26:10Z",
+      "side": 1,
+      "message": "Yea I can\u0027t think of anything better rn. Added a comment and maybe we can revisit in the future?",
+      "parentUuid": "60ea23ca_07fa7c11",
       "revId": "319df55c7157e03ea5ae2b7dadb34fa9f3afcbda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "72da5cab_13a27a54",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-30T21:26:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88765304_12bbe18d",
+      "revId": "319df55c7157e03ea5ae2b7dadb34fa9f3afcbda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "094ecff3_a256b8ac",
         "filename": "components/viz/service/frame_sinks/root_compositor_frame_sink_impl.cc",
         "patchSetId": 8
@@ -64,6 +118,24 @@
       "writtenOn": "2018-01-29T18:55:07Z",
       "side": 1,
       "message": "Can this be false?",
+      "revId": "319df55c7157e03ea5ae2b7dadb34fa9f3afcbda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8da9152_d329abb3",
+        "filename": "components/viz/service/frame_sinks/root_compositor_frame_sink_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-30T21:26:10Z",
+      "side": 1,
+      "message": "Right it can\u0027t be true for the RootCompositorFrameSinkImpl case, added a DCHECK in GetHitTestAggregator",
+      "parentUuid": "094ecff3_a256b8ac",
       "revId": "319df55c7157e03ea5ae2b7dadb34fa9f3afcbda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "f2bf5094_6c2c2469",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-30T21:26:10Z",
+      "side": 1,
+      "message": "Oh right",
+      "parentUuid": "06f1e7df_0c00e480",
+      "range": {
+        "startLine": 50,
+        "startChar": 55,
+        "endLine": 50,
+        "endChar": 72
+      },
+      "revId": "319df55c7157e03ea5ae2b7dadb34fa9f3afcbda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43cde921_cad7e7cb",
         "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
         "patchSetId": 8
@@ -104,6 +200,24 @@
       "writtenOn": "2018-01-29T18:55:07Z",
       "side": 1,
       "message": "Not something to fix here, but this test class should probably just be based on mojom::FrameSinkManagerClient instead of HostFrameSinkManager?",
+      "revId": "319df55c7157e03ea5ae2b7dadb34fa9f3afcbda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e6eba9e_d6714b57",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-30T21:26:10Z",
+      "side": 1,
+      "message": "Added a TODO.",
+      "parentUuid": "43cde921_cad7e7cb",
       "revId": "319df55c7157e03ea5ae2b7dadb34fa9f3afcbda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "b5afe747_abe738d4",
+        "filename": "ui/views/test/DEPS",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-30T21:26:10Z",
+      "side": 1,
+      "message": "Deleted",
+      "parentUuid": "389a594f_e623ad36",
+      "revId": "319df55c7157e03ea5ae2b7dadb34fa9f3afcbda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8163ce43_d9363fc5",
         "filename": "ui/views/test/views_test_base.cc",
         "patchSetId": 8
@@ -138,6 +270,24 @@
       "writtenOn": "2018-01-29T18:55:07Z",
       "side": 1,
       "message": "This isn\u0027t the right place. You need to call mojo::edk::Init() once at the start of the process. Either in the main() or in the TestSuite. This will get called once per test case that runs.",
+      "revId": "319df55c7157e03ea5ae2b7dadb34fa9f3afcbda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "187467c0_4aea414e",
+        "filename": "ui/views/test/views_test_base.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-30T21:26:10Z",
+      "side": 1,
+      "message": "Thanks for catching this! Moved to main()",
+      "parentUuid": "8163ce43_d9363fc5",
       "revId": "319df55c7157e03ea5ae2b7dadb34fa9f3afcbda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
