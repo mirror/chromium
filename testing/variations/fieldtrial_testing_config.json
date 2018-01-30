@@ -2294,6 +2294,21 @@
                         "OmniboxUIExperimentHideSuggestionUrlScheme",
                         "OmniboxUIExperimentHideSuggestionUrlTrivialSubdomains"
                     ]
+                },
+                {
+                    "name": "SwapTitleAndUrl",
+                    "enable_features": [
+                        "OmniboxUIExperimentSwapTitleAndUrl"
+                    ]
+                },
+                {
+                    "name": "VerticalMargin_Enabled_8px",
+                    "params": {
+                        "UIVerticalMargin": "8"
+                    },
+                    "enable_features": [
+                        "OmniboxUIExperimentVerticalMargin"
+                    ]
                 }
             ]
         }
