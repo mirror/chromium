@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80d78c57_60713406",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 23858,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-01-30T16:21:56Z",
+      "side": 1,
+      "message": "with the new formation - I\u0027m not sure this is the best wording. This is emitting the number of extensions each time the extension update check is executed - right? Is that actually what you want?",
+      "revId": "b1a60ba12958bb20cc2b9410a9c1cca796eac282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8edb05d_50c491a7",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 23877,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-01-30T16:21:56Z",
+      "side": 1,
+      "message": "I\u0027m not sure the wording is right here - this isn\u0027t emitting \"counts\". I would describe the histogram as a single emission. WHat exactly is this measuring for each input to the histogram",
+      "revId": "b1a60ba12958bb20cc2b9410a9c1cca796eac282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
