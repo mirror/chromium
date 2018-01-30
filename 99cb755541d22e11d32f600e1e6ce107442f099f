@@ -16,6 +16,24 @@
       "revId": "99cb755541d22e11d32f600e1e6ce107442f099f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1edc9f9_87666282",
+        "filename": "third_party/WebKit/Source/modules/canvas/canvas2d/BaseRenderingContext2D.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2018-01-30T18:40:04Z",
+      "side": 1,
+      "message": "Yes, but the spec asks for different measures for those. The exception throwing is only added for the canvas as a source.",
+      "parentUuid": "1560820c_2e42d582",
+      "revId": "99cb755541d22e11d32f600e1e6ce107442f099f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
