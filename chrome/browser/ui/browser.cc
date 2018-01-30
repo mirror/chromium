@@ -2375,6 +2375,7 @@ void Browser::SetAsDelegate(WebContents* web_contents, bool set_delegate) {
 }
 
 void Browser::CloseFrame() {
+  BrowserList::NotifyBrowserCloseStarted(this);
   window_->Close();
 }
 
