@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1416538f_2d18eed9",
+        "filename": "components/gcm_driver/gcm_client_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-30T15:01:16Z",
+      "side": 1,
+      "message": "nit: unused",
+      "revId": "d042f0a9c969174ddfbc4ec72d9b39ab8023f183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ba35522_e1d10c09",
+        "filename": "components/gcm_driver/gcm_client_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-30T15:01:16Z",
+      "side": 1,
+      "message": "style nit: could use initialization lists:\n\n    std::vector\u003cstd::string\u003e senders{\"sender\"};",
+      "revId": "d042f0a9c969174ddfbc4ec72d9b39ab8023f183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7051aad_05dc7794",
+        "filename": "components/gcm_driver/gcm_client_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-30T15:01:16Z",
+      "side": 1,
+      "message": "style nit: try to avoid bare new:\n\n    auto gcm_info \u003d std::make_unique\u003cGCMRegistrationInfo\u003e();",
+      "revId": "d042f0a9c969174ddfbc4ec72d9b39ab8023f183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbec3b7c_ad1e875a",
+        "filename": "components/gcm_driver/gcm_client_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-30T15:01:16Z",
+      "side": 1,
+      "message": "ditto re: style nit.\n\nDo you mean \"deserialized\" instead of \"rehydrated\"? :)",
+      "revId": "d042f0a9c969174ddfbc4ec72d9b39ab8023f183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2356caa0_e1dcb89b",
+        "filename": "components/gcm_driver/gcm_client_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-30T15:01:16Z",
+      "side": 1,
+      "message": "nit: ASSERT_TRUE(). If deserialization fails, there\u0027s no point in verifying any of the further values because we\u0027ll know them to be wrong.",
+      "revId": "d042f0a9c969174ddfbc4ec72d9b39ab8023f183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2f09cc5_c7ade655",
+        "filename": "components/gcm_driver/gcm_client_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-30T15:01:16Z",
+      "side": 1,
+      "message": "nit: no need to check sender_ids twice",
+      "revId": "d042f0a9c969174ddfbc4ec72d9b39ab8023f183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eef54c0_3d8a1551",
+        "filename": "components/gcm_driver/registration_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-30T15:01:16Z",
+      "side": 1,
+      "message": "nit: since we explicitly type out commas and equal signs as separators, I\u0027d be explicit about the hash sign too.",
+      "revId": "d042f0a9c969174ddfbc4ec72d9b39ab8023f183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "771b8abf_4072e0b7",
+        "filename": "components/gcm_driver/registration_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-30T15:01:16Z",
+      "side": 1,
+      "message": "delete",
+      "revId": "d042f0a9c969174ddfbc4ec72d9b39ab8023f183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "245e1813_bba7e245",
+        "filename": "components/gcm_driver/registration_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-30T15:01:16Z",
+      "side": 1,
+      "message": "Since we have both a ternary and a branch here, can we be more explicit like\n\n    if (has_timestamp) {\n      // new format\n    } else {\n      // old format\n    }",
+      "revId": "d042f0a9c969174ddfbc4ec72d9b39ab8023f183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "765af76c_46eec0c3",
+        "filename": "components/gcm_driver/registration_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-30T15:01:16Z",
+      "side": 1,
+      "message": "To raise a question: what should |last_validated| default to if it doesn\u0027t have a value?",
+      "revId": "d042f0a9c969174ddfbc4ec72d9b39ab8023f183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc11a00e_b787b736",
+        "filename": "components/gcm_driver/registration_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-30T15:01:16Z",
+      "side": 1,
+      "message": "nit: could return immediately w/o the temporary variable",
+      "revId": "d042f0a9c969174ddfbc4ec72d9b39ab8023f183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e04f828_dfbbcbd9",
+        "filename": "components/gcm_driver/registration_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-30T15:01:16Z",
+      "side": 1,
+      "message": "same here re: pos_has and having an if { new format } else { old format } branch",
+      "revId": "d042f0a9c969174ddfbc4ec72d9b39ab8023f183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
