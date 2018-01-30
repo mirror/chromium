@@ -34,6 +34,25 @@
       "revId": "c9c0b92b490a8635e884e598dcf8a3c39ababd62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be797ffa_022d55d4",
+        "filename": "services/audio/public/cpp/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-30T14:48:20Z",
+      "side": 1,
+      "message": "Right, I promise I did read the CL description, I just got confused. :)  I was thinking /services/audio/common had deps on /services/audio\n\nI don\u0027t think there is a good reason to introduce a common target, and it\u0027s extra build complexity if that gets established as a pattern. Private service code can of course depend on anything in public/, so anything shared between public and private should itself just live in public/.\n\nIf you don\u0027t want clients depending on SystemInfo directly for some reason, GN has ways to express that - you could put it in a separate public/cpp target visible only to public/cpp:cpp, or you could use the public[1] variable to express that only some sources are public.\n\n[1]",
+      "parentUuid": "c499c32f_4f1675b5",
+      "tag": "mailMessageId\u003d\u003cCA+apAgFLkqR_HntDwEEjiuZUxxYeZQEy3J0tJ5ovjE_c3Y\u003drcQ@mail.gmail.com\u003e",
+      "revId": "c9c0b92b490a8635e884e598dcf8a3c39ababd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
