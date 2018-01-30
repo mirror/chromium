@@ -22,6 +22,30 @@
       "revId": "62b114da33bdbefea51f729495986976740c3bf7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78b034d1_c1075d2d",
+        "filename": "ios/web/navigation/wk_based_restore_session_util.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-01-30T21:25:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e2337b6_4a097676",
+      "range": {
+        "startLine": 47,
+        "startChar": 9,
+        "endLine": 47,
+        "endChar": 21
+      },
+      "revId": "62b114da33bdbefea51f729495986976740c3bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
