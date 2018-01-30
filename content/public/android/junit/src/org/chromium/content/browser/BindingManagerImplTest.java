@@ -23,9 +23,9 @@ import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowLooper;
 
 import org.chromium.base.process_launcher.ChildProcessConnection;
+import org.chromium.base.test.BaseRobolectricTestRunner;
 import org.chromium.base.test.TestChildProcessConnection;
 import org.chromium.base.test.util.Feature;
-import org.chromium.testing.local.LocalRobolectricTestRunner;
 
 import java.util.ArrayList;
 
@@ -35,7 +35,7 @@ import java.util.ArrayList;
  * Default property of being low-end device is overriden, so that both low-end and high-end policies
  * are tested.
  */
-@RunWith(LocalRobolectricTestRunner.class)
+@RunWith(BaseRobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
 public class BindingManagerImplTest {
 

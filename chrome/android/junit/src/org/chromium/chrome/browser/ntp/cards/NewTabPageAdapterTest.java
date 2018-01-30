@@ -21,9 +21,12 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import static org.chromium.chrome.browser.ntp.cards.ContentSuggestionsUnitTestUtils.makeUiConfig;
-import static org.chromium.chrome.test.util.browser.suggestions.ContentSuggestionsTestUtils.createDummySuggestions;
-import static org.chromium.chrome.test.util.browser.suggestions.ContentSuggestionsTestUtils.registerCategory;
-import static org.chromium.chrome.test.util.browser.suggestions.ContentSuggestionsTestUtils.stringify;
+import static org.chromium.chrome.test.util.browser.suggestions.ContentSuggestionsTestUtils
+        .createDummySuggestions;
+import static org.chromium.chrome.test.util.browser.suggestions.ContentSuggestionsTestUtils
+        .registerCategory;
+import static org.chromium.chrome.test.util.browser.suggestions.ContentSuggestionsTestUtils
+        .stringify;
 
 import android.accounts.Account;
 import android.content.res.Resources;
@@ -53,6 +56,7 @@ import org.robolectric.shadows.ShadowResources;
 
 import org.chromium.base.Callback;
 import org.chromium.base.ContextUtils;
+import org.chromium.base.test.BaseRobolectricTestRunner;
 import org.chromium.base.test.util.Feature;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
@@ -78,14 +82,14 @@ import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.test.util.browser.Features;
 import org.chromium.chrome.test.util.browser.Features.DisableFeatures;
 import org.chromium.chrome.test.util.browser.Features.EnableFeatures;
-import org.chromium.chrome.test.util.browser.suggestions.ContentSuggestionsTestUtils.CategoryInfoBuilder;
+import org.chromium.chrome.test.util.browser.suggestions.ContentSuggestionsTestUtils
+        .CategoryInfoBuilder;
 import org.chromium.chrome.test.util.browser.suggestions.FakeSuggestionsSource;
 import org.chromium.components.signin.AccountManagerFacade;
 import org.chromium.components.signin.test.util.AccountHolder;
 import org.chromium.components.signin.test.util.FakeAccountManagerDelegate;
 import org.chromium.net.NetworkChangeNotifier;
 import org.chromium.testing.local.CustomShadowAsyncTask;
-import org.chromium.testing.local.LocalRobolectricTestRunner;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -97,7 +101,7 @@ import java.util.List;
  * Unit tests for {@link NewTabPageAdapter}. {@link AccountManagerFacade} uses AsyncTasks, thus
  * the need for {@link CustomShadowAsyncTask}.
  */
-@RunWith(LocalRobolectricTestRunner.class)
+@RunWith(BaseRobolectricTestRunner.class)
 @Config(manifest = Config.NONE, shadows = {CustomShadowAsyncTask.class})
 @DisableFeatures({ChromeFeatureList.NTP_CONDENSED_LAYOUT, ChromeFeatureList.CHROME_HOME,
         ChromeFeatureList.CONTENT_SUGGESTIONS_SCROLL_TO_LOAD})

@@ -12,13 +12,14 @@ import android.net.Uri;
 
 import com.google.android.collect.Lists;
 
-import org.chromium.base.CommandLine;
-import org.chromium.testing.local.LocalRobolectricTestRunner;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowApplication;
+
+import org.chromium.base.CommandLine;
+import org.chromium.base.test.BaseRobolectricTestRunner;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -33,7 +34,7 @@ import java.util.Map;
 /**
  * Unit tests (run on host) for {@link org.chromium.chrome.browser.media.remote.MediaUrlResolver}.
  */
-@RunWith(LocalRobolectricTestRunner.class)
+@RunWith(BaseRobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
 public class MediaUrlResolverTest {
 
