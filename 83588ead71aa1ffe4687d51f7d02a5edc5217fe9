@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "569a38a8_898a7851",
+        "filename": "base/process/launch.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-30T01:52:35Z",
+      "side": 1,
+      "message": "This parameter isn\u0027t a flag, though. Also, the preceding line says \"If left unset, the child process will be launched with an empty namespace\", which isn\u0027t true unless the caller remembers to clear the LP_CLONE_FDIO_NAMESPACE bit.\n\nSuggest rewording the comment from the second line, to describe the default behaviour, and then describe how to use this member.",
+      "range": {
+        "startLine": 205,
+        "startChar": 5,
+        "endLine": 205,
+        "endChar": 14
+      },
+      "revId": "83588ead71aa1ffe4687d51f7d02a5edc5217fe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d63e28ca_bf9e8190",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-30T01:52:35Z",
+      "side": 1,
+      "message": "nit: Suggest |paths_index|",
+      "range": {
+        "startLine": 73,
+        "startChar": 14,
+        "endLine": 73,
+        "endChar": 22
+      },
+      "revId": "83588ead71aa1ffe4687d51f7d02a5edc5217fe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6789b450_287073b6",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-30T01:52:35Z",
+      "side": 1,
+      "message": "Some debug logging got left here?",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 51
+      },
+      "revId": "83588ead71aa1ffe4687d51f7d02a5edc5217fe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47b12d45_0bf5564f",
         "filename": "base/process/launch_fuchsia.cc",
         "patchSetId": 8
@@ -18,6 +87,29 @@
         "startChar": 0,
         "endLine": 142,
         "endChar": 5
+      },
+      "revId": "83588ead71aa1ffe4687d51f7d02a5edc5217fe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e7d9f69_eab7f254",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-30T01:52:35Z",
+      "side": 1,
+      "message": "No need to create and then wrap - you can instead write:\n\nScopedLaunchpad lp;\nlaunchpad_create(job, argv_cstr[0], lp.receive());\n\nwhich will cause |lp| to take ownership of whatever the call returns.\n\n(Separately, we should clean up this code to handle errors properly!)",
+      "range": {
+        "startLine": 170,
+        "startChar": 2,
+        "endLine": 170,
+        "endChar": 28
       },
       "revId": "83588ead71aa1ffe4687d51f7d02a5edc5217fe9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
