@@ -6,17 +6,27 @@
 
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/strings/utf_string_conversions.h"
+#include "ui/base/l10n/l10n_util.h"
 #include "ui/chromeos/ksv/keyboard_shortcut_item.h"
 #include "ui/chromeos/strings/grit/ui_chromeos_strings.h"
 #include "ui/events/event_constants.h"
-#include "ui/events/keycodes/keyboard_codes.h"
+#include "ui/events/keycodes/dom/dom_code.h"
+#include "ui/events/keycodes/dom/dom_key.h"
+#include "ui/events/keycodes/dom/keycode_converter.h"
+#include "ui/events/keycodes/keyboard_code_conversion.h"
 
 namespace keyboard_shortcut_viewer {
 
 namespace {
 
+constexpr ShortcutCategory kCategoryDisplayOrder[] = {
+    ShortcutCategory::kPopular,        ShortcutCategory::kTabAndWindow,
+    ShortcutCategory::kPageAndBrowser, ShortcutCategory::kSystemAndDisplay,
+    ShortcutCategory::kTextEditing,    ShortcutCategory::kAccessibility};
+
 // Get the keyboard codes for modifiers.
-ui::KeyboardCode GetModifierKeyCode(ui::EventFlags modifier) {
+ui::KeyboardCode GetKeyCodeForModifier(ui::EventFlags modifier) {
   switch (modifier) {
     case ui::EF_CONTROL_DOWN:
       return ui::VKEY_CONTROL;
@@ -32,7 +42,83 @@ ui::KeyboardCode GetModifierKeyCode(ui::EventFlags modifier) {
   }
 }
 
+// TODO(https://crbug.com/803502): For VKEY without US layout mapping or with
+// special labels.
+bool GetSpecialStringForKeyboardCode(ui::KeyboardCode keycode,
+                                     base::string16* key_label) {
+  std::string label;
+  switch (keycode) {
+    case ui::VKEY_CONTROL:
+      label = "CTRL";
+      break;
+    case ui::VKEY_LMENU:
+      label = "ALT";
+      break;
+    case ui::VKEY_SHIFT:
+      label = "SHIFT";
+      break;
+    case ui::VKEY_COMMAND:
+      label = "SEARCH";
+      break;
+    default:
+      return false;
+  }
+  *key_label = base::ASCIIToUTF16(label);
+  return true;
+}
+
 }  // namespace
+
+const base::span<const ShortcutCategory> GetCategoryDisplayOrder() {
+  base::span<const ShortcutCategory> span(kCategoryDisplayOrder);
+  return span;
+}
+
+const base::string16 GetStringForCategory(ShortcutCategory category) {
+  int msg_id = 0;
+  switch (category) {
+    case ShortcutCategory::kPopular:
+      msg_id = IDS_KSV_CATEGORY_POPULAR;
+      break;
+    case ShortcutCategory::kTabAndWindow:
+      msg_id = IDS_KSV_CATEGORY_TAB_WINDOW;
+      break;
+    case ShortcutCategory::kPageAndBrowser:
+      msg_id = IDS_KSV_CATEGORY_PAGE_BROWSER;
+      break;
+    case ShortcutCategory::kSystemAndDisplay:
+      msg_id = IDS_KSV_CATEGORY_SYSTEM_DISPLAY;
+      break;
+    case ShortcutCategory::kTextEditing:
+      msg_id = IDS_KSV_CATEGORY_TEXT_EDITING;
+      break;
+    case ShortcutCategory::kAccessibility:
+      msg_id = IDS_KSV_CATEGORY_ACCESSIBILITY;
+      break;
+    default:
+      NOTREACHED();
+  }
+  return l10n_util::GetStringUTF16(msg_id);
+}
+
+const base::string16 GetStringForKeyboardCode(ui::KeyboardCode keycode,
+                                              bool shift_down) {
+  ui::DomCode dom_code = ui::UsLayoutKeyboardCodeToDomCode(keycode);
+  ui::DomKey dom_key;
+  ui::KeyboardCode keycode_ignored;
+  base::string16 key_label;
+  int flags = 0;
+  if (shift_down)
+    flags = ui::EF_SHIFT_DOWN;
+  if (!GetSpecialStringForKeyboardCode(keycode, &key_label)) {
+    bool has_mapping = ui::DomCodeToUsLayoutDomKey(dom_code, flags, &dom_key,
+                                                   &keycode_ignored);
+    DCHECK(has_mapping);
+    key_label =
+        base::UTF8ToUTF16(ui::KeycodeConverter::DomKeyToKeyString(dom_key));
+  }
+  return key_label;
+}
 
 const std::vector<KeyboardShortcutItem>& GetKeyboardShortcutItemList() {
   CR_DEFINE_STATIC_LOCAL(
@@ -75,8 +161,10 @@ const std::vector<KeyboardShortcutItem>& GetKeyboardShortcutItemList() {
         // |shortcut_message_id| associated string template.
         for (auto modifier : {ui::EF_CONTROL_DOWN, ui::EF_ALT_DOWN,
                               ui::EF_SHIFT_DOWN, ui::EF_COMMAND_DOWN}) {
-          if (accelerator_id.modifiers & modifier)
-            item.shortcut_key_codes.emplace_back(GetModifierKeyCode(modifier));
+          if (accelerator_id.modifiers & modifier) {
+            item.shortcut_key_codes.emplace_back(
+                GetKeyCodeForModifier(modifier));
+          }
         }
         // For non grouped accelerators, we need to populate the key as well.
         if (item.accelerator_ids.size() == 1)
