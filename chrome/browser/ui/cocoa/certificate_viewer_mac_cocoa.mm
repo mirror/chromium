@@ -6,9 +6,11 @@
 
 #include "base/logging.h"
 #import "base/mac/foundation_util.h"
+#include "build/buildflag.h"
 #include "chrome/browser/certificate_viewer.h"
 #import "chrome/browser/ui/cocoa/constrained_window/constrained_window_mac.h"
 #import "chrome/browser/ui/cocoa/constrained_window/constrained_window_sheet_controller.h"
+#include "ui/base/ui_features.h"
 
 @interface SSLCertificateViewerCocoa ()
 - (instancetype)initWithCertificate:(net::X509Certificate*)certificate

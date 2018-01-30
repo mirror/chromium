@@ -13,6 +13,7 @@
 #include "build/build_config.h"
 #include "chrome/browser/ssl/ssl_client_auth_observer.h"
 #include "chrome/browser/ui/browser_dialogs.h"
+#include "chrome/browser/ui/views_mode_controller.h"
 #include "chrome/grit/generated_resources.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/client_certificate_delegate.h"
@@ -140,6 +141,12 @@ void ShowSSLClientCertificateSelector(
     net::SSLCertRequestInfo* cert_request_info,
     net::ClientCertIdentityList client_certs,
     std::unique_ptr<content::ClientCertificateDelegate> delegate) {
+#if defined(OS_MACOSX)
+  if (views_mode_controller::IsViewsBrowserCocoa())
+    return ShowSSLClientCertificateSelectorCocoa(contents, cert_request_info,
+                                                 std::move(client_certs),
+                                                 std::move(delegate));
+#endif
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   // Not all WebContentses can show modal dialogs.
