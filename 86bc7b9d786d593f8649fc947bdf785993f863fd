@@ -34,6 +34,24 @@
       "revId": "86bc7b9d786d593f8649fc947bdf785993f863fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07f0129c_4df59acb",
+        "filename": "content/browser/sandbox_parameters_mac.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2018-01-30T21:50:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9bd3a0c_0c9cdf88",
+      "revId": "86bc7b9d786d593f8649fc947bdf785993f863fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
