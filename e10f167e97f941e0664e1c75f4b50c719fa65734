@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "35819aa1_9f6ed9dd",
+        "filename": "net/socket/socket_bio_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-30T08:35:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3400c40e_c593ce52",
+      "range": {
+        "startLine": 29,
+        "startChar": 24,
+        "endLine": 29,
+        "endChar": 27
+      },
+      "revId": "e10f167e97f941e0664e1c75f4b50c719fa65734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b61939fe_dacc83d8",
         "filename": "net/socket/socket_bio_adapter.cc",
         "patchSetId": 4
@@ -93,6 +117,30 @@
       "revId": "e10f167e97f941e0664e1c75f4b50c719fa65734",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "085073b7_97b8712c",
+        "filename": "net/socket/socket_bio_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-30T08:35:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68dc3d3c_9784b08c",
+      "range": {
+        "startLine": 37,
+        "startChar": 37,
+        "endLine": 37,
+        "endChar": 61
+      },
+      "revId": "e10f167e97f941e0664e1c75f4b50c719fa65734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
