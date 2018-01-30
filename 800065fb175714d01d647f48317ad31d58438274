@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82f577ed_550f1d57",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-30T06:30:52Z",
+      "side": 1,
+      "message": "nit: An actual https link will be better than \"cl ...\", since I had to manually look it up instead of just clicking on the link.",
+      "revId": "800065fb175714d01d647f48317ad31d58438274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0adc5ec7_05179aaf",
+        "filename": "content/public/browser/content_browser_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1030,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-01-30T06:30:52Z",
+      "side": 1,
+      "message": "nit: content/chrome is not a directory that exists, maybe reword it \"contnt or chrome\", depending on the meaning you are trying to convey.",
+      "range": {
+        "startLine": 1030,
+        "startChar": 64,
+        "endLine": 1030,
+        "endChar": 78
+      },
+      "revId": "800065fb175714d01d647f48317ad31d58438274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
