@@ -12,6 +12,7 @@ import org.junit.Rule;
 
 import org.chromium.base.CommandLine;
 import org.chromium.base.CommandLineInitUtil;
+import org.chromium.base.NoThrowingCallable;
 import org.chromium.base.test.BaseTestResult.PreTestHook;
 
 import java.lang.annotation.ElementType;
@@ -91,7 +92,13 @@ public final class CommandLineFlags {
     public static void setUp(Context targetContext, AnnotatedElement element) {
         Assert.assertNotNull("Unable to get a non-null target context.", targetContext);
         CommandLine.reset();
-        CommandLineInitUtil.initCommandLine(targetContext, getTestCmdLineFile());
+        CommandLineInitUtil.initCommandLine(
+                targetContext, getTestCmdLineFile(), new NoThrowingCallable<Boolean>() {
+                    @Override
+                    public Boolean call() {
+                        return false;
+                    }
+                });
         Set<String> enableFeatures = new HashSet<String>();
         Set<String> disableFeatures = new HashSet<String>();
         Set<String> flags = getFlags(element);

@@ -10,6 +10,7 @@ import org.chromium.base.ApplicationStatus;
 import org.chromium.base.BaseChromiumApplication;
 import org.chromium.base.CommandLineInitUtil;
 import org.chromium.base.ContextUtils;
+import org.chromium.base.NoThrowingCallable;
 import org.chromium.base.PathUtils;
 
 /**
@@ -40,6 +41,12 @@ public class CastApplication extends BaseChromiumApplication {
     }
 
     public void initCommandLine() {
-        CommandLineInitUtil.initCommandLine(this, COMMAND_LINE_FILE);
+        CommandLineInitUtil.initCommandLine(
+                this, COMMAND_LINE_FILE, new NoThrowingCallable<Boolean>() {
+                    @Override
+                    public Boolean call() {
+                        return false;
+                    }
+                });
     }
 }

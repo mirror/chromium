@@ -10,6 +10,7 @@ import org.junit.runners.model.InitializationError;
 
 import org.chromium.base.CollectionUtil;
 import org.chromium.base.CommandLineInitUtil;
+import org.chromium.base.NoThrowingCallable;
 import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.BaseTestResult.PreTestHook;
 import org.chromium.base.test.util.CommandLineFlags;
@@ -49,7 +50,12 @@ public class ChromeJUnit4ClassRunner extends BaseJUnit4ClassRunner {
 
     @Override
     protected void initCommandLineForTest() {
-        CommandLineInitUtil.initCommandLine(
-                InstrumentationRegistry.getTargetContext(), CommandLineFlags.getTestCmdLineFile());
+        CommandLineInitUtil.initCommandLine(InstrumentationRegistry.getTargetContext(),
+                CommandLineFlags.getTestCmdLineFile(), new NoThrowingCallable<Boolean>() {
+                    @Override
+                    public Boolean call() {
+                        return false;
+                    }
+                });
     }
 }

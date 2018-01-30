@@ -13,6 +13,7 @@ import org.chromium.base.BaseChromiumApplication;
 import org.chromium.base.CommandLineInitUtil;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.DiscardableReferencePool;
+import org.chromium.base.NoThrowingCallable;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.TraceEvent;
 import org.chromium.base.annotations.MainDex;
@@ -26,6 +27,7 @@ import org.chromium.chrome.browser.document.DocumentActivity;
 import org.chromium.chrome.browser.document.IncognitoDocumentActivity;
 import org.chromium.chrome.browser.init.InvalidStartupDialog;
 import org.chromium.chrome.browser.metrics.UmaUtils;
+import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
 import org.chromium.chrome.browser.tabmodel.document.ActivityDelegateImpl;
 import org.chromium.chrome.browser.tabmodel.document.DocumentTabModelSelector;
 import org.chromium.chrome.browser.tabmodel.document.StorageDelegate;
@@ -100,7 +102,14 @@ public class ChromeApplication extends BaseChromiumApplication {
     }
 
     public void initCommandLine() {
-        CommandLineInitUtil.initCommandLine(this, COMMAND_LINE_FILE);
+        ChromePreferenceManager manager = ChromePreferenceManager.getInstance();
+        NoThrowingCallable<Boolean> callable = new NoThrowingCallable<Boolean>() {
+            @Override
+            public Boolean call() {
+                return manager.getCommandLineOnNonRootedEnabled();
+            }
+        };
+        CommandLineInitUtil.initCommandLine(this, COMMAND_LINE_FILE, callable);
     }
 
     /**

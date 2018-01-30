@@ -25,7 +25,12 @@ public class CommandLineInitUtilTest {
     public void setUp() throws Exception {
         CommandLineInitUtil.initCommandLine(
                 InstrumentationRegistry.getInstrumentation().getTargetContext(),
-                CommandLineFlags.getTestCmdLineFile());
+                CommandLineFlags.getTestCmdLineFile(), new NoThrowingCallable<Boolean>() {
+                    @Override
+                    public Boolean call() {
+                        return false;
+                    }
+                });
     }
 
     /**
