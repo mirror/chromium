@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "f69adecc_b8475128",
+        "filename": "third_party/WebKit/Source/core/workers/GlobalScopeCreationParams.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2018-01-30T04:30:04Z",
+      "side": 1,
+      "message": "I named this starter_secure_context to be consistent with starter_origin. I expect both will be obtained from the same ExecutionContext instance (typically the document). That said, I can see the value in being more explicit, as in your suggesting naming.\n\nWhat do you think is more important here?",
+      "parentUuid": "4ee5edc3_e54f2782",
+      "revId": "2cd71df5ebedef85ecba9d0cd69fb6f7b2fb0b89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10eb16c7_e7f991c4",
         "filename": "third_party/WebKit/Source/core/workers/WorkletGlobalScope.h",
         "patchSetId": 5
