@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "065e32ff_49ea8106",
+        "filename": "sql/vfs_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-01-30T18:16:40Z",
+      "side": 1,
+      "message": "Do we build SQLite with SQLITE_OMIT_DEPRECATED?",
+      "revId": "5c1dea3c1464c68f2666b55fa2bd870bb645728a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
