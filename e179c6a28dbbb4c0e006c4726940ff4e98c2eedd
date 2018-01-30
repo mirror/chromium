@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e51eae19_0ccc361f",
+        "filename": "third_party/WebKit/LayoutTests/fast/multicol/border-radius-clipped-layer-expected.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-30T00:09:27Z",
+      "side": 0,
+      "message": "Pixel-tests suck. :(\nIs it not possible to figure out what causes the invisible subpixel differences instead, and fix the test/ref?",
+      "revId": "e179c6a28dbbb4c0e006c4726940ff4e98c2eedd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
