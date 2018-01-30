@@ -34,6 +34,24 @@
       "revId": "d685207c650ee3a5cf18ceb8c233ec2628e03c12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bc996f3_11dddeac",
+        "filename": "net/network_error_logging/network_error_logging_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1242160
+      },
+      "writtenOn": "2018-01-30T14:42:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d60649e9_5da602e9",
+      "revId": "d685207c650ee3a5cf18ceb8c233ec2628e03c12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
