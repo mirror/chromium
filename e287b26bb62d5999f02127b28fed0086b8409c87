@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1488898e_f77efdb4",
+        "filename": "docs/network_traffic_annotations.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-01-30T10:25:25Z",
+      "side": 1,
+      "message": "Forgot this.",
+      "range": {
+        "startLine": 259,
+        "startChar": 10,
+        "endLine": 259,
+        "endChar": 36
+      },
+      "revId": "e287b26bb62d5999f02127b28fed0086b8409c87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
