@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "30e5842a_6d8ff1b3",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-30T23:42:45Z",
+      "side": 1,
+      "message": "Added a comment saying that QueueFrame can fail in unit tests.",
+      "parentUuid": "ed5cbc38_3b456029",
+      "revId": "757acaa9a917a71d9953869d33b60759c9ffb6bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e878f73e_9464a148",
         "filename": "components/viz/service/frame_sinks/direct_layer_tree_frame_sink.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c4a25151_5eb835ad",
+        "filename": "components/viz/service/frame_sinks/direct_layer_tree_frame_sink.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-30T23:42:45Z",
+      "side": 1,
+      "message": "As discussed offline, we can\u0027t have components/viz/common depend on services/viz/public/interfaces rn. WDYT keeping this here and we can move it to common after the dependency problem is resolved?",
+      "parentUuid": "e878f73e_9464a148",
+      "revId": "757acaa9a917a71d9953869d33b60759c9ffb6bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3bb302eb_3a4f027d",
         "filename": "components/viz/service/frame_sinks/direct_layer_tree_frame_sink_unittest.cc",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-26T03:29:11Z",
       "side": 1,
       "message": "Instead of doing this override (and making the fn virtual), can you instead inspect the HitTestManager in the test?",
+      "revId": "757acaa9a917a71d9953869d33b60759c9ffb6bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a09ae5e3_445ded20",
+        "filename": "components/viz/service/frame_sinks/direct_layer_tree_frame_sink_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-01-30T23:42:45Z",
+      "side": 1,
+      "message": "Good point, changed to get the active hit-test region list with display\u0027s surface id.",
+      "parentUuid": "3bb302eb_3a4f027d",
       "revId": "757acaa9a917a71d9953869d33b60759c9ffb6bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
