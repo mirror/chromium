@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fd40bd1a_2553881c",
+        "filename": "ui/message_center/views/message_popup_collection.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2018-01-30T10:24:02Z",
+      "side": 1,
+      "message": "I could not figure out how to get current_event() from here (*iter is View so there\u0027s no current_event(), and I thought (*iter)-\u003eGetWidget()-\u003eGetRootView()-\u003ecurrent_event() but RootView is not exported.)\n\nAlso, in the unit test, I failed to use EventGenerator (I couldn\u0027t figure out why it doesn\u0027t work), so I\u0027m passing the mock event to SlideOutController directly.",
+      "parentUuid": "cc4f2fe1_8416d811",
+      "range": {
+        "startLine": 369,
+        "startChar": 7,
+        "endLine": 369,
+        "endChar": 23
+      },
+      "revId": "7b6059eaf83214754080d749d3b84008446aefaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5910f220_9ddd8397",
         "filename": "ui/message_center/views/toast_contents_view.h",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "7b6059eaf83214754080d749d3b84008446aefaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "370b90e0_b478b62a",
+        "filename": "ui/message_center/views/toast_contents_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2018-01-30T10:24:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5910f220_9ddd8397",
+      "range": {
+        "startLine": 83,
+        "startChar": 15,
+        "endLine": 83,
+        "endChar": 27
+      },
+      "revId": "7b6059eaf83214754080d749d3b84008446aefaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
