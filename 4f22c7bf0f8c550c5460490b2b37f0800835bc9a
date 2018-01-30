@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ec4f2ad_8e1f9724",
+        "filename": "third_party/WebKit/Source/modules/webmidi/MIDIAccess.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-30T15:51:07Z",
+      "side": 1,
+      "message": "Shall we change this double to TimeTicks, and move following conversion to the caller site, MIDIOutput::send()?\n\nAlso, it seems we have redundant null timestamp check here. It\u0027s my fault.\n\nMIDIOutput has three send() methods for relevant JS bindings, and only the first one of them calls this MIDIAccess::SendMIDIData() method. Other two just call the first send() internally. So, we can remove null timestamp check from this file, and from the second send() method in MIDIOutput, and can have the double to TimeTicks conversion in the first send().\n\nIf we still want to keep something replacing the line 216, it can be a simple DCHECK.",
+      "range": {
+        "startLine": 199,
+        "startChar": 30,
+        "endLine": 199,
+        "endChar": 36
+      },
+      "revId": "4f22c7bf0f8c550c5460490b2b37f0800835bc9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
