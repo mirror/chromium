@@ -34,6 +34,24 @@
       "revId": "3512be4ee0c451ba6088f6c2f941423786bbb87c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cf2af0c_a9a77962",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_physical_fragment.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2018-01-30T04:23:00Z",
+      "side": 1,
+      "message": "I\u0027ve fixed it so that there is always a space between Box and \"(self paint)\"\n\nhas_content flag really means \"insert space before\", right? It is a tricky flag to understand.",
+      "parentUuid": "2fb08eef_62a38581",
+      "revId": "3512be4ee0c451ba6088f6c2f941423786bbb87c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
