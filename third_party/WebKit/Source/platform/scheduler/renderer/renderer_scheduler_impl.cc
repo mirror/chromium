@@ -197,7 +197,8 @@ const char* OptionalTaskDescriptionToString(
 }  // namespace
 
 RendererSchedulerImpl::RendererSchedulerImpl(
-    std::unique_ptr<TaskQueueManager> task_queue_manager)
+    std::unique_ptr<TaskQueueManager> task_queue_manager,
+    base::Optional<base::Time> initial_virtual_time)
     : helper_(std::move(task_queue_manager), this),
       idle_helper_(
           &helper_,
@@ -285,6 +286,12 @@ RendererSchedulerImpl::RendererSchedulerImpl(
 
   internal::ProcessState::Get()->is_process_backgrounded =
       main_thread_only().renderer_backgrounded;
+
+  if (initial_virtual_time) {
+    main_thread_only().initial_virtual_date = *initial_virtual_time;
+    EnableVirtualTime();
+    SetVirtualTimePolicy(VirtualTimePolicy::kPause);
+  }
 }
 
 RendererSchedulerImpl::~RendererSchedulerImpl() {
@@ -1761,8 +1768,11 @@ base::TimeTicks RendererSchedulerImpl::EnableVirtualTime() {
     return main_thread_only().initial_virtual_time;
   main_thread_only().use_virtual_time = true;
   DCHECK(!virtual_time_domain_);
+  if (main_thread_only().initial_virtual_date.is_null())
+    main_thread_only().initial_virtual_date = base::Time::Now();
   main_thread_only().initial_virtual_time = tick_clock()->NowTicks();
   virtual_time_domain_.reset(new AutoAdvancingVirtualTimeDomain(
+      main_thread_only().initial_virtual_date,
       main_thread_only().initial_virtual_time, &helper_));
   RegisterTimeDomain(virtual_time_domain_.get());
   virtual_time_domain_->SetObserver(this);
