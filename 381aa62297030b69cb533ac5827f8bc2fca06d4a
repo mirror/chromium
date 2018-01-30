@@ -16,6 +16,24 @@
       "revId": "381aa62297030b69cb533ac5827f8bc2fca06d4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b83f1e2_1dd4a41d",
+        "filename": "components/linux/mpris_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2018-01-30T18:59:45Z",
+      "side": 1,
+      "message": "Good point, I\u0027ll change this in the real CL",
+      "parentUuid": "ede6a50a_3dcdea94",
+      "revId": "381aa62297030b69cb533ac5827f8bc2fca06d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
