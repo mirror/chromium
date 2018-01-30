@@ -22,6 +22,30 @@
       "revId": "c03669476a120c261e7093d62f4b7423d3e5e084",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7efaec3b_4146d6cf",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2018-01-30T08:46:23Z",
+      "side": 1,
+      "message": "Now I think the original suggestion was more natural and correct.",
+      "parentUuid": "e8a4e3f8_a3170c8c",
+      "range": {
+        "startLine": 313,
+        "startChar": 42,
+        "endLine": 313,
+        "endChar": 45
+      },
+      "revId": "c03669476a120c261e7093d62f4b7423d3e5e084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
