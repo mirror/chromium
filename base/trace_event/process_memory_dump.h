@@ -108,6 +108,10 @@ class BASE_EXPORT ProcessMemoryDump {
   // nullptr if not found.
   MemoryAllocatorDump* GetAllocatorDump(const std::string& absolute_name) const;
 
+  // Do NOT use this method. All dump providers should use
+  // CreateAllocatorDump(). Tries to create a new MemoryAllocatorDump only if it
+  // doesn't already exist. This method is used only in rare cases multiple
+  // components create allocator dumps with same name.
   MemoryAllocatorDump* GetOrCreateAllocatorDump(
       const std::string& absolute_name);
 
