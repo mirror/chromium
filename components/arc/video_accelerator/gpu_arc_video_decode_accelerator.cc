@@ -449,8 +449,8 @@ void GpuArcVideoDecodeAccelerator::AllocateProtectedBuffer(
   VLOGF(2) << " fd=" << fd.get() << " size=" << size;
 
   auto protected_shmem =
-      protected_buffer_manager_->AllocateProtectedSharedMemory(std::move(fd),
-                                                               size);
+      protected_buffer_manager_->AllocateProtectedSharedMemoryDeprecated(
+          std::move(fd), size);
   if (!protected_shmem) {
     VLOGF(1) << "Failed allocating protected shared memory.";
     std::move(callback).Run(false);
@@ -530,7 +530,8 @@ void GpuArcVideoDecodeAccelerator::AssignPictureBuffers(uint32_t count) {
     buffers.push_back(
         media::PictureBuffer(static_cast<int32_t>(id), coded_size_));
   }
-  if (secure_mode_) {
+
+  if (secure_mode_ && this->Version_ == 0) {
     protected_output_handles_.clear();
     protected_output_handles_.resize(static_cast<size_t>(count));
   }
@@ -582,23 +583,39 @@ void GpuArcVideoDecodeAccelerator::ImportBufferForPicture(
   gfx::GpuMemoryBufferHandle gmb_handle;
   gmb_handle.type = gfx::NATIVE_PIXMAP;
   if (secure_mode_) {
-    DCHECK_EQ(protected_output_handles_.size(), output_buffer_count_);
-    VLOGF(2) << "Allocate output protected buffer"
-             << ", picture_buffer_id=" << picture_buffer_id;
-    auto protected_pixmap =
-        protected_buffer_manager_->AllocateProtectedNativePixmap(
-            std::move(handle_fd),
-            media::VideoPixelFormatToGfxBufferFormat(pixel_format),
-            coded_size_);
-    if (!protected_pixmap) {
-      VLOGF(1) << "Failed allocating protected pixmap.";
-      client_->NotifyError(
-          mojom::VideoDecodeAccelerator::Result::PLATFORM_FAILURE);
-      return;
+    if (this->Version_ == 0) {
+      DCHECK_EQ(protected_output_handles_.size(), output_buffer_count_);
+
+      VLOGF(2) << "Allocate output protected buffer"
+               << ", picture_buffer_id=" << picture_buffer_id;
+      auto protected_pixmap =
+          protected_buffer_manager_->AllocateProtectedNativePixmapDeprecated(
+              std::move(handle_fd),
+              media::VideoPixelFormatToGfxBufferFormat(pixel_format),
+              coded_size_);
+      if (!protected_pixmap) {
+        VLOGF(1) << "Failed allocating protected pixmap.";
+        client_->NotifyError(
+            mojom::VideoDecodeAccelerator::Result::PLATFORM_FAILURE);
+        return;
+      }
+      gmb_handle.native_pixmap_handle =
+          gfx::CloneHandleForIPC(protected_pixmap->native_pixmap_handle());
+      protected_output_handles_[picture_buffer_id] =
+          std::move(protected_pixmap);
+    } else {
+      auto protected_native_pixmap =
+          protected_buffer_manager_->GetProtectedNativePixmapHandleFor(
+              std::move(handle_fd));
+      if (protected_native_pixmap.fds.size() == 0) {
+        VLOGF(1) << "No protected native pixmap found for handle";
+        client_->NotifyError(
+            mojom::VideoDecodeAccelerator::Result::PLATFORM_FAILURE);
+        return;
+      }
+      gmb_handle.native_pixmap_handle =
+          gfx::CloneHandleForIPC(protected_native_pixmap);
     }
-    gmb_handle.native_pixmap_handle =
-        gfx::CloneHandleForIPC(protected_pixmap->native_pixmap_handle());
-    protected_output_handles_[picture_buffer_id] = std::move(protected_pixmap);
   } else {
     if (!VerifyDmabuf(pixel_format, coded_size_, handle_fd.get(), planes)) {
       VLOGF(1) << "Failed verifying dmabuf";
