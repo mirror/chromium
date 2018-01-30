@@ -22,6 +22,30 @@
       "revId": "582fb032ef427266fc2617defafaf20bf28b839c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94d6d5f7_7cd6bb8e",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 4257,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2018-01-30T06:31:54Z",
+      "side": 1,
+      "message": "This feature flag is already enabled by default (http://crrev.com/c/887999). I plan to remove the flag after the next branch cut.\n\nRe-reading the message from the Critique Finch bot (cl/183320730), it seemed that I should just remove this testing config entry once it becomes default.\n\nRemoved and updated the change description. PTAL.",
+      "parentUuid": "bdad1246_c1e57828",
+      "range": {
+        "startLine": 4240,
+        "startChar": 0,
+        "endLine": 4257,
+        "endChar": 6
+      },
+      "revId": "582fb032ef427266fc2617defafaf20bf28b839c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
