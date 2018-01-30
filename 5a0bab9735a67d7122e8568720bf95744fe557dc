@@ -2,6 +2,316 @@
   "comments": [
     {
       "key": {
+        "uuid": "4f009294_98d18435",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrDialog.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-30T16:16:21Z",
+      "side": 1,
+      "message": "disable :P",
+      "range": {
+        "startLine": 68,
+        "startChar": 17,
+        "endLine": 68,
+        "endChar": 24
+      },
+      "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1477a442_4b66529c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrDialog.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-30T16:16:21Z",
+      "side": 1,
+      "message": "Do we also want to call setTextIsSelectable, so that the user can copy/paste into any fields as a fallback?",
+      "range": {
+        "startLine": 74,
+        "startChar": 16,
+        "endLine": 74,
+        "endChar": 68
+      },
+      "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2df9002_08e4e712",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrDialog.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-30T16:16:21Z",
+      "side": 1,
+      "message": "Is this something that we need to undo? Do any dialogs keep their view hierarchy around to be reused, which would lead to this breaking the dialog when it shows up after exiting VR?",
+      "range": {
+        "startLine": 74,
+        "startChar": 47,
+        "endLine": 74,
+        "endChar": 67
+      },
+      "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e297d29_26dfe454",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrModalPresenter.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-30T16:16:21Z",
+      "side": 1,
+      "message": "Again, I think this would all be cleaner if VrDialog just extended FrameLayout...\n\nFor one, you wouldn\u0027t need the setLayout/getLayout calls, and you wouldn\u0027t have to worry about things like the layout being null, etc.",
+      "range": {
+        "startLine": 28,
+        "startChar": 8,
+        "endLine": 28,
+        "endChar": 17
+      },
+      "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bef3ac8b_00eee132",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-30T16:16:21Z",
+      "side": 1,
+      "message": "nit: unnecessary churn",
+      "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f87fa1bc_a9ea7fa3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-30T16:16:21Z",
+      "side": 1,
+      "message": "if (mVrUiViewContainer \u003d\u003d null) mVrUiViewContainer \u003d new VrViewContainer(mActivity);\nmVrUiViewContainer.setSurface(surface);",
+      "range": {
+        "startLine": 511,
+        "startChar": 8,
+        "endLine": 516,
+        "endChar": 9
+      },
+      "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11ef1f85_44096bdb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-30T16:16:21Z",
+      "side": 1,
+      "message": "Why are we doing this in pause/resume? I think these should be in constructor/shutdown().",
+      "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a85cb13b_c37a678a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-30T16:16:21Z",
+      "side": 1,
+      "message": "nit: ViewGroup (best not to assume the DecorView is always a FrameLayout)",
+      "range": {
+        "startLine": 557,
+        "startChar": 8,
+        "endLine": 557,
+        "endChar": 19
+      },
+      "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f01adc0_7591928a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-30T16:16:21Z",
+      "side": 1,
+      "message": "merge these",
+      "range": {
+        "startLine": 656,
+        "startChar": 8,
+        "endLine": 661,
+        "endChar": 9
+      },
+      "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bff50534_e0a01d3f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-30T16:16:21Z",
+      "side": 1,
+      "message": "Why would this ever have a parent? Shouldn\u0027t we just assert it has no parent?\n\nIf this is actually necessary, use UiUtils.removeViewFromParent",
+      "range": {
+        "startLine": 662,
+        "startChar": 8,
+        "endLine": 662,
+        "endChar": 39
+      },
+      "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b66169f_03d690dd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-30T16:16:21Z",
+      "side": 1,
+      "message": "if (mVrUiViewContainer \u003d\u003d null) mVrUiViewContainer \u003d new VrViewContainer(mActivity);",
+      "range": {
+        "startLine": 665,
+        "startChar": 8,
+        "endLine": 665,
+        "endChar": 41
+      },
+      "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbd97bf4_0935f853",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-30T16:16:21Z",
+      "side": 1,
+      "message": "The child should have been removed in closeVrDialog(), and we should assert no children here, right? Or do we not close the old dialog before opening a new one?",
+      "range": {
+        "startLine": 666,
+        "startChar": 31,
+        "endLine": 666,
+        "endChar": 47
+      },
+      "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66238ac8_5b0e6f9c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-30T16:16:21Z",
+      "side": 1,
+      "message": "de-duplicate with code above.",
+      "range": {
+        "startLine": 670,
+        "startChar": 12,
+        "endLine": 671,
+        "endChar": 47
+      },
+      "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6adb840e_c55b2f12",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-30T16:16:21Z",
+      "side": 1,
+      "message": "Do this when we initialize mVrUiViewContainer",
+      "range": {
+        "startLine": 674,
+        "startChar": 12,
+        "endLine": 674,
+        "endChar": 47
+      },
+      "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "184b109c_d7389225",
         "filename": "chrome/browser/android/tab_web_contents_delegate_android.cc",
         "patchSetId": 11
@@ -18,6 +328,166 @@
         "startChar": 10,
         "endLine": 278,
         "endChar": 16
+      },
+      "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad5ffd10_f8f16e27",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-30T16:16:21Z",
+      "side": 1,
+      "message": "I missed the DCHECK here too, can you add it for me? :P",
+      "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10367073_f9e09c0b",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-30T16:16:21Z",
+      "side": 1,
+      "message": "DCHECK(OnGlThread());",
+      "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bad8a70_9f5a7e83",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-30T16:16:21Z",
+      "side": 1,
+      "message": "DCHECK(OnMainThread());",
+      "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3af7063f_f928bc57",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-30T16:16:21Z",
+      "side": 1,
+      "message": "Why add? Don\u0027t we only have one?\n\nSetAlertDialog?",
+      "range": {
+        "startLine": 492,
+        "startChar": 14,
+        "endLine": 492,
+        "endChar": 17
+      },
+      "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "456ee3b1_f3ed7f9b",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-30T16:16:21Z",
+      "side": 1,
+      "message": "This isn\u0027t remotely threadsafe, why are we not creating/using VrDialog only from the GL thread?",
+      "range": {
+        "startLine": 498,
+        "startChar": 35,
+        "endLine": 498,
+        "endChar": 51
+      },
+      "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03ae2e74_0ac953f0",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-30T16:16:21Z",
+      "side": 1,
+      "message": "vr_dialog_ \u003d nullptr; ?",
+      "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02252295_63cd6ac8",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-30T16:16:21Z",
+      "side": 1,
+      "message": "Can you merge ContentSurfaceCreated, ContentOverlaySurfaceCreated and DialogSurfaceCreated into a single function to avoid unnecessary task posting? Something like \"SurfacesCreated(...)\"",
+      "range": {
+        "startLine": 263,
+        "startChar": 12,
+        "endLine": 263,
+        "endChar": 33
+      },
+      "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b852a17d_88306489",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1267,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-30T16:16:21Z",
+      "side": 1,
+      "message": "I\u0027ve moved these SetDefaultBufferSize calls to the main thread for the other textures (as it\u0027s a thread safe call), so we may as well do that for this texture too I think.",
+      "range": {
+        "startLine": 1267,
+        "startChar": 23,
+        "endLine": 1267,
+        "endChar": 43
       },
       "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
