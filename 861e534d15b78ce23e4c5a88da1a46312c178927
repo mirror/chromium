@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ebaae4d_38a273af",
+        "filename": "chrome/tools/build/win/FILES.cfg",
+        "patchSetId": 50
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-30T20:25:26Z",
+      "side": 1,
+      "message": "This is used for archiving builds, right? Why wouldn\u0027t we want notification_helper.exe in that? Since part of our functionality will depend on it, ISTM that we\u0027d want to include it.",
+      "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c848ca8_ceca948e",
+        "filename": "notification_helper/com_server_module.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-30T20:25:26Z",
+      "side": 1,
+      "message": "Should these use some logging mechanism we already use in the project?",
+      "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "035f3ddc_550bb340",
+        "filename": "notification_helper/com_server_module.h",
+        "patchSetId": 50
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-30T20:25:26Z",
+      "side": 1,
+      "message": "Would it make sense to namespace the code in the new directory? ComServerModule sounds really generic, but actually is quite specific.",
+      "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ff0f304_e87fddc7",
+        "filename": "notification_helper/com_server_module.h",
+        "patchSetId": 50
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-30T20:25:26Z",
+      "side": 1,
+      "message": "nit: DISALLOW_COPY_AND_ASSIGN()",
+      "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea0201ef_42902fd7",
+        "filename": "notification_helper/notification_activator.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-30T20:25:26Z",
+      "side": 1,
+      "message": "This is quite different from the data we\u0027d get from the activation handlers. Is there an opportunity to remove those when we fully support the helper?\n\nSpecifically, I\u0027d be interested to know what sort of data we get for button clicks, inline reply, the right-click context menu, etcetera. I suppose those would be included in |data|?",
+      "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c26edcc4_e4fa24f5",
+        "filename": "notification_helper/notification_activator.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-30T20:25:26Z",
+      "side": 1,
+      "message": "While I appreciate the thoroughness of this comment, ideally we\u0027d pass whatever ID we get from Windows to NotificationPlatformBridgeWin::DecodeTemplateId() and decide on validity there, or figure out how we can share that code between both processes.\n\nSplitting such parsing rules over multiple files (or targets), even in documentation, is bound to lead to (documentation) misalignments at some point.",
+      "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3989e76_edf0df4b",
+        "filename": "notification_helper/notification_activator.h",
+        "patchSetId": 50
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-30T20:25:26Z",
+      "side": 1,
+      "message": "nit: DISALLOW_COPY_AND_ASSIGN()",
+      "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ccd7347_8414ae29",
+        "filename": "notification_helper/notification_helper.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-30T20:25:26Z",
+      "side": 1,
+      "message": "nit: Maybe add a comment detailing that Windows will get the arguments from elsewhere (GetCommandLineW)? This caught me by surprise.",
+      "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bcb911b_081be131",
+        "filename": "notification_helper/notification_helper.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-30T20:25:26Z",
+      "side": 1,
+      "message": "The comment for this process type says:\n\n\u003e\u003e We bundle the handler into chrome.exe on Windows because there is\n\u003e\u003e high probability of a \"new\" .exe being blocked or interfered with by\n\u003e\u003e application firewalls, AV software, etc.\n\nIs this something we should be concerned about? Can we track it?",
+      "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
