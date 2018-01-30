@@ -184,6 +184,13 @@ void SplitViewController::SnapWindow(aura::Window* window,
   wm::GetWindowState(window)->OnWMEvent(&event);
   wm::ActivateWindow(window);
 
+  // Need to update the divider and snapped windows bounds after snapped
+  // the |window|. Since the minimum size of |window| maybe larger than
+  // currently bounds in |snap_position|.
+  MoveDividerToClosestFixedPosition();
+  NotifyDividerPositionChanged();
+  UpdateSnappedWindowsAndDividerBounds();
+
   // Stack the other snapped window below the current active window so that
   // the snapped two windows are always the top two windows while resizing.
   aura::Window* stacking_target =
