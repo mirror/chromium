@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "9b8b262b_fb06c704",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 48
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-30T23:41:39Z",
+      "side": 1,
+      "message": "Done. Removed.",
+      "parentUuid": "0119c989_8d836c96",
+      "revId": "d44296643d823f3fd0bf596404843363790dd15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55beb864_568a2036",
         "filename": "chrome/installer/setup/install_worker.cc",
         "patchSetId": 48
@@ -208,6 +226,30 @@
       "side": 1,
       "message": "Ah, I see. I disagree with Rob. I don\u0027t see a need to create a vector. I\u0027d be perfectly happy with using operator+ if you don\u0027t like append. Now that we have move semantics, + works just fine.",
       "parentUuid": "7cff3409_35b0eee4",
+      "range": {
+        "startLine": 248,
+        "startChar": 12,
+        "endLine": 248,
+        "endChar": 22
+      },
+      "revId": "d44296643d823f3fd0bf596404843363790dd15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "670108d4_ec0f8379",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 48
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-30T23:41:39Z",
+      "side": 1,
+      "message": "Sounds good. I will keep \"append\" then.",
+      "parentUuid": "3ae74a18_5d41476c",
       "range": {
         "startLine": 248,
         "startChar": 12,
