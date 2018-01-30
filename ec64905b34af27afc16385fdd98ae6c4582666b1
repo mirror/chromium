@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8379b74_72c8dcde",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 58
+      },
+      "lineNbr": 4661,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-30T17:24:03Z",
+      "side": 1,
+      "message": "Can we not do that on same-document commit? This seems wrong in that case.",
+      "revId": "ec64905b34af27afc16385fdd98ae6c4582666b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a34efb87_57928fc5",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 58
+      },
+      "lineNbr": 1080,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-30T17:24:03Z",
+      "side": 1,
+      "message": "nit: s/Update/Updates",
+      "revId": "ec64905b34af27afc16385fdd98ae6c4582666b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf3e1a73_a2e01aaa",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 58
+      },
+      "lineNbr": 1087,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-30T17:24:03Z",
+      "side": 1,
+      "message": "s/false if the commit state should be restored/false if the RenderFrameHost state should be restored to its pre-commit value.",
+      "revId": "ec64905b34af27afc16385fdd98ae6c4582666b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "427d085c_1c413737",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 58
+      },
+      "lineNbr": 4514,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-30T17:24:03Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think this change is needed anymore (we can just leave the static_cast as is).",
+      "revId": "ec64905b34af27afc16385fdd98ae6c4582666b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04142062_510c5d2a",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 58
+      },
+      "lineNbr": 1293,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-30T17:24:03Z",
+      "side": 1,
+      "message": "s/factors state update and sending the message to the browser/updates the state of the RenderFrameImpl and sends a commit message to the browser process.",
+      "revId": "ec64905b34af27afc16385fdd98ae6c4582666b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc2e2e7b_975bf3b0",
+        "filename": "content/test/test_render_frame_host.cc",
+        "patchSetId": 58
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-30T17:24:03Z",
+      "side": 1,
+      "message": "nit: DCHECK that request is not valid in this case?",
+      "revId": "ec64905b34af27afc16385fdd98ae6c4582666b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
