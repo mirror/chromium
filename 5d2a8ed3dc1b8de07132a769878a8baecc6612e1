@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b634e4d5_825c7c52",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-30T22:23:47Z",
+      "side": 1,
+      "message": "Hehe, I wasn\u0027t sure for a moment whether you were pointing out a typo or whether there was something wrong with my assumption that base::CreateSingleThreadTaskRunnerWithTraits() is backed by a thread pool.\n\nAs a non native speaker, I am not sure, but is it wrong to write \"thread pool thread\" to refer to a thread owner by a thread pool?",
+      "parentUuid": "3756ab01_2d172ed9",
+      "revId": "5d2a8ed3dc1b8de07132a769878a8baecc6612e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "660cc4c8_d6b071f9",
         "filename": "content/browser/service_manager/service_manager_context.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-30T22:04:03Z",
       "side": 1,
       "message": "out of curiosity - any reason this can\u0027t be CreateSequencedTaskRunnerWithTraits, using the same traits? i.e. do you really need thread affinity, or just sequencing?",
+      "revId": "5d2a8ed3dc1b8de07132a769878a8baecc6612e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9a6918c_97bd27ae",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-30T22:23:47Z",
+      "side": 1,
+      "message": "SequencedTaskRunner may be enough on some platforms, but probably not all. This task runner is going to be used to make calls to the system APIs for camera access. I don\u0027t know all these APIs well enough to say for sure, but I think it is likely that some of them do not play nice when getting called from different threads. \n\nAn interesting question in that context is what happens on the Windows platform. There, we need to have COM enabled, and we do this using a ScopedComInitializer at [1]. We currently have no plan to run the service in the Browser process on Windows, but since the code allows this (using command-line flags) I am a bit worried about \"polluting\" a shared task runner with a ScopedComInitializer. I think I should maybe add #ifdefs to use CreateCOMSTATaskRunnerWithTraits() on Windows.\n\n[1] https://cs.chromium.org/chromium/src/services/video_capture/service_impl.h?dr\u003dCSs\u0026l\u003d54",
+      "parentUuid": "660cc4c8_d6b071f9",
       "revId": "5d2a8ed3dc1b8de07132a769878a8baecc6612e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
