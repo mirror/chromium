@@ -41,6 +41,14 @@ class ASH_EXPORT ClientControlledState : public BaseState {
     // the different bounds.
     virtual void HandleBoundsRequest(WindowState* window_state,
                                      const gfx::Rect& requested_bounds) = 0;
+    // Handles the state change of |window_state| to |requested_state| and along
+    // with the desried bounds change. Delegate may decide to ignore the state
+    // change and the bounds change. Currently it's only used for snapped window
+    // states as the client also needs to send over the snapped bounds.
+    virtual void HandleWindowStateAndBoundsRequest(
+        WindowState* window_state,
+        mojom::WindowStateType requested_state,
+        const gfx::Rect& requested_bounds) = 0;
   };
 
   explicit ClientControlledState(std::unique_ptr<Delegate> delegate);

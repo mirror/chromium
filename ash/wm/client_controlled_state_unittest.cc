@@ -39,6 +39,18 @@ class TestClientControlledStateDelegate
     requested_bounds_ = bounds;
   }
 
+  void HandleWindowStateAndBoundsRequest(
+      ash::wm::WindowState* window_state,
+      ash::mojom::WindowStateType requested_state,
+      const gfx::Rect& bounds) override {
+    DCHECK(requested_state == ash::mojom::WindowStateType::LEFT_SNAPPED ||
+           requested_state == ash::mojom::WindowStateType::RIGHT_SNAPPED);
+
+    old_state_ = window_state->GetStateType();
+    new_state_ = requested_state;
+    requested_bounds_ = bounds;
+  }
+
   mojom::WindowStateType old_state() const { return old_state_; }
 
   mojom::WindowStateType new_state() const { return new_state_; }
