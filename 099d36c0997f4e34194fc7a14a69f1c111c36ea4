@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19bafadb_0c87e355",
+        "filename": "third_party/WebKit/Source/platform/loader/cors/CORS.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-30T06:15:14Z",
+      "side": 1,
+      "message": "Will remove this DCHECK that was added in the last patch set.\nThis actually happens on sendBeacon, and would be reasonable to accept it.",
+      "range": {
+        "startLine": 248,
+        "startChar": 2,
+        "endLine": 248,
+        "endChar": 8
+      },
+      "revId": "099d36c0997f4e34194fc7a14a69f1c111c36ea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
