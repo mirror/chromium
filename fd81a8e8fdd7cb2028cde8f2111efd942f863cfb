@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49f97417_2b0184a3",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-01-30T18:26:32Z",
+      "side": 1,
+      "message": "I see mostly base::File in the code below.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 17
+      },
+      "revId": "fd81a8e8fdd7cb2028cde8f2111efd942f863cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c19280a_c7696ea8",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-01-30T18:26:32Z",
+      "side": 1,
+      "message": "This should be in initializer.",
+      "range": {
+        "startLine": 104,
+        "startChar": 2,
+        "endLine": 104,
+        "endChar": 17
+      },
+      "revId": "fd81a8e8fdd7cb2028cde8f2111efd942f863cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5efdeb0_5bb38efd",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-01-30T18:26:32Z",
+      "side": 1,
+      "message": "\u003d default;",
+      "range": {
+        "startLine": 107,
+        "startChar": 34,
+        "endLine": 107,
+        "endChar": 46
+      },
+      "revId": "fd81a8e8fdd7cb2028cde8f2111efd942f863cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8a206ff_54e23c23",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-01-30T18:26:32Z",
+      "side": 1,
+      "message": "Can we instead check if it has a valid position_in_lru?",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 120,
+        "endChar": 15
+      },
+      "revId": "fd81a8e8fdd7cb2028cde8f2111efd942f863cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90871f14_87a3df3e",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-01-30T18:26:32Z",
+      "side": 1,
+      "message": "DCHECK_EQ",
+      "range": {
+        "startLine": 268,
+        "startChar": 6,
+        "endLine": 268,
+        "endChar": 12
+      },
+      "revId": "fd81a8e8fdd7cb2028cde8f2111efd942f863cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "590f8255_35895bf1",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-01-30T18:26:32Z",
+      "side": 1,
+      "message": "optional nit: Rename to MoveToFrontOfLRU? Not a strong preference.",
+      "range": {
+        "startLine": 300,
+        "startChar": 24,
+        "endLine": 300,
+        "endChar": 42
+      },
+      "revId": "fd81a8e8fdd7cb2028cde8f2111efd942f863cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "845767dd_87ddfbf9",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-01-30T18:26:32Z",
+      "side": 1,
+      "message": "DCHECKing that std::list::push_front works seems a bit much.",
+      "range": {
+        "startLine": 303,
+        "startChar": 0,
+        "endLine": 304,
+        "endChar": 60
+      },
+      "revId": "fd81a8e8fdd7cb2028cde8f2111efd942f863cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e382ae0_7a1ee685",
+        "filename": "net/disk_cache/simple/simple_file_tracker_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-01-30T18:26:32Z",
+      "side": 1,
+      "message": "Can you turn this into a const as well?",
+      "range": {
+        "startLine": 288,
+        "startChar": 48,
+        "endLine": 288,
+        "endChar": 49
+      },
+      "revId": "fd81a8e8fdd7cb2028cde8f2111efd942f863cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
