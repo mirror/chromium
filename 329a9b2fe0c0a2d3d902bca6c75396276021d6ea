@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a145ed9_393134f4",
+        "filename": "build/toolchain/win/tool_wrapper.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-01-30T18:59:40Z",
+      "side": 1,
+      "message": "This is the vpython stuff I guess?",
+      "revId": "329a9b2fe0c0a2d3d902bca6c75396276021d6ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b28faf5_a13c18b4",
+        "filename": "build/toolchain/win/tool_wrapper.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-01-30T18:59:40Z",
+      "side": 1,
+      "message": "fwiw, I think Nico/Zach/someone was going to try to drop tool_wrapper.py for links with clang. So just be aware that there\u0027d be the co-dependency between getting FlushFileBuffers in there and removing this.",
+      "revId": "329a9b2fe0c0a2d3d902bca6c75396276021d6ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36817477_6110184e",
+        "filename": "build/toolchain/win/tool_wrapper.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-01-30T18:59:40Z",
+      "side": 1,
+      "message": "win32file sorta sucks... maybe ctypes it instead since there\u0027s only a few functions to call? i.e.:\n\ndef DoFlush(filename):\n  import ctypes\n  import ctypes.wintypes\n\n  kernel32 \u003d ctypes.WinDLL(\u0027kernel32\u0027)\n\n  CreateFileA \u003d kernel32.CreateFileA\n  CreateFileA.restype \u003d ctypes.wintypes.HANDLE\n  CreateFileA.argtypes \u003d [ctypes.wintypes.LPCSTR,\n                          ctypes.wintypes.DWORD,\n                          ctypes.wintypes.DWORD,\n                          ctypes.wintypes.LPVOID,\n                          ctypes.wintypes.DWORD,\n                          ctypes.wintypes.DWORD,\n                          ctypes.wintypes.HANDLE]\n  FlushFileBuffers \u003d kernel32.FlushFileBuffers\n  FlushFileBuffers \u003d kernel32.FlushFileBuffers\n  FlushFileBuffers.restype \u003d ctypes.wintypes.BOOL\n  FlushFileBuffers.argtypes \u003d [ctypes.wintypes.HANDLE]\n\n  CloseHandle \u003d kernel32.CloseHandle\n  CloseHandle.restype \u003d ctypes.wintypes.BOOL\n  CloseHandle.argtypes \u003d [ctypes.wintypes.HANDLE]\n\n  GENERIC_WRITE \u003d 0x40000000\n  OPEN_EXISTING \u003d 3\n\n  handle \u003d CreateFileA(filename, GENERIC_WRITE, 0, None, OPEN_EXISTING, 0, 0)\n  if handle \u003c 0:\n    return False\n  if not FlushFileBuffers(handle):\n    return False\n  return CloseHandle(handle) !\u003d 0\n\n\nUp to you.",
+      "revId": "329a9b2fe0c0a2d3d902bca6c75396276021d6ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
