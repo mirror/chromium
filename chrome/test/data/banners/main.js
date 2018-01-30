@@ -5,8 +5,9 @@
 const PromptAction = {
   CALL_PROMPT_DELAYED: 0,
   CALL_PROMPT_IN_HANDLER: 1,
-  CANCEL_PROMPT: 2,
-  STASH_EVENT: 3,
+  CALL_PROMPT_NO_USERCHOICE: 2,
+  CANCEL_PROMPT: 3,
+  STASH_EVENT: 4,
 };
 
 const LISTENER = "listener";
@@ -39,6 +40,9 @@ function verifyEvents(eventName) {
 
 function callPrompt(event) {
   event.prompt();
+  event.userChoice.then(function(choiceResult) {
+    window.document.title = 'Got userChoice: ' + choiceResult.outcome;
+  });
 }
 
 function callStashedPrompt() {
@@ -58,6 +62,9 @@ function addPromptListener(promptAction) {
         break;
       case PromptAction.CALL_PROMPT_IN_HANDLER:
         callPrompt(e);
+        break;
+      case PromptAction.CALL_PROMPT_NO_USERCHOICE:
+        setTimeout(() => e.prompt(), 0);
         break;
       case PromptAction.CANCEL_PROMPT:
         // Navigate the window to trigger the banner cancellation.
