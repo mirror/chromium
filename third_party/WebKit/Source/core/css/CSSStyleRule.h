@@ -51,9 +51,7 @@ class CORE_EXPORT CSSStyleRule final : public CSSRule {
 
   CSSStyleDeclaration* style() const;
 
-  StylePropertyMap* attributeStyleMap() const {
-    return attribute_style_map_.Get();
-  }
+  StylePropertyMap* styleMap() const { return attribute_style_map_.Get(); }
 
   // FIXME: Not CSSOM. Remove.
   StyleRule* GetStyleRule() const { return style_rule_.Get(); }
