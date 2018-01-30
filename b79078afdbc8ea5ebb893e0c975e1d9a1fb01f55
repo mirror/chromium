@@ -16,6 +16,24 @@
       "revId": "b79078afdbc8ea5ebb893e0c975e1d9a1fb01f55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e874e01c_8af62e4d",
+        "filename": "content/shell/browser/layout_test/blink_test_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 833,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-30T18:09:59Z",
+      "side": 1,
+      "message": "CopyOutputResult::Format::RGBA_BITMAP just indicates that the result must be in memory instead of texture.  The comments in components/viz/common/frame_sinks/copy_output_result.h say that \"AsSkBitmap() will return a bitmap in \"N32Premul\" form\". So it returns bitmap with colorType \u003d kN32_SkColorType, which is either kBGRA_8888_SkColorType or kRGBA_8888_SkColorType depending on platform, see https://cs.chromium.org/chromium/src/third_party/skia/include/core/SkImageInfo.h?type\u003dcs\u0026q\u003dkRGBA_8888_SkColorType\u0026l\u003d86 . It\u0027s BGRA on all platforms except Android.",
+      "parentUuid": "271e4389_574ecad7",
+      "revId": "b79078afdbc8ea5ebb893e0c975e1d9a1fb01f55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
