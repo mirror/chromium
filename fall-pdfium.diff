@@ -1,0 +1,215 @@
+diff --git a/BUILD.gn b/BUILD.gn
+index 4fe979e3d..a3e4d7977 100644
+--- a/BUILD.gn
++++ b/BUILD.gn
+@@ -101,6 +101,10 @@ config("xfa_warnings") {
+   }
+ }
+ 
++pdfium_remove_configs = [
++  "//build/config/compiler:warn_fallthrough"
++]
++
+ jumbo_static_library("pdfium") {
+   sources = [
+     "fpdfsdk/cba_annotiterator.cpp",
+@@ -182,6 +186,7 @@ jumbo_static_library("pdfium") {
+ 
+   libs = []
+   configs += [ ":pdfium_core_config" ]
++  configs -= pdfium_remove_configs
+ 
+   deps = [
+     ":fdrm",
+@@ -263,6 +268,7 @@ jumbo_static_library("test_support") {
+     configs += [ "//v8:external_startup_data" ]
+   }
+   configs += [ ":pdfium_core_config" ]
++  configs -= pdfium_remove_configs
+ }
+ 
+ jumbo_static_library("image_diff") {
+@@ -272,6 +278,7 @@ jumbo_static_library("image_diff") {
+     "testing/image_diff/image_diff_png.h",
+   ]
+   configs += [ ":pdfium_core_config" ]
++  configs -= pdfium_remove_configs
+   deps = []
+   if (!pdf_enable_xfa) {
+     deps += [ "third_party:png" ]
+@@ -293,6 +300,7 @@ jumbo_static_library("fdrm") {
+     "core/fdrm/crypto/fx_crypt_sha.cpp",
+   ]
+   configs += [ ":pdfium_core_config" ]
++  configs -= pdfium_remove_configs
+   deps = [
+     ":fxcrt",
+   ]
+@@ -376,6 +384,7 @@ jumbo_static_library("fpdfdoc") {
+     "core/fpdfdoc/ipvt_fontmap.h",
+   ]
+   configs += [ ":pdfium_core_config" ]
++  configs -= pdfium_remove_configs
+   deps = [
+     ":fxcrt",
+   ]
+@@ -667,6 +676,7 @@ jumbo_static_library("fpdfapi") {
+     "core/fpdfapi/render/cpdf_type3glyphs.h",
+   ]
+   configs += [ ":pdfium_core_config" ]
++  configs -= pdfium_remove_configs
+   deps = [
+     ":fxcrt",
+     "third_party:lcms2",
+@@ -685,6 +695,7 @@ jumbo_static_library("fpdftext") {
+     "core/fpdftext/unicodenormalizationdata.h",
+   ]
+   configs += [ ":pdfium_core_config" ]
++  configs -= pdfium_remove_configs
+   deps = [
+     ":fxcrt",
+   ]
+@@ -751,6 +762,7 @@ jumbo_static_library("fxcodec") {
+     "core/fxcodec/jbig2/JBig2_TrdProc.h",
+   ]
+   configs += [ ":pdfium_core_config" ]
++  configs -= pdfium_remove_configs
+   include_dirs = []
+   deps = [
+     ":fxcrt",
+@@ -875,6 +887,7 @@ jumbo_static_library("fxcrt") {
+     "core/fxcrt/xml/cxml_parser.h",
+   ]
+   configs += [ ":pdfium_core_config" ]
++  configs -= pdfium_remove_configs
+   visibility += [ "third_party:*" ]
+   deps = [
+     "third_party:pdfium_base",
+@@ -1078,6 +1091,7 @@ jumbo_static_library("fxge") {
+     ":fxge_warnings",
+     ":pdfium_core_config",
+   ]
++  configs -= pdfium_remove_configs
+ 
+   deps = [
+     ":fxcrt",
+@@ -1173,6 +1187,7 @@ jumbo_static_library("pwl") {
+     "fpdfsdk/pwl/cpwl_wnd.h",
+   ]
+   configs += [ ":pdfium_core_config" ]
++  configs -= pdfium_remove_configs
+   deps = [
+     ":fxcrt",
+   ]
+@@ -1184,6 +1199,7 @@ jumbo_static_library("fxjs") {
+     "fxjs/ijs_runtime.h",
+   ]
+   configs += [ ":pdfium_core_config" ]
++  configs -= pdfium_remove_configs
+   deps = [
+     ":fxcrt",
+   ]
+@@ -1644,6 +1660,7 @@ jumbo_static_library("formfiller") {
+     "fpdfsdk/formfiller/cffl_textobject.h",
+   ]
+   configs += [ ":pdfium_core_config" ]
++  configs -= pdfium_remove_configs
+   deps = [
+     ":fxcrt",
+   ]
+@@ -1667,6 +1684,7 @@ if (pdf_enable_xfa) {
+       ":xfa",
+     ]
+     configs += [ ":pdfium_core_config" ]
++    configs -= pdfium_remove_configs
+   }
+ 
+   jumbo_static_library("fxbarcode") {
+@@ -1804,6 +1822,7 @@ if (pdf_enable_xfa) {
+       ":fxcrt",
+     ]
+     configs += [ ":pdfium_core_config" ]
++    configs -= pdfium_remove_configs
+   }
+ 
+   group("xfa") {
+@@ -1835,6 +1854,7 @@ if (pdf_enable_xfa) {
+       ":pdfium_core_config",
+       ":xfa_warnings",
+     ]
++    configs -= pdfium_remove_configs
+   }
+ 
+   jumbo_static_library("xfa_fgas") {
+@@ -1871,6 +1891,7 @@ if (pdf_enable_xfa) {
+       ":pdfium_core_config",
+       ":xfa_warnings",
+     ]
++    configs -= pdfium_remove_configs
+   }
+ 
+   jumbo_static_library("xfa_fwl") {
+@@ -2001,6 +2022,7 @@ if (pdf_enable_xfa) {
+       ":pdfium_core_config",
+       ":xfa_warnings",
+     ]
++    configs -= pdfium_remove_configs
+   }
+ 
+   jumbo_static_library("xfa_fxfa") {
+@@ -2102,6 +2124,7 @@ if (pdf_enable_xfa) {
+       ":pdfium_core_config",
+       ":xfa_warnings",
+     ]
++    configs -= pdfium_remove_configs
+   }
+ 
+   jumbo_static_library("xfa_fxfa_fm2js") {
+@@ -2124,6 +2147,7 @@ if (pdf_enable_xfa) {
+       ":pdfium_core_config",
+       ":xfa_warnings",
+     ]
++    configs -= pdfium_remove_configs
+   }
+ 
+   # TODO(crbug.com/pdfium/964): Support jumbo builds.
+@@ -2831,6 +2855,7 @@ if (pdf_enable_xfa) {
+       ":pdfium_core_config",
+       ":xfa_warnings",
+     ]
++    configs -= pdfium_remove_configs
+   }
+ 
+   jumbo_static_library("xfa_fxgraphics") {
+@@ -2850,6 +2875,7 @@ if (pdf_enable_xfa) {
+       ":pdfium_core_config",
+       ":xfa_warnings",
+     ]
++    configs -= pdfium_remove_configs
+   }
+ }
+ 
+@@ -2962,6 +2988,7 @@ test("pdfium_unittests") {
+     ]
+   }
+   configs += [ ":pdfium_core_config" ]
++  configs -= pdfium_remove_configs
+   if (is_android) {
+     use_raw_android_executable = true
+   }
+@@ -3016,6 +3043,7 @@ test("pdfium_embeddertests") {
+   ]
+   include_dirs = [ "testing/gmock/include" ]
+   configs += [ ":pdfium_core_config" ]
++  configs -= pdfium_remove_configs
+ 
+   if (pdf_enable_v8) {
+     sources += [
+@@ -3064,6 +3092,7 @@ if (pdf_is_standalone) {
+     configs -= [ "//build/config/compiler:chromium_code" ]
+     configs += [ "//build/config/compiler:no_chromium_code" ]
+     configs += [ ":pdfium_core_config" ]
++    configs -= pdfium_remove_configs
+   }
+ 
+   group("fuzzers") {
