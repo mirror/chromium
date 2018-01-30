@@ -125,7 +125,7 @@ class TestBidirectionalStreamCallback {
   virtual bool MaybeCancel(bidirectional_stream* stream, ResponseStep step) {
     DCHECK_EQ(stream, this->stream);
     response_step = step;
-    DLOG(WARNING) << "Step: " << step;
+    DVLOG(3) << "Step: " << step;
 
     if (step != cancel_from_step)
       return false;

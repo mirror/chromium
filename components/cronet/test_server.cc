@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "components/cronet/ios/test/test_server.h"
+#include "components/cronet/test_server.h"
 
 #include <memory>
 #include <utility>
@@ -190,7 +190,7 @@ std::string TestServer::EchoRequestBodyURL() {
   return g_test_server->GetURL(kEchoRequestBodyPath).spec();
 }
 
-std::string TestServer::PrepareBigDataURL(long data_size) {
+std::string TestServer::PrepareBigDataURL(size_t data_size) {
   DCHECK(g_test_server);
   DCHECK(g_big_data_body.Get().empty());
   // Response line with headers.

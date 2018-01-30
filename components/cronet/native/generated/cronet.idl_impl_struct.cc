@@ -10,66 +10,73 @@
 
 #include "base/logging.h"
 
-// Struct Cronet_Exception.
-Cronet_Exception::Cronet_Exception() {}
+// Struct Cronet_Error.
+Cronet_Error::Cronet_Error() {}
 
-Cronet_Exception::~Cronet_Exception() {}
+Cronet_Error::~Cronet_Error() {}
 
-Cronet_ExceptionPtr Cronet_Exception_Create() {
-  return new Cronet_Exception();
+Cronet_ErrorPtr Cronet_Error_Create() {
+  return new Cronet_Error();
 }
 
-void Cronet_Exception_Destroy(Cronet_ExceptionPtr self) {
+void Cronet_Error_Destroy(Cronet_ErrorPtr self) {
   delete self;
 }
 
-// Struct Cronet_Exception setters.
-void Cronet_Exception_set_error_code(Cronet_ExceptionPtr self,
-                                     Cronet_Exception_ERROR_CODE error_code) {
+// Struct Cronet_Error setters.
+void Cronet_Error_set_errorCode(Cronet_ErrorPtr self,
+                                Cronet_Error_ERROR_CODE errorCode) {
   DCHECK(self);
-  self->error_code = error_code;
+  self->errorCode = errorCode;
 }
 
-void Cronet_Exception_set_internal_error_code(Cronet_ExceptionPtr self,
-                                              int32_t internal_error_code) {
+void Cronet_Error_set_message(Cronet_ErrorPtr self, CharString message) {
   DCHECK(self);
-  self->internal_error_code = internal_error_code;
+  self->message = message;
 }
 
-void Cronet_Exception_set_immediately_retryable(Cronet_ExceptionPtr self,
-                                                bool immediately_retryable) {
+void Cronet_Error_set_internalErrorCode(Cronet_ErrorPtr self,
+                                        int32_t internalErrorCode) {
   DCHECK(self);
-  self->immediately_retryable = immediately_retryable;
+  self->internalErrorCode = internalErrorCode;
 }
 
-void Cronet_Exception_set_quic_detailed_error_code(
-    Cronet_ExceptionPtr self,
-    int32_t quic_detailed_error_code) {
+void Cronet_Error_set_immediatelyRetryable(Cronet_ErrorPtr self,
+                                           bool immediatelyRetryable) {
   DCHECK(self);
-  self->quic_detailed_error_code = quic_detailed_error_code;
+  self->immediatelyRetryable = immediatelyRetryable;
 }
 
-// Struct Cronet_Exception getters.
-Cronet_Exception_ERROR_CODE Cronet_Exception_get_error_code(
-    Cronet_ExceptionPtr self) {
+void Cronet_Error_set_quicDetailedErrorCode(Cronet_ErrorPtr self,
+                                            int32_t quicDetailedErrorCode) {
   DCHECK(self);
-  return self->error_code;
+  self->quicDetailedErrorCode = quicDetailedErrorCode;
 }
 
-int32_t Cronet_Exception_get_internal_error_code(Cronet_ExceptionPtr self) {
+// Struct Cronet_Error getters.
+Cronet_Error_ERROR_CODE Cronet_Error_get_errorCode(Cronet_ErrorPtr self) {
   DCHECK(self);
-  return self->internal_error_code;
+  return self->errorCode;
 }
 
-bool Cronet_Exception_get_immediately_retryable(Cronet_ExceptionPtr self) {
+CharString Cronet_Error_get_message(Cronet_ErrorPtr self) {
   DCHECK(self);
-  return self->immediately_retryable;
+  return self->message.c_str();
 }
 
-int32_t Cronet_Exception_get_quic_detailed_error_code(
-    Cronet_ExceptionPtr self) {
+int32_t Cronet_Error_get_internalErrorCode(Cronet_ErrorPtr self) {
   DCHECK(self);
-  return self->quic_detailed_error_code;
+  return self->internalErrorCode;
+}
+
+bool Cronet_Error_get_immediatelyRetryable(Cronet_ErrorPtr self) {
+  DCHECK(self);
+  return self->immediatelyRetryable;
+}
+
+int32_t Cronet_Error_get_quicDetailedErrorCode(Cronet_ErrorPtr self) {
+  DCHECK(self);
+  return self->quicDetailedErrorCode;
 }
 
 // Struct Cronet_QuicHint.
@@ -139,7 +146,7 @@ void Cronet_PublicKeyPins_set_host(Cronet_PublicKeyPinsPtr self,
 }
 
 void Cronet_PublicKeyPins_add_pinsSha256(Cronet_PublicKeyPinsPtr self,
-                                         RawDataPtr pinsSha256) {
+                                         CharString pinsSha256) {
   DCHECK(self);
   self->pinsSha256.push_back(pinsSha256);
 }
@@ -148,6 +155,12 @@ void Cronet_PublicKeyPins_set_includeSubdomains(Cronet_PublicKeyPinsPtr self,
                                                 bool includeSubdomains) {
   DCHECK(self);
   self->includeSubdomains = includeSubdomains;
+}
+
+void Cronet_PublicKeyPins_set_expirationDate(Cronet_PublicKeyPinsPtr self,
+                                             int64_t expirationDate) {
+  DCHECK(self);
+  self->expirationDate = expirationDate;
 }
 
 // Struct Cronet_PublicKeyPins getters.
@@ -160,17 +173,22 @@ uint32_t Cronet_PublicKeyPins_get_pinsSha256Size(Cronet_PublicKeyPinsPtr self) {
   DCHECK(self);
   return self->pinsSha256.size();
 }
-RawDataPtr Cronet_PublicKeyPins_get_pinsSha256AtIndex(
+CharString Cronet_PublicKeyPins_get_pinsSha256AtIndex(
     Cronet_PublicKeyPinsPtr self,
     uint32_t index) {
   DCHECK(self);
   DCHECK(index < self->pinsSha256.size());
-  return self->pinsSha256[index];
+  return self->pinsSha256[index].c_str();
 }
 
 bool Cronet_PublicKeyPins_get_includeSubdomains(Cronet_PublicKeyPinsPtr self) {
   DCHECK(self);
   return self->includeSubdomains;
+}
+
+int64_t Cronet_PublicKeyPins_get_expirationDate(Cronet_PublicKeyPinsPtr self) {
+  DCHECK(self);
+  return self->expirationDate;
 }
 
 // Struct Cronet_EngineParams.
@@ -191,6 +209,12 @@ void Cronet_EngineParams_set_userAgent(Cronet_EngineParamsPtr self,
                                        CharString userAgent) {
   DCHECK(self);
   self->userAgent = userAgent;
+}
+
+void Cronet_EngineParams_set_acceptLanguage(Cronet_EngineParamsPtr self,
+                                            CharString acceptLanguage) {
+  DCHECK(self);
+  self->acceptLanguage = acceptLanguage;
 }
 
 void Cronet_EngineParams_set_storagePath(Cronet_EngineParamsPtr self,
@@ -253,10 +277,22 @@ void Cronet_EngineParams_set_enablePublicKeyPinningBypassForLocalTrustAnchors(
       enablePublicKeyPinningBypassForLocalTrustAnchors;
 }
 
+void Cronet_EngineParams_set_experimentalOptions(
+    Cronet_EngineParamsPtr self,
+    CharString experimentalOptions) {
+  DCHECK(self);
+  self->experimentalOptions = experimentalOptions;
+}
+
 // Struct Cronet_EngineParams getters.
 CharString Cronet_EngineParams_get_userAgent(Cronet_EngineParamsPtr self) {
   DCHECK(self);
   return self->userAgent.c_str();
+}
+
+CharString Cronet_EngineParams_get_acceptLanguage(Cronet_EngineParamsPtr self) {
+  DCHECK(self);
+  return self->acceptLanguage.c_str();
 }
 
 CharString Cronet_EngineParams_get_storagePath(Cronet_EngineParamsPtr self) {
@@ -319,6 +355,12 @@ bool Cronet_EngineParams_get_enablePublicKeyPinningBypassForLocalTrustAnchors(
     Cronet_EngineParamsPtr self) {
   DCHECK(self);
   return self->enablePublicKeyPinningBypassForLocalTrustAnchors;
+}
+
+CharString Cronet_EngineParams_get_experimentalOptions(
+    Cronet_EngineParamsPtr self) {
+  DCHECK(self);
+  return self->experimentalOptions.c_str();
 }
 
 // Struct Cronet_HttpHeader.

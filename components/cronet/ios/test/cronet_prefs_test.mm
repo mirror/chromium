@@ -8,7 +8,7 @@
 #include "base/path_service.h"
 #include "components/cronet/ios/test/cronet_test_base.h"
 #include "components/cronet/ios/test/start_cronet.h"
-#include "components/cronet/ios/test/test_server.h"
+#include "components/cronet/test_server.h"
 #include "components/grpc_support/test/quic_test_server.h"
 #include "net/base/mac/url_conversions.h"
 #include "testing/gtest_mac.h"
@@ -78,7 +78,8 @@ class PrefsTest : public CronetTestBase {
   NSURLSession* session_;
 };
 
-TEST_F(PrefsTest, HttpSeverProperties) {
+// TODO(mef): Figure out how to run this test without waiting for 90 seconds.
+TEST_F(PrefsTest, DISABLED_HttpSeverProperties) {
   base::FilePath storage_path;
   bool result = PathService::Get(base::DIR_CACHE, &storage_path);
   ASSERT_TRUE(result);

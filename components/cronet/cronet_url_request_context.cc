@@ -311,7 +311,6 @@ void CronetURLRequestContext::NetworkTasks::Initialize(
     std::unique_ptr<net::ProxyConfigService> proxy_config_service) {
   DCHECK_CALLED_ON_VALID_THREAD(network_thread_checker_);
   DCHECK(!is_context_initialized_);
-  DCHECK(proxy_config_service);
 
   std::unique_ptr<URLRequestContextConfig> config(std::move(context_config_));
   network_task_runner_ = network_task_runner;
@@ -469,6 +468,38 @@ CronetURLRequestContext::NetworkTasks::GetURLRequestContext() {
     LOG(ERROR) << "URLRequestContext is not set up";
   }
   return context_.get();
+}
+
+// Request context getter for CronetURLRequestContext.
+class CronetURLRequestContext::ContextGetter
+    : public net::URLRequestContextGetter {
+ public:
+  explicit ContextGetter(CronetURLRequestContext* cronet_context)
+      : cronet_context_(cronet_context) {}
+
+  net::URLRequestContext* GetURLRequestContext() override {
+    DCHECK(cronet_context_);
+    return cronet_context_->GetURLRequestContext();
+  }
+
+  scoped_refptr<base::SingleThreadTaskRunner> GetNetworkTaskRunner()
+      const override {
+    DCHECK(cronet_context_);
+    return cronet_context_->GetNetworkTaskRunner();
+  }
+
+ private:
+  // Must be called on the IO thread.
+  ~ContextGetter() override {}
+
+  CronetURLRequestContext* cronet_context_;
+
+  DISALLOW_COPY_AND_ASSIGN(ContextGetter);
+};
+
+net::URLRequestContextGetter*
+CronetURLRequestContext::GetURLRequestContextGetter() {
+  return new ContextGetter(this);
 }
 
 net::URLRequestContext* CronetURLRequestContext::GetURLRequestContext() {
