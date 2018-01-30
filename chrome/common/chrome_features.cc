@@ -37,6 +37,10 @@ const base::Feature kShow10_9ObsoleteInfobar{"Show109ObsoleteInfobar",
 const base::Feature kFullscreenToolbarReveal{"FullscreenToolbarReveal",
                                              base::FEATURE_DISABLED_BY_DEFAULT};
 
+// Enables the Views browser UI in Views browser builds.
+const base::Feature kViewsBrowserUsesViewsUI{"ViewsBrowserUsesViewsUI",
+                                             base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Use toolkit-views for profile chooser menu.
 const base::Feature kViewsProfileChooser{"ViewsProfileChooser",
                                          base::FEATURE_ENABLED_BY_DEFAULT};
