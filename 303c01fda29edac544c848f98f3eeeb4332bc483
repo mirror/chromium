@@ -22,6 +22,29 @@
       "revId": "303c01fda29edac544c848f98f3eeeb4332bc483",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b05f120f_42bd90d1",
+        "filename": "base/android/library_loader/library_loader_hooks.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-30T13:39:04Z",
+      "side": 1,
+      "message": "I just noticed this; this looks like a bugfix that should be in a different CL (eg so it\u0027s not reverted if the rest of this goes south)?",
+      "range": {
+        "startLine": 219,
+        "startChar": 27,
+        "endLine": 219,
+        "endChar": 55
+      },
+      "revId": "303c01fda29edac544c848f98f3eeeb4332bc483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
