@@ -125,6 +125,11 @@ const base::Feature kTripleBuffer720{"enable_triple_buffer_720",
 const base::Feature kSingleBuffer{"enable_single_buffer",
                                   base::FEATURE_DISABLED_BY_DEFAULT};
 
+// Enables APIs to set the application window resolution, useful for testing
+// applications at different resolutions.
+const base::Feature kEnableOverrideWindowResolution{
+    "enable_override_window_resolution", base::FEATURE_DISABLED_BY_DEFAULT};
+
 // End Chromecast Feature definitions.
 
 // An iterator for a base::DictionaryValue. Use an alias for brevity in loops.

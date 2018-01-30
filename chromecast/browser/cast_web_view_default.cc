@@ -11,9 +11,12 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "chromecast/base/cast_features.h"
 #include "chromecast/base/metrics/cast_metrics_helper.h"
+#include "chromecast/base/pref_names.h"
+#include "chromecast/browser/cast_browser_process.h"
 #include "chromecast/browser/cast_web_contents_manager.h"
 #include "chromecast/chromecast_features.h"
 #include "chromecast/public/cast_media_shlib.h"
+#include "components/prefs/pref_service.h"
 #include "content/public/browser/media_capture_devices.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_frame_host.h"
@@ -38,12 +41,33 @@ namespace chromecast {
 
 namespace {
 
+gfx::Size GetWindowSize() {
+  // Default to screen size
+  CHECK(display::Screen::GetScreen());
+  gfx::Size size = display::Screen::GetScreen()->GetPrimaryDisplay().size();
+  if (!base::FeatureList::IsEnabled(kEnableOverrideWindowResolution))
+    return size;
+
+  // Feature flag enabled, allow pref to override default (but not exceed
+  // screen size).
+  PrefService* pref_service =
+      shell::CastBrowserProcess::GetInstance()->pref_service();
+  DCHECK(pref_service);
+  int width = pref_service->GetInteger(prefs::kOverrideWindowWidth);
+  if (width > 0) {
+    size.set_width(std::min(width, size.width()));
+  }
+  int height = pref_service->GetInteger(prefs::kOverrideWindowHeight);
+  if (height > 0) {
+    size.set_height(std::min(height, size.height()));
+  }
+  return size;
+}
+
 std::unique_ptr<content::WebContents> CreateWebContents(
     content::BrowserContext* browser_context,
     scoped_refptr<content::SiteInstance> site_instance) {
-  CHECK(display::Screen::GetScreen());
-  gfx::Size display_size =
-      display::Screen::GetScreen()->GetPrimaryDisplay().size();
+  gfx::Size display_size(GetWindowSize());
 
   content::WebContents::CreateParams create_params(browser_context, NULL);
   create_params.routing_id = MSG_ROUTING_NONE;
@@ -318,8 +342,7 @@ void CastWebViewDefault::DidStartNavigation(
 
 #if defined(USE_AURA)
   // Resize window
-  gfx::Size display_size =
-      display::Screen::GetScreen()->GetPrimaryDisplay().size();
+  gfx::Size display_size(GetWindowSize());
   aura::Window* content_window = web_contents()->GetNativeView();
   content_window->SetBounds(
       gfx::Rect(display_size.width(), display_size.height()));

@@ -51,5 +51,9 @@ const char kStabilityRendererHangCount[] =
 const char kStabilitySystemUncleanShutdownCount[] =
     "user_experience_metrics.stability.system_unclean_shutdowns";
 
+// Override application window width/height. 0 means no override, use default.
+const char kOverrideWindowWidth[] = "override.window_width";
+const char kOverrideWindowHeight[] = "override.window_height";
+
 }  // namespace prefs
 }  // namespace chromecast

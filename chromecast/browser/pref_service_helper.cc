@@ -64,6 +64,9 @@ std::unique_ptr<PrefService> PrefServiceHelper::CreatePrefService(
   cdm::MediaDrmStorageImpl::RegisterProfilePrefs(registry);
 #endif  // defined(OS_ANDROID) && !BUILDFLAG(IS_CAST_USING_CMA_BACKEND)
 
+  registry->RegisterIntegerPref(prefs::kOverrideWindowWidth, 0);
+  registry->RegisterIntegerPref(prefs::kOverrideWindowHeight, 0);
+
   RegisterPlatformPrefs(registry);
 
   PrefServiceFactory prefServiceFactory;
