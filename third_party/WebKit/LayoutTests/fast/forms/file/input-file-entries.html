@@ -31,7 +31,7 @@ var expectedFileAttributes = {
   'dir2/green.jpg':  { 'directory': false, 'size': 764 }
 };
 
-var droppedEntries, verifyingEntry, returnedMetadata, returnedEntries;
+var droppedEntries, verifyingEntry, returnedFile, returnedEntries;
 
 var jsTestIsAsync = true;
 if (window.testRunner) {
@@ -90,17 +90,17 @@ function verifyEntry(testIndex, entryIndex)
 
     var callback = function() { verifyEntry(testIndex, entryIndex + 1); };
     if (entry.isFile) {
-        entry.getMetadata(verifyFile.bind(this, expected, callback), onError);
+        entry.file(verifyFile.bind(this, expected, callback), onError);
     } else {
         var reader = entry.createReader();
         reader.readEntries(verifyDirectory.bind(this, expected, callback), onError);
     }
 }
 
-function verifyFile(expected, callback, metadata)
+function verifyFile(expected, callback, file)
 {
-    returnedMetadata = metadata;
-    shouldEvaluateTo('returnedMetadata.size', expected.size);
+    returnedFile = file;
+    shouldEvaluateTo('returnedFile.size', expected.size);
     callback();
 }
 

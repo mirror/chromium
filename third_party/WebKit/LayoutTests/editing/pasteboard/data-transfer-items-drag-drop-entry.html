@@ -73,6 +73,7 @@ function handleDrop(e)
     log('Verifying contents of DataTransferItems...');
     var items = e.dataTransfer.items;
     var files = [];
+    var fileEntryCount = 0;
     test(testFiles.length, items.length);
     for (var i = 0; i < items.length; ++i) {
         // The items should be in the same order as we added.
@@ -89,13 +90,14 @@ function handleDrop(e)
         test('/' + name, entry.fullPath);
         test(expected.directory, entry.isDirectory);
 
-        with ({last: i + 1 == items.length, expected: expected}) {
-            entry.getMetadata(function(metadata) {
-                if (!expected.directory)
-                    test(expected.size, metadata.size);
-                if (last && window.testRunner)
-                    testRunner.notifyDone();
-            });
+        if (entry.isFile) {
+            (function(num, expected) {
+                entry.file(function(file) {
+                    test(expected.size, file.size)
+                    if (num === fileEntryCount && window.testRunner)
+                        testRunner.notifyDone();
+                });
+            })(++fileEntryCount, expected);
         }
     }
 }

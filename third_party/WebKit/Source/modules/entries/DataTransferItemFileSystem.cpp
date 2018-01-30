@@ -28,60 +28,58 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "modules/filesystem/DataTransferItemFileSystem.h"
+#include "modules/entries/DataTransferItemFileSystem.h"
 
 #include "core/clipboard/DataObject.h"
 #include "core/clipboard/DataTransfer.h"
 #include "core/clipboard/DataTransferItem.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/fileapi/File.h"
+#include "modules/entries/DraggedIsolatedFileSystemImpl.h"
+#include "modules/entries/FileSystem.h"
+#include "modules/entries/FileSystemDirectoryEntry.h"
+#include "modules/entries/FileSystemEntry.h"
+#include "modules/entries/FileSystemFileEntry.h"
 #include "modules/filesystem/DOMFilePath.h"
-#include "modules/filesystem/DOMFileSystem.h"
-#include "modules/filesystem/DirectoryEntry.h"
-#include "modules/filesystem/DraggedIsolatedFileSystemImpl.h"
-#include "modules/filesystem/Entry.h"
-#include "modules/filesystem/FileEntry.h"
-#include "platform/AsyncFileSystemCallbacks.h"
 #include "platform/FileMetadata.h"
 #include "platform/bindings/ScriptState.h"
 
 namespace blink {
 
 // static
-Entry* DataTransferItemFileSystem::webkitGetAsEntry(ScriptState* script_state,
-                                                    DataTransferItem& item) {
+FileSystemEntry* DataTransferItemFileSystem::webkitGetAsEntry(
+    ScriptState* script_state,
+    DataTransferItem& item) {
   if (!item.GetDataObjectItem()->IsFilename())
     return nullptr;
 
   // For dragged files getAsFile must be pretty lightweight.
-  Blob* file = item.getAsFile();
+  File* file = item.getAsFile();
   // The clipboard may not be in a readable state.
   if (!file)
     return nullptr;
-  DCHECK(file->IsFile());
 
-  DOMFileSystem* dom_file_system =
-      DraggedIsolatedFileSystemImpl::GetDOMFileSystem(
-          item.GetDataTransfer()->GetDataObject(),
-          ExecutionContext::From(script_state), *item.GetDataObjectItem());
-  if (!dom_file_system) {
+  FileSystem* file_system = DraggedIsolatedFileSystemImpl::GetFileSystem(
+      item.GetDataTransfer()->GetDataObject(),
+      ExecutionContext::From(script_state), *item.GetDataObjectItem());
+  if (!file_system) {
     // IsolatedFileSystem may not be enabled.
     return nullptr;
   }
 
   // The dropped entries are mapped as top-level entries in the isolated
   // filesystem.
-  String virtual_path = DOMFilePath::Append("/", ToFile(file)->name());
+  String virtual_path = DOMFilePath::Append(DOMFilePath::kRoot, file->name());
 
   // FIXME: This involves synchronous file operation. Consider passing file type
   // data when we dispatch drag event.
   FileMetadata metadata;
-  if (!GetFileMetadata(ToFile(file)->GetPath(), metadata))
+  if (!GetFileMetadata(file->GetPath(), metadata))
     return nullptr;
 
   if (metadata.type == FileMetadata::kTypeDirectory)
-    return DirectoryEntry::Create(dom_file_system, virtual_path);
-  return FileEntry::Create(dom_file_system, virtual_path);
+    return FileSystemDirectoryEntry::Create(file_system, virtual_path);
+  return FileSystemFileEntry::Create(file_system, virtual_path);
 }
 
 }  // namespace blink
