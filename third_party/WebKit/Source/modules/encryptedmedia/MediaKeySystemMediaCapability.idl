@@ -7,4 +7,5 @@
 dictionary MediaKeySystemMediaCapability {
     DOMString contentType = "";
     DOMString robustness = "";
+    [RuntimeEnabled=EncryptedMediaHdcpPolicyCheck] DOMString encryption = "";
 };
