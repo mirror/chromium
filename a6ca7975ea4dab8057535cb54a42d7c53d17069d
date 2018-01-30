@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f2b070f_57fcca36",
+        "filename": "base/files/dir_reader_posix_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-30T18:30:49Z",
+      "side": 1,
+      "message": "This is now out of date. :) But don\u0027t stress out over it. Hopefully this entire block will be gone soon.\n\nIn general, when the #endif is very close to the #if and it\u0027s not nested, I wouldn\u0027t even bother with the end comment.",
+      "revId": "a6ca7975ea4dab8057535cb54a42d7c53d17069d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
