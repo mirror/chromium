@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be43017e_6b6283a0",
+        "filename": "chrome_elf/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-30T11:31:21Z",
+      "side": 1,
+      "message": "naming is hard! i\u0027m not sure about \"main\". this file is concerned with initialization of the module, right? how about initialization.{cc,h}?",
+      "revId": "48e441b407a448b4fea0402323daf9b6ea4b39c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
