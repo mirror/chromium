@@ -50,7 +50,9 @@ class StatusAreaWidgetDelegateAnimationSettings
 namespace ash {
 
 StatusAreaWidgetDelegate::StatusAreaWidgetDelegate(Shelf* shelf)
-    : shelf_(shelf), focus_cycler_for_testing_(nullptr) {
+    : shelf_(shelf),
+      focus_cycler_for_testing_(nullptr),
+      tooltip_(this, shelf_) {
   DCHECK(shelf_);
 
   // Allow the launcher to surrender the focus to another window upon
@@ -89,6 +91,12 @@ views::Widget* StatusAreaWidgetDelegate::GetWidget() {
 
 const views::Widget* StatusAreaWidgetDelegate::GetWidget() const {
   return View::GetWidget();
+}
+
+void StatusAreaWidgetDelegate::ViewHierarchyChanged(
+    const ViewHierarchyChangedDetails& details) {
+  if (details.is_add && details.child == this)
+    tooltip_.Init();
 }
 
 void StatusAreaWidgetDelegate::OnGestureEvent(ui::GestureEvent* event) {
