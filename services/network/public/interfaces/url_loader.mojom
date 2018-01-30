@@ -63,6 +63,12 @@ interface URLLoader {
   // methods to pause/resume reading the response body from network. Otherwise,
   // these methods could be no-ops.
   //
+  // Please note that calling PauseReadingBodyFromNet() doesn't mean that the
+  // response body data pipe will immediately stop providing data:
+  // - due to asynchronousness, it may pause after providing some more data;
+  // - it may not pause providing data at all, if the response body is not
+  //   fetched from network.
+  //
   // It is allowed to call Pause/ResumeReadingBodyFromNet before response body
   // is available.
   PauseReadingBodyFromNet();
