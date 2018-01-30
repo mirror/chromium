@@ -218,6 +218,24 @@
       "revId": "bff9e8b5cb03079956b59aea660c589bab1d4925",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c21c96d_f354134c",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8GCController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-30T08:09:21Z",
+      "side": 1,
+      "message": "Hmm, we\u0027d better have it stated in https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/blink-c++.md\nI know people who have a feeling std containers are allowed in Blink these days. ;-) \nWe also have them squeezed into the code base.",
+      "parentUuid": "10805861_1e0c0eba",
+      "revId": "bff9e8b5cb03079956b59aea660c589bab1d4925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
