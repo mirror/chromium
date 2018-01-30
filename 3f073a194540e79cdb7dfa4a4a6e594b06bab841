@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2be09e43_b38f791d",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-30T23:17:46Z",
+      "side": 1,
+      "message": "#include stl_util.h",
+      "range": {
+        "startLine": 89,
+        "startChar": 17,
+        "endLine": 89,
+        "endChar": 28
+      },
+      "revId": "3f073a194540e79cdb7dfa4a4a6e594b06bab841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c06382c_d5ac24e0",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-30T23:17:46Z",
+      "side": 1,
+      "message": "Can you add a test that checks that we propagate 3-deep\n\ndisallowed.html\n  - allowed_child.html\n    - allowed_grandchild.html\n      - allowed_great_grandchild\n\nor just append the first test",
+      "revId": "3f073a194540e79cdb7dfa4a4a6e594b06bab841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bcb65df_839013ae",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-30T23:17:46Z",
+      "side": 1,
+      "message": "What do you mean by \"DoesNotImpact\"? Maybe this test would be better named\n\"DryRun_AllowedFramesNotTaggedAsAd\"",
+      "range": {
+        "startLine": 783,
+        "startChar": 7,
+        "endLine": 783,
+        "endChar": 60
+      },
+      "revId": "3f073a194540e79cdb7dfa4a4a6e594b06bab841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f33fcab7_7e93f034",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-30T23:17:46Z",
+      "side": 1,
+      "message": "This comment (and the one in the test above) are sort of redundant. Feel free to remove.",
+      "revId": "3f073a194540e79cdb7dfa4a4a6e594b06bab841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab1633fb_55b044bf",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-30T23:17:46Z",
+      "side": 1,
+      "message": "Create",
+      "range": {
+        "startLine": 798,
+        "startChar": 5,
+        "endLine": 798,
+        "endChar": 10
+      },
+      "revId": "3f073a194540e79cdb7dfa4a4a6e594b06bab841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
