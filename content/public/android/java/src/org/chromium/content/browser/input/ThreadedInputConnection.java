@@ -39,7 +39,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 class ThreadedInputConnection extends BaseInputConnection implements ChromiumBaseInputConnection {
     private static final String TAG = "cr_Ime";
-    private static final boolean DEBUG_LOGS = false;
+    private static final boolean DEBUG_LOGS = true;
 
     private static final TextInputState UNBLOCKER = new TextInputState(
             "", new Range(0, 0), new Range(-1, -1), false, false /* notFromIme */) {

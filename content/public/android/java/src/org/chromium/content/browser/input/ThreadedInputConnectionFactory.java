@@ -4,6 +4,7 @@
 
 package org.chromium.content.browser.input;
 
+import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.view.View;
@@ -20,7 +21,7 @@ import org.chromium.base.VisibleForTesting;
 // See crbug.com/588547 for details.
 public class ThreadedInputConnectionFactory implements ChromiumBaseInputConnection.Factory {
     private static final String TAG = "cr_Ime";
-    private static final boolean DEBUG_LOGS = false;
+    private static final boolean DEBUG_LOGS = true;
 
     // Most of the time we do not need to retry. But if we have lost window focus while triggering
     // delayed creation, then there is a chance that detection may fail in the following scenario:
@@ -120,15 +121,17 @@ public class ThreadedInputConnectionFactory implements ChromiumBaseInputConnecti
             Log.i(TAG, "initializeAndGet. outAttr: " + ImeUtils.getEditorInfoDebugString(outAttrs));
         }
 
-        // IMM can internally ignore subsequent activation requests, e.g., by checking
-        // mServedConnecting.
-        if (mCheckInvalidator != null) mCheckInvalidator.invalidate();
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            // IMM can internally ignore subsequent activation requests, e.g., by checking
+            // mServedConnecting.
+            if (mCheckInvalidator != null) mCheckInvalidator.invalidate();
 
-        if (shouldTriggerDelayedOnCreateInputConnection()) {
-            triggerDelayedOnCreateInputConnection(view);
-            return null;
+            if (shouldTriggerDelayedOnCreateInputConnection()) {
+                triggerDelayedOnCreateInputConnection(view);
+                return null;
+            }
+            if (DEBUG_LOGS) Log.i(TAG, "initializeAndGet: called from proxy view");
         }
-        if (DEBUG_LOGS) Log.i(TAG, "initializeAndGet: called from proxy view");
 
         if (mThreadedInputConnection == null) {
             if (DEBUG_LOGS) Log.i(TAG, "Creating ThreadedInputConnection...");

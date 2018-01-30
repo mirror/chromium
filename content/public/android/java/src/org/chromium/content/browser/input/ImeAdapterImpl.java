@@ -78,7 +78,7 @@ import java.util.List;
 @JNINamespace("content")
 public class ImeAdapterImpl implements ImeAdapter, WindowEventObserver {
     private static final String TAG = "cr_Ime";
-    private static final boolean DEBUG_LOGS = false;
+    private static final boolean DEBUG_LOGS = true;
 
     private static final float SUGGESTION_HIGHLIGHT_BACKGROUND_TRANSPARENCY = 0.4f;
 
