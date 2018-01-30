@@ -81,6 +81,29 @@
       "revId": "fbdca255c3f886b43912e28e012e016334a8853c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "604824c2_f8d8ec05",
+        "filename": "third_party/zlib/google/zip_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-30T21:59:35Z",
+      "side": 0,
+      "message": "ExtractCurrentEntryToFile and LocateAndOpenEntry are other unused members of the public interface. Do you want me to remove them as well?",
+      "range": {
+        "startLine": 411,
+        "startChar": 49,
+        "endLine": 411,
+        "endChar": 0
+      },
+      "revId": "fbdca255c3f886b43912e28e012e016334a8853c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
