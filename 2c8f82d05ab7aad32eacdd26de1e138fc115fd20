@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7291a1d_14463ef9",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1211,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-30T03:59:10Z",
+      "side": 1,
+      "message": "what happens if this is an incognito profile? (code in BookmarkAppHelper::FinishInstallation suggests that\u0027s a possibility)",
+      "revId": "2c8f82d05ab7aad32eacdd26de1e138fc115fd20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00155c0f_1c3bf278",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1234,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-30T03:59:10Z",
+      "side": 1,
+      "message": "Looking at this... I think this file is included on android (?), and we need a bunch of these guards around the code you\u0027re adding.",
+      "revId": "2c8f82d05ab7aad32eacdd26de1e138fc115fd20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
