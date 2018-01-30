@@ -240,6 +240,30 @@
     },
     {
       "key": {
+        "uuid": "2e57f096_7fa98582",
+        "filename": "chrome/test/vr/auto_bisect.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-30T23:01:08Z",
+      "side": 1,
+      "message": "Discussed internally. src-internal is too complicated for now. Lets do without defaults.",
+      "parentUuid": "6bedf343_152a770e",
+      "range": {
+        "startLine": 60,
+        "startChar": 29,
+        "endLine": 60,
+        "endChar": 47
+      },
+      "revId": "b6e5a014ef23017b8adf70c0a7a857bf00cd4d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bac012f_5fd095ba",
         "filename": "chrome/test/vr/auto_bisect.py",
         "patchSetId": 1
