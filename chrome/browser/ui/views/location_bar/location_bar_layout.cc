@@ -168,3 +168,11 @@ void LocationBarLayout::LayoutPass3(gfx::Rect* bounds, int* available_width) {
   if (position_ == LEFT_EDGE)
     bounds->set_x(bounds->x() + item_edit_padding_);
 }
+
+bool LocationBarLayout::HasVisibleDecorations() const {
+  for (const auto& decoration : decorations_) {
+    if (decoration->view->visible())
+      return true;
+  }
+  return false;
+}

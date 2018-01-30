@@ -72,6 +72,11 @@ class LocationBarLayout {
   // bar towards the middle.
   void LayoutPass3(gfx::Rect* bounds, int* available_width);
 
+  // Returns true if there are are any |LocationBarDecoration|s that are
+  // visible. Note this method may not be return the correct result until
+  // |LayoutPass3()| has been called.
+  bool HasVisibleDecorations() const;
+
  private:
   // LEFT_EDGE means decorations are added from left to right and stacked on
   // the left of the omnibox, RIGHT_EDGE means the opposite.

@@ -20,40 +20,45 @@ BackgroundWith1PxBorder::BackgroundWith1PxBorder(SkColor background,
 
 void BackgroundWith1PxBorder::Paint(gfx::Canvas* canvas,
                                     views::View* view) const {
-  gfx::RectF border_rect_f(view->GetContentsBounds());
+  PaintBackground(canvas, get_color(), border_color_,
+                  GetBorderRadiusInternal(view->height()),
+                  view->GetContentsBounds());
+}
 
+float BackgroundWith1PxBorder::GetBorderRadiusInternal(int height) const {
+  return kBorderRadius;
+}
+
+void BackgroundWith1PxBorder::PaintBackground(gfx::Canvas* canvas,
+                                              SkColor background,
+                                              SkColor border,
+                                              float inner_border_radius,
+                                              const gfx::Rect& bounds) {
   gfx::ScopedCanvas scoped_canvas(canvas);
   const float scale = canvas->UndoDeviceScaleFactor();
+  gfx::RectF border_rect_f(bounds);
   border_rect_f.Scale(scale);
-  // Draw the border as a 1px thick line aligned with the inside edge of the
-  // kLocationBarBorderThicknessDip region. This line needs to be snapped to the
-  // pixel grid, so the result of the scale-up needs to be snapped to an integer
-  // value. Using floor() instead of round() ensures that, for non-integral
-  // scale factors, the border will still be drawn inside the BORDER_THICKNESS
-  // region instead of being partially inside it.
-  border_rect_f.Inset(
-      gfx::InsetsF(std::floor(kLocationBarBorderThicknessDip * scale) - 0.5f));
 
-  SkPath path;
-  const SkScalar scaled_corner_radius =
-      SkFloatToScalar(kCornerRadius * scale + 0.5f);
-  path.addRoundRect(gfx::RectFToSkRect(border_rect_f), scaled_corner_radius,
-                    scaled_corner_radius);
+  // |inner_border_radius| is the border radius on the inside of the
+  // |OmniboxBackgroundBorder|, so inset |border_rect_f| to ensure there's
+  // enough room to outset the outer |SkRRect| later.
+  border_rect_f.Inset(kLocationBarBorderThicknessDip,
+                      kLocationBarBorderThicknessDip);
+
+  SkRRect inner_rect(SkRRect::MakeRectXY(gfx::RectFToSkRect(border_rect_f),
+                                         inner_border_radius,
+                                         inner_border_radius));
+  SkRRect outer_rect(inner_rect);
+  outer_rect.outset(kLocationBarBorderThicknessDip,
+                    kLocationBarBorderThicknessDip);
 
   cc::PaintFlags flags;
-  flags.setStyle(cc::PaintFlags::kStroke_Style);
-  flags.setStrokeWidth(1);
   flags.setAntiAlias(true);
-
-  SkPath stroke_path;
-  flags.getFillPath(path, &stroke_path);
-
-  SkPath fill_path;
-  Op(path, stroke_path, kDifference_SkPathOp, &fill_path);
   flags.setStyle(cc::PaintFlags::kFill_Style);
-  flags.setColor(get_color());
-  canvas->sk_canvas()->drawPath(fill_path, flags);
 
-  flags.setColor(border_color_);
-  canvas->sk_canvas()->drawPath(stroke_path, flags);
+  flags.setColor(border);
+  canvas->sk_canvas()->drawDRRect(outer_rect, inner_rect, flags);
+
+  flags.setColor(background);
+  canvas->sk_canvas()->drawRRect(inner_rect, flags);
 }
