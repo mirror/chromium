@@ -2981,8 +2981,6 @@ split_static_library("browser") {
   if (is_desktop_linux) {
     # Desktop linux, doesn't count ChromeOS.
     sources += [
-      "dbus/dbus_thread_linux.cc",
-      "dbus/dbus_thread_linux.h",
       "first_run/upgrade_util.cc",
       "first_run/upgrade_util_linux.cc",
       "first_run/upgrade_util_linux.h",
@@ -2996,7 +2994,11 @@ split_static_library("browser") {
       "web_applications/web_app_linux.cc",
     ]
 
-    deps += [ "//third_party/speech-dispatcher" ]
+    deps += [
+      "//components/dbus:dbus_thread_linux",
+      "//components/linux:mpris_client",
+      "//third_party/speech-dispatcher",
+    ]
 
     if (enable_native_notifications) {
       sources += [

@@ -737,8 +737,10 @@ bool Bus::TryRegisterObjectPath(const ObjectPath& object_path,
       vtable,
       user_data,
       error);
-  if (success)
+  if (success) {
     registered_object_paths_.insert(object_path);
+    printf("registered object path %s\n", object_path.value().c_str());
+  }
   return success;
 }
 
