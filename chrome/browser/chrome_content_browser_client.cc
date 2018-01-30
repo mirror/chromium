@@ -174,6 +174,7 @@
 #include "components/safe_browsing/browser/url_checker_delegate.h"
 #include "components/safe_browsing/common/safe_browsing_prefs.h"
 #include "components/safe_browsing/db/database_manager.h"
+#include "components/safe_browsing/features.h"
 #include "components/safe_browsing/password_protection/password_protection_navigation_throttle.h"
 #include "components/signin/core/browser/profile_management_switches.h"
 #include "components/spellcheck/spellcheck_build_features.h"
@@ -3701,25 +3702,32 @@ ChromeContentBrowserClient::CreateURLLoaderThrottles(
     const base::Callback<content::WebContents*()>& wc_getter,
     content::NavigationUIData* navigation_ui_data) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  DCHECK(base::FeatureList::IsEnabled(network::features::kNetworkService));
 
+  bool network_service_enabled =
+      base::FeatureList::IsEnabled(network::features::kNetworkService);
   std::vector<std::unique_ptr<content::URLLoaderThrottle>> result;
 
-  auto safe_browsing_throttle =
-      safe_browsing::BrowserURLLoaderThrottle::MaybeCreate(
-          GetSafeBrowsingUrlCheckerDelegate(), wc_getter);
-  if (safe_browsing_throttle)
-    result.push_back(std::move(safe_browsing_throttle));
+  if (network_service_enabled ||
+      base::FeatureList::IsEnabled(safe_browsing::kCheckByURLLoaderThrottle)) {
+    auto safe_browsing_throttle =
+        safe_browsing::BrowserURLLoaderThrottle::MaybeCreate(
+            GetSafeBrowsingUrlCheckerDelegate(), wc_getter);
+    if (safe_browsing_throttle)
+      result.push_back(std::move(safe_browsing_throttle));
+  }
 
-  ChromeNavigationUIData* chrome_navigation_ui_data =
-      static_cast<ChromeNavigationUIData*>(navigation_ui_data);
-  if (chrome_navigation_ui_data &&
-      chrome_navigation_ui_data->prerender_mode() != prerender::NO_PRERENDER) {
-    result.push_back(std::make_unique<prerender::PrerenderURLLoaderThrottle>(
-        chrome_navigation_ui_data->prerender_mode(),
-        chrome_navigation_ui_data->prerender_histogram_prefix(),
-        base::BindOnce(GetPrerenderCanceller, wc_getter),
-        BrowserThread::GetTaskRunnerForThread(BrowserThread::UI)));
+  if (network_service_enabled) {
+    ChromeNavigationUIData* chrome_navigation_ui_data =
+        static_cast<ChromeNavigationUIData*>(navigation_ui_data);
+    if (chrome_navigation_ui_data &&
+        chrome_navigation_ui_data->prerender_mode() !=
+            prerender::NO_PRERENDER) {
+      result.push_back(std::make_unique<prerender::PrerenderURLLoaderThrottle>(
+          chrome_navigation_ui_data->prerender_mode(),
+          chrome_navigation_ui_data->prerender_histogram_prefix(),
+          base::BindOnce(GetPrerenderCanceller, wc_getter),
+          BrowserThread::GetTaskRunnerForThread(BrowserThread::UI)));
+    }
   }
 
   return result;

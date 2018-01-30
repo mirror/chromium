@@ -465,12 +465,10 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
       default_loader_used_ = false;
       url_loader_ = ThrottlingURLLoader::CreateLoaderAndStart(
           std::move(start_loader_callback),
-          base::FeatureList::IsEnabled(network::features::kNetworkService)
-              ? GetContentClient()->browser()->CreateURLLoaderThrottles(
-                    web_contents_getter_, navigation_ui_data_.get())
-              : std::vector<std::unique_ptr<content::URLLoaderThrottle>>(),
-          frame_tree_node_id_, resource_request_.get(), this,
-          kNavigationUrlLoaderTrafficAnnotation,
+          GetContentClient()->browser()->CreateURLLoaderThrottles(
+              web_contents_getter_, navigation_ui_data_.get())
+              frame_tree_node_id_,
+          resource_request_.get(), this, kNavigationUrlLoaderTrafficAnnotation,
           base::ThreadTaskRunnerHandle::Get());
 
       subresource_loader_params_ =
