@@ -519,6 +519,9 @@ void Element::scrollIntoViewWithOptions(const ScrollIntoViewOptions& options) {
   if (!GetLayoutObject() || !GetDocument().GetPage())
     return;
 
+  if (GetDocument().Loader())
+    GetDocument().Loader()->GetInitialScrollState().was_scrolled_by_js = true;
+
   ScrollBehavior behavior = (options.behavior() == "smooth")
                                 ? kScrollBehaviorSmooth
                                 : kScrollBehaviorAuto;
@@ -542,6 +545,9 @@ void Element::scrollIntoViewIfNeeded(bool center_if_needed) {
 
   if (!GetLayoutObject())
     return;
+
+  if (GetDocument().Loader())
+    GetDocument().Loader()->GetInitialScrollState().was_scrolled_by_js = true;
 
   LayoutRect bounds = BoundingBox();
   if (center_if_needed) {
@@ -906,6 +912,9 @@ void Element::setScrollLeft(double new_left) {
   if (!InActiveDocument())
     return;
 
+  if (GetDocument().Loader())
+    GetDocument().Loader()->GetInitialScrollState().was_scrolled_by_js = true;
+
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheetsForNode(this);
 
   new_left = ScrollableArea::NormalizeNonFiniteScroll(new_left);
@@ -924,6 +933,9 @@ void Element::setScrollLeft(double new_left) {
 void Element::setScrollTop(double new_top) {
   if (!InActiveDocument())
     return;
+
+  if (GetDocument().Loader())
+    GetDocument().Loader()->GetInitialScrollState().was_scrolled_by_js = true;
 
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheetsForNode(this);
 
@@ -1003,6 +1015,9 @@ void Element::scrollBy(const ScrollToOptions& scroll_to_options) {
   if (!InActiveDocument())
     return;
 
+  if (GetDocument().Loader())
+    GetDocument().Loader()->GetInitialScrollState().was_scrolled_by_js = true;
+
   // FIXME: This should be removed once scroll updates are processed only after
   // the compositing update. See http://crbug.com/420741.
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheetsForNode(this);
@@ -1024,6 +1039,9 @@ void Element::scrollTo(double x, double y) {
 void Element::scrollTo(const ScrollToOptions& scroll_to_options) {
   if (!InActiveDocument())
     return;
+
+  if (GetDocument().Loader())
+    GetDocument().Loader()->GetInitialScrollState().was_scrolled_by_js = true;
 
   // FIXME: This should be removed once scroll updates are processed only after
   // the compositing update. See http://crbug.com/420741.

@@ -1186,6 +1186,14 @@ void FrameLoader::RestoreScrollPositionAndViewState(
   if (!can_restore_without_annoying_user)
     return;
 
+  // Measure how many pages try to use js scroll to prevent browser scroll
+  // restoration.
+  if ((should_restore_scroll || should_restore_scale) &&
+      GetDocumentLoader()->GetInitialScrollState().was_scrolled_by_js) {
+    UseCounter::Count(GetDocument(),
+                      WebFeature::kJsScrollBeforeScrollRestoration);
+  }
+
   if (should_restore_scroll) {
     // TODO(pnoland): attempt to restore the anchor in more places than this.
     // Anchor-based restore should allow for earlier restoration.
