@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2d80174_138eb44b",
+        "filename": "components/viz/service/main/viz_main_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-30T21:19:18Z",
+      "side": 1,
+      "message": "We should probably just move this into ws altogether, so viz doesn\u0027t have to worry about it.",
+      "revId": "5814409275c0f45b51e9bbb5511d198165b899ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3719cff1_f36152cc",
+        "filename": "components/viz/service/main/viz_main_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-30T21:19:18Z",
+      "side": 1,
+      "message": "eek! I don\u0027t really know all implications of the nested runloop. +piman@ should review.",
+      "revId": "5814409275c0f45b51e9bbb5511d198165b899ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f835d2a9_9a466e7c",
+        "filename": "components/viz/service/main/viz_main_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-30T21:19:18Z",
+      "side": 1,
+      "message": "I would normally expect this to be a OnceClosure, but I guess RunLoop::QuitClosure() is the repeating version?",
+      "revId": "5814409275c0f45b51e9bbb5511d198165b899ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
