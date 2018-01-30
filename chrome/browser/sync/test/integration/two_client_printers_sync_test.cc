@@ -25,6 +25,22 @@ class TwoClientPrintersSyncTest : public SyncTest {
   TwoClientPrintersSyncTest() : SyncTest(TWO_CLIENT) {}
   ~TwoClientPrintersSyncTest() override {}
 
+  void SetUp() override {
+    SyncTest::SetUp();
+
+    // Initialize a SyncedPrinterManager and a ModelTypeStore for each Profile
+    // before the test starts. The content::RunAllTasksUntilIdle() call is
+    // required to associate ModelTypeStores with their SyncedPrinterManagers.
+    //
+    // TODO(sync): Remove this forced initialization once there is a mechanism
+    // to queue writes/reads before the ModelTypeStore is associated with the
+    // SyncedPrinterManager. https://crbug.com/709094.
+    GetPrinterStore(0);
+    GetPrinterStore(1);
+    GetVerifierPrinterStore();
+    content::RunAllTasksUntilIdle();
+  }
+
  private:
   DISALLOW_COPY_AND_ASSIGN(TwoClientPrintersSyncTest);
 };
