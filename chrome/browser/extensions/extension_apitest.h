@@ -8,6 +8,7 @@
 #include <string>
 
 #include "base/compiler_specific.h"
+#include "base/strings/string_piece_forward.h"
 #include "base/values.h"
 #include "chrome/browser/extensions/extension_browsertest.h"
 #include "content/public/browser/notification_registrar.h"
@@ -198,6 +199,10 @@ class ExtensionApiTest : public ExtensionBrowserTest {
   const base::FilePath& shared_test_data_dir() const {
     return shared_test_data_dir_;
   }
+
+  // Sets the additional string argument |customArg| to the test config object,
+  // which is available to javascript tests using chrome.test.getConfig().
+  void SetCustomArg(base::StringPiece custom_arg);
 
   // If it failed, what was the error message?
   std::string message_;

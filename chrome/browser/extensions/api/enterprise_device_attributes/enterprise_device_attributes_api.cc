@@ -11,6 +11,7 @@
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/extensions/api/enterprise_device_attributes.h"
+#include "chromeos/system/statistics_provider.h"
 #include "components/user_manager/user_manager.h"
 
 namespace extensions {
@@ -18,7 +19,7 @@ namespace extensions {
 namespace {
 
 // Checks for the current browser context if the user is affiliated.
-bool IsPermittedToGetDeviceId(content::BrowserContext* context) {
+bool IsPermittedToGetDeviceAttributes(content::BrowserContext* context) {
   const user_manager::User* user =
       chromeos::ProfileHelper::Get()->GetUserByProfile(
           Profile::FromBrowserContext(context));
@@ -28,10 +29,29 @@ bool IsPermittedToGetDeviceId(content::BrowserContext* context) {
 // Returns the directory device id for the permitted extensions or an empty
 // string.
 std::string GetDirectoryDeviceId(content::BrowserContext* context) {
-  return IsPermittedToGetDeviceId(context)
+  return IsPermittedToGetDeviceAttributes(context)
              ? g_browser_process->platform_part()
                    ->browser_policy_connector_chromeos()
                    ->GetDirectoryApiID()
+             : std::string();
+}
+
+// Returns the device serial number for the permitted extensions or an empty
+// string.
+std::string GetDeviceSerialNumber(content::BrowserContext* context) {
+  chromeos::system::StatisticsProvider* statistics_provider =
+      chromeos::system::StatisticsProvider::GetInstance();
+  return statistics_provider && IsPermittedToGetDeviceAttributes(context)
+             ? statistics_provider->GetEnterpriseMachineID()
+             : std::string();
+}
+
+// Returns the asset id for the permitted extensions or an empty string.
+std::string GetDeviceAssetId(content::BrowserContext* context) {
+  return IsPermittedToGetDeviceAttributes(context)
+             ? g_browser_process->platform_part()
+                   ->browser_policy_connector_chromeos()
+                   ->GetDeviceAssetID()
              : std::string();
 }
 
@@ -49,6 +69,34 @@ EnterpriseDeviceAttributesGetDirectoryDeviceIdFunction::Run() {
   return RespondNow(ArgumentList(
       api::enterprise_device_attributes::GetDirectoryDeviceId::Results::Create(
           device_id)));
+}
+
+EnterpriseDeviceAttributesGetDeviceSerialNumberFunction::
+    EnterpriseDeviceAttributesGetDeviceSerialNumberFunction() {}
+
+EnterpriseDeviceAttributesGetDeviceSerialNumberFunction::
+    ~EnterpriseDeviceAttributesGetDeviceSerialNumberFunction() {}
+
+ExtensionFunction::ResponseAction
+EnterpriseDeviceAttributesGetDeviceSerialNumberFunction::Run() {
+  const std::string serial_number = GetDeviceSerialNumber(browser_context());
+  return RespondNow(ArgumentList(
+      api::enterprise_device_attributes::GetDeviceSerialNumber::Results::Create(
+          serial_number)));
+}
+
+EnterpriseDeviceAttributesGetDeviceAssetIdFunction::
+    EnterpriseDeviceAttributesGetDeviceAssetIdFunction() {}
+
+EnterpriseDeviceAttributesGetDeviceAssetIdFunction::
+    ~EnterpriseDeviceAttributesGetDeviceAssetIdFunction() {}
+
+ExtensionFunction::ResponseAction
+EnterpriseDeviceAttributesGetDeviceAssetIdFunction::Run() {
+  const std::string asset_id = GetDeviceAssetId(browser_context());
+  return RespondNow(ArgumentList(
+      api::enterprise_device_attributes::GetDeviceAssetId::Results::Create(
+          asset_id)));
 }
 
 }  // namespace extensions
