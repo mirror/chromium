@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6707ce5b_b859e4ad",
+        "filename": "ui/gl/gl_image_shared_memory_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2018-01-30T19:04:18Z",
+      "side": 1,
+      "message": "Can we have this one as disabled on win instead? So we can run it without the need to recompile without the ifdef.\nUp to you if you prefer to leave it as it is.",
+      "revId": "3398b4a86ef8705503562c4f45143d4a9e9076aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
