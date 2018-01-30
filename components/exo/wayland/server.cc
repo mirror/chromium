@@ -2080,6 +2080,14 @@ void remote_surface_set_max_size(wl_client* client,
       gfx::Size(width, height));
 }
 
+void remote_surface_snap_to_left(wl_client* client, wl_resource* resource) {
+  GetUserDataAs<ClientControlledShellSurface>(resource)->SetLeftSnapped();
+}
+
+void remote_surface_snap_to_right(wl_client* client, wl_resource* resource) {
+  GetUserDataAs<ClientControlledShellSurface>(resource)->SetRightSnapped();
+}
+
 const struct zcr_remote_surface_v1_interface remote_surface_implementation = {
     remote_surface_destroy,
     remote_surface_set_app_id,
@@ -2113,7 +2121,9 @@ const struct zcr_remote_surface_v1_interface remote_surface_implementation = {
     remote_surface_set_can_maximize,
     remote_surface_unset_can_maximize,
     remote_surface_set_min_size,
-    remote_surface_set_max_size};
+    remote_surface_set_max_size,
+    remote_surface_snap_to_left,
+    remote_surface_snap_to_right};
 
 ////////////////////////////////////////////////////////////////////////////////
 // notification_surface_interface:
@@ -2368,6 +2378,12 @@ void HandleRemoteSurfaceStateChangedCallback(
     case ash::mojom::WindowStateType::TRUSTED_PINNED:
       state_type = ZCR_REMOTE_SHELL_V1_STATE_TYPE_TRUSTED_PINNED;
       break;
+    case ash::mojom::WindowStateType::LEFT_SNAPPED:
+      state_type = ZCR_REMOTE_SHELL_V1_STATE_TYPE_LEFT_SNAPPED;
+      break;
+    case ash::mojom::WindowStateType::RIGHT_SNAPPED:
+      state_type = ZCR_REMOTE_SHELL_V1_STATE_TYPE_RIGHT_SNAPPED;
+      break;
     default:
       break;
   }
@@ -2379,6 +2395,7 @@ void HandleRemoteSurfaceStateChangedCallback(
 void HandleRemoteSurfaceBoundsChangedCallback(
     wl_resource* resource,
     ash::mojom::WindowStateType current_state_type,
+    ash::mojom::WindowStateType new_state_type,
     int64_t display_id,
     const gfx::Rect& bounds,
     bool resize,
@@ -2390,6 +2407,10 @@ void HandleRemoteSurfaceBoundsChangedCallback(
     reason = ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_REASON_DRAG_RESIZE;
   } else if (bounds_change & ash::WindowResizer::kBoundsChange_Repositions) {
     reason = ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_REASON_DRAG_MOVE;
+  } else if (new_state_type == ash::mojom::WindowStateType::LEFT_SNAPPED) {
+    reason = ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_REASON_SNAP_TO_LEFT;
+  } else if (new_state_type == ash::mojom::WindowStateType::RIGHT_SNAPPED) {
+    reason = ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_REASON_SNAP_TO_RIGHT;
   }
   zcr_remote_surface_v1_send_bounds_changed(
       resource, static_cast<uint32_t>(display_id >> 32),
@@ -2557,7 +2578,7 @@ const struct zcr_remote_shell_v1_interface remote_shell_implementation = {
     remote_shell_destroy, remote_shell_get_remote_surface,
     remote_shell_get_notification_surface};
 
-const uint32_t remote_shell_version = 10;
+const uint32_t remote_shell_version = 11;
 
 void bind_remote_shell(wl_client* client,
                        void* data,

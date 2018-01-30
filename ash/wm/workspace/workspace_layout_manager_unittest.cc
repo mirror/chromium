@@ -1038,10 +1038,9 @@ class WorkspaceLayoutManagerBackdropTest : public AshTestBase {
 
   // Turn the top window back drop on / off.
   void ShowTopWindowBackdropForContainer(aura::Window* container, bool show) {
-    std::unique_ptr<BackdropDelegate> backdrop;
-    if (show) {
-      backdrop = std::make_unique<TabletModeBackdropDelegateImpl>();
-    }
+    std::unique_ptr<BackdropDelegate> backdrop =
+        show ? std::make_unique<TabletModeBackdropDelegateImpl>()
+             : std::make_unique<BackdropDelegate>();
     GetWorkspaceLayoutManager(container)->SetBackdropDelegate(
         std::move(backdrop));
     // Closing and / or opening can be a delayed operation.
