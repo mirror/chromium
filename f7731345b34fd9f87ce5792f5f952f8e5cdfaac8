@@ -16,6 +16,24 @@
       "revId": "f7731345b34fd9f87ce5792f5f952f8e5cdfaac8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c87dfb9_6bcb9bb2",
+        "filename": "content/browser/renderer_host/browser_compositor_view_mac.mm",
+        "patchSetId": 62
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-30T00:04:50Z",
+      "side": 1,
+      "message": "Sorry about that. I\u0027ll make sure to add you for review next time, and also do more testing on Mac.",
+      "parentUuid": "2318d0e4_db8d3d6e",
+      "revId": "f7731345b34fd9f87ce5792f5f952f8e5cdfaac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
