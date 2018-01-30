@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab65e99_91098aac",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5437,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-30T22:44:51Z",
+      "side": 1,
+      "message": "good find!\n\nWe should probably clamp to the lower of GL_MAX_RENDERBUFFER_SIZE and GL_MAX_TEXTURE_SIZE since we can\u0027t create back buffers larger than that. What do you think?",
+      "revId": "afa37c7e1aec3335db94e52ef724f1ec2a11e7dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
