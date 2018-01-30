@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1fcf40c_72a4dff6",
+        "filename": "media/capture/video/file_video_capture_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-30T18:42:19Z",
+      "side": 1,
+      "message": "One thing to consider here would be to use a factory method for creating a default/empty PhotoState like this. Factory methods for creating a PhotoState with defaults for all or most fields could be shared across several usage sites, e.g. [1][2][3]. Besides eliminating duplication this would have the advantage of reducing the risk of ending up with uninitialized fields in some usage sites whenever a new field is added to the struct.\n\n[1] https://cs.chromium.org/chromium/src/content/browser/image_capture/image_capture_impl.cc?q\u003dmojom::PhotoState::New\u0026l\u003d28\u0026dr\u003dC\n[2] https://cs.chromium.org/chromium/src/media/capture/video/mac/video_capture_device_mac.mm?q\u003dmojom::PhotoState::New\u0026l\u003d395\u0026dr\u003dC\n[3] https://cs.chromium.org/chromium/src/media/capture/video/win/video_capture_device_mf_win.cc?q\u003dmojom::PhotoState::New\u0026l\u003d777\u0026dr\u003dC",
+      "revId": "b190aea3620ed3244b791c8045967c594687eae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2ebdcd2_e4d13abd",
+        "filename": "media/capture/video/file_video_capture_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-30T18:42:19Z",
+      "side": 1,
+      "message": "The behavior contract at interface media::VideoCaptureDevice specifies [1] that the callback gets invoked on the same thread that called TakePhoto. It seems that is not the case here.\n\n[1] https://cs.chromium.org/chromium/src/media/capture/video/video_capture_device.h?q\u003dSetPhotoOptions\u0026l\u003d289",
+      "revId": "b190aea3620ed3244b791c8045967c594687eae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
