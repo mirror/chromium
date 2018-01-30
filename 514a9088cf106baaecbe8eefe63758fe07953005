@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d06bf15_474a02a6",
+        "filename": "ash/ash_layout_constants.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-30T18:06:09Z",
+      "side": 1,
+      "message": "Just curious, any particular reason this isn\u0027t a 3rd MaterialDesignController::Mode ? Most surfaces affected by Mode won\u0027t be changed by this?",
+      "revId": "514a9088cf106baaecbe8eefe63758fe07953005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "224c6a78_2e069411",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-30T18:06:09Z",
+      "side": 1,
+      "message": "It\u0027s important to me that we never ship this behavior to end users. Please either wait for the other CL to land or file a release-block-stable bug for whatever milestone this feature is targeting and cite it in the TODO comment.",
+      "revId": "514a9088cf106baaecbe8eefe63758fe07953005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
