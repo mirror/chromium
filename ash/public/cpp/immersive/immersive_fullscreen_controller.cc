@@ -96,9 +96,13 @@ void ImmersiveFullscreenController::SetEnabled(WindowType window_type,
     return;
   enabled_ = enabled;
 
+  LOG(ERROR) << enabled_;
+  LOG(ERROR) << "a";
   EnableWindowObservers(enabled_);
+  LOG(ERROR) << "a";
 
   ImmersiveContext::Get()->OnEnteringOrExitingImmersive(this, enabled);
+  LOG(ERROR) << "a";
 
   if (enabled_) {
     // Animate enabling immersive mode by sliding out the top-of-window views.
@@ -130,6 +134,7 @@ void ImmersiveFullscreenController::SetEnabled(WindowType window_type,
     delegate_->OnImmersiveFullscreenExited();
   }
 
+  LOG(ERROR) << "a";
   if (enabled_) {
     UMA_HISTOGRAM_ENUMERATION("Ash.ImmersiveFullscreen.WindowType", window_type,
                               WINDOW_TYPE_COUNT);
