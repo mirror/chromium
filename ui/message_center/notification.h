@@ -258,6 +258,8 @@ class MESSAGE_CENTER_EXPORT Notification {
   // is_read and never_timeout.
   void CopyState(Notification* base);
 
+  void set_app_id(const std::string& app_id) { notifier_id_.app_id = app_id; }
+
   NotificationType type() const { return type_; }
   void set_type(NotificationType type) { type_ = type; }
 

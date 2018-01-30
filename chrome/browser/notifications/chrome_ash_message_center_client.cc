@@ -11,6 +11,7 @@
 #include "chrome/browser/notifications/arc_application_notifier_controller_chromeos.h"
 #include "chrome/browser/notifications/extension_notifier_controller.h"
 #include "chrome/browser/notifications/web_page_notifier_controller.h"
+#include "chrome/browser/ui/app_list/arc/arc_app_list_prefs.h"
 #include "components/user_manager/user_manager.h"
 #include "content/public/common/service_manager_connection.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
@@ -156,6 +157,12 @@ void ChromeAshMessageCenterClient::GetNotifierList(
   std::sort(notifiers.begin(), notifiers.end(), comparator);
 
   std::move(callback).Run(std::move(notifiers));
+}
+
+void ChromeAshMessageCenterClient::GetAppId(const std::string& package_name,
+                                            GetAppIdCallback callback) {
+  std::move(callback).Run(ArcAppListPrefs::Get(GetProfileForNotifiers())
+                              ->GetAppIdWithoutActivityName(package_name));
 }
 
 void ChromeAshMessageCenterClient::OnIconImageUpdated(

@@ -269,6 +269,33 @@ std::string ArcAppListPrefs::GetAppId(const std::string& package_name,
   return app_id;
 }
 
+std::string ArcAppListPrefs::GetAppIdWithoutActivityName(
+    const std::string& package_name) {
+  const base::DictionaryValue* apps =
+      prefs_->GetDictionary(arc::prefs::kArcApps);
+
+  for (base::DictionaryValue::Iterator app_it(*apps); !app_it.IsAtEnd();
+       app_it.Advance()) {
+    const base::Value* value = &app_it.value();
+    const base::DictionaryValue* app;
+    std::string installed_package_name;
+    std::string activity_name;
+    if (!value->GetAsDictionary(&app) ||
+        !app->GetString(kPackageName, &installed_package_name)) {
+      LOG(ERROR) << "Failed to extract information for " << app_it.key() << ".";
+      continue;
+    }
+    if (installed_package_name != package_name)
+      continue;
+
+    return app->GetString(kActivity, &activity_name)
+               ? GetAppId(package_name, activity_name)
+               : std::string();
+  }
+
+  return std::string();
+}
+
 ArcAppListPrefs::ArcAppListPrefs(
     Profile* profile,
     arc::ConnectionHolder<arc::mojom::AppInstance, arc::mojom::AppHost>*

@@ -7,6 +7,7 @@
 #include <memory>
 #include <utility>
 
+#include "ash/message_center/message_center_controller.h"
 #include "ash/shell.h"
 #include "ash/system/toast/toast_manager.h"
 #include "base/memory/ptr_util.h"
@@ -138,7 +139,11 @@ void ArcNotificationManager::OnNotificationPosted(
     auto result = items_.insert(std::make_pair(key, std::move(item)));
     DCHECK(result.second);
     it = result.first;
+    // Update the ArcNotificationItemImpl with the proper AppId.
+    ash::Shell::Get()->message_center_controller()->UpdateNotificationAppId(
+        data->package_name.value(), result.first->second->GetNotificationId());
   }
+
   it->second->OnUpdatedFromAndroid(std::move(data));
 }
 
