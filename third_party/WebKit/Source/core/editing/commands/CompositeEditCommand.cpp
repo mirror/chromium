@@ -291,8 +291,9 @@ void CompositeEditCommand::InsertNodeBefore(
   // TODO(editing-dev): Use of updateStyleAndLayoutIgnorePendingStylesheets
   // needs to be audited.  See http://crbug.com/590369 for more details.
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
-  ABORT_EDITING_COMMAND_IF(!HasEditableStyle(*ref_child->parentNode()) &&
-                           ref_child->parentNode()->InActiveDocument());
+  ABORT_EDITING_COMMAND_IF(!ref_child->parentNode() ||
+                           (!HasEditableStyle(*ref_child->parentNode()) &&
+                            ref_child->parentNode()->InActiveDocument()));
   ApplyCommandToComposite(
       InsertNodeBeforeCommand::Create(insert_child, ref_child,
                                       should_assume_content_is_always_editable),

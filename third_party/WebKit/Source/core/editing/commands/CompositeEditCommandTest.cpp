@@ -134,4 +134,16 @@ TEST_F(CompositeEditCommandTest,
       body->InnerHTMLAsString());
 }
 
+TEST_F(CompositeEditCommandTest, insertNodeOnDisconnectedParent) {
+  SetBodyContent("<p><iframe></iframe></p>");
+  SampleCommand& sample = *new SampleCommand(GetDocument());
+  Node* insert_child = GetDocument().QuerySelector("iframe");
+  Element* ref_child = GetDocument().QuerySelector("p");
+  ref_child->remove();
+  EditingState editing_state;
+  // editing state should abort here.
+  sample.InsertNodeBefore(insert_child, ref_child, &editing_state);
+  EXPECT_TRUE(editing_state.IsAborted());
+}
+
 }  // namespace blink
