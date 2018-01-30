@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06baaa0e_875f1651",
+        "filename": "base/optional_unittest.nc",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-30T11:33:03Z",
+      "side": 1,
+      "message": "Note: this was wrong, so that the ctor didn\u0027t find due to different reason... Fixed in PS6.",
+      "revId": "d668ae5ee05c9c2a44787009da5618fdb3ba57d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
