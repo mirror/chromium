@@ -2194,7 +2194,10 @@ component("net") {
       if (is_android) {
         # Use ICU alternative on Android.
         sources += [ "base/net_string_util_icu_alternatives_android.cc" ]
-        deps += [ ":net_jni_headers" ]
+        deps += [
+          ":net_jni_headers",
+          "//url:url_java",
+        ]
       } else if (is_ios) {
         # Use ICU alternative on iOS.
         sources += [ "base/net_string_util_icu_alternatives_ios.mm" ]
@@ -5623,6 +5626,7 @@ test("net_unittests") {
       "proxy_resolution/proxy_resolver_v8_unittest.cc",
       "url_request/url_request_job_unittest.cc",
     ]
+    deps += [ "//url:url_java" ]
   }
 
   # Unit tests that are not supported by the current ICU alternatives on iOS.
