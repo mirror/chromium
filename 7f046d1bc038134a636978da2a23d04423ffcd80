@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "654956b8_7b8b0ff8",
+        "filename": "device/ctap/device_response_converter.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-30T16:43:21Z",
+      "side": 1,
+      "message": "Returning primitive types by value is preferred. A return by reference is unnecessary indirection since the pointer is the same size as the type itself.",
+      "parentUuid": "1d2eb639_7096f2a0",
+      "range": {
+        "startLine": 126,
+        "startChar": 31,
+        "endLine": 126,
+        "endChar": 66
+      },
+      "revId": "7f046d1bc038134a636978da2a23d04423ffcd80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f181b35e_d6b65f8f",
         "filename": "device/ctap/device_response_converter.cc",
         "patchSetId": 23
