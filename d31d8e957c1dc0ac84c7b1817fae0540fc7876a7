@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b06ebd1_b25d8ff3",
+        "filename": "chrome/browser/ui/webui/settings/appearance_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-30T21:04:01Z",
+      "side": 1,
+      "message": "WallpaperControllerClient::Get() accesses a global with no lifetime gaurantees, so passing Unretained(this) could cause ResolveCallback() to be called after this is destroyed. We should use a WeakPtrFactory here.",
+      "revId": "d31d8e957c1dc0ac84c7b1817fae0540fc7876a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30598248_936f101b",
+        "filename": "chrome/browser/ui/webui/settings/appearance_handler.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-30T21:04:01Z",
+      "side": 1,
+      "message": "nit: s/row// (We shouldn\u0027t include details about how the setting is displayed in the handler comment)",
+      "revId": "d31d8e957c1dc0ac84c7b1817fae0540fc7876a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
