@@ -22,17 +22,73 @@ class NGPaintFragmentTest : public RenderingTest,
         ScopedLayoutNGPaintFragmentsForTest(true) {}
 
  protected:
-  const NGPaintFragment& FirstLineBoxByElementId(const char* id) {
+  const NGPaintFragment& RootPaintFragmentByElementId(const char* id) {
     const LayoutNGBlockFlow& block_flow =
         ToLayoutNGBlockFlow(*GetLayoutObjectByElementId(id));
-    const NGPaintFragment& root_fragment = *block_flow.PaintFragment();
-    EXPECT_GE(1u, root_fragment.Children().size());
-    const NGPaintFragment& line_box = *root_fragment.Children()[0];
+    const NGPaintFragment& root = *block_flow.PaintFragment();
+    return root;
+  }
+
+  const NGPaintFragment& FirstLineBoxByElementId(const char* id) {
+    const NGPaintFragment& root = RootPaintFragmentByElementId(id);
+    EXPECT_GE(1u, root.Children().size());
+    const NGPaintFragment& line_box = *root.Children()[0];
     EXPECT_EQ(NGPhysicalFragment::kFragmentLineBox,
               line_box.PhysicalFragment().Type());
     return line_box;
   }
 };
+
+TEST_F(NGPaintFragmentTest, LayoutObjectMap) {
+  LoadAhem();
+  SetBodyInnerHTML(R"HTML(
+    <!DOCTYPE html>
+    <style>
+    html, body { margin: 0; }
+    div { font: 10px/1 Ahem; width: 10ch; }
+    span { background: yellow; }
+    </style>
+    <body>
+      <div id="container">12345 <span id="box">789 0123<span> 567</div>
+    </body>
+  )HTML");
+  LayoutBlockFlow* container =
+      ToLayoutBlockFlow(GetLayoutObjectByElementId("container"));
+  ASSERT_TRUE(container);
+  LayoutObject* text1 = container->FirstChild();
+  ASSERT_TRUE(text1 && text1->IsText());
+  LayoutObject* box = text1->NextSibling();
+  ASSERT_TRUE(box && box->IsLayoutInline());
+#if 0
+  LayoutObject* text2 = box->NextSibling();
+  ASSERT_TRUE(text2 && text2->IsText()) << text2;
+#endif
+
+  Vector<NGPaintFragment*> results;
+  auto it = NGPaintFragment::FragmentsFor(text1);
+  results.AppendRange(it.begin(), it.end());
+  EXPECT_EQ(1u, results.size());
+  EXPECT_EQ(text1, results[0]->GetLayoutObject());
+  EXPECT_EQ(NGPhysicalOffset(), results[0]->InlineOffsetToContainerBox());
+
+  results.clear();
+  it = NGPaintFragment::FragmentsFor(box);
+  results.AppendRange(it.begin(), it.end());
+  EXPECT_EQ(2u, results.size());
+  EXPECT_EQ(box, results[0]->GetLayoutObject());
+  EXPECT_EQ(box, results[1]->GetLayoutObject());
+  EXPECT_EQ(NGPhysicalOffset(LayoutUnit(60), LayoutUnit()),
+            results[0]->InlineOffsetToContainerBox());
+  EXPECT_EQ(NGPhysicalOffset(LayoutUnit(), LayoutUnit(10)),
+            results[1]->InlineOffsetToContainerBox());
+
+#if 0
+  results.clear();
+  it = NGPaintFragment::FragmentsFor(text2);
+  results.AppendRange(it.begin(), it.end());
+  EXPECT_EQ(1u, results.size());
+#endif
+}
 
 TEST_F(NGPaintFragmentTest, InlineBox) {
   LoadAhem();
