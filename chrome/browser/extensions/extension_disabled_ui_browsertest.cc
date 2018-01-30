@@ -126,9 +126,61 @@ class ExtensionDisabledGlobalErrorTest : public ExtensionBrowserTest {
   base::FilePath path_v3_;
 };
 
+#define REPEAT_F(c, t, b) \
+    IN_PROC_BROWSER_TEST_F(c, t##000) b \
+    IN_PROC_BROWSER_TEST_F(c, t##001) b \
+    IN_PROC_BROWSER_TEST_F(c, t##002) b \
+    IN_PROC_BROWSER_TEST_F(c, t##003) b \
+    IN_PROC_BROWSER_TEST_F(c, t##004) b \
+    IN_PROC_BROWSER_TEST_F(c, t##005) b \
+    IN_PROC_BROWSER_TEST_F(c, t##006) b \
+    IN_PROC_BROWSER_TEST_F(c, t##007) b \
+    IN_PROC_BROWSER_TEST_F(c, t##008) b \
+    IN_PROC_BROWSER_TEST_F(c, t##009) b \
+    IN_PROC_BROWSER_TEST_F(c, t##010) b \
+    IN_PROC_BROWSER_TEST_F(c, t##011) b \
+    IN_PROC_BROWSER_TEST_F(c, t##012) b \
+    IN_PROC_BROWSER_TEST_F(c, t##013) b \
+    IN_PROC_BROWSER_TEST_F(c, t##014) b \
+    IN_PROC_BROWSER_TEST_F(c, t##015) b \
+    IN_PROC_BROWSER_TEST_F(c, t##016) b \
+    IN_PROC_BROWSER_TEST_F(c, t##017) b \
+    IN_PROC_BROWSER_TEST_F(c, t##018) b \
+    IN_PROC_BROWSER_TEST_F(c, t##019) b \
+    IN_PROC_BROWSER_TEST_F(c, t##020) b \
+    IN_PROC_BROWSER_TEST_F(c, t##021) b \
+    IN_PROC_BROWSER_TEST_F(c, t##022) b \
+    IN_PROC_BROWSER_TEST_F(c, t##023) b \
+    IN_PROC_BROWSER_TEST_F(c, t##024) b \
+    IN_PROC_BROWSER_TEST_F(c, t##025) b \
+    IN_PROC_BROWSER_TEST_F(c, t##026) b \
+    IN_PROC_BROWSER_TEST_F(c, t##027) b \
+    IN_PROC_BROWSER_TEST_F(c, t##028) b \
+    IN_PROC_BROWSER_TEST_F(c, t##029) b \
+    IN_PROC_BROWSER_TEST_F(c, t##030) b \
+    IN_PROC_BROWSER_TEST_F(c, t##031) b \
+    IN_PROC_BROWSER_TEST_F(c, t##032) b \
+    IN_PROC_BROWSER_TEST_F(c, t##033) b \
+    IN_PROC_BROWSER_TEST_F(c, t##034) b \
+    IN_PROC_BROWSER_TEST_F(c, t##035) b \
+    IN_PROC_BROWSER_TEST_F(c, t##036) b \
+    IN_PROC_BROWSER_TEST_F(c, t##037) b \
+    IN_PROC_BROWSER_TEST_F(c, t##038) b \
+    IN_PROC_BROWSER_TEST_F(c, t##039) b \
+    IN_PROC_BROWSER_TEST_F(c, t##040) b \
+    IN_PROC_BROWSER_TEST_F(c, t##041) b \
+    IN_PROC_BROWSER_TEST_F(c, t##042) b \
+    IN_PROC_BROWSER_TEST_F(c, t##043) b \
+    IN_PROC_BROWSER_TEST_F(c, t##044) b \
+    IN_PROC_BROWSER_TEST_F(c, t##045) b \
+    IN_PROC_BROWSER_TEST_F(c, t##046) b \
+    IN_PROC_BROWSER_TEST_F(c, t##047) b \
+    IN_PROC_BROWSER_TEST_F(c, t##048) b \
+    IN_PROC_BROWSER_TEST_F(c, t##049) b
+
 // Tests the process of updating an extension to one that requires higher
 // permissions, and accepting the permissions.
-IN_PROC_BROWSER_TEST_F(ExtensionDisabledGlobalErrorTest, AcceptPermissions) {
+REPEAT_F(ExtensionDisabledGlobalErrorTest, AcceptPermissions, {
   const Extension* extension = InstallAndUpdateIncreasingPermissionsExtension();
   ASSERT_TRUE(extension);
   ASSERT_TRUE(GetExtensionDisabledGlobalError());
@@ -142,7 +194,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionDisabledGlobalErrorTest, AcceptPermissions) {
   ASSERT_FALSE(GetExtensionDisabledGlobalError());
   // Expect onInstalled event to fire.
   EXPECT_TRUE(listener.WaitUntilSatisfied());
-}
+})
 
 // Tests uninstalling an extension that was disabled due to higher permissions.
 IN_PROC_BROWSER_TEST_F(ExtensionDisabledGlobalErrorTest, Uninstall) {
