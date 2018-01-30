@@ -77,8 +77,16 @@ class OmniboxPopupContentsView : public views::View,
  private:
   class AutocompletePopupWidget;
 
+  // Updates |start_margin_| and |end_margin_| and returns the target popup
+  // bounds by querying the bounds of |location_bar_view_| and its parent view
+  // on screen.
+  gfx::Rect UpdateMarginsAndGetTargetBounds();
+
   // Calculates the height needed to show all the results in the model.
   int CalculatePopupHeight();
+
+  // Update the Widget bounds, or re-clip the contents.
+  void UpdatePopupBounds();
 
   // Size our children to the available content area.
   void LayoutChildren();
