@@ -160,6 +160,11 @@ class CONTENT_EXPORT Navigator : public base::RefCounted<Navigator> {
                                  const CommonNavigationParams& common_params,
                                  mojom::BeginNavigationParamsPtr begin_params);
 
+  // Used to restart a navigation that was thought to be same-document in
+  // cross-document mode.
+  virtual void RestartNavigationCrossDocument(
+      std::unique_ptr<NavigationRequest> navigation_request) {}
+
   // Used to abort an ongoing renderer-initiated navigation.
   virtual void OnAbortNavigation(FrameTreeNode* frame_tree_node) {}
 
