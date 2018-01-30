@@ -16,6 +16,24 @@
       "revId": "12976fd919d94a3fb037fe1ad6c6793dc1f80200",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "184d9f0d_2919cb6b",
+        "filename": "third_party/WebKit/Tools/Scripts/audit-non-blink-usage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1261292
+      },
+      "writtenOn": "2018-01-30T02:43:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66698ac9_fe40c3c1",
+      "revId": "12976fd919d94a3fb037fe1ad6c6793dc1f80200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
