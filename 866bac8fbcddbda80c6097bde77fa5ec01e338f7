@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "7d2da236_a91f2ca1",
+        "filename": "extensions/common/api/_permission_features.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-30T21:56:31Z",
+      "side": 1,
+      "message": "also, is this really needed on stable, yet?",
+      "revId": "866bac8fbcddbda80c6097bde77fa5ec01e338f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3dd676b8_43b42f19",
         "filename": "extensions/common/api/_permission_features.json",
         "patchSetId": 3
