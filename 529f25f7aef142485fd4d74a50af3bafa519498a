@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bc1a0a4_4706f16e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-30T01:28:02Z",
+      "side": 1,
+      "message": "Does this need to be done in the cases where hasCommitted is false? (e.g., for a download.)  Or for error pages (if isErrorPage is true)?  Many WebContentsObservers filter those cases out, and I\u0027d guess your scenario would only apply if isInMainFrame and hasCommitted are true, and isErrorPage is false.",
+      "revId": "529f25f7aef142485fd4d74a50af3bafa519498a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c75caf4_327f4d4a",
+        "filename": "third_party/WebKit/Source/core/exported/WebRemoteFrameImpl.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-30T01:28:02Z",
+      "side": 1,
+      "message": "Any reason why this check is necessary?",
+      "range": {
+        "startLine": 336,
+        "startChar": 0,
+        "endLine": 336,
+        "endChar": 17
+      },
+      "revId": "529f25f7aef142485fd4d74a50af3bafa519498a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

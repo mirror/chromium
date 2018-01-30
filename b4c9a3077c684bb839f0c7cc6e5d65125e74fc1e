@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "963c377d_7a0d067d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-30T01:28:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b45757d0_ba6febd8",
+      "revId": "b4c9a3077c684bb839f0c7cc6e5d65125e74fc1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80004ca8_cd33e51f",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 17
@@ -107,6 +125,30 @@
       "side": 1,
       "message": "GetFrame()-\u003eNotifyUserActivation() is private, so this seems like the only way.",
       "parentUuid": "0ba88d15_1da34753",
+      "range": {
+        "startLine": 2182,
+        "startChar": 4,
+        "endLine": 2182,
+        "endChar": 74
+      },
+      "revId": "b4c9a3077c684bb839f0c7cc6e5d65125e74fc1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70885451_d9b31bc8",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 2182,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-30T01:28:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c6e73b96_8676b404",
       "range": {
         "startLine": 2182,
         "startChar": 4,
