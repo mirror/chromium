@@ -204,11 +204,12 @@ class InProcessBrowserTest : public content::BrowserTestBase {
   // the navigation to complete, and show the browser's window.
   void AddBlankTabAndShow(Browser* browser);
 
-  // Enables running of accessibility audit for a particular test case.
+  // Enables running of content accessibility audit for a particular test case.
   //  - Call in test body to enable/disable for one test case.
   //  - Call in SetUpOnMainThread() to enable for all test cases.
-  void EnableAccessibilityChecksForTestCase(bool enabled) {
-    run_accessibility_checks_for_test_case_ = enabled;
+  // Note: UI accessibility tests are currently always run.
+  void EnableContentAccessibilityChecksForTestCase(bool enabled) {
+    run_content_accessibility_checks_for_test_case_ = enabled;
   }
 
 #if !defined OS_MACOSX
@@ -244,6 +245,10 @@ class InProcessBrowserTest : public content::BrowserTestBase {
   // if successful.
   virtual bool CreateUserDataDirectory() WARN_UNUSED_RESULT;
 
+  // Run subsets of accessibility tests.
+  bool RunContentAccessibilityChecks(std::string* error_message);
+  bool RunUIAccessibilityChecks(std::string* error_message);
+
   // Quits all open browsers and waits until there are no more browsers.
   void QuitBrowsers();
 
@@ -262,9 +267,10 @@ class InProcessBrowserTest : public content::BrowserTestBase {
   // True if the about:blank tab should be opened when the browser is launched.
   bool open_about_blank_on_browser_launch_;
 
-  // True if the accessibility test should run for a particular test case.
-  // This is reset for every test case.
-  bool run_accessibility_checks_for_test_case_;
+  // True if the content accessibility test should run for a particular test
+  // case. This is reset for every test case.
+  // Note: UI tests are currently always run.
+  bool run_content_accessibility_checks_for_test_case_;
 
   // We use hardcoded quota settings to have a consistent testing environment.
   storage::QuotaSettings quota_settings_;

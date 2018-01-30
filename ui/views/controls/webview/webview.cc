@@ -192,6 +192,7 @@ void WebView::AboutToRequestFocusFromTabTraversal(bool reverse) {
 
 void WebView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   node_data->role = ax::mojom::Role::kWebView;
+  node_data->SetName("");  // Explicitly set to "" in order to pass a11y audit.
 }
 
 gfx::NativeViewAccessible WebView::GetNativeViewAccessible() {
