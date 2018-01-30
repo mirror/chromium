@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "b824c342_817ed779",
+        "filename": "content/browser/renderer_host/browser_compositor_view_mac.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2018-01-30T00:36:21Z",
+      "side": 1,
+      "message": "Mac manually handles its resize locks, so this should be fine.",
+      "revId": "af6b44ea83bef9b9335a5632285d9b9651cecbca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f89d5fba_196fe6fb",
         "filename": "ui/compositor/layer.h",
         "patchSetId": 13
