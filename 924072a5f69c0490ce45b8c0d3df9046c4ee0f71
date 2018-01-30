@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd64b96e_ded766b5",
+        "filename": "third_party/WebKit/Source/platform/mojo/BigStringStructTraits.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-30T22:50:51Z",
+      "side": 1,
+      "message": "Similarly, call this MojomTraits instead of StructTraits",
+      "revId": "924072a5f69c0490ce45b8c0d3df9046c4ee0f71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a653556_d299e6bb",
+        "filename": "mojo/public/cpp/base/big_string_struct_traits.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-30T22:50:51Z",
+      "side": 1,
+      "message": "Nit: big_string_mojom_traits.h, et cetera per the updated naming conventions",
+      "revId": "41c11102c1468ed2b61f00a50905b368f2640ab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
