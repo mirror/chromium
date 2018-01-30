@@ -53,6 +53,9 @@ function verifyBeforeInstallPromptEvents() {
 
 function callPrompt(event) {
   event.prompt();
+  event.userChoice.then(function(choiceResult) {
+    window.document.title = 'Got userChoice: ' + choiceResult.outcome;
+  });
 }
 
 function callStashedPrompt() {
