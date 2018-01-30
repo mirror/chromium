@@ -200,6 +200,14 @@ class BluetoothAdapterClientImpl : public BluetoothAdapterClient,
         object_path, bluetooth_adapter::kBluetoothAdapterInterface));
   }
 
+  void ResumeDiscovery(const dbus::ObjectPath& object_path,
+                       const base::Closure& callback,
+                       const ErrorCallback& error_callback) override {}
+
+  void SuspendDiscovery(const dbus::ObjectPath& object_path,
+                        const base::Closure& callback,
+                        const ErrorCallback& error_callback) override {}
+
   // BluetoothAdapterClient override.
   void StartDiscovery(const dbus::ObjectPath& object_path,
                       const base::Closure& callback,
