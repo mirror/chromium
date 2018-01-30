@@ -16,6 +16,24 @@
       "revId": "9fa24bb3cecedd43ac5deff6a7b0b2d2aaa41f62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b609b3c2_3e6f4798",
+        "filename": "chrome/browser/media/media_engagement_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-30T14:38:27Z",
+      "side": 1,
+      "message": "I would agree in principle but I found very hard to read test failures from MEI unit tests because of this tendency to wrap methods: gtest gives you the failing line (using EXPECT/ASSERT) and then you have to figure out which one of the calls are actually triggering the fail :(\n\nI don\u0027t want to impose the pain I had to go trough to whomever will have to debug this later :)",
+      "parentUuid": "8c2de93c_4136bfd1",
+      "revId": "9fa24bb3cecedd43ac5deff6a7b0b2d2aaa41f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
