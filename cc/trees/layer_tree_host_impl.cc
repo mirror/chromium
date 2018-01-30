@@ -101,6 +101,11 @@
 namespace cc {
 namespace {
 
+// Used with the --cc-check-damage-early flag to determine how many consecutive
+// frames can have damage before disabling the damage check in
+// WillBeginImplFrame.
+constexpr int kDamagedFrameLimit = 3;
+
 // Small helper class that saves the current viewport location as the user sees
 // it and resets to the same location.
 class ViewportAnchor {
@@ -250,6 +255,7 @@ LayerTreeHostImpl::LayerTreeHostImpl(
       requires_high_res_to_draw_(false),
       is_likely_to_require_a_draw_(false),
       has_valid_layer_tree_frame_sink_(false),
+      consecutive_frame_with_damage_count_(kDamagedFrameLimit),
       scroll_animating_latched_element_id_(kInvalidElementId),
       has_scrolled_by_wheel_(false),
       has_scrolled_by_touch_(false),
@@ -889,11 +895,15 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
   DamageTracker::UpdateDamageTracking(active_tree_.get(),
                                       active_tree_->GetRenderSurfaceList());
 
-  if (!HasDamage()) {
+  if (HasDamage()) {
+    if (consecutive_frame_with_damage_count_ < kDamagedFrameLimit)
+      consecutive_frame_with_damage_count_++;
+  } else {
     TRACE_EVENT0("cc",
                  "LayerTreeHostImpl::CalculateRenderPasses::EmptyDamageRect");
     frame->has_no_damage = true;
     DCHECK(!resourceless_software_draw_);
+    consecutive_frame_with_damage_count_ = 0;
     return DRAW_SUCCESS;
   }
 
@@ -2171,7 +2181,8 @@ bool LayerTreeHostImpl::WillBeginImplFrame(const viz::BeginFrameArgs& args) {
   // HasDamage() expects the return values of CanDraw and
   // active_tree()->UpdateDrawProperties() to be true. If we can't check
   // damage, return true to indicate that there might be damage in this frame.
-  if (settings_.check_damage_early && CanDraw()) {
+  if (settings_.enable_early_damage_check &&
+      consecutive_frame_with_damage_count_ < kDamagedFrameLimit && CanDraw()) {
     bool ok = active_tree()->UpdateDrawProperties();
     DCHECK(ok);
     DamageTracker::UpdateDamageTracking(active_tree_.get(),
