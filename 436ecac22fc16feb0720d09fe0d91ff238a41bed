@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "170eead1_95a90fd9",
+        "filename": "base/optional_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-30T17:06:10Z",
+      "side": 1,
+      "message": "move constructors are not usually marked explicit, how come this is?",
+      "revId": "436ecac22fc16feb0720d09fe0d91ff238a41bed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

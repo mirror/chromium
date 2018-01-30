@@ -34,6 +34,24 @@
       "revId": "0a7026fb84dd4cfa73f5e8c8db8aa97dcaf5a6e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e723301_08275a7f",
+        "filename": "base/optional.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-30T17:06:10Z",
+      "side": 1,
+      "message": "fwiw in type traits we\u0027ve used |value| like the stl would in the past",
+      "parentUuid": "581aa85d_21d7fa12",
+      "revId": "0a7026fb84dd4cfa73f5e8c8db8aa97dcaf5a6e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
