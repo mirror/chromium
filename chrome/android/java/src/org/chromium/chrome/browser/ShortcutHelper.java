@@ -9,6 +9,7 @@ import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -26,6 +27,7 @@ import android.graphics.drawable.Icon;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -587,6 +589,22 @@ public class ShortcutHelper {
         // lacks the key for the extra.
         byte[] mac = WebappAuthenticator.getMacForUrl(context, url);
         return Base64.encodeToString(mac, Base64.DEFAULT);
+    }
+
+    /**
+     * Extracts meta data from the Android Manifest of an app.
+     * @param packageName The package name.
+     * @return Bundle with the extracted meta data.
+     */
+    public static Bundle extractMetaData(String packageName) {
+        PackageManager packageManager = ContextUtils.getApplicationContext().getPackageManager();
+        try {
+            ApplicationInfo appInfo =
+                    packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
+            return appInfo.metaData;
+        } catch (PackageManager.NameNotFoundException e) {
+            return null;
+        }
     }
 
     /**
