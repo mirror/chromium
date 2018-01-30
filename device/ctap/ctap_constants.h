@@ -94,6 +94,8 @@ enum class CTAPRequestCommand : uint8_t {
   kAuthenticatorReset = 0x07,
 };
 
+enum class DigitalSignatureAlgorithm : int { kCoseES256 = -7 };
+
 constexpr std::array<CTAPDeviceResponseCode, 51> GetCTAPResponseCodeList() {
   return {CTAPDeviceResponseCode::kSuccess,
           CTAPDeviceResponseCode::kCtap1ErrInvalidCommand,
