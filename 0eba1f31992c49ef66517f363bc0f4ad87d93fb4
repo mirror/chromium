@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34d7fdda_92afb7b7",
+        "filename": "chrome/browser/page_load_metrics/observers/core_page_load_metrics_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-30T05:48:27Z",
+      "side": 1,
+      "message": "Should this match the name used in histograms.xml, \"PageLoad.DocumentTiming.FirstInputDelayForMainDocument\"?",
+      "range": {
+        "startLine": 118,
+        "startChar": 4,
+        "endLine": 118,
+        "endChar": 45
+      },
+      "revId": "0eba1f31992c49ef66517f363bc0f4ad87d93fb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
