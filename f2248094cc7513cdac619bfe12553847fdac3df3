@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cbcfcf3_7ad052e2",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/remoteobjects/RemoteObjectImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-30T20:13:38Z",
+      "side": 1,
+      "message": "IllegalAccessException can happen if there\u0027s an annotated private method? I don\u0027t see we guard for things like private methods when looking up methods.\n\nIllegalArgumentException can still happen if the argument types don\u0027t match, right? we only checked for number of arguments, not types\n\nNullPointerException is probably ok I think",
+      "range": {
+        "startLine": 137,
+        "startChar": 17,
+        "endLine": 137,
+        "endChar": 66
+      },
+      "revId": "f2248094cc7513cdac619bfe12553847fdac3df3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
