@@ -52,6 +52,24 @@
       "revId": "6f9a0404c2d1180ffe7ce7a94041a14bd9ee040a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f4b4afb_a9ac7f60",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2018-01-30T00:16:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c33a5f1f_8ff3f44b",
+      "revId": "6f9a0404c2d1180ffe7ce7a94041a14bd9ee040a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
