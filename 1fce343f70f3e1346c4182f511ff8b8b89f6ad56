@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5a62536_431d66f9",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 2298,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-30T01:10:43Z",
+      "side": 1,
+      "message": "Only the first entry in the experiments array is tested; the others are ignored.  If you want these things tested jointly, you need to make a single combined entry.  If you want them tested separately, then you\u0027re (mostly) out of luck.",
+      "revId": "1fce343f70f3e1346c4182f511ff8b8b89f6ad56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
