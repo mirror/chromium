@@ -23,9 +23,10 @@ constexpr char kTestRelyingPartyId[] = "google.com";
 
 class FakeU2fRequest : public U2fRequest {
  public:
-  FakeU2fRequest(std::string relying_party_id,
-                 std::vector<U2fDiscovery*> discoveries)
-      : U2fRequest(std::move(relying_party_id), std::move(discoveries)) {}
+  explicit FakeU2fRequest(std::string relying_party_id)
+      : U2fRequest(std::move(relying_party_id),
+                   nullptr /* connector */,
+                   base::flat_set<U2fTransportProtocol>()) {}
   ~FakeU2fRequest() override = default;
 
   void TryDevice() override {
@@ -46,8 +47,9 @@ class U2fRequestTest : public testing::Test {
 };
 
 TEST_F(U2fRequestTest, TestIterateDevice) {
-  MockU2fDiscovery discovery;
-  FakeU2fRequest request(kTestRelyingPartyId, {&discovery});
+  FakeU2fRequest request(kTestRelyingPartyId);
+  auto* discovery_ptr = static_cast<MockU2fDiscovery*>(
+      request.SetDiscoveryForTesting(std::make_unique<MockU2fDiscovery>()));
 
   auto device0 = std::make_unique<MockU2fDevice>();
   auto device1 = std::make_unique<MockU2fDevice>();
@@ -56,8 +58,8 @@ TEST_F(U2fRequestTest, TestIterateDevice) {
   EXPECT_CALL(*device1.get(), GetId())
       .WillRepeatedly(testing::Return("device1"));
   // Add two U2F devices
-  discovery.AddDevice(std::move(device0));
-  discovery.AddDevice(std::move(device1));
+  discovery_ptr->AddDevice(std::move(device0));
+  discovery_ptr->AddDevice(std::move(device1));
 
   // Move first device to current
   request.IterateDevice();
@@ -89,11 +91,14 @@ TEST_F(U2fRequestTest, TestIterateDevice) {
 }
 
 TEST_F(U2fRequestTest, TestBasicMachine) {
-  MockU2fDiscovery discovery;
-  EXPECT_CALL(discovery, Start())
-      .WillOnce(testing::Invoke(&discovery, &MockU2fDiscovery::StartSuccess));
+  auto discovery = std::make_unique<MockU2fDiscovery>();
+  auto* discovery_ptr = discovery.get();
+  EXPECT_CALL(*discovery_ptr, Start())
+      .WillOnce(
+          testing::Invoke(discovery_ptr, &MockU2fDiscovery::StartSuccess));
 
-  FakeU2fRequest request(kTestRelyingPartyId, {&discovery});
+  FakeU2fRequest request(kTestRelyingPartyId);
+  request.SetDiscoveryForTesting(std::move(discovery));
   request.Start();
 
   // Add one U2F device
@@ -101,21 +106,24 @@ TEST_F(U2fRequestTest, TestBasicMachine) {
   EXPECT_CALL(*device, GetId());
   EXPECT_CALL(*device, TryWinkRef(_))
       .WillOnce(testing::Invoke(MockU2fDevice::WinkDoNothing));
-  discovery.AddDevice(std::move(device));
+  discovery_ptr->AddDevice(std::move(device));
 
   EXPECT_EQ(U2fRequest::State::BUSY, request.state_);
 }
 
 TEST_F(U2fRequestTest, TestAlreadyPresentDevice) {
-  MockU2fDiscovery discovery;
+  auto discovery = std::make_unique<MockU2fDiscovery>();
   auto device = std::make_unique<MockU2fDevice>();
   EXPECT_CALL(*device, GetId());
-  discovery.AddDevice(std::move(device));
+  discovery->AddDevice(std::move(device));
 
-  EXPECT_CALL(discovery, Start())
-      .WillOnce(testing::Invoke(&discovery, &MockU2fDiscovery::StartSuccess));
+  EXPECT_CALL(*discovery, Start())
+      .WillOnce(
+          testing::Invoke(discovery.get(), &MockU2fDiscovery::StartSuccess));
 
-  FakeU2fRequest request(kTestRelyingPartyId, {&discovery});
+  FakeU2fRequest request(kTestRelyingPartyId);
+  request.SetDiscoveryForTesting(std::move(discovery));
+
   request.Start();
 
   EXPECT_NE(nullptr, request.current_device_);
