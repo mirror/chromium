@@ -473,8 +473,13 @@
         ],
         "isolate_name": "telemetry_perf_tests_experimental",
         "merge": {
-          "args": [],
-          "script": "//tools/perf/upload_perf_results.py"
+          "args": [
+            "--configuration-name",
+            "buildbot-test",
+            "--results-url",
+            "https://chromeperf.appspot.com"
+          ],
+          "script": "//tools/perf/process_perf_results.py"
         },
         "name": "benchmark1 dummy_benchmark.histogram_benchmark_1",
         "override_compile_targets": [
@@ -505,8 +510,13 @@
         ],
         "isolate_name": "telemetry_perf_tests_experimental",
         "merge": {
-          "args": [],
-          "script": "//tools/perf/upload_perf_results.py"
+          "args": [
+            "--configuration-name",
+            "buildbot-test",
+            "--results-url",
+            "https://chromeperf.appspot.com"
+          ],
+          "script": "//tools/perf/process_perf_results.py"
         },
         "name": "benchmark2 dummy_benchmark.stable_benchmark_1",
         "override_compile_targets": [
@@ -524,43 +534,6 @@
           "hard_timeout": 10800,
           "ignore_task_failure": false,
           "io_timeout": 3600
-        }
-      },
-      {
-        "args": [
-          "-v",
-          "--output-format=histograms",
-          "--output-format=json-test-results",
-          "--xvfb",
-          "--browser=reference"
-        ],
-        "isolate_name": "performance_test_suite",
-        "merge": {
-          "args": [],
-          "script": "//tools/perf/upload_perf_results.py"
-        },
-        "name": "performance_test_suite",
-        "override_compile_targets": [
-          "performance_test_suite"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "dimension_sets": [
-            {
-              "pool": "Chrome-perf-fyi"
-            }
-          ],
-          "expiration": 36000,
-          "hard_timeout": 10800,
-          "ignore_task_failure": false,
-          "io_timeout": 3600
-        },
-        "trigger_script": {
-          "args": [
-            "--bot-id=swarm846-c4",
-            "--bot-id=swarm847-c4"
-          ],
-          "script": "//tools/perf/perf_device_trigger.py"
         }
       }
     ]
