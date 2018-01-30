@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4c01a20a_b1e642e2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-30T15:12:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfc9a2d0_3ee4a2b5",
+      "range": {
+        "startLine": 9,
+        "startChar": 25,
+        "endLine": 9,
+        "endChar": 26
+      },
+      "revId": "c22b89e6a8f5975b01f5105699a759daed39c690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12366b9c_afc64dd6",
         "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller.mm",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "83c2221a_a93edba2",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-30T15:12:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12366b9c_afc64dd6",
+      "range": {
+        "startLine": 59,
+        "startChar": 21,
+        "endLine": 59,
+        "endChar": 0
+      },
+      "revId": "c22b89e6a8f5975b01f5105699a759daed39c690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f308aed_c07a5d8b",
         "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller.mm",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "c22b89e6a8f5975b01f5105699a759daed39c690",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74fdaf99_60f2857f",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/adaptive_toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-30T15:12:24Z",
+      "side": 1,
+      "message": "I am not sure :) This is from the old toolbar.\nI think it is fine to call it but it is called from somewhere else, so it is not necessary. I am keeping the current behavior in case it is fixing some weird edge case.",
+      "parentUuid": "4f308aed_c07a5d8b",
+      "range": {
+        "startLine": 153,
+        "startChar": 37,
+        "endLine": 153,
+        "endChar": 54
+      },
+      "revId": "c22b89e6a8f5975b01f5105699a759daed39c690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
