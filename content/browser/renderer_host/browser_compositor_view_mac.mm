@@ -154,6 +154,9 @@ std::unique_ptr<RecyclableCompositorMac> RecyclableCompositorMac::Create() {
 void RecyclableCompositorMac::Recycle(
     std::unique_ptr<RecyclableCompositorMac> compositor) {
   DCHECK(compositor);
+  // The factory may have disappeared during shut-down.
+  if (!content::ImageTransportFactory::GetInstance())
+    return;
   content::ImageTransportFactory::GetInstance()
       ->SetCompositorSuspendedForRecycle(compositor->compositor(), true);
 
