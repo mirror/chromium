@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecc5e9af_d8f45bcd",
+        "filename": "components/viz/service/main/viz_main_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-30T21:17:50Z",
+      "side": 1,
+      "message": "Which tasks are posted to the GPU thread? I would imagine generally we should only be tearing down after all the compositors/frame sinks are destroyed.\n\nI\u0027d like to see if we can avoid a nested loop which can cause out-of-order execution of tasks, reentrancy, and other issues. We typically never run a nested loop in production code (there\u0027s only a handful of exceptions).",
+      "revId": "3bc03a04603b48bc34a59c3f124de72fbcfb81bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
