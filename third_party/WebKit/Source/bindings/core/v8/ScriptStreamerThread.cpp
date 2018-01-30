@@ -6,9 +6,9 @@
 
 #include <memory>
 #include "base/location.h"
+#include "base/single_thread_task_runner.h"
 #include "bindings/core/v8/ScriptStreamer.h"
 #include "core/inspector/InspectorTraceEvents.h"
-#include "platform/WebTaskRunner.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "public/platform/Platform.h"
 
