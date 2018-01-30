@@ -96,7 +96,7 @@ using web::WebThread;
 - (void)downloadManagerTabHelper:(nonnull DownloadManagerTabHelper*)tabHelper
                  didHideDownload:(nonnull web::DownloadTask*)download {
   if (!_downloadTask) {
-    // TODO(crbug.com/805653): This callback can be called multiple times.
+    // TODO(crbug.com/805653): This callback can be called bultiple times.
     return;
   }
 
@@ -175,7 +175,7 @@ using web::WebThread;
   }
 }
 
-// Asynchronously starts download operation.
+// Asynchrnonously starts download operation.
 - (void)startDownload {
   base::FilePath downloadDir;
   if (!GetDownloadsDirectory(&downloadDir)) {
@@ -184,45 +184,45 @@ using web::WebThread;
   }
 
   // Download will start once writer is created by background task, however it
-  // OK to change view controller state now to preven further user interactions
+  // OK to change view controller state now to preven further user interaactions
   // with "Start Download" button.
   _viewController.state = kDownloadManagerStateInProgress;
 
   base::string16 suggestedFileName = _downloadTask->GetSuggestedFilename();
   __weak DownloadManagerCoordinator* weakSelf = self;
-  base::PostTaskWithTraits(
-      FROM_HERE, {base::MayBlock(), base::TaskPriority::USER_VISIBLE},
-      base::BindBlockArc(^{
-        if (!weakSelf)
+  base::TaskTraits traits(base::MayBlock(), base::TaskPriority::USER_VISIBLE);
+  base::PostTaskWithTraits(FROM_HERE, traits, base::BindBlockArc(^{
+    if (!weakSelf)
+      return;
+
+    if (!base::CreateDirectory(downloadDir)) {
+      WebThread::PostTask(WebThread::UI, FROM_HERE, base::BindBlockArc(^{
+                            [weakSelf didFailFileWriterCreation];
+                          }));
+      return;
+    }
+
+    base::FilePath donwloadFilePath =
+        downloadDir.Append(base::UTF16ToUTF8(suggestedFileName));
+    base::TaskTraits traits(base::MayBlock(),
+                            base::TaskPriority::BACKGROUND);
+    auto taskRunner = base::CreateSequencedTaskRunnerWithTraits(traits);
+    __block auto writer = std::make_unique<net::URLFetcherFileWriter>(
+        taskRunner, donwloadFilePath);
+    WebThread::PostTask(WebThread::UI, FROM_HERE, base::BindBlockArc(^{
+      writer->Initialize(base::BindBlockArc(^(int error) {
+        DownloadManagerCoordinator* strongSelf = weakSelf;
+        if (!strongSelf)
           return;
 
-        if (!base::CreateDirectory(downloadDir)) {
-          WebThread::PostTask(WebThread::UI, FROM_HERE, base::BindBlockArc(^{
-                                [weakSelf didFailFileWriterCreation];
-                              }));
-          return;
+        if (!error) {
+          strongSelf.downloadTask->Start(std::move(writer));
+        } else {
+          [strongSelf didFailFileWriterCreation];
         }
-
-        base::FilePath downloadFilePath =
-            downloadDir.Append(base::UTF16ToUTF8(suggestedFileName));
-        auto taskRunner = base::CreateSequencedTaskRunnerWithTraits(
-            {base::MayBlock(), base::TaskPriority::BACKGROUND});
-        __block auto writer = std::make_unique<net::URLFetcherFileWriter>(
-            taskRunner, downloadFilePath);
-        WebThread::PostTask(WebThread::UI, FROM_HERE, base::BindBlockArc(^{
-          writer->Initialize(base::BindBlockArc(^(int error) {
-            DownloadManagerCoordinator* strongSelf = weakSelf;
-            if (!strongSelf)
-              return;
-
-            if (!error) {
-              strongSelf.downloadTask->Start(std::move(writer));
-            } else {
-              [strongSelf didFailFileWriterCreation];
-            }
-          }));
-        }));
       }));
+    }));
+  }));
 }
 
 // Called when coordinator failed to create file writer.
