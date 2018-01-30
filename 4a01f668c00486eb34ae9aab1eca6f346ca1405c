@@ -52,6 +52,24 @@
       "revId": "4a01f668c00486eb34ae9aab1eca6f346ca1405c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c153401_1f78f751",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-30T20:25:33Z",
+      "side": 1,
+      "message": "Not all devices have a tablet mode switch, some rely strictly on the accelerometer. I\u0027m not sure if we actually know (other than having seen lid events) whether the device supports it - but jonross might know for sure.",
+      "parentUuid": "379ad750_0cfd31f5",
+      "revId": "4a01f668c00486eb34ae9aab1eca6f346ca1405c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
