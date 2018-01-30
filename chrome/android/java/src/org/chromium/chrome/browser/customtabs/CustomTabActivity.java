@@ -955,8 +955,9 @@ public class CustomTabActivity extends ChromeActivity {
                     @Override
                     public void onClick(View v) {
                         if (getActivityTab() == null) return;
-                        mIntentDataProvider.sendButtonPendingIntentWithUrl(
-                                getApplicationContext(), getActivityTab().getUrl());
+                        mIntentDataProvider.sendButtonPendingIntentWithUrlAndTitle(
+                                getApplicationContext(), getActivityTab().getUrl(),
+                                getActivityTab().getTitle());
                         RecordUserAction.record("CustomTabsCustomActionButtonClick");
                         if (mIntentDataProvider.shouldEnableEmbeddedMediaExperience()
                                 && TextUtils.equals(
@@ -983,8 +984,8 @@ public class CustomTabActivity extends ChromeActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int menuIndex = getAppMenuPropertiesDelegate().getIndexOfMenuItem(item);
         if (menuIndex >= 0) {
-            mIntentDataProvider.clickMenuItemWithUrl(this, menuIndex,
-                    getTabModelSelector().getCurrentTab().getUrl());
+            mIntentDataProvider.clickMenuItemWithUrlAndTitle(
+                    this, menuIndex, getActivityTab().getUrl(), getActivityTab().getTitle());
             RecordUserAction.record("CustomTabsMenuCustomMenuItem");
             return true;
         }
