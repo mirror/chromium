@@ -31,6 +31,10 @@
 #include "device/bluetooth/dbus/bluetooth_profile_manager_client.h"
 #include "device/bluetooth/dbus/bluetooth_profile_service_provider.h"
 
+#if defined(OS_CHROMEOS)
+#include "device/bluetooth/dbus/bluetooth_adapter_client.h"
+#endif  // defined(OS_CHROMEOS)
+
 namespace base {
 class SequencedTaskRunner;
 class TimeDelta;
