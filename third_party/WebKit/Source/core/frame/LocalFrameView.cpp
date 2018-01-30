@@ -3774,6 +3774,18 @@ LayoutRect LocalFrameView::DocumentToAbsolute(
                     rect_in_document.Size());
 }
 
+LayoutPoint LocalFrameView::AbsoluteToDocument(
+    const LayoutPoint& absolute_point) const {
+  return absolute_point +
+         LayoutSize(GetLayoutView()->GetScrollableArea()->GetScrollOffset());
+}
+
+LayoutRect LocalFrameView::AbsoluteToDocument(
+    const LayoutRect& absolute_rect) const {
+  return LayoutRect(AbsoluteToDocument(absolute_rect.Location()),
+                    absolute_rect.Size());
+}
+
 IntRect LocalFrameView::ConvertToContainingEmbeddedContentView(
     const IntRect& local_rect) const {
   if (LocalFrameView* parent = ParentFrameView()) {
