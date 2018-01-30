@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "29bd9861_5a5f209b",
+        "filename": "chrome/browser/ssl/ssl_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-30T05:52:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88e504d0_41565e50",
+      "range": {
+        "startLine": 879,
+        "startChar": 4,
+        "endLine": 879,
+        "endChar": 49
+      },
+      "revId": "e6a3625709c11b0c6196bba15656c1e68889095b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8071918_06c43359",
         "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "e6a3625709c11b0c6196bba15656c1e68889095b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1391a09e_30a6e95a",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-30T05:52:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8071918_06c43359",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 1
+      },
+      "revId": "e6a3625709c11b0c6196bba15656c1e68889095b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "09c5976b_2ae8c3fe",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-30T05:52:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bba89f0_c771ae5f",
+      "range": {
+        "startLine": 74,
+        "startChar": 28,
+        "endLine": 74,
+        "endChar": 43
+      },
+      "revId": "e6a3625709c11b0c6196bba15656c1e68889095b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0000b8eb_728551f4",
         "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
         "patchSetId": 4
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "30bc300b_0f0ff61c",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-30T05:52:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0000b8eb_728551f4",
+      "range": {
+        "startLine": 93,
+        "startChar": 33,
+        "endLine": 93,
+        "endChar": 53
+      },
+      "revId": "e6a3625709c11b0c6196bba15656c1e68889095b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "929dd9a3_e08de6c8",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 4
@@ -114,6 +210,30 @@
       "revId": "e6a3625709c11b0c6196bba15656c1e68889095b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af94ac1e_9bb12a4b",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 947,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-30T05:52:08Z",
+      "side": 1,
+      "message": "Done.\n\nThanks for the pointer! Seems like this is a subset of that patch. I copied some of the code and tests from it and addressed some of the comments from that patch.",
+      "parentUuid": "929dd9a3_e08de6c8",
+      "range": {
+        "startLine": 947,
+        "startChar": 24,
+        "endLine": 947,
+        "endChar": 62
+      },
+      "revId": "e6a3625709c11b0c6196bba15656c1e68889095b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -152,6 +272,24 @@
     },
     {
       "key": {
+        "uuid": "870ed33a_b9fb17b6",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1220,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-30T05:52:08Z",
+      "side": 1,
+      "message": "Changed to only DCHECK if action is CANCEL_AND_IGNORE.",
+      "parentUuid": "edcf2155_f8b68073",
+      "revId": "e6a3625709c11b0c6196bba15656c1e68889095b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "293c04dd_3b1f5202",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 4
@@ -163,6 +301,30 @@
       "writtenOn": "2018-01-29T19:45:37Z",
       "side": 1,
       "message": "I don\u0027t think I understand why this is added (why does the throttle have to provide error_page_content?)",
+      "range": {
+        "startLine": 1221,
+        "startChar": 11,
+        "endLine": 1221,
+        "endChar": 50
+      },
+      "revId": "e6a3625709c11b0c6196bba15656c1e68889095b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a81292d8_243a8c90",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1221,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-30T05:52:08Z",
+      "side": 1,
+      "message": "I believe this is related to the DCHECK above, but I\u0027ll have to check with clamy. IIUC, the DCHECK exists because the error page shown when OnRequestFailedInternal is called is very specific to net::ERR_ABORTED. If the caller wants to pass an error other than ERR_ABORTED, they need to pass a error_page_content to get an appropriate error page.",
+      "parentUuid": "293c04dd_3b1f5202",
       "range": {
         "startLine": 1221,
         "startChar": 11,
