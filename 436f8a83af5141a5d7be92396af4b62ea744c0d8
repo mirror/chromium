@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7878ed80_ec8c8da7",
+        "filename": "services/network/public/cpp/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-30T15:52:08Z",
+      "side": 1,
+      "message": "I\u0027m surprised this file didn\u0027t need the macros, since it\u0027s called from content?",
+      "revId": "436f8a83af5141a5d7be92396af4b62ea744c0d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc87471c_25281608",
+        "filename": "services/network/public/cpp/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-30T15:52:08Z",
+      "side": 1,
+      "message": "services?",
+      "revId": "436f8a83af5141a5d7be92396af4b62ea744c0d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb181427_00a46f7e",
+        "filename": "services/network/public/cpp/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-30T15:52:08Z",
+      "side": 1,
+      "message": "curious why this wouldn\u0027t be IS_SERVICES_NETWORK_CPP_TYPES_IMPL?",
+      "revId": "436f8a83af5141a5d7be92396af4b62ea744c0d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
