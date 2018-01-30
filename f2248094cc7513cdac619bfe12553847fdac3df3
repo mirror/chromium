@@ -70,6 +70,30 @@
       "revId": "f2248094cc7513cdac619bfe12553847fdac3df3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc3b6e25_9242b08e",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/remoteobjects/RemoteObjectImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-30T22:17:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcdd08aa_d2af105b",
+      "range": {
+        "startLine": 137,
+        "startChar": 17,
+        "endLine": 137,
+        "endChar": 66
+      },
+      "revId": "f2248094cc7513cdac619bfe12553847fdac3df3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
