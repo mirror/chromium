@@ -483,8 +483,12 @@ NGBoxStrut ComputeMarginsForVisualContainer(
 
 NGBoxStrut ComputeMarginsForSelf(const NGConstraintSpace& constraint_space,
                                  const ComputedStyle& style) {
-  return ComputePhysicalMargins(constraint_space, style)
+  NGBoxStrut margins =
+      ComputePhysicalMargins(constraint_space, style)
       .ConvertToLogical(style.GetWritingMode(), style.Direction());
+  if (constraint_space.ShouldSkipInlineMargins())
+    margins.inline_start = margins.inline_end = LayoutUnit();
+  return margins;
 }
 
 NGBoxStrut ComputeMinMaxMargins(const ComputedStyle& parent_style,

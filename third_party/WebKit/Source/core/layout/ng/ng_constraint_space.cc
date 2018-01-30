@@ -44,6 +44,7 @@ NGConstraintSpace::NGConstraintSpace(
     NGFragmentationType block_direction_fragmentation_type,
     bool separate_leading_fragmentainer_margins,
     bool is_new_fc,
+    bool should_skip_inline_margins,
     bool is_anonymous,
     bool use_first_line_style,
     const NGMarginStrut& margin_strut,
@@ -71,6 +72,7 @@ NGConstraintSpace::NGConstraintSpace(
       separate_leading_fragmentainer_margins_(
           separate_leading_fragmentainer_margins),
       is_new_fc_(is_new_fc),
+      should_skip_inline_margins_(should_skip_inline_margins),
       is_anonymous_(is_anonymous),
       use_first_line_style_(use_first_line_style),
       writing_mode_(static_cast<unsigned>(writing_mode)),

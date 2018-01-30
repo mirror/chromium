@@ -95,6 +95,8 @@ class CORE_EXPORT NGConstraintSpace final
   // Formatting Context.
   bool IsNewFormattingContext() const { return is_new_fc_; }
 
+  bool ShouldSkipInlineMargins() const { return should_skip_inline_margins_; }
+
   // Return true if we are to separate (i.e. honor, rather than collapse)
   // block-start margins at the beginning of fragmentainers. This only makes a
   // difference if we're block-fragmented (pagination, multicol, etc.). Then
@@ -223,6 +225,7 @@ class CORE_EXPORT NGConstraintSpace final
       NGFragmentationType block_direction_fragmentation_type,
       bool separate_leading_fragmentainer_margins_,
       bool is_new_fc,
+      bool should_skip_inline_margins,
       bool is_anonymous,
       bool use_first_line_style,
       const NGMarginStrut& margin_strut,
@@ -255,6 +258,8 @@ class CORE_EXPORT NGConstraintSpace final
   // Whether the current constraint space is for the newly established
   // formatting Context
   unsigned is_new_fc_ : 1;
+
+  unsigned should_skip_inline_margins_ : 1;
 
   unsigned is_anonymous_ : 1;
   unsigned use_first_line_style_ : 1;
