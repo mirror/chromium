@@ -236,6 +236,24 @@
       "revId": "bff9e8b5cb03079956b59aea660c589bab1d4925",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b7cc6b0_8906e343",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8GCController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-30T08:15:43Z",
+      "side": 1,
+      "message": "+1. dcheng@?\n\n(Maybe we can add a presubmit check for std::unordererd_set and std::unordered_map since it would be rare to use them at the boundary layers.)",
+      "parentUuid": "8c21c96d_f354134c",
+      "revId": "bff9e8b5cb03079956b59aea660c589bab1d4925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
