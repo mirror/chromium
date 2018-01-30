@@ -170,6 +170,11 @@ base::WeakPtr<BluetoothAdapter> BluetoothAdapterBlueZ::CreateAdapter(
   return adapter->weak_ptr_factory_.GetWeakPtr();
 }
 
+#if defined(OS_CHROMEOS)
+void SuspendImminent(power_manager::SuspendImminent::Reason reason) {}
+void SuspendDone(const base::TimeDelta& sleep_duration) {}
+#endif  // defined(OS_CHROMEOS)
+
 void BluetoothAdapterBlueZ::Shutdown() {
   if (dbus_is_shutdown_)
     return;
