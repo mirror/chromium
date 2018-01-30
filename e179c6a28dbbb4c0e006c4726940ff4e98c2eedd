@@ -34,6 +34,24 @@
       "revId": "e179c6a28dbbb4c0e006c4726940ff4e98c2eedd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37f18f8f_bd38cdf3",
+        "filename": "third_party/WebKit/LayoutTests/fast/multicol/border-radius-clipped-layer-expected.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-30T05:57:21Z",
+      "side": 0,
+      "message": "Tien-Ren\u0027s patch is nice. I\u0027ve included in the latest patch set. PTAL.\n\nI also tried another method: \n\n-\u003cdiv style\u003d\"width:41em; height:10.5em; line-height:2em;\"\u003e\n-    \u003cdiv style\u003d\"float:left; width:13em; height:100%; overflow:hidden;\"\u003e\n+\u003cdiv style\u003d\"width:41em; height:10.5em; line-height:2em; position:relative; left: -1em; margin: 0 1em; overflow: hidden\"\u003e\n(In Tien-Ren\u0027s patch for the same line:\n+\u003cdiv style\u003d\"width:41em; height:10.5em; line-height:2em; position:absolute; clip:rect(0,42em,10.5em,-1em);\"\u003e)\n\nbut it works for SPv175 but not SPv1.\n\nThis let me feel that this kind of fix is fragile. Perhaps we need a generic method to tolerate such invisible subpixel differences because of different AA code paths.",
+      "parentUuid": "f7a57b42_96ed713e",
+      "revId": "e179c6a28dbbb4c0e006c4726940ff4e98c2eedd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
