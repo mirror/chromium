@@ -430,5 +430,92 @@ Polymer({
     });
     this.fire('save-sticky-settings', JSON.stringify(serialization));
   },
+
+  /**
+   * Creates an object that represents a Google Cloud Print print ticket.
+   * @param {!print_preview.Destination} destination Destination to print to.
+   * @return {string} Google Cloud Print print ticket.
+   */
+  createPrintTicket(destination) {
+    assert(
+        !destination.isLocal || destination.isPrivet || destination.isExtension,
+        'Trying to create a Google Cloud Print print ticket for a local ' +
+            ' non-privet and non-extension destination');
+    assert(
+        destination.capabilities,
+        'Trying to create a Google Cloud Print print ticket for a ' +
+            'destination with no print capabilities');
+
+    const cjt = {version: '1.0', print: {}};
+    if (this.settings.collate.available)
+      cjt.print.collate = {collate: this.settings.collate.value};
+    if (this.settings.color.available) {
+      const selectedOption = destination.getSelectedColorOption(
+          /** @type {boolean} */ (this.settings.color.value));
+      if (!selectedOption) {
+        console.error('Could not find correct color option');
+      } else {
+        cjt.print.color = {type: selectedOption.type};
+        if (selectedOption.hasOwnProperty('vendor_id')) {
+          cjt.print.color.vendor_id = selectedOption.vendor_id;
+        }
+      }
+    } else {
+      // Always try setting the color in the print ticket, otherwise a
+      // reasonable reader of the ticket will have to do more work, or process
+      // the ticket sub-optimally, in order to safely handle the lack of a
+      // color ticket item.
+      const defaultOption = destination.defaultColorOption;
+      if (defaultOption) {
+        cjt.print.color = {type: defaultOption.type};
+        if (defaultOption.hasOwnProperty('vendor_id')) {
+          cjt.print.color.vendor_id = defaultOption.vendor_id;
+        }
+      }
+    }
+    if (this.settings.copies.available)
+      cjt.print.copies = {copies: this.settings.copies.value};
+    if (this.settings.duplex.available) {
+      cjt.print.duplex = {
+        type: this.settings.duplex.value ? 'LONG_EDGE' : 'NO_DUPLEX'
+      };
+    }
+    if (this.settings.mediaSize.available) {
+      const mediaValue = this.settings.mediaSize.value;
+      cjt.print.media_size = {
+        width_microns: mediaValue.width_microns,
+        height_microns: mediaValue.height_microns,
+        is_continuous_feed: mediaValue.is_continuous_feed,
+        vendor_id: mediaValue.vendor_id
+      };
+    }
+    if (!this.settings.layout.available) {
+      // In this case "orientation" option is hidden from user, so user can't
+      // adjust it for page content, see Landscape.isCapabilityAvailable().
+      // We can improve results if we set AUTO here.
+      const capability = destination.capabilities.printer ?
+          destination.capabilities.printer.page_orientation :
+          null;
+      if (capability && capability.option &&
+          capability.option.some(option => option.type == 'AUTO')) {
+        cjt.print.page_orientation = {type: 'AUTO'};
+      }
+    } else {
+      cjt.print.page_orientation = {
+        type: this.settings.layout ? 'LANDSCAPE' : 'PORTRAIT'
+      };
+    }
+    if (this.settings.dpi.available) {
+      const dpiValue = this.settings.dpi.value;
+      cjt.print.dpi = {
+        horizontal_dpi: dpiValue.horizontal_dpi,
+        vertical_dpi: dpiValue.vertical_dpi,
+        vendor_id: dpiValue.vendor_id
+      };
+    }
+    // TODO (rbpotter): Deal with advanced settings (vendorItems).
+
+    return JSON.stringify(cjt);
+  },
 });
 })();
