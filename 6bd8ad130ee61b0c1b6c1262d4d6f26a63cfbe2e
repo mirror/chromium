@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c2d4dc13_c107f4a6",
+        "filename": "device/bluetooth/bluez/bluetooth_adapter_bluez.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1258076
+      },
+      "writtenOn": "2018-01-30T22:08:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f6af6997_c5d1e8d7",
+      "revId": "6bd8ad130ee61b0c1b6c1262d4d6f26a63cfbe2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3dbfd92_4bd5dccb",
         "filename": "device/bluetooth/bluez/bluetooth_adapter_bluez.cc",
         "patchSetId": 14
@@ -51,6 +69,24 @@
       "revId": "6bd8ad130ee61b0c1b6c1262d4d6f26a63cfbe2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22b7e34b_6cb51bf1",
+        "filename": "device/bluetooth/bluez/bluetooth_adapter_bluez.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1258076
+      },
+      "writtenOn": "2018-01-30T22:08:11Z",
+      "side": 1,
+      "message": "+1. Thanks anyway, Dan! This is quite a good reminder for Sonny, who is working on the dispatcher side. As not a single line in this patch will be checked in, I would simply ignore tiny racing issues and style fixes and instead, focus on the bluez interface.",
+      "parentUuid": "d809a8c4_17b7b9da",
+      "revId": "6bd8ad130ee61b0c1b6c1262d4d6f26a63cfbe2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
