@@ -32,8 +32,7 @@ ShapeDetectionService::~ShapeDetectionService() = default;
 
 void ShapeDetectionService::OnStart() {
   ref_factory_.reset(new service_manager::ServiceContextRefFactory(
-      base::Bind(&service_manager::ServiceContext::RequestQuit,
-                 base::Unretained(context()))));
+      context()->GetRequestQuitClosure()));
 
 #if defined(OS_ANDROID)
   registry_.AddInterface(

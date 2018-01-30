@@ -83,7 +83,15 @@ class SERVICE_MANAGER_PUBLIC_CPP_EXPORT ServiceContext : public mojom::Service {
   // If the request is granted, the Service Manager will soon sever the
   // connection to this ServiceContext, and
   // Service::OnServiceManagerConnectionLost() will be invoked at that time.
+  //
+  // Note: Consider using GetRequestQuitClosure() if unless it is clear that the
+  // ServiceContext is still around.  In particular, the quit closure for a
+  // ServiceContextRefFactory should be from GetRequestQuitClosure().
   void RequestQuit();
+
+  // Return a closure that will RequestQuit when run, unless we have already
+  // been destroyed.  In that case, it will do nothing.
+  base::OnceClosure GetRequestQuitClosure();
 
   // Immediately severs the connection to the Service Manager.
   //
