@@ -13,11 +13,11 @@
 #endif
 
 // Tests for the Payment Request API in a page with data URL scheme.
-@interface PaymentRequestDataURLEGTest : PaymentRequestEGTestBase
+@interface PaymentRequestDataURLTestCase : PaymentRequestEGTestBase
 
 @end
 
-@implementation PaymentRequestDataURLEGTest
+@implementation PaymentRequestDataURLTestCase
 
 #pragma mark - Tests
 

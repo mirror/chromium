@@ -31,11 +31,11 @@ const char kCanMakePaymentMethodIdentifierPage[] =
 }  // namepsace
 
 // Various tests for canMakePayment() support in the Payment Request API.
-@interface PaymentRequestCanMakePaymentEGTest : PaymentRequestEGTestBase
+@interface PaymentRequestCanMakePaymentTestCase : PaymentRequestEGTestBase
 
 @end
 
-@implementation PaymentRequestCanMakePaymentEGTest
+@implementation PaymentRequestCanMakePaymentTestCase
 
 #pragma mark - Tests
 
@@ -102,12 +102,12 @@ const char kCanMakePaymentMethodIdentifierPage[] =
 
 // Tests for canMakePayment() exceeding query quota, when querying explicit
 // payment methods.
-@interface PaymentRequestCanMakePaymentExceedsQueryQuotaEGTest
+@interface PaymentRequestCanMakePaymentExceedsQueryQuotaTestCase
     : PaymentRequestEGTestBase
 
 @end
 
-@implementation PaymentRequestCanMakePaymentExceedsQueryQuotaEGTest
+@implementation PaymentRequestCanMakePaymentExceedsQueryQuotaTestCase
 
 // Tests canMakePayment() exceeds query quota when different payment methods are
 // queried one after another.
@@ -156,12 +156,12 @@ const char kCanMakePaymentMethodIdentifierPage[] =
 
 // Tests for canMakePayment() exceeding query quota, when querying basic-card
 // payment method.
-@interface PaymentRequestCanMakePaymentExceedsQueryQuotaBasicaCardEGTest
+@interface PaymentRequestCanMakePaymentExceedsQueryQuotaBasicaCardTestCase
     : PaymentRequestEGTestBase
 
 @end
 
-@implementation PaymentRequestCanMakePaymentExceedsQueryQuotaBasicaCardEGTest
+@implementation PaymentRequestCanMakePaymentExceedsQueryQuotaBasicaCardTestCase
 
 #pragma mark - Tests
 

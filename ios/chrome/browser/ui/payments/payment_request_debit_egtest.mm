@@ -57,13 +57,13 @@ id<GREYMatcher> PaymentMethodCellMatcher(
 }  // namepsace
 
 // Various tests for a merchant that requests a debit card.
-@interface PaymentRequestDebitEGTest : PaymentRequestEGTestBase
+@interface PaymentRequestDebitTestCase : PaymentRequestEGTestBase
 
 @end
 
 std::unique_ptr<autofill::AutofillProfile> _profile;
 
-@implementation PaymentRequestDebitEGTest
+@implementation PaymentRequestDebitTestCase
 
 - (void)setUp {
   [super setUp];

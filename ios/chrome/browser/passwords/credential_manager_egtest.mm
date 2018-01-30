@@ -53,11 +53,11 @@ std::unique_ptr<net::test_server::HttpResponse> StandardResponse(
 // TODO(crbug.com/435048): Add EG test for save/update password prompt.
 // TODO(crbug.com/435048): When account chooser and first run experience dialog
 // are implemented, test them too.
-@interface CredentialManagerEGTest : ChromeTestCase
+@interface CredentialManagerTestCase : ChromeTestCase
 
 @end
 
-@implementation CredentialManagerEGTest {
+@implementation CredentialManagerTestCase {
   base::test::ScopedFeatureList _featureList;
 }
 

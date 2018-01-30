@@ -38,11 +38,11 @@ const char kNoShippingPage[] =
 
 // Tests for various scenarios in which Payment Request UI is displayed then
 // closed (e.g., merchant cancellation, user cancellation, and completion).
-@interface PaymentRequestOpenAndCloseEGTest : PaymentRequestEGTestBase
+@interface PaymentRequestOpenAndCloseTestCase : PaymentRequestEGTestBase
 
 @end
 
-@implementation PaymentRequestOpenAndCloseEGTest
+@implementation PaymentRequestOpenAndCloseTestCase
 
 #pragma mark - Tests
 
