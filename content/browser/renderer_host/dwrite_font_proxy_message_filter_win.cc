@@ -219,7 +219,7 @@ void DWriteFontProxyImpl::GetFamilyCount(GetFamilyCountCallback callback) {
   InitializeDirectWrite();
   TRACE_EVENT0("dwrite", "FontProxyHost::OnGetFamilyCount");
   DCHECK(collection_);
-  std::move(callback).Run(collection_->GetFontFamilyCount());
+  std::move(callback).Run(collection_ ? collection_->GetFontFamilyCount() : 0);
 }
 
 void DWriteFontProxyImpl::GetFamilyNames(UINT32 family_index,
