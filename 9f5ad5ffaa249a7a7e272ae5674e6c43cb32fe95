@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "883b155a_d9b87fe8",
+        "filename": "services/network/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-30T20:44:06Z",
+      "side": 1,
+      "message": "I think you need to add\ndefines \u003d [ \"IS_NETWORK_CPP_IMPL\" ]\nhere to fix the build errors, as some of the methods declared in public/cpp are implemented here.",
+      "revId": "9f5ad5ffaa249a7a7e272ae5674e6c43cb32fe95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
