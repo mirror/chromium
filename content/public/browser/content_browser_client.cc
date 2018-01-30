@@ -16,6 +16,7 @@
 #include "content/public/browser/navigation_ui_data.h"
 #include "content/public/browser/network_service_instance.h"
 #include "content/public/browser/page_navigator.h"
+#include "content/public/browser/resource_dispatcher_host_login_delegate.h"
 #include "content/public/browser/vpn_service_proxy.h"
 #include "content/public/common/url_loader_throttle.h"
 #include "device/geolocation/public/cpp/location_provider.h"
@@ -25,6 +26,7 @@
 #include "mojo/public/cpp/bindings/associated_interface_ptr.h"
 #include "net/ssl/client_cert_identity.h"
 #include "net/ssl/client_cert_store.h"
+#include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "services/network/public/cpp/features.h"
 #include "services/service_manager/sandbox/sandbox_type.h"
@@ -650,6 +652,15 @@ bool ContentBrowserClient::ShouldPermitIndividualAttestationForWebauthnRPID(
 
 std::unique_ptr<net::ClientCertStore>
 ContentBrowserClient::CreateClientCertStore(ResourceContext* resource_context) {
+  return nullptr;
+}
+
+ResourceDispatcherHostLoginDelegate* ContentBrowserClient::CreateLoginDelegate(
+    net::AuthChallengeInfo* auth_info,
+    net::URLRequestContext* context,
+    content::ResourceRequestInfo::WebContentsGetter web_contents_getter,
+    int load_flags,
+    const GURL& url) {
   return nullptr;
 }
 
