@@ -87,6 +87,30 @@
       "revId": "491dcf34c872df6838063f7a6f4641da848db38b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef1617a7_232ccc20",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-30T04:42:03Z",
+      "side": 1,
+      "message": "Agree that the network service shouldn\u0027t know about schemes that it doesn\u0027t handle, i.e. http, https, ws, wss (ignoring file since generally it\u0027s not handled by it).\n\nURLLoader always defers redirects and waits for its client to tell it. Can we depend on that, i.e. with network service, or without NS but with NavigationMojoResponse, we can have the logic in one place in the browser. Similarly for subresources, it can be in the renderer (we can double check with security team, but given that renderer can\u0027t get access to URLLoaderFactory that it doesn\u0027t have permission to, this should be safe). For downloads, when is it ever ok to download across a scheme change (other than http \u003c\u003e https)?",
+      "parentUuid": "9330c4f0_9295748a",
+      "range": {
+        "startLine": 192,
+        "startChar": 24,
+        "endLine": 192,
+        "endChar": 36
+      },
+      "revId": "491dcf34c872df6838063f7a6f4641da848db38b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
