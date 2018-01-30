@@ -18,7 +18,7 @@ import sys
 import tempfile
 import time
 
-from common_args import AddCommonArgs, ConfigureLogging, GetDeploymentTargetForArgs
+from common_args import AddCommonArgs, EnableLogging, GetDeploymentTargetForArgs
 from run_package import RunPackage
 
 DEFAULT_TEST_CONCURRENCY = 4
@@ -59,7 +59,7 @@ def main():
   parser.add_argument('child_args', nargs='*',
                       help='Arguments for the test process.')
   args = parser.parse_args()
-  ConfigureLogging(args)
+  EnableLogging(args)
 
   child_args = ['--test-launcher-retry-limit=0']
   if args.single_process_tests:

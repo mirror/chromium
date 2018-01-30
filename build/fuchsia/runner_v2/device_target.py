@@ -60,7 +60,7 @@ class DeviceTarget(target.Target):
       logging.debug('Starting automatic device deployment.')
       node_name = boot_data.GetNodeName(self._output_dir)
       self._host = self.__Discover(node_name)
-      if self._host and self._WaitUntilReady(retries=0):
+      if self._host and self._Connect(retries=0):
         logging.info('Connected to an already booted device.')
         return
 
@@ -87,7 +87,7 @@ class DeviceTarget(target.Target):
 
       logging.debug('host=%s, port=%d' % (self._host, self._port))
 
-    self._WaitUntilReady();
+    self._Connect();
 
   def _GetEndpoint(self):
     return (self._host, self._port)
