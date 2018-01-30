@@ -33,6 +33,24 @@
       "revId": "6bd8ad130ee61b0c1b6c1262d4d6f26a63cfbe2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d809a8c4_17b7b9da",
+        "filename": "device/bluetooth/bluez/bluetooth_adapter_bluez.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2018-01-30T22:00:03Z",
+      "side": 1,
+      "message": "I think the Bluetooth Dispatcher will handle the SuspendImminent coordination with powerd, while the bluez side only needs to have interface for Dispatcher to request for discovery suspend.",
+      "parentUuid": "f3dbfd92_4bd5dccb",
+      "revId": "6bd8ad130ee61b0c1b6c1262d4d6f26a63cfbe2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
