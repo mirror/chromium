@@ -83,6 +83,15 @@ void BaseFetchContext::AddErrorConsoleMessage(const String& message,
       ConsoleMessage::Create(kJSMessageSource, kErrorMessageLevel, message));
 }
 
+bool BaseFetchContext::GetIsAdForLastCheckedResource(
+    const KURL& resource_url,
+    WebURLRequest::RequestContext request_context) const {
+  SubresourceFilter* filter = GetSubresourceFilter();
+  return filter ? filter->GetIsAdForLastCheckedResource(resource_url,
+                                                        request_context)
+                : false;
+}
+
 void BaseFetchContext::PrintAccessDeniedMessage(const KURL& url) const {
   if (url.IsNull())
     return;
