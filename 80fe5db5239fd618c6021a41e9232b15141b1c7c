@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "909a882f_f54c62d0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2018-01-30T17:28:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a4ea0a6_ad8f5e48",
+      "range": {
+        "startLine": 13,
+        "startChar": 20,
+        "endLine": 13,
+        "endChar": 26
+      },
+      "revId": "80fe5db5239fd618c6021a41e9232b15141b1c7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "269894e3_32248bc0",
         "filename": "chrome/test/data/policy/policy_test_cases.json",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "80fe5db5239fd618c6021a41e9232b15141b1c7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec3c8290_36c07b38",
+        "filename": "chrome/test/data/policy/policy_test_cases.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 3457,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2018-01-30T17:28:04Z",
+      "side": 1,
+      "message": "copy/paste, added android.",
+      "parentUuid": "269894e3_32248bc0",
+      "revId": "80fe5db5239fd618c6021a41e9232b15141b1c7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

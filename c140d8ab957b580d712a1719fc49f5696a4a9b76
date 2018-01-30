@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "80b4d1cb_5ca6d025",
+        "filename": "chrome/browser/policy/configuration_policy_handler_list_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2018-01-30T17:28:04Z",
+      "side": 1,
+      "message": "That\u0027s in policy_templates.json",
+      "parentUuid": "52a9e7e1_a5c70df9",
+      "revId": "c140d8ab957b580d712a1719fc49f5696a4a9b76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8077c9e5_d7a2f248",
         "filename": "chrome/browser/policy/policy_browsertest.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4d36367b_89e9a99e",
+        "filename": "chrome/browser/policy/policy_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3746,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2018-01-30T17:28:04Z",
+      "side": 1,
+      "message": "Done, added comments in a few files.",
+      "parentUuid": "8077c9e5_d7a2f248",
+      "revId": "c140d8ab957b580d712a1719fc49f5696a4a9b76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a584650_3ddd22cf",
         "filename": "chrome/browser/ui/webui/settings/safe_browsing_handler.cc",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "c140d8ab957b580d712a1719fc49f5696a4a9b76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd1ac9f4_aff61ae4",
+        "filename": "chrome/browser/ui/webui/settings/safe_browsing_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2018-01-30T17:28:04Z",
+      "side": 1,
+      "message": "Just how we interpret the pref. It\u0027s value (opted-in vs opted-out) has the same meaning still.\nThe managed bit only affects whether the user can change it (eg: grey-out+icon on chrome://settings, hide checkbox on interstitial).",
+      "parentUuid": "7a584650_3ddd22cf",
+      "revId": "c140d8ab957b580d712a1719fc49f5696a4a9b76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
