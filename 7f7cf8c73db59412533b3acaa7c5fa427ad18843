@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "063aa340_fa2d8e09",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_window.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2018-01-30T18:44:24Z",
+      "side": 1,
+      "message": "Do you handle the conflict when \n1. Icon load requested.\n2. Custom icon is set.\n3. OnIconUpdated is called?",
+      "range": {
+        "startLine": 167,
+        "startChar": 19,
+        "endLine": 167,
+        "endChar": 32
+      },
+      "revId": "7f7cf8c73db59412533b3acaa7c5fa427ad18843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0d3dc35_a950160f",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_window.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2018-01-30T18:44:24Z",
+      "side": 1,
+      "message": "I think manipulating directly kAppIconKey and kWindowIconKey is incorrect. This is internal functionality how to apply icon to platform window. Icon for app and window is provided via Delegate.\n\nclass ShellSurfaceBase : ....\n                         public views::WidgetDelegate,",
+      "range": {
+        "startLine": 181,
+        "startChar": 47,
+        "endLine": 181,
+        "endChar": 58
+      },
+      "revId": "7f7cf8c73db59412533b3acaa7c5fa427ad18843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
