@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "e960e9b1_b40a6d96",
+        "filename": "chrome/browser/ui/overlay/overlay_surface_embedder.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-30T21:11:14Z",
+      "side": 1,
+      "message": "i think the new style is to link to crbug rather than username.",
+      "range": {
+        "startLine": 18,
+        "startChar": 10,
+        "endLine": 18,
+        "endChar": 18
+      },
+      "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71e1f765_8349e907",
         "filename": "content/common/media/media_player_delegate_messages.h",
         "patchSetId": 15
@@ -136,6 +159,121 @@
       "writtenOn": "2018-01-30T20:10:13Z",
       "side": 1,
       "message": "I\u0027m not sure this is the right place for this. It seems this should talk to the external surfaces code directly instead of going through the delegate?",
+      "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c776a3c_d00bdf24",
+        "filename": "media/blink/webmediaplayer_delegate.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-30T21:11:14Z",
+      "side": 1,
+      "message": "+1 .  there\u0027s nothing terribly media-specific about pip, so this seems like the wrong way to notify the browser about it.  it would be nice if there were some generic way to do this, so that anybody with a SurfaceID could choose to pip it.\n\nmaybe the render frame could send in a RepeatingCallback to wmpi to replace this method.  it could handle routing it to the right place in the browser.",
+      "parentUuid": "e6043d8f_72d545b3",
+      "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca204ddc_1c5f82c3",
+        "filename": "media/blink/webmediaplayer_delegate.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-30T21:11:14Z",
+      "side": 1,
+      "message": "this actually causes pip to start if it\u0027s not started?  the name\u0027s not terribly clear about that.  ShowPictureInPicture() or similar makes that clearer.",
+      "range": {
+        "startLine": 111,
+        "startChar": 15,
+        "endLine": 111,
+        "endChar": 47
+      },
+      "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "330bd5b3_5043cb33",
+        "filename": "media/blink/webmediaplayer_delegate.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-30T21:11:14Z",
+      "side": 1,
+      "message": "could these be replaced with SurfaceID or LocalSurfaceID or something?",
+      "range": {
+        "startLine": 113,
+        "startChar": 6,
+        "endLine": 115,
+        "endChar": 34
+      },
+      "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c77f9955_d6d9c142",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-30T21:11:14Z",
+      "side": 1,
+      "message": "if pip is already enabled, then i think that this should notify the delegate again.  for example, if the video resolution changes while in pip, i suspect that the pip window would quit showing frames as it\u0027s written now.",
+      "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eb86cd7_f4a713c8",
+        "filename": "third_party/WebKit/Source/platform/graphics/SurfaceLayerBridge.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-30T21:11:14Z",
+      "side": 1,
+      "message": "why take apart |frame_sink_id| here, just to put it back together in WebMediaPlayerImpl?  i think one may just pass the FrameSinkId .\n\nalternatively, just pass |surface_info| or |surface_info.id()| in place of all four args.",
+      "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14e61eba_4125c433",
+        "filename": "third_party/WebKit/public/platform/WebSurfaceLayerBridge.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-30T21:11:14Z",
+      "side": 1,
+      "message": "please add comments.",
       "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
