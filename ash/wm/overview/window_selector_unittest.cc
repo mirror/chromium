@@ -23,6 +23,8 @@
 #include "ash/system/tray/system_tray.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/wm/overview/overview_window_drag_controller.h"
+#include "ash/wm/overview/overview_window_mask.h"
+#include "ash/wm/overview/rounded_rect_view.h"
 #include "ash/wm/overview/window_grid.h"
 #include "ash/wm/overview/window_selector.h"
 #include "ash/wm/overview/window_selector_controller.h"
@@ -359,6 +361,14 @@ class WindowSelectorTest : public AshTestBase {
     DCHECK(window_selector());
     return window_selector()->window_drag_controller_.get();
   }
+
+  OverviewWindowMask* GetBackdropMaskForItem(WindowSelectorItem* window_item) {
+    return window_item->backdrop_mask_.get();
+  };
+
+  OverviewWindowMask* GetWindowMaskForItem(WindowSelectorItem* window_item) {
+    return window_item->transform_window_.mask_.get();
+  };
 
  private:
   aura::test::TestWindowDelegate delegate_;
@@ -2119,6 +2129,72 @@ TEST_F(WindowSelectorTest, ExtremeWindowBounds) {
             tall_item->GetWindowDimensionsType());
   EXPECT_EQ(ScopedTransformOverviewWindow::GridWindowFillMode::kNormal,
             normal_item->GetWindowDimensionsType());
+}
+
+// Verify that a window which enters overview mode has a OverviewWindowMask
+// attached to it.
+TEST_F(WindowSelectorTest, WindowMask) {
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kAshEnableNewOverviewUi);
+
+  std::unique_ptr<aura::Window> window(
+      CreateWindow(gfx::Rect(10, 10, 200, 200)));
+
+  ASSERT_FALSE(window->layer()->layer_mask_layer());
+  ToggleOverview();
+  RunAllPendingInMessageLoop();
+  EXPECT_TRUE(window->layer()->layer_mask_layer());
+
+  // Verify that the applied mask is the same as the one tracked by
+  // ScopedTransformOverviewWindow.
+  OverviewWindowMask* mask =
+      GetWindowMaskForItem(GetWindowItemForWindow(0, window.get()));
+  EXPECT_EQ(mask->layer(), window->layer()->layer_mask_layer());
+  ToggleOverview();
+  EXPECT_FALSE(window->layer()->layer_mask_layer());
+}
+
+// Verify that a windows which enter overview mode have a visible backdrop which
+// has a OverviewWindowMask, if the window is to be letter or pillar fitted.
+TEST_F(WindowSelectorTest, BackdropMask) {
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kAshEnableNewOverviewUi);
+
+  std::unique_ptr<aura::Window> window(
+      CreateWindow(gfx::Rect(10, 10, 200, 200)));
+
+  std::unique_ptr<aura::Window> wide(CreateWindow(gfx::Rect(10, 10, 400, 160)));
+  std::unique_ptr<aura::Window> tall(CreateWindow(gfx::Rect(10, 10, 50, 200)));
+  std::unique_ptr<aura::Window> normal(
+      CreateWindow(gfx::Rect(10, 10, 200, 200)));
+
+  ToggleOverview();
+  RunAllPendingInMessageLoop();
+  WindowSelectorItem* wide_item = GetWindowItemForWindow(0, wide.get());
+  WindowSelectorItem* tall_item = GetWindowItemForWindow(0, tall.get());
+  WindowSelectorItem* normal_item = GetWindowItemForWindow(0, normal.get());
+
+  // Only very tall and very wide windows will have a visible backdrop.
+  EXPECT_TRUE(wide_item->GetBackdropViewForTesting()->visible());
+  EXPECT_TRUE(tall_item->GetBackdropViewForTesting()->visible());
+  EXPECT_FALSE(normal_item->GetBackdropViewForTesting()->visible());
+
+  // Only visible backdrops will have a mask.
+  auto get_backdrop_mask_for_item = [](WindowSelectorItem* item) {
+    return item->GetBackdropViewForTesting()->layer()->layer_mask_layer();
+  };
+  EXPECT_TRUE(get_backdrop_mask_for_item(wide_item));
+  EXPECT_TRUE(get_backdrop_mask_for_item(tall_item));
+  EXPECT_FALSE(get_backdrop_mask_for_item(normal_item));
+
+  // Verify that the applied mask is the same as the one tracked by
+  // WindowSelectorItem.
+  OverviewWindowMask* wide_mask = GetBackdropMaskForItem(wide_item);
+  OverviewWindowMask* tall_mask = GetBackdropMaskForItem(tall_item);
+  ASSERT_TRUE(wide_mask);
+  ASSERT_TRUE(tall_mask);
+  EXPECT_EQ(wide_mask->layer(), get_backdrop_mask_for_item(wide_item));
+  EXPECT_EQ(tall_mask->layer(), get_backdrop_mask_for_item(tall_item));
 }
 
 class SplitViewWindowSelectorTest : public WindowSelectorTest {

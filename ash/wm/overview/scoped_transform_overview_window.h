@@ -42,6 +42,7 @@ enum class ShadowElevation;
 
 namespace ash {
 
+class OverviewWindowMask;
 class ScopedOverviewAnimationSettings;
 class WindowSelectorItem;
 
@@ -190,7 +191,6 @@ class ASH_EXPORT ScopedTransformOverviewWindow
  private:
   friend class WindowSelectorTest;
   class LayerCachingAndFilteringObserver;
-  class WindowMask;
 
   // Closes the window managed by |this|.
   void CloseWidget();
@@ -218,6 +218,12 @@ class ASH_EXPORT ScopedTransformOverviewWindow
   // The original opacity of the window before entering overview mode.
   float original_opacity_;
 
+  // Overview windows which are letter or pillar fitted into the window grid may
+  // need to be adjusted by |last_calculated_top_offset_| to account for their
+  // title bar which gets hidden in overview mode. This information is also
+  // needed by the selector items' backdrop.
+  int last_calculated_top_offset_ = 0;
+
   // Specifies how the window is laid out in the grid.
   GridWindowFillMode type_ = GridWindowFillMode::kNormal;
 
@@ -236,7 +242,7 @@ class ASH_EXPORT ScopedTransformOverviewWindow
 
   // A mask to be applied on |window_|. This will give |window_| rounded edges
   // while in overview.
-  std::unique_ptr<WindowMask> mask_;
+  std::unique_ptr<OverviewWindowMask> mask_;
 
   // The original mask layer of the window before entering overview mode.
   ui::Layer* original_mask_layer_ = nullptr;
