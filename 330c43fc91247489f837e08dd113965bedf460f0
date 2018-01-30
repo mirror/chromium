@@ -171,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "a2244f72_33efe8d6",
+        "filename": "chrome/browser/sessions/session_service.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-30T14:22:55Z",
+      "side": 1,
+      "message": "I changed SessionService to update the indices. Someone who knows the code will have to take a look and see if it makes sense.\nI wonder if it would be easier to not call NotifyPrunedEntries() during the deletions at all and just call SessionService::ResetFromCurrentBrowsers() after all deletions are done. SessionService::ScheduleCommand seems to be doing this from time to time anyway. That would simplify this a lot.",
+      "parentUuid": "7be535c0_6a767557",
+      "revId": "330c43fc91247489f837e08dd113965bedf460f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2435d444_ab4b85c3",
         "filename": "components/browsing_data/core/features.cc",
         "patchSetId": 19
