@@ -34,7 +34,7 @@ WebPointerEvent::WebPointerEvent(const WebTouchEvent& touch_event,
                                  const WebTouchPoint& touch_point)
     : WebInputEvent(sizeof(WebPointerEvent)),
       WebPointerProperties(touch_point),
-      scroll_capable(true),
+      scroll_capable(!touch_event.supports_hover),
       width(touch_point.radius_x * 2.f),
       height(touch_point.radius_y * 2.f) {
   // WebInutEvent attributes
