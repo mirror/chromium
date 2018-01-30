@@ -2589,7 +2589,6 @@ crbug.com/753073 external/wpt/html/browsers/history/the-location-interface/locat
 crbug.com/753073 external/wpt/html/browsers/history/the-location-interface/location-prototype-setting-same-origin.html [ NeedsManualRebaseline ]
 crbug.com/753073 external/wpt/html/dom/interfaces.html [ NeedsManualRebaseline ]
 crbug.com/753073 external/wpt/html/editing/dnd/synthetic/001.html [ NeedsManualRebaseline ]
-crbug.com/753073 external/wpt/html/infrastructure/common-dom-interfaces/collections/htmlallcollection.html [ NeedsManualRebaseline ]
 crbug.com/753073 external/wpt/html/semantics/embedded-content/media-elements/interfaces/TrackEvent/createEvent.html [ NeedsManualRebaseline ]
 crbug.com/753073 external/wpt/html/semantics/embedded-content/the-canvas-element/imagedata.html [ NeedsManualRebaseline ]
 crbug.com/753073 external/wpt/html/semantics/forms/the-form-element/form-indexed-element.html [ NeedsManualRebaseline ]
