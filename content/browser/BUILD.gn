@@ -966,6 +966,8 @@ jumbo_source_set("browser") {
     "leveldb_wrapper_impl.h",
     "loader/cross_site_document_resource_handler.cc",
     "loader/cross_site_document_resource_handler.h",
+    "loader/data_pipe_source_stream.cc",
+    "loader/data_pipe_source_stream.h",
     "loader/detachable_resource_handler.cc",
     "loader/detachable_resource_handler.h",
     "loader/downloaded_temp_file_impl.cc",
