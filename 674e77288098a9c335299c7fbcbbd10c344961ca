@@ -70,6 +70,30 @@
       "revId": "674e77288098a9c335299c7fbcbbd10c344961ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5822f45_6eb304d1",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-30T17:00:43Z",
+      "side": 1,
+      "message": "\u003e Well why not just using one instead of trying making this lockfree? You have more atomics than what would require for a mutex.\n\nI really want to make the part that is executed when we don\u0027t record a sample (above line 249) as fast as possible. Namely I\u0027d like to avoid mutex in this part as lots of allocations are running in parallel. It currently requires just a single NoBarrier_AtomicIncrement which is pretty good.\n\nAs for the bottom part (lines below 249) it is already being run by a single thread, so no mutex really required there.\n\n\u003e Are you sure you don\u0027t really need a *_CompareAndSwap there? Do you really intend to exchange without checking the previous value? (asking because the logic itself you intend to achieve is not fully clear)\n\nI\u0027m not checking the value, because I just grab all the accumulated amount at line 263 with AtomicExchange.\n\nThere is another approach to collect a sample that I considered. It makes use of CompareAndSwap, but it seems to be less \"precise\" than this one.\n\nThat approach would basically do (assuming size !\u003d 0):\n1: bytes_left \u003d AtomicIncrement(\u0026g_bytes_left, -size);\n2: if (bytes_left \u003e 0) return;\n3: if (CompareAndSwap(\u0026g_bytes_left, bytes_left, next_interval) !\u003d bytes_left) return;\n\nHere as soon the the bytes_left reaches zero, all the threads will run to the line 3. Then the threads will be leaving at line 3 if other threads keep coming and changing g_bytes_left at line 1. So basically this approach makes the last thread win.\n\nThe current approach does the opposite. It allows the thread that in fact crossed the zero level to record the sample. In a situation when there are threads allocate e.g. 100KB and 1KB, it is very likely that the one allocating 100 KB chunk is in fact crossed the line, and I want it to record the stack.\nAs a bonus my current approach uses just a single operation on the fast path, while CAS one would need two. :-)",
+      "parentUuid": "b3cba535_c6ef8f81",
+      "range": {
+        "startLine": 250,
+        "startChar": 1,
+        "endLine": 264,
+        "endChar": 73
+      },
+      "revId": "674e77288098a9c335299c7fbcbbd10c344961ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
