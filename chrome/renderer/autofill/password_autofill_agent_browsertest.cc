@@ -2730,6 +2730,11 @@ TEST_F(PasswordAutofillAgentTest,
       "  <INPUT type='submit' />"
       "</FORM>";
 
+  const char kNoFormWithMultipleAnonymousTextFields[] =
+      "<INPUT type='text' placeholder='username'/>"
+      "<INPUT type='password' placeholder='Password'/>"
+      "<INPUT type='text' placeholder='captch'/>";
+
   const struct {
     const char* html_form;
     bool is_possible_change_password_form;
@@ -2776,6 +2781,11 @@ TEST_F(PasswordAutofillAgentTest,
       {kChangePasswordFormButNoAutocompleteAttribute, true, true,
        kDummyUsernameField, kDummyPasswordField, kAliceUsername, kAlicePassword,
        true, true},
+
+      // Sign-in form without <form> tag, with captch text field. All fields are
+      // anonymous.
+      {kNoFormWithMultipleAnonymousTextFields, false, true, kDummyUsernameField,
+       kDummyPasswordField, kAliceUsername, kAlicePassword, true, true},
   };
 
   for (const auto& test_case : test_cases) {
@@ -2792,9 +2802,15 @@ TEST_F(PasswordAutofillAgentTest,
     blink::WebDocument document = GetMainFrame()->GetDocument();
     blink::WebVector<WebFormElement> forms;
     document.Forms(forms);
-    WebFormElement form_element = forms[0];
-    std::vector<blink::WebFormControlElement> control_elements =
-        form_util::ExtractAutofillableElementsInForm(form_element);
+    std::vector<blink::WebFormControlElement> control_elements;
+    bool no_form_case = forms.empty();
+    if (no_form_case) {
+      control_elements = form_util::GetUnownedAutofillableFormFieldElements(
+          document.All(), nullptr);
+    } else {
+      control_elements = form_util::ExtractAutofillableElementsInForm(forms[0]);
+    }
+
     bool has_fillable_username =
         (kEmpty != test_case.fill_data_username_field_name);
     if (has_fillable_username) {
@@ -2803,8 +2819,13 @@ TEST_F(PasswordAutofillAgentTest,
     } else {
       password_element_ = control_elements[0].To<WebInputElement>();
     }
-
     UpdateOriginForHTML(test_case.html_form);
+
+    if (no_form_case) {
+      // When there is no <form> action must be equal to origin.
+      fill_data_.action = fill_data_.origin;
+    }
+
     if (test_case.does_trigger_autocomplete_on_fill) {
       // Prepare |fill_data_| to trigger autocomplete.
       fill_data_.is_possible_change_password_form =

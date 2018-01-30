@@ -178,18 +178,18 @@ bool FindFormInputElement(
 
     // Check for a non-unique match.
     if (found_input) {
-      // For change password form keep only the first password field entry.
-      if (does_password_field_has_ambigous_or_empty_name) {
+      if (ambiguous_or_empty_names) {
+        // In case of ambigous or empty names, there might be multiple
+        // appropriate inputs. Check if the current input is better than
+        // previously found one.
         if (!form_util::IsWebElementVisible((*result)[field_name])) {
           // If a previously chosen field was invisible then take the current
           // one.
           (*result)[field_name] = input_element;
         }
-        continue;
       }
-
-      found_input = false;
-      break;
+      // Stick to already found input and skip the current one.
+      continue;
     }
 
     (*result)[field_name] = input_element;
