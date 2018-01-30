@@ -284,6 +284,7 @@ LockDebugView::LockDebugView(mojom::TrayActionState initial_note_action_state,
   add_user_ = AddButton("Add user");
   remove_user_ = AddButton("Remove user");
   toggle_auth_ = AddButton("Auth (allowed)");
+  toggle_gaia_auth_ = AddButton("Add new user flow");
 
   RebuildDebugUserColumn();
 }
@@ -385,6 +386,11 @@ void LockDebugView::ButtonPressed(views::Button* sender,
     Shell::Get()
         ->login_screen_controller()
         ->set_force_fail_auth_for_debug_overlay(force_fail_auth_);
+    return;
+  }
+
+  if (sender == toggle_gaia_auth_) {
+    Shell::Get()->login_screen_controller()->ShowGaiaSignin();
     return;
   }
 

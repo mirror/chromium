@@ -51,6 +51,7 @@ login.createScreen('GaiaSigninScreen', 'gaia-signin', function() {
       'updateControlsState',
       'showWhitelistCheckFailedError',
       'invalidateAd',
+      'loaded',
     ],
 
     /**
@@ -117,12 +118,17 @@ login.createScreen('GaiaSigninScreen', 'gaia-signin', function() {
      */
     lastBackMessageValue_: false,
 
+    usersNum_: 0,
+
     /**
      * Whether the dialog could be closed.
      * @type {boolean}
      */
     get closable() {
-      return !!$('pod-row').pods.length || this.isOffline();
+      var hasUser = Oobe.getInstance().showingViewsLogin ?
+          (!!this.usersNum_) :
+          (!!$('pod-row').pods.length);
+      return hasUser || this.isOffline();
     },
 
     /**
@@ -685,6 +691,7 @@ login.createScreen('GaiaSigninScreen', 'gaia-signin', function() {
       this.chromeOSApiVersion_ = data.chromeOSApiVersion;
       // This triggers updateSigninFrameContainers_()
       this.screenMode = data.screenMode;
+      this.usersNum_ = data.usersNum;
       this.email = '';
       this.authCompleted_ = false;
       this.lastBackMessageValue_ = false;
@@ -1275,6 +1282,13 @@ login.createScreen('GaiaSigninScreen', 'gaia-signin', function() {
       this.authCompleted_ = false;
       this.loading = false;
       Oobe.getInstance().headerHidden = false;
+    },
+
+    loaded: function() {
+      if (Oobe.getInstance().showingViewsLogin)
+        chrome.send('showAddUser');
     }
   };
 });
+
+document.addEventListener('DOMContentLoaded', login.GaiaSigninScreen.loaded);

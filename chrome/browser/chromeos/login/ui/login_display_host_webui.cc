@@ -1207,6 +1207,10 @@ void LoginDisplayHostWebUI::StartVoiceInteractionOobe() {
   login_view_->set_should_emit_login_prompt_visible(false);
 }
 
+const user_manager::UserList LoginDisplayHostWebUI::users() {
+  return user_manager::UserList();
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // external
 
