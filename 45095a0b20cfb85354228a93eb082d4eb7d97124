@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a8f949f_a9455d99",
+        "filename": "components/viz/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-30T17:26:27Z",
+      "side": 1,
+      "message": "Maybe worth mentioning this dep is for interfaces defined in display that are provided by the embedder?",
+      "revId": "45095a0b20cfb85354228a93eb082d4eb7d97124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e51e713_d9b926a0",
+        "filename": "components/viz/service/display_embedder/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-30T17:26:27Z",
+      "side": 1,
+      "message": "And maybe worth pointing at specific headers here to avoid something more strange? wdyt",
+      "revId": "45095a0b20cfb85354228a93eb082d4eb7d97124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
