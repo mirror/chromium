@@ -1602,8 +1602,12 @@ void SourceBufferStream<RangeClass>::Seek(base::TimeDelta timestamp) {
     if (config.codec() == kCodecOpus) {
       DecodeTimestamp preroll_dts = std::max(
           seek_dts - config.seek_preroll(), RangeGetStartTimestamp(itr->get()));
+      // |preroll_dts| might be > |seek_dts| in cases where |seek_dts| is within
+      // fudge room distance before the start of the range, so bound the end of
+      // the config search sanely.
+      DecodeTimestamp upper_bound = std::max(seek_dts, preroll_dts);
       if (RangeCanSeekTo(itr->get(), preroll_dts) &&
-          RangeSameConfigThruRange(itr->get(), preroll_dts, seek_dts)) {
+          RangeSameConfigThruRange(itr->get(), preroll_dts, upper_bound)) {
         seek_dts = preroll_dts;
       }
     }
