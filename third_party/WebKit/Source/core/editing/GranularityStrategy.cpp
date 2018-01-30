@@ -44,13 +44,9 @@ static VisiblePosition NextWordBound(const VisiblePosition& pos,
   bool next_bound_if_on_bound =
       word_bound_adjust == BoundAdjust::kNextBoundIfOnBound;
   if (direction == SearchDirection::kSearchForward) {
-    EWordSide word_side = next_bound_if_on_bound ? kNextWordIfOnBoundary
-                                                 : kPreviousWordIfOnBoundary;
-    return EndOfWord(pos, word_side);
+    return next_bound_if_on_bound ? EndOfWord(pos) : EndOfWordBackward(pos);
   }
-  EWordSide word_side = next_bound_if_on_bound ? kPreviousWordIfOnBoundary
-                                               : kNextWordIfOnBoundary;
-  return StartOfWord(pos, word_side);
+  return next_bound_if_on_bound ? StartOfWordBackward(pos) : StartOfWord(pos);
 }
 
 GranularityStrategy::GranularityStrategy() = default;

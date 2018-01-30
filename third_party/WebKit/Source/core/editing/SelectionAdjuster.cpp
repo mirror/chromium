@@ -62,8 +62,9 @@ class GranularityAdjuster final {
         // kNextWordIfOnBoundary);
         const VisiblePositionTemplate<Strategy> visible_start =
             CreateVisiblePosition(passed_start);
-        return StartOfWord(visible_start, ChooseWordSide(visible_start))
-            .DeepEquivalent();
+        if (ShouldFindWordBackward(visible_start))
+          return StartOfWordBackward(visible_start).DeepEquivalent();
+        return StartOfWord(visible_start).DeepEquivalent();
       }
       case TextGranularity::kSentence:
         return StartOfSentence(CreateVisiblePosition(passed_start))
@@ -120,7 +121,9 @@ class GranularityAdjuster final {
         const VisiblePositionTemplate<Strategy> original_end =
             CreateVisiblePosition(passed_end);
         const VisiblePositionTemplate<Strategy> word_end =
-            EndOfWord(original_end, ChooseWordSide(original_end));
+            ShouldFindWordBackward(original_end)
+                ? EndOfWordBackward(original_end)
+                : EndOfWord(original_end);
         if (!IsEndOfParagraph(original_end))
           return word_end.DeepEquivalent();
         if (IsEmptyTableCell(start.AnchorNode()))
@@ -244,13 +247,11 @@ class GranularityAdjuster final {
 
  private:
   template <typename Strategy>
-  static EWordSide ChooseWordSide(
+  static bool ShouldFindWordBackward(
       const VisiblePositionTemplate<Strategy>& position) {
     return IsEndOfEditableOrNonEditableContent(position) ||
-                   (IsEndOfLine(position) && !IsStartOfLine(position) &&
-                    !IsEndOfParagraph(position))
-               ? kPreviousWordIfOnBoundary
-               : kNextWordIfOnBoundary;
+           (IsEndOfLine(position) && !IsStartOfLine(position) &&
+            !IsEndOfParagraph(position));
   }
 };
 
