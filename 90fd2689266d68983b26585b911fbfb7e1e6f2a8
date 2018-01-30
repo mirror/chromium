@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a20c7ef9_e72cb12b",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-30T23:01:00Z",
+      "side": 1,
+      "message": "Because we support multiple discovery sessions, we need to handle a couple more cases. More specifically:\n\n - If there is a session already and we start another one, we need to add the new UUIDs to the current scan.\n - If there are multiple sessions and one of them is stopped, we need to remove that session\u0027s UUIDs from the current scan.",
+      "revId": "90fd2689266d68983b26585b911fbfb7e1e6f2a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8ca6fd5_f1cb7457",
         "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
         "patchSetId": 1
