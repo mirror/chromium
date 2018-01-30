@@ -34,6 +34,24 @@
       "revId": "0595c4d499e667842991af8d879b0e55b4058984",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de81fae1_5ae73170",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/resources/fetch-canvas-tainting-tests.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2018-01-30T04:08:30Z",
+      "side": 1,
+      "message": "Ah, I see, thanks!\nI thought promise_tests can be interleaved.",
+      "parentUuid": "104e344c_f1099679",
+      "revId": "0595c4d499e667842991af8d879b0e55b4058984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
