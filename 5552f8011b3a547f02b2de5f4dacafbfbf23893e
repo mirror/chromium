@@ -1,0 +1,501 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3fe3d6d_49748d00",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T20:46:57Z",
+      "side": 1,
+      "message": "nit: shift 2-space right, or insert an empty line after the block to make it easier to read. Same goes for other animation description.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 7
+      },
+      "revId": "5552f8011b3a547f02b2de5f4dacafbfbf23893e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9267fcf8_e89639f3",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T20:46:57Z",
+      "side": 1,
+      "message": "nit: cur_raduis -\u003e current_radius",
+      "range": {
+        "startLine": 88,
+        "startChar": 8,
+        "endLine": 88,
+        "endChar": 18
+      },
+      "revId": "5552f8011b3a547f02b2de5f4dacafbfbf23893e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a767ed6d_b1fb68f2",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T20:46:57Z",
+      "side": 1,
+      "message": "nit: cur_rect -\u003e current_rect",
+      "range": {
+        "startLine": 92,
+        "startChar": 14,
+        "endLine": 92,
+        "endChar": 22
+      },
+      "revId": "5552f8011b3a547f02b2de5f4dacafbfbf23893e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54fac8a7_267958d8",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T20:46:57Z",
+      "side": 1,
+      "message": "Add an AnimationCanceled to call AnimationEnded().",
+      "revId": "5552f8011b3a547f02b2de5f4dacafbfbf23893e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "694e14d1_c5b56284",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T20:46:57Z",
+      "side": 1,
+      "message": "nit: AppListFolderView* const folder_view_;",
+      "revId": "5552f8011b3a547f02b2de5f4dacafbfbf23893e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fdbb893_6cbd924b",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T20:46:57Z",
+      "side": 1,
+      "message": "Add AnimationEnded and AnimationCanceled to ensure the end state.",
+      "revId": "5552f8011b3a547f02b2de5f4dacafbfbf23893e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89d89ccb_1d192b75",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T20:46:57Z",
+      "side": 1,
+      "message": "nit: const bool, here and other places applicable",
+      "revId": "5552f8011b3a547f02b2de5f4dacafbfbf23893e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9896e0f_fba60c53",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T20:46:57Z",
+      "side": 1,
+      "message": "nit: const pointer.",
+      "revId": "5552f8011b3a547f02b2de5f4dacafbfbf23893e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88276c39_7bd5f41d",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T20:46:57Z",
+      "side": 1,
+      "message": "nit: TopIconAnimationDelegate -\u003e TopIconAnimation, since this is not really a delegate.",
+      "range": {
+        "startLine": 169,
+        "startChar": 6,
+        "endLine": 169,
+        "endChar": 30
+      },
+      "revId": "5552f8011b3a547f02b2de5f4dacafbfbf23893e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75329125_403079f2",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T20:46:57Z",
+      "side": 1,
+      "message": "What happens if this happens with outstanding entries in |top_icon_views_|?",
+      "revId": "5552f8011b3a547f02b2de5f4dacafbfbf23893e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "879cdd51_867acbcc",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T20:46:57Z",
+      "side": 1,
+      "message": "We probably need a symmetric RemoveObserver in OnTopIconAnimationsComplete and in dtor.",
+      "revId": "5552f8011b3a547f02b2de5f4dacafbfbf23893e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84921b2c_241a3c99",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T20:46:57Z",
+      "side": 1,
+      "message": "Can we use |icon_view| and get rid of this cast?",
+      "range": {
+        "startLine": 227,
+        "startChar": 6,
+        "endLine": 227,
+        "endChar": 40
+      },
+      "revId": "5552f8011b3a547f02b2de5f4dacafbfbf23893e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73958811_5617dad9",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T20:46:57Z",
+      "side": 1,
+      "message": "nit: // TopIconAnimationObserver",
+      "revId": "5552f8011b3a547f02b2de5f4dacafbfbf23893e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbbd867b_71e3dcfb",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T20:46:57Z",
+      "side": 1,
+      "message": "nit: reverse condition and bail out early to save some indentation.",
+      "revId": "5552f8011b3a547f02b2de5f4dacafbfbf23893e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf5124bd_b66d9857",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T20:46:57Z",
+      "side": 1,
+      "message": "nit: const pointer",
+      "revId": "5552f8011b3a547f02b2de5f4dacafbfbf23893e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58b3ecde_b9dd6765",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T20:46:57Z",
+      "side": 1,
+      "message": "nit: ContentsContainerAnimationDelegate -\u003e ContentsContainerAnimation",
+      "range": {
+        "startLine": 316,
+        "startChar": 6,
+        "endLine": 316,
+        "endChar": 40
+      },
+      "revId": "5552f8011b3a547f02b2de5f4dacafbfbf23893e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43c36676_0f49892f",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T20:46:57Z",
+      "side": 1,
+      "message": "We need a StopObservingImplicitAnimations(); if the animation still runs when we are here.",
+      "revId": "5552f8011b3a547f02b2de5f4dacafbfbf23893e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9752587e_d724a882",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T20:46:57Z",
+      "side": 1,
+      "message": "nit: // ui::ImplicitAnimationObserver",
+      "revId": "5552f8011b3a547f02b2de5f4dacafbfbf23893e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7ca84b6_7b07085b",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T20:46:57Z",
+      "side": 1,
+      "message": "nit: use \"\u003d std::make_unique\u003cBackgroundAnimation\u003e(show, this)\", here and other .reset() calls.",
+      "range": {
+        "startLine": 461,
+        "startChar": 24,
+        "endLine": 461,
+        "endChar": 29
+      },
+      "revId": "5552f8011b3a547f02b2de5f4dacafbfbf23893e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94800036_9a7adc60",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T20:46:57Z",
+      "side": 1,
+      "message": "Can we get rid of the cast, here and the L478?\n\ne.g. making TopIconAnimationDelegate (or an animation interface) as a nested class declared in header then we can make std::unique_ptr knows correct type.\n\nSomething like the following:\nin h: \n\u003d\u003d\u003d\u003d\nclass AppListFolderView {\n public:\n  ...\n private:\n  class Animation {\n   public:\n    virtual ~Animation() {}\n    virtual void ScheduleAnimation() \u003d 0;\n  };\n\n  ...\n\n  std::unique_ptr\u003cAnimation\u003e top_icon_animation_delegate_;\n};\n\nin cc:\n\u003d\u003d\u003d\u003d\nclass TopIconAnimationDelegate : public AppListFolderView::Animation,\n                                 public ... {\n  ...\n};\n\nThen here,\n  top_icon_animation_delegate_ \u003d std::make_unique\u003cTopIconAnimationDelegate\u003e(...);\n  top_icon_animation_delegate_-\u003eScheduleAnimation();",
+      "range": {
+        "startLine": 472,
+        "startChar": 2,
+        "endLine": 472,
+        "endChar": 40
+      },
+      "revId": "5552f8011b3a547f02b2de5f4dacafbfbf23893e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1eb67200_c5c7b377",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T20:46:57Z",
+      "side": 1,
+      "message": "nit: Get rid of the cast",
+      "range": {
+        "startLine": 517,
+        "startChar": 9,
+        "endLine": 517,
+        "endChar": 20
+      },
+      "revId": "5552f8011b3a547f02b2de5f4dacafbfbf23893e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51457fe9_db636fe8",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T20:46:57Z",
+      "side": 1,
+      "message": "Can we not keeping this as a member and get it from the root grid view when needed? The worry is that the folder view might be gone (e.g. from sync) and keeping a reference without observing data model is dangerous.",
+      "range": {
+        "startLine": 575,
+        "startChar": 2,
+        "endLine": 575,
+        "endChar": 29
+      },
+      "revId": "5552f8011b3a547f02b2de5f4dacafbfbf23893e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "816350ab_501dcaa8",
+        "filename": "ui/app_list/views/app_list_folder_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T20:46:57Z",
+      "side": 1,
+      "message": "nit: const gfx::Rect\u0026, to save a copy here and in L86",
+      "range": {
+        "startLine": 84,
+        "startChar": 2,
+        "endLine": 84,
+        "endChar": 11
+      },
+      "revId": "5552f8011b3a547f02b2de5f4dacafbfbf23893e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5b85708_6af4c362",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2129,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T20:46:57Z",
+      "side": 1,
+      "message": "nit: UTF8ToUTF16 since display name is UTF8",
+      "range": {
+        "startLine": 2129,
+        "startChar": 12,
+        "endLine": 2129,
+        "endChar": 24
+      },
+      "revId": "5552f8011b3a547f02b2de5f4dacafbfbf23893e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abc2bb47_3e88ee56",
+        "filename": "ui/app_list/views/apps_grid_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T20:46:57Z",
+      "side": 1,
+      "message": "nit: const method",
+      "revId": "5552f8011b3a547f02b2de5f4dacafbfbf23893e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
