@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8125af8b_2233f956",
+        "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/PreviewFactory.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-30T22:24:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1096a652_c0f46ff6",
+      "range": {
+        "startLine": 39,
+        "startChar": 40,
+        "endLine": 39,
+        "endChar": 55
+      },
+      "revId": "5200381c63237dad328abefc4e9594051e944921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2ca65bf_8b6a9e4d",
         "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/SourceFrame.js",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "5200381c63237dad328abefc4e9594051e944921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd01c14f_66b9d18a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/SourceFrame.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-30T22:24:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2ca65bf_8b6a9e4d",
+      "range": {
+        "startLine": 47,
+        "startChar": 9,
+        "endLine": 47,
+        "endChar": 26
+      },
+      "revId": "5200381c63237dad328abefc4e9594051e944921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a103dbe4_12fd9616",
+        "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/SourceFrame.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-30T22:24:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49893499_4dc94045",
+      "range": {
+        "startLine": 48,
+        "startChar": 9,
+        "endLine": 48,
+        "endChar": 22
+      },
+      "revId": "5200381c63237dad328abefc4e9594051e944921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b5d44d2_44371ad3",
         "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/SourceFrame.js",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "5200381c63237dad328abefc4e9594051e944921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aee5766_23468c32",
+        "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/SourceFrame.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-30T22:24:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b5d44d2_44371ad3",
+      "range": {
+        "startLine": 100,
+        "startChar": 9,
+        "endLine": 100,
+        "endChar": 24
+      },
+      "revId": "5200381c63237dad328abefc4e9594051e944921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "3993ee55_3c3fba0a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/SourceFrame.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-30T22:24:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1086ed42_735da962",
+      "range": {
+        "startLine": 101,
+        "startChar": 9,
+        "endLine": 101,
+        "endChar": 31
+      },
+      "revId": "5200381c63237dad328abefc4e9594051e944921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f501e7e4_19ab2806",
         "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/SourceFrame.js",
         "patchSetId": 1
@@ -137,6 +257,30 @@
       "revId": "5200381c63237dad328abefc4e9594051e944921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5303bde4_cc26ffb2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/SourceFrame.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-30T22:24:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f501e7e4_19ab2806",
+      "range": {
+        "startLine": 119,
+        "startChar": 18,
+        "endLine": 119,
+        "endChar": 31
+      },
+      "revId": "5200381c63237dad328abefc4e9594051e944921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "bfb0b01e_b3fb7c83",
+        "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/SourceFrame.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-30T22:24:41Z",
+      "side": 1,
+      "message": "No. We should be good because we are in read-only mode. But there was a CodeMirror bug. Filed and fixed: https://github.com/codemirror/CodeMirror/issues/5217",
+      "parentUuid": "4aca8e9f_55f44ade",
+      "range": {
+        "startLine": 132,
+        "startChar": 11,
+        "endLine": 132,
+        "endChar": 21
+      },
+      "revId": "5200381c63237dad328abefc4e9594051e944921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11d333f8_f48bc25c",
         "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/SourceFrame.js",
         "patchSetId": 1
@@ -183,6 +351,30 @@
       "revId": "5200381c63237dad328abefc4e9594051e944921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2561552_7723d186",
+        "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/SourceFrame.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-30T22:24:41Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "11d333f8_f48bc25c",
+      "range": {
+        "startLine": 143,
+        "startChar": 2,
+        "endLine": 143,
+        "endChar": 15
+      },
+      "revId": "5200381c63237dad328abefc4e9594051e944921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "9a98194b_f7c2d0e0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/SourceFrame.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-30T22:24:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7368ec13_665f9286",
+      "range": {
+        "startLine": 217,
+        "startChar": 6,
+        "endLine": 217,
+        "endChar": 12
+      },
+      "revId": "5200381c63237dad328abefc4e9594051e944921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "979ab6d9_0213ee05",
         "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/SourceFrame.js",
         "patchSetId": 1
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "16554cf4_04f1008a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/SourceFrame.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-30T22:24:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "979ab6d9_0213ee05",
+      "range": {
+        "startLine": 219,
+        "startChar": 27,
+        "endLine": 219,
+        "endChar": 34
+      },
+      "revId": "5200381c63237dad328abefc4e9594051e944921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f4e0c4e_88f6940c",
         "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/SourceFrame.js",
         "patchSetId": 1
@@ -252,6 +492,30 @@
       "revId": "5200381c63237dad328abefc4e9594051e944921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a30d5f4a_f852c95f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/SourceFrame.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-30T22:24:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f4e0c4e_88f6940c",
+      "range": {
+        "startLine": 642,
+        "startChar": 44,
+        "endLine": 642,
+        "endChar": 63
+      },
+      "revId": "5200381c63237dad328abefc4e9594051e944921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

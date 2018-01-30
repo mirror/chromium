@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e52ebff_65de8207",
+        "filename": "third_party/WebKit/Source/devtools/front_end/formatter_worker/FormatterWorker.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-30T22:24:41Z",
+      "side": 1,
+      "message": "Not all js comes in the network as text/javascript, so I had to add more mime types here.",
+      "revId": "27e82940c88fd32ba2c53a122f61050b3eebcace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
