@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2346af1c_f9960a31",
+        "filename": "content/browser/loader/resource_loader_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1687,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-30T19:07:30Z",
+      "side": 1,
+      "message": "Nit: static constexpr char kPath[] \u003d ...;\n\n(in general char[] is slightly preferable to char* anyway, as the latter is a pointer and storage for the string, while the former is only storage)",
+      "revId": "ad596510386093f823d15188ed85bcef72b32571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a761d7b9_3571aa1d",
+        "filename": "services/network/public/interfaces/url_loader.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-30T19:07:30Z",
+      "side": 1,
+      "message": "Nit: suggest wording this as:\n\nNote that PauseReadingBodyFromNet() is asynchronous and only pauses *if* the response\nbody is fetched from the network. This means:\n- any data in flight before PauseReadingBodyFromNet() is processed will still be sent\n- a response body not from the network (e.g. from \u003cfill in example\u003e) will not be paused\n  at all",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 28
+      },
+      "revId": "ad596510386093f823d15188ed85bcef72b32571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
