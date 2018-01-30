@@ -93,6 +93,23 @@
     },
     {
       "key": {
+        "uuid": "9241f979_ecc002e0",
+        "filename": "content/browser/renderer_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-30T05:17:37Z",
+      "side": 1,
+      "message": "Ok, I guess for child frames, nothing says the compositor viewport should be in pixels. I think GetPhysicalBackingSize really wants to be GetCompositorViewportSize or something. But that\u0027d be for another change.",
+      "revId": "083bf8200360902ba81ab5b50cda9ada1e8693d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3483889e_899acdb0",
         "filename": "content/common/frame_messages.h",
         "patchSetId": 7
