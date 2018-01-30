@@ -196,7 +196,7 @@ void BrowserFrameHeaderAsh::LayoutHeader() {
   UpdateCaptionButtons();
   caption_button_container_->Layout();
 
-  gfx::Size caption_button_container_size =
+  const gfx::Size caption_button_container_size =
       caption_button_container_->GetPreferredSize();
   caption_button_container_->SetBounds(
       view_->width() - caption_button_container_size.width(), 0,
@@ -206,9 +206,8 @@ void BrowserFrameHeaderAsh::LayoutHeader() {
   if (window_icon_) {
     // Vertically center the window icon with respect to the caption button
     // container.
-    gfx::Size icon_size(window_icon_->GetPreferredSize());
-    int icon_offset_y =
-        (caption_button_container_->height() - icon_size.height()) / 2;
+    const gfx::Size icon_size(window_icon_->GetPreferredSize());
+    const int icon_offset_y = (GetHeaderHeight() - icon_size.height()) / 2;
     window_icon_->SetBounds(ash::FrameHeaderUtil::GetLeftViewXInset(),
                             icon_offset_y, icon_size.width(),
                             icon_size.height());
@@ -216,7 +215,7 @@ void BrowserFrameHeaderAsh::LayoutHeader() {
 }
 
 int BrowserFrameHeaderAsh::GetHeaderHeight() const {
-  return caption_button_container_->height();
+  return caption_button_container_->bounds().bottom();
 }
 
 int BrowserFrameHeaderAsh::GetHeaderHeightForPainting() const {

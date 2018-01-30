@@ -73,7 +73,10 @@ int LayoutProvider::GetDistanceMetric(int metric) const {
     case DistanceMetric::DISTANCE_BUTTON_HORIZONTAL_PADDING:
       return 16;
     case DistanceMetric::DISTANCE_BUTTON_MAX_LINKABLE_WIDTH:
+    case DistanceMetric::DISTANCE_CAPTION_BUTTONS_SPACING:
       return 0;
+    case DistanceMetric::DISTANCE_CAPTION_BUTTONS_SPACING_TOUCH_OPTIMIZED:
+      return 8;
     case DistanceMetric::DISTANCE_CLOSE_BUTTON_MARGIN:
       return 7;
     case DistanceMetric::DISTANCE_CONTROL_VERTICAL_TEXT_PADDING:
