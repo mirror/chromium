@@ -55,8 +55,7 @@ int GetIconViewWidth() {
 const char SearchResultView::kViewClassName[] = "ui/app_list/SearchResultView";
 
 SearchResultView::SearchResultView(SearchResultListView* list_view)
-    : views::Button(this),
-      list_view_(list_view),
+    : list_view_(list_view),
       icon_(new views::ImageView),
       badge_icon_(new views::ImageView),
       actions_view_(new SearchResultActionsView(this)),
@@ -132,18 +131,6 @@ base::string16 SearchResultView::ComputeAccessibleName() const {
   accessible_name += result_->details();
 
   return accessible_name;
-}
-
-void SearchResultView::SetSelected(bool selected) {
-  if (selected_ == selected)
-    return;
-  selected_ = selected;
-
-  if (selected_) {
-    ScrollRectToVisible(GetLocalBounds());
-    NotifyAccessibilityEvent(ax::mojom::Event::kSelection, true);
-  }
-  SchedulePaint();
 }
 
 void SearchResultView::UpdateAccessibleName() {
@@ -295,7 +282,7 @@ void SearchResultView::PaintButtonContents(gfx::Canvas* canvas) {
 
   // Possibly call FillRect a second time (these colours are partially
   // transparent, so the previous FillRect is not redundant).
-  if (selected())
+  if (background_highlighted())
     canvas->FillRect(content_rect, kRowSelectedColor);
 
   gfx::Rect border_bottom = gfx::SubtractRects(rect, content_rect);
@@ -328,13 +315,15 @@ void SearchResultView::PaintButtonContents(gfx::Canvas* canvas) {
 }
 
 void SearchResultView::OnFocus() {
-  SetSelected(true);
-  Button::OnFocus();
+  set_background_highlighted(true);
+  ScrollRectToVisible(GetLocalBounds());
+  NotifyAccessibilityEvent(ui::AX_EVENT_SELECTION, true);
+  SchedulePaint();
 }
 
 void SearchResultView::OnBlur() {
-  SetSelected(false);
-  Button::OnBlur();
+  set_background_highlighted(false);
+  SchedulePaint();
 }
 
 void SearchResultView::ButtonPressed(views::Button* sender,

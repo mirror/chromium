@@ -52,8 +52,7 @@ class APP_LIST_EXPORT SearchResultListView : public SearchResultContainerView {
   void NotifyFirstResultYIndex(int y_index) override;
   int GetYSize() override;
   views::View* GetSelectedView() const override;
-  views::View* GetFirstResultView() override;
-  void SetFirstResultSelected(bool selected) override;
+  SearchResultBaseView* GetFirstResultView() override;
 
   views::View* results_container_for_test() const { return results_container_; }
 

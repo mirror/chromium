@@ -5,6 +5,7 @@
 #include "ui/app_list/views/search_result_page_view.h"
 
 #include <stddef.h>
+#include <ui/app_list/views/search_result_base_view.h>
 
 #include <algorithm>
 #include <memory>
@@ -16,6 +17,7 @@
 #include "ui/app_list/views/app_list_main_view.h"
 #include "ui/app_list/views/contents_view.h"
 #include "ui/app_list/views/search_box_view.h"
+#include "ui/app_list/views/search_result_base_view.h"
 #include "ui/app_list/views/search_result_list_view.h"
 #include "ui/app_list/views/search_result_tile_item_list_view.h"
 #include "ui/gfx/canvas.h"
@@ -263,35 +265,35 @@ void SearchResultPageView::OnSearchResultContainerResultsChanged() {
 
   // Only sort and layout the containers when they have all updated.
   for (SearchResultContainerView* view : result_container_views_) {
-    if (view->UpdateScheduled()) {
+    if (view->UpdateScheduled())
       return;
-    }
   }
 
-  if (result_container_views_.empty())
-    return;
-  // Set the first result (if it exists) selected when search results are
-  // updated. Note that the focus is not set on the first result to prevent
-  // frequent focus switch between search box and first result during typing
-  // query.
-  SearchResultContainerView* old_first_container_view =
-      result_container_views_[0];
   ReorderSearchResultContainers();
 
   views::View* focused_view = GetFocusManager()->GetFocusedView();
-  if (first_result_view_ != focused_view) {
-    // If the old first result is focused, do not clear the selection. (This
-    // happens when the user moved the focus before search results are
-    // updated.)
-    old_first_container_view->SetFirstResultSelected(false);
+  if (first_result_view_ && first_result_view_ != focused_view) {
+    // Clear the first search result view's background highlight.
+    first_result_view_->set_background_highlighted(false);
+    first_result_view_->SchedulePaint();
   }
+
   first_result_view_ = result_container_views_[0]->GetFirstResultView();
-  if (!Contains(focused_view)) {
-    // If one of the search result is focused, do not set the first result
-    // selected.
-    result_container_views_[0]->SetFirstResultSelected(true);
+
+  if (Contains(focused_view)) {
+    // If one of the search result is focused, do not highlight the first search
+    // result.
+    return;
   }
-  return;
+
+  if (first_result_view_) {
+    // Highlight the first result after search results are updated. Note that
+    // the focus is not set on the first result to prevent frequent focus switch
+    // between the search box and the first result when the user is typing
+    // query.
+    first_result_view_->set_background_highlighted(true);
+    first_result_view_->SchedulePaint();
+  }
 }
 
 gfx::Rect SearchResultPageView::GetPageBoundsForState(
