@@ -556,6 +556,13 @@ std::unique_ptr<CSSParserSelector> CSSSelectorParser::ConsumePseudo(
       selector->AdoptSelectorVector(selector_vector);
       return selector;
     }
+    case CSSSelector::kPseudoPart: {
+      const CSSParserToken& ident = block.ConsumeIncludingWhitespace();
+      if (ident.GetType() != kIdentToken || !block.AtEnd())
+        return nullptr;
+      selector->SetArgument(ident.Value().ToAtomicString());
+      return selector;
+    }
     case CSSSelector::kPseudoSlotted: {
       DisallowPseudoElementsScope scope(this);
 
