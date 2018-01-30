@@ -8,6 +8,7 @@
 #include "core/editing/TextAffinity.h"
 #include "core/editing/testing/EditingTestBase.h"
 #include "core/layout/LayoutObject.h"
+#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 
 namespace blink {
 
@@ -21,6 +22,27 @@ std::ostream& operator<<(std::ostream& out, const LocalCaretRect& caret_rect) {
 }
 
 class LocalCaretRectTest : public EditingTestBase {};
+
+// Helper class to run the same test code with and without LayoutNG
+class ParameterizedLocalCaretRectTest
+    : public ::testing::WithParamInterface<bool>,
+      private ScopedLayoutNGForTest,
+      private ScopedLayoutNGPaintFragmentsForTest,
+      public LocalCaretRectTest {
+ public:
+  ParameterizedLocalCaretRectTest()
+      : ScopedLayoutNGForTest(GetParam()),
+        ScopedLayoutNGPaintFragmentsForTest(GetParam()) {}
+
+ protected:
+  bool LayoutNGEnabled() const { return GetParam(); }
+};
+
+INSTANTIATE_TEST_CASE_P(All,
+                        ParameterizedLocalCaretRectTest,
+                        ::testing::Bool());
+
+// TODO(xiaochengh): Parameterize all test cases.
 
 TEST_F(LocalCaretRectTest, DOMAndFlatTrees) {
   const char* body_content =

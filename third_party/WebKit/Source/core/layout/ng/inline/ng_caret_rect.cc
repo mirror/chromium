@@ -15,6 +15,7 @@
 #include "core/layout/ng/inline/ng_physical_line_box_fragment.h"
 #include "core/layout/ng/inline/ng_physical_text_fragment.h"
 #include "core/layout/ng/ng_physical_box_fragment.h"
+#include "platform/fonts/CharacterRange.h"
 
 namespace blink {
 
@@ -251,6 +252,12 @@ NGCaretPosition ComputeNGCaretPosition(const LayoutBlockFlow& context,
   }
 
   return candidate;
+}
+
+LocalCaretRect ComputeNGLocalCaretRect(const LayoutBlockFlow& context,
+                                       const PositionWithAffinity& position) {
+  // TODO(xiaochengh): Implementation.
+  return LocalCaretRect();
 }
 
 }  // namespace blink
