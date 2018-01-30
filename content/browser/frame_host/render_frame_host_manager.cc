@@ -1328,6 +1328,18 @@ RenderFrameHostManager::DetermineSiteInstanceForURL(
     }
   }
 
+  // TODO(alexmos): is this needed for KEYWORD and KEYWORD_GENERATED?
+  // TODO(alexmos): Move into a helper.
+  if (frame_tree_node_->IsMainFrame() &&
+      (ui::PageTransitionCoreTypeIs(transition, ui::PAGE_TRANSITION_TYPED) ||
+       ui::PageTransitionCoreTypeIs(transition,
+                                    ui::PAGE_TRANSITION_AUTO_BOOKMARK) ||
+       ui::PageTransitionCoreTypeIs(transition,
+                                    ui::PAGE_TRANSITION_GENERATED))) {
+    return SiteInstanceDescriptor(browser_context, dest_url,
+                                  SiteInstanceRelation::UNRELATED);
+  }
+
   // Start the new renderer in a new SiteInstance, but in the current
   // BrowsingInstance.
   return SiteInstanceDescriptor(browser_context, dest_url,

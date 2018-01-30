@@ -990,7 +990,7 @@ void BlinkTestController::OnReload() {
 
 void BlinkTestController::OnLoadURLForFrame(const GURL& url,
                                             const std::string& frame_name) {
-  main_window_->LoadURLForFrame(url, frame_name);
+  main_window_->LoadURLForFrame(url, frame_name, ui::PAGE_TRANSITION_LINK);
 }
 
 void BlinkTestController::OnCloseRemainingWindows() {
