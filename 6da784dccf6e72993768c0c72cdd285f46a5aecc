@@ -70,6 +70,30 @@
       "revId": "6da784dccf6e72993768c0c72cdd285f46a5aecc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9dc0fe76_312e7d05",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/share/ShareHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1226606
+      },
+      "writtenOn": "2018-01-30T23:39:20Z",
+      "side": 1,
+      "message": "I\u0027ve done this according to your suggestion, I will of course test it before submitting, unfortunately I don\u0027t know if I can spend more time on this three lines long code. \n\nPlease finally approve it or reject it and please note, that I have also send second short patch, which is not touched by you yet. Can we proceed?",
+      "parentUuid": "0a96c616_990199f3",
+      "range": {
+        "startLine": 628,
+        "startChar": 39,
+        "endLine": 628,
+        "endChar": 52
+      },
+      "revId": "6da784dccf6e72993768c0c72cdd285f46a5aecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
