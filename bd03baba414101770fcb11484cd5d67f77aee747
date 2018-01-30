@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6f32645_485aa1e4",
+        "filename": "chrome/browser/signin/account_consistency_mode_manager.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-30T10:22:50Z",
+      "side": 1,
+      "message": "This may be called for incognito profiles as well, so this DCHECK_EQ is wrong.",
+      "range": {
+        "startLine": 129,
+        "startChar": 36,
+        "endLine": 129,
+        "endChar": 49
+      },
+      "revId": "bd03baba414101770fcb11484cd5d67f77aee747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab7839f3_3f6fbdf6",
+        "filename": "chrome/browser/signin/account_consistency_mode_manager.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-30T10:22:50Z",
+      "side": 1,
+      "message": "Can we make these method private and only keep the static ones public?",
+      "range": {
+        "startLine": 29,
+        "startChar": 11,
+        "endLine": 29,
+        "endChar": 40
+      },
+      "revId": "bd03baba414101770fcb11484cd5d67f77aee747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3461644_e51421c8",
+        "filename": "components/signin/core/browser/signin_header_helper.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-30T10:22:50Z",
+      "side": 1,
+      "message": "dice_helper knows the account consistency method, so we should move the decision on what signout_mode to use in the DiceHeaderHelper.",
+      "range": {
+        "startLine": 184,
+        "startChar": 36,
+        "endLine": 184,
+        "endChar": 54
+      },
+      "revId": "bd03baba414101770fcb11484cd5d67f77aee747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e6fcbea_e9717cba",
+        "filename": "components/signin/ios/browser/account_consistency_service.mm",
+        "patchSetId": 31
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-30T10:22:50Z",
+      "side": 1,
+      "message": "I am wondering - should we pass the account_consistency instead of boolean is_mirror_enabled in BuildMirrorRequestCookieIfPossible?",
+      "range": {
+        "startLine": 366,
+        "startChar": 18,
+        "endLine": 366,
+        "endChar": 36
+      },
+      "revId": "bd03baba414101770fcb11484cd5d67f77aee747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
