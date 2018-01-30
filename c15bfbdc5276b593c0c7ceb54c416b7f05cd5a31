@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05c17a85_fd3d3035",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-30T23:14:16Z",
+      "side": 1,
+      "message": "This will only get sent if there\u0027s a pending resize. Please add a comment.",
+      "revId": "c15bfbdc5276b593c0c7ceb54c416b7f05cd5a31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef149407_9271b9d2",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-30T23:14:16Z",
+      "side": 1,
+      "message": "This needs a comment about why it\u0027s ok to send WasShown if we cannot resize. Why is shown different from resize?",
+      "revId": "c15bfbdc5276b593c0c7ceb54c416b7f05cd5a31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
