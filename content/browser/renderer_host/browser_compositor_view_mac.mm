@@ -254,7 +254,6 @@ void BrowserCompositorMac::CopyFromCompositingSurface(
     const ReadbackRequestCallback& callback,
     SkColorType preferred_color_type) {
   DCHECK(delegated_frame_host_);
-  DCHECK(state_ == HasAttachedCompositor);
   outstanding_copy_count_ += 1;
 
   auto callback_with_decrement =
@@ -281,7 +280,6 @@ void BrowserCompositorMac::CopyFromCompositingSurfaceToVideoFrame(
     scoped_refptr<media::VideoFrame> target,
     const base::Callback<void(const gfx::Rect&, bool)>& callback) {
   DCHECK(delegated_frame_host_);
-  DCHECK(state_ == HasAttachedCompositor);
   outstanding_copy_count_ += 1;
 
   auto callback_with_decrement =
