@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7c31933_338a58b7",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_set_manufacturer_model_behavior.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-30T18:37:55Z",
+      "side": 1,
+      "message": "nit: better to move this TODO inside of the function?",
+      "revId": "686e0afb60196ef11b40e614baf31c50c3512d68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
