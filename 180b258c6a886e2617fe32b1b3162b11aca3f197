@@ -69,6 +69,24 @@
       "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "369b1e84_f1444ca9",
+        "filename": "content/public/browser/content_browser_client.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2018-01-30T15:57:12Z",
+      "side": 1,
+      "message": "still, ContentBrowserClient is a last-resort interface. I\u0027d rather have this on RenderFrameHostDelegate",
+      "parentUuid": "14eb7494_51019d2d",
+      "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
