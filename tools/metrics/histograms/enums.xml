@@ -17705,6 +17705,10 @@ Called by update_net_error_codes.py.-->
   <int value="2349" label="V8HTMLElement_Autocapitalize_AttributeGetter"/>
   <int value="2350" label="V8HTMLElement_Autocapitalize_AttributeSetter"/>
   <int value="2351" label="CSSLegacyAlignment"/>
+  <int value="2352" label="CSSBasicShape"/>
+  <int value="2353" label="CSSGradient"/>
+  <int value="2354" label="CSSPaintFunction"/>
+  <int value="2355" label="WebkitCrossFade"/>
 </enum>
 
 <enum name="FeedbackSource">
