@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4dc836f1_c010317f",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/items_to_remove_list.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-30T21:29:02Z",
+      "side": 1,
+      "message": "nit: we can remove these params since they\u0027re unused.",
+      "range": {
+        "startLine": 119,
+        "startChar": 32,
+        "endLine": 119,
+        "endChar": 62
+      },
+      "revId": "c62726b8c0580abbdc53749e181ce44d7697fc8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b312035_8b20d1d1",
+        "filename": "chrome/test/data/webui/settings/chrome_cleanup_page_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-30T21:29:02Z",
+      "side": 1,
+      "message": "Nit: no need to assign here, just use registryKeysListContainer directly.\nYou can remove the assert on the next line since it\u0027ll be the same as the one on line 168",
+      "range": {
+        "startLine": 171,
+        "startChar": 10,
+        "endLine": 171,
+        "endChar": 26
+      },
+      "revId": "c62726b8c0580abbdc53749e181ce44d7697fc8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
