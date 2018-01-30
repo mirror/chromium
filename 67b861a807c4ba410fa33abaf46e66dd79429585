@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "5111f5cd_e9f55361",
+        "filename": "net/base/registry_controlled_domains/registry_controlled_domain.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-30T19:22:15Z",
+      "side": 1,
+      "message": "Ya, I knew I was making the callers more discerning, but you know when you try to cut that little bruised spot off the apple and it just keeps getting wider... The call sites are also difficult to track down/get to the root of because, well, tests under gdb, and also the breakpoint is in an anonymous namespace. I suppose I could move it temporarily, but the web...html tests failing were just outside my experience.\n\nRegarding enums, some callers genuinely want the length, but aside from that, I was thinking that, if the entire host is a registry, how about we return the entire length? It can be tested by the caller, but I admit that I don\u0027t understand the subtleties of what leading and trailing dots mean to the callers.",
+      "parentUuid": "9c4d47ab_0c01bebc",
+      "revId": "67b861a807c4ba410fa33abaf46e66dd79429585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9dbdd208_4d85ec37",
         "filename": "net/base/registry_controlled_domains/registry_controlled_domain.cc",
         "patchSetId": 3

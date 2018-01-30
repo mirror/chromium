@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "47146055_3e647b1c",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-30T19:22:15Z",
+      "side": 1,
+      "message": "I know; I built switches for 20 years. :) But I try to adopt the group\u0027s nomenclature - just today, someone used \"ping\" for PNG - and it seemed to be what the issues used. I did mean to quote it though.\n\nAnyways, removed but still in the description, but quoted.",
+      "parentUuid": "05bb80ec_2aab121a",
+      "revId": "9c83715aa8534b6a72a75840b34d18218fffad7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f816058f_34f5ec74",
         "filename": "components/omnibox/browser/omnibox_edit_model.cc",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0a43db51_f217f254",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-30T19:22:15Z",
+      "side": 1,
+      "message": "Ok, moved.",
+      "parentUuid": "f816058f_34f5ec74",
+      "revId": "9c83715aa8534b6a72a75840b34d18218fffad7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a6675ea_3263761b",
         "filename": "net/base/registry_controlled_domains/registry_controlled_domain.cc",
         "patchSetId": 7
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-29T22:32:01Z",
       "side": 1,
       "message": "Nit: This could use a comment saying what the returned values are.  (It could also maybe use a rename.)",
+      "revId": "9c83715aa8534b6a72a75840b34d18218fffad7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d3cbafb_7c5126a5",
+        "filename": "net/base/registry_controlled_domains/registry_controlled_domain.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-30T19:22:15Z",
+      "side": 1,
+      "message": "Done, but I couldn\u0027t think of a better not-overly-long name.",
+      "parentUuid": "1a6675ea_3263761b",
       "revId": "9c83715aa8534b6a72a75840b34d18218fffad7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "5c2946d0_73720488",
+        "filename": "net/base/registry_controlled_domains/registry_controlled_domain.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-30T19:22:15Z",
+      "side": 1,
+      "message": "Done. The explicit types were due to the ternaries.",
+      "parentUuid": "dacd2a0e_b3e9d5bc",
+      "revId": "9c83715aa8534b6a72a75840b34d18218fffad7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd86077a_b52c326e",
         "filename": "net/base/registry_controlled_domains/registry_controlled_domain.cc",
         "patchSetId": 7
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "014c885e_ded39208",
+        "filename": "net/base/registry_controlled_domains/registry_controlled_domain.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-30T19:22:15Z",
+      "side": 1,
+      "message": "Don\u0027t you think that borders on write-only ? :) Besides, I had to switch to simple if\u0027s in other places, so it looks consistent now.\n\nbtw, I think style requires braces on those, but I think they\u0027re a liability here. Let me know if you agree.",
+      "parentUuid": "bd86077a_b52c326e",
+      "revId": "9c83715aa8534b6a72a75840b34d18218fffad7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc0274ee_4124b068",
         "filename": "net/base/registry_controlled_domains/registry_controlled_domain.h",
         "patchSetId": 7
@@ -101,6 +191,24 @@
       "revId": "9c83715aa8534b6a72a75840b34d18218fffad7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96700ed2_e58bc016",
+        "filename": "net/base/registry_controlled_domains/registry_controlled_domain.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-30T19:22:15Z",
+      "side": 1,
+      "message": "By it I meant that GetRegistryLength() overloads return values, and that this function tightens those. I agree that the evaluation is identical.\n\nI took your suggestion (since the old comment borders on unflattering.)",
+      "parentUuid": "dc0274ee_4124b068",
+      "revId": "9c83715aa8534b6a72a75840b34d18218fffad7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
