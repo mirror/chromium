@@ -93,6 +93,9 @@ class LockManager::Lock {
     DCHECK(request_);
     DCHECK(!handle_);
 
+    // Get a new ID when granted, to maintain map in grant order.
+    lock_id_ = context->next_lock_id++;
+
     blink::mojom::LockHandlePtr ptr;
     handle_ = LockHandleImpl::Create(context, origin, lock_id_, &ptr);
     request_->Granted(std::move(ptr));
@@ -121,9 +124,16 @@ class LockManager::Lock {
  private:
   const std::string name_;
   const LockMode mode_;
-  const int64_t lock_id_;
   const std::string client_id_;
+
+  // |lock_id_| changes when granted, to reflect grant order.
+  int64_t lock_id_;
+
+  // |request_| is valid until the lock is granted (or failure).
   blink::mojom::LockRequestPtr request_;
+
+  // Once granted, |handle_| holds this end of the pipe that lets us monitor
+  // for the other end going away.
   mojo::StrongBindingPtr<blink::mojom::LockHandle> handle_;
 };
 
@@ -136,14 +146,15 @@ class LockManager::OriginState {
   OriginState() = default;
   ~OriginState() = default;
 
-  void AddRequest(int64_t lock_id,
-                  const std::string& name,
-                  LockMode mode,
-                  const std::string& client_id,
-                  blink::mojom::LockRequestPtr request) {
-    requested_.emplace(std::make_pair(
+  const Lock* AddRequest(int64_t lock_id,
+                         const std::string& name,
+                         LockMode mode,
+                         const std::string& client_id,
+                         blink::mojom::LockRequestPtr request) {
+    auto it = requested_.emplace(std::make_pair(
         lock_id, std::make_unique<Lock>(name, mode, lock_id, client_id,
                                         std::move(request))));
+    return it.first->second.get();
   }
 
   bool EraseLock(int64_t lock_id) {
@@ -281,13 +292,17 @@ void LockManager::RequestLock(const std::string& name,
   request.set_connection_error_handler(base::BindOnce(&LockManager::ReleaseLock,
                                                       base::Unretained(this),
                                                       context.origin, lock_id));
-  origins_[context.origin].AddRequest(lock_id, name, mode, context.client_id,
-                                      std::move(request));
+  const Lock* lock = origins_[context.origin].AddRequest(
+      lock_id, name, mode, context.client_id, std::move(request));
   ProcessRequests(context.origin);
 
-  DCHECK(priority != Priority::OVERRIDE ||
-         origins_[context.origin].IsHeld(lock_id))
-      << "Stolen lock should be granted immediately";
+#if DCHECK_IS_ON()
+  if (priority == Priority::OVERRIDE) {
+    DCHECK(origins_[context.origin].IsHeld(lock->lock_id()))
+        << "Stolen lock should be granted immediately";
+    DCHECK_NE(lock->lock_id(), lock_id) << "Id should be replaced when granted";
+  }
+#endif
 }
 
 void LockManager::ReleaseLock(const url::Origin& origin, int64_t lock_id) {
