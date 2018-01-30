@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20013eed_d633179e",
+        "filename": "mojo/public/interfaces/bindings/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-30T21:52:21Z",
+      "side": 1,
+      "message": "I realize there is some weirdness in the incongruity between having one \"allow\" and one \"disallow\" feature. My thinking is, it\u0027s weird for the bindings generator to need a special flag just to operate normally. So if we wanted to be consistent, I\u0027d prefer for these to both be \"disallow\" settings, and I didn\u0027t think changing the native_structs option here made sense.\n\nAlternatively I could merge them into one dedicated setting \u0026 flag like [--]for_internal_bindings or something.\n\nWDYT?",
+      "revId": "1f497abedd37f1828afbaa773d612b3b5fd790ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
