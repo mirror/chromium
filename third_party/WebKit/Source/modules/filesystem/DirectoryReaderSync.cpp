@@ -40,65 +40,57 @@
 namespace blink {
 
 class DirectoryReaderSync::EntriesCallbackHelper final
-    : public DirectoryReaderOnDidReadCallback {
+    : public EntriesCallbacks::OnDidGetEntriesCallback {
  public:
+  static EntriesCallbackHelper* Create(DirectoryReaderSync* reader) {
+    return new EntriesCallbackHelper(reader);
+  }
+
+  void Trace(blink::Visitor* visitor) override {
+    visitor->Trace(reader_);
+    EntriesCallbacks::OnDidGetEntriesCallback::Trace(visitor);
+  }
+
+  void OnSuccess(EntryHeapVectorCarrier* entries) override {
+    reader_->entries_.ReserveCapacity(reader_->entries_.size() +
+                                      entries->Get().size());
+    for (const auto& entry : entries->Get()) {
+      reader_->entries_.UncheckedAppend(EntrySync::Create(entry.Get()));
+    }
+  }
+
+ private:
   explicit EntriesCallbackHelper(DirectoryReaderSync* reader)
       : reader_(reader) {}
 
-  void OnDidReadDirectoryEntries(const EntryHeapVector& entries) override {
-    EntrySyncHeapVector sync_entries;
-    sync_entries.ReserveInitialCapacity(entries.size());
-    for (size_t i = 0; i < entries.size(); ++i)
-      sync_entries.UncheckedAppend(EntrySync::Create(entries[i].Get()));
-    reader_->AddEntries(sync_entries);
-  }
-
-  void Trace(blink::Visitor* visitor) override {
-    visitor->Trace(reader_);
-    DirectoryReaderOnDidReadCallback::Trace(visitor);
-  }
-
- private:
-  Member<DirectoryReaderSync> reader_;
-};
-
-class DirectoryReaderSync::ErrorCallbackHelper final
-    : public ErrorCallbackBase {
- public:
-  explicit ErrorCallbackHelper(DirectoryReaderSync* reader) : reader_(reader) {}
-
-  void Invoke(FileError::ErrorCode error) override { reader_->SetError(error); }
-
-  void Trace(blink::Visitor* visitor) override {
-    visitor->Trace(reader_);
-    ErrorCallbackBase::Trace(visitor);
-  }
-
- private:
   Member<DirectoryReaderSync> reader_;
 };
 
 DirectoryReaderSync::DirectoryReaderSync(DOMFileSystemBase* file_system,
                                          const String& full_path)
-    : DirectoryReaderBase(file_system, full_path),
-      callbacks_id_(0),
-      error_code_(FileError::kOK) {}
-
-DirectoryReaderSync::~DirectoryReaderSync() = default;
+    : DirectoryReaderBase(file_system, full_path) {}
 
 EntrySyncHeapVector DirectoryReaderSync::readEntries(
     ExceptionState& exception_state) {
   if (!callbacks_id_) {
+    DCHECK(!sync_helper_);
+    sync_helper_ = EntriesCallbacksSyncHelper::Create();
     callbacks_id_ = Filesystem()->ReadDirectory(
-        this, full_path_, new EntriesCallbackHelper(this),
-        new ErrorCallbackHelper(this), DOMFileSystemBase::kSynchronous);
+        this, full_path_,
+        // We need to accumulate the entries in the directory, so
+        // |sync_helper_->GetSuccessCallback()|, which is a simple getter,
+        // doesn't fit for this purpose.
+        EntriesCallbackHelper::Create(this), sync_helper_->GetErrorCallback(),
+        DOMFileSystemBase::kSynchronous);
   }
 
-  if (error_code_ == FileError::kOK && has_more_entries_ && entries_.IsEmpty())
-    file_system_->WaitForAdditionalResult(callbacks_id_);
+  if (sync_helper_->GetErrorCode() == FileError::kOK && has_more_entries_ &&
+      entries_.IsEmpty()) {
+    CHECK(Filesystem()->WaitForAdditionalResult(callbacks_id_));
+  }
 
-  if (error_code_ != FileError::kOK) {
-    FileError::ThrowDOMException(exception_state, error_code_);
+  sync_helper_->GetResultOrThrow(exception_state);
+  if (exception_state.HadException()) {
     return EntrySyncHeapVector();
   }
 
@@ -108,6 +100,7 @@ EntrySyncHeapVector DirectoryReaderSync::readEntries(
 }
 
 void DirectoryReaderSync::Trace(blink::Visitor* visitor) {
+  visitor->Trace(sync_helper_);
   visitor->Trace(entries_);
   DirectoryReaderBase::Trace(visitor);
 }
