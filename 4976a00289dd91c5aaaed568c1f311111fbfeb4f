@@ -34,6 +34,24 @@
       "revId": "4976a00289dd91c5aaaed568c1f311111fbfeb4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73023571_082d1be2",
+        "filename": "chrome/browser/notifications/notification_common.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-30T14:58:03Z",
+      "side": 1,
+      "message": "It can live in this directory, just as its own file. There shouldn\u0027t be any layering violation for the XPC service to include that header in its build.",
+      "parentUuid": "8244a999_e14321ce",
+      "revId": "4976a00289dd91c5aaaed568c1f311111fbfeb4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
