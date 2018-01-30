@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0301646c_1890e16a",
+        "filename": "components/cbor/cbor_values.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2018-01-30T22:44:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cd60a03_b9138f15",
+      "range": {
+        "startLine": 180,
+        "startChar": 2,
+        "endLine": 180,
+        "endChar": 49
+      },
+      "revId": "c23567d4ab4899aa459c687d693a916a8af87050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d3e4868_be1bed8a",
         "filename": "components/cbor/cbor_values.h",
         "patchSetId": 1
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "Can you explain what the difference between the static method and the ctor?",
       "parentUuid": "8298c575_412b4cc9",
+      "range": {
+        "startLine": 110,
+        "startChar": 10,
+        "endLine": 110,
+        "endChar": 55
+      },
+      "revId": "c23567d4ab4899aa459c687d693a916a8af87050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a303ea4_3c50f9e1",
+        "filename": "components/cbor/cbor_values.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2018-01-30T22:44:41Z",
+      "side": 1,
+      "message": "Moved to the top.\n\nIIUC the current options are:\n1) as in the latest patch.\n2) Change L114 ctor signature to CBORValue(base::StringPiece, Type), where type can either be TYPE::STRING or TYPE::BYTE_STRING\n\nSince Jun seemed ok with the either of those, I went ahead and uploaded the option 1 approach.",
+      "parentUuid": "592eb3fc_3226a8e2",
       "range": {
         "startLine": 110,
         "startChar": 10,
