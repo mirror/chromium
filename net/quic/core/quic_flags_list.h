@@ -119,11 +119,6 @@ QUIC_FLAG(bool,
           FLAGS_quic_reloadable_flag_quic_server_reply_to_connectivity_probing,
           true)
 
-// If true, allow stream data and control frames to be acked multiple times.
-QUIC_FLAG(bool,
-          FLAGS_quic_reloadable_flag_quic_allow_multiple_acks_for_data2,
-          true)
-
 // If true, calculate stream sequencer buffer block count in a way that
 // guaranteed to be 2048.
 QUIC_FLAG(bool,
