@@ -36,6 +36,40 @@
     },
     {
       "key": {
+        "uuid": "59ece8f3_2844c57f",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-30T03:21:09Z",
+      "side": 1,
+      "message": "can this be shared with Label::SetHorizontalAlignment()? \n\nMaybe \n\nnamespace gfx {\n\nHorizontalAlignment MaybeFlipForRTL(HorizontalAlignment alignment);\n\n}",
+      "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da04d8e4_7ff5142a",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-30T03:21:09Z",
+      "side": 1,
+      "message": "this doesn\u0027t match what Label does for ALIGN_TO_HEAD and seems to not meet the comment \"ALIGN_TO_HEAD,  // Align the text to its first strong character\u0027s direction.\".  If it\u0027s too hard, we should probably ban using ALIGN_TO_HEAD for StyledLabel (i.e DCHECK here).",
+      "revId": "67c395c84e250fac92395c6542a20dba03a8912d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a2c2270_f49826a7",
         "filename": "ui/views/controls/styled_label.cc",
         "patchSetId": 1
