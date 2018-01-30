@@ -46,7 +46,7 @@ public class UndoBarController implements SnackbarManager.SnackbarController {
 
     private final TabModelSelector mTabModelSelector;
     private final TabModelObserver mTabModelObserver;
-    private final SnackbarManager mSnackbarManager;
+    final SnackbarManager mSnackbarManager;
     private final Context mContext;
 
     /**
@@ -129,7 +129,7 @@ public class UndoBarController implements SnackbarManager.SnackbarController {
      * @param tabId The id of the tab.
      * @param content The title of the tab.
      */
-    private void showUndoBar(int tabId, String content) {
+    void showUndoBar(int tabId, String content) {
         RecordHistogram.recordEnumeratedHistogram("AndroidTabCloseUndo.Toast",
                 mSnackbarManager.isShowing() ? TAB_CLOSE_UNDO_TOAST_SHOWN_WARM
                                              : TAB_CLOSE_UNDO_TOAST_SHOWN_COLD,
@@ -148,7 +148,7 @@ public class UndoBarController implements SnackbarManager.SnackbarController {
      *
      * @param closedTabs A list of tabs that were closed.
      */
-    private void showUndoCloseAllBar(List<Tab> closedTabs) {
+    void showUndoCloseAllBar(List<Tab> closedTabs) {
         String content = String.format(Locale.getDefault(), "%d", closedTabs.size());
         mSnackbarManager.showSnackbar(
                 Snackbar.make(content, this, Snackbar.TYPE_ACTION, Snackbar.UMA_TAB_CLOSE_ALL_UNDO)

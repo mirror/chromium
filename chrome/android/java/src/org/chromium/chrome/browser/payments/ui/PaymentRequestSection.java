@@ -155,7 +155,7 @@ public abstract class PaymentRequestSection extends LinearLayout implements View
      * @param sectionName Title of the section to display.
      * @param delegate    Delegate to alert when something changes in the dialog.
      */
-    private PaymentRequestSection(Context context, String sectionName, SectionDelegate delegate) {
+    PaymentRequestSection(Context context, String sectionName, SectionDelegate delegate) {
         super(context);
         mDelegate = delegate;
         setOnClickListener(delegate);
@@ -514,7 +514,7 @@ public abstract class PaymentRequestSection extends LinearLayout implements View
          * The TextView that is used to display the updated message to the user when the total price
          * of their cart changes. It's the second child of the mSummaryLayout.
          */
-        private TextView mUpdatedView;
+        TextView mUpdatedView;
 
         /** The runnable used to fade out the mUpdatedView. */
         private Runnable mFadeOutRunnable = new Runnable() {
@@ -810,11 +810,12 @@ public abstract class PaymentRequestSection extends LinearLayout implements View
             private static final int OPTION_ROW_TYPE_WARNING = 3;
 
             private final int mRowType;
-            @Nullable private final PaymentOption mOption;
-            private final View mButton;
-            private final TextView mLabel;
-            private final View mOptionIcon;
-            private final View mEditIcon;
+            @Nullable
+            final PaymentOption mOption;
+            final View mButton;
+            final TextView mLabel;
+            final View mOptionIcon;
+            final View mEditIcon;
 
             public OptionRow(GridLayout parent, int rowIndex, int rowType,
                     @Nullable PaymentOption item, boolean isSelected) {
@@ -1032,16 +1033,16 @@ public abstract class PaymentRequestSection extends LinearLayout implements View
         }
 
         /** Top and bottom margins for each item. */
-        private final int mVerticalMargin;
+        final int mVerticalMargin;
 
         /** All the possible PaymentOptions in Layout form, then one row for adding new options. */
         private final ArrayList<OptionRow> mOptionRows = new ArrayList<>();
 
         /** Width that the editable option icon takes. */
-        private final int mEditableOptionIconMaxWidth;
+        final int mEditableOptionIconMaxWidth;
 
         /** Width that the non editable option icon takes. */
-        private final int mNonEditableOptionIconMaxWidth;
+        final int mNonEditableOptionIconMaxWidth;
 
         /** Layout containing all the {@link OptionRow}s. */
         private GridLayout mOptionLayout;
@@ -1269,7 +1270,7 @@ public abstract class PaymentRequestSection extends LinearLayout implements View
             }
         }
 
-        private void updateSelectedItem(PaymentOption selectedItem) {
+        void updateSelectedItem(PaymentOption selectedItem) {
             // Only left TextView in the summary section is used in this section.
             // Summary is displayed in multiple lines by default unless:
             // 1. nothing is selected or
@@ -1376,7 +1377,7 @@ public abstract class PaymentRequestSection extends LinearLayout implements View
             }
         }
 
-        private CharSequence convertOptionToString(PaymentOption item, boolean excludeMainLabel,
+        CharSequence convertOptionToString(PaymentOption item, boolean excludeMainLabel,
                 boolean useBoldLabel, boolean singleLine) {
             SpannableStringBuilder builder = new SpannableStringBuilder();
             if (!excludeMainLabel) {

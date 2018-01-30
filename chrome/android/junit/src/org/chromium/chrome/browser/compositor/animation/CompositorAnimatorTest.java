@@ -39,7 +39,7 @@ import java.util.ArrayList;
 public final class CompositorAnimatorTest {
     /** A mock implementation of {@link LayoutUpdateHost} that tracks update requests. */
     private static class MockLayoutUpdateHost implements LayoutUpdateHost {
-        private final CallbackHelper mUpdateCallbackHelper = new CallbackHelper();
+        final CallbackHelper mUpdateCallbackHelper = new CallbackHelper();
 
         @Override
         public void requestUpdate() {
@@ -80,8 +80,8 @@ public final class CompositorAnimatorTest {
 
     /** An animation update listener that counts calls to its methods. */
     private static class TestUpdateListener implements CompositorAnimator.AnimatorUpdateListener {
-        private final CallbackHelper mUpdateCallbackHelper = new CallbackHelper();
-        private float mLastAnimatedFraction;
+        final CallbackHelper mUpdateCallbackHelper = new CallbackHelper();
+        float mLastAnimatedFraction;
 
         @Override
         public void onAnimationUpdate(CompositorAnimator animator) {
@@ -92,9 +92,9 @@ public final class CompositorAnimatorTest {
 
     /** An animation listener for tracking lifecycle events on an animator. */
     private static class TestAnimatorListener extends AnimatorListenerAdapter {
-        private final CallbackHelper mCancelCallbackHelper = new CallbackHelper();
-        private final CallbackHelper mEndCallbackHelper = new CallbackHelper();
-        private final CallbackHelper mStartCallbackHelper = new CallbackHelper();
+        final CallbackHelper mCancelCallbackHelper = new CallbackHelper();
+        final CallbackHelper mEndCallbackHelper = new CallbackHelper();
+        final CallbackHelper mStartCallbackHelper = new CallbackHelper();
 
         @Override
         public void onAnimationCancel(Animator animation) {

@@ -40,7 +40,7 @@ public class SystemResourceLoader extends AsyncPreloadResourceLoader {
         });
     }
 
-    private static Resource createResource(int minScreenSideLengthPx, int resId) {
+    static Resource createResource(int minScreenSideLengthPx, int resId) {
         switch (resId) {
             case SystemUIResourceType.OVERSCROLL_EDGE:
                 return StaticResource.create(Resources.getSystem(),

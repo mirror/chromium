@@ -44,8 +44,8 @@ public class TestStatusReporter {
 
     public static final int HEARTBEAT_INTERVAL_MS = 5000;
 
-    private final Context mContext;
-    private final AtomicBoolean mKeepBeating = new AtomicBoolean(false);
+    final Context mContext;
+    final AtomicBoolean mKeepBeating = new AtomicBoolean(false);
 
     public TestStatusReporter(Context c) {
         mContext = c;

@@ -113,5 +113,5 @@ public class MemoryPressureListener {
         activity.onTrimMemory(level);
     }
 
-    private static native void nativeOnMemoryPressure(int memoryPressureType);
+    static native void nativeOnMemoryPressure(int memoryPressureType);
 }

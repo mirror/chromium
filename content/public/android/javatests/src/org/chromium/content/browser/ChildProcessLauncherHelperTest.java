@@ -48,7 +48,7 @@ public class ChildProcessLauncherHelperTest {
     // Pseudo command line arguments to instruct the child process to wait until being killed.
     // Allowing the process to continue would lead to a crash when attempting to initialize IPC
     // channels that are not being set up in this test.
-    private static final String[] sProcessWaitArguments = {
+    static final String[] sProcessWaitArguments = {
             "_", "--" + BaseSwitches.RENDERER_WAIT_FOR_JAVA_DEBUGGER};
     private static final String EXTERNAL_APK_PACKAGE_NAME = "org.chromium.external.apk";
     private static final String DEFAULT_SANDBOXED_PROCESS_SERVICE =
@@ -529,7 +529,7 @@ public class ChildProcessLauncherHelperTest {
 
     // Returns the number of sandboxed connection matching the specificed package name that are
     // connected,
-    private static int getConnectedSandboxedServicesCountForPackage(final String packageName) {
+    static int getConnectedSandboxedServicesCountForPackage(final String packageName) {
         return ChildProcessLauncherTestUtils.runOnLauncherAndGetResult(new Callable<Integer>() {
             @Override
             public Integer call() {
@@ -550,7 +550,7 @@ public class ChildProcessLauncherHelperTest {
                 }));
     }
 
-    private static ChildProcessCreationParams getDefaultChildProcessCreationParams(
+    static ChildProcessCreationParams getDefaultChildProcessCreationParams(
             String packageName) {
         return packageName == null
                 ? null
@@ -559,7 +559,7 @@ public class ChildProcessLauncherHelperTest {
                           false /* ignoreVisibilityForImportance */);
     }
 
-    private static boolean hasSandboxedConnectionAllocatorForPackage(final String packageName) {
+    static boolean hasSandboxedConnectionAllocatorForPackage(final String packageName) {
         return ChildProcessLauncherTestUtils.runOnLauncherAndGetResult(new Callable<Boolean>() {
             @Override
             public Boolean call() {
@@ -607,7 +607,7 @@ public class ChildProcessLauncherHelperTest {
         });
     }
 
-    private static int getPid(final ChildProcessLauncherHelper launcherHelper) {
+    static int getPid(final ChildProcessLauncherHelper launcherHelper) {
         return ChildProcessLauncherTestUtils.runOnLauncherAndGetResult(new Callable<Integer>() {
             @Override
             public Integer call() {

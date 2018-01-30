@@ -34,9 +34,9 @@ public class CompositorVisibilityTest {
     @Rule
     public ChromeTabbedActivityTestRule mActivityTestRule = new ChromeTabbedActivityTestRule();
 
-    private CompositorView mCompositorView;
+    CompositorView mCompositorView;
 
-    private LayoutRenderHost mRenderHost = new LayoutRenderHost() {
+    LayoutRenderHost mRenderHost = new LayoutRenderHost() {
         @Override
         public void requestRender() {}
 

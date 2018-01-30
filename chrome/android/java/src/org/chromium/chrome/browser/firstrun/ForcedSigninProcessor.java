@@ -66,7 +66,7 @@ public final class ForcedSigninProcessor {
      * Processes the fully automatic non-FRE-related forced sign-in.
      * This is used to enforce the environment for Android EDU and child accounts.
      */
-    private static void processForcedSignIn(
+    static void processForcedSignIn(
             final Context appContext, @Nullable final Runnable onComplete) {
         final SigninManager signinManager = SigninManager.get(appContext);
         // By definition we have finished all the checks for first run.

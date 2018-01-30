@@ -291,7 +291,7 @@ public class PictureInPictureController {
     }
 
     /** Moves the Activity to the back and performs all cleanup. */
-    private void dismissActivity(ChromeActivity activity, int reason) {
+    void dismissActivity(ChromeActivity activity, int reason) {
         activity.moveTaskToBack(true);
         cleanup(activity, reason);
     }

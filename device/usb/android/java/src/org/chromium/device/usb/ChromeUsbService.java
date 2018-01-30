@@ -77,11 +77,11 @@ final class ChromeUsbService {
         unregisterForUsbDeviceIntentBroadcast();
     }
 
-    private native void nativeDeviceAttached(long nativeUsbServiceAndroid, UsbDevice device);
+    native void nativeDeviceAttached(long nativeUsbServiceAndroid, UsbDevice device);
 
-    private native void nativeDeviceDetached(long nativeUsbServiceAndroid, int deviceId);
+    native void nativeDeviceDetached(long nativeUsbServiceAndroid, int deviceId);
 
-    private native void nativeDevicePermissionRequestComplete(
+    native void nativeDevicePermissionRequestComplete(
             long nativeUsbServiceAndroid, int deviceId, boolean granted);
 
     private void registerForUsbDeviceIntentBroadcast() {

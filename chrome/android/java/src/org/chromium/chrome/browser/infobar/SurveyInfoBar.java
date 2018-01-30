@@ -36,10 +36,10 @@ public class SurveyInfoBar extends InfoBar {
     private final int mDisplayLogoResId;
 
     // The delegate to handle what happens when info bar events are triggered.
-    private final SurveyInfoBarDelegate mDelegate;
+    final SurveyInfoBarDelegate mDelegate;
 
     // Boolean to track if the infobar was clicked to prevent double triggering of the survey.
-    private boolean mClicked;
+    boolean mClicked;
 
     /**
      * Create and show the {@link SurveyInfoBar}.
@@ -121,7 +121,7 @@ public class SurveyInfoBar extends InfoBar {
      * Closes the infobar without calling the {@link SurveyInfoBarDelegate}'s
      * onSurveyInfoBarCloseButtonClicked.
      */
-    private void closeInfoBar() {
+    void closeInfoBar() {
         // TODO(mdjones): add a proper close method to programatically close the infobar.
         super.onCloseButtonClicked();
     }
@@ -158,7 +158,7 @@ public class SurveyInfoBar extends InfoBar {
      * Shows the survey and closes the infobar.
      * @param tab The tab on which to show the survey.
      */
-    private void showSurvey(Tab tab) {
+    void showSurvey(Tab tab) {
         mClicked = true;
         mDelegate.onSurveyTriggered();
 

@@ -27,7 +27,7 @@ public class FaceDetectionImpl implements FaceDetection {
     private static final String TAG = "FaceDetectionImpl";
     private static final int MAX_FACES = 32;
     private final boolean mFastMode;
-    private final int mMaxFaces;
+    final int mMaxFaces;
 
     FaceDetectionImpl(FaceDetectorOptions options) {
         mFastMode = options.fastMode;

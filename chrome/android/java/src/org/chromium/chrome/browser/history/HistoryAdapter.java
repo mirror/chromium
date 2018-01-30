@@ -41,7 +41,7 @@ public class HistoryAdapter extends DateDividedAdapter implements BrowsingHistor
 
     private final SelectionDelegate<HistoryItem> mSelectionDelegate;
     private final HistoryProvider mHistoryProvider;
-    private final HistoryManager mHistoryManager;
+    final HistoryManager mHistoryManager;
     private final ArrayList<HistoryItemView> mItemViews;
     private RecyclerView mRecyclerView;
 

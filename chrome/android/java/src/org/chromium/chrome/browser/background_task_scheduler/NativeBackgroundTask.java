@@ -43,10 +43,10 @@ public abstract class NativeBackgroundTask implements BackgroundTask {
     protected NativeBackgroundTask() {}
 
     /** Indicates that the task has already been stopped. Should only be accessed on UI Thread. */
-    private boolean mTaskStopped;
+    boolean mTaskStopped;
 
     /** The id of the task from {@link TaskParameters} used for metrics logging. */
-    private int mTaskId;
+    int mTaskId;
 
     @Override
     public final boolean onStartTask(

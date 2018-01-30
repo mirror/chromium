@@ -85,7 +85,7 @@ public class DownloadNotificationService2 {
     private DownloadForegroundServiceManager mDownloadForegroundServiceManager;
 
     private static class LazyHolder {
-        private static final DownloadNotificationService2 INSTANCE =
+        static final DownloadNotificationService2 INSTANCE =
                 new DownloadNotificationService2();
     }
 

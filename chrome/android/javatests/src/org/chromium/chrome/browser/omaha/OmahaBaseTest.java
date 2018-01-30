@@ -53,8 +53,8 @@ public class OmahaBaseTest {
     }
 
     private static class MockOmahaDelegate extends OmahaDelegate {
-        private final List<Integer> mPostResults = new ArrayList<Integer>();
-        private final List<Boolean> mGenerateAndPostRequestResults = new ArrayList<Boolean>();
+        final List<Integer> mPostResults = new ArrayList<Integer>();
+        final List<Boolean> mGenerateAndPostRequestResults = new ArrayList<Boolean>();
 
         private final Context mContext;
         private final boolean mIsOnTablet;
@@ -64,11 +64,11 @@ public class OmahaBaseTest {
         private MockRequestGenerator mMockGenerator;
 
         private int mNumUUIDsGenerated;
-        private long mNextScheduledTimestamp = -1;
+        long mNextScheduledTimestamp = -1;
 
-        private boolean mInstallEventWasSent;
-        private TimestampPair mTimestampsOnRegisterNewRequest;
-        private TimestampPair mTimestampsOnSaveState;
+        boolean mInstallEventWasSent;
+        TimestampPair mTimestampsOnRegisterNewRequest;
+        TimestampPair mTimestampsOnSaveState;
 
         MockOmahaDelegate(Context context, DeviceType deviceType, InstallSource installSource) {
             mContext = context;
@@ -148,7 +148,7 @@ public class OmahaBaseTest {
     private enum PostStatus { DUE, NOT_DUE }
 
     private AdvancedMockContext mContext;
-    private MockOmahaDelegate mDelegate;
+    MockOmahaDelegate mDelegate;
     private MockOmahaBase mOmahaBase;
 
     private MockOmahaBase createOmahaBase() {

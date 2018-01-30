@@ -28,9 +28,9 @@ import org.chromium.ui.mojom.WindowOpenDisposition;
 public class ContextualSuggestionsCardViewHolder extends NewTabPageViewHolder {
     private static final double CARD_WIDTH_TO_WINDOW_SIZE_RATIO = 0.9;
     private final SuggestionsBinder mSuggestionsBinder;
-    private final SuggestionsUiDelegate mUiDelegate;
+    final SuggestionsUiDelegate mUiDelegate;
     private final DisplayStyleObserverAdapter mDisplayStyleObserver;
-    private SnippetArticle mSuggestion;
+    SnippetArticle mSuggestion;
 
     public ContextualSuggestionsCardViewHolder(ViewGroup recyclerView, UiConfig uiConfig,
             SuggestionsUiDelegate uiDelegate, ContextMenuManager contextMenuManager) {

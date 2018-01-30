@@ -93,7 +93,7 @@ public class AwVariationsConfigurationService extends Service {
 
     // Handle the seed transfer call from the Seed Fetch Service. It will store the fetched seed
     // into separate two files in the service directory.
-    private static void handleSeedTransfer() {
+    static void handleSeedTransfer() {
         Bundle data = sMsgFromSeedFetchService.getData();
         sMsgFromSeedFetchService = null;
         byte[] seedData = data.getByteArray(AwVariationsUtils.KEY_SEED_DATA);
@@ -119,7 +119,7 @@ public class AwVariationsConfigurationService extends Service {
 
     // Handle the seed request call from the WebView. It will decide whether to schedule a new seed
     // fetch job and return the seed in the WebView package data directory.
-    private static void handleSeedRequest(Message msg) {
+    static void handleSeedRequest(Message msg) {
         // TODO: add tests for this logic:
         // 1. There are only one seed fetch job once per time
         // 2. Send back empty message if the seed is expired

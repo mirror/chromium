@@ -38,12 +38,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class AndroidSyncSettingsTest {
     private static class CountingMockSyncContentResolverDelegate
             extends MockSyncContentResolverDelegate {
-        private final AtomicInteger mGetMasterSyncAutomaticallyCalls = new AtomicInteger();
-        private final AtomicInteger mGetSyncAutomaticallyCalls = new AtomicInteger();
-        private final AtomicInteger mGetIsSyncableCalls = new AtomicInteger();
-        private final AtomicInteger mSetIsSyncableCalls = new AtomicInteger();
+        final AtomicInteger mGetMasterSyncAutomaticallyCalls = new AtomicInteger();
+        final AtomicInteger mGetSyncAutomaticallyCalls = new AtomicInteger();
+        final AtomicInteger mGetIsSyncableCalls = new AtomicInteger();
+        final AtomicInteger mSetIsSyncableCalls = new AtomicInteger();
         private final AtomicInteger mSetSyncAutomaticallyCalls = new AtomicInteger();
-        private final AtomicInteger mRemovePeriodicSyncCalls = new AtomicInteger();
+        final AtomicInteger mRemovePeriodicSyncCalls = new AtomicInteger();
 
         @Override
         public boolean getMasterSyncAutomatically() {
@@ -99,7 +99,7 @@ public class AndroidSyncSettingsTest {
         }
     }
 
-    private Context mContext;
+    Context mContext;
     private CountingMockSyncContentResolverDelegate mSyncContentResolverDelegate;
     private String mAuthority;
     private Account mAccount;

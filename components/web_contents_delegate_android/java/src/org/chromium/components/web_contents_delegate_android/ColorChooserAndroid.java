@@ -16,8 +16,8 @@ import org.chromium.ui.base.WindowAndroid;
  */
 @JNINamespace("web_contents_delegate_android")
 public class ColorChooserAndroid {
-    private final ColorPickerDialog mDialog;
-    private final long mNativeColorChooserAndroid;
+    final ColorPickerDialog mDialog;
+    final long mNativeColorChooserAndroid;
 
     private ColorChooserAndroid(long nativeColorChooserAndroid, Context context, int initialColor,
             ColorSuggestion[] suggestions) {
@@ -72,5 +72,5 @@ public class ColorChooserAndroid {
     }
 
     // Implemented in color_chooser_android.cc
-    private native void nativeOnColorChosen(long nativeColorChooserAndroid, int color);
+    native void nativeOnColorChosen(long nativeColorChooserAndroid, int color);
 }

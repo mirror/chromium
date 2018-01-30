@@ -28,13 +28,13 @@ import java.util.concurrent.TimeoutException;
  */
 public class WebViewLayoutTestActivity extends Activity {
 
-    private final StringBuilder mConsoleLog = new StringBuilder();
+    final StringBuilder mConsoleLog = new StringBuilder();
     private final Object mLock = new Object();
     private static final String TEST_FINISHED_SENTINEL = "TEST FINISHED";
 
     private WebView mWebView;
     private boolean mFinished = false;
-    private boolean mGrantPermission = false;
+    boolean mGrantPermission = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -135,7 +135,7 @@ public class WebViewLayoutTestActivity extends Activity {
         settings.setAllowFileAccessFromFileURLs(true);
     }
 
-    private void finishTest() {
+    void finishTest() {
         mFinished = true;
         synchronized (mLock) {
             mLock.notifyAll();

@@ -24,7 +24,7 @@ public class FocusAnimator {
     private static final int ANIMATION_LENGTH_MS = 225;
 
     /** Contains all of the Views that may be focused. */
-    private final LinearLayout mLayout;
+    final LinearLayout mLayout;
 
     /** Child that is being focused. */
     private final View mFocusedChild;
@@ -64,7 +64,7 @@ public class FocusAnimator {
         });
     }
 
-    private void startAnimator(final Runnable callback) {
+    void startAnimator(final Runnable callback) {
         // Don't animate anything if the number of children changed.
         if (mInitialNumberOfChildren != mLayout.getChildCount()) {
             finishAnimation(callback);
@@ -154,13 +154,13 @@ public class FocusAnimator {
     }
 
     /** Cleans up the animation and notifies the owner that it is done via the runnable. */
-    private void finishAnimation(Runnable callback) {
+    void finishAnimation(Runnable callback) {
         requestChildFocus();
         callback.run();
     }
 
     /** Scroll the layout so that the focused child is on screen. */
-    private void requestChildFocus() {
+    void requestChildFocus() {
         ViewGroup parent = (ViewGroup) mLayout.getParent();
         if (mLayout.getParent() == null) return;
 

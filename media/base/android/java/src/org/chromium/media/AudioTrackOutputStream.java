@@ -51,7 +51,7 @@ class AudioTrackOutputStream {
     // Must be the same as AudioBus::kChannelAlignment.
     private static final int CHANNEL_ALIGNMENT = 16;
 
-    private long mNativeAudioTrackOutputStream;
+    long mNativeAudioTrackOutputStream;
     private Callback mCallback;
     private AudioTrack mAudioTrack;
     private int mBufferSizeInBytes;
@@ -267,7 +267,7 @@ class AudioTrackOutputStream {
         return new AudioBufferInfo(frames, size);
     }
 
-    private void readMoreData() {
+    void readMoreData() {
         assert mNativeAudioTrackOutputStream != 0;
 
         // Although the return value of AudioTrack.getPlaybackHeadPosition() should be unsigned
@@ -290,7 +290,7 @@ class AudioTrackOutputStream {
         mLeftSize = info.getNumBytes();
     }
 
-    private int writeData() {
+    int writeData() {
         if (mLeftSize == 0) return 0;
 
         int written = writeAudioTrack();
@@ -313,8 +313,8 @@ class AudioTrackOutputStream {
         return mAudioTrack.write(mWriteBuffer, mLeftSize, AudioTrack.WRITE_BLOCKING);
     }
 
-    private native AudioBufferInfo nativeOnMoreData(
+    native AudioBufferInfo nativeOnMoreData(
             long nativeAudioTrackOutputStream, ByteBuffer audioData, long delayInFrames);
-    private native void nativeOnError(long nativeAudioTrackOutputStream);
-    private native long nativeGetAddress(long nativeAudioTrackOutputStream, ByteBuffer byteBuffer);
+    native void nativeOnError(long nativeAudioTrackOutputStream);
+    native long nativeGetAddress(long nativeAudioTrackOutputStream, ByteBuffer byteBuffer);
 }

@@ -62,7 +62,7 @@ public class WebApkUpdateManagerTest {
     private static final long WEBAPK_THEME_COLOR = 2147483648L;
     private static final long WEBAPK_BACKGROUND_COLOR = 2147483648L;
 
-    private Tab mTab;
+    Tab mTab;
 
     /**
      * Subclass of {@link WebApkUpdateManager} which notifies the {@link CallbackHelper} passed to

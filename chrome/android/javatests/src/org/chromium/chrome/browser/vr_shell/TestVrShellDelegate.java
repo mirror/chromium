@@ -21,8 +21,8 @@ public class TestVrShellDelegate extends VrShellDelegate {
     // Arbitrary but valid delay to make sure that we actually did cancel the DON flow instead of
     // running into crbug.com/762724
     private static final int DON_CANCEL_DELAY_MS = 200;
-    private boolean mOnResumeCalled;
-    private static TestVrShellDelegate sInstance;
+    boolean mOnResumeCalled;
+    static TestVrShellDelegate sInstance;
 
     protected TestVrShellDelegate(ChromeActivity activity) {
         super(activity, VrShellDelegate.getVrClassesWrapper());

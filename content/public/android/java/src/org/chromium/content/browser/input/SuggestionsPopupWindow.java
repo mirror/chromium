@@ -44,7 +44,7 @@ public abstract class SuggestionsPopupWindow
     // From Android Settings app's @integer/maximum_user_dictionary_word_length.
     private static final int ADD_TO_DICTIONARY_MAX_LENGTH_ON_JELLY_BEAN = 48;
 
-    private final Context mContext;
+    final Context mContext;
     protected final TextSuggestionHost mTextSuggestionHost;
     private final View mParentView;
     private final WindowAndroidProvider mWindowAndroidProvider;
@@ -55,7 +55,7 @@ public abstract class SuggestionsPopupWindow
     private LinearLayout mContentView;
 
     private String mHighlightedText;
-    private int mNumberOfSuggestionsToUse;
+    int mNumberOfSuggestionsToUse;
     private TextView mAddToDictionaryButton;
     private TextView mDeleteButton;
     private ListView mSuggestionListView;

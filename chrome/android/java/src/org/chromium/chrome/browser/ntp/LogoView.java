@@ -50,17 +50,17 @@ public class LogoView extends FrameLayout implements OnClickListener {
     private final int mLogoMaxInternalSpaceBottom;
 
     // mLogo and mNewLogo are remembered for cross fading animation.
-    private Bitmap mLogo;
-    private Bitmap mNewLogo;
+    Bitmap mLogo;
+    Bitmap mNewLogo;
     private BaseGifDrawable mAnimatedLogoDrawable;
 
-    private ObjectAnimator mFadeAnimation;
+    ObjectAnimator mFadeAnimation;
     private Paint mPaint;
-    private Matrix mLogoMatrix;
-    private Matrix mNewLogoMatrix;
+    Matrix mLogoMatrix;
+    Matrix mNewLogoMatrix;
     private Matrix mAnimatedLogoMatrix;
-    private boolean mLogoIsDefault;
-    private boolean mNewLogoIsDefault;
+    boolean mLogoIsDefault;
+    boolean mNewLogoIsDefault;
 
     private LoadingView mLoadingView;
 
@@ -69,7 +69,7 @@ public class LogoView extends FrameLayout implements OnClickListener {
      * the new logo, and intermediate values show the new logo cross-fading in over the old logo.
      * Set to 0 when not transitioning.
      */
-    private float mTransitionAmount;
+    float mTransitionAmount;
 
     private Delegate mDelegate;
 

@@ -112,7 +112,7 @@ public class SyncCustomizationFragmentTest {
                 SyncCustomizationFragment.PREFERENCE_SYNC_SETTINGS);
     }
 
-    private Preferences mPreferences;
+    Preferences mPreferences;
 
     @Before
     public void setUp() throws Exception {

@@ -54,19 +54,19 @@ public class ChromeHomePromoIllustration extends Drawable implements Drawable.Ca
     private static final float HOME_SHEET_HEIGHT_PERCENT = .572f;
     private static final float HIGHLIGHT_DIAMETER_PERCENT = .888f;
 
-    private static final int[] BOOKMARK_ROW_COLORS = {Color.parseColor("#01579B"),
+    static final int[] BOOKMARK_ROW_COLORS = {Color.parseColor("#01579B"),
             Color.parseColor("#039BE5"), Color.parseColor("#4FC3F7"), Color.parseColor("#B3E5FC")};
 
     private final PhoneDrawable mPhoneDrawable;
     private final VectorDrawableCompat mBackgroundDrawable;
     private final SheetDrawable mSheetDrawable;
-    private final HomeSectionDrawable mHomeSectionDrawable;
-    private final BookmarkSectionDrawable mBookmarkSectionDrawable;
+    final HomeSectionDrawable mHomeSectionDrawable;
+    final BookmarkSectionDrawable mBookmarkSectionDrawable;
     private final HighlightDrawable mHighlightDrawable;
 
-    private Animator mAnimator;
-    private float mSheetAnimationPercent;
-    private float mHighlightAnimationPercent;
+    Animator mAnimator;
+    float mSheetAnimationPercent;
+    float mHighlightAnimationPercent;
 
     private int mIntrinsicWidth;
     private int mIntrinsicHeight;
@@ -230,7 +230,7 @@ public class ChromeHomePromoIllustration extends Drawable implements Drawable.Ca
                 }
             };
 
-            private void resetInitialState() {
+            void resetInitialState() {
                 mSheetAnimationPercent = 0f;
                 mHighlightAnimationPercent = 0f;
 

@@ -168,7 +168,7 @@ public class ContextMenuManager implements OnCloseContextMenuListener {
     }
 
     private static class MenuItemLabelMatcher {
-        private static final Map<Integer, Integer> STRING_MAP = new TreeMap<Integer, Integer>() {
+        static final Map<Integer, Integer> STRING_MAP = new TreeMap<Integer, Integer>() {
             {
                 put(ID_OPEN_IN_NEW_WINDOW, R.string.contextmenu_open_in_other_window);
                 put(ID_OPEN_IN_NEW_TAB, R.string.contextmenu_open_in_new_tab);

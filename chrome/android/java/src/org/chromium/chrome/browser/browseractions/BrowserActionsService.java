@@ -75,8 +75,8 @@ public class BrowserActionsService extends Service {
 
     private static int sTitleResId;
 
-    private static Set<Integer> sPendingTabIds = new HashSet<Integer>();
-    private static int sPendingCreatedUrlNum;
+    static Set<Integer> sPendingTabIds = new HashSet<Integer>();
+    static int sPendingCreatedUrlNum;
 
     private BrowserActionsTabModelSelector mBrowserActionsSelector;
     private TabModelSelectorImpl mTabbedModeTabModelSelector;
@@ -126,7 +126,7 @@ public class BrowserActionsService extends Service {
         sPendingCreatedUrlNum = 0;
     }
 
-    private void createNotification(boolean isUpdate, int tabId) {
+    void createNotification(boolean isUpdate, int tabId) {
         sendBrowserActionsNotification(isUpdate, tabId);
         if (isUpdate) {
             ContextUtils.getAppSharedPreferences()
@@ -136,7 +136,7 @@ public class BrowserActionsService extends Service {
         }
     }
 
-    private void backgroundServiceIfNecessary() {
+    void backgroundServiceIfNecessary() {
         if (sPendingTabIds.isEmpty() && sPendingCreatedUrlNum == 0) {
             stopForeground(false);
             removeObserver();
@@ -225,7 +225,7 @@ public class BrowserActionsService extends Service {
         mBrowserActionsSelector.openNewTab(loadUrlParams, tabCreatedCallback);
     }
 
-    private void removeSavedTabs(List<Integer> savedTabIds) {
+    void removeSavedTabs(List<Integer> savedTabIds) {
         for (Integer tabId : savedTabIds) sPendingTabIds.remove(tabId);
     }
 

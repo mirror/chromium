@@ -23,7 +23,7 @@ public class BookmarkAddActivity extends AsyncInitializationActivity {
     private static final String EXTRA_TITLE = "title";
     private static final String EXTRA_URL = "url";
 
-    private BookmarkModel mModel;
+    BookmarkModel mModel;
 
     @Override
     protected void setContentView() {}

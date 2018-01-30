@@ -32,11 +32,11 @@ public class TabularContextMenuViewPager extends ViewPager {
             getResources(), R.drawable.white_with_rounded_corners);
 
     private ValueAnimator mAnimator;
-    private int mOldHeight;
+    int mOldHeight;
     private int mCanvasWidth;
-    private int mClipHeight;
+    int mClipHeight;
 
-    private int mDifferenceInHeight;
+    int mDifferenceInHeight;
     private int mPreviousChildIndex = 1;
 
     public TabularContextMenuViewPager(Context context, AttributeSet attrs) {

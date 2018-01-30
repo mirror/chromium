@@ -22,8 +22,8 @@ public class WebViewFindApisTestRule extends AwActivityTestRule {
     private static final String WOODCHUCK =
             "How much WOOD would a woodchuck chuck if a woodchuck could chuck wOoD?";
 
-    private FindResultListener mFindResultListener;
-    private AwContents mContents;
+    FindResultListener mFindResultListener;
+    AwContents mContents;
 
     @Override
     public Statement apply(final Statement base, Description description) {
@@ -50,7 +50,7 @@ public class WebViewFindApisTestRule extends AwActivityTestRule {
                 int activeMatchOrdinal, int numberOfMatches, boolean isDoneCounting);
     }
 
-    private AwContents loadContentsFromStringSync(final String html) throws Throwable {
+    AwContents loadContentsFromStringSync(final String html) throws Throwable {
         final TestAwContentsClient contentsClient = new TestAwContentsClient() {
             @Override
             public void onFindResultReceived(

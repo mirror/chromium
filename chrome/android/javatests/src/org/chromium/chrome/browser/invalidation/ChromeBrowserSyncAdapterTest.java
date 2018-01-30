@@ -55,12 +55,12 @@ public class ChromeBrowserSyncAdapterTest {
     private TestSyncAdapter mSyncAdapter;
 
     private static class TestSyncAdapter extends ChromeBrowserSyncAdapter {
-        private boolean mInvalidated;
-        private boolean mInvalidatedAllTypes;
-        private int mObjectSource;
-        private String mObjectId;
-        private long mVersion;
-        private String mPayload;
+        boolean mInvalidated;
+        boolean mInvalidatedAllTypes;
+        int mObjectSource;
+        String mObjectId;
+        long mVersion;
+        String mPayload;
 
         public TestSyncAdapter(Context context, Application application) {
             super(context, application);
@@ -107,7 +107,7 @@ public class ChromeBrowserSyncAdapterTest {
         }, WAIT_FOR_LAUNCHER_MS, POLL_INTERVAL_MS);
     }
 
-    private boolean isActivityResumed() {
+    boolean isActivityResumed() {
         return ApplicationStatus.hasVisibleActivities();
     }
 

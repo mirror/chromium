@@ -126,8 +126,8 @@ public class FirstRunTest {
         public void onAbortFirstRunExperience() {}
     }
 
-    private final TestObserver mTestObserver = new TestObserver();
-    private FirstRunActivity mActivity;
+    final TestObserver mTestObserver = new TestObserver();
+    FirstRunActivity mActivity;
 
 
     @After
@@ -228,7 +228,7 @@ public class FirstRunTest {
         return prefActivity;
     }
 
-    private void processFirstRunOnUiThread() {
+    void processFirstRunOnUiThread() {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {

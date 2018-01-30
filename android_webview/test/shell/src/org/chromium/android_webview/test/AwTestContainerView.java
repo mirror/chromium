@@ -38,7 +38,7 @@ public class AwTestContainerView extends FrameLayout {
     private AwContents mAwContents;
     private AwContents.InternalAccessDelegate mInternalAccessDelegate;
 
-    private HardwareView mHardwareView;
+    HardwareView mHardwareView;
     private boolean mAttachedContents;
 
     private class HardwareView extends GLSurfaceView {

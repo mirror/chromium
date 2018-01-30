@@ -19,9 +19,9 @@ import java.lang.Thread.UncaughtExceptionHandler;
  */
 @JNINamespace("base::android")
 public class JavaHandlerThread {
-    private final HandlerThread mThread;
+    final HandlerThread mThread;
 
-    private Throwable mUnhandledException;
+    Throwable mUnhandledException;
 
     /**
      * Construct a java-only instance. Can be connected with native side later.
@@ -58,7 +58,7 @@ public class JavaHandlerThread {
     }
 
     @CalledByNative
-    private void stopOnThread(final long nativeThread) {
+    void stopOnThread(final long nativeThread) {
         nativeStopThread(nativeThread);
         MessageQueue queue = Looper.myQueue();
         // Add an idle handler so that the thread cleanup code can run after the message loop has
@@ -136,7 +136,7 @@ public class JavaHandlerThread {
         return mUnhandledException;
     }
 
-    private native void nativeInitializeThread(long nativeJavaHandlerThread, long nativeEvent);
+    native void nativeInitializeThread(long nativeJavaHandlerThread, long nativeEvent);
     private native void nativeStopThread(long nativeJavaHandlerThread);
-    private native void nativeOnLooperStopped(long nativeJavaHandlerThread);
+    native void nativeOnLooperStopped(long nativeJavaHandlerThread);
 }

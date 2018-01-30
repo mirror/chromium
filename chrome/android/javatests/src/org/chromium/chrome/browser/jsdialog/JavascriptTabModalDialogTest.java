@@ -63,7 +63,7 @@ public class JavascriptTabModalDialogTest {
     private static final String OTHER_PAGE = UrlUtils.encodeHtmlDataUri(
             "<html><title>Modal Dialog Test</title><p>Testcase. Other tab.</p></title></html>");
 
-    private ChromeTabbedActivity mActivity;
+    ChromeTabbedActivity mActivity;
 
     @Before
     public void setUp() throws InterruptedException {

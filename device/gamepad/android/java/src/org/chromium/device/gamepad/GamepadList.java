@@ -35,7 +35,7 @@ public class GamepadList {
     private boolean mIsGamepadAPIActive;
     private InputDeviceListener mInputDeviceListener;
 
-    private GamepadList() {
+    GamepadList() {
         mInputDeviceListener = new InputDeviceListener() {
             // Override InputDeviceListener methods
             @Override
@@ -112,15 +112,15 @@ public class GamepadList {
 
     // ------------------------------------------------------------
 
-    private void onInputDeviceChangedImpl(int deviceId) {}
+    void onInputDeviceChangedImpl(int deviceId) {}
 
-    private void onInputDeviceRemovedImpl(int deviceId) {
+    void onInputDeviceRemovedImpl(int deviceId) {
         synchronized (mLock) {
             unregisterGamepad(deviceId);
         }
     }
 
-    private void onInputDeviceAddedImpl(int deviceId) {
+    void onInputDeviceAddedImpl(int deviceId) {
         InputDevice inputDevice = InputDevice.getDevice(deviceId);
         if (!isGamepadDevice(inputDevice)) return;
         synchronized (mLock) {
@@ -320,6 +320,6 @@ public class GamepadList {
             boolean connected, String devicename, long timestamp, float[] axes, float[] buttons);
 
     private static class LazyHolder {
-        private static final GamepadList INSTANCE = new GamepadList();
+        static final GamepadList INSTANCE = new GamepadList();
     }
 }

@@ -129,7 +129,7 @@ public class GvrKeyboardLoaderClient {
     private static class KeyboardContextWrapper extends ContextWrapper {
         private final Context mKeyboardContext;
 
-        private KeyboardContextWrapper(Context keyboardContext, Context baseContext) {
+        KeyboardContextWrapper(Context keyboardContext, Context baseContext) {
             super(baseContext);
             this.mKeyboardContext = keyboardContext;
         }

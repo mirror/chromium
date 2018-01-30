@@ -45,9 +45,9 @@ public class NavigationPopup extends ListPopupWindow implements AdapterView.OnIt
     private final Profile mProfile;
     private final Context mContext;
     private final NavigationController mNavigationController;
-    private final NavigationHistory mHistory;
+    final NavigationHistory mHistory;
     private final NavigationAdapter mAdapter;
-    private final ListItemFactory mListItemFactory;
+    final ListItemFactory mListItemFactory;
 
     private final int mFaviconSize;
 
@@ -164,7 +164,7 @@ public class NavigationPopup extends ListPopupWindow implements AdapterView.OnIt
         dismiss();
     }
 
-    private void updateBitmapForTextView(TextView view, Bitmap bitmap) {
+    void updateBitmapForTextView(TextView view, Bitmap bitmap) {
         Drawable faviconDrawable = null;
         if (bitmap != null) {
             faviconDrawable = new BitmapDrawable(mContext.getResources(), bitmap);

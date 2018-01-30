@@ -82,7 +82,7 @@ public class DOMUtils {
      * @param id The element's id to check.
      * @return whether the media has ended.
      */
-    private static boolean isMediaEnded(final WebContents webContents, final String id)
+    static boolean isMediaEnded(final WebContents webContents, final String id)
             throws InterruptedException, TimeoutException {
         return getNodeField("ended", webContents, id, Boolean.class);
     }
@@ -93,7 +93,7 @@ public class DOMUtils {
      * @param id The element's id to check.
      * @return the current time (in seconds) of the media.
      */
-    private static double getCurrentTime(final WebContents webContents, final String id)
+    static double getCurrentTime(final WebContents webContents, final String id)
             throws InterruptedException, TimeoutException {
         return getNodeField("currentTime", webContents, id, Double.class);
     }

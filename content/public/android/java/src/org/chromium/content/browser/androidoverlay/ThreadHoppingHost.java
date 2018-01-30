@@ -27,7 +27,7 @@ class ThreadHoppingHost implements DialogOverlayCore.Host {
     private Handler mHandler;
 
     // Host impl that we're proxying to.
-    private final DialogOverlayCore.Host mHost;
+    final DialogOverlayCore.Host mHost;
 
     // Semaphore to keep track of whether cleanup has started yet.
     private final Semaphore mSemaphore = new Semaphore(0);

@@ -381,7 +381,7 @@ public class ViewResourceInflater {
     /**
      * Invalidate the resource, which will cause a new snapshot to be captured.
      */
-    private void invalidateResource() {
+    void invalidateResource() {
         if (mIsInvalidated && mView != null && mResourceAdapter != null) {
             mIsInvalidated = false;
             mResourceAdapter.invalidate(null);

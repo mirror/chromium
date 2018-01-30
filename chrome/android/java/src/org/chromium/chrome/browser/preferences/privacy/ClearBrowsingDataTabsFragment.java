@@ -50,7 +50,7 @@ public class ClearBrowsingDataTabsFragment extends Fragment {
      * TODO(dullweber): Extract the RTL code into a wrapper class if other places in Chromium need
      * it as well.
      */
-    private static int adjustIndexForDirectionality(int index) {
+    static int adjustIndexForDirectionality(int index) {
         if (TextUtilsCompat.getLayoutDirectionFromLocale(Locale.getDefault())
                 == ViewCompat.LAYOUT_DIRECTION_RTL) {
             return CBD_TAB_COUNT - 1 - index;

@@ -40,7 +40,7 @@ public class DecoderService extends Service {
     private static final String TAG = "ImageDecoder";
 
     // Whether the native library and the sandbox have been initialized.
-    private boolean mNativeLibraryAndSandboxInitialized;
+    boolean mNativeLibraryAndSandboxInitialized;
 
     @Override
     public void onCreate() {

@@ -235,7 +235,7 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
     private static class NotifierForTest {
         private final Handler mHandler;
         private final Runnable mNotification;
-        private boolean mNotificationPending;
+        boolean mNotificationPending;
 
         /**
          * Constructs the helper to notify tests for an event.
@@ -272,38 +272,38 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
     /** Length of the animation to hide the bottom sheet UI. */
     private static final int DIALOG_EXIT_ANIMATION_MS = 195;
 
-    private static PaymentRequestObserverForTest sPaymentRequestObserverForTest;
+    static PaymentRequestObserverForTest sPaymentRequestObserverForTest;
     private static EditorObserverForTest sEditorObserverForTest;
 
     /** Notifies tests that the [PAY] button can be clicked. */
-    private final NotifierForTest mReadyToPayNotifierForTest;
+    final NotifierForTest mReadyToPayNotifierForTest;
 
     private final Context mContext;
-    private final Client mClient;
-    private final boolean mRequestShipping;
-    private final boolean mRequestContactDetails;
+    final Client mClient;
+    final boolean mRequestShipping;
+    final boolean mRequestContactDetails;
     private final boolean mShowDataSource;
 
-    private final Dialog mDialog;
+    final Dialog mDialog;
     private final EditorDialog mEditorDialog;
     private final EditorDialog mCardEditorDialog;
-    private final ViewGroup mFullContainer;
-    private final ViewGroup mRequestView;
+    final ViewGroup mFullContainer;
+    final ViewGroup mRequestView;
     private final PaymentRequestUiErrorView mErrorView;
     private final Callback<PaymentInformation> mUpdateSectionsCallback;
     private final ShippingStrings mShippingStrings;
 
-    private FadingEdgeScrollView mPaymentContainer;
+    FadingEdgeScrollView mPaymentContainer;
     private LinearLayout mPaymentContainerLayout;
-    private ViewGroup mBottomBar;
+    ViewGroup mBottomBar;
     private Button mEditButton;
-    private Button mPayButton;
+    Button mPayButton;
     private View mCloseButton;
     private View mSpinnyLayout;
 
     private LineItemBreakdownSection mOrderSummarySection;
-    private OptionSection mShippingAddressSection;
-    private OptionSection mShippingOptionSection;
+    OptionSection mShippingAddressSection;
+    OptionSection mShippingOptionSection;
     private OptionSection mContactDetailsSection;
     private OptionSection mPaymentMethodSection;
     private List<SectionSeparator> mSectionSeparators;
@@ -312,19 +312,19 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
     private boolean mIsExpandedToFullHeight;
     private boolean mIsProcessingPayClicked;
     private boolean mIsClientClosing;
-    private boolean mIsClientCheckingSelection;
+    boolean mIsClientCheckingSelection;
     private boolean mIsShowingSpinner;
     private boolean mIsEditingPaymentItem;
     private boolean mIsClosing;
 
     private SectionInformation mPaymentMethodSectionInformation;
-    private SectionInformation mShippingAddressSectionInformation;
+    SectionInformation mShippingAddressSectionInformation;
     private SectionInformation mShippingOptionsSectionInformation;
     private SectionInformation mContactDetailsSectionInformation;
 
-    private Animator mSheetAnimator;
-    private FocusAnimator mSectionAnimator;
-    private int mAnimatorTranslation;
+    Animator mSheetAnimator;
+    FocusAnimator mSectionAnimator;
+    int mAnimatorTranslation;
 
     /**
      * Builds the UI for PaymentRequest.
@@ -842,7 +842,7 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
      *
      * @param isAnimated If true, the dialog dismissal is animated.
      */
-    private void dismissDialog(boolean isAnimated) {
+    void dismissDialog(boolean isAnimated) {
         mIsClosing = true;
         if (mDialog.isShowing()) {
             if (isAnimated) {
@@ -903,7 +903,7 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
         mDialog.show();
     }
 
-    private void changeSpinnerVisibility(boolean showSpinner) {
+    void changeSpinnerVisibility(boolean showSpinner) {
         if (mIsShowingSpinner == showSpinner) return;
         mIsShowingSpinner = showSpinner;
 
@@ -932,7 +932,7 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
         }
     }
 
-    private void updatePayButtonEnabled() {
+    void updatePayButtonEnabled() {
         boolean contactInfoOk = !mRequestContactDetails
                 || (mContactDetailsSectionInformation != null
                            && mContactDetailsSectionInformation.getSelectedItem() != null);
@@ -973,7 +973,7 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
         mShippingAddressSection.setOptionSectionFocusChangedObserver(observer);
     }
 
-    private void expand(PaymentRequestSection section) {
+    void expand(PaymentRequestSection section) {
         if (!mIsExpandedToFullHeight) {
             // Container now takes the full height of the screen, animating towards it.
             mRequestView.getLayoutParams().height = LayoutParams.MATCH_PARENT;
@@ -1076,7 +1076,7 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
     }
 
     /** Update the display status of each expandable section in the full dialog. */
-    private void updateSectionVisibility() {
+    void updateSectionVisibility() {
         startSectionResizeAnimation();
         mOrderSummarySection.focusSection(mSelectedSection == mOrderSummarySection);
         mShippingAddressSection.focusSection(mSelectedSection == mShippingAddressSection);
@@ -1247,7 +1247,7 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
          *
          * @param progress How far along the animation is.  In the range [0,1], with 1 being done.
          */
-        private void update(float progress) {
+        void update(float progress) {
             // The dialog container initially starts off translated downward, gradually decreasing
             // the translation until it is in the right place on screen.
             float containerTranslation = mContainerHeightDifference * progress;
@@ -1383,13 +1383,13 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
         return mContactDetailsSection;
     }
 
-    private void notifyReadyForInput() {
+    void notifyReadyForInput() {
         if (sPaymentRequestObserverForTest != null && isAcceptingUserInput()) {
             sPaymentRequestObserverForTest.onPaymentRequestReadyForInput(this);
         }
     }
 
-    private void notifySelectionChecked() {
+    void notifySelectionChecked() {
         if (sPaymentRequestObserverForTest != null) {
             sPaymentRequestObserverForTest.onPaymentRequestSelectionChecked(this);
         }

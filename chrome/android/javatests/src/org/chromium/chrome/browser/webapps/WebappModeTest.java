@@ -60,7 +60,7 @@ public class WebappModeTest {
     public MultiActivityTestRule mTestRule = new MultiActivityTestRule();
 
     private static final String WEBAPP_1_ID = "webapp_id_1";
-    private static final String WEBAPP_1_URL = UrlUtils.encodeHtmlDataUri(
+    static final String WEBAPP_1_URL = UrlUtils.encodeHtmlDataUri(
             "<html><head><title>Web app #1</title><meta name='viewport' "
             + "content='width=device-width initial-scale=0.5, maximum-scale=0.5'></head>"
             + "<body bgcolor='#011684'>Webapp 1</body></html>");
@@ -75,7 +75,7 @@ public class WebappModeTest {
             + "IWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3wQIFB4cxOfiSQAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdG"
             + "ggR0lNUFeBDhcAAAAMSURBVAjXY2AUawEAALcAnI/TkI8AAAAASUVORK5CYII=";
 
-    private Intent createIntent(String id, String url, String title, String icon, boolean addMac) {
+    Intent createIntent(String id, String url, String title, String icon, boolean addMac) {
         Intent intent = new Intent();
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setPackage(InstrumentationRegistry.getTargetContext().getPackageName());
@@ -334,7 +334,7 @@ public class WebappModeTest {
     }
 
     /** Returns true when the last Activity is a WebappActivity and is ready for testing .*/
-    private boolean isWebappActivityReady(Activity lastActivity) {
+    boolean isWebappActivityReady(Activity lastActivity) {
         if (!(lastActivity instanceof WebappActivity)) return false;
 
         WebappActivity webappActivity = (WebappActivity) lastActivity;

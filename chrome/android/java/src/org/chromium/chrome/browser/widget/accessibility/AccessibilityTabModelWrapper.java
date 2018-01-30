@@ -37,7 +37,7 @@ public class AccessibilityTabModelWrapper extends LinearLayout {
     private View mModernLayout;
     private TabLayout mModernStackButtonWrapper;
     private TabLayout.Tab mModernStandardButton;
-    private TabLayout.Tab mModernIncognitoButton;
+    TabLayout.Tab mModernIncognitoButton;
     private TintedDrawable mModernStandardButtonIcon;
     private TintedDrawable mModernIncognitoButtonIcon;
 
@@ -224,7 +224,7 @@ public class AccessibilityTabModelWrapper extends LinearLayout {
         getAdapter().setTabModel(mTabModelSelector.getModel(incognitoSelected));
     }
 
-    private AccessibilityTabModelAdapter getAdapter() {
+    AccessibilityTabModelAdapter getAdapter() {
         return (AccessibilityTabModelAdapter) mAccessibilityView.getAdapter();
     }
 
@@ -232,7 +232,7 @@ public class AccessibilityTabModelWrapper extends LinearLayout {
      * Set either standard or incognito tab model as currently selected.
      * @param incognitoSelected Whether the incognito tab model is selected.
      */
-    private void setSelectedModel(boolean incognitoSelected) {
+    void setSelectedModel(boolean incognitoSelected) {
         if (mTabModelSelector == null
                 || incognitoSelected == mTabModelSelector.isIncognitoSelected()) {
             return;
@@ -249,7 +249,7 @@ public class AccessibilityTabModelWrapper extends LinearLayout {
                 getResources().getString(stackAnnouncementId));
     }
 
-    private void updateVisibilityForLayoutOrStackButton() {
+    void updateVisibilityForLayoutOrStackButton() {
         boolean incognitoEnabled =
                 mTabModelSelector.getModel(true).getComprehensiveModel().getCount() > 0;
         if (FeatureUtilities.isChromeHomeEnabled()) {

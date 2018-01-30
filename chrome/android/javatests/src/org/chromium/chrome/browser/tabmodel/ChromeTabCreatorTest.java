@@ -45,7 +45,7 @@ public class ChromeTabCreatorTest {
 
     private static final String TEST_PATH = "/chrome/test/data/android/about.html";
 
-    private EmbeddedTestServer mTestServer;
+    EmbeddedTestServer mTestServer;
 
     @Before
     public void setUp() throws Exception {
@@ -146,7 +146,7 @@ public class ChromeTabCreatorTest {
     /**
      * @return the index of the given tab in the current tab model
      */
-    private int indexOf(Tab tab) {
+    int indexOf(Tab tab) {
         return mActivityTestRule.getActivity().getCurrentTabModel().indexOf(tab);
     }
 }

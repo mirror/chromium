@@ -46,29 +46,29 @@ public class MediaSessionTabHelper implements MediaImageCallback {
     @VisibleForTesting
     static final int HIDE_NOTIFICATION_DELAY_MILLIS = 1000;
 
-    private Tab mTab;
-    private Bitmap mPageMediaImage;
+    Tab mTab;
+    Bitmap mPageMediaImage;
     @VisibleForTesting
     Bitmap mFavicon;
-    private Bitmap mCurrentMediaImage;
-    private String mOrigin;
+    Bitmap mCurrentMediaImage;
+    String mOrigin;
     @VisibleForTesting
     MediaSessionObserver mMediaSessionObserver;
     private int mPreviousVolumeControlStream = AudioManager.USE_DEFAULT_STREAM_TYPE;
-    private MediaNotificationInfo.Builder mNotificationInfoBuilder;
+    MediaNotificationInfo.Builder mNotificationInfoBuilder;
     // The fallback title if |mPageMetadata| is null or its title is empty.
-    private String mFallbackTitle;
+    String mFallbackTitle;
     // The metadata set by the page.
-    private MediaMetadata mPageMetadata;
+    MediaMetadata mPageMetadata;
     // The currently showing metadata.
-    private MediaMetadata mCurrentMetadata;
-    private MediaImageManager mMediaImageManager;
-    private Set<Integer> mMediaSessionActions;
+    MediaMetadata mCurrentMetadata;
+    MediaImageManager mMediaImageManager;
+    Set<Integer> mMediaSessionActions;
     private Handler mHandler;
     // The delayed task to hide notification. Hiding notification can be immediate or delayed.
     // Delayed hiding will schedule this delayed task to |mHandler|. The task will be canceled when
     // showing or immediate hiding.
-    private Runnable mHideNotificationDelayedTask;
+    Runnable mHideNotificationDelayedTask;
 
     // Used to override the MediaSession object get from WebContents. This is to work around the
     // static getter {@link MediaSession#fromWebContents()}.
@@ -81,7 +81,7 @@ public class MediaSessionTabHelper implements MediaImageCallback {
         return mMediaSessionObserver;
     }
 
-    private MediaNotificationListener mControlsListener = new MediaNotificationListener() {
+    MediaNotificationListener mControlsListener = new MediaNotificationListener() {
         @Override
         public void onPlay(int actionSource) {
             if (isNotificationHiddingOrHidden()) return;
@@ -139,7 +139,7 @@ public class MediaSessionTabHelper implements MediaImageCallback {
         }
     };
 
-    private void hideNotificationDelayed() {
+    void hideNotificationDelayed() {
         if (mTab == null) return;
         if (mHideNotificationDelayedTask != null) return;
 
@@ -155,7 +155,7 @@ public class MediaSessionTabHelper implements MediaImageCallback {
         mNotificationInfoBuilder = null;
     }
 
-    private void hideNotificationImmediately() {
+    void hideNotificationImmediately() {
         if (mTab == null) return;
         if (mHideNotificationDelayedTask != null) {
             mHandler.removeCallbacks(mHideNotificationDelayedTask);
@@ -170,7 +170,7 @@ public class MediaSessionTabHelper implements MediaImageCallback {
      * This method performs the common steps for hiding the notification. It should only be called
      * by {@link #hideNotificationDelayed()} and {@link #hideNotificationImmediately()}.
      */
-    private void hideNotificationInternal() {
+    void hideNotificationInternal() {
         MediaNotificationManager.hide(mTab.getId(), R.id.media_playback_notification);
         Activity activity = getActivityFromTab(mTab);
         if (activity != null) {
@@ -178,7 +178,7 @@ public class MediaSessionTabHelper implements MediaImageCallback {
         }
     }
 
-    private void showNotification() {
+    void showNotification() {
         assert mNotificationInfoBuilder != null;
         if (mHideNotificationDelayedTask != null) {
             mHandler.removeCallbacks(mHideNotificationDelayedTask);
@@ -253,7 +253,7 @@ public class MediaSessionTabHelper implements MediaImageCallback {
         };
     }
 
-    private void setWebContents(WebContents webContents) {
+    void setWebContents(WebContents webContents) {
         MediaSession mediaSession = getMediaSession(webContents);
         if (mMediaSessionObserver != null
                 && mediaSession == mMediaSessionObserver.getMediaSession()) {
@@ -267,7 +267,7 @@ public class MediaSessionTabHelper implements MediaImageCallback {
         }
     }
 
-    private void cleanupMediaSessionObserver() {
+    void cleanupMediaSessionObserver() {
         if (mMediaSessionObserver == null) return;
         mMediaSessionObserver.stopObserving();
         mMediaSessionObserver = null;
@@ -392,7 +392,7 @@ public class MediaSessionTabHelper implements MediaImageCallback {
      * @param title The original tab title, e.g. "   ▶   Foo - Bar  "
      * @return The sanitized tab title, e.g. "Foo - Bar"
      */
-    private String sanitizeMediaTitle(String title) {
+    String sanitizeMediaTitle(String title) {
         title = title.trim();
         return title.startsWith(UNICODE_PLAY_CHARACTER) ? title.substring(1).trim() : title;
     }
@@ -417,7 +417,7 @@ public class MediaSessionTabHelper implements MediaImageCallback {
         return MediaSessionUMA.MEDIA_SESSION_ACTION_SOURCE_MAX;
     }
 
-    private Activity getActivityFromTab(Tab tab) {
+    Activity getActivityFromTab(Tab tab) {
         WindowAndroid windowAndroid = tab.getWindowAndroid();
         if (windowAndroid == null) return null;
 
@@ -428,7 +428,7 @@ public class MediaSessionTabHelper implements MediaImageCallback {
      * Updates the best favicon if the given icon is better.
      * @return whether the best favicon is updated.
      */
-    private boolean updateFavicon(Bitmap icon) {
+    boolean updateFavicon(Bitmap icon) {
         if (icon == null) return false;
 
         // Disable favicons in notifications for low memory devices on O
@@ -449,7 +449,7 @@ public class MediaSessionTabHelper implements MediaImageCallback {
      * Updates the metadata in media notification. This method should be called whenever
      * |mPageMetadata| or |mFallbackTitle| is changed.
      */
-    private void updateNotificationMetadata() {
+    void updateNotificationMetadata() {
         if (isNotificationHiddingOrHidden()) return;
 
         MediaMetadata newMetadata = getMetadata();
@@ -465,7 +465,7 @@ public class MediaSessionTabHelper implements MediaImageCallback {
      * or |mCurrentMetadata| if it reflects the current state. Otherwise will return a new
      * {@link MediaMetadata} object.
      */
-    private MediaMetadata getMetadata() {
+    MediaMetadata getMetadata() {
         String title = mFallbackTitle;
         String artist = "";
         String album = "";
@@ -485,7 +485,7 @@ public class MediaSessionTabHelper implements MediaImageCallback {
         return new MediaMetadata(title, artist, album);
     }
 
-    private void updateNotificationActions() {
+    void updateNotificationActions() {
         if (isNotificationHiddingOrHidden()) return;
 
         mNotificationInfoBuilder.setMediaSessionActions(mMediaSessionActions);
@@ -498,7 +498,7 @@ public class MediaSessionTabHelper implements MediaImageCallback {
         updateNotificationImage();
     }
 
-    private void updateNotificationImage() {
+    void updateNotificationImage() {
         Bitmap newMediaImage = getNotificationImage();
         if (mCurrentMediaImage == newMediaImage) return;
 
@@ -510,11 +510,11 @@ public class MediaSessionTabHelper implements MediaImageCallback {
         showNotification();
     }
 
-    private Bitmap getNotificationImage() {
+    Bitmap getNotificationImage() {
         return (mPageMediaImage != null) ? mPageMediaImage : mFavicon;
     }
 
-    private boolean isNotificationHiddingOrHidden() {
+    boolean isNotificationHiddingOrHidden() {
         return mNotificationInfoBuilder == null;
     }
 

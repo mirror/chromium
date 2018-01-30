@@ -68,16 +68,16 @@ public class DocumentModeAssassinTest {
     private static final String TABBED_MODE_DIRECTORY_NAME = "app_tabs";
     private static final int TABBED_MODE_INDEX = 0;
 
-    private static final TestTabModelDirectory.TabModelMetaDataInfo TEST_INFO =
+    static final TestTabModelDirectory.TabModelMetaDataInfo TEST_INFO =
             TestTabModelDirectory.TAB_MODEL_METADATA_V5_NO_M18;
-    private static final TestTabModelDirectory.TabStateInfo[] TAB_STATE_INFO = TEST_INFO.contents;
+    static final TestTabModelDirectory.TabStateInfo[] TAB_STATE_INFO = TEST_INFO.contents;
 
-    private AdvancedMockContext mContext;
-    private TestTabModelDirectory mDocumentModeDirectory;
-    private TestTabModelDirectory mTabbedModeDirectory;
-    private ActivityDelegate mActivityDelegate;
-    private CallbackHelper mFinishAllDocumentActivitiesCallback;
-    private MockDocumentTabModel mTestTabModel;
+    AdvancedMockContext mContext;
+    TestTabModelDirectory mDocumentModeDirectory;
+    TestTabModelDirectory mTabbedModeDirectory;
+    ActivityDelegate mActivityDelegate;
+    CallbackHelper mFinishAllDocumentActivitiesCallback;
+    MockDocumentTabModel mTestTabModel;
 
     @Before
     public void setUp() throws Exception {

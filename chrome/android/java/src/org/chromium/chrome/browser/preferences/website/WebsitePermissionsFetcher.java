@@ -69,12 +69,12 @@ public class WebsitePermissionsFetcher {
     }
 
     // This map looks up Websites by their origin and embedder.
-    private final Map<OriginAndEmbedder, Website> mSites = new HashMap<>();
+    final Map<OriginAndEmbedder, Website> mSites = new HashMap<>();
 
     // The callback to run when the permissions have been fetched.
-    private final WebsitePermissionsCallback mCallback;
+    final WebsitePermissionsCallback mCallback;
 
-    private final boolean mFetchSiteImportantInfo;
+    final boolean mFetchSiteImportantInfo;
 
     /**
      * @param callback The callback to run when the fetch is complete.
@@ -203,7 +203,7 @@ public class WebsitePermissionsFetcher {
         queue.next();
     }
 
-    private Website findOrCreateSite(WebsiteAddress origin, WebsiteAddress embedder) {
+    Website findOrCreateSite(WebsiteAddress origin, WebsiteAddress embedder) {
         OriginAndEmbedder key = OriginAndEmbedder.create(origin, embedder);
         Website site = mSites.get(key);
         if (site == null) {
@@ -213,7 +213,7 @@ public class WebsitePermissionsFetcher {
         return site;
     }
 
-    private void setException(int contentSettingsType) {
+    void setException(int contentSettingsType) {
         for (ContentSettingException exception :
                 WebsitePreferenceBridge.getContentSettingsExceptions(contentSettingsType)) {
             // The pattern "*" represents the default setting, not a specific website.

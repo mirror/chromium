@@ -18,7 +18,7 @@ import java.util.Set;
  */
 final class GeolocationPermissionsAdapter extends GeolocationPermissions {
     private final WebViewChromiumFactoryProvider mFactory;
-    private final AwGeolocationPermissions mChromeGeolocationPermissions;
+    final AwGeolocationPermissions mChromeGeolocationPermissions;
 
     public GeolocationPermissionsAdapter(WebViewChromiumFactoryProvider factory,
             AwGeolocationPermissions chromeGeolocationPermissions) {

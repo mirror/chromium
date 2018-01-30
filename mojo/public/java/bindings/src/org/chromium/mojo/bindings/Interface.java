@@ -112,7 +112,7 @@ public interface Interface extends ConnectionErrorHandler, Closeable {
             /**
              * The currently known version of the interface.
              */
-            private int mVersion;
+            int mVersion;
 
             /**
              * Constructor.

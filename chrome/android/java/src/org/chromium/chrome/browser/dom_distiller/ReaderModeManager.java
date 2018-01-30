@@ -64,19 +64,19 @@ public class ReaderModeManager extends TabModelSelectorTabObserver {
             "org.chromium.chrome.browser.dom_distiller.EXTRA_READER_MODE_PARENT";
 
     /** The url of the last page visited if the last page was reader mode page.  Otherwise null. */
-    private String mReaderModePageUrl;
+    String mReaderModePageUrl;
 
     /** Whether the fact that the current web page was distillable or not has been recorded. */
-    private boolean mIsUmaRecorded;
+    boolean mIsUmaRecorded;
 
     /** The per-tab state of distillation. */
     protected Map<Integer, ReaderModeTabInfo> mTabStatusMap;
 
     /** The ChromeActivity that this infobar exists in. */
-    private ChromeActivity mChromeActivity;
+    ChromeActivity mChromeActivity;
 
     /** The primary means of getting the currently active tab. */
-    private TabModelSelector mTabModelSelector;
+    TabModelSelector mTabModelSelector;
 
     // Hold on to the InterceptNavigationDelegate that the custom tab uses.
     InterceptNavigationDelegate mCustomTabNavigationDelegate;
@@ -398,7 +398,7 @@ public class ReaderModeManager extends TabModelSelectorTabObserver {
      * Record the amount of time the user spent in Reader Mode.
      * @param timeMs The amount of time in ms that the user spent in Reader Mode.
      */
-    private void recordReaderModeViewDuration(long timeMs) {
+    void recordReaderModeViewDuration(long timeMs) {
         RecordHistogram.recordLongTimesHistogram(
                 "DomDistiller.Time.ViewingReaderModePage", timeMs, TimeUnit.MILLISECONDS);
     }

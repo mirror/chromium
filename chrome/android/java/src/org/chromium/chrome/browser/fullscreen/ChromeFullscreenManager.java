@@ -48,11 +48,11 @@ public class ChromeFullscreenManager
     private static final long ACTIVITY_RETURN_SHOW_REQUEST_DELAY_MS = 100;
 
     private final Activity mActivity;
-    private final BrowserStateBrowserControlsVisibilityDelegate mBrowserVisibilityDelegate;
+    final BrowserStateBrowserControlsVisibilityDelegate mBrowserVisibilityDelegate;
     @ControlsPosition private final int mControlsPosition;
     private final boolean mExitFullscreenOnStop;
 
-    private ControlContainer mControlContainer;
+    ControlContainer mControlContainer;
     private int mTopControlContainerHeight;
     private int mBottomControlContainerHeight;
     private boolean mControlsResizeView;
@@ -64,7 +64,7 @@ public class ChromeFullscreenManager
     private float mPreviousContentOffset = Float.NaN;
     private float mControlOffsetRatio;
     private float mPreviousControlOffset;
-    private boolean mIsEnteringPersistentModeState;
+    boolean mIsEnteringPersistentModeState;
 
     private boolean mInGesture;
     private boolean mContentViewScrolling;
@@ -566,7 +566,7 @@ public class ChromeFullscreenManager
         scheduleVisibilityUpdate();
     }
 
-    private boolean shouldShowAndroidControls() {
+    boolean shouldShowAndroidControls() {
         if (mBrowserControlsAndroidViewHidden) return false;
 
         boolean showControls = !drawControlsAsTexture();

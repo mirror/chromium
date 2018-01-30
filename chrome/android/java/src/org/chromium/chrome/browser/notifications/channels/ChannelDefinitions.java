@@ -226,7 +226,7 @@ public class ChannelDefinitions {
         private final int mNameResId;
         private final int mImportance;
         @ChannelGroupId
-        private final String mGroupId;
+        final String mGroupId;
 
         PredefinedChannel(@ChannelId String id, int nameResId, int importance,
                 @ChannelGroupId String groupId) {

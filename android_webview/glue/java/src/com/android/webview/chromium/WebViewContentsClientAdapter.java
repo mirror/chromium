@@ -109,9 +109,9 @@ class WebViewContentsClientAdapter extends AwContentsClient {
     // The listener receiving find-in-page API results.
     private WebView.FindListener mFindListener;
     // The listener receiving notifications of screen updates.
-    private WebView.PictureListener mPictureListener;
+    WebView.PictureListener mPictureListener;
     // Whether the picture listener is invalidate only (i.e. receives a null Picture)
-    private boolean mPictureListenerInvalidateOnly;
+    boolean mPictureListenerInvalidateOnly;
 
     private WebViewDelegate mWebViewDelegate;
 

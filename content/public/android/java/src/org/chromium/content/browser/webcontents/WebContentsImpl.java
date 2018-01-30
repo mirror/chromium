@@ -62,7 +62,7 @@ public class WebContentsImpl implements WebContents, RenderFrameHostDelegate {
 
     private static final long PARCELABLE_VERSION_ID = 0;
     // Non-final for testing purposes, so resetting of the UUID can happen.
-    private static UUID sParcelableUUID = UUID.randomUUID();
+    static UUID sParcelableUUID = UUID.randomUUID();
 
     /**
      * Used to reset the internal tracking for whether or not a serialized {@link WebContents}
@@ -742,7 +742,7 @@ public class WebContentsImpl implements WebContents, RenderFrameHostDelegate {
     // This is static to avoid exposing a public destroy method on the native side of this class.
     private static native void nativeDestroyWebContents(long webContentsAndroidPtr);
 
-    private static native WebContents nativeFromNativePtr(long webContentsAndroidPtr);
+    static native WebContents nativeFromNativePtr(long webContentsAndroidPtr);
 
     private native WindowAndroid nativeGetTopLevelNativeWindow(long nativeWebContentsAndroid);
     private native RenderFrameHost nativeGetMainFrame(long nativeWebContentsAndroid);

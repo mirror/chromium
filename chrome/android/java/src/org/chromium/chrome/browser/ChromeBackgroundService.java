@@ -64,7 +64,7 @@ public class ChromeBackgroundService extends GcmTaskService {
         return GcmNetworkManager.RESULT_SUCCESS;
     }
 
-    private void handleBackgroundSyncEvent(Context context, String tag) {
+    void handleBackgroundSyncEvent(Context context, String tag) {
         if (!BackgroundSyncLauncher.hasInstance()) {
             // Start the browser. The browser's BackgroundSyncManager (for the active profile) will
             // start, check the network, and run any necessary sync events. This task runs with a
@@ -76,7 +76,7 @@ public class ChromeBackgroundService extends GcmTaskService {
         }
     }
 
-    private void handleSnippetsOnPersistentSchedulerWakeUp(Context context, String tag) {
+    void handleSnippetsOnPersistentSchedulerWakeUp(Context context, String tag) {
         if (!SnippetsLauncher.hasInstance()) {
             launchBrowser(context, tag);
         }

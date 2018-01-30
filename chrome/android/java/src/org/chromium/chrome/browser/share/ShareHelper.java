@@ -98,14 +98,14 @@ public class ShareHelper {
     private static final String SHARE_IMAGES_DIRECTORY_NAME = "screenshot";
 
     /** Force the use of a Chrome-specific intent chooser, not the system chooser. */
-    private static boolean sForceCustomChooserForTesting;
+    static boolean sForceCustomChooserForTesting;
 
     /** If non-null, will be used instead of the real activity. */
-    private static FakeIntentReceiver sFakeIntentReceiverForTesting;
+    static FakeIntentReceiver sFakeIntentReceiverForTesting;
 
     private ShareHelper() {}
 
-    private static void fireIntent(Activity activity, Intent intent) {
+    static void fireIntent(Activity activity, Intent intent) {
         if (sFakeIntentReceiverForTesting != null) {
             Context context = activity.getApplicationContext();
             sFakeIntentReceiverForTesting.fireIntent(context, intent);
@@ -114,7 +114,7 @@ public class ShareHelper {
         }
     }
 
-    private static void deleteShareImageFiles(File file) {
+    static void deleteShareImageFiles(File file) {
         if (!file.exists()) return;
         if (file.isDirectory()) {
             File[] file_list = file.listFiles();
@@ -479,7 +479,7 @@ public class ShareHelper {
         }
     }
 
-    private static void makeIntentAndShare(ShareParams params, @Nullable ComponentName component) {
+    static void makeIntentAndShare(ShareParams params, @Nullable ComponentName component) {
         Intent intent = getShareLinkIntent(params);
         intent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT | Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
         intent.setComponent(component);

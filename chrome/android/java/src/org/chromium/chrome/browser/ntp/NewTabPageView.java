@@ -96,11 +96,11 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
      */
     private static final int PARAM_DEFAULT_VALUE_CONDENSED_LAYOUT_LOGO_HEIGHT_DP = 100;
 
-    private NewTabPageRecyclerView mRecyclerView;
+    NewTabPageRecyclerView mRecyclerView;
 
-    private NewTabPageLayout mNewTabPageLayout;
-    private LogoView mSearchProviderLogoView;
-    private View mSearchBoxView;
+    NewTabPageLayout mNewTabPageLayout;
+    LogoView mSearchProviderLogoView;
+    View mSearchBoxView;
     private ImageView mVoiceSearchButton;
     private SiteSectionViewHolder mSiteSectionViewHolder;
     private View mTileGridPlaceholder;
@@ -108,13 +108,13 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
 
     private OnSearchBoxScrollListener mSearchBoxScrollListener;
 
-    private NewTabPageManager mManager;
-    private Tab mTab;
-    private LogoDelegateImpl mLogoDelegate;
+    NewTabPageManager mManager;
+    Tab mTab;
+    LogoDelegateImpl mLogoDelegate;
     private TileGroup mTileGroup;
     private UiConfig mUiConfig;
-    private Runnable mSnapScrollRunnable;
-    private Runnable mUpdateSearchBoxOnScrollRunnable;
+    Runnable mSnapScrollRunnable;
+    Runnable mUpdateSearchBoxOnScrollRunnable;
 
     /**
      * Whether the tiles shown in the layout have finished loading.
@@ -131,22 +131,22 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
     private boolean mSearchProviderHasLogo = true;
     private boolean mSearchProviderIsGoogle;
 
-    private boolean mPendingSnapScroll;
+    boolean mPendingSnapScroll;
     private boolean mInitialized;
-    private int mLastScrollY = -1;
+    int mLastScrollY = -1;
 
     private float mUrlFocusChangePercent;
     private boolean mDisableUrlFocusChangeAnimations;
-    private boolean mIsMovingNewTabPageView;
+    boolean mIsMovingNewTabPageView;
 
     /** Flag used to request some layout changes after the next layout pass is completed. */
-    private boolean mTileCountChanged;
-    private boolean mSnapshotTileGridChanged;
-    private boolean mNewTabPageRecyclerViewChanged;
+    boolean mTileCountChanged;
+    boolean mSnapshotTileGridChanged;
+    boolean mNewTabPageRecyclerViewChanged;
     private int mSnapshotWidth;
     private int mSnapshotHeight;
     private int mSnapshotScrollY;
-    private ContextMenuManager mContextMenuManager;
+    ContextMenuManager mContextMenuManager;
 
     /**
      * Manages the view interaction with the rest of the system.
@@ -496,7 +496,7 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
         TraceEvent.end(TAG + ".initializeLayoutChangeListeners()");
     }
 
-    private void updateSearchBoxOnScroll() {
+    void updateSearchBoxOnScroll() {
         if (mDisableUrlFocusChangeAnimations || mIsMovingNewTabPageView) return;
 
         // When the page changes (tab switching or new page loading), it is possible that events
@@ -603,7 +603,7 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
         TraceEvent.end(TAG + ".setupScrollHandling()");
     }
 
-    private void handleScroll() {
+    void handleScroll() {
         if (mPendingSnapScroll) {
             mRecyclerView.removeCallbacks(mSnapScrollRunnable);
             mRecyclerView.postDelayed(mSnapScrollRunnable, SNAP_SCROLL_DELAY_MS);
@@ -764,7 +764,7 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
         return mUrlFocusChangePercent;
     }
 
-    private void onUrlFocusAnimationChanged() {
+    void onUrlFocusAnimationChanged() {
         if (mDisableUrlFocusChangeAnimations || FeatureUtilities.isChromeHomeEnabled()
                 || mIsMovingNewTabPageView) {
             return;

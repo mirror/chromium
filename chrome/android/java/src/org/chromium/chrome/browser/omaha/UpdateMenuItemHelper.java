@@ -69,16 +69,16 @@ public class UpdateMenuItemHelper {
     private boolean mAlreadyCheckedForUpdates;
 
     // Whether an update is available.
-    private boolean mUpdateAvailable;
+    boolean mUpdateAvailable;
 
     // URL to direct the user to when Omaha detects a newer version available.
-    private String mUpdateUrl;
+    String mUpdateUrl;
 
     // Whether the menu item was clicked. This is used to log the click-through rate.
     private boolean mMenuItemClicked;
 
     // The latest Chrome version available if OmahaClient.isNewerVersionAvailable() returns true.
-    private String mLatestVersion;
+    String mLatestVersion;
 
     /**
      * @return The {@link UpdateMenuItemHelper} instance.
@@ -351,7 +351,7 @@ public class UpdateMenuItemHelper {
                 action, ITEM_CLICKED_BOUNDARY);
     }
 
-    private void recordUpdateHistogram() {
+    void recordUpdateHistogram() {
         if (PrefServiceBridge.getInstance().getClickedUpdateMenuItem()) {
             RecordHistogram.recordEnumeratedHistogram(
                     "GoogleUpdate.MenuItem.ActionTakenAfterItemClicked",
@@ -410,7 +410,7 @@ public class UpdateMenuItemHelper {
         }
     }
 
-    private boolean checkForSufficientStorage() {
+    boolean checkForSufficientStorage() {
         assert !ThreadUtils.runningOnUiThread();
 
         File path = Environment.getDataDirectory();

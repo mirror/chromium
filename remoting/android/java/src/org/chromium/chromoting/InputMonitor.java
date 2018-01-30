@@ -272,14 +272,14 @@ public final class InputMonitor
     }
 
     // ---------------------------- Event handlers ---------------------------------------
-    private void handleClientSizeChanged(SizeChangedEventParameter parameter) {
+    void handleClientSizeChanged(SizeChangedEventParameter parameter) {
         mPanGestureBounds = new Rect(mEdgeSlopInPx,
                                      mEdgeSlopInPx,
                                      parameter.width - mEdgeSlopInPx,
                                      parameter.height - mEdgeSlopInPx);
     }
 
-    private void handleTouch(TouchEventParameter parameter) {
+    void handleTouch(TouchEventParameter parameter) {
         mOnTouchEvent.raise(parameter.event);
 
         boolean handled = mScroller.onTouchEvent(parameter.event);

@@ -61,31 +61,31 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
 
     private static final long ANIMATION_DURATION_MS = 150L;
 
-    private final View mView;
-    private final SuggestionsRecyclerView mRecyclerView;
+    final View mView;
+    final SuggestionsRecyclerView mRecyclerView;
     private final ChromeActivity mActivity;
-    private final BottomSheet mSheet;
+    final BottomSheet mSheet;
     private final LocationBarPhone mLocationBar;
     private final BottomToolbarPhone mToolbarView;
     private final ViewGroup mControlContainerView;
     private final View mToolbarPullHandle;
     private final View mToolbarShadow;
 
-    private NewTabPageAdapter mAdapter;
+    NewTabPageAdapter mAdapter;
     private ContextMenuManager mContextMenuManager;
-    private SuggestionsUiDelegateImpl mSuggestionsUiDelegate;
+    SuggestionsUiDelegateImpl mSuggestionsUiDelegate;
     private TileGroup.Delegate mTileGroupDelegate;
     private SuggestionsSheetVisibilityChangeObserver mBottomSheetObserver;
-    private LogoView mLogoView;
-    private LogoDelegateImpl mLogoDelegate;
+    LogoView mLogoView;
+    LogoDelegateImpl mLogoDelegate;
 
     @Nullable
     private SuggestionsCarousel mSuggestionsCarousel;
 
-    private boolean mNewTabShown;
+    boolean mNewTabShown;
     private boolean mSuggestionsInitialized;
     private boolean mSearchProviderHasLogo = true;
-    private float mLastSheetHeightFraction = 1f;
+    float mLastSheetHeightFraction = 1f;
 
     /**
      * The transition fraction for hiding the logo: 0 means the logo is fully visible, 1 means it is
@@ -108,7 +108,7 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
      * Whether {@code mView} is currently attached to the window. This is used in place of
      * {@link View#isAttachedToWindow()} to support older versions of Android (KitKat & JellyBean).
      */
-    private boolean mIsAttachedToWindow;
+    boolean mIsAttachedToWindow;
 
     public SuggestionsBottomSheetContent(final ChromeActivity activity, final BottomSheet sheet,
             TabModelSelector tabModelSelector, SnackbarManager snackbarManager) {
@@ -179,7 +179,7 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
         }
     }
 
-    private void initializeWithNative(
+    void initializeWithNative(
             TabModelSelector tabModelSelector, SnackbarManager snackbarManager) {
         assert !mSuggestionsInitialized;
         mSuggestionsInitialized = true;
@@ -419,7 +419,7 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
         mAnimator.start();
     }
 
-    private void maybeUpdateContextualSuggestions() {
+    void maybeUpdateContextualSuggestions() {
         if (mSuggestionsCarousel == null) return;
         assert ChromeFeatureList.isEnabled(ChromeFeatureList.CONTEXTUAL_SUGGESTIONS_CAROUSEL);
 
@@ -452,7 +452,7 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
         });
     }
 
-    private void updateLogoTransition() {
+    void updateLogoTransition() {
         boolean showLogo = shouldShowLogo();
 
         // If the logo is not shown, reset all transitions.
@@ -523,7 +523,7 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
         mRecyclerView.setVisibility(alpha == 0.0f ? View.INVISIBLE : View.VISIBLE);
     }
 
-    private void updateLogoVisibility() {
+    void updateLogoVisibility() {
         boolean showLogo = shouldShowLogo();
         mAdapter.setLogoVisibility(showLogo);
         int top = showLogo ? 0 : mToolbarHeight;

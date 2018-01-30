@@ -34,7 +34,7 @@ public class ModalDialogManager {
          * @param dialog The dialog that's currently showing in this presenter. If null, no dialog
          *               is currently showing.
          */
-        private void setModalDialog(
+        void setModalDialog(
                 @Nullable ModalDialogView dialog, @Nullable Runnable cancelCallback) {
             if (dialog == null) {
                 removeDialogView(mCurrentView);

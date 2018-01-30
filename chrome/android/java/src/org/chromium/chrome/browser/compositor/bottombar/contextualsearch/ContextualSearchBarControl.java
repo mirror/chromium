@@ -72,7 +72,7 @@ public class ContextualSearchBarControl {
     /**
      * The visibility percentage for the divider line ranging from 0.f to 1.f.
      */
-    private float mDividerLineVisibilityPercentage;
+    float mDividerLineVisibilityPercentage;
 
     /**
      * The width of the divider line in px.
@@ -439,7 +439,7 @@ public class ContextualSearchBarControl {
     /**
      * Whether the touch highlight is visible.
      */
-    private boolean mTouchHighlightVisible;
+    boolean mTouchHighlightVisible;
 
     /**
      * Whether the touch that triggered showing the touch highlight was on the end Bar button.
@@ -591,7 +591,7 @@ public class ContextualSearchBarControl {
      *
      * @param percentage The visibility percentage of the search term view.
      */
-    private void updateSearchBarTextOpacity(float percentage) {
+    void updateSearchBarTextOpacity(float percentage) {
         // The search context will start fading out before the search term starts fading in.
         // They will both be partially visible for overlapPercentage of the animation duration.
         float overlapPercentage = .75f;

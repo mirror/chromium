@@ -390,7 +390,7 @@ public class AwContentsClientFullScreenTest {
         assertNotEquals(expected, DOMUtils.isMediaPaused(getWebContentsOnUiThread(), VIDEO_ID));
     }
 
-    private boolean getKeepScreenOnOnInstrumentationThread(final View view) {
+    boolean getKeepScreenOnOnInstrumentationThread(final View view) {
         try {
             return ThreadUtils.runOnUiThreadBlocking(() -> getKeepScreenOnOnUiThread(view));
         } catch (Exception e) {
@@ -477,7 +477,7 @@ public class AwContentsClientFullScreenTest {
         mActivityTestRule.waitForVisualStateCallback(mTestContainerView.getAwContents());
     }
 
-    private WebContents getWebContentsOnUiThread() {
+    WebContents getWebContentsOnUiThread() {
         try {
             return ThreadUtils.runOnUiThreadBlocking(() -> mContentViewCore.getWebContents());
         } catch (Exception e) {

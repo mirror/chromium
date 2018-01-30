@@ -164,7 +164,7 @@ public class StorageDelegate extends TabPersister {
      * @param entryMap Map to fill with {@link DocumentTabModel.Entry}s about Tabs.
      * @param recentlyClosedTabIdList List to fill with IDs of recently closed tabs.
      */
-    private void updateTabEntriesFromMetadata(byte[] metadataBytes, SparseArray<Entry> entryMap,
+    void updateTabEntriesFromMetadata(byte[] metadataBytes, SparseArray<Entry> entryMap,
             List<Integer> recentlyClosedTabIdList) {
         if (metadataBytes != null) {
             DocumentList list = null;

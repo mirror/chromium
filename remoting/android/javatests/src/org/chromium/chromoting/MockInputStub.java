@@ -137,7 +137,7 @@ public final class MockInputStub extends Assert implements InputStub {
         public static final float INVALID_RADIANS = 6.289f * (float) Math.PI;
 
         // TouchEventData stores degrees instead of radians
-        private static final float INVALID_DEGREES = (float) Math.toDegrees(INVALID_RADIANS);
+        static final float INVALID_DEGREES = (float) Math.toDegrees(INVALID_RADIANS);
         private final TouchEventData.EventType mEventType;
         private final TouchEventData[] mData;
 

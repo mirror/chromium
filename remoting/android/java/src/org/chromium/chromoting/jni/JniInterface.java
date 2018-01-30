@@ -84,5 +84,5 @@ public class JniInterface {
     private static native void nativeLoadNative();
 
     /** Notifies the native client with the new auth token */
-    private static native void nativeOnAuthTokenFetched(String token);
+    static native void nativeOnAuthTokenFetched(String token);
 }

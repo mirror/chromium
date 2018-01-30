@@ -98,7 +98,7 @@ public class HostListManager {
         });
     }
 
-    private void doRetrieveHostList(String authToken, Callback callback) {
+    void doRetrieveHostList(String authToken, Callback callback) {
         Response response = sendRequest(authToken, HOST_LIST_PATH, "GET", null, null);
         if (response.error != null) {
             postError(callback, response.error);
@@ -158,8 +158,8 @@ public class HostListManager {
         });
     }
 
-    private void doPutHost(String authToken, String hostId, String hostName, String publicKey,
-                           final Callback callback) {
+    void doPutHost(String authToken, String hostId, String hostName, String publicKey,
+            final Callback callback) {
         String requestJson;
         try {
             JSONObject data = new JSONObject();
@@ -202,7 +202,7 @@ public class HostListManager {
         });
     }
 
-    private void doDeleteHost(String authToken, String hostId, final Callback callback) {
+    void doDeleteHost(String authToken, String hostId, final Callback callback) {
         Response response = sendRequest(authToken, HOST_LIST_PATH + '/' + hostId, "DELETE",
                 null, null);
         if (response.error != null) {

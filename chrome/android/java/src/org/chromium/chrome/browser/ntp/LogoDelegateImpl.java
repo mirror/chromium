@@ -37,15 +37,15 @@ public class LogoDelegateImpl implements LogoView.Delegate {
     private static final int ANIMATED_LOGO_CLICKED = 2;
 
     private final SuggestionsNavigationDelegate mNavigationDelegate;
-    private LogoView mLogoView;
+    LogoView mLogoView;
 
     private LogoBridge mLogoBridge;
-    private String mOnLogoClickUrl;
-    private String mAnimatedLogoUrl;
+    String mOnLogoClickUrl;
+    String mAnimatedLogoUrl;
 
-    private boolean mShouldRecordLoadTime = true;
+    boolean mShouldRecordLoadTime = true;
 
-    private boolean mIsDestroyed;
+    boolean mIsDestroyed;
 
     /**
      * Construct a new {@link LogoDelegateImpl}.

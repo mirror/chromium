@@ -28,9 +28,9 @@ public class NavigationMenuAdapter extends ArrayAdapter<NavigationMenuAdapter.Na
      * Defines a menu item.
      */
     public static class NavigationMenuItem {
-        private String mText;
-        private Drawable mIcon;
-        private Runnable mCallback;
+        String mText;
+        Drawable mIcon;
+        Runnable mCallback;
 
         public NavigationMenuItem(String text, Drawable icon, Runnable callback) {
             mText = text;

@@ -29,10 +29,10 @@ public class FakeServerHelper {
 
     // Pointer value for the FakeServer. This pointer is not owned by native
     // code, so it must be stored here for future deletion.
-    private static long sNativeFakeServer;
+    static long sNativeFakeServer;
 
     // The pointer to the native object called here.
-    private final long mNativeFakeServerHelperAndroid;
+    final long mNativeFakeServerHelperAndroid;
 
     // Accesses the singleton FakeServerHelper. There is at most one instance created per
     // application lifetime, so no deletion mechanism is provided for the native object.
@@ -388,36 +388,36 @@ public class FakeServerHelper {
 
     // Native methods.
     private native long nativeInit();
-    private native long nativeCreateFakeServer(long nativeFakeServerHelperAndroid);
-    private native long nativeCreateNetworkResources(
+    native long nativeCreateFakeServer(long nativeFakeServerHelperAndroid);
+    native long nativeCreateNetworkResources(
             long nativeFakeServerHelperAndroid, long nativeFakeServer);
-    private native void nativeDeleteFakeServer(
+    native void nativeDeleteFakeServer(
             long nativeFakeServerHelperAndroid, long nativeFakeServer);
-    private native boolean nativeVerifyEntityCountByTypeAndName(
+    native boolean nativeVerifyEntityCountByTypeAndName(
             long nativeFakeServerHelperAndroid, long nativeFakeServer, int count, int modelType,
             String name);
-    private native boolean nativeVerifySessions(
+    native boolean nativeVerifySessions(
             long nativeFakeServerHelperAndroid, long nativeFakeServer, String[] urlArray);
-    private native byte[][] nativeGetSyncEntitiesByModelType(
+    native byte[][] nativeGetSyncEntitiesByModelType(
             long nativeFakeServerHelperAndroid, long nativeFakeServer, int modelType);
-    private native void nativeInjectUniqueClientEntity(
+    native void nativeInjectUniqueClientEntity(
             long nativeFakeServerHelperAndroid, long nativeFakeServer, String name,
             byte[] serializedEntitySpecifics);
-    private native void nativeModifyEntitySpecifics(long nativeFakeServerHelperAndroid,
+    native void nativeModifyEntitySpecifics(long nativeFakeServerHelperAndroid,
             long nativeFakeServer, String id, byte[] serializedEntitySpecifics);
-    private native void nativeInjectBookmarkEntity(
+    native void nativeInjectBookmarkEntity(
             long nativeFakeServerHelperAndroid, long nativeFakeServer, String title, String url,
             String parentId);
-    private native void nativeInjectBookmarkFolderEntity(long nativeFakeServerHelperAndroid,
+    native void nativeInjectBookmarkFolderEntity(long nativeFakeServerHelperAndroid,
             long nativeFakeServer, String title, String parentId);
-    private native void nativeModifyBookmarkEntity(long nativeFakeServerHelperAndroid,
+    native void nativeModifyBookmarkEntity(long nativeFakeServerHelperAndroid,
             long nativeFakeServer, String bookmarkId, String title, String url, String parentId);
-    private native void nativeModifyBookmarkFolderEntity(long nativeFakeServerHelperAndroid,
+    native void nativeModifyBookmarkFolderEntity(long nativeFakeServerHelperAndroid,
             long nativeFakeServer, String bookmarkId, String title, String parentId);
-    private native String nativeGetBookmarkBarFolderId(
+    native String nativeGetBookmarkBarFolderId(
             long nativeFakeServerHelperAndroid, long nativeFakeServer);
-    private native void nativeDeleteEntity(long nativeFakeServerHelperAndroid,
+    native void nativeDeleteEntity(long nativeFakeServerHelperAndroid,
             long nativeFakeServer, String id, String clientDefinedUniqueTag);
-    private native void nativeClearServerData(
+    native void nativeClearServerData(
             long nativeFakeServerHelperAndroid, long nativeFakeServer);
 }

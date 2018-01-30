@@ -153,7 +153,7 @@ public class PrefetchedPagesNotifier {
      * Records a histogram when Chrome loads native.
      * Note: Does not itself load native so this will do nothing if nothing else does.
      */
-    private static void recordNotificationActionWhenChromeLoadsNative(final int action) {
+    static void recordNotificationActionWhenChromeLoadsNative(final int action) {
         runWhenChromeLoadsNative(() -> getInstance().recordNotificationAction(action));
     }
 

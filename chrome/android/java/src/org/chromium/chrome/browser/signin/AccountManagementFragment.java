@@ -211,7 +211,7 @@ public class AccountManagementFragment extends PreferenceFragment
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private boolean canAddAccounts() {
+    boolean canAddAccounts() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) return true;
 
         UserManager userManager = (UserManager) getActivity()

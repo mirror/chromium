@@ -47,7 +47,7 @@ public class DistilledPagePrefsView extends LinearLayout
     // Buttons for color mode.
     private final Map<Theme, RadioButton> mColorModeButtons;
 
-    private final DistilledPagePrefs mDistilledPagePrefs;
+    final DistilledPagePrefs mDistilledPagePrefs;
 
     // Text field showing font scale percentage.
     private TextView mFontScaleTextView;

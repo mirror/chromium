@@ -54,7 +54,7 @@ public class OfflinePageBridgeUnitTest {
     private static final long TEST_LASTACCESSTIMEMS = 20160314;
     private static final String TEST_REQUEST_ORIGIN = "abc.xyz";
 
-    private static final OfflinePageItem TEST_OFFLINE_PAGE_ITEM = new OfflinePageItem(TEST_URL,
+    static final OfflinePageItem TEST_OFFLINE_PAGE_ITEM = new OfflinePageItem(TEST_URL,
             TEST_OFFLINE_ID, TEST_NAMESPACE, TEST_ID, "" /* title */, TEST_FILE_PATH, TEST_FILESIZE,
             TEST_CREATIONTIMEMS, TEST_ACCESSCOUNT, TEST_LASTACCESSTIMEMS, TEST_REQUEST_ORIGIN);
 

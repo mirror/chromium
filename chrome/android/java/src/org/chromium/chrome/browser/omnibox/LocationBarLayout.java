@@ -161,14 +161,14 @@ public class LocationBarLayout extends FrameLayout
     /** A handle to the bottom sheet for chrome home. */
     protected BottomSheet mBottomSheet;
 
-    private AutocompleteController mAutocomplete;
+    AutocompleteController mAutocomplete;
 
     protected ToolbarDataProvider mToolbarDataProvider;
     private ObserverList<UrlFocusChangeListener> mUrlFocusChangeListeners = new ObserverList<>();
 
     protected boolean mNativeInitialized;
 
-    private final List<Runnable> mDeferredNativeRunnables = new ArrayList<Runnable>();
+    final List<Runnable> mDeferredNativeRunnables = new ArrayList<Runnable>();
 
     // The type of the navigation button currently showing.
     private NavigationButtonType mNavigationButtonType;
@@ -177,34 +177,34 @@ public class LocationBarLayout extends FrameLayout
     @DrawableRes
     private int mSecurityIconResource;
 
-    private final OmniboxResultsAdapter mSuggestionListAdapter;
-    private OmniboxSuggestionsList mSuggestionList;
+    final OmniboxResultsAdapter mSuggestionListAdapter;
+    OmniboxSuggestionsList mSuggestionList;
 
-    private final List<OmniboxResultItem> mSuggestionItems;
+    final List<OmniboxResultItem> mSuggestionItems;
 
     /**
      * The text shown in the URL bar (user text + inline autocomplete) after the most recent set of
      * omnibox suggestions was received. When the user presses enter in the omnibox, this value is
      * compared to the URL bar text to determine whether the first suggestion is still valid.
      */
-    private String mUrlTextAfterSuggestionsReceived;
+    String mUrlTextAfterSuggestionsReceived;
 
-    private boolean mIgnoreOmniboxItemSelection = true;
+    boolean mIgnoreOmniboxItemSelection = true;
 
     private String mOriginalUrl = "";
 
     private WindowAndroid mWindowAndroid;
     private WindowDelegate mWindowDelegate;
 
-    private Runnable mRequestSuggestions;
+    Runnable mRequestSuggestions;
 
-    private ViewGroup mOmniboxResultsContainer;
+    ViewGroup mOmniboxResultsContainer;
     protected FadingBackgroundView mFadingView;
 
     private boolean mSuggestionsShown;
     private boolean mUrlHasFocus;
     protected boolean mUrlFocusChangeInProgress;
-    private boolean mUrlFocusedFromFakebox;
+    boolean mUrlFocusedFromFakebox;
     private boolean mUrlFocusedWithoutAnimations;
 
     private boolean mVoiceSearchEnabled;
@@ -219,23 +219,23 @@ public class LocationBarLayout extends FrameLayout
     @LocationBarButtonType private int mLocationBarButtonType;
 
     private AnimatorSet mLocationBarIconActiveAnimator;
-    private AnimatorSet mSecurityButtonShowAnimator;
-    private AnimatorSet mNavigationIconShowAnimator;
+    AnimatorSet mSecurityButtonShowAnimator;
+    AnimatorSet mNavigationIconShowAnimator;
 
     private OmniboxPrerender mOmniboxPrerender;
 
-    private boolean mSuggestionModalShown;
+    boolean mSuggestionModalShown;
     private boolean mUseDarkColors;
     private boolean mIsEmphasizingHttpsScheme;
 
     @Nullable
     private BottomSheetContent mOmniboxSuggestionsSheetContent;
 
-    private Runnable mShowSuggestions;
+    Runnable mShowSuggestions;
 
-    private boolean mShowCachedZeroSuggestResults;
+    boolean mShowCachedZeroSuggestResults;
 
-    private DeferredOnSelectionRunnable mDeferredOnSelection;
+    DeferredOnSelectionRunnable mDeferredOnSelection;
 
     private static abstract class DeferredOnSelectionRunnable implements Runnable {
         protected final OmniboxSuggestion mSuggestion;
@@ -353,7 +353,7 @@ public class LocationBarLayout extends FrameLayout
             return false;
         }
 
-        private void findMatchAndLoadUrl(String urlText) {
+        void findMatchAndLoadUrl(String urlText) {
             int suggestionMatchPosition;
             OmniboxSuggestion suggestionMatch;
             boolean skipOutOfBoundsCheck = false;
@@ -468,7 +468,7 @@ public class LocationBarLayout extends FrameLayout
             mAnchorView = LocationBarLayout.this.getRootView().findViewById(R.id.toolbar);
         }
 
-        private void show() {
+        void show() {
             updateLayoutParams();
             if (getVisibility() != VISIBLE) {
                 mIgnoreOmniboxItemSelection = true;  // Reset to default value.
@@ -525,7 +525,7 @@ public class LocationBarLayout extends FrameLayout
             return mMaxMatchContentsWidth;
         }
 
-        private void updateLayoutParams() {
+        void updateLayoutParams() {
             boolean updateLayout = false;
             FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) getLayoutParams();
             if (layoutParams == null) {
@@ -615,7 +615,7 @@ public class LocationBarLayout extends FrameLayout
             }
         }
 
-        private void updateSuggestionsLayoutDirection(int layoutDirection) {
+        void updateSuggestionsLayoutDirection(int layoutDirection) {
             if (!isShown()) return;
 
             for (int i = 0; i < getChildCount(); i++) {
@@ -628,7 +628,7 @@ public class LocationBarLayout extends FrameLayout
         /**
          * @return Whether or not the suggestions list is scrolled any amount.
          */
-        private int getVerticalScroll() {
+        int getVerticalScroll() {
             return computeVerticalScrollOffset();
         }
     }
@@ -1093,7 +1093,7 @@ public class LocationBarLayout extends FrameLayout
      * - The URL bar has focus.
      * - The current tab is not incognito.
      */
-    private void startZeroSuggest() {
+    void startZeroSuggest() {
         // hasWindowFocus() can return true before onWindowFocusChanged has been called, so this
         // is an optimization, but not entirely reliable.  The underlying controller needs to also
         // ensure we do not double trigger zero query.
@@ -1719,7 +1719,7 @@ public class LocationBarLayout extends FrameLayout
      * @param skipCheck Whether to skip an out of bounds check.
      * @return The url to navigate to.
      */
-    private String updateSuggestionUrlIfNeeded(OmniboxSuggestion suggestion, int selectedIndex,
+    String updateSuggestionUrlIfNeeded(OmniboxSuggestion suggestion, int selectedIndex,
             boolean skipCheck) {
         // Only called once we have suggestions, and don't have a listener though which we can
         // receive suggestions until the native side is ready, so this is safe
@@ -1794,7 +1794,7 @@ public class LocationBarLayout extends FrameLayout
      *
      * @param clear Whether to clear the most recent autocomplete results.
      */
-    private void stopAutocomplete(boolean clear) {
+    void stopAutocomplete(boolean clear) {
         if (mAutocomplete != null) mAutocomplete.stop(clear);
         cancelPendingAutocompleteStart();
     }
@@ -2139,14 +2139,14 @@ public class LocationBarLayout extends FrameLayout
      * @param displayText The text (URL or search terms) for user display.
      * @return Whether the URL was changed as a result of this call.
      */
-    private boolean setUrlBarText(String originalText, String displayText) {
+    boolean setUrlBarText(String originalText, String displayText) {
         mUrlBar.setIgnoreTextChangesForAutocomplete(true);
         boolean urlChanged = mUrlBar.setUrl(originalText, displayText);
         mUrlBar.setIgnoreTextChangesForAutocomplete(false);
         return urlChanged;
     }
 
-    private void loadUrlFromOmniboxMatch(String url, int transition, int matchPosition, int type) {
+    void loadUrlFromOmniboxMatch(String url, int transition, int matchPosition, int type) {
         // loadUrl modifies AutocompleteController's state clearing the native
         // AutocompleteResults needed by onSuggestionsSelected. Therefore,
         // loadUrl should should be invoked last.

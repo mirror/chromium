@@ -10,8 +10,8 @@ import org.chromium.base.annotations.CalledByNative;
  * Utility functions for testing features implemented in AndroidNetworkLibrary.
  */
 public class AndroidNetworkLibraryTestUtil {
-    private static int sPerHostCleartextCheckCount;
-    private static int sDefaultCleartextCheckCount;
+    static int sPerHostCleartextCheckCount;
+    static int sDefaultCleartextCheckCount;
     /**
      * Helper for tests that simulates an app controlling cleartext traffic on M and newer.
      */

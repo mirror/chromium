@@ -29,11 +29,11 @@ import java.util.concurrent.ExecutionException;
 public class OptionalShareTargetsManager {
     private static final String TAG = "share_manager";
 
-    private static Set<Activity> sPendingShareActivities =
+    static Set<Activity> sPendingShareActivities =
             Collections.synchronizedSet(new HashSet<Activity>());
     private static ActivityStateListener sStateListener;
-    private static AsyncTask<Void, Void, Void> sStateChangeTask;
-    private static List<ComponentName> sEnabledComponents;
+    static AsyncTask<Void, Void, Void> sStateChangeTask;
+    static List<ComponentName> sEnabledComponents;
 
     /**
      * Enables sharing options.
@@ -134,7 +134,7 @@ public class OptionalShareTargetsManager {
      *
      * This will avoid timing issues described here: crbug.com/649453.
      */
-    private static void waitForPendingStateChangeTask() {
+    static void waitForPendingStateChangeTask() {
         ThreadUtils.assertOnUiThread();
 
         if (sStateChangeTask == null) return;

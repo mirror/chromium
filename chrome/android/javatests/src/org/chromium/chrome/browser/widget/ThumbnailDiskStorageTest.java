@@ -46,9 +46,9 @@ public class ThumbnailDiskStorageTest {
     private static final long TIMEOUT_MS = 10000;
     private static final long INTERVAL_MS = 500;
 
-    private TestThumbnailStorageDelegate mTestThumbnailStorageDelegate;
-    private TestThumbnailGenerator mTestThumbnailGenerator;
-    private TestThumbnailDiskStorage mTestThumbnailDiskStorage;
+    TestThumbnailStorageDelegate mTestThumbnailStorageDelegate;
+    TestThumbnailGenerator mTestThumbnailGenerator;
+    TestThumbnailDiskStorage mTestThumbnailDiskStorage;
 
     private static class TestThumbnailRequest implements ThumbnailProvider.ThumbnailRequest {
         private String mContentId;

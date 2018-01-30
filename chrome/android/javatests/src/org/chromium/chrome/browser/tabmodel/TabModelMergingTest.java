@@ -56,18 +56,18 @@ public class TabModelMergingTest {
     @Rule
     public ChromeTabbedActivityTestRule mActivityTestRule = new ChromeTabbedActivityTestRule();
 
-    private static final String TEST_URL_0 = UrlUtils.encodeHtmlDataUri("<html>test_url_0.</html>");
-    private static final String TEST_URL_1 = UrlUtils.encodeHtmlDataUri("<html>test_url_1.</html>");
-    private static final String TEST_URL_2 = UrlUtils.encodeHtmlDataUri("<html>test_url_2.</html>");
-    private static final String TEST_URL_3 = UrlUtils.encodeHtmlDataUri("<html>test_url_3.</html>");
-    private static final String TEST_URL_4 = UrlUtils.encodeHtmlDataUri("<html>test_url_4.</html>");
+    static final String TEST_URL_0 = UrlUtils.encodeHtmlDataUri("<html>test_url_0.</html>");
+    static final String TEST_URL_1 = UrlUtils.encodeHtmlDataUri("<html>test_url_1.</html>");
+    static final String TEST_URL_2 = UrlUtils.encodeHtmlDataUri("<html>test_url_2.</html>");
+    static final String TEST_URL_3 = UrlUtils.encodeHtmlDataUri("<html>test_url_3.</html>");
+    static final String TEST_URL_4 = UrlUtils.encodeHtmlDataUri("<html>test_url_4.</html>");
     private static final String TEST_URL_5 = UrlUtils.encodeHtmlDataUri("<html>test_url_5.</html>");
     private static final String TEST_URL_6 = UrlUtils.encodeHtmlDataUri("<html>test_url_6.</html>");
 
-    private ChromeTabbedActivity mActivity1;
-    private ChromeTabbedActivity mActivity2;
-    private int mActivity1State;
-    private int mActivity2State;
+    ChromeTabbedActivity mActivity1;
+    ChromeTabbedActivity mActivity2;
+    int mActivity1State;
+    int mActivity2State;
     private String[] mMergeIntoActivity1ExpectedTabs;
     private String[] mMergeIntoActivity2ExpectedTabs;
 

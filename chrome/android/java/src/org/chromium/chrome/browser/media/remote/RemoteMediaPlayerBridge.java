@@ -18,8 +18,8 @@ import org.chromium.chrome.browser.vr_shell.VrShellDelegate;
  */
 @JNINamespace("remote_media")
 public class RemoteMediaPlayerBridge {
-    private long mStartPositionMillis;
-    private long mNativeRemoteMediaPlayerBridge;
+    long mStartPositionMillis;
+    long mNativeRemoteMediaPlayerBridge;
 
     /**
      * The route controller for the video, null if no appropriate route controller.
@@ -27,20 +27,20 @@ public class RemoteMediaPlayerBridge {
     private final MediaRouteController mRouteController;
     private final String mOriginalSourceUrl;
     private final String mOriginalFrameUrl;
-    private String mFrameUrl;
-    private String mSourceUrl;
+    String mFrameUrl;
+    String mSourceUrl;
     private final String mUserAgent;
-    private Bitmap mPosterBitmap;
-    private String mCookies;
-    private boolean mPauseRequested;
-    private boolean mSeekRequested;
-    private long mSeekLocation;
-    private boolean mIsPlayable;
-    private boolean mRouteIsAvailable;
+    Bitmap mPosterBitmap;
+    String mCookies;
+    boolean mPauseRequested;
+    boolean mSeekRequested;
+    long mSeekLocation;
+    boolean mIsPlayable;
+    boolean mRouteIsAvailable;
 
     // mActive is true when the Chrome is playing, or preparing to play, this player's video
     // remotely.
-    private boolean mActive;
+    boolean mActive;
 
     private static final String TAG = "MediaFling";
 
@@ -329,7 +329,7 @@ public class RemoteMediaPlayerBridge {
         }
     }
 
-    private void onRouteAvailabilityChange() {
+    void onRouteAvailabilityChange() {
         Log.d(TAG, "onRouteAvailabilityChange: " + mRouteIsAvailable + ", " + mIsPlayable);
         if (mNativeRemoteMediaPlayerBridge == 0) return;
 
@@ -369,20 +369,20 @@ public class RemoteMediaPlayerBridge {
                 });
     }
 
-    private native void nativeOnPlaying(long nativeRemoteMediaPlayerBridge);
-    private native void nativeOnPaused(long nativeRemoteMediaPlayerBridge);
-    private native void nativeOnRouteUnselected(long nativeRemoteMediaPlayerBridge);
-    private native void nativeOnPlaybackFinished(long nativeRemoteMediaPlayerBridge);
+    native void nativeOnPlaying(long nativeRemoteMediaPlayerBridge);
+    native void nativeOnPaused(long nativeRemoteMediaPlayerBridge);
+    native void nativeOnRouteUnselected(long nativeRemoteMediaPlayerBridge);
+    native void nativeOnPlaybackFinished(long nativeRemoteMediaPlayerBridge);
     private native void nativeOnRouteAvailabilityChanged(
             long nativeRemoteMediaPlayerBridge, int availability);
-    private native void nativeOnCancelledRemotePlaybackRequest(long nativeRemoteMediaPlayerBridge);
-    private native String nativeGetTitle(long nativeRemoteMediaPlayerBridge);
-    private native void nativePauseLocal(long nativeRemoteMediaPlayerBridge);
-    private native int nativeGetLocalPosition(long nativeRemoteMediaPlayerBridge);
-    private native void nativeOnCastStarting(long nativeRemoteMediaPlayerBridge,
+    native void nativeOnCancelledRemotePlaybackRequest(long nativeRemoteMediaPlayerBridge);
+    native String nativeGetTitle(long nativeRemoteMediaPlayerBridge);
+    native void nativePauseLocal(long nativeRemoteMediaPlayerBridge);
+    native int nativeGetLocalPosition(long nativeRemoteMediaPlayerBridge);
+    native void nativeOnCastStarting(long nativeRemoteMediaPlayerBridge,
             String castingMessage);
-    private native void nativeOnCastStarted(long nativeRemoteMediaPlayerBridge);
-    private native void nativeOnCastStopping(long nativeRemoteMediaPlayerBridge);
-    private native void nativeOnError(long nativeRemoteMediaPlayerBridge);
-    private native void nativeOnSeekCompleted(long nativeRemoteMediaPlayerBridge);
+    native void nativeOnCastStarted(long nativeRemoteMediaPlayerBridge);
+    native void nativeOnCastStopping(long nativeRemoteMediaPlayerBridge);
+    native void nativeOnError(long nativeRemoteMediaPlayerBridge);
+    native void nativeOnSeekCompleted(long nativeRemoteMediaPlayerBridge);
 }

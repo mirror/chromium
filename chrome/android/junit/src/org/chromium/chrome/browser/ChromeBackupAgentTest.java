@@ -89,7 +89,7 @@ public class ChromeBackupAgentTest {
 
     private Context mContext;
     private ChromeBackupAgent mAgent;
-    private AsyncInitTaskRunner mTaskRunner;
+    AsyncInitTaskRunner mTaskRunner;
 
     private void setUpTestPrefs(SharedPreferences prefs) {
         SharedPreferences.Editor editor = prefs.edit();

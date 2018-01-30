@@ -57,10 +57,10 @@ public class BindingManagerIntegrationTest {
 
     private static class MockBindingManager implements BindingManager {
         // Maps pid to the last received visibility state of the renderer.
-        private final SparseBooleanArray mProcessInForegroundMap = new SparseBooleanArray();
+        final SparseBooleanArray mProcessInForegroundMap = new SparseBooleanArray();
         // Maps pid to a string recording calls to setInForeground() and visibilityDetermined().
         private final SparseArray<String> mVisibilityCallsMap = new SparseArray<String>();
-        private boolean mIsReleaseAllModerateBindingsCalled;
+        boolean mIsReleaseAllModerateBindingsCalled;
 
         void assertIsInForeground(final int pid) {
             CriteriaHelper.pollInstrumentationThread(new Criteria() {

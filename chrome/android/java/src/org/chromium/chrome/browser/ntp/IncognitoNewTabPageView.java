@@ -19,7 +19,7 @@ import org.chromium.chrome.browser.util.ViewUtils;
  */
 public class IncognitoNewTabPageView extends FrameLayout {
 
-    private IncognitoNewTabPageManager mManager;
+    IncognitoNewTabPageManager mManager;
     private boolean mFirstShow = true;
     private NewTabPageScrollView mScrollView;
 

@@ -45,7 +45,7 @@ public class DesktopCanvas {
      * boundary values to account for System UI.  This functionality ensures the user can view and
      * interact with any area of the remote image, even when System UI might otherwise obscure it.
      */
-    private PointF mViewportOffset = new PointF();
+    PointF mViewportOffset = new PointF();
 
     /**
      * Tracks whether to adjust the size of the viewport to account for System UI. If false, the
@@ -55,7 +55,7 @@ public class DesktopCanvas {
     private boolean mAdjustViewportSizeForSystemUi = false;
 
     /* Used to perform per-frame rendering tasks. */
-    private Event.ParameterCallback<Boolean, Void> mFrameRenderedCallback;
+    Event.ParameterCallback<Boolean, Void> mFrameRenderedCallback;
 
     public DesktopCanvas(RenderStub renderStub, RenderData renderData) {
         mRenderStub = renderStub;
@@ -258,7 +258,7 @@ public class DesktopCanvas {
     /**
      * Repositions the image by translating it (without affecting the zoom level).
      */
-    private void repositionImage() {
+    void repositionImage() {
         PointF viewportPosition = new PointF(mDesiredCenter.x, mDesiredCenter.y);
         constrainPointToBounds(viewportPosition, getViewportBounds());
         float[] viewportAdjustment = {viewportPosition.x, viewportPosition.y};

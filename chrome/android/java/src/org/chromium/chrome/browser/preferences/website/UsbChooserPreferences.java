@@ -38,14 +38,14 @@ public class UsbChooserPreferences extends PreferenceFragment {
     private SiteSettingsCategory mCategory;
     // Multiple sites may have access to the same device. A canonical UsbInfo for each device is
     // therefore arbitrarily chosen to represent it.
-    private Map<String, Pair<ArrayList<UsbInfo>, ArrayList<Website>>> mPermissionsByObject =
+    Map<String, Pair<ArrayList<UsbInfo>, ArrayList<Website>>> mPermissionsByObject =
             new HashMap<>();
     // The view to show when the list is empty.
     private TextView mEmptyView;
     // The view for searching the list of items.
     private SearchView mSearchView;
     // If not blank, represents a substring to use to search for site names.
-    private String mSearch = "";
+    String mSearch = "";
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -148,12 +148,12 @@ public class UsbChooserPreferences extends PreferenceFragment {
      *
      * resetList() is called to refresh the view when the data is ready.
      */
-    private void getInfo() {
+    void getInfo() {
         WebsitePermissionsFetcher fetcher = new WebsitePermissionsFetcher(new ResultsPopulator());
         fetcher.fetchPreferencesForCategory(mCategory);
     }
 
-    private void resetList() {
+    void resetList() {
         getPreferenceScreen().removeAll();
         PreferenceUtils.addPreferencesFromResource(this, R.xml.usb_chooser_preferences);
 

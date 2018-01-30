@@ -104,20 +104,20 @@ public class WebappActivity extends SingleTabActivity {
     private final WebappActionsNotificationManager mNotificationManager;
     private final WebappDirectoryManager mDirectoryManager;
 
-    private WebappInfo mWebappInfo;
+    WebappInfo mWebappInfo;
 
     private WebappSplashScreenController mSplashController;
 
     private boolean mIsInitialized;
-    private Integer mBrandColor;
+    Integer mBrandColor;
 
-    private Bitmap mLargestFavicon;
+    Bitmap mLargestFavicon;
 
     private Runnable mSetImmersiveRunnable;
 
-    private BrowserSessionDataProvider mBrowserSessionDataProvider;
+    BrowserSessionDataProvider mBrowserSessionDataProvider;
 
-    private TrustedWebContentProvider mTrustedWebContentProvider;
+    TrustedWebContentProvider mTrustedWebContentProvider;
 
     private class TrustedWebContentProvider
             implements BrowserSessionContentHandler, OriginVerificationListener {
@@ -191,7 +191,7 @@ public class WebappActivity extends SingleTabActivity {
     private static class Holder {
         // This static map is used to cache WebappInfo objects between their initial creation in
         // WebappLauncherActivity and final use in WebappActivity.
-        private static final HashMap<String, WebappInfo> sWebappInfoMap =
+        static final HashMap<String, WebappInfo> sWebappInfoMap =
                 new HashMap<String, WebappInfo>();
     }
 
@@ -443,7 +443,7 @@ public class WebappActivity extends SingleTabActivity {
     /**
      * This method no-ops before {@link #enterImmersiveMode()} is called explicitly.
      */
-    private void asyncSetImmersive(int delayInMills) {
+    void asyncSetImmersive(int delayInMills) {
         if (mSetImmersiveRunnable == null) return;
 
         mHandler.removeCallbacks(mSetImmersiveRunnable);
@@ -765,7 +765,7 @@ public class WebappActivity extends SingleTabActivity {
                 getBrowserSession());
     }
 
-    private void updateToolbarCloseButtonVisibility() {
+    void updateToolbarCloseButtonVisibility() {
         if (WebappBrowserControlsDelegate.shouldShowToolbarCloseButton(this)) {
             getToolbarManager().setCloseButtonDrawable(
                     TintedDrawable.constructTintedDrawable(getResources(), R.drawable.btn_close));
@@ -795,7 +795,7 @@ public class WebappActivity extends SingleTabActivity {
         }
     }
 
-    private void updateTaskDescription() {
+    void updateTaskDescription() {
         String title = null;
         if (!TextUtils.isEmpty(mWebappInfo.shortName())) {
             title = mWebappInfo.shortName();

@@ -326,7 +326,7 @@ public class WebApkUpdateManagerUnitTest {
         ShadowApplication.getInstance().runBackgroundTasks();
     }
 
-    private static void writeRandomTextToFile(String path) {
+    static void writeRandomTextToFile(String path) {
         File file = new File(path);
         new File(file.getParent()).mkdirs();
         try (FileOutputStream out = new FileOutputStream(file)) {

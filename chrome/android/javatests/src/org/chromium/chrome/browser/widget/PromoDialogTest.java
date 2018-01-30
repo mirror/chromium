@@ -52,7 +52,7 @@ public class PromoDialogTest {
         public final PromoDialog dialog;
         public final PromoDialogLayout dialogLayout;
 
-        private final DialogParams mDialogParams;
+        final DialogParams mDialogParams;
 
         PromoDialogWrapper(final Activity activity, final DialogParams dialogParams)
                 throws Exception {

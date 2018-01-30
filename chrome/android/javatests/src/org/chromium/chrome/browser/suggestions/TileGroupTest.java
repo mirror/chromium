@@ -64,8 +64,8 @@ public class TileGroupTest {
                     "/chrome/test/data/android/navigate/three.html"};
 
     private NewTabPage mNtp;
-    private String[] mSiteSuggestionUrls;
-    private FakeMostVisitedSites mMostVisitedSites;
+    String[] mSiteSuggestionUrls;
+    FakeMostVisitedSites mMostVisitedSites;
     private EmbeddedTestServer mTestServer;
 
     @Before

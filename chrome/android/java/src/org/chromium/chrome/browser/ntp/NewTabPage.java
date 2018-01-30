@@ -72,30 +72,30 @@ public class NewTabPage
     // Key for the scroll position data that may be stored in a navigation entry.
     private static final String NAVIGATION_ENTRY_SCROLL_POSITION_KEY = "NewTabPageScrollPosition";
 
-    private final Tab mTab;
+    final Tab mTab;
 
     private final String mTitle;
     private final int mBackgroundColor;
     private final int mThemeColor;
-    private final NewTabPageView mNewTabPageView;
+    final NewTabPageView mNewTabPageView;
     private final NewTabPageManagerImpl mNewTabPageManager;
     private final TileGroup.Delegate mTileGroupDelegate;
 
     private TabObserver mTabObserver;
     private boolean mSearchProviderHasLogo;
 
-    private FakeboxDelegate mFakeboxDelegate;
+    FakeboxDelegate mFakeboxDelegate;
 
     // The timestamp at which the constructor was called.
-    private final long mConstructedTimeNs;
+    final long mConstructedTimeNs;
 
     // The timestamp at which this NTP was last shown to the user.
-    private long mLastShownTimeNs;
+    long mLastShownTimeNs;
 
-    private boolean mIsLoaded;
+    boolean mIsLoaded;
 
     // Whether destroy() has been called.
-    private boolean mIsDestroyed;
+    boolean mIsDestroyed;
 
     /**
      * Allows clients to listen for updates to the scroll changes of the search box on the
@@ -237,7 +237,7 @@ public class NewTabPage
      * {@link NewTabPage}.
      */
     private class NewTabPageTileGroupDelegate extends TileGroupDelegateImpl {
-        private NewTabPageTileGroupDelegate(ChromeActivity activity, Profile profile,
+        NewTabPageTileGroupDelegate(ChromeActivity activity, Profile profile,
                 SuggestionsNavigationDelegate navigationDelegate) {
             super(activity, profile, navigationDelegate, activity.getSnackbarManager());
         }
@@ -367,7 +367,7 @@ public class NewTabPage
         mNewTabPageView.setUrlFocusAnimationsDisabled(disable);
     }
 
-    private boolean isInSingleUrlBarMode() {
+    boolean isInSingleUrlBarMode() {
         if (DeviceFormFactor.isTablet()) return false;
         if (FeatureUtilities.isChromeHomeEnabled()) return false;
         return mSearchProviderHasLogo;
@@ -460,14 +460,14 @@ public class NewTabPage
      * Records UMA for the NTP being shown. This includes a fresh page load or being brought to the
      * foreground.
      */
-    private void recordNTPShown() {
+    void recordNTPShown() {
         mLastShownTimeNs = System.nanoTime();
         RecordUserAction.record("MobileNTPShown");
         SuggestionsMetrics.recordSurfaceVisible();
     }
 
     /** Records UMA for the NTP being hidden and the time spent on it. */
-    private void recordNTPHidden() {
+    void recordNTPHidden() {
         RecordHistogram.recordMediumTimesHistogram(
                 "NewTabPage.TimeSpent", System.nanoTime() - mLastShownTimeNs, TimeUnit.NANOSECONDS);
         SuggestionsMetrics.recordSurfaceHidden();

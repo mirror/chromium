@@ -40,7 +40,7 @@ public class UmaSessionStats {
     private final boolean mIsMultiWindowCapable;
     private ComponentCallbacks mComponentCallbacks;
 
-    private boolean mKeyboardConnected;
+    boolean mKeyboardConnected;
 
     public UmaSessionStats(Context context) {
         mContext = context;
@@ -48,7 +48,7 @@ public class UmaSessionStats {
                 SAMSUNG_MULTWINDOW_PACKAGE);
     }
 
-    private void recordPageLoadStats(Tab tab) {
+    void recordPageLoadStats(Tab tab) {
         WebContents webContents = tab.getWebContents();
         boolean isDesktopUserAgent = webContents != null
                 && webContents.getNavigationController().getUseDesktopUserAgent();

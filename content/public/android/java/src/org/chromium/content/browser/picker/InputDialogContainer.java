@@ -46,10 +46,10 @@ public class InputDialogContainer {
     private final Context mContext;
 
     // Prevents sending two notifications (from onClick and from onDismiss)
-    private boolean mDialogAlreadyDismissed;
+    boolean mDialogAlreadyDismissed;
 
-    private AlertDialog mDialog;
-    private final InputActionDelegate mInputActionDelegate;
+    AlertDialog mDialog;
+    final InputActionDelegate mInputActionDelegate;
 
     public static boolean isDialogInputType(int type) {
         return type == TextInputType.DATE || type == TextInputType.TIME
@@ -274,7 +274,7 @@ public class InputDialogContainer {
         return mDialog != null && mDialog.isShowing();
     }
 
-    private void dismissDialog() {
+    void dismissDialog() {
         if (isDialogShowing()) mDialog.dismiss();
     }
 

@@ -62,7 +62,7 @@ public class ChromeInstrumentationTestRunner extends BaseChromiumInstrumentation
         }
 
         @SuppressWarnings("unchecked")
-        private VrDaydreamApi getDaydreamApi() {
+        VrDaydreamApi getDaydreamApi() {
             if (!mAttemptedToGetApi) {
                 mAttemptedToGetApi = true;
                 try {

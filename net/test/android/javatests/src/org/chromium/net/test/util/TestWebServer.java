@@ -508,7 +508,7 @@ public class TestWebServer {
      *
      * @throws NoSuchAlgorithmException, IOException
      */
-    private void outputResponse(List<String> requestLines, WebServerPrintStream stream)
+    void outputResponse(List<String> requestLines, WebServerPrintStream stream)
             throws NoSuchAlgorithmException, IOException {
         assert Thread.currentThread()
                 == mServerThread : "outputResponse called from non-server thread";
@@ -629,7 +629,7 @@ public class TestWebServer {
 
     private static class ServerThread extends Thread {
         private TestWebServer mServer;
-        private ServerSocket mSocket;
+        ServerSocket mSocket;
         private boolean mIsSsl;
         private SSLContext mSslContext;
 

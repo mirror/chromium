@@ -53,7 +53,7 @@ public class CastSessionInfo {
             }
         }
 
-        private VolumeInfo(double level, boolean muted) {
+        VolumeInfo(double level, boolean muted) {
             this.level = level;
             this.muted = muted;
         }
@@ -162,7 +162,7 @@ public class CastSessionInfo {
             }
         }
 
-        private ReceiverInfo(
+        ReceiverInfo(
                 String label,
                 String friendlyName,
                 List<String> capabilities,
@@ -301,7 +301,7 @@ public class CastSessionInfo {
         }
     }
 
-    private CastSessionInfo(
+    CastSessionInfo(
             String sessionId,
             String statusText,
             ReceiverInfo receiver,

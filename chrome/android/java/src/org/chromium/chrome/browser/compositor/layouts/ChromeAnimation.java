@@ -40,7 +40,7 @@ public class ChromeAnimation<T> {
      * Multiplier for animation durations for debugging. Can be set in Developer Options and cached
      * here.
      */
-    private static Float sAnimationMultiplier;
+    static Float sAnimationMultiplier;
 
     private final AtomicBoolean mFinishCalled = new AtomicBoolean();
     private final ArrayList<Animation<T>> mAnimations = new ArrayList<Animation<T>>();
@@ -50,7 +50,7 @@ public class ChromeAnimation<T> {
     private static AccelerateInterpolator sAccelerateInterpolator;
     private static LinearInterpolator sLinearInterpolator;
     private static DecelerateInterpolator sDecelerateInterpolator;
-    private static final Object sLock = new Object();
+    static final Object sLock = new Object();
 
     /**
      * @return The default acceleration interpolator. No allocation.

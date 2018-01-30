@@ -85,7 +85,7 @@ public abstract class ToolbarLayout extends FrameLayout implements Toolbar {
 
     protected boolean mShowMenuBadge;
     private AnimatorSet mMenuBadgeAnimatorSet;
-    private boolean mIsMenuBadgeAnimationRunning;
+    boolean mIsMenuBadgeAnimationRunning;
 
     /**
      * Basic constructor for {@link ToolbarLayout}.

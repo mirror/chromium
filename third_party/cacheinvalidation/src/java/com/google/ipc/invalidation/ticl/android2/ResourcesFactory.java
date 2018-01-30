@@ -71,7 +71,7 @@ public class ResourcesFactory {
      * @param clock source of time for the internal scheduler
      * @param logPrefix log prefix
      */
-    private AndroidResources(Context context, AndroidClock clock, String logPrefix) {
+    AndroidResources(Context context, AndroidClock clock, String logPrefix) {
       super(AndroidLogger.forPrefix(logPrefix), new AndroidInternalScheduler(context, clock),
           new InvalidScheduler(), new AndroidNetworkChannel(context), new AndroidStorage(context),
           getPlatformString());

@@ -66,7 +66,7 @@ public class WebVrInputTest {
     @Rule
     public RuleChain mRuleChain;
 
-    private ChromeActivityTestRule mVrTestRule;
+    ChromeActivityTestRule mVrTestRule;
     private VrTestFramework mVrTestFramework;
 
     public WebVrInputTest(Callable<ChromeActivityTestRule> callable) throws Exception {

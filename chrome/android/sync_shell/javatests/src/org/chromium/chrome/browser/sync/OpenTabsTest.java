@@ -82,7 +82,7 @@ public class OpenTabsTest {
         public final List<String> tabIds;
         public final List<String> urls;
 
-        private OpenTabs(String headerId, List<String> tabIds, List<String> urls) {
+        OpenTabs(String headerId, List<String> tabIds, List<String> urls) {
             this.headerId = headerId;
             this.tabIds = tabIds;
             this.urls = urls;
@@ -350,7 +350,7 @@ public class OpenTabsTest {
     }
 
     // Distills the local session data into a simple data object for the given client.
-    private OpenTabs getLocalTabsForClient(String clientName) throws JSONException {
+    OpenTabs getLocalTabsForClient(String clientName) throws JSONException {
         List<Pair<String, JSONObject>> tabEntities =
                 SyncTestUtil.getLocalData(mSyncTestRule.getTargetContext(), OPEN_TABS_TYPE);
         // Output lists.

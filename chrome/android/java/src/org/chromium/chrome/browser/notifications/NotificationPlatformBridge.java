@@ -525,7 +525,7 @@ public class NotificationPlatformBridge {
     }
 
     /** Called after querying whether the browser backs the given WebAPK. */
-    private void displayNotificationInternal(String notificationId, String origin, String scopeUrl,
+    void displayNotificationInternal(String notificationId, String origin, String scopeUrl,
             String profileId, boolean incognito, String tag, String title, String body,
             Bitmap image, Bitmap icon, Bitmap badge, int[] vibrationPattern, long timestamp,
             boolean renotify, boolean silent, ActionInfo[] actions, String webApkPackage) {
@@ -732,7 +732,7 @@ public class NotificationPlatformBridge {
     }
 
     /** Called after querying whether the browser backs the given WebAPK. */
-    private void closeNotificationInternal(String notificationId, String webApkPackage) {
+    void closeNotificationInternal(String notificationId, String webApkPackage) {
         if (TextUtils.isEmpty(webApkPackage)) {
             mNotificationManager.cancel(notificationId, PLATFORM_ID);
         } else {

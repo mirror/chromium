@@ -93,7 +93,7 @@ public class UpdateMenuItemHelperTest {
         }
     }
 
-    private MockVersionNumberGetter mMockVersionNumberGetter;
+    MockVersionNumberGetter mMockVersionNumberGetter;
     private MockMarketURLGetter mMockMarketURLGetter;
 
     @Before

@@ -52,7 +52,7 @@ public class ThumbnailProviderImpl implements ThumbnailProvider, ThumbnailStorag
      * the thumbnail.
      */
     private static class RecentlyUsedCache extends LruCache<Pair<String, Integer>, Bitmap> {
-        private RecentlyUsedCache() {
+        RecentlyUsedCache() {
             super(MAX_CACHE_BYTES);
         }
 
@@ -84,7 +84,7 @@ public class ThumbnailProviderImpl implements ThumbnailProvider, ThumbnailStorag
      * Static cache used for deduplicating bitmaps. The key is a pair of file name and thumbnail
      * size (as for the {@link #mBitmapCache}.
      */
-    private static Map<Pair<String, Integer>, WeakReference<Bitmap>> sDeduplicationCache =
+    static Map<Pair<String, Integer>, WeakReference<Bitmap>> sDeduplicationCache =
             new HashMap<>();
 
     /** Queue of files to retrieve thumbnails for. */

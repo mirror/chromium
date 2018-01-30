@@ -48,7 +48,7 @@ public class DataReductionStatsPreference extends Preference {
 
     private NetworkStatsHistory mOriginalNetworkStatsHistory;
     private NetworkStatsHistory mReceivedNetworkStatsHistory;
-    private List<DataReductionDataUseItem> mSiteBreakdownItems;
+    List<DataReductionDataUseItem> mSiteBreakdownItems;
 
     private TextView mOriginalSizeTextView;
     private TextView mReceivedSizeTextView;
@@ -59,7 +59,7 @@ public class DataReductionStatsPreference extends Preference {
     private TextView mEndDateTextView;
     private Button mResetStatisticsButton;
     private ChartDataUsageView mChartDataUsageView;
-    private DataReductionSiteBreakdownView mDataReductionBreakdownView;
+    DataReductionSiteBreakdownView mDataReductionBreakdownView;
     private long mLeftPosition;
     private long mRightPosition;
     private Long mCurrentTime;
@@ -154,7 +154,7 @@ public class DataReductionStatsPreference extends Preference {
         return networkStatsHistory;
     }
 
-    private void setDetailText() {
+    void setDetailText() {
         updateDetailData();
         mPercentReductionTextView.setText(mPercentReductionPhrase);
         mStartDateTextView.setText(mStartDatePhrase);

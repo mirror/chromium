@@ -43,7 +43,7 @@ public class NavigationRecorderTest {
 
     private EmbeddedTestServer mTestServer;
     private String mNavUrl;
-    private Tab mInitialTab;
+    Tab mInitialTab;
 
     @Before
     public void setUp() throws InterruptedException {

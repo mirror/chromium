@@ -23,7 +23,7 @@ public class VSyncMonitor {
 
     // Conservative guess about vsync's consecutivity.
     // If true, next tick is guaranteed to be consecutive.
-    private boolean mConsecutiveVSync;
+    boolean mConsecutiveVSync;
 
     /**
      * VSync listener class
@@ -40,13 +40,13 @@ public class VSyncMonitor {
     private Listener mListener;
 
     // Display refresh rate as reported by the system.
-    private long mRefreshPeriodNano;
+    long mRefreshPeriodNano;
 
     private boolean mHaveRequestInFlight;
 
     private final Choreographer mChoreographer;
     private final Choreographer.FrameCallback mVSyncFrameCallback;
-    private long mGoodStartingPointNano;
+    long mGoodStartingPointNano;
 
     // If the monitor is activated after having been idle, we synthesize the first vsync to reduce
     // latency.
@@ -116,11 +116,11 @@ public class VSyncMonitor {
         return mInsideVSync;
     }
 
-    private long getCurrentNanoTime() {
+    long getCurrentNanoTime() {
         return System.nanoTime();
     }
 
-    private void onVSyncCallback(long frameTimeNanos, long currentTimeNanos) {
+    void onVSyncCallback(long frameTimeNanos, long currentTimeNanos) {
         assert mHaveRequestInFlight;
         mInsideVSync = true;
         mHaveRequestInFlight = false;

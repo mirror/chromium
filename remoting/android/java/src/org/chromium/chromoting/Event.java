@@ -80,7 +80,7 @@ public class Event<ParamT> {
      */
     public static final class PromisedRaisable<ParamT> extends Raisable<ParamT> {
         private boolean mRaised;
-        private ParamT mLastParameter;
+        ParamT mLastParameter;
 
         @Override
         public Object add(final ParameterRunnable<ParamT> runnable) {
@@ -132,8 +132,8 @@ public class Event<ParamT> {
         private final Object mLock;
         private final Object mEvent;
 
-        private SelfRemovableParameterRunnable(Event<ParamT> owner,
-                                               ParameterCallback<Boolean, ParamT> callback) {
+        SelfRemovableParameterRunnable(Event<ParamT> owner,
+                ParameterCallback<Boolean, ParamT> callback) {
             Preconditions.notNull(callback);
             mCallback = callback;
             mOwner = owner;

@@ -50,14 +50,14 @@ public abstract class UserRecoverableErrorHandler {
     private static final int ERROR_HANDLER_ACTION_IGNORED_AS_REDUNDANT = 3;
     private static final int ERROR_HANDLER_ACTION_HISTOGRAM_BOUNDARY = 4;
 
-    private static final EnumeratedHistogramSample sErrorHandlerActionHistogramSample =
+    static final EnumeratedHistogramSample sErrorHandlerActionHistogramSample =
             new EnumeratedHistogramSample(ERROR_HANDLER_ACTION_HISTOGRAM_NAME,
                     ERROR_HANDLER_ACTION_HISTOGRAM_BOUNDARY);
 
-    private static final ActionEvent sModalDialogShownActionEvent =
+    static final ActionEvent sModalDialogShownActionEvent =
             new ActionEvent("Signin_Android_GmsUserRecoverableDialogShown");
 
-    private static final ActionEvent sModalDialogAcceptedActionEvent =
+    static final ActionEvent sModalDialogAcceptedActionEvent =
             new ActionEvent("Signin_Android_GmsUserRecoverableDialogAccepted");
 
     /**

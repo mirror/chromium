@@ -14,7 +14,7 @@ import org.chromium.base.annotations.JNINamespace;
 class JavaHandlerThreadHelpers {
     private static class TestException extends Exception {}
 
-    private static boolean sTaskExecuted;
+    static boolean sTaskExecuted;
     // This is executed as part of base_unittests. This tests that JavaHandlerThread can be used
     // by itself without attaching to its native peer.
     @CalledByNative

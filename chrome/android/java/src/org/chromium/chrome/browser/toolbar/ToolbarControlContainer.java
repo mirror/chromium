@@ -33,7 +33,7 @@ import org.chromium.ui.resources.dynamics.ViewResourceAdapter;
 public class ToolbarControlContainer extends FrameLayout implements ControlContainer {
     private final float mTabStripHeight;
 
-    private Toolbar mToolbar;
+    Toolbar mToolbar;
     private ToolbarViewResourceFrameLayout mToolbarContainer;
     private View mMenuBtn;
 
@@ -138,7 +138,7 @@ public class ToolbarControlContainer extends FrameLayout implements ControlConta
      */
     // Only publicly visible due to lint warnings.
     public static class ToolbarViewResourceFrameLayout extends ViewResourceFrameLayout {
-        private boolean mReadyForBitmapCapture;
+        boolean mReadyForBitmapCapture;
 
         public ToolbarViewResourceFrameLayout(Context context, AttributeSet attrs) {
             super(context, attrs);
@@ -261,7 +261,7 @@ public class ToolbarControlContainer extends FrameLayout implements ControlConta
         return mSwipeRecognizer.onTouchEvent(event);
     }
 
-    private boolean isOnTabStrip(MotionEvent e) {
+    boolean isOnTabStrip(MotionEvent e) {
         return e.getY() <= mTabStripHeight;
     }
 

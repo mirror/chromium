@@ -54,8 +54,8 @@ public class DownloadBroadcastManager extends Service {
 
     private final Context mApplicationContext;
     private final DownloadNotificationService2 mDownloadNotificationService;
-    private final Handler mHandler = new Handler();
-    private final Runnable mStopSelfRunnable = new Runnable() {
+    final Handler mHandler = new Handler();
+    final Runnable mStopSelfRunnable = new Runnable() {
         @Override
         public void run() {
             stopSelf();

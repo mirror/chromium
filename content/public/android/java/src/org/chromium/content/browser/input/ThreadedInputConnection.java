@@ -79,17 +79,17 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
         }
     };
 
-    private final ImeAdapter mImeAdapter;
+    final ImeAdapter mImeAdapter;
     private final Handler mHandler;
-    private int mNumNestedBatchEdits;
+    int mNumNestedBatchEdits;
 
     // TODO(changwan): check if we can keep a pool of TextInputState to avoid creating
     // a bunch of new objects for each key stroke.
     private final BlockingQueue<TextInputState> mQueue = new LinkedBlockingQueue<>();
-    private int mPendingAccent;
+    int mPendingAccent;
     private TextInputState mCachedTextInputState;
-    private int mCurrentExtractedTextRequestToken;
-    private boolean mShouldUpdateExtractedText;
+    int mCurrentExtractedTextRequestToken;
+    boolean mShouldUpdateExtractedText;
 
     ThreadedInputConnection(View view, ImeAdapter imeAdapter, Handler handler) {
         super(view, true);
@@ -167,7 +167,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
         mHandler.post(mProcessPendingInputStatesRunnable);
     }
 
-    private void processPendingInputStates() {
+    void processPendingInputStates() {
         if (DEBUG_LOGS) Log.i(TAG, "checkQueue");
         assertOnImeThread();
         // Handle all the remaining states in the queue.
@@ -308,7 +308,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
         return true;
     }
 
-    private void updateComposingTextOnUiThread(
+    void updateComposingTextOnUiThread(
             CharSequence text, int newCursorPosition, boolean isPendingAccent) {
         int accentToSend =
                 isPendingAccent ? (mPendingAccent | KeyCharacterMap.COMBINING_ACCENT) : 0;
@@ -350,7 +350,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
         return true;
     }
 
-    private void commitTextOnUiThread(final CharSequence text, final int newCursorPosition) {
+    void commitTextOnUiThread(final CharSequence text, final int newCursorPosition) {
         cancelCombiningAccentOnUiThread();
         mImeAdapter.sendCompositionToNative(text, newCursorPosition, true, 0);
     }
@@ -505,7 +505,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
         setCombiningAccentOnUiThread(pendingAccentToSet);
     }
 
-    private boolean handleCombiningAccentOnUiThread(final KeyEvent event) {
+    boolean handleCombiningAccentOnUiThread(final KeyEvent event) {
         // TODO(changwan): this will break the current composition. check if we can
         // implement it in the renderer instead.
         int action = event.getAction();
@@ -572,7 +572,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
         return true;
     }
 
-    private void finishComposingTextOnUiThread() {
+    void finishComposingTextOnUiThread() {
         mImeAdapter.finishComposingText();
     }
 

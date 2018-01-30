@@ -36,7 +36,7 @@ import org.chromium.ui.base.ViewAndroidDelegate;
 public class OverlayPanelContent {
 
     /** The ContentViewCore that this panel will display. */
-    private ContentViewCore mContentViewCore;
+    ContentViewCore mContentViewCore;
 
     /** The pointer to the native version of this class. */
     private long mNativeOverlayPanelContentPtr;
@@ -45,13 +45,13 @@ public class OverlayPanelContent {
     private final WebContentsDelegateAndroid mWebContentsDelegate;
 
     /** The activity that this content is contained in. */
-    private ChromeActivity mActivity;
+    ChromeActivity mActivity;
 
     /** Observer used for tracking loading and navigation. */
     private WebContentsObserver mWebContentsObserver;
 
     /** The URL that was directly loaded using the {@link #loadUrl(String)} method. */
-    private String mLoadedUrl;
+    String mLoadedUrl;
 
     /** Whether the ContentViewCore has started loading a URL. */
     private boolean mDidStartLoadingUrl;
@@ -73,16 +73,16 @@ public class OverlayPanelContent {
      * For more details, see crbug.com/441048
      * TODO(pedrosimonetti): remove this from M48 or move it to Contextual Search Panel.
      */
-    private boolean mIsProcessingPendingNavigation;
+    boolean mIsProcessingPendingNavigation;
 
     /** Whether the content view is currently being displayed. */
     private boolean mIsContentViewShowing;
 
     /** The observer used by this object to inform implementers of different events. */
-    private OverlayContentDelegate mContentDelegate;
+    OverlayContentDelegate mContentDelegate;
 
     /** Used to observe progress bar events. */
-    private OverlayContentProgressObserver mProgressObserver;
+    OverlayContentProgressObserver mProgressObserver;
 
     /** If a URL is set to delayed load (load on user interaction), it will be stored here. */
     private String mPendingUrl;
@@ -96,7 +96,7 @@ public class OverlayPanelContent {
     private int mContentViewHeight;
 
     /** The height of the bar at the top of the OverlayPanel in pixels. */
-    private int mBarHeightPx;
+    int mBarHeightPx;
 
     // ============================================================================================
     // InterceptNavigationDelegateImpl
@@ -295,7 +295,7 @@ public class OverlayPanelContent {
                 new ViewAndroidDelegate() {
                     private ViewGroup mContainerView;
 
-                    private ViewAndroidDelegate init(ViewGroup containerView) {
+                    ViewAndroidDelegate init(ViewGroup containerView) {
                         mContainerView = containerView;
                         return this;
                     }
@@ -473,7 +473,7 @@ public class OverlayPanelContent {
     /**
      * @return Whether the given HTTP result code represents a failure or not.
      */
-    private boolean isHttpFailureCode(int httpResultCode) {
+    boolean isHttpFailureCode(int httpResultCode) {
         return httpResultCode <= 0 || httpResultCode >= 400;
     }
 

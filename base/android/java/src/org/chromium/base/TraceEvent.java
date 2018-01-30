@@ -29,7 +29,7 @@ import org.chromium.base.annotations.MainDex;
 @JNINamespace("base::android")
 @MainDex
 public class TraceEvent implements AutoCloseable {
-    private static volatile boolean sEnabled;
+    static volatile boolean sEnabled;
     private static volatile boolean sATraceEnabled; // True when taking an Android systrace.
 
     private static class BasicLooperMonitor implements Printer {
@@ -195,7 +195,7 @@ public class TraceEvent implements AutoCloseable {
 
     // Holder for monitor avoids unnecessary construction on non-debug runs
     private static final class LooperMonitorHolder {
-        private static final BasicLooperMonitor sInstance =
+        static final BasicLooperMonitor sInstance =
                 CommandLine.getInstance().hasSwitch(BaseSwitches.ENABLE_IDLE_TRACING)
                 ? new IdleTracingLooperMonitor() : new BasicLooperMonitor();
     }
@@ -370,8 +370,8 @@ public class TraceEvent implements AutoCloseable {
     private static native void nativeInstant(String name, String arg);
     private static native void nativeBegin(String name, String arg);
     private static native void nativeEnd(String name, String arg);
-    private static native void nativeBeginToplevel(String target);
-    private static native void nativeEndToplevel();
+    static native void nativeBeginToplevel(String target);
+    static native void nativeEndToplevel();
     private static native void nativeStartAsync(String name, long id);
     private static native void nativeFinishAsync(String name, long id);
 }

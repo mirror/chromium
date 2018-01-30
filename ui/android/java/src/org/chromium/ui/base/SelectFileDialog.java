@@ -59,7 +59,7 @@ public class SelectFileDialog implements WindowAndroid.IntentCallback,
     private static final String ANY_TYPES = "*/*";
 
     // Duration before temporary camera file is cleaned up, in milliseconds.
-    private static final long DURATION_BEFORE_FILE_CLEAN_UP_IN_MILLIS = TimeUnit.HOURS.toMillis(1);
+    static final long DURATION_BEFORE_FILE_CLEAN_UP_IN_MILLIS = TimeUnit.HOURS.toMillis(1);
 
     // A list of some of the more popular image extensions. Not meant to be
     // exhaustive, but should cover the vast majority of image types.
@@ -92,12 +92,12 @@ public class SelectFileDialog implements WindowAndroid.IntentCallback,
     @SuppressLint("StaticFieldLeak")
     private static WindowAndroid sOverrideWindowAndroid;
 
-    private final long mNativeSelectFileDialog;
+    final long mNativeSelectFileDialog;
     private List<String> mFileTypes;
     private boolean mCapture;
     private boolean mAllowMultiple;
-    private Uri mCameraOutputUri;
-    private WindowAndroid mWindowAndroid;
+    Uri mCameraOutputUri;
+    WindowAndroid mWindowAndroid;
 
     private boolean mSupportsImageCapture;
     private boolean mSupportsVideoCapture;
@@ -191,7 +191,7 @@ public class SelectFileDialog implements WindowAndroid.IntentCallback,
      * @param hasCameraPermission Whether accessing camera is allowed.
      * @param camera Intent for selecting files from camera.
      */
-    private void launchSelectFileWithCameraIntent(boolean hasCameraPermission, Intent camera) {
+    void launchSelectFileWithCameraIntent(boolean hasCameraPermission, Intent camera) {
         RecordHistogram.recordEnumeratedHistogram("Android.SelectFileDialogScope",
                 determineSelectFileDialogScope(), SELECT_FILE_DIALOG_SCOPE_COUNT);
 
@@ -417,7 +417,7 @@ public class SelectFileDialog implements WindowAndroid.IntentCallback,
      * @param context The application context.
      * @return file path for the captured image to be stored.
      */
-    private File getFileForImageCapture(Context context) throws IOException {
+    File getFileForImageCapture(Context context) throws IOException {
         assert !ThreadUtils.runningOnUiThread();
         File photoFile = File.createTempFile(String.valueOf(System.currentTimeMillis()), ".jpg",
                 UiUtils.getDirectoryForImageCapture(context));
@@ -509,7 +509,7 @@ public class SelectFileDialog implements WindowAndroid.IntentCallback,
         launchSelectFileIntent();
     }
 
-    private void onFileNotSelected() {
+    void onFileNotSelected() {
         onFileNotSelected(mNativeSelectFileDialog);
     }
 
@@ -585,7 +585,7 @@ public class SelectFileDialog implements WindowAndroid.IntentCallback,
         return mFileTypes.size() == 1 && TextUtils.equals(mFileTypes.get(0), type);
     }
 
-    private boolean captureCamera() {
+    boolean captureCamera() {
         return mCapture && acceptsSpecificType(ALL_IMAGE_TYPES);
     }
 
@@ -692,13 +692,13 @@ public class SelectFileDialog implements WindowAndroid.IntentCallback,
         return convertToImageMimeTypes(mFileTypes) != null;
     }
 
-    private void onFileSelected(
+    void onFileSelected(
             long nativeSelectFileDialogImpl, String filePath, String displayName) {
         if (eligibleForPhotoPicker()) recordImageCountHistogram(1);
         nativeOnFileSelected(nativeSelectFileDialogImpl, filePath, displayName);
     }
 
-    private void onMultipleFilesSelected(
+    void onMultipleFilesSelected(
             long nativeSelectFileDialogImpl, String[] filePathArray, String[] displayNameArray) {
         if (eligibleForPhotoPicker()) recordImageCountHistogram(filePathArray.length);
         nativeOnMultipleFilesSelected(nativeSelectFileDialogImpl, filePathArray, displayNameArray);

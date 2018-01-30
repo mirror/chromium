@@ -271,7 +271,7 @@ public class OriginVerifier {
     }
 
     @CalledByNative
-    private void originVerified(boolean originVerified) {
+    void originVerified(boolean originVerified) {
         if (originVerified) {
             addVerifiedOriginForPackage(mPackageName, mOrigin, mRelation);
             mOrigin = getPostMessageOriginFromVerifiedOrigin(mPackageName, mOrigin);

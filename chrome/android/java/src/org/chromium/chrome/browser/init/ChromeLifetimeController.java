@@ -102,7 +102,7 @@ class ChromeLifetimeController implements ApplicationLifetime.Observer,
     }
 
     /** Start the Activity that will ultimately kill this process. */
-    private void fireBrowserRestartActivityIntent() {
+    void fireBrowserRestartActivityIntent() {
         ThreadUtils.assertOnUiThread();
 
         if (mIsWaitingForProcessDeath) return;

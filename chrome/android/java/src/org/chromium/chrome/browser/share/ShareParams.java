@@ -56,7 +56,7 @@ public class ShareParams {
     /** The package name of the app who requests for share. If Null, it is requested by Chrome */
     private final String mSourcePackageName;
 
-    private ShareParams(boolean shareDirectly, boolean saveLastUsed, Activity activity,
+    ShareParams(boolean shareDirectly, boolean saveLastUsed, Activity activity,
             String title, String text, String url, @Nullable Uri offlineUri,
             @Nullable Uri screenshotUri, @Nullable TargetChosenCallback callback,
             @Nullable String sourcePackageName) {

@@ -109,9 +109,9 @@ public abstract class AbstractMediaRouteController implements MediaRouteControll
         };
 
         /** True if we are waiting for the MediaRouter route to connect or reconnect */
-        private boolean mConnectionFailureNotifierQueued;
+        boolean mConnectionFailureNotifierQueued;
 
-        private void clearConnectionFailureCallback() {
+        void clearConnectionFailureCallback() {
             getHandler().removeCallbacks(mConnectionFailureNotifier);
             mConnectionFailureNotifierQueued = false;
         }
@@ -156,7 +156,7 @@ public abstract class AbstractMediaRouteController implements MediaRouteControll
     protected static final long CONNECTION_FAILURE_NOTIFICATION_DELAY_MS = 10000L;
     private static final long END_OF_VIDEO_THRESHOLD_MS = 500L;
     private static final String TAG = "MediaFling";
-    private final Set<MediaStateListener> mAvailableRouteListeners;
+    final Set<MediaStateListener> mAvailableRouteListeners;
     private final Context mContext;
     private RouteInfo mCurrentRoute;
     private final DeviceDiscoveryCallback mDeviceDiscoveryCallback;;
@@ -167,7 +167,7 @@ public abstract class AbstractMediaRouteController implements MediaRouteControll
 
     private final MediaRouter mMediaRouter;
 
-    private final MediaRouteSelector mMediaRouteSelector;
+    final MediaRouteSelector mMediaRouteSelector;
     /**
      * The media state listener connects to the web page that requested casting. It will be null if
      * that page is no longer in a tab, but closing the page or tab should not stop cast. Cast can
@@ -180,7 +180,7 @@ public abstract class AbstractMediaRouteController implements MediaRouteControll
     // two player states.
     private PlayerState mRemotePlayerState = PlayerState.FINISHED;
     private PlayerState mDisplayedPlayerState = PlayerState.FINISHED;
-    private boolean mRoutesAvailable;
+    boolean mRoutesAvailable;
     private final Set<UiListener> mUiListeners;
     private boolean mWatchingRouteSelection;
 
@@ -420,7 +420,7 @@ public abstract class AbstractMediaRouteController implements MediaRouteControll
     }
 
     @RemovableInRelease
-    private void logRoute(String message, RouteInfo route) {
+    void logRoute(String message, RouteInfo route) {
         if (route != null) {
             Log.d(TAG, message + " " + route.getName() + " " + route.getId());
         }

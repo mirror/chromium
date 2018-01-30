@@ -45,7 +45,7 @@ public class StubbedProvider implements BackendProvider {
 
         public final List<DownloadItem> regularItems = new ArrayList<>();
         public final List<DownloadItem> offTheRecordItems = new ArrayList<>();
-        private DownloadHistoryAdapter mAdapter;
+        DownloadHistoryAdapter mAdapter;
 
         @Override
         public void addDownloadHistoryAdapter(DownloadHistoryAdapter adapter) {
@@ -202,7 +202,7 @@ public class StubbedProvider implements BackendProvider {
 
     private static final long ONE_GIGABYTE = 1024L * 1024L * 1024L;
 
-    private final Handler mHandler;
+    final Handler mHandler;
     private final StubbedDownloadDelegate mDownloadDelegate;
     private final StubbedOfflineContentProvider mOfflineContentProvider;
     private final SelectionDelegate<DownloadHistoryItemWrapper> mSelectionDelegate;

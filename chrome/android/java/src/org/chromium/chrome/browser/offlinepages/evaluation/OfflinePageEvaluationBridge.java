@@ -100,7 +100,7 @@ public class OfflinePageEvaluationBridge {
     private ObserverList<OfflinePageEvaluationObserver> mObservers =
             new ObserverList<OfflinePageEvaluationObserver>();
 
-    private OutputStreamWriter mLogOutput;
+    OutputStreamWriter mLogOutput;
 
     /** Destroys the native portion of the bridge. */
     public void destroy() {

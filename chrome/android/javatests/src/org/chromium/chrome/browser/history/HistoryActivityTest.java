@@ -121,13 +121,13 @@ public class HistoryActivityTest {
     }
 
     private StubbedHistoryProvider mHistoryProvider;
-    private HistoryAdapter mAdapter;
-    private HistoryManager mHistoryManager;
-    private RecyclerView mRecyclerView;
-    private TestObserver mTestObserver;
+    HistoryAdapter mAdapter;
+    HistoryManager mHistoryManager;
+    RecyclerView mRecyclerView;
+    TestObserver mTestObserver;
     private PrefChangeRegistrar mPrefChangeRegistrar;
 
-    private HistoryItem mItem1;
+    HistoryItem mItem1;
     private HistoryItem mItem2;
 
     @Before

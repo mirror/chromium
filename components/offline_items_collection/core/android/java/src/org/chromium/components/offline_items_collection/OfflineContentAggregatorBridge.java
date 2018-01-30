@@ -111,7 +111,7 @@ public class OfflineContentAggregatorBridge implements OfflineContentProvider {
         mObservers.removeObserver(observer);
     }
 
-    private void notifyObserverOfItemsReady(Observer observer) {
+    void notifyObserverOfItemsReady(Observer observer) {
         if (!mObservers.hasObserver(observer)) return;
         observer.onItemsAvailable();
     }

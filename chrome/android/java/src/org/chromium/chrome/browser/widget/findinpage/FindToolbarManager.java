@@ -20,7 +20,7 @@ public class FindToolbarManager {
     private FindToolbar mFindToolbar;
     private final ChromeActivity mActivity;
     private final ActionMode.Callback mCallback;
-    private final ObserverList<FindToolbarObserver> mObservers;
+    final ObserverList<FindToolbarObserver> mObservers;
 
     /**
      * Creates an instance of a {@link FindToolbarManager}.

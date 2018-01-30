@@ -57,7 +57,7 @@ public class SelectPopupDropdown implements SelectPopup {
                 });
     }
 
-    private void notifySelection(int[] indicies) {
+    void notifySelection(int[] indicies) {
         if (mSelectionNotified) return;
         mContentViewCore.selectPopupMenuItems(indicies);
         mSelectionNotified = true;

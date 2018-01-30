@@ -78,10 +78,10 @@ public class ApplicationStatus {
 
     /** Last activity that was shown (or null if none or it was destroyed). */
     @SuppressLint("StaticFieldLeak")
-    private static Activity sActivity;
+    static Activity sActivity;
 
     /** A lazily initialized listener that forwards application state changes to native. */
-    private static ApplicationStateListener sNativeApplicationStateListener;
+    static ApplicationStateListener sNativeApplicationStateListener;
 
     private static boolean sIsInitialized;
 
@@ -107,7 +107,7 @@ public class ApplicationStatus {
      * A list of observers to be notified when the window focus changes.
      * See {@link #registerWindowFocusChangedListener}.
      */
-    private static final ObserverList<WindowFocusChangedListener> sWindowFocusListeners =
+    static final ObserverList<WindowFocusChangedListener> sWindowFocusListeners =
             new ObserverList<>();
 
     /**
@@ -309,7 +309,7 @@ public class ApplicationStatus {
      * @param activity Current activity.
      * @param newState New state value.
      */
-    private static void onStateChange(Activity activity, @ActivityState int newState) {
+    static void onStateChange(Activity activity, @ActivityState int newState) {
         if (activity == null) throw new IllegalArgumentException("null activity is not supported");
 
         if (sActivity == null
@@ -625,5 +625,5 @@ public class ApplicationStatus {
 
     // Called to notify the native side of state changes.
     // IMPORTANT: This is always called on the main thread!
-    private static native void nativeOnApplicationStateChange(@ApplicationState int newState);
+    static native void nativeOnApplicationStateChange(@ApplicationState int newState);
 }

@@ -53,7 +53,7 @@ public class StaticLayout extends Layout {
 
     private final UnstallRunnable mUnstallRunnable;
     private final Handler mHandler;
-    private boolean mUnstalling;
+    boolean mUnstalling;
     private StaticTabSceneLayer mSceneLayer;
 
     /**

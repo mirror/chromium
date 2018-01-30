@@ -45,7 +45,7 @@ class HostBrowserLauncher {
     /** Parent activity for any dialogs. */
     private Activity mParentActivity;
 
-    private Context mContext;
+    Context mContext;
 
     /** Intent used to launch WebAPK. */
     private Intent mIntent;
@@ -136,7 +136,7 @@ class HostBrowserLauncher {
                 mContext.getDir(HostBrowserClassLoader.DEX_DIR_NAME, Context.MODE_PRIVATE));
     }
 
-    private void launchInHostBrowser(String runtimeHost) {
+    void launchInHostBrowser(String runtimeHost) {
         PackageInfo info;
         try {
             info = mContext.getPackageManager().getPackageInfo(runtimeHost, 0);
@@ -185,7 +185,7 @@ class HostBrowserLauncher {
     /**
      * Launches the Play Store with the host browser's page.
      */
-    private void installBrowser(String hostBrowserPackageName) {
+    void installBrowser(String hostBrowserPackageName) {
         try {
             mParentActivity.startActivity(createInstallIntent(hostBrowserPackageName));
         } catch (ActivityNotFoundException e) {

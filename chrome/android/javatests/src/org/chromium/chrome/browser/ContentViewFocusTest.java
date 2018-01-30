@@ -53,7 +53,7 @@ public class ContentViewFocusTest {
 
     private final ArrayDeque<Boolean> mFocusChanges = new ArrayDeque<Boolean>();
 
-    private String mTitle;
+    String mTitle;
 
     private void addFocusChangedListener(View view) {
         view.setOnFocusChangeListener((v, hasFocus) -> {

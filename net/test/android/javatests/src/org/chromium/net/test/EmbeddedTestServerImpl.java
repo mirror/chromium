@@ -37,9 +37,9 @@ public class EmbeddedTestServerImpl extends IEmbeddedTestServerImpl.Stub {
 
     private final Context mContext;
     private Handler mHandler;
-    private HandlerThread mHandlerThread;
-    private long mNativeEmbeddedTestServer;
-    private IConnectionListener mConnectionListener;
+    HandlerThread mHandlerThread;
+    long mNativeEmbeddedTestServer;
+    IConnectionListener mConnectionListener;
 
     /** Create an uninitialized EmbeddedTestServer. */
     public EmbeddedTestServerImpl(Context context) {
@@ -312,20 +312,20 @@ public class EmbeddedTestServerImpl extends IEmbeddedTestServerImpl.Stub {
         mNativeEmbeddedTestServer = 0;
     }
 
-    private native void nativeInit(String testDataDir, boolean https);
-    private native void nativeDestroy(long nativeEmbeddedTestServerAndroid);
-    private native boolean nativeStart(long nativeEmbeddedTestServerAndroid);
-    private native String nativeGetRootCertPemPath(long nativeEmbeddedTestServerAndroid);
-    private native boolean nativeShutdownAndWaitUntilComplete(long nativeEmbeddedTestServerAndroid);
-    private native void nativeAddDefaultHandlers(
+    native void nativeInit(String testDataDir, boolean https);
+    native void nativeDestroy(long nativeEmbeddedTestServerAndroid);
+    native boolean nativeStart(long nativeEmbeddedTestServerAndroid);
+    native String nativeGetRootCertPemPath(long nativeEmbeddedTestServerAndroid);
+    native boolean nativeShutdownAndWaitUntilComplete(long nativeEmbeddedTestServerAndroid);
+    native void nativeAddDefaultHandlers(
             long nativeEmbeddedTestServerAndroid, String directoryPath);
-    private native void nativeSetSSLConfig(
+    native void nativeSetSSLConfig(
             long nativeEmbeddedTestServerAndroid, int serverCertificate);
-    private native void nativeRegisterRequestHandler(
+    native void nativeRegisterRequestHandler(
             long nativeEmbeddedTestServerAndroid, long handler);
-    private native String nativeGetURL(long nativeEmbeddedTestServerAndroid, String relativeUrl);
-    private native String nativeGetURLWithHostName(
+    native String nativeGetURL(long nativeEmbeddedTestServerAndroid, String relativeUrl);
+    native String nativeGetURLWithHostName(
             long nativeEmbeddedTestServerAndroid, String hostName, String relativeUrl);
-    private native void nativeServeFilesFromDirectory(
+    native void nativeServeFilesFromDirectory(
             long nativeEmbeddedTestServerAndroid, String directoryPath);
 }

@@ -59,7 +59,7 @@ public class ConnectivityCheckerTestRule extends ChromeBrowserTestRule {
         return mGeneratedSlowUrl;
     }
 
-    private void setUp() throws Exception {
+    void setUp() throws Exception {
         mTestServer = EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
         mGenerated200Url = mTestServer.getURL("/echo?status=200");
         mGenerated204Url = mTestServer.getURL("/echo?status=204");
@@ -68,7 +68,7 @@ public class ConnectivityCheckerTestRule extends ChromeBrowserTestRule {
         mGeneratedSlowUrl = mTestServer.getURL("/slow?5");
     }
 
-    private void tearDown() throws Exception {
+    void tearDown() throws Exception {
         mTestServer.stopAndDestroyServer();
     }
 }

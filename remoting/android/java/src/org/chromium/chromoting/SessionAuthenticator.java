@@ -27,10 +27,10 @@ public class SessionAuthenticator {
      * Application context used for getting user preferences, displaying UI, and fetching
      * third-party tokens.
      */
-    private Chromoting mApplicationContext;
+    Chromoting mApplicationContext;
 
     /** Client connection being authenticated. */
-    private final Client mClient;
+    final Client mClient;
 
     /** Provides the tokenUrlPatterns for this host during fetchThirdPartyTokens(). */
     private HostInfo mHost;

@@ -117,8 +117,8 @@ public interface Client {
     private final Bytes clientToken;
     private final long lastMessageSendTimeMs;
 
-    private PersistentTiclState(Bytes clientToken,
-        Long lastMessageSendTimeMs) {
+    PersistentTiclState(Bytes clientToken,
+            Long lastMessageSendTimeMs) {
       int hazzerBits = 0;
       if (clientToken != null) {
         hazzerBits |= 0x1;

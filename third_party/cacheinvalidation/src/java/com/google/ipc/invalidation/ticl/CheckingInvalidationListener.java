@@ -39,7 +39,7 @@ import com.google.ipc.invalidation.util.Preconditions;
 class CheckingInvalidationListener implements InvalidationListener {
 
   /** The actual listener to which this listener delegates. */
-  private final InvalidationListener delegate;
+  final InvalidationListener delegate;
 
   /** The scheduler for scheduling internal events in the library. */
   private final Scheduler internalScheduler;
@@ -48,9 +48,9 @@ class CheckingInvalidationListener implements InvalidationListener {
   private final Scheduler listenerScheduler;
 
   /** Statistics objects to track number of sent messages, etc. */
-  private Statistics statistics;
+  Statistics statistics;
 
-  private final Logger logger;
+  final Logger logger;
 
   CheckingInvalidationListener(InvalidationListener delegate, Scheduler internalScheduler,
       Scheduler listenerScheduler, Logger logger) {

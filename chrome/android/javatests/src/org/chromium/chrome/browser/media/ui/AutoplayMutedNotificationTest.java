@@ -48,7 +48,7 @@ public class AutoplayMutedNotificationTest {
 
     private EmbeddedTestServer mTestServer;
 
-    private AudioManager getAudioManager() {
+    AudioManager getAudioManager() {
         return (AudioManager) mActivityTestRule.getActivity()
                 .getApplicationContext()
                 .getSystemService(Context.AUDIO_SERVICE);

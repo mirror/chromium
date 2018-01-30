@@ -53,7 +53,7 @@ public class LanguageListBaseAdapter
         private TextView mTitle;
         private TextView mDescription;
 
-        private TintedImageView mStartIcon;
+        TintedImageView mStartIcon;
         private ListMenuButton mMoreButton;
 
         LanguageRowViewHolder(View view) {
@@ -70,7 +70,7 @@ public class LanguageListBaseAdapter
          * Update the current {@link LanguageRowViewHolder} with basic language info.
          * @param item A {@link LanguageItem} with the language details.
          */
-        private void updateLanguageInfo(LanguageItem item) {
+        void updateLanguageInfo(LanguageItem item) {
             mTitle.setText(item.getDisplayName());
 
             // Avoid duplicate display names.
@@ -114,12 +114,12 @@ public class LanguageListBaseAdapter
         }
     }
 
-    private final int mDraggedBackgroundColor;
-    private final float mDraggedElevation;
+    final int mDraggedBackgroundColor;
+    final float mDraggedElevation;
 
     private boolean mDragEnabled;
     private ItemTouchHelper mItemTouchHelper;
-    private List<LanguageItem> mLanguageList;
+    List<LanguageItem> mLanguageList;
 
     protected Context mContext;
 

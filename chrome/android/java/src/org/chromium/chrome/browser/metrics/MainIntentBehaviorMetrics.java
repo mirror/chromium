@@ -184,7 +184,7 @@ public class MainIntentBehaviorMetrics implements ApplicationStatus.ActivityStat
         }
     }
 
-    private void recordUserBehavior(@MainIntentActionType int behavior) {
+    void recordUserBehavior(@MainIntentActionType int behavior) {
         if (!mPendingActionRecordForMainIntent || mIgnoreEvents) return;
         mPendingActionRecordForMainIntent = false;
 

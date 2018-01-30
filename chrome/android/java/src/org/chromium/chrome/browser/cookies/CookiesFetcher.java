@@ -65,7 +65,7 @@ public class CookiesFetcher {
      *
      * @return Path to the cookie file.
      */
-    private static String fetchFileName(Context context) {
+    static String fetchFileName(Context context) {
         assert !ThreadUtils.runningOnUiThread();
         return context.getFileStreamPath(DEFAULT_COOKIE_FILE_NAME).getAbsolutePath();
     }
@@ -176,7 +176,7 @@ public class CookiesFetcher {
     /**
      * Delete the cookies file. Called when we detect that all incognito tabs have been closed.
      */
-    private static void scheduleDeleteCookiesFile(final Context context) {
+    static void scheduleDeleteCookiesFile(final Context context) {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
@@ -213,7 +213,7 @@ public class CookiesFetcher {
         }.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
     }
 
-    private void saveFetchedCookiesToDisk(CanonicalCookie[] cookies) {
+    void saveFetchedCookiesToDisk(CanonicalCookie[] cookies) {
         DataOutputStream out = null;
         try {
             Cipher cipher = CipherFactory.getInstance().getCipher(Cipher.ENCRYPT_MODE);
@@ -251,7 +251,7 @@ public class CookiesFetcher {
 
     private native long nativeInit();
     private native void nativePersistCookies(long nativeCookiesFetcher);
-    private static native void nativeRestoreCookies(String name, String value, String domain,
+    static native void nativeRestoreCookies(String name, String value, String domain,
             String path, long creation, long expiration, long lastAccess, boolean secure,
             boolean httpOnly, int sameSite, int priority);
 }

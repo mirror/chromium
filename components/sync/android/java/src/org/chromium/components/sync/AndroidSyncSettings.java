@@ -45,15 +45,15 @@ public class AndroidSyncSettings {
     @SuppressLint("StaticFieldLeak")
     private static AndroidSyncSettings sInstance;
 
-    private final Object mLock = new Object();
+    final Object mLock = new Object();
 
-    private final String mContractAuthority;
+    final String mContractAuthority;
 
     private final Context mApplicationContext;
 
-    private final SyncContentResolverDelegate mSyncContentResolverDelegate;
+    final SyncContentResolverDelegate mSyncContentResolverDelegate;
 
-    private Account mAccount;
+    Account mAccount;
 
     private boolean mIsSyncable;
 
@@ -311,7 +311,7 @@ public class AndroidSyncSettings {
      *
      * @return Whether either chromeSyncEnabled or masterSyncEnabled changed.
      */
-    private boolean updateCachedSettings() {
+    boolean updateCachedSettings() {
         synchronized (mLock) {
             boolean oldChromeSyncEnabled = mChromeSyncEnabled;
             boolean oldMasterSyncEnabled = mMasterSyncEnabled;
@@ -335,7 +335,7 @@ public class AndroidSyncSettings {
         }
     }
 
-    private void notifyObservers() {
+    void notifyObservers() {
         for (AndroidSyncSettingsObserver observer : mObservers) {
             observer.androidSyncSettingsChanged();
         }

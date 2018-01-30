@@ -33,9 +33,9 @@ public class SyncAccountSwitcher
     private static final String TAG = "SyncAccountSwitcher";
 
     private final SyncedAccountPreference mSyncedAccountPreference;
-    private final Activity mActivity;
+    final Activity mActivity;
 
-    private String mNewAccountName;
+    String mNewAccountName;
 
     /**
      * Sets up a SyncAccountSwitcher to be ready to accept callbacks.

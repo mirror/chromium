@@ -119,7 +119,7 @@ public class DocumentModeAssassin {
 
     /** Creates and holds the Singleton. */
     private static class LazyHolder {
-        private static final DocumentModeAssassin INSTANCE = new DocumentModeAssassin();
+        static final DocumentModeAssassin INSTANCE = new DocumentModeAssassin();
     }
 
     /** Returns the Singleton instance. */
@@ -128,10 +128,10 @@ public class DocumentModeAssassin {
     }
 
     /** IDs of Tabs that have had their TabState files copied between directories successfully. */
-    private final Set<Integer> mMigratedTabIds = new HashSet<>();
+    final Set<Integer> mMigratedTabIds = new HashSet<>();
 
     /** Observers of the migration pipeline. */
-    private final ObserverList<DocumentModeAssassinObserver> mObservers = new ObserverList<>();
+    final ObserverList<DocumentModeAssassinObserver> mObservers = new ObserverList<>();
 
     /** Current stage of the migration. */
     private int mStage = STAGE_UNINITIALIZED;
@@ -437,7 +437,7 @@ public class DocumentModeAssassin {
      * @param newStage      Stage of the pipeline that is being activated.
      * @return Whether or not the stage was updated.
      */
-    private final boolean setStage(int expectedStage, int newStage) {
+    final boolean setStage(int expectedStage, int newStage) {
         ThreadUtils.assertOnUiThread();
 
         if (mStage != expectedStage) {
@@ -513,12 +513,12 @@ public class DocumentModeAssassin {
         mObservers.removeObserver(observer);
     }
 
-    private DocumentModeAssassin() {
+    DocumentModeAssassin() {
         mStage = isMigrationNecessary() ? STAGE_UNINITIALIZED : STAGE_DONE;
         mIsPipelineActive = true;
     }
 
-    private DocumentModeAssassin(int stage, boolean isPipelineActive) {
+    DocumentModeAssassin(int stage, boolean isPipelineActive) {
         mStage = stage;
         mIsPipelineActive = isPipelineActive;
     }

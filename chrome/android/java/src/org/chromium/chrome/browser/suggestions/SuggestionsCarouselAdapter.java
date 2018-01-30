@@ -29,7 +29,7 @@ public class SuggestionsCarouselAdapter
     private final ContextMenuManager mContextMenuManager;
 
     /** The list of suggestions held in the carousel currently. */
-    private final List<SnippetArticle> mSuggestionsList;
+    final List<SnippetArticle> mSuggestionsList;
 
     /** Access point to offline related features. */
     private final OfflineModelObserver mObserver;

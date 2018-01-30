@@ -28,7 +28,7 @@ import java.util.List;
 class NativeInitializationController {
     private static final String TAG = "NativeInitializationController";
 
-    private final ChromeActivityNativeDelegate mActivityDelegate;
+    final ChromeActivityNativeDelegate mActivityDelegate;
     private final Handler mHandler;
 
     private boolean mOnStartPending;
@@ -36,7 +36,7 @@ class NativeInitializationController {
     private List<Intent> mPendingNewIntents;
     private List<ActivityResult> mPendingActivityResults;
 
-    private Boolean mBackgroundTasksComplete;
+    Boolean mBackgroundTasksComplete;
     private boolean mHasDoneFirstDraw;
     private boolean mHasSignaledLibraryLoaded;
     private boolean mInitializationComplete;
@@ -102,7 +102,7 @@ class NativeInitializationController {
         }.startBackgroundTasks(allocateChildConnection, fetchVariationsSeed);
     }
 
-    private void signalNativeLibraryLoadedIfReady() {
+    void signalNativeLibraryLoadedIfReady() {
         ThreadUtils.assertOnUiThread();
 
         // Called on UI thread when any of the booleans below have changed.

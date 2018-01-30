@@ -112,11 +112,11 @@ public class CustomTabActivity extends ChromeActivity {
     private static final int CONNECTION_STATUS_CONNECTED_KEEP_ALIVE = 3;
     private static final int CONNECTION_STATUS_MAX = 4;
 
-    private CustomTabIntentDataProvider mIntentDataProvider;
-    private CustomTabsSessionToken mSession;
+    CustomTabIntentDataProvider mIntentDataProvider;
+    CustomTabsSessionToken mSession;
     private BrowserSessionContentHandler mBrowserSessionContentHandler;
     private Tab mMainTab;
-    private CustomTabBottomBarDelegate mBottomBarDelegate;
+    CustomTabBottomBarDelegate mBottomBarDelegate;
     private CustomTabTabPersistencePolicy mTabPersistencePolicy;
 
     // This is to give the right package name while using the client's resources during an
@@ -129,7 +129,7 @@ public class CustomTabActivity extends ChromeActivity {
     private boolean mIsInitialResume = true;
     // Whether there is any speculative page loading associated with the session.
     private boolean mHasSpeculated;
-    private CustomTabObserver mTabObserver;
+    CustomTabObserver mTabObserver;
 
     private String mSpeculatedUrl;
 
@@ -230,7 +230,7 @@ public class CustomTabActivity extends ChromeActivity {
         }
     }
 
-    private PageLoadMetricsObserver mMetricsObserver;
+    PageLoadMetricsObserver mMetricsObserver;
 
     // Only the normal tab model is observed because there is no incognito tabmodel in Custom Tabs.
     private TabModelObserver mTabModelObserver = new EmptyTabModelObserver() {
@@ -730,7 +730,7 @@ public class CustomTabActivity extends ChromeActivity {
      * Loads the current tab with the given load params while taking client
      * referrer and extra headers into account.
      */
-    private void loadUrlInTab(final Tab tab, final LoadUrlParams params, long timeStamp) {
+    void loadUrlInTab(final Tab tab, final LoadUrlParams params, long timeStamp) {
         Intent intent = getIntent();
         String url = getUrlToLoad();
 
@@ -899,7 +899,7 @@ public class CustomTabActivity extends ChromeActivity {
         return true;
     }
 
-    private void recordClientConnectionStatus() {
+    void recordClientConnectionStatus() {
         String packageName =
                 (getActivityTab() == null) ? null : getActivityTab().getAppAssociatedWith();
         if (packageName == null) return; // No associated package
@@ -934,7 +934,7 @@ public class CustomTabActivity extends ChromeActivity {
     /**
      * Configures the custom button on toolbar. Does nothing if invalid data is provided by clients.
      */
-    private void showCustomButtonOnToolbar() {
+    void showCustomButtonOnToolbar() {
         final CustomButtonParams params = mIntentDataProvider.getCustomButtonOnToolbar();
         if (params == null) return;
         getToolbarManager().setCustomActionButton(

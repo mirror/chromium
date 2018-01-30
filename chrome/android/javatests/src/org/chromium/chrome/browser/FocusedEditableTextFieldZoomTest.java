@@ -46,7 +46,7 @@ public class FocusedEditableTextFieldZoomTest {
     private static final float INITIAL_SCALE = 0.5f;
 
     private EmbeddedTestServer mTestServer;
-    private Coordinates mCoordinates;
+    Coordinates mCoordinates;
 
     @Before
     public void setUp() throws Exception {

@@ -34,7 +34,7 @@ class TimeZoneMonitor {
         }
     };
 
-    private long mNativePtr;
+    long mNativePtr;
 
     /**
      * Start listening for intents.
@@ -63,5 +63,5 @@ class TimeZoneMonitor {
      * Native JNI call to device::TimeZoneMonitorAndroid::TimeZoneChanged.
      * See device/time_zone_monitor/time_zone_monitor_android.cc.
      */
-    private native void nativeTimeZoneChangedFromJava(long nativeTimeZoneMonitorAndroid);
+    native void nativeTimeZoneChangedFromJava(long nativeTimeZoneMonitorAndroid);
 }

@@ -22,12 +22,12 @@ import org.chromium.ui.base.DeviceFormFactor;
 @TargetApi(Build.VERSION_CODES.M)
 public class FloatingPastePopupMenu implements PastePopupMenu {
     private final View mParent;
-    private final PastePopupMenuDelegate mDelegate;
-    private final Context mContext;
+    final PastePopupMenuDelegate mDelegate;
+    final Context mContext;
 
-    private ActionMode mActionMode;
-    private Rect mSelectionRect;
-    private ActionMode.Callback mExternalCallback;
+    ActionMode mActionMode;
+    Rect mSelectionRect;
+    ActionMode.Callback mExternalCallback;
 
     public FloatingPastePopupMenu(Context context, View parent, PastePopupMenuDelegate delegate,
             ActionMode.Callback externalCallback) {

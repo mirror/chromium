@@ -14,7 +14,7 @@ import java.util.List;
 public class PatternMatcher {
     /** Encapsulates information about illegal pattern. */
     public static class IllegalPatternException extends Exception {
-        private IllegalPatternException(String message, String pattern) {
+        IllegalPatternException(String message, String pattern) {
             super(String.format("Illegal pattern '%s': %s", pattern, message));
         }
     }

@@ -57,7 +57,7 @@ public class LocationProviderTest {
     // Member variables for LocationProviderType.GMS_CORE case.
     @Mock
     private GoogleApiClient mGoogleApiClient;
-    private boolean mGoogleApiClientIsConnected;
+    boolean mGoogleApiClientIsConnected;
 
     // Member variables for LocationProviderType.ANDROID case.
     private LocationManager mLocationManager;

@@ -33,7 +33,7 @@ public class PhotoPickerDialog extends AlertDialog {
     private PhotoPickerListenerWrapper mListenerWrapper;
 
     // Whether the wait for an external intent launch is over.
-    private boolean mDoneWaitingForExternalIntent;
+    boolean mDoneWaitingForExternalIntent;
 
     /**
      * A wrapper around {@link PhotoPickerListener} that listens for external intents being

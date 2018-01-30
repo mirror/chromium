@@ -65,10 +65,10 @@ public class ItemChooserDialog {
      * A class representing one data row in the picker.
      */
     public static class ItemChooserRow {
-        private final String mKey;
-        private String mDescription;
-        private Drawable mIcon;
-        private String mIconDescription;
+        final String mKey;
+        String mDescription;
+        Drawable mIcon;
+        String mIconDescription;
 
         public ItemChooserRow(String key, String description, @Nullable Drawable icon,
                 @Nullable String iconDescription) {
@@ -139,8 +139,8 @@ public class ItemChooserDialog {
      * Item holder for performance boost.
      */
     private static class ViewHolder {
-        private TextView mTextView;
-        private ImageView mImageView;
+        TextView mTextView;
+        ImageView mImageView;
 
         public ViewHolder(View view) {
             mImageView = (ImageView) view.findViewById(R.id.icon);
@@ -401,7 +401,7 @@ public class ItemChooserDialog {
         }
     }
 
-    private Activity mActivity;
+    Activity mActivity;
 
     // The dialog this class encapsulates.
     private Dialog mDialog;
@@ -415,7 +415,7 @@ public class ItemChooserDialog {
     private ProgressBar mProgressBar;
     private ListView mListView;
     private TextView mStatus;
-    private Button mConfirmButton;
+    Button mConfirmButton;
 
     // The labels to display in the dialog.
     private ItemChooserLabels mLabels;
@@ -434,7 +434,7 @@ public class ItemChooserDialog {
 
     // If this variable is false, the window should be closed when it loses focus;
     // Otherwise, the window should not be closed when it loses focus.
-    private boolean mIgnorePendingWindowFocusChangeForClose;
+    boolean mIgnorePendingWindowFocusChangeForClose;
 
     /**
      * Creates the ItemChooserPopup and displays it (and starts waiting for data).

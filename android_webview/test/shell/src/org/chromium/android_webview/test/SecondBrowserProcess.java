@@ -51,7 +51,7 @@ public class SecondBrowserProcess extends Service {
         return START_STICKY;
     }
 
-    private void startBrowserProcess() throws Exception {
+    void startBrowserProcess() throws Exception {
         CommandLine.initFromFile("/data/local/tmp/android-webview-command-line");
         AwResource.setResources(this.getResources());
         AwResource.setConfigKeySystemUuidMapping(R.array.config_key_system_uuid_mapping);

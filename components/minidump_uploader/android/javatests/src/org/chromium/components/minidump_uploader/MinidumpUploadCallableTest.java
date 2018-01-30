@@ -40,8 +40,8 @@ public class MinidumpUploadCallableTest {
     private static final String BOUNDARY = "TESTBOUNDARY";
     private static final String CRASH_ID = "IMACRASHID";
     private static final String LOG_FILE_NAME = "chromium_renderer-123_log.dmp224";
-    private File mTestUpload;
-    private File mUploadLog;
+    File mTestUpload;
+    File mUploadLog;
     private File mExpectedFileAfterUpload;
 
     /**
@@ -133,7 +133,7 @@ public class MinidumpUploadCallableTest {
     }
 
     private static class ErrorCodeHttpUrlConnectionFactory implements HttpURLConnectionFactory {
-        private final int mErrorCode;
+        final int mErrorCode;
 
         ErrorCodeHttpUrlConnectionFactory(int errorCode) {
             mErrorCode = errorCode;

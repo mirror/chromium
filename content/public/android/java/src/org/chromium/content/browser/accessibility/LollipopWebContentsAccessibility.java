@@ -32,7 +32,7 @@ import java.util.Locale;
 public class LollipopWebContentsAccessibility extends KitKatWebContentsAccessibility {
     private static SparseArray<AccessibilityAction> sAccessibilityActionMap =
             new SparseArray<AccessibilityAction>();
-    private String mSystemLanguageTag;
+    String mSystemLanguageTag;
     private BroadcastReceiver mBroadcastReceiver;
     private Context mContext;
 

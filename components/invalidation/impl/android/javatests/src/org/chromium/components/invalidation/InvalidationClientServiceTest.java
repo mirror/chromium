@@ -59,7 +59,7 @@ public class InvalidationClientServiceTest extends
     private static final String PRIVATE_DATA_DIRECTORY_SUFFIX = "invalidation_test";
 
     /** Intents provided to {@link #startService}. */
-    private List<Intent> mStartServiceIntents;
+    List<Intent> mStartServiceIntents;
 
     public InvalidationClientServiceTest() {
         super(TestableInvalidationClientService.class);

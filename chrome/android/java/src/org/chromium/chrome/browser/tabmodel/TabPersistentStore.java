@@ -152,7 +152,7 @@ public class TabPersistentStore extends TabPersister {
 
     private static class BaseStateDirectoryHolder {
         // Not final for tests.
-        private static File sDirectory;
+        static File sDirectory;
 
         static {
             sDirectory = ContextUtils.getApplicationContext()
@@ -160,22 +160,22 @@ public class TabPersistentStore extends TabPersister {
         }
     }
 
-    private final TabPersistencePolicy mPersistencePolicy;
+    final TabPersistencePolicy mPersistencePolicy;
     private final TabModelSelector mTabModelSelector;
     private final TabCreatorManager mTabCreatorManager;
-    private ObserverList<TabPersistentStoreObserver> mObservers;
+    ObserverList<TabPersistentStoreObserver> mObservers;
 
     private final Deque<Tab> mTabsToSave;
-    private final Deque<TabRestoreDetails> mTabsToRestore;
-    private final Set<Integer> mTabIdsToRestore;
+    final Deque<TabRestoreDetails> mTabsToRestore;
+    final Set<Integer> mTabIdsToRestore;
 
     private LoadTabTask mLoadTabTask;
-    private SaveTabTask mSaveTabTask;
-    private SaveListTask mSaveListTask;
+    SaveTabTask mSaveTabTask;
+    SaveListTask mSaveListTask;
 
-    private boolean mDestroyed;
-    private boolean mCancelNormalTabLoads;
-    private boolean mCancelIncognitoTabLoads;
+    boolean mDestroyed;
+    boolean mCancelNormalTabLoads;
+    boolean mCancelIncognitoTabLoads;
 
     // Keys are the original tab indexes, values are the tab ids.
     private SparseIntArray mNormalTabsRestored;
@@ -185,16 +185,16 @@ public class TabPersistentStore extends TabPersister {
     private AsyncTask<Void, Void, DataInputStream> mPrefetchTabListTask;
     private List<Pair<AsyncTask<Void, Void, DataInputStream>, String>> mPrefetchTabListToMergeTasks;
     // A set of filenames which are tracked to merge.
-    private Set<String> mMergedFileNames;
+    Set<String> mMergedFileNames;
     private byte[] mLastSavedMetadata;
 
     // Tracks whether this TabPersistentStore's tabs are being loaded.
-    private boolean mLoadInProgress;
+    boolean mLoadInProgress;
     // The number of tabs being merged. Used for logging time to restore per tab.
-    private int mMergeTabCount;
+    int mMergeTabCount;
     // Set when restoreTabs() is called during a non-cold-start merge. Used for logging time to
     // restore per tab.
-    private long mRestoreMergedTabsStartTime;
+    long mRestoreMergedTabsStartTime;
 
     @VisibleForTesting
     AsyncTask<Void, Void, TabState> mPrefetchActiveTabTask;
@@ -798,7 +798,7 @@ public class TabPersistentStore extends TabPersister {
         // done as part of the standard tab removal process.
     }
 
-    private TabModelSelectorMetadata serializeTabMetadata() throws IOException {
+    TabModelSelectorMetadata serializeTabMetadata() throws IOException {
         List<TabRestoreDetails> tabsToRestore = new ArrayList<>();
 
         // The metadata file may be being written out before all of the Tabs have been restored.
@@ -909,7 +909,7 @@ public class TabPersistentStore extends TabPersister {
         return output.toByteArray();
     }
 
-    private void saveListToFile(byte[] listData) {
+    void saveListToFile(byte[] listData) {
         if (Arrays.equals(mLastSavedMetadata, listData)) return;
 
         saveListToFile(getStateDirectory(), mPersistencePolicy.getStateFileName(), listData);
@@ -1222,7 +1222,7 @@ public class TabPersistentStore extends TabPersister {
         }
     }
 
-    private void loadNextTab() {
+    void loadNextTab() {
         if (mDestroyed) return;
 
         if (mTabsToRestore.isEmpty()) {
@@ -1291,7 +1291,7 @@ public class TabPersistentStore extends TabPersister {
      *
      * @param file Name of file under the state directory to be deleted.
      */
-    private void deleteFileAsync(final String file) {
+    void deleteFileAsync(final String file) {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
@@ -1378,7 +1378,7 @@ public class TabPersistentStore extends TabPersister {
      *
      * @return True if the tab is definitely Incognito, false if it's not or if it's undecideable.
      */
-    private boolean isIncognitoTabBeingRestored(TabRestoreDetails tabDetails, TabState tabState) {
+    boolean isIncognitoTabBeingRestored(TabRestoreDetails tabDetails, TabState tabState) {
         if (tabState != null) {
             // The Tab's previous state was completely restored.
             return tabState.isIncognito();

@@ -44,11 +44,11 @@ public class PrefetchBackgroundTaskTest {
 
     private static final double BACKOFF_JITTER_FACTOR = 0.33;
     private static final int SEMAPHORE_TIMEOUT_MS = 5000;
-    private TestBackgroundTaskScheduler mScheduler;
+    TestBackgroundTaskScheduler mScheduler;
 
     private static class TestPrefetchBackgroundTask extends PrefetchBackgroundTask {
         private TaskInfo mTaskInfo;
-        private Semaphore mStopSemaphore = new Semaphore(0);
+        Semaphore mStopSemaphore = new Semaphore(0);
 
         public TestPrefetchBackgroundTask(TaskInfo taskInfo) {
             mTaskInfo = taskInfo;
@@ -107,8 +107,8 @@ public class PrefetchBackgroundTaskTest {
     }
 
     private static class TestBackgroundTaskScheduler implements BackgroundTaskScheduler {
-        private HashMap<Integer, TestPrefetchBackgroundTask> mTasks = new HashMap<>();
-        private Semaphore mStartSemaphore = new Semaphore(0);
+        HashMap<Integer, TestPrefetchBackgroundTask> mTasks = new HashMap<>();
+        Semaphore mStartSemaphore = new Semaphore(0);
         private int mAddCount = 0;
         private int mRemoveCount = 0;
 

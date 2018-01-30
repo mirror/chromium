@@ -35,27 +35,27 @@ public class ContextualSearchBarBannerControl extends OverlayPanelInflater {
     /**
      * Whether the Bar Banner is in the process of hiding.
      */
-    private boolean mIsHiding;
+    boolean mIsHiding;
 
     /**
      * The height of the Bar Banner, in pixels.
      */
-    private float mHeightPx;
+    float mHeightPx;
 
     /**
      * The width of the Ripple resource in pixels.
      */
-    private float mRippleWidthPx;
+    float mRippleWidthPx;
 
     /**
      * The opacity of the Ripple resource.
      */
-    private float mRippleOpacity;
+    float mRippleOpacity;
 
     /**
      * The opacity of the Text View dynamic resource.
      */
-    private float mTextOpacity;
+    float mTextOpacity;
 
     /**
      * The precomputed padding of the Bar Banner, in pixels.
@@ -71,12 +71,12 @@ public class ContextualSearchBarBannerControl extends OverlayPanelInflater {
     /**
      * The precomputed minimum width of the Ripple resource in pixels.
      */
-    private final float mRippleMinimumWidthPx;
+    final float mRippleMinimumWidthPx;
 
     /**
      * The precomputed maximum width of the Ripple resource in pixels.
      */
-    private float mRippleMaximumWidthPx;
+    float mRippleMaximumWidthPx;
 
     /**
      * @param panel             The panel.
@@ -135,7 +135,7 @@ public class ContextualSearchBarBannerControl extends OverlayPanelInflater {
     /** Calculates the padded height of the bar banner if it has not been calculated before.
      * @return The padded height of the Bar Banner.
      */
-    private float getPaddedHeightPx() {
+    float getPaddedHeightPx() {
         if (mPaddedHeightPx == 0.f) {
             // Calculate the padded height based on the measured height of the TextView.
             inflate();

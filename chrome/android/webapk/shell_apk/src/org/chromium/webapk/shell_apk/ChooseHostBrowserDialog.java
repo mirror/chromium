@@ -45,7 +45,7 @@ public class ChooseHostBrowserDialog {
         private String mPackageName;
         private CharSequence mApplicationLabel;
         private Drawable mIcon;
-        private boolean mSupportsWebApks;
+        boolean mSupportsWebApks;
 
         public BrowserItem(String packageName, CharSequence applicationLabel, Drawable icon,
                 boolean supportsWebApks) {

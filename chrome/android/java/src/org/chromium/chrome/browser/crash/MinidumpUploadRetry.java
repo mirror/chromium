@@ -21,14 +21,14 @@ class MinidumpUploadRetry implements NetworkChangeNotifier.ConnectionTypeObserve
     private final Context mContext;
     private final CrashReportingPermissionManager mPermissionManager;
     @SuppressLint("StaticFieldLeak")
-    private static MinidumpUploadRetry sSingleton;
+    static MinidumpUploadRetry sSingleton;
 
     private static class Scheduler implements Runnable {
         private static NonThreadSafe sThreadCheck;
         private final Context mContext;
         private final CrashReportingPermissionManager mPermissionManager;
 
-        private Scheduler(Context context, CrashReportingPermissionManager permissionManager) {
+        Scheduler(Context context, CrashReportingPermissionManager permissionManager) {
             this.mContext = context;
             mPermissionManager = permissionManager;
         }
@@ -58,7 +58,7 @@ class MinidumpUploadRetry implements NetworkChangeNotifier.ConnectionTypeObserve
         new Handler(context.getMainLooper()).post(new Scheduler(context, permissionManager));
     }
 
-    private MinidumpUploadRetry(
+    MinidumpUploadRetry(
             Context context, CrashReportingPermissionManager permissionManager) {
         this.mContext = context;
         this.mPermissionManager = permissionManager;

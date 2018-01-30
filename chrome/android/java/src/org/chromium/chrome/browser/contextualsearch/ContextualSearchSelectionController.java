@@ -52,11 +52,11 @@ public class ContextualSearchSelectionController {
     private static final int INVALID_DURATION = -1;
 
     private final ChromeActivity mActivity;
-    private final ContextualSearchSelectionHandler mHandler;
+    final ContextualSearchSelectionHandler mHandler;
     private final float mPxToDp;
     private final Pattern mContainsWordPattern;
 
-    private String mSelectedText;
+    String mSelectedText;
     private SelectionType mSelectionType;
     private boolean mWasTapGestureDetected;
     // Reflects whether the last tap was valid and whether we still have a tap-based selection.
@@ -70,13 +70,13 @@ public class ContextualSearchSelectionController {
     private float mY;
 
     // The time of the most last scroll activity, or 0 if none.
-    private long mLastScrollTimeNs;
+    long mLastScrollTimeNs;
 
     // When the last tap gesture happened.
-    private long mTapTimeNanoseconds;
+    long mTapTimeNanoseconds;
 
     // Whether the selection was empty before the most recent tap gesture.
-    private boolean mWasSelectionEmptyBeforeTap;
+    boolean mWasSelectionEmptyBeforeTap;
 
     // The duration of the last tap gesture in milliseconds, or 0 if not set.
     private int mTapDurationMs = INVALID_DURATION;

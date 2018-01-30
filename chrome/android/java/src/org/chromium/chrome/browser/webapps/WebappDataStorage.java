@@ -104,7 +104,7 @@ public class WebappDataStorage {
     private static Factory sFactory = new Factory();
 
     private final String mId;
-    private final SharedPreferences mPreferences;
+    final SharedPreferences mPreferences;
 
     /**
      * Called after data has been retrieved from storage.

@@ -91,7 +91,7 @@ public class AndroidOverlayProviderImpl implements AndroidOverlayProvider {
     /**
      * Called by AndroidOverlays when they no longer need the thread via |mNotifyReleasedRunnable|.
      */
-    private void notifyReleased() {
+    void notifyReleased() {
         ThreadUtils.assertOnUiThread();
         assert mNumOverlays > 0;
         mNumOverlays--;

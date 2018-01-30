@@ -48,16 +48,16 @@ public class ScreenCapture extends Fragment {
     private static final int REQUEST_MEDIA_PROJECTION = 1;
 
     // Native callback context variable.
-    private final long mNativeScreenCaptureMachineAndroid;
+    final long mNativeScreenCaptureMachineAndroid;
 
     private static enum CaptureState { ATTACHED, ALLOWED, STARTED, STOPPING, STOPPED }
     private static enum DeviceOrientation { PORTRAIT, LANDSCAPE }
-    private final Object mCaptureStateLock = new Object();
-    private CaptureState mCaptureState = CaptureState.STOPPED;
+    final Object mCaptureStateLock = new Object();
+    CaptureState mCaptureState = CaptureState.STOPPED;
 
-    private MediaProjection mMediaProjection;
+    MediaProjection mMediaProjection;
     private MediaProjectionManager mMediaProjectionManager;
-    private VirtualDisplay mVirtualDisplay;
+    VirtualDisplay mVirtualDisplay;
     private Surface mSurface;
     private ImageReader mImageReader;
     private HandlerThread mThread;
@@ -69,7 +69,7 @@ public class ScreenCapture extends Fragment {
     private int mScreenDensity;
     private int mWidth;
     private int mHeight;
-    private int mFormat;
+    int mFormat;
     private int mResultCode;
 
     ScreenCapture(long nativeScreenCaptureMachineAndroid) {
@@ -333,7 +333,7 @@ public class ScreenCapture extends Fragment {
         }
     }
 
-    private void createImageReaderWithFormat() {
+    void createImageReaderWithFormat() {
         if (mImageReader != null) {
             mImageReader.close();
         }
@@ -345,7 +345,7 @@ public class ScreenCapture extends Fragment {
         mImageReader.setOnImageAvailableListener(imageReaderListener, mBackgroundHandler);
     }
 
-    private void createVirtualDisplay() {
+    void createVirtualDisplay() {
         if (mVirtualDisplay != null) {
             mVirtualDisplay.release();
         }
@@ -355,7 +355,7 @@ public class ScreenCapture extends Fragment {
                 null);
     }
 
-    private void changeCaptureStateAndNotify(CaptureState state) {
+    void changeCaptureStateAndNotify(CaptureState state) {
         synchronized (mCaptureStateLock) {
             mCaptureState = state;
             mCaptureStateLock.notifyAll();
@@ -394,7 +394,7 @@ public class ScreenCapture extends Fragment {
         }
     }
 
-    private boolean maybeDoRotation() {
+    boolean maybeDoRotation() {
         final int rotation = getDeviceRotation();
         final DeviceOrientation orientation = getDeviceOrientation(rotation);
         if (orientation == mCurrentOrientation) {
@@ -415,11 +415,11 @@ public class ScreenCapture extends Fragment {
     }
 
     // Method for ScreenCapture implementations to call back native code.
-    private native void nativeOnRGBAFrameAvailable(long nativeScreenCaptureMachineAndroid,
+    native void nativeOnRGBAFrameAvailable(long nativeScreenCaptureMachineAndroid,
             ByteBuffer buf, int left, int top, int width, int height, int rowStride,
             long timestamp);
 
-    private native void nativeOnI420FrameAvailable(long nativeScreenCaptureMachineAndroid,
+    native void nativeOnI420FrameAvailable(long nativeScreenCaptureMachineAndroid,
             ByteBuffer yBuffer, int yStride, ByteBuffer uBuffer, ByteBuffer vBuffer,
             int uvRowStride, int uvPixelStride, int left, int top, int width, int height,
             long timestamp);

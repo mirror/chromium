@@ -74,13 +74,13 @@ public class ToolbarProgressBar extends ClipDrawableProgressBar {
     private static final long ALPHA_ANIMATION_DURATION_MS = 140;
 
     /** Whether or not the progress bar has started processing updates. */
-    private boolean mIsStarted;
+    boolean mIsStarted;
 
     /** The target progress the smooth animation should move to (when animating smoothly). */
-    private float mTargetProgress;
+    float mTargetProgress;
 
     /** The logic used to animate the progress bar during smooth animation. */
-    private AnimationLogic mAnimationLogic;
+    AnimationLogic mAnimationLogic;
 
     /** Whether or not the animation has been initialized. */
     private boolean mAnimationInitialized;
@@ -110,7 +110,7 @@ public class ToolbarProgressBar extends ClipDrawableProgressBar {
      * The indeterminate animating view for the progress bar. This will be null for Android
      * versions < K.
      */
-    private ToolbarProgressBarAnimatingView mAnimatingView;
+    ToolbarProgressBarAnimatingView mAnimatingView;
 
     /** Whether or not the progress bar is attached to the window. */
     private boolean mIsAttachedToWindow;
@@ -131,7 +131,7 @@ public class ToolbarProgressBar extends ClipDrawableProgressBar {
         }
     };
 
-    private final TimeAnimator mSmoothProgressAnimator = new TimeAnimator();
+    final TimeAnimator mSmoothProgressAnimator = new TimeAnimator();
     {
         mSmoothProgressAnimator.setTimeListener(new TimeListener() {
             @Override
@@ -169,7 +169,7 @@ public class ToolbarProgressBar extends ClipDrawableProgressBar {
         private final TimeInterpolator mAccelerateInterpolator = new AccelerateInterpolator();
 
         /** The target progress for the throttle animator. */
-        private float mThrottledProgressTarget;
+        float mThrottledProgressTarget;
 
         /** The number of increments expected to reach the target progress since the last update. */
         private int mExpectedIncrements;
@@ -450,7 +450,7 @@ public class ToolbarProgressBar extends ClipDrawableProgressBar {
      * Set the progress bar state based on the external updates coming in.
      * @param progress The current progress.
      */
-    private void setProgressInternal(float progress) {
+    void setProgressInternal(float progress) {
         if (!mIsStarted || MathUtils.areFloatsEqual(mTargetProgress, progress)) return;
         mTargetProgress = progress;
 

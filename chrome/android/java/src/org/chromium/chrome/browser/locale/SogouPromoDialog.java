@@ -63,7 +63,7 @@ public class SogouPromoDialog extends PromoDialog {
     };
 
     @UserChoice
-    private int mChoice = CHOICE_BACK_KEY;
+    int mChoice = CHOICE_BACK_KEY;
 
     /**
      * Creates an instance of the dialog.

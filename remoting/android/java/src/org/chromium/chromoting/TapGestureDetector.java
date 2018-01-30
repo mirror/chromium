@@ -42,7 +42,7 @@ public class TapGestureDetector {
     }
 
     /** The listener to which notifications are sent. */
-    private final OnTapListener mListener;
+    final OnTapListener mListener;
 
     /** Handler used for posting tasks to be executed in the future. */
     private final Handler mHandler;
@@ -60,13 +60,13 @@ public class TapGestureDetector {
     private final int mTouchSlopSquare;
 
     /** The maximum number of fingers seen in the gesture. */
-    private int mPointerCount = 0;
+    int mPointerCount = 0;
 
     /** The coordinates of the first finger down seen in the gesture. */
-    private PointF mInitialPoint;
+    PointF mInitialPoint;
 
     /** Set to true whenever motion is detected in the gesture, or a long-touch is triggered. */
-    private boolean mTapCancelled = false;
+    boolean mTapCancelled = false;
 
     // This static inner class holds a WeakReference to the outer object, to avoid triggering the
     // lint HandlerLeak warning.

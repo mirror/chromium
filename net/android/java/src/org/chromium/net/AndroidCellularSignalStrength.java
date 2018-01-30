@@ -27,7 +27,7 @@ import org.chromium.base.annotations.JNINamespace;
 @JNINamespace("net::android")
 public class AndroidCellularSignalStrength {
     // {@link mSignalLevel} is set to volatile since may be accessed across threads.
-    private volatile int mSignalLevel = CellularSignalStrengthError.ERROR_NOT_SUPPORTED;
+    volatile int mSignalLevel = CellularSignalStrengthError.ERROR_NOT_SUPPORTED;
 
     private static final AndroidCellularSignalStrength sInstance =
             new AndroidCellularSignalStrength();

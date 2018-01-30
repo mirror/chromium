@@ -73,11 +73,11 @@ class SuggestionView extends ViewGroup {
 
     private static final float ANSWER_IMAGE_SCALING_FACTOR = 1.15f;
 
-    private final LocationBar mLocationBar;
-    private UrlBar mUrlBar;
-    private ImageView mNavigationButton;
+    final LocationBar mLocationBar;
+    UrlBar mUrlBar;
+    ImageView mNavigationButton;
 
-    private final int mSuggestionHeight;
+    final int mSuggestionHeight;
     private final int mSuggestionAnswerHeight;
     private int mNumAnswerLines = 1;
 
@@ -87,26 +87,26 @@ class SuggestionView extends ViewGroup {
     private final int mLightUrlStandardColor;
 
     private OmniboxResultItem mSuggestionItem;
-    private OmniboxSuggestion mSuggestion;
-    private OmniboxSuggestionDelegate mSuggestionDelegate;
-    private Boolean mUseDarkColors;
-    private int mPosition;
+    OmniboxSuggestion mSuggestion;
+    OmniboxSuggestionDelegate mSuggestionDelegate;
+    Boolean mUseDarkColors;
+    int mPosition;
     private int mRightOffsetPx;
-    private int mSuggestionViewOffset;
+    int mSuggestionViewOffset;
 
-    private final SuggestionContentsContainer mContentsView;
+    final SuggestionContentsContainer mContentsView;
 
     private final int mRefineWidth;
     private final View mRefineView;
-    private TintedDrawable mRefineIcon;
+    TintedDrawable mRefineIcon;
     private final int mRefineViewModernEndPadding;
     private final int mSuggestionListModernOffset;
 
-    private final int[] mViewPositionHolder = new int[2];
+    final int[] mViewPositionHolder = new int[2];
 
     // Pre-computed offsets in px.
-    private final int mPhoneUrlBarLeftOffsetPx;
-    private final int mPhoneUrlBarLeftOffsetRtlPx;
+    final int mPhoneUrlBarLeftOffsetPx;
+    final int mPhoneUrlBarLeftOffsetRtlPx;
 
     /**
      * Constructs a new omnibox suggestion view.
@@ -396,7 +396,7 @@ class SuggestionView extends ViewGroup {
         }
     }
 
-    private int getStandardFontColor() {
+    int getStandardFontColor() {
         return (mUseDarkColors == null || mUseDarkColors) ? mDarkTitleColorStandardFont
                                                           : mLightTitleColorStandardFont;
     }
@@ -654,13 +654,13 @@ class SuggestionView extends ViewGroup {
         @SuggestionIcon
         private int mSuggestionIconType = SUGGESTION_ICON_UNDEFINED;
 
-        private final TextView mTextLine1;
-        private final TextView mTextLine2;
-        private final ImageView mAnswerImage;
+        final TextView mTextLine1;
+        final TextView mTextLine2;
+        final ImageView mAnswerImage;
 
-        private int mAnswerImageMaxSize;  // getMaxWidth() is API 16+, so store it locally.
-        private float mRequiredWidth;
-        private float mMatchContentsWidth;
+        int mAnswerImageMaxSize;  // getMaxWidth() is API 16+, so store it locally.
+        float mRequiredWidth;
+        float mMatchContentsWidth;
         private boolean mForceIsFocused;
 
         private final Runnable mRelayoutRunnable = new Runnable() {
@@ -756,7 +756,7 @@ class SuggestionView extends ViewGroup {
             addView(mAnswerImage);
         }
 
-        private void resetTextWidths() {
+        void resetTextWidths() {
             mRequiredWidth = 0;
             mMatchContentsWidth = 0;
         }
@@ -1018,7 +1018,7 @@ class SuggestionView extends ViewGroup {
 
         // TODO(crbug.com/635567): Fix this properly.
         @SuppressLint("SwitchIntDef")
-        private void setSuggestionIcon(@SuggestionIcon int type, boolean invalidateCurrentIcon) {
+        void setSuggestionIcon(@SuggestionIcon int type, boolean invalidateCurrentIcon) {
             if (mSuggestionIconType == type && !invalidateCurrentIcon) return;
             assert type != SUGGESTION_ICON_UNDEFINED;
 

@@ -21,7 +21,7 @@ public class LoadingView extends ProgressBar {
     private static final int LOADING_ANIMATION_DELAY_MS = 500;
     private static final int MINIMUM_ANIMATION_SHOW_TIME_MS = 500;
 
-    private long mStartTime = -1;
+    long mStartTime = -1;
 
     private final Runnable mDelayedShow = new Runnable() {
         @Override
@@ -38,7 +38,7 @@ public class LoadingView extends ProgressBar {
      * doesn't always cancel a Runnable when requested, meaning that the View could be hidden before
      * it even has a chance to be shown.
      */
-    private boolean mShouldShow;
+    boolean mShouldShow;
 
     // Material loading design spec requires us to show progress spinner at least 500ms, so we need
     // this delayed runnable to implement that.

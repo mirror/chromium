@@ -73,7 +73,7 @@ public class DownloadManagerServiceTest {
             CLEAR_PENDING_DOWNLOADS
         }
 
-        private final Queue<Pair<MethodID, Object>> mExpectedCalls =
+        final Queue<Pair<MethodID, Object>> mExpectedCalls =
                 new ConcurrentLinkedQueue<Pair<MethodID, Object>>();
 
         public MockDownloadNotifier(Context context) {
@@ -163,8 +163,8 @@ public class DownloadManagerServiceTest {
      * Mock implementation of the DownloadSnackbarController.
      */
     static class MockDownloadSnackbarController extends DownloadSnackbarController {
-        private boolean mSucceeded;
-        private boolean mFailed;
+        boolean mSucceeded;
+        boolean mFailed;
 
         public MockDownloadSnackbarController() {
             super(null);
@@ -203,7 +203,7 @@ public class DownloadManagerServiceTest {
      * mockObject.waitTillExpectedCallsComplete(); assertTrue(matchSet.mMatches.empty());
      */
     private static class OneTimeMatchSet {
-        private final HashSet<Object> mMatches;
+        final HashSet<Object> mMatches;
 
         OneTimeMatchSet(Object... params) {
             mMatches = new HashSet<Object>();
@@ -289,7 +289,7 @@ public class DownloadManagerServiceTest {
         RecordHistogram.setDisabledForTests(false);
     }
 
-    private static Handler getTestHandler() {
+    static Handler getTestHandler() {
         HandlerThread handlerThread = new HandlerThread("handlerThread");
         handlerThread.start();
         return new Handler(handlerThread.getLooper());

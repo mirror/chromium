@@ -47,8 +47,8 @@ public class AwImeTest {
     }
 
     private TestAwContentsClient mContentsClient;
-    private AwTestContainerView mTestContainerView;
-    private EditText mEditText;
+    AwTestContainerView mTestContainerView;
+    EditText mEditText;
     private final TestJavascriptInterface mTestJavascriptInterface = new TestJavascriptInterface();
     private TestInputMethodManagerWrapper mInputMethodManagerWrapper;
 
@@ -113,7 +113,7 @@ public class AwImeTest {
         mTestJavascriptInterface.getFocusCallbackHelper().waitForCallback(0);
     }
 
-    private InputConnection getInputConnection() {
+    InputConnection getInputConnection() {
         return mTestContainerView.getContentViewCore()
                 .getImeAdapterForTest()
                 .getInputConnectionForTest();

@@ -334,8 +334,8 @@ public class MinidumpUploaderImplTest {
     }
 
     private static class StallingHttpUrlConnectionFactory implements HttpURLConnectionFactory {
-        private final CountDownLatch mStopStallingLatch;
-        private final boolean mSucceed;
+        final CountDownLatch mStopStallingLatch;
+        final boolean mSucceed;
 
         private class StallingOutputStream extends OutputStream {
             @Override

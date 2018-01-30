@@ -112,7 +112,7 @@ public class StripLayoutTab implements VirtualView {
 
     private int mId = Tab.INVALID_TAB_ID;
 
-    private final StripLayoutTabDelegate mDelegate;
+    final StripLayoutTabDelegate mDelegate;
     private final TabLoadTracker mLoadTracker;
     private final LayoutRenderHost mRenderHost;
     private final LayoutUpdateHost mUpdateHost;
@@ -142,7 +142,7 @@ public class StripLayoutTab implements VirtualView {
     private final CompositorButton mCloseButton;
 
     // Content Animations
-    private CompositorAnimator mButtonOpacityAnimation;
+    CompositorAnimator mButtonOpacityAnimation;
 
     private float mLoadingSpinnerRotationDegrees;
 

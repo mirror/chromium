@@ -55,7 +55,7 @@ public class AwContentsGarbageCollectionTest {
     // so allow for 1 'leaked' instance.
     private static final int MAX_IDLE_INSTANCES = 1;
 
-    private TestDependencyFactory mOverridenFactory;
+    TestDependencyFactory mOverridenFactory;
 
     @After
     public void tearDown() throws Exception {

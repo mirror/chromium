@@ -317,9 +317,9 @@ class Wrappers {
      */
     static class BluetoothDeviceWrapper {
         private final BluetoothDevice mDevice;
-        private final HashMap<BluetoothGattCharacteristic, BluetoothGattCharacteristicWrapper>
+        final HashMap<BluetoothGattCharacteristic, BluetoothGattCharacteristicWrapper>
                 mCharacteristicsToWrappers;
-        private final HashMap<BluetoothGattDescriptor, BluetoothGattDescriptorWrapper>
+        final HashMap<BluetoothGattDescriptor, BluetoothGattDescriptorWrapper>
                 mDescriptorsToWrappers;
 
         public BluetoothDeviceWrapper(BluetoothDevice device) {
@@ -603,7 +603,7 @@ class Wrappers {
      * Wraps android.bluetooth.BluetoothGattDescriptor.
      */
     static class BluetoothGattDescriptorWrapper {
-        private final BluetoothGattDescriptor mDescriptor;
+        final BluetoothGattDescriptor mDescriptor;
         final BluetoothDeviceWrapper mDeviceWrapper;
 
         public BluetoothGattDescriptorWrapper(

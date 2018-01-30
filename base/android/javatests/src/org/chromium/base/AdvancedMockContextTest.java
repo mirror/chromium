@@ -40,7 +40,7 @@ public class AdvancedMockContextTest {
     }
 
     private static class Callback2 extends Callback1 implements ComponentCallbacks2 {
-        private int mLevel;
+        int mLevel;
 
         @Override
         public void onTrimMemory(int level) {

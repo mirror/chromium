@@ -135,7 +135,7 @@ public class AccountSwitcherBasic extends AccountSwitcherBase {
     }
 
     /** Called when the choose-account button is pressed. */
-    private void onChooseAccount() {
+    void onChooseAccount() {
         Account selected = null;
         if (mSelectedAccount != null) {
             selected = new Account(mSelectedAccount, ACCOUNT_TYPE);

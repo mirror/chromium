@@ -54,7 +54,7 @@ public class BookmarksTest {
     private static final String MODIFIED_TITLE = "Chromium2";
     private static final String FOLDER_TITLE = "Tech";
 
-    private BookmarkBridge mBookmarkBridge;
+    BookmarkBridge mBookmarkBridge;
 
     // A container to store bookmark information for data verification.
     private static class Bookmark {
@@ -63,7 +63,7 @@ public class BookmarksTest {
         public final String url;
         public final String parentId;
 
-        private Bookmark(String id, String title, String url, String parentId) {
+        Bookmark(String id, String title, String url, String parentId) {
             this.id = id;
             this.title = title;
             this.url = url;
@@ -476,7 +476,7 @@ public class BookmarksTest {
         });
     }
 
-    private List<Bookmark> getClientBookmarks() throws JSONException {
+    List<Bookmark> getClientBookmarks() throws JSONException {
         List<Pair<String, JSONObject>> rawBookmarks =
                 SyncTestUtil.getLocalData(mSyncTestRule.getTargetContext(), BOOKMARKS_TYPE_STRING);
         List<Bookmark> bookmarks = new ArrayList<Bookmark>(rawBookmarks.size());
@@ -489,7 +489,7 @@ public class BookmarksTest {
         return bookmarks;
     }
 
-    private List<Bookmark> getServerBookmarks() throws Exception {
+    List<Bookmark> getServerBookmarks() throws Exception {
         List<SyncEntity> entities =
                 mSyncTestRule.getFakeServerHelper().getSyncEntitiesByModelType(ModelType.BOOKMARKS);
         List<Bookmark> bookmarks = new ArrayList<Bookmark>(entities.size());

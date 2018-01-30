@@ -465,7 +465,7 @@ public class TabState {
         sChannelNameOverrideForTest = name;
     }
 
-    private static native WebContents nativeRestoreContentsFromByteBuffer(
+    static native WebContents nativeRestoreContentsFromByteBuffer(
             ByteBuffer buffer, int savedStateVersion, boolean initiallyHidden);
 
     private static native ByteBuffer nativeGetContentsStateAsByteBuffer(Tab tab);
@@ -479,7 +479,7 @@ public class TabState {
     private static native String nativeGetVirtualUrlFromByteBuffer(
             ByteBuffer state, int savedStateVersion);
 
-    private static native void nativeFreeWebContentsStateBuffer(ByteBuffer buffer);
+    static native void nativeFreeWebContentsStateBuffer(ByteBuffer buffer);
 
-    private static native void nativeCreateHistoricalTab(ByteBuffer state, int savedStateVersion);
+    static native void nativeCreateHistoricalTab(ByteBuffer state, int savedStateVersion);
 }

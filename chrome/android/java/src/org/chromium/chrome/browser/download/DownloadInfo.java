@@ -49,7 +49,7 @@ public final class DownloadInfo {
     private final boolean mIsTransient;
     private final Bitmap mIcon;
 
-    private DownloadInfo(Builder builder) {
+    DownloadInfo(Builder builder) {
         mUrl = builder.mUrl;
         mUserAgent = builder.mUserAgent;
         mMimeType = builder.mMimeType;
@@ -242,32 +242,32 @@ public final class DownloadInfo {
      * Helper class for building the DownloadInfo object.
      */
     public static class Builder {
-        private String mUrl;
-        private String mUserAgent;
-        private String mMimeType;
-        private String mCookie;
-        private String mFileName;
-        private String mDescription;
-        private String mFilePath;
-        private String mReferrer;
-        private String mOriginalUrl;
-        private long mBytesReceived;
-        private boolean mIsGETRequest;
-        private String mDownloadGuid;
-        private boolean mHasUserGesture;
-        private String mContentDisposition;
-        private Progress mProgress = Progress.createIndeterminateProgress();
-        private long mTimeRemainingInMillis;
-        private boolean mIsResumable = true;
-        private boolean mIsPaused;
-        private boolean mIsOffTheRecord;
-        private boolean mIsOfflinePage;
-        private int mState = DownloadState.IN_PROGRESS;
-        private long mLastAccessTime;
-        private ContentId mContentId;
-        private boolean mIsOpenable = true;
-        private boolean mIsTransient;
-        private Bitmap mIcon;
+        String mUrl;
+        String mUserAgent;
+        String mMimeType;
+        String mCookie;
+        String mFileName;
+        String mDescription;
+        String mFilePath;
+        String mReferrer;
+        String mOriginalUrl;
+        long mBytesReceived;
+        boolean mIsGETRequest;
+        String mDownloadGuid;
+        boolean mHasUserGesture;
+        String mContentDisposition;
+        Progress mProgress = Progress.createIndeterminateProgress();
+        long mTimeRemainingInMillis;
+        boolean mIsResumable = true;
+        boolean mIsPaused;
+        boolean mIsOffTheRecord;
+        boolean mIsOfflinePage;
+        int mState = DownloadState.IN_PROGRESS;
+        long mLastAccessTime;
+        ContentId mContentId;
+        boolean mIsOpenable = true;
+        boolean mIsTransient;
+        Bitmap mIcon;
 
         public Builder setUrl(String url) {
             mUrl = url;

@@ -44,10 +44,10 @@ public class ContextualSearchTapEventTest {
     public ChromeActivityTestRule<ChromeActivity> mActivityTestRule =
             new ChromeActivityTestRule<>(ChromeActivity.class);
 
-    private ContextualSearchManagerWrapper mContextualSearchManager;
-    private ContextualSearchPanel mPanel;
-    private OverlayPanelManagerWrapper mPanelManager;
-    private SelectionClient mContextualSearchClient;
+    ContextualSearchManagerWrapper mContextualSearchManager;
+    ContextualSearchPanel mPanel;
+    OverlayPanelManagerWrapper mPanelManager;
+    SelectionClient mContextualSearchClient;
 
     // --------------------------------------------------------------------------------------------
 

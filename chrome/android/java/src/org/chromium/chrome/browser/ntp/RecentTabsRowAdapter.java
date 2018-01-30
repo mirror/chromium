@@ -66,14 +66,14 @@ public class RecentTabsRowAdapter extends BaseExpandableListAdapter {
         static final int LIMIT = 11;
     }
 
-    private final Activity mActivity;
+    final Activity mActivity;
     private final List<Group> mGroups;
-    private final Drawable mDefaultFavicon;
-    private final RecentTabsManager mRecentTabsManager;
+    final Drawable mDefaultFavicon;
+    final RecentTabsManager mRecentTabsManager;
     private final RecentlyClosedTabsGroup mRecentlyClosedTabsGroup = new RecentlyClosedTabsGroup();
     private final SeparatorGroup mVisibleSeparatorGroup = new SeparatorGroup(true);
     private final SeparatorGroup mInvisibleSeparatorGroup = new SeparatorGroup(false);
-    private final FaviconCache mFaviconCache;
+    final FaviconCache mFaviconCache;
     private final int mFaviconSize;
     private boolean mHasForeignDataRecorded;
 
@@ -627,13 +627,13 @@ public class RecentTabsRowAdapter extends BaseExpandableListAdapter {
         public FaviconImageCallback imageCallback;
     }
 
-    private Drawable faviconDrawable(Bitmap image) {
+    Drawable faviconDrawable(Bitmap image) {
         if (image == null) return null;
         return new BitmapDrawable(mActivity.getResources(), Bitmap.createScaledBitmap(image,
                 mFaviconSize, mFaviconSize, true));
     }
 
-    private void loadSyncedFavicon(final ViewHolder viewHolder, final String url) {
+    void loadSyncedFavicon(final ViewHolder viewHolder, final String url) {
         Drawable image = mFaviconCache.getSyncedFaviconImage(url);
         if (image == null) {
             image = faviconDrawable(mRecentTabsManager.getSyncedFaviconImageForURL(url));
@@ -644,7 +644,7 @@ public class RecentTabsRowAdapter extends BaseExpandableListAdapter {
                 image, null, null, null);
     }
 
-    private void loadLocalFavicon(final ViewHolder viewHolder, final String url) {
+    void loadLocalFavicon(final ViewHolder viewHolder, final String url) {
         Drawable image;
         if (url == null) {
             // URL is null for print jobs, for example.

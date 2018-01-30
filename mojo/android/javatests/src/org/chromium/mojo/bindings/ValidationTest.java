@@ -146,7 +146,7 @@ public class ValidationTest {
         private final MessageReceiverWithResponder mRequest;
         private final MessageReceiver mResponse;
 
-        private RoutingMessageReceiver(MessageReceiverWithResponder request,
+        RoutingMessageReceiver(MessageReceiverWithResponder request,
                 MessageReceiver response) {
             this.mRequest = request;
             this.mResponse = response;

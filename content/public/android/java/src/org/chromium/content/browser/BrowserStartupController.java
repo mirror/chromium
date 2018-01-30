@@ -89,9 +89,9 @@ public class BrowserStartupController {
     private boolean mHasStartedInitializingBrowserProcess;
 
     // Whether tasks that occur after resource extraction have been completed.
-    private boolean mPostResourceExtractionTasksCompleted;
+    boolean mPostResourceExtractionTasksCompleted;
 
-    private boolean mHasCalledContentStart;
+    boolean mHasCalledContentStart;
 
     // Whether the async startup of the browser process is complete.
     private boolean mStartupDone;
@@ -99,11 +99,11 @@ public class BrowserStartupController {
     // This field is set after startup has been completed based on whether the startup was a success
     // or not. It is used when later requests to startup come in that happen after the initial set
     // of enqueued callbacks have been executed.
-    private boolean mStartupSuccess;
+    boolean mStartupSuccess;
 
     private int mLibraryProcessType;
 
-    private TracingControllerAndroid mTracingController;
+    TracingControllerAndroid mTracingController;
 
     BrowserStartupController(int libraryProcessType) {
         mAsyncStartupCallbacks = new ArrayList<>();
@@ -268,7 +268,7 @@ public class BrowserStartupController {
         }
     }
 
-    private void executeEnqueuedCallbacks(int startupResult, boolean alreadyStarted) {
+    void executeEnqueuedCallbacks(int startupResult, boolean alreadyStarted) {
         assert ThreadUtils.runningOnUiThread() : "Callback from browser startup from wrong thread.";
         mStartupDone = true;
         mStartupSuccess = (startupResult <= 0);
@@ -285,7 +285,7 @@ public class BrowserStartupController {
 
     // Queue the callbacks to run. Since running the callbacks clears the list it is safe to call
     // this more than once.
-    private void enqueueCallbackExecution(final int startupFailure, final boolean alreadyStarted) {
+    void enqueueCallbackExecution(final int startupFailure, final boolean alreadyStarted) {
         new Handler().post(new Runnable() {
             @Override
             public void run() {
@@ -363,18 +363,18 @@ public class BrowserStartupController {
         nativeSetCommandLineFlags(false, null);
     }
 
-    private String getPlugins() {
+    String getPlugins() {
         return PepperPluginManager.getPlugins(ContextUtils.getApplicationContext());
     }
 
-    private static native void nativeSetCommandLineFlags(
+    static native void nativeSetCommandLineFlags(
             boolean singleProcess, String pluginDescriptor);
 
     // Is this an official build of Chrome? Only native code knows for sure. Official build
     // knowledge is needed very early in process startup.
     private static native boolean nativeIsOfficialBuild();
 
-    private static native boolean nativeIsPluginEnabled();
+    static native boolean nativeIsPluginEnabled();
 
     private static native void nativeFlushStartupTasks();
 }

@@ -24,14 +24,14 @@ public class SpareChildConnection {
     private final ChildConnectionAllocator mConnectionAllocator;
 
     // The actual spare connection.
-    private ChildProcessConnection mConnection;
+    ChildProcessConnection mConnection;
 
     // True when there is a spare connection and it is bound.
-    private boolean mConnectionReady;
+    boolean mConnectionReady;
 
     // The callback that should be called when the connection becomes bound. Set when the connection
     // is retrieved.
-    private ChildProcessConnection.ServiceCallback mConnectionServiceCallback;
+    ChildProcessConnection.ServiceCallback mConnectionServiceCallback;
 
     /** Creates and binds a ChildProcessConnection using the specified parameters. */
     public SpareChildConnection(
@@ -118,7 +118,7 @@ public class SpareChildConnection {
         return mConnection == null || mConnectionServiceCallback != null;
     }
 
-    private void clearConnection() {
+    void clearConnection() {
         assert LauncherThread.runningOnLauncherThread();
         mConnection = null;
         mConnectionReady = false;

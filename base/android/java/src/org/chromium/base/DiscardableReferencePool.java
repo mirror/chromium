@@ -43,7 +43,7 @@ public class DiscardableReferencePool {
         @Nullable
         private T mPayload;
 
-        private DiscardableReference(T payload) {
+        DiscardableReference(T payload) {
             assert payload != null;
             mPayload = payload;
         }
@@ -59,7 +59,7 @@ public class DiscardableReferencePool {
         /**
          * Clear the referent.
          */
-        private void discard() {
+        void discard() {
             assert mPayload != null;
             mPayload = null;
         }

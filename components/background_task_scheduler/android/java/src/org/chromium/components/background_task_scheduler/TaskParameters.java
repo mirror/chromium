@@ -17,7 +17,7 @@ public class TaskParameters {
     private final int mTaskId;
     private final Bundle mExtras;
 
-    private TaskParameters(Builder builder) {
+    TaskParameters(Builder builder) {
         mTaskId = builder.mTaskId;
         mExtras = builder.mExtras == null ? new Bundle() : builder.mExtras;
     }
@@ -44,8 +44,8 @@ public class TaskParameters {
 
     /** Class for building a task parameters object. Public for testing */
     public static final class Builder {
-        private final int mTaskId;
-        private Bundle mExtras;
+        final int mTaskId;
+        Bundle mExtras;
 
         Builder(int taskId) {
             mTaskId = taskId;

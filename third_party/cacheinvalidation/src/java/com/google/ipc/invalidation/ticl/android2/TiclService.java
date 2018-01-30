@@ -59,10 +59,10 @@ public class TiclService extends IntentService {
   /** This class must be public so that Android can instantiate it as a service. */
 
   /** Resources for the created Ticls. */
-  private AndroidResources resources;
+  AndroidResources resources;
 
   /** The function for computing persistence state digests when rewriting them. */
-  private final DigestFunction digestFn = new ObjectIdDigestUtils.Sha1DigestFunction();
+  final DigestFunction digestFn = new ObjectIdDigestUtils.Sha1DigestFunction();
 
   public TiclService() {
     super("TiclService");

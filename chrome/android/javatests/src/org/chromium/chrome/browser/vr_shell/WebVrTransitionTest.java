@@ -67,7 +67,7 @@ public class WebVrTransitionTest {
     public RuleChain mRuleChain;
 
     private ChromeActivityTestRule mVrTestRule;
-    private VrTestFramework mVrTestFramework;
+    VrTestFramework mVrTestFramework;
 
     public WebVrTransitionTest(Callable<ChromeActivityTestRule> callable) throws Exception {
         mVrTestRule = callable.call();

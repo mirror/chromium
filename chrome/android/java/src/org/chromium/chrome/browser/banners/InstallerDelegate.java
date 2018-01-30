@@ -113,25 +113,25 @@ public class InstallerDelegate {
     private InstallMonitor mInstallMonitor;
 
     /** Message loop to post the Runnable to. */
-    private final Handler mHandler;
+    final Handler mHandler;
 
     /** Monitors for application state changes. */
     private final ApplicationStatus.ApplicationStateListener mListener;
 
     /** The name of the package currently being installed. */
-    private String mPackageName;
+    String mPackageName;
 
     /** Milliseconds to wait between calls to check on the PackageManager during installation. */
-    private long mMsBetweenRuns;
+    long mMsBetweenRuns;
 
     /** Maximum milliseconds to wait before giving up on monitoring during installation. */
-    private long mMsMaximumWaitingTime;
+    long mMsMaximumWaitingTime;
 
     /** The observer to inform of updates during the installation process. */
-    private Observer mObserver;
+    Observer mObserver;
 
     /** Whether or we are currently monitoring an installation. */
-    private boolean mIsRunning;
+    boolean mIsRunning;
 
     /** Overrides the PackageManager for testing. */
     @VisibleForTesting

@@ -39,7 +39,7 @@ class BindingManagerImpl implements BindingManager {
 
     private static class ModerateBindingPool implements ComponentCallbacks2 {
         // Stores the connections in MRU order.
-        private final LinkedList<ManagedConnection> mConnections = new LinkedList<>();
+        final LinkedList<ManagedConnection> mConnections = new LinkedList<>();
         private final int mMaxSize;
 
         private Runnable mDelayedClearer;
@@ -87,7 +87,7 @@ class BindingManagerImpl implements BindingManager {
         @Override
         public void onConfigurationChanged(Configuration configuration) {}
 
-        private void reduce(float reduceRatio) {
+        void reduce(float reduceRatio) {
             int oldSize = mConnections.size();
             int newSize = (int) (oldSize * (1f - reduceRatio));
             Log.i(TAG, "Reduce connections from %d to %d", oldSize, newSize);
@@ -169,7 +169,7 @@ class BindingManagerImpl implements BindingManager {
         }
     }
 
-    private ModerateBindingPool mModerateBindingPool;
+    ModerateBindingPool mModerateBindingPool;
 
     /**
      * Wraps ChildProcessConnection keeping track of additional information needed to manage the
@@ -177,7 +177,7 @@ class BindingManagerImpl implements BindingManager {
      */
     private class ManagedConnection {
         // The connection to the service.
-        private final ChildProcessConnection mConnection;
+        final ChildProcessConnection mConnection;
 
         // True iff there is a strong binding kept on the service because it is working in
         // foreground.
@@ -221,7 +221,7 @@ class BindingManagerImpl implements BindingManager {
         }
 
         /** Adds the moderate service binding. */
-        private void addModerateBinding() {
+        void addModerateBinding() {
             mConnection.addModerateBinding();
         }
 

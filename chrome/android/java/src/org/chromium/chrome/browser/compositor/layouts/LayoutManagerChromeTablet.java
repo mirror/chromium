@@ -170,7 +170,7 @@ public class LayoutManagerChromeTablet extends LayoutManagerChrome {
         return mTabStripLayoutHelperManager;
     }
 
-    private void updateTitle(Tab tab) {
+    void updateTitle(Tab tab) {
         if (tab != null && mTitleCache != null) {
             String title = mTitleCache.getUpdatedTitle(tab, mDefaultTitle);
             getActiveLayout().tabTitleChanged(tab.getId(), title);

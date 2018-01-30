@@ -468,7 +468,7 @@ public class ExternalNavigationDelegateImpl implements ExternalNavigationDelegat
                 new String[] {permission.READ_EXTERNAL_STORAGE}, permissionCallback);
     }
 
-    private void loadIntent(Intent intent, String referrerUrl, String fallbackUrl, Tab tab,
+    void loadIntent(Intent intent, String referrerUrl, String fallbackUrl, Tab tab,
             boolean needsToCloseTab, boolean launchIncogntio) {
         boolean needsToStartIntent = false;
         if (tab == null || tab.isClosing() || !tab.isInitialized()) {
@@ -561,7 +561,7 @@ public class ExternalNavigationDelegateImpl implements ExternalNavigationDelegat
         return Telephony.Sms.getDefaultSmsPackage(mApplicationContext);
     }
 
-    private void closeTab(Tab tab) {
+    void closeTab(Tab tab) {
         Context context = tab.getWindowAndroid().getContext().get();
         if (context instanceof ChromeActivity) {
             ((ChromeActivity) context).getTabModelSelector().closeTab(tab);

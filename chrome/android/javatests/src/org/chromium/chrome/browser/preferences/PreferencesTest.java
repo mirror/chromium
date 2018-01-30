@@ -265,7 +265,7 @@ public class PreferencesTest {
         });
     }
 
-    private int indexOfFirstHttpSearchEngine(SearchEnginePreference pref) {
+    int indexOfFirstHttpSearchEngine(SearchEnginePreference pref) {
         TemplateUrlService templateUrlService = TemplateUrlService.getInstance();
         List<TemplateUrl> urls = templateUrlService.getSearchEngines();
         int index;
@@ -302,7 +302,7 @@ public class PreferencesTest {
         onTemplateUrlServiceLoadedHelper.waitForCallback(0);
     }
 
-    private ContentSetting locationPermissionForSearchEngine(String keyword) {
+    ContentSetting locationPermissionForSearchEngine(String keyword) {
         String url = TemplateUrlService.getInstance().getSearchEngineUrlFromTemplateUrl(keyword);
         GeolocationInfo locationSettings = new GeolocationInfo(url, null, false);
         ContentSetting locationPermission = locationSettings.getContentSetting();

@@ -48,7 +48,7 @@ public class WebappDirectoryManager {
     private static final String UPDATE_DIRECTORY_PATH = "webapk/update";
 
     /** Whether or not the class has already started trying to clean up obsolete directories. */
-    private static final AtomicBoolean sMustCleanUpOldDirectories = new AtomicBoolean(true);
+    static final AtomicBoolean sMustCleanUpOldDirectories = new AtomicBoolean(true);
 
     /** AsyncTask that is used to clean up the web app directories. */
     private AsyncTask<Void, Void, Void> mCleanupTask;
@@ -110,7 +110,7 @@ public class WebappDirectoryManager {
      *
      * @param directoriesToDelete Set to append directory names to.
      */
-    private void findStaleWebappDirectories(Context context, Set<File> directoriesToDelete) {
+    void findStaleWebappDirectories(Context context, Set<File> directoriesToDelete) {
         File webappBaseDirectory = getBaseWebappDirectory(context);
 
         // Figure out what WebappActivities are still listed in Android's recents menu.
@@ -146,7 +146,7 @@ public class WebappDirectoryManager {
     }
 
     /** Records to UMA the count of old "WebAPK update request" files. */
-    private void recordNumberOfStaleWebApkUpdateRequestFiles() {
+    void recordNumberOfStaleWebApkUpdateRequestFiles() {
         File updateDirectory = getWebApkUpdateDirectory();
         int count = 0;
         File[] children = updateDirectory.listFiles();

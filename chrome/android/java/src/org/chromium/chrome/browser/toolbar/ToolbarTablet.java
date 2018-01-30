@@ -43,9 +43,9 @@ public class ToolbarTablet
     // The number of toolbar buttons that can be hidden at small widths (reload, back, forward).
     public static final int HIDEABLE_BUTTON_COUNT = 3;
 
-    private TintedImageButton mHomeButton;
-    private TintedImageButton mBackButton;
-    private TintedImageButton mForwardButton;
+    TintedImageButton mHomeButton;
+    TintedImageButton mBackButton;
+    TintedImageButton mForwardButton;
     private TintedImageButton mReloadButton;
     private TintedImageButton mBookmarkButton;
     private TintedImageButton mSaveOfflineButton;
@@ -59,7 +59,7 @@ public class ToolbarTablet
 
     private boolean mShowTabStack;
     private boolean mToolbarButtonsVisible;
-    private TintedImageButton[] mToolbarButtons;
+    TintedImageButton[] mToolbarButtons;
 
     private NavigationPopup mNavigationPopup;
 
@@ -72,9 +72,9 @@ public class ToolbarTablet
     private final int mStartPaddingWithButtons;
     private final int mStartPaddingWithoutButtons;
     private boolean mShouldAnimateButtonVisibilityChange;
-    private AnimatorSet mButtonVisibilityAnimators;
+    AnimatorSet mButtonVisibilityAnimators;
 
-    private NewTabPage mVisibleNtp;
+    NewTabPage mVisibleNtp;
 
     /**
      * Constructs a ToolbarTablet object.
@@ -608,7 +608,7 @@ public class ToolbarTablet
      * Sets the toolbar start padding based on whether the buttons are visible.
      * @param buttonsVisible Whether the toolbar buttons are visible.
      */
-    private void setStartPaddingBasedOnButtonVisibility(boolean buttonsVisible) {
+    void setStartPaddingBasedOnButtonVisibility(boolean buttonsVisible) {
         buttonsVisible = buttonsVisible || mHomeButton.getVisibility() == View.VISIBLE;
 
         ApiCompatibilityUtils.setPaddingRelative(this,

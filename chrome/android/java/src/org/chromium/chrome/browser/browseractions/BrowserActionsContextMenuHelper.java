@@ -109,13 +109,13 @@ public class BrowserActionsContextMenuHelper implements OnCreateContextMenuListe
     // Map each custom item's id with its PendingIntent action.
     private final SparseArray<PendingIntent> mCustomItemActionMap = new SparseArray<>();
 
-    private final ContextMenuParams mCurrentContextMenuParams;
-    private final BrowserActionsContextMenuItemDelegate mMenuItemDelegate;
-    private final Activity mActivity;
+    final ContextMenuParams mCurrentContextMenuParams;
+    final BrowserActionsContextMenuItemDelegate mMenuItemDelegate;
+    final Activity mActivity;
     private final Callback<Integer> mItemSelectedCallback;
     private final Runnable mOnMenuShown;
     private final Runnable mOnMenuClosed;
-    private final Runnable mOnMenuShownListener;
+    final Runnable mOnMenuShownListener;
     private final Callback<Boolean> mOnShareClickedRunnable;
     private final PendingIntent mOnBrowserActionSelectedCallback;
 
@@ -123,8 +123,8 @@ public class BrowserActionsContextMenuHelper implements OnCreateContextMenuListe
 
     private final ProgressDialog mProgressDialog;
 
-    private BrowserActionsTestDelegate mTestDelegate;
-    private int mPendingItemId;
+    BrowserActionsTestDelegate mTestDelegate;
+    int mPendingItemId;
     private boolean mIsNativeInitialized;
 
     public BrowserActionsContextMenuHelper(Activity activity, ContextMenuParams params,

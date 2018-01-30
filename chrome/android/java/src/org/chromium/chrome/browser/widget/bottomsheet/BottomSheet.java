@@ -198,7 +198,7 @@ public class BottomSheet
     private final ObserverList<BottomSheetObserver> mObservers = new ObserverList<>();
 
     /** The visible rect for the screen taking the keyboard into account. */
-    private final Rect mVisibleViewportRect = new Rect();
+    final Rect mVisibleViewportRect = new Rect();
 
     /** The minimum distance between half and full states to allow the half state. */
     private final float mMinHalfFullDistance;
@@ -213,36 +213,36 @@ public class BottomSheet
     private BottomSheetNewTabController mNtpController;
 
     /** For detecting scroll and fling events on the bottom sheet. */
-    private BottomSheetSwipeDetector mGestureDetector;
+    BottomSheetSwipeDetector mGestureDetector;
 
     /** The animator used to move the sheet to a fixed state when released by the user. */
-    private ValueAnimator mSettleAnimator;
+    ValueAnimator mSettleAnimator;
 
     /** The animator set responsible for swapping the bottom sheet content. */
     private AnimatorSet mContentSwapAnimatorSet;
 
     /** The height of the toolbar. */
-    private float mToolbarHeight;
+    float mToolbarHeight;
 
     /** The width of the view that contains the bottom sheet. */
-    private float mContainerWidth;
+    float mContainerWidth;
 
     /** The height of the view that contains the bottom sheet. */
-    private float mContainerHeight;
+    float mContainerHeight;
 
     /** The current state that the sheet is in. */
     @SheetState
-    private int mCurrentState = SHEET_STATE_PEEK;
+    int mCurrentState = SHEET_STATE_PEEK;
 
     /** The target sheet state. This is the state that the sheet is currently moving to. */
     @SheetState
-    private int mTargetState = SHEET_STATE_NONE;
+    int mTargetState = SHEET_STATE_NONE;
 
     /** Used for getting the current tab. */
     private TabModelSelector mTabModelSelector;
 
     /** The fullscreen manager for information about toolbar offsets. */
-    private ChromeFullscreenManager mFullscreenManager;
+    ChromeFullscreenManager mFullscreenManager;
 
     /** A handle to the content being shown by the sheet. */
     @Nullable
@@ -255,7 +255,7 @@ public class BottomSheet
     private View mFindInPageView;
 
     /** A handle to the FrameLayout that holds the content of the bottom sheet. */
-    private TouchRestrictingFrameLayout mBottomSheetContentContainer;
+    TouchRestrictingFrameLayout mBottomSheetContentContainer;
 
     /**
      * The last ratio sent to observers of onTransitionPeekToHalf(). This is used to ensure the
@@ -264,7 +264,7 @@ public class BottomSheet
     private float mLastPeekToHalfRatioSent;
 
     /** The FrameLayout used to hold the bottom sheet toolbar. */
-    private TouchRestrictingFrameLayout mToolbarHolder;
+    TouchRestrictingFrameLayout mToolbarHolder;
 
     /**
      * The default toolbar view. This is shown when the current bottom sheet content doesn't have
@@ -279,7 +279,7 @@ public class BottomSheet
     private boolean mIsSheetOpen;
 
     /** The activity displaying the bottom sheet. */
-    private ChromeActivity mActivity;
+    ChromeActivity mActivity;
 
     /** A delegate for when the action bar starts showing. */
     private ViewShiftingActionBarDelegate mActionBarDelegate;
@@ -288,7 +288,7 @@ public class BottomSheet
     private boolean mBackButtonDismissesChrome;
 
     /** Whether {@link #destroy()} has been called. **/
-    private boolean mIsDestroyed;
+    boolean mIsDestroyed;
 
     /** The token used to enable browser controls persistence. */
     private int mPersistentControlsToken;
@@ -303,7 +303,7 @@ public class BottomSheet
     private boolean mIsSwipeVelocityRecorded;
 
     /** The speed of the swipe the last time the sheet was opened. */
-    private long mLastSheetOpenMicrosPerDp;
+    long mLastSheetOpenMicrosPerDp;
 
     // TODO(twellington): Remove this after Chrome Home launches.
     /** The in-product help bubble controller used to display various help bubbles. */
@@ -464,7 +464,7 @@ public class BottomSheet
      * @param name The name of the histogram.
      * @param microsPerDp The microseconds per dp being recorded.
      */
-    private void recordSwipeVelocity(String name, int microsPerDp) {
+    void recordSwipeVelocity(String name, int microsPerDp) {
         RecordHistogram.recordCustomCountHistogram(name, microsPerDp, 1, 60000, 50);
     }
 
@@ -1103,7 +1103,7 @@ public class BottomSheet
      * Called when the animation to swap BottomSheetContent ends.
      * @param content The BottomSheetContent showing at the end of the animation.
      */
-    private void onContentSwapAnimationEnd(BottomSheetContent content) {
+    void onContentSwapAnimationEnd(BottomSheetContent content) {
         if (mIsDestroyed) return;
 
         onSheetContentChanged(content);
@@ -1179,7 +1179,7 @@ public class BottomSheet
      * @param parent The parent for newView and oldView.
      * @param detachOldView Whether or not to detach the old view once faded out.
      */
-    private void swapViews(final View newView, final View oldView, final ViewGroup parent,
+    void swapViews(final View newView, final View oldView, final ViewGroup parent,
             final boolean detachOldView) {
         if (detachOldView && oldView.getParent() != null) {
             parent.removeView(oldView);
@@ -1242,7 +1242,7 @@ public class BottomSheet
     /**
      * Updates the bottom sheet's state ratios and adjusts the sheet's state if necessary.
      */
-    private void updateSheetStateRatios() {
+    void updateSheetStateRatios() {
         if (mContainerHeight <= 0) return;
 
         // Though mStateRatios is a static constant, the peeking ratio is computed here because
@@ -1262,7 +1262,7 @@ public class BottomSheet
     /**
      * Cancels and nulls the height animation if it exists.
      */
-    private void cancelAnimation() {
+    void cancelAnimation() {
         if (mSettleAnimator == null) return;
         mSettleAnimator.cancel();
         mSettleAnimator = null;
@@ -1308,7 +1308,7 @@ public class BottomSheet
      * Sets the sheet's offset relative to the bottom of the screen.
      * @param offset The offset that the sheet should be.
      */
-    private void setSheetOffsetFromBottom(float offset) {
+    void setSheetOffsetFromBottom(float offset) {
         if (MathUtils.areFloatsEqual(offset, getCurrentOffsetPx())) return;
 
         setTranslationY(mContainerHeight - offset);
@@ -1487,7 +1487,7 @@ public class BottomSheet
      * @param state The current state of the sheet.
      * @param reason The reason the state is changing if any.
      */
-    private void setInternalCurrentState(@SheetState int state, @StateChangeReason int reason) {
+    void setInternalCurrentState(@SheetState int state, @StateChangeReason int reason) {
         if (state == mCurrentState) return;
 
         // TODO(mdjones): This shouldn't be able to happen, but does occasionally during layout.

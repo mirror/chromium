@@ -84,7 +84,7 @@ public class SafeBrowsingTest {
 
     private SafeBrowsingContentsClient mContentsClient;
     private AwTestContainerView mContainerView;
-    private MockAwContents mAwContents;
+    MockAwContents mAwContents;
     private TestAwWebContentsObserver mWebContentsObserver;
 
     private EmbeddedTestServer mTestServer;
@@ -345,7 +345,7 @@ public class SafeBrowsingTest {
         mActivityTestRule.waitForVisualStateCallback(mAwContents);
     }
 
-    private void evaluateJavaScriptOnInterstitialOnUiThread(
+    void evaluateJavaScriptOnInterstitialOnUiThread(
             final String script, final Callback<String> callback) {
         ThreadUtils.runOnUiThread(
                 () -> mAwContents.evaluateJavaScriptOnInterstitialForTesting(script, callback));

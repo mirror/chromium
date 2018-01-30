@@ -134,7 +134,7 @@ class UsbMidiDeviceFactoryAndroid {
      *
      * @param device a USB device
      */
-    private void requestDevicePermissionIfNecessary(UsbDevice device) {
+    void requestDevicePermissionIfNecessary(UsbDevice device) {
         for (UsbDevice d : mRequestedDevices) {
             if (d.getDeviceId() == device.getDeviceId()) {
                 // It is already requested.
@@ -161,7 +161,7 @@ class UsbMidiDeviceFactoryAndroid {
      *
      * @param device a USB device
      */
-    private void onUsbDeviceDetached(UsbDevice device) {
+    void onUsbDeviceDetached(UsbDevice device) {
         for (UsbDevice usbDevice : mRequestedDevices) {
             if (usbDevice.getDeviceId() == device.getDeviceId()) {
                 mRequestedDevices.remove(usbDevice);
@@ -198,7 +198,7 @@ class UsbMidiDeviceFactoryAndroid {
      * @param context
      * @param intent
      */
-    private void onUsbDevicePermissionRequestDone(Context context, Intent intent) {
+    void onUsbDevicePermissionRequestDone(Context context, Intent intent) {
         UsbDevice device = (UsbDevice) intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
         UsbMidiDeviceAndroid midiDevice = null;
         if (mRequestedDevices.contains(device)) {

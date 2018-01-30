@@ -25,7 +25,7 @@ import org.chromium.ui.text.SpanApplier;
  * tags and the action upon its clicking is defined by |setLinkClickDelegate()|.
  */
 public class TextMessageWithLinkAndIconPreference extends TextMessagePreference {
-    private Runnable mLinkClickDelegate;
+    Runnable mLinkClickDelegate;
     private boolean mNoBottomSpacing;
 
     /**

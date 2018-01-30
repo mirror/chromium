@@ -18,7 +18,7 @@ import org.chromium.chrome.browser.tabmodel.TabModelSelectorTabModelObserver;
  */
 public class TabModalLifetimeHandler {
     /** The observer to dismiss all dialogs when the attached tab is not interactable. */
-    private final TabObserver mTabObserver = new EmptyTabObserver() {
+    final TabObserver mTabObserver = new EmptyTabObserver() {
         @Override
         public void onInteractabilityChanged(boolean isInteractable) {
             if (!isInteractable && mPresenter.getModalDialog() != null) {
@@ -27,12 +27,12 @@ public class TabModalLifetimeHandler {
         }
     };
 
-    private final ModalDialogManager mManager;
-    private final TabModalPresenter mPresenter;
+    final ModalDialogManager mManager;
+    final TabModalPresenter mPresenter;
     private final TabModelSelectorTabModelObserver mTabModelObserver;
     private final boolean mHasBottomControls;
 
-    private Tab mActiveTab;
+    Tab mActiveTab;
 
     /**
      * @param activity The {@link ChromeActivity} that this handler is attached to.

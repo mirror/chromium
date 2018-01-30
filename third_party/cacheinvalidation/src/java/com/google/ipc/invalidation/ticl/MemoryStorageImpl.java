@@ -38,7 +38,7 @@ import java.util.Map;
  */
 public class MemoryStorageImpl extends InternalBase implements Storage {
   private Scheduler scheduler;
-  private Map<String, byte[]> ticlPersistentState = new HashMap<String, byte[]>();
+  Map<String, byte[]> ticlPersistentState = new HashMap<String, byte[]>();
 
   @Override
   public void writeKey(final String key, final byte[] value, final Callback<Status> callback) {

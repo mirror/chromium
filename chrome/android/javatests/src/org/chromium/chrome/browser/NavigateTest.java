@@ -144,7 +144,7 @@ public class NavigateTest {
     /**
      * @return the expected contents of the location bar after navigating to url.
      */
-    private String expectedLocation(String url) {
+    String expectedLocation(String url) {
         Assert.assertTrue(url.startsWith(HTTP_SCHEME));
         return url.replaceFirst(HTTP_SCHEME, "");
     }

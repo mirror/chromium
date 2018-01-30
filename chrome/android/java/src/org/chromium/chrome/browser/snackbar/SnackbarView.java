@@ -40,26 +40,26 @@ class SnackbarView {
     private static final int MAX_LINES = 5;
 
     private final Activity mActivity;
-    private final ViewGroup mContainerView;
+    final ViewGroup mContainerView;
     private final ViewGroup mSnackbarView;
     private final TemplatePreservingTextView mMessageView;
     private final TextView mActionButtonView;
     private final ImageView mProfileImageView;
     private final View mShadowView;
-    private final int mAnimationDuration;
+    final int mAnimationDuration;
     private final boolean mIsTablet;
     private ViewGroup mOriginalParent;
-    private ViewGroup mParent;
+    ViewGroup mParent;
     private Snackbar mSnackbar;
     private boolean mAnimateOverWebContent;
-    private View mRootContentView;
+    View mRootContentView;
 
     // Variables used to calculate the virtual keyboard's height.
     private Rect mCurrentVisibleRect = new Rect();
     private Rect mPreviousVisibleRect = new Rect();
     private int[] mTempLocation = new int[2];
 
-    private OnLayoutChangeListener mLayoutListener = new OnLayoutChangeListener() {
+    OnLayoutChangeListener mLayoutListener = new OnLayoutChangeListener() {
         @Override
         public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft,
                 int oldTop, int oldRight, int oldBottom) {
@@ -299,7 +299,7 @@ class SnackbarView {
      * {@link SurfaceView} is not present in the given {@link Activity}, start the {@link Animator}
      * in the normal way.
      */
-    private void startAnimatorOnSurfaceView(Animator animator) {
+    void startAnimatorOnSurfaceView(Animator animator) {
         if (mAnimateOverWebContent) {
             ((ChromeActivity) mActivity).getWindowAndroid().startAnimationOverContent(animator);
         } else {
@@ -307,7 +307,7 @@ class SnackbarView {
         }
     }
 
-    private FrameLayout.LayoutParams getLayoutParams() {
+    FrameLayout.LayoutParams getLayoutParams() {
         return (FrameLayout.LayoutParams) mContainerView.getLayoutParams();
     }
 

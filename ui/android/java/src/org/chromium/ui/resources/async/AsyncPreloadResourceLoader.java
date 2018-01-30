@@ -32,7 +32,7 @@ public class AsyncPreloadResourceLoader extends ResourceLoader {
         Resource create(int resId);
     }
 
-    private final SparseArray<AsyncLoadTask> mOutstandingLoads = new SparseArray<AsyncLoadTask>();
+    final SparseArray<AsyncLoadTask> mOutstandingLoads = new SparseArray<AsyncLoadTask>();
     private final ResourceCreator mCreator;
 
     /**
@@ -88,7 +88,7 @@ public class AsyncPreloadResourceLoader extends ResourceLoader {
         mOutstandingLoads.put(resId, task);
     }
 
-    private Resource createResource(int resId) {
+    Resource createResource(int resId) {
         try {
             TraceEvent.begin("AsyncPreloadResourceLoader.createResource");
             return mCreator.create(resId);
@@ -97,7 +97,7 @@ public class AsyncPreloadResourceLoader extends ResourceLoader {
         }
     }
 
-    private void registerResource(Resource resource, int resourceId) {
+    void registerResource(Resource resource, int resourceId) {
         notifyLoadFinished(resourceId, resource);
         if (resource != null) resource.getBitmap().recycle();
         mOutstandingLoads.remove(resourceId);

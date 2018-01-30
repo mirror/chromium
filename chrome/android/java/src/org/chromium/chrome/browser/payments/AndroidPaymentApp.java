@@ -192,7 +192,7 @@ public class AndroidPaymentApp
         }, SERVICE_CONNECTION_TIMEOUT_MS);
     }
 
-    private void respondToGetInstrumentsQuery(final PaymentInstrument instrument) {
+    void respondToGetInstrumentsQuery(final PaymentInstrument instrument) {
         if (mServiceConnection != null) {
             ContextUtils.getApplicationContext().unbindService(mServiceConnection);
             mServiceConnection = null;
@@ -212,7 +212,7 @@ public class AndroidPaymentApp
         });
     }
 
-    private void sendIsReadyToPayIntentToPaymentApp(IsReadyToPayService isReadyToPayService) {
+    void sendIsReadyToPayIntentToPaymentApp(IsReadyToPayService isReadyToPayService) {
         if (mInstrumentsCallback == null) return;
         mIsReadyToPayQueried = true;
         IsReadyToPayServiceCallback.Stub callback = new IsReadyToPayServiceCallback.Stub() {

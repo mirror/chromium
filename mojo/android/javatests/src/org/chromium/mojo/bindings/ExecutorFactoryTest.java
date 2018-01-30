@@ -39,8 +39,8 @@ public class ExecutorFactoryTest {
     private static final int CONCURRENCY_LEVEL = 5;
     private static final ExecutorService WORKERS = Executors.newFixedThreadPool(CONCURRENCY_LEVEL);
 
-    private Executor mExecutor;
-    private List<Thread> mThreadContainer;
+    Executor mExecutor;
+    List<Thread> mThreadContainer;
 
     /**
      * @see MojoTestCase#setUp()

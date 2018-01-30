@@ -24,11 +24,11 @@ public class ActionModeController {
     private static final int SLIDE_DURATION_MS = 200;
 
     private ToolbarActionModeCallback mToolbarActionModeCallback;
-    private ObjectAnimator mCurrentAnimation;
+    ObjectAnimator mCurrentAnimation;
     private boolean mShowingActionMode;
-    private float mTabStripHeight;
+    float mTabStripHeight;
     private final Context mContext;
-    private final ActionBarDelegate mActionBarDelegate;
+    final ActionBarDelegate mActionBarDelegate;
 
     /** Property for animating the top margin of ActionBarDelegate. */
     public static final Property<ActionBarDelegate, Integer> TOP_MARGIN_ANIM_PROPERTY =
@@ -117,7 +117,7 @@ public class ActionModeController {
     /**
      * @return The current action bar height.
      */
-    private int queryCurrentActionBarHeight() {
+    int queryCurrentActionBarHeight() {
         ActionBar actionBar = mActionBarDelegate.getSupportActionBar();
         if (actionBar != null) return actionBar.getHeight();
 

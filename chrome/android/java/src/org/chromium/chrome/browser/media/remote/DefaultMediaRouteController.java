@@ -76,8 +76,8 @@ public class DefaultMediaRouteController extends AbstractMediaRouteController {
     private static final String ACTION_RECEIVE_MEDIA_STATUS_UPDATE =
             "com.google.android.apps.chrome.videofling.RECEIVE_MEDIA_STATUS_UPDATE";
     private static final String MIME_TYPE = "video/mp4";
-    private String mCurrentSessionId;
-    private String mCurrentItemId;
+    String mCurrentSessionId;
+    String mCurrentItemId;
     private boolean mSeeking;
     private final String mIntentCategory;
     private PendingIntent mSessionStatusUpdateIntent;
@@ -85,8 +85,8 @@ public class DefaultMediaRouteController extends AbstractMediaRouteController {
     private PendingIntent mMediaStatusUpdateIntent;
     private BroadcastReceiver mMediaStatusBroadcastReceiver;
 
-    private String mPreferredTitle;
-    private long mStartPositionMillis;
+    String mPreferredTitle;
+    long mStartPositionMillis;
     private final PositionExtrapolator mPositionExtrapolator = new PositionExtrapolator();
 
     private Uri mLocalVideoUri;
@@ -300,7 +300,7 @@ public class DefaultMediaRouteController extends AbstractMediaRouteController {
         }
     }
 
-    private void getSessionStatus(String sessionId) {
+    void getSessionStatus(String sessionId) {
         Intent intent = new Intent(MediaControlIntent.ACTION_GET_SESSION_STATUS);
         intent.addCategory(MediaControlIntent.CATEGORY_REMOTE_PLAYBACK);
 
@@ -453,7 +453,7 @@ public class DefaultMediaRouteController extends AbstractMediaRouteController {
      * Disconnect from the remote screen without stopping the media playing. use release() for
      * disconnect + stop.
      */
-    private void disconnect() {
+    void disconnect() {
         clearStreamState();
         clearMediaRoute();
 
@@ -582,7 +582,7 @@ public class DefaultMediaRouteController extends AbstractMediaRouteController {
         mSeeking = false;
     }
 
-    private void processSessionStatusBundle(Bundle statusBundle) {
+    void processSessionStatusBundle(Bundle statusBundle) {
         MediaSessionStatus status = MediaSessionStatus.fromBundle(
                 statusBundle.getBundle(MediaControlIntent.EXTRA_SESSION_STATUS));
         int sessionState = status.getSessionState();
@@ -619,7 +619,7 @@ public class DefaultMediaRouteController extends AbstractMediaRouteController {
         }
     }
 
-    private void processMediaStatusBundle(Bundle statusBundle) {
+    void processMediaStatusBundle(Bundle statusBundle) {
         if (statusBundle == null) return;
         logBundle("processMediaStatusBundle: ", statusBundle);
 
@@ -751,7 +751,7 @@ public class DefaultMediaRouteController extends AbstractMediaRouteController {
         }
     }
 
-    private void recordRemainingTimeUMA() {
+    void recordRemainingTimeUMA() {
         long duration = getDuration();
         long remainingTime = Math.max(0, duration - getPosition());
         // Duration has already been cleared.
@@ -793,7 +793,7 @@ public class DefaultMediaRouteController extends AbstractMediaRouteController {
         playUri(listener.getTitle(), mStartPositionMillis);
     }
 
-    private void configureNewSession(Bundle data) {
+    void configureNewSession(Bundle data) {
         mCurrentSessionId = data.getString(MediaControlIntent.EXTRA_SESSION_ID);
         mSessionState = MediaSessionStatus.SESSION_STATE_INVALIDATED;
         Log.d(TAG, "Got a session id: %s", mCurrentSessionId);
@@ -828,12 +828,12 @@ public class DefaultMediaRouteController extends AbstractMediaRouteController {
     }
 
     @RemovableInRelease
-    private void logBundle(String message, Bundle bundle) {
+    void logBundle(String message, Bundle bundle) {
         Log.d(TAG, message + bundleToString(bundle));
     }
 
     @RemovableInRelease
-    private void logControlRequestError(Intent intent, String message, Bundle data) {
+    void logControlRequestError(Intent intent, String message, Bundle data) {
         // The intent may contain some PII so we don't want to log it in the released
         // version by default.
         Log.e(TAG, String.format(
@@ -856,12 +856,12 @@ public class DefaultMediaRouteController extends AbstractMediaRouteController {
     }
 
     @RemovableInRelease
-    private void logIntent(String prefix, Intent intent) {
+    void logIntent(String prefix, Intent intent) {
         Log.d(TAG, prefix + intent + " extras: " + bundleToString(intent.getExtras()));
     }
 
     @RemovableInRelease
-    private void logMediaSessionStatus(Bundle data) {
+    void logMediaSessionStatus(Bundle data) {
         MediaSessionStatus status = MediaSessionStatus.fromBundle(
                 data.getBundle(MediaControlIntent.EXTRA_SESSION_STATUS));
         int sessionState = status.getSessionState();

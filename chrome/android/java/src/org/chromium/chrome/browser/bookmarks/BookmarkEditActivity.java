@@ -33,8 +33,8 @@ public class BookmarkEditActivity extends SynchronousInitializationActivity {
 
     private static final String TAG = "BookmarkEdit";
 
-    private BookmarkModel mModel;
-    private BookmarkId mBookmarkId;
+    BookmarkModel mModel;
+    BookmarkId mBookmarkId;
     private EmptyAlertEditText mTitleEditText;
     private EmptyAlertEditText mUrlEditText;
     private TextView mFolderTextView;
@@ -98,7 +98,7 @@ public class BookmarkEditActivity extends SynchronousInitializationActivity {
     /**
      * @param modelChanged Whether this view update is due to a model change in background.
      */
-    private void updateViewContent(boolean modelChanged) {
+    void updateViewContent(boolean modelChanged) {
         BookmarkItem bookmarkItem = mModel.getBookmarkById(mBookmarkId);
         // While the user is editing the bookmark, do not override user's input.
         if (!modelChanged) {

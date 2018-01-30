@@ -82,14 +82,14 @@ public final class WarmupManager {
     @SuppressLint("StaticFieldLeak")
     private static WarmupManager sWarmupManager;
 
-    private final Set<String> mDnsRequestsInFlight;
-    private final Map<String, Profile> mPendingPreconnectWithProfile;
+    final Set<String> mDnsRequestsInFlight;
+    final Map<String, Profile> mPendingPreconnectWithProfile;
 
     private int mToolbarContainerId;
     private ViewGroup mMainView;
     @VisibleForTesting
     WebContents mSpareWebContents;
-    private long mWebContentsCreationTimeMs;
+    long mWebContentsCreationTimeMs;
     private RenderProcessGoneObserver mObserver;
 
     /**
@@ -333,14 +333,14 @@ public final class WarmupManager {
         return mSpareWebContents != null;
     }
 
-    private void destroySpareWebContentsInternal() {
+    void destroySpareWebContentsInternal() {
         mSpareWebContents.removeObserver(mObserver);
         mSpareWebContents.destroy();
         mSpareWebContents = null;
         mObserver = null;
     }
 
-    private static void recordWebContentsStatus(int status) {
+    static void recordWebContentsStatus(int status) {
         RecordHistogram.recordEnumeratedHistogram(
                 WEBCONTENTS_STATUS_HISTOGRAM, status, WEBCONTENTS_STATUS_COUNT);
     }

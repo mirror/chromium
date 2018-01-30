@@ -38,15 +38,15 @@ import javax.annotation.Nullable;
 public class ContextMenuHelper implements OnCreateContextMenuListener {
     private static final int MAX_SHARE_DIMEN_PX = 2048;
 
-    private final WebContents mWebContents;
-    private long mNativeContextMenuHelper;
+    final WebContents mWebContents;
+    long mNativeContextMenuHelper;
 
-    private ContextMenuPopulator mPopulator;
-    private ContextMenuParams mCurrentContextMenuParams;
-    private Activity mActivity;
+    ContextMenuPopulator mPopulator;
+    ContextMenuParams mCurrentContextMenuParams;
+    Activity mActivity;
     private Callback<Integer> mCallback;
     private Runnable mOnMenuShown;
-    private Runnable mOnMenuClosed;
+    Runnable mOnMenuClosed;
 
     private ContextMenuHelper(long nativeContextMenuHelper, WebContents webContents) {
         mNativeContextMenuHelper = nativeContextMenuHelper;
@@ -284,5 +284,5 @@ public class ContextMenuHelper implements OnCreateContextMenuListener {
             Callback<byte[]> callback, int maxWidthPx, int maxHeightPx);
     private native void nativeRetrieveImageForContextMenu(long nativeContextMenuHelper,
             Callback<Bitmap> callback, int maxWidthPx, int maxHeightPx);
-    private native void nativeOnContextMenuClosed(long nativeContextMenuHelper);
+    native void nativeOnContextMenuClosed(long nativeContextMenuHelper);
 }

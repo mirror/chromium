@@ -415,7 +415,7 @@ public class PlatformSensorAndProviderTest {
         return mockSensor;
     }
 
-    private List<Sensor> getMockSensors(int sensorType) {
+    List<Sensor> getMockSensors(int sensorType) {
         if (mMockSensors.indexOfKey(sensorType) >= 0) {
             return mMockSensors.get(sensorType);
         }

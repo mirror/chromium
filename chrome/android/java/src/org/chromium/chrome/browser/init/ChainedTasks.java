@@ -18,7 +18,7 @@ import java.util.LinkedList;
  * - {@link cancel()} must be called from the UI thread.
  */
 public class ChainedTasks {
-    private LinkedList<Runnable> mTasks = new LinkedList<>();
+    LinkedList<Runnable> mTasks = new LinkedList<>();
     private volatile boolean mFinalized;
 
     private final Runnable mRunAndPost = new Runnable() {

@@ -116,7 +116,7 @@ public class DecoderServiceHost extends IDecoderServiceCallback.Stub {
     List<ServiceReadyCallback> mCallbacks = new ArrayList<ServiceReadyCallback>();
 
     // Flag indicating whether we are bound to the service.
-    private boolean mBound;
+    boolean mBound;
 
     private final Context mContext;
 

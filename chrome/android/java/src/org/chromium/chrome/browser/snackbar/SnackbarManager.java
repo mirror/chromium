@@ -67,7 +67,7 @@ public class SnackbarManager implements OnClickListener, InfoBarContainer.InfoBa
     private Activity mActivity;
     private SnackbarView mView;
     private final Handler mUIThreadHandler;
-    private SnackbarCollection mSnackbars = new SnackbarCollection();
+    SnackbarCollection mSnackbars = new SnackbarCollection();
     private boolean mActivityInForeground;
     private boolean mIsDisabledForTesting;
     private ViewGroup mSnackbarParentView;
@@ -202,7 +202,7 @@ public class SnackbarManager implements OnClickListener, InfoBarContainer.InfoBa
      * Updates the {@link SnackbarView} to reflect the value of mSnackbars.currentSnackbar(), which
      * may be null. This might show, change, or hide the view.
      */
-    private void updateView() {
+    void updateView() {
         if (!mActivityInForeground) return;
         Snackbar currentSnackbar = mSnackbars.getCurrent();
         if (currentSnackbar == null) {

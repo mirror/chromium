@@ -80,7 +80,7 @@ public final class InfoBarLayout extends ViewGroup implements View.OnClickListen
     private final int mPadding;
     private final int mMinWidth;
 
-    private final InfoBarView mInfoBarView;
+    final InfoBarView mInfoBarView;
     private final ImageButton mCloseButton;
     private final InfoBarControlLayout mMessageLayout;
     private final List<InfoBarControlLayout> mControlLayouts;

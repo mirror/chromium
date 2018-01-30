@@ -43,7 +43,7 @@ public class Website implements Serializable {
     private ProtectedMediaIdentifierInfo mProtectedMediaIdentifierInfo;
     private ContentSettingException mSoundException;
     private final List<StorageInfo> mStorageInfo = new ArrayList<StorageInfo>();
-    private int mStorageInfoCallbacksLeft;
+    int mStorageInfoCallbacksLeft;
     private final List<UsbInfo> mUsbInfo = new ArrayList<UsbInfo>();
 
     public Website(WebsiteAddress origin, WebsiteAddress embedder) {

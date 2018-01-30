@@ -139,7 +139,7 @@ public class WebApkServiceClient {
     }
 
     /** Decodes bitmap from WebAPK's resources. */
-    private static Bitmap decodeImageResource(String webApkPackage, int resourceId) {
+    static Bitmap decodeImageResource(String webApkPackage, int resourceId) {
         PackageManager packageManager = ContextUtils.getApplicationContext().getPackageManager();
         try {
             Resources resources = packageManager.getResourcesForApplication(webApkPackage);
@@ -150,7 +150,7 @@ public class WebApkServiceClient {
     }
 
     /** Returns whether the WebAPK targets SDK 26+. */
-    private boolean webApkTargetsAtLeastO(String webApkPackage) {
+    boolean webApkTargetsAtLeastO(String webApkPackage) {
         try {
             ApplicationInfo info =
                     ContextUtils.getApplicationContext().getPackageManager().getApplicationInfo(

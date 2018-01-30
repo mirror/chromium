@@ -45,11 +45,11 @@ public class LogcatExtractionRunnableTest {
     @Rule
     public CrashTestRule mTestRule = new CrashTestRule();
 
-    private File mCrashDir;
+    File mCrashDir;
 
     private static final String BOUNDARY = "boundary";
     private static final String MINIDUMP_CONTENTS = "important minidump contents";
-    private static final List<String> LOGCAT =
+    static final List<String> LOGCAT =
             Arrays.asList("some random log content", "some more deterministic log content");
 
     private static class TestLogcatExtractionRunnable extends LogcatExtractionRunnable {

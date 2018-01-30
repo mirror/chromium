@@ -41,8 +41,8 @@ public class TabTest {
     public ChromeActivityTestRule<ChromeActivity> mActivityTestRule =
             new ChromeActivityTestRule<>(ChromeActivity.class);
 
-    private Tab mTab;
-    private CallbackHelper mOnTitleUpdatedHelper;
+    Tab mTab;
+    CallbackHelper mOnTitleUpdatedHelper;
 
     private final TabObserver mTabObserver = new EmptyTabObserver() {
         @Override

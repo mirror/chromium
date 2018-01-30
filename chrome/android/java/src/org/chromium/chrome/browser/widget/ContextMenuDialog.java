@@ -31,7 +31,7 @@ public class ContextMenuDialog extends AlwaysDismissedDialog {
     private static final long EXIT_ANIMATION_DURATION_MS = 150;
 
     private final Activity mActivity;
-    private final View mContentView;
+    final View mContentView;
     private final float mTouchPointXPx;
     private final float mTouchPointYPx;
     private final float mTopContentOffsetPx;
@@ -90,7 +90,7 @@ public class ContextMenuDialog extends AlwaysDismissedDialog {
         super.show();
     }
 
-    private void startEnterAnimation() {
+    void startEnterAnimation() {
         Rect rectangle = new Rect();
         Window window = mActivity.getWindow();
         window.getDecorView().getWindowVisibleDisplayFrame(rectangle);

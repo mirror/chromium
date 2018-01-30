@@ -38,7 +38,7 @@ public class GestureDetectorResetTest {
     public ContentShellActivityTestRule mActivityTestRule = new ContentShellActivityTestRule();
 
     private static final long WAIT_TIMEOUT_SECONDS = scaleTimeout(2);
-    private static final String CLICK_TEST_URL = UrlUtils.encodeHtmlDataUri("<html><body>"
+    static final String CLICK_TEST_URL = UrlUtils.encodeHtmlDataUri("<html><body>"
             + "<button id=\"button\" "
             + "  onclick=\"document.getElementById('test').textContent = 'clicked';\">"
             + "Button"

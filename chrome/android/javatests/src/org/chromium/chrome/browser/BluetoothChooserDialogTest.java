@@ -97,7 +97,7 @@ public class BluetoothChooserDialogTest {
 
     private ActivityWindowAndroid mWindowAndroid;
     private FakeLocationUtils mLocationUtils;
-    private BluetoothChooserDialogWithFakeNatives mChooserDialog;
+    BluetoothChooserDialogWithFakeNatives mChooserDialog;
 
     @Rule
     public ChromeActivityTestRule<ChromeActivity> mActivityTestRule =

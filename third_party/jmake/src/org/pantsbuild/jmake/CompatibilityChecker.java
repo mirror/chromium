@@ -19,10 +19,10 @@ import java.util.Set;
 public class CompatibilityChecker {
 
     private PCDManager pcdm;
-    private RefClassFinder rf;
+    RefClassFinder rf;
     ClassInfo oldClassInfo = null;
     ClassInfo newClassInfo = null;
-    private boolean versionsCompatible;
+    boolean versionsCompatible;
     private boolean publicConstantChanged;
 
     public CompatibilityChecker(PCDManager pcdm, boolean failOnDependentJar, boolean noWarnOnDependentJar) {

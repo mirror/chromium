@@ -102,7 +102,7 @@ public class PassphraseCreationDialogFragment extends DialogFragment {
         }
     }
 
-    private void tryToSubmitPassphrase() {
+    void tryToSubmitPassphrase() {
         String passphrase = mEnterPassphrase.getText().toString();
         String confirmPassphrase = mConfirmPassphrase.getText().toString();
 

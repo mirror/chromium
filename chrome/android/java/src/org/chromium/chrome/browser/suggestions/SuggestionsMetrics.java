@@ -184,7 +184,7 @@ public abstract class SuggestionsMetrics {
         private long mTrackingStartTimeMs;
         private final Callback<Long> mTrackingCompleteCallback;
 
-        private DurationTracker(Callback<Long> trackingCompleteCallback) {
+        DurationTracker(Callback<Long> trackingCompleteCallback) {
             mTrackingCompleteCallback = trackingCompleteCallback;
         }
 

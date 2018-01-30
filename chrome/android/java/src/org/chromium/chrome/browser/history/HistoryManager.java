@@ -70,9 +70,9 @@ public class HistoryManager implements OnMenuItemClickListener, SignInStateObser
     private final boolean mIsIncognito;
     private final boolean mIsSeparateActivity;
     private final SelectableListLayout<HistoryItem> mSelectableListLayout;
-    private final HistoryAdapter mHistoryAdapter;
+    final HistoryAdapter mHistoryAdapter;
     private final SelectionDelegate<HistoryItem> mSelectionDelegate;
-    private final HistoryManagerToolbar mToolbar;
+    final HistoryManagerToolbar mToolbar;
     private final TextView mEmptyView;
     private final RecyclerView mRecyclerView;
     private final SnackbarManager mSnackbarManager;

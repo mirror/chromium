@@ -38,11 +38,11 @@ import java.util.List;
  * A custom dialog that separates each group into separate tabs. It uses a dialog instead.
  */
 public class TabularContextMenuUi implements ContextMenuUi, AdapterView.OnItemClickListener {
-    private ContextMenuDialog mContextMenuDialog;
+    ContextMenuDialog mContextMenuDialog;
     private Callback<Integer> mCallback;
     private int mMenuItemHeight;
     private ImageView mHeaderImageView;
-    private Callback<Boolean> mOnShareItemClicked;
+    Callback<Boolean> mOnShareItemClicked;
     private View mPagerView;
     private float mTopContentOffsetPx;
 

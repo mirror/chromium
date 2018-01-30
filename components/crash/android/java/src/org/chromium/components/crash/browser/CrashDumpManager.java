@@ -26,7 +26,7 @@ public class CrashDumpManager {
      * The globally registered callback for uploading minidumps, or null if no callback has been
      * registered yet.
      */
-    private static UploadMinidumpCallback sCallback;
+    static UploadMinidumpCallback sCallback;
 
     /**
      * Registers a callback for uploading minidumps. May be called at most once, and only on the UI

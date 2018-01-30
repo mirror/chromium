@@ -50,13 +50,13 @@ public class AccessibilityTabModelListItem extends FrameLayout implements OnClic
     private static final int CLOSE_TIMEOUT_MS = 4000;
 
     private int mCloseAnimationDurationMs;
-    private int mDefaultAnimationDurationMs;
-    private int mCloseTimeoutMs;
+    int mDefaultAnimationDurationMs;
+    int mCloseTimeoutMs;
     // The last run animation (if non-null, it still might have already completed).
     private Animator mActiveAnimation;
 
     private final float mSwipeCommitDistance;
-    private final float mFlingCommitDistance;
+    final float mFlingCommitDistance;
     private final int mDefaultLevel;
     private final int mIncognitoLevel;
     private final ColorStateList mDarkIconColor;
@@ -69,23 +69,23 @@ public class AccessibilityTabModelListItem extends FrameLayout implements OnClic
     private float mSwipedAway;
 
     // The children on the standard view.
-    private LinearLayout mTabContents;
+    LinearLayout mTabContents;
     private TextView mTitleView;
     private TextView mDescriptionView;
     private ImageView mFaviconView;
     private TintedImageButton mCloseButton;
 
     // The children on the undo view.
-    private LinearLayout mUndoContents;
+    LinearLayout mUndoContents;
     private Button mUndoButton;
 
-    private Tab mTab;
+    Tab mTab;
     private boolean mCanUndo;
-    private AccessibilityTabModelListItemListener mListener;
+    AccessibilityTabModelListItemListener mListener;
     private final GestureDetector mSwipeGestureDetector;
     private final int mDefaultHeight;
-    private AccessibilityTabModelListView mCanScrollListener;
-    private boolean mCloseButtonClicked;
+    AccessibilityTabModelListView mCanScrollListener;
+    boolean mCloseButtonClicked;
 
     /**
      * An interface that exposes actions taken on this item.  The registered listener will be
@@ -128,14 +128,14 @@ public class AccessibilityTabModelListItem extends FrameLayout implements OnClic
         public void cancelPendingClosure(int tabId);
     }
 
-    private final Runnable mCloseRunnable = new Runnable() {
+    final Runnable mCloseRunnable = new Runnable() {
         @Override
         public void run() {
             runCloseAnimation();
         }
     };
 
-    private final Handler mHandler = new Handler();
+    final Handler mHandler = new Handler();
 
     /**
      * Used with the swipe away and blink out animations to bring in the undo view.
@@ -273,7 +273,7 @@ public class AccessibilityTabModelListItem extends FrameLayout implements OnClic
         updateFavicon();
     }
 
-    private void showUndoView(boolean showView) {
+    void showUndoView(boolean showView) {
         if (showView && mCanUndo) {
             mUndoContents.setVisibility(View.VISIBLE);
             mTabContents.setVisibility(View.INVISIBLE);
@@ -295,7 +295,7 @@ public class AccessibilityTabModelListItem extends FrameLayout implements OnClic
         mCanScrollListener = canScrollListener;
     }
 
-    private void updateTabText() {
+    void updateTabText() {
         String title = null;
         String url = null;
         if (mTab != null) {
@@ -344,7 +344,7 @@ public class AccessibilityTabModelListItem extends FrameLayout implements OnClic
         }
     }
 
-    private void updateFavicon() {
+    void updateFavicon() {
         if (mTab != null) {
             Bitmap bitmap = mTab.getFavicon();
             if (bitmap != null) {
@@ -559,7 +559,7 @@ public class AccessibilityTabModelListItem extends FrameLayout implements OnClic
         return false;
     }
 
-    private void runSwipeAnimation(long time) {
+    void runSwipeAnimation(long time) {
         cancelRunningAnimation();
         mSwipedAway = getTranslationX();
 
@@ -576,7 +576,7 @@ public class AccessibilityTabModelListItem extends FrameLayout implements OnClic
         mActiveAnimation = set;
     }
 
-    private void runResetAnimation(boolean useCloseAnimationDuration) {
+    void runResetAnimation(boolean useCloseAnimationDuration) {
         cancelRunningAnimation();
 
         ObjectAnimator swipe = ObjectAnimator.ofFloat(this, View.TRANSLATION_X, 0.f);
@@ -611,7 +611,7 @@ public class AccessibilityTabModelListItem extends FrameLayout implements OnClic
         mActiveAnimation = set;
     }
 
-    private void runCloseAnimation() {
+    void runCloseAnimation() {
         cancelRunningAnimation();
 
         ObjectAnimator shrinkHeight = ObjectAnimator.ofInt(this, "height", 0);
@@ -626,13 +626,13 @@ public class AccessibilityTabModelListItem extends FrameLayout implements OnClic
         mActiveAnimation = set;
     }
 
-    private void cancelRunningAnimation() {
+    void cancelRunningAnimation() {
         if (mActiveAnimation != null && mActiveAnimation.isRunning()) mActiveAnimation.cancel();
 
         mActiveAnimation = null;
     }
 
-    private void notifyTabUpdated(Tab tab) {
+    void notifyTabUpdated(Tab tab) {
         if (mListener != null) mListener.tabChanged(tab.getId());
     }
 }

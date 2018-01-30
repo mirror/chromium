@@ -104,11 +104,11 @@ public class AppBannerManagerTest {
     private static final String INSTALL_ACTION = "INSTALL_ACTION";
 
     private class MockAppDetailsDelegate extends AppDetailsDelegate {
-        private Observer mObserver;
-        private AppData mAppData;
-        private int mNumRetrieved;
+        Observer mObserver;
+        AppData mAppData;
+        int mNumRetrieved;
         private Intent mInstallIntent;
-        private String mReferrer;
+        String mReferrer;
 
         @Override
         protected void getAppDetailsAsynchronously(
@@ -173,7 +173,7 @@ public class AppBannerManagerTest {
     }
 
     private static class InfobarListener implements InfoBarAnimationListener {
-        private boolean mDoneAnimating;
+        boolean mDoneAnimating;
 
         @Override
         public void notifyAnimationFinished(int animationType) {
@@ -186,10 +186,10 @@ public class AppBannerManagerTest {
         public void notifyAllAnimationsFinished(Item frontInfoBar) {}
     }
 
-    private MockAppDetailsDelegate mDetailsDelegate;
+    MockAppDetailsDelegate mDetailsDelegate;
     private String mNativeAppUrl;
     private TestPackageManager mPackageManager;
-    private EmbeddedTestServer mTestServer;
+    EmbeddedTestServer mTestServer;
     private String mWebAppUrl;
 
     @Before

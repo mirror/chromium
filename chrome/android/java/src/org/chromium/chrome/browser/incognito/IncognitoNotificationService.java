@@ -105,7 +105,7 @@ public class IncognitoNotificationService extends IntentService {
         });
     }
 
-    private void focusChromeIfNecessary() {
+    void focusChromeIfNecessary() {
         Set<Integer> visibleTaskIds = getTaskIdsForVisibleActivities();
         int tabbedTaskId = -1;
 
@@ -133,7 +133,7 @@ public class IncognitoNotificationService extends IntentService {
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private void removeNonVisibleChromeTabbedRecentEntries() {
+    void removeNonVisibleChromeTabbedRecentEntries() {
         Set<Integer> visibleTaskIds = getTaskIdsForVisibleActivities();
 
         Context context = ContextUtils.getApplicationContext();

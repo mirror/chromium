@@ -114,8 +114,8 @@ public class ExternalNavigationHandlerTest {
             "com.google.android.instantapps.START", "com.google.android.instantapps.nmr1.INSTALL",
             "com.google.android.instantapps.nmr1.VIEW"};
 
-    private final TestExternalNavigationDelegate mDelegate;
-    private ExternalNavigationHandler mUrlHandler;
+    final TestExternalNavigationDelegate mDelegate;
+    ExternalNavigationHandler mUrlHandler;
 
     public ExternalNavigationHandlerTest() {
         mDelegate = new TestExternalNavigationDelegate();
@@ -1261,7 +1261,7 @@ public class ExternalNavigationHandlerTest {
                 .expecting(OverrideUrlLoadingResult.NO_OVERRIDE, IGNORE);
     }
 
-    private static ResolveInfo newResolveInfo(String packageName, String name) {
+    static ResolveInfo newResolveInfo(String packageName, String name) {
         ActivityInfo ai = new ActivityInfo();
         ai.packageName = packageName;
         ai.name = name;
@@ -1493,7 +1493,7 @@ public class ExternalNavigationHandlerTest {
         public boolean startIncognitoIntentCalled;
 
         // This should not be reset for every run of check().
-        private Boolean mQueryIntentOverride;
+        Boolean mQueryIntentOverride;
 
         private String mNewUrlAfterClobbering;
         private String mReferrerUrlForClobbering;
@@ -1509,7 +1509,7 @@ public class ExternalNavigationHandlerTest {
         public String defaultSmsPackageName;
     }
 
-    private void checkIntentSanity(Intent intent, String name) {
+    void checkIntentSanity(Intent intent, String name) {
         Assert.assertTrue("The invoked " + name + " doesn't have the BROWSABLE category set\n",
                 intent.hasCategory(Intent.CATEGORY_BROWSABLE));
         Assert.assertNull("The invoked " + name + " should not have a Component set\n",
@@ -1533,7 +1533,7 @@ public class ExternalNavigationHandlerTest {
         private boolean mHasUserGesture;
         private TabRedirectHandler mRedirectHandler;
 
-        private ExternalNavigationTestParams(String url) {
+        ExternalNavigationTestParams(String url) {
             mUrl = url;
         }
 

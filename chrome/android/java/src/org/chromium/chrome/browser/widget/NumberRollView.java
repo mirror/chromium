@@ -94,14 +94,14 @@ public class NumberRollView extends FrameLayout {
     /**
      * Gets the current number roll position.
      */
-    private float getNumberRoll() {
+    float getNumberRoll() {
         return mNumber;
     }
 
     /**
      * Sets the number roll position.
      */
-    private void setNumberRoll(float number) {
+    void setNumberRoll(float number) {
         mNumber = number;
         int downNumber = (int) number;
         int upNumber = downNumber + 1;

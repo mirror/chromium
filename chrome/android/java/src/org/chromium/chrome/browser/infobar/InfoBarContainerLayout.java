@@ -688,7 +688,7 @@ public class InfoBarContainerLayout extends FrameLayout {
      * The height of back infobars, i.e. the distance between the top of the front infobar and the
      * top of the next infobar back.
      */
-    private final int mBackInfobarHeight;
+    final int mBackInfobarHeight;
 
     /**
      * All the Items, in front to back order.
@@ -700,21 +700,21 @@ public class InfoBarContainerLayout extends FrameLayout {
     /**
      * The currently visible InfoBarWrappers, in front to back order.
      */
-    private final ArrayList<InfoBarWrapper> mInfoBarWrappers = new ArrayList<>();
+    final ArrayList<InfoBarWrapper> mInfoBarWrappers = new ArrayList<>();
 
     /** A list of observers that are notified when animations finish. */
-    private final ObserverList<InfoBarAnimationListener> mAnimationListeners = new ObserverList<>();
+    final ObserverList<InfoBarAnimationListener> mAnimationListeners = new ObserverList<>();
 
     /** The current animation, or null if no animation is happening currently. */
-    private InfoBarAnimation mAnimation;
+    InfoBarAnimation mAnimation;
 
-    private FloatingBehavior mFloatingBehavior;
+    FloatingBehavior mFloatingBehavior;
 
     /**
      * Determines whether any animations need to run in order to make the visible views match the
      * current list of Items in mItems. If so, kicks off the next animation that's needed.
      */
-    private void processPendingAnimations() {
+    void processPendingAnimations() {
         // If an animation is running, wait until it finishes before beginning the next animation.
         if (mAnimation != null) return;
 
@@ -809,25 +809,25 @@ public class InfoBarContainerLayout extends FrameLayout {
         }
     }
 
-    private void addWrapper(InfoBarWrapper wrapper) {
+    void addWrapper(InfoBarWrapper wrapper) {
         addView(wrapper, 0, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         mInfoBarWrappers.add(wrapper);
         updateLayoutParams();
     }
 
-    private void addWrapperToFront(InfoBarWrapper wrapper) {
+    void addWrapperToFront(InfoBarWrapper wrapper) {
         addView(wrapper, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         mInfoBarWrappers.add(0, wrapper);
         updateLayoutParams();
     }
 
-    private void removeWrapper(InfoBarWrapper wrapper) {
+    void removeWrapper(InfoBarWrapper wrapper) {
         removeView(wrapper);
         mInfoBarWrappers.remove(wrapper);
         updateLayoutParams();
     }
 
-    private void updateLayoutParams() {
+    void updateLayoutParams() {
         // Stagger the top margins so the back infobars peek out a bit.
         int childCount = mInfoBarWrappers.size();
         for (int i = 0; i < childCount; i++) {

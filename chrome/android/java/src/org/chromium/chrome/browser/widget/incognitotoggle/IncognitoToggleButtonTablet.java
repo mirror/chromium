@@ -23,7 +23,7 @@ import org.chromium.chrome.browser.tabmodel.TabModelSelectorObserver;
  * A {@link View} that allows a user to toggle between incognito and normal {@link TabModel}s.
  */
 public class IncognitoToggleButtonTablet extends ImageButton {
-    private TabModelSelector mTabModelSelector;
+    TabModelSelector mTabModelSelector;
     private TabModelSelectorObserver mTabModelSelectorObserver;
     private TabModelObserver mTabModelObserver;
 
@@ -95,7 +95,7 @@ public class IncognitoToggleButtonTablet extends ImageButton {
         }
     }
 
-    private void updateButtonResource() {
+    void updateButtonResource() {
         if (mTabModelSelector == null || mTabModelSelector.getCurrentModel() == null) return;
 
         setContentDescription(getContext().getString(mTabModelSelector.isIncognitoSelected()
@@ -105,7 +105,7 @@ public class IncognitoToggleButtonTablet extends ImageButton {
                 ? R.drawable.btn_tabstrip_switch_incognito : R.drawable.btn_tabstrip_switch_normal);
     }
 
-    private void updateButtonVisibility() {
+    void updateButtonVisibility() {
         if (mTabModelSelector == null || mTabModelSelector.getCurrentModel() == null) {
             setVisibility(View.GONE);
             return;

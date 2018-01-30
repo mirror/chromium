@@ -45,13 +45,13 @@ class DialogOverlayCore {
         void enforceClose();
     }
 
-    private Host mHost;
+    Host mHost;
 
     // When initialized via Init, we'll create mDialog.  We'll clear it when we send
     // onOverlayDestroyed to the host.  In general, when this is null, either we haven't been
     // initialized yet, or we've been torn down.  It shouldn't be the case that anything calls
     // methods after construction but before |initialize()|, though.
-    private Dialog mDialog;
+    Dialog mDialog;
 
     private Callbacks mDialogCallbacks;
 

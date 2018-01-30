@@ -53,11 +53,11 @@ class UrlManager {
     private static final int MAX_CACHE_SIZE = 100;
     private final ObserverList<Listener> mObservers;
     private final Set<String> mNearbyUrls;
-    private final Map<String, UrlInfo> mUrlInfoMap;
+    final Map<String, UrlInfo> mUrlInfoMap;
     private final Map<String, PwsResult> mPwsResultMap;
     private final PriorityQueue<String> mUrlsSortedByTimestamp;
     private PwsClient mPwsClient;
-    private long mNativePhysicalWebDataSourceAndroid;
+    long mNativePhysicalWebDataSourceAndroid;
 
     /**
      * Interface for observers that should be notified when the nearby URL list changes.
@@ -95,7 +95,7 @@ class UrlManager {
 
     // "Initialization on demand holder idiom"
     private static class LazyHolder {
-        private static final UrlManager INSTANCE = new UrlManager();
+        static final UrlManager INSTANCE = new UrlManager();
     }
 
 
@@ -318,7 +318,7 @@ class UrlManager {
      * Adds a URL that has been resolved by the PWS.
      * @param pwsResult The meta data associated with the resolved URL.
      */
-    private void addResolvedUrl(PwsResult pwsResult) {
+    void addResolvedUrl(PwsResult pwsResult) {
         Log.d(TAG, "PWS resolved: %s", pwsResult.requestUrl);
         if (mPwsResultMap.containsKey(pwsResult.requestUrl)) {
             return;
@@ -334,7 +334,7 @@ class UrlManager {
         registerNewDisplayableUrl(mUrlInfoMap.get(pwsResult.requestUrl));
     }
 
-    private void removeResolvedUrl(UrlInfo url) {
+    void removeResolvedUrl(UrlInfo url) {
         Log.d(TAG, "PWS unresolved: %s", url);
         mPwsResultMap.remove(url.getUrl());
         putCachedPwsResultMap();
@@ -533,7 +533,7 @@ class UrlManager {
      * Checks if we have initialized the native library and received a handle to the data source.
      * @return true if the data source handle is non-null.
      */
-    private boolean isNativeInitialized() {
+    boolean isNativeInitialized() {
         return mNativePhysicalWebDataSourceAndroid != 0;
     }
 
@@ -542,7 +542,7 @@ class UrlManager {
      * No message will be sent if the feature is in the Onboarding state.
      * @param url The Physical Web URL.
      */
-    private void safeNotifyNativeListenersOnFound(final String url) {
+    void safeNotifyNativeListenersOnFound(final String url) {
         if (!isNativeInitialized() || PhysicalWeb.isOnboarding()) {
             return;
         }
@@ -637,12 +637,12 @@ class UrlManager {
         return MAX_CACHE_SIZE;
     }
 
-    private native long nativeInit();
+    native long nativeInit();
     private native void nativeAppendMetadataItem(long nativePhysicalWebCollection,
             String requestUrl, double distanceEstimate, long firstSeenTimestamp, String siteUrl,
             String iconUrl, String title, String description, String groupId);
-    private native void nativeOnFound(long nativePhysicalWebDataSourceAndroid, String url);
-    private native void nativeOnLost(long nativePhysicalWebDataSourceAndroid, String url);
-    private native void nativeOnDistanceChanged(
+    native void nativeOnFound(long nativePhysicalWebDataSourceAndroid, String url);
+    native void nativeOnLost(long nativePhysicalWebDataSourceAndroid, String url);
+    native void nativeOnDistanceChanged(
             long nativePhysicalWebDataSourceAndroid, String url, double distanceChanged);
 }

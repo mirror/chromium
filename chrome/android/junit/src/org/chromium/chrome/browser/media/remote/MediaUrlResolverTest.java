@@ -145,15 +145,15 @@ public class MediaUrlResolverTest {
 
     }
 
-    private Map<String, String> mRequestProperties;
+    Map<String, String> mRequestProperties;
 
-    private Map<String, List<String>> mReturnedHeaders;
+    Map<String, List<String>> mReturnedHeaders;
 
-    private URL mReturnedUrl;
+    URL mReturnedUrl;
 
-    private int mReturnedResponseCode;
+    int mReturnedResponseCode;
 
-    private boolean mThrowIOException;
+    boolean mThrowIOException;
 
     @Before
     public void setup() {

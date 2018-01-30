@@ -43,11 +43,11 @@ public class BrowserActionsTabModelSelector
 
     private final TabCreatorManager mTabCreatorManager;
 
-    private final TabPersistentStore mTabSaver;
+    final TabPersistentStore mTabSaver;
 
     private final TabModelOrderController mOrderController;
 
-    private final List<LoadUrlParams> mPendingUrls = new ArrayList<>();
+    final List<LoadUrlParams> mPendingUrls = new ArrayList<>();
 
     private Runnable mTabCreationRunnable;
 
@@ -158,7 +158,7 @@ public class BrowserActionsTabModelSelector
         mPendingUrls.add(loadUrlParams);
     }
 
-    private void createNewTab(LoadUrlParams params, Callback<Integer> tabCreatedCallback) {
+    void createNewTab(LoadUrlParams params, Callback<Integer> tabCreatedCallback) {
         Tab tab = openNewTab(params, TabLaunchType.FROM_BROWSER_ACTIONS, null, false);
         tabCreatedCallback.onResult(tab.getId());
     }

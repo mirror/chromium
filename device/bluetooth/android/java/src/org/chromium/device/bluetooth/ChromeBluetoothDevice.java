@@ -27,7 +27,7 @@ import java.util.HashMap;
 final class ChromeBluetoothDevice {
     private static final String TAG = "Bluetooth";
 
-    private long mNativeBluetoothDeviceAndroid;
+    long mNativeBluetoothDeviceAndroid;
     final Wrappers.BluetoothDeviceWrapper mDevice;
     Wrappers.BluetoothGattWrapper mBluetoothGatt;
     private final BluetoothGattCallbackImpl mBluetoothGattCallbackImpl;
@@ -82,7 +82,7 @@ final class ChromeBluetoothDevice {
 
     // Implements BluetoothDeviceAndroid::GetAddress.
     @CalledByNative
-    private String getAddress() {
+    String getAddress() {
         return mDevice.getAddress();
     }
 
@@ -309,14 +309,14 @@ final class ChromeBluetoothDevice {
     // BluetoothAdapterDevice C++ methods declared for access from java:
 
     // Binds to BluetoothDeviceAndroid::OnConnectionStateChange.
-    private native void nativeOnConnectionStateChange(
+    native void nativeOnConnectionStateChange(
             long nativeBluetoothDeviceAndroid, int status, boolean connected);
 
     // Binds to BluetoothDeviceAndroid::CreateGattRemoteService.
     // TODO(http://crbug.com/505554): Replace 'Object' with specific type when JNI fixed.
-    private native void nativeCreateGattRemoteService(long nativeBluetoothDeviceAndroid,
+    native void nativeCreateGattRemoteService(long nativeBluetoothDeviceAndroid,
             String instanceId, Object bluetoothGattServiceWrapper);
 
     // Binds to BluetoothDeviceAndroid::GattServicesDiscovered.
-    private native void nativeOnGattServicesDiscovered(long nativeBluetoothDeviceAndroid);
+    native void nativeOnGattServicesDiscovered(long nativeBluetoothDeviceAndroid);
 }

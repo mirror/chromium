@@ -33,7 +33,7 @@ public class OriginVerifierTest {
     private static final String SHA_256_FINGERPRINT =
             "32:A2:FC:74:D7:31:10:58:59:E5:A8:5D:F1:6D:95:F1:02:D8:5B"
             + ":22:09:9B:80:64:C5:D8:91:5C:61:DA:D1:E0";
-    private static final Uri TEST_HTTPS_ORIGIN_1 = Uri.parse("https://www.example.com");
+    static final Uri TEST_HTTPS_ORIGIN_1 = Uri.parse("https://www.example.com");
     private static final Uri TEST_HTTPS_ORIGIN_2 = Uri.parse("https://www.android.com");
     private static final Uri TEST_HTTP_ORIGIN = Uri.parse("http://www.android.com");
 
@@ -47,12 +47,12 @@ public class OriginVerifierTest {
         }
     }
 
-    private Semaphore mVerificationResultSemaphore;
+    Semaphore mVerificationResultSemaphore;
     private OriginVerifier mUseAsOriginVerifier;
     private OriginVerifier mHandleAllUrlsVerifier;
-    private volatile String mLastPackageName;
-    private volatile Uri mLastOrigin;
-    private volatile boolean mLastVerified;
+    volatile String mLastPackageName;
+    volatile Uri mLastOrigin;
+    volatile boolean mLastVerified;
 
     @Before
     public void setUp() throws Exception {

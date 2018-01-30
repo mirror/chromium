@@ -39,14 +39,14 @@ public class NotificationTestRule extends ChromeActivityTestRule<ChromeTabbedAct
     /** The polling interval to wait between checking for a satisfied criteria. */
     private static final long POLLING_INTERVAL_MS = 50;
 
-    private MockNotificationManagerProxy mMockNotificationManager;
+    MockNotificationManagerProxy mMockNotificationManager;
     private EmbeddedTestServer mTestServer;
 
     public NotificationTestRule() {
         super(ChromeTabbedActivity.class);
     }
 
-    private void setUp() throws Exception {
+    void setUp() throws Exception {
         // The NotificationPlatformBridge must be overriden prior to the browser process starting.
         mMockNotificationManager = new MockNotificationManagerProxy();
         NotificationPlatformBridge.overrideNotificationManagerForTesting(mMockNotificationManager);
@@ -55,7 +55,7 @@ public class NotificationTestRule extends ChromeActivityTestRule<ChromeTabbedAct
                 InstrumentationRegistry.getInstrumentation().getContext());
     }
 
-    private void tearDown() throws Exception {
+    void tearDown() throws Exception {
         NotificationPlatformBridge.overrideNotificationManagerForTesting(null);
         mTestServer.stopAndDestroyServer();
     }

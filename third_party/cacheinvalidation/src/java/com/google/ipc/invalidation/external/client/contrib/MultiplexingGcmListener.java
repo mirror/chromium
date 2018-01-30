@@ -246,7 +246,7 @@ public class MultiplexingGcmListener extends GCMBaseIntentService {
      * Returns the name of the wakelock to acquire for the intent service implemented by
      * {@code clazz}.
      */
-    private static String getWakelockKey(Class<?> clazz) {
+    static String getWakelockKey(Class<?> clazz) {
       return WAKELOCK_PREFIX + clazz.getName();
     }
   }
@@ -258,7 +258,7 @@ public class MultiplexingGcmListener extends GCMBaseIntentService {
   private static final String GCM_SENDER_IDS_METADATA_KEY = "sender_ids";
 
   /** Logger. */
-  private static final Logger logger = AndroidLogger.forTag("MplexGcmListener");
+  static final Logger logger = AndroidLogger.forTag("MplexGcmListener");
 
   // All onYYY methods work by constructing an appropriate Intent and broadcasting it.
 

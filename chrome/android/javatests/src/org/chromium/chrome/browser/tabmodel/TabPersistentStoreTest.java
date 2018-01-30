@@ -56,7 +56,7 @@ public class TabPersistentStoreTest {
     @Rule
     public final ChromeBrowserTestRule mBrowserTestRule = new ChromeBrowserTestRule();
 
-    private ChromeActivity mChromeActivity;
+    ChromeActivity mChromeActivity;
 
     private static final int SELECTOR_INDEX = 0;
 
@@ -158,8 +158,8 @@ public class TabPersistentStoreTest {
             implements TabModelDelegate {
         final TabPersistentStore mTabPersistentStore;
         final MockTabPersistentStoreObserver mTabPersistentStoreObserver;
-        private final MockTabCreatorManager mTabCreatorManager;
-        private final TabModelOrderController mTabModelOrderController;
+        final MockTabCreatorManager mTabCreatorManager;
+        final TabModelOrderController mTabModelOrderController;
 
         public TestTabModelSelector() throws Exception {
             mTabCreatorManager = new MockTabCreatorManager(this);
@@ -265,7 +265,7 @@ public class TabPersistentStoreTest {
         }
     }
 
-    private final TabWindowManager.TabModelSelectorFactory mMockTabModelSelectorFactory =
+    final TabWindowManager.TabModelSelectorFactory mMockTabModelSelectorFactory =
             new TabWindowManager.TabModelSelectorFactory() {
                 @Override
                 public TabModelSelector buildSelector(Activity activity,
@@ -281,7 +281,7 @@ public class TabPersistentStoreTest {
     /** Class for mocking out the directory containing all of the TabState files. */
     private TestTabModelDirectory mMockDirectory;
     private AdvancedMockContext mAppContext;
-    private SharedPreferences mPreferences;
+    SharedPreferences mPreferences;
 
     @Before
     public void setUp() throws Exception {
@@ -768,7 +768,7 @@ public class TabPersistentStoreTest {
      * all of a {@link TabModel}'s tabs on tablets, which is different from how the
      * {@link OverviewListLayout} would do it on phones.
      */
-    private void closeAllTabsThenUndo(TabModelSelector selector, TabModelMetaDataInfo info) {
+    void closeAllTabsThenUndo(TabModelSelector selector, TabModelMetaDataInfo info) {
         // Close all the tabs, using an Observer to determine what is actually being closed.
         TabModel regularModel = selector.getModel(false);
         final List<Integer> closedTabIds = new ArrayList<>();

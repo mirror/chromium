@@ -640,17 +640,17 @@ public class NetworkChangeNotifierAutoDetect extends BroadcastReceiver {
     // {@link IntentFilter} for incoming global broadcast {@link Intent}s this object listens for.
     private final NetworkConnectivityIntentFilter mIntentFilter;
     // Notifications are sent to this {@link Observer}.
-    private final Observer mObserver;
+    final Observer mObserver;
     private final RegistrationPolicy mRegistrationPolicy;
 
     // mConnectivityManagerDelegates and mWifiManagerDelegate are only non-final for testing.
-    private ConnectivityManagerDelegate mConnectivityManagerDelegate;
+    ConnectivityManagerDelegate mConnectivityManagerDelegate;
     private WifiManagerDelegate mWifiManagerDelegate;
     // mNetworkCallback and mNetworkRequest are only non-null in Android L and above.
     // mNetworkCallback will be null if ConnectivityManager.registerNetworkCallback() ever fails.
     private MyNetworkCallback mNetworkCallback;
     private NetworkRequest mNetworkRequest;
-    private boolean mRegistered;
+    boolean mRegistered;
     private NetworkState mNetworkState;
     // When a BroadcastReceiver is registered for a sticky broadcast that has been sent out at
     // least once, onReceive() will immediately be called. mIgnoreNextBroadcast is set to true
@@ -660,7 +660,7 @@ public class NetworkChangeNotifierAutoDetect extends BroadcastReceiver {
     // state so were this initial onReceive() call not ignored, no signals would be passed to
     // observers anyhow as the state hasn't changed. This is simply an optimization to avoid
     // useless work.
-    private boolean mIgnoreNextBroadcast;
+    boolean mIgnoreNextBroadcast;
     // mSignal is set to false when it's not worth calculating if signals to Observers should
     // be sent out because this class is being constructed and the internal state has just
     // been updated to the current device state, so no signals are necessary. This is simply an
@@ -760,7 +760,7 @@ public class NetworkChangeNotifierAutoDetect extends BroadcastReceiver {
         }
     }
 
-    private void runOnThread(Runnable r) {
+    void runOnThread(Runnable r) {
         if (onThread()) {
             r.run();
         } else {
@@ -874,7 +874,7 @@ public class NetworkChangeNotifierAutoDetect extends BroadcastReceiver {
      * @param ignoreNetwork ignore this network as if it is not connected.
      */
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private static Network[] getAllNetworksFiltered(
+    static Network[] getAllNetworksFiltered(
             ConnectivityManagerDelegate connectivityManagerDelegate, Network ignoreNetwork) {
         Network[] networks = connectivityManagerDelegate.getAllNetworksUnfiltered();
         // Whittle down |networks| into just the list of networks useful to us.
@@ -951,7 +951,7 @@ public class NetworkChangeNotifierAutoDetect extends BroadcastReceiver {
      * Returns the connection type for the given ConnectivityManager type and subtype.
      */
     @ConnectionType
-    private static int convertToConnectionType(int type, int subtype) {
+    static int convertToConnectionType(int type, int subtype) {
         switch (type) {
             case ConnectivityManager.TYPE_ETHERNET:
                 return ConnectionType.CONNECTION_ETHERNET;
@@ -1010,7 +1010,7 @@ public class NetworkChangeNotifierAutoDetect extends BroadcastReceiver {
         });
     }
 
-    private void connectionTypeChanged() {
+    void connectionTypeChanged() {
         NetworkState networkState = getCurrentNetworkState();
         if (networkState.getConnectionType() != mNetworkState.getConnectionType()
                 || !networkState.getWifiSsid().equals(mNetworkState.getWifiSsid())) {

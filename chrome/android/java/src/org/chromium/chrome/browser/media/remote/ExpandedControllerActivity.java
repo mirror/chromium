@@ -39,12 +39,12 @@ public class ExpandedControllerActivity
     // The alpha value for the poster/placeholder image, an integer between 0 and 256 (opaque).
     private static final int POSTER_IMAGE_ALPHA = 200;
 
-    private Handler mHandler;
+    Handler mHandler;
     // We don't use the standard android.media.MediaController, but a custom one.
     // See the class itself for details.
-    private MediaController mMediaController;
+    MediaController mMediaController;
     private FullscreenMediaRouteButton mMediaRouteButton;
-    private MediaRouteController mMediaRouteController;
+    MediaRouteController mMediaRouteController;
     private RemoteVideoInfo mVideoInfo;
     private String mScreenName;
 

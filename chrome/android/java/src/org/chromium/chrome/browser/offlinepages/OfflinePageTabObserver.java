@@ -57,10 +57,10 @@ public class OfflinePageTabObserver
         }
     }
 
-    private static Map<Activity, OfflinePageTabObserver> sObservers;
+    static Map<Activity, OfflinePageTabObserver> sObservers;
 
-    private final SnackbarManager mSnackbarManager;
-    private final SnackbarController mSnackbarController;
+    final SnackbarManager mSnackbarManager;
+    final SnackbarController mSnackbarController;
     private final TabModelSelector mTabModelSelector;
     private final TabModelSelectorTabModelObserver mTabModelObserver;
     /** Map of observed tabs. */
@@ -220,7 +220,7 @@ public class OfflinePageTabObserver
         }
     }
 
-    private void destroy() {
+    void destroy() {
         mTabModelObserver.destroy();
         if (!mObservedTabs.isEmpty()) {
             for (Integer tabId : mObservedTabs.keySet()) {

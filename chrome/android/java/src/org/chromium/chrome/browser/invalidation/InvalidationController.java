@@ -46,12 +46,12 @@ public class InvalidationController implements ApplicationStatus.ApplicationStat
         /**
          * Runnable which is added to the handler's message queue.
          */
-        private Runnable mHandlerRunnable;
+        Runnable mHandlerRunnable;
 
         /**
          * User provided task.
          */
-        private Runnable mRunnable;
+        Runnable mRunnable;
 
         /**
          * Time at which the task is scheduled.
@@ -133,7 +133,7 @@ public class InvalidationController implements ApplicationStatus.ApplicationStat
     @SuppressLint("StaticFieldLeak")
     private static InvalidationController sInstance;
 
-    private final Context mContext;
+    final Context mContext;
 
     /**
      * Whether session sync invalidations can be disabled.
@@ -153,7 +153,7 @@ public class InvalidationController implements ApplicationStatus.ApplicationStat
     /**
      *  Whether session sync invalidations are enabled.
      */
-    private boolean mSessionInvalidationsEnabled;
+    boolean mSessionInvalidationsEnabled;
 
     /**
      * The number of open RecentTabsPages

@@ -115,7 +115,7 @@ public class ContentShellActivity extends Activity {
         }
     }
 
-    private void finishInitialization(Bundle savedInstanceState) {
+    void finishInitialization(Bundle savedInstanceState) {
         String shellUrl;
         if (!TextUtils.isEmpty(mStartupUrl)) {
             shellUrl = mStartupUrl;
@@ -130,7 +130,7 @@ public class ContentShellActivity extends Activity {
         mShellManager.launchShell(shellUrl);
     }
 
-    private void initializationFailed() {
+    void initializationFailed() {
         Log.e(TAG, "ContentView initialization failed.");
         Toast.makeText(ContentShellActivity.this,
                 R.string.browser_process_initialization_failed,

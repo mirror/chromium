@@ -51,7 +51,7 @@ public class TabTitleObserver extends EmptyTabObserver {
         mCallback.waitForCallback(0, 1, seconds, TimeUnit.SECONDS);
     }
 
-    private boolean notifyCallbackIfTitleMatches(Tab tab) {
+    boolean notifyCallbackIfTitleMatches(Tab tab) {
         if (doesTitleMatch(mExpectedTitle, tab.getTitle())) {
             mCallback.notifyCalled();
             return true;

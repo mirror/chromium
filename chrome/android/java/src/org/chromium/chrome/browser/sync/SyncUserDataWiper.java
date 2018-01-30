@@ -15,7 +15,7 @@ import org.chromium.chrome.browser.preferences.privacy.BrowsingDataBridge.OnClea
  * A class to wipe the user's bookmarks and all types of sync data.
  */
 public class SyncUserDataWiper {
-    private static final int[] SYNC_DATA_TYPES = {
+    static final int[] SYNC_DATA_TYPES = {
             BrowsingDataType.HISTORY,
             BrowsingDataType.CACHE,
             BrowsingDataType.COOKIES,

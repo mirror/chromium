@@ -47,7 +47,7 @@ public class BrowsingDataRemoverIntegrationTest {
     public ChromeActivityTestRule<ChromeActivity> mActivityTestRule =
             new ChromeActivityTestRule<>(ChromeActivity.class);
 
-    private boolean mCallbackCalled;
+    boolean mCallbackCalled;
 
     private class CallbackCriteria extends Criteria {
         public CallbackCriteria() {

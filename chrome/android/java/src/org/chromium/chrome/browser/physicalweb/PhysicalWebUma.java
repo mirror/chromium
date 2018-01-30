@@ -220,7 +220,7 @@ public class PhysicalWebUma {
         }
     }
 
-    private static String createStateString(String stateName, String actionName) {
+    static String createStateString(String stateName, String actionName) {
         return PHYSICAL_WEB_STATE + "." + stateName + "." + actionName;
     }
 

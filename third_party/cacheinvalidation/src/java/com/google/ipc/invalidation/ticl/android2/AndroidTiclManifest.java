@@ -139,11 +139,11 @@ public class AndroidTiclManifest {
         DEFAULTS.put(GCM_UPSTREAM_SERVICE_NAME_KEY, null);
     }
 
-    private final String ticlServiceClass;
-    private final String listenerClass;
-    private final String listenerServiceClass;
-    private final String backgroundInvalidationListenerServiceClass;
-    private final String gcmUpstreamServiceClass;
+    final String ticlServiceClass;
+    final String listenerClass;
+    final String listenerServiceClass;
+    final String backgroundInvalidationListenerServiceClass;
+    final String gcmUpstreamServiceClass;
 
     ApplicationMetadata(Context context) {
       ApplicationInfo appInfo;

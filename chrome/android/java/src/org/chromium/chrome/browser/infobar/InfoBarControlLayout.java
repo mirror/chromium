@@ -139,7 +139,7 @@ public final class InfoBarControlLayout extends ViewGroup {
         public int start;
         public int top;
         public int columnsRequired;
-        private boolean mMustBeFullWidth;
+        boolean mMustBeFullWidth;
 
         /**
          * Stores values required for laying out this ViewGroup's children.
@@ -147,7 +147,7 @@ public final class InfoBarControlLayout extends ViewGroup {
          * This is set up as a private method to mitigate attempts at adding controls to the layout
          * that aren't provided by the InfoBarControlLayout.
          */
-        private ControlLayoutParams() {
+        ControlLayoutParams() {
             super(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         }
     }

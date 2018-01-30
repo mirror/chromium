@@ -88,7 +88,7 @@ public class HttpNegotiateAuthenticatorTest {
     }
 
     @Mock
-    private static AccountManager sMockAccountManager;
+    static AccountManager sMockAccountManager;
     @Captor
     private ArgumentCaptor<AccountManagerCallback<Bundle>> mBundleCallbackCaptor;
     @Captor

@@ -293,7 +293,7 @@ public class SupervisedUserContentProvider extends WebRestrictionsContentProvide
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
-    private void updateEnabledState() {
+    void updateEnabledState() {
         // This method uses AppRestrictions directly, rather than using the Policy interface,
         // because it must be callable in contexts in which the native library hasn't been
         // loaded. It will always be called from a background thread (except possibly in tests)
@@ -348,6 +348,6 @@ public class SupervisedUserContentProvider extends WebRestrictionsContentProvide
     native void nativeRequestInsert(long nativeSupervisedUserContentProvider,
             SupervisedUserInsertReply insertReply, String url);
 
-    private native void nativeSetFilterForTesting(long nativeSupervisedUserContentProvider);
+    native void nativeSetFilterForTesting(long nativeSupervisedUserContentProvider);
 
 }

@@ -19,10 +19,10 @@ import org.chromium.content.browser.test.util.CriteriaHelper;
  * Utilities for interacting with a {@link DefaultSearchEngineDialogHelper}.
  */
 public class DefaultSearchEngineDialogHelperUtils {
-    private static final int OPTION_LAYOUT_ID = R.id.default_search_engine_dialog_options;
-    private static final int OK_BUTTON_ID = R.id.button_primary;
+    static final int OPTION_LAYOUT_ID = R.id.default_search_engine_dialog_options;
+    static final int OK_BUTTON_ID = R.id.button_primary;
 
-    private static String sSelectedEngine;
+    static String sSelectedEngine;
 
     /** Clicks on the first search engine option available. */
     public static void clickOnFirstEngine(final View rootView) {

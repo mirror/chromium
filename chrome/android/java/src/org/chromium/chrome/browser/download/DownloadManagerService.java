@@ -122,12 +122,12 @@ public class DownloadManagerService
     private final HashMap<String, DownloadProgress> mDownloadProgressMap =
             new HashMap<String, DownloadProgress>(4, 0.75f);
 
-    private final DownloadNotifier mDownloadNotifier;
+    final DownloadNotifier mDownloadNotifier;
     // Delay between UI updates.
     private final long mUpdateDelayInMillis;
 
     private final Handler mHandler;
-    private final Context mContext;
+    final Context mContext;
 
     @VisibleForTesting protected final List<String> mAutoResumableDownloadIds =
             new ArrayList<String>();
@@ -137,7 +137,7 @@ public class DownloadManagerService
     private OMADownloadHandler mOMADownloadHandler;
     private DownloadSnackbarController mDownloadSnackbarController;
     private long mNativeDownloadManagerService;
-    private DownloadManagerDelegate mDownloadManagerDelegate;
+    DownloadManagerDelegate mDownloadManagerDelegate;
     private NetworkChangeNotifierAutoDetect mNetworkChangeNotifier;
     // Flag to track if we need to post a task to update download notifications.
     private boolean mIsUIUpdateScheduled;

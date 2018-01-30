@@ -69,8 +69,8 @@ public class NavigationPopupTest {
     }
 
     private static class TestNavigationController implements NavigationController {
-        private final TestNavigationHistory mHistory;
-        private int mNavigatedIndex = INVALID_NAVIGATION_INDEX;
+        final TestNavigationHistory mHistory;
+        int mNavigatedIndex = INVALID_NAVIGATION_INDEX;
 
         public TestNavigationController() {
             mHistory = new TestNavigationHistory();

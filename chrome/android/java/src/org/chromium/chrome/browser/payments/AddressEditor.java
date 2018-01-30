@@ -47,15 +47,15 @@ public class AddressEditor
     private EditorFieldModel mPhoneField;
     @Nullable
     private EditorFieldModel mEmailField;
-    private PhoneNumberUtil.CountryAwareFormatTextWatcher mPhoneFormatter;
-    private CountryAwarePhoneNumberValidator mPhoneValidator;
+    PhoneNumberUtil.CountryAwareFormatTextWatcher mPhoneFormatter;
+    CountryAwarePhoneNumberValidator mPhoneValidator;
     @Nullable
     private List<AddressUiComponent> mAddressUiComponents;
     private boolean mAdminAreasLoaded;
-    private String mRecentlySelectedCountry;
-    private Runnable mCountryChangeCallback;
+    String mRecentlySelectedCountry;
+    Runnable mCountryChangeCallback;
     private AutofillProfile mProfile;
-    private EditorModel mEditor;
+    EditorModel mEditor;
     private ProgressDialog mProgressDialog;
     private boolean mEmailFieldIncluded;
 
@@ -233,7 +233,7 @@ public class AddressEditor
         loadAdminAreasForCountry(mCountryField.getValue().toString());
     }
 
-    private void showProgressDialog() {
+    void showProgressDialog() {
         mProgressDialog = new ProgressDialog(mContext);
         mProgressDialog.setMessage(mContext.getText(R.string.payments_loading_message));
         mProgressDialog.show();
@@ -387,7 +387,7 @@ public class AddressEditor
     }
 
     /** Requests the list of admin areas. */
-    private void loadAdminAreasForCountry(String countryCode) {
+    void loadAdminAreasForCountry(String countryCode) {
         // Used to check if the callback is called (for the cancellation).
         mAdminAreasLoaded = false;
         mEditorDialog.setAsNotDismissed();

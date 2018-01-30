@@ -94,7 +94,7 @@ public class PassphraseTypeDialogFragment extends DialogFragment implements
          * Do not call this constructor directly. Instead use
          * {@link PassphraseTypeDialogFragment#createAdapter}.
          */
-        private Adapter(List<PassphraseType> passphraseTypes, String[] displayStrings) {
+        Adapter(List<PassphraseType> passphraseTypes, String[] displayStrings) {
             super(getActivity(), R.layout.passphrase_type_item, displayStrings);
             mPassphraseTypes = passphraseTypes;
         }
@@ -241,7 +241,7 @@ public class PassphraseTypeDialogFragment extends DialogFragment implements
         return df.format(new Date(passphraseTime));
     }
 
-    private boolean getIsEncryptEverythingAllowedFromArguments() {
+    boolean getIsEncryptEverythingAllowedFromArguments() {
         return getArguments().getBoolean(ARG_IS_ENCRYPT_EVERYTHING_ALLOWED);
     }
 }

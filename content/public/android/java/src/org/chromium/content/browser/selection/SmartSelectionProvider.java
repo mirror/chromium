@@ -37,7 +37,7 @@ public class SmartSelectionProvider {
     private static final int CLASSIFY = 0;
     private static final int SUGGEST_AND_CLASSIFY = 1;
 
-    private SelectionClient.ResultCallback mResultCallback;
+    SelectionClient.ResultCallback mResultCallback;
     private WindowAndroid mWindowAndroid;
     private ClassificationTask mClassificationTask;
     private TextClassifier mTextClassifier;

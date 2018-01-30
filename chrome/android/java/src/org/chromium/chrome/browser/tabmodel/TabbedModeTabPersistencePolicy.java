@@ -78,12 +78,12 @@ public class TabbedModeTabPersistencePolicy implements TabPersistencePolicy {
     private static File sStateDirectory;
 
     private final SharedPreferences mPreferences;
-    private final int mSelectorIndex;
+    final int mSelectorIndex;
     private final int mOtherSelectorIndex;
     private final boolean mMergeTabs;
 
-    private TabContentManager mTabContentManager;
-    private boolean mDestroyed;
+    TabContentManager mTabContentManager;
+    boolean mDestroyed;
 
     /**
      * Constructs a persistence policy that handles the Tabbed mode specific logic.
@@ -199,7 +199,7 @@ public class TabbedModeTabPersistencePolicy implements TabPersistencePolicy {
      * directory.
      */
     @WorkerThread
-    private void performLegacyMigration() {
+    void performLegacyMigration() {
         Log.w(TAG, "Starting to perform legacy migration.");
         File newFolder = getOrCreateStateDirectory();
         File[] newFiles = newFolder.listFiles();
@@ -233,7 +233,7 @@ public class TabbedModeTabPersistencePolicy implements TabPersistencePolicy {
      * were each kept in separate subdirectories.
      */
     @WorkerThread
-    private void performMultiInstanceMigration() {
+    void performMultiInstanceMigration() {
         Log.w(TAG, "Starting to perform multi-instance migration.");
         // 0. Do not rename the old metadata file if the new metadata file already exists. This
         //    should not happen, but if it does and the metadata file is overwritten then users

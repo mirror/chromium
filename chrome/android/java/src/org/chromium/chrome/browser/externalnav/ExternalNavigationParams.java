@@ -58,7 +58,7 @@ public class ExternalNavigationParams {
      */
     private final boolean mShouldCloseContentsOnOverrideUrlLoadingAndLaunchIntent;
 
-    private ExternalNavigationParams(String url, boolean isIncognito, String referrerUrl,
+    ExternalNavigationParams(String url, boolean isIncognito, String referrerUrl,
             int pageTransition, boolean isRedirect, boolean appMustBeInForeground,
             TabRedirectHandler redirectHandler, Tab tab, boolean openInNewTab,
             boolean isBackgroundTabNavigation, boolean isMainFrame, String nativeClientPackageName,

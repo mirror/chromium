@@ -112,13 +112,13 @@ public class OMADownloadHandler extends BroadcastReceiver
             "953 Non-Acceptable Content \n\r";
     private static final String DOWNLOAD_STATUS_LOADER_ERROR = "954 Loader Error \n\r";
 
-    private final Context mContext;
+    final Context mContext;
     private final SharedPreferences mSharedPrefs;
     private final LongSparseArray<DownloadItem> mSystemDownloadIdMap =
             new LongSparseArray<DownloadItem>();
     private final LongSparseArray<OMAInfo> mPendingOMADownloads =
             new LongSparseArray<OMAInfo>();
-    private final DownloadSnackbarController mDownloadSnackbarController;
+    final DownloadSnackbarController mDownloadSnackbarController;
     private final DownloadManagerDelegate mDownloadManagerDelegate;
 
     /**
@@ -367,7 +367,7 @@ public class OMADownloadHandler extends BroadcastReceiver
      * @param downloadId Download Id from the Android DownloadManager.
      * @param notifyURI The previously saved installNotifyURI attribute.
      */
-    private void onDownloadCompleted(DownloadInfo downloadInfo, long downloadId, String notifyURI) {
+    void onDownloadCompleted(DownloadInfo downloadInfo, long downloadId, String notifyURI) {
         OMAInfo omaInfo = mPendingOMADownloads.get(downloadId);
         if (omaInfo == null) {
             omaInfo = new OMAInfo();
@@ -386,7 +386,7 @@ public class OMADownloadHandler extends BroadcastReceiver
      * @param reason The reason of failure.
      * @param notifyURI The previously saved installNotifyURI attribute.
      */
-    private void onDownloadFailed(
+    void onDownloadFailed(
             DownloadInfo downloadInfo, long downloadId, int reason, String notifyURI) {
         String status = DOWNLOAD_STATUS_DEVICE_ABORTED;
         switch (reason) {
@@ -460,7 +460,7 @@ public class OMADownloadHandler extends BroadcastReceiver
      * @param downloadInfo Information about the download.
      * @param omaInfo Information about the OMA content.
      */
-    private void showOMAInfoDialog(
+    void showOMAInfoDialog(
             final long downloadId, final DownloadInfo downloadInfo, final OMAInfo omaInfo) {
         LayoutInflater inflater =
                 (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -506,7 +506,7 @@ public class OMADownloadHandler extends BroadcastReceiver
      * @param downloadInfo Information about the download.
      * @param statusMessage Message to be sent to the notification server.
      */
-    private void showDownloadWarningDialog(
+    void showDownloadWarningDialog(
             int titleId, final OMAInfo omaInfo, final DownloadInfo downloadInfo,
             final String statusMessage) {
         DialogInterface.OnClickListener clickListener = (dialog, which) -> {
@@ -528,7 +528,7 @@ public class OMADownloadHandler extends BroadcastReceiver
      *
      * @param omaInfo Information about the OMA content.
      */
-    private void showNextUrlDialog(OMAInfo omaInfo) {
+    void showNextUrlDialog(OMAInfo omaInfo) {
         if (omaInfo.isValueEmpty(OMA_NEXT_URL)) {
             return;
         }
@@ -1002,7 +1002,7 @@ public class OMADownloadHandler extends BroadcastReceiver
      * Remove OMA download info from SharedPrefs.
      * @param downloadId ID to be removed.
      */
-    private void removeOMADownloadFromSharedPrefs(long downloadId) {
+    void removeOMADownloadFromSharedPrefs(long downloadId) {
         Set<String> omaDownloads = getStoredDownloadInfo(mSharedPrefs, PENDING_OMA_DOWNLOADS);
         for (String omaDownload : omaDownloads) {
             OMAEntry entry = OMAEntry.parseOMAEntry(omaDownload);

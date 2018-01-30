@@ -349,7 +349,7 @@ public class NfcImpl implements Nfc {
     /**
      * Helper method that creates NfcError object from NfcErrorType.
      */
-    private NfcError createError(int errorType) {
+    NfcError createError(int errorType) {
         NfcError error = new NfcError();
         error.errorType = errorType;
         return error;
@@ -477,7 +477,7 @@ public class NfcImpl implements Nfc {
     /**
      * Completes pending push operation and disables reader mode if needed.
      */
-    private void completePendingPushOperation(NfcError error) {
+    void completePendingPushOperation(NfcError error) {
         if (mPendingPushOperation == null) return;
 
         cancelPushTimeoutTask();

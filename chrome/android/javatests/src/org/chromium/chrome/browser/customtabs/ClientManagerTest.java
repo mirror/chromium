@@ -40,7 +40,7 @@ public class ClientManagerTest {
     private static final String HTTP_URL = "http://www.android.com";
 
     private ClientManager mClientManager;
-    private CustomTabsSessionToken mSession =
+    CustomTabsSessionToken mSession =
             CustomTabsSessionToken.createMockSessionTokenForTesting();
     private int mUid = Process.myUid();
 

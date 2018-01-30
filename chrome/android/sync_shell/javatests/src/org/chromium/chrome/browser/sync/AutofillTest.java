@@ -175,7 +175,7 @@ public class AutofillTest {
         return specifics;
     }
 
-    private List<Autofill> getClientAutofillProfiles() throws JSONException {
+    List<Autofill> getClientAutofillProfiles() throws JSONException {
         List<Pair<String, JSONObject>> entities =
                 SyncTestUtil.getLocalData(mSyncTestRule.getTargetContext(), AUTOFILL_TYPE);
         List<Autofill> autofills = new ArrayList<Autofill>(entities.size());

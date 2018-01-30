@@ -29,7 +29,7 @@ public class BottomSheetNewTabController extends EmptyBottomSheetObserver {
         void onNewTabHidden();
     }
 
-    private final BottomSheet mBottomSheet;
+    final BottomSheet mBottomSheet;
     private final BottomToolbarPhone mToolbar;
     private final ChromeActivity mActivity;
     private final List<Observer> mObservers = new ArrayList<>();
@@ -38,7 +38,7 @@ public class BottomSheetNewTabController extends EmptyBottomSheetObserver {
     private OverviewModeObserver mOverviewModeObserver;
     private TabModelSelector mTabModelSelector;
 
-    private boolean mIsShowingNewTabUi;
+    boolean mIsShowingNewTabUi;
     private boolean mIsShowingNormalToolbar;
     private boolean mHideOverviewOnClose;
     private boolean mSelectIncognitoModelOnClose;

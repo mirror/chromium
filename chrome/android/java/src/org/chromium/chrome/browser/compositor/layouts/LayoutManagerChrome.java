@@ -448,7 +448,7 @@ public class LayoutManagerChrome
         if (getActiveLayout() != null) getActiveLayout().onTabClosed(time(), id, nextId, incognito);
     }
 
-    private void tabClosed(int tabId, boolean incognito, boolean tabRemoved) {
+    void tabClosed(int tabId, boolean incognito, boolean tabRemoved) {
         Tab currentTab =
                 getTabModelSelector() != null ? getTabModelSelector().getCurrentTab() : null;
         int nextTabId = currentTab != null ? currentTab.getId() : Tab.INVALID_TAB_ID;
@@ -483,29 +483,29 @@ public class LayoutManagerChrome
         if (getActiveLayout() != null) getActiveLayout().onTabModelSwitched(incognito);
     }
 
-    private void tabMoved(int id, int oldIndex, int newIndex, boolean incognito) {
+    void tabMoved(int id, int oldIndex, int newIndex, boolean incognito) {
         if (getActiveLayout() != null) {
             getActiveLayout().onTabMoved(time(), id, oldIndex, newIndex, incognito);
         }
     }
 
-    private void tabPageLoadStarted(int id, boolean incognito) {
+    void tabPageLoadStarted(int id, boolean incognito) {
         if (getActiveLayout() != null) getActiveLayout().onTabPageLoadStarted(id, incognito);
     }
 
-    private void tabPageLoadFinished(int id, boolean incognito) {
+    void tabPageLoadFinished(int id, boolean incognito) {
         if (getActiveLayout() != null) getActiveLayout().onTabPageLoadFinished(id, incognito);
     }
 
-    private void tabLoadStarted(int id, boolean incognito) {
+    void tabLoadStarted(int id, boolean incognito) {
         if (getActiveLayout() != null) getActiveLayout().onTabLoadStarted(id, incognito);
     }
 
-    private void tabLoadFinished(int id, boolean incognito) {
+    void tabLoadFinished(int id, boolean incognito) {
         if (getActiveLayout() != null) getActiveLayout().onTabLoadFinished(id, incognito);
     }
 
-    private void tabClosureCancelled(int id, boolean incognito) {
+    void tabClosureCancelled(int id, boolean incognito) {
         if (getActiveLayout() != null) {
             getActiveLayout().onTabClosureCancelled(time(), id, incognito);
         }

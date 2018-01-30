@@ -140,13 +140,13 @@ public class AccountSigninView extends FrameLayout {
     private ButtonCompat mPositiveButton;
     private Button mNegativeButton;
     private Button mMoreButton;
-    private Listener mListener;
+    Listener mListener;
     private Delegate mDelegate;
     private @SigninAccessPoint int mSigninAccessPoint;
     private @SigninFlowType int mSigninFlowType;
     private @UndoBehavior int mUndoBehavior;
-    private String mSelectedAccountName;
-    private boolean mIsDefaultAccountSelected;
+    String mSelectedAccountName;
+    boolean mIsDefaultAccountSelected;
     private @StringRes int mCancelButtonTextId = R.string.cancel;
     private boolean mIsChildAccount;
     private UserRecoverableErrorHandler.ModalDialog mGooglePlayServicesUpdateErrorHandler;
@@ -159,7 +159,7 @@ public class AccountSigninView extends FrameLayout {
     private TextView mSigninAccountEmail;
     private TextView mSigninPersonalizeServiceDescription;
     private TextView mSigninSettingsControl;
-    private ConfirmSyncDataStateMachine mConfirmSyncDataStateMachine;
+    ConfirmSyncDataStateMachine mConfirmSyncDataStateMachine;
 
     public AccountSigninView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -353,7 +353,7 @@ public class AccountSigninView extends FrameLayout {
         showSigninPage();
     }
 
-    private void setButtonsEnabled(boolean enabled) {
+    void setButtonsEnabled(boolean enabled) {
         mPositiveButton.setEnabled(enabled);
         mNegativeButton.setEnabled(enabled);
     }
@@ -558,7 +558,7 @@ public class AccountSigninView extends FrameLayout {
         triggerUpdateAccounts();
     }
 
-    private void showConfirmSigninPage() {
+    void showConfirmSigninPage() {
         updateSignedInAccountInfo();
         mProfileDataCache.update(Collections.singletonList(mSelectedAccountName));
 
@@ -624,7 +624,7 @@ public class AccountSigninView extends FrameLayout {
         }
     }
 
-    private void showConfirmSigninPagePreviousAccountCheck() {
+    void showConfirmSigninPagePreviousAccountCheck() {
         mConfirmSyncDataStateMachine = new ConfirmSyncDataStateMachine(getContext(),
                 mDelegate.getFragmentManager(), ImportSyncType.PREVIOUS_DATA_FOUND,
                 PrefServiceBridge.getInstance().getSyncLastAccountName(), mSelectedAccountName,
@@ -645,7 +645,7 @@ public class AccountSigninView extends FrameLayout {
                 });
     }
 
-    private static void recordAccountTrackerServiceSeedingTime(long seedingStartTime) {
+    static void recordAccountTrackerServiceSeedingTime(long seedingStartTime) {
         RecordHistogram.recordTimesHistogram("Signin.AndroidAccountSigninViewSeedingTime",
                 SystemClock.elapsedRealtime() - seedingStartTime, TimeUnit.MILLISECONDS);
     }
@@ -690,7 +690,7 @@ public class AccountSigninView extends FrameLayout {
         });
     }
 
-    private void onSigninConfirmationCancel() {
+    void onSigninConfirmationCancel() {
         if (mUndoBehavior == UNDO_BACK_TO_SELECTION) {
             showSigninPage();
         } else {

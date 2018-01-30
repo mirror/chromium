@@ -10,10 +10,10 @@ import android.content.Context;
  * Manages clients and settings for Service Workers.
  */
 public class AwServiceWorkerController {
-    private AwServiceWorkerClient mServiceWorkerClient;
+    AwServiceWorkerClient mServiceWorkerClient;
     private AwContentsIoThreadClient mServiceWorkerIoThreadClient;
-    private AwContentsBackgroundThreadClient mServiceWorkerBackgroundThreadClient;
-    private AwServiceWorkerSettings mServiceWorkerSettings;
+    AwContentsBackgroundThreadClient mServiceWorkerBackgroundThreadClient;
+    AwServiceWorkerSettings mServiceWorkerSettings;
     private AwBrowserContext mBrowserContext;
 
     public AwServiceWorkerController(Context applicationContext, AwBrowserContext browserContext) {

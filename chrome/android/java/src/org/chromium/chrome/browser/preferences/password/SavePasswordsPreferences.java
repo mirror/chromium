@@ -149,7 +149,7 @@ public class SavePasswordsPreferences
         exportWarningDialogFragment.show(getFragmentManager(), null);
     }
 
-    private void exportAfterWarning() {
+    void exportAfterWarning() {
         // TODO(crbug.com/788701): Start the export.
     }
 

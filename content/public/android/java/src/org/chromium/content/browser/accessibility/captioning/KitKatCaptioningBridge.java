@@ -20,7 +20,7 @@ public class KitKatCaptioningBridge implements SystemCaptioningBridge {
     private final CaptioningManager.CaptioningChangeListener mCaptioningChangeListener =
             new KitKatCaptioningChangeListener();
 
-    private final CaptioningChangeDelegate mCaptioningChangeDelegate;
+    final CaptioningChangeDelegate mCaptioningChangeDelegate;
     private final CaptioningManager mCaptioningManager;
     private static KitKatCaptioningBridge sKitKatCaptioningBridge;
 
@@ -120,7 +120,7 @@ public class KitKatCaptioningBridge implements SystemCaptioningBridge {
      * @param userStyle the platform CaptionStyle
      * @return a Chromium CaptioningStyle
      */
-    private CaptioningStyle getCaptioningStyleFrom(CaptioningManager.CaptionStyle userStyle) {
+    CaptioningStyle getCaptioningStyleFrom(CaptioningManager.CaptionStyle userStyle) {
         return CaptioningStyle.createFrom(userStyle);
     }
 }

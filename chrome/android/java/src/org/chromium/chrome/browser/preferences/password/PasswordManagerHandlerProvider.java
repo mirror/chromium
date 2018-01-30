@@ -23,12 +23,12 @@ import org.chromium.chrome.browser.PasswordUIView;
  */
 public class PasswordManagerHandlerProvider implements PasswordManagerHandler.PasswordListObserver {
     private static final class LazyHolder {
-        private static final PasswordManagerHandlerProvider INSTANCE =
+        static final PasswordManagerHandlerProvider INSTANCE =
                 new PasswordManagerHandlerProvider();
     }
 
     /** Private constructor, use GetInstance() instead. */
-    private PasswordManagerHandlerProvider() {}
+    PasswordManagerHandlerProvider() {}
 
     public static PasswordManagerHandlerProvider getInstance() {
         return LazyHolder.INSTANCE;

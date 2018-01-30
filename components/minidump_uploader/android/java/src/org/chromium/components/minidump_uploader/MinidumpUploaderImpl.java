@@ -31,12 +31,12 @@ public class MinidumpUploaderImpl implements MinidumpUploader {
      * Whether the current job has been canceled. This is written to from the main thread, and read
      * from the worker thread.
      */
-    private volatile boolean mCancelUpload = false;
+    volatile boolean mCancelUpload = false;
 
     /**
      * The thread used for the actual work of uploading minidumps.
      */
-    private Thread mWorkerThread;
+    Thread mWorkerThread;
 
     @VisibleForTesting
     public static final int MAX_UPLOAD_TRIES_ALLOWED = 3;

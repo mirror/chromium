@@ -160,7 +160,7 @@ public class FindTest {
         return findToolbar;
     }
 
-    private EditText getFindQueryText() {
+    EditText getFindQueryText() {
         final EditText findQueryText =
                 (EditText) mActivityTestRule.getActivity().findViewById(R.id.find_query);
         Assert.assertNotNull("FindQueryText not found", findQueryText);

@@ -44,7 +44,7 @@ public class ContentViewPointerTypeTest {
         mActivityTestRule.waitForActiveShellToBeDoneLoading();
     }
 
-    private void moveCursor(final float x, final float y) {
+    void moveCursor(final float x, final float y) {
         MotionEvent.PointerProperties[] pointerProperties = new MotionEvent.PointerProperties[1];
         MotionEvent.PointerProperties pp = new MotionEvent.PointerProperties();
         pp.id = 0;

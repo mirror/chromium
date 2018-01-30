@@ -38,8 +38,8 @@ public class ContentViewLocationTest {
     public ContentShellActivityTestRule mActivityTestRule = new ContentShellActivityTestRule();
 
     private TestCallbackHelperContainer mTestCallbackHelperContainer;
-    private TestCallbackHelperContainer.OnEvaluateJavaScriptResultHelper mJavascriptHelper;
-    private MockLocationProvider mMockLocationProvider;
+    TestCallbackHelperContainer.OnEvaluateJavaScriptResultHelper mJavascriptHelper;
+    MockLocationProvider mMockLocationProvider;
 
     private void hideContentViewOnUiThread() {
         InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {

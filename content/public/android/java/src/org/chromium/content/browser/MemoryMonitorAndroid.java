@@ -85,5 +85,5 @@ class MemoryMonitorAndroid {
             long availMem, boolean lowMemory,
             long threshold, long totalMem, long outPtr);
 
-    private static native void nativeOnTrimMemory(int level);
+    static native void nativeOnTrimMemory(int level);
 }

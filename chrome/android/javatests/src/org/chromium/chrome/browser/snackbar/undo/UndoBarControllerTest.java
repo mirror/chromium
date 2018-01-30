@@ -38,7 +38,7 @@ public class UndoBarControllerTest {
     @Rule
     public ChromeTabbedActivityTestRule mActivityTestRule = new ChromeTabbedActivityTestRule();
 
-    private SnackbarManager mSnackbarManager;
+    SnackbarManager mSnackbarManager;
     private TabModel mTabModel;
 
     @Before

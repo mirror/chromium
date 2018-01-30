@@ -65,7 +65,7 @@ public class SectionUiUtils {
         view.setText(summary);
     }
 
-    private static String getSectionSummaryForPreviewInASingleLine(Context context,
+    static String getSectionSummaryForPreviewInASingleLine(Context context,
             SectionInformation section, @Nullable Layout layout, @Nullable TextPaint paint) {
         int optionCount = section.getSize();
         assert optionCount != 0;

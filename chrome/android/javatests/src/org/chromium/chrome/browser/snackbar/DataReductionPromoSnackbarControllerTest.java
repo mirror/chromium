@@ -40,8 +40,8 @@ public class DataReductionPromoSnackbarControllerTest {
     private static final String SECOND_SNACKBAR_SIZE_STRING = "1 GB";
     private static final String COMMAND_LINE_FLAG_SNACKBAR_SIZE_STRING = "1 MB";
 
-    private SnackbarManager mManager;
-    private DataReductionPromoSnackbarController mController;
+    SnackbarManager mManager;
+    DataReductionPromoSnackbarController mController;
 
     @Before
     public void setUp() throws InterruptedException {

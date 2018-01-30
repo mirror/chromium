@@ -74,9 +74,9 @@ public class CardUnmaskPrompt
     private final TextView mVerificationView;
     private final long mSuccessMessageDurationMilliseconds;
 
-    private int mThisYear;
-    private int mThisMonth;
-    private boolean mValidationWaitsForCalendarTask;
+    int mThisYear;
+    int mThisMonth;
+    boolean mValidationWaitsForCalendarTask;
 
     private String mCvcErrorMessage;
     private String mExpirationMonthErrorMessage;
@@ -350,7 +350,7 @@ public class CardUnmaskPrompt
      * enabled. Also displays a detailed error message and highlights the fields for which the value
      * is wrong. Finally checks whether the focuse should move to the next field.
      */
-    private void validate() {
+    void validate() {
         Button positiveButton = mDialog.getButton(AlertDialog.BUTTON_POSITIVE);
 
         @ErrorType int errorType = getExpirationAndCvcErrorType();

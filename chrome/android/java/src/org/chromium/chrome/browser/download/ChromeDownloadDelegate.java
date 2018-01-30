@@ -49,7 +49,7 @@ public class ChromeDownloadDelegate {
 
     // The application context.
     private final Context mContext;
-    private Tab mTab;
+    Tab mTab;
 
     /**
      * Creates ChromeDownloadDelegate.
@@ -124,7 +124,7 @@ public class ChromeDownloadDelegate {
      *
      * @return File object containing the path to the download directory.
      */
-    private static File getDownloadDirectoryFullPath() {
+    static File getDownloadDirectoryFullPath() {
         assert !ThreadUtils.runningOnUiThread();
         File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
         if (!dir.mkdir() && !dir.isDirectory()) return null;
@@ -137,7 +137,7 @@ public class ChromeDownloadDelegate {
         return file != null && file.exists();
     }
 
-    private static void deleteFileForOverwrite(DownloadInfo info) {
+    static void deleteFileForOverwrite(DownloadInfo info) {
         assert !ThreadUtils.runningOnUiThread();
         File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
         if (!dir.isDirectory()) return;
@@ -186,7 +186,7 @@ public class ChromeDownloadDelegate {
      * @param externalStorageStatus The status of the external storage.
      * @return Whether external storage is ok for downloading.
      */
-    private boolean checkExternalStorageAndNotify(
+    boolean checkExternalStorageAndNotify(
             String filename, File fullDirPath, String externalStorageStatus) {
         if (fullDirPath == null) {
             Log.e(TAG, "Download failed: no SD card");

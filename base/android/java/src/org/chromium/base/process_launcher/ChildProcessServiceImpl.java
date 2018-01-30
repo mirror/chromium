@@ -43,34 +43,34 @@ public class ChildProcessServiceImpl {
     // Only for a check that create is only called once.
     private static boolean sCreateCalled;
 
-    private final ChildProcessServiceDelegate mDelegate;
+    final ChildProcessServiceDelegate mDelegate;
 
-    private final Object mBinderLock = new Object();
-    private final Object mLibraryInitializedLock = new Object();
+    final Object mBinderLock = new Object();
+    final Object mLibraryInitializedLock = new Object();
 
     // True if we should enforce that bindToCaller() is called before setupConnection().
     // Only set once in bind(), does not require synchronization.
-    private boolean mBindToCallerCheck;
+    boolean mBindToCallerCheck;
 
     // PID of the client of this service, set in bindToCaller(), if mBindToCallerCheck is true.
     @GuardedBy("mBinderLock")
-    private int mBoundCallingPid;
+    int mBoundCallingPid;
 
     // This is the native "Main" thread for the renderer / utility process.
-    private Thread mMainThread;
+    Thread mMainThread;
 
     // Parameters received via IPC, only accessed while holding the mMainThread monitor.
-    private String[] mCommandLineParams;
+    String[] mCommandLineParams;
 
     // File descriptors that should be registered natively.
-    private FileDescriptorInfo[] mFdInfos;
+    FileDescriptorInfo[] mFdInfos;
 
     @GuardedBy("mLibraryInitializedLock")
-    private boolean mLibraryInitialized;
+    boolean mLibraryInitialized;
 
     // Called once the service is bound and all service related member variables have been set.
     // Only set once in bind(), does not require synchronization.
-    private boolean mServiceBound;
+    boolean mServiceBound;
 
     /**
      * If >= 0 enables "validation of caller of {@link mBinder}'s methods". A RemoteException
@@ -78,9 +78,9 @@ public class ChildProcessServiceImpl {
      * {@link mBinder}'s methods.
      * Only set once in {@link bind}, does not require synchronization.
      */
-    private int mAuthorizedCallerUid;
+    int mAuthorizedCallerUid;
 
-    private final Semaphore mActivitySemaphore = new Semaphore(1);
+    final Semaphore mActivitySemaphore = new Semaphore(1);
 
     public ChildProcessServiceImpl(ChildProcessServiceDelegate delegate) {
         mDelegate = delegate;
@@ -288,7 +288,7 @@ public class ChildProcessServiceImpl {
         return mBinder;
     }
 
-    private void processConnectionBundle(Bundle bundle, List<IBinder> clientInterfaces) {
+    void processConnectionBundle(Bundle bundle, List<IBinder> clientInterfaces) {
         // Required to unparcel FileDescriptorInfo.
         bundle.setClassLoader(mHostClassLoader);
         synchronized (mMainThread) {
@@ -318,11 +318,11 @@ public class ChildProcessServiceImpl {
      * This includes the IPC channel, the crash dump signals and resource related
      * files.
      */
-    private static native void nativeRegisterFileDescriptors(
+    static native void nativeRegisterFileDescriptors(
             String[] keys, int[] id, int[] fd, long[] offset, long[] size);
 
     /**
      * Force the child process to exit.
      */
-    private static native void nativeExitChildProcess();
+    static native void nativeExitChildProcess();
 }

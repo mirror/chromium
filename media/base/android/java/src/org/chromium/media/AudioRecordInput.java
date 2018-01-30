@@ -32,13 +32,13 @@ class AudioRecordInput {
     // TODO(dalecurtis): This should use AudioRecord.getTimestamp() in API 24+.
     private static final int HARDWARE_DELAY_MS = 100;
 
-    private final long mNativeAudioRecordInputStream;
+    final long mNativeAudioRecordInputStream;
     private final int mSampleRate;
     private final int mChannels;
     private final int mBitsPerSample;
     private final boolean mUsePlatformAEC;
-    private ByteBuffer mBuffer;
-    private AudioRecord mAudioRecord;
+    ByteBuffer mBuffer;
+    AudioRecord mAudioRecord;
     private AudioRecordThread mAudioRecordThread;
     private AcousticEchoCanceler mAEC;
 
@@ -241,6 +241,6 @@ class AudioRecordInput {
 
     private native void nativeCacheDirectBufferAddress(long nativeAudioRecordInputStream,
                                                        ByteBuffer buffer);
-    private native void nativeOnData(
+    native void nativeOnData(
             long nativeAudioRecordInputStream, int size, int hardwareDelayMs);
 }

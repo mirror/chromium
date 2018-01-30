@@ -40,23 +40,23 @@ public class OverlayPanelEventFilterTest {
     private static final float EPSILON = 1e-04f;
 
     private float mTouchSlopDp;
-    private float mDpToPx;
+    float mDpToPx;
 
     private float mAlmostMaximizedContentOffsetYDp;
     private float mMaximizedContentOffsetYDp;
 
-    private float mContentVerticalScroll;
+    float mContentVerticalScroll;
 
-    private boolean mWasTapDetectedOnContent;
-    private boolean mWasScrollDetectedOnContent;
+    boolean mWasTapDetectedOnContent;
+    boolean mWasScrollDetectedOnContent;
 
-    private MockOverlayPanel mPanel;
+    MockOverlayPanel mPanel;
     private OverlayPanelEventFilterWrapper mEventFilter;
 
-    private boolean mShouldLockHorizontalMotionInContent;
-    private MotionEvent mEventPropagatedToContent;
-    private boolean mEventWasScroll;
-    private boolean mEventWasTap;
+    boolean mShouldLockHorizontalMotionInContent;
+    MotionEvent mEventPropagatedToContent;
+    boolean mEventWasScroll;
+    boolean mEventWasTap;
 
     // --------------------------------------------------------------------------------------------
     // OverlayPanelEventFilterWrapper

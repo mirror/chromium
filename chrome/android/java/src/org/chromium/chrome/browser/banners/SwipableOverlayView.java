@@ -52,28 +52,28 @@ public abstract class SwipableOverlayView extends FrameLayout {
     private final GestureStateListener mGestureStateListener;
 
     /** Listens for changes in the layout. */
-    private final View.OnLayoutChangeListener mLayoutChangeListener;
+    final View.OnLayoutChangeListener mLayoutChangeListener;
 
     /** Interpolator used for the animation. */
     private final Interpolator mInterpolator;
 
     /** Tracks whether the user is scrolling or flinging. */
-    private int mGestureState;
+    int mGestureState;
 
     /** Animation currently being used to translate the View. */
-    private Animator mCurrentAnimation;
+    Animator mCurrentAnimation;
 
     /** Used to determine when the layout has changed and the Viewport must be updated. */
     private int mParentHeight;
 
     /** Offset from the top of the page when the current gesture was first started. */
-    private int mInitialOffsetY;
+    int mInitialOffsetY;
 
     /** How tall the View is, including its margins. */
-    private int mTotalHeight;
+    int mTotalHeight;
 
     /** Whether or not the View ever been fully displayed. */
-    private boolean mIsBeingDisplayedForFirstTime;
+    boolean mIsBeingDisplayedForFirstTime;
 
     /** The WebContents to which the overlay is added. */
     private WebContents mWebContents;
@@ -363,7 +363,7 @@ public abstract class SwipableOverlayView extends FrameLayout {
      * Cancels the current animation, unless the View is coming onto the screen for the first time.
      * @return True if the animation was canceled or wasn't running, false otherwise.
      */
-    private boolean cancelCurrentAnimation() {
+    boolean cancelCurrentAnimation() {
         if (mIsBeingDisplayedForFirstTime) return false;
         if (mCurrentAnimation != null) mCurrentAnimation.cancel();
         return true;

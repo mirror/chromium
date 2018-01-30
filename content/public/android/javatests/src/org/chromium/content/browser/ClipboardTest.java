@@ -125,7 +125,7 @@ public class ClipboardTest {
     }
 
     // Returns whether there is a primary clip with content on the current clipboard.
-    private Boolean hasPrimaryClip(ClipboardManager clipboardManager) {
+    Boolean hasPrimaryClip(ClipboardManager clipboardManager) {
         final ClipData clip = clipboardManager.getPrimaryClip();
         if (clip != null && clip.getItemCount() > 0) {
             return !TextUtils.isEmpty(clip.getItemAt(0).getText());

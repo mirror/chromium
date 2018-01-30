@@ -29,22 +29,22 @@ import java.util.concurrent.TimeUnit;
  * A {@link TabObserver} that also handles custom tabs specific logging and messaging.
  */
 class CustomTabObserver extends EmptyTabObserver {
-    private final CustomTabsConnection mCustomTabsConnection;
-    private final CustomTabsSessionToken mSession;
+    final CustomTabsConnection mCustomTabsConnection;
+    final CustomTabsSessionToken mSession;
     private final boolean mOpenedByChrome;
-    private int mContentBitmapWidth;
-    private int mContentBitmapHeight;
+    int mContentBitmapWidth;
+    int mContentBitmapHeight;
 
     private long mIntentReceivedTimestamp;
     private long mPageLoadStartedTimestamp;
     private long mFirstCommitTimestamp;
 
-    private boolean mScreenshotTakenForCurrentNavigation;
+    boolean mScreenshotTakenForCurrentNavigation;
 
     private static final int STATE_RESET = 0;
     private static final int STATE_WAITING_LOAD_START = 1;
     private static final int STATE_WAITING_LOAD_FINISH = 2;
-    private int mCurrentState;
+    int mCurrentState;
 
     public CustomTabObserver(
             Application application, CustomTabsSessionToken session, boolean openedByChrome) {

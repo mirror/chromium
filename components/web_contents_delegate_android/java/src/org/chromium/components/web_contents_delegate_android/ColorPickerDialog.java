@@ -29,9 +29,9 @@ public class ColorPickerDialog extends AlertDialog implements OnColorChangedList
 
     private final OnColorChangedListener mListener;
 
-    private final int mInitialColor;
+    final int mInitialColor;
 
-    private int mCurrentColor;
+    int mCurrentColor;
 
     /**
      * @param context The context the dialog is to run in.
@@ -129,7 +129,7 @@ public class ColorPickerDialog extends AlertDialog implements OnColorChangedList
      * Hides the simple view (the default) and shows the advanced one instead, hiding the
      * "More" button at the same time.
      */
-    private void showAdvancedView() {
+    void showAdvancedView() {
         // Only need to hide the borders, not the Views themselves, since the Views are
         // contained within the borders.
         View buttonBorder = findViewById(R.id.more_colors_button_border);
@@ -146,7 +146,7 @@ public class ColorPickerDialog extends AlertDialog implements OnColorChangedList
     /**
      * Tries to notify any listeners that the color has been set.
      */
-    private void tryNotifyColorSet(int color) {
+    void tryNotifyColorSet(int color) {
         if (mListener != null) mListener.onColorChanged(color);
     }
 

@@ -24,7 +24,7 @@ import java.lang.annotation.Annotation;
 public final class JavaBridgeTestCommon {
     protected TestCallbackHelperContainer mTestCallbackHelperContainer;
 
-    private final TestCommonCallback<ContentShellActivity> mCallback;
+    final TestCommonCallback<ContentShellActivity> mCallback;
 
     public JavaBridgeTestCommon(TestCommonCallback<ContentShellActivity> callback) {
         mCallback = callback;

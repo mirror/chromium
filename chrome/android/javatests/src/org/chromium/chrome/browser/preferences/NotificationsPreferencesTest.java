@@ -39,7 +39,7 @@ public class NotificationsPreferencesTest {
     // TODO(peconn): Add UI Catalogue entries for NotificationsPreferences.
     @Rule
     public final ChromeBrowserTestRule mBrowserTestRule = new ChromeBrowserTestRule();
-    private Preferences mActivity;
+    Preferences mActivity;
 
     @Before
     public void setUp() {
@@ -126,7 +126,7 @@ public class NotificationsPreferencesTest {
     }
 
     /** Gets the fragment of the top Activity. Assumes the top Activity is a Preferences. */
-    private static Fragment getTopFragment() {
+    static Fragment getTopFragment() {
         Preferences preferences = (Preferences) ApplicationStatus.getLastTrackedFocusedActivity();
         return preferences.getFragmentForTest();
     }
@@ -155,7 +155,7 @@ public class NotificationsPreferencesTest {
     }
 
     /** Gets the summary text that should be used for site specific notifications. */
-    private String getNotificationsSummary(boolean enabled) {
+    String getNotificationsSummary(boolean enabled) {
         return mActivity.getResources().getString(ContentSettingsResources.getCategorySummary(
                 ContentSettingsType.CONTENT_SETTINGS_TYPE_NOTIFICATIONS, enabled));
     }

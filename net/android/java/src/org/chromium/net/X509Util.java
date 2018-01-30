@@ -324,7 +324,7 @@ public class X509Util {
     /**
      * After each modification by the system of the key store, trust manager has to be regenerated.
      */
-    private static void reloadDefaultTrustManager() throws KeyStoreException,
+    static void reloadDefaultTrustManager() throws KeyStoreException,
             NoSuchAlgorithmException, CertificateException {
         synchronized (sLock) {
             sDefaultTrustManager = null;

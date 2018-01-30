@@ -82,10 +82,10 @@ public class WebApkServiceConnectionManager {
     private String mAction;
 
     /** Mapping of WebAPK package to WebAPK service connection.*/
-    private HashMap<String, Connection> mConnections = new HashMap<>();
+    HashMap<String, Connection> mConnections = new HashMap<>();
 
     /** Called when a WebAPK service connection is disconnected. */
-    private void onServiceDisconnected(String webApkName) {
+    void onServiceDisconnected(String webApkName) {
         mConnections.remove(webApkName);
     }
 
@@ -172,7 +172,7 @@ public class WebApkServiceConnectionManager {
      * Creates intent to connect to WebAPK service.
      * @param webApkPackage The package name of the WebAPK to connect to.
      */
-    private Intent createConnectIntent(String webApkPackage) {
+    Intent createConnectIntent(String webApkPackage) {
         Intent intent = new Intent();
         if (mCategory != null) intent.addCategory(mCategory);
         if (mAction != null) intent.setAction(mAction);

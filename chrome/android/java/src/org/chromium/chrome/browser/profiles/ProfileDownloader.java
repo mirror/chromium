@@ -163,7 +163,7 @@ public class ProfileDownloader {
     }
 
     // Native methods.
-    private static native void nativeStartFetchingAccountInfoFor(
+    static native void nativeStartFetchingAccountInfoFor(
             Profile profile, String accountId, int imageSidePixels, boolean isPreSignin);
     private static native String nativeGetCachedFullNameForPrimaryAccount(Profile profile);
     private static native String nativeGetCachedGivenNameForPrimaryAccount(Profile profile);

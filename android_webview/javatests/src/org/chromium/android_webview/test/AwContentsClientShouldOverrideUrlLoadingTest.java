@@ -59,7 +59,7 @@ public class AwContentsClientShouldOverrideUrlLoadingTest {
     private TestWebServer mWebServer;
     private TestAwContentsClient mContentsClient;
     private AwTestContainerView mTestContainerView;
-    private AwContents mAwContents;
+    AwContents mAwContents;
 
     private TestAwContentsClient.ShouldOverrideUrlLoadingHelper mShouldOverrideUrlLoadingHelper;
 

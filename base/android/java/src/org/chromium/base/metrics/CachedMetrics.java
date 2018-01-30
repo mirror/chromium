@@ -22,7 +22,7 @@ public class CachedMetrics {
      * commit operation when the native library is loaded.
      */
     private abstract static class CachedMetric {
-        private static final List<CachedMetric> sMetrics = new ArrayList<CachedMetric>();
+        static final List<CachedMetric> sMetrics = new ArrayList<CachedMetric>();
 
         protected final String mName;
         protected boolean mCached;

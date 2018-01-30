@@ -39,7 +39,7 @@ import java.util.Locale;
  */
 public class TabContextMenuItemDelegate implements ContextMenuItemDelegate {
     private final Tab mTab;
-    private boolean mLoadOriginalImageRequestedForPageLoad;
+    boolean mLoadOriginalImageRequestedForPageLoad;
     private EmptyTabObserver mDataReductionProxyContextMenuTabObserver;
 
     /**

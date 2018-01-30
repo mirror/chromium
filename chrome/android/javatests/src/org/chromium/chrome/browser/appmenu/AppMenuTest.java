@@ -48,7 +48,7 @@ public class AppMenuTest {
     private static final String TEST_URL = UrlUtils.encodeHtmlDataUri("<html>foo</html>");
 
     private AppMenu mAppMenu;
-    private AppMenuHandler mAppMenuHandler;
+    AppMenuHandler mAppMenuHandler;
 
     /**
      * AppMenuHandler that will be used to intercept item selections for testing.

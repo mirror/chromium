@@ -16,12 +16,12 @@ public class TabLoadTracker {
     private final Handler mHandler = new Handler();
 
     // Callback Tracking State
-    private final int mId;
-    private final TabLoadTrackerCallback mCallback;
+    final int mId;
+    final TabLoadTrackerCallback mCallback;
 
     // Internal Loading State
-    private boolean mLoading;
-    private boolean mPageLoading;
+    boolean mLoading;
+    boolean mPageLoading;
 
     /**
      * The callback object to be notified of when the loading state changes.

@@ -53,7 +53,7 @@ public abstract class DownloadHistoryItemWrapper extends TimedItem {
     public static final Integer FILE_EXTENSION_ZIP = 14;
     public static final Integer FILE_EXTENSION_BOUNDARY = 15;
 
-    private static final Map<String, Integer> EXTENSIONS_MAP;
+    static final Map<String, Integer> EXTENSIONS_MAP;
     static {
         Map<String, Integer> extensions = new HashMap<>();
         extensions.put("apk", FILE_EXTENSION_APK);
@@ -80,7 +80,7 @@ public abstract class DownloadHistoryItemWrapper extends TimedItem {
     private Long mStableId;
     private boolean mIsDeletionPending;
 
-    private DownloadHistoryItemWrapper(BackendProvider provider, ComponentName component) {
+    DownloadHistoryItemWrapper(BackendProvider provider, ComponentName component) {
         mBackendProvider = provider;
         mComponentName = component;
     }

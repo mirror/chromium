@@ -76,7 +76,7 @@ public class ConfirmSyncDataStateMachineDelegate {
             mListener = listener;
         }
 
-        private static ProgressDialogFragment create(ProgressDialogListener listener) {
+        static ProgressDialogFragment create(ProgressDialogListener listener) {
             ProgressDialogFragment result = new ProgressDialogFragment();
             result.setListener(listener);
             return result;
@@ -120,7 +120,7 @@ public class ConfirmSyncDataStateMachineDelegate {
             mListener = listener;
         }
 
-        private static TimeoutDialogFragment create(TimeoutDialogListener listener) {
+        static TimeoutDialogFragment create(TimeoutDialogListener listener) {
             TimeoutDialogFragment result = new TimeoutDialogFragment();
             result.setListener(listener);
             return result;

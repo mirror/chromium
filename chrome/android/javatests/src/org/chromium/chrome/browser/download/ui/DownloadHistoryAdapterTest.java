@@ -95,11 +95,11 @@ public class DownloadHistoryAdapterTest {
     private static final String PREF_SHOW_STORAGE_INFO_HEADER =
             "download_home_show_storage_info_header";
 
-    private DownloadHistoryAdapter mAdapter;
+    DownloadHistoryAdapter mAdapter;
     private Observer mObserver;
     private StubbedDownloadDelegate mDownloadDelegate;
-    private StubbedOfflineContentProvider mOfflineContentProvider;
-    private StubbedProvider mBackendProvider;
+    StubbedOfflineContentProvider mOfflineContentProvider;
+    StubbedProvider mBackendProvider;
 
     @Before
     public void setUp() throws Exception {

@@ -127,12 +127,12 @@ public class ChromiumLinkerTestActivity extends Activity {
         // the program finishes().
     }
 
-    private void finishInitialization(Bundle savedInstanceState) {
+    void finishInitialization(Bundle savedInstanceState) {
         String shellUrl = ShellManager.DEFAULT_SHELL_URL;
         mShellManager.launchShell(shellUrl);
     }
 
-    private void initializationFailed() {
+    void initializationFailed() {
         Log.e(TAG, "ContentView initialization failed.");
         finish();
     }

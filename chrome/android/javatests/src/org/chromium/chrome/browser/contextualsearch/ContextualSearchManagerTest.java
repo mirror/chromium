@@ -165,11 +165,11 @@ public class ContextualSearchManagerTest {
     }
 
     private ActivityMonitor mActivityMonitor;
-    private ContextualSearchFakeServer mFakeServer;
-    private ContextualSearchManager mManager;
-    private ContextualSearchPanel mPanel;
+    ContextualSearchFakeServer mFakeServer;
+    ContextualSearchManager mManager;
+    ContextualSearchPanel mPanel;
     private ContextualSearchPolicy mPolicy;
-    private ContextualSearchSelectionController mSelectionController;
+    ContextualSearchSelectionController mSelectionController;
     private EmbeddedTestServer mTestServer;
 
     private float mDpToPx;
@@ -633,7 +633,7 @@ public class ContextualSearchManagerTest {
     /**
      * @return The selected text.
      */
-    private String getSelectedText() {
+    String getSelectedText() {
         return mSelectionController.getSelectedText();
     }
 
@@ -2108,7 +2108,7 @@ public class ContextualSearchManagerTest {
         }));
     }
 
-    private SelectionPopupController getSelectionPopupController() {
+    SelectionPopupController getSelectionPopupController() {
         return SelectionPopupController.fromWebContents(
                 mActivityTestRule.getActivity().getActivityTab().getWebContents());
     }

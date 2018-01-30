@@ -49,17 +49,17 @@ public class ChromeHomeIphBubbleController {
     private static final String HELP_BUBBLE_TIMEOUT_PARAM_NAME = "x_iph-timeout-duration-ms";
 
     /** Cache the events before native is initialized. */
-    private final ArrayDeque<Integer> mEvents = new ArrayDeque<>();
+    final ArrayDeque<Integer> mEvents = new ArrayDeque<>();
 
-    private TextBubble mHelpBubble;
-    private LayoutManagerChrome mLayoutManager;
+    TextBubble mHelpBubble;
+    LayoutManagerChrome mLayoutManager;
     private BottomToolbarPhone mToolbar;
     private View mControlContainer;
-    private ChromeFullscreenManager mFullscreenManager;
+    ChromeFullscreenManager mFullscreenManager;
     private BottomSheet mBottomSheet;
     private Context mContext;
 
-    private boolean mNativeInitialized;
+    boolean mNativeInitialized;
 
     /**
      * Create a new ChromeHomeIphBubbleController.
@@ -282,7 +282,7 @@ public class ChromeHomeIphBubbleController {
     }
 
     /** Dismiss the help bubble if it is not null. */
-    private void dismissHelpBubble() {
+    void dismissHelpBubble() {
         if (mHelpBubble != null) mHelpBubble.dismiss();
     }
 
@@ -298,7 +298,7 @@ public class ChromeHomeIphBubbleController {
         return new Rect(centerPoint, locationInWindow[1], centerPoint, locationInWindow[1]);
     }
 
-    private void trackEvent(@StateChangeReason int reason) {
+    void trackEvent(@StateChangeReason int reason) {
         Tracker tracker = TrackerFactory.getTrackerForProfile(Profile.getLastUsedProfile());
         tracker.notifyEvent(EventConstants.BOTTOM_SHEET_EXPANDED);
 

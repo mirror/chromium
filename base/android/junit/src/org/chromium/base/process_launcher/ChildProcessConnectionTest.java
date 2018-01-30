@@ -110,12 +110,12 @@ public class ChildProcessConnectionTest {
 
     private Binder mChildProcessServiceBinder;
 
-    private ChildServiceConnectionMock mFirstServiceConnection;
+    ChildServiceConnectionMock mFirstServiceConnection;
 
     // Parameters captured from the IChildProcessService.setupConnection() call
-    private Bundle mConnectionBundle;
-    private ICallbackInt mConnectionPidCallback;
-    private IBinder mConnectionIBinderCallback;
+    Bundle mConnectionBundle;
+    ICallbackInt mConnectionPidCallback;
+    IBinder mConnectionIBinderCallback;
 
     @Before
     public void setUp() throws RemoteException {

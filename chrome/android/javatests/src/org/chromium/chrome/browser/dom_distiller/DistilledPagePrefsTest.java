@@ -37,7 +37,7 @@ public class DistilledPagePrefsTest {
     public final RuleChain mChain =
             RuleChain.outerRule(new ChromeBrowserTestRule()).around(new UiThreadTestRule());
 
-    private DistilledPagePrefs mDistilledPagePrefs;
+    DistilledPagePrefs mDistilledPagePrefs;
 
     private static final double EPSILON = 1e-5;
 

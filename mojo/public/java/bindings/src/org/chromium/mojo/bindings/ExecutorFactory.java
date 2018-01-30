@@ -29,7 +29,7 @@ class ExecutorFactory {
      * A null buffer which is used to send messages without any data on the PipedExecutor's
      * signaling handles.
      */
-    private static final ByteBuffer NOTIFY_BUFFER = null;
+    static final ByteBuffer NOTIFY_BUFFER = null;
 
     /**
      * Implementation of the executor which uses a pair of {@link MessagePipeHandle} for signaling.

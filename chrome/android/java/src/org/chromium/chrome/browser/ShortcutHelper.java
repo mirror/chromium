@@ -140,7 +140,7 @@ public class ShortcutHelper {
         }
     }
 
-    private static Delegate sDelegate = new Delegate();
+    static Delegate sDelegate = new Delegate();
 
     /**
      * Sets the delegate to use.
@@ -220,7 +220,7 @@ public class ShortcutHelper {
     }
 
     @TargetApi(Build.VERSION_CODES.O)
-    private static void addShortcutWithShortcutManager(
+    static void addShortcutWithShortcutManager(
             String title, Bitmap icon, Intent shortcutIntent) {
         String id = shortcutIntent.getStringExtra(ShortcutHelper.EXTRA_ID);
         Context context = ContextUtils.getApplicationContext();
@@ -237,7 +237,7 @@ public class ShortcutHelper {
     /**
      * Show toast to alert user that the shortcut was added to the home screen.
      */
-    private static void showAddedToHomescreenToast(final String title) {
+    static void showAddedToHomescreenToast(final String title) {
         Context applicationContext = ContextUtils.getApplicationContext();
         String toastText = applicationContext.getString(R.string.added_to_homescreen, title);
         showToast(toastText);
@@ -659,11 +659,11 @@ public class ShortcutHelper {
         return false;
     }
 
-    private static boolean shouldShowToastWhenAddingShortcut() {
+    static boolean shouldShowToastWhenAddingShortcut() {
         return !isRequestPinShortcutSupported();
     }
 
-    private static boolean isRequestPinShortcutSupported() {
+    static boolean isRequestPinShortcutSupported() {
         if (!sCheckedIfRequestPinShortcutSupported) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 checkIfRequestPinShortcutSupported();
@@ -767,7 +767,7 @@ public class ShortcutHelper {
         return array;
     }
 
-    private static native void nativeOnWebappDataStored(long callbackPointer);
+    static native void nativeOnWebappDataStored(long callbackPointer);
     private static native void nativeOnWebApksRetrieved(long callbackPointer, String[] names,
             String[] shortNames, String[] packageName, int[] shellApkVersions, int[] versionCodes,
             String[] uris, String[] scopes, String[] manifestUrls, String[] manifestStartUrls,

@@ -51,21 +51,21 @@ public class TextBubble implements OnTouchListener {
      * A set of bubbles which are active at this moment. This set can be used to dismiss the
      * bubbles on a back press event.
      */
-    private static final Set<TextBubble> sBubbles = new HashSet<>();
+    static final Set<TextBubble> sBubbles = new HashSet<>();
 
     // Cache Rect objects for querying View and Screen coordinate APIs.
     private final Rect mCachedPaddingRect = new Rect();
     private final Rect mCachedWindowRect = new Rect();
 
-    private final Context mContext;
-    private final Handler mHandler;
-    private final View mRootView;
+    final Context mContext;
+    final Handler mHandler;
+    final View mRootView;
 
     /** The margin to add to the text bubble so it doesn't bump against the edges of the screen. */
     private final int mMarginPx;
 
     /** The actual {@link PopupWindow}.  Internalized to prevent API leakage. */
-    private final PopupWindow mPopupWindow;
+    final PopupWindow mPopupWindow;
 
     /** The {@link Drawable} that is responsible for drawing the bubble and the arrow. */
     private final ArrowBubbleDrawable mDrawable;
@@ -73,7 +73,7 @@ public class TextBubble implements OnTouchListener {
     /** The {@link Rect} to anchor the bubble to in screen space. */
     private final Rect mAnchorRect = new Rect();
 
-    private final Runnable mDismissRunnable = new Runnable() {
+    final Runnable mDismissRunnable = new Runnable() {
         @Override
         public void run() {
             if (mPopupWindow.isShowing()) dismiss();
@@ -101,7 +101,7 @@ public class TextBubble implements OnTouchListener {
 
     // Pass through for the internal PopupWindow.  This class needs to intercept these for API
     // purposes, but they are still useful to callers.
-    private ObserverList<OnDismissListener> mDismissListeners = new ObserverList<>();
+    ObserverList<OnDismissListener> mDismissListeners = new ObserverList<>();
     private OnTouchListener mTouchListener;
 
     // Positioning/sizing coordinates for the popup bubble.
@@ -118,7 +118,7 @@ public class TextBubble implements OnTouchListener {
      * dismiss and show.  In that case we don't want to let the world know we're dismissing because
      * it's only temporary.
      */
-    private boolean mIgnoreDismissal;
+    boolean mIgnoreDismissal;
 
     // Content specific variables.
     /** The resource id for the string to show in the bubble. */
@@ -127,7 +127,7 @@ public class TextBubble implements OnTouchListener {
 
     /** The resource id for the accessibility string associated with the bubble. */
     @StringRes
-    private final int mAccessibilityStringId;
+    final int mAccessibilityStringId;
 
     /**
      * Constructs a {@link TextBubble} instance using the default arrow drawable background.

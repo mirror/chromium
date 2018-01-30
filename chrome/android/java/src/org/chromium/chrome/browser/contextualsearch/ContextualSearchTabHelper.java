@@ -36,7 +36,7 @@ public class ContextualSearchTabHelper
     /**
      * The WebContents associated with the Tab which this helper is monitoring, unless detached.
      */
-    private WebContents mWebContents;
+    WebContents mWebContents;
 
     /**
      * The {@link ContextualSearchManager} that's managing this tab. This may point to
@@ -193,7 +193,7 @@ public class ContextualSearchTabHelper
      *
      * @param webContents The WebContents to attach the gesture state listener to.
      */
-    private void updateContextualSearchHooks(WebContents webContents) {
+    void updateContextualSearchHooks(WebContents webContents) {
         if (webContents == null) return;
 
         removeContextualSearchHooks(webContents);

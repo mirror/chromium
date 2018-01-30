@@ -56,9 +56,9 @@ public class BrandColorTest {
     private static final String BRAND_COLOR_2 = "#505050";
     private static final String INTERSTITIAL_HTML = "<html><head></head><body>test</body></html>";
 
-    private ToolbarPhone mToolbar;
-    private ToolbarDataProvider mToolbarDataProvider;
-    private int mDefaultColor;
+    ToolbarPhone mToolbar;
+    ToolbarDataProvider mToolbarDataProvider;
+    int mDefaultColor;
 
     private static String getUrlWithBrandColor(String brandColor) {
         String brandColorMetaTag = TextUtils.isEmpty(brandColor)

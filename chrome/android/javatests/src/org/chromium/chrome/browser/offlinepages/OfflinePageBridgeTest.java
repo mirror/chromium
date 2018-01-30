@@ -53,12 +53,12 @@ public class OfflinePageBridgeTest {
     private static final String TEST_PAGE = "/chrome/test/data/android/about.html";
     private static final int TIMEOUT_MS = 5000;
     private static final long POLLING_INTERVAL = 100;
-    private static final ClientId BOOKMARK_ID =
+    static final ClientId BOOKMARK_ID =
             new ClientId(OfflinePageBridge.BOOKMARK_NAMESPACE, "1234");
 
-    private OfflinePageBridge mOfflinePageBridge;
+    OfflinePageBridge mOfflinePageBridge;
     private EmbeddedTestServer mTestServer;
-    private String mTestPage;
+    String mTestPage;
 
     private void initializeBridgeForProfile(final boolean incognitoProfile)
             throws InterruptedException {

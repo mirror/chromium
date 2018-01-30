@@ -58,7 +58,7 @@ public class Desktop
     /** Duration for fade-in and fade-out animations for the ActionBar. */
     private static final int ACTIONBAR_ANIMATION_DURATION_MS = 250;
 
-    private final Event.Raisable<SystemUiVisibilityChangedEventParameter>
+    final Event.Raisable<SystemUiVisibilityChangedEventParameter>
             mOnSystemUiVisibilityChanged = new Event.Raisable<>();
 
     private final Event.Raisable<InputModeChangedEventParameter> mOnInputModeChanged =
@@ -70,13 +70,13 @@ public class Desktop
     private ActivityLifecycleListener mActivityLifecycleListener;
 
     /** Indicates whether a Soft Input UI (such as a keyboard) is visible. */
-    private boolean mSoftInputVisible = false;
+    boolean mSoftInputVisible = false;
 
     /** Holds the scheduled task object which will be called to hide the ActionBar. */
     private Runnable mActionBarAutoHideTask;
 
     /** The Toolbar instance backing our SupportActionBar. */
-    private Toolbar mToolbar;
+    Toolbar mToolbar;
 
     /** Tracks the current input mode (e.g. trackpad/touch). */
     private InputMode mInputMode = InputMode.UNKNOWN;
@@ -96,7 +96,7 @@ public class Desktop
     private boolean mHasPhysicalKeyboard;
 
     /** Tracks whether the activity is in windowed mode. */
-    private boolean mIsInWindowedMode = false;
+    boolean mIsInWindowedMode = false;
 
     /** Called when the activity is first created. */
     @Override
@@ -355,7 +355,7 @@ public class Desktop
     // generated.  Since the function below is only used to listen to, not intercept, the events,
     // the lint warning can be safely suppressed.
     @SuppressLint("ClickableViewAccessibility")
-    private void attachToolbarInteractionListenerToView(View view) {
+    void attachToolbarInteractionListenerToView(View view) {
         view.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent event) {
@@ -395,7 +395,7 @@ public class Desktop
 
     // Posts a deplayed task to hide the ActionBar.  If an existing task has already been scheduled,
     // then the previous task is removed and the new one scheduled, effectively resetting the timer.
-    private void startActionBarAutoHideTimer() {
+    void startActionBarAutoHideTimer() {
         if (mActionBarAutoHideTask != null) {
             stopActionBarAutoHideTimer();
             getWindow().getDecorView().postDelayed(
@@ -404,7 +404,7 @@ public class Desktop
     }
 
     // Clear all existing delayed tasks to prevent the ActionBar from being hidden.
-    private void stopActionBarAutoHideTimer() {
+    void stopActionBarAutoHideTimer() {
         if (mActionBarAutoHideTask != null) {
             getWindow().getDecorView().removeCallbacks(mActionBarAutoHideTask);
         }
@@ -417,11 +417,11 @@ public class Desktop
         onSystemUiVisibilityChange(getWindow().getDecorView().getSystemUiVisibility());
     }
 
-    private boolean isActionBarVisible() {
+    boolean isActionBarVisible() {
         return getSupportActionBar() != null && getSupportActionBar().isShowing();
     }
 
-    private boolean isSystemUiVisible() {
+    boolean isSystemUiVisible() {
         return (getWindow().getDecorView().getSystemUiVisibility() & getFullscreenFlags()) == 0;
     }
 

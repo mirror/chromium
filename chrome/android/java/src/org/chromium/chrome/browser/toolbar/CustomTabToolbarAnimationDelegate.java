@@ -33,13 +33,13 @@ class CustomTabToolbarAnimationDelegate {
     private static final int CUSTOM_TAB_TOOLBAR_SLIDE_DURATION_MS = 200;
     private static final int CUSTOM_TAB_TOOLBAR_FADE_DURATION_MS = 150;
 
-    private final View mSecurityButton;
+    final View mSecurityButton;
     private final View mTitleUrlContainer;
     private final AnimatorSet mSecurityButtonShowAnimator;
     private final AnimatorSet mSecurityButtonHideAnimator;
 
-    private TextView mUrlBar;
-    private TextView mTitleBar;
+    TextView mUrlBar;
+    TextView mTitleBar;
     private int mSecurityButtonWidth;
     // A flag controlling whether the animation has run before.
     private boolean mShouldRunTitleAnimation;

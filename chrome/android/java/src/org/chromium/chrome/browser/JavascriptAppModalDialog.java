@@ -38,7 +38,7 @@ public class JavascriptAppModalDialog implements DialogInterface.OnClickListener
     private CheckBox mSuppressCheckBox;
     private TextView mPromptTextView;
 
-    private JavascriptAppModalDialog(String title, String message,
+    JavascriptAppModalDialog(String title, String message,
             int positiveButtonTextId, int negativeButtonTextId,
             boolean shouldShowSuppressCheckBox) {
         mTitle = title;

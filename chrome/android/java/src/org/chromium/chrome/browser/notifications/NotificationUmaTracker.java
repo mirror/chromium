@@ -62,7 +62,7 @@ public class NotificationUmaTracker {
             "NotificationUmaTracker.LastShownNotificationType";
 
     private static class LazyHolder {
-        private static final NotificationUmaTracker INSTANCE = new NotificationUmaTracker();
+        static final NotificationUmaTracker INSTANCE = new NotificationUmaTracker();
     }
 
     /** Cached objects. */
@@ -73,7 +73,7 @@ public class NotificationUmaTracker {
         return LazyHolder.INSTANCE;
     }
 
-    private NotificationUmaTracker() {
+    NotificationUmaTracker() {
         mSharedPreferences = ContextUtils.getAppSharedPreferences();
         mNotificationManager = NotificationManagerCompat.from(ContextUtils.getApplicationContext());
     }

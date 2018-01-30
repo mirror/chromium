@@ -40,11 +40,11 @@ public class ConnectionInfoPopup implements OnClickListener {
             "https://support.google.com/chrome/answer/95617";
     private static final int DESCRIPTION_TEXT_SIZE_SP = 12;
     private final Context mContext;
-    private final Dialog mDialog;
+    final Dialog mDialog;
     private final LinearLayout mContainer;
     private final WebContents mWebContents;
     private final int mPaddingWide, mPaddingThin;
-    private final long mNativeConnectionInfoPopup;
+    final long mNativeConnectionInfoPopup;
     private TextView mCertificateViewer, mMoreInfoLink;
     private ViewGroup mCertificateLayout, mDescriptionLayout;
     private Button mResetCertDecisionsButton;
@@ -244,7 +244,7 @@ public class ConnectionInfoPopup implements OnClickListener {
 
     private static native long nativeInit(ConnectionInfoPopup popup,
             WebContents webContents);
-    private native void nativeDestroy(long nativeConnectionInfoPopupAndroid);
+    native void nativeDestroy(long nativeConnectionInfoPopupAndroid);
     private native void nativeResetCertDecisions(
             long nativeConnectionInfoPopupAndroid, WebContents webContents);
 }

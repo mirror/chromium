@@ -19,7 +19,7 @@ import org.chromium.content.browser.test.NativeLibraryTestRule;
  * initializing the AccountManagerFacade.
  */
 public class ChromeBrowserTestRule extends NativeLibraryTestRule {
-    private void setUp(Instrumentation instrumentation) {
+    void setUp(Instrumentation instrumentation) {
         ApplicationData.clearAppData(InstrumentationRegistry.getTargetContext());
         SigninTestUtil.setUpAuthForTest(instrumentation);
         loadNativeLibraryAndInitBrowserProcess();
@@ -45,7 +45,7 @@ public class ChromeBrowserTestRule extends NativeLibraryTestRule {
         }, description);
     }
 
-    private void tearDown() {
+    void tearDown() {
         SigninTestUtil.resetSigninState();
         SigninTestUtil.tearDownAuthForTest();
     }

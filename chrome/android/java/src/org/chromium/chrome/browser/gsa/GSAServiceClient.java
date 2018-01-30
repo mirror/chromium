@@ -49,15 +49,15 @@ public class GSAServiceClient {
     static final int ACCOUNT_CHANGE_SOURCE_COUNT = 2;
 
     /** Messenger to handle incoming messages from the service */
-    private final Messenger mMessenger;
+    final Messenger mMessenger;
     private final IncomingHandler mHandler;
     private final GSAServiceConnection mConnection;
-    private final GSAHelper mGsaHelper;
-    private Context mContext;
-    private Callback<Bundle> mOnMessageReceived;
+    final GSAHelper mGsaHelper;
+    Context mContext;
+    Callback<Bundle> mOnMessageReceived;
 
     /** Messenger for communicating with service. */
-    private Messenger mService;
+    Messenger mService;
 
     /**
      * Handler of incoming messages from service.

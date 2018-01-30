@@ -26,7 +26,7 @@ class SystemMessageHandler extends Handler {
     private static final int SCHEDULED_WORK = 1;
     private static final int DELAYED_SCHEDULED_WORK = 2;
 
-    private long mNativeMessagePumpForUI;
+    long mNativeMessagePumpForUI;
     private boolean mScheduledDelayedWork;
 
     private final IdleHandler mIdleHandler = new IdleHandler() {
@@ -168,5 +168,5 @@ class SystemMessageHandler extends Handler {
     }
 
     private native void nativeDoRunLoopOnce(long nativeMessagePumpForUI, boolean delayed);
-    private native void nativeDoIdleWork(long nativeMessagePumpForUI);
+    native void nativeDoIdleWork(long nativeMessagePumpForUI);
 }

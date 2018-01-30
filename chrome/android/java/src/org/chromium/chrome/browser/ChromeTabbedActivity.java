@@ -252,13 +252,13 @@ public class ChromeTabbedActivity
 
     private UndoBarController mUndoBarPopupController;
 
-    private LayoutManagerChrome mLayoutManager;
+    LayoutManagerChrome mLayoutManager;
 
     private ViewGroup mContentContainer;
 
-    private ToolbarControlContainer mControlContainer;
+    ToolbarControlContainer mControlContainer;
 
-    private TabModelSelectorImpl mTabModelSelectorImpl;
+    TabModelSelectorImpl mTabModelSelectorImpl;
     private TabModelSelectorTabObserver mTabModelSelectorTabObserver;
     private TabModelSelectorTabModelObserver mTabModelObserver;
 
@@ -266,7 +266,7 @@ public class ChromeTabbedActivity
 
     private TabModalLifetimeHandler mTabModalHandler;
 
-    private boolean mUIInitialized;
+    boolean mUIInitialized;
 
     private Boolean mMergeTabsOnResume;
 
@@ -274,12 +274,12 @@ public class ChromeTabbedActivity
 
     private LocaleManager mLocaleManager;
 
-    private AppIndexingUtil mAppIndexingUtil;
+    AppIndexingUtil mAppIndexingUtil;
 
     /**
      * Whether an initial tab needs to be created during UI initialization.
      */
-    private Runnable mDelayedInitialTabBehaviorDuringUiInit;
+    Runnable mDelayedInitialTabBehaviorDuringUiInit;
 
     /**
      * Keeps track of whether or not a specific tab was created based on the startup intent.
@@ -290,7 +290,7 @@ public class ChromeTabbedActivity
     private boolean mIntentWithEffect;
 
     // Time at which an intent was received and handled.
-    private long mIntentHandlingTimeMs;
+    long mIntentHandlingTimeMs;
 
     private class TabbedAssistStatusHandler extends AssistStatusHandler {
         public TabbedAssistStatusHandler(Activity activity) {
@@ -1923,7 +1923,7 @@ public class ChromeTabbedActivity
                 action, BACK_PRESSED_COUNT);
     }
 
-    private void recordLauncherShortcutAction(boolean isIncognito) {
+    void recordLauncherShortcutAction(boolean isIncognito) {
         if (isIncognito) {
             RecordUserAction.record("Android.LauncherShortcut.NewIncognitoTab");
         } else {
@@ -2070,7 +2070,7 @@ public class ChromeTabbedActivity
      *                      back to the default behavior for making that determination.
      * @param intent        The original intent.
      */
-    private Tab launchIntent(String url, String referer, String headers,
+    Tab launchIntent(String url, String referer, String headers,
             String externalAppId, boolean forceNewTab, Intent intent) {
         if (mUIInitialized && (getBottomSheet() == null || !NewTabPage.isNTPUrl(url))) {
             mLayoutManager.hideOverview(false);
@@ -2438,7 +2438,7 @@ public class ChromeTabbedActivity
      * @param isIncognito Whether the shortcut or action created a new incognito tab.
      */
     @TargetApi(Build.VERSION_CODES.N_MR1)
-    private void reportNewTabShortcutUsed(boolean isIncognito) {
+    void reportNewTabShortcutUsed(boolean isIncognito) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N_MR1) return;
 
         ShortcutManager shortcutManager = getSystemService(ShortcutManager.class);

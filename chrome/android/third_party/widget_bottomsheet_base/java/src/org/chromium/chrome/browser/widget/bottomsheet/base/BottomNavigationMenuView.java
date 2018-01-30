@@ -43,8 +43,8 @@ public class BottomNavigationMenuView extends LinearLayout implements MenuView {
     private int mItemBackgroundRes;
     private int mMenuWidth;
 
-    private BottomNavigationPresenter mPresenter;
-    private MenuBuilder mMenu;
+    BottomNavigationPresenter mPresenter;
+    MenuBuilder mMenu;
 
     public BottomNavigationMenuView(Context context) {
         this(context, null);
@@ -197,7 +197,7 @@ public class BottomNavigationMenuView extends LinearLayout implements MenuView {
         }
     }
 
-    private void activateNewButton(int newButton) {
+    void activateNewButton(int newButton) {
         if (mActiveButton == newButton) return;
 
         mMenu.getItem(newButton).setChecked(true);

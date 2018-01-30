@@ -32,7 +32,7 @@ public class SnackbarTest {
     @Rule
     public ChromeTabbedActivityTestRule mActivityTestRule = new ChromeTabbedActivityTestRule();
 
-    private SnackbarManager mManager;
+    SnackbarManager mManager;
     private SnackbarController mDefaultController = new SnackbarController() {
         @Override
         public void onDismissNoAction(Object actionData) {
@@ -43,7 +43,7 @@ public class SnackbarTest {
         }
     };
 
-    private SnackbarController mDismissController = new SnackbarController() {
+    SnackbarController mDismissController = new SnackbarController() {
         @Override
         public void onDismissNoAction(Object actionData) {
             mDismissed = true;
@@ -53,7 +53,7 @@ public class SnackbarTest {
         public void onAction(Object actionData) { }
     };
 
-    private boolean mDismissed;
+    boolean mDismissed;
 
     @Before
     public void setUp() throws InterruptedException {

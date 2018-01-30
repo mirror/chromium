@@ -74,9 +74,9 @@ public class GoogleApiClientHelper
     private int mResolutionAttempts;
     private boolean mWasConnectedBefore;
     private final Handler mHandler = new Handler(ThreadUtils.getUiThreadLooper());
-    private final GoogleApiClient mClient;
+    final GoogleApiClient mClient;
     private long mDisconnectionDelayMs;
-    private Runnable mPendingDisconnect;
+    Runnable mPendingDisconnect;
 
     /**
      * Creates a helper and enrolls it in the various connection management features.
@@ -191,7 +191,7 @@ public class GoogleApiClientHelper
         mHandler.postDelayed(mPendingDisconnect, mDisconnectionDelayMs);
     }
 
-    private void disconnect() {
+    void disconnect() {
         if (mClient.isConnected() || mClient.isConnecting()) {
             mWasConnectedBefore = true;
         }

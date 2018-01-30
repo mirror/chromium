@@ -32,9 +32,9 @@ import java.util.List;
  */
 public class TranslateMenuHelper implements AdapterView.OnItemClickListener {
     private final TranslateMenuListener mMenuListener;
-    private final TranslateOptions mOptions;
+    final TranslateOptions mOptions;
 
-    private ContextThemeWrapper mContextWrapper;
+    ContextThemeWrapper mContextWrapper;
     private TranslateMenuAdapter mAdapter;
     private View mAnchorView;
     private ListPopupWindow mPopup;
@@ -59,7 +59,7 @@ public class TranslateMenuHelper implements AdapterView.OnItemClickListener {
     /**
      * Build translate menu by menu type.
      */
-    private List<TranslateMenu.MenuItem> getMenuList(int menuType) {
+    List<TranslateMenu.MenuItem> getMenuList(int menuType) {
         List<TranslateMenu.MenuItem> menuList = new ArrayList<TranslateMenu.MenuItem>();
         if (menuType == TranslateMenu.MENU_OVERFLOW) {
             // TODO(googleo): Add language short list above static menu after its data is ready.
@@ -210,7 +210,7 @@ public class TranslateMenuHelper implements AdapterView.OnItemClickListener {
      */
     private final class TranslateMenuAdapter extends ArrayAdapter<TranslateMenu.MenuItem> {
         private final LayoutInflater mInflater;
-        private int mMenuType;
+        int mMenuType;
 
         public TranslateMenuAdapter(int menuType) {
             super(mContextWrapper, R.layout.translate_menu_item, getMenuList(menuType));
@@ -218,7 +218,7 @@ public class TranslateMenuHelper implements AdapterView.OnItemClickListener {
             mMenuType = menuType;
         }
 
-        private void refreshMenu(int menuType) {
+        void refreshMenu(int menuType) {
             // MENU_OVERFLOW is static and it should not reload.
             if (menuType == TranslateMenu.MENU_OVERFLOW) return;
 

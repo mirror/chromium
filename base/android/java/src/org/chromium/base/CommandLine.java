@@ -403,10 +403,10 @@ public abstract class CommandLine {
         }
     }
 
-    private static native void nativeInit(String[] args);
-    private static native boolean nativeHasSwitch(String switchString);
-    private static native String nativeGetSwitchValue(String switchString);
-    private static native void nativeAppendSwitch(String switchString);
-    private static native void nativeAppendSwitchWithValue(String switchString, String value);
-    private static native void nativeAppendSwitchesAndArguments(String[] array);
+    static native void nativeInit(String[] args);
+    static native boolean nativeHasSwitch(String switchString);
+    static native String nativeGetSwitchValue(String switchString);
+    static native void nativeAppendSwitch(String switchString);
+    static native void nativeAppendSwitchWithValue(String switchString, String value);
+    static native void nativeAppendSwitchesAndArguments(String[] array);
 }

@@ -91,10 +91,10 @@ public class CustomTabTabPersistencePolicy implements TabPersistencePolicy {
     }
 
     private final int mTaskId;
-    private final boolean mShouldRestore;
+    final boolean mShouldRestore;
 
     private AsyncTask<Void, Void, Void> mInitializationTask;
-    private boolean mDestroyed;
+    boolean mDestroyed;
 
     /**
      * Constructs a persistence policy for a given Custom Tab.

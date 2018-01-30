@@ -185,7 +185,7 @@ public class NewTabPageAdapterTest {
      * expressed as a sequence of calls to the {@code expect...()} methods.
      */
     private static class ItemsMatcher { // TODO(pke): Find better name.
-        private final TreeNode mRoot;
+        final TreeNode mRoot;
         private final NodeVisitor mVisitor = mock(NodeVisitor.class);
         private final InOrder mInOrder = inOrder(mVisitor);
 

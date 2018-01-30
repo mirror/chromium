@@ -34,41 +34,41 @@ import javax.annotation.Nullable;
 class ContextualSearchFakeServer
         implements ContextualSearchNetworkCommunicator, OverlayPanelContentFactory {
 
-    private final ContextualSearchPolicy mPolicy;
+    final ContextualSearchPolicy mPolicy;
 
-    private final ContextualSearchManagerTest mManagerTest;
+    final ContextualSearchManagerTest mManagerTest;
     private final ContextualSearchNetworkCommunicator mBaseManager;
 
     private final OverlayContentDelegate mContentDelegate;
     private final OverlayContentProgressObserver mProgressObserver;
     private final ChromeActivity mActivity;
 
-    private final ArrayList<String> mRemovedUrls = new ArrayList<String>();
+    final ArrayList<String> mRemovedUrls = new ArrayList<String>();
 
     private final Map<String, FakeTapSearch> mFakeTapSearches = new HashMap<>();
     private final Map<String, FakeLongPressSearch> mFakeLongPressSearches = new HashMap<>();
     private final Map<String, FakeSlowResolveSearch> mFakeSlowResolveSearches = new HashMap<>();
 
-    private FakeTapSearch mActiveFakeTapSearch;
+    FakeTapSearch mActiveFakeTapSearch;
 
-    private String mLoadedUrl;
-    private int mLoadedUrlCount;
-    private boolean mUseInvalidLowPriorityPath;
+    String mLoadedUrl;
+    int mLoadedUrlCount;
+    boolean mUseInvalidLowPriorityPath;
 
     private String mSearchTermRequested;
     private boolean mShouldUseHttps;
     private boolean mIsOnline = true;
 
-    private boolean mDidEverCallContentViewCoreOnShow;
+    boolean mDidEverCallContentViewCoreOnShow;
 
     private class ContentsObserver extends WebContentsObserver {
         private boolean mIsVisible;
 
-        private ContentsObserver(WebContents webContents) {
+        ContentsObserver(WebContents webContents) {
             super(webContents);
         }
 
-        private boolean isVisible() {
+        boolean isVisible() {
             return mIsVisible;
         }
 
@@ -84,7 +84,7 @@ class ContextualSearchFakeServer
         }
     };
 
-    private ContentsObserver mContentsObserver;
+    ContentsObserver mContentsObserver;
 
     boolean isContentVisible() {
         return mContentsObserver.isVisible();
@@ -168,20 +168,20 @@ class ContextualSearchFakeServer
      * Class that represents a fake tap triggered contextual search.
      */
     public class FakeTapSearch extends FakeSearch {
-        private final boolean mIsNetworkUnavailable;
-        private final int mResponseCode;
+        final boolean mIsNetworkUnavailable;
+        final int mResponseCode;
         protected final String mSearchTerm;
-        private final String mDisplayText;
-        private final String mAlternateTerm;
-        private final String mMid;
-        private final boolean mDoPreventPreload;
-        private final int mStartAdjust;
-        private final int mEndAdjust;
-        private final String mContextLanguage;
-        private final String mThumbnailUrl;
-        private final String mCaption;
-        private final String mQuickActionUri;
-        private final int mQuickActionCategory;
+        final String mDisplayText;
+        final String mAlternateTerm;
+        final String mMid;
+        final boolean mDoPreventPreload;
+        final int mStartAdjust;
+        final int mEndAdjust;
+        final String mContextLanguage;
+        final String mThumbnailUrl;
+        final String mCaption;
+        final String mQuickActionUri;
+        final int mQuickActionCategory;
 
         boolean mDidStartResolution;
         boolean mDidFinishResolution;

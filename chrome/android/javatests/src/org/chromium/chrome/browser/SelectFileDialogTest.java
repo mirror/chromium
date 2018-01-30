@@ -90,7 +90,7 @@ public class SelectFileDialogTest {
     }
 
     private ContentViewCore mContentViewCore;
-    private ActivityWindowAndroidForTest mActivityWindowAndroidForTest;
+    ActivityWindowAndroidForTest mActivityWindowAndroidForTest;
 
     @Before
     public void setUp() throws Exception {

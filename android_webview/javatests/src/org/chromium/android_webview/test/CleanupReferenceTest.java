@@ -22,7 +22,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /** Test suite for {@link CleanupReference}. */
 @RunWith(BaseJUnit4ClassRunner.class)
 public class CleanupReferenceTest {
-    private static AtomicInteger sObjectCount = new AtomicInteger();
+    static AtomicInteger sObjectCount = new AtomicInteger();
 
     private static class ReferredObject {
 

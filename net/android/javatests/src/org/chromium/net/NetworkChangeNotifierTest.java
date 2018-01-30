@@ -307,7 +307,7 @@ public class NetworkChangeNotifierTest {
         }
     }
 
-    private static int demungeNetId(long netId) {
+    static int demungeNetId(long netId) {
         // On Marshmallow, demunge the NetID to undo munging done in Network.getNetworkHandle().
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             netId >>= 32;
@@ -405,7 +405,7 @@ public class NetworkChangeNotifierTest {
      * @param watchForChanges indicates whether app wants to watch for changes always or only when
      *            it is in the foreground.
      */
-    private void createTestNotifier(WatchForChanges watchForChanges) {
+    void createTestNotifier(WatchForChanges watchForChanges) {
         Context context = new ContextWrapper(InstrumentationRegistry.getInstrumentation()
                                                      .getTargetContext()
                                                      .getApplicationContext()) {

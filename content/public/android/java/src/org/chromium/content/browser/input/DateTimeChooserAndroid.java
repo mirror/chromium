@@ -19,7 +19,7 @@ import org.chromium.ui.base.WindowAndroid;
 @JNINamespace("content")
 class DateTimeChooserAndroid {
 
-    private final long mNativeDateTimeChooserAndroid;
+    final long mNativeDateTimeChooserAndroid;
     private final InputDialogContainer mInputDialogContainer;
 
     private DateTimeChooserAndroid(Context context,
@@ -79,8 +79,8 @@ class DateTimeChooserAndroid {
         array[index] = new DateTimeSuggestion(value, localizedValue, label);
     }
 
-    private native void nativeReplaceDateTime(long nativeDateTimeChooserAndroid,
-                                              double dialogValue);
+    native void nativeReplaceDateTime(long nativeDateTimeChooserAndroid,
+            double dialogValue);
 
-    private native void nativeCancelDialog(long nativeDateTimeChooserAndroid);
+    native void nativeCancelDialog(long nativeDateTimeChooserAndroid);
 }

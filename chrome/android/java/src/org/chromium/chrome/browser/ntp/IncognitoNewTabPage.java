@@ -36,7 +36,7 @@ public class IncognitoNewTabPage implements NativePage, InvalidationAwareThumbna
     private final int mThemeColor;
     protected final IncognitoNewTabPageView mIncognitoNewTabPageView;
 
-    private boolean mIsLoaded;
+    boolean mIsLoaded;
 
     private final IncognitoNewTabPageManager mIncognitoNewTabPageManager =
             new IncognitoNewTabPageManager() {
@@ -67,7 +67,7 @@ public class IncognitoNewTabPage implements NativePage, InvalidationAwareThumbna
         }
     };
 
-    private void showIncognitoLearnMore() {
+    void showIncognitoLearnMore() {
         HelpAndFeedback.getInstance(mActivity).show(mActivity,
                 mActivity.getString(R.string.help_context_incognito_learn_more),
                 Profile.getLastUsedProfile(), null);

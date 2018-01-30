@@ -39,8 +39,8 @@ public class PopupZoomerTest {
     @Rule
     public ContentShellActivityTestRule mActivityTestRule = new ContentShellActivityTestRule();
 
-    private CustomCanvasPopupZoomer mPopupZoomer;
-    private ContentViewCoreImpl mContentViewCore;
+    CustomCanvasPopupZoomer mPopupZoomer;
+    ContentViewCoreImpl mContentViewCore;
 
     private static class CustomCanvasPopupZoomer extends PopupZoomer {
         Canvas mCanvas;
@@ -81,7 +81,7 @@ public class PopupZoomerTest {
         }
     }
 
-    private CustomCanvasPopupZoomer createPopupZoomerForTest(
+    CustomCanvasPopupZoomer createPopupZoomerForTest(
             Context context, WebContents webContents, ViewGroup containerView) {
         return new CustomCanvasPopupZoomer(context, webContents, containerView,
                 new Canvas(Bitmap.createBitmap(100, 100, Bitmap.Config.ALPHA_8)));

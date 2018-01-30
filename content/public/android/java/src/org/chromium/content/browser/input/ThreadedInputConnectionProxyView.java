@@ -28,7 +28,7 @@ public class ThreadedInputConnectionProxyView extends View {
     private static final boolean DEBUG_LOGS = false;
 
     private final Handler mImeThreadHandler;
-    private final View mContainerView;
+    final View mContainerView;
     private final AtomicBoolean mFocused = new AtomicBoolean();
     private final AtomicBoolean mWindowFocused = new AtomicBoolean();
     private final AtomicReference<IBinder> mWindowToken = new AtomicReference<>();

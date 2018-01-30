@@ -125,10 +125,10 @@ public class BottomToolbarPhone extends ToolbarPhone {
     private final Drawable mHandleDark;
 
     /** A handle to the bottom sheet. */
-    private BottomSheet mBottomSheet;
+    BottomSheet mBottomSheet;
 
     /** A handle to the expand button that Chrome Home may or may not use. */
-    private TintedImageButton mExpandButton;
+    TintedImageButton mExpandButton;
 
     /**
      * Whether some of the toolbar buttons are hidden regardless of whether the URL bar is focused.
@@ -141,13 +141,13 @@ public class BottomToolbarPhone extends ToolbarPhone {
     /**
      * This tracks the height fraction of the bottom bar to determine if it is moving up or down.
      */
-    private float mLastHeightFraction;
+    float mLastHeightFraction;
 
     /**
      * This tracks the peek-to-half height fraction of the bottom bar to determine if it is moving
      * up or down.
      */
-    private float mLastPeekToHalfHeightFraction;
+    float mLastPeekToHalfHeightFraction;
 
     /** The toolbar handle view that indicates the toolbar can be pulled upward. */
     private ImageView mToolbarHandleView;
@@ -202,10 +202,10 @@ public class BottomToolbarPhone extends ToolbarPhone {
     private int mLocationBarExtraFocusedLeftMargin;
 
     /** The top shadow drawable of the bottom toolbar if it exists. */
-    private LayerDrawable mBottomToolbarTopShadowDrawable;
+    LayerDrawable mBottomToolbarTopShadowDrawable;
 
     /** Observer of the infobar container to change the toolbar shadow. */
-    private InfoBarContainerObserver mInfoBarContainerObserver;
+    InfoBarContainerObserver mInfoBarContainerObserver;
 
     /**
      * A tab observer to attach/detach the {@link InfoBarContainerObserver} for the bottom toolbar
@@ -422,7 +422,7 @@ public class BottomToolbarPhone extends ToolbarPhone {
      * @param end The end opacity of the primary drawable.
      * @return An {@link Animator} that runs the transition.
      */
-    private Animator createShadowTransitionAnimator(float start, float end) {
+    Animator createShadowTransitionAnimator(float start, float end) {
         ValueAnimator transition = ValueAnimator.ofFloat(start, end);
         transition.setDuration(DURATION_SHADOW_TRANSITION_MS);
         transition.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -952,7 +952,7 @@ public class BottomToolbarPhone extends ToolbarPhone {
      * animation.
      * @param isMovingUp Whether the sheet is currently moving up.
      */
-    private void updateToolbarButtonAnimation(boolean isMovingUp) {
+    void updateToolbarButtonAnimation(boolean isMovingUp) {
         // Update the interpolator if the toolbar buttons are fully visible or fully hidden.
         if (mToolbarButtonVisibilityPercent == 0.f || mToolbarButtonVisibilityPercent == 1.f) {
             mToolbarButtonAnimationIterpolator = isMovingUp ? BakedBezierInterpolator.FADE_OUT_CURVE
@@ -1172,12 +1172,12 @@ public class BottomToolbarPhone extends ToolbarPhone {
         }
     }
 
-    private void updateMenuButtonClickableState() {
+    void updateMenuButtonClickableState() {
         mMenuButton.setClickable(
                 !urlHasFocus() && (!mBottomSheet.isSheetOpen() || mBottomSheet.isShowingNewTab()));
     }
 
-    private void updateContentDescription() {
+    void updateContentDescription() {
         if (isInTabSwitcherMode() || mBottomSheet.isSheetOpen()) {
             setContentDescription(null);
         } else {

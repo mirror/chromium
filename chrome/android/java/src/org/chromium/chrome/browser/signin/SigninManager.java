@@ -171,7 +171,7 @@ public class SigninManager implements AccountTrackerService.OnSystemAccountsSeed
         /**
          * Returns whether the sign-in flow activity was set but is no longer visible to the user.
          */
-        private boolean isActivityInvisible() {
+        boolean isActivityInvisible() {
             return activity != null
                     && (ApplicationStatus.getStateForActivity(activity) == ActivityState.STOPPED
                                || ApplicationStatus.getStateForActivity(activity)

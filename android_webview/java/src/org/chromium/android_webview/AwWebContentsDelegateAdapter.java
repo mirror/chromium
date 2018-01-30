@@ -38,10 +38,10 @@ import org.chromium.content_public.common.ResourceRequestBody;
 class AwWebContentsDelegateAdapter extends AwWebContentsDelegate {
     private static final String TAG = "AwWebContentsDelegateAdapter";
 
-    private final AwContents mAwContents;
+    final AwContents mAwContents;
     private final AwContentsClient mContentsClient;
     private final AwSettings mAwSettings;
-    private final Context mContext;
+    final Context mContext;
     private View mContainerView;
     private FrameLayout mCustomView;
     private AwContentVideoViewEmbedder mVideoViewEmbedder;

@@ -80,16 +80,16 @@ public class VideoCaptureCamera
     }
 
     private int mExpectedFrameSize;
-    private final Object mPhotoTakenCallbackLock = new Object();
+    final Object mPhotoTakenCallbackLock = new Object();
 
     // Storage of takePicture() callback Id. There can be one such request in flight at most, and
     // needs to be exercised either in case of error or success.
-    private long mPhotoTakenCallbackId;
+    long mPhotoTakenCallbackId;
 
     private int mPhotoWidth;
     private int mPhotoHeight;
     private android.hardware.Camera.Area mAreaOfInterest;
-    private android.hardware.Camera.Parameters mPreviewParameters;
+    android.hardware.Camera.Parameters mPreviewParameters;
 
     private android.hardware.Camera mCamera;
     // Lock to mutually exclude execution of OnPreviewFrame() and {start/stop}Capture().

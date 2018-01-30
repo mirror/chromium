@@ -60,7 +60,7 @@ public class PopularUrlsTest {
             new ChromeActivityTestRule<>(ChromeActivity.class);
 
     private static final String TAG = "PopularUrlsTest";
-    private static final String NEW_LINE = System.getProperty("line.separator");
+    static final String NEW_LINE = System.getProperty("line.separator");
     private static final File INPUT_FILE =
             new File(Environment.getExternalStorageDirectory(), "popular_urls.txt");
     private static final File OUTPUT_FILE =

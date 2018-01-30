@@ -18,7 +18,7 @@ import org.chromium.base.VisibleForTesting;
 public class VersionNumberGetter {
 
     private static final class LazyHolder {
-        private static final VersionNumberGetter INSTANCE = new VersionNumberGetter();
+        static final VersionNumberGetter INSTANCE = new VersionNumberGetter();
     }
 
     @VisibleForTesting

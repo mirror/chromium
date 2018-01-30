@@ -69,7 +69,7 @@ public class DexLoaderTest {
     private Context mRemoteContext;
     private DexLoader mDexLoader;
     private File mLocalDexDir;
-    private IDexOptimizerService mDexOptimizerService;
+    IDexOptimizerService mDexOptimizerService;
     private ServiceConnection mServiceConnection;
 
     /**

@@ -110,7 +110,7 @@ public class TileGridLayoutTest {
     private static final String[] FAKE_MOST_VISITED_TITLES =
             new String[] {"ONE", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE"};
 
-    private final CallbackHelper mLoadCompleteHelper = new CallbackHelper();
+    final CallbackHelper mLoadCompleteHelper = new CallbackHelper();
 
     @Test
     @SmallTest
@@ -337,7 +337,7 @@ public class TileGridLayoutTest {
      * @param requestedOrientation The requested orientation, as used in
      *         {@link ActivityInfo#screenOrientation}.
      */
-    private boolean orientationMatchesRequest(Activity activity, int requestedOrientation) {
+    boolean orientationMatchesRequest(Activity activity, int requestedOrientation) {
         // Note: Requests use a constant from ActivityInfo, not Configuration.ORIENTATION_*!
         boolean expectLandscape = requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
 

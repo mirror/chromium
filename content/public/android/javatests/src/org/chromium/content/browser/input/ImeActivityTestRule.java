@@ -45,15 +45,15 @@ import java.util.concurrent.TimeoutException;
 class ImeActivityTestRule extends ContentShellActivityTestRule {
     private ChromiumBaseInputConnection mConnection;
     private TestInputConnectionFactory mConnectionFactory;
-    private ImeAdapter mImeAdapter;
+    ImeAdapter mImeAdapter;
 
     static final String INPUT_FORM_HTML = "content/test/data/android/input/input_forms.html";
     static final String PASSWORD_FORM_HTML = "content/test/data/android/input/password_form.html";
 
-    private ContentViewCore mContentViewCore;
-    private SelectionPopupControllerImpl mSelectionPopupController;
+    ContentViewCore mContentViewCore;
+    SelectionPopupControllerImpl mSelectionPopupController;
     private TestCallbackHelperContainer mCallbackContainer;
-    private TestInputMethodManagerWrapper mInputMethodManagerWrapper;
+    TestInputMethodManagerWrapper mInputMethodManagerWrapper;
 
     public void setUpForUrl(String url) throws Exception {
         launchContentShellWithUrlSync(url);

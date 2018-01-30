@@ -23,9 +23,9 @@ import java.io.File;
  * Android Webview-specific implementations for minidump uploading logic.
  */
 public class AwMinidumpUploaderDelegate implements MinidumpUploaderDelegate {
-    private final ConnectivityManager mConnectivityManager;
+    final ConnectivityManager mConnectivityManager;
 
-    private boolean mPermittedByUser = false;
+    boolean mPermittedByUser = false;
 
     @VisibleForTesting
     public AwMinidumpUploaderDelegate() {

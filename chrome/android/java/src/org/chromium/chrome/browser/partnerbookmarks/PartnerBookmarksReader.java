@@ -25,7 +25,7 @@ import javax.annotation.concurrent.GuardedBy;
 */
 public class PartnerBookmarksReader {
     private static final String TAG = "PartnerBMReader";
-    private static Set<FaviconUpdateObserver> sFaviconUpdateObservers = new HashSet<>();
+    static Set<FaviconUpdateObserver> sFaviconUpdateObservers = new HashSet<>();
 
     static final String LAST_EMPTY_READ_PREFS_NAME = "PartnerBookmarksReader.last_empty_read";
 
@@ -39,7 +39,7 @@ public class PartnerBookmarksReader {
     static final long INVALID_BOOKMARK_ID = -1;
 
     /** Storage for failed favicon retrieval attempts to throttle future requests. **/
-    private PartnerBookmarksFaviconThrottle mFaviconThrottle;
+    PartnerBookmarksFaviconThrottle mFaviconThrottle;
 
     // JNI c++ pointer
     private long mNativePartnerBookmarksReader;
@@ -50,14 +50,14 @@ public class PartnerBookmarksReader {
     // Favicons are loaded asynchronously so we need to keep track of how many are currently in
     // progress, as well as whether or not we've finished reading bookmarks from this class so we
     // don't end up shutting the bookmark reader down prematurely.
-    private final Object mProgressLock = new Object();
+    final Object mProgressLock = new Object();
     @GuardedBy("mProgressLock")
-    private int mNumFaviconsInProgress;
+    int mNumFaviconsInProgress;
     @GuardedBy("mProgressLock")
     private boolean mShutDown;
     @GuardedBy("mProgressLock")
-    private boolean mFaviconsFetchedFromServer;
-    private boolean mFinishedReading;
+    boolean mFaviconsFetchedFromServer;
+    boolean mFinishedReading;
 
     /**
      * Observer for listeners to receive updates when changes are made to the favicon cache.
@@ -139,7 +139,7 @@ public class PartnerBookmarksReader {
      * @param touchicon .PNG blob for icon.
      * @return          NATIVE id of a bookmark
      */
-    private long onBookmarkPush(String url, String title, boolean isFolder, long parentId,
+    long onBookmarkPush(String url, String title, boolean isFolder, long parentId,
             byte[] favicon, byte[] touchicon) {
         FetchFaviconCallback callback = new FetchFaviconCallback() {
             @Override
@@ -399,6 +399,6 @@ public class PartnerBookmarksReader {
             String title, boolean isFolder, long parentId, byte[] favicon, byte[] touchicon,
             boolean fetchUncachedFaviconsFromServer, FetchFaviconCallback callback);
     private native void nativePartnerBookmarksCreationComplete(long nativePartnerBookmarksReader);
-    private static native String nativeGetNativeUrlString(String url);
+    static native String nativeGetNativeUrlString(String url);
     private static native void nativeDisablePartnerBookmarksEditing();
 }

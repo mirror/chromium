@@ -30,17 +30,17 @@ public class ThreadedInputConnectionFactory implements ChromiumBaseInputConnecti
     // UI message loop until View#hasWindowFocus() is aligned with what IMMS sees.
     private static final int CHECK_REGISTER_RETRY = 1;
 
-    private final InputMethodManagerWrapper mInputMethodManagerWrapper;
+    final InputMethodManagerWrapper mInputMethodManagerWrapper;
     private final InputMethodUma mInputMethodUma;
-    private ThreadedInputConnectionProxyView mProxyView;
+    ThreadedInputConnectionProxyView mProxyView;
     private ThreadedInputConnection mThreadedInputConnection;
-    private CheckInvalidator mCheckInvalidator;
+    CheckInvalidator mCheckInvalidator;
     private boolean mReentrantTriggering;
 
     // Initialization-on-demand holder for Handler.
     private static class LazyHandlerHolder {
         // Note that we never exit this thread to avoid lifetime or thread-safety issues.
-        private static final Handler sHandler;
+        static final Handler sHandler;
         static {
             HandlerThread handlerThread =
                     new HandlerThread("InputConnectionHandlerThread", HandlerThread.NORM_PRIORITY);
@@ -192,7 +192,7 @@ public class ThreadedInputConnectionFactory implements ChromiumBaseInputConnecti
     }
 
     // Note that this function is called both from IME thread and UI thread.
-    private void postCheckRegisterResultOnUiThread(final View view,
+    void postCheckRegisterResultOnUiThread(final View view,
             final CheckInvalidator checkInvalidator, final int retry) {
         // Now posting on UI thread to access view methods.
         final Handler viewHandler = view.getHandler();
@@ -205,7 +205,7 @@ public class ThreadedInputConnectionFactory implements ChromiumBaseInputConnecti
         });
     }
 
-    private void checkRegisterResult(View view, CheckInvalidator checkInvalidator, int retry) {
+    void checkRegisterResult(View view, CheckInvalidator checkInvalidator, int retry) {
         if (DEBUG_LOGS) Log.i(TAG, "checkRegisterResult - retry: " + retry);
         // Success.
         if (mInputMethodManagerWrapper.isActive(mProxyView)) {

@@ -92,8 +92,8 @@ public class GeolocationHeaderUnitTest {
             "CAEQDLoBJAoeChExMToxMToxMToxMToxMToxMRD___________8BGAEgCroBJAoeChExMToxMToxMToxMTox"
             + "MToxMxDi__________8BGAAgHroBEBIKCAMQChgLIAwoDRgBIAq6ARASCggBEBQYFSAWKBcYACAU";
 
-    private static int sRefreshVisibleNetworksRequests = 0;
-    private static int sRefreshLastKnownLocation = 0;
+    static int sRefreshVisibleNetworksRequests = 0;
+    static int sRefreshLastKnownLocation = 0;
 
     @Rule
     public TestRule mFeatureProcessor = new Features.JUnitProcessor();

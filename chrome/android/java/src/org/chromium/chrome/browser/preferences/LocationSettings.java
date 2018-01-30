@@ -107,5 +107,5 @@ public class LocationSettings {
         sInstance = instance;
     }
 
-    private static native void nativeOnLocationSettingsDialogOutcome(long callback, int result);
+    static native void nativeOnLocationSettingsDialogOutcome(long callback, int result);
 }

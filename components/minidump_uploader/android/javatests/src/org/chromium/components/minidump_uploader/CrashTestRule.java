@@ -48,7 +48,7 @@ public class CrashTestRule implements TestRule {
         return mCacheDir;
     }
 
-    private void setUp() throws Exception {
+    void setUp() throws Exception {
         ContextUtils.initApplicationContextForTests(
                 InstrumentationRegistry.getTargetContext().getApplicationContext());
         if (mCacheDir == null) {
@@ -70,7 +70,7 @@ public class CrashTestRule implements TestRule {
         return ContextUtils.getApplicationContext().getCacheDir();
     }
 
-    private void tearDown() throws Exception {
+    void tearDown() throws Exception {
         File[] crashFiles = mCrashDir.listFiles();
         if (crashFiles == null) {
             return;

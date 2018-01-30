@@ -42,7 +42,7 @@ public class CookieManagerTest {
     @Rule
     public AwActivityTestRule mActivityTestRule = new AwActivityTestRule();
 
-    private AwCookieManager mCookieManager;
+    AwCookieManager mCookieManager;
     private TestAwContentsClient mContentsClient;
     private AwContents mAwContents;
 
@@ -743,7 +743,7 @@ public class CookieManagerTest {
      * @param  url the url which which should appear as the src of the iframe.
      * @return  the url which gets the response
      */
-    private String makeIframeUrl(TestWebServer webServer, String path, String url) {
+    String makeIframeUrl(TestWebServer webServer, String path, String url) {
         String responseStr = "<html><head><title>Content!</title></head>"
                 + "<body><iframe src=" + url + "></iframe></body></html>";
         return webServer.setResponse(path, responseStr, null);
@@ -757,7 +757,7 @@ public class CookieManagerTest {
      * @param  value the value of the cookie
      * @return  the url which gets the response
      */
-    private String makeCookieScriptUrl(TestWebServer webServer, String path, String key,
+    String makeCookieScriptUrl(TestWebServer webServer, String path, String key,
             String value) {
         String response = "<html><head></head><body>"
                 + "<script>document.cookie = \"" + key + "=" + value + "\";</script></body></html>";
@@ -769,7 +769,7 @@ public class CookieManagerTest {
      * @param  url the url to fake.
      * @return  the resulting url after faking.
      */
-    private String toThirdPartyUrl(String url) {
+    String toThirdPartyUrl(String url) {
         return url.replace("localhost", "127.0.0.1");
     }
 
@@ -792,7 +792,7 @@ public class CookieManagerTest {
     /**
      * Clears all cookies synchronously.
      */
-    private void clearCookies() throws Throwable {
+    void clearCookies() throws Throwable {
         CookieUtils.clearCookies(InstrumentationRegistry.getInstrumentation(), mCookieManager);
     }
 
@@ -800,7 +800,7 @@ public class CookieManagerTest {
         AwActivityTestRule.pollInstrumentationThread(() -> mCookieManager.getCookie(url) != null);
     }
 
-    private void validateCookies(String responseCookie, String... expectedCookieNames) {
+    void validateCookies(String responseCookie, String... expectedCookieNames) {
         String[] cookies = responseCookie.split(";");
         Set<String> foundCookieNames = new HashSet<String>();
         for (String cookie : cookies) {

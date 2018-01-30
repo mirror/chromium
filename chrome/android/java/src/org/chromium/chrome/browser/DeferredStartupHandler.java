@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 public class DeferredStartupHandler {
     private static class Holder {
         @SuppressLint("StaticFieldLeak")
-        private static final DeferredStartupHandler INSTANCE = new DeferredStartupHandler();
+        static final DeferredStartupHandler INSTANCE = new DeferredStartupHandler();
     }
 
     private boolean mDeferredStartupCompletedForApp;

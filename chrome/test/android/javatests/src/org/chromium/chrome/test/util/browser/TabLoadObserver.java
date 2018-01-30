@@ -29,9 +29,9 @@ public class TabLoadObserver extends EmptyTabObserver {
     private final CallbackHelper mTabLoadStartedCallback = new CallbackHelper();
     private final CallbackHelper mTabLoadFinishedCallback = new CallbackHelper();
 
-    private final Tab mTab;
-    private final String mExpectedTitle;
-    private final Float mExpectedScale;
+    final Tab mTab;
+    final String mExpectedTitle;
+    final Float mExpectedScale;
 
     public TabLoadObserver(Tab tab) {
         this(tab, null, null);

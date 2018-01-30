@@ -44,8 +44,8 @@ public class OmniboxUrlEmphasizerTest {
     public final RuleChain mChain =
             RuleChain.outerRule(new ChromeBrowserTestRule()).around(new UiThreadTestRule());
 
-    private Profile mProfile;
-    private Resources mResources;
+    Profile mProfile;
+    Resources mResources;
 
     @Before
     public void setUp() throws Exception {
@@ -77,7 +77,7 @@ public class OmniboxUrlEmphasizerTest {
             return mParent.subSequence(getStartIndex(), getEndIndex()).toString();
         }
 
-        private int getStartIndex() {
+        int getStartIndex() {
             return mParent.getSpanStart(mSpan);
         }
 

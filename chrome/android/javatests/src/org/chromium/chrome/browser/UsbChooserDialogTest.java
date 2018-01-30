@@ -63,7 +63,7 @@ public class UsbChooserDialogTest {
         void nativeLoadUsbHelpPage(long nativeUsbChooserDialogAndroid) {}
     }
 
-    private UsbChooserDialogWithFakeNatives mChooserDialog;
+    UsbChooserDialogWithFakeNatives mChooserDialog;
 
     @Before
     public void setUp() throws Exception {

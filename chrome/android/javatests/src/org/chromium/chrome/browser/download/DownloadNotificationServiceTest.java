@@ -146,7 +146,7 @@ public class DownloadNotificationServiceTest
         return ((DownloadNotificationService.LocalBinder) service).getService();
     }
 
-    private static Handler getTestHandler() {
+    static Handler getTestHandler() {
         HandlerThread handlerThread = new HandlerThread("handlerThread");
         handlerThread.start();
         return new Handler(handlerThread.getLooper());

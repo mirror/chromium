@@ -33,7 +33,7 @@ public class WebContentsObserverAndroidTest {
     @Rule
     public ContentShellActivityTestRule mActivityTestRule = new ContentShellActivityTestRule();
 
-    private static final String URL = UrlUtils.encodeHtmlDataUri(
+    static final String URL = UrlUtils.encodeHtmlDataUri(
             "<html><head></head><body>didFirstVisuallyNonEmptyPaint test</body></html>");
 
     private static class TestWebContentsObserver extends WebContentsObserver {

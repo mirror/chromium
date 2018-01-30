@@ -47,10 +47,10 @@ public class OfflinePageUtilsTest {
 
     private static final String TEST_PAGE = "/chrome/test/data/android/about.html";
     private static final int TIMEOUT_MS = 5000;
-    private static final ClientId BOOKMARK_ID =
+    static final ClientId BOOKMARK_ID =
             new ClientId(OfflinePageBridge.BOOKMARK_NAMESPACE, "1234");
 
-    private OfflinePageBridge mOfflinePageBridge;
+    OfflinePageBridge mOfflinePageBridge;
     private EmbeddedTestServer mTestServer;
 
     @Before
@@ -96,7 +96,7 @@ public class OfflinePageUtilsTest {
      */
     static class MockSnackbarController implements SnackbarController {
         private int mTabId;
-        private boolean mDismissed;
+        boolean mDismissed;
         private static final long SNACKBAR_TIMEOUT = 7 * 1000;
         private static final long POLLING_INTERVAL = 100;
 

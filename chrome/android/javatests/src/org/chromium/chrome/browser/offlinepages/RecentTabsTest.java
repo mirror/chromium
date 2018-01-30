@@ -45,7 +45,7 @@ public class RecentTabsTest {
     private static final String TEST_PAGE = "/chrome/test/data/android/about.html";
     private static final int TIMEOUT_MS = 5000;
 
-    private OfflinePageBridge mOfflinePageBridge;
+    OfflinePageBridge mOfflinePageBridge;
     private EmbeddedTestServer mTestServer;
     private String mTestPage;
 

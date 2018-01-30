@@ -39,8 +39,8 @@ public class CleanupReference extends WeakReference<Object> {
     // garbage collection (i.e. when all references to the underlying object are nullified).
     // |sReaperThread| processes this queue by forwarding the references on to the UI thread
     // (via REMOVE_REF message) to perform cleanup.
-    private static ReferenceQueue<Object> sGcQueue = new ReferenceQueue<Object>();
-    private static Object sCleanupMonitor = new Object();
+    static ReferenceQueue<Object> sGcQueue = new ReferenceQueue<Object>();
+    static Object sCleanupMonitor = new Object();
 
     private static final Thread sReaperThread = new Thread(TAG) {
         @Override
@@ -122,7 +122,7 @@ public class CleanupReference extends WeakReference<Object> {
      * actually get enqueued.
      * Only accessed on the UI thread.
      */
-    private static Set<CleanupReference> sRefs = new HashSet<CleanupReference>();
+    static Set<CleanupReference> sRefs = new HashSet<CleanupReference>();
 
     private Runnable mCleanupTask;
 
@@ -160,7 +160,7 @@ public class CleanupReference extends WeakReference<Object> {
         }
     }
 
-    private void runCleanupTaskInternal() {
+    void runCleanupTaskInternal() {
         if (DEBUG) Log.d(TAG, "runCleanupTaskInternal");
         sRefs.remove(this);
         Runnable cleanupTask = mCleanupTask;

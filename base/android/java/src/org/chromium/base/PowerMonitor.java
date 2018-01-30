@@ -57,7 +57,7 @@ public class PowerMonitor  {
     private PowerMonitor() {
     }
 
-    private static void onBatteryChargingChanged(Intent intent) {
+    static void onBatteryChargingChanged(Intent intent) {
         assert sInstance != null;
         int chargePlug = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
         // If we're not plugged, assume we're running on battery power.

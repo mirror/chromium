@@ -147,7 +147,7 @@ public class Connector implements MessageReceiver, HandleOwner<MessagePipeHandle
     /**
      * @see org.chromium.mojo.system.Watcher.Callback#onResult(int)
      */
-    private void onWatcherResult(int result) {
+    void onWatcherResult(int result) {
         if (result == MojoResult.OK) {
             readOutstandingMessages();
         } else {

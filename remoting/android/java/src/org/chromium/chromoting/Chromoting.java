@@ -70,10 +70,10 @@ public class Chromoting extends AppCompatActivity implements ConnectionListener,
     private static final String PREFERENCE_EXPERIMENTAL_FLAGS = "flags";
 
     /** User's account name (email). */
-    private String mAccount;
+    String mAccount;
 
     /** Helper for fetching the host list. */
-    private HostListManager mHostListManager;
+    HostListManager mHostListManager;
 
     /** List of hosts. */
     private HostInfo[] mHosts = new HostInfo[0];
@@ -97,7 +97,7 @@ public class Chromoting extends AppCompatActivity implements ConnectionListener,
      * Helper used by SessionConnection for session authentication. Receives onNewIntent()
      * notifications to handle third-party authentication.
      */
-    private SessionAuthenticator mAuthenticator;
+    SessionAuthenticator mAuthenticator;
 
     private OAuthTokenConsumer mHostConnectingConsumer;
 
@@ -105,7 +105,7 @@ public class Chromoting extends AppCompatActivity implements ConnectionListener,
 
     private OAuthTokenConsumer mHostDeletingConsumer;
 
-    private DrawerLayout mDrawerLayout;
+    DrawerLayout mDrawerLayout;
 
     private ActionBarDrawerToggle mDrawerToggle;
 
@@ -118,7 +118,7 @@ public class Chromoting extends AppCompatActivity implements ConnectionListener,
     private AccountSwitcher mAccountSwitcher;
 
     /** The currently-connected Client, if any. */
-    private Client mClient;
+    Client mClient;
 
     /**
      * Set in onActivityResult() if a child Activity for user sign-in reported failure or
@@ -175,13 +175,13 @@ public class Chromoting extends AppCompatActivity implements ConnectionListener,
      * the host list chooser or the host list empty view, depending on whether mHosts contains any
      * hosts.
      */
-    private void updateHostListView() {
+    void updateHostListView() {
         mHostListView.setVisibility(mHosts.length == 0 ? View.GONE : View.VISIBLE);
         mEmptyView.setVisibility(mHosts.length == 0 ? View.VISIBLE : View.GONE);
         mProgressView.setVisibility(View.GONE);
     }
 
-    private void runPendingDrawerCloseTask() {
+    void runPendingDrawerCloseTask() {
         // Avoid potential recursion problems by null-ing the task first.
         Runnable task = mPendingDrawerCloseTask;
         mPendingDrawerCloseTask = null;
@@ -523,7 +523,7 @@ public class Chromoting extends AppCompatActivity implements ConnectionListener,
     }
 
     /** Called when the user taps on a host entry. */
-    private void onHostClicked(int index) {
+    void onHostClicked(int index) {
         HostInfo host = mHosts[index];
         if (host.isOnline) {
             connectToHost(host);
@@ -572,7 +572,7 @@ public class Chromoting extends AppCompatActivity implements ConnectionListener,
         });
     }
 
-    private void showAuthErrorMessage(OAuthTokenFetcher.Error error) {
+    void showAuthErrorMessage(OAuthTokenFetcher.Error error) {
         String explanation = getString(error == OAuthTokenFetcher.Error.NETWORK
                 ? R.string.error_network_error : R.string.error_unexpected);
         Toast.makeText(Chromoting.this, explanation, Toast.LENGTH_LONG).show();
@@ -596,7 +596,7 @@ public class Chromoting extends AppCompatActivity implements ConnectionListener,
         });
     }
 
-    private void deleteHost(final String hostId) {
+    void deleteHost(final String hostId) {
         showHostListLoadingIndicator();
 
         mHostDeletingConsumer.consume(mAccount, new OAuthTokenFetcher.Callback() {

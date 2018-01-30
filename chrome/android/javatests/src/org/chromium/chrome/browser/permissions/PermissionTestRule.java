@@ -103,8 +103,8 @@ public class PermissionTestRule extends ChromeActivityTestRule<ChromeActivity> {
      * Criteria class to detect whether the permission dialog is shown.
      */
     protected static class DialogShownCriteria extends Criteria {
-        private AlertDialog mDialog;
-        private boolean mExpectDialog;
+        AlertDialog mDialog;
+        boolean mExpectDialog;
 
         public DialogShownCriteria(String error, boolean expectDialog) {
             super(error);
@@ -136,7 +136,7 @@ public class PermissionTestRule extends ChromeActivityTestRule<ChromeActivity> {
         super(ChromeActivity.class);
     }
 
-    private void ruleSetUp() throws Throwable {
+    void ruleSetUp() throws Throwable {
         startMainActivityOnBlankPage();
         InfoBarContainer container =
                 getActivity().getTabModelSelector().getCurrentTab().getInfoBarContainer();
@@ -146,7 +146,7 @@ public class PermissionTestRule extends ChromeActivityTestRule<ChromeActivity> {
         mTestServer = EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
     }
 
-    private void ruleTearDown() throws Exception {
+    void ruleTearDown() throws Exception {
         mTestServer.stopAndDestroyServer();
     }
 

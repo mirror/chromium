@@ -419,7 +419,7 @@ public class NotificationPlatformBridgeTest {
     //in lower than L devices
     private static class Helper {
         @TargetApi(Build.VERSION_CODES.KITKAT_WATCH) // RemoteInputs added in KITKAT_WATCH.
-        private static void sendIntentWithRemoteInput(Context context, PendingIntent pendingIntent,
+        static void sendIntentWithRemoteInput(Context context, PendingIntent pendingIntent,
                 RemoteInput[] remoteInputs, String resultKey, String reply)
                 throws PendingIntent.CanceledException {
             Bundle results = new Bundle();

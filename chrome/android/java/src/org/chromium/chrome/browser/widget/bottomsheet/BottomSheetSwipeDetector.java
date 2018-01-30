@@ -34,13 +34,13 @@ public class BottomSheetSwipeDetector extends GestureDetector.SimpleOnGestureLis
     private final GestureDetector mGestureDetector;
 
     /** An interface for retrieving information from a bottom sheet. */
-    private final SwipeableBottomSheet mSheetDelegate;
+    final SwipeableBottomSheet mSheetDelegate;
 
     /** Track the velocity of the user's scrolls to determine up or down direction. */
-    private VelocityTracker mVelocityTracker;
+    VelocityTracker mVelocityTracker;
 
     /** Whether or not the user is scrolling the bottom sheet. */
-    private boolean mIsScrolling;
+    boolean mIsScrolling;
 
     /**
      * An interface for views that are swipable from the bottom of the screen. This interface
@@ -254,7 +254,7 @@ public class BottomSheetSwipeDetector extends GestureDetector.SimpleOnGestureLis
      * @param e The motion event to test.
      * @return True if the event occurred in the toolbar region.
      */
-    private boolean isTouchEventInToolbar(MotionEvent e) {
+    boolean isTouchEventInToolbar(MotionEvent e) {
         return mSheetDelegate.getContainerHeightPx() - e.getRawY()
                 > mSheetDelegate.getCurrentOffsetPx() - mSheetDelegate.getMinOffsetPx();
     }
@@ -266,7 +266,7 @@ public class BottomSheetSwipeDetector extends GestureDetector.SimpleOnGestureLis
      * @param velocity The velocity of the fling.
      * @return The distance the fling would cover.
      */
-    private float getFlingDistance(float velocity) {
+    float getFlingDistance(float velocity) {
         // This includes conversion from seconds to ms.
         return velocity * BASE_ANIMATION_DURATION_MS / 2000f;
     }

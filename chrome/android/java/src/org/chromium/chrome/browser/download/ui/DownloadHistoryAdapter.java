@@ -157,7 +157,7 @@ public class DownloadHistoryAdapter extends DateDividedAdapter
     private final BackendItems mIncognitoDownloadItems = new BackendItemsImpl();
     private final BackendItems mOfflineItems = new BackendItemsImpl();
 
-    private final FilePathsToDownloadItemsMap mFilePathsToItemsMap =
+    final FilePathsToDownloadItemsMap mFilePathsToItemsMap =
             new FilePathsToDownloadItemsMap();
 
     private final Map<Date, SubsectionHeader> mSubsectionHeaders = new HashMap<>();
@@ -555,7 +555,7 @@ public class DownloadHistoryAdapter extends DateDividedAdapter
         return mBackendProvider.getDownloadDelegate();
     }
 
-    private SelectionDelegate<DownloadHistoryItemWrapper> getSelectionDelegate() {
+    SelectionDelegate<DownloadHistoryItemWrapper> getSelectionDelegate() {
         return mBackendProvider.getSelectionDelegate();
     }
 

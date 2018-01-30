@@ -32,15 +32,15 @@ class MidiManagerAndroid {
     /**
      * Set true when this instance is successfully initialized.
      */
-    private boolean mIsInitialized;
+    boolean mIsInitialized;
     /**
      * The devices held by this manager.
      */
-    private final List<MidiDeviceAndroid> mDevices = new ArrayList<>();
+    final List<MidiDeviceAndroid> mDevices = new ArrayList<>();
     /**
      * The device information instances which are being initialized.
      */
-    private final Set<MidiDeviceInfo> mPendingDevices = new HashSet<>();
+    final Set<MidiDeviceInfo> mPendingDevices = new HashSet<>();
     /**
      * The underlying MidiManager.
      */
@@ -52,7 +52,7 @@ class MidiManagerAndroid {
     /**
      * The associated midi::MidiDeviceAndroid instance.
      */
-    private final long mNativeManagerPointer;
+    final long mNativeManagerPointer;
 
     /**
      * Checks if Android MIDI is supported on the device.
@@ -141,7 +141,7 @@ class MidiManagerAndroid {
      * Called when a midi device is attached.
      * @param info the attached device information.
      */
-    private void onDeviceAdded(final MidiDeviceInfo info) {
+    void onDeviceAdded(final MidiDeviceInfo info) {
         if (!mIsInitialized) {
             mPendingDevices.add(info);
         }
@@ -152,7 +152,7 @@ class MidiManagerAndroid {
      * Called when a midi device is detached.
      * @param info the detached device information.
      */
-    private void onDeviceRemoved(MidiDeviceInfo info) {
+    void onDeviceRemoved(MidiDeviceInfo info) {
         for (MidiDeviceAndroid device : mDevices) {
             if (device.isOpen() && device.getInfo().getId() == info.getId()) {
                 device.close();
@@ -161,7 +161,7 @@ class MidiManagerAndroid {
         }
     }
 
-    private void onDeviceOpened(MidiDevice device, MidiDeviceInfo info) {
+    void onDeviceOpened(MidiDevice device, MidiDeviceInfo info) {
         mPendingDevices.remove(info);
         if (device != null) {
             MidiDeviceAndroid xdevice = new MidiDeviceAndroid(device);

@@ -83,8 +83,8 @@ public class BaseGifDrawable extends Drawable implements Runnable, Animatable,
     // thread and read from the UI thread.  No further synchronization is needed because their
     // values will only ever change from at most once, and it is safe to lazily detect the change
     // in the UI thread.
-    private volatile boolean mError;
-    private volatile boolean mDone;
+    volatile boolean mError;
+    volatile boolean mDone;
     private volatile boolean mAnimateOnLoad = true;
 
     private int mBackgroundColor;
@@ -117,24 +117,24 @@ public class BaseGifDrawable extends Drawable implements Runnable, Animatable,
     private boolean mBackupSaved;
     private int[] mBackup;
 
-    private int mFrameCount;
+    int mFrameCount;
 
     private long mLastFrameTime;
 
     private boolean mRunning;
     protected int mFrameDelay;
-    private int mNextFrameDelay;
+    int mNextFrameDelay;
     protected boolean mScheduled;
     private boolean mAnimationEnabled = true;
-    private final Handler mHandler = new Handler(Looper.getMainLooper(), this);
+    final Handler mHandler = new Handler(Looper.getMainLooper(), this);
     private static DecoderThread sDecoderThread;
     private static Handler sDecoderHandler;
 
-    private boolean mRecycled;
+    boolean mRecycled;
     protected boolean mFirstFrameReady;
-    private boolean mEndOfFile;
-    private int mLoopCount = 0; // 0 to repeat endlessly.
-    private int mLoopIndex = 0;
+    boolean mEndOfFile;
+    int mLoopCount = 0; // 0 to repeat endlessly.
+    int mLoopIndex = 0;
 
     private final Bitmap.Config mBitmapConfig;
     private boolean mFirstFrame = true;
@@ -377,7 +377,7 @@ public class BaseGifDrawable extends Drawable implements Runnable, Animatable,
     /**
      * Restarts decoding the image from the beginning.  Called from the background thread.
      */
-    private void reset() {
+    void reset() {
         // Return to the position of the first image frame in the stream.
         mPosition = mGifImage.mHeaderSize;
         mBackupSaved = false;
@@ -417,7 +417,7 @@ public class BaseGifDrawable extends Drawable implements Runnable, Animatable,
      * @return true if the next frame has been parsed successfully, false if EOF
      *         has been reached
      */
-    private void readNextFrame() {
+    void readNextFrame() {
         // Don't clear the image if it is a terminator.
         if ((mData[mPosition] & 0xff) == 0x3b) {
           mEndOfFile = true;

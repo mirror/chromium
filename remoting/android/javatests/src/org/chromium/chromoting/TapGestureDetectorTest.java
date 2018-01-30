@@ -71,8 +71,8 @@ public class TapGestureDetectorTest {
         }
     }
 
-    private TapGestureDetector mDetector;
-    private MockListener mListener;
+    TapGestureDetector mDetector;
+    MockListener mListener;
     private TouchEventGenerator mEventGenerator;
 
     /** Injects movement of a single finger (keeping other fingers in place). */
@@ -83,14 +83,14 @@ public class TapGestureDetectorTest {
     }
 
     /** Injects a finger-down event (keeping other fingers in place). */
-    private void injectDownEvent(int id, float x, float y) {
+    void injectDownEvent(int id, float x, float y) {
         MotionEvent event = mEventGenerator.obtainDownEvent(id, x, y);
         mDetector.onTouchEvent(event);
         event.recycle();
     }
 
     /** Injects a finger-up event (keeping other fingers in place). */
-    private void injectUpEvent(int id) {
+    void injectUpEvent(int id) {
         MotionEvent event = mEventGenerator.obtainUpEvent(id);
         mDetector.onTouchEvent(event);
         event.recycle();

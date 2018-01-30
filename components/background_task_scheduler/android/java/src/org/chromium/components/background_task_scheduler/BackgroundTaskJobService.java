@@ -23,9 +23,9 @@ public class BackgroundTaskJobService extends JobService {
 
     private static class TaskFinishedCallbackJobService
             implements BackgroundTask.TaskFinishedCallback {
-        private final BackgroundTaskJobService mJobService;
+        final BackgroundTaskJobService mJobService;
         private final BackgroundTask mBackgroundTask;
-        private final JobParameters mParams;
+        final JobParameters mParams;
 
         TaskFinishedCallbackJobService(BackgroundTaskJobService jobService,
                 BackgroundTask backgroundTask, JobParameters params) {
@@ -56,13 +56,13 @@ public class BackgroundTaskJobService extends JobService {
             });
         }
 
-        private boolean isCurrentBackgroundTaskForJobId() {
+        boolean isCurrentBackgroundTaskForJobId() {
             return mJobService.mCurrentTasks.get(mParams.getJobId()) == mBackgroundTask;
         }
     }
 
     @SuppressLint("UseSparseArrays") // TODO(crbug.com/799070): See if SparseArray is better.
-    private final Map<Integer, BackgroundTask> mCurrentTasks = new HashMap<>();
+    final Map<Integer, BackgroundTask> mCurrentTasks = new HashMap<>();
 
     @Override
     public boolean onStartJob(JobParameters params) {

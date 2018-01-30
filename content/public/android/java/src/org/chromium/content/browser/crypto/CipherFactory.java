@@ -79,7 +79,7 @@ public class CipherFactory {
 
     /** Singleton holder for the class. */
     private static class LazyHolder {
-        private static CipherFactory sInstance = new CipherFactory();
+        static CipherFactory sInstance = new CipherFactory();
     }
 
     /**
@@ -95,7 +95,7 @@ public class CipherFactory {
     private CipherData mData;
 
     /** Generates random data for the Ciphers. May be swapped out for tests. */
-    private ByteArrayGenerator mRandomNumberProvider;
+    ByteArrayGenerator mRandomNumberProvider;
 
     /** A list of observers for this class. */
     private final ObserverList<CipherDataObserver> mObservers;
@@ -318,13 +318,13 @@ public class CipherFactory {
     }
 
 
-    private void notifyCipherDataGenerated() {
+    void notifyCipherDataGenerated() {
         for (CipherDataObserver observer : mObservers) {
             observer.onCipherDataGenerated();
         }
     }
 
-    private CipherFactory() {
+    CipherFactory() {
         mRandomNumberProvider = new ByteArrayGenerator();
         mObservers = new ObserverList<CipherDataObserver>();
     }

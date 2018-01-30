@@ -43,7 +43,7 @@ public class SyncTestRule extends ChromeActivityTestRule<ChromeActivity> {
 
     private static final String CLIENT_ID = "Client_ID";
 
-    private static final Set<Integer> USER_SELECTABLE_TYPES =
+    static final Set<Integer> USER_SELECTABLE_TYPES =
             new HashSet<Integer>(Arrays.asList(new Integer[] {
                     ModelType.AUTOFILL, ModelType.BOOKMARKS, ModelType.PASSWORDS,
                     ModelType.PREFERENCES, ModelType.PROXY_TABS, ModelType.TYPED_URLS,
@@ -68,9 +68,9 @@ public class SyncTestRule extends ChromeActivityTestRule<ChromeActivity> {
         }
     }
 
-    private Context mContext;
-    private FakeServerHelper mFakeServerHelper;
-    private ProfileSyncService mProfileSyncService;
+    Context mContext;
+    FakeServerHelper mFakeServerHelper;
+    ProfileSyncService mProfileSyncService;
     private MockSyncContentResolverDelegate mSyncContentResolver;
 
     public SyncTestRule() {
@@ -100,7 +100,7 @@ public class SyncTestRule extends ChromeActivityTestRule<ChromeActivity> {
         startMainActivityOnBlankPage();
     }
 
-    private void setUpMockAndroidSyncSettings() {
+    void setUpMockAndroidSyncSettings() {
         mSyncContentResolver = new MockSyncContentResolverDelegate();
         mSyncContentResolver.setMasterSyncAutomatically(true);
         AndroidSyncSettings.overrideForTests(mContext, mSyncContentResolver, null);
@@ -248,7 +248,7 @@ public class SyncTestRule extends ChromeActivityTestRule<ChromeActivity> {
         };
     }
 
-    private void ruleSetUp() throws Throwable {
+    void ruleSetUp() throws Throwable {
         // This must be called before doing anything with the SharedPreferences because
         // ChromeActivityTestRule's setUp normally wipes them clean between runs.
         // Setting a SharedPreference here via the SigninTestUtil.setUpAuthForTest() call below
@@ -260,7 +260,7 @@ public class SyncTestRule extends ChromeActivityTestRule<ChromeActivity> {
         SigninTestUtil.setUpAuthForTest(InstrumentationRegistry.getInstrumentation());
     }
 
-    private void ruleTearDown() throws Exception {
+    void ruleTearDown() throws Exception {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {

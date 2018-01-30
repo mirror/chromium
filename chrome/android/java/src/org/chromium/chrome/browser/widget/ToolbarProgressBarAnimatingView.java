@@ -62,16 +62,16 @@ public class ToolbarProgressBarAnimatingView extends ImageView {
     private float mProgressWidth;
 
     /** The set of individual animators that constitute the whole animation sequence. */
-    private final AnimatorSet mAnimatorSet;
+    final AnimatorSet mAnimatorSet;
 
     /** The animator controlling the fast animation. */
-    private final ValueAnimator mFastAnimation;
+    final ValueAnimator mFastAnimation;
 
     /** The animator controlling the slow animation. */
     private final ValueAnimator mSlowAnimation;
 
     /** Track if the animation has been canceled. */
-    private boolean mIsCanceled;
+    boolean mIsCanceled;
 
     /** If the layout is RTL. */
     private boolean mIsRtl;
@@ -80,10 +80,10 @@ public class ToolbarProgressBarAnimatingView extends ImageView {
     private ProgressBarUpdateListener mListener;
 
     /** The last fraction of the animation that was drawn. */
-    private float mLastAnimatedFraction;
+    float mLastAnimatedFraction;
 
     /** The last animation that received an update. */
-    private ValueAnimator mLastUpdatedAnimation;
+    ValueAnimator mLastUpdatedAnimation;
 
     /** The ratio of px to dp. */
     private float mDpToPx;
@@ -150,7 +150,7 @@ public class ToolbarProgressBarAnimatingView extends ImageView {
     /**
      * Update the duration of the animation based on the width of the progress bar.
      */
-    private void updateAnimationDuration() {
+    void updateAnimationDuration() {
         // If progress is <= 0, the duration is also 0.
         if (mProgressWidth <= 0) return;
 
@@ -190,7 +190,7 @@ public class ToolbarProgressBarAnimatingView extends ImageView {
      * @param animator The current running animator.
      * @param animatedFraction The current fraction of completion for the animation.
      */
-    private void updateAnimation(ValueAnimator animator, float animatedFraction) {
+    void updateAnimation(ValueAnimator animator, float animatedFraction) {
         if (mIsCanceled) return;
         float bezierProgress = mBezier.getInterpolation(animatedFraction);
 

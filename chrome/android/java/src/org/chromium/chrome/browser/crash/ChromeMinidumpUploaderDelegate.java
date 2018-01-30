@@ -34,12 +34,12 @@ public class ChromeMinidumpUploaderDelegate implements MinidumpUploaderDelegate 
      * The cached crash reporting permissions. These are cached because the upload job might run
      * outside of a context in which the original permissions are easily accessible.
      */
-    private final PersistableBundle mPermissions;
+    final PersistableBundle mPermissions;
 
     /**
      * The system connectivity manager service, used to determine the network state.
      */
-    private final ConnectivityManager mConnectivityManager;
+    final ConnectivityManager mConnectivityManager;
 
     /**
      * Constructs a new Chrome-specific minidump uploader delegate.

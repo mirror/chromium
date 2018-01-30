@@ -33,17 +33,17 @@ import javax.annotation.Nullable;
 /** Handles validation and display of one field from the {@link EditorFieldModel}. */
 @VisibleForTesting
 public class EditorTextField extends FrameLayout implements EditorFieldView, View.OnClickListener {
-    private EditorFieldModel mEditorFieldModel;
-    private OnEditorActionListener mEditorActionListener;
+    EditorFieldModel mEditorFieldModel;
+    OnEditorActionListener mEditorActionListener;
     private CompatibilityTextInputLayout mInputLayout;
-    private AutoCompleteTextView mInput;
-    private View mIconsLayer;
+    AutoCompleteTextView mInput;
+    View mIconsLayer;
     private ImageView mActionIcon;
     private ImageView mValueIcon;
     private int mValueIconId;
-    private boolean mHasFocusedAtLeastOnce;
+    boolean mHasFocusedAtLeastOnce;
     @Nullable
-    private EditorObserverForTest mObserverForTest;
+    EditorObserverForTest mObserverForTest;
 
     public EditorTextField(Context context, final EditorFieldModel fieldModel,
             OnEditorActionListener actionListener, @Nullable InputFilter filter,
@@ -261,7 +261,7 @@ public class EditorTextField extends FrameLayout implements EditorFieldView, Vie
         mInput.setText(mEditorFieldModel.getValue());
     }
 
-    private void updateFieldValueIcon(boolean force) {
+    void updateFieldValueIcon(boolean force) {
         if (mValueIcon == null) return;
 
         int iconId = mEditorFieldModel.getValueIconGenerator().getIconResourceId(mInput.getText());

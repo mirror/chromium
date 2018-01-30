@@ -36,7 +36,7 @@ public class AppBannerManager {
     private boolean mIsEnabledForTab;
 
     /** Pointer to the native side AppBannerManager. */
-    private long mNativePointer;
+    long mNativePointer;
 
     /**
      * Checks if the add to home screen intent is supported.
@@ -198,7 +198,7 @@ public class AppBannerManager {
     private native void nativeRecordMenuOpen(long nativeAppBannerManagerAndroid);
     private static native AppBannerManager nativeGetJavaBannerManagerForWebContents(
             WebContents webContents);
-    private native boolean nativeOnAppDetailsRetrieved(long nativeAppBannerManagerAndroid,
+    native boolean nativeOnAppDetailsRetrieved(long nativeAppBannerManagerAndroid,
             AppData data, String title, String packageName, String imageUrl);
 
     // Testing methods.

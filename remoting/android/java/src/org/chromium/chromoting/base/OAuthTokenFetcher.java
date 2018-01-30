@@ -60,15 +60,15 @@ public class OAuthTokenFetcher {
      * handle user-recoverable errors if it is an activity, otherwise user-recoverable errors will
      * not be handled.
      */
-    private Context mContext;
+    Context mContext;
 
     /** Account name (e-mail) for which the token will be fetched. */
-    private String mAccountName;
+    String mAccountName;
 
     /** OAuth scope used for the token request. */
-    private String mTokenScope;
+    String mTokenScope;
 
-    private Callback mCallback;
+    Callback mCallback;
 
     public OAuthTokenFetcher(Context context, String accountName, String tokenScope,
             Callback callback) {
@@ -116,7 +116,7 @@ public class OAuthTokenFetcher {
         }.execute();
     }
 
-    private void handleTokenReceived(final String token) {
+    void handleTokenReceived(final String token) {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
@@ -125,7 +125,7 @@ public class OAuthTokenFetcher {
         });
     }
 
-    private void handleError(final Error error) {
+    void handleError(final Error error) {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
@@ -134,7 +134,7 @@ public class OAuthTokenFetcher {
         });
     }
 
-    private void handleRecoverableException(final UserRecoverableAuthException exception) {
+    void handleRecoverableException(final UserRecoverableAuthException exception) {
         if (!(mContext instanceof Activity)) {
             handleError(Error.UI);
             return;

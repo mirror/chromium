@@ -52,7 +52,7 @@ public class StripLayoutHelperManager implements SceneOverlay {
     private static final float MODEL_SELECTOR_BUTTON_HEIGHT_DP = 24.f;
 
     // External influences
-    private TabModelSelector mTabModelSelector;
+    TabModelSelector mTabModelSelector;
     private final LayoutUpdateHost mUpdateHost;
 
     // Event Filters
@@ -67,7 +67,7 @@ public class StripLayoutHelperManager implements SceneOverlay {
     private float mWidth;  // in dp units
     private final float mHeight;  // in dp units
     private int mOrientation;
-    private final CompositorButton mModelSelectorButton;
+    final CompositorButton mModelSelectorButton;
 
     private TabStripSceneLayer mTabStripTreeProvider;
 
@@ -179,7 +179,7 @@ public class StripLayoutHelperManager implements SceneOverlay {
         mNormalHelper.destroy();
     }
 
-    private void handleModelSelectorButtonClick() {
+    void handleModelSelectorButtonClick() {
         if (mTabModelSelector == null) return;
         getActiveStripLayoutHelper().finishAnimation();
         if (!mModelSelectorButton.isVisible()) return;

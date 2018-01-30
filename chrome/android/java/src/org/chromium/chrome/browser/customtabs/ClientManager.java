@@ -138,14 +138,14 @@ class ClientManager {
         public boolean lowConfidencePrediction;
         public boolean highConfidencePrediction;
         private String mPackageName;
-        private boolean mShouldHideDomain;
-        private boolean mShouldPrerenderOnCellular;
-        private boolean mShouldSendNavigationInfo;
-        private boolean mShouldSendBottomBarScrollState;
+        boolean mShouldHideDomain;
+        boolean mShouldPrerenderOnCellular;
+        boolean mShouldSendNavigationInfo;
+        boolean mShouldSendBottomBarScrollState;
         private KeepAliveServiceConnection mKeepAliveConnection;
-        private String mPredictedUrl;
+        String mPredictedUrl;
         private long mLastMayLaunchUrlTimestamp;
-        private int mSpeculationMode;
+        int mSpeculationMode;
 
         public SessionParams(Context context, int uid, DisconnectCallback callback,
                 PostMessageHandler postMessageHandler) {

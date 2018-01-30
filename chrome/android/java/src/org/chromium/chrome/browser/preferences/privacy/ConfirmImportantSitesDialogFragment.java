@@ -61,7 +61,7 @@ public class ConfirmImportantSitesDialogFragment extends DialogFragment {
         private final int mFaviconSize;
         private RoundedIconGenerator mIconGenerator;
 
-        private ClearBrowsingDataAdapter(
+        ClearBrowsingDataAdapter(
                 String[] domains, String[] faviconURLs, Resources resources) {
             super(getActivity(), R.layout.confirm_important_sites_list_row, domains);
             mDomains = domains;
@@ -131,7 +131,7 @@ public class ConfirmImportantSitesDialogFragment extends DialogFragment {
             mLargeIconBridge.getLargeIconForUrl(url, mFaviconSize, viewHolder.imageCallback);
         }
 
-        private Drawable getFaviconDrawable(Bitmap icon, int fallbackColor, String url) {
+        Drawable getFaviconDrawable(Bitmap icon, int fallbackColor, String url) {
             if (icon == null) {
                 mIconGenerator.setBackgroundColor(fallbackColor);
                 icon = mIconGenerator.generateIconForUrl(url);
@@ -204,17 +204,17 @@ public class ConfirmImportantSitesDialogFragment extends DialogFragment {
     /** Array of important registerable domains we're showing to the user. */
     private String[] mImportantDomains;
     /** Map of the reasons the above important domains were chosen. */
-    private Map<String, Integer> mImportantDomainsReasons;
+    Map<String, Integer> mImportantDomainsReasons;
     /** Array of favicon urls to use for each important domain above. */
     private String[] mFaviconURLs;
     /** The map of domains to the checked state, where true is checked. */
-    private Map<String, Boolean> mCheckedState;
+    Map<String, Boolean> mCheckedState;
     /** The alert dialog shown to the user. */
     private AlertDialog mDialog;
     /** Our adapter that we use with the list view in the dialog. */
     private ClearBrowsingDataAdapter mAdapter;
 
-    private LargeIconBridge mLargeIconBridge;
+    LargeIconBridge mLargeIconBridge;
 
     private Profile mProfile;
 
@@ -260,7 +260,7 @@ public class ConfirmImportantSitesDialogFragment extends DialogFragment {
         }
     }
 
-    private int[] toIntArray(List<Integer> boxedList) {
+    int[] toIntArray(List<Integer> boxedList) {
         int[] result = new int[boxedList.size()];
         for (int i = 0; i < result.length; i++) {
             result[i] = boxedList.get(i);

@@ -102,7 +102,7 @@ public class BottomSheetContentController
     /** The height of the bottom navigation bar that appears when the bottom sheet is expanded. */
     private int mBottomNavHeight;
 
-    private final Map<Integer, BottomSheetContent> mBottomSheetContents = new HashMap<>();
+    final Map<Integer, BottomSheetContent> mBottomSheetContents = new HashMap<>();
     private boolean mLabelsEnabled;
     private boolean mDestroyed;
 
@@ -202,19 +202,19 @@ public class BottomSheetContentController
         }
     };
 
-    private BottomSheet mBottomSheet;
+    BottomSheet mBottomSheet;
     private TabModelSelector mTabModelSelector;
-    private SnackbarManager mSnackbarManager;
-    private int mSelectedItemId;
-    private ChromeActivity mActivity;
-    private boolean mShouldOpenSheetOnNextContentChange;
-    private boolean mShouldOpenSheetToHalfOnNextContentChange;
-    private boolean mShouldClearContentsOnNextContentChange;
-    private PlaceholderSheetContent mPlaceholderContent;
-    private boolean mOmniboxHasFocus;
+    SnackbarManager mSnackbarManager;
+    int mSelectedItemId;
+    ChromeActivity mActivity;
+    boolean mShouldOpenSheetOnNextContentChange;
+    boolean mShouldOpenSheetToHalfOnNextContentChange;
+    boolean mShouldClearContentsOnNextContentChange;
+    PlaceholderSheetContent mPlaceholderContent;
+    boolean mOmniboxHasFocus;
     private TabModelSelectorObserver mTabModelSelectorObserver;
-    private Integer mHighlightItemId;
-    private View mHighlightedView;
+    Integer mHighlightItemId;
+    View mHighlightedView;
     private boolean mNavItemSelectedWhileOmniboxFocused;
     private int mConsecutiveBookmarkTaps;
 
@@ -330,7 +330,7 @@ public class BottomSheetContentController
      *
      * Needs to be called after the native library is loaded.
      */
-    private void initBottomNavMenu() {
+    void initBottomNavMenu() {
         assert ChromeFeatureList.isInitialized();
 
         DisplayMetrics metrics =
@@ -400,7 +400,7 @@ public class BottomSheetContentController
      * Whenever this is triggered by a global layout change, we ensure that our bottom navigation
      * menu items are spaced apart appropriately.
      */
-    private void updateMenuItemSpacing() {
+    void updateMenuItemSpacing() {
         getMenuView().updateMenuItemSpacingForMinWidth(
                 mBottomSheet.getWidth(), mBottomSheet.getHeight());
     }
@@ -490,7 +490,7 @@ public class BottomSheetContentController
         }
     }
 
-    private BottomSheetContent getSheetContentForId(int navItemId) {
+    BottomSheetContent getSheetContentForId(int navItemId) {
         if (mTabModelSelector.isIncognitoSelected() && navItemId == R.id.action_home) {
             navItemId = INCOGNITO_HOME_ID;
         }
@@ -501,7 +501,7 @@ public class BottomSheetContentController
         return createAndCacheContentForId(navItemId);
     }
 
-    private int getHomeContentId() {
+    int getHomeContentId() {
         if (mTabModelSelector.isIncognitoSelected()) return INCOGNITO_HOME_ID;
         return R.id.action_home;
     }
@@ -535,7 +535,7 @@ public class BottomSheetContentController
         return content;
     }
 
-    private void showBottomSheetContent(int navItemId) {
+    void showBottomSheetContent(int navItemId) {
         // There are some bugs related to programmatically selecting menu items that are fixed in
         // newer support library versions.
         // TODO(twellington): remove this after the support library is rolled.
@@ -554,7 +554,7 @@ public class BottomSheetContentController
         mBottomSheet.showContent(newContent);
     }
 
-    private void announceBottomSheetContentSelected() {
+    void announceBottomSheetContentSelected() {
         if (mSelectedItemId == R.id.action_home) {
             announceForAccessibility(getResources().getString(R.string.bottom_sheet_home_tab));
         } else if (mSelectedItemId == R.id.action_downloads) {
@@ -566,7 +566,7 @@ public class BottomSheetContentController
         }
     }
 
-    private void updateVisuals(boolean isIncognitoTabModelSelected) {
+    void updateVisuals(boolean isIncognitoTabModelSelected) {
         setMenuBackgroundColor(isIncognitoTabModelSelected);
 
         ColorStateList tint = ApiCompatibilityUtils.getColorStateList(getResources(),
@@ -577,21 +577,21 @@ public class BottomSheetContentController
         setItemTextColor(tint);
     }
 
-    private void setIcons() {
+    void setIcons() {
         getMenu().findItem(R.id.action_home).setIcon(R.drawable.ic_home_grey600_24dp);
         getMenu().findItem(R.id.action_downloads).setIcon(R.drawable.ic_file_download_white_24dp);
         getMenu().findItem(R.id.action_bookmarks).setIcon(R.drawable.btn_star_filled);
         getMenu().findItem(R.id.action_history).setIcon(R.drawable.ic_watch_later_24dp);
     }
 
-    private void removeIcons() {
+    void removeIcons() {
         getMenu().findItem(R.id.action_home).setIcon(null);
         getMenu().findItem(R.id.action_downloads).setIcon(null);
         getMenu().findItem(R.id.action_bookmarks).setIcon(null);
         getMenu().findItem(R.id.action_history).setIcon(null);
     }
 
-    private void setIconsEnabled(boolean enabled) {
+    void setIconsEnabled(boolean enabled) {
         getMenu().findItem(R.id.action_downloads).setEnabled(enabled);
         getMenu().findItem(R.id.action_bookmarks).setEnabled(enabled);
         getMenu().findItem(R.id.action_history).setEnabled(enabled);
@@ -624,7 +624,7 @@ public class BottomSheetContentController
         return mSelectedItemId;
     }
 
-    private void clearBottomSheetContents(boolean destroyHomeContent) {
+    void clearBottomSheetContents(boolean destroyHomeContent) {
         Iterator<Entry<Integer, BottomSheetContent>> contentIterator =
                 mBottomSheetContents.entrySet().iterator();
         while (contentIterator.hasNext()) {
@@ -682,13 +682,13 @@ public class BottomSheetContentController
         private PointF mStartPosition;
 
         /** The direction of the star. */
-        private PointF mVector;
+        PointF mVector;
 
         /** The velocity of the star. */
-        private float mVelocity;
+        float mVelocity;
 
         /** The speed and direction that the star is rotating. Negative is counter-clockwise. */
-        private float mRotationVelocity;
+        float mRotationVelocity;
 
         /** The animation delay for the star. */
         private long mStartDelay;

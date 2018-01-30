@@ -49,7 +49,7 @@ public class AccountsChangedReceiver extends BroadcastReceiver {
         task.execute();
     }
 
-    private void continueHandleAccountChangeIfNeeded(final Context context) {
+    void continueHandleAccountChangeIfNeeded(final Context context) {
         AccountTrackerService.get().invalidateAccountSeedStatus(
                 false /* don't refresh right now */);
         boolean isChromeVisible = ApplicationStatus.hasVisibleActivities();

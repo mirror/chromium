@@ -56,7 +56,7 @@ public class CoreImpl implements Core {
      */
     static final int INVALID_HANDLE = 0;
 
-    private static class LazyHolder { private static final Core INSTANCE = new CoreImpl(); }
+    private static class LazyHolder { static final Core INSTANCE = new CoreImpl(); }
 
     /**
      * The run loop for the current thread.
@@ -75,7 +75,7 @@ public class CoreImpl implements Core {
         return LazyHolder.INSTANCE;
     }
 
-    private CoreImpl() {
+    CoreImpl() {
         // Fix for the ART runtime, before:
         // https://android.googlesource.com/platform/libcore/+/fb6c80875a8a8d0a9628562f89c250b6a962e824%5E!/
         // This assumes consistent allocation.

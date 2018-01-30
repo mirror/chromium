@@ -204,8 +204,8 @@ public class VisibleNetworksTrackerTest {
      */
     @Implements(PlatformNetworksManager.class)
     public static class ShadowPlatformNetworksManager {
-        private static List<VisibleNetworks> sAllVisibleNetworks;
-        private static List<VisibleNetworks> sOnlyConnectedNetworks;
+        static List<VisibleNetworks> sAllVisibleNetworks;
+        static List<VisibleNetworks> sOnlyConnectedNetworks;
 
         @Implementation
         public static VisibleNetworks computeVisibleNetworks(

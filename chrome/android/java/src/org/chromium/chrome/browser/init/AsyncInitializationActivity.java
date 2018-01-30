@@ -58,7 +58,7 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
         ChromeActivityNativeDelegate, BrowserParts {
     protected final Handler mHandler;
 
-    private final NativeInitializationController mNativeInitializationController =
+    final NativeInitializationController mNativeInitializationController =
             new NativeInitializationController(this);
 
     /** Time at which onCreate is called. This is realtime, counted in ms since device boot. */
@@ -81,8 +81,8 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
     // first |onResume| call.
     private boolean mFirstResumePending = true;
 
-    private boolean mStartupDelayed;
-    private boolean mFirstDrawComplete;
+    boolean mStartupDelayed;
+    boolean mFirstDrawComplete;
 
     public AsyncInitializationActivity() {
         mHandler = new Handler();
@@ -508,7 +508,7 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
         if (mWindowAndroid != null) mWindowAndroid.onContextMenuClosed();
     }
 
-    private void onFirstDrawComplete() {
+    void onFirstDrawComplete() {
         assert mFirstDrawComplete;
         assert !mStartupDelayed;
 
@@ -632,7 +632,7 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
     protected void onOrientationChange(int orientation) {
     }
 
-    private void checkOrientation() {
+    void checkOrientation() {
         WindowManager wm = getWindowManager();
         if (wm == null) return;
 
@@ -698,17 +698,17 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
                     : null;
 
     private class LaunchBehindWorkaround {
-        private boolean mPaused;
+        boolean mPaused;
 
-        private View getDecorView() {
+        View getDecorView() {
             return getWindow().getDecorView();
         }
 
-        private ViewTreeObserver getViewTreeObserver() {
+        ViewTreeObserver getViewTreeObserver() {
             return getDecorView().getViewTreeObserver();
         }
 
-        private void onPause() {
+        void onPause() {
             mPaused = true;
         }
 
@@ -724,7 +724,7 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
         // Note, we probably want onDrawListener here, but it isn't being called
         // when I add this to the decorView. However, it should be the same for
         // this purpose as long as no other pre-draw listener returns false.
-        private final OnPreDrawListener mPreDrawListener = new OnPreDrawListener() {
+        final OnPreDrawListener mPreDrawListener = new OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
                 mHandler.post(new Runnable() {

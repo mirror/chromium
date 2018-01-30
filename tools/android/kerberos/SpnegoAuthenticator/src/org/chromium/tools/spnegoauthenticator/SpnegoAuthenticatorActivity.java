@@ -58,7 +58,7 @@ public class SpnegoAuthenticatorActivity extends AccountAuthenticatorActivity {
         return intent;
     }
 
-    private void addAccount(String accountName) {
+    void addAccount(String accountName) {
         Log.d(TAG, "Adding account '%s'", accountName);
 
         AccountData accountData = AccountData.create(accountName, this);
@@ -71,7 +71,7 @@ public class SpnegoAuthenticatorActivity extends AccountAuthenticatorActivity {
         finish();
     }
 
-    private void confirmCredentials(String accountName) {
+    void confirmCredentials(String accountName) {
         Log.d(TAG, "Confirming credentials for account '%s'", accountName);
 
         NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);

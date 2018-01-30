@@ -192,7 +192,7 @@ public abstract class AndroidListener extends IntentService {
   /**
    * The internal state of the listener. Lazy initialization, triggered by {@link #onHandleIntent}.
    */
-  private AndroidListenerState state;
+  AndroidListenerState state;
 
   /** The clock to use when scheduling retry call-backs. */
   private final AndroidClock clock = new AndroidClock.SystemClock();

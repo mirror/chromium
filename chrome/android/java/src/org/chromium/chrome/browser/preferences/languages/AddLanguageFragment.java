@@ -59,7 +59,7 @@ public class AddLanguageFragment extends Fragment {
          * Called to perform a search.
          * @param query The text to search for.
          */
-        private void search(String query) {
+        void search(String query) {
             if (TextUtils.isEmpty(query)) {
                 reload(mFullLanguageList);
                 return;
@@ -83,12 +83,12 @@ public class AddLanguageFragment extends Fragment {
     private SearchView mSearchView;
 
     // If not blank, represents a substring to use to search for language names.
-    private String mSearch;
+    String mSearch;
 
     private RecyclerView mRecyclerView;
-    private LanguageSearchListAdapter mAdapter;
-    private List<LanguageItem> mFullLanguageList;
-    private LanguageListBaseAdapter.ItemClickListener mItemClickListener;
+    LanguageSearchListAdapter mAdapter;
+    List<LanguageItem> mFullLanguageList;
+    LanguageListBaseAdapter.ItemClickListener mItemClickListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

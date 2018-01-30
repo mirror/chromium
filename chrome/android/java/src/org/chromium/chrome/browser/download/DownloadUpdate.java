@@ -32,7 +32,7 @@ public final class DownloadUpdate {
     private final long mSystemDownloadId;
     private final long mTimeRemainingInMillis;
 
-    private DownloadUpdate(Builder builder) {
+    DownloadUpdate(Builder builder) {
         this.mContentId = builder.mContentId;
         this.mFileName = builder.mFileName;
         this.mFilePath = builder.mFilePath;
@@ -124,23 +124,23 @@ public final class DownloadUpdate {
      * Helper class for building the DownloadUpdate object.
      */
     public static class Builder {
-        private ContentId mContentId;
-        private String mFileName;
-        private String mFilePath;
-        private Bitmap mIcon;
-        private int mIconId = -1;
-        private boolean mIsDownloadPending;
-        private boolean mIsOffTheRecord;
-        private boolean mIsOpenable;
-        private boolean mIsSupportedMimeType;
-        private boolean mIsTransient;
-        private int mNotificationId = -1;
-        private String mOriginalUrl;
-        private Progress mProgress;
-        private String mReferrer;
-        private long mStartTime;
-        private long mSystemDownloadId = -1;
-        private long mTimeRemainingInMillis;
+        ContentId mContentId;
+        String mFileName;
+        String mFilePath;
+        Bitmap mIcon;
+        int mIconId = -1;
+        boolean mIsDownloadPending;
+        boolean mIsOffTheRecord;
+        boolean mIsOpenable;
+        boolean mIsSupportedMimeType;
+        boolean mIsTransient;
+        int mNotificationId = -1;
+        String mOriginalUrl;
+        Progress mProgress;
+        String mReferrer;
+        long mStartTime;
+        long mSystemDownloadId = -1;
+        long mTimeRemainingInMillis;
 
         public Builder setContentId(ContentId contentId) {
             this.mContentId = contentId;

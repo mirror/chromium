@@ -33,8 +33,8 @@ public class AutoSigninFirstRunDialog
     private final int mExplanationLinkEnd;
     private final String mOkButtonText;
     private final String mTurnOffButtonText;
-    private long mNativeAutoSigninFirstRunDialog;
-    private AlertDialog mDialog;
+    long mNativeAutoSigninFirstRunDialog;
+    AlertDialog mDialog;
     private boolean mWasDismissedByNative;
 
     private AutoSigninFirstRunDialog(Context context, long nativeAutoSigninFirstRunDialog,
@@ -129,5 +129,5 @@ public class AutoSigninFirstRunDialog
     private native void nativeOnTurnOffClicked(long nativeAutoSigninFirstRunDialogAndroid);
     private native void nativeOnOkClicked(long nativeAutoSigninFirstRunDialogAndroid);
     private native void nativeDestroy(long nativeAutoSigninFirstRunDialogAndroid);
-    private native void nativeOnLinkClicked(long nativeAutoSigninFirstRunDialogAndroid);
+    native void nativeOnLinkClicked(long nativeAutoSigninFirstRunDialogAndroid);
 }

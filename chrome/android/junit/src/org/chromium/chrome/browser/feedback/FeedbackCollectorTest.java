@@ -82,7 +82,7 @@ public class FeedbackCollectorTest {
     private static final String VALUE_9 = "value9";
     private static final String VALUE_10 = "value10";
 
-    private static List<FeedbackSource> buildSynchronousFeedbackSources() {
+    static List<FeedbackSource> buildSynchronousFeedbackSources() {
         Map<String, String> map1 =
                 CollectionUtil.newHashMap(Pair.create(KEY_1, VALUE_1), Pair.create(KEY_2, VALUE_2));
         Map<String, String> map2 = CollectionUtil.newHashMap(Pair.create(KEY_3, VALUE_3));

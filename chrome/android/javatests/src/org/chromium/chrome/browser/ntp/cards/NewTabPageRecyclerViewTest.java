@@ -318,7 +318,7 @@ public class NewTabPageRecyclerViewTest {
         return mNtp.getNewTabPageView();
     }
 
-    private NewTabPageRecyclerView getRecyclerView() {
+    NewTabPageRecyclerView getRecyclerView() {
         return getNtpView().getRecyclerView();
     }
 
@@ -385,7 +385,7 @@ public class NewTabPageRecyclerViewTest {
         RecyclerViewTestUtils.waitForStableRecyclerView(getRecyclerView());
     }
 
-    private List<SnippetArticle> buildSuggestions(int suggestionsCount) {
+    List<SnippetArticle> buildSuggestions(int suggestionsCount) {
         List<SnippetArticle> suggestions = new ArrayList<>();
         for (int i = 0; i < suggestionsCount; i++) {
             String url = mTestServer.getURL(TEST_PAGE) + "#" + i;

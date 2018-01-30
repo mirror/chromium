@@ -182,8 +182,8 @@ public class CustomTabActivityTest {
 
     private static int sIdToIncrement = 1;
 
-    private String mTestPage;
-    private String mTestPage2;
+    String mTestPage;
+    String mTestPage2;
     private EmbeddedTestServer mTestServer;
     private TestWebServer mWebServer;
 
@@ -237,7 +237,7 @@ public class CustomTabActivityTest {
         mWebServer.shutdown();
     }
 
-    private CustomTabActivity getActivity() {
+    CustomTabActivity getActivity() {
         return mCustomTabActivityTestRule.getActivity();
     }
 

@@ -59,7 +59,7 @@ public class ChildConnectionAllocator {
     private static final long FREE_CONNECTION_DELAY_MILLIS = 1;
 
     // The handler of the thread on which all interations should happen.
-    private final Handler mLauncherHandler;
+    final Handler mLauncherHandler;
 
     // Connections to services. Indices of the array correspond to the service numbers.
     private final ChildProcessConnection[] mChildProcessConnections;
@@ -256,7 +256,7 @@ public class ChildConnectionAllocator {
     }
 
     /** Frees a connection and notifies listeners. */
-    private void free(ChildProcessConnection connection) {
+    void free(ChildProcessConnection connection) {
         assert isRunningOnLauncherThread();
 
         // mChildProcessConnections is relatively short (20 items at max at this point).
@@ -328,7 +328,7 @@ public class ChildConnectionAllocator {
         return mChildProcessConnections[slotNumber];
     }
 
-    private boolean isRunningOnLauncherThread() {
+    boolean isRunningOnLauncherThread() {
         return mLauncherHandler.getLooper() == Looper.myLooper();
     }
 }

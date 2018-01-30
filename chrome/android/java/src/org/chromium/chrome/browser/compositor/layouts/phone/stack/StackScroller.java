@@ -279,25 +279,25 @@ public class StackScroller {
         private int mStart;
 
         // Current position
-        private int mCurrentPosition;
+        int mCurrentPosition;
 
         // Final position
-        private int mFinal;
+        int mFinal;
 
         // Initial velocity
         private int mVelocity;
 
         // Current velocity
-        private float mCurrVelocity;
+        float mCurrVelocity;
 
         // Constant current deceleration
         private float mDeceleration;
 
         // Animation starting time, in system milliseconds
-        private long mStartTime;
+        long mStartTime;
 
         // Animation duration, in milliseconds
-        private int mDuration;
+        int mDuration;
 
         // Duration to complete spline component of animation
         private int mSplineDuration;
@@ -306,7 +306,7 @@ public class StackScroller {
         private int mSplineDistance;
 
         // Whether the animation is currently in progress
-        private boolean mFinished;
+        boolean mFinished;
 
         // The allowed overshot distance before boundary is reached.
         private int mOver;

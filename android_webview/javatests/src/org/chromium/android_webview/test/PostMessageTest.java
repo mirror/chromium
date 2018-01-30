@@ -44,7 +44,7 @@ public class PostMessageTest {
 
     private static final String SOURCE_ORIGIN = "";
     // Timeout to failure, in milliseconds
-    private static final long TIMEOUT = scaleTimeout(5000);
+    static final long TIMEOUT = scaleTimeout(5000);
 
     // Inject to the page to verify received messages.
     private static class MessageObject {

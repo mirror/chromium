@@ -271,7 +271,7 @@ public class DataUseTabUIManager {
      * @param context An Android context.
      * @param optedOut Whether the user has opted out of seeing the data use dialog.
      */
-    private static void setOptedOutOfDataUseDialog(Context context, boolean optedOut) {
+    static void setOptedOutOfDataUseDialog(Context context, boolean optedOut) {
         ContextUtils.getAppSharedPreferences().edit()
                 .putBoolean(SHARED_PREF_DATA_USE_DIALOG_OPT_OUT, optedOut)
                 .apply();

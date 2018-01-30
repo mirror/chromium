@@ -28,9 +28,9 @@ public class TileGroupDelegateImpl implements TileGroup.Delegate {
     private final Context mContext;
     private final SnackbarManager mSnackbarManager;
     private final SuggestionsNavigationDelegate mNavigationDelegate;
-    private final MostVisitedSites mMostVisitedSites;
+    final MostVisitedSites mMostVisitedSites;
 
-    private boolean mIsDestroyed;
+    boolean mIsDestroyed;
     private SnackbarController mTileRemovedSnackbarController;
 
     public TileGroupDelegateImpl(ChromeActivity activity, Profile profile,

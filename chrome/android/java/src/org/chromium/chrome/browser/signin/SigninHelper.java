@@ -98,9 +98,10 @@ public class SigninHelper {
 
     private final ChromeSigninController mChromeSigninController;
 
-    @Nullable private final ProfileSyncService mProfileSyncService;
+    @Nullable
+    final ProfileSyncService mProfileSyncService;
 
-    private final SigninManager mSigninManager;
+    final SigninManager mSigninManager;
 
     private final AccountTrackerService mAccountTrackerService;
 

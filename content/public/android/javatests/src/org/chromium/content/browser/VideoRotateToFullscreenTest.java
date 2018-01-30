@@ -67,7 +67,7 @@ public class VideoRotateToFullscreenTest {
                 }));
     }
 
-    private String screenOrientation() throws InterruptedException, TimeoutException {
+    String screenOrientation() throws InterruptedException, TimeoutException {
         // Returns "\"portrait\"" or "\"landscape\"" (strips the "-primary" or "-secondary" suffix).
         return JavaScriptUtils.executeJavaScriptAndWaitForResult(
                 mRule.getWebContents(), "screen.orientation.type.split('-')[0]");

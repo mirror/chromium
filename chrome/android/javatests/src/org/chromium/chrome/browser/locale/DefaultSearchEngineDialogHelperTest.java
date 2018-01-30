@@ -81,10 +81,10 @@ public class DefaultSearchEngineDialogHelperTest {
     public UiThreadTestRule mRule = new UiThreadTestRule();
 
     private final DismissRunnable mDismissRunnable = new DismissRunnable();
-    private final List<TemplateUrl> mTemplateUrls = new ArrayList<>();
+    final List<TemplateUrl> mTemplateUrls = new ArrayList<>();
 
     private Context mContext;
-    private @SearchEnginePromoType int mDialogType;
+    @SearchEnginePromoType int mDialogType;
 
     @Before
     public void setUp() throws Exception {

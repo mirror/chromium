@@ -21,7 +21,7 @@ import org.chromium.base.ContextUtils;
 class NearbyBackgroundSubscription extends NearbySubscription {
     private static final String TAG = "PhysicalWeb";
     private final int mAction;
-    private final Runnable mCallback;
+    final Runnable mCallback;
 
     NearbyBackgroundSubscription(int action, Runnable callback) {
         super(ContextUtils.getApplicationContext());

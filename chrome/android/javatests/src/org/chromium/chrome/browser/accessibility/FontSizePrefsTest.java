@@ -172,7 +172,7 @@ public class FontSizePrefsTest {
             mForceEnableZoom = enabled;
         }
 
-        private void assertConsistent() {
+        void assertConsistent() {
             ThreadUtils.runOnUiThreadBlocking(() -> {
                 Assert.assertEquals(getUserFontScaleFactor(), mUserFontScaleFactor, EPSILON);
                 Assert.assertEquals(getFontScaleFactor(), mFontScaleFactor, EPSILON);
@@ -198,12 +198,12 @@ public class FontSizePrefsTest {
         ThreadUtils.runOnUiThreadBlocking(() -> mFontSizePrefs.setUserFontScaleFactor(fontsize));
     }
 
-    private float getUserFontScaleFactor() {
+    float getUserFontScaleFactor() {
         return ThreadUtils.runOnUiThreadBlockingNoException(
                 () -> mFontSizePrefs.getUserFontScaleFactor());
     }
 
-    private float getFontScaleFactor() {
+    float getFontScaleFactor() {
         return ThreadUtils.runOnUiThreadBlockingNoException(
                 () -> mFontSizePrefs.getFontScaleFactor());
     }
@@ -212,7 +212,7 @@ public class FontSizePrefsTest {
         ThreadUtils.runOnUiThreadBlocking(() -> mFontSizePrefs.setForceEnableZoomFromUser(enabled));
     }
 
-    private boolean getForceEnableZoom() {
+    boolean getForceEnableZoom() {
         return ThreadUtils.runOnUiThreadBlockingNoException(
                 () -> mFontSizePrefs.getForceEnableZoom());
     }

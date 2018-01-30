@@ -143,7 +143,7 @@ public class LightweightFirstRunActivity extends FirstRunActivityBase {
         sendPendingIntentIfNecessary(true);
     }
 
-    private void acceptTermsOfService() {
+    void acceptTermsOfService() {
         if (!mNativeInitialized) {
             mTriggerAcceptAfterNativeInit = true;
 

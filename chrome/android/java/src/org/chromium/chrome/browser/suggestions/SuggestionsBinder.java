@@ -48,14 +48,14 @@ public class SuggestionsBinder {
     private static final int MAX_HEADER_LINES = 3;
 
     private final ImageFetcher mImageFetcher;
-    private final SuggestionsUiDelegate mUiDelegate;
+    final SuggestionsUiDelegate mUiDelegate;
 
     private final View mCardContainerView;
     private final LinearLayout mTextLayout;
     private final TextView mHeadlineTextView;
     private final TextView mPublisherTextView;
     private final TextView mAgeTextView;
-    private final TintedImageView mThumbnailView;
+    final TintedImageView mThumbnailView;
     private final @Nullable ImageView mVideoBadge;
     private final ImageView mOfflineBadge;
     private final View mPublisherBar;
@@ -67,7 +67,7 @@ public class SuggestionsBinder {
     @Nullable
     private ImageFetcher.DownloadThumbnailRequest mThumbnailRequest;
 
-    private SnippetArticle mSuggestion;
+    SnippetArticle mSuggestion;
 
     public SuggestionsBinder(View cardContainerView, SuggestionsUiDelegate uiDelegate) {
         mCardContainerView = cardContainerView;
@@ -277,7 +277,7 @@ public class SuggestionsBinder {
         }
     }
 
-    private void fadeThumbnailIn(Drawable thumbnail) {
+    void fadeThumbnailIn(Drawable thumbnail) {
         assert mThumbnailView.getDrawable() != null;
 
         mThumbnailView.setScaleType(ImageView.ScaleType.CENTER_CROP);

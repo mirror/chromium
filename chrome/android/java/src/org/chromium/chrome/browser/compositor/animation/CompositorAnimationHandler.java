@@ -19,7 +19,7 @@ import java.util.ArrayList;
  */
 public class CompositorAnimationHandler {
     /** A list of all the handler's animators. */
-    private final ArrayList<CompositorAnimator> mAnimators = new ArrayList<>();
+    final ArrayList<CompositorAnimator> mAnimators = new ArrayList<>();
 
     /** This handler's update host. */
     private final LayoutUpdateHost mUpdateHost;

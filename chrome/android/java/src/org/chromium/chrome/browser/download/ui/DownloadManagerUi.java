@@ -182,7 +182,7 @@ public class DownloadManagerUi
 
     private static BackendProvider sProviderForTests;
 
-    private final DownloadHistoryAdapter mHistoryAdapter;
+    final DownloadHistoryAdapter mHistoryAdapter;
     private final FilterAdapter mFilterAdapter;
     private final ObserverList<DownloadUiObserver> mObservers = new ObserverList<>();
     private final BackendProvider mBackendProvider;

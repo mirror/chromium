@@ -36,7 +36,7 @@ public class ContentViewPopupZoomerTest {
     @Rule
     public ContentShellActivityTestRule mActivityTestRule = new ContentShellActivityTestRule();
 
-    private static PopupZoomer findPopupZoomer(ViewGroup view) {
+    static PopupZoomer findPopupZoomer(ViewGroup view) {
         assert view != null;
         for (int i = 0; i < view.getChildCount(); i++) {
             View child = view.getChildAt(i);

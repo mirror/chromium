@@ -63,7 +63,7 @@ class MediaCodecBridge {
         private final int mStatus;
         private final int mIndex;
 
-        private DequeueInputResult(int status, int index) {
+        DequeueInputResult(int status, int index) {
             mStatus = status;
             mIndex = index;
         }
@@ -88,7 +88,7 @@ class MediaCodecBridge {
         private final long mPresentationTimeMicroseconds;
         private final int mNumBytes;
 
-        private DequeueOutputResult(int status, int index, int flags, int offset,
+        DequeueOutputResult(int status, int index, int flags, int offset,
                 long presentationTimeMicroseconds, int numBytes) {
             mStatus = status;
             mIndex = index;
@@ -136,7 +136,7 @@ class MediaCodecBridge {
         // May be null if mStatus is not MediaCodecStatus.OK.
         private final MediaFormat mFormat;
 
-        private GetOutputFormatResult(int status, MediaFormat format) {
+        GetOutputFormatResult(int status, MediaFormat format) {
             mStatus = status;
             mFormat = format;
         }

@@ -40,9 +40,9 @@ public class AwContentsClientBridge {
     private AwContentsClient mClient;
     private Context mContext;
     // The native peer of this object.
-    private long mNativeContentsClientBridge;
+    long mNativeContentsClientBridge;
 
-    private final ClientCertLookupTable mLookupTable;
+    final ClientCertLookupTable mLookupTable;
 
     // Used for mocking this class in tests.
     protected AwContentsClientBridge(ClientCertLookupTable table) {
@@ -407,7 +407,7 @@ public class AwContentsClientBridge {
             long nativeAwContentsClientBridge, int action, boolean reporting, int requestId);
     private native void nativeProceedSslError(long nativeAwContentsClientBridge, boolean proceed,
             int id);
-    private native void nativeProvideClientCertificateResponse(long nativeAwContentsClientBridge,
+    native void nativeProvideClientCertificateResponse(long nativeAwContentsClientBridge,
             int id, byte[][] certChain, PrivateKey androidKey);
 
     private native void nativeConfirmJsResult(long nativeAwContentsClientBridge, int id,

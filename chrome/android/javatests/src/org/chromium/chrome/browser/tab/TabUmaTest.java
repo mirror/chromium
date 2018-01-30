@@ -45,7 +45,7 @@ public class TabUmaTest {
     private static final String TEST_PATH = "/chrome/test/data/android/about.html";
 
     private EmbeddedTestServer mTestServer;
-    private String mTestUrl;
+    String mTestUrl;
 
     @Before
     public void setUp() throws Exception {

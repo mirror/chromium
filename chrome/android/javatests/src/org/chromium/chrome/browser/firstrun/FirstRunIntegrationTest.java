@@ -52,7 +52,7 @@ public class FirstRunIntegrationTest {
     public MultiActivityTestRule mTestRule = new MultiActivityTestRule();
 
     private FirstRunActivityTestObserver mTestObserver = new FirstRunActivityTestObserver();
-    private Activity mActivity;
+    Activity mActivity;
 
     @Before
     public void setUp() throws Exception {

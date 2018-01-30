@@ -364,7 +364,7 @@ public class ModalDialogManagerTest {
                 () -> { mManager.showDialog(mModalDialogViews[index], dialogType); });
     }
 
-    private void dismissDialog(final int index) {
+    void dismissDialog(final int index) {
         ThreadUtils.runOnUiThreadBlocking(
                 () -> { mManager.dismissDialog(mModalDialogViews[index]); });
     }

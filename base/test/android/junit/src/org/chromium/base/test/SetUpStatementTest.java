@@ -22,7 +22,7 @@ import java.util.List;
 public class SetUpStatementTest {
     private Statement mBase;
     private SetUpTestRule<TestRule> mRule;
-    private List<Integer> mList;
+    List<Integer> mList;
 
     @Before
     public void setUp() {

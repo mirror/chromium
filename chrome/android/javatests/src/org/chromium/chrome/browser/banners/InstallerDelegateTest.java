@@ -47,11 +47,11 @@ public class InstallerDelegateTest implements InstallerDelegate.Observer {
     }
 
     private TestPackageManager mPackageManager;
-    private InstallerDelegate mTestDelegate;
+    InstallerDelegate mTestDelegate;
     private HandlerThread mThread;
 
     // Variables for tracking the result.
-    private boolean mResultFinished;
+    boolean mResultFinished;
     private InstallerDelegate mResultDelegate;
     private boolean mResultSuccess;
     private boolean mInstallStarted;

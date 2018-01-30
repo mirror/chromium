@@ -62,8 +62,8 @@ public class ChromeBrowserInitializer {
     private static ChromeBrowserInitializer sChromeBrowserInitializer;
 
     private final Handler mHandler;
-    private final ChromeApplication mApplication;
-    private final Locale mInitialLocale = Locale.getDefault();
+    final ChromeApplication mApplication;
+    final Locale mInitialLocale = Locale.getDefault();
 
     private boolean mPreInflationStartupComplete;
     private boolean mPostInflationStartupComplete;
@@ -370,7 +370,7 @@ public class ChromeBrowserInitializer {
         TraceEvent.end("NetworkChangeNotifier.init");
     }
 
-    private void onStartNativeInitialization() {
+    void onStartNativeInitialization() {
         ThreadUtils.assertOnUiThread();
         if (mNativeInitializationComplete) return;
         // The policies are used by browser startup, so we need to register the policy providers
@@ -380,7 +380,7 @@ public class ChromeBrowserInitializer {
         SpeechRecognition.initialize(mApplication);
     }
 
-    private void onFinishNativeInitialization() {
+    void onFinishNativeInitialization() {
         if (mNativeInitializationComplete) return;
 
         mNativeInitializationComplete = true;

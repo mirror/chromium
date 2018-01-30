@@ -27,7 +27,7 @@ abstract class HttpRequest<T> implements Runnable {
     private final URL mUrl;
     private final String mUserAgent;
     private final String mAcceptLanguage;
-    private final HttpRequestCallback<T> mCallback;
+    final HttpRequestCallback<T> mCallback;
 
     /**
      * Construct a Request object.

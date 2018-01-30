@@ -357,7 +357,7 @@ public class TextSuggestionMenuTest {
         return getSuggestionList(cvc).getChildAt(suggestionIndex);
     }
 
-    private View getDeleteButton(ContentViewCore cvc) {
+    View getDeleteButton(ContentViewCore cvc) {
         View contentView = getContentView(cvc);
         if (contentView == null) {
             return null;

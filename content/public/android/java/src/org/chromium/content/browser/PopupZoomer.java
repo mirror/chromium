@@ -67,7 +67,7 @@ public class PopupZoomer extends View {
     private static final int UMA_TAPDISAMBIGUATION_TAPPEDINSIDE_DIFFERENTNODE = 5;
     private static final int UMA_TAPDISAMBIGUATION_COUNT = 6;
 
-    private long mNativePopupZoomer;
+    long mNativePopupZoomer;
 
     private void recordHistogram(int value) {
         RecordHistogram.recordEnumeratedHistogram(
@@ -81,7 +81,7 @@ public class PopupZoomer extends View {
         public void onResolveTapDisambiguation(long timeMs, float x, float y, boolean isLongPress);
     }
 
-    private OnTapListener mOnTapListener;
+    OnTapListener mOnTapListener;
 
     /**
      * Interface to be implemented to add and remove PopupZoomer to/from the view hierarchy.
@@ -106,7 +106,7 @@ public class PopupZoomer extends View {
     private final Interpolator mShowInterpolator = new OvershootInterpolator();
     private final Interpolator mHideInterpolator = new ReverseInterpolator(mShowInterpolator);
 
-    private boolean mAnimating;
+    boolean mAnimating;
     private boolean mShowing;
     private long mAnimationStartTime;
 
@@ -316,7 +316,7 @@ public class PopupZoomer extends View {
         canvas.drawPaint(clearPaint);
     }
 
-    private void scroll(float x, float y) {
+    void scroll(float x, float y) {
         mPopupScrollX = constrain(mPopupScrollX - x, mMinScrollX, mMaxScrollX);
         mPopupScrollY = constrain(mPopupScrollY - y, mMinScrollY, mMaxScrollY);
         invalidate();
@@ -574,7 +574,7 @@ public class PopupZoomer extends View {
         }
     }
 
-    private void tappedInside() {
+    void tappedInside() {
         if (!mShowing) return;
         // Tapped-inside histogram value is recorded on the renderer side,
         // not here.
@@ -582,7 +582,7 @@ public class PopupZoomer extends View {
         startAnimation(false);
     }
 
-    private void tappedOutside() {
+    void tappedOutside() {
         if (!mShowing) return;
         recordHistogram(UMA_TAPDISAMBIGUATION_TAPPEDOUTSIDE);
 
@@ -599,7 +599,7 @@ public class PopupZoomer extends View {
     /**
      * Converts the coordinates to a point on the original un-zoomed view.
      */
-    private PointF convertTouchPoint(float x, float y) {
+    PointF convertTouchPoint(float x, float y) {
         x -= mShiftX;
         y -= mShiftY;
         x = mTouch.x + (x - mTouch.x - mPopupScrollX) / mScale;
@@ -610,7 +610,7 @@ public class PopupZoomer extends View {
     /**
      * Returns true if the point is inside the final drawable area for this popup zoomer.
      */
-    private boolean isTouchOutsideArea(float x, float y) {
+    boolean isTouchOutsideArea(float x, float y) {
         return !mClipRect.contains(x, y);
     }
 
@@ -658,6 +658,6 @@ public class PopupZoomer extends View {
     }
 
     private native long nativeInit(WebContents webContents);
-    private native void nativeResolveTapDisambiguation(
+    native void nativeResolveTapDisambiguation(
             long nativePopupZoomer, long timeMs, float x, float y, boolean isLongPress);
 }

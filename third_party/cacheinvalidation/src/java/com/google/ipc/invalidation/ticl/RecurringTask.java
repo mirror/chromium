@@ -86,13 +86,13 @@ public abstract class RecurringTask extends InternalBase
   private final Logger logger;
 
   /** Scheduler for the scheduling the task as needed. */
-  private final Scheduler scheduler;
+  final Scheduler scheduler;
 
   /**
    * The time after which the task is scheduled first. If no delayGenerator is specified, this is
    * also the delay used for retries.
    */
-  private final int initialDelayMs;
+  final int initialDelayMs;
 
   /** For a task that is retried, add this time to the delay. */
   private final int timeoutDelayMs;
@@ -101,13 +101,13 @@ public abstract class RecurringTask extends InternalBase
   private final Smearer smearer;
 
   /** A delay generator for exponential backoff. */
-  private final TiclExponentialBackoffDelayGenerator delayGenerator;
+  final TiclExponentialBackoffDelayGenerator delayGenerator;
 
   /** The runnable that is scheduled for the task. */
   private final NamedRunnable runnable;
 
   /** If the task has been currently scheduled. */
-  private boolean isScheduled;
+  boolean isScheduled;
 
   /**
    * Creates a recurring task with the given parameters. The specs of the parameters are given in
@@ -208,7 +208,7 @@ public abstract class RecurringTask extends InternalBase
    * <p>
    * REQUIRES: Must be called from the scheduler thread.
    */
-  private void ensureScheduled(boolean isRetry, String debugReason) {
+  void ensureScheduled(boolean isRetry, String debugReason) {
     Preconditions.checkState(scheduler.isRunningOnThread());
     if (isScheduled) {
       logger.fine("[%s] Not scheduling task that is already scheduled", debugReason);

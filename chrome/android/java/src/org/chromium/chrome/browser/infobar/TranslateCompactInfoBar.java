@@ -47,7 +47,7 @@ public class TranslateCompactInfoBar extends InfoBar
     private final TranslateOptions mOptions;
 
     private long mNativeTranslateInfoBarPtr;
-    private TranslateTabLayout mTabLayout;
+    TranslateTabLayout mTabLayout;
 
     // Metric to track the total number of translations in a page, including reverts to original.
     private int mTotalTranslationCount = 0;
@@ -101,16 +101,16 @@ public class TranslateCompactInfoBar extends InfoBar
 
     // Need 2 instances of TranslateMenuHelper to prevent a race condition bug which happens when
     // showing language menu after dismissing overflow menu.
-    private TranslateMenuHelper mOverflowMenuHelper;
+    TranslateMenuHelper mOverflowMenuHelper;
     private TranslateMenuHelper mLanguageMenuHelper;
 
     private TintedImageButton mMenuButton;
     private InfoBarCompactLayout mParent;
 
-    private TranslateSnackbarController mSnackbarController;
+    TranslateSnackbarController mSnackbarController;
 
-    private boolean mMenuExpanded;
-    private boolean mIsFirstLayout = true;
+    boolean mMenuExpanded;
+    boolean mIsFirstLayout = true;
     private boolean mUserInteracted;
 
     /** The controller for translate UI snackbars. */
@@ -255,7 +255,7 @@ public class TranslateCompactInfoBar extends InfoBar
         mParent = parent;
     }
 
-    private void initMenuHelper(int menuType) {
+    void initMenuHelper(int menuType) {
         switch (menuType) {
             case TranslateMenu.MENU_OVERFLOW:
                 if (mOverflowMenuHelper == null) {
@@ -321,7 +321,7 @@ public class TranslateCompactInfoBar extends InfoBar
         super.onNativeDestroyed();
     }
 
-    private void closeInfobar(boolean explicitly) {
+    void closeInfobar(boolean explicitly) {
         if (!mUserInteracted) {
             recordInfobarAction(INFOBAR_DECLINE);
         }
@@ -457,13 +457,13 @@ public class TranslateCompactInfoBar extends InfoBar
 
     // Dismiss all overflow menus that remains open.
     // This is called when infobar started hiding or layout changed.
-    private void dismissMenus() {
+    void dismissMenus() {
         if (mOverflowMenuHelper != null) mOverflowMenuHelper.dismiss();
         if (mLanguageMenuHelper != null) mLanguageMenuHelper.dismiss();
     }
 
     // Dismiss all overflow menus and snackbars that belong to this infobar and remain open.
-    private void dismissMenusAndSnackbars() {
+    void dismissMenusAndSnackbars() {
         dismissMenus();
         if (getSnackbarManager() != null && mSnackbarController != null) {
             getSnackbarManager().dismissSnackbars(mSnackbarController);
@@ -530,7 +530,7 @@ public class TranslateCompactInfoBar extends InfoBar
                                 getContext().getString(R.string.translate_snackbar_cancel), null));
     }
 
-    private void handleTranslateOptionPostSnackbar(int actionId) {
+    void handleTranslateOptionPostSnackbar(int actionId) {
         // Quit if native is destroyed.
         if (mNativeTranslateInfoBarPtr == 0) return;
 
@@ -571,7 +571,7 @@ public class TranslateCompactInfoBar extends InfoBar
                 mOptions.alwaysTranslateLanguageState());
     }
 
-    private static void recordInfobarAction(int action) {
+    static void recordInfobarAction(int action) {
         RecordHistogram.recordEnumeratedHistogram(
                 INFOBAR_HISTOGRAM, action, INFOBAR_HISTOGRAM_BOUNDARY);
     }
@@ -589,7 +589,7 @@ public class TranslateCompactInfoBar extends InfoBar
     }
 
     // Return the width of parent in pixels.  Return 0 if there is no parent.
-    private int getParentWidth() {
+    int getParentWidth() {
         return mParent != null ? mParent.getWidth() : 0;
     }
 

@@ -54,7 +54,7 @@ public class AndroidPaymentAppsFragment extends PreferenceFragment {
                 });
     }
 
-    private void addPaymentAppsPreference(Map<String, Pair<String, Drawable>> androidAppsInfo,
+    void addPaymentAppsPreference(Map<String, Pair<String, Drawable>> androidAppsInfo,
             Map<String, Pair<String, Bitmap>> serviceWorkerAppsInfo) {
         if (androidAppsInfo.isEmpty() && serviceWorkerAppsInfo.isEmpty()) return;
 

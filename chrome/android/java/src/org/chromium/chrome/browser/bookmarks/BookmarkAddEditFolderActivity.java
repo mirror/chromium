@@ -40,9 +40,9 @@ public class BookmarkAddEditFolderActivity extends SynchronousInitializationActi
             INTENT_CREATED_BOOKMARK = "BookmarkAddEditFolderActivity.createdBookmark";
     static final int PARENT_FOLDER_REQUEST_CODE = 10;
 
-    private boolean mIsAddMode;
-    private BookmarkId mParentId;
-    private BookmarkModel mModel;
+    boolean mIsAddMode;
+    BookmarkId mParentId;
+    BookmarkModel mModel;
     private TextView mParentTextView;
     private EmptyAlertEditText mFolderTitle;
 
@@ -51,7 +51,7 @@ public class BookmarkAddEditFolderActivity extends SynchronousInitializationActi
     private MenuItem mSaveButton;
 
     // Edit mode member variables
-    private BookmarkId mFolderId;
+    BookmarkId mFolderId;
     private MenuItem mDeleteButton;
 
     private BookmarkModelObserver mBookmarkModelObserver = new BookmarkModelObserver() {
@@ -255,7 +255,7 @@ public class BookmarkAddEditFolderActivity extends SynchronousInitializationActi
         mModel = null;
     }
 
-    private void updateParent(BookmarkId newParent) {
+    void updateParent(BookmarkId newParent) {
         mParentId = newParent;
         mParentTextView.setText(mModel.getBookmarkTitle(mParentId));
     }

@@ -29,7 +29,7 @@ import org.chromium.components.background_task_scheduler.TaskIds;
  * notifications displayed in the notification tray.
  */
 public class NotificationService extends IntentService {
-    private static final String TAG = NotificationService.class.getSimpleName();
+    static final String TAG = NotificationService.class.getSimpleName();
 
     /**
      * The class which receives the intents from the Android framework. It initializes the

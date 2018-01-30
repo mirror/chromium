@@ -16,9 +16,9 @@ import java.util.List;
  * register to observe the underlying TabModels as they are created lazily.
  */
 public class TabModelSelectorTabModelObserver extends EmptyTabModelObserver {
-    private final TabModelSelector mTabModelSelector;
+    final TabModelSelector mTabModelSelector;
 
-    private TabModelSelectorObserver mSelectorObserver;
+    TabModelSelectorObserver mSelectorObserver;
 
     /**
      * Constructs an observer that should be notified of changes for all tab models owned
@@ -53,7 +53,7 @@ public class TabModelSelectorTabModelObserver extends EmptyTabModelObserver {
         }
     }
 
-    private void registerModelObservers() {
+    void registerModelObservers() {
         List<TabModel> tabModels = mTabModelSelector.getModels();
         for (int i = 0; i < tabModels.size(); i++) {
             TabModel tabModel = tabModels.get(i);

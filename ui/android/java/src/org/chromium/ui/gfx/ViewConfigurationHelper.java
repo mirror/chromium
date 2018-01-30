@@ -50,7 +50,7 @@ public class ViewConfigurationHelper {
                 });
     }
 
-    private void updateNativeViewConfigurationIfNecessary() {
+    void updateNativeViewConfigurationIfNecessary() {
         ViewConfiguration configuration =
                 ViewConfiguration.get(ContextUtils.getApplicationContext());
         if (mViewConfiguration == configuration) {

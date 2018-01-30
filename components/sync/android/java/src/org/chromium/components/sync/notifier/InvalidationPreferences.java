@@ -42,7 +42,7 @@ public class InvalidationPreferences {
      */
     @SuppressLint("CommitPrefEdits")
     public static class EditContext {
-        private final SharedPreferences.Editor mEditor;
+        final SharedPreferences.Editor mEditor;
 
         EditContext() {
             mEditor = ContextUtils.getAppSharedPreferences().edit();

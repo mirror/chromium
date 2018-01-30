@@ -80,7 +80,7 @@ public class UrlBar extends AutocompleteEditText {
      * */
     private int mUrlDirection;
 
-    private UrlBarDelegate mUrlBarDelegate;
+    UrlBarDelegate mUrlBarDelegate;
 
     private UrlDirectionListener mUrlDirectionListener;
 

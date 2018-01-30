@@ -67,20 +67,20 @@ public class FindToolbar extends LinearLayout
     private TabModelSelector mTabModelSelector;
     private final TabModelSelectorObserver mTabModelSelectorObserver;
     private final TabModelObserver mTabModelObserver;
-    private Tab mCurrentTab;
+    Tab mCurrentTab;
     private final TabObserver mTabObserver;
     private WindowAndroid mWindowAndroid;
-    private FindInPageBridge mFindInPageBridge;
+    FindInPageBridge mFindInPageBridge;
     private FindToolbarObserver mObserver;
 
     /** Most recently entered search text (globally, in non-incognito tabs). */
-    private String mLastUserSearch = "";
+    String mLastUserSearch = "";
 
     /** Whether toolbar text is being set automatically (not typed by user). */
-    private boolean mSettingFindTextProgrammatically;
+    boolean mSettingFindTextProgrammatically;
 
     /** Whether the search key should trigger a new search. */
-    private boolean mSearchKeyShouldTriggerSearch;
+    boolean mSearchKeyShouldTriggerSearch;
 
     /** Whether startFinding() should also hide the keyboard. **/
     private boolean mHideKeyboardWhileFinding;
@@ -89,7 +89,7 @@ public class FindToolbar extends LinearLayout
 
     private Handler mHandler = new Handler();
     private Runnable mAccessibleAnnouncementRunnable;
-    private boolean mAccessibilityDidActivateResult;
+    boolean mAccessibilityDidActivateResult;
 
     /** Subclasses EditText in order to intercept BACK key presses. */
     @SuppressLint("Instantiatable")
@@ -328,7 +328,7 @@ public class FindToolbar extends LinearLayout
     protected void findResultSelected(Rect rect) {
     }
 
-    private void startFinding(boolean forward) {
+    void startFinding(boolean forward) {
         if (mFindInPageBridge == null) return;
 
         final String findQuery = mFindQuery.getText().toString();
@@ -721,7 +721,7 @@ public class FindToolbar extends LinearLayout
         mFindNextButton.setEnabled(enable);
     }
 
-    private void showKeyboard() {
+    void showKeyboard() {
         if (!mFindQuery.hasWindowFocus()) {
             // HACK: showKeyboard() is normally called from activate() which is
             // triggered by an options menu item. Unfortunately, because the

@@ -49,32 +49,32 @@ public class ContentSettingsResources {
             mDisabledSummary = disabledSummary;
         }
 
-        private int getIcon() {
+        int getIcon() {
             return mIcon;
         }
 
-        private int getTitle() {
+        int getTitle() {
             return mTitle;
         }
 
-        private int getExplanation() {
+        int getExplanation() {
             return mExplanation;
         }
 
-        private ContentSetting getDefaultEnabledValue() {
+        ContentSetting getDefaultEnabledValue() {
             return mDefaultEnabledValue;
         }
 
-        private ContentSetting getDefaultDisabledValue() {
+        ContentSetting getDefaultDisabledValue() {
             return mDefaultDisabledValue;
         }
 
-        private int getEnabledSummary() {
+        int getEnabledSummary() {
             return mEnabledSummary == 0 ? getCategorySummary(mDefaultEnabledValue)
                                         : mEnabledSummary;
         }
 
-        private int getDisabledSummary() {
+        int getDisabledSummary() {
             return mDisabledSummary == 0 ? getCategorySummary(mDefaultDisabledValue)
                                          : mDisabledSummary;
         }
@@ -240,7 +240,7 @@ public class ContentSettingsResources {
      * Returns the string resource id for a given ContentSetting to show with a permission category.
      * @param value The ContentSetting for which we want the resource.
      */
-    private static int getCategorySummary(ContentSetting value) {
+    static int getCategorySummary(ContentSetting value) {
         switch (value) {
             case ALLOW:
                 return R.string.website_settings_category_allowed;

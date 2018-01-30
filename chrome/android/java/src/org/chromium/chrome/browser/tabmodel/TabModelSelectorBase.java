@@ -237,7 +237,7 @@ public abstract class TabModelSelectorBase implements TabModelSelector {
      * Notifies all the listeners that a new tab has been created.
      * @param tab The tab that has been created.
      */
-    private void notifyNewTabCreated(Tab tab) {
+    void notifyNewTabCreated(Tab tab) {
         for (TabModelSelectorObserver listener : mObservers) {
             listener.onNewTabCreated(tab);
         }

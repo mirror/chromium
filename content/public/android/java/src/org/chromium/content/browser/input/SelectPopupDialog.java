@@ -30,7 +30,7 @@ public class SelectPopupDialog implements SelectPopup {
     };
 
     // The dialog hosting the popup list view.
-    private final AlertDialog mListBoxPopup;
+    final AlertDialog mListBoxPopup;
     private final ContentViewCore mContentViewCore;
 
     private boolean mSelectionNotified;
@@ -115,7 +115,7 @@ public class SelectPopupDialog implements SelectPopup {
         return resourceId;
     }
 
-    private static int[] getSelectedIndices(ListView listView) {
+    static int[] getSelectedIndices(ListView listView) {
         SparseBooleanArray sparseArray = listView.getCheckedItemPositions();
         int selectedCount = 0;
         for (int i = 0; i < sparseArray.size(); ++i) {
@@ -132,7 +132,7 @@ public class SelectPopupDialog implements SelectPopup {
         return indices;
     }
 
-    private void notifySelection(int[] indicies) {
+    void notifySelection(int[] indicies) {
         if (mSelectionNotified) return;
         mContentViewCore.selectPopupMenuItems(indicies);
         mSelectionNotified = true;

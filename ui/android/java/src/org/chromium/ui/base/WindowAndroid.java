@@ -74,8 +74,8 @@ public class WindowAndroid {
     }
 
     // Native pointer to the c++ WindowAndroid object.
-    private long mNativeWindowAndroid;
-    private final VSyncMonitor mVSyncMonitor;
+    long mNativeWindowAndroid;
+    final VSyncMonitor mVSyncMonitor;
     private final DisplayAndroid mDisplayAndroid;
 
     // A string used as a key to store intent errors in a bundle
@@ -95,7 +95,7 @@ public class WindowAndroid {
     protected HashMap<Integer, String> mIntentErrors;
 
     // We track all animations over content and provide a drawing placeholder for them.
-    private HashSet<Animator> mAnimationsOverContent = new HashSet<>();
+    HashSet<Animator> mAnimationsOverContent = new HashSet<>();
     private View mAnimationPlaceholderView;
 
     private ViewGroup mKeyboardAccessoryView;
@@ -103,10 +103,10 @@ public class WindowAndroid {
     protected boolean mIsKeyboardShowing;
 
     // System accessibility service.
-    private final AccessibilityManager mAccessibilityManager;
+    final AccessibilityManager mAccessibilityManager;
 
     // Whether touch exploration is enabled.
-    private boolean mIsTouchExplorationEnabled;
+    boolean mIsTouchExplorationEnabled;
 
     // On KitKat and higher, a class that monitors the touch exploration state.
     private TouchExplorationMonitor mTouchExplorationMonitor;
@@ -115,8 +115,8 @@ public class WindowAndroid {
 
     // Note that this state lives in Java, rather than in the native BeginFrameSource because
     // clients may pause VSync before the native WindowAndroid is created.
-    private boolean mPendingVSyncRequest;
-    private boolean mVSyncPaused;
+    boolean mPendingVSyncRequest;
+    boolean mVSyncPaused;
 
     /**
      * An interface to notify listeners of changes in the soft keyboard's visibility.
@@ -760,7 +760,7 @@ public class WindowAndroid {
      * setWillNotDraw(false) to ensure that the animation is drawn over the SurfaceView,
      * and otherwise we call setWillNotDraw(true).
      */
-    private void refreshWillNotDraw() {
+    void refreshWillNotDraw() {
         boolean willNotDraw = !mIsTouchExplorationEnabled && mAnimationsOverContent.isEmpty();
         if (mAnimationPlaceholderView.willNotDraw() != willNotDraw) {
             mAnimationPlaceholderView.setWillNotDraw(willNotDraw);
@@ -779,9 +779,9 @@ public class WindowAndroid {
     }
 
     private native long nativeInit(int displayId);
-    private native void nativeOnVSync(long nativeWindowAndroid,
-                                      long vsyncTimeMicros,
-                                      long vsyncPeriodMicros);
+    native void nativeOnVSync(long nativeWindowAndroid,
+            long vsyncTimeMicros,
+            long vsyncPeriodMicros);
     private native void nativeOnVisibilityChanged(long nativeWindowAndroid, boolean visible);
     private native void nativeOnActivityStopped(long nativeWindowAndroid);
     private native void nativeOnActivityStarted(long nativeWindowAndroid);

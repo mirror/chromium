@@ -216,7 +216,7 @@ public class AwVariationsUtils {
      * @param dateTimeStr The string holds the date time info.
      * @return The Date object holds the date info from the input string, null if parse failed.
      */
-    private static Date parseDateTimeString(String dateTimeStr) {
+    static Date parseDateTimeString(String dateTimeStr) {
         Date lastSeedFetchTime = null;
         try {
             final SimpleDateFormat dateFormat =

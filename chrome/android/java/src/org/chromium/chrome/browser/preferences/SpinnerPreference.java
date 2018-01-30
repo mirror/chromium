@@ -23,7 +23,7 @@ import org.chromium.chrome.R;
 public class SpinnerPreference extends Preference {
     private Spinner mSpinner;
     private ArrayAdapter<Object> mAdapter;
-    private int mSelectedIndex;
+    int mSelectedIndex;
     private View mView;
     private final boolean mSingleLine;
 

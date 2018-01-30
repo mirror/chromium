@@ -35,12 +35,12 @@ public class WebViewThreadTestActivity extends Activity {
     private static final String MIME_KEY = "mime";
     private static final String ENCODE_KEY = "encode";
     private static final String URL_KEY = "url";
-    private WebView mWebView;
+    WebView mWebView;
     private Thread mWebViewThread;
-    private CountDownLatch mWebviewLatch;
-    private CountDownLatch mLoadLatch;
-    private Handler mHandler;
-    private StringBuilder mStringOutput;
+    CountDownLatch mWebviewLatch;
+    CountDownLatch mLoadLatch;
+    Handler mHandler;
+    StringBuilder mStringOutput;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

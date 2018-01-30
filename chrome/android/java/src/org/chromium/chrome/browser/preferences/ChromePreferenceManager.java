@@ -76,7 +76,7 @@ public class ChromePreferenceManager {
 
     private final SharedPreferences mSharedPreferences;
 
-    private ChromePreferenceManager() {
+    ChromePreferenceManager() {
         mSharedPreferences = ContextUtils.getAppSharedPreferences();
     }
 

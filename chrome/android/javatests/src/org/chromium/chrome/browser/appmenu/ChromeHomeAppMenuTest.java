@@ -109,7 +109,7 @@ public class ChromeHomeAppMenuTest {
         public void addOnInitializedCallback(Callback<Boolean> callback) {}
     }
 
-    private AppMenuHandler mAppMenuHandler;
+    AppMenuHandler mAppMenuHandler;
     private BottomSheet mBottomSheet;
     private EmbeddedTestServer mTestServer;
     private String mTestUrl;

@@ -28,7 +28,7 @@ class VisibleNetworksTracker {
     private static long sVisibleNetworksTime = Long.MAX_VALUE;
 
     @Nullable
-    private static AsyncTask<Void, Void, VisibleNetworks> sOngoingRefresh;
+    static AsyncTask<Void, Void, VisibleNetworks> sOngoingRefresh;
 
     private static VisibleNetworks sVisibleNetworksForTesting;
     private static boolean sUseVisibleNetworksForTesting;
@@ -114,7 +114,7 @@ class VisibleNetworksTracker {
         sUseVisibleNetworksForTesting = true;
     }
 
-    private static void setCachedVisibleNetworks(VisibleNetworks visibleNetworks) {
+    static void setCachedVisibleNetworks(VisibleNetworks visibleNetworks) {
         ThreadUtils.assertOnUiThread();
         sVisibleNetworks = visibleNetworks;
         sVisibleNetworksTime = SystemClock.elapsedRealtime();

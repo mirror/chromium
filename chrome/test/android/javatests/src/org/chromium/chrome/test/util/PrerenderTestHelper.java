@@ -27,7 +27,7 @@ public class PrerenderTestHelper {
     private static final int WAIT_FOR_RESPONSE_MS = 10000;
     private static final int SHORT_TIMEOUT_MS = 200;
 
-    private static boolean hasTabPrerenderedUrl(final Tab tab, final String url) {
+    static boolean hasTabPrerenderedUrl(final Tab tab, final String url) {
         return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Boolean>() {
             @Override
             public Boolean call() {

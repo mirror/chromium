@@ -30,8 +30,8 @@ import org.chromium.base.VisibleForTesting;
  * PopupMenu to disambiguate.
  */
 public class TextViewWithClickableSpans extends TextViewWithLeading {
-    private AccessibilityManager mAccessibilityManager;
-    private PopupMenu mDisambiguationMenu;
+    AccessibilityManager mAccessibilityManager;
+    PopupMenu mDisambiguationMenu;
 
     public TextViewWithClickableSpans(Context context) {
         super(context);
@@ -140,7 +140,7 @@ public class TextViewWithClickableSpans extends TextViewWithLeading {
         }
     }
 
-    private void openDisambiguationMenu() {
+    void openDisambiguationMenu() {
         ClickableSpan[] clickableSpans = getClickableSpans();
         if (clickableSpans == null || clickableSpans.length == 0 || mDisambiguationMenu != null) {
             return;

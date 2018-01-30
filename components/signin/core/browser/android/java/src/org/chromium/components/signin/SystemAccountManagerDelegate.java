@@ -242,7 +242,7 @@ public class SystemAccountManagerDelegate implements AccountManagerDelegate {
                 == PackageManager.PERMISSION_GRANTED;
     }
 
-    private void fireOnAccountsChangedNotification() {
+    void fireOnAccountsChangedNotification() {
         for (AccountsChangeObserver observer : mObservers) {
             observer.onAccountsChanged();
         }

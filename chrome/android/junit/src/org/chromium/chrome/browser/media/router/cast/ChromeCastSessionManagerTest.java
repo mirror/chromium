@@ -34,7 +34,7 @@ public class ChromeCastSessionManagerTest {
     private CastSessionManagerListener mListener;
     private CastSessionLaunchRequest mRequest;
     private CastSession mSession;
-    private ChromeCastSessionManager mManager;
+    ChromeCastSessionManager mManager;
 
     // Mocks to be used in scenarios where multiple sessions are launched.
     private CastSessionManagerListener mAltListener;

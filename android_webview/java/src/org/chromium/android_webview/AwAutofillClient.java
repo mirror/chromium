@@ -25,7 +25,7 @@ import org.chromium.ui.base.WindowAndroid;
 @JNINamespace("android_webview")
 public class AwAutofillClient {
 
-    private final long mNativeAwAutofillClient;
+    final long mNativeAwAutofillClient;
     private AutofillPopup mAutofillPopup;
     private ViewGroup mContainerView;
     private ContentViewCore mContentViewCore;
@@ -110,7 +110,7 @@ public class AwAutofillClient {
                 false /* isMultilineLabel */, false /* isBoldLabel */);
     }
 
-    private native void nativeDismissed(long nativeAwAutofillClient);
-    private native void nativeSuggestionSelected(long nativeAwAutofillClient,
+    native void nativeDismissed(long nativeAwAutofillClient);
+    native void nativeSuggestionSelected(long nativeAwAutofillClient,
             int position);
 }

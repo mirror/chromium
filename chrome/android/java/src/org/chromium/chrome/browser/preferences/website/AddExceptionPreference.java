@@ -33,7 +33,7 @@ import org.chromium.ui.UiUtils;
  */
 public class AddExceptionPreference extends Preference implements OnPreferenceClickListener {
     // The callback to notify when the user adds a site.
-    private SiteAddedCallback mSiteAddedCallback;
+    SiteAddedCallback mSiteAddedCallback;
 
     // The accent color to use for the icon and title view.
     private int mPrefAccentColor;

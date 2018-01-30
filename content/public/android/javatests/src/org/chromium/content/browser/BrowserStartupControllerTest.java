@@ -23,14 +23,14 @@ import org.chromium.base.test.BaseJUnit4ClassRunner;
  */
 @RunWith(BaseJUnit4ClassRunner.class)
 public class BrowserStartupControllerTest {
-    private TestBrowserStartupController mController;
+    TestBrowserStartupController mController;
 
     private static class TestBrowserStartupController extends BrowserStartupController {
 
-        private int mStartupResult;
-        private boolean mLibraryLoadSucceeds;
+        int mStartupResult;
+        boolean mLibraryLoadSucceeds;
         private int mInitializedCounter = 0;
-        private boolean mStartupCompleteCalled;
+        boolean mStartupCompleteCalled;
 
         @Override
         void prepareToStartBrowserProcess(boolean singleProcess, Runnable completionCallback)
@@ -43,7 +43,7 @@ public class BrowserStartupControllerTest {
             }
         }
 
-        private TestBrowserStartupController() {
+        TestBrowserStartupController() {
             super(LibraryProcessType.PROCESS_BROWSER);
         }
 
@@ -68,16 +68,16 @@ public class BrowserStartupControllerTest {
             BrowserStartupController.browserStartupComplete(mStartupResult);
         }
 
-        private int initializedCounter() {
+        int initializedCounter() {
             return mInitializedCounter;
         }
     }
 
     private static class TestStartupCallback implements BrowserStartupController.StartupCallback {
-        private boolean mWasSuccess;
-        private boolean mWasFailure;
-        private boolean mHasStartupResult;
-        private boolean mAlreadyStarted;
+        boolean mWasSuccess;
+        boolean mWasFailure;
+        boolean mHasStartupResult;
+        boolean mAlreadyStarted;
 
         @Override
         public void onSuccess(boolean alreadyStarted) {

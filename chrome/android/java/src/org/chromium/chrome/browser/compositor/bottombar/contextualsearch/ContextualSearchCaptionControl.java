@@ -71,7 +71,7 @@ public class ContextualSearchCaptionControl extends OverlayPanelTextViewInflater
      * ANIMATION_PERCENTAGE_COMPLETE when the Contextual Search bar is peeking and
      * ANIMATION_PERCENTAGE_ZERO when it is expanded.
      */
-    private float mAnimationPercentage = ANIMATION_PERCENTAGE_ZERO;
+    float mAnimationPercentage = ANIMATION_PERCENTAGE_ZERO;
 
     /** The animator responsible for transitioning the caption. */
     private CompositorAnimator mTransitionAnimator;

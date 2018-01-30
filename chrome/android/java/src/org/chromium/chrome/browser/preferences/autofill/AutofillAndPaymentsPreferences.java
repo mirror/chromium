@@ -87,7 +87,7 @@ public class AutofillAndPaymentsPreferences extends PreferenceFragment {
                 });
     }
 
-    private void setPaymentAppsPrefStatus(Preference pref, boolean enabled) {
+    void setPaymentAppsPrefStatus(Preference pref, boolean enabled) {
         if (enabled) {
             pref.setSummary(null);
             pref.setEnabled(true);

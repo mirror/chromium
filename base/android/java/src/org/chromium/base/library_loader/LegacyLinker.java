@@ -579,7 +579,7 @@ class LegacyLinker extends Linker {
      *
      * @param opaque Opaque crazy linker arguments.
      */
-    private static native void nativeRunCallbackOnUiThread(long opaque);
+    static native void nativeRunCallbackOnUiThread(long opaque);
 
     /**
      * Native method used to load a library.

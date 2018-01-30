@@ -23,7 +23,7 @@ public class AwWebContentsObserver extends WebContentsObserver {
     // reference to an AwWebContentsObserver instance. This is not intentional,
     // and should be found and cleaned up.
     private final WeakReference<AwContents> mAwContents;
-    private final WeakReference<AwContentsClient> mAwContentsClient;
+    final WeakReference<AwContentsClient> mAwContentsClient;
 
     // Whether this webcontents has ever committed any navigation.
     private boolean mCommittedNavigation;

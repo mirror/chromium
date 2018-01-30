@@ -43,12 +43,12 @@ public class InstantAppsHandlerTest {
     public ChromeActivityTestRule<ChromeActivity> mActivityTestRule =
             new ChromeActivityTestRule<>(ChromeActivity.class);
 
-    private TestInstantAppsHandler mHandler;
-    private Context mContext;
+    TestInstantAppsHandler mHandler;
+    Context mContext;
 
     private static final Uri URI = Uri.parse("http://sampleurl.com/foo");
     private static final String INSTANT_APP_URL = "http://sampleapp.com/boo";
-    private static final Uri REFERRER_URI = Uri.parse("http://www.wikipedia.org/");
+    static final Uri REFERRER_URI = Uri.parse("http://www.wikipedia.org/");
 
     private Intent createViewIntent() {
         return new Intent(Intent.ACTION_VIEW, URI);

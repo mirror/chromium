@@ -311,5 +311,5 @@ public class TracingControllerAndroid {
             long nativeTracingControllerAndroid, String categories, String traceOptions);
     private native void nativeStopTracing(long nativeTracingControllerAndroid, String filename);
     private native boolean nativeGetKnownCategoryGroupsAsync(long nativeTracingControllerAndroid);
-    private native String nativeGetDefaultCategories();
+    native String nativeGetDefaultCategories();
 }

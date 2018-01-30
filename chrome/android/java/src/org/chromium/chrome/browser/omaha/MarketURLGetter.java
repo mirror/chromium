@@ -17,7 +17,7 @@ import org.chromium.base.VisibleForTesting;
 public class MarketURLGetter {
 
     private static final class LazyHolder {
-        private static final MarketURLGetter INSTANCE = new MarketURLGetter();
+        static final MarketURLGetter INSTANCE = new MarketURLGetter();
     }
 
     /** See {@link #getMarketUrl(Context)} */

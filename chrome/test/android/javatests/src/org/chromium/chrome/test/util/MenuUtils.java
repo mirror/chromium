@@ -20,8 +20,8 @@ public class MenuUtils {
     public static class MenuActivityTrigger implements Runnable {
 
         private final Instrumentation mInstrumentation;
-        private final ChromeActivity mActivity;
-        private final int mMenuId;
+        final ChromeActivity mActivity;
+        final int mMenuId;
 
         public MenuActivityTrigger(Instrumentation instrumentation, ChromeActivity activity,
                 int menuId) {

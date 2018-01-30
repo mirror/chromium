@@ -81,7 +81,7 @@ public class UrlBarTest {
     // real keyboard app will interact with null InputConnection while the test can still interact
     // with BaseInputConnection's method and thus affects EditText's Editable through
     // {@link UrlBar#getInputConnection()}. https://crbug.com/723901 for details.
-    private void startIgnoringImeUntilRestart(final UrlBar urlBar) {
+    void startIgnoringImeUntilRestart(final UrlBar urlBar) {
         urlBar.setIgnoreImeForTest(true);
         InputMethodManager imm =
                 (InputMethodManager) mActivityTestRule.getActivity().getSystemService(
@@ -114,7 +114,7 @@ public class UrlBarTest {
         });
     }
 
-    private UrlBar getUrlBar() {
+    UrlBar getUrlBar() {
         return (UrlBar) mActivityTestRule.getActivity().findViewById(R.id.url_bar);
     }
 

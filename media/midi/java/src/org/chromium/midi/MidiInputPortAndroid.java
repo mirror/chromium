@@ -30,7 +30,7 @@ class MidiInputPortAndroid {
     /**
      * A pointer to a midi::MidiInputPortAndroid object.
      */
-    private long mNativeReceiverPointer;
+    long mNativeReceiverPointer;
     /**
      * The device this port belongs to.
      */
@@ -92,6 +92,6 @@ class MidiInputPortAndroid {
         mPort = null;
     }
 
-    private static native void nativeOnData(
+    static native void nativeOnData(
             long nativeMidiInputPortAndroid, byte[] bs, int offset, int count, long timestamp);
 }

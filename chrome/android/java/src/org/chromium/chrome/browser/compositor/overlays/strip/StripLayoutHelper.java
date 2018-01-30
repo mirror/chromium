@@ -95,16 +95,16 @@ public class StripLayoutHelper implements StripLayoutTab.StripLayoutTabDelegate 
     private static final int MESSAGE_UPDATE_SPINNER = 2;
 
     // External influences
-    private final LayoutUpdateHost mUpdateHost;
+    final LayoutUpdateHost mUpdateHost;
     private final LayoutRenderHost mRenderHost;
-    private TabModel mModel;
+    TabModel mModel;
     private TabCreator mTabCreator;
     private StripStacker mStripStacker;
     private CascadingStripStacker mCascadingStripStacker = new CascadingStripStacker();
     private ScrollingStripStacker mScrollingStripStacker = new ScrollingStripStacker();
 
     // Internal State
-    private StripLayoutTab[] mStripTabs = new StripLayoutTab[0];
+    StripLayoutTab[] mStripTabs = new StripLayoutTab[0];
     private StripLayoutTab[] mStripTabsVisuallyOrdered = new StripLayoutTab[0];
     private StripLayoutTab[] mStripTabsToRender = new StripLayoutTab[0];
     private final StripTabEventHandler mStripTabEventHandler = new StripTabEventHandler();
@@ -119,7 +119,7 @@ public class StripLayoutHelper implements StripLayoutTab.StripLayoutTabDelegate 
     private final float mMinTabWidth;
     private final float mMaxTabWidth;
     private final float mReorderMoveStartThreshold;
-    private final ListPopupWindow mTabMenu;
+    final ListPopupWindow mTabMenu;
 
     // Strip State
     private StackScroller mScroller;
@@ -823,7 +823,7 @@ public class StripLayoutHelper implements StripLayoutTab.StripLayoutTabDelegate 
         }
     }
 
-    private void handleNewTabClick() {
+    void handleNewTabClick() {
         if (mModel == null) return;
 
         if (!mModel.isIncognito()) mModel.commitAllTabClosures();
@@ -1039,7 +1039,7 @@ public class StripLayoutHelper implements StripLayoutTab.StripLayoutTabDelegate 
         updateVisualTabOrdering();
     }
 
-    private void resizeTabStrip(boolean delay) {
+    void resizeTabStrip(boolean delay) {
         if (delay) {
             resetResizeTimeout(true);
         } else {
@@ -1090,7 +1090,7 @@ public class StripLayoutHelper implements StripLayoutTab.StripLayoutTabDelegate 
         return TabModel.INVALID_TAB_INDEX;
     }
 
-    private void computeAndUpdateTabWidth(boolean animate) {
+    void computeAndUpdateTabWidth(boolean animate) {
         // Remove any queued resize messages.
         mStripTabEventHandler.removeMessages(MESSAGE_RESIZE);
 

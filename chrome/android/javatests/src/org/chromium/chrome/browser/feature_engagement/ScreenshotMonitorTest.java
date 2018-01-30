@@ -29,8 +29,8 @@ public class ScreenshotMonitorTest {
     private static final String FILENAME = "image.jpeg";
     private static final String TAG = "ScreenshotTest";
 
-    private ScreenshotMonitor mTestScreenshotMonitor;
-    private TestScreenshotMonitorDelegate mTestScreenshotMonitorDelegate;
+    ScreenshotMonitor mTestScreenshotMonitor;
+    TestScreenshotMonitorDelegate mTestScreenshotMonitorDelegate;
     private TestScreenshotMonitorFileObserver mTestFileObserver;
 
     /**

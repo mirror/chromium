@@ -84,7 +84,7 @@ public class StackLayout extends Layout implements Animatable<StackLayout.Proper
     private static final float SWITCH_STACK_FLING_DT = 1.0f / 30.0f;
 
     /** The array of potentially visible stacks. The code works for only 2 stacks. */
-    private final Stack[] mStacks;
+    final Stack[] mStacks;
 
     /** Rectangles that defines the area where each stack need to be laid out. */
     private final RectF[] mStackRects;
@@ -94,26 +94,26 @@ public class StackLayout extends Layout implements Animatable<StackLayout.Proper
     private float mFlingSpeed; // pixel/ms
 
     /** Whether the current fling animation is the result of switching stacks. */
-    private boolean mFlingFromModelChange;
+    boolean mFlingFromModelChange;
 
-    private boolean mClicked;
+    boolean mClicked;
 
     // If not overscroll, then mRenderedScrollIndex == mScrollIndex;
     // Otherwise, mRenderedScrollIndex is updated with the actual index passed in
     // from the event handler; and mRenderedScrollIndex is the value we get
     // after map mScrollIndex through a decelerate function.
     // Here we use float as index so we can smoothly animate the transition between stack.
-    private float mRenderedScrollOffset;
+    float mRenderedScrollOffset;
     private float mScrollIndexOffset;
 
-    private final int mMinMaxInnerMargin;
-    private float mInnerMarginPercent;
-    private float mStackOffsetYPercent;
+    final int mMinMaxInnerMargin;
+    float mInnerMarginPercent;
+    float mStackOffsetYPercent;
 
-    private SwipeMode mInputMode = SwipeMode.NONE;
-    private float mLastOnDownX;
-    private float mLastOnDownY;
-    private long mLastOnDownTimeStamp;
+    SwipeMode mInputMode = SwipeMode.NONE;
+    float mLastOnDownX;
+    float mLastOnDownY;
+    long mLastOnDownTimeStamp;
     private final float mMinShortPressThresholdSqr; // Computed from Android ViewConfiguration
     private final float mMinDirectionThreshold; // Computed from Android ViewConfiguration
 
@@ -348,7 +348,7 @@ public class StackLayout extends Layout implements Animatable<StackLayout.Proper
      * Get the tab stack state.
      * @return The tab stack index for the given tab id.
      */
-    private int getTabStackIndex() {
+    int getTabStackIndex() {
         return getTabStackIndex(Tab.INVALID_TAB_ID);
     }
 
@@ -739,7 +739,7 @@ public class StackLayout extends Layout implements Animatable<StackLayout.Proper
         mStacks[getTabStackIndex()].swipeFlingOccurred(time, x, y, tx, ty, vx, vy);
     }
 
-    private void requestStackUpdate() {
+    void requestStackUpdate() {
         // TODO(jgreenwald): It isn't always necessary to invalidate both
         // stacks.
         mStacks[0].requestUpdate();
@@ -774,7 +774,7 @@ public class StackLayout extends Layout implements Animatable<StackLayout.Proper
      * @param dy   The y displacement happening this frame.
      * @return     The input mode to select.
      */
-    private SwipeMode computeInputMode(long time, float x, float y, float dx, float dy) {
+    SwipeMode computeInputMode(long time, float x, float y, float dx, float dy) {
         if (!mStacks[1].isDisplayable()) return SwipeMode.SEND_TO_STACK;
         int currentIndex = getTabStackIndex();
         if (currentIndex != getViewportParameters().getStackIndexAt(x, y)) {
@@ -932,7 +932,7 @@ public class StackLayout extends Layout implements Animatable<StackLayout.Proper
         }
     }
 
-    private PortraitViewport getViewportParameters() {
+    PortraitViewport getViewportParameters() {
         if (getOrientation() == Orientation.PORTRAIT) {
             if (mCachedPortraitViewport == null) {
                 mCachedPortraitViewport = new PortraitViewport();
@@ -971,7 +971,7 @@ public class StackLayout extends Layout implements Animatable<StackLayout.Proper
         return (stackIndex == 0 && switchDelta < 0) || (stackIndex == 1 && switchDelta > 0);
     }
 
-    private void scrollStacks(float delta) {
+    void scrollStacks(float delta) {
         cancelAnimation(this, Property.STACK_SNAP);
         float fullDistance = getFullScrollDistance();
         mScrollIndexOffset += MathUtils.flipSignIf(delta / fullDistance,
@@ -985,7 +985,7 @@ public class StackLayout extends Layout implements Animatable<StackLayout.Proper
         requestStackUpdate();
     }
 
-    private void flingStacks(boolean toIncognito) {
+    void flingStacks(boolean toIncognito) {
         // velocityX is measured in pixel per second.
         if (!canScrollLinearly(toIncognito ? 0 : 1)) return;
         setActiveStackState(toIncognito);
@@ -1000,7 +1000,7 @@ public class StackLayout extends Layout implements Animatable<StackLayout.Proper
      * with the opposite.  For example, if the user does a very small fling from
      * incognito to non-incognito, which leaves the up event in the incognito side.
      */
-    private void finishScrollStacks() {
+    void finishScrollStacks() {
         cancelAnimation(this, Property.STACK_SNAP);
         final int currentModelIndex = getTabStackIndex();
         float delta = Math.abs(currentModelIndex + mRenderedScrollOffset);
@@ -1147,7 +1147,7 @@ public class StackLayout extends Layout implements Animatable<StackLayout.Proper
         return mStacks[fromStackIndex ^ 0x01].isDisplayable();
     }
 
-    private float getFullScrollDistance() {
+    float getFullScrollDistance() {
         float distance = getOrientation() == Orientation.PORTRAIT ? getWidth()
                                                                   : getHeightMinusBrowserControls();
         return distance - 2 * getViewportParameters().getInnerMargin();

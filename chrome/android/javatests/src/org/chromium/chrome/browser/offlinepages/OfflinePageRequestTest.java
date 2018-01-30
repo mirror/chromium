@@ -42,10 +42,10 @@ public class OfflinePageRequestTest {
     private static final String TEST_PAGE = "/chrome/test/data/android/test.html";
     private static final String ABOUT_PAGE = "/chrome/test/data/android/about.html";
     private static final int TIMEOUT_MS = 5000;
-    private static final ClientId CLIENT_ID =
+    static final ClientId CLIENT_ID =
             new ClientId(OfflinePageBridge.BOOKMARK_NAMESPACE, "1234");
 
-    private OfflinePageBridge mOfflinePageBridge;
+    OfflinePageBridge mOfflinePageBridge;
 
     @Before
     public void setUp() throws Exception {

@@ -148,7 +148,7 @@ public class AppWebMessagePort implements MessagePort {
     private Core mMojoCore;
     private Connector mConnector;
 
-    private AppWebMessagePort(MessagePipeHandle messagePipeHandle) {
+    AppWebMessagePort(MessagePipeHandle messagePipeHandle) {
         mMojoCore = messagePipeHandle.getCore();
         mConnector = new Connector(messagePipeHandle);
     }
@@ -252,6 +252,6 @@ public class AppWebMessagePort implements MessagePort {
         mConnector.accept(msg.serializeWithHeader(mMojoCore, MESSAGE_HEADER));
     }
 
-    private static native String nativeDecodeStringMessage(byte[] encodedData);
+    static native String nativeDecodeStringMessage(byte[] encodedData);
     private static native byte[] nativeEncodeStringMessage(String message);
 }

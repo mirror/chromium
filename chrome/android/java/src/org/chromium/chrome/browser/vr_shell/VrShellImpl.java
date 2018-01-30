@@ -62,7 +62,7 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
     private static final String TAG = "VrShellImpl";
     private static final float INCHES_TO_METERS = 0.0254f;
 
-    private final ChromeActivity mActivity;
+    final ChromeActivity mActivity;
     private final VrShellDelegate mDelegate;
     private final VirtualDisplayAndroid mContentVirtualDisplay;
     private final TabRedirectHandler mTabRedirectHandler;
@@ -72,33 +72,33 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
     private TabModelSelectorTabObserver mTabModelSelectorTabObserver;
     private OnPreDrawListener mPredrawListener;
 
-    private long mNativeVrShell;
+    long mNativeVrShell;
 
-    private FrameLayout mRenderToSurfaceLayoutParent;
-    private FrameLayout mRenderToSurfaceLayout;
-    private Surface mSurface;
+    FrameLayout mRenderToSurfaceLayoutParent;
+    FrameLayout mRenderToSurfaceLayout;
+    Surface mSurface;
     private View mPresentationView;
 
     // The tab that holds the main ContentViewCore.
     private Tab mTab;
-    private ContentViewCore mContentViewCore;
-    private NativePage mNativePage;
+    ContentViewCore mContentViewCore;
+    NativePage mNativePage;
     private Boolean mCanGoBack;
     private Boolean mCanGoForward;
 
-    private VrWindowAndroid mContentVrWindowAndroid;
+    VrWindowAndroid mContentVrWindowAndroid;
 
     private boolean mReprojectedRendering;
 
     private InterceptNavigationDelegateImpl mNonVrInterceptNavigationDelegate;
     private TabRedirectHandler mNonVrTabRedirectHandler;
     private TabModelSelector mTabModelSelector;
-    private float mLastContentWidth;
-    private float mLastContentHeight;
-    private float mLastContentDpr;
+    float mLastContentWidth;
+    float mLastContentHeight;
+    float mLastContentDpr;
     private Boolean mPaused;
 
-    private AndroidUiGestureTarget mAndroidUiGestureTarget;
+    AndroidUiGestureTarget mAndroidUiGestureTarget;
 
     private OnDispatchTouchEventCallback mOnDispatchTouchEventForTesting;
 
@@ -358,7 +358,7 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
         nativeOnTabListCreated(mNativeVrShell, mainTabs, incognitoTabs);
     }
 
-    private void swapToForegroundTab() {
+    void swapToForegroundTab() {
         Tab tab = mActivity.getActivityTab();
         if (tab == mTab) return;
         if (tab == null || !mDelegate.canEnterVr(tab, false)) {
@@ -761,7 +761,7 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
         updateHistoryButtonsVisibility();
     }
 
-    private void updateHistoryButtonsVisibility() {
+    void updateHistoryButtonsVisibility() {
         assert mTab != null;
         boolean willCloseTab = false;
         if (mActivity instanceof ChromeTabbedActivity) {
@@ -786,7 +786,7 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
         mTab.reload();
     }
 
-    private float getNativePageScrollRatio() {
+    float getNativePageScrollRatio() {
         return mActivity.getWindowAndroid().getDisplay().getDipScale()
                 / mContentVrWindowAndroid.getDisplay().getDipScale();
     }
@@ -834,13 +834,13 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
             float displayWidthMeters, float displayHeightMeters, int displayWidthPixels,
             int displayHeightPixels);
     private native void nativeSetSurface(long nativeVrShell, Surface surface);
-    private native void nativeSwapContents(
+    native void nativeSwapContents(
             long nativeVrShell, Tab tab, AndroidUiGestureTarget androidUiGestureTarget);
     private native void nativeDestroy(long nativeVrShell);
-    private native void nativeOnTriggerEvent(long nativeVrShell, boolean touched);
+    native void nativeOnTriggerEvent(long nativeVrShell, boolean touched);
     private native void nativeOnPause(long nativeVrShell);
     private native void nativeOnResume(long nativeVrShell);
-    private native void nativeOnLoadProgressChanged(long nativeVrShell, double progress);
+    native void nativeOnLoadProgressChanged(long nativeVrShell, double progress);
     private native void nativeOnPhysicalBackingSizeChanged(
             long nativeVrShell, WebContents webContents, int width, int height);
     private native void nativeContentPhysicalBoundsChanged(long nativeVrShell, int width,
@@ -850,11 +850,11 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
     private native boolean nativeIsDisplayingUrlForTesting(long nativeVrShell);
     private native void nativeOnTabListCreated(long nativeVrShell, Tab[] mainTabs,
             Tab[] incognitoTabs);
-    private native void nativeOnTabUpdated(long nativeVrShell, boolean incognito, int id,
+    native void nativeOnTabUpdated(long nativeVrShell, boolean incognito, int id,
             String title);
-    private native void nativeOnTabRemoved(long nativeVrShell, boolean incognito, int id);
-    private native Surface nativeTakeContentSurface(long nativeVrShell);
-    private native void nativeRestoreContentSurface(long nativeVrShell);
+    native void nativeOnTabRemoved(long nativeVrShell, boolean incognito, int id);
+    native Surface nativeTakeContentSurface(long nativeVrShell);
+    native void nativeRestoreContentSurface(long nativeVrShell);
     private native void nativeSetHistoryButtonsEnabled(
             long nativeVrShell, boolean canGoBack, boolean canGoForward);
     private native void nativeRequestToExitVr(long nativeVrShell, @UiUnsupportedMode int reason);

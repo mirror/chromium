@@ -30,7 +30,7 @@ import java.util.List;
  */
 public class PasswordGenerationAdapter extends BaseAdapter {
     private final Context mContext;
-    private final Delegate mDelegate;
+    final Delegate mDelegate;
     private final List<Integer> mViewTypes;
     private final String mPassword;
     private final String mSuggestionTitle;

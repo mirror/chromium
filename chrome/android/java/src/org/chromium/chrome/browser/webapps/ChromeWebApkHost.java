@@ -20,7 +20,7 @@ import org.chromium.webapk.lib.client.WebApkValidator;
  * Contains functionality needed for Chrome to host WebAPKs.
  */
 public class ChromeWebApkHost {
-    private static ApplicationStatus.ApplicationStateListener sListener;
+    static ApplicationStatus.ApplicationStateListener sListener;
 
     public static void init() {
         WebApkValidator.init(ChromeWebApkHostSignature.EXPECTED_SIGNATURE,

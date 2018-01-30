@@ -46,7 +46,7 @@ public class ShapeDetectionTest {
     private static final String BARCODE_TEST_EXPECTED_TAB_TITLE = "https://chromium.org";
     private static final String TEXT_TEST_EXPECTED_TAB_TITLE =
             "The quick brown fox jumped over the lazy dog. Helvetica Neue 36.";
-    private StrictMode.ThreadPolicy mOldPolicy;
+    StrictMode.ThreadPolicy mOldPolicy;
 
     /**
      * Verifies that QR codes are detected correctly.

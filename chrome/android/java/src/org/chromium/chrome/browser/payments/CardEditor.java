@@ -100,16 +100,17 @@ public class CardEditor extends EditorBase<AutofillPaymentInstrument>
      * profiles from disk, which may have changed due to sync, for example. updateBillingAddress()
      * updates this cache.
      */
-    private final List<AutofillProfile> mProfilesForBillingAddress;
+    final List<AutofillProfile> mProfilesForBillingAddress;
 
     /** A map of GUIDs of the incomplete profiles to their edit required message resource Ids. */
-    private final Map<String, Integer> mIncompleteProfilesForBillingAddress;
+    final Map<String, Integer> mIncompleteProfilesForBillingAddress;
 
     /** Used for verifying billing address completeness and also editing billing addresses. */
-    private final AddressEditor mAddressEditor;
+    final AddressEditor mAddressEditor;
 
     /** An optional observer used by tests. */
-    @Nullable private final PaymentRequestServiceObserverForTest mObserverForTest;
+    @Nullable
+    final PaymentRequestServiceObserverForTest mObserverForTest;
 
     /**
      * A mapping from all card issuer networks recognized in Chrome to information about these
@@ -122,7 +123,7 @@ public class CardEditor extends EditorBase<AutofillPaymentInstrument>
      * The issuer networks accepted by the merchant website. This is a subset of recognized cards.
      * Used in the validator.
      */
-    private final Set<String> mAcceptedIssuerNetworks;
+    final Set<String> mAcceptedIssuerNetworks;
 
     /**
      * The issuer networks accepted by the merchant website that should have "basic-card" as the
@@ -143,24 +144,27 @@ public class CardEditor extends EditorBase<AutofillPaymentInstrument>
      */
     private final List<CardIssuerNetwork> mAcceptedCardIssuerNetworks;
 
-    private final Handler mHandler;
+    final Handler mHandler;
     private final EditorFieldValidator mCardNumberValidator;
     private final EditorValueIconGenerator mCardIconGenerator;
     private final AsyncTask<Void, Void, Calendar> mCalendar;
 
     @Nullable private EditorFieldModel mIconHint;
     @Nullable private EditorFieldModel mNumberField;
-    @Nullable private EditorFieldModel mNameField;
+    @Nullable
+    EditorFieldModel mNameField;
     @Nullable private EditorFieldModel mMonthField;
-    @Nullable private EditorFieldModel mYearField;
-    @Nullable private EditorFieldModel mBillingAddressField;
+    @Nullable
+    EditorFieldModel mYearField;
+    @Nullable
+    EditorFieldModel mBillingAddressField;
     @Nullable private EditorFieldModel mSaveCardCheckbox;
     @Nullable private CreditCardScanner mCardScanner;
     @Nullable private EditorFieldValidator mCardExpirationMonthValidator;
     private boolean mCanScan;
     private boolean mIsScanning;
-    private int mCurrentMonth;
-    private int mCurrentYear;
+    int mCurrentMonth;
+    int mCurrentYear;
 
     /**
      * Builds a credit card editor.
@@ -268,7 +272,7 @@ public class CardEditor extends EditorBase<AutofillPaymentInstrument>
         mCalendar.execute();
     }
 
-    private boolean isCardNumberLengthMaximum(@Nullable CharSequence value) {
+    boolean isCardNumberLengthMaximum(@Nullable CharSequence value) {
         if (TextUtils.isEmpty(value)) return false;
         String cardType = PersonalDataManager.getInstance().getBasicCardIssuerNetwork(
                 value.toString(), false);
@@ -759,7 +763,7 @@ public class CardEditor extends EditorBase<AutofillPaymentInstrument>
         editor.addField(mBillingAddressField);
     }
 
-    private static AutofillProfile findTargetProfile(List<AutofillProfile> profiles, String guid) {
+    static AutofillProfile findTargetProfile(List<AutofillProfile> profiles, String guid) {
         for (int i = 0; i < profiles.size(); i++) {
             if (profiles.get(i).getGUID().equals(guid)) return profiles.get(i);
         }

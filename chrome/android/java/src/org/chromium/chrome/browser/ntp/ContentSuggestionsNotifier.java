@@ -136,7 +136,7 @@ public class ContentSuggestionsNotifier {
         }
     }
 
-    private static void openUrl(Uri uri) {
+    static void openUrl(Uri uri) {
         Context context = ContextUtils.getApplicationContext();
         Intent intent = new Intent()
                                 .setAction(Intent.ACTION_VIEW)
@@ -226,7 +226,7 @@ public class ContentSuggestionsNotifier {
      * will not be recorded.
      */
     @CalledByNative
-    private static void hideNotification(int category, String idWithinCategory, int why) {
+    static void hideNotification(int category, String idWithinCategory, int why) {
         ActiveNotification activeNotification = findActiveNotification(category, idWithinCategory);
         if (!removeActiveNotification(category, idWithinCategory)) return;
 
@@ -313,7 +313,7 @@ public class ContentSuggestionsNotifier {
     }
 
     /** Removes notification from the "active" set. Returns false if it wasn't there. */
-    private static boolean removeActiveNotification(int category, String idWithinCategory) {
+    static boolean removeActiveNotification(int category, String idWithinCategory) {
         SharedPreferences prefs = ContextUtils.getAppSharedPreferences();
         ActiveNotification notification = findActiveNotification(category, idWithinCategory);
         if (notification == null) return false;
@@ -407,7 +407,7 @@ public class ContentSuggestionsNotifier {
      *
      * @param action The action to update the pref for.
      */
-    private static void recordCachedActionMetric(@ContentSuggestionsNotificationAction int action) {
+    static void recordCachedActionMetric(@ContentSuggestionsNotificationAction int action) {
         String prefName = cachedMetricNameForAction(action);
         assert !prefName.isEmpty();
 
@@ -497,7 +497,7 @@ public class ContentSuggestionsNotifier {
      * the keyed service) the flush will be deferred until startup is complete.
      */
     @CalledByNative
-    private static void flushCachedMetrics() {
+    static void flushCachedMetrics() {
         BrowserStartupController browserStartup =
                 BrowserStartupController.get(LibraryProcessType.PROCESS_BROWSER);
         if (!browserStartup.isStartupSuccessfullyCompleted()) {

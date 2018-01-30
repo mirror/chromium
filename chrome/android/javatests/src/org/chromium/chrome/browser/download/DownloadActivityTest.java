@@ -69,7 +69,7 @@ public class DownloadActivityTest {
         public final CallbackHelper onFilterCallback = new CallbackHelper();
         public final CallbackHelper onSpaceDisplayUpdatedCallback = new CallbackHelper();
 
-        private List<DownloadHistoryItemWrapper> mOnSelectionItems;
+        List<DownloadHistoryItemWrapper> mOnSelectionItems;
         private Handler mHandler;
 
         public TestObserver() {
@@ -112,8 +112,8 @@ public class DownloadActivityTest {
     private DownloadManagerUi mUi;
     private DownloadHistoryAdapter mAdapter;
 
-    private RecyclerView mRecyclerView;
-    private TextView mSpaceUsedDisplay;
+    RecyclerView mRecyclerView;
+    TextView mSpaceUsedDisplay;
 
     @Before
     public void setUp() throws Exception {

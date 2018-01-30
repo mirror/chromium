@@ -61,7 +61,7 @@ public class AndroidPermissionRequester {
         return permissionsToRequest;
     }
 
-    private static int getContentSettingType(
+    static int getContentSettingType(
             SparseArray<String[]> contentSettingsTypesToPermissionsMap, String permission) {
         // SparseArray#indexOfValue uses == instead of .equals, so we need to manually iterate
         // over the list.

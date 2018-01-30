@@ -42,8 +42,8 @@ public class AwSecondBrowserProcessTest {
         }
     };
 
-    private CountDownLatch mSecondBrowserProcessLatch;
-    private int mSecondBrowserServicePid;
+    CountDownLatch mSecondBrowserProcessLatch;
+    int mSecondBrowserServicePid;
 
     @After
     public void tearDown() throws Exception {

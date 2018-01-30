@@ -118,7 +118,7 @@ public class ShareMenuActionHandler {
         return canonicalUrl;
     }
 
-    private void logCanonicalUrlResult(String visibleUrl, String canonicalUrl) {
+    void logCanonicalUrlResult(String visibleUrl, String canonicalUrl) {
         @CanonicalURLResult
         int result = getCanonicalUrlResult(visibleUrl, canonicalUrl);
         RecordHistogram.recordEnumeratedHistogram(CANONICAL_URL_RESULT_HISTOGRAM, result,
@@ -180,7 +180,7 @@ public class ShareMenuActionHandler {
         }
     }
 
-    private void triggerShareWithCanonicalUrlResolved(final Activity mainActivity,
+    void triggerShareWithCanonicalUrlResolved(final Activity mainActivity,
             final WebContents webContents, final String title, final String visibleUrl,
             final String canonicalUrl, final boolean shareDirectly, boolean isIncognito) {
         // Share an empty blockingUri in place of screenshot file. The file ready notification is

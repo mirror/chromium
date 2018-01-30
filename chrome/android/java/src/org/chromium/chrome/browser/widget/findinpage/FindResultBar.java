@@ -49,7 +49,7 @@ class FindResultBar extends View {
     private final int mActiveBorderColor;
 
     private final int mBarTouchWidth;
-    private final int mBarDrawWidth;
+    final int mBarDrawWidth;
     private final int mResultMinHeight;
     private final int mActiveMinHeight;
     private final int mBarVerticalPadding;
@@ -290,7 +290,7 @@ class FindResultBar extends View {
         }
     }
 
-    private int getLeftMargin() {
+    int getLeftMargin() {
         return LocalizationUtils.isLayoutRtl() ? 0 : getWidth() - mBarDrawWidth;
     }
 

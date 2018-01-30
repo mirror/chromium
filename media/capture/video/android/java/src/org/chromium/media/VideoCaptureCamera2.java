@@ -283,10 +283,10 @@ public class VideoCaptureCamera2 extends VideoCapture {
 
     private final Object mCameraStateLock = new Object();
 
-    private CameraDevice mCameraDevice;
-    private CameraCaptureSession mPreviewSession;
+    CameraDevice mCameraDevice;
+    CameraCaptureSession mPreviewSession;
     private CaptureRequest mPreviewRequest;
-    private CaptureRequest.Builder mPreviewRequestBuilder;
+    CaptureRequest.Builder mPreviewRequestBuilder;
     private Handler mMainHandler;
     private ImageReader mImageReader = null;
     private final Looper mLooper;
@@ -299,7 +299,7 @@ public class VideoCaptureCamera2 extends VideoCapture {
     private int mPhotoHeight;
     private int mFocusMode = AndroidMeteringMode.CONTINUOUS;
     private int mExposureMode = AndroidMeteringMode.CONTINUOUS;
-    private long mLastExposureTimeNs;
+    long mLastExposureTimeNs;
     private MeteringRectangle mAreaOfInterest;
     private int mExposureCompensation;
     private int mWhiteBalanceMode = AndroidMeteringMode.CONTINUOUS;
@@ -324,11 +324,11 @@ public class VideoCaptureCamera2 extends VideoCapture {
 
     // {@link nativeOnPhotoTaken()} needs to be called back if there's any
     // problem after {@link takePhoto()} has returned true.
-    private void notifyTakePhotoError(long callbackId) {
+    void notifyTakePhotoError(long callbackId) {
         nativeOnPhotoTaken(mNativeVideoCaptureDeviceAndroid, callbackId, new byte[0]);
     }
 
-    private boolean createPreviewObjectsAndStartPreview() {
+    boolean createPreviewObjectsAndStartPreview() {
         if (mCameraDevice == null) return false;
 
         // Create an ImageReader and plug a thread looper into it to have
@@ -398,7 +398,7 @@ public class VideoCaptureCamera2 extends VideoCapture {
         return true;
     }
 
-    private void configureCommonCaptureSettings(CaptureRequest.Builder requestBuilder) {
+    void configureCommonCaptureSettings(CaptureRequest.Builder requestBuilder) {
         final CameraCharacteristics cameraCharacteristics = getCameraCharacteristics(mId);
 
         // |mFocusMode| indicates if we're in auto/continuous, single-shot or manual mode.
@@ -514,7 +514,7 @@ public class VideoCaptureCamera2 extends VideoCapture {
         if (mIso > 0) requestBuilder.set(CaptureRequest.SENSOR_SENSITIVITY, mIso);
     }
 
-    private void changeCameraStateAndNotify(CameraState state) {
+    void changeCameraStateAndNotify(CameraState state) {
         synchronized (mCameraStateLock) {
             mCameraState = state;
             mCameraStateLock.notifyAll();

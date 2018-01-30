@@ -55,11 +55,11 @@ public class SelectableListLayout<E>
 
     private static final int WIDE_DISPLAY_MIN_PADDING_DP = 16;
 
-    private Adapter<RecyclerView.ViewHolder> mAdapter;
+    Adapter<RecyclerView.ViewHolder> mAdapter;
     private ViewStub mToolbarStub;
-    private TextView mEmptyView;
-    private LoadingView mLoadingView;
-    private RecyclerView mRecyclerView;
+    TextView mEmptyView;
+    LoadingView mLoadingView;
+    RecyclerView mRecyclerView;
     private ItemAnimator mItemAnimator;
     SelectableListToolbar<E> mToolbar;
     private FadingShadowView mToolbarShadow;
@@ -324,7 +324,7 @@ public class SelectableListLayout<E>
         return padding;
     }
 
-    private void setToolbarShadowVisibility() {
+    void setToolbarShadowVisibility() {
         if (mToolbar == null || mRecyclerView == null) return;
 
         boolean showShadow = mRecyclerView.canScrollVertically(-1) || mToolbar.isSearching()
@@ -336,7 +336,7 @@ public class SelectableListLayout<E>
      * Unlike ListView or GridView, RecyclerView does not provide default empty
      * view implementation. We need to check it ourselves.
      */
-    private void updateEmptyViewVisibility() {
+    void updateEmptyViewVisibility() {
         mEmptyView.setVisibility(mAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
 

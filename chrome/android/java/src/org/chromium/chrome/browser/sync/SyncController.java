@@ -66,9 +66,9 @@ public class SyncController implements ProfileSyncService.SyncStateChangedListen
     private static SyncController sInstance;
     private static boolean sInitialized;
 
-    private final Context mContext;
+    final Context mContext;
     private final ChromeSigninController mChromeSigninController;
-    private final ProfileSyncService mProfileSyncService;
+    final ProfileSyncService mProfileSyncService;
     private final SyncNotificationController mSyncNotificationController;
 
     private SyncController(Context context) {
@@ -141,7 +141,7 @@ public class SyncController implements ProfileSyncService.SyncStateChangedListen
     /**
      * Updates sync to reflect the state of the Android sync settings.
      */
-    private void updateSyncStateFromAndroid() {
+    void updateSyncStateFromAndroid() {
         boolean isSyncEnabled = AndroidSyncSettings.isSyncEnabled(mContext);
         if (isSyncEnabled == mProfileSyncService.isSyncRequested()) return;
         if (isSyncEnabled) {

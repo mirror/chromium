@@ -35,7 +35,7 @@ class BundleToPersistableBundleConverter {
         @NonNull
         private final Set<String> mFailedKeys;
 
-        private Result(@NonNull PersistableBundle bundle, @NonNull Set<String> failedKeys) {
+        Result(@NonNull PersistableBundle bundle, @NonNull Set<String> failedKeys) {
             mBundle = bundle;
             mFailedKeys = failedKeys;
         }

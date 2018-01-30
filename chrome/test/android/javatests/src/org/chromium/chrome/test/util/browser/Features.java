@@ -85,11 +85,11 @@ public class Features {
         for (String featureName : featureNames) mRegisteredState.put(featureName, false);
     }
 
-    private void applyForJUnit() {
+    void applyForJUnit() {
         ChromeFeatureList.setTestFeatures(mRegisteredState);
     }
 
-    private void applyForInstrumentation() {
+    void applyForInstrumentation() {
         mergeFeatureLists("enable-features", true);
         mergeFeatureLists("disable-features", false);
     }
@@ -117,7 +117,7 @@ public class Features {
     }
 
     /** Resets Features-related state that might persist in between tests. */
-    private static void reset() {
+    static void reset() {
         sInstance = null;
         ChromeFeatureList.setTestFeatures(null);
     }

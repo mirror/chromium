@@ -80,7 +80,7 @@ public class ExternalDataUseObserver {
     /**
      * Pointer to the native ExternalDataUseObserverBridge object.
      */
-    private long mNativeExternalDataUseObserverBridge;
+    long mNativeExternalDataUseObserverBridge;
 
     /**
      * {@link #ControlAppManager} object that notifies when control app is installed.
@@ -217,6 +217,6 @@ public class ExternalDataUseObserver {
             long nativeExternalDataUseObserver, boolean success);
 
     @NativeClassQualifiedName("ExternalDataUseObserverBridge")
-    private native void nativeOnControlAppInstallStateChange(
+    native void nativeOnControlAppInstallStateChange(
             long nativeExternalDataUseObserver, boolean isControlAppInstalled);
 }

@@ -42,7 +42,7 @@ public class SystemDownloadNotifier implements DownloadNotifier, Observer {
     private final Context mApplicationContext;
 
     @Nullable
-    private DownloadNotificationService mBoundService;
+    DownloadNotificationService mBoundService;
     private Set<String> mActiveDownloads = new HashSet<String>();
     private ArrayList<PendingNotificationInfo> mPendingNotifications = new ArrayList<>();
 

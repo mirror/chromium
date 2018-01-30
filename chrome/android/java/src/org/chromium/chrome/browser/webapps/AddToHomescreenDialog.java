@@ -25,18 +25,18 @@ import org.chromium.chrome.browser.banners.AppBannerManager;
  * Displays the "Add to Homescreen" dialog.
  */
 public class AddToHomescreenDialog implements AddToHomescreenManager.Observer {
-    private AlertDialog mDialog;
-    private View mProgressBarView;
+    AlertDialog mDialog;
+    View mProgressBarView;
     private ImageView mIconView;
 
     /**
      * The {@mShortcutTitleInput} and the {@mPwaLayout} are mutually exclusive, depending on
      * whether the site is WebAPK compatible.
      */
-    private EditText mShortcutTitleInput;
+    EditText mShortcutTitleInput;
     private LinearLayout mPwaLayout;
 
-    private AddToHomescreenManager mManager;
+    AddToHomescreenManager mManager;
 
     /**
      * Whether {@link mManager} is ready for {@link AddToHomescreenManager#addShortcut()} to be

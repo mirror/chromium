@@ -55,7 +55,7 @@ public class VrShellTransitionTest {
     @Rule
     public ChromeTabbedActivityVrTestRule mVrTestRule = new ChromeTabbedActivityVrTestRule();
 
-    private VrTestFramework mVrTestFramework;
+    VrTestFramework mVrTestFramework;
 
     @Before
     public void setUp() throws Exception {

@@ -32,7 +32,7 @@ public class TabModelSelectorImpl extends TabModelSelectorBase implements TabMod
     /** Flag set to false when the asynchronous loading of tabs is finished. */
     private final AtomicBoolean mSessionRestoreInProgress =
             new AtomicBoolean(true);
-    private final TabPersistentStore mTabSaver;
+    final TabPersistentStore mTabSaver;
 
     // This flag signifies the object has gotten an onNativeReady callback and
     // has not been destroyed.
@@ -48,11 +48,11 @@ public class TabModelSelectorImpl extends TabModelSelectorBase implements TabMod
 
     private OverviewModeBehavior mOverviewModeBehavior;
 
-    private TabContentManager mTabContentManager;
+    TabContentManager mTabContentManager;
 
     private Tab mVisibleTab;
 
-    private final TabModelSelectorUma mUma;
+    final TabModelSelectorUma mUma;
 
     private CloseAllTabsDelegate mCloseAllTabsDelegate;
 
@@ -99,7 +99,7 @@ public class TabModelSelectorImpl extends TabModelSelectorBase implements TabMod
         }
     }
 
-    private void handleOnPageLoadStopped(Tab tab) {
+    void handleOnPageLoadStopped(Tab tab) {
         if (tab != null) mTabSaver.addTabToSaveQueue(tab);
     }
 

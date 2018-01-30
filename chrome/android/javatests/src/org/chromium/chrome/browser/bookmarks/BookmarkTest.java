@@ -77,9 +77,9 @@ public class BookmarkTest {
     private static final String TEST_FOLDER_TITLE = "Test folder";
 
     private BookmarkManager mManager;
-    private BookmarkModel mBookmarkModel;
-    private RecyclerView mItemsContainer;
-    private String mTestPage;
+    BookmarkModel mBookmarkModel;
+    RecyclerView mItemsContainer;
+    String mTestPage;
     private String mTestPageFoo;
     private EmbeddedTestServer mTestServer;
     private @Nullable BookmarkActivity mBookmarkActivity;

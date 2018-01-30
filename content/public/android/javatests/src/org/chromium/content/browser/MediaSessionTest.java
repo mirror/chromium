@@ -55,7 +55,7 @@ public class MediaSessionTest {
     private static final String LONG_VIDEO_SILENT = "long-video-silent";
     private static final int AUDIO_FOCUS_CHANGE_TIMEOUT = 500;  // ms
 
-    private AudioManager getAudioManager() {
+    AudioManager getAudioManager() {
         return (AudioManager) mActivityTestRule.getActivity()
                 .getApplicationContext()
                 .getSystemService(Context.AUDIO_SERVICE);
@@ -101,9 +101,9 @@ public class MediaSessionTest {
 
     private MockAudioFocusChangeListener mAudioFocusChangeListener;
 
-    private MediaSessionObserver mObserver;
+    MediaSessionObserver mObserver;
 
-    private ArrayList<StateRecord> mStateRecords = new ArrayList<StateRecord>();
+    ArrayList<StateRecord> mStateRecords = new ArrayList<StateRecord>();
 
     private static class StateRecord {
         public boolean isControllable;

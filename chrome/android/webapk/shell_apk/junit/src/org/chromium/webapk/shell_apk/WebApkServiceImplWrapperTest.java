@@ -41,7 +41,7 @@ public class WebApkServiceImplWrapperTest {
     private MockWebApkServiceImplWrapper mWrapper;
 
     private static class MockWebApkServiceImpl extends WebApkServiceImpl {
-        private boolean mIsCalled;
+        boolean mIsCalled;
 
         public MockWebApkServiceImpl(Context context, Bundle bundle) {
             super(context, bundle);
@@ -61,7 +61,7 @@ public class WebApkServiceImplWrapperTest {
     }
 
     private static class MockWebApkServiceImplWrapper extends WebApkServiceImplWrapper {
-        private boolean mIsCalled;
+        boolean mIsCalled;
 
         public MockWebApkServiceImplWrapper(Context context, IBinder delegate, int hostBrowserUid) {
             super(context, delegate, hostBrowserUid);
@@ -132,7 +132,7 @@ public class WebApkServiceImplWrapperTest {
         }
     }
 
-    private static int getApiCodeHelper(String name) {
+    static int getApiCodeHelper(String name) {
         try {
             Field f = IWebApkApi.Stub.class.getDeclaredField(name);
             f.setAccessible(true);

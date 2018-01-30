@@ -51,7 +51,7 @@ public class GmsCoreSyncListenerTest {
         }
     }
 
-    private CountingGmsCoreSyncListener mListener;
+    CountingGmsCoreSyncListener mListener;
 
     @Before
     public void setUp() throws Exception {

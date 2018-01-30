@@ -90,7 +90,7 @@ public class OSKOverscrollTest {
         });
     }
 
-    private int getViewportHeight(WebContents webContents) {
+    int getViewportHeight(WebContents webContents) {
         try {
             String jsonText = JavaScriptUtils.executeJavaScriptAndWaitForResult(
                     webContents, "window.visualViewport.height");
@@ -102,7 +102,7 @@ public class OSKOverscrollTest {
         return -1;
     }
 
-    private boolean almostEqual(int a, int b) {
+    boolean almostEqual(int a, int b) {
         return Math.abs(a - b) <= ERROR_EPS_PIX;
     }
 

@@ -56,11 +56,11 @@ public class WebappRegistry {
     /** Initialization-on-demand holder. This exists for thread-safe lazy initialization. */
     private static class Holder {
         // Not final for testing.
-        private static WebappRegistry sInstance = new WebappRegistry();
+        static WebappRegistry sInstance = new WebappRegistry();
     }
 
-    private HashMap<String, WebappDataStorage> mStorages;
-    private SharedPreferences mPreferences;
+    HashMap<String, WebappDataStorage> mStorages;
+    SharedPreferences mPreferences;
 
     /**
      * Callback run when a WebappDataStorage object is registered for the first time. The storage
@@ -70,7 +70,7 @@ public class WebappRegistry {
         void onWebappDataStorageRetrieved(WebappDataStorage storage);
     }
 
-    private WebappRegistry() {
+    WebappRegistry() {
         mPreferences = openSharedPreferences();
         mStorages = new HashMap<>();
     }

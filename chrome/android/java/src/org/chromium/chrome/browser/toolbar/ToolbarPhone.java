@@ -125,7 +125,7 @@ public class ToolbarPhone extends ToolbarLayout
     protected ImageView mToggleTabStackButton;
     protected NewTabButton mNewTabButton;
     protected @Nullable TintedImageButton mHomeButton;
-    private TextView mUrlBar;
+    TextView mUrlBar;
     protected View mUrlActionContainer;
     protected ImageView mToolbarShadow;
     // TODO(twellington): Make this final after modern is always enabled for Chrome Home.
@@ -134,7 +134,7 @@ public class ToolbarPhone extends ToolbarLayout
     private final int mProgressBackBackgroundColorWhite;
 
     private ObjectAnimator mTabSwitcherModeAnimation;
-    private ObjectAnimator mDelayedTabSwitcherModeAnimation;
+    ObjectAnimator mDelayedTabSwitcherModeAnimation;
 
     private final List<View> mTabSwitcherModeViews = new ArrayList<>();
     protected final Set<View> mBrowsingModeViews = new HashSet<>();
@@ -179,7 +179,7 @@ public class ToolbarPhone extends ToolbarLayout
 
     /** 1.0 is 100% focused, 0 is completely unfocused */
     @ViewDebug.ExportedProperty(category = "chrome")
-    private float mUrlFocusChangePercent;
+    float mUrlFocusChangePercent;
 
     /**
      * The degree to which the omnibox has expanded to full width, either because it is getting
@@ -202,7 +202,7 @@ public class ToolbarPhone extends ToolbarLayout
     protected boolean mHasVisibleViewPriorToUrlBar;
     private boolean mUnfocusedLocationBarUsesTransparentBg;
 
-    private int mLocationBarBackgroundAlpha = 255;
+    int mLocationBarBackgroundAlpha = 255;
     private float mNtpSearchBoxScrollPercent = UNINITIALIZED_PERCENT;
     protected ColorDrawable mToolbarBackground;
 
@@ -242,23 +242,23 @@ public class ToolbarPhone extends ToolbarLayout
     protected int mLocationBarVerticalMargin;
 
     private ValueAnimator mBrandColorTransitionAnimation;
-    private boolean mBrandColorTransitionActive;
+    boolean mBrandColorTransitionActive;
 
     private boolean mIsHomeButtonEnabled;
 
     private LayoutUpdateHost mLayoutUpdateHost;
 
     /** Callout for the tab switcher button. */
-    private TextBubble mTabSwitcherCallout;
+    TextBubble mTabSwitcherCallout;
 
     /** Whether or not we've checked if the TabSwitcherCallout needs to be shown. */
     private boolean mHasCheckedIfTabSwitcherCalloutIsNecessary;
 
     /** Manages when the Toolbar hides and unhides. */
-    private BrowserStateBrowserControlsVisibilityDelegate mControlsVisibilityDelegate;
+    BrowserStateBrowserControlsVisibilityDelegate mControlsVisibilityDelegate;
 
     /** Token held when the TabSwitcherCallout is displayed to prevent the Toolbar from hiding. */
-    private int mFullscreenCalloutToken = FullscreenManager.INVALID_TOKEN;
+    int mFullscreenCalloutToken = FullscreenManager.INVALID_TOKEN;
 
     /**
      * Used to specify the visual state of the toolbar.
@@ -902,7 +902,7 @@ public class ToolbarPhone extends ToolbarLayout
      * Updates percentage of current the URL focus change animation.
      * @param percent 1.0 is 100% focused, 0 is completely unfocused.
      */
-    private void setUrlFocusChangePercent(float percent) {
+    void setUrlFocusChangePercent(float percent) {
         mUrlFocusChangePercent = percent;
         updateUrlExpansionPercent();
         updateUrlExpansionAnimation();
@@ -1602,7 +1602,7 @@ public class ToolbarPhone extends ToolbarLayout
                 || mTabSwitcherState == EXITING_TAB_SWITCHER;
     }
 
-    private void updateViewsForTabSwitcherMode() {
+    void updateViewsForTabSwitcherMode() {
         int tabSwitcherViewsVisibility = mTabSwitcherState != STATIC_TAB  ? VISIBLE : INVISIBLE;
         int browsingViewsVisibility = mTabSwitcherState != STATIC_TAB ? INVISIBLE : VISIBLE;
 
@@ -2121,7 +2121,7 @@ public class ToolbarPhone extends ToolbarLayout
         mBrandColorTransitionActive = true;
     }
 
-    private void updateNtpAnimationState() {
+    void updateNtpAnimationState() {
         // Store previous NTP scroll before calling reset as that clears this value.
         boolean wasShowingNtp = mVisibleNewTabPage != null;
         float previousNtpScrollPercent = mNtpSearchBoxScrollPercent;

@@ -231,7 +231,7 @@ public class Stack {
     private Animator mViewAnimations;
 
     // The parent Layout
-    private final StackLayout mLayout;
+    final StackLayout mLayout;
 
     // Border values
     private float mBorderTransparentTop;

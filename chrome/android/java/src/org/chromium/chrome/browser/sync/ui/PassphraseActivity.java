@@ -97,7 +97,7 @@ public class PassphraseActivity extends FragmentActivity implements
         ProfileSyncService.get().addSyncStateChangedListener(mSyncStateChangedListener);
     }
 
-    private void removeSyncStateChangedListener() {
+    void removeSyncStateChangedListener() {
         if (mSyncStateChangedListener != null) {
             ProfileSyncService.get().removeSyncStateChangedListener(mSyncStateChangedListener);
             mSyncStateChangedListener = null;
@@ -108,7 +108,7 @@ public class PassphraseActivity extends FragmentActivity implements
         return getFragmentManager().findFragmentByTag(tag) != null;
     }
 
-    private void displayPassphraseDialog() {
+    void displayPassphraseDialog() {
         assert ProfileSyncService.get().isEngineInitialized();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.addToBackStack(null);

@@ -14,7 +14,7 @@ import org.chromium.base.Callback;
  */
 public class VariationsSession {
     private boolean mRestrictModeFetchStarted;
-    private String mRestrictMode;
+    String mRestrictMode;
 
     /**
      * Triggers to the native VariationsService that the application has entered the foreground.

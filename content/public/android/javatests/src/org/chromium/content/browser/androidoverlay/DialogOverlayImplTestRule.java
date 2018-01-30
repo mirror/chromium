@@ -29,18 +29,18 @@ import java.util.concurrent.TimeUnit;
  */
 public class DialogOverlayImplTestRule extends ContentShellActivityTestRule {
     // overlay-ui thread.
-    private HandlerThread mOverlayUiThread;
-    private Handler mOverlayUiHandler;
+    HandlerThread mOverlayUiThread;
+    Handler mOverlayUiHandler;
 
     // Runnable that will be called on the browser UI thread when an overlay is released.
-    private Runnable mReleasedRunnable;
+    Runnable mReleasedRunnable;
 
     // The routing token that we'll use to create overlays.  This may be modified by the tests prior
     // to calling createOverlay().
-    private UnguessableToken mRoutingToken;
+    UnguessableToken mRoutingToken;
 
     // True if we should create a secure overlay.
-    private boolean mSecure;
+    boolean mSecure;
 
     private String mInitialUrl;
 
@@ -159,7 +159,7 @@ public class DialogOverlayImplTestRule extends ContentShellActivityTestRule {
         }
     }
 
-    private Client mClient = new Client();
+    Client mClient = new Client();
 
     // Return the URL to start with.
     public DialogOverlayImplTestRule(String url) {

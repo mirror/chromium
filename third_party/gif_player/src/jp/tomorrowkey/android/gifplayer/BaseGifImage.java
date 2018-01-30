@@ -193,7 +193,7 @@ public class BaseGifImage {
 
     private final class GifHeaderStream extends ByteArrayInputStream {
 
-        private GifHeaderStream(byte[] buf) {
+        GifHeaderStream(byte[] buf) {
             super(buf);
         }
 

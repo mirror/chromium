@@ -35,7 +35,7 @@ import java.util.Map;
 final class ChromeBluetoothAdapter extends BroadcastReceiver {
     private static final String TAG = "Bluetooth";
 
-    private long mNativeBluetoothAdapterAndroid;
+    long mNativeBluetoothAdapterAndroid;
     // mAdapter is final to ensure registerReceiver is followed by unregisterReceiver.
     private final Wrappers.BluetoothAdapterWrapper mAdapter;
     private ScanCallback mScanCallback;
@@ -347,13 +347,13 @@ final class ChromeBluetoothAdapter extends BroadcastReceiver {
     // BluetoothAdapterAndroid C++ methods declared for access from java:
 
     // Binds to BluetoothAdapterAndroid::OnScanFailed.
-    private native void nativeOnScanFailed(long nativeBluetoothAdapterAndroid);
+    native void nativeOnScanFailed(long nativeBluetoothAdapterAndroid);
 
     // Binds to BluetoothAdapterAndroid::CreateOrUpdateDeviceOnScan.
     // 'Object' type must be used for |bluetoothDeviceWrapper| because inner class
     // Wrappers.BluetoothDeviceWrapper reference is not handled by jni_generator.py JavaToJni.
     // http://crbug.com/505554
-    private native void nativeCreateOrUpdateDeviceOnScan(long nativeBluetoothAdapterAndroid,
+    native void nativeCreateOrUpdateDeviceOnScan(long nativeBluetoothAdapterAndroid,
             String address, Object bluetoothDeviceWrapper, int rssi, String[] advertisedUuids,
             int txPower, String[] serviceDataKeys, Object[] serviceDataValues,
             int[] manufacturerDataKeys, Object[] manufacturerDataValues);

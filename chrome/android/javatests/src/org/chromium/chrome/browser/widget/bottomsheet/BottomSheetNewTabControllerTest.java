@@ -49,8 +49,8 @@ import java.util.concurrent.TimeoutException;
 @Restriction(UiRestriction.RESTRICTION_TYPE_PHONE) // ChromeHome is only enabled on phones
 public class BottomSheetNewTabControllerTest {
     private FadingBackgroundView mFadingBackgroundView;
-    private BottomSheet mBottomSheet;
-    private ChromeTabbedActivity mActivity;
+    BottomSheet mBottomSheet;
+    ChromeTabbedActivity mActivity;
     private TabModelSelector mTabModelSelector;
     private TestTabModelObserver mNormalTabModelObserver;
     private TestTabModelObserver mIncognitoTabModelObserver;
@@ -59,7 +59,7 @@ public class BottomSheetNewTabControllerTest {
     /** An observer used to detect changes in the tab model. */
     private static class TestTabModelObserver extends EmptyTabModelObserver {
         private final CallbackHelper mDidCloseTabCallbackHelper = new CallbackHelper();
-        private final CallbackHelper mPendingTabAddCallbackHelper = new CallbackHelper();
+        final CallbackHelper mPendingTabAddCallbackHelper = new CallbackHelper();
 
         @Override
         public void didCloseTab(int tabId, boolean incognito) {
@@ -73,7 +73,7 @@ public class BottomSheetNewTabControllerTest {
     }
 
     private static class TestTabModelSelectorObserver extends EmptyTabModelSelectorObserver {
-        private final CallbackHelper mTabModelSelectedCallbackHelper = new CallbackHelper();
+        final CallbackHelper mTabModelSelectedCallbackHelper = new CallbackHelper();
 
         @Override
         public void onTabModelSelected(TabModel newModel, TabModel oldModel) {

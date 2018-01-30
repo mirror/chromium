@@ -86,7 +86,7 @@ public class LayoutManagerChromePhone extends LayoutManagerChrome {
         if (mTitleCache != null) mTitleCache.clearExcept(tabId);
     }
 
-    private void tabClosing(int id) {
+    void tabClosing(int id) {
         Tab closedTab = getTabById(id);
         if (closedTab == null) return;
 

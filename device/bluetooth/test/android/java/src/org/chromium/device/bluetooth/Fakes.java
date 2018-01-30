@@ -310,7 +310,7 @@ class Fakes {
         public Wrappers.ScanCallbackWrapper mScanCallback;
         private boolean mThrowException;
 
-        private FakeBluetoothLeScanner() {
+        FakeBluetoothLeScanner() {
             super(null);
         }
 
@@ -405,7 +405,7 @@ class Fakes {
         private String mAddress;
         private String mName;
         final FakeBluetoothGatt mGatt;
-        private Wrappers.BluetoothGattCallbackWrapper mGattCallback;
+        Wrappers.BluetoothGattCallbackWrapper mGattCallback;
 
         static FakeBluetoothDevice sRememberedDevice;
 
@@ -921,43 +921,43 @@ class Fakes {
     // BluetoothTestAndroid C++ methods declared for access from java:
 
     // Bind to BluetoothTestAndroid::PostTaskFromJava.
-    private static native void nativePostTaskFromJava(long nativeBluetoothTestAndroid, Runnable r);
+    static native void nativePostTaskFromJava(long nativeBluetoothTestAndroid, Runnable r);
 
     // Binds to BluetoothTestAndroid::OnFakeAdapterStateChanged.
-    private static native void nativeOnFakeAdapterStateChanged(
+    static native void nativeOnFakeAdapterStateChanged(
             long nativeBluetoothTestAndroid, boolean powered);
 
     // Binds to BluetoothTestAndroid::OnFakeBluetoothDeviceConnectGattCalled.
-    private static native void nativeOnFakeBluetoothDeviceConnectGattCalled(
+    static native void nativeOnFakeBluetoothDeviceConnectGattCalled(
             long nativeBluetoothTestAndroid);
 
     // Binds to BluetoothTestAndroid::OnFakeBluetoothGattDisconnect.
-    private static native void nativeOnFakeBluetoothGattDisconnect(long nativeBluetoothTestAndroid);
+    static native void nativeOnFakeBluetoothGattDisconnect(long nativeBluetoothTestAndroid);
 
     // Binds to BluetoothTestAndroid::OnFakeBluetoothGattClose.
-    private static native void nativeOnFakeBluetoothGattClose(long nativeBluetoothTestAndroid);
+    static native void nativeOnFakeBluetoothGattClose(long nativeBluetoothTestAndroid);
 
     // Binds to BluetoothTestAndroid::OnFakeBluetoothGattDiscoverServices.
-    private static native void nativeOnFakeBluetoothGattDiscoverServices(
+    static native void nativeOnFakeBluetoothGattDiscoverServices(
             long nativeBluetoothTestAndroid);
 
     // Binds to BluetoothTestAndroid::OnFakeBluetoothGattSetCharacteristicNotification.
-    private static native void nativeOnFakeBluetoothGattSetCharacteristicNotification(
+    static native void nativeOnFakeBluetoothGattSetCharacteristicNotification(
             long nativeBluetoothTestAndroid);
 
     // Binds to BluetoothTestAndroid::OnFakeBluetoothGattReadCharacteristic.
-    private static native void nativeOnFakeBluetoothGattReadCharacteristic(
+    static native void nativeOnFakeBluetoothGattReadCharacteristic(
             long nativeBluetoothTestAndroid);
 
     // Binds to BluetoothTestAndroid::OnFakeBluetoothGattWriteCharacteristic.
-    private static native void nativeOnFakeBluetoothGattWriteCharacteristic(
+    static native void nativeOnFakeBluetoothGattWriteCharacteristic(
             long nativeBluetoothTestAndroid, byte[] value);
 
     // Binds to BluetoothTestAndroid::OnFakeBluetoothGattReadDescriptor.
-    private static native void nativeOnFakeBluetoothGattReadDescriptor(
+    static native void nativeOnFakeBluetoothGattReadDescriptor(
             long nativeBluetoothTestAndroid);
 
     // Binds to BluetoothTestAndroid::OnFakeBluetoothGattWriteDescriptor.
-    private static native void nativeOnFakeBluetoothGattWriteDescriptor(
+    static native void nativeOnFakeBluetoothGattWriteDescriptor(
             long nativeBluetoothTestAndroid, byte[] value);
 }

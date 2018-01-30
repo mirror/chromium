@@ -59,10 +59,10 @@ public class ImageFetcher {
     private final boolean mUseFaviconService;
     private final NativePageHost mHost;
 
-    private boolean mIsDestroyed;
+    boolean mIsDestroyed;
 
     private final SuggestionsSource mSuggestionsSource;
-    private final Profile mProfile;
+    final Profile mProfile;
     private final DiscardableReferencePool mReferencePool;
     private ThumbnailProvider mThumbnailProvider;
     private FaviconHelper mFaviconHelper;
@@ -186,7 +186,7 @@ public class ImageFetcher {
         return String.format("%s://%s", snippetUri.getScheme(), snippetUri.getHost());
     }
 
-    private void fetchFaviconFromLocalCache(final URI snippetUri, final boolean fallbackToService,
+    void fetchFaviconFromLocalCache(final URI snippetUri, final boolean fallbackToService,
             final long faviconFetchStartTimeMs, final int faviconSizePx,
             final SnippetArticle suggestion, final Callback<Bitmap> faviconCallback) {
         getFaviconHelper().getLocalFaviconImageForURL(mProfile, getSnippetDomain(snippetUri),
@@ -234,7 +234,7 @@ public class ImageFetcher {
 
     // TODO(crbug.com/635567): Fix this properly.
     @SuppressLint("DefaultLocale")
-    private boolean fetchFaviconFromService(final SnippetArticle suggestion, final URI snippetUri,
+    boolean fetchFaviconFromService(final SnippetArticle suggestion, final URI snippetUri,
             final long faviconFetchStartTimeMs, final int faviconSizePx,
             final Callback<Bitmap> faviconCallback) {
         if (!mUseFaviconService) return false;
@@ -290,7 +290,7 @@ public class ImageFetcher {
         return 0;
     }
 
-    private void recordFaviconFetchHistograms(
+    void recordFaviconFetchHistograms(
             SnippetArticle suggestion, int result, long fetchTime) {
         // Record the histogram for articles only to have a fair comparision.
         if (!suggestion.isArticle()) return;
@@ -302,7 +302,7 @@ public class ImageFetcher {
      * Utility method to lazily create the {@link ThumbnailProvider}, and avoid unnecessary native
      * calls in tests.
      */
-    private ThumbnailProvider getThumbnailProvider() {
+    ThumbnailProvider getThumbnailProvider() {
         if (mThumbnailProvider == null) {
             mThumbnailProvider = SuggestionsDependencyFactory.getInstance().createThumbnailProvider(
                     mReferencePool);

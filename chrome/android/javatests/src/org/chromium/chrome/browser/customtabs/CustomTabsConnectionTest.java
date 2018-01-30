@@ -47,7 +47,7 @@ import java.util.concurrent.TimeUnit;
 /** Tests for CustomTabsConnection. */
 @RunWith(ChromeJUnit4ClassRunner.class)
 public class CustomTabsConnectionTest {
-    private CustomTabsConnection mCustomTabsConnection;
+    CustomTabsConnection mCustomTabsConnection;
     private static final String URL = "http://www.google.com";
     private static final String URL2 = "https://www.android.com";
     private static final String INVALID_SCHEME_URL = "intent://www.google.com";
@@ -432,7 +432,7 @@ public class CustomTabsConnectionTest {
         });
     }
 
-    private void assertSpareWebContentsNotNullAndDestroy() {
+    void assertSpareWebContentsNotNullAndDestroy() {
         WebContents webContents = WarmupManager.getInstance().takeSpareWebContents(false, false);
         Assert.assertNotNull(webContents);
         webContents.destroy();

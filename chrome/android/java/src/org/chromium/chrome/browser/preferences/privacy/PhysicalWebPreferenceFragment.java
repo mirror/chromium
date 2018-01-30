@@ -39,7 +39,7 @@ public class PhysicalWebPreferenceFragment extends PreferenceFragment {
         initLaunchButton();
     }
 
-    private void ensureLocationPermission() {
+    void ensureLocationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (getActivity().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED) {

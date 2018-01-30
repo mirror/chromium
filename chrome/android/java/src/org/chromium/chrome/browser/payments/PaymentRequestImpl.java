@@ -275,7 +275,7 @@ public class PaymentRequestImpl
     @Nullable
     private final byte[][] mCertificateChain;
     private final AddressEditor mAddressEditor;
-    private final CardEditor mCardEditor;
+    final CardEditor mCardEditor;
     private final JourneyLogger mJourneyLogger;
     private final boolean mIsIncognito;
 
@@ -320,14 +320,14 @@ public class PaymentRequestImpl
     private boolean mRequestPayerPhone;
     private boolean mRequestPayerEmail;
     private int mShippingType;
-    private SectionInformation mShippingAddressesSection;
-    private ContactDetailsSection mContactSection;
+    SectionInformation mShippingAddressesSection;
+    ContactDetailsSection mContactSection;
     private List<PaymentApp> mApps;
     private List<PaymentApp> mPendingApps;
     private List<PaymentInstrument> mPendingInstruments;
     private int mPaymentMethodsSectionAdditionalTextResourceId;
-    private SectionInformation mPaymentMethodsSection;
-    private PaymentRequestUI mUI;
+    SectionInformation mPaymentMethodsSection;
+    PaymentRequestUI mUI;
     private Callback<PaymentInformation> mPaymentInformationCallback;
     private boolean mPaymentAppRunning;
     private boolean mMerchantSupportsAutofillPaymentInstruments;
@@ -913,7 +913,7 @@ public class PaymentRequestImpl
     }
 
     /** Updates the modifiers for payment instruments and order summary. */
-    private void updateInstrumentModifiedTotals() {
+    void updateInstrumentModifiedTotals() {
         if (!ChromeFeatureList.isEnabled(ChromeFeatureList.WEB_PAYMENTS_MODIFIERS)) return;
         if (mModifiers == null) return;
         if (mPaymentMethodsSection == null) return;
@@ -1086,7 +1086,7 @@ public class PaymentRequestImpl
         });
     }
 
-    private void providePaymentInformation() {
+    void providePaymentInformation() {
         mPaymentInformationCallback.onResult(
                 new PaymentInformation(mUiShoppingCart, mShippingAddressesSection,
                         mUiShippingOptions, mContactSection, mPaymentMethodsSection));
@@ -1570,7 +1570,7 @@ public class PaymentRequestImpl
         if (isFinishedQueryingPaymentApps()) query.notifyObserversOfResponse(mCanMakePayment);
     }
 
-    private void respondCanMakePaymentQuery(boolean response) {
+    void respondCanMakePaymentQuery(boolean response) {
         if (mClient == null) return;
 
         boolean isIgnoringQueryQuota = false;
@@ -1871,7 +1871,7 @@ public class PaymentRequestImpl
      * Starts the normalization of the new shipping address. Will call back into either
      * onAddressNormalized or onCouldNotNormalize which will send the result to the merchant.
      */
-    private void startShippingAddressChangeNormalization(AutofillAddress address) {
+    void startShippingAddressChangeNormalization(AutofillAddress address) {
         PersonalDataManager.getInstance().normalizeAddress(address.getProfile(), this);
     }
 

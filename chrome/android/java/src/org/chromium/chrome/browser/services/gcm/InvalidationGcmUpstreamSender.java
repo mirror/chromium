@@ -51,7 +51,7 @@ public class InvalidationGcmUpstreamSender extends GcmUpstreamSenderService {
     }
 
     @MainThread
-    private void doDeliverMessage(
+    void doDeliverMessage(
             final Context applicationContext, final String to, final Bundle data) {
         ThreadUtils.assertOnUiThread();
         ProcessInitializationHandler.getInstance().initializePreNative();
@@ -91,7 +91,7 @@ public class InvalidationGcmUpstreamSender extends GcmUpstreamSenderService {
     /*
      * This function runs on a thread from the AsyncTask.THREAD_POOL_EXECUTOR.
      */
-    private void sendUpstreamMessage(String to, Bundle data, String token, Context context) {
+    void sendUpstreamMessage(String to, Bundle data, String token, Context context) {
         // Add the OAuth2 token to the bundle. The token should have the prefix Bearer added to it.
         data.putString("Authorization", "Bearer " + token);
         if (!isMessageWithinLimit(data)) {

@@ -43,7 +43,7 @@ public class OmniboxTestUtils {
     public static class TestSuggestionResultsBuilder {
         private final List<SuggestionsResultBuilder> mSuggestionBuilders =
                 new ArrayList<SuggestionsResultBuilder>();
-        private String mTextShownFor;
+        String mTextShownFor;
 
         public TestSuggestionResultsBuilder addSuggestions(SuggestionsResultBuilder suggestions) {
             mSuggestionBuilders.add(suggestions);
@@ -55,7 +55,7 @@ public class OmniboxTestUtils {
             return this;
         }
 
-        private List<SuggestionsResult> buildSuggestionsList() {
+        List<SuggestionsResult> buildSuggestionsList() {
             ArrayList<SuggestionsResult> suggestions = new ArrayList<SuggestionsResult>();
             for (int i = 0; i < mSuggestionBuilders.size(); i++) {
                 suggestions.add(mSuggestionBuilders.get(i).build());
@@ -91,7 +91,7 @@ public class OmniboxTestUtils {
             return this;
         }
 
-        private SuggestionsResult build() {
+        SuggestionsResult build() {
             return new SuggestionsResult(mSuggestions, mAutocompleteText);
         }
     }
@@ -101,8 +101,8 @@ public class OmniboxTestUtils {
      * {@link OnSuggestionsReceivedListener#onSuggestionsReceived}.
      */
     public static class SuggestionsResult {
-        private final List<OmniboxSuggestion> mSuggestions;
-        private final String mAutocompleteText;
+        final List<OmniboxSuggestion> mSuggestions;
+        final String mAutocompleteText;
 
         public SuggestionsResult(List<OmniboxSuggestion> suggestions, String autocompleteText) {
             mSuggestions = suggestions;
@@ -128,7 +128,7 @@ public class OmniboxTestUtils {
      */
     public static class TestAutocompleteController extends AutocompleteController {
         private final View mView;
-        private final Map<String, List<SuggestionsResult>> mSuggestions;
+        final Map<String, List<SuggestionsResult>> mSuggestions;
         private Runnable mSuggestionsDispatcher;
         private int mZeroSuggestCalledCount;
         private boolean mStartAutocompleteCalled;
@@ -257,7 +257,7 @@ public class OmniboxTestUtils {
         });
     }
 
-    private static boolean isKeyboardActiveForView(final View view) {
+    static boolean isKeyboardActiveForView(final View view) {
         return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Boolean>() {
             @Override
             public Boolean call() throws Exception {

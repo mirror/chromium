@@ -79,9 +79,9 @@ public class CastTestRule extends ChromeActivityTestRule<ChromeActivity> {
         public void onTitleChanged(String title) {}
     }
 
-    private Set<PlayerState> mAwaitedStates;
-    private CountDownLatch mLatch;
-    private EmbeddedTestServer mTestServer;
+    Set<PlayerState> mAwaitedStates;
+    CountDownLatch mLatch;
+    EmbeddedTestServer mTestServer;
 
     // The name of the route provided by the dummy cast device.
     public static final String CAST_TEST_ROUTE = "Cast Test Route";
@@ -114,7 +114,7 @@ public class CastTestRule extends ChromeActivityTestRule<ChromeActivity> {
 
     private static final String TAG = "CastTestRule";
 
-    private MediaRouteController mMediaRouteController;
+    MediaRouteController mMediaRouteController;
 
     public CastTestRule() {
         super(ChromeActivity.class);
@@ -132,13 +132,13 @@ public class CastTestRule extends ChromeActivityTestRule<ChromeActivity> {
         }, description);
     }
 
-    private void setUp() throws Exception {
+    void setUp() throws Exception {
         startMainActivityOnBlankPage();
         mTestServer = EmbeddedTestServer.createAndStartServer(
                 InstrumentationRegistry.getInstrumentation().getContext());
     }
 
-    private void tearDown() throws Exception {
+    void tearDown() throws Exception {
         mTestServer.stopAndDestroyServer();
     }
 

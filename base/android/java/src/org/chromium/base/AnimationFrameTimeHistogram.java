@@ -90,11 +90,11 @@ public class AnimationFrameTimeHistogram {
         private long[] mFrameTimesMs;
         private int mFrameTimesCount;
 
-        private Recorder() {
+        Recorder() {
             mAnimator.setTimeListener(this);
         }
 
-        private void startRecording() {
+        void startRecording() {
             assert !mAnimator.isRunning();
             mFrameTimesCount = 0;
             mFrameTimesMs = new long[MAX_FRAME_TIME_NUM];
@@ -105,17 +105,17 @@ public class AnimationFrameTimeHistogram {
          * @return Whether the recording was successful. If successful, the result is available via
          *         getFrameTimesNs and getFrameTimesCount.
          */
-        private boolean endRecording() {
+        boolean endRecording() {
             boolean succeeded = mAnimator.isStarted();
             mAnimator.end();
             return succeeded;
         }
 
-        private long[] getFrameTimesMs() {
+        long[] getFrameTimesMs() {
             return mFrameTimesMs;
         }
 
-        private int getFrameTimesCount() {
+        int getFrameTimesCount() {
             return mFrameTimesCount;
         }
 
@@ -123,7 +123,7 @@ public class AnimationFrameTimeHistogram {
          * Deallocates the temporary buffer to record frame times. Must be called after ending
          * the recording and getting the result.
          */
-        private void cleanUp() {
+        void cleanUp() {
             mFrameTimesMs = null;
         }
 

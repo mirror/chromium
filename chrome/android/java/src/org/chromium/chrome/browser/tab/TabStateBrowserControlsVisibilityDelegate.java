@@ -26,11 +26,11 @@ public class TabStateBrowserControlsVisibilityDelegate
     /** The maximum amount of time to wait for a page to load before entering fullscreen. */
     private static final long MAX_FULLSCREEN_LOAD_DELAY_MS = 3000;
 
-    private static boolean sDisableLoadingCheck;
+    static boolean sDisableLoadingCheck;
 
     protected final Tab mTab;
 
-    private boolean mIsFullscreenWaitingForLoad;
+    boolean mIsFullscreenWaitingForLoad;
 
     /**
      * Basic constructor.
@@ -55,7 +55,7 @@ public class TabStateBrowserControlsVisibilityDelegate
                 return sDisableLoadingCheck ? 0 : MAX_FULLSCREEN_LOAD_DELAY_MS;
             }
 
-            private void enableFullscreenAfterLoad() {
+            void enableFullscreenAfterLoad() {
                 if (!mIsFullscreenWaitingForLoad) return;
 
                 mIsFullscreenWaitingForLoad = false;

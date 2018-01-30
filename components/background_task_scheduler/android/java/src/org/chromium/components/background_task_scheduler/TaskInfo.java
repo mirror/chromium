@@ -26,7 +26,7 @@ public class TaskInfo {
         private final long mWindowEndTimeMs;
         private final boolean mHasWindowStartTimeConstraint;
 
-        private OneOffInfo(long windowStartTimeMs, long windowEndTimeMs,
+        OneOffInfo(long windowStartTimeMs, long windowEndTimeMs,
                 boolean hasWindowStartTimeConstraint) {
             mWindowStartTimeMs = windowStartTimeMs;
             mWindowEndTimeMs = windowEndTimeMs;
@@ -72,7 +72,7 @@ public class TaskInfo {
         private final long mFlexMs;
         private final boolean mHasFlex;
 
-        private PeriodicInfo(long intervalMs, long flexMs, boolean hasFlex) {
+        PeriodicInfo(long intervalMs, long flexMs, boolean hasFlex) {
             mIntervalMs = intervalMs;
             mFlexMs = flexMs;
             mHasFlex = hasFlex;
@@ -190,7 +190,7 @@ public class TaskInfo {
      */
     private final PeriodicInfo mPeriodicInfo;
 
-    private TaskInfo(Builder builder) {
+    TaskInfo(Builder builder) {
         mTaskId = builder.mTaskId;
         mBackgroundTaskClass = builder.mBackgroundTaskClass;
         mExtras = builder.mExtras == null ? new Bundle() : builder.mExtras;
@@ -403,26 +403,26 @@ public class TaskInfo {
      * @see #createPeriodicTask(int, Class, long, long)
      */
     public static final class Builder {
-        private final int mTaskId;
+        final int mTaskId;
         @NonNull
-        private final Class<? extends BackgroundTask> mBackgroundTaskClass;
-        private final boolean mIsPeriodic;
-        private Bundle mExtras;
+        final Class<? extends BackgroundTask> mBackgroundTaskClass;
+        final boolean mIsPeriodic;
+        Bundle mExtras;
         @NetworkType
-        private int mRequiredNetworkType;
-        private boolean mRequiresCharging;
-        private boolean mIsPersisted;
-        private boolean mUpdateCurrent;
+        int mRequiredNetworkType;
+        boolean mRequiresCharging;
+        boolean mIsPersisted;
+        boolean mUpdateCurrent;
 
         // Data about one-off tasks.
-        private long mWindowStartTimeMs;
-        private long mWindowEndTimeMs;
-        private boolean mHasWindowStartTimeConstraint;
+        long mWindowStartTimeMs;
+        long mWindowEndTimeMs;
+        boolean mHasWindowStartTimeConstraint;
 
         // Data about periodic tasks.
-        private long mIntervalMs;
-        private long mFlexMs;
-        private boolean mHasFlex;
+        long mIntervalMs;
+        long mFlexMs;
+        boolean mHasFlex;
 
         Builder(int taskId, @NonNull Class<? extends BackgroundTask> backgroundTaskClass,
                 boolean isPeriodic) {

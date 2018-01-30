@@ -56,8 +56,8 @@ public class ToolbarSwipeLayout extends Layout {
 
     // Offsets are in pixels [0, width].
     private float mOffsetStart;
-    private float mOffset;
-    private float mOffsetTarget;
+    float mOffset;
+    float mOffsetTarget;
 
     // These will be set from dimens.xml
     private final float mSpaceBetweenTabs;

@@ -79,7 +79,7 @@ public class RecordUserAction {
         sNativeActionCallback = 0;
     }
 
-    private static native void nativeRecordUserAction(String action);
+    static native void nativeRecordUserAction(String action);
     private static native long nativeAddActionCallbackForTesting(UserActionCallback callback);
     private static native void nativeRemoveActionCallbackForTesting(long callbackId);
 }

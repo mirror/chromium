@@ -546,19 +546,19 @@ public class DeviceSensorsTest {
             Assert.assertEquals(v1, mValue1);
         }
 
-        private void verifyValues(double v1, double v2, double v3) {
+        void verifyValues(double v1, double v2, double v3) {
             Assert.assertEquals(v1, mValue1, 0);
             Assert.assertEquals(v2, mValue2, 0);
             Assert.assertEquals(v3, mValue3, 0);
         }
 
-        private void verifyValuesEpsilon(double v1, double v2, double v3) {
+        void verifyValuesEpsilon(double v1, double v2, double v3) {
             Assert.assertEquals(v1, mValue1, 0.1);
             Assert.assertEquals(v2, mValue2, 0.1);
             Assert.assertEquals(v3, mValue3, 0.1);
         }
 
-        private void verifyCalls(String names) {
+        void verifyCalls(String names) {
             Assert.assertEquals(mCalls, names);
         }
 
@@ -604,13 +604,13 @@ public class DeviceSensorsTest {
     }
 
     private static class MockSensorManager implements DeviceSensors.SensorManagerProxy {
-        private int mNumRegistered = 0;
-        private int mNumUnRegistered = 0;
+        int mNumRegistered = 0;
+        int mNumUnRegistered = 0;
         private boolean mRotationVectorAvailable = true;
         private boolean mGameRotationVectorAvailable = true;
         private boolean mAccelerometerAvailable = true;
 
-        private MockSensorManager() {}
+        MockSensorManager() {}
 
         public void setGameRotationVectorAvailable(boolean available) {
             mGameRotationVectorAvailable = available;

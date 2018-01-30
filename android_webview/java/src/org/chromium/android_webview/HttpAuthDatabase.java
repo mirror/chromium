@@ -81,7 +81,7 @@ public class HttpAuthDatabase {
      * @param context the Context to use for opening the database
      * @param databaseFile Name of the file to be initialized.
      */
-    private void initOnBackgroundThread(Context context, String databaseFile) {
+    void initOnBackgroundThread(Context context, String databaseFile) {
         synchronized (mInitializedLock) {
             if (mInitialized) {
                 return;

@@ -58,7 +58,7 @@ public class TabularContextMenuUiTest {
                     sourceType);
         }
 
-        private MockMenuParams(String url) {
+        MockMenuParams(String url) {
             this(0, "", "", "", "", "", "", false, null, true, 0, 0,
                     MenuSourceType.MENU_SOURCE_TOUCH);
             mUrl = url;

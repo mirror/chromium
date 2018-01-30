@@ -54,7 +54,7 @@ public final class SafeBrowsingTest {
         }));
     }
 
-    private WebContents getWebContents() {
+    WebContents getWebContents() {
         return mActivityTestRule.getActivity().getCurrentContentViewCore().getWebContents();
     }
 

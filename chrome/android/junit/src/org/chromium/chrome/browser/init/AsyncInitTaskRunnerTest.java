@@ -44,7 +44,7 @@ public class AsyncInitTaskRunnerTest {
 
     private LibraryLoader mLoader;
     private AsyncInitTaskRunner mRunner;
-    private CountDownLatch mLatch;
+    CountDownLatch mLatch;
 
     private VariationsSeedFetcher mVariationsSeedFetcher;
 

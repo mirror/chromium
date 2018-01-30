@@ -114,7 +114,7 @@ public abstract class InvalidationClientCore extends InternalBase
      * Constructs an instance from {@code marshalledState} that does not use exponential backoff.
      * @param name name of the recurring task
      */
-    private TiclRecurringTask(String name, RecurringTaskState marshalledState) {
+    TiclRecurringTask(String name, RecurringTaskState marshalledState) {
       super(name, internalScheduler, logger, smearer, null, marshalledState);
     }
 
@@ -124,7 +124,7 @@ public abstract class InvalidationClientCore extends InternalBase
      *
      * @param name name of the recurring task
      */
-    private TiclRecurringTask(String name, int timeoutMs, RecurringTaskState marshalledState) {
+    TiclRecurringTask(String name, int timeoutMs, RecurringTaskState marshalledState) {
       super(name, internalScheduler, logger, smearer,
           createExpBackOffGenerator(timeoutMs, marshalledState.getBackoffState()), marshalledState);
     }
@@ -196,7 +196,7 @@ public abstract class InvalidationClientCore extends InternalBase
     private static final String TASK_NAME = "PersistentWrite";
 
     /** The last client token that was written to to persistent state successfully. */
-    private final Box<PersistentTiclState> lastWrittenState =
+    final Box<PersistentTiclState> lastWrittenState =
         Box.of(PersistentTiclState.DEFAULT_INSTANCE);
 
     PersistentWriteTask() {
@@ -350,16 +350,16 @@ public abstract class InvalidationClientCore extends InternalBase
   public static final String CLIENT_TOKEN_KEY = "ClientToken";
 
   /** Resources for the Ticl. */
-  private final SystemResources resources;
+  final SystemResources resources;
 
   /**
    * Reference into the resources object for cleaner code. All Ticl code must execute on this
    * scheduler.
    */
-  private final Scheduler internalScheduler;
+  final Scheduler internalScheduler;
 
   /** Logger reference into the resources object for cleaner code. */
-  private final Logger logger;
+  final Logger logger;
 
   /** Storage for the Ticl persistent state. */
   Storage storage;
@@ -368,19 +368,19 @@ public abstract class InvalidationClientCore extends InternalBase
   final InvalidationListener listener;
 
   /** Configuration for this instance. */
-  private ClientConfigP config;
+  ClientConfigP config;
 
   /** Application identifier for this client. */
-  private final ApplicationClientIdP applicationClientId;
+  final ApplicationClientIdP applicationClientId;
 
   /** Object maintaining the registration state for this client. */
-  private final RegistrationManager registrationManager;
+  final RegistrationManager registrationManager;
 
   /** Object handling low-level wire format interactions. */
-  private final ProtocolHandler protocolHandler;
+  final ProtocolHandler protocolHandler;
 
   /** The function for computing the registration and persistence state digests. */
-  private final DigestFunction digestFn = new ObjectIdDigestUtils.Sha1DigestFunction();
+  final DigestFunction digestFn = new ObjectIdDigestUtils.Sha1DigestFunction();
 
   /** The state of the Ticl whether it has started or not. */
   private final RunState ticlState;
@@ -389,15 +389,15 @@ public abstract class InvalidationClientCore extends InternalBase
   final Statistics statistics;
 
   /** A smearer to make sure that delays are randomized a little bit. */
-  private final Smearer smearer;
+  final Smearer smearer;
 
   /** Current client token known from the server. */
-  private Bytes clientToken = null;
+  Bytes clientToken = null;
 
   // After the client starts, exactly one of nonce and clientToken is non-null.
 
   /** If not {@code null}, nonce for pending identifier request. */
-  private Bytes nonce = null;
+  Bytes nonce = null;
 
   /** Whether we should send registrations to the server or not. */
   private boolean shouldSendRegistrations;
@@ -406,10 +406,10 @@ public abstract class InvalidationClientCore extends InternalBase
   private boolean isOnline = true;
 
   /** A random number generator. */
-  private final Random random;
+  final Random random;
 
   /** Last time a message was sent to the server. */
-  private long lastMessageSendTimeMs = 0;
+  long lastMessageSendTimeMs = 0;
 
   /** A task for acquiring the token (if the client has no token). */
   private AcquireTokenTask acquireTokenTask;
@@ -424,7 +424,7 @@ public abstract class InvalidationClientCore extends InternalBase
   private HeartbeatTask heartbeatTask;
 
   /** Task to send all batched messages to the server. */
-  private BatchingTask batchingTask;
+  BatchingTask batchingTask;
 
   /** Task to do the first heartbeat after a persistent restart. */
   private InitialPersistentHeartbeatTask initialPersistentHeartbeatTask;
@@ -783,7 +783,7 @@ public abstract class InvalidationClientCore extends InternalBase
    * {@code serializedState} if any. Starts the TICL protocol and makes the TICL ready to receive
    * registrations, invalidations, etc.
    */
-  private void startInternal(byte[] serializedState) {
+  void startInternal(byte[] serializedState) {
     Preconditions.checkState(internalScheduler.isRunningOnThread(), "Not on internal thread");
 
     // Initialize the session manager using the persisted client token.
@@ -1378,8 +1378,8 @@ public abstract class InvalidationClientCore extends InternalBase
    * Sends an info message to the server. If {@code mustSendPerformanceCounters} is true,
    * the performance counters are sent regardless of when they were sent earlier.
    */
-  private void sendInfoMessageToServer(boolean mustSendPerformanceCounters,
-      boolean requestServerSummary) {
+  void sendInfoMessageToServer(boolean mustSendPerformanceCounters,
+          boolean requestServerSummary) {
     logger.info("Sending info message to server; request server summary = %s",
         requestServerSummary);
     Preconditions.checkState(internalScheduler.isRunningOnThread(), "Not on internal thread");
@@ -1432,7 +1432,7 @@ public abstract class InvalidationClientCore extends InternalBase
    * The goal is to ensure that a nonce is never set unless there is no
    * client token, unless the nonce is being cleared.
    */
-  private void setNonce(Bytes newNonce) {
+  void setNonce(Bytes newNonce) {
     if ((newNonce != null) && (clientToken != null)) {
       throw new IllegalStateException("Tried to set nonce with existing token " + clientToken);
     }
@@ -1490,8 +1490,8 @@ public abstract class InvalidationClientCore extends InternalBase
    * Returns an exponential backoff generator with {@code initialDelayMs} and other state as
    * given in {@code marshalledState}.
    */
-  private TiclExponentialBackoffDelayGenerator createExpBackOffGenerator(int initialDelayMs,
-      ExponentialBackoffState marshalledState) {
+  TiclExponentialBackoffDelayGenerator createExpBackOffGenerator(int initialDelayMs,
+          ExponentialBackoffState marshalledState) {
     if (marshalledState != null) {
       return new TiclExponentialBackoffDelayGenerator(random, initialDelayMs,
           config.getMaxExponentialBackoffFactor(), marshalledState);

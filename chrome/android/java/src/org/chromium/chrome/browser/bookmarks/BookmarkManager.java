@@ -56,17 +56,17 @@ public class BookmarkManager implements BookmarkDelegate, SearchDelegate,
 
     private Activity mActivity;
     private ViewGroup mMainView;
-    private BookmarkModel mBookmarkModel;
+    BookmarkModel mBookmarkModel;
     private BookmarkUndoController mUndoController;
     private final ObserverList<BookmarkUIObserver> mUIObservers = new ObserverList<>();
     private BasicNativePage mNativePage;
     private SelectableListLayout<BookmarkId> mSelectableListLayout;
     private RecyclerView mRecyclerView;
     private TextView mEmptyView;
-    private BookmarkItemsAdapter mAdapter;
+    BookmarkItemsAdapter mAdapter;
     private BookmarkActionBar mToolbar;
-    private SelectionDelegate<BookmarkId> mSelectionDelegate;
-    private final Stack<BookmarkUIState> mStateStack = new Stack<>();
+    SelectionDelegate<BookmarkId> mSelectionDelegate;
+    final Stack<BookmarkUIState> mStateStack = new Stack<>();
     private LargeIconBridge mLargeIconBridge;
     private boolean mFaviconsNeedRefresh;
     private String mInitialUrl;
@@ -348,7 +348,7 @@ public class BookmarkManager implements BookmarkDelegate, SearchDelegate,
      * and back button are not controlled by the manager: the tab handles back key and backstack
      * navigation.
      */
-    private void setState(BookmarkUIState state) {
+    void setState(BookmarkUIState state) {
         if (!state.isValid(mBookmarkModel)) {
             state = BookmarkUIState.createFolderState(mBookmarkModel.getDefaultFolder(),
                     mBookmarkModel);

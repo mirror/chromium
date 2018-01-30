@@ -80,7 +80,7 @@ final class ScreenshotTask implements ScreenshotSource {
         onBitmapReceived(bitmap);
     }
 
-    private void onBitmapReceived(@Nullable Bitmap bitmap) {
+    void onBitmapReceived(@Nullable Bitmap bitmap) {
         mDone = true;
         mBitmap = bitmap;
         if (mCallback != null) mCallback.run();

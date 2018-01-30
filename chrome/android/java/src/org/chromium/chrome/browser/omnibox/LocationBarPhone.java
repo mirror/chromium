@@ -52,9 +52,9 @@ public class LocationBarPhone extends LocationBarLayout {
     private int mGoogleGWidth;
     private int mGoogleGMargin;
     private float mUrlFocusChangePercent;
-    private Runnable mKeyboardResizeModeTask;
+    Runnable mKeyboardResizeModeTask;
     private ObjectAnimator mOmniboxBackgroundAnimator;
-    private boolean mCloseSheetOnBackButton;
+    boolean mCloseSheetOnBackButton;
 
     /**
      * Constructor used to inflate from XML.
@@ -205,7 +205,7 @@ public class LocationBarPhone extends LocationBarLayout {
         updateGoogleG();
     }
 
-    private void updateGoogleG() {
+    void updateGoogleG() {
         if (!mNativeInitialized) {
             mGoogleGContainer.setVisibility(View.GONE);
             return;
@@ -302,7 +302,7 @@ public class LocationBarPhone extends LocationBarLayout {
      * @param softInputMode The software input resize mode.
      * @param delay Delay the change in input mode.
      */
-    private void setSoftInputMode(final int softInputMode, boolean delay) {
+    void setSoftInputMode(final int softInputMode, boolean delay) {
         final WindowDelegate delegate = getWindowDelegate();
 
         if (mKeyboardResizeModeTask != null) {

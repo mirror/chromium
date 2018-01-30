@@ -57,19 +57,19 @@ public class CastSessionImpl implements MediaNotificationListener, CastSession {
     }
 
     private final CastMessagingChannel mMessageChannel;
-    private final CastDevice mCastDevice;
+    final CastDevice mCastDevice;
     private final MediaSource mSource;
-    private final CastMessageHandler mMessageHandler;
+    final CastMessageHandler mMessageHandler;
 
-    private GoogleApiClient mApiClient;
-    private String mSessionId;
+    GoogleApiClient mApiClient;
+    String mSessionId;
     private String mApplicationStatus;
     private ApplicationMetadata mApplicationMetadata;
-    private boolean mStoppingApplication;
-    private MediaNotificationInfo.Builder mNotificationBuilder;
-    private RemoteMediaPlayer mMediaPlayer;
+    boolean mStoppingApplication;
+    MediaNotificationInfo.Builder mNotificationBuilder;
+    RemoteMediaPlayer mMediaPlayer;
 
-    private Set<String> mNamespaces = new HashSet<String>();
+    Set<String> mNamespaces = new HashSet<String>();
 
     /**
      * Initializes a new {@link CastSessionImpl} instance.
@@ -239,7 +239,7 @@ public class CastSessionImpl implements MediaNotificationListener, CastSession {
         }
     }
 
-    private void unregisterNamespace(String namespace) {
+    void unregisterNamespace(String namespace) {
         assert mNamespaces.contains(namespace);
 
         if (isApiClientInvalid()) return;

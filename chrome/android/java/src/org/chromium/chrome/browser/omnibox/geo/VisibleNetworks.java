@@ -111,7 +111,7 @@ class VisibleNetworks {
         return o != null ? o.hashCode() : 0;
     }
 
-    private static int objectsHash(Object... a) {
+    static int objectsHash(Object... a) {
         return Arrays.hashCode(a);
     }
 
@@ -271,7 +271,7 @@ class VisibleNetworks {
         @Nullable
         private Long mTimestampMs;
 
-        private VisibleCell(Builder builder) {
+        VisibleCell(Builder builder) {
             mRadioType = builder.mRadioType;
             mCellId = builder.mCellId;
             mLocationAreaCode = builder.mLocationAreaCode;
@@ -439,23 +439,23 @@ class VisibleNetworks {
          */
         static class Builder {
             @RadioType
-            private int mRadioType;
+            int mRadioType;
             @Nullable
-            private Integer mCellId;
+            Integer mCellId;
             @Nullable
-            private Integer mLocationAreaCode;
+            Integer mLocationAreaCode;
             @Nullable
-            private Integer mMobileCountryCode;
+            Integer mMobileCountryCode;
             @Nullable
-            private Integer mMobileNetworkCode;
+            Integer mMobileNetworkCode;
             @Nullable
-            private Integer mPrimaryScramblingCode;
+            Integer mPrimaryScramblingCode;
             @Nullable
-            private Integer mPhysicalCellId;
+            Integer mPhysicalCellId;
             @Nullable
-            private Integer mTrackingAreaCode;
+            Integer mTrackingAreaCode;
             @Nullable
-            private Long mTimestampMs;
+            Long mTimestampMs;
 
             Builder setRadioType(@RadioType int radioType) {
                 mRadioType = radioType;

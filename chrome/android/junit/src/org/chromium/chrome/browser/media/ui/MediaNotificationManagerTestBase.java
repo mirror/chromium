@@ -167,7 +167,7 @@ public class MediaNotificationManagerTestBase {
         mMockContext.startService(intent);
     }
 
-    private void startService(Intent intent) {
+    void startService(Intent intent) {
         ensureService();
         mService.onStartCommand(intent, 0, 0);
     }

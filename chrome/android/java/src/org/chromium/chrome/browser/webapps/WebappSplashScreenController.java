@@ -33,10 +33,10 @@ class WebappSplashScreenController extends EmptyTabObserver {
     public static final int ERROR_OK = 0;
 
     /** Used to schedule splash screen hiding. */
-    private CompositorViewHolder mCompositorViewHolder;
+    CompositorViewHolder mCompositorViewHolder;
 
     /** View to which the splash screen is added. */
-    private ViewGroup mParentView;
+    ViewGroup mParentView;
 
     /** Whether native was loaded. Native must be loaded in order to record metrics. */
     private boolean mNativeLoaded;
@@ -44,8 +44,8 @@ class WebappSplashScreenController extends EmptyTabObserver {
     /** Whether the splash screen layout was initialized. */
     private boolean mInitializedLayout;
 
-    private ViewGroup mSplashScreen;
-    private WebappUma mWebappUma;
+    ViewGroup mSplashScreen;
+    WebappUma mWebappUma;
 
     /** The error code of the navigation. */
     private int mErrorCode;
@@ -53,7 +53,7 @@ class WebappSplashScreenController extends EmptyTabObserver {
     private WebappOfflineDialog mOfflineDialog;
 
     /** Indicates whether reloading is allowed. */
-    private boolean mAllowReloads;
+    boolean mAllowReloads;
 
     private String mAppName;
 
@@ -208,7 +208,7 @@ class WebappSplashScreenController extends EmptyTabObserver {
     }
 
     /** Sets the splash screen layout and sets the splash screen's title and icon. */
-    private void initializeLayout(WebappInfo webappInfo, int backgroundColor, Bitmap splashImage) {
+    void initializeLayout(WebappInfo webappInfo, int backgroundColor, Bitmap splashImage) {
         mInitializedLayout = true;
         Context context = ContextUtils.getApplicationContext();
         Resources resources = context.getResources();

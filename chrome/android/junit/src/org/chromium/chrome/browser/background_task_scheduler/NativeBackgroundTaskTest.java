@@ -60,7 +60,7 @@ public class NativeBackgroundTaskTest {
         static final TaskParameters INSTANCE = TaskParameters.create(TaskIds.TEST).build();
     }
 
-    private static TaskParameters getTaskParameters() {
+    static TaskParameters getTaskParameters() {
         return LazyTaskParameters.INSTANCE;
     }
 
@@ -232,7 +232,7 @@ public class NativeBackgroundTaskTest {
         }
     }
 
-    private static boolean waitOnLatch(CountDownLatch latch) {
+    static boolean waitOnLatch(CountDownLatch latch) {
         try {
             // All tests are expected to get it done much faster
             return latch.await(5, TimeUnit.SECONDS);

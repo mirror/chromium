@@ -57,7 +57,7 @@ public class WebApkUpdateDataFetcherTest {
     // {@link WEB_MANIFEST_WITH_LONG_ICON_MURMUR2_HASH}.
     private static final String WEB_MANIFEST_SCOPE = "/chrome/test/data";
 
-    private Tab mTab;
+    Tab mTab;
 
     // CallbackHelper which blocks until the {@link ManifestUpgradeDetectorFetcher.Callback}
     // callback is called.

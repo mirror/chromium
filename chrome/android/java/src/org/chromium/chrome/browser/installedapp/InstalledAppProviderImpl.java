@@ -127,7 +127,7 @@ public class InstalledAppProviderImpl implements InstalledAppProvider {
      *         of time in ms that should be delayed before returning to the user, to mask the
      *         installed state of the requested apps.
      */
-    private Pair<RelatedApplication[], Integer> filterInstalledAppsOnBackgroundThread(
+    Pair<RelatedApplication[], Integer> filterInstalledAppsOnBackgroundThread(
             RelatedApplication[] relatedApps, URI frameUrl) {
         ThreadUtils.assertOnBackgroundThread();
 

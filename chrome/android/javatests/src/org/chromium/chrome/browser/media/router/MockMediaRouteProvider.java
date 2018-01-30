@@ -23,7 +23,7 @@ public class MockMediaRouteProvider implements MediaRouteProvider {
     private static final String SINK_NAME1 = "test-sink-1";
     private static final String SINK_NAME2 = "test-sink-2";
 
-    private MediaRouteManager mManager;
+    MediaRouteManager mManager;
 
     private final Map<String, MediaRoute> mRoutes = new HashMap<String, MediaRoute>();
     private final Map<String, MediaRoute> mPresentationIdToRoute =
@@ -49,7 +49,7 @@ public class MockMediaRouteProvider implements MediaRouteProvider {
         }
     }
 
-    private MockMediaRouteProvider() {}
+    MockMediaRouteProvider() {}
 
     public void setCreateRouteDelayMillis(int delayMillis) {
         assert delayMillis >= 0;
@@ -121,8 +121,8 @@ public class MockMediaRouteProvider implements MediaRouteProvider {
         }
     }
 
-    private void doCreateRoute(String sourceId, String sinkId, String presentationId, String origin,
-                               int tabId, int nativeRequestId) {
+    void doCreateRoute(String sourceId, String sinkId, String presentationId, String origin,
+            int tabId, int nativeRequestId) {
         MediaRoute route = new MediaRoute(sinkId, sourceId, presentationId);
         mRoutes.put(route.id, route);
         mPresentationIdToRoute.put(presentationId, route);

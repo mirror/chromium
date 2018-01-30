@@ -25,7 +25,7 @@ import org.chromium.chrome.browser.contextualsearch.ContextualSearchInternalStat
  */
 @RunWith(BlockJUnit4ClassRunner.class)
 public class ContextualSearchInternalStateTest {
-    private ContextualSearchInternalStateController mInternalStateController;
+    ContextualSearchInternalStateController mInternalStateController;
 
     private class ContextualSearchInternalStateHandlerStub
             implements ContextualSearchInternalStateHandler {
@@ -99,9 +99,9 @@ public class ContextualSearchInternalStateTest {
     private ContextualSearchInternalStateHandlerStub mHandlerStub;
     private ContextualSearchPolicy mMockedPolicy;
 
-    private boolean mDidHide;
-    private boolean mDidShow;
-    private boolean mDidResolve;
+    boolean mDidHide;
+    boolean mDidShow;
+    boolean mDidResolve;
 
     boolean didHide() {
         return mDidHide;

@@ -35,7 +35,7 @@ class BaseChromiumRunnerCommon {
      */
     @MainDex
     static class MultiDexContextWrapper extends ContextWrapper {
-        private Context mAppContext;
+        Context mAppContext;
 
         MultiDexContextWrapper(Context instrContext, Context appContext) {
             super(instrContext);

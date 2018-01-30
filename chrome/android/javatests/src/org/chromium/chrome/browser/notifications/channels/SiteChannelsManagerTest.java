@@ -207,7 +207,7 @@ public class SiteChannelsManagerTest {
         };
     }
 
-    private static String statusToString(@NotificationChannelStatus int status) {
+    static String statusToString(@NotificationChannelStatus int status) {
         switch (status) {
             case NotificationChannelStatus.ENABLED:
                 return "ENABLED";

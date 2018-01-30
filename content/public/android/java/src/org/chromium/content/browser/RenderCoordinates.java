@@ -20,8 +20,8 @@ import org.chromium.base.VisibleForTesting;
 public class RenderCoordinates {
 
     // Scroll offset from the native in CSS.
-    private float mScrollXCss;
-    private float mScrollYCss;
+    float mScrollXCss;
+    float mScrollYCss;
 
     // Content size from native in CSS.
     private float mContentWidthCss;
@@ -32,18 +32,18 @@ public class RenderCoordinates {
     private float mLastFrameViewportHeightCss;
 
     // Cached page scale factor from native.
-    private float mPageScaleFactor = 1.0f;
+    float mPageScaleFactor = 1.0f;
     private float mMinPageScaleFactor = 1.0f;
     private float mMaxPageScaleFactor = 1.0f;
 
     // Cached device density.
-    private float mDeviceScaleFactor = 1.0f;
+    float mDeviceScaleFactor = 1.0f;
 
     // Multiplier that determines how many (device) pixels to scroll per mouse
     // wheel tick. Defaults to the preferred list item height.
     private float mWheelScrollFactor;
 
-    private float mTopContentOffsetYPix;
+    float mTopContentOffsetYPix;
 
     private boolean mHasFrameInfo;
 
@@ -115,7 +115,7 @@ public class RenderCoordinates {
     public class NormalizedPoint {
         private float mXAbsoluteCss, mYAbsoluteCss;
 
-        private NormalizedPoint() {
+        NormalizedPoint() {
         }
 
         /**

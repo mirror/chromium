@@ -57,8 +57,8 @@ public class ScreenOrientationListenerTest {
         }
     }
 
-    private OrientationChangeCallbackHelper mCallbackHelper;
-    private DisplayAndroid mDisplayAndroid;
+    OrientationChangeCallbackHelper mCallbackHelper;
+    DisplayAndroid mDisplayAndroid;
     private int mNaturalOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
 
     @Before

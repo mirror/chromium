@@ -52,7 +52,7 @@ class ForeignSessionHelper {
         public final long modifiedTime;
         public final List<ForeignSessionWindow> windows = new ArrayList<ForeignSessionWindow>();
 
-        private ForeignSession(String tag, String name, int deviceType, long modifiedTime) {
+        ForeignSession(String tag, String name, int deviceType, long modifiedTime) {
             this.tag = tag;
             this.name = name;
             this.deviceType = deviceType;
@@ -69,7 +69,7 @@ class ForeignSessionHelper {
         public final int sessionId;
         public final List<ForeignSessionTab> tabs = new ArrayList<ForeignSessionTab>();
 
-        private ForeignSessionWindow(long timestamp, int sessionId) {
+        ForeignSessionWindow(long timestamp, int sessionId) {
             this.timestamp = timestamp;
             this.sessionId = sessionId;
         }
@@ -84,7 +84,7 @@ class ForeignSessionHelper {
         public final long timestamp;
         public final int id;
 
-        private ForeignSessionTab(String url, String title, long timestamp, int id) {
+        ForeignSessionTab(String url, String title, long timestamp, int id) {
             this.url = url;
             this.title = title;
             this.timestamp = timestamp;

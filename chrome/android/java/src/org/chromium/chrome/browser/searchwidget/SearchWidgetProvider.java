@@ -230,7 +230,7 @@ public class SearchWidgetProvider extends AppWidgetProvider {
         IntentUtils.safeStartActivity(context, searchIntent, optionsBundle);
     }
 
-    private static void performUpdate(int[] ids) {
+    static void performUpdate(int[] ids) {
         SearchWidgetProviderDelegate delegate = getDelegate();
 
         if (ids == null) ids = delegate.getAllSearchWidgetIds();

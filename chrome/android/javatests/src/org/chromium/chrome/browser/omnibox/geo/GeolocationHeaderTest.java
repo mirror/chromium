@@ -176,7 +176,7 @@ public class GeolocationHeaderTest {
         });
     }
 
-    private void assertHeaderState(String header, long locationTime, boolean shouldBeNull) {
+    void assertHeaderState(String header, long locationTime, boolean shouldBeNull) {
         if (shouldBeNull) {
             Assert.assertNull(header);
         } else {
@@ -203,7 +203,7 @@ public class GeolocationHeaderTest {
         return location;
     }
 
-    private void setMockLocation(long time) {
+    void setMockLocation(long time) {
         Location location = generateMockLocation(LocationManager.NETWORK_PROVIDER, time);
         GeolocationTracker.setLocationForTesting(location, null);
     }
@@ -237,7 +237,7 @@ public class GeolocationHeaderTest {
         }
     }
 
-    private void assertHeaderEquals(long locationTime, String header) {
+    void assertHeaderEquals(long locationTime, String header) {
         long timestamp = locationTime * 1000;
         // Latitude times 1e7.
         int latitudeE7 = (int) (LOCATION_LAT * 10000000);

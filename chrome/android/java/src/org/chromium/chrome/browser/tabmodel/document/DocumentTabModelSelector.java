@@ -44,17 +44,17 @@ public class DocumentTabModelSelector extends TabModelSelectorBase implements Ta
     /**
      * ID of the Tab to prioritize when initializing the TabState.
      */
-    private static int sPrioritizedTabId = Tab.INVALID_TAB_ID;
+    static int sPrioritizedTabId = Tab.INVALID_TAB_ID;
 
     /**
      * Interacts with DocumentActivities.
      */
-    private final ActivityDelegate mActivityDelegate;
+    final ActivityDelegate mActivityDelegate;
 
     /**
      * Interacts with the file system.
      */
-    private final StorageDelegate mStorageDelegate;
+    final StorageDelegate mStorageDelegate;
 
     /**
      * Creates new Tabs.
@@ -70,7 +70,7 @@ public class DocumentTabModelSelector extends TabModelSelectorBase implements Ta
     /**
      * TabModel that keeps track of incognito tabs. This may be null if no incognito tabs exist.
      */
-    private final IncognitoDocumentTabModel mIncognitoTabModel;
+    final IncognitoDocumentTabModel mIncognitoTabModel;
 
     /**
      * If the TabModels haven't been initialized yet, prioritize the correct one to load the Tab.

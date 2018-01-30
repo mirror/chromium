@@ -105,7 +105,7 @@ public final class FirstRunSignInProcessor {
     /**
      * Opens sign in settings as requested in the FRE sign-in dialog.
      */
-    private static void openSignInSettings(Activity activity) {
+    static void openSignInSettings(Activity activity) {
         Intent intent = PreferencesLauncher.createIntentForSettingsPage(
                 activity, AccountManagementFragment.class.getName());
         activity.startActivity(intent);

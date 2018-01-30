@@ -43,10 +43,10 @@ public class WebShareTest {
 
     private String mUrl;
 
-    private Tab mTab;
+    Tab mTab;
     private WebShareUpdateWaiter mUpdateWaiter;
 
-    private Intent mReceivedIntent;
+    Intent mReceivedIntent;
 
     /** Waits until the JavaScript code supplies a result. */
     private class WebShareUpdateWaiter extends EmptyTabObserver {

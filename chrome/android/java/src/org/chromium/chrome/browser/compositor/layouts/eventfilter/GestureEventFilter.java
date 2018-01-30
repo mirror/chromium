@@ -16,13 +16,13 @@ import android.view.ViewConfiguration;
 public class GestureEventFilter extends EventFilter {
     private final int mLongPressTimeoutMs;
     private final GestureDetector mDetector;
-    private final GestureHandler mHandler;
+    final GestureHandler mHandler;
     private final boolean mUseDefaultLongPress;
-    private final int mScaledTouchSlop;
-    private boolean mSingleInput = true;
-    private boolean mInLongPress;
-    private boolean mSeenFirstScrollEvent;
-    private int mButtons;
+    final int mScaledTouchSlop;
+    boolean mSingleInput = true;
+    boolean mInLongPress;
+    boolean mSeenFirstScrollEvent;
+    int mButtons;
     private LongPressRunnable mLongPressRunnable = new LongPressRunnable();
     private Handler mLongPressHandler = new Handler();
 
@@ -171,7 +171,7 @@ public class GestureEventFilter extends EventFilter {
         mDetector.setIsLongpressEnabled(mUseDefaultLongPress);
     }
 
-    private void longPress(MotionEvent e) {
+    void longPress(MotionEvent e) {
         if (mSingleInput) {
             mInLongPress = true;
             mHandler.onLongPress(e.getX() * mPxToDp, e.getY() * mPxToDp);

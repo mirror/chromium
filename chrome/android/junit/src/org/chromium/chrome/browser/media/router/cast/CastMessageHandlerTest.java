@@ -69,7 +69,7 @@ public class CastMessageHandlerTest {
             CastMessageHandler.INVALID_SEQUENCE_NUMBER;
     private CastMediaRouteProvider mRouteProvider;
     private CastSession mSession;
-    private CastMessageHandler mMessageHandler;
+    CastMessageHandler mMessageHandler;
     private int mNumStopApplicationCalled = 0;
 
     private interface CheckedRunnable { void run() throws Exception; }

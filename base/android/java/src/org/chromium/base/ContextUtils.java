@@ -30,7 +30,7 @@ public class ContextUtils {
      */
     private static class Holder {
         // Not final for tests.
-        private static SharedPreferences sSharedPreferences = fetchAppSharedPreferences();
+        static SharedPreferences sSharedPreferences = fetchAppSharedPreferences();
     }
 
     /**
@@ -71,7 +71,7 @@ public class ContextUtils {
      *
      * @return The application-wide shared preferences.
      */
-    private static SharedPreferences fetchAppSharedPreferences() {
+    static SharedPreferences fetchAppSharedPreferences() {
         return PreferenceManager.getDefaultSharedPreferences(sApplicationContext);
     }
 

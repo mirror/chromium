@@ -694,21 +694,26 @@ public interface JavaClient {
     private final com.google.ipc.invalidation.ticl.proto.Client.PersistentTiclState lastWrittenState;
     private final com.google.ipc.invalidation.ticl.proto.JavaClient.StatisticsState statisticsState;
 
-    private InvalidationClientState(com.google.ipc.invalidation.ticl.proto.Client.RunStateP runState,
-        Bytes clientToken,
-        Bytes nonce,
-        Boolean shouldSendRegistrations,
-        Long lastMessageSendTimeMs,
-        Boolean isOnline,
-        com.google.ipc.invalidation.ticl.proto.JavaClient.ProtocolHandlerState protocolHandlerState,
-        com.google.ipc.invalidation.ticl.proto.JavaClient.RegistrationManagerStateP registrationManagerState,
-        com.google.ipc.invalidation.ticl.proto.JavaClient.RecurringTaskState acquireTokenTaskState,
-        com.google.ipc.invalidation.ticl.proto.JavaClient.RecurringTaskState regSyncHeartbeatTaskState,
-        com.google.ipc.invalidation.ticl.proto.JavaClient.RecurringTaskState persistentWriteTaskState,
-        com.google.ipc.invalidation.ticl.proto.JavaClient.RecurringTaskState heartbeatTaskState,
-        com.google.ipc.invalidation.ticl.proto.JavaClient.RecurringTaskState batchingTaskState,
-        com.google.ipc.invalidation.ticl.proto.Client.PersistentTiclState lastWrittenState,
-        com.google.ipc.invalidation.ticl.proto.JavaClient.StatisticsState statisticsState) {
+    InvalidationClientState(com.google.ipc.invalidation.ticl.proto.Client.RunStateP runState,
+            Bytes clientToken,
+            Bytes nonce,
+            Boolean shouldSendRegistrations,
+            Long lastMessageSendTimeMs,
+            Boolean isOnline,
+            com.google.ipc.invalidation.ticl.proto.JavaClient.ProtocolHandlerState
+                    protocolHandlerState,
+            com.google.ipc.invalidation.ticl.proto.JavaClient.RegistrationManagerStateP
+                    registrationManagerState,
+            com.google.ipc.invalidation.ticl.proto.JavaClient.RecurringTaskState
+                    acquireTokenTaskState,
+            com.google.ipc.invalidation.ticl.proto.JavaClient.RecurringTaskState
+                    regSyncHeartbeatTaskState,
+            com.google.ipc.invalidation.ticl.proto.JavaClient.RecurringTaskState
+                    persistentWriteTaskState,
+            com.google.ipc.invalidation.ticl.proto.JavaClient.RecurringTaskState heartbeatTaskState,
+            com.google.ipc.invalidation.ticl.proto.JavaClient.RecurringTaskState batchingTaskState,
+            com.google.ipc.invalidation.ticl.proto.Client.PersistentTiclState lastWrittenState,
+            com.google.ipc.invalidation.ticl.proto.JavaClient.StatisticsState statisticsState) {
       int hazzerBits = 0;
       if (runState != null) {
         hazzerBits |= 0x1;

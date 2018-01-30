@@ -40,7 +40,7 @@ public class AwAutofillManager {
     }
 
     private AutofillManager mAutofillManager;
-    private boolean mIsAutofillInputUIShowing;
+    boolean mIsAutofillInputUIShowing;
     private AutofillInputUIMonitor mMonitor;
     private boolean mDestroyed;
     private boolean mDisabled;

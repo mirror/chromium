@@ -27,11 +27,11 @@ import org.chromium.ui.base.WindowAndroid;
 @JNINamespace("content")
 public class ContentViewRenderView extends FrameLayout {
     // The native side of this object.
-    private long mNativeContentViewRenderView;
+    long mNativeContentViewRenderView;
     private SurfaceHolder.Callback mSurfaceCallback;
     private WindowAndroid mWindowAndroid;
 
-    private final SurfaceView mSurfaceView;
+    final SurfaceView mSurfaceView;
     protected ContentViewCore mContentViewCore;
 
     private int mWidth;
@@ -223,11 +223,11 @@ public class ContentViewRenderView extends FrameLayout {
     private native void nativeDestroy(long nativeContentViewRenderView);
     private native void nativeSetCurrentWebContents(
             long nativeContentViewRenderView, WebContents webContents);
-    private native void nativeOnPhysicalBackingSizeChanged(
+    native void nativeOnPhysicalBackingSizeChanged(
             long nativeContentViewRenderView, WebContents webContents, int width, int height);
-    private native void nativeSurfaceCreated(long nativeContentViewRenderView);
-    private native void nativeSurfaceDestroyed(long nativeContentViewRenderView);
-    private native void nativeSurfaceChanged(long nativeContentViewRenderView,
+    native void nativeSurfaceCreated(long nativeContentViewRenderView);
+    native void nativeSurfaceDestroyed(long nativeContentViewRenderView);
+    native void nativeSurfaceChanged(long nativeContentViewRenderView,
             int format, int width, int height, Surface surface);
     private native void nativeSetOverlayVideoMode(long nativeContentViewRenderView,
             boolean enabled);

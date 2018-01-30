@@ -102,7 +102,7 @@ final class PaymentRequestTestCommon implements PaymentRequestObserverForTest,
 
     private final AtomicReference<ContentViewCore> mViewCoreRef;
 
-    private final AtomicReference<WebContents> mWebContentsRef;
+    final AtomicReference<WebContents> mWebContentsRef;
 
     private final String mTestFilePath;
 

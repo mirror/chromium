@@ -187,7 +187,7 @@ public class ConfirmSyncDataStateMachine
         }
     }
 
-    private void requestNewAccountManagementStatus() {
+    void requestNewAccountManagementStatus() {
         SigninManager.isUserManaged(mNewAccountName, this::setIsNewAccountManaged);
     }
 
@@ -217,11 +217,11 @@ public class ConfirmSyncDataStateMachine
         }
     }
 
-    private void showProgressDialog() {
+    void showProgressDialog() {
         mDelegate.showFetchManagementPolicyProgressDialog(this::onCancel);
     }
 
-    private void scheduleTimeout() {
+    void scheduleTimeout() {
         if (mCheckTimeoutRunnable == null) {
             mCheckTimeoutRunnable = this::checkTimeout;
         }

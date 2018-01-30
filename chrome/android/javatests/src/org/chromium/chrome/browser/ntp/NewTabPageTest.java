@@ -98,12 +98,12 @@ public class NewTabPageTest {
 
     private static final String TEST_PAGE = "/chrome/test/data/android/navigate/simple.html";
 
-    private Tab mTab;
-    private NewTabPage mNtp;
+    Tab mTab;
+    NewTabPage mNtp;
     private View mFakebox;
-    private ViewGroup mTileGridLayout;
-    private FakeMostVisitedSites mMostVisitedSites;
-    private EmbeddedTestServer mTestServer;
+    ViewGroup mTileGridLayout;
+    FakeMostVisitedSites mMostVisitedSites;
+    EmbeddedTestServer mTestServer;
     private List<SiteSuggestion> mSiteSuggestions;
 
     @Before
@@ -533,18 +533,18 @@ public class NewTabPageTest {
                 mNtp.getManagerForTesting().getSuggestionsSource().areRemoteSuggestionsEnabled());
     }
 
-    private void assertThumbnailInvalidAndRecapture() {
+    void assertThumbnailInvalidAndRecapture() {
         Assert.assertTrue(mNtp.shouldCaptureThumbnail());
         captureThumbnail();
         Assert.assertFalse(mNtp.shouldCaptureThumbnail());
     }
 
-    private void captureThumbnail() {
+    void captureThumbnail() {
         Canvas canvas = new Canvas();
         mNtp.captureThumbnail(canvas);
     }
 
-    private boolean getUrlFocusAnimationsDisabled() {
+    boolean getUrlFocusAnimationsDisabled() {
         return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Boolean>() {
             @Override
             public Boolean call() throws Exception {
@@ -592,7 +592,7 @@ public class NewTabPageTest {
     /**
      * @return The position of the top of the fakebox relative to the window.
      */
-    private int getFakeboxTop(final NewTabPage ntp) {
+    int getFakeboxTop(final NewTabPage ntp) {
         return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Integer>() {
             @Override
             public Integer call() {

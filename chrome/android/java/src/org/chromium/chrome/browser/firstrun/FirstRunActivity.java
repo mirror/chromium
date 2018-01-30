@@ -82,25 +82,25 @@ public class FirstRunActivity extends FirstRunActivityBase implements FirstRunPa
     private static final EnumeratedHistogramSample sMobileFreProgressViewIntentHistogram =
             new EnumeratedHistogramSample("MobileFre.Progress.ViewIntent", FRE_PROGRESS_MAX);
 
-    private static FirstRunActivityObserver sObserver;
+    static FirstRunActivityObserver sObserver;
 
-    private boolean mShowWelcomePage = true;
+    boolean mShowWelcomePage = true;
 
-    private String mResultSignInAccountName;
+    String mResultSignInAccountName;
     private boolean mResultIsDefaultAccount;
     private boolean mResultShowSignInSettings;
 
-    private boolean mFlowIsKnown;
+    boolean mFlowIsKnown;
     private boolean mPostNativePageSequenceCreated;
-    private boolean mNativeSideIsInitialized;
+    boolean mNativeSideIsInitialized;
     private Set<FirstRunFragment> mPagesToNotifyOfNativeInit;
     private boolean mDeferredCompleteFRE;
 
-    private FirstRunViewPager mPager;
+    FirstRunViewPager mPager;
 
     private FirstRunFlowSequencer mFirstRunFlowSequencer;
 
-    private Bundle mFreProperties;
+    Bundle mFreProperties;
 
     /**
      * Whether the first run activity was launched as a result of the user launching Chrome from the
@@ -108,18 +108,18 @@ public class FirstRunActivity extends FirstRunActivityBase implements FirstRunPa
      */
     private boolean mLaunchedFromChromeIcon;
 
-    private final List<FirstRunPage> mPages = new ArrayList<>();
-    private final List<Integer> mFreProgressStates = new ArrayList<>();
+    final List<FirstRunPage> mPages = new ArrayList<>();
+    final List<Integer> mFreProgressStates = new ArrayList<>();
 
     /**
      * The pager adapter, which provides the pages to the view pager widget.
      */
-    private FirstRunPagerAdapter mPagerAdapter;
+    FirstRunPagerAdapter mPagerAdapter;
 
     /**
      * Defines a sequence of pages to be shown (depending on parameters etc).
      */
-    private void createPageSequence() {
+    void createPageSequence() {
         // An optional welcome page.
         if (mShowWelcomePage) {
             mPages.add(new ToSAndUMAFirstRunFragment.Page());
@@ -130,7 +130,7 @@ public class FirstRunActivity extends FirstRunActivityBase implements FirstRunPa
         // native has been initialized.
     }
 
-    private void createPostNativePageSequence() {
+    void createPostNativePageSequence() {
         // Note: Can't just use POST_NATIVE_SETUP_NEEDED for the early return, because this
         // populates |mPages| which needs to be done even even if onNativeInitialized() was
         // performed in a previous session.
@@ -254,7 +254,7 @@ public class FirstRunActivity extends FirstRunActivityBase implements FirstRunPa
         TemplateUrlService.getInstance().runWhenLoaded(onNativeFinished);
     }
 
-    private void onNativeDependenciesFullyInitialized() {
+    void onNativeDependenciesFullyInitialized() {
         mNativeSideIsInitialized = true;
         if (mDeferredCompleteFRE) {
             completeFirstRunExperience();
@@ -467,12 +467,12 @@ public class FirstRunActivity extends FirstRunActivityBase implements FirstRunPa
         return true;
     }
 
-    private void stopProgressionIfNotAcceptedTermsOfService() {
+    void stopProgressionIfNotAcceptedTermsOfService() {
         if (mPagerAdapter == null) return;
         mPagerAdapter.setStopAtTheFirstPage(mShowWelcomePage && !didAcceptTermsOfService());
     }
 
-    private void skipPagesIfNecessary() {
+    void skipPagesIfNecessary() {
         if (mPagerAdapter == null) return;
 
         boolean shouldSkip = mPages.get(mPager.getCurrentItem()).shouldSkipPageOnCreate();
@@ -482,7 +482,7 @@ public class FirstRunActivity extends FirstRunActivityBase implements FirstRunPa
         }
     }
 
-    private void recordFreProgressHistogram(int state) {
+    void recordFreProgressHistogram(int state) {
         if (mLaunchedFromChromeIcon) {
             sMobileFreProgressMainIntentHistogram.record(state);
         } else {

@@ -398,7 +398,7 @@ public class ChartDataUsageView extends ChartView {
         }
     }
 
-    private static void setText(
+    static void setText(
             SpannableStringBuilder builder, Object key, CharSequence text, String bootstrap) {
         int start = builder.getSpanStart(key);
         int end = builder.getSpanEnd(key);

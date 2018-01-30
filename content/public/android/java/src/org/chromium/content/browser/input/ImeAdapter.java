@@ -116,11 +116,11 @@ public class ImeAdapter {
     // Keep the current configuration to detect the change when onConfigurationChanged() is called.
     private Configuration mCurrentConfig;
 
-    private int mLastSelectionStart;
-    private int mLastSelectionEnd;
-    private String mLastText;
-    private int mLastCompositionStart;
-    private int mLastCompositionEnd;
+    int mLastSelectionStart;
+    int mLastSelectionEnd;
+    String mLastText;
+    int mLastCompositionStart;
+    int mLastCompositionEnd;
     private boolean mRestartInputOnNextStateUpdate;
 
     // True if ImeAdapter is connected to render process.

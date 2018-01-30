@@ -21,7 +21,7 @@ import java.util.Map;
 @SuppressWarnings("deprecation")
 final class WebStorageAdapter extends WebStorage {
     private final WebViewChromiumFactoryProvider mFactory;
-    private final AwQuotaManagerBridge mQuotaManagerBridge;
+    final AwQuotaManagerBridge mQuotaManagerBridge;
 
     WebStorageAdapter(
             WebViewChromiumFactoryProvider factory, AwQuotaManagerBridge quotaManagerBridge) {

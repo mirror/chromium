@@ -295,7 +295,7 @@ public class NetworkChangeNotifier {
         getInstance().notifyObserversOfConnectionSubtypeChange(connectionSubtype);
     }
 
-    private void updateCurrentConnectionType(int newConnectionType) {
+    void updateCurrentConnectionType(int newConnectionType) {
         mCurrentConnectionType = newConnectionType;
         notifyObserversOfConnectionTypeChange(newConnectionType);
     }

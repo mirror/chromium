@@ -32,11 +32,11 @@ public class UpgradeActivity extends AppCompatActivity {
     private static final long MIN_MS_TO_DISPLAY_ACTIVITY = 3000;
     private static final long INVALID_TIMESTAMP = -1;
 
-    private final Handler mHandler;
+    final Handler mHandler;
     private final DocumentModeAssassinObserver mObserver;
 
     private Intent mIntentToFireAfterUpgrade;
-    private long mStartTimestamp = INVALID_TIMESTAMP;
+    long mStartTimestamp = INVALID_TIMESTAMP;
     private boolean mIsDestroyed;
 
     public static void launchInstance(Activity activity, Intent originalIntent) {
@@ -124,7 +124,7 @@ public class UpgradeActivity extends AppCompatActivity {
         return intentToFire;
     }
 
-    private void continueApplicationLaunch() {
+    void continueApplicationLaunch() {
         if (mIsDestroyed) return;
 
         ApiCompatibilityUtils.finishAndRemoveTask(this);

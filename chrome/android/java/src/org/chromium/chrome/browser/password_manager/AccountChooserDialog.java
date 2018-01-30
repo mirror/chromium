@@ -45,7 +45,7 @@ import org.chromium.ui.widget.Toast;
 public class AccountChooserDialog
         implements DialogInterface.OnClickListener, DialogInterface.OnDismissListener {
     private final Context mContext;
-    private final Credential[] mCredentials;
+    final Credential[] mCredentials;
 
     /**
      * Title of the dialog, contains Smart Lock branding for the Smart Lock users.
@@ -62,9 +62,9 @@ public class AccountChooserDialog
     /**
      * Holds the reference to the credentials which were chosen by the user.
      */
-    private Credential mCredential;
-    private long mNativeAccountChooserDialog;
-    private AlertDialog mDialog;
+    Credential mCredential;
+    long mNativeAccountChooserDialog;
+    AlertDialog mDialog;
     /**
      * True, if credentials were selected via "Sign In" button instead of clicking on the credential
      * itself.
@@ -209,7 +209,7 @@ public class AccountChooserDialog
         mDialog.show();
     }
 
-    private void showTooltip(View view, String message, int layoutId) {
+    void showTooltip(View view, String message, int layoutId) {
         Context context = view.getContext();
         Resources resources = context.getResources();
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -326,5 +326,5 @@ public class AccountChooserDialog
             int credentialId, boolean signinButtonClicked);
     private native void nativeCancelDialog(long nativeAccountChooserDialogAndroid);
     private native void nativeDestroy(long nativeAccountChooserDialogAndroid);
-    private native void nativeOnLinkClicked(long nativeAccountChooserDialogAndroid);
+    native void nativeOnLinkClicked(long nativeAccountChooserDialogAndroid);
 }

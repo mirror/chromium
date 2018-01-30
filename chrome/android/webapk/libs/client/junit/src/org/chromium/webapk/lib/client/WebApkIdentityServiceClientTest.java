@@ -41,8 +41,8 @@ public class WebApkIdentityServiceClientTest {
     /** Mocks the {@link WebApkIdentityServiceClient.CheckBrowserBacksWebApkCallback}. */
     private static class TestCheckBacksWebApkCallback
             implements WebApkIdentityServiceClient.CheckBrowserBacksWebApkCallback {
-        private boolean mResult;
-        private boolean mIsCalled;
+        boolean mResult;
+        boolean mIsCalled;
 
         @Override
         public void onChecked(boolean doesBrowserBackWebApk) {

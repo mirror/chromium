@@ -99,7 +99,7 @@ public class ClearBrowsingDataPreferencesBasicTest {
         });
     }
 
-    private String getCheckboxSummary(PreferenceScreen screen, String preference) {
+    String getCheckboxSummary(PreferenceScreen screen, String preference) {
         CheckBoxPreference checkbox = (CheckBoxPreference) screen.findPreference(preference);
         return new StringBuilder(checkbox.getSummary()).toString();
     }

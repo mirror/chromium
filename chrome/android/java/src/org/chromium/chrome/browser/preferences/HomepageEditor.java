@@ -24,8 +24,8 @@ import org.chromium.components.url_formatter.UrlFormatter;
  * Provides the Java-UI for editing the homepage preference.
  */
 public class HomepageEditor extends Fragment implements TextWatcher {
-    private HomepageManager mHomepageManager;
-    private EditText mHomepageUrlEdit;
+    HomepageManager mHomepageManager;
+    EditText mHomepageUrlEdit;
     private Button mSaveButton;
     private Button mResetButton;
 

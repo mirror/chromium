@@ -462,7 +462,7 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
         return mBrowserContext;
     }
 
-    private void setWebContentsDebuggingEnabled(boolean enable) {
+    void setWebContentsDebuggingEnabled(boolean enable) {
         if (Looper.myLooper() != ThreadUtils.getUiThreadLooper()) {
             throw new RuntimeException(
                     "Toggling of Web Contents Debugging must be done on the UI thread");

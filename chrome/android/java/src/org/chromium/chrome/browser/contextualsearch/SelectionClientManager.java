@@ -136,7 +136,7 @@ public class SelectionClientManager {
          * @param contextualSearchSelectionClient A {@link SelectionClient} based on the
          *        {@code ContextualSearchManager}.
          */
-        private SelectionClientBridge(SelectionClient smartSelectionClient,
+        SelectionClientBridge(SelectionClient smartSelectionClient,
                 SelectionClient contextualSearchSelectionClient) {
             mSmartSelectionClient = smartSelectionClient;
             mContextualSearchSelectionClient = contextualSearchSelectionClient;
@@ -145,7 +145,7 @@ public class SelectionClientManager {
         /**
          * @return The current Smart Selection client.
          */
-        private SelectionClient getSmartSelectionClient() {
+        SelectionClient getSmartSelectionClient() {
             return mSmartSelectionClient;
         }
 

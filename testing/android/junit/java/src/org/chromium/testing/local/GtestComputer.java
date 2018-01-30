@@ -19,7 +19,7 @@ import org.junit.runners.model.RunnerBuilder;
  */
 public class GtestComputer extends Computer {
 
-    private final GtestLogger mLogger;
+    final GtestLogger mLogger;
 
     public GtestComputer(GtestLogger logger) {
         mLogger = logger;

@@ -140,10 +140,10 @@ public class TileGroup implements MostVisitedSites.Observer {
     }
 
     private final SuggestionsUiDelegate mUiDelegate;
-    private final ContextMenuManager mContextMenuManager;
-    private final Delegate mTileGroupDelegate;
-    private final Observer mObserver;
-    private final TileRenderer mTileRenderer;
+    final ContextMenuManager mContextMenuManager;
+    final Delegate mTileGroupDelegate;
+    final Observer mObserver;
+    final TileRenderer mTileRenderer;
 
     /**
      * Tracks the tasks currently in flight.
@@ -163,7 +163,7 @@ public class TileGroup implements MostVisitedSites.Observer {
      * @see #findTile(SiteSuggestion)
      * @see #findTilesForUrl(String)
      */
-    private SparseArray<List<Tile>> mTileSections = createEmptyTileData();
+    SparseArray<List<Tile>> mTileSections = createEmptyTileData();
 
     /** Most recently received tile data that has not been displayed yet. */
     @Nullable
@@ -174,7 +174,7 @@ public class TileGroup implements MostVisitedSites.Observer {
      * the tile backend.
      */
     @Nullable
-    private String mPendingRemovalUrl;
+    String mPendingRemovalUrl;
 
     /**
      * URL of the most recently added tile. Used to identify when a given tile's insertion is
@@ -182,7 +182,7 @@ public class TileGroup implements MostVisitedSites.Observer {
      * then the user undoes the action and wants that tile back.
      */
     @Nullable
-    private String mPendingInsertionUrl;
+    String mPendingInsertionUrl;
 
     private boolean mHasReceivedData;
 
@@ -368,7 +368,7 @@ public class TileGroup implements MostVisitedSites.Observer {
     }
 
     @Nullable
-    private Tile findTile(SiteSuggestion suggestion) {
+    Tile findTile(SiteSuggestion suggestion) {
         if (mTileSections.get(suggestion.sectionType) == null) return null;
         for (Tile tile : mTileSections.get(suggestion.sectionType)) {
             if (tile.getData().equals(suggestion)) return tile;
@@ -399,11 +399,11 @@ public class TileGroup implements MostVisitedSites.Observer {
         return tiles;
     }
 
-    private void addTask(@TileTask int task) {
+    void addTask(@TileTask int task) {
         mPendingTasks.add(task);
     }
 
-    private void removeTask(@TileTask int task) {
+    void removeTask(@TileTask int task) {
         boolean removedTask = mPendingTasks.remove(Integer.valueOf(task));
         assert removedTask;
 
@@ -423,7 +423,7 @@ public class TileGroup implements MostVisitedSites.Observer {
      * not be sent, as it would cause calling {@link Delegate#onLoadingComplete(List)} at the
      * wrong moment.
      */
-    private boolean isLoadTracked() {
+    boolean isLoadTracked() {
         return mPendingTasks.contains(TileTask.FETCH_DATA)
                 || mPendingTasks.contains(TileTask.SCHEDULE_ICON_FETCH);
     }
@@ -456,7 +456,7 @@ public class TileGroup implements MostVisitedSites.Observer {
         private final SiteSuggestion mSiteData;
         private final boolean mTrackLoadTask;
 
-        private LargeIconCallbackImpl(SiteSuggestion suggestion, boolean trackLoadTask) {
+        LargeIconCallbackImpl(SiteSuggestion suggestion, boolean trackLoadTask) {
             mSiteData = suggestion;
             mTrackLoadTask = trackLoadTask;
         }

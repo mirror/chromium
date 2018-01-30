@@ -53,7 +53,7 @@ public class ChildProcessLauncherTestHelperService extends Service {
 
     private final HandlerThread mHandlerThread = new HandlerThread("Helper Service Handler");
 
-    private ChildProcessLauncherHelper mProcessLauncher;
+    ChildProcessLauncherHelper mProcessLauncher;
 
     @Override
     public void onCreate() {
@@ -74,7 +74,7 @@ public class ChildProcessLauncherTestHelperService extends Service {
         return messenger.getBinder();
     }
 
-    private void doBindService(final Message msg) {
+    void doBindService(final Message msg) {
         String[] commandLine = { "_", "--" + BaseSwitches.RENDERER_WAIT_FOR_JAVA_DEBUGGER };
         final boolean bindToCaller = true;
         ChildProcessCreationParams params = new ChildProcessCreationParams(getPackageName(), false,
@@ -113,7 +113,7 @@ public class ChildProcessLauncherTestHelperService extends Service {
         handler.postDelayed(task, 10);
     }
 
-    private void unbindService(Message msg) {
+    void unbindService(Message msg) {
         // Crash the service instead of unbinding so we are guaranteed the service process dies
         // (if we were to unbind, the service process would stay around and may be reused).
         try {

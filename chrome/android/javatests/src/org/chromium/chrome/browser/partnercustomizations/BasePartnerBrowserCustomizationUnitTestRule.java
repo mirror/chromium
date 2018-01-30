@@ -36,7 +36,7 @@ public class BasePartnerBrowserCustomizationUnitTestRule implements TestRule {
             mCallbackLock.release();
         }
     };
-    private final Semaphore mCallbackLock = new Semaphore(0);
+    final Semaphore mCallbackLock = new Semaphore(0);
 
     /**
      * Specifies the URI path that should be delayed when querying the delayed provider.

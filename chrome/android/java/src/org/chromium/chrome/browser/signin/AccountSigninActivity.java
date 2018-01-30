@@ -192,7 +192,7 @@ public class AccountSigninActivity extends AppCompatActivity
     @Override
     public void onFailedToSetForcedAccount(String forcedAccountName) {}
 
-    private void recordSigninCompletedHistogramAccountInfo() {
+    void recordSigninCompletedHistogramAccountInfo() {
         if (!mIsFromPersonalizedPromo) {
             return;
         }

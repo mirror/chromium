@@ -108,14 +108,14 @@ public class VrShellDelegate
 
     private static final int WINDOW_FADE_ANIMATION_DURATION_MS = 150;
 
-    private static VrShellDelegate sInstance;
+    static VrShellDelegate sInstance;
     private static VrBroadcastReceiver sVrBroadcastReceiver;
     private static boolean sRegisteredDaydreamHook;
     private static boolean sAddedBlackOverlayView;
-    private static boolean sRegisteredVrAssetsComponent = false;
+    static boolean sRegisteredVrAssetsComponent = false;
     private static boolean sChromeStarted = false;
 
-    private ChromeActivity mActivity;
+    ChromeActivity mActivity;
 
     private @VrSupportLevel int mVrSupportLevel;
     private int mCachedVrCorePackageVersion;
@@ -123,25 +123,25 @@ public class VrShellDelegate
     // How often to prompt the user to enter VR feedback.
     private int mFeedbackFrequency;
 
-    private final VrClassesWrapper mVrClassesWrapper;
+    final VrClassesWrapper mVrClassesWrapper;
     private VrShell mVrShell;
-    private VrDaydreamApi mVrDaydreamApi;
+    VrDaydreamApi mVrDaydreamApi;
     private Boolean mIsDaydreamCurrentViewer;
     private VrCoreVersionChecker mVrCoreVersionChecker;
     private TabModelSelector mTabModelSelector;
 
-    private boolean mProbablyInDon;
-    private boolean mInVr;
-    private final Handler mExpectPauseOrDonSucceeded;
-    private boolean mNeedsAnimationCancel;
+    boolean mProbablyInDon;
+    boolean mInVr;
+    final Handler mExpectPauseOrDonSucceeded;
+    boolean mNeedsAnimationCancel;
     private boolean mCancellingEntryAnimation;
 
     // Whether or not the VR Device ON flow succeeded. If this is true it means the user has a VR
     // headset on, but we haven't switched into VR mode yet.
     // See further documentation here: https://developers.google.com/vr/daydream/guides/vr-entry
-    private boolean mDonSucceeded;
+    boolean mDonSucceeded;
     // Best effort whether or not the system was in VR when Chrome launched.
-    private Boolean mInVrAtChromeLaunch;
+    Boolean mInVrAtChromeLaunch;
     private boolean mShowingDaydreamDoff;
     private boolean mDoffOptional;
     // Listener to be called once we exited VR due to to an unsupported mode, e.g. the user clicked
@@ -149,12 +149,12 @@ public class VrShellDelegate
     private OnExitVrRequestListener mOnExitVrRequestListener;
     private boolean mExitedDueToUnsupportedMode;
     private boolean mExitingCct;
-    private boolean mPaused;
+    boolean mPaused;
     private boolean mStopped;
     private boolean mVisible;
     private int mRestoreSystemUiVisibilityFlag = -1;
     private Integer mRestoreOrientation = null;
-    private long mNativeVrShellDelegate;
+    long mNativeVrShellDelegate;
     private boolean mRequestedWebVr;
     private boolean mRequestedWebVrBeforePause;
     private boolean mListeningForWebVrActivate;
@@ -164,7 +164,7 @@ public class VrShellDelegate
     // content to call requestPresent.
     private boolean mAutopresentWebVr;
     // If set to true, we attempt to enter VR mode when the activity is resumed.
-    private boolean mEnterVrOnStartup;
+    boolean mEnterVrOnStartup;
 
     // Set to true if performed VR browsing at least once. That is, this was not simply a WebVr
     // presentation experience.
@@ -446,7 +446,7 @@ public class VrShellDelegate
         return getInstance((ChromeActivity) activity);
     }
 
-    private static VrShellDelegate getInstance(ChromeActivity activity) {
+    static VrShellDelegate getInstance(ChromeActivity activity) {
         if (!LibraryLoader.isInitialized()) return null;
         if (activity == null || !activitySupportsPresentation(activity)) return null;
         if (sInstance != null) return sInstance;
@@ -466,7 +466,7 @@ public class VrShellDelegate
         return activity instanceof ChromeTabbedActivity || activity instanceof CustomTabActivity;
     }
 
-    private static boolean activitySupportsVrBrowsing(Activity activity) {
+    static boolean activitySupportsVrBrowsing(Activity activity) {
         if (activity instanceof ChromeTabbedActivity) return true;
         if (activity instanceof CustomTabActivity) {
             return ChromeFeatureList.isEnabled(ChromeFeatureList.VR_BROWSING_IN_CUSTOM_TAB);
@@ -479,7 +479,7 @@ public class VrShellDelegate
                 && ChromeFeatureList.isEnabled(ChromeFeatureList.VR_BROWSING_FEEDBACK);
     }
 
-    private static void registerVrAssetsComponentIfDaydreamUser(boolean isDaydreamCurrentViewer) {
+    static void registerVrAssetsComponentIfDaydreamUser(boolean isDaydreamCurrentViewer) {
         assert !sRegisteredVrAssetsComponent;
         if (isDaydreamCurrentViewer) {
             nativeRegisterVrAssetsComponent();
@@ -535,7 +535,7 @@ public class VrShellDelegate
     /**
      * Registers the Intent to fire after phone inserted into a headset.
      */
-    private static void registerDaydreamIntent(
+    static void registerDaydreamIntent(
             final VrDaydreamApi daydreamApi, final ChromeActivity activity) {
         if (sRegisteredDaydreamHook) return;
         if (!daydreamApi.registerDaydreamIntent(getEnterVrPendingIntent(activity))) return;
@@ -850,7 +850,7 @@ public class VrShellDelegate
         maybeSetPresentResult(true, donSuceeded);
     }
 
-    private static void addBlackOverlayViewForActivity(ChromeActivity activity) {
+    static void addBlackOverlayViewForActivity(ChromeActivity activity) {
         if (sAddedBlackOverlayView) return;
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                 WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
@@ -1017,7 +1017,7 @@ public class VrShellDelegate
                 && orientation == Configuration.ORIENTATION_LANDSCAPE;
     }
 
-    private void setWindowModeForVr() {
+    void setWindowModeForVr() {
         ScreenOrientationDelegateManager.setOrientationDelegate(this);
         mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
@@ -1160,7 +1160,7 @@ public class VrShellDelegate
         return true;
     }
 
-    private boolean cancelStartupAnimationIfNeeded() {
+    boolean cancelStartupAnimationIfNeeded() {
         if (!mNeedsAnimationCancel) return false;
         if (DEBUG_LOGS) Log.e(TAG, "canceling startup animation");
         mCancellingEntryAnimation = true;
@@ -1258,7 +1258,7 @@ public class VrShellDelegate
         mProbablyInDon = false;
     }
 
-    private void handleDonFlowSuccess() {
+    void handleDonFlowSuccess() {
         if (mInVr) {
             maybeSetPresentResult(true, mDonSucceeded);
             mDonSucceeded = false;
@@ -1381,7 +1381,7 @@ public class VrShellDelegate
         mExitingCct = false;
     }
 
-    private boolean isDaydreamCurrentViewer() {
+    boolean isDaydreamCurrentViewer() {
         if (mIsDaydreamCurrentViewer == null) {
             mIsDaydreamCurrentViewer = mVrDaydreamApi.isDaydreamCurrentViewer();
         }
@@ -1539,7 +1539,7 @@ public class VrShellDelegate
         return true;
     }
 
-    private static void startFeedback(Tab tab) {
+    static void startFeedback(Tab tab) {
         // TODO(ymalik): This call will connect to the Google Services api which can be slow. Can we
         // connect to it beforehand when we know that we'll be prompting for feedback?
         HelpAndFeedback.getInstance(tab.getActivity())
@@ -1615,7 +1615,7 @@ public class VrShellDelegate
         return vrCoreCompatibility == VrCoreCompatibility.VR_READY;
     }
 
-    private static void promptToUpdateVrServices(int vrCoreCompatibility, Tab tab) {
+    static void promptToUpdateVrServices(int vrCoreCompatibility, Tab tab) {
         final Activity activity = tab.getActivity();
         String infobarText;
         String buttonText;
@@ -1771,7 +1771,7 @@ public class VrShellDelegate
     private native long nativeInit();
     private static native void nativeOnLibraryAvailable();
     private native void nativeSetPresentResult(long nativeVrShellDelegate, boolean result);
-    private native void nativeDisplayActivate(long nativeVrShellDelegate);
+    native void nativeDisplayActivate(long nativeVrShellDelegate);
     private native void nativeOnPause(long nativeVrShellDelegate);
     private native void nativeOnResume(long nativeVrShellDelegate);
     private native boolean nativeIsClearActivatePending(long nativeVrShellDelegate);

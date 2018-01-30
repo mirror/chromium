@@ -59,17 +59,17 @@ public class SignInPromo extends OptionalLeaf {
     /**
      * Whether the signin status means that the user has the possibility to sign in.
      */
-    private boolean mCanSignIn;
+    boolean mCanSignIn;
 
     /**
      * Whether personalized suggestions can be shown. If it's not the case, we have no reason to
      * offer the user to sign in.
      */
-    private boolean mCanShowPersonalizedSuggestions;
+    boolean mCanShowPersonalizedSuggestions;
 
     private final @Nullable SigninObserver mSigninObserver;
     private final @Nullable SigninPromoController mSigninPromoController;
-    private final @Nullable ProfileDataCache mProfileDataCache;
+    final @Nullable ProfileDataCache mProfileDataCache;
 
     private SignInPromo(SuggestionsUiDelegate uiDelegate) {
         Context context = ContextUtils.getApplicationContext();
@@ -152,7 +152,7 @@ public class SignInPromo extends OptionalLeaf {
         visitor.visitSignInPromo();
     }
 
-    private void updateVisibility() {
+    void updateVisibility() {
         setVisibilityInternal(!mDismissed && mCanSignIn && mCanShowPersonalizedSuggestions);
     }
 
@@ -185,7 +185,7 @@ public class SignInPromo extends OptionalLeaf {
         /** Guards {@link #unregister()}, which can be called multiple times. */
         private boolean mUnregistered;
 
-        private SigninObserver(SigninManager signinManager, SuggestionsSource suggestionsSource) {
+        SigninObserver(SigninManager signinManager, SuggestionsSource suggestionsSource) {
             mSigninManager = signinManager;
             mSigninManager.addSignInAllowedObserver(this);
             mSigninManager.addSignInStateObserver(this);
@@ -197,7 +197,7 @@ public class SignInPromo extends OptionalLeaf {
             AccountManagerFacade.get().addObserver(this);
         }
 
-        private void unregister() {
+        void unregister() {
             if (mUnregistered) return;
             mUnregistered = true;
 

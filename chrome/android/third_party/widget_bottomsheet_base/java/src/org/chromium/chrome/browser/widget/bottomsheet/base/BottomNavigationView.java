@@ -91,7 +91,7 @@ public class BottomNavigationView extends FrameLayout {
     private final BottomNavigationPresenter mPresenter = new BottomNavigationPresenter();
     private MenuInflater mMenuInflater;
 
-    private OnNavigationItemSelectedListener mListener;
+    OnNavigationItemSelectedListener mListener;
 
     public BottomNavigationView(Context context) {
         this(context, null);

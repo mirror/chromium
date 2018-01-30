@@ -114,13 +114,13 @@ public class CustomTabToolbar extends ToolbarLayout implements LocationBar,
     private ImageButton mCloseButton;
 
     // Whether dark tint should be applied to icons and text.
-    private boolean mUseDarkColors = true;
+    boolean mUseDarkColors = true;
 
     private ValueAnimator mBrandColorTransitionAnimation;
-    private boolean mBrandColorTransitionActive;
+    boolean mBrandColorTransitionActive;
 
-    private CustomTabToolbarAnimationDelegate mAnimDelegate;
-    private int mState = STATE_DOMAIN_ONLY;
+    CustomTabToolbarAnimationDelegate mAnimDelegate;
+    int mState = STATE_DOMAIN_ONLY;
     private String mFirstUrl;
 
     protected ToolbarDataProvider mToolbarDataProvider;
@@ -658,7 +658,7 @@ public class CustomTabToolbar extends ToolbarLayout implements LocationBar,
         return false;
     }
 
-    private static String parsePublisherNameFromUrl(String url) {
+    static String parsePublisherNameFromUrl(String url) {
         // TODO(ianwen): Make it generic to parse url from URI path. http://crbug.com/599298
         // The url should look like: https://www.google.com/amp/s/www.nyt.com/ampthml/blogs.html
         // or https://www.google.com/amp/www.nyt.com/ampthml/blogs.html.

@@ -20,7 +20,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class HistoryReportJniBridge implements SearchJniBridge {
     private static final String TAG = "historyreport";
 
-    private long mNativeHistoryReportJniBridge;
+    long mNativeHistoryReportJniBridge;
     private DataChangeObserver mDataChangeObserver;
     private final AtomicBoolean mStarted = new AtomicBoolean();
 
@@ -162,7 +162,7 @@ public class HistoryReportJniBridge implements SearchJniBridge {
         mDataChangeObserver.stopReportingTask();
     }
 
-    private native long nativeInit();
+    native long nativeInit();
     private native long nativeTrimDeltaFile(long nativeHistoryReportJniBridge,
             long seqNoLowerBound);
     private native DeltaFileEntry[] nativeQuery(long nativeHistoryReportJniBridge, long lastSeqNo,

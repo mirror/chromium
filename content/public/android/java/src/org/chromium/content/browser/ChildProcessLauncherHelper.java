@@ -55,15 +55,15 @@ public class ChildProcessLauncherHelper {
             "org.chromium.content.browser.PRIVILEGED_SERVICES_NAME";
 
     // A warmed-up connection to a sandboxed service.
-    private static SpareChildConnection sSpareSandboxedConnection;
+    static SpareChildConnection sSpareSandboxedConnection;
 
     // Map from package name to ChildConnectionAllocator.
-    private static final Map<String, ChildConnectionAllocator>
+    static final Map<String, ChildConnectionAllocator>
             sSandboxedChildConnectionAllocatorMap = new HashMap<>();
 
     // Map from PID to ChildProcessLauncherHelper.
     @SuppressLint("UseSparseArrays") // TODO(crbug.com/799070): Fix this.
-    private static final Map<Integer, ChildProcessLauncherHelper> sLauncherByPid = new HashMap<>();
+    static final Map<Integer, ChildProcessLauncherHelper> sLauncherByPid = new HashMap<>();
 
     // Allocator used for non-sandboxed services.
     private static ChildConnectionAllocator sPrivilegedChildConnectionAllocator;
@@ -80,9 +80,9 @@ public class ChildProcessLauncherHelper {
     private static boolean sApplicationInForeground = true;
 
     // Whether the connection is managed by the BindingManager.
-    private final boolean mUseBindingManager;
+    final boolean mUseBindingManager;
 
-    private final ChildProcessCreationParams mCreationParams;
+    final ChildProcessCreationParams mCreationParams;
 
     // Whether the created process should be sandboxed.
     private final boolean mSandboxed;
@@ -153,7 +153,7 @@ public class ChildProcessLauncherHelper {
     private final ChildProcessLauncher mLauncher;
 
     // Note native pointer is only guaranteed live until nativeOnChildProcessStarted.
-    private long mNativeChildProcessLauncherHelper;
+    long mNativeChildProcessLauncherHelper;
 
     private @ChildProcessImportance int mImportance = ChildProcessImportance.NORMAL;
 
@@ -231,7 +231,7 @@ public class ChildProcessLauncherHelper {
         });
     }
 
-    private static void warmUpOnLauncherThread(Context context) {
+    static void warmUpOnLauncherThread(Context context) {
         if (sSpareSandboxedConnection != null && !sSpareSandboxedConnection.isEmpty()) {
             return;
         }
@@ -558,7 +558,7 @@ public class ChildProcessLauncherHelper {
     }
 
     // Can be called on a number of threads, including launcher, and binder.
-    private static native void nativeOnChildProcessStarted(
+    static native void nativeOnChildProcessStarted(
             long nativeChildProcessLauncherHelper, int pid);
 
     private static boolean sLinkerInitialized;
@@ -593,7 +593,7 @@ public class ChildProcessLauncherHelper {
         }
     }
 
-    private static Bundle populateServiceBundle(
+    static Bundle populateServiceBundle(
             Bundle bundle, ChildProcessCreationParams creationParams) {
         boolean bindToCallerCheck = false;
         if (creationParams != null) {

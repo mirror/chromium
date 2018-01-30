@@ -80,10 +80,10 @@ public class ChromeActivityTestRule<T extends ChromeActivity> extends ActivityTe
     private static final long OMNIBOX_FIND_SUGGESTION_TIMEOUT_MS = 10 * 1000;
 
     protected boolean mSkipClearAppData;
-    private Thread.UncaughtExceptionHandler mDefaultUncaughtExceptionHandler;
-    private Class<T> mChromeActivityClass;
+    Thread.UncaughtExceptionHandler mDefaultUncaughtExceptionHandler;
+    Class<T> mChromeActivityClass;
     private T mSetActivity;
-    private String mCurrentTestName;
+    String mCurrentTestName;
 
     public ChromeActivityTestRule(Class<T> activityClass) {
         this(activityClass, false);

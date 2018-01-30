@@ -215,7 +215,7 @@ public class RouterImpl implements Router {
     /**
      * Receive a message from the connector. Returns |true| if the message has been handled.
      */
-    private boolean handleIncomingMessage(Message message) {
+    boolean handleIncomingMessage(Message message) {
         MessageHeader header = message.asServiceMessage().getHeader();
         if (header.hasFlag(MessageHeader.MESSAGE_EXPECTS_RESPONSE_FLAG)) {
             if (mIncomingMessageReceiver != null) {
@@ -242,7 +242,7 @@ public class RouterImpl implements Router {
         return false;
     }
 
-    private void handleConnectorClose() {
+    void handleConnectorClose() {
         if (mIncomingMessageReceiver != null) {
             mIncomingMessageReceiver.close();
         }
@@ -253,7 +253,7 @@ public class RouterImpl implements Router {
      * this Router's Handle. If this Router was constructed with an invalid
      * handle then this method does nothing.
      */
-    private void closeOnHandleThread() {
+    void closeOnHandleThread() {
         if (mExecutor != null) {
             mExecutor.execute(new Runnable() {
 

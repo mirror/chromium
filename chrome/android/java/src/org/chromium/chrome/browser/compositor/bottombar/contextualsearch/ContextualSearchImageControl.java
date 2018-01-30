@@ -23,7 +23,7 @@ public class ContextualSearchImageControl {
     private final OverlayPanel mPanel;
 
     /** The percentage the panel is expanded. 1.f is fully expanded and 0.f is peeked. */
-    private float mExpandedPercentage;
+    float mExpandedPercentage;
 
     public ContextualSearchImageControl(OverlayPanel panel) {
         mPanel = panel;
@@ -141,7 +141,7 @@ public class ContextualSearchImageControl {
      * The custom image visibility percentage, which dictates how and where to draw the custom
      * image. The custom image is not visible at all at 0.f and completely visible at 1.f.
      */
-    private float mCustomImageVisibilityPercentage;
+    float mCustomImageVisibilityPercentage;
 
     /**
      * Hides the custom image if it is visible. Also resets the thumbnail URL and quick action icon
@@ -180,7 +180,7 @@ public class ContextualSearchImageControl {
     /**
      * Called when the custom image finishes hiding to reset thumbnail and quick action icon values.
      */
-    private void onCustomImageHidden() {
+    void onCustomImageHidden() {
         mQuickActionIconResourceId = 0;
         mQuickActionIconVisible = false;
 
@@ -193,7 +193,7 @@ public class ContextualSearchImageControl {
     // Thumbnail Animation
     // ============================================================================================
 
-    private CompositorAnimator mImageVisibilityAnimator;
+    CompositorAnimator mImageVisibilityAnimator;
 
     private Interpolator mCustomImageVisibilityInterpolator;
 

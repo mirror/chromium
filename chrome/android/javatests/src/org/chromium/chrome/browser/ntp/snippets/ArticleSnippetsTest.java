@@ -115,7 +115,7 @@ public class ArticleSnippetsTest {
     }
 
     private SuggestionsUiDelegate mUiDelegate;
-    private FakeSuggestionsSource mSnippetsSource;
+    FakeSuggestionsSource mSnippetsSource;
     private MockThumbnailProvider mThumbnailProvider;
 
     private SuggestionsRecyclerView mRecyclerView;
@@ -422,7 +422,7 @@ public class ArticleSnippetsTest {
         suggestion.setThumbnail(mUiDelegate.getReferencePool().put(drawable));
     }
 
-    private Bitmap getBitmap(@DrawableRes int resId) {
+    Bitmap getBitmap(@DrawableRes int resId) {
         return BitmapFactory.decodeResource(
                 InstrumentationRegistry.getInstrumentation().getTargetContext().getResources(),
                 resId);

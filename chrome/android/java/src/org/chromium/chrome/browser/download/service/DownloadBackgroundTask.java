@@ -34,7 +34,7 @@ public class DownloadBackgroundTask extends NativeBackgroundTask {
     }
 
     // Keeps track of in progress tasks which haven't invoked their {@link TaskFinishedCallback}s.
-    private Map<Integer, PendingTaskCounter> mPendingTaskCounters = new HashMap<>();
+    Map<Integer, PendingTaskCounter> mPendingTaskCounters = new HashMap<>();
 
     @Override
     protected int onStartTaskBeforeNativeLoaded(
@@ -93,7 +93,7 @@ public class DownloadBackgroundTask extends NativeBackgroundTask {
     }
 
     /** @return Whether or not there are no more pending callbacks and we can notify the system. */
-    private boolean decrementPendingCallbackCount(
+    boolean decrementPendingCallbackCount(
             @DownloadTaskType int taskType, boolean needsRescuedule) {
         PendingTaskCounter taskCounter = mPendingTaskCounters.get(taskType);
         assert taskCounter != null && taskCounter.numPendingCallbacks > 0;

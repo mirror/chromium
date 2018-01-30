@@ -41,7 +41,7 @@ public class RouterTest {
 
     private MessagePipeHandle mHandle;
     private Router mRouter;
-    private RecordingMessageReceiverWithResponder mReceiver;
+    RecordingMessageReceiverWithResponder mReceiver;
     private CapturingErrorHandler mErrorHandler;
 
     /**

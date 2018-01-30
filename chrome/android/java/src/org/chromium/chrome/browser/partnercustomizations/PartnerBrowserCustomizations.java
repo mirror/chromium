@@ -47,13 +47,13 @@ public class PartnerBrowserCustomizations {
     @VisibleForTesting
     static final String PARTNER_DISABLE_INCOGNITO_MODE_PATH = "disableincognitomode";
 
-    private static String sProviderAuthority = PROVIDER_AUTHORITY;
-    private static boolean sIgnoreBrowserProviderSystemPackageCheck;
-    private static volatile String sHomepage;
-    private static volatile boolean sIncognitoModeDisabled;
-    private static volatile boolean sBookmarksEditingDisabled;
-    private static boolean sIsInitialized;
-    private static List<Runnable> sInitializeAsyncCallbacks = new ArrayList<>();
+    static String sProviderAuthority = PROVIDER_AUTHORITY;
+    static boolean sIgnoreBrowserProviderSystemPackageCheck;
+    static volatile String sHomepage;
+    static volatile boolean sIncognitoModeDisabled;
+    static volatile boolean sBookmarksEditingDisabled;
+    static boolean sIsInitialized;
+    static List<Runnable> sInitializeAsyncCallbacks = new ArrayList<>();
 
     /** Provider of partner customizations. */
     public interface Provider {

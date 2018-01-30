@@ -36,11 +36,11 @@ public class VSyncPausedTest {
     private static final String VSYNC_HTML = "content/test/data/android/vsync.html";
     private static final String CALL_RAF = "window.requestAnimationFrame(onAnimationFrame);";
 
-    private CallbackHelper mOnTitleUpdatedHelper;
-    private String mTitle;
+    CallbackHelper mOnTitleUpdatedHelper;
+    String mTitle;
 
     private WebContentsObserver mObserver;
-    private ContentShellActivity mActivity;
+    ContentShellActivity mActivity;
 
     @Before
     public void setUp() throws Exception {

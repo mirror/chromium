@@ -86,7 +86,7 @@ public class BrowserStateBrowserControlsVisibilityDelegate
         return token;
     }
 
-    private void releaseToken(int token) {
+    void releaseToken(int token) {
         if (mPersistentControlTokens.remove(token)
                 && mPersistentControlTokens.isEmpty()) {
             mStateChangedCallback.run();

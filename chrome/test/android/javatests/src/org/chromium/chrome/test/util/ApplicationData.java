@@ -78,7 +78,7 @@ public final class ApplicationData {
      *
      * @return whether removal succeeded.
      */
-    private static boolean removeAppData(final Context targetContext) {
+    static boolean removeAppData(final Context targetContext) {
         File dataDir = ContextCompat.getDataDir(targetContext);
         File codeCacheDir = ContextCompat.getCodeCacheDir(targetContext);
         File[] files = dataDir.listFiles();

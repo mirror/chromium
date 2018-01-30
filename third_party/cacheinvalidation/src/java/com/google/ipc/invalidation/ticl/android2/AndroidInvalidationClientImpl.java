@@ -60,7 +60,7 @@ import java.util.Random;
  */
 class AndroidInvalidationClientImpl extends InvalidationClientCore {
   /** Logger from Ticl resources. */
-  private static final Logger staticLogger = AndroidLogger.forTag("InvClientImpl");
+  static final Logger staticLogger = AndroidLogger.forTag("InvClientImpl");
 
   /** Class implementing the application listener stub (allows overriding default for tests). */
   static Class<? extends Service> listenerServiceClassForTest = null;

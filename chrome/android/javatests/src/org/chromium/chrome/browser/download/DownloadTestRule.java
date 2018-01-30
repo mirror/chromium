@@ -142,8 +142,8 @@ public class DownloadTestRule extends ChromeActivityTestRule<ChromeActivity> {
         return cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_TITLE));
     }
 
-    private String mLastDownloadFilePath;
-    private final CallbackHelper mHttpDownloadFinished = new CallbackHelper();
+    String mLastDownloadFilePath;
+    final CallbackHelper mHttpDownloadFinished = new CallbackHelper();
     private DownloadManagerService mSavedDownloadManagerService;
 
     public String getLastDownloadFile() {
@@ -205,7 +205,7 @@ public class DownloadTestRule extends ChromeActivityTestRule<ChromeActivity> {
         }, description);
     }
 
-    private void setUp() throws Exception {
+    void setUp() throws Exception {
         mActivityStart.customMainActivityStart();
 
         cleanUpAllDownloads();
@@ -222,7 +222,7 @@ public class DownloadTestRule extends ChromeActivityTestRule<ChromeActivity> {
         });
     }
 
-    private void tearDown() throws Exception {
+    void tearDown() throws Exception {
         cleanUpAllDownloads();
         ThreadUtils.runOnUiThreadBlocking(() -> {
             DownloadManagerService.setDownloadManagerService(mSavedDownloadManagerService);

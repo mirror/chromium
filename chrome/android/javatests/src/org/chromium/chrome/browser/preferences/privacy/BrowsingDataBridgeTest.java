@@ -41,8 +41,8 @@ public class BrowsingDataBridgeTest {
     public ChromeActivityTestRule<ChromeActivity> mActivityTestRule =
             new ChromeActivityTestRule<>(ChromeActivity.class);
 
-    private CallbackHelper mCallbackHelper;
-    private BrowsingDataBridge.OnClearBrowsingDataListener mListener;
+    CallbackHelper mCallbackHelper;
+    BrowsingDataBridge.OnClearBrowsingDataListener mListener;
     private UserActionTester mActionTester;
 
     @Before

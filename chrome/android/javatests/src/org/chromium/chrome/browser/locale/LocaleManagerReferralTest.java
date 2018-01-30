@@ -33,7 +33,7 @@ import java.util.concurrent.TimeoutException;
 @RunWith(BaseJUnit4ClassRunner.class)
 public class LocaleManagerReferralTest {
     private Locale mDefaultLocale;
-    private String mYandexReferralId = "";
+    String mYandexReferralId = "";
 
     @Before
     public void setUp() {

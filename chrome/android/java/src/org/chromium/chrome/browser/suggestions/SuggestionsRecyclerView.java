@@ -297,7 +297,7 @@ public class SuggestionsRecyclerView extends RecyclerView {
         animation.start();
     }
 
-    private void dismissItemInternal(ViewHolder viewHolder) {
+    void dismissItemInternal(ViewHolder viewHolder) {
         // Re-check the position in case the adapter has changed.
         final int position = viewHolder.getAdapterPosition();
         if (position == RecyclerView.NO_POSITION) {
@@ -327,7 +327,7 @@ public class SuggestionsRecyclerView extends RecyclerView {
      * @param dX The amount of horizontal displacement caused by user's action.
      * @param viewHolder The view holder containing the view to be updated.
      */
-    private void updateViewStateForDismiss(float dX, ViewHolder viewHolder) {
+    void updateViewStateForDismiss(float dX, ViewHolder viewHolder) {
         viewHolder.itemView.setTranslationX(dX);
 
         float input = Math.abs(dX) / viewHolder.itemView.getMeasuredWidth();
@@ -438,7 +438,7 @@ public class SuggestionsRecyclerView extends RecyclerView {
         }
     }
 
-    private List<ViewHolder> getDismissalGroupViewHolders(ViewHolder viewHolder) {
+    List<ViewHolder> getDismissalGroupViewHolders(ViewHolder viewHolder) {
         int position = viewHolder.getAdapterPosition();
         if (position == NO_POSITION) return Collections.emptyList();
 

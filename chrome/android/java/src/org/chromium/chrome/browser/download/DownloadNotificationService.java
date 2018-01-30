@@ -135,14 +135,14 @@ public class DownloadNotificationService extends Service {
         void onDownloadCanceled(ContentId id);
     }
 
-    private final ObserverList<Observer> mObservers = new ObserverList<>();
+    final ObserverList<Observer> mObservers = new ObserverList<>();
     private final IBinder mBinder = new LocalBinder();
     private final List<ContentId> mDownloadsInProgress = new ArrayList<ContentId>();
 
     private NotificationManager mNotificationManager;
     private NotificationManagerCompat mNotificationManagerCompat;
     private SharedPreferences mSharedPrefs;
-    private Context mContext;
+    Context mContext;
     private int mNextNotificationId;
     private int mNumAutoResumptionAttemptLeft;
     private Bitmap mDownloadSuccessLargeIcon;
@@ -739,7 +739,7 @@ public class DownloadNotificationService extends Service {
      *                                downloads home.
      * @param icon                    A {@link Bitmap} to be used as the large icon for display.
      */
-    private void notifyDownloadPending(ContentId id, String fileName, boolean isOffTheRecord,
+    void notifyDownloadPending(ContentId id, String fileName, boolean isOffTheRecord,
             boolean canDownloadWhileMetered, boolean isTransient, Bitmap icon) {
         updateActiveDownloadNotification(id, fileName, Progress.createIndeterminateProgress(), 0, 0,
                 0, isOffTheRecord, canDownloadWhileMetered, true, isTransient, icon);
@@ -1241,7 +1241,7 @@ public class DownloadNotificationService extends Service {
         }
     }
 
-    private boolean isDownloadOpenOrNotificationClickedAction(Intent intent) {
+    boolean isDownloadOpenOrNotificationClickedAction(Intent intent) {
         return ACTION_DOWNLOAD_OPEN.equals(intent.getAction())
                 || ACTION_NOTIFICATION_CLICKED.equals(intent.getAction());
     }
@@ -1251,7 +1251,7 @@ public class DownloadNotificationService extends Service {
      * @param context Context of the receiver.
      * @param intent Intent from the android DownloadManager.
      */
-    private void openDownload(final Context context, Intent intent) {
+    void openDownload(final Context context, Intent intent) {
         long ids[] =
                 intent.getLongArrayExtra(DownloadManager.EXTRA_NOTIFICATION_CLICK_DOWNLOAD_IDS);
         if (ids == null || ids.length == 0) {

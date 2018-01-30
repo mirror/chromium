@@ -58,9 +58,9 @@ public class ChromeHomeSurveyController implements InfoBarContainer.InfoBarAnima
     static final long ONE_WEEK_IN_MILLIS = 604800000L;
     static final String DATE_LAST_ROLLED_KEY = "chrome_home_date_last_rolled_for_survey";
 
-    private TabModelSelector mTabModelSelector;
-    private Handler mLoggingHandler;
-    private Tab mSurveyInfoBarTab;
+    TabModelSelector mTabModelSelector;
+    Handler mLoggingHandler;
+    Tab mSurveyInfoBarTab;
     private TabModelSelectorObserver mTabModelObserver;
 
     @VisibleForTesting
@@ -87,7 +87,7 @@ public class ChromeHomeSurveyController implements InfoBarContainer.InfoBarAnima
      * @param tabModelSelector The tab model selector to access the tab on which the survey will be
      *                         shown.
      */
-    private void startDownload(Context context, TabModelSelector tabModelSelector) {
+    void startDownload(Context context, TabModelSelector tabModelSelector) {
         mLoggingHandler = new Handler();
         mTabModelSelector = tabModelSelector;
 
@@ -107,7 +107,7 @@ public class ChromeHomeSurveyController implements InfoBarContainer.InfoBarAnima
         surveyController.downloadSurvey(context, siteId, onSuccessRunnable, siteContext);
     }
 
-    private String getSiteId() {
+    String getSiteId() {
         CommandLine commandLine = CommandLine.getInstance();
         if (commandLine.hasSwitch(PARAM_NAME)) {
             return commandLine.getSwitchValue(PARAM_NAME);
@@ -120,7 +120,7 @@ public class ChromeHomeSurveyController implements InfoBarContainer.InfoBarAnima
     }
 
     /** @return Whether the user qualifies for the survey. */
-    private boolean doesUserQualifyForSurvey() {
+    boolean doesUserQualifyForSurvey() {
         if (DeviceFormFactor.isTablet()) return false;
         if (!isUMAEnabled() && !sForceUmaEnabledForTesting) return false;
         if (hasInfoBarBeenDisplayed()) return false;
@@ -156,7 +156,7 @@ public class ChromeHomeSurveyController implements InfoBarContainer.InfoBarAnima
      * @param siteId The site id of the survey to display.
      * @return If the infobar was successfully shown.
      */
-    private boolean attemptToShowOnTab(Tab tab, String siteId) {
+    boolean attemptToShowOnTab(Tab tab, String siteId) {
         if (!isValidTabForSurvey(tab)) return false;
 
         if (tab.isLoading() || !tab.isUserInteractable()) {
@@ -369,7 +369,7 @@ public class ChromeHomeSurveyController implements InfoBarContainer.InfoBarAnima
     }
 
     /** Logs in {@link SharedPreferences} that the info bar was displayed. */
-    private void recordInfoBarDisplayed() {
+    void recordInfoBarDisplayed() {
         // This can be called multiple times e.g. by mLoggingHandler & onSurveyInfoBarClosed().
         // Return early to allow only one call to this method (http://crbug.com/791076).
         if (mSurveyInfoBarTab == null) return;

@@ -38,7 +38,7 @@ public class SafeStorage implements Storage {
   private final Storage delegate;
 
   /** The scheduler on which the callbacks are scheduled. */
-  private Scheduler scheduler;
+  Scheduler scheduler;
 
   SafeStorage(Storage delegate) {
     this.delegate = Preconditions.checkNotNull(delegate);

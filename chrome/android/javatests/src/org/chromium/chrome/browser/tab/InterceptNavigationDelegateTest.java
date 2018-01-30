@@ -65,10 +65,10 @@ public class InterceptNavigationDelegateTest {
     private static final long DEFAULT_MAX_TIME_TO_WAIT_IN_MS = 3000;
     private static final long LONG_MAX_TIME_TO_WAIT_IN_MS = 20000;
 
-    private ChromeActivity mActivity;
-    private List<NavigationParams> mNavParamHistory = new ArrayList<>();
-    private List<ExternalNavigationParams> mExternalNavParamHistory = new ArrayList<>();
-    private TestInterceptNavigationDelegate mInterceptNavigationDelegate;
+    ChromeActivity mActivity;
+    List<NavigationParams> mNavParamHistory = new ArrayList<>();
+    List<ExternalNavigationParams> mExternalNavParamHistory = new ArrayList<>();
+    TestInterceptNavigationDelegate mInterceptNavigationDelegate;
     private EmbeddedTestServer mTestServer;
 
     class TestInterceptNavigationDelegate extends InterceptNavigationDelegateImpl {

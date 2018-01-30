@@ -54,7 +54,7 @@ public class Encoder {
          * @param bufferSize A hint on the size of the message. Used to build the initial byte
          *            buffer.
          */
-        private EncoderState(Core core, int bufferSize) {
+        EncoderState(Core core, int bufferSize) {
             assert bufferSize % BindingsHelper.ALIGNMENT == 0;
             this.core = core;
             byteBuffer = ByteBuffer.allocateDirect(

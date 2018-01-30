@@ -31,10 +31,10 @@ public class DummyPlayer implements MediaPlayer.OnPreparedListener,
 
     private final Context mContext;
     private final Handler mHandler = new Handler();
-    private MediaPlayer mMediaPlayer;
-    private int mState = STATE_IDLE;
-    private int mSeekToPos;
-    private Callback mCallback;
+    MediaPlayer mMediaPlayer;
+    int mState = STATE_IDLE;
+    int mSeekToPos;
+    Callback mCallback;
 
     /**
      * Callback interface for the session manager

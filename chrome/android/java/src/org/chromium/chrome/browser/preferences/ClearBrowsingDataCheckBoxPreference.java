@@ -29,7 +29,7 @@ import org.chromium.ui.text.SpanApplier;
  */
 public class ClearBrowsingDataCheckBoxPreference extends ChromeBaseCheckBoxPreference {
     private View mView;
-    private Runnable mLinkClickDelegate;
+    Runnable mLinkClickDelegate;
     private boolean mHasClickableSpans;
 
     /**

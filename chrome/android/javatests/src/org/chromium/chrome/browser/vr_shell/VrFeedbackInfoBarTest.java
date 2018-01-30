@@ -45,9 +45,9 @@ public class VrFeedbackInfoBarTest {
     @Rule
     public ChromeTabbedActivityVrTestRule mVrTestRule = new ChromeTabbedActivityVrTestRule();
 
-    private VrTestFramework mVrTestFramework;
+    VrTestFramework mVrTestFramework;
 
-    private static final String TEST_PAGE_2D_URL =
+    static final String TEST_PAGE_2D_URL =
             VrTestFramework.getHtmlTestFile("test_navigation_2d_page");
     private static final String TEST_PAGE_WEBVR_URL =
             VrTestFramework.getHtmlTestFile("test_requestPresent_enters_vr");

@@ -27,7 +27,7 @@ public class VrFirstRunActivity extends Activity {
     private static final BooleanHistogramSample sFreNotCompleteAutopresentHistogram =
             new BooleanHistogramSample("VRFreNotComplete.WebVRAutopresent");
 
-    private VrDaydreamApi mApi;
+    VrDaydreamApi mApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

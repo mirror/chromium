@@ -53,7 +53,7 @@ public class SuggestionsCarousel extends OptionalLeaf {
      * Necessary flag to record correct UMA metrics and avoid possible inconsistencies caused by the
      * {@link ViewHolder}. We record that the carousel was scrolled in the view holder, but want to
      * make sure that this is recorded only once per carousel shown. */
-    private boolean mWasScrolledSinceShown;
+    boolean mWasScrolledSinceShown;
 
     public SuggestionsCarousel(UiConfig uiConfig, SuggestionsUiDelegate uiDelegate,
             ContextMenuManager contextMenuManager, OfflinePageBridge offlinePageBridge) {

@@ -32,7 +32,7 @@ import java.util.List;
 public class BookmarkActionBar extends SelectableListToolbar<BookmarkId>
         implements BookmarkUIObserver, OnMenuItemClickListener, OnClickListener {
     private BookmarkItem mCurrentFolder;
-    private BookmarkDelegate mDelegate;
+    BookmarkDelegate mDelegate;
 
     private BookmarkModelObserver mBookmarkModelObserver = new BookmarkModelObserver() {
         @Override

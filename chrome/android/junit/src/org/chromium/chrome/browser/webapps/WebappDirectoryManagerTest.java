@@ -54,7 +54,7 @@ public class WebappDirectoryManagerTest {
     private static final String WEBAPK_ID_3 = WebApkConstants.WEBAPK_ID_PREFIX + "webapp_3";
 
     private static class TestWebappDirectoryManager extends WebappDirectoryManager {
-        private Set<Intent> mBaseIntents = new HashSet<Intent>();
+        Set<Intent> mBaseIntents = new HashSet<Intent>();
 
         @Override
         protected Set<Intent> getBaseIntentsForAllTasks() {

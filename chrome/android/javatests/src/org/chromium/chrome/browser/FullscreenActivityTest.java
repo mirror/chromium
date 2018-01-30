@@ -91,7 +91,7 @@ public class FullscreenActivityTest {
      * useful because there is a slight discrepancy between when the webpage thinks it is fullscreen
      * and when the window thinks it is fullscreen that can lead to a race condition during tests.
      */
-    private static boolean hasFullscreenFlags(View view) {
+    static boolean hasFullscreenFlags(View view) {
         return (view.getWindowSystemUiVisibility() & SYSTEM_UI_FLAG_LOW_PROFILE)
                 == SYSTEM_UI_FLAG_LOW_PROFILE;
     }

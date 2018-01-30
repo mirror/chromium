@@ -13,7 +13,7 @@ import org.chromium.base.annotations.CalledByNative;
  * code.
  */
 public class MockWebRestrictionsClient extends WebRestrictionsClient {
-    private String mAuthority;
+    String mAuthority;
 
     @CalledByNative
     static void registerAsMockForTesting() {

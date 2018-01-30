@@ -32,7 +32,7 @@ import org.chromium.content_public.common.ConsoleMessageLevel;
  * See https://crbug.com/732260.
  */
 public class InterceptNavigationDelegateImpl implements InterceptNavigationDelegate {
-    private final Tab mTab;
+    final Tab mTab;
     private final ExternalNavigationHandler mExternalNavHandler;
     private final AuthenticatorNavigationInterceptor mAuthenticatorHelper;
     private ExternalNavigationHandler.OverrideUrlLoadingResult mLastOverrideUrlLoadingResult =

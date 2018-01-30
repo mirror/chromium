@@ -108,7 +108,7 @@ public class TabsTest {
     private float mTabsViewHeightDp;
     private float mTabsViewWidthDp;
 
-    private boolean mNotifyChangedCalled;
+    boolean mNotifyChangedCalled;
 
     private static final int SWIPE_TO_RIGHT_DIRECTION = 1;
     private static final int SWIPE_TO_LEFT_DIRECTION = -1;

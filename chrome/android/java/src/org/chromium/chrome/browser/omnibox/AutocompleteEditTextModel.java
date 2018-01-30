@@ -24,14 +24,14 @@ public class AutocompleteEditTextModel implements AutocompleteEditTextModelBase 
 
     private static final boolean DEBUG = false;
 
-    private final Delegate mDelegate;
-    private final AutocompleteSpan mAutocompleteSpan;
+    final Delegate mDelegate;
+    final AutocompleteSpan mAutocompleteSpan;
 
-    private int mBatchEditNestCount;
-    private int mBeforeBatchEditAutocompleteIndex = -1;
-    private String mBeforeBatchEditFullText;
+    int mBatchEditNestCount;
+    int mBeforeBatchEditAutocompleteIndex = -1;
+    String mBeforeBatchEditFullText;
     private boolean mSelectionChangedInBatchMode;
-    private boolean mTextDeletedInBatchMode;
+    boolean mTextDeletedInBatchMode;
     // Set to true when the text is modified programmatically. Initially set to true until the old
     // state has been loaded.
     private boolean mIgnoreTextChangeFromAutocomplete = true;
@@ -104,7 +104,7 @@ public class AutocompleteEditTextModel implements AutocompleteEditTextModelBase 
                 == BaseInputConnection.getComposingSpanStart(text);
     }
 
-    private void onPostEndBatchEdit() {
+    void onPostEndBatchEdit() {
         if (mSelectionChangedInBatchMode) {
             validateSelection(mDelegate.getSelectionStart(), mDelegate.getSelectionEnd());
             mSelectionChangedInBatchMode = false;
@@ -278,7 +278,7 @@ public class AutocompleteEditTextModel implements AutocompleteEditTextModelBase 
         }
     }
 
-    private void clearAutocompleteSpanIfInvalid() {
+    void clearAutocompleteSpanIfInvalid() {
         Editable editableText = mDelegate.getEditableText();
         CharSequence previousUserText = mAutocompleteSpan.mUserText;
         CharSequence previousAutocompleteText = mAutocompleteSpan.mAutocompleteText;
@@ -439,7 +439,7 @@ public class AutocompleteEditTextModel implements AutocompleteEditTextModelBase 
         return mInputConnection;
     }
 
-    private void notifyAutocompleteTextStateChanged(boolean textDeleted, boolean updateDisplay) {
+    void notifyAutocompleteTextStateChanged(boolean textDeleted, boolean updateDisplay) {
         if (DEBUG) {
             Log.i(TAG, "notifyAutocompleteTextStateChanged: DEL[%b] DIS[%b] IGN[%b]", textDeleted,
                     updateDisplay, mIgnoreTextChangeFromAutocomplete);
@@ -469,8 +469,8 @@ public class AutocompleteEditTextModel implements AutocompleteEditTextModelBase 
      * Simple span used for tracking the current autocomplete state.
      */
     private class AutocompleteSpan {
-        private CharSequence mUserText;
-        private CharSequence mAutocompleteText;
+        CharSequence mUserText;
+        CharSequence mAutocompleteText;
 
         /**
          * Adds the span to the current text.

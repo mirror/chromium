@@ -20,7 +20,7 @@ public class MediaRouteControllerDialogManager extends BaseMediaRouteDialogManag
     private static final String DIALOG_FRAGMENT_TAG =
             "android.support.v7.mediarouter:MediaRouteControllerDialogFragment";
 
-    private final String mMediaRouteId;
+    final String mMediaRouteId;
 
     private final MediaRouter.Callback mCallback = new MediaRouter.Callback() {
         @Override

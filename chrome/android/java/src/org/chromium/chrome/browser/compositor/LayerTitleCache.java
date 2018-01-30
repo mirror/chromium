@@ -32,7 +32,7 @@ import org.chromium.ui.resources.dynamics.DynamicResourceLoader;
  */
 @JNINamespace("android")
 public class LayerTitleCache implements TitleCache {
-    private static int sNextResourceId = 1;
+    static int sNextResourceId = 1;
 
     private final Context mContext;
     private TabModelSelector mTabModelSelector;
@@ -41,7 +41,7 @@ public class LayerTitleCache implements TitleCache {
     private final int mFaviconSize;
 
     private long mNativeLayerTitleCache;
-    private ResourceManager mResourceManager;
+    ResourceManager mResourceManager;
 
     private FaviconHelper mFaviconHelper;
 
@@ -192,7 +192,7 @@ public class LayerTitleCache implements TitleCache {
         return title;
     }
 
-    private void updateFaviconFromHistory(Tab tab, Bitmap faviconBitmap) {
+    void updateFaviconFromHistory(Tab tab, Bitmap faviconBitmap) {
         if (!tab.isInitialized()) return;
 
         int tabId = tab.getId();

@@ -37,7 +37,7 @@ public class AwPermissionRequest {
     private static final class DestroyRunnable implements Runnable {
         private final long mNativeAwPermissionRequest;
 
-        private DestroyRunnable(long nativeAwPermissionRequest) {
+        DestroyRunnable(long nativeAwPermissionRequest) {
             mNativeAwPermissionRequest = nativeAwPermissionRequest;
         }
         @Override
@@ -106,5 +106,5 @@ public class AwPermissionRequest {
     }
 
     private native void nativeOnAccept(long nativeAwPermissionRequest, boolean allowed);
-    private static native void nativeDestroy(long nativeAwPermissionRequest);
+    static native void nativeDestroy(long nativeAwPermissionRequest);
 }

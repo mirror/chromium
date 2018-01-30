@@ -93,7 +93,7 @@ public class ContentViewScrollingTest {
         }
     }
 
-    private RenderCoordinates mCoordinates;
+    RenderCoordinates mCoordinates;
 
     private void waitForScroll(final boolean hugLeft, final boolean hugTop) {
         CriteriaHelper.pollInstrumentationThread(new Criteria() {

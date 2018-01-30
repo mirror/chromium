@@ -53,7 +53,7 @@ public class PhotoPickerDialogTest implements PhotoPickerListener, SelectionObse
             new ChromeActivityTestRule<>(ChromeActivity.class);
 
     // The dialog we are testing.
-    private PhotoPickerDialog mDialog;
+    PhotoPickerDialog mDialog;
 
     // The data to show in the dialog (A map of filepath to last-modified time).
     // Map<String, Long> mTestFiles;

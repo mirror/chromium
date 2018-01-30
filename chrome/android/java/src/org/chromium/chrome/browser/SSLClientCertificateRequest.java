@@ -303,6 +303,6 @@ public class SSLClientCertificateRequest {
     private static native void nativeNotifyClientCertificatesChangedOnIOThread();
 
     // Called to pass request results to native side.
-    private static native void nativeOnSystemRequestCompletion(
+    static native void nativeOnSystemRequestCompletion(
             long requestPtr, byte[][] certChain, PrivateKey privateKey);
 }

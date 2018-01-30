@@ -64,7 +64,7 @@ public class AppMenu implements OnItemClickListener, OnKeyListener {
     private final boolean mTranslateMenuItemsOnShow;
 
     private PopupWindow mPopup;
-    private ListView mListView;
+    ListView mListView;
     private AppMenuAdapter mAdapter;
     private AppMenuHandler mHandler;
     private View mFooterView;
@@ -527,7 +527,7 @@ public class AppMenu implements OnItemClickListener, OnKeyListener {
         return menuHeight;
     }
 
-    private void runMenuItemEnterAnimations() {
+    void runMenuItemEnterAnimations() {
         mMenuItemEnterAnimator = new AnimatorSet();
         AnimatorSet.Builder builder = null;
 

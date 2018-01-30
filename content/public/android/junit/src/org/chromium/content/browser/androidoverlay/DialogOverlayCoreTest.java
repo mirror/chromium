@@ -71,8 +71,8 @@ public class DialogOverlayCoreTest {
     public static class MyPhoneWindowShadow extends ShadowPhoneWindow {
         public MyPhoneWindowShadow() {}
 
-        private SurfaceHolder.Callback2 mCallback;
-        private WindowManager.LayoutParams mLayoutParams;
+        SurfaceHolder.Callback2 mCallback;
+        WindowManager.LayoutParams mLayoutParams;
 
         @Implementation
         public void takeSurface(SurfaceHolder.Callback2 callback) {

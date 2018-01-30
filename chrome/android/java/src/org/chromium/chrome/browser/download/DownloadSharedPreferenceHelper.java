@@ -37,7 +37,7 @@ public class DownloadSharedPreferenceHelper {
 
     // "Initialization on demand holder idiom"
     private static class LazyHolder {
-        private static final DownloadSharedPreferenceHelper INSTANCE =
+        static final DownloadSharedPreferenceHelper INSTANCE =
                 new DownloadSharedPreferenceHelper();
     }
 
@@ -48,7 +48,7 @@ public class DownloadSharedPreferenceHelper {
         return LazyHolder.INSTANCE;
     }
 
-    private DownloadSharedPreferenceHelper() {
+    DownloadSharedPreferenceHelper() {
         mSharedPrefs = ContextUtils.getAppSharedPreferences();
         parseDownloadSharedPrefs();
     }

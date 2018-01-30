@@ -120,7 +120,7 @@ public final class DefaultBrowserInfo {
         }
     }
 
-    private static String getTitleFromPackageLabel(Context context, String packageLabel) {
+    static String getTitleFromPackageLabel(Context context, String packageLabel) {
         return packageLabel == null
                 ? context.getString(R.string.menu_open_in_product_default)
                 : context.getString(R.string.menu_open_in_product, packageLabel);
@@ -130,7 +130,7 @@ public final class DefaultBrowserInfo {
      * @return Default ResolveInfo to handle a VIEW intent for a url.
      * @param pm The PackageManager of current context.
      */
-    private static ResolveInfo getResolveInfoForViewIntent(PackageManager pm) {
+    static ResolveInfo getResolveInfoForViewIntent(PackageManager pm) {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(SAMPLE_URL));
         try {
             return pm.resolveActivity(intent, 0);
@@ -224,18 +224,18 @@ public final class DefaultBrowserInfo {
         }
     }
 
-    private static String getSystemBrowserCountUmaName(DefaultInfo info) {
+    static String getSystemBrowserCountUmaName(DefaultInfo info) {
         if (info.isChromeSystem) return "Mobile.DefaultBrowser.SystemBrowserCount.ChromeSystem";
         return "Mobile.DefaultBrowser.SystemBrowserCount.ChromeNotSystem";
     }
 
-    private static String getDefaultBrowserCountUmaName(DefaultInfo info) {
+    static String getDefaultBrowserCountUmaName(DefaultInfo info) {
         if (!info.hasDefault) return "Mobile.DefaultBrowser.BrowserCount.NoDefault";
         if (info.isChromeDefault) return "Mobile.DefaultBrowser.BrowserCount.ChromeDefault";
         return "Mobile.DefaultBrowser.BrowserCount.OtherDefault";
     }
 
-    private static @MobileDefaultBrowserState int getDefaultBrowserUmaState(DefaultInfo info) {
+    static @MobileDefaultBrowserState int getDefaultBrowserUmaState(DefaultInfo info) {
         if (!info.hasDefault) return MobileDefaultBrowserState.NO_DEFAULT;
 
         if (info.isChromeDefault) {
@@ -247,12 +247,12 @@ public final class DefaultBrowserInfo {
         return MobileDefaultBrowserState.OTHER_INSTALLED_DEFAULT;
     }
 
-    private static boolean isSamePackage(Context context, ResolveInfo info) {
+    static boolean isSamePackage(Context context, ResolveInfo info) {
         return TextUtils.equals(
                 context.getPackageName(), info.activityInfo.applicationInfo.packageName);
     }
 
-    private static boolean isSystemPackage(ResolveInfo info) {
+    static boolean isSystemPackage(ResolveInfo info) {
         return (info.activityInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
     }
 }

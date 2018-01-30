@@ -150,7 +150,7 @@ public class SadTabViewFactory {
      * @param sendFeedbackView Whether the event is for the "send feedback" version of the Sad Tab.
      * @param event The {@link SadTabEvent} to record.
      */
-    private static void recordEvent(boolean sendFeedbackView, int event) {
+    static void recordEvent(boolean sendFeedbackView, int event) {
         if (sendFeedbackView) {
             RecordHistogram.recordEnumeratedHistogram(
                     "Tabs.SadTab.Feedback.Event", event, SadTabEvent.MAX_SAD_TAB_EVENT);

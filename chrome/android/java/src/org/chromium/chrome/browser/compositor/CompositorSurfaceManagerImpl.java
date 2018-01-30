@@ -103,13 +103,13 @@ class CompositorSurfaceManagerImpl implements SurfaceHolder.Callback2, Composito
     // surfaceDestroyed on |mClient|.  Note that it's not necessary that Android has notified us
     // the surface has been destroyed; we deliberately keep it around until the client tells us that
     // it's okay to get rid of it.
-    private SurfaceState mOwnedByClient;
+    SurfaceState mOwnedByClient;
 
     // Surface that was most recently requested by the client.
     private SurfaceState mRequestedByClient;
 
     // Client that we notify about surface change events.
-    private SurfaceManagerCallbackTarget mClient;
+    SurfaceManagerCallbackTarget mClient;
 
     // View to which we'll attach the SurfaceView.
     private final ViewGroup mParentView;
@@ -360,7 +360,7 @@ class CompositorSurfaceManagerImpl implements SurfaceHolder.Callback2, Composito
     /**
      * Attach |state| to |mParentView| immedaitely.
      */
-    private void attachSurfaceNow(SurfaceState state) {
+    void attachSurfaceNow(SurfaceState state) {
         if (state.isAttached()) return;
 
         // If there is a destroy in-flight for this surface, then do nothing.
@@ -406,7 +406,7 @@ class CompositorSurfaceManagerImpl implements SurfaceHolder.Callback2, Composito
     /**
      * Detach |state| from |mParentView| immediately.
      */
-    private void detachSurfaceNow(SurfaceState state) {
+    void detachSurfaceNow(SurfaceState state) {
         // If we're called while we're not attached, then do nothing.  This makes it easier for the
         // client, since it doesn't have to keep track of whether the outgoing surface has been
         // destroyed or not.  The client will be notified (or has already) when the surface is

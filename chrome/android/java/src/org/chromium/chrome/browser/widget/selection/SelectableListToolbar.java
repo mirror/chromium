@@ -110,9 +110,9 @@ public class SelectableListToolbar<E> extends Toolbar implements SelectionObserv
     private boolean mHasSearchView;
     private LinearLayout mSearchView;
     private EditText mSearchText;
-    private EditText mSearchEditText;
-    private TintedImageButton mClearTextButton;
-    private SearchDelegate mSearchDelegate;
+    EditText mSearchEditText;
+    TintedImageButton mClearTextButton;
+    SearchDelegate mSearchDelegate;
     private boolean mIsLightTheme = true;
     private boolean mSelectableListHasItems;
 

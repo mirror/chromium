@@ -20,7 +20,7 @@ public class HomepagePreferences extends PreferenceFragment {
     private static final String PREF_HOMEPAGE_SWITCH = "homepage_switch";
     private static final String PREF_HOMEPAGE_EDIT = "homepage_edit";
 
-    private HomepageManager mHomepageManager;
+    HomepageManager mHomepageManager;
     private ChromeSwitchPreference mHomepageSwitch;
     private Preference mHomepageEdit;
 

@@ -21,10 +21,10 @@ import org.chromium.chrome.browser.payments.ui.EditorObserverForTest;
  */
 public class AutofillProfileEditorPreference extends Preference {
     final private Activity mActivity;
-    final private EditorObserverForTest mObserverForTest;
+    final EditorObserverForTest mObserverForTest;
     private EditorDialog mEditorDialog;
     private AutofillAddress mAutofillAddress;
-    private String mGUID;
+    String mGUID;
 
     public AutofillProfileEditorPreference(
             Activity activity, EditorObserverForTest observerForTest) {

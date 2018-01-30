@@ -42,9 +42,9 @@ public class RecentTabsPageTest {
     @Rule
     public ChromeTabbedActivityTestRule mActivityTestRule = new ChromeTabbedActivityTestRule();
 
-    private FakeRecentlyClosedTabManager mManager;
-    private Tab mTab;
-    private RecentTabsPage mPage;
+    FakeRecentlyClosedTabManager mManager;
+    Tab mTab;
+    RecentTabsPage mPage;
 
     @Before
     public void setUp() throws Exception {

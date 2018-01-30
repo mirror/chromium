@@ -43,12 +43,12 @@ public class SpannableAutocompleteEditTextModel implements AutocompleteEditTextM
             "[\\p{script=latin}\\p{script=cyrillic}\\p{script=greek}\\p{script=hebrew}\\p{Punct} "
             + "0-9]*");
 
-    private final AutocompleteEditTextModelBase.Delegate mDelegate;
+    final AutocompleteEditTextModelBase.Delegate mDelegate;
 
     // The current state that reflects EditText view's current state through callbacks such as
     // onSelectionChanged() and onTextChanged(). It reflects all the latest changes even in a batch
     // edit. The autocomplete text here is meaningless in the middle of a change.
-    private final AutocompleteState mCurrentState;
+    final AutocompleteState mCurrentState;
 
     // This keeps track of the state in which previous notification was sent. It prevents redundant
     // or unnecessary notification.
@@ -57,15 +57,15 @@ public class SpannableAutocompleteEditTextModel implements AutocompleteEditTextM
     // This keeps track of the autocompletetext that we need to show (at the end of batch edit if
     // we are in the middle of it), and also the matching user text that it should be appended to.
     // Note that this potentially allows the controller to update in a delayed manner.
-    private final AutocompleteState mPreviouslySetState;
+    final AutocompleteState mPreviouslySetState;
 
-    private final SpanCursorController mSpanCursorController;
+    final SpanCursorController mSpanCursorController;
 
     private AutocompleteInputConnection mInputConnection;
-    private boolean mLastEditWasTyping = true;
+    boolean mLastEditWasTyping = true;
     private boolean mIgnoreTextChangeFromAutocomplete = true;
-    private int mBatchEditNestCount;
-    private int mDeletePostfixOnNextBeginImeCommand;
+    int mBatchEditNestCount;
+    int mDeletePostfixOnNextBeginImeCommand;
 
     // For testing.
     private int mLastUpdateSelStart;
@@ -102,7 +102,7 @@ public class SpannableAutocompleteEditTextModel implements AutocompleteEditTextM
      * @param editable The editable.
      * @return Debug string for the given {@Editable}.
      */
-    private static String getEditableDebugString(Editable editable) {
+    static String getEditableDebugString(Editable editable) {
         return String.format(Locale.US, "Editable {[%s] SEL[%d %d] COM[%d %d]}",
                 editable.toString(), Selection.getSelectionStart(editable),
                 Selection.getSelectionEnd(editable),
@@ -175,7 +175,7 @@ public class SpannableAutocompleteEditTextModel implements AutocompleteEditTextM
         sendAccessibilityEventForAppendingAutocomplete(mCurrentState);
     }
 
-    private void notifyAutocompleteTextStateChanged() {
+    void notifyAutocompleteTextStateChanged() {
         if (DEBUG) {
             Log.i(TAG, "notifyAutocompleteTextStateChanged PRV[%s] CUR[%s] IGN[%b]",
                     mPreviouslyNotifiedState, mCurrentState, mIgnoreTextChangeFromAutocomplete);
@@ -211,7 +211,7 @@ public class SpannableAutocompleteEditTextModel implements AutocompleteEditTextM
         mDelegate.onAutocompleteTextStateChanged(false /* updateDisplay */);
     }
 
-    private void clearAutocompleteText() {
+    void clearAutocompleteText() {
         if (DEBUG) Log.i(TAG, "clearAutocomplete");
         mPreviouslySetState.clearAutocompleteText();
         mCurrentState.clearAutocompleteText();
@@ -355,7 +355,7 @@ public class SpannableAutocompleteEditTextModel implements AutocompleteEditTextM
                 || pkgName.contains("omronsoft") || pkgName.contains(".iwnn"); // crbug.com/758443
     }
 
-    private boolean shouldFinishCompositionOnDeletion() {
+    boolean shouldFinishCompositionOnDeletion() {
         // crbug.com/758443, crbug.com/766888: Japanese keyboard does not finish composition when we
         // restore the deleted text, and later typing will make Japanese keyboard move before the
         // restored character. Most keyboards accept finishComposingText and update their internal
@@ -390,7 +390,7 @@ public class SpannableAutocompleteEditTextModel implements AutocompleteEditTextM
         return mInputConnection;
     }
 
-    private void updateSelectionForTesting() {
+    void updateSelectionForTesting() {
         int selStart = mDelegate.getSelectionStart();
         int selEnd = mDelegate.getSelectionEnd();
         if (selStart == mLastUpdateSelStart && selEnd == mLastUpdateSelEnd) return;

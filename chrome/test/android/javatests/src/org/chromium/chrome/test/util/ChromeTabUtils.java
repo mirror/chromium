@@ -99,7 +99,7 @@ public class ChromeTabUtils {
         }
     }
 
-    private static boolean loadComplete(Tab tab, String url) {
+    static boolean loadComplete(Tab tab, String url) {
         return !tab.isLoading() && (url == null || TextUtils.equals(tab.getUrl(), url))
                 && !tab.getWebContents().isLoadingToDifferentDocument();
     }

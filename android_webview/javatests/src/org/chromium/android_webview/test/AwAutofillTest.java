@@ -492,12 +492,12 @@ public class AwAutofillTest {
     @Rule
     public AwActivityTestRule mRule = new AwActivityTestRule();
 
-    private AwTestContainerView mTestContainerView;
+    AwTestContainerView mTestContainerView;
     private AwAutofillTestClient mContentsClient;
-    private CallbackHelper mCallbackHelper = new CallbackHelper();
-    private AwContents mAwContents;
-    private ConcurrentLinkedQueue<Integer> mEventQueue = new ConcurrentLinkedQueue<>();
-    private TestValues mTestValues = new TestValues();
+    CallbackHelper mCallbackHelper = new CallbackHelper();
+    AwContents mAwContents;
+    ConcurrentLinkedQueue<Integer> mEventQueue = new ConcurrentLinkedQueue<>();
+    TestValues mTestValues = new TestValues();
 
     @Before
     public void setUp() throws Exception {

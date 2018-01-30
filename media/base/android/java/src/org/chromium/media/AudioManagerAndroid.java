@@ -82,7 +82,7 @@ class AudioManagerAndroid {
         private final int mId;
         private final String mName;
 
-        private AudioDeviceName(int id, String name) {
+        AudioDeviceName(int id, String name) {
             mId = id;
             mName = name;
         }
@@ -158,8 +158,8 @@ class AudioManagerAndroid {
     // fails.
     private static final int DEFAULT_FRAME_PER_BUFFER = 256;
 
-    private final AudioManager mAudioManager;
-    private final long mNativeAudioManagerAndroid;
+    final AudioManager mAudioManager;
+    final long mNativeAudioManagerAndroid;
 
     // Enabled during initialization if MODIFY_AUDIO_SETTINGS permission is
     // granted. Required to shift system-wide audio settings.
@@ -171,7 +171,7 @@ class AudioManagerAndroid {
     // Stores the audio states related to Bluetooth SCO audio, where some
     // states are needed to keep track of intermediate states while the SCO
     // channel is enabled or disabled (switching state can take a few seconds).
-    private int mBluetoothScoState = STATE_BLUETOOTH_SCO_INVALID;
+    int mBluetoothScoState = STATE_BLUETOOTH_SCO_INVALID;
 
     private boolean mIsInitialized;
     private boolean mSavedIsSpeakerphoneOn;
@@ -188,10 +188,10 @@ class AudioManagerAndroid {
 
     // Lock to protect |mAudioDevices| and |mRequestedAudioDevice| which can
     // be accessed from the main thread and the audio manager thread.
-    private final Object mLock = new Object();
+    final Object mLock = new Object();
 
     // Contains a list of currently available audio devices.
-    private boolean[] mAudioDevices = new boolean[DEVICE_COUNT];
+    boolean[] mAudioDevices = new boolean[DEVICE_COUNT];
 
     private final ContentResolver mContentResolver;
     private ContentObserver mSettingsObserver;
@@ -607,7 +607,7 @@ class AudioManagerAndroid {
     }
 
     /** Gets the current earpiece state. */
-    private boolean hasEarpiece() {
+    boolean hasEarpiece() {
         return ContextUtils.getApplicationContext().getPackageManager().hasSystemFeature(
                 PackageManager.FEATURE_TELEPHONY);
     }
@@ -620,7 +620,7 @@ class AudioManagerAndroid {
      * wired headset.
      */
     @Deprecated
-    private boolean hasWiredHeadset() {
+    boolean hasWiredHeadset() {
         return mAudioManager.isWiredHeadsetOn();
     }
 
@@ -684,7 +684,7 @@ class AudioManagerAndroid {
      * peripheral and automatically routes audio playback and capture appropriately on Android5.0
      * and higher in the order of wired headset first, then USB audio device and earpiece at last.
      */
-    private boolean hasUsbAudio() {
+    boolean hasUsbAudio() {
         // Android 5.0 (API level 21) and above supports USB audio class 1 (UAC1) features for
         // audio functions, capture and playback, in host mode.
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) return false;
@@ -1015,7 +1015,7 @@ class AudioManagerAndroid {
     }
 
     /** Returns true if setDevice() has been called with a valid device id. */
-    private boolean deviceHasBeenRequested() {
+    boolean deviceHasBeenRequested() {
         synchronized (mLock) {
             return (mRequestedAudioDevice != DEVICE_INVALID);
         }
@@ -1026,7 +1026,7 @@ class AudioManagerAndroid {
      * information about if a specific device has been selected or if
      * the default device is selected.
      */
-    private void updateDeviceActivation() {
+    void updateDeviceActivation() {
         boolean devices[] = null;
         int requested = DEVICE_INVALID;
         synchronized (mLock) {
@@ -1066,7 +1066,7 @@ class AudioManagerAndroid {
      * been a change in the state.
      * TODO(henrika): add support for state change listener.
      */
-    private void reportUpdate() {
+    void reportUpdate() {
         if (DEBUG) {
             synchronized (mLock) {
                 List<String> devices = new ArrayList<String>();
@@ -1094,12 +1094,12 @@ class AudioManagerAndroid {
     }
 
     /** Trivial helper method for debug logging */
-    private static void logd(String msg) {
+    static void logd(String msg) {
         Log.d(TAG, msg);
     }
 
     /** Trivial helper method for error logging */
-    private static void loge(String msg) {
+    static void loge(String msg) {
         Log.e(TAG, msg);
     }
 
@@ -1168,7 +1168,7 @@ class AudioManagerAndroid {
      * @return Whether the USB device has such an interface.
      */
 
-    private boolean hasUsbAudioCommInterface(UsbDevice device) {
+    boolean hasUsbAudioCommInterface(UsbDevice device) {
         boolean hasUsbAudioCommInterface = false;
         for (int i = 0; i < device.getInterfaceCount(); ++i) {
             UsbInterface iface = device.getInterface(i);
@@ -1249,5 +1249,5 @@ class AudioManagerAndroid {
         mUsbAudioReceiver = null;
     }
 
-    private native void nativeSetMute(long nativeAudioManagerAndroid, boolean muted);
+    native void nativeSetMute(long nativeAudioManagerAndroid, boolean muted);
 }

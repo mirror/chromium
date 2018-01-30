@@ -56,22 +56,22 @@ public class Shell extends LinearLayout {
         }
     };
 
-    private ContentViewCoreImpl mContentViewCore;
-    private WebContents mWebContents;
-    private NavigationController mNavigationController;
-    private EditText mUrlTextView;
-    private ImageButton mPrevButton;
-    private ImageButton mNextButton;
-    private ImageButton mStopReloadButton;
+    ContentViewCoreImpl mContentViewCore;
+    WebContents mWebContents;
+    NavigationController mNavigationController;
+    EditText mUrlTextView;
+    ImageButton mPrevButton;
+    ImageButton mNextButton;
+    ImageButton mStopReloadButton;
 
-    private ClipDrawable mProgressDrawable;
+    ClipDrawable mProgressDrawable;
 
     private long mNativeShell;
-    private ContentViewRenderView mContentViewRenderView;
+    ContentViewRenderView mContentViewRenderView;
     private WindowAndroid mWindow;
     private ShellViewAndroidDelegate mViewAndroidDelegate;
 
-    private boolean mLoading;
+    boolean mLoading;
     private boolean mIsFullscreen;
 
     private Callback<Boolean> mOverlayModeChangedCallbackForTesting;
@@ -427,7 +427,7 @@ public class Shell extends LinearLayout {
         return mWebContents;
     }
 
-    private void setKeyboardVisibilityForUrl(boolean visible) {
+    void setKeyboardVisibilityForUrl(boolean visible) {
         InputMethodManager imm = (InputMethodManager) getContext().getSystemService(
                 Context.INPUT_METHOD_SERVICE);
         if (visible) {

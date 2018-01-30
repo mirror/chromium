@@ -35,9 +35,9 @@ public class ChromotingDownloadManager {
 
     private Activity mActivity;
     private BroadcastReceiver mDownloadReceiver;
-    private DownloadManager mDownloadManager;
-    private Set<Long> mUnfinishedDownloadIds;
-    private Callback mCallback;
+    DownloadManager mDownloadManager;
+    Set<Long> mUnfinishedDownloadIds;
+    Callback mCallback;
     private String[] mNames;
     private String[] mUris;
 
@@ -140,7 +140,7 @@ public class ChromotingDownloadManager {
     /**
      * Convert a Set of Long to an array of long.
      */
-    private long[] convertToArray(Set<Long> data) {
+    long[] convertToArray(Set<Long> data) {
         long[] result = new long[data.size()];
         int index = 0;
         for (long number : data) {

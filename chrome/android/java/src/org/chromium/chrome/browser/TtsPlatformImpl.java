@@ -28,16 +28,16 @@ import java.util.Locale;
  */
 class TtsPlatformImpl {
     private static class TtsVoice {
-        private TtsVoice(String name, String language) {
+        TtsVoice(String name, String language) {
             mName = name;
             mLanguage = language;
         }
-        private final String mName;
-        private final String mLanguage;
+        final String mName;
+        final String mLanguage;
     }
 
     private static class PendingUtterance {
-        private PendingUtterance(TtsPlatformImpl impl, int utteranceId, String text,
+        PendingUtterance(TtsPlatformImpl impl, int utteranceId, String text,
                 String lang, float rate, float pitch, float volume) {
             mImpl = impl;
             mUtteranceId = utteranceId;
@@ -48,7 +48,7 @@ class TtsPlatformImpl {
             mVolume = volume;
         }
 
-        private void speak() {
+        void speak() {
             mImpl.speak(mUtteranceId, mText, mLang, mRate, mPitch, mVolume);
         }
 
@@ -153,8 +153,8 @@ class TtsPlatformImpl {
      * @return true on success.
      */
     @CalledByNative
-    private boolean speak(int utteranceId, String text, String lang,
-                          float rate, float pitch, float volume) {
+    boolean speak(int utteranceId, String text, String lang,
+            float rate, float pitch, float volume) {
         if (!mInitialized) {
             mPendingUtterance = new PendingUtterance(this, utteranceId, text, lang, rate,
                     pitch, volume);

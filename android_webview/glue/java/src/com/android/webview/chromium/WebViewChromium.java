@@ -232,7 +232,7 @@ class WebViewChromium implements WebViewProvider, WebViewProvider.ScrollDelegate
         }
     }
 
-    private void initForReal() {
+    void initForReal() {
         AwContentsStatics.setRecordFullDocument(sRecordWholeDocumentEnabledByApi
                 || mAppTargetSdkVersion < Build.VERSION_CODES.LOLLIPOP);
 

@@ -33,7 +33,7 @@ class UsbMidiDeviceAndroid {
     /**
      * A connection handle for this device.
      */
-    private final UsbDeviceConnection mConnection;
+    final UsbDeviceConnection mConnection;
 
     /**
      * A map from endpoint number to UsbEndpoint.
@@ -53,7 +53,7 @@ class UsbMidiDeviceAndroid {
     /**
      * True if this device is closed.
      */
-    private boolean mIsClosed;
+    boolean mIsClosed;
 
     /**
      * True if there is a thread processing input data.
@@ -63,7 +63,7 @@ class UsbMidiDeviceAndroid {
     /**
      * The identifier of this device.
      */
-    private long mNativePointer;
+    long mNativePointer;
 
     /**
      * The underlying USB device.
@@ -182,7 +182,7 @@ class UsbMidiDeviceAndroid {
     /**
      * Posts a data input event to the main thread.
      */
-    private void postOnDataEvent(final int endpointNumber, final byte[] bs) {
+    void postOnDataEvent(final int endpointNumber, final byte[] bs) {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -309,7 +309,7 @@ class UsbMidiDeviceAndroid {
      * Since the Android API doesn't provide us the length,
      * we calculate it manually.
      */
-    private static int getInputDataLength(ByteBuffer buffer) {
+    static int getInputDataLength(ByteBuffer buffer) {
         int position = buffer.position();
         // We assume that the data length is always divisable by 4.
         for (int i = 0; i < position; i += 4) {
@@ -321,6 +321,6 @@ class UsbMidiDeviceAndroid {
         return position;
     }
 
-    private static native void nativeOnData(
+    static native void nativeOnData(
             long nativeUsbMidiDeviceAndroid, int endpointNumber, byte[] data);
 }

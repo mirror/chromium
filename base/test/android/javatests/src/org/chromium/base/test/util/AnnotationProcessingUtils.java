@@ -63,7 +63,7 @@ public abstract class AnnotationProcessingUtils {
                 .getMatchingAnnotations(annotatedElement);
     }
 
-    private static boolean isChromiumAnnotation(Annotation annotation) {
+    static boolean isChromiumAnnotation(Annotation annotation) {
         Package pkg = annotation.annotationType().getPackage();
         return pkg != null && pkg.getName().startsWith("org.chromium");
     }

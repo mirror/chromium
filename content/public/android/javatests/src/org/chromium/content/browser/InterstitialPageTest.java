@@ -36,11 +36,11 @@ public class InterstitialPageTest {
     @Rule
     public ContentShellActivityTestRule mActivityTestRule = new ContentShellActivityTestRule();
 
-    private static final String URL = UrlUtils.encodeHtmlDataUri(
+    static final String URL = UrlUtils.encodeHtmlDataUri(
             "<html><head></head><body>test</body></html>");
 
     private static class TestWebContentsObserver extends WebContentsObserver {
-        private boolean mInterstitialShowing;
+        boolean mInterstitialShowing;
 
         public TestWebContentsObserver(WebContents webContents) {
             super(webContents);

@@ -12,10 +12,10 @@ import android.widget.FrameLayout;
 
 class AwZoomControls {
 
-    private AwContents mAwContents;
+    AwContents mAwContents;
     // It is advised to use getZoomController() where possible.
     @SuppressWarnings("deprecation")
-    private android.widget.ZoomButtonsController mZoomButtonsController;
+    android.widget.ZoomButtonsController mZoomButtonsController;
 
     AwZoomControls(AwContents awContents) {
         mAwContents = awContents;

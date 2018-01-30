@@ -119,7 +119,7 @@ public class PulseDrawable extends Drawable implements Animatable {
         return drawable;
     }
 
-    private final Runnable mNextFrame = new Runnable() {
+    final Runnable mNextFrame = new Runnable() {
         @Override
         public void run() {
             stepPulse();
@@ -134,7 +134,7 @@ public class PulseDrawable extends Drawable implements Animatable {
 
     private PulseState mState;
     private boolean mMutated;
-    private boolean mRunning;
+    boolean mRunning;
 
     /**
      * Creates a new {@link PulseDrawable} instance.
@@ -146,7 +146,7 @@ public class PulseDrawable extends Drawable implements Animatable {
         setUseLightPulseColor(false);
     }
 
-    private PulseDrawable(PulseState state) {
+    PulseDrawable(PulseState state) {
         mState = state;
     }
 
@@ -266,7 +266,7 @@ public class PulseDrawable extends Drawable implements Animatable {
         return mState;
     }
 
-    private void stepPulse() {
+    void stepPulse() {
         long curTime = SystemClock.uptimeMillis();
         long msIntoAnim = (curTime - mState.startTime) % PULSE_DURATION_MS;
         float progress = ((float) msIntoAnim) / ((float) PULSE_DURATION_MS);

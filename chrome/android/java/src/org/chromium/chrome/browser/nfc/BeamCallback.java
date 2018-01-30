@@ -54,8 +54,8 @@ class BeamCallback implements CreateNdefMessageCallback, OnNdefPushCompleteCallb
     // and our app to return to foreground.
     private static final int TOAST_ERROR_DELAY_MS = 400;
 
-    private final Activity mActivity;
-    private final BeamProvider mProvider;
+    final Activity mActivity;
+    final BeamProvider mProvider;
 
     // We use this to delay the error message in ICS because it would be hidden behind
     // the system beam overlay. It is only accessed by the NFC thread
@@ -130,7 +130,7 @@ class BeamCallback implements CreateNdefMessageCallback, OnNdefPushCompleteCallb
     /**
      * @return Whether given URL is valid and sharable via Beam.
      */
-    private static boolean isValidUrl(String url) {
+    static boolean isValidUrl(String url) {
         if (TextUtils.isEmpty(url)) return false;
         try {
             String urlProtocol = (new URL(url)).getProtocol();

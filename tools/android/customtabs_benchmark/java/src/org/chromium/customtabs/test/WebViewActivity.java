@@ -33,7 +33,7 @@ public class WebViewActivity extends Activity {
         });
     }
 
-    private void go() {
+    void go() {
         String url = getIntent().getData().toString();
         final long intentSentMs = getIntent().getLongExtra(MainActivity.INTENT_SENT_EXTRA, -1);
 

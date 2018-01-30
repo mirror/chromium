@@ -86,10 +86,10 @@ public class BluetoothChooserDialog
     boolean mIsLocationModeChangedReceiverRegistered;
 
     // The local device Bluetooth adapter.
-    private final BluetoothAdapter mAdapter;
+    final BluetoothAdapter mAdapter;
 
     // The status message to show when the bluetooth adapter is turned off.
-    private final SpannableString mAdapterOffStatus;
+    final SpannableString mAdapterOffStatus;
 
     @VisibleForTesting
     final BroadcastReceiver mLocationModeBroadcastReceiver = new BroadcastReceiver() {
@@ -246,7 +246,7 @@ public class BluetoothChooserDialog
     }
 
     // Returns true if Location Services is on and Chrome has permission to see the user's location.
-    private boolean checkLocationServicesAndPermission() {
+    boolean checkLocationServicesAndPermission() {
         final boolean havePermission = LocationUtils.getInstance().hasAndroidLocationPermission();
         final boolean locationServicesOn =
                 LocationUtils.getInstance().isSystemLocationSettingEnabled();

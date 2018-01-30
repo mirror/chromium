@@ -72,7 +72,7 @@ public class OfflineContentAggregatorNotificationBridgeUiTest {
     @Rule
     public MockitoRule mMockitoRule = MockitoJUnit.rule();
 
-    private static OfflineItem buildOfflineItem(ContentId id, @OfflineItemState int state) {
+    static OfflineItem buildOfflineItem(ContentId id, @OfflineItemState int state) {
         OfflineItem item = new OfflineItem();
         item.id = id;
         item.state = state;

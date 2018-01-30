@@ -18,7 +18,7 @@ public class MockLocationProvider implements LocationProviderFactory.LocationPro
     private boolean mIsRunning;
     private Handler mHandler;
     private HandlerThread mHandlerThread;
-    private final Object mLock = new Object();
+    final Object mLock = new Object();
 
     private static final int UPDATE_LOCATION_MSG = 100;
 
@@ -77,7 +77,7 @@ public class MockLocationProvider implements LocationProviderFactory.LocationPro
         };
     }
 
-    private void newLocation() {
+    void newLocation() {
         Location location = new Location("MockLocationProvider");
         location.setTime(System.currentTimeMillis());
         location.setAccuracy(0.5f);

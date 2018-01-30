@@ -62,17 +62,17 @@ public class ManageSpaceActivity extends AppCompatActivity implements View.OnCli
 
     private static final String PREF_FAILED_BUILD_VERSION = "ManagedSpace.FailedBuildVersion";
 
-    private TextView mUnimportantSiteDataSizeText;
-    private TextView mSiteDataSizeText;
+    TextView mUnimportantSiteDataSizeText;
+    TextView mSiteDataSizeText;
     private Button mClearUnimportantButton;
     private Button mManageSiteDataButton;
     private Button mClearAllDataButton;
     // Stored for testing.
-    private AlertDialog mUnimportantDialog;
+    AlertDialog mUnimportantDialog;
 
     private static boolean sActivityNotExportedChecked;
 
-    private boolean mIsNativeInitialized;
+    boolean mIsNativeInitialized;
 
     @SuppressLint({"ApplySharedPref", "CommitPrefEdits"})
     @Override
@@ -198,7 +198,7 @@ public class ManageSpaceActivity extends AppCompatActivity implements View.OnCli
     }
 
     /** Data will be cleared once we fetch all site size and important status info. */
-    private void clearUnimportantData() {
+    void clearUnimportantData() {
         mSiteDataSizeText.setText(R.string.storage_management_computing_size);
         mUnimportantSiteDataSizeText.setText(R.string.storage_management_computing_size);
         mClearUnimportantButton.setEnabled(false);
@@ -208,7 +208,7 @@ public class ManageSpaceActivity extends AppCompatActivity implements View.OnCli
     }
 
     /** Called after we finish clearing unimportant data. Re-enables our buttons. */
-    private void clearUnimportantDataDone() {
+    void clearUnimportantDataDone() {
         mClearUnimportantButton.setEnabled(true);
         mManageSiteDataButton.setEnabled(true);
     }
@@ -273,7 +273,7 @@ public class ManageSpaceActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-    private void onSiteStorageSizeCalculated(long totalSize, long unimportantSize) {
+    void onSiteStorageSizeCalculated(long totalSize, long unimportantSize) {
         mSiteDataSizeText.setText(Formatter.formatFileSize(this, totalSize));
         mUnimportantSiteDataSizeText.setText(Formatter.formatFileSize(this, unimportantSize));
     }

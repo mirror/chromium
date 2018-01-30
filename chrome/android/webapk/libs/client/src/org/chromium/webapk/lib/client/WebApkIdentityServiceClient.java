@@ -103,7 +103,7 @@ public class WebApkIdentityServiceClient {
      * @param webApkBackingBrowserPackageName The package name of the WebAPK's backing browser.
      * @param callback The callback to notify whether {@link browserPackageName} backs the WebAPK.
      */
-    private static void onGotWebApkRuntimeHost(String browserPackageName,
+    static void onGotWebApkRuntimeHost(String browserPackageName,
             String webApkBackingBrowserPackageName, CheckBrowserBacksWebApkCallback callback) {
         callback.onChecked(TextUtils.equals(webApkBackingBrowserPackageName, browserPackageName));
     }
@@ -113,7 +113,7 @@ public class WebApkIdentityServiceClient {
      * See {@link WebApkIdentityServiceClient#SHELL_APK_VERSION_SUPPORTING_SWITCH_RUNTIME_HOST} for
      * more details.
      */
-    private static String maybeExtractRuntimeHostFromMetaData(
+    static String maybeExtractRuntimeHostFromMetaData(
             Context context, String webApkPackageName) {
         Bundle metadata = readMetaData(context, webApkPackageName);
         if (metadata == null

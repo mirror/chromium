@@ -111,7 +111,7 @@ public class ProcessInitializationHandler {
     private boolean mInitializedPreNative;
     private boolean mInitializedPostNative;
     private boolean mInitializedDeferredStartupTasks;
-    private DevToolsServer mDevToolsServer;
+    DevToolsServer mDevToolsServer;
 
     /**
      * @return The ProcessInitializationHandler for use during the lifetime of the browser process.
@@ -408,7 +408,7 @@ public class ProcessInitializationHandler {
                 () -> { BuildHooksAndroid.maybeRecordResourceMetrics(); });
     }
 
-    private void initChannelsAsync() {
+    void initChannelsAsync() {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
@@ -419,7 +419,7 @@ public class ProcessInitializationHandler {
                 .executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
     }
 
-    private void initAsyncDiskTask(final Context context) {
+    void initAsyncDiskTask(final Context context) {
         new AsyncTask<Void, Void, Void>() {
             /**
              * The threshold after which it's no longer appropriate to try to attach logcat output
@@ -603,7 +603,7 @@ public class ProcessInitializationHandler {
      * in Chrome M41.
      */
     @WorkerThread
-    private void removeSnapshotDatabase(Context context) {
+    void removeSnapshotDatabase(Context context) {
         synchronized (SNAPSHOT_DATABASE_LOCK) {
             SharedPreferences prefs = ContextUtils.getAppSharedPreferences();
             if (!prefs.getBoolean(SNAPSHOT_DATABASE_REMOVED, false)) {
@@ -613,14 +613,14 @@ public class ProcessInitializationHandler {
         }
     }
 
-    private void startModerateBindingManagementIfNeeded(Context context) {
+    void startModerateBindingManagementIfNeeded(Context context) {
         // Moderate binding doesn't apply to low end devices.
         if (SysUtils.isLowEndDevice()) return;
         ChildProcessLauncherHelper.startModerateBindingManagement(context);
     }
 
     @SuppressWarnings("deprecation") // InputMethodSubtype.getLocale() deprecated in API 24
-    private void recordKeyboardLocaleUma(Context context) {
+    void recordKeyboardLocaleUma(Context context) {
         InputMethodManager imm =
                 (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         List<InputMethodInfo> ims = imm.getEnabledInputMethodList();
@@ -652,7 +652,7 @@ public class ProcessInitializationHandler {
      * Logs a histogram with the size of the Android EGL shader cache.
      */
     @TargetApi(Build.VERSION_CODES.N)
-    private static void logEGLShaderCacheSizeHistogram() {
+    static void logEGLShaderCacheSizeHistogram() {
         // To simplify logic, only log this value on Android N+.
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             return;

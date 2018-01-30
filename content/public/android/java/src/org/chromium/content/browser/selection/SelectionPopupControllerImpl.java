@@ -87,13 +87,13 @@ public class SelectionPopupControllerImpl
     private static final int MENU_ITEM_ORDER_TEXT_PROCESS_START = 100;
 
     private static final class UserDataFactoryLazyHolder {
-        private static final UserDataFactory<SelectionPopupControllerImpl> INSTANCE =
+        static final UserDataFactory<SelectionPopupControllerImpl> INSTANCE =
                 SelectionPopupControllerImpl::new;
     }
 
     private Context mContext;
     private WindowAndroid mWindowAndroid;
-    private WebContentsImpl mWebContents;
+    WebContentsImpl mWebContents;
     private ActionMode.Callback mCallback;
 
     private SelectionClient.ResultCallback mResultCallback;
@@ -106,16 +106,16 @@ public class SelectionPopupControllerImpl
 
     // Self-repeating task that repeatedly hides the ActionMode. This is
     // required because ActionMode only exposes a temporary hide routine.
-    private Runnable mRepeatingHideRunnable;
+    Runnable mRepeatingHideRunnable;
 
-    private View mView;
+    View mView;
     private ActionMode mActionMode;
     private MenuDescriptor mActionMenuDescriptor;
 
     // Bit field for mappings from menu item to a flag indicating it is allowed.
     private int mAllowedMenuItems;
 
-    private boolean mHidden;
+    boolean mHidden;
 
     private boolean mEditable;
     private boolean mIsPasswordType;
@@ -124,8 +124,8 @@ public class SelectionPopupControllerImpl
     private boolean mCanEditRichly;
 
     private boolean mUnselectAllOnDismiss;
-    private String mLastSelectedText;
-    private int mLastSelectionOffset;
+    String mLastSelectedText;
+    int mLastSelectionOffset;
 
     // Tracks whether a touch selection is currently active.
     private boolean mHasSelection;
@@ -142,11 +142,11 @@ public class SelectionPopupControllerImpl
     private SelectionClient mSelectionClient;
 
     // SelectionMetricsLogger, could be null.
-    private SmartSelectionMetricsLogger mSelectionMetricsLogger;
+    SmartSelectionMetricsLogger mSelectionMetricsLogger;
 
     // The classificaton result of the selected text if the selection exists and
     // SelectionClient was able to classify it, otherwise null.
-    private SelectionClient.Result mClassificationResult;
+    SelectionClient.Result mClassificationResult;
 
     // Whether a scroll is in progress.
     private boolean mScrollInProgress;
@@ -563,7 +563,7 @@ public class SelectionPopupControllerImpl
     /**
      * @see ActionMode#hide(long)
      */
-    private void hideActionModeTemporarily(long duration) {
+    void hideActionModeTemporarily(long duration) {
         assert isFloatingActionMode();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (isActionModeValid()) mActionMode.hide(duration);
@@ -575,7 +575,7 @@ public class SelectionPopupControllerImpl
                 && mActionMode.getType() == ActionMode.TYPE_FLOATING;
     }
 
-    private long getDefaultHideDuration() {
+    long getDefaultHideDuration() {
         if (supportsFloatingActionMode()) {
             return ViewConfiguration.getDefaultActionModeHideDuration();
         }
@@ -688,7 +688,7 @@ public class SelectionPopupControllerImpl
         return !createActionMenuDescriptor().equals(mActionMenuDescriptor);
     }
 
-    private boolean canPaste() {
+    boolean canPaste() {
         ClipboardManager clipMgr =
                 (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
         return clipMgr.hasPrimaryClip();

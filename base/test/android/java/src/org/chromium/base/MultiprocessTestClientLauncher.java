@@ -40,10 +40,10 @@ public final class MultiprocessTestClientLauncher {
 
     private static final int CONNECTION_TIMEOUT_MS = 10 * 1000;
 
-    private static final SparseArray<MultiprocessTestClientLauncher> sPidToLauncher =
+    static final SparseArray<MultiprocessTestClientLauncher> sPidToLauncher =
             new SparseArray<>();
 
-    private static final SparseArray<Integer> sPidToMainResult = new SparseArray<>();
+    static final SparseArray<Integer> sPidToMainResult = new SparseArray<>();
 
     private static final Object sLauncherHandlerInitLock = new Object();
     private static Handler sLauncherHandler;
@@ -109,25 +109,25 @@ public final class MultiprocessTestClientLauncher {
                 }
             };
 
-    private final CountDownLatch mPidReceived = new CountDownLatch(1);
+    final CountDownLatch mPidReceived = new CountDownLatch(1);
 
-    private final ChildProcessLauncher mLauncher;
+    final ChildProcessLauncher mLauncher;
 
-    private final ReentrantLock mConnectedLock = new ReentrantLock();
-    private final Condition mConnectedCondition = mConnectedLock.newCondition();
+    final ReentrantLock mConnectedLock = new ReentrantLock();
+    final Condition mConnectedCondition = mConnectedLock.newCondition();
     @GuardedBy("mConnectedLock")
-    private boolean mConnected;
+    boolean mConnected;
 
     private IChildProcessService mService = null;
-    private int mPid;
-    private ITestController mTestController;
+    int mPid;
+    ITestController mTestController;
 
-    private final ReentrantLock mMainReturnCodeLock = new ReentrantLock();
-    private final Condition mMainReturnCodeCondition = mMainReturnCodeLock.newCondition();
+    final ReentrantLock mMainReturnCodeLock = new ReentrantLock();
+    final Condition mMainReturnCodeCondition = mMainReturnCodeLock.newCondition();
     // The return code returned by the service's main method.
     // null if the service has not sent it yet.
     @GuardedBy("mMainReturnCodeLock")
-    private Integer mMainReturnCode;
+    Integer mMainReturnCode;
 
     private MultiprocessTestClientLauncher(String[] commandLine, FileDescriptorInfo[] filesToMap) {
         assert isRunningOnLauncherThread();
@@ -225,7 +225,7 @@ public final class MultiprocessTestClientLauncher {
         });
     }
 
-    private static MultiprocessTestClientLauncher createAndStartLauncherOnLauncherThread(
+    static MultiprocessTestClientLauncher createAndStartLauncherOnLauncherThread(
             String[] commandLine, FileDescriptorInfo[] filesToMap) {
         assert isRunningOnLauncherThread();
 
@@ -258,7 +258,7 @@ public final class MultiprocessTestClientLauncher {
         });
     }
 
-    private static MainReturnCodeResult waitForMainToReturnOnLauncherThread(
+    static MainReturnCodeResult waitForMainToReturnOnLauncherThread(
             int pid, int timeoutMs) {
         assert isRunningOnLauncherThread();
 
@@ -290,7 +290,7 @@ public final class MultiprocessTestClientLauncher {
         });
     }
 
-    private static boolean terminateOnLauncherThread(int pid, int exitCode, boolean wait) {
+    static boolean terminateOnLauncherThread(int pid, int exitCode, boolean wait) {
         assert isRunningOnLauncherThread();
 
         MultiprocessTestClientLauncher launcher = sPidToLauncher.get(pid);
@@ -347,7 +347,7 @@ public final class MultiprocessTestClientLauncher {
         return new FileDescriptorInfo(id, parcelableFd, 0 /* offset */, 0 /* size */);
     }
 
-    private static boolean isRunningOnLauncherThread() {
+    static boolean isRunningOnLauncherThread() {
         return sLauncherHandler.getLooper() == Looper.myLooper();
     }
 

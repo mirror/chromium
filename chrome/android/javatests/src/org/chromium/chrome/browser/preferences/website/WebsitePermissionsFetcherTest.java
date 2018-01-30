@@ -30,7 +30,7 @@ public class WebsitePermissionsFetcherTest {
     @Rule
     public final ChromeBrowserTestRule mBrowserTestRule = new ChromeBrowserTestRule();
 
-    private static final String[] PERMISSION_URLS = {
+    static final String[] PERMISSION_URLS = {
             "http://www.google.com/", "http://www.youtube.com/", "http://www.facebook.com/",
             "http://www.baidu.com/", "http://www.wikipedia.org/", "http://www.yahoo.com/",
             "http://www.google.co.in/", "http://www.reddit.com/", "http://www.qq.com/",

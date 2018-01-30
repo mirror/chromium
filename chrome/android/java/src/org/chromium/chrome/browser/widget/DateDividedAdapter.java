@@ -55,7 +55,7 @@ public abstract class DateDividedAdapter extends Adapter<RecyclerView.ViewHolder
         private boolean mIsLastInGroup;
 
         /** See {@link #mPosition}. */
-        private final void setPosition(int position) {
+        final void setPosition(int position) {
             mPosition = position;
         }
 
@@ -203,15 +203,15 @@ public abstract class DateDividedAdapter extends Adapter<RecyclerView.ViewHolder
      * A bucket of items with the same date.
      */
     public static class ItemGroup {
-        private final Date mDate;
+        final Date mDate;
         private final List<TimedItem> mItems = new ArrayList<>();
 
         /** Index of the header, relative to the full list.  Must be set only once.*/
         private int mIndex;
 
         private boolean mIsSorted;
-        private boolean mIsListHeader;
-        private boolean mIsListFooter;
+        boolean mIsListHeader;
+        boolean mIsListFooter;
 
         public ItemGroup(long timestamp) {
             mDate = new Date(timestamp);
@@ -735,7 +735,7 @@ public abstract class DateDividedAdapter extends Adapter<RecyclerView.ViewHolder
     /**
      * @return 0 if cal1 and cal2 are in the same day; 1 if cal1 happens before cal2; -1 otherwise.
      */
-    private static int compareCalendar(Calendar cal1, Calendar cal2) {
+    static int compareCalendar(Calendar cal1, Calendar cal2) {
         boolean sameDay = cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR)
                 && cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
         if (sameDay) {
@@ -750,7 +750,7 @@ public abstract class DateDividedAdapter extends Adapter<RecyclerView.ViewHolder
     /**
      * Convenient getter for {@link #sCal1} and {@link #sCal2}.
      */
-    private static Pair<Calendar, Calendar> getCachedCalendars() {
+    static Pair<Calendar, Calendar> getCachedCalendars() {
         Calendar cal1, cal2;
         try {
             cal1 = sCal1.get();

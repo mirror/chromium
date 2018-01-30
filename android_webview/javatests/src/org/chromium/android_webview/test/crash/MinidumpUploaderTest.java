@@ -157,7 +157,7 @@ public class MinidumpUploaderTest {
      */
     private static class WebViewUserConsentMinidumpUploaderDelegate
             extends AwMinidumpUploaderDelegate {
-        private final boolean mUserConsent;
+        final boolean mUserConsent;
         WebViewUserConsentMinidumpUploaderDelegate(boolean userConsent) {
             super();
             mUserConsent = userConsent;

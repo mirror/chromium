@@ -3002,7 +3002,7 @@ public class AwSettingsTest {
         }
     }
 
-    private TestDependencyFactory mOverridenFactory;
+    TestDependencyFactory mOverridenFactory;
 
     @After
     public void tearDown() throws Exception {
@@ -3298,18 +3298,18 @@ public class AwSettingsTest {
      * @param resource Resource name
      * @param expectedCount Expected resource requests count
      */
-    private void ensureResourceRequestCountInContentProvider(String resource, int expectedCount) {
+    void ensureResourceRequestCountInContentProvider(String resource, int expectedCount) {
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         int actualCount = TestContentProvider.getResourceRequestCount(context, resource);
         Assert.assertEquals(expectedCount, actualCount);
     }
 
-    private void resetResourceRequestCountInContentProvider(String resource) {
+    void resetResourceRequestCountInContentProvider(String resource) {
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         TestContentProvider.resetResourceRequestCount(context, resource);
     }
 
-    private String createContentUrl(final String target) {
+    String createContentUrl(final String target) {
         return TestContentProvider.createContentUrl(target);
     }
 

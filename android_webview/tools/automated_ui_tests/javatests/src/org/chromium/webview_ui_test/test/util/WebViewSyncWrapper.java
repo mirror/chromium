@@ -33,15 +33,15 @@ public class WebViewSyncWrapper {
     private static final int TIME_WAIT_MS = 100000;
     private static final String TAG = "WebViewSyncWrapper";
     private static final String EXTERNAL_PREFIX = UrlUtils.getIsolatedTestRoot() + "/";
-    private static final String FILE_URL_BASE =
+    static final String FILE_URL_BASE =
             "file://" + EXTERNAL_PREFIX + "android_webview/tools/automated_ui_tests/test/data/";
 
-    private final WebView mWebView;
+    final WebView mWebView;
 
-    private CallbackHelper mPageCallback = new CallbackHelper();
-    private CallbackHelper mJsCallback = new CallbackHelper();
+    CallbackHelper mPageCallback = new CallbackHelper();
+    CallbackHelper mJsCallback = new CallbackHelper();
 
-    private List<ConsoleMessage> mErrorMessageList = Collections.synchronizedList(
+    List<ConsoleMessage> mErrorMessageList = Collections.synchronizedList(
             new ArrayList<ConsoleMessage>());
 
     public WebViewSyncWrapper(WebView wv) {

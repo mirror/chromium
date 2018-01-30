@@ -55,7 +55,7 @@ public class AwShellActivity extends Activity {
     private AwTestContainerView mAwTestContainerView;
     private WebContents mWebContents;
     private NavigationController mNavigationController;
-    private EditText mUrlTextView;
+    EditText mUrlTextView;
     private ImageButton mPrevButton;
     private ImageButton mNextButton;
 

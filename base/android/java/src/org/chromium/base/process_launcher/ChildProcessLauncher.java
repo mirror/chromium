@@ -77,7 +77,7 @@ public class ChildProcessLauncher {
     private static final int NULL_PROCESS_HANDLE = 0;
 
     // The handle for the thread we were created on and on which all methods should be called.
-    private final Handler mLauncherHandler;
+    final Handler mLauncherHandler;
 
     private final Delegate mDelegate;
 
@@ -85,13 +85,13 @@ public class ChildProcessLauncher {
     private final FileDescriptorInfo[] mFilesToBeMapped;
 
     // The allocator used to create the connection.
-    private final ChildConnectionAllocator mConnectionAllocator;
+    final ChildConnectionAllocator mConnectionAllocator;
 
     // The IBinder interfaces provided to the created service.
     private final List<IBinder> mClientInterfaces;
 
     // The actual service connection. Set once we have connected to the service.
-    private ChildProcessConnection mConnection;
+    ChildProcessConnection mConnection;
 
     /**
      * Constructor.
@@ -186,7 +186,7 @@ public class ChildProcessLauncher {
         return mConnectionAllocator;
     }
 
-    private boolean allocateAndSetupConnection(
+    boolean allocateAndSetupConnection(
             final ChildProcessConnection.ServiceCallback serviceCallback,
             final boolean setupConnection, final boolean queueIfNoFreeConnection) {
         assert mConnection == null;
@@ -236,7 +236,7 @@ public class ChildProcessLauncher {
         mConnection.setupConnection(connectionBundle, getClientInterfaces(), connectionCallback);
     }
 
-    private void onServiceConnected() {
+    void onServiceConnected() {
         assert isRunningOnLauncherThread();
 
         Log.d(TAG, "on connect callback, pid=%d", mConnection.getPid());
@@ -262,7 +262,7 @@ public class ChildProcessLauncher {
         return mClientInterfaces;
     }
 
-    private boolean isRunningOnLauncherThread() {
+    boolean isRunningOnLauncherThread() {
         return mLauncherHandler.getLooper() == Looper.myLooper();
     }
 
@@ -273,7 +273,7 @@ public class ChildProcessLauncher {
         return bundle;
     }
 
-    private void onChildProcessDied() {
+    void onChildProcessDied() {
         assert isRunningOnLauncherThread();
         if (getPid() != 0) {
             mDelegate.onConnectionLost(mConnection);

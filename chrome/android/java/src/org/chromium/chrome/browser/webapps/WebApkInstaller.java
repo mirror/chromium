@@ -25,7 +25,7 @@ public class WebApkInstaller {
     private static final String TAG = "WebApkInstaller";
 
     /** Weak pointer to the native WebApkInstaller. */
-    private long mNativePointer;
+    long mNativePointer;
 
     /** Talks to Google Play to install WebAPKs. */
     private final GooglePlayWebApkInstallDelegate mInstallDelegate;
@@ -94,7 +94,7 @@ public class WebApkInstaller {
         mInstallDelegate.installAsync(packageName, version, title, token, callback);
     }
 
-    private void notify(@WebApkInstallResult int result) {
+    void notify(@WebApkInstallResult int result) {
         if (mNativePointer != 0) {
             nativeOnInstallFinished(mNativePointer, result);
         }
@@ -154,5 +154,5 @@ public class WebApkInstaller {
 
     private native void nativeOnInstallFinished(
             long nativeWebApkInstaller, @WebApkInstallResult int result);
-    private native void nativeOnGotSpaceStatus(long nativeWebApkInstaller, int status);
+    native void nativeOnGotSpaceStatus(long nativeWebApkInstaller, int status);
 }

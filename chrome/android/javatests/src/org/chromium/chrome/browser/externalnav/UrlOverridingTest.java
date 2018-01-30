@@ -115,7 +115,7 @@ public class UrlOverridingTest {
         }
     }
 
-    private ActivityMonitor mActivityMonitor;
+    ActivityMonitor mActivityMonitor;
     private EmbeddedTestServer mTestServer;
 
     @Before

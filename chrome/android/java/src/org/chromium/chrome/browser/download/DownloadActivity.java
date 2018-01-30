@@ -28,7 +28,7 @@ public class DownloadActivity extends SnackbarActivity {
     private boolean mIsOffTheRecord;
 
     /** Caches the stack of filters applied to let the user backtrack through their history. */
-    private final Deque<String> mBackStack = new LinkedList<>();
+    final Deque<String> mBackStack = new LinkedList<>();
 
     private final DownloadUiObserver mUiObserver = new DownloadUiObserver() {
         @Override

@@ -22,7 +22,7 @@ public class LargeIconBridge {
     private static final int CACHE_ENTRY_MIN_SIZE_BYTES = 1024;
     private final Profile mProfile;
     private long mNativeLargeIconBridge;
-    private LruCache<String, CachedFavicon> mFaviconCache;
+    LruCache<String, CachedFavicon> mFaviconCache;
 
     private static class CachedFavicon {
         public Bitmap icon;

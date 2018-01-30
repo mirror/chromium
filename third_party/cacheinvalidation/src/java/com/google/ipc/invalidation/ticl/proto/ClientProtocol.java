@@ -536,11 +536,11 @@ public interface ClientProtocol {
     private final Bytes payload;
     private final boolean isTrickleRestart;
 
-    private InvalidationP(com.google.ipc.invalidation.ticl.proto.ClientProtocol.ObjectIdP objectId,
-        Boolean isKnownVersion,
-        Long version,
-        Bytes payload,
-        Boolean isTrickleRestart) throws ValidationArgumentException {
+    InvalidationP(com.google.ipc.invalidation.ticl.proto.ClientProtocol.ObjectIdP objectId,
+            Boolean isKnownVersion,
+            Long version,
+            Bytes payload,
+            Boolean isTrickleRestart) throws ValidationArgumentException {
       int hazzerBits = 0;
       required("object_id", objectId);
       this.objectId = objectId;
@@ -1692,11 +1692,13 @@ public interface ClientProtocol {
     private final long serverTimeMs;
     private final String messageId;
 
-    private ServerHeader(com.google.ipc.invalidation.ticl.proto.ClientProtocol.ProtocolVersion protocolVersion,
-        Bytes clientToken,
-        com.google.ipc.invalidation.ticl.proto.ClientProtocol.RegistrationSummary registrationSummary,
-        Long serverTimeMs,
-        String messageId) throws ValidationArgumentException {
+    ServerHeader(
+            com.google.ipc.invalidation.ticl.proto.ClientProtocol.ProtocolVersion protocolVersion,
+            Bytes clientToken,
+            com.google.ipc.invalidation.ticl.proto.ClientProtocol.RegistrationSummary
+                    registrationSummary,
+            Long serverTimeMs,
+            String messageId) throws ValidationArgumentException {
       int hazzerBits = 0;
       required("protocol_version", protocolVersion);
       this.protocolVersion = protocolVersion;
@@ -1852,14 +1854,20 @@ public interface ClientProtocol {
     private final com.google.ipc.invalidation.ticl.proto.ClientProtocol.InfoRequestMessage infoRequestMessage;
     private final com.google.ipc.invalidation.ticl.proto.ClientProtocol.ErrorMessage errorMessage;
 
-    private ServerToClientMessage(com.google.ipc.invalidation.ticl.proto.ClientProtocol.ServerHeader header,
-        com.google.ipc.invalidation.ticl.proto.ClientProtocol.TokenControlMessage tokenControlMessage,
-        com.google.ipc.invalidation.ticl.proto.ClientProtocol.InvalidationMessage invalidationMessage,
-        com.google.ipc.invalidation.ticl.proto.ClientProtocol.RegistrationStatusMessage registrationStatusMessage,
-        com.google.ipc.invalidation.ticl.proto.ClientProtocol.RegistrationSyncRequestMessage registrationSyncRequestMessage,
-        com.google.ipc.invalidation.ticl.proto.ClientProtocol.ConfigChangeMessage configChangeMessage,
-        com.google.ipc.invalidation.ticl.proto.ClientProtocol.InfoRequestMessage infoRequestMessage,
-        com.google.ipc.invalidation.ticl.proto.ClientProtocol.ErrorMessage errorMessage) throws ValidationArgumentException {
+    ServerToClientMessage(com.google.ipc.invalidation.ticl.proto.ClientProtocol.ServerHeader header,
+            com.google.ipc.invalidation.ticl.proto.ClientProtocol.TokenControlMessage
+                    tokenControlMessage,
+            com.google.ipc.invalidation.ticl.proto.ClientProtocol.InvalidationMessage
+                    invalidationMessage,
+            com.google.ipc.invalidation.ticl.proto.ClientProtocol.RegistrationStatusMessage
+                    registrationStatusMessage,
+            com.google.ipc.invalidation.ticl.proto.ClientProtocol.RegistrationSyncRequestMessage
+                    registrationSyncRequestMessage,
+            com.google.ipc.invalidation.ticl.proto.ClientProtocol.ConfigChangeMessage
+                    configChangeMessage,
+            com.google.ipc.invalidation.ticl.proto.ClientProtocol.InfoRequestMessage
+                    infoRequestMessage,
+            com.google.ipc.invalidation.ticl.proto.ClientProtocol.ErrorMessage errorMessage) throws ValidationArgumentException {
       int hazzerBits = 0;
       required("header", header);
       this.header = header;
@@ -2535,8 +2543,8 @@ public interface ClientProtocol {
     private final int batchingDelayMs;
     private final List<com.google.ipc.invalidation.ticl.proto.ClientProtocol.RateLimitP> rateLimit;
 
-    private ProtocolHandlerConfigP(Integer batchingDelayMs,
-        Collection<com.google.ipc.invalidation.ticl.proto.ClientProtocol.RateLimitP> rateLimit) {
+    ProtocolHandlerConfigP(Integer batchingDelayMs,
+            Collection<com.google.ipc.invalidation.ticl.proto.ClientProtocol.RateLimitP> rateLimit) {
       int hazzerBits = 0;
       if (batchingDelayMs != null) {
         hazzerBits |= 0x1;
@@ -2681,19 +2689,20 @@ public interface ClientProtocol {
     private final int offlineHeartbeatThresholdMs;
     private final boolean allowSuppression;
 
-    private ClientConfigP(com.google.ipc.invalidation.ticl.proto.ClientProtocol.Version version,
-        Integer networkTimeoutDelayMs,
-        Integer writeRetryDelayMs,
-        Integer heartbeatIntervalMs,
-        Integer perfCounterDelayMs,
-        Integer maxExponentialBackoffFactor,
-        Integer smearPercent,
-        Boolean isTransient,
-        Integer initialPersistentHeartbeatDelayMs,
-        com.google.ipc.invalidation.ticl.proto.ClientProtocol.ProtocolHandlerConfigP protocolHandlerConfig,
-        Boolean channelSupportsOfflineDelivery,
-        Integer offlineHeartbeatThresholdMs,
-        Boolean allowSuppression) throws ValidationArgumentException {
+    ClientConfigP(com.google.ipc.invalidation.ticl.proto.ClientProtocol.Version version,
+            Integer networkTimeoutDelayMs,
+            Integer writeRetryDelayMs,
+            Integer heartbeatIntervalMs,
+            Integer perfCounterDelayMs,
+            Integer maxExponentialBackoffFactor,
+            Integer smearPercent,
+            Boolean isTransient,
+            Integer initialPersistentHeartbeatDelayMs,
+            com.google.ipc.invalidation.ticl.proto.ClientProtocol.ProtocolHandlerConfigP
+                    protocolHandlerConfig,
+            Boolean channelSupportsOfflineDelivery,
+            Integer offlineHeartbeatThresholdMs,
+            Boolean allowSuppression) throws ValidationArgumentException {
       int hazzerBits = 0;
       required("version", version);
       this.version = version;

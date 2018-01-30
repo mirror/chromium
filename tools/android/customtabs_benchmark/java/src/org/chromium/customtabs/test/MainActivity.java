@@ -66,13 +66,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private static final int PRERENDER = 2;
     private static final int HIDDEN_TAB = 3;
 
-    private final Handler mHandler = new Handler(Looper.getMainLooper());
+    final Handler mHandler = new Handler(Looper.getMainLooper());
 
     private EditText mUrlEditText;
     private RadioButton mChromeRadioButton;
     private RadioButton mWebViewRadioButton;
     private CheckBox mWarmupCheckbox;
-    private long mIntentSentMs;
+    long mIntentSentMs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,7 +124,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
     /** Routes to either of the benchmark modes. */
-    private void processArguments(Intent intent) {
+    void processArguments(Intent intent) {
         if (intent.hasExtra(USE_WEBVIEW_KEY)) {
             startCustomTabsWebViewBenchmark(intent);
         } else {
@@ -177,7 +177,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         CustomTabsClient.bindCustomTabsService(this, DEFAULT_PACKAGE, connection);
     }
 
-    private void launchChromeIntent(String url, boolean warmup, CustomTabsClient client) {
+    void launchChromeIntent(String url, boolean warmup, CustomTabsClient client) {
         CustomTabsCallback callback = new CustomTabsCallback() {
             private long mNavigationStartOffsetMs;
 
@@ -304,7 +304,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
 
         /** Outputs the available metrics, and die. Unavalaible metrics are set to -1. */
-        private void logMetricsAndFinish() {
+        void logMetricsAndFinish() {
             String logLine = (mWarmup ? "1" : "0") + "," + (mSkipLauncherActivity ? "1" : "0") + ","
                     + mSpeculationMode + "," + mDelayToMayLaunchUrl + "," + mDelayToLaunchUrl + ","
                     + mIntentSentMs + "," + mPageLoadStartedMs + "," + mPageLoadFinishedMs + ","
@@ -364,7 +364,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         return new int[] {pss, privateDirty};
     }
 
-    private void logMemory(String packageName, String message) {
+    void logMemory(String packageName, String message) {
         int[] pssAndPrivateDirty = getPackagePssAndPrivateDirty(
                 getApplicationContext(), packageName);
         if (pssAndPrivateDirty == null) return;
@@ -404,7 +404,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         if (!ok) throw new RuntimeException("Cannot set the speculation mode");
     }
 
-    private void onCustomTabsServiceConnected(CustomTabsClient client, final Uri speculatedUri,
+    void onCustomTabsServiceConnected(CustomTabsClient client, final Uri speculatedUri,
             final Uri uri, final CustomCallback cb, boolean warmup, boolean skipLauncherActivity,
             String speculationMode, int delayToMayLaunchUrl, final int delayToLaunchUrl,
             final int timeoutSeconds, final String packageName) {

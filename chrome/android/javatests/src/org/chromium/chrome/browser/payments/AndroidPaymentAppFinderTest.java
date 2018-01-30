@@ -84,7 +84,7 @@ public class AndroidPaymentAppFinderTest implements PaymentAppCreatedCallback {
 
     private EmbeddedTestServer mServer;
     private List<PaymentApp> mPaymentApps;
-    private boolean mAllPaymentAppsCreated;
+    boolean mAllPaymentAppsCreated;
 
     // PaymentAppCreatedCallback
     @Override

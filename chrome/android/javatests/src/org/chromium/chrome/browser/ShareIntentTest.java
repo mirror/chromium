@@ -50,8 +50,8 @@ public class ShareIntentTest {
      * activity and redirects the calls to the methods to the actual activity.
      */
     private static class MockChromeActivity extends ChromeTabbedActivity {
-        private final Object mLock = new Object();
-        private boolean mCheckCompleted = false;
+        final Object mLock = new Object();
+        boolean mCheckCompleted = false;
         private ChromeActivity mActivity = null;
 
         public MockChromeActivity(ChromeActivity activity) {

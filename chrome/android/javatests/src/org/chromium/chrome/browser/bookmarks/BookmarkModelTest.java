@@ -44,10 +44,10 @@ public class BookmarkModelTest {
             RuleChain.outerRule(new ChromeBrowserTestRule()).around(new UiThreadTestRule());
 
     private static final int TIMEOUT_MS = 5000;
-    private BookmarkModel mBookmarkModel;
-    private BookmarkId mMobileNode;
-    private BookmarkId mOtherNode;
-    private BookmarkId mDesktopNode;
+    BookmarkModel mBookmarkModel;
+    BookmarkId mMobileNode;
+    BookmarkId mOtherNode;
+    BookmarkId mDesktopNode;
 
     @Before
     public void setUp() throws Exception {

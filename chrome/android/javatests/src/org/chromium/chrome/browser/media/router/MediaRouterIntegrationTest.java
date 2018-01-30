@@ -80,7 +80,7 @@ public class MediaRouterIntegrationTest {
     private static final int SCRIPT_TIMEOUT_MS = 10000;
     private static final int SCRIPT_RETRY_MS = 50;
 
-    private StrictMode.ThreadPolicy mOldPolicy;
+    StrictMode.ThreadPolicy mOldPolicy;
 
     private EmbeddedTestServer mTestServer;
 

@@ -61,7 +61,7 @@ public class DownloadForegroundServiceManager {
     // This is true when context.bindService has been called and before context.unbindService.
     private boolean mIsServiceBound;
     // This is non-null when onServiceConnected has been called (aka service is active).
-    private DownloadForegroundService mBoundService;
+    DownloadForegroundService mBoundService;
 
     public DownloadForegroundServiceManager() {}
 

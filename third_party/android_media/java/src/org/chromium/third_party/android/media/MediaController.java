@@ -83,12 +83,12 @@ public class MediaController extends FrameLayout {
         long getActionFlags();
     }
 
-    private Delegate mDelegate;
+    Delegate mDelegate;
     private Context mContext;
     private ViewGroup mProgressGroup;
     private SeekBar mProgressBar;
-    private TextView mEndTime, mCurrentTime;
-    private boolean mDragging;
+    TextView mEndTime, mCurrentTime;
+    boolean mDragging;
     private boolean mUseFastForward;
     private boolean mListenersSet;
     private boolean mShowNext, mShowPrev;
@@ -212,7 +212,7 @@ public class MediaController extends FrameLayout {
         updatePausePlay();
     }
 
-    private String stringForTime(int timeMs) {
+    String stringForTime(int timeMs) {
         int totalSeconds = timeMs / 1000;
 
         int seconds = totalSeconds % 60;
@@ -256,7 +256,7 @@ public class MediaController extends FrameLayout {
         }
     };
 
-    private void updatePausePlay() {
+    void updatePausePlay() {
         if (mDelegate == null || mPauseButton == null) return;
 
         if (mDelegate.isPlaying()) {
@@ -266,7 +266,7 @@ public class MediaController extends FrameLayout {
         }
     }
 
-    private void doPauseResume() {
+    void doPauseResume() {
         if (mDelegate == null) return;
 
         if (mDelegate.isPlaying()) {

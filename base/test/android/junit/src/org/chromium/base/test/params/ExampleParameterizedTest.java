@@ -35,7 +35,7 @@ public class ExampleParameterizedTest {
                     new ParameterSet().value("aa", "yy").name("AaYy"));
 
     @MethodParameter("A")
-    private static List<ParameterSet> sMethodParamA =
+    static List<ParameterSet> sMethodParamA =
             Arrays.asList(new ParameterSet().value(1, 2).name("OneTwo"),
                     new ParameterSet().value(2, 3).name("TwoThree"),
                     new ParameterSet().value(3, 4).name("ThreeFour"));

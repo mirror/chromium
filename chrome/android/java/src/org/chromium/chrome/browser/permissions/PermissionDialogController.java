@@ -48,8 +48,8 @@ public class PermissionDialogController implements AndroidPermissionRequester.Re
             REQUEST_ANDROID_PERMISSIONS})
     private @interface State {}
 
-    private AlertDialog mDialog;
-    private PermissionDialogDelegate mDialogDelegate;
+    AlertDialog mDialog;
+    PermissionDialogDelegate mDialogDelegate;
 
     // As the PermissionRequestManager handles queueing for a tab and only shows prompts for active
     // tabs, we typically only have one request. This class only handles multiple requests at once
@@ -60,12 +60,12 @@ public class PermissionDialogController implements AndroidPermissionRequester.Re
     private List<PermissionDialogDelegate> mRequestQueue;
 
     /** The current state, whether we have a prompt showing and so on. */
-    private @State int mState;
+    @State int mState;
 
     // Static holder to ensure safe initialization of the singleton instance.
     private static class Holder {
         @SuppressLint("StaticFieldLeak")
-        private static final PermissionDialogController sInstance =
+        static final PermissionDialogController sInstance =
                 new PermissionDialogController();
     }
 
@@ -73,7 +73,7 @@ public class PermissionDialogController implements AndroidPermissionRequester.Re
         return Holder.sInstance;
     }
 
-    private PermissionDialogController() {
+    PermissionDialogController() {
         mRequestQueue = new LinkedList<>();
         mState = NOT_SHOWING;
     }
@@ -101,7 +101,7 @@ public class PermissionDialogController implements AndroidPermissionRequester.Re
         scheduleDisplay();
     }
 
-    private void scheduleDisplay() {
+    void scheduleDisplay() {
         if (mState == NOT_SHOWING && !mRequestQueue.isEmpty()) dequeueDialog();
     }
 
@@ -186,7 +186,7 @@ public class PermissionDialogController implements AndroidPermissionRequester.Re
         }
     }
 
-    private void showDialog() {
+    void showDialog() {
         assert mState == PROMPT_PENDING;
 
         // The tab may have navigated or been closed while we were waiting for Chrome Home to close.
@@ -311,7 +311,7 @@ public class PermissionDialogController implements AndroidPermissionRequester.Re
         delegate.destroy();
     }
 
-    private void destroyDelegate() {
+    void destroyDelegate() {
         mDialogDelegate.destroy();
         mDialogDelegate = null;
         mState = NOT_SHOWING;

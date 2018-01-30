@@ -55,7 +55,7 @@ public class WebappVisibilityTest {
         });
     }
 
-    private static void testCanAutoHideBrowserControls() {
+    static void testCanAutoHideBrowserControls() {
         // Allow auto-hiding controls unless we're on a dangerous connection.
         Assert.assertTrue(canAutoHideBrowserControls(ConnectionSecurityLevel.NONE));
         Assert.assertTrue(canAutoHideBrowserControls(ConnectionSecurityLevel.SECURE));
@@ -64,7 +64,7 @@ public class WebappVisibilityTest {
         Assert.assertFalse(canAutoHideBrowserControls(ConnectionSecurityLevel.DANGEROUS));
     }
 
-    private static void testShouldShowBrowserControls(
+    static void testShouldShowBrowserControls(
             WebappScopePolicy scopePolicy, @WebDisplayMode int displayMode) {
         // Show browser controls for out-of-domain URLs.
         Assert.assertTrue(shouldShowBrowserControls(WEBAPP_URL, "http://notoriginalwebsite.com",

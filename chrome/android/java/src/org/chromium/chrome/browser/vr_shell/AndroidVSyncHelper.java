@@ -17,7 +17,7 @@ import org.chromium.base.annotations.JNINamespace;
  */
 @JNINamespace("vr_shell")
 public class AndroidVSyncHelper {
-    private final long mNativeAndroidVSyncHelper;
+    final long mNativeAndroidVSyncHelper;
 
     private final Choreographer.FrameCallback mCallback = new Choreographer.FrameCallback() {
         @Override
@@ -54,5 +54,5 @@ public class AndroidVSyncHelper {
         return windowManager.getDefaultDisplay().getRefreshRate();
     }
 
-    private native void nativeOnVSync(long nativeAndroidVSyncHelper, long frameTimeNanos);
+    native void nativeOnVSync(long nativeAndroidVSyncHelper, long frameTimeNanos);
 }

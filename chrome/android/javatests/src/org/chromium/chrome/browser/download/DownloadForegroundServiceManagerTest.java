@@ -49,10 +49,10 @@ public final class DownloadForegroundServiceManagerTest {
      */
     public static class MockDownloadForegroundServiceManager
             extends DownloadForegroundServiceManager {
-        private boolean mIsServiceBound;
-        private int mUpdatedNotificationId = DEFAULT_NOTIFICATION_ID;
-        private boolean mIsNotificationKilled;
-        private boolean mIsNotificationDetached;
+        boolean mIsServiceBound;
+        int mUpdatedNotificationId = DEFAULT_NOTIFICATION_ID;
+        boolean mIsNotificationKilled;
+        boolean mIsNotificationDetached;
 
         public MockDownloadForegroundServiceManager() {}
 

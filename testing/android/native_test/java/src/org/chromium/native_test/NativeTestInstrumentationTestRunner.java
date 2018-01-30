@@ -55,16 +55,16 @@ public class NativeTestInstrumentationTestRunner extends Instrumentation {
     private static final String DEFAULT_NATIVE_TEST_ACTIVITY =
             "org.chromium.native_test.NativeUnitTestActivity";
 
-    private Handler mHandler = new Handler();
-    private Bundle mLogBundle = new Bundle();
-    private SparseArray<ShardMonitor> mMonitors = new SparseArray<ShardMonitor>();
-    private String mNativeTestActivity;
+    Handler mHandler = new Handler();
+    Bundle mLogBundle = new Bundle();
+    SparseArray<ShardMonitor> mMonitors = new SparseArray<ShardMonitor>();
+    String mNativeTestActivity;
     private TestStatusReceiver mReceiver;
-    private Queue<ArrayList<String>> mShards = new ArrayDeque<ArrayList<String>>();
-    private long mShardNanoTimeout = DEFAULT_SHARD_NANO_TIMEOUT;
+    Queue<ArrayList<String>> mShards = new ArrayDeque<ArrayList<String>>();
+    long mShardNanoTimeout = DEFAULT_SHARD_NANO_TIMEOUT;
     private int mShardSizeLimit = DEFAULT_SHARD_SIZE_LIMIT;
-    private File mStdoutFile;
-    private Bundle mTransparentArguments;
+    File mStdoutFile;
+    Bundle mTransparentArguments;
 
     @Override
     public void onCreate(Bundle arguments) {
@@ -218,7 +218,7 @@ public class NativeTestInstrumentationTestRunner extends Instrumentation {
 
     }
 
-    private static boolean isAppProcessAlive(Context context, int pid) {
+    static boolean isAppProcessAlive(Context context, int pid) {
         ActivityManager activityManager =
                 (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningAppProcessInfo processInfo :

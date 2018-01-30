@@ -26,8 +26,8 @@ class PermissionUpdateInfoBarDelegate implements WindowAndroid.PermissionCallbac
 
     private final ContentViewCore mContentViewCore;
     private final String[] mAndroidPermisisons;
-    private long mNativePtr;
-    private ActivityStateListener mActivityStateListener;
+    long mNativePtr;
+    ActivityStateListener mActivityStateListener;
 
     @CalledByNative
     private static PermissionUpdateInfoBarDelegate create(
@@ -109,7 +109,7 @@ class PermissionUpdateInfoBarDelegate implements WindowAndroid.PermissionCallbac
         notifyPermissionResult();
     }
 
-    private void notifyPermissionResult() {
+    void notifyPermissionResult() {
         boolean hasAllPermissions = true;
         WindowAndroid windowAndroid = mContentViewCore.getWindowAndroid();
         if (windowAndroid == null) {
@@ -122,6 +122,6 @@ class PermissionUpdateInfoBarDelegate implements WindowAndroid.PermissionCallbac
         if (mNativePtr != 0) nativeOnPermissionResult(mNativePtr, hasAllPermissions);
     }
 
-    private native void nativeOnPermissionResult(
+    native void nativeOnPermissionResult(
             long nativePermissionUpdateInfoBarDelegate, boolean allPermissionsGranted);
 }

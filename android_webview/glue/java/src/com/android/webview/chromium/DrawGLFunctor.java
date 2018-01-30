@@ -91,7 +91,7 @@ class DrawGLFunctor implements AwContents.NativeDrawGLFunctor {
     // IMPORTANT: this class must not hold any reference back to the outer DrawGLFunctor
     // instance, as that will defeat GC of that object.
     private static final class DestroyRunnable implements Runnable {
-        private long mNativeDrawGLFunctor;
+        long mNativeDrawGLFunctor;
         DestroyRunnable(long nativeDrawGLFunctor) {
             mNativeDrawGLFunctor = nativeDrawGLFunctor;
             assert mNativeDrawGLFunctor != 0;
@@ -107,6 +107,6 @@ class DrawGLFunctor implements AwContents.NativeDrawGLFunctor {
     }
 
     private static native long nativeCreateGLFunctor(long viewContext);
-    private static native void nativeDestroyGLFunctor(long functor);
+    static native void nativeDestroyGLFunctor(long functor);
     private static native void nativeSetChromiumAwDrawGLFunction(long functionPointer);
 }

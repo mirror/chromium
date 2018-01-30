@@ -56,12 +56,12 @@ public class VideoFullscreenOrientationLockTest {
         );
     }
 
-    private boolean isScreenOrientationLocked() {
+    boolean isScreenOrientationLocked() {
         return mActivityTestRule.getActivity().getRequestedOrientation()
                 != ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
     }
 
-    private boolean isScreenOrientationLandscape() throws InterruptedException, TimeoutException {
+    boolean isScreenOrientationLandscape() throws InterruptedException, TimeoutException {
         StringBuilder sb = new StringBuilder();
         sb.append("(function() {");
         sb.append("  return  screen.orientation.type.startsWith('landscape');");

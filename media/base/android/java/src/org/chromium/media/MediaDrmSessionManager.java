@@ -94,7 +94,7 @@ class MediaDrmSessionManager {
             return createTemporarySessionId(new byte[0]);
         }
 
-        private SessionId(byte[] emeId, byte[] drmId, byte[] keySetId) {
+        SessionId(byte[] emeId, byte[] drmId, byte[] keySetId) {
             assert emeId != null;
             assert drmId != null || keySetId != null;
 
@@ -115,11 +115,11 @@ class MediaDrmSessionManager {
             return mKeySetId;
         }
 
-        private void setKeySetId(byte[] keySetId) {
+        void setKeySetId(byte[] keySetId) {
             mKeySetId = keySetId;
         }
 
-        private void setDrmId(byte[] drmId) {
+        void setDrmId(byte[] drmId) {
             mDrmId = drmId;
         }
 
@@ -140,7 +140,7 @@ class MediaDrmSessionManager {
         // MediaDrm.KEY_TYPE_XXX.
         private int mKeyType;
 
-        private SessionInfo(SessionId sessionId, String mimeType, int keyType) {
+        SessionInfo(SessionId sessionId, String mimeType, int keyType) {
             assert sessionId != null;
             assert mimeType != null && !mimeType.isEmpty();
 
@@ -159,21 +159,21 @@ class MediaDrmSessionManager {
 
         // Private methods that are visible in this file only.
 
-        private SessionId sessionId() {
+        SessionId sessionId() {
             return mSessionId;
         }
 
-        private void setKeyType(int keyType) {
+        void setKeyType(int keyType) {
             mKeyType = keyType;
         }
 
-        private PersistentInfo toPersistentInfo() {
+        PersistentInfo toPersistentInfo() {
             assert mSessionId.keySetId() != null;
 
             return new PersistentInfo(mSessionId.emeId(), mSessionId.keySetId(), mMimeType);
         }
 
-        private static SessionInfo fromPersistentInfo(PersistentInfo persistentInfo) {
+        static SessionInfo fromPersistentInfo(PersistentInfo persistentInfo) {
             assert persistentInfo != null;
             assert persistentInfo.emeId() != null;
             assert persistentInfo.keySetId() != null;
@@ -191,7 +191,7 @@ class MediaDrmSessionManager {
     //   3. Get EME/DRM session ID from DRM/EME session ID.
     // SessionId always has a valid EME session ID, so all opened session should
     // have an entry in mEmeSessionInfoMap.
-    private HashMap<ByteBuffer, SessionInfo> mEmeSessionInfoMap;
+    HashMap<ByteBuffer, SessionInfo> mEmeSessionInfoMap;
     private HashMap<ByteBuffer, SessionInfo> mDrmSessionInfoMap;
 
     // The persistent storage to record map from EME session ID to key set ID

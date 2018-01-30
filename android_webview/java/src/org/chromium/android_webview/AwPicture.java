@@ -22,7 +22,7 @@ class AwPicture extends Picture {
     // handled via the CleanupReference.
     private static final class DestroyRunnable implements Runnable {
         private long mNativeAwPicture;
-        private DestroyRunnable(long nativeAwPicture) {
+        DestroyRunnable(long nativeAwPicture) {
             mNativeAwPicture = nativeAwPicture;
         }
         @Override
@@ -78,7 +78,7 @@ class AwPicture extends Picture {
         throw new IllegalStateException("Unsupported in AwPicture");
     }
 
-    private static native void nativeDestroy(long nativeAwPicture);
+    static native void nativeDestroy(long nativeAwPicture);
     private native int nativeGetWidth(long nativeAwPicture);
     private native int nativeGetHeight(long nativeAwPicture);
     private native void nativeDraw(long nativeAwPicture, Canvas canvas);

@@ -21,10 +21,10 @@ import java.io.IOException;
  * time.
  */
 public class OAuthTokenConsumer {
-    private Context mContext;
+    Context mContext;
     private String mTokenScope;
-    private boolean mWaitingForAuthToken;
-    private String mLatestToken;
+    boolean mWaitingForAuthToken;
+    String mLatestToken;
 
     /**
      * @param context The context used to fetch token. |context| must be an activity if user
@@ -124,8 +124,8 @@ public class OAuthTokenConsumer {
         }.execute();
     }
 
-    private void handleErrorOnMainThread(final OAuthTokenFetcher.Callback callback,
-                                         final OAuthTokenFetcher.Error error) {
+    void handleErrorOnMainThread(final OAuthTokenFetcher.Callback callback,
+            final OAuthTokenFetcher.Error error) {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {

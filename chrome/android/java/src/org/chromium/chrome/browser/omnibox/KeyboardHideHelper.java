@@ -110,7 +110,7 @@ class KeyboardHideHelper implements ViewTreeObserver.OnGlobalLayoutListener {
         return Math.min(mTempRect.height(), mWindowDelegate.getDecorViewHeight());
     }
 
-    private void cleanUp() {
+    void cleanUp() {
         if (!mIsLayoutListenerAttached) return;
         mView.removeCallbacks(mClearListenerDelayedTask);
         mView.getViewTreeObserver().removeOnGlobalLayoutListener(this);

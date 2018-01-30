@@ -78,9 +78,9 @@ public class CompositorViewHolder extends FrameLayout
     private boolean mIsKeyboardShowing;
 
     private final Invalidator mInvalidator = new Invalidator();
-    private LayoutManager mLayoutManager;
+    LayoutManager mLayoutManager;
     private LayerTitleCache mLayerTitleCache;
-    private CompositorView mCompositorView;
+    CompositorView mCompositorView;
 
     private boolean mContentOverlayVisiblity = true;
 
@@ -93,7 +93,7 @@ public class CompositorViewHolder extends FrameLayout
     /**
      * A task to be performed after a resize event.
      */
-    private Runnable mPostHideKeyboardTask;
+    Runnable mPostHideKeyboardTask;
 
     private TabModelSelector mTabModelSelector;
     private ChromeFullscreenManager mFullscreenManager;
@@ -438,7 +438,7 @@ public class CompositorViewHolder extends FrameLayout
         return currentTab;
     }
 
-    private View getActiveView() {
+    View getActiveView() {
         Tab tab = getCurrentTab();
         return tab != null ? tab.getContentView() : null;
     }
@@ -448,7 +448,7 @@ public class CompositorViewHolder extends FrameLayout
         return tab != null ? tab.getActiveContentViewCore() : null;
     }
 
-    private WebContents getActiveWebContents() {
+    WebContents getActiveWebContents() {
         Tab tab = getCurrentTab();
         return tab != null ? tab.getWebContents() : null;
     }
@@ -581,7 +581,7 @@ public class CompositorViewHolder extends FrameLayout
         }
     }
 
-    private void onViewportChanged() {
+    void onViewportChanged() {
         if (mLayoutManager != null) mLayoutManager.onViewportChanged();
     }
 
@@ -929,7 +929,7 @@ public class CompositorViewHolder extends FrameLayout
      * parameters on {@link ContentViewCore} on {@code tab}.
      * @param tab The {@link Tab} to initialize.
      */
-    private void initializeTab(Tab tab) {
+    void initializeTab(Tab tab) {
         ContentViewCore content = tab.getActiveContentViewCore();
         if (content != null) initializeContentViewCore(content);
 

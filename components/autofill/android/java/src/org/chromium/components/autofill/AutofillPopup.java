@@ -46,10 +46,10 @@ public class AutofillPopup extends DropdownPopupWindow implements AdapterView.On
     private static final long CLEAR_ACCESSIBILITY_FOCUS_DELAY_MS = 100;
 
     private final Context mContext;
-    private final AutofillDelegate mAutofillDelegate;
+    final AutofillDelegate mAutofillDelegate;
     private List<AutofillSuggestion> mSuggestions;
 
-    private final Runnable mClearAccessibilityFocusRunnable = new Runnable() {
+    final Runnable mClearAccessibilityFocusRunnable = new Runnable() {
         @Override
         public void run() {
             mAutofillDelegate.accessibilityFocusCleared();

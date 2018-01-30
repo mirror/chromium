@@ -44,7 +44,7 @@ class BookmarkItemsAdapter
     }
 
     private static final int MAXIMUM_NUMBER_OF_SEARCH_RESULTS = 500;
-    private static final String EMPTY_QUERY = null;
+    static final String EMPTY_QUERY = null;
 
     private final List<List<? extends Object>> mSections;
 
@@ -55,10 +55,10 @@ class BookmarkItemsAdapter
 
     private final List<BookmarkId> mTopLevelFolders = new ArrayList<>();
 
-    private BookmarkDelegate mDelegate;
+    BookmarkDelegate mDelegate;
     private Context mContext;
     private BookmarkPromoHeader mPromoHeaderManager;
-    private String mSearchText;
+    String mSearchText;
     private BookmarkId mCurrentFolder;
 
     private BookmarkModelObserver mBookmarkModelObserver = new BookmarkModelObserver() {
@@ -143,7 +143,7 @@ class BookmarkItemsAdapter
     /**
      * @return The position of the given bookmark in adapter. Will return -1 if not found.
      */
-    private int getPositionForBookmark(BookmarkId bookmark) {
+    int getPositionForBookmark(BookmarkId bookmark) {
         assert bookmark != null;
         int position = -1;
         for (int i = 0; i < getItemCount(); i++) {
@@ -170,7 +170,7 @@ class BookmarkItemsAdapter
         updateHeaderAndNotify();
     }
 
-    private void removeItem(int position) {
+    void removeItem(int position) {
         List<?> section = getSection(position);
         assert section == mFolderSection || section == mBookmarkSection;
         section.remove(toSectionPosition(position));
@@ -345,7 +345,7 @@ class BookmarkItemsAdapter
     }
 
     private static class ItemViewHolder extends RecyclerView.ViewHolder {
-        private ItemViewHolder(View view) {
+        ItemViewHolder(View view) {
             super(view);
         }
     }

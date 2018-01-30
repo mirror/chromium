@@ -32,7 +32,7 @@ public final class ChildAccountInfoFetcher {
 
     private final long mNativeAccountFetcherService;
     private final String mAccountId;
-    private final Account mAccount;
+    final Account mAccount;
     private final BroadcastReceiver mAccountFlagsChangedReceiver;
 
     private ChildAccountInfoFetcher(
@@ -67,7 +67,7 @@ public final class ChildAccountInfoFetcher {
         return new ChildAccountInfoFetcher(nativeAccountFetcherService, accountId, accountName);
     }
 
-    private void fetch() {
+    void fetch() {
         Log.d(TAG, "Checking child account status for %s", mAccount.name);
         AccountManagerFacade.get().checkChildAccount(
                 mAccount, isChildAccount -> setIsChildAccount(isChildAccount));

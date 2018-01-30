@@ -57,7 +57,7 @@ public class AwAutofillProvider extends AutofillProvider {
         private static final int INIT_ID = 1; // ID can't be 0 in Android.
         private static int sSessionId = INIT_ID;
         public final int sessionId;
-        private FormData mFormData;
+        FormData mFormData;
         private FocusField mFocusField;
 
         public AutofillRequest(FormData formData, FocusField focus) {

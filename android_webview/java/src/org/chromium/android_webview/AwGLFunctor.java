@@ -24,7 +24,7 @@ public class AwGLFunctor {
         private final long mNativeAwGLFunctor;
         private final Runnable mNativeDrawGLFunctorDestroyRunnable;
 
-        private DestroyRunnable(
+        DestroyRunnable(
                 long nativeAwGLFunctor, Runnable nativeDrawGLFunctorDestroyRunnable) {
             mNativeAwGLFunctor = nativeAwGLFunctor;
             mNativeDrawGLFunctorDestroyRunnable = nativeDrawGLFunctorDestroyRunnable;
@@ -130,7 +130,7 @@ public class AwGLFunctor {
     private native long nativeGetAwDrawGLViewContext(long nativeAwGLFunctor);
 
     private static native long nativeGetAwDrawGLFunction();
-    private static native void nativeDestroy(long nativeAwGLFunctor);
+    static native void nativeDestroy(long nativeAwGLFunctor);
     private static native long nativeCreate(AwGLFunctor javaProxy);
     private static native int nativeGetNativeInstanceCount();
 }

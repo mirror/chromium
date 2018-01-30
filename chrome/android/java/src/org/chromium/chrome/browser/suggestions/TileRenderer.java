@@ -43,14 +43,14 @@ public class TileRenderer {
     private static final int ICON_DECREASED_MIN_SIZE_PX = 24;
 
     private final Resources mResources;
-    private final ImageFetcher mImageFetcher;
+    final ImageFetcher mImageFetcher;
     private final RoundedIconGenerator mIconGenerator;
 
     @TileView.Style
     private final int mStyle;
     private final int mTitleLinesCount;
     private final int mDesiredIconSize;
-    private final int mMinIconSize;
+    final int mMinIconSize;
 
     @LayoutRes
     private final int mLayout;

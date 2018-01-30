@@ -31,7 +31,7 @@ import org.chromium.chrome.browser.tab.Tab;
  */
 public class ReaderModeInfoBar extends InfoBar {
     /** If the infobar has started hiding. */
-    private boolean mIsHiding;
+    boolean mIsHiding;
 
     /**
      * Navigate to Reader Mode when the icon or the message text is clicked.
@@ -134,7 +134,7 @@ public class ReaderModeInfoBar extends InfoBar {
     /**
      * @return The {@link ReaderModeManager} for this infobar.
      */
-    private ReaderModeManager getReaderModeManager() {
+    ReaderModeManager getReaderModeManager() {
         if (getNativeInfoBarPtr() == 0) return null;
         Tab tab = nativeGetTab(getNativeInfoBarPtr());
 

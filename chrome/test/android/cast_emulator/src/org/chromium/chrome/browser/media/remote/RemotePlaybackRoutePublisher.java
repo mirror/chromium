@@ -46,9 +46,9 @@ public final class RemotePlaybackRoutePublisher implements RoutePublisher {
     private static final String VARIABLE_VOLUME_SESSION_ROUTE_ID = "variable_session";
     private static final int VOLUME_MAX = 10;
 
-    private int mVolume = 5;
+    int mVolume = 5;
 
-    private final MediaRouteProvider mProvider;
+    final MediaRouteProvider mProvider;
     private final List<String> mControlCategories = new ArrayList<String>();
 
     public RemotePlaybackRoutePublisher(MediaRouteProvider provider) {
@@ -433,7 +433,7 @@ public final class RemotePlaybackRoutePublisher implements RoutePublisher {
             return success;
         }
 
-        private void handleStatusChange(MediaItem item) {
+        void handleStatusChange(MediaItem item) {
             if (item == null) {
                 item = mSessionManager.getCurrentItem();
             }
@@ -472,7 +472,7 @@ public final class RemotePlaybackRoutePublisher implements RoutePublisher {
     }
 
     @RemovableInRelease
-    private String getMediaControlIntentDebugString(Intent intent) {
+    String getMediaControlIntentDebugString(Intent intent) {
         return "uri=" + intent.getData()
                 + ", mime=" + intent.getType()
                 + ", sid=" +  intent.getStringExtra(MediaControlIntent.EXTRA_SESSION_ID)

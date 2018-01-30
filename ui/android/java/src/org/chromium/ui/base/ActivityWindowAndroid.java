@@ -44,8 +44,8 @@ public class ActivityWindowAndroid
 
     private static final String PERMISSION_QUERIED_KEY_PREFIX = "HasRequestedAndroidPermission::";
 
-    private final Handler mHandler;
-    private final SparseArray<PermissionCallback> mOutstandingPermissionRequests;
+    final Handler mHandler;
+    final SparseArray<PermissionCallback> mOutstandingPermissionRequests;
 
     private int mNextRequestCode;
 
@@ -176,7 +176,7 @@ public class ActivityWindowAndroid
         return false;
     }
 
-    private String getHasRequestedPermissionKey(String permission) {
+    String getHasRequestedPermissionKey(String permission) {
         String permissionQueriedKey = permission;
         // Prior to O, permissions were granted at the group level.  Post O, each permission is
         // granted individually.
@@ -251,7 +251,7 @@ public class ActivityWindowAndroid
 
     protected void logUMAOnRequestPermissionDenied(String permission) {}
 
-    private int generateNextRequestCode() {
+    int generateNextRequestCode() {
         int requestCode = REQUEST_CODE_PREFIX + mNextRequestCode;
         mNextRequestCode = (mNextRequestCode + 1) % REQUEST_CODE_RANGE_SIZE;
         return requestCode;

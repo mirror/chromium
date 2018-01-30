@@ -28,8 +28,8 @@ public class GCMDriver {
     // The instance of GCMDriver currently owned by a C++ GCMDriverAndroid, if any.
     private static GCMDriver sInstance;
 
-    private long mNativeGCMDriverAndroid;
-    private GoogleCloudMessagingSubscriber mSubscriber;
+    long mNativeGCMDriverAndroid;
+    GoogleCloudMessagingSubscriber mSubscriber;
 
     private GCMDriver(long nativeGCMDriverAndroid) {
         mNativeGCMDriverAndroid = nativeGCMDriverAndroid;
@@ -126,9 +126,9 @@ public class GCMDriver {
         sInstance.mSubscriber = subscriber;
     }
 
-    private native void nativeOnRegisterFinished(long nativeGCMDriverAndroid, String appId,
+    native void nativeOnRegisterFinished(long nativeGCMDriverAndroid, String appId,
             String registrationId, boolean success);
-    private native void nativeOnUnregisterFinished(long nativeGCMDriverAndroid, String appId,
+    native void nativeOnUnregisterFinished(long nativeGCMDriverAndroid, String appId,
             boolean success);
     private native void nativeOnMessageReceived(long nativeGCMDriverAndroid, String appId,
             String senderId, String collapseKey, byte[] rawData, String[] dataKeysAndValues);

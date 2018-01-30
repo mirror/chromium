@@ -59,7 +59,7 @@ public class ChildConnectionAllocatorTest {
 
         private ChildProcessConnection mConnection;
 
-        private ChildProcessConnection.ServiceCallback mConnectionServiceCallback;
+        ChildProcessConnection.ServiceCallback mConnectionServiceCallback;
 
         @Override
         public ChildProcessConnection createConnection(Context context, ComponentName serviceName,

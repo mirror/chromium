@@ -41,13 +41,14 @@ public class FullscreenHtmlApiHandler {
     private static final long CLEAR_LAYOUT_FULLSCREEN_DELAY_MS = 20;
 
     private final Window mWindow;
-    private final Handler mHandler;
-    private final FullscreenHtmlApiDelegate mDelegate;
+    final Handler mHandler;
+    final FullscreenHtmlApiDelegate mDelegate;
 
     // We still need this since we are setting fullscreen UI state on the ContentViewCore's
     // container view, and a Tab can change to have null content view core, i.e., if you navigate
     // to a native page.
-    @Nullable private ContentViewCore mContentViewCoreInFullscreen;
+    @Nullable
+    ContentViewCore mContentViewCoreInFullscreen;
     @Nullable private Tab mTabInFullscreen;
     private boolean mIsPersistentMode;
 
@@ -310,7 +311,7 @@ public class FullscreenHtmlApiHandler {
     /**
      * Create and show the fullscreen notification toast.
      */
-    private void showNotificationToast() {
+    void showNotificationToast() {
         if (mNotificationToast == null) {
             int resId = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
                     ? R.string.immersive_fullscreen_api_notification
@@ -363,7 +364,7 @@ public class FullscreenHtmlApiHandler {
      * Helper method to return extra fullscreen UI flags for Kitkat devices.
      * @return fullscreen flags to be applied to system UI visibility.
      */
-    private static int getExtraFullscreenUIFlags() {
+    static int getExtraFullscreenUIFlags() {
         int flags = 0;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             flags |= View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;

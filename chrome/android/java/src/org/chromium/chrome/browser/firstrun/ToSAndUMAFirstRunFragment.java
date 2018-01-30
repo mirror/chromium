@@ -168,7 +168,7 @@ public class ToSAndUMAFirstRunFragment extends Fragment implements FirstRunFragm
         if (mTriggerAcceptAfterNativeInit) acceptTermsOfService();
     }
 
-    private void acceptTermsOfService() {
+    void acceptTermsOfService() {
         if (!mNativeInitialized) {
             mTriggerAcceptAfterNativeInit = true;
             setSpinnerVisible(true);

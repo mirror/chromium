@@ -145,7 +145,7 @@ public class HttpNegotiateAuthenticator {
 
     @VisibleForTesting
     class GetTokenCallback implements AccountManagerCallback<Bundle> {
-        private final RequestData mRequestData;
+        final RequestData mRequestData;
         public GetTokenCallback(RequestData requestData) {
             mRequestData = requestData;
         }
@@ -247,7 +247,7 @@ public class HttpNegotiateAuthenticator {
      * Process a result bundle from a completed token request, communicating its content back to
      * the native code.
      */
-    private void processResult(Bundle result, RequestData requestData) {
+    void processResult(Bundle result, RequestData requestData) {
         mSpnegoContext = result.getBundle(HttpNegotiateConstants.KEY_SPNEGO_CONTEXT);
         int status;
         switch (result.getInt(

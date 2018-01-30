@@ -39,15 +39,15 @@ public class UsbDevicePreferences
     // The site settings category we are showing.
     private SiteSettingsCategory mCategory;
     // Canonical example of the USB device being examined.
-    private UsbInfo mUsbInfo;
+    UsbInfo mUsbInfo;
     // All of the USB device permission entries matching the canonical device.
-    private ArrayList<UsbInfo> mUsbInfos;
+    ArrayList<UsbInfo> mUsbInfos;
     // The set of sites to display.
-    private ArrayList<Website> mSites;
+    ArrayList<Website> mSites;
     // The view for searching the list of items.
     private SearchView mSearchView;
     // If not blank, represents a substring to use to search for site names.
-    private String mSearch = "";
+    String mSearch = "";
 
     @Override
     @SuppressWarnings("unchecked")
@@ -173,12 +173,12 @@ public class UsbDevicePreferences
      *
      * resetList() is called to refresh the view when the data is ready.
      */
-    private void getInfo() {
+    void getInfo() {
         WebsitePermissionsFetcher fetcher = new WebsitePermissionsFetcher(new ResultsPopulator());
         fetcher.fetchPreferencesForCategory(mCategory);
     }
 
-    private void resetList() {
+    void resetList() {
         getPreferenceScreen().removeAll();
         PreferenceUtils.addPreferencesFromResource(this, R.xml.usb_device_preferences);
 

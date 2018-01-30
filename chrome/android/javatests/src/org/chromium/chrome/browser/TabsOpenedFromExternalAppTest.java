@@ -694,7 +694,7 @@ public class TabsOpenedFromExternalAppTest {
 
 
     private static class TestTabObserver extends EmptyTabObserver {
-        private ContextMenu mContextMenu;
+        ContextMenu mContextMenu;
 
         @Override
         public void onContextMenuShown(Tab tab, ContextMenu menu) {

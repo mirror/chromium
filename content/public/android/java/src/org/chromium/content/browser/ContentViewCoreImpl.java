@@ -156,8 +156,8 @@ public class ContentViewCoreImpl
     }
 
     private final Context mContext;
-    private final String mProductVersion;
-    private ViewGroup mContainerView;
+    final String mProductVersion;
+    ViewGroup mContainerView;
     private InternalAccessDelegate mContainerViewInternals;
     private WebContentsImpl mWebContents;
     private WebContentsObserver mWebContentsObserver;
@@ -172,7 +172,7 @@ public class ContentViewCoreImpl
     private long mNativeSelectPopupSourceFrame;
 
     // Only valid when focused on a text / password field.
-    private ImeAdapter mImeAdapter;
+    ImeAdapter mImeAdapter;
 
     private TextSuggestionHost mTextSuggestionHost;
 
@@ -182,7 +182,7 @@ public class ContentViewCoreImpl
     // Whether joystick scroll is enabled.  It's disabled when an editable field is focused.
     private boolean mJoystickScrollEnabled = true;
 
-    private boolean mIsMobileOptimizedHint;
+    boolean mIsMobileOptimizedHint;
 
     private boolean mPreserveSelectionOnNextLossOfFocus;
 
@@ -219,7 +219,7 @@ public class ContentViewCoreImpl
 
     // The outstanding fling start events that hasn't got fling end yet. It may be > 1 because
     // onNativeFlingStopped() is called asynchronously.
-    private int mPotentiallyActiveFlingCount;
+    int mPotentiallyActiveFlingCount;
 
     /**
      * PID used to indicate an invalid render process.
@@ -524,7 +524,7 @@ public class ContentViewCoreImpl
         return mTouchScrollInProgress || mPotentiallyActiveFlingCount > 0;
     }
 
-    private void setTouchScrollInProgress(boolean inProgress) {
+    void setTouchScrollInProgress(boolean inProgress) {
         mTouchScrollInProgress = inProgress;
         getSelectionPopupController().setScrollInProgress(inProgress, isScrollInProgress());
     }
@@ -588,7 +588,7 @@ public class ContentViewCoreImpl
         mWebContents.onHide();
     }
 
-    private void hidePopupsAndClearSelection() {
+    void hidePopupsAndClearSelection() {
         if (isAlive()) {
             getSelectionPopupController().destroyActionModeAndUnselect();
             destroyPastePopup();
@@ -1123,7 +1123,7 @@ public class ContentViewCoreImpl
         return mSelectPopup;
     }
 
-    private void destroyPastePopup() {
+    void destroyPastePopup() {
         getSelectionPopupController().destroyPastePopup();
     }
 
@@ -1216,7 +1216,7 @@ public class ContentViewCoreImpl
 
     // When creating the View structure, the left and top are relative to the parent node.
     @TargetApi(Build.VERSION_CODES.M)
-    private void createVirtualStructure(ViewStructure viewNode, AccessibilitySnapshotNode node,
+    void createVirtualStructure(ViewStructure viewNode, AccessibilitySnapshotNode node,
             final boolean ignoreScrollOffset) {
         viewNode.setClassName(node.className);
         if (node.hasSelection) {
@@ -1319,7 +1319,7 @@ public class ContentViewCoreImpl
      * Reset scroll and fling accounting, notifying listeners as appropriate.
      * This is useful as a failsafe when the input stream may have been interruped.
      */
-    private void resetScrollInProgress() {
+    void resetScrollInProgress() {
         if (!isScrollInProgress()) return;
 
         final boolean touchScrollInProgress = mTouchScrollInProgress;

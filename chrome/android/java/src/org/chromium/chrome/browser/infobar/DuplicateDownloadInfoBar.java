@@ -31,10 +31,10 @@ import java.io.File;
  */
 public class DuplicateDownloadInfoBar extends ConfirmInfoBar {
     private static final String TAG = "DuplicateDownloadInfoBar";
-    private final String mFilePath;
+    final String mFilePath;
     private final boolean mIsOfflinePage;
-    private final String mPageUrl;
-    private final boolean mIsIncognito;
+    final String mPageUrl;
+    final boolean mIsIncognito;
     private final boolean mDuplicateRequestExists;
 
     @CalledByNative

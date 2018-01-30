@@ -84,7 +84,7 @@ public class PassphraseDialogFragment extends DialogFragment implements OnClickL
         return dialog;
     }
 
-    private void recordPassphraseDialogDismissal(int result) {
+    void recordPassphraseDialogDismissal(int result) {
         RecordHistogram.recordEnumeratedHistogram(
                 "Sync.PassphraseDialogDismissed",
                 result,
@@ -229,7 +229,7 @@ public class PassphraseDialogFragment extends DialogFragment implements OnClickL
         getListener().onPassphraseCanceled();
     }
 
-    private void handleSubmit() {
+    void handleSubmit() {
         resetPassphraseBoxColor();
         mVerifyingTextView.setText(R.string.sync_verifying);
 

@@ -70,23 +70,23 @@ public class EditorDialog
     /** Duration of the animation to hide the UI. */
     private static final int DIALOG_EXIT_ANIMATION_MS = 195;
 
-    private final Context mContext;
-    private final EditorObserverForTest mObserverForTest;
+    final Context mContext;
+    final EditorObserverForTest mObserverForTest;
     private final Handler mHandler;
     private final TextView.OnEditorActionListener mEditorActionListener;
     private final int mHalfRowMargin;
     private final int mDropdownTopPadding;
     private final List<EditorFieldView> mFieldViews;
-    private final List<EditText> mEditableTextFields;
+    final List<EditText> mEditableTextFields;
     private final List<Spinner> mDropdownFields;
     private final InputFilter mCardNumberInputFilter;
     private final TextWatcher mCardNumberFormatter;
 
     @Nullable
     private TextWatcher mPhoneFormatter;
-    private View mLayout;
-    private EditorModel mEditorModel;
-    private Button mDoneButton;
+    View mLayout;
+    EditorModel mEditorModel;
+    Button mDoneButton;
     private ViewGroup mDataView;
     private View mFooter;
     @Nullable
@@ -94,9 +94,9 @@ public class EditorDialog
     @Nullable
     private TextView mPhoneInput;
 
-    private Animator mDialogInOutAnimator;
+    Animator mDialogInOutAnimator;
     @Nullable
-    private Runnable mDeleteRunnable;
+    Runnable mDeleteRunnable;
     private boolean mIsDismissed;
     /**
      * Builds the editor dialog.
@@ -288,7 +288,7 @@ public class EditorDialog
         }
     }
 
-    private void animateOutDialog() {
+    void animateOutDialog() {
         if (mDialogInOutAnimator != null || !isShowing()) return;
 
         Animator dropDown =
@@ -342,7 +342,7 @@ public class EditorDialog
      * This would be more optimal as a RelativeLayout, but because it's dynamically generated, it's
      * much more human-parsable with inefficient LinearLayouts for half-width controls sharing rows.
      */
-    private void prepareEditor() {
+    void prepareEditor() {
         assert mEditorModel != null;
 
         // Ensure the layout is empty.
@@ -559,7 +559,7 @@ public class EditorDialog
         mDialogInOutAnimator.start();
     }
 
-    private void initFocus() {
+    void initFocus() {
         // Immediately focus the first invalid field to make it faster to edit.
         final List<EditorFieldView> invalidViews = getViewsWithInvalidInformation(false);
         if (!invalidViews.isEmpty()) {

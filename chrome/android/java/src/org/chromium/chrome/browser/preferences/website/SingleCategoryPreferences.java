@@ -76,21 +76,21 @@ public class SingleCategoryPreferences extends PreferenceFragment
     // The clear button displayed in the Storage view.
     private Button mClearButton;
     // The Site Settings Category we are showing.
-    private SiteSettingsCategory mCategory;
+    SiteSettingsCategory mCategory;
     // If not blank, represents a substring to use to search for site names.
-    private String mSearch = "";
+    String mSearch = "";
     // Whether to group by allowed/blocked list.
-    private boolean mGroupByAllowBlock;
+    boolean mGroupByAllowBlock;
     // Whether the Blocked list should be shown expanded.
-    private boolean mBlockListExpanded;
+    boolean mBlockListExpanded;
     // Whether the Allowed list should be shown expanded.
-    private boolean mAllowListExpanded = true;
+    boolean mAllowListExpanded = true;
     // Whether this is the first time this screen is shown.
-    private boolean mIsInitialRun = true;
+    boolean mIsInitialRun = true;
     // The number of sites that are on the Allowed list.
-    private int mAllowedSiteCount;
+    int mAllowedSiteCount;
     // The websites that are currently displayed to the user.
-    private List<WebsitePreference> mWebsites;
+    List<WebsitePreference> mWebsites;
 
     // Keys for individual preferences.
     public static final String READ_WRITE_TOGGLE_KEY = "read_write_toggle";
@@ -102,7 +102,7 @@ public class SingleCategoryPreferences extends PreferenceFragment
     private static final String ALLOWED_GROUP = "allowed_group";
     private static final String BLOCKED_GROUP = "blocked_group";
 
-    private void getInfoForOrigins() {
+    void getInfoForOrigins() {
         if (!mCategory.enabledInAndroid(getActivity())) {
             // No need to fetch any data if we're not going to show it, but we do need to update
             // the global toggle to reflect updates in Android settings (e.g. Location).
@@ -115,7 +115,7 @@ public class SingleCategoryPreferences extends PreferenceFragment
         fetcher.fetchPreferencesForCategory(mCategory);
     }
 
-    private void displayEmptyScreenMessage() {
+    void displayEmptyScreenMessage() {
         if (mEmptyView != null) {
             mEmptyView.setText(R.string.no_saved_website_settings);
         }
@@ -214,7 +214,7 @@ public class SingleCategoryPreferences extends PreferenceFragment
      * Returns whether a website is on the Blocked list for the category currently showing.
      * @param website The website to check.
      */
-    private boolean isOnBlockList(WebsitePreference website) {
+    boolean isOnBlockList(WebsitePreference website) {
         // This list is ordered alphabetically by permission.
         if (mCategory.showAdsSites()) {
             return website.site().getAdsPermission() == ContentSetting.BLOCK;
@@ -250,7 +250,7 @@ public class SingleCategoryPreferences extends PreferenceFragment
      * @param numAllowed The number of sites that are on the Allowed list
      * @param toggleValue The value the global toggle will have once precessing ends.
      */
-    private void updateAllowedHeader(int numAllowed, boolean toggleValue) {
+    void updateAllowedHeader(int numAllowed, boolean toggleValue) {
         ExpandablePreferenceGroup allowedGroup =
                 (ExpandablePreferenceGroup) getPreferenceScreen().findPreference(ALLOWED_GROUP);
         if (numAllowed == 0) {
@@ -273,7 +273,7 @@ public class SingleCategoryPreferences extends PreferenceFragment
         allowedGroup.setIcon(icon);
     }
 
-    private void updateBlockedHeader(int numBlocked) {
+    void updateBlockedHeader(int numBlocked) {
         ExpandablePreferenceGroup blockedGroup =
                 (ExpandablePreferenceGroup) getPreferenceScreen().findPreference(BLOCKED_GROUP);
         if (numBlocked == 0) {
@@ -621,7 +621,7 @@ public class SingleCategoryPreferences extends PreferenceFragment
     /**
      * Reset the preference screen an initialize it again.
      */
-    private void resetList() {
+    void resetList() {
         // This will remove the combo box at the top and all the sites listed below it.
         getPreferenceScreen().removeAll();
         // And this will add the filter preference back (combo box).

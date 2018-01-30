@@ -314,7 +314,7 @@ public class ContextualSearchPromoControl extends OverlayPanelInflater {
      * @param percentage The completion percentage. 0.f means the Promo is fully collapsed and
      *                   transparent. 1.f means the Promo is fully expanded and opaque.
      */
-    private void updateAppearance(float percentage) {
+    void updateAppearance(float percentage) {
         if (mIsVisible) {
             mHeightPx = Math.round(MathUtils.clamp(percentage * mContentHeightPx,
                     0.f, mContentHeightPx));
@@ -401,7 +401,7 @@ public class ContextualSearchPromoControl extends OverlayPanelInflater {
      * Handles the choice made by the user in the Promo.
      * @param hasEnabled Whether the user has chosen to enable the feature.
      */
-    private void handlePromoChoice(boolean hasEnabled) {
+    void handlePromoChoice(boolean hasEnabled) {
         if (!mHasHandledChoice) {
             mHasHandledChoice = true;
             PrefServiceBridge.getInstance().setContextualSearchState(hasEnabled);
@@ -411,7 +411,7 @@ public class ContextualSearchPromoControl extends OverlayPanelInflater {
     /**
      * Handles a click in the settings link located in the Promo.
      */
-    private void handleClickSettingsLink() {
+    void handleClickSettingsLink() {
         new Handler().post(new Runnable() {
             @Override
             public void run() {

@@ -75,7 +75,7 @@ public class InfoBarTest {
     private static class TestInfoBar extends InfoBar {
         private boolean mCompact;
 
-        private TestInfoBar(String message) {
+        TestInfoBar(String message) {
             super(0, null, message);
         }
 
@@ -92,7 +92,7 @@ public class InfoBarTest {
     private static class TestInfoBarWithAccessibilityMessage extends TestInfoBar {
         private CharSequence mAccessibilityMessage;
 
-        private TestInfoBarWithAccessibilityMessage(String message) {
+        TestInfoBarWithAccessibilityMessage(String message) {
             super(message);
         }
 

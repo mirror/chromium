@@ -91,7 +91,7 @@ public class ViewPositionObserver implements PositionObserver {
         }
     }
 
-    private void updatePosition() {
+    void updatePosition() {
         int previousPositionX = mPosition[0];
         int previousPositionY = mPosition[1];
         mView.getLocationInWindow(mPosition);

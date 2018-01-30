@@ -20,8 +20,8 @@ public final class HashUtil {
     }
 
     public static class Params {
-        private final String mText;
-        private String mSalt;
+        final String mText;
+        String mSalt;
 
         public Params(String text) {
             mText = text;

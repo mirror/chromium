@@ -70,9 +70,9 @@ public class AutocompleteEditTextTest {
 
     private Context mContext;
     private InputConnection mInputConnection;
-    private Verifier mVerifier;
+    Verifier mVerifier;
     private ShadowAccessibilityManager mShadowAccessibilityManager;
-    private boolean mIsShown;
+    boolean mIsShown;
 
     // Limits the target of InOrder#verify.
     private static class Verifier {

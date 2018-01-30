@@ -166,9 +166,9 @@ public class BookmarkWidgetService extends RemoteViewsService {
         private BookmarkFolder mFolder;
         private BookmarkModel mBookmarkModel;
         private LargeIconBridge mLargeIconBridge;
-        private RoundedIconGenerator mIconGenerator;
+        RoundedIconGenerator mIconGenerator;
         private int mMinIconSizeDp;
-        private int mDisplayedIconSize;
+        int mDisplayedIconSize;
         private int mCornerRadius;
         private int mRemainingTaskCount;
 
@@ -200,7 +200,7 @@ public class BookmarkWidgetService extends RemoteViewsService {
         }
 
         @UiThread
-        private void loadBookmarks(BookmarkId folderId) {
+        void loadBookmarks(BookmarkId folderId) {
             mFolder = new BookmarkFolder();
 
             // Load the requested folder if it exists. Otherwise, fall back to the default folder.
@@ -260,7 +260,7 @@ public class BookmarkWidgetService extends RemoteViewsService {
         }
 
         @UiThread
-        private void taskFinished() {
+        void taskFinished() {
             mRemainingTaskCount--;
             if (mRemainingTaskCount == 0) {
                 mCallback.onBookmarksLoaded(mFolder);
@@ -281,12 +281,12 @@ public class BookmarkWidgetService extends RemoteViewsService {
     private static class BookmarkAdapter implements RemoteViewsService.RemoteViewsFactory {
 
         // Can be accessed on any thread
-        private final Context mContext;
+        final Context mContext;
         private final int mWidgetId;
         private final SharedPreferences mPreferences;
 
         // Accessed only on the UI thread
-        private BookmarkModel mBookmarkModel;
+        BookmarkModel mBookmarkModel;
 
         // Accessed only on binder threads.
         private BookmarkFolder mCurrentFolder;
@@ -339,7 +339,7 @@ public class BookmarkWidgetService extends RemoteViewsService {
         }
 
         @UiThread
-        private void refreshWidget() {
+        void refreshWidget() {
             mContext.sendBroadcast(new Intent(
                     BookmarkWidgetProvider.getBookmarkAppWidgetUpdateAction(mContext),
                     null, mContext, BookmarkThumbnailWidgetProvider.class)

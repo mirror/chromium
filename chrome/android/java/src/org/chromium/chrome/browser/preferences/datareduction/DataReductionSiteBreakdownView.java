@@ -37,12 +37,12 @@ public class DataReductionSiteBreakdownView extends LinearLayout {
      */
     private static final String OTHER_HOST_NAME = "Other";
 
-    private int mNumDataUseItemsToDisplay = 10;
+    int mNumDataUseItemsToDisplay = 10;
 
     private TableLayout mTableLayout;
-    private TextView mDataUsedTitle;
-    private TextView mDataSavedTitle;
-    private List<DataReductionDataUseItem> mDataUseItems;
+    TextView mDataUsedTitle;
+    TextView mDataSavedTitle;
+    List<DataReductionDataUseItem> mDataUseItems;
     private boolean mTextViewsNeedAttributesSet;
     @ColorInt
     private int mTextColor;
@@ -118,7 +118,7 @@ public class DataReductionSiteBreakdownView extends LinearLayout {
         }
     }
 
-    private void setTextViewSortedAttributes(TextView textView) {
+    void setTextViewSortedAttributes(TextView textView) {
         textView.setTextColor(mTextColor);
         Drawable arrowDrawable = getStartCompoundDrawable(textView);
         // If the drawable has not been created yet, set mTextViewsNeedAttributesSet so that
@@ -131,7 +131,7 @@ public class DataReductionSiteBreakdownView extends LinearLayout {
         arrowDrawable.setAlpha(255);
     }
 
-    private void setTextViewUnsortedAttributes(TextView textView) {
+    void setTextViewUnsortedAttributes(TextView textView) {
         textView.setTextColor(mLightTextColor);
         Drawable arrowDrawable = getStartCompoundDrawable(textView);
         // If the drawable has not been created yet, set mTextViewsNeedAttributesSet so that
@@ -203,7 +203,7 @@ public class DataReductionSiteBreakdownView extends LinearLayout {
     /**
      * Update the site breakdown to display the data use items.
      */
-    private void updateSiteBreakdown() {
+    void updateSiteBreakdown() {
         // Remove all old rows except the header.
         mTableLayout.removeViews(1, mTableLayout.getChildCount() - 1);
 

@@ -118,7 +118,7 @@ public class ProxyChangeListener {
         // methods on it. If we fail, return an empty proxy config (meaning
         // 'direct').
         // TODO(sgurun): once android.net.ProxyInfo is public, rewrite this.
-        private ProxyConfig extractNewProxy(Intent intent) {
+        ProxyConfig extractNewProxy(Intent intent) {
             try {
                 final String getHostName = "getHost";
                 final String getPortName = "getPort";
@@ -189,7 +189,7 @@ public class ProxyChangeListener {
         }
     }
 
-    private void proxySettingsChanged(ProxyReceiver proxyReceiver, ProxyConfig cfg) {
+    void proxySettingsChanged(ProxyReceiver proxyReceiver, ProxyConfig cfg) {
         if (!sEnabled
                 // Once execution begins on the correct thread, make sure unregisterReceiver()
                 // hasn't been called in the mean time. Ignore the changed signal if
@@ -241,7 +241,7 @@ public class ProxyChangeListener {
         }
     }
 
-    private void runOnThread(Runnable r) {
+    void runOnThread(Runnable r) {
         if (onThread()) {
             r.run();
         } else {

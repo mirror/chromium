@@ -42,7 +42,7 @@ public class WebappDataStorageTest {
     public MockWebappDataStorageClockRule mClockRule = new MockWebappDataStorageClockRule();
 
     private SharedPreferences mSharedPreferences;
-    private boolean mCallbackCalled;
+    boolean mCallbackCalled;
 
     private class FetchCallback<T> implements WebappDataStorage.FetchCallback<T> {
         T mExpected;
@@ -382,7 +382,7 @@ public class WebappDataStorageTest {
     // produced from a byte stream is hardcoded to be a 100x100 bitmap with
     // ARGB_8888 pixel format. Because of this, we need to work around the
     // equality check of bitmaps. Remove this once the bug is fixed.
-    private static boolean bitmapEquals(Bitmap expected, Bitmap actual) {
+    static boolean bitmapEquals(Bitmap expected, Bitmap actual) {
         if (actual.getWidth() != 100) return false;
         if (actual.getHeight() != 100) return false;
         if (!actual.getConfig().equals(Bitmap.Config.ARGB_8888)) return false;

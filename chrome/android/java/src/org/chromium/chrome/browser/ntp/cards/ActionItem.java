@@ -46,9 +46,9 @@ public class ActionItem extends OptionalLeaf {
     private final SuggestionsMetrics.DurationTracker mSpinnerDurationTracker =
             SuggestionsMetrics.getSpinnerVisibilityReporter();
 
-    private boolean mImpressionTracked;
+    boolean mImpressionTracked;
     private int mPerSectionRank = -1;
-    private @State int mState = State.HIDDEN;
+    @State int mState = State.HIDDEN;
 
     public ActionItem(SuggestionsSection section, SuggestionsRanker ranker) {
         mCategoryInfo = section.getCategoryInfo();
@@ -207,7 +207,7 @@ public class ActionItem extends OptionalLeaf {
                     : R.layout.new_tab_page_action_card;
         }
 
-        private void setState(@State int state) {
+        void setState(@State int state) {
             assert state != State.HIDDEN;
 
             // When hiding children, we keep them invisible rather than GONE to make sure the

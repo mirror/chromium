@@ -33,7 +33,7 @@ public class ApplicationStatusTest {
     /** Shadow that tracks calls to onWindowFocusChanged and dispatchKeyEvent. */
     @Implements(Activity.class)
     public static class TrackingShadowActivity extends ShadowActivity {
-        private int mWindowFocusCalls;
+        int mWindowFocusCalls;
         private int mDispatchKeyEventCalls;
         private boolean mReturnValueForKeyDispatch;
 

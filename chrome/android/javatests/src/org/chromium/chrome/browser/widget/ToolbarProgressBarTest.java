@@ -53,9 +53,9 @@ public class ToolbarProgressBarTest {
 
     private static final String TEST_PAGE = "/chrome/test/data/android/progressbar_test.html";
 
-    private final CallbackHelper mProgressUpdateHelper = new CallbackHelper();
-    private final CallbackHelper mProgressVisibilityHelper = new CallbackHelper();
-    private ToolbarProgressBar mProgressBar;
+    final CallbackHelper mProgressUpdateHelper = new CallbackHelper();
+    final CallbackHelper mProgressVisibilityHelper = new CallbackHelper();
+    ToolbarProgressBar mProgressBar;
 
     @Before
     public void setUp() throws InterruptedException, TimeoutException {

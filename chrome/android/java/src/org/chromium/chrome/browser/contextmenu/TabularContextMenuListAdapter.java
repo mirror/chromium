@@ -28,7 +28,7 @@ import java.util.List;
 class TabularContextMenuListAdapter extends BaseAdapter {
     private final List<ContextMenuItem> mMenuItems;
     private final Activity mActivity;
-    private final Callback<Boolean> mOnDirectShare;
+    final Callback<Boolean> mOnDirectShare;
 
     /**
      * Adapter for the tabular context menu UI

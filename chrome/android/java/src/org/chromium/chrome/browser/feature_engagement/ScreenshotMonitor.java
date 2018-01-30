@@ -51,7 +51,7 @@ public class ScreenshotMonitor {
         }
 
         // This can only be accessed on the UI thread.
-        private ScreenshotMonitor mScreenshotMonitor;
+        ScreenshotMonitor mScreenshotMonitor;
 
         public ScreenshotMonitorFileObserver() {
             super(getDirPath(), FileObserver.CREATE);
@@ -104,7 +104,7 @@ public class ScreenshotMonitor {
         mIsMonitoring = false;
     }
 
-    private void onEventOnUiThread(final int event, final String path) {
+    void onEventOnUiThread(final int event, final String path) {
         if (!mIsMonitoring) return;
         if (path == null) return;
         assert event == FileObserver.CREATE;

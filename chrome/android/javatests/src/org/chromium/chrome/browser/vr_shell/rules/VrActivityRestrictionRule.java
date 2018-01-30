@@ -17,7 +17,7 @@ import org.chromium.chrome.browser.vr_shell.util.VrTestRuleUtils;
  * one of the supported Activity types for the test.
  */
 public class VrActivityRestrictionRule implements TestRule {
-    private SupportedActivity mCurrentRestriction;
+    SupportedActivity mCurrentRestriction;
 
     public VrActivityRestrictionRule(SupportedActivity currentRestriction) {
         mCurrentRestriction = currentRestriction;

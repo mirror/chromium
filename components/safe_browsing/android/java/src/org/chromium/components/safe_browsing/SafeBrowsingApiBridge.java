@@ -68,6 +68,6 @@ public final class SafeBrowsingApiBridge {
         Log.d(TAG, "Done starting request");
     }
 
-    private static native void nativeOnUrlCheckDone(
+    static native void nativeOnUrlCheckDone(
             long callbackId, int resultStatus, String metadata, long checkDelta);
 }

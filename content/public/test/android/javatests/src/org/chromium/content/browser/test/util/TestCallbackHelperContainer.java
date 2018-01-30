@@ -17,7 +17,7 @@ import java.util.concurrent.TimeoutException;
  * This class is used to provide callback hooks for tests and related classes.
  */
 public class TestCallbackHelperContainer {
-    private TestWebContentsObserver mTestWebContentsObserver;
+    TestWebContentsObserver mTestWebContentsObserver;
 
     public TestCallbackHelperContainer(final ContentViewCore contentViewCore) {
         // TODO(yfriedman): Change callers to be executed on the UI thread. Unfortunately this is

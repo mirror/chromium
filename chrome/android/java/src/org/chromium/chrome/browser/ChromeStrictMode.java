@@ -32,9 +32,9 @@ public class ChromeStrictMode {
     private static final double MAX_UPLOADS_PER_SESSION = 3;
 
     private static boolean sIsStrictModeAlreadyConfigured;
-    private static List<Object> sCachedStackTraces =
+    static List<Object> sCachedStackTraces =
             Collections.synchronizedList(new ArrayList<Object>());
-    private static AtomicInteger sNumUploads = new AtomicInteger();
+    static AtomicInteger sNumUploads = new AtomicInteger();
 
     private static class SnoopingArrayList<T> extends ArrayList<T> {
         @Override

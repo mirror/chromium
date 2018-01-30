@@ -45,7 +45,7 @@ class ScrollAccessibilityHelper {
     }
 
     private Handler mHandler;
-    private boolean mMsgViewScrolledQueued;
+    boolean mMsgViewScrolledQueued;
 
     public ScrollAccessibilityHelper(View eventSender) {
         mHandler = new Handler(new HandlerCallback(eventSender));

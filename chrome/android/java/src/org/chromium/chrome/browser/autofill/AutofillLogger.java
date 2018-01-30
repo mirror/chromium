@@ -20,7 +20,7 @@ public class AutofillLogger {
         private final String mAutofilledValue;
         private final String mProfileFullName;
 
-        private LogEntry(String autofilledValue, String profileFullName) {
+        LogEntry(String autofilledValue, String profileFullName) {
             mAutofilledValue = autofilledValue;
             mProfileFullName = profileFullName;
         }

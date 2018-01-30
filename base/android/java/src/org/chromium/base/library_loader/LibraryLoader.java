@@ -664,11 +664,11 @@ public class LibraryLoader {
     // Finds the ranges corresponding to the native library pages, forks a new
     // process to prefetch these pages and waits for it. The new process then
     // terminates. This is blocking.
-    private static native boolean nativeForkAndPrefetchNativeLibrary();
+    static native boolean nativeForkAndPrefetchNativeLibrary();
 
     // Returns the percentage of the native library code page that are currently reseident in
     // memory.
-    private static native int nativePercentageOfResidentNativeLibraryCode();
+    static native int nativePercentageOfResidentNativeLibraryCode();
 
     // Periodically logs native library residency from this thread.
     private static native void nativePeriodicallyCollectResidency();

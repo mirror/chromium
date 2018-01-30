@@ -22,7 +22,7 @@ public class EmptyTabModel implements TabModel {
 
     // "Initialization on demand holder idiom"
     private static class LazyHolder {
-        private static final EmptyTabModel INSTANCE = new EmptyTabModel();
+        static final EmptyTabModel INSTANCE = new EmptyTabModel();
     }
 
     /**

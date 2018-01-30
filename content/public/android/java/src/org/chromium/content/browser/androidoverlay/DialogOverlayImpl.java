@@ -37,11 +37,11 @@ public class DialogOverlayImpl implements AndroidOverlay, DialogOverlayCore.Host
     // separately from mDialogCore itself so that we can call it after we've discarded the latter.
     private Runnable mReleaseCoreRunnable;
 
-    private final ThreadHoppingHost mHoppingHost;
+    final ThreadHoppingHost mHoppingHost;
 
     private DialogOverlayCore mDialogCore;
 
-    private long mNativeHandle;
+    long mNativeHandle;
 
     // If nonzero, then we have registered a surface with this ID.
     private int mSurfaceId;
@@ -323,7 +323,7 @@ public class DialogOverlayImpl implements AndroidOverlay, DialogOverlayCore.Host
      * Notify the native side that we are ready for token / dismissed callbacks.  This may result in
      * a callback before it returns.
      */
-    private native void nativeCompleteInit(long nativeDialogOverlayImpl);
+    native void nativeCompleteInit(long nativeDialogOverlayImpl);
 
     /**
      * Stops native side and deallocates |handle|.

@@ -43,11 +43,11 @@ class CustomTabBottomBarDelegate implements FullscreenListener {
     private static final CachedMetrics.ActionEvent REMOTE_VIEWS_UPDATED =
             new CachedMetrics.ActionEvent("CustomTabsRemoteViewsUpdated");
     private static final int SLIDE_ANIMATION_DURATION_MS = 400;
-    private ChromeActivity mActivity;
-    private ChromeFullscreenManager mFullscreenManager;
-    private ViewGroup mBottomBarView;
+    ChromeActivity mActivity;
+    ChromeFullscreenManager mFullscreenManager;
+    ViewGroup mBottomBarView;
     private CustomTabIntentDataProvider mDataProvider;
-    private PendingIntent mClickPendingIntent;
+    PendingIntent mClickPendingIntent;
     private int[] mClickableIDs;
 
     private OnClickListener mBottomBarClickListener = new OnClickListener() {
@@ -233,7 +233,7 @@ class CustomTabBottomBarDelegate implements FullscreenListener {
         }
     }
 
-    private static void sendPendingIntentWithUrl(PendingIntent pendingIntent, Intent extraIntent,
+    static void sendPendingIntentWithUrl(PendingIntent pendingIntent, Intent extraIntent,
             ChromeActivity activity) {
         Intent addedIntent = extraIntent == null ? new Intent() : new Intent(extraIntent);
         Tab tab = activity.getActivityTab();

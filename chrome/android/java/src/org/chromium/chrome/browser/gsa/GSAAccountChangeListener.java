@@ -48,9 +48,9 @@ public class GSAAccountChangeListener {
 
     // Reference count for the connection.
     private int mUsersCount;
-    private GSAServiceClient mClient;
+    GSAServiceClient mClient;
 
-    private boolean mAlreadyReportedHistogram;
+    boolean mAlreadyReportedHistogram;
 
     @VisibleForTesting
     static class AccountChangeBroadcastReceiver extends BroadcastReceiver {
@@ -127,7 +127,7 @@ public class GSAAccountChangeListener {
         context.registerReceiver(gsaUpdatedReceiver, filter);
     }
 
-    private void createGsaClientAndConnect(final Context context) {
+    void createGsaClientAndConnect(final Context context) {
         Callback<Bundle> onMessageReceived = new Callback<Bundle>() {
             @Override
             public void onResult(Bundle result) {
@@ -180,7 +180,7 @@ public class GSAAccountChangeListener {
         if (mClient != null && mUsersCount == 0) mClient.disconnect();
     }
 
-    private void notifyGsaBroadcastsAccountChanges() {
+    void notifyGsaBroadcastsAccountChanges() {
         if (mClient == null) return;
         mClient.disconnect();
         mClient = null;

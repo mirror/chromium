@@ -50,7 +50,7 @@ public class OverlayPanelEventFilter extends GestureEventFilter {
     private static final float VERTICAL_DETERMINATION_BOOST = 1.25f;
 
     /** The OverlayPanel that this filter is for. */
-    private final OverlayPanel mPanel;
+    final OverlayPanel mPanel;
 
     /** The {@link GestureDetector} used to distinguish tap and scroll gestures. */
     private final GestureDetector mGestureDetector;

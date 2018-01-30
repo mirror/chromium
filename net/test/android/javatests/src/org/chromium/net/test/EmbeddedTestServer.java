@@ -41,7 +41,7 @@ public class EmbeddedTestServer {
             "org.chromium.net.test.EMBEDDED_TEST_SERVER_SERVICE";
     private static final long SERVICE_CONNECTION_WAIT_INTERVAL_MS = 5000;
 
-    private IEmbeddedTestServerImpl mImpl;
+    IEmbeddedTestServerImpl mImpl;
     private ServiceConnection mConn = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
@@ -61,7 +61,7 @@ public class EmbeddedTestServer {
     };
 
     private Context mContext;
-    private final Object mImplMonitor = new Object();
+    final Object mImplMonitor = new Object();
 
     // Whether the server should use HTTP or HTTPS.
     public enum ServerHTTPSSetting {
@@ -124,7 +124,7 @@ public class EmbeddedTestServer {
          */
         public void readFromSocket(long socketId) {}
 
-        private IConnectionListener getListener() {
+        IConnectionListener getListener() {
             return mListener;
         }
     }

@@ -106,17 +106,17 @@ public class OfflinePageSavePageLaterEvaluationTest {
     private static final int PAGE_MODEL_LOAD_TIMEOUT_MS = 30000;
     private static final int REMOVE_REQUESTS_TIMEOUT_MS = 30000;
 
-    private OfflinePageEvaluationBridge mBridge;
+    OfflinePageEvaluationBridge mBridge;
     private OfflinePageEvaluationObserver mObserver;
 
-    private CountDownLatch mCompletionLatch;
-    private List<String> mUrls;
-    private int mCount;
-    private boolean mIsUserRequested;
+    CountDownLatch mCompletionLatch;
+    List<String> mUrls;
+    int mCount;
+    boolean mIsUserRequested;
     private boolean mUseTestScheduler;
-    private int mScheduleBatchSize;
+    int mScheduleBatchSize;
 
-    private LongSparseArray<RequestMetadata> mRequestMetadata;
+    LongSparseArray<RequestMetadata> mRequestMetadata;
 
     @Before
     public void setUp() throws Exception {
@@ -207,7 +207,7 @@ public class OfflinePageSavePageLaterEvaluationTest {
     /**
      * Print log message in output file through evaluation bridge.
      */
-    private void log(String tag, String format, Object... args) {
+    void log(String tag, String format, Object... args) {
         mBridge.log(tag, String.format(format, args));
     }
 
@@ -375,7 +375,7 @@ public class OfflinePageSavePageLaterEvaluationTest {
     }
 
     // Translate the int value of status to BackgroundSavePageResult.
-    private String statusToString(int status) {
+    String statusToString(int status) {
         switch (status) {
             case BackgroundSavePageResult.SUCCESS:
                 return "SUCCESS";

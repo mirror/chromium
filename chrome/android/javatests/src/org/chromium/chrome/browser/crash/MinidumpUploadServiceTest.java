@@ -61,12 +61,12 @@ public class MinidumpUploadServiceTest {
     private static class TestMinidumpUploadService extends MinidumpUploadService {
         private final NetworkChangingPermissionManager mPermissionManager =
                 new NetworkChangingPermissionManager();
-        private TestMinidumpUploadService() {}
-        private TestMinidumpUploadService(Context context) {
+        TestMinidumpUploadService() {}
+        TestMinidumpUploadService(Context context) {
             attachBaseContext(context);
         }
 
-        private void attachBaseContextLate(Context base) {
+        void attachBaseContextLate(Context base) {
             super.attachBaseContext(base);
         }
 
@@ -698,9 +698,9 @@ public class MinidumpUploadServiceTest {
      * It can be constructed with the wanted return-value of the call()-method.
      */
     private static class CountedMinidumpUploadCallable extends MinidumpUploadCallable {
-        private int mCalledCount;
+        int mCalledCount;
         @MinidumpUploadCallable.MinidumpUploadStatus private final int mResult;
-        private final boolean mTriggerNetworkChange;
+        final boolean mTriggerNetworkChange;
 
         /**
          * Creates a fake callable, that just counts the number of times it is called.
@@ -709,7 +709,7 @@ public class MinidumpUploadServiceTest {
          * @param networkChange Should trigger a network change after this callable is finished.
          *     This essentially triggers a retry if result is set to fail.
          */
-        private CountedMinidumpUploadCallable(String fileName, int result, boolean networkChange) {
+        CountedMinidumpUploadCallable(String fileName, int result, boolean networkChange) {
             super(new File(fileName), null, null, null);
             this.mResult = result;
             this.mTriggerNetworkChange = networkChange;

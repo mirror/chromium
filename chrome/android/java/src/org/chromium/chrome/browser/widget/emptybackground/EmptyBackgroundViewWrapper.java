@@ -139,7 +139,7 @@ public class EmptyBackgroundViewWrapper {
         });
     }
 
-    private void updateEmptyContainerState() {
+    void updateEmptyContainerState() {
         boolean showEmptyBackground = shouldShowEmptyContainer();
         if (showEmptyBackground) {
             inflateViewIfNecessary();

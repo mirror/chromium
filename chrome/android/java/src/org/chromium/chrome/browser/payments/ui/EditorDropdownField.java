@@ -31,14 +31,14 @@ import javax.annotation.Nullable;
  * Helper class for creating a dropdown view with a label.
  */
 class EditorDropdownField implements EditorFieldView {
-    private final EditorFieldModel mFieldModel;
+    final EditorFieldModel mFieldModel;
     private final View mLayout;
     private final TextView mLabel;
     private final Spinner mDropdown;
-    private int mSelectedIndex;
-    private ArrayAdapter<CharSequence> mAdapter;
+    int mSelectedIndex;
+    ArrayAdapter<CharSequence> mAdapter;
     @Nullable
-    private EditorObserverForTest mObserverForTest;
+    EditorObserverForTest mObserverForTest;
 
     /**
      * Builds a dropdown view.
@@ -173,7 +173,7 @@ class EditorDropdownField implements EditorFieldView {
         requestFocusAndHideKeyboard();
     }
 
-    private void requestFocusAndHideKeyboard() {
+    void requestFocusAndHideKeyboard() {
         UiUtils.hideKeyboard(mDropdown);
         ViewGroup parent = (ViewGroup) mDropdown.getParent();
         if (parent != null) parent.requestChildFocus(mDropdown, mDropdown);

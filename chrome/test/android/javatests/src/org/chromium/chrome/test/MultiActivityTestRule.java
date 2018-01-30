@@ -20,7 +20,7 @@ import java.util.concurrent.TimeoutException;
 
 /** Custom TestRule for MultiActivity Tests. */
 public class MultiActivityTestRule implements TestRule, MultiActivityTestCommonCallback {
-    private final MultiActivityTestCommon mTestCommon;
+    final MultiActivityTestCommon mTestCommon;
 
     public MultiActivityTestRule() {
         mTestCommon = new MultiActivityTestCommon(this);

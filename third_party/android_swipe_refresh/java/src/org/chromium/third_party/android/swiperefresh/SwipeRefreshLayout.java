@@ -87,19 +87,19 @@ public class SwipeRefreshLayout extends ViewGroup {
     // Default offset in dips from the top of the view to where the progress spinner should stop
     private static final int DEFAULT_CIRCLE_TARGET = 64;
 
-    private OnRefreshListener mListener;
+    OnRefreshListener mListener;
     private OnResetListener mResetListener;
-    private boolean mRefreshing = false;
+    boolean mRefreshing = false;
     private float mTotalDragDistance = -1;
     private int mMediumAnimationDuration;
-    private int mCurrentTargetOffsetTop;
+    int mCurrentTargetOffsetTop;
     // Whether or not the starting offset has been determined.
     private boolean mOriginalOffsetCalculated = false;
 
     private float mInitialMotionY;
     private boolean mIsBeingDragged;
     // Whether this item is scaled up rather than clipped
-    private boolean mScale;
+    boolean mScale;
 
     // Target is returning to its start offset because it was cancelled or a
     // refresh was triggered.
@@ -109,16 +109,16 @@ public class SwipeRefreshLayout extends ViewGroup {
         android.R.attr.enabled
     };
 
-    private CircleImageView mCircleView;
+    CircleImageView mCircleView;
     private int mCircleViewIndex = -1;
 
     protected int mFrom;
 
-    private float mStartingScale;
+    float mStartingScale;
 
     protected int mOriginalOffsetTop;
 
-    private MaterialProgressDrawable mProgress;
+    MaterialProgressDrawable mProgress;
 
     private Animation mScaleAnimation;
 
@@ -132,18 +132,18 @@ public class SwipeRefreshLayout extends ViewGroup {
 
     private Animation.AnimationListener mCancelAnimationListener;
 
-    private float mSpinnerFinalOffset;
+    float mSpinnerFinalOffset;
 
-    private boolean mNotify;
+    boolean mNotify;
 
     private int mCircleWidth;
 
     private int mCircleHeight;
 
     // Whether the client has set a custom starting position;
-    private boolean mUsingCustomStart;
+    boolean mUsingCustomStart;
 
-    private Animation.AnimationListener mRefreshListener = new Animation.AnimationListener() {
+    Animation.AnimationListener mRefreshListener = new Animation.AnimationListener() {
         @Override
         public void onAnimationStart(Animation animation) {
         }
@@ -382,7 +382,7 @@ public class SwipeRefreshLayout extends ViewGroup {
      * Pre API 11, this does an alpha animation.
      * @param progress
      */
-    private void setAnimationProgress(float progress) {
+    void setAnimationProgress(float progress) {
         if (isAlphaUsedForScale()) {
             setColorViewAlpha((int) (progress * MAX_ALPHA));
         } else {
@@ -403,7 +403,7 @@ public class SwipeRefreshLayout extends ViewGroup {
         }
     }
 
-    private void startScaleDownAnimation(Animation.AnimationListener listener) {
+    void startScaleDownAnimation(Animation.AnimationListener listener) {
         if (mScaleDownAnimation == null) {
             mScaleDownAnimation = new Animation() {
                 @Override
@@ -751,7 +751,7 @@ public class SwipeRefreshLayout extends ViewGroup {
         }
     };
 
-    private void moveToStart(float interpolatedTime) {
+    void moveToStart(float interpolatedTime) {
         int targetTop = 0;
         targetTop = (mFrom + (int) ((mOriginalOffsetTop - mFrom) * interpolatedTime));
         int offset = targetTop - mCircleView.getTop();
@@ -791,7 +791,7 @@ public class SwipeRefreshLayout extends ViewGroup {
         mCircleView.startAnimation(mScaleDownToStartAnimation);
     }
 
-    private void setTargetOffsetTopAndBottom(int offset, boolean requiresUpdate) {
+    void setTargetOffsetTopAndBottom(int offset, boolean requiresUpdate) {
         mCircleView.bringToFront();
         mCircleView.offsetTopAndBottom(offset);
         mCurrentTargetOffsetTop = mCircleView.getTop();

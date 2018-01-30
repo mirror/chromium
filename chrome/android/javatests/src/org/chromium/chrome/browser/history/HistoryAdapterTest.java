@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit;
 @RunWith(ChromeJUnit4ClassRunner.class)
 public class HistoryAdapterTest {
     private StubbedHistoryProvider mHistoryProvider;
-    private HistoryAdapter mAdapter;
+    HistoryAdapter mAdapter;
 
     @Before
     public void setUp() throws Exception {

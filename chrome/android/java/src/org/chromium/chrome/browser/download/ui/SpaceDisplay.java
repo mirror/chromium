@@ -103,7 +103,7 @@ public class SpaceDisplay extends RecyclerView.AdapterDataObserver {
 
     private final ObserverList<Observer> mObservers = new ObserverList<>();
     private final AsyncTask<Void, Void, Long> mFileSystemBytesTask;
-    private AsyncTask<Void, Void, Long> mFreeBytesTask;
+    AsyncTask<Void, Void, Long> mFreeBytesTask;
 
     private DownloadHistoryAdapter mHistoryAdapter;
     private View mView;
@@ -111,7 +111,7 @@ public class SpaceDisplay extends RecyclerView.AdapterDataObserver {
     private TextView mSpaceUsedByDownloadsTextView;
     private TextView mSpaceFreeAndOtherAppsTextView;
     private MaterialProgressBar mSpaceBar;
-    private long mFreeBytes;
+    long mFreeBytes;
 
     SpaceDisplay(final ViewGroup parent, DownloadHistoryAdapter historyAdapter) {
         mHistoryAdapter = historyAdapter;
@@ -171,7 +171,7 @@ public class SpaceDisplay extends RecyclerView.AdapterDataObserver {
         mObservers.addObserver(observer);
     }
 
-    private void update() {
+    void update() {
         long fileSystemBytes = 0;
 
         try {

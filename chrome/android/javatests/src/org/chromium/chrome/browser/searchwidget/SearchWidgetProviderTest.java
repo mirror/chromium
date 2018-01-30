@@ -64,7 +64,7 @@ public class SearchWidgetProviderTest {
         private Context mContext;
         private SharedPreferences mPreferences;
 
-        private TestDelegate(Context context) {
+        TestDelegate(Context context) {
             super(context);
             mContext = context;
             mPreferences = new InMemorySharedPreferences();
@@ -103,8 +103,8 @@ public class SearchWidgetProviderTest {
     private static final String TEXT_SEARCH_ENGINE = "Stuff and Thangs";
     private static final String TEXT_SEARCH_ENGINE_FULL = "Search with Stuff and Thangs";
 
-    private TestContext mContext;
-    private TestDelegate mDelegate;
+    TestContext mContext;
+    TestDelegate mDelegate;
 
     @Before
     public void setUp() throws Exception {

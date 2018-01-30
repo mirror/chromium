@@ -19,7 +19,7 @@ import java.util.Set;
 public class InMemorySharedPreferences implements SharedPreferences {
 
     // Guarded on its own monitor.
-    private final Map<String, Object> mData;
+    final Map<String, Object> mData;
 
     public InMemorySharedPreferences() {
         mData = new HashMap<String, Object>();

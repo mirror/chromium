@@ -40,9 +40,9 @@ public class PaymentManifestParserTest implements ManifestParseCallback {
     private URI[] mSupportedOrigins;
     private boolean mAllOriginsSupported;
     private WebAppManifestSection[] mWebAppManifest;
-    private boolean mParseFailure;
-    private boolean mParsePaymentMethodManifestSuccess;
-    private boolean mParseWebAppManifestSuccess;
+    boolean mParseFailure;
+    boolean mParsePaymentMethodManifestSuccess;
+    boolean mParseWebAppManifestSuccess;
 
     @Override
     public void onPaymentMethodManifestParseSuccess(

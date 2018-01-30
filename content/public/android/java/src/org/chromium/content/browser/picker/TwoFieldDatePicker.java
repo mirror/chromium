@@ -27,9 +27,9 @@ import java.util.TimeZone;
  */
 public abstract class TwoFieldDatePicker extends FrameLayout {
 
-    private final NumberPicker mPositionInYearSpinner;
+    final NumberPicker mPositionInYearSpinner;
 
-    private final NumberPicker mYearSpinner;
+    final NumberPicker mYearSpinner;
 
     private OnMonthOrWeekChangedListener mMonthOrWeekChangedListener;
 

@@ -355,7 +355,7 @@ public class CustomTabTabPersistencePolicyTest {
         };
     }
 
-    private static CustomTabActivity buildTestCustomTabActivity(
+    static CustomTabActivity buildTestCustomTabActivity(
             final int taskId, int[] normalTabIds, int[] incognitoTabIds) {
         final TabModelSelectorImpl selectorImpl =
                 buildTestTabModelSelector(normalTabIds, incognitoTabIds);
@@ -436,7 +436,7 @@ public class CustomTabTabPersistencePolicyTest {
         };
     }
 
-    private static TabModelSelectorImpl buildTestTabModelSelector(
+    static TabModelSelectorImpl buildTestTabModelSelector(
             int[] normalTabIds, int[] incognitoTabIds) {
         MockTabModel.MockTabModelDelegate tabModelDelegate =
                 new MockTabModel.MockTabModelDelegate() {

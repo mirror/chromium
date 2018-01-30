@@ -44,9 +44,9 @@ public class GeolocationTest {
     };
 
     private TestAwContentsClient mContentsClient;
-    private AwContents mAwContents;
+    AwContents mAwContents;
     private MockLocationProvider mMockLocationProvider;
-    private TestDependencyFactory mOverridenFactory;
+    TestDependencyFactory mOverridenFactory;
 
     private static final String RAW_HTML =
             "<!DOCTYPE html>\n"

@@ -126,48 +126,48 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
 
     private static final String CHROME_MEMEX_URL = "https://chrome-memex.appspot.com";
 
-    private final ToolbarLayout mToolbar;
-    private final ToolbarControlContainer mControlContainer;
+    final ToolbarLayout mToolbar;
+    final ToolbarControlContainer mControlContainer;
 
-    private TabModelSelector mTabModelSelector;
-    private TabModelSelectorObserver mTabModelSelectorObserver;
-    private TabModelObserver mTabModelObserver;
+    TabModelSelector mTabModelSelector;
+    TabModelSelectorObserver mTabModelSelectorObserver;
+    TabModelObserver mTabModelObserver;
     private MenuDelegatePhone mMenuDelegatePhone;
-    private final ToolbarModelImpl mToolbarModel;
+    final ToolbarModelImpl mToolbarModel;
     private Profile mCurrentProfile;
-    private BookmarkBridge mBookmarkBridge;
-    private TemplateUrlServiceObserver mTemplateUrlObserver;
-    private final LocationBar mLocationBar;
-    private FindToolbarManager mFindToolbarManager;
-    private final AppMenuPropertiesDelegate mAppMenuPropertiesDelegate;
+    BookmarkBridge mBookmarkBridge;
+    TemplateUrlServiceObserver mTemplateUrlObserver;
+    final LocationBar mLocationBar;
+    FindToolbarManager mFindToolbarManager;
+    final AppMenuPropertiesDelegate mAppMenuPropertiesDelegate;
 
     private final TabObserver mTabObserver;
     private final BookmarkBridge.BookmarkModelObserver mBookmarksObserver;
-    private final FindToolbarObserver mFindToolbarObserver;
-    private final OverviewModeObserver mOverviewModeObserver;
-    private final SceneChangeObserver mSceneChangeObserver;
-    private final ActionBarDelegate mActionBarDelegate;
-    private final ActionModeController mActionModeController;
-    private final LoadProgressSimulator mLoadProgressSimulator;
+    final FindToolbarObserver mFindToolbarObserver;
+    final OverviewModeObserver mOverviewModeObserver;
+    final SceneChangeObserver mSceneChangeObserver;
+    final ActionBarDelegate mActionBarDelegate;
+    final ActionModeController mActionModeController;
+    final LoadProgressSimulator mLoadProgressSimulator;
     private final Callback<Boolean> mUrlFocusChangedCallback;
-    private final Handler mHandler = new Handler();
+    final Handler mHandler = new Handler();
 
-    private BrowserStateBrowserControlsVisibilityDelegate mControlsVisibilityDelegate;
+    BrowserStateBrowserControlsVisibilityDelegate mControlsVisibilityDelegate;
     private int mFullscreenFocusToken = FullscreenManager.INVALID_TOKEN;
-    private int mFullscreenFindInPageToken = FullscreenManager.INVALID_TOKEN;
-    private int mFullscreenMenuToken = FullscreenManager.INVALID_TOKEN;
-    private int mFullscreenHighlightToken = FullscreenManager.INVALID_TOKEN;
+    int mFullscreenFindInPageToken = FullscreenManager.INVALID_TOKEN;
+    int mFullscreenMenuToken = FullscreenManager.INVALID_TOKEN;
+    int mFullscreenHighlightToken = FullscreenManager.INVALID_TOKEN;
 
-    private int mPreselectedTabId = Tab.INVALID_TAB_ID;
+    int mPreselectedTabId = Tab.INVALID_TAB_ID;
 
     private boolean mNativeLibraryReady;
-    private boolean mTabRestoreCompleted;
+    boolean mTabRestoreCompleted;
 
     private AppMenuButtonHelper mAppMenuButtonHelper;
 
-    private ViewAnchoredTextBubble mTextBubble;
+    ViewAnchoredTextBubble mTextBubble;
 
-    private HomepageStateListener mHomepageStateListener;
+    HomepageStateListener mHomepageStateListener;
 
     private boolean mInitializedWithNative;
 
@@ -802,7 +802,7 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
         mToolbar.onAccessibilityStatusChanged(enabled);
     }
 
-    private void registerTemplateUrlObserver() {
+    void registerTemplateUrlObserver() {
         final TemplateUrlService templateUrlService = TemplateUrlService.getInstance();
         assert mTemplateUrlObserver == null;
         mTemplateUrlObserver = new TemplateUrlServiceObserver() {
@@ -852,7 +852,7 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
         handleTabRestoreCompleted();
     }
 
-    private void handleTabRestoreCompleted() {
+    void handleTabRestoreCompleted() {
         if (!mTabRestoreCompleted || !mNativeLibraryReady) return;
         mToolbar.onStateRestored();
         updateTabCount();
@@ -1136,7 +1136,7 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
     /**
      * Updates the current number of Tabs based on the TabModel this Toolbar contains.
      */
-    private void updateTabCount() {
+    void updateTabCount() {
         if (!mTabRestoreCompleted || !mShouldUpdateTabCount) return;
         mToolbar.updateTabCountVisuals(mTabModelSelector.getCurrentModel().getCount());
     }
@@ -1145,7 +1145,7 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
      * Updates the current button states and calls appropriate abstract visibility methods, giving
      * inheriting classes the chance to update the button visuals as well.
      */
-    private void updateButtonStatus() {
+    void updateButtonStatus() {
         Tab currentTab = mToolbarModel.getTab();
         boolean tabCrashed = currentTab != null && currentTab.isShowingSadTab();
 
@@ -1158,7 +1158,7 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
         mToolbar.getMenuButtonWrapper().setVisibility(View.VISIBLE);
     }
 
-    private void updateBookmarkButtonStatus() {
+    void updateBookmarkButtonStatus() {
         Tab currentTab = mToolbarModel.getTab();
         boolean isBookmarked = currentTab != null
                 && currentTab.getBookmarkId() != Tab.INVALID_BOOKMARK_ID;
@@ -1180,7 +1180,7 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
     /**
      * Triggered when the selected tab has changed.
      */
-    private void refreshSelectedTab() {
+    void refreshSelectedTab() {
         Tab tab = null;
         if (mPreselectedTabId != Tab.INVALID_TAB_ID) {
             tab = mTabModelSelector.getTabById(mPreselectedTabId);
@@ -1274,12 +1274,12 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
         }
     }
 
-    private void updateTabLoadingState(boolean updateUrl) {
+    void updateTabLoadingState(boolean updateUrl) {
         mLocationBar.updateLoadingState(updateUrl);
         if (updateUrl) updateButtonStatus();
     }
 
-    private void updateLoadProgress(int progress) {
+    void updateLoadProgress(int progress) {
         // If it's a native page, progress bar is already hidden or being hidden, so don't update
         // the value.
         // TODO(kkimlabs): Investigate back/forward navigation with native page & web content and
@@ -1294,7 +1294,7 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
         if (progress == 100) finishLoadProgress(true);
     }
 
-    private void finishLoadProgress(boolean delayed) {
+    void finishLoadProgress(boolean delayed) {
         mLoadProgressSimulator.cancel();
         mToolbar.finishLoadProgress(delayed);
     }
@@ -1302,7 +1302,7 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
     /**
      * Only start showing the progress bar if it is not already started.
      */
-    private void startLoadProgress() {
+    void startLoadProgress() {
         if (mToolbar.isProgressStarted()) return;
         mToolbar.startLoadProgress();
     }
@@ -1311,7 +1311,7 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
         mToolbar.getProgressBar().setVisibility(enabled ? View.VISIBLE : View.GONE);
     }
 
-    private boolean shouldShowCusrsorInLocationBar() {
+    boolean shouldShowCusrsorInLocationBar() {
         Tab tab = mToolbarModel.getTab();
         if (tab == null) return false;
         NativePage nativePage = tab.getNativePage();
@@ -1331,10 +1331,10 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
         private static final int PROGRESS_INCREMENT = 10;
         private static final int PROGRESS_INCREMENT_DELAY_MS = 10;
 
-        private final ToolbarManager mToolbarManager;
+        final ToolbarManager mToolbarManager;
         private final Handler mHandler;
 
-        private int mProgress;
+        int mProgress;
 
         public LoadProgressSimulator(ToolbarManager toolbar) {
             mToolbarManager = toolbar;

@@ -22,7 +22,7 @@ public class UnguessableToken implements Parcelable {
     private final long mHigh;
     private final long mLow;
 
-    private UnguessableToken(long high, long low) {
+    UnguessableToken(long high, long low) {
         mHigh = high;
         mLow = low;
     }

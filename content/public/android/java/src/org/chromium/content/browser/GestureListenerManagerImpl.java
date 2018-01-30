@@ -25,7 +25,7 @@ import org.chromium.content_public.browser.WebContents;
 @JNINamespace("content")
 public class GestureListenerManagerImpl implements GestureListenerManager {
     private static final class UserDataFactoryLazyHolder {
-        private static final UserDataFactory<GestureListenerManagerImpl> INSTANCE =
+        static final UserDataFactory<GestureListenerManagerImpl> INSTANCE =
                 GestureListenerManagerImpl::new;
     }
 

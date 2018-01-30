@@ -19,7 +19,7 @@ import java.util.Arrays;
  * run prior to initializing the browser.
  */
 public class CommandLineInitRule implements TestRule {
-    private String[] mArgs;
+    String[] mArgs;
 
     public CommandLineInitRule(String[] args) {
         if (args != null) {

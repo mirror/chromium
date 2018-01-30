@@ -139,18 +139,18 @@ public class AwContentsClientCallbackHelper {
     // Minimum period allowed between consecutive onNewPicture calls, to rate-limit the callbacks.
     private static final long ON_NEW_PICTURE_MIN_PERIOD_MILLIS = 500;
     // Timestamp of the most recent onNewPicture callback.
-    private long mLastPictureTime;
+    long mLastPictureTime;
     // True when a onNewPicture callback is currenly in flight.
-    private boolean mHasPendingOnNewPicture;
+    boolean mHasPendingOnNewPicture;
 
-    private final AwContentsClient mContentsClient;
+    final AwContentsClient mContentsClient;
 
     private final Handler mHandler;
 
-    private CancelCallbackPoller mCancelCallbackPoller;
+    CancelCallbackPoller mCancelCallbackPoller;
 
     private class MyHandler extends Handler {
-        private MyHandler(Looper looper) {
+        MyHandler(Looper looper) {
             super(looper);
         }
 

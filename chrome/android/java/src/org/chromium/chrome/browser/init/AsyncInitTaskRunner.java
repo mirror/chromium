@@ -27,12 +27,12 @@ import java.util.concurrent.Executor;
  * - Fetching the variations seed on first run
  */
 public abstract class AsyncInitTaskRunner {
-    private boolean mFetchingVariations;
-    private boolean mLibraryLoaded;
+    boolean mFetchingVariations;
+    boolean mLibraryLoaded;
     private boolean mAllocateChildConnection;
 
     private LoadTask mLoadTask;
-    private FetchSeedTask mFetchSeedTask;
+    FetchSeedTask mFetchSeedTask;
 
     @VisibleForTesting
     boolean shouldFetchVariationsSeedDuringFirstRun() {
@@ -145,7 +145,7 @@ public abstract class AsyncInitTaskRunner {
         mLoadTask.executeOnExecutor(getExecutor());
     }
 
-    private void tasksPossiblyComplete(boolean result) {
+    void tasksPossiblyComplete(boolean result) {
         ThreadUtils.assertOnUiThread();
 
         if (!result) {

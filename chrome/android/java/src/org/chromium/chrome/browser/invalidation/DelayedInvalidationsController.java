@@ -38,7 +38,7 @@ public class DelayedInvalidationsController {
     private static final String DELAYED_INVALIDATIONS = "delayed_invalidations";
 
     private static class LazyHolder {
-        private static final DelayedInvalidationsController INSTANCE =
+        static final DelayedInvalidationsController INSTANCE =
                 new DelayedInvalidationsController();
     }
 

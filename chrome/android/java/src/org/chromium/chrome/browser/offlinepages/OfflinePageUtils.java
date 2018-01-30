@@ -63,7 +63,7 @@ public class OfflinePageUtils {
     private static final int BIT_LAST_N = 1 << 4;
 
     // Used instead of the constant so tests can override the value.
-    private static int sSnackbarDurationMs = DEFAULT_SNACKBAR_DURATION_MS;
+    static int sSnackbarDurationMs = DEFAULT_SNACKBAR_DURATION_MS;
 
     /** Instance carrying actual implementation of utility methods. */
     private static Internal sInstance;
@@ -73,7 +73,7 @@ public class OfflinePageUtils {
      * be garbage collected without worrying about this map.  The RecentTabTracker is held here so
      * that it can be destroyed when the ChromeActivity gets a new TabModelSelector.
      */
-    private static Map<ChromeActivity, RecentTabTracker> sTabModelObservers = new HashMap<>();
+    static Map<ChromeActivity, RecentTabTracker> sTabModelObservers = new HashMap<>();
 
     /**
      * Interface for implementation of offline page utilities, that can be implemented for testing.
@@ -181,7 +181,7 @@ public class OfflinePageUtils {
         public static final int COUNT = 10;
     }
 
-    private static Internal getInstance() {
+    static Internal getInstance() {
         if (sInstance == null) {
             sInstance = new OfflinePageUtilsImpl();
         }
@@ -612,7 +612,7 @@ public class OfflinePageUtils {
         }
     }
 
-    private static void recordTabRestoreHistogram(int tabRestoreType, String url) {
+    static void recordTabRestoreHistogram(int tabRestoreType, String url) {
         Log.d(TAG, "Concluded tab restore: type=" + tabRestoreType + ", url=" + url);
         RecordHistogram.recordEnumeratedHistogram(
                 "OfflinePages.TabRestore", tabRestoreType, TabRestoreType.COUNT);

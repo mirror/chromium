@@ -25,9 +25,9 @@ public class AccountTrackerService {
     private static final String TAG = "AccountService";
     private static AccountTrackerService sAccountTrackerService;
 
-    private SystemAccountsSeedingStatus mSystemAccountsSeedingStatus;
-    private boolean mSystemAccountsChanged;
-    private boolean mSyncForceRefreshedForTest;
+    SystemAccountsSeedingStatus mSystemAccountsSeedingStatus;
+    boolean mSystemAccountsChanged;
+    boolean mSyncForceRefreshedForTest;
     private AccountsChangeObserver mAccountsChangeObserver;
 
     private enum SystemAccountsSeedingStatus {
@@ -103,7 +103,7 @@ public class AccountTrackerService {
         mSystemAccountsSeedingObservers.removeObserver(observer);
     }
 
-    private void seedSystemAccounts() {
+    void seedSystemAccounts() {
         ThreadUtils.assertOnUiThread();
         mSystemAccountsChanged = false;
         mSyncForceRefreshedForTest = false;
@@ -154,14 +154,14 @@ public class AccountTrackerService {
         });
     }
 
-    private boolean areAccountIdsValid(String[] accountIds) {
+    boolean areAccountIdsValid(String[] accountIds) {
         for (String accountId : accountIds) {
             if (accountId == null) return false;
         }
         return true;
     }
 
-    private void notifyObserversOnSeedingComplete() {
+    void notifyObserversOnSeedingComplete() {
         for (OnSystemAccountsSeededListener observer : mSystemAccountsSeedingObservers) {
             observer.onSystemAccountsSeedingComplete();
         }
@@ -229,6 +229,6 @@ public class AccountTrackerService {
         }
     }
 
-    private static native void nativeSeedAccountsInfo(String[] gaiaIds, String[] accountNames);
+    static native void nativeSeedAccountsInfo(String[] gaiaIds, String[] accountNames);
     private static native boolean nativeAreAccountsSeeded(String[] accountNames);
 }

@@ -177,7 +177,7 @@ public class BookmarkBridge {
         private final boolean mIsEditable;
         private final boolean mIsManaged;
 
-        private BookmarkItem(BookmarkId id, String title, String url, boolean isFolder,
+        BookmarkItem(BookmarkId id, String title, String url, boolean isFolder,
                 BookmarkId parentId, boolean isEditable, boolean isManaged) {
             mId = id;
             mTitle = title;
@@ -861,7 +861,7 @@ public class BookmarkBridge {
         private final int mCallbackMethod;
         private final BookmarkBridge mHandler;
 
-        private DelayedBookmarkCallback(BookmarkId folderId, BookmarksCallback callback,
+        DelayedBookmarkCallback(BookmarkId folderId, BookmarksCallback callback,
                 int method, BookmarkBridge handler) {
             mFolderId = folderId;
             mCallback = callback;
@@ -872,7 +872,7 @@ public class BookmarkBridge {
         /**
          * Invoke the callback method.
          */
-        private void callCallbackMethod() {
+        void callCallbackMethod() {
             switch (mCallbackMethod) {
                 case GET_BOOKMARKS_FOR_FOLDER:
                     mHandler.getBookmarksForFolder(mFolderId, mCallback);

@@ -43,8 +43,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 
 public class TestThread extends Thread {
-    private final Object mThreadReadyLock;
-    private AtomicBoolean mThreadReady;
+    final Object mThreadReadyLock;
+    AtomicBoolean mThreadReady;
     private Handler mMainThreadHandler;
     private Handler mTestThreadHandler;
 

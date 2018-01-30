@@ -45,7 +45,7 @@ import java.util.Set;
  * elements will be the cards shown to the user
  */
 public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements NodeParent {
-    private final SuggestionsUiDelegate mUiDelegate;
+    final SuggestionsUiDelegate mUiDelegate;
     private final ContextMenuManager mContextMenuManager;
     private final OfflinePageBridge mOfflinePageBridge;
 
@@ -278,7 +278,7 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
         return getChildPositionOffset(mBottomSpacer);
     }
 
-    private void updateAllDismissedVisibility() {
+    void updateAllDismissedVisibility() {
         boolean areRemoteSuggestionsEnabled =
                 mUiDelegate.getSuggestionsSource().areRemoteSuggestionsEnabled();
         boolean allDismissed = hasAllBeenDismissed() && !areArticlesLoading();

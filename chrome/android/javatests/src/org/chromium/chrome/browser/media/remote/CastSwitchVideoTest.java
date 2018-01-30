@@ -183,7 +183,7 @@ public class CastSwitchVideoTest {
         mCastTestRule.checkVideoStarted(TEST_VIDEO_2);
     }
 
-    private void castVideoFromCurrentTab(String videoElement) throws InterruptedException,
+    void castVideoFromCurrentTab(String videoElement) throws InterruptedException,
             TimeoutException {
         final Tab tab = mCastTestRule.getActivity().getActivityTab();
         WebContents webContents = tab.getWebContents();
@@ -193,7 +193,7 @@ public class CastSwitchVideoTest {
         mCastTestRule.castVideoAndWaitUntilPlaying(CAST_TEST_ROUTE, tab, videoRect);
     }
 
-    private void playVideoFromCurrentTab(String videoElement) throws InterruptedException,
+    void playVideoFromCurrentTab(String videoElement) throws InterruptedException,
             TimeoutException {
         final Tab tab = mCastTestRule.getActivity().getActivityTab();
         WebContents webContents = tab.getWebContents();

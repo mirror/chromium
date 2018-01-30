@@ -68,7 +68,7 @@ public class DisplayAndroidManager {
 
         private static final long POLLING_DELAY = 500;
 
-        private int mAccurateCount;
+        int mAccurateCount;
 
         // DisplayListenerBackend implementation:
 
@@ -186,9 +186,9 @@ public class DisplayAndroidManager {
     // virtual display ids at a much higher number, and increment them in the same way.
     private static final int VIRTUAL_DISPLAY_ID_BEGIN = Integer.MAX_VALUE / 2;
 
-    private long mNativePointer;
-    private int mMainSdkDisplayId;
-    private SparseArray<DisplayAndroid> mIdMap;
+    long mNativePointer;
+    int mMainSdkDisplayId;
+    SparseArray<DisplayAndroid> mIdMap;
     private DisplayListenerBackend mBackend;
     private int mNextVirtualDisplayId = VIRTUAL_DISPLAY_ID_BEGIN;
 
@@ -208,7 +208,7 @@ public class DisplayAndroidManager {
         return windowManager.getDefaultDisplay();
     }
 
-    private static Context getContext() {
+    static Context getContext() {
         // Using the global application context is probably ok.
         // The DisplayManager API observers all display updates, so in theory it should not matter
         // which context is used to obtain it. If this turns out not to be true in practice, it's
@@ -216,7 +216,7 @@ public class DisplayAndroidManager {
         return ContextUtils.getApplicationContext();
     }
 
-    private static DisplayManager getDisplayManager() {
+    static DisplayManager getDisplayManager() {
         return (DisplayManager) getContext().getSystemService(Context.DISPLAY_SERVICE);
     }
 
@@ -319,7 +319,7 @@ public class DisplayAndroidManager {
     private native void nativeUpdateDisplay(long nativeDisplayAndroidManager, int sdkDisplayId,
             int width, int height, float dipScale, int rotationDegrees, int bitsPerPixel,
             int bitsPerComponent, boolean isWideColorGamut);
-    private native void nativeRemoveDisplay(long nativeDisplayAndroidManager, int sdkDisplayId);
+    native void nativeRemoveDisplay(long nativeDisplayAndroidManager, int sdkDisplayId);
     private native void nativeSetPrimaryDisplayId(
             long nativeDisplayAndroidManager, int sdkDisplayId);
 }

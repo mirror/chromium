@@ -150,7 +150,7 @@ public class ContextReporter {
      * Reports that the given display selection has been established for the current tab.
      * @param displaySelection The information about the selection being displayed.
      */
-    private void reportDisplaySelection(@Nullable GSAContextDisplaySelection displaySelection) {
+    void reportDisplaySelection(@Nullable GSAContextDisplaySelection displaySelection) {
         Tab currentTab = mActivity.getActivityTab();
         reportUsageOfCurrentContextIfPossible(currentTab, false, displaySelection);
     }
@@ -159,7 +159,7 @@ public class ContextReporter {
         if (mContextInUse.compareAndSet(true, false)) mDelegate.reportContextUsageEnded();
     }
 
-    private void reportUsageOfCurrentContextIfPossible(
+    void reportUsageOfCurrentContextIfPossible(
             Tab tab, boolean isTitleChange, @Nullable GSAContextDisplaySelection displaySelection) {
         Tab currentTab = mActivity.getActivityTab();
         if (currentTab == null || currentTab.isIncognito()) {

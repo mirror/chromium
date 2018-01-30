@@ -31,7 +31,7 @@ public class AccessibilityPreferences extends PreferenceFragment
     private FontSizePrefs mFontSizePrefs;
 
     private TextScalePreference mTextScalePref;
-    private SeekBarLinkedCheckBoxPreference mForceEnableZoomPref;
+    SeekBarLinkedCheckBoxPreference mForceEnableZoomPref;
     private ChromeBaseCheckBoxPreference mReaderForAccessibilityPref;
 
     private FontSizePrefsObserver mFontSizePrefsObserver = new FontSizePrefsObserver() {
@@ -104,7 +104,7 @@ public class AccessibilityPreferences extends PreferenceFragment
         mForceEnableZoomPref.setChecked(mFontSizePrefs.getForceEnableZoom());
     }
 
-    private void updateTextScaleSummary(float userFontScaleFactor) {
+    void updateTextScaleSummary(float userFontScaleFactor) {
         mTextScalePref.setSummary(mFormat.format(userFontScaleFactor));
     }
 

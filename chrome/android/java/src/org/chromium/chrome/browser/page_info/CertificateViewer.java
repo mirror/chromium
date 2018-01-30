@@ -46,7 +46,7 @@ class CertificateViewer implements OnItemSelectedListener {
     private final Context mContext;
     private final ArrayList<LinearLayout> mViews;
     private final ArrayList<String> mTitles;
-    private final int mPadding;
+    final int mPadding;
     private CertificateFactory mCertificateFactory;
 
     /**

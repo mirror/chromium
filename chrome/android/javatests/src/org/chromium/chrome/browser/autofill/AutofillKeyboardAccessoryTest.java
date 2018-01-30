@@ -52,7 +52,7 @@ public class AutofillKeyboardAccessoryTest {
     private final AtomicReference<ContentViewCore> mViewCoreRef =
             new AtomicReference<ContentViewCore>();
     private final AtomicReference<WebContents> mWebContentsRef = new AtomicReference<WebContents>();
-    private final AtomicReference<ViewGroup> mContainerRef = new AtomicReference<ViewGroup>();
+    final AtomicReference<ViewGroup> mContainerRef = new AtomicReference<ViewGroup>();
     private final AtomicReference<ViewGroup> mKeyboardAccessoryRef =
             new AtomicReference<ViewGroup>();
 
@@ -277,7 +277,7 @@ public class AutofillKeyboardAccessoryTest {
                         .booleanValue());
     }
 
-    private View getSuggestionAt(int index) {
+    View getSuggestionAt(int index) {
         // The view hierarchy:
         //   Keyboard accessory.
         //    \--> A list of suggestions.

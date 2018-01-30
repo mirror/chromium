@@ -76,7 +76,7 @@ class MediaCodecUtil {
         }
 
         @SuppressWarnings("deprecation")
-        private int getCodecCount() {
+        int getCodecCount() {
             if (hasNewMediaCodecList()) return mCodecList.length;
             try {
                 return MediaCodecList.getCodecCount();
@@ -88,7 +88,7 @@ class MediaCodecUtil {
         }
 
         @SuppressWarnings("deprecation")
-        private MediaCodecInfo getCodecInfoAt(int index) {
+        MediaCodecInfo getCodecInfoAt(int index) {
             if (hasNewMediaCodecList()) return mCodecList[index];
             return MediaCodecList.getCodecInfoAt(index);
         }

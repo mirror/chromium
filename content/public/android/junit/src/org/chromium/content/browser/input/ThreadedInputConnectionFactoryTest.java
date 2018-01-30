@@ -95,24 +95,24 @@ public class ThreadedInputConnectionFactoryTest {
     }
 
     @Mock
-    private ImeAdapter mImeAdapter;
+    ImeAdapter mImeAdapter;
     @Mock
-    private View mContainerView;
+    View mContainerView;
     @Mock
-    private ThreadedInputConnectionProxyView mProxyView;
+    ThreadedInputConnectionProxyView mProxyView;
     @Mock
     private InputMethodManager mInputMethodManager;
     @Mock
     private Context mContext;
 
-    private EditorInfo mEditorInfo;
+    EditorInfo mEditorInfo;
     private Handler mImeHandler;
     private Handler mUiHandler;
     private ShadowLooper mImeShadowLooper;
-    private TestFactory mFactory;
-    private InputConnection mInputConnection;
+    TestFactory mFactory;
+    InputConnection mInputConnection;
     private InOrder mInOrder;
-    private boolean mHasWindowFocus;
+    boolean mHasWindowFocus;
 
     @Before
     public void setUp() throws Exception {

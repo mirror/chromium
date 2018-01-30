@@ -26,7 +26,7 @@ import java.util.Set;
  * Basis for testing tab model selector observers.
  */
 public class TabModelSelectorObserverTestRule extends ChromeBrowserTestRule {
-    private TabModelSelectorBase mSelector;
+    TabModelSelectorBase mSelector;
     private TabModelSelectorTestTabModel mNormalTabModel;
     private TabModelSelectorTestTabModel mIncognitoTabModel;
 
@@ -60,7 +60,7 @@ public class TabModelSelectorObserverTestRule extends ChromeBrowserTestRule {
         }, description);
     }
 
-    private void setUp() throws Exception {
+    void setUp() throws Exception {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
@@ -69,7 +69,7 @@ public class TabModelSelectorObserverTestRule extends ChromeBrowserTestRule {
         });
     }
 
-    private void initialize() {
+    void initialize() {
         mWindowAndroid = new WindowAndroid(InstrumentationRegistry.getInstrumentation()
                                                    .getTargetContext()
                                                    .getApplicationContext());

@@ -165,7 +165,7 @@ public class NativeTest {
         }
     }
 
-    private void runTests(Activity activity) {
+    void runTests(Activity activity) {
         nativeRunTests(mCommandLineFlags.toString(), mCommandLineFilePath, mStdoutFilePath,
                 activity.getApplicationContext(), UrlUtils.getIsolatedTestRoot());
         activity.finish();

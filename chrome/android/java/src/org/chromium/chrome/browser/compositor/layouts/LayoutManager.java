@@ -75,7 +75,7 @@ public class LayoutManager
     protected final StaticLayout mStaticLayout;
 
     // External Dependencies
-    private TabModelSelector mTabModelSelector;
+    TabModelSelector mTabModelSelector;
     @SuppressWarnings("unused")
     private TabModelSelectorTabObserver mTabModelSelectorTabObserver;
     private ViewGroup mContentContainer;

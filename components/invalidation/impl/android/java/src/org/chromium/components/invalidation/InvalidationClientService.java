@@ -534,7 +534,7 @@ public class InvalidationClientService extends AndroidListener {
         return sClientId;
     }
 
-    private static String getOAuth2ScopeWithType() {
+    static String getOAuth2ScopeWithType() {
         return "oauth2:" + SyncConstants.CHROME_SYNC_OAUTH2_SCOPE;
     }
 

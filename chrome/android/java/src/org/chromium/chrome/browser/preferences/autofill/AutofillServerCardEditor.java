@@ -66,7 +66,7 @@ public class AutofillServerCardEditor extends AutofillCreditCardEditor {
         return v;
     }
 
-    private void removeLocalCopyViews() {
+    void removeLocalCopyViews() {
         ViewGroup parent = (ViewGroup) mClearLocalCopy.getParent();
         if (parent == null) return;
 

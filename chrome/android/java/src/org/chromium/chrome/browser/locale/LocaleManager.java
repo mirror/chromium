@@ -78,7 +78,7 @@ public class LocaleManager {
 
     private boolean mSearchEnginePromoCompleted;
     private boolean mSearchEnginePromoShownThisSession;
-    private boolean mSearchEnginePromoCheckedThisSession;
+    boolean mSearchEnginePromoCheckedThisSession;
 
     // LocaleManager is a singleton and it should not have strong reference to UI objects.
     // SnackbarManager is owned by ChromeActivity and is not null as long as the activity is alive.
@@ -240,7 +240,7 @@ public class LocaleManager {
         });
     }
 
-    private void handleSearchEnginePromoWithTemplateUrlsLoaded(
+    void handleSearchEnginePromoWithTemplateUrlsLoaded(
             final Activity activity, final @Nullable Callback<Boolean> onSearchEngineFinalized) {
         assert TemplateUrlService.getInstance().isLoaded();
 

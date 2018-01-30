@@ -56,7 +56,7 @@ public class BookmarkFolderSelectActivity extends SynchronousInitializationActiv
 
     private BookmarkModel mModel;
     private boolean mIsCreatingFolder;
-    private List<BookmarkId> mBookmarksToMove;
+    List<BookmarkId> mBookmarksToMove;
     private BookmarkId mParentId;
     private FolderListAdapter mBookmarkIdsAdapter;
     private ListView mBookmarkIdsList;
@@ -175,7 +175,7 @@ public class BookmarkFolderSelectActivity extends SynchronousInitializationActiv
         }
     }
 
-    private void updateFolderList() {
+    void updateFolderList() {
         List<BookmarkId> folderList = new ArrayList<>();
         List<Integer> depthList = new ArrayList<>();
         mModel.getMoveDestinations(folderList, depthList, mBookmarksToMove);

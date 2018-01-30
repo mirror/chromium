@@ -85,7 +85,7 @@ public class OverviewListLayoutTest {
     }
 
     private class TabModelCountCountCriteria extends Criteria {
-        private final boolean mIncognito;
+        final boolean mIncognito;
         private final int mTabCount;
 
         public TabModelCountCountCriteria(boolean incognito, int count) {
@@ -116,12 +116,12 @@ public class OverviewListLayoutTest {
         mActivityTestRule.startMainActivityFromLauncher();
     }
 
-    private ViewGroup getContainer() {
+    ViewGroup getContainer() {
         return ((OverviewListLayout) mActivityTestRule.getActivity().getOverviewListLayout())
                 .getContainer();
     }
 
-    private ListView getList() {
+    ListView getList() {
         return (ListView) getContainer().findViewById(R.id.list_view);
     }
 

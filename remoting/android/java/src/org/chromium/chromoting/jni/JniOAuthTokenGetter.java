@@ -27,8 +27,8 @@ public class JniOAuthTokenGetter {
 
     @SuppressLint("StaticFieldLeak")
     private static Context sContext;
-    private static String sAccount;
-    private static String sLatestToken;
+    static String sAccount;
+    static String sLatestToken;
 
     public static void setContext(Context context) {
         Preconditions.notNull(context);
@@ -96,6 +96,6 @@ public class JniOAuthTokenGetter {
         }).clearAndFetch(sLatestToken);
     }
 
-    private static native void nativeResolveOAuthTokenCallback(
+    static native void nativeResolveOAuthTokenCallback(
             long callbackPtr, int status, String userEmail, String accessToken);
 }

@@ -50,7 +50,7 @@ public abstract class PathUtils {
      * <p>See https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom.
      */
     private static class Holder {
-        private static final String[] DIRECTORY_PATHS = getOrComputeDirectoryPaths();
+        static final String[] DIRECTORY_PATHS = getOrComputeDirectoryPaths();
     }
 
     /**
@@ -58,7 +58,7 @@ public abstract class PathUtils {
      * on the UI thread otherwise. This should only be called as part of Holder's initialization
      * above to guarantee thread-safety as part of the initialization-on-demand holder idiom.
      */
-    private static String[] getOrComputeDirectoryPaths() {
+    static String[] getOrComputeDirectoryPaths() {
         try {
             // We need to call sDirPathFetchTask.cancel() here to prevent races. If it returns
             // true, that means that the task got canceled successfully (and thus, it did not
@@ -91,7 +91,7 @@ public abstract class PathUtils {
      *
      * @see Context#getDir(String, int)
      */
-    private static String[] setPrivateDataDirectorySuffixInternal() {
+    static String[] setPrivateDataDirectorySuffixInternal() {
         String[] paths = new String[NUM_DIRECTORIES];
         Context appContext = ContextUtils.getApplicationContext();
         paths[DATA_DIRECTORY] = appContext.getDir(

@@ -40,10 +40,10 @@ public class BookmarkBridgeTest {
     public final RuleChain mChain =
             RuleChain.outerRule(new ChromeBrowserTestRule()).around(new UiThreadTestRule());
 
-    private BookmarkBridge mBookmarkBridge;
-    private BookmarkId mMobileNode;
-    private BookmarkId mOtherNode;
-    private BookmarkId mDesktopNode;
+    BookmarkBridge mBookmarkBridge;
+    BookmarkId mMobileNode;
+    BookmarkId mOtherNode;
+    BookmarkId mDesktopNode;
 
     @Before
     public void setUp() throws Exception {

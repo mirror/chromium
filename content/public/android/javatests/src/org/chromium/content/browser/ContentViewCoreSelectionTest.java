@@ -58,8 +58,8 @@ public class ContentViewCoreSelectionTest {
             + "<input id=\"disabled_text\" type=\"text\" disabled value=\"Sample Text\" />"
             + "<div id=\"rich_div\" contentEditable=\"true\" >Rich Editor</div>"
             + "</form></body></html>");
-    private ContentViewCore mContentViewCore;
-    private SelectionPopupControllerImpl mSelectionPopupController;
+    ContentViewCore mContentViewCore;
+    SelectionPopupControllerImpl mSelectionPopupController;
 
     private static class TestSelectionClient implements SelectionClient {
         private SelectionClient.Result mResult;
@@ -634,7 +634,7 @@ public class ContentViewCoreSelectionTest {
         Assert.assertEquals(mSelectionPopupController.getSelectedText(), "SampleTextArea");
     }
 
-    private CharSequence getTextBeforeCursor(final int length, final int flags) {
+    CharSequence getTextBeforeCursor(final int length, final int flags) {
         final ChromiumBaseInputConnection connection =
                 mContentViewCore.getImeAdapterForTest().getInputConnectionForTest();
         return ImeTestUtils.runBlockingOnHandlerNoException(

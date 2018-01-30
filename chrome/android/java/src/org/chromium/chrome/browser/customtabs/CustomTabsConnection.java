@@ -198,7 +198,7 @@ public class CustomTabsConnection {
     protected final ClientManager mClientManager;
     protected final boolean mLogRequests;
     private final AtomicBoolean mWarmupHasBeenCalled = new AtomicBoolean();
-    private final AtomicBoolean mWarmupHasBeenFinished = new AtomicBoolean();
+    final AtomicBoolean mWarmupHasBeenFinished = new AtomicBoolean();
     private ExternalPrerenderHandler mExternalPrerenderHandler;
     private boolean mForcePrerenderForTesting;
     private volatile Runnable mWarmupFinishedCallback;
@@ -332,7 +332,7 @@ public class CustomTabsConnection {
     }
 
     /** Warmup activities that should only happen once. */
-    private static void initializeBrowser(final Context context) {
+    static void initializeBrowser(final Context context) {
         ThreadUtils.assertOnUiThread();
         try {
             ChromeBrowserInitializer.getInstance(context).handleSynchronousStartupWithGpuWarmUp();

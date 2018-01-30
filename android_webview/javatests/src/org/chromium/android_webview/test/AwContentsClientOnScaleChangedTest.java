@@ -27,7 +27,7 @@ public class AwContentsClientOnScaleChangedTest {
     public AwActivityTestRule mActivityTestRule = new AwActivityTestRule();
 
     private TestAwContentsClient mContentsClient;
-    private AwContents mAwContents;
+    AwContents mAwContents;
 
     @Before
     public void setUp() throws Exception {

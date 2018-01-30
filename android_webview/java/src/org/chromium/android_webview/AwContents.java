@@ -132,7 +132,7 @@ public class AwContents implements SmartClipProvider {
     private static final double MIN_SCREEN_HEIGHT_PERCENTAGE_FOR_INTERSTITIAL = 0.7;
 
     private static class ForceAuxiliaryBitmapRendering {
-        private static final boolean sResult = lazyCheck();
+        static final boolean sResult = lazyCheck();
         private static boolean lazyCheck() {
             return "goldfish".equals(Build.HARDWARE) || "ranchu".equals(Build.HARDWARE)
                     || !nativeHasRequiredHardwareExtensions();
@@ -294,45 +294,45 @@ public class AwContents implements SmartClipProvider {
         public abstract void onComplete(long requestId);
     }
 
-    private long mNativeAwContents;
+    long mNativeAwContents;
     private final AwBrowserContext mBrowserContext;
     // mContainerView and mCurrentFunctor form a pair that needs to stay in sync.
-    private ViewGroup mContainerView;
-    private AwGLFunctor mCurrentFunctor;
-    private AwGLFunctor mInitialFunctor;
-    private AwGLFunctor mFullScreenFunctor; // Only non-null when in fullscreen mode.
-    private final Context mContext;
+    ViewGroup mContainerView;
+    AwGLFunctor mCurrentFunctor;
+    AwGLFunctor mInitialFunctor;
+    AwGLFunctor mFullScreenFunctor; // Only non-null when in fullscreen mode.
+    final Context mContext;
     private final int mAppTargetSdkVersion;
-    private ContentViewCore mContentViewCore;
+    ContentViewCore mContentViewCore;
     private AwViewAndroidDelegate mViewAndroidDelegate;
     private WindowAndroidWrapper mWindowAndroid;
-    private WebContents mWebContents;
+    WebContents mWebContents;
     private NavigationController mNavigationController;
-    private final AwContentsClient mContentsClient;
+    final AwContentsClient mContentsClient;
     private AwWebContentsObserver mWebContentsObserver;
     private final AwContentsClientBridge mContentsClientBridge;
     private final AwWebContentsDelegateAdapter mWebContentsDelegate;
-    private final AwContentsBackgroundThreadClient mBackgroundThreadClient;
+    final AwContentsBackgroundThreadClient mBackgroundThreadClient;
     private final AwContentsIoThreadClient mIoThreadClient;
     private final InterceptNavigationDelegateImpl mInterceptNavigationDelegate;
-    private InternalAccessDelegate mInternalAccessAdapter;
+    InternalAccessDelegate mInternalAccessAdapter;
     private final NativeDrawGLFunctorFactory mNativeDrawGLFunctorFactory;
-    private final AwLayoutSizer mLayoutSizer;
-    private final AwZoomControls mZoomControls;
-    private final AwScrollOffsetManager mScrollOffsetManager;
-    private OverScrollGlow mOverScrollGlow;
+    final AwLayoutSizer mLayoutSizer;
+    final AwZoomControls mZoomControls;
+    final AwScrollOffsetManager mScrollOffsetManager;
+    OverScrollGlow mOverScrollGlow;
     private final DisplayAndroidObserver mDisplayObserver;
     // This can be accessed on any thread after construction. See AwContentsIoThreadClient.
-    private final AwSettings mSettings;
-    private final ScrollAccessibilityHelper mScrollAccessibilityHelper;
+    final AwSettings mSettings;
+    final ScrollAccessibilityHelper mScrollAccessibilityHelper;
 
     private final ObserverList<PopupTouchHandleDrawable> mTouchHandleDrawables =
             new ObserverList<>();
 
     private boolean mIsPaused;
-    private boolean mIsViewVisible;
-    private boolean mIsWindowVisible;
-    private boolean mIsAttachedToWindow;
+    boolean mIsViewVisible;
+    boolean mIsWindowVisible;
+    boolean mIsAttachedToWindow;
     // Visiblity state of |mContentViewCore|.
     private boolean mIsContentViewCoreVisible;
     private boolean mIsUpdateVisibilityTaskPending;
@@ -352,14 +352,14 @@ public class AwContents implements SmartClipProvider {
     // Must call nativeUpdateLastHitTestData first to update this before use.
     private final HitTestData mPossiblyStaleHitTestData = new HitTestData();
 
-    private final DefaultVideoPosterRequestHandler mDefaultVideoPosterRequestHandler;
+    final DefaultVideoPosterRequestHandler mDefaultVideoPosterRequestHandler;
 
     // Bound method for suppling Picture instances to the AwContentsClient. Will be null if the
     // picture listener API has not yet been enabled, or if it is using invalidation-only mode.
     private Callable<Picture> mPictureListenerContentProvider;
 
-    private boolean mContainerViewFocused;
-    private boolean mWindowFocused;
+    boolean mContainerViewFocused;
+    boolean mWindowFocused;
 
     // These come from the compositor and are updated synchronously (in contrast to the values in
     // ContentViewCore, which are updated at end of every frame).
@@ -378,11 +378,11 @@ public class AwContents implements SmartClipProvider {
 
     // This flag indicates that ShouldOverrideUrlNavigation should be posted
     // through the resourcethrottle. This is only used for popup windows.
-    private boolean mDeferredShouldOverrideUrlLoadingIsPendingForPopup;
+    boolean mDeferredShouldOverrideUrlLoadingIsPendingForPopup;
 
     // This is a workaround for some qualcomm devices discarding buffer on
     // Activity restore.
-    private boolean mInvalidateRootViewOnNextDraw;
+    boolean mInvalidateRootViewOnNextDraw;
 
     // The framework may temporarily detach our container view, for example during layout if
     // we are a child of a ListView. This may cause many toggles of View focus, which we suppress
@@ -403,7 +403,7 @@ public class AwContents implements SmartClipProvider {
 
     private static String sCurrentLocales = "";
 
-    private Paint mPaintForNWorkaround;
+    Paint mPaintForNWorkaround;
 
     // A holder of objects passed from WebContents and should be owned by AwContents that may
     // have direct or indirect reference back to WebView. They are used internally by
@@ -412,14 +412,14 @@ public class AwContents implements SmartClipProvider {
     // memory leak. To avoid the issue, it is possible to use |WebContents.setInternalHolder|
     // to move the holder of those internal objects to AwContents. Note that they are still
     // used by WebContents, and AwContents doesn't have to know what's inside the holder.
-    private WebContentsInternals mWebContentsInternals;
+    WebContentsInternals mWebContentsInternals;
 
     private JavascriptInjector mJavascriptInjector;
 
     private static class WebContentsInternalsHolder implements WebContents.InternalsHolder {
         private final WeakReference<AwContents> mAwContentsRef;
 
-        private WebContentsInternalsHolder(AwContents awContents) {
+        WebContentsInternalsHolder(AwContents awContents) {
             mAwContentsRef = new WeakReference<>(awContents);
         }
 
@@ -445,7 +445,7 @@ public class AwContents implements SmartClipProvider {
         // until we are done here.
         private final WindowAndroidWrapper mWindowAndroid;
 
-        private AwContentsDestroyRunnable(
+        AwContentsDestroyRunnable(
                 long nativeAwContents, WindowAndroidWrapper windowAndroid) {
             mNativeAwContents = nativeAwContents;
             mWindowAndroid = windowAndroid;
@@ -468,7 +468,7 @@ public class AwContents implements SmartClipProvider {
         /** Whether the initial container view was focused when we entered fullscreen */
         private boolean mWasInitialContainerViewFocused;
 
-        private FullScreenTransitionsState(ViewGroup initialContainerView,
+        FullScreenTransitionsState(ViewGroup initialContainerView,
                 InternalAccessDelegate initialInternalAccessAdapter,
                 AwViewMethods initialAwViewMethods) {
             mInitialContainerView = initialContainerView;
@@ -476,37 +476,37 @@ public class AwContents implements SmartClipProvider {
             mInitialAwViewMethods = initialAwViewMethods;
         }
 
-        private void enterFullScreen(FullScreenView fullScreenView,
+        void enterFullScreen(FullScreenView fullScreenView,
                 boolean wasInitialContainerViewFocused) {
             mFullScreenView = fullScreenView;
             mWasInitialContainerViewFocused = wasInitialContainerViewFocused;
         }
 
-        private boolean wasInitialContainerViewFocused() {
+        boolean wasInitialContainerViewFocused() {
             return mWasInitialContainerViewFocused;
         }
 
-        private void exitFullScreen() {
+        void exitFullScreen() {
             mFullScreenView = null;
         }
 
-        private boolean isFullScreen() {
+        boolean isFullScreen() {
             return mFullScreenView != null;
         }
 
-        private ViewGroup getInitialContainerView() {
+        ViewGroup getInitialContainerView() {
             return mInitialContainerView;
         }
 
-        private InternalAccessDelegate getInitialInternalAccessDelegate() {
+        InternalAccessDelegate getInitialInternalAccessDelegate() {
             return mInitialInternalAccessAdapter;
         }
 
-        private AwViewMethods getInitialAwViewMethods() {
+        AwViewMethods getInitialAwViewMethods() {
             return mInitialAwViewMethods;
         }
 
-        private FullScreenView getFullScreenView() {
+        FullScreenView getFullScreenView() {
             return mFullScreenView;
         }
     }
@@ -1050,7 +1050,7 @@ public class AwContents implements SmartClipProvider {
 
         private static final class DestroyRunnable implements Runnable {
             private final WindowAndroid mWindowAndroid;
-            private DestroyRunnable(WindowAndroid windowAndroid) {
+            DestroyRunnable(WindowAndroid windowAndroid) {
                 mWindowAndroid = windowAndroid;
             }
             @Override
@@ -1295,7 +1295,7 @@ public class AwContents implements SmartClipProvider {
         return mIsNoOperation;
     }
 
-    private boolean isDestroyedOrNoOperation(int warnIfDestroyed) {
+    boolean isDestroyedOrNoOperation(int warnIfDestroyed) {
         return isDestroyed(warnIfDestroyed) || isNoOperation();
     }
 
@@ -1446,7 +1446,7 @@ public class AwContents implements SmartClipProvider {
     // as a local variable in the function and not used anywhere else.
     private static final Rect sLocalGlobalVisibleRect = new Rect();
 
-    private Rect getGlobalVisibleRect() {
+    Rect getGlobalVisibleRect() {
         if (!mContainerView.getGlobalVisibleRect(sLocalGlobalVisibleRect)) {
             sLocalGlobalVisibleRect.setEmpty();
         }
@@ -2241,7 +2241,7 @@ public class AwContents implements SmartClipProvider {
         return mPageScaleFactor;
     }
 
-    private float getDeviceScaleFactor() {
+    float getDeviceScaleFactor() {
         return mWindowAndroid.getWindowAndroid().getDisplay().getDipScale();
     }
 
@@ -2581,7 +2581,7 @@ public class AwContents implements SmartClipProvider {
         mAwViewMethods.onWindowVisibilityChanged(visibility);
     }
 
-    private void setViewVisibilityInternal(boolean visible) {
+    void setViewVisibilityInternal(boolean visible) {
         mIsViewVisible = visible;
         if (!isDestroyedOrNoOperation(NO_WARN)) {
             nativeSetViewVisibility(mNativeAwContents, mIsViewVisible);
@@ -2589,7 +2589,7 @@ public class AwContents implements SmartClipProvider {
         postUpdateContentViewCoreVisibility();
     }
 
-    private void setWindowVisibilityInternal(boolean visible) {
+    void setWindowVisibilityInternal(boolean visible) {
         mInvalidateRootViewOnNextDraw |= Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP
                 && visible && !mIsWindowVisible;
         mIsWindowVisible = visible;
@@ -2599,7 +2599,7 @@ public class AwContents implements SmartClipProvider {
         postUpdateContentViewCoreVisibility();
     }
 
-    private void postUpdateContentViewCoreVisibility() {
+    void postUpdateContentViewCoreVisibility() {
         if (mIsUpdateVisibilityTaskPending) return;
         // When WebView is attached to a visible window, WebView will be
         // attached to a window whose visibility is initially invisible, then
@@ -2955,7 +2955,7 @@ public class AwContents implements SmartClipProvider {
     }
 
     @CalledByNative
-    private void postInvalidateOnAnimation() {
+    void postInvalidateOnAnimation() {
         if (!mWindowAndroid.getWindowAndroid().isInsideVSync()) {
             mContainerView.postInvalidateOnAnimation();
         } else {
@@ -3132,7 +3132,7 @@ public class AwContents implements SmartClipProvider {
         }
     }
 
-    private void saveWebArchiveInternal(String path, final Callback<String> callback) {
+    void saveWebArchiveInternal(String path, final Callback<String> callback) {
         if (path == null || isDestroyedOrNoOperation(WARN)) {
             if (callback == null) return;
 
@@ -3146,7 +3146,7 @@ public class AwContents implements SmartClipProvider {
      * Try to generate a pathname for saving an MHTML archive. This roughly follows WebView's
      * autoname logic.
      */
-    private static String generateArchiveAutoNamePath(String originalUrl, String baseName) {
+    static String generateArchiveAutoNamePath(String originalUrl, String baseName) {
         String name = null;
         if (originalUrl != null && !originalUrl.isEmpty()) {
             try {
@@ -3575,8 +3575,8 @@ public class AwContents implements SmartClipProvider {
     //--------------------------------------------------------------------------------------------
 
     private static native long nativeInit(AwBrowserContext browserContext);
-    private static native void nativeDestroy(long nativeAwContents);
-    private static native boolean nativeHasRequiredHardwareExtensions();
+    static native void nativeDestroy(long nativeAwContents);
+    static native boolean nativeHasRequiredHardwareExtensions();
     private static native void nativeSetAwDrawSWFunctionTable(long functionTablePointer);
     private static native void nativeSetAwDrawGLFunctionTable(long functionTablePointer);
     private static native int nativeGetNativeInstanceCount();
@@ -3599,9 +3599,9 @@ public class AwContents implements SmartClipProvider {
 
     private native void nativeAddVisitedLinks(long nativeAwContents, String[] visitedLinks);
     private native void nativeZoomBy(long nativeAwContents, float delta);
-    private native void nativeOnComputeScroll(
+    native void nativeOnComputeScroll(
             long nativeAwContents, long currentAnimationTimeMillis);
-    private native boolean nativeOnDraw(long nativeAwContents, Canvas canvas,
+    native boolean nativeOnDraw(long nativeAwContents, Canvas canvas,
             boolean isHardwareAccelerated, int scrollX, int scrollY, int visibleLeft,
             int visibleTop, int visibleRight, int visibleBottom,
             boolean forceAuxiliaryBitmapRendering);
@@ -3613,21 +3613,21 @@ public class AwContents implements SmartClipProvider {
     private native byte[] nativeGetCertificate(long nativeAwContents);
 
     // Coordinates in desity independent pixels.
-    private native void nativeRequestNewHitTestDataAt(long nativeAwContents, float x, float y,
+    native void nativeRequestNewHitTestDataAt(long nativeAwContents, float x, float y,
             float touchMajor);
     private native void nativeUpdateLastHitTestData(long nativeAwContents);
 
-    private native void nativeOnSizeChanged(long nativeAwContents, int w, int h, int ow, int oh);
-    private native void nativeScrollTo(long nativeAwContents, int x, int y);
-    private native void nativeSmoothScroll(
+    native void nativeOnSizeChanged(long nativeAwContents, int w, int h, int ow, int oh);
+    native void nativeScrollTo(long nativeAwContents, int x, int y);
+    native void nativeSmoothScroll(
             long nativeAwContents, int targetX, int targetY, long durationMs);
     private native void nativeSetViewVisibility(long nativeAwContents, boolean visible);
     private native void nativeSetWindowVisibility(long nativeAwContents, boolean visible);
     private native void nativeSetIsPaused(long nativeAwContents, boolean paused);
-    private native void nativeOnAttachedToWindow(long nativeAwContents, int w, int h);
-    private native void nativeOnDetachedFromWindow(long nativeAwContents);
+    native void nativeOnAttachedToWindow(long nativeAwContents, int w, int h);
+    native void nativeOnDetachedFromWindow(long nativeAwContents);
     private native boolean nativeIsVisible(long nativeAwContents);
-    private native void nativeSetDipScale(long nativeAwContents, float dipScale);
+    native void nativeSetDipScale(long nativeAwContents, float dipScale);
 
     // Returns null if save state fails.
     private native byte[] nativeGetOpaqueState(long nativeAwContents);
@@ -3636,7 +3636,7 @@ public class AwContents implements SmartClipProvider {
     private native boolean nativeRestoreFromOpaqueState(long nativeAwContents, byte[] state);
 
     private native long nativeReleasePopupAwContents(long nativeAwContents);
-    private native void nativeFocusFirstNode(long nativeAwContents);
+    native void nativeFocusFirstNode(long nativeAwContents);
     private native void nativeSetBackgroundColor(long nativeAwContents, int color);
 
     private native long nativeCapturePicture(long nativeAwContents, int width, int height);
@@ -3653,7 +3653,7 @@ public class AwContents implements SmartClipProvider {
 
     private native void nativeSetJsOnlineProperty(long nativeAwContents, boolean networkUp);
 
-    private native void nativeTrimMemory(long nativeAwContents, int level, boolean visible);
+    native void nativeTrimMemory(long nativeAwContents, int level, boolean visible);
 
     private native void nativeCreatePdfExporter(long nativeAwContents, AwPdfExporter awPdfExporter);
 

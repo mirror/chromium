@@ -177,7 +177,7 @@ public class CustomTabDelegateFactory extends TabDelegateFactory {
         }
     }
 
-    private final boolean mShouldHideBrowserControls;
+    final boolean mShouldHideBrowserControls;
     private final boolean mIsOpenedByChrome;
     private final BrowserStateBrowserControlsVisibilityDelegate mBrowserStateVisibilityDelegate;
 

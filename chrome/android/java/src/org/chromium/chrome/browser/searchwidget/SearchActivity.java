@@ -182,7 +182,7 @@ public class SearchActivity extends AsyncInitializationActivity
                 SearchActivity.this, onSearchEngineFinalizedCallback);
     }
 
-    private void finishDeferredInitialization() {
+    void finishDeferredInitialization() {
         assert !mIsActivityUsable
                 : "finishDeferredInitialization() incorrectly called multiple times";
         mIsActivityUsable = true;
@@ -273,7 +273,7 @@ public class SearchActivity extends AsyncInitializationActivity
         return contentView;
     }
 
-    private void cancelSearch() {
+    void cancelSearch() {
         finish();
         overridePendingTransition(0, R.anim.activity_close_exit);
     }

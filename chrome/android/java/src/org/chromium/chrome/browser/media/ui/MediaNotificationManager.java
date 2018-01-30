@@ -283,7 +283,7 @@ public class MediaNotificationManager {
     // On O, if startForegroundService() was called, the app MUST call startForeground on the
     // created service no matter what or it will crash. Show the minimal notification. The caller is
     // responsible for hiding it afterwards.
-    private static void finishStartingForegroundService(ListenerService s) {
+    static void finishStartingForegroundService(ListenerService s) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return;
 
         ChromeNotificationBuilder builder =
@@ -454,7 +454,7 @@ public class MediaNotificationManager {
      * This class is used internally but have to be public to be able to launch the service.
      */
     public static final class PlaybackListenerService extends ListenerService {
-        private static final int NOTIFICATION_ID = R.id.media_playback_notification;
+        static final int NOTIFICATION_ID = R.id.media_playback_notification;
 
         @Override
         public void onCreate() {
@@ -492,7 +492,7 @@ public class MediaNotificationManager {
      * This class is used internally but have to be public to be able to launch the service.
      */
     public static final class PresentationListenerService extends ListenerService {
-        private static final int NOTIFICATION_ID = R.id.presentation_notification;
+        static final int NOTIFICATION_ID = R.id.presentation_notification;
 
         @Override
         protected int getNotificationId() {
@@ -504,7 +504,7 @@ public class MediaNotificationManager {
      * This class is used internally but have to be public to be able to launch the service.
      */
     public static final class CastListenerService extends ListenerService {
-        private static final int NOTIFICATION_ID = R.id.remote_notification;
+        static final int NOTIFICATION_ID = R.id.remote_notification;
 
         @Override
         protected int getNotificationId() {
@@ -837,7 +837,7 @@ public class MediaNotificationManager {
         }
     }
 
-    private static boolean shouldIgnoreMediaNotificationInfo(
+    static boolean shouldIgnoreMediaNotificationInfo(
             MediaNotificationInfo oldInfo, MediaNotificationInfo newInfo) {
         return newInfo.equals(oldInfo)
                 || ((newInfo.isPaused && oldInfo != null && newInfo.tabId != oldInfo.tabId));
@@ -1251,7 +1251,7 @@ public class MediaNotificationManager {
         return intArray;
     }
 
-    private static Context getContext() {
+    static Context getContext() {
         return ContextUtils.getApplicationContext();
     }
 }

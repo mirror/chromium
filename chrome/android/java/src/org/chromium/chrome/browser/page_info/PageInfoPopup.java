@@ -256,15 +256,15 @@ public class PageInfoPopup implements OnClickListener {
 
     private static final int MAX_TABLET_DIALOG_WIDTH_DP = 400;
 
-    private final Context mContext;
+    final Context mContext;
     private final WindowAndroid mWindowAndroid;
-    private final Tab mTab;
+    final Tab mTab;
 
     // A pointer to the C++ object for this UI.
-    private long mNativePageInfoPopup;
+    long mNativePageInfoPopup;
 
     // The outer container, filled with the layout from page_info.xml.
-    private final LinearLayout mContainer;
+    final LinearLayout mContainer;
 
     // UI elements in the dialog.
     private final ElidedUrlTextView mUrlTitle;
@@ -276,19 +276,19 @@ public class PageInfoPopup implements OnClickListener {
     private final Button mOpenOnlineButton;
 
     // The dialog the container is placed in.
-    private final Dialog mDialog;
+    final Dialog mDialog;
 
     // Whether or not the popup should appear at the bottom of the screen.
-    private final boolean mIsBottomPopup;
+    final boolean mIsBottomPopup;
 
     // Animation which is currently running, if there is one.
-    private AnimatorSet mCurrentAnimation;
+    AnimatorSet mCurrentAnimation;
 
-    private boolean mDismissWithoutAnimation;
+    boolean mDismissWithoutAnimation;
 
     // The full URL from the URL bar, which is copied to the user's clipboard when they select 'Copy
     // URL'.
-    private String mFullUrl;
+    String mFullUrl;
 
     // A parsed version of mFullUrl. Is null if the URL is invalid/cannot be
     // parsed.
@@ -452,7 +452,7 @@ public class PageInfoPopup implements OnClickListener {
 
         // Create the dialog.
         mDialog = new Dialog(mContext) {
-            private void superDismiss() {
+            void superDismiss() {
                 super.dismiss();
             }
 
@@ -600,7 +600,7 @@ public class PageInfoPopup implements OnClickListener {
      * Update the permissions view based on the contents of mDisplayedPermissions.
      */
     @CalledByNative
-    private void updatePermissionDisplay() {
+    void updatePermissionDisplay() {
         mPermissionsList.removeAllViews();
         for (PageInfoPermissionEntry permission : mDisplayedPermissions) {
             addReadOnlyPermissionSection(permission);
@@ -956,7 +956,7 @@ public class PageInfoPopup implements OnClickListener {
      *
      * Tablets use the default Dialog fade-in instead of sliding in manually.
      */
-    private Animator createAllAnimations(boolean isEnter) {
+    Animator createAllAnimations(boolean isEnter) {
         AnimatorSet animation = new AnimatorSet();
         AnimatorSet.Builder builder = null;
         Animator startAnim;
@@ -991,7 +991,7 @@ public class PageInfoPopup implements OnClickListener {
         return animation;
     }
 
-    private void recordAction(int action) {
+    void recordAction(int action) {
         if (mNativePageInfoPopup != 0) {
             nativeRecordPageInfoAction(mNativePageInfoPopup, action);
         }
@@ -1041,7 +1041,7 @@ public class PageInfoPopup implements OnClickListener {
 
     private static native long nativeInit(PageInfoPopup popup, WebContents webContents);
 
-    private native void nativeDestroy(long nativePageInfoPopupAndroid);
+    native void nativeDestroy(long nativePageInfoPopupAndroid);
 
     private native void nativeRecordPageInfoAction(
             long nativePageInfoPopupAndroid, int action);

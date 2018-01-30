@@ -57,16 +57,16 @@ public class AccountManagerFacade {
     private static final AtomicReference<AccountManagerFacade> sAtomicInstance =
             new AtomicReference<>();
 
-    private final AccountManagerDelegate mDelegate;
+    final AccountManagerDelegate mDelegate;
     private final ObserverList<AccountsChangeObserver> mObservers = new ObserverList<>();
-    private final AtomicReference<AccountManagerResult<Account[]>> mMaybeAccounts =
+    final AtomicReference<AccountManagerResult<Account[]>> mMaybeAccounts =
             new AtomicReference<>();
-    private final CountDownLatch mPopulateAccountCacheLatch = new CountDownLatch(1);
+    final CountDownLatch mPopulateAccountCacheLatch = new CountDownLatch(1);
     private final CachedMetrics.TimesHistogramSample mPopulateAccountCacheWaitingTimeHistogram =
             new CachedMetrics.TimesHistogramSample(
                     "Signin.AndroidPopulateAccountCacheWaitingTime", TimeUnit.MILLISECONDS);
 
-    private int mUpdateTasksCounter = 0;
+    int mUpdateTasksCounter = 0;
     private final ArrayList<Runnable> mCallbacksWaitingForPendingUpdates = new ArrayList<>();
 
     /**
@@ -494,7 +494,7 @@ public class AccountManagerFacade {
         hasFeatures(account, new String[] {FEATURE_IS_CHILD_ACCOUNT_KEY}, callback);
     }
 
-    private boolean hasFeatures(Account account, String[] features) {
+    boolean hasFeatures(Account account, String[] features) {
         return mDelegate.hasFeatures(account, features);
     }
 
@@ -564,13 +564,13 @@ public class AccountManagerFacade {
         new UpdateAccountsTask().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
     }
 
-    private void fireOnAccountsChangedNotification() {
+    void fireOnAccountsChangedNotification() {
         for (AccountsChangeObserver observer : mObservers) {
             observer.onAccountsChanged();
         }
     }
 
-    private AccountManagerResult<Account[]> getAllAccounts() {
+    AccountManagerResult<Account[]> getAllAccounts() {
         try {
             return new AccountManagerResult<>(mDelegate.getAccountsSync());
         } catch (AccountManagerDelegateException ex) {
@@ -578,7 +578,7 @@ public class AccountManagerFacade {
         }
     }
 
-    private void decrementUpdateCounter() {
+    void decrementUpdateCounter() {
         if (--mUpdateTasksCounter > 0) return;
 
         for (Runnable callback : mCallbacksWaitingForPendingUpdates) {
@@ -645,9 +645,9 @@ public class AccountManagerFacade {
             implements NetworkChangeNotifier.ConnectionTypeObserver {
         private static final int MAX_TRIES = 3;
 
-        private final AuthTask<T> mAuthTask;
-        private final AtomicInteger mNumTries;
-        private final AtomicBoolean mIsTransientError;
+        final AuthTask<T> mAuthTask;
+        final AtomicInteger mNumTries;
+        final AtomicBoolean mIsTransientError;
 
         public static <T> void runAuthTask(AuthTask<T> authTask) {
             new ConnectionRetry<>(authTask).attempt();

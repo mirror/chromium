@@ -62,7 +62,7 @@ public final class PrefServiceBridge {
         private final String mApplicationVersion;
         private final String mOSVersion;
 
-        private AboutVersionStrings(String applicationVersion, String osVersion) {
+        AboutVersionStrings(String applicationVersion, String osVersion) {
             mApplicationVersion = applicationVersion;
             mOSVersion = osVersion;
         }

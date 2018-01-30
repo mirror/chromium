@@ -376,13 +376,13 @@ public class PopupTouchHandleDrawable extends View implements DisplayAndroidObse
         setVisibility(newVisibility);
     }
 
-    private void setIsScrolling(boolean scrolling) {
+    void setIsScrolling(boolean scrolling) {
         if (mScrolling == scrolling) return;
         mScrolling = scrolling;
         onVisibilityInputChanged();
     }
 
-    private void setIsFocused(boolean focused) {
+    void setIsFocused(boolean focused) {
         if (mFocused == focused) return;
         mFocused = focused;
         onVisibilityInputChanged();
@@ -430,7 +430,7 @@ public class PopupTouchHandleDrawable extends View implements DisplayAndroidObse
         scheduleInvalidate();
     }
 
-    private void temporarilyHide() {
+    void temporarilyHide() {
         if (!mContainer.isShowing()) return;
         mTemporarilyHiddenExpireTime = SystemClock.uptimeMillis() + MOVING_FADE_IN_DELAY_MS;
         setTemporarilyHidden(true);
@@ -529,7 +529,7 @@ public class PopupTouchHandleDrawable extends View implements DisplayAndroidObse
     }
 
     @CalledByNative
-    private void destroy() {
+    void destroy() {
         mDrawableObserverList.removeObserver(this);
         if (mWebContents == null) return;
         hide();

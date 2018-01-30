@@ -78,7 +78,7 @@ public class AutofillSaveCardInfoBar extends ConfirmInfoBar {
         }
     }
 
-    private final long mNativeAutofillSaveCardInfoBar;
+    final long mNativeAutofillSaveCardInfoBar;
     private final List<CardDetail> mCardDetails = new ArrayList<>();
     private final LinkedList<LegalMessageLine> mLegalMessageLines =
             new LinkedList<LegalMessageLine>();
@@ -185,6 +185,6 @@ public class AutofillSaveCardInfoBar extends ConfirmInfoBar {
         }
     }
 
-    private native void nativeOnLegalMessageLinkClicked(
+    native void nativeOnLegalMessageLinkClicked(
             long nativeAutofillSaveCardInfoBar, String url);
 }

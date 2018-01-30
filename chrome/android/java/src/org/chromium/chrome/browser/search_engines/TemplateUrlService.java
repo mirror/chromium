@@ -148,7 +148,7 @@ public class TemplateUrlService {
     }
 
     private final long mNativeTemplateUrlServiceAndroid;
-    private final ObserverList<LoadListener> mLoadListeners = new ObserverList<LoadListener>();
+    final ObserverList<LoadListener> mLoadListeners = new ObserverList<LoadListener>();
     private final ObserverList<TemplateUrlServiceObserver> mObservers =
             new ObserverList<TemplateUrlServiceObserver>();
 

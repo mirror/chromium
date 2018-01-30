@@ -592,7 +592,7 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
         mView.postDelayed(mSendWindowContentChangedRunnable, WINDOW_CONTENT_CHANGED_DELAY_MS);
     }
 
-    private void sendWindowContentChangedOnView() {
+    void sendWindowContentChangedOnView() {
         if (mSendWindowContentChangedRunnable != null) {
             mView.removeCallbacks(mSendWindowContentChangedRunnable);
             mSendWindowContentChangedRunnable = null;

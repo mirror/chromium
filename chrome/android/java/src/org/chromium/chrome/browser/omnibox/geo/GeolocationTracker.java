@@ -26,7 +26,7 @@ import org.chromium.base.VisibleForTesting;
  */
 class GeolocationTracker {
 
-    private static SelfCancelingListener sListener;
+    static SelfCancelingListener sListener;
     private static Location sNetworkLocationForTesting;
     private static Location sGpsLocationForTesting;
     private static boolean sUseLocationForTesting;
@@ -40,11 +40,11 @@ class GeolocationTracker {
         // would cause battery drain. See: http://crbug.com/309917
         private static final int REQUEST_TIMEOUT_MS = 60 * 1000;  // 60 sec.
 
-        private final LocationManager mLocationManager;
+        final LocationManager mLocationManager;
         private final Handler mHandler;
         private final Runnable mCancelRunnable;
 
-        private SelfCancelingListener(LocationManager manager) {
+        SelfCancelingListener(LocationManager manager) {
             mLocationManager = manager;
             mHandler = new Handler();
             mCancelRunnable = new Runnable() {

@@ -168,7 +168,7 @@ public class ChromeBrowserProvider extends ContentProvider {
     private final Object mLoadNativeLock = new Object();
     private UriMatcher mUriMatcher;
     private long mLastModifiedBookmarkFolderId = INVALID_BOOKMARK_ID;
-    private long mNativeChromeBrowserProvider;
+    long mNativeChromeBrowserProvider;
     private BookmarkNode mMobileBookmarksFolder;
 
     private void ensureUriMatcherInitialized() {
@@ -1135,7 +1135,7 @@ public class ChromeBrowserProvider extends ContentProvider {
      * This is called from BrowserStartupCallback during normal startup except when called
      * through one of the public ContentProvider APIs.
      */
-    private void ensureNativeSideInitialized() {
+    void ensureNativeSideInitialized() {
         ThreadUtils.assertOnUiThread();
         if (mNativeChromeBrowserProvider == 0) mNativeChromeBrowserProvider = nativeInit();
     }
@@ -1159,7 +1159,7 @@ public class ChromeBrowserProvider extends ContentProvider {
     /**
      * This method should only run on UI thread.
      */
-    private void ensureNativeChromeDestroyedOnUIThread() {
+    void ensureNativeChromeDestroyedOnUIThread() {
         if (mNativeChromeBrowserProvider != 0) {
             nativeDestroy(mNativeChromeBrowserProvider);
             mNativeChromeBrowserProvider = 0;

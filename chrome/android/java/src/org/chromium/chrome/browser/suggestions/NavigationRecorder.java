@@ -94,7 +94,7 @@ public class NavigationRecorder extends EmptyTabObserver {
         if ((params.getTransitionType() & transitionTypeMask) != 0) endRecording(tab, null);
     }
 
-    private void endRecording(@Nullable Tab removeObserverFromTab, @Nullable String endUrl) {
+    void endRecording(@Nullable Tab removeObserverFromTab, @Nullable String endUrl) {
         if (removeObserverFromTab != null) {
             removeObserverFromTab.removeObserver(this);
             if (removeObserverFromTab.getWebContents() != null && mWebContentsObserver != null) {

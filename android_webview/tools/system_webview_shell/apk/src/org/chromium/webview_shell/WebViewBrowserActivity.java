@@ -93,8 +93,8 @@ public class WebViewBrowserActivity extends Activity implements PopupMenu.OnMenu
             Pattern.compile("(Chrome/)([\\d\\.]+)\\s");
 
     private EditText mUrlBar;
-    private WebView mWebView;
-    private View mFullscreenView;
+    WebView mWebView;
+    View mFullscreenView;
     private String mWebViewVersion;
 
     // Each time we make a request, store it here with an int key. onRequestPermissionsResult will
@@ -359,7 +359,7 @@ public class WebViewBrowserActivity extends Activity implements PopupMenu.OnMenu
     }
 
     @SuppressLint("NewApi") // PermissionRequest#deny requires API level 21.
-    private void requestPermissionsForPage(PermissionRequest request) {
+    void requestPermissionsForPage(PermissionRequest request) {
         // Deny any unrecognized permissions.
         for (String webkitPermission : request.getResources()) {
             if (!sPermissions.containsKey(webkitPermission)) {
@@ -532,11 +532,11 @@ public class WebViewBrowserActivity extends Activity implements PopupMenu.OnMenu
         mWebView.requestFocus();
     }
 
-    private void setUrlBarText(String url) {
+    void setUrlBarText(String url) {
         mUrlBar.setText(url, TextView.BufferType.EDITABLE);
     }
 
-    private void setUrlFail(boolean fail) {
+    void setUrlFail(boolean fail) {
         mUrlBar.setTextColor(fail ? Color.RED : Color.BLACK);
     }
 
@@ -563,7 +563,7 @@ public class WebViewBrowserActivity extends Activity implements PopupMenu.OnMenu
             + ")"
             + "(.*)");
 
-    private static boolean startBrowsingIntent(Context context, String url) {
+    static boolean startBrowsingIntent(Context context, String url) {
         Intent intent;
         // Perform generic parsing of the URI to turn it into an Intent.
         try {

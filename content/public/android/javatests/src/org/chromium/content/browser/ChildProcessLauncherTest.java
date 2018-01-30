@@ -97,7 +97,7 @@ public class ChildProcessLauncherTest {
         }
     }
 
-    private ChildConnectionAllocator mConnectionAllocator;
+    ChildConnectionAllocator mConnectionAllocator;
 
     @Before
     public void setUp() throws Exception {
@@ -122,15 +122,15 @@ public class ChildProcessLauncherTest {
         private final CallbackHelper mOnDestroyHelper = new CallbackHelper();
 
         // Can be accessed after mOnConnectionSetupCalled is signaled.
-        private boolean mServiceCreated;
-        private Bundle mServiceBundle;
-        private Bundle mConnectionBundle;
+        boolean mServiceCreated;
+        Bundle mServiceBundle;
+        Bundle mConnectionBundle;
 
         // Can be accessed after mOnLoadNativeCalled is signaled.
-        private boolean mNativeLibraryLoaded;
+        boolean mNativeLibraryLoaded;
 
         // Can be accessed after mOnBeforeMainCalled is signaled.
-        private String[] mCommandLine;
+        String[] mCommandLine;
 
         @Override
         public void onConnectionSetup(
@@ -535,7 +535,7 @@ public class ChildProcessLauncherTest {
         waitForConnectionState(launcher.getConnection(), CONNECTION_BLOCK_UNTIL_SETUP);
     }
 
-    private static int getConnectionPid(final ChildProcessConnection connection) {
+    static int getConnectionPid(final ChildProcessConnection connection) {
         return ChildProcessLauncherTestUtils.runOnLauncherAndGetResult(new Callable<Integer>() {
             @Override
             public Integer call() {

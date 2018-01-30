@@ -101,7 +101,7 @@ public class ClearBrowsingDataPreferencesTest {
         });
     }
 
-    private static void clickClearButton(ClearBrowsingDataPreferences preferences) {
+    static void clickClearButton(ClearBrowsingDataPreferences preferences) {
         Button clearButton =
                 preferences.getView().findViewById(org.chromium.chrome.R.id.clear_button);
         Assert.assertNotNull(clearButton);

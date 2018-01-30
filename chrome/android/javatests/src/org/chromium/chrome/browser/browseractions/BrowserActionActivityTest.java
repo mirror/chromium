@@ -89,21 +89,21 @@ public class BrowserActionActivityTest {
     @DrawableRes
     private static final int CUSTOM_ITEM_ICON_INVALID_DRAWABLE_ID = -1;
 
-    private final CallbackHelper mOnBrowserActionsMenuShownCallback = new CallbackHelper();
-    private final CallbackHelper mOnFinishNativeInitializationCallback = new CallbackHelper();
-    private final CallbackHelper mOnOpenTabInBackgroundStartCallback = new CallbackHelper();
-    private final CallbackHelper mOnDownloadStartCallback = new CallbackHelper();
+    final CallbackHelper mOnBrowserActionsMenuShownCallback = new CallbackHelper();
+    final CallbackHelper mOnFinishNativeInitializationCallback = new CallbackHelper();
+    final CallbackHelper mOnOpenTabInBackgroundStartCallback = new CallbackHelper();
+    final CallbackHelper mOnDownloadStartCallback = new CallbackHelper();
 
-    private final CallbackHelper mDidAddTabCallback = new CallbackHelper();
+    final CallbackHelper mDidAddTabCallback = new CallbackHelper();
 
-    private SparseArray<PendingIntent> mCustomActions;
-    private List<Pair<Integer, List<ContextMenuItem>>> mItems;
-    private ProgressDialog mProgressDialog;
+    SparseArray<PendingIntent> mCustomActions;
+    List<Pair<Integer, List<ContextMenuItem>>> mItems;
+    ProgressDialog mProgressDialog;
     private TestDelegate mTestDelegate;
     private TabModelObserver mTestObserver;
     private EmbeddedTestServer mTestServer;
     private String mTestPage;
-    private String mTestPage2;
+    String mTestPage2;
     private String mTestPage3;
     @Rule
     public ChromeTabbedActivityTestRule mActivityTestRule = new ChromeTabbedActivityTestRule();

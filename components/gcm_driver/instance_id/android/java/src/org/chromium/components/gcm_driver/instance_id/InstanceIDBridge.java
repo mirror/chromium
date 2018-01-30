@@ -20,15 +20,15 @@ import java.util.concurrent.ExecutionException;
  */
 @JNINamespace("instance_id")
 public class InstanceIDBridge {
-    private final String mSubtype;
-    private long mNativeInstanceIDAndroid;
+    final String mSubtype;
+    long mNativeInstanceIDAndroid;
     /**
      * Underlying InstanceIDWithSubtype. May be shared by multiple InstanceIDBridges. Must be
      * initialized on a background thread.
      */
-    private InstanceIDWithSubtype mInstanceID;
+    InstanceIDWithSubtype mInstanceID;
 
-    private static boolean sBlockOnAsyncTasksForTesting;
+    static boolean sBlockOnAsyncTasksForTesting;
 
     private InstanceIDBridge(long nativeInstanceIDAndroid, String subtype) {
         mSubtype = subtype;
@@ -161,14 +161,14 @@ public class InstanceIDBridge {
         }.execute();
     }
 
-    private native void nativeDidGetID(long nativeInstanceIDAndroid, int requestId, String id);
-    private native void nativeDidGetCreationTime(
+    native void nativeDidGetID(long nativeInstanceIDAndroid, int requestId, String id);
+    native void nativeDidGetCreationTime(
             long nativeInstanceIDAndroid, int requestId, long creationTime);
-    private native void nativeDidGetToken(
+    native void nativeDidGetToken(
             long nativeInstanceIDAndroid, int requestId, String token);
-    private native void nativeDidDeleteToken(
+    native void nativeDidDeleteToken(
             long nativeInstanceIDAndroid, int requestId, boolean success);
-    private native void nativeDidDeleteID(
+    native void nativeDidDeleteID(
             long nativeInstanceIDAndroid, int requestId, boolean success);
 
     /**

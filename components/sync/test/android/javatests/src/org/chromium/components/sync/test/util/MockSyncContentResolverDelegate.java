@@ -191,13 +191,13 @@ public class MockSyncContentResolverDelegate implements SyncContentResolverDeleg
     }
 
     private static class AsyncSyncStatusObserver {
-        private final SyncStatusObserver mSyncStatusObserver;
+        final SyncStatusObserver mSyncStatusObserver;
 
-        private AsyncSyncStatusObserver(SyncStatusObserver syncStatusObserver) {
+        AsyncSyncStatusObserver(SyncStatusObserver syncStatusObserver) {
             mSyncStatusObserver = syncStatusObserver;
         }
 
-        private void notifyObserverAsync(final Semaphore pendingObserverCount) {
+        void notifyObserverAsync(final Semaphore pendingObserverCount) {
             if (ThreadUtils.runningOnUiThread()) {
                 new AsyncTask<Void, Void, Void>() {
                     @Override

@@ -42,7 +42,7 @@ public class ActivityTabTaskDescriptionHelper {
     private final TabModelSelectorTabModelObserver mTabModelObserver;
     private final TabObserver mTabObserver;
 
-    private Bitmap mLargestFavicon;
+    Bitmap mLargestFavicon;
     private Tab mCurrentTab;
 
     /**
@@ -168,12 +168,12 @@ public class ActivityTabTaskDescriptionHelper {
         refreshSelectedTab();
     }
 
-    private void resetIcon() {
+    void resetIcon() {
         mLargestFavicon = null;
         updateTaskDescription();
     }
 
-    private void updateFavicon(Bitmap favicon) {
+    void updateFavicon(Bitmap favicon) {
         if (favicon == null) return;
         if (mLargestFavicon == null || favicon.getWidth() > mLargestFavicon.getWidth()
                 || favicon.getHeight() > mLargestFavicon.getHeight()) {
@@ -182,7 +182,7 @@ public class ActivityTabTaskDescriptionHelper {
         }
     }
 
-    private void updateTaskDescription() {
+    void updateTaskDescription() {
         if (mCurrentTab == null) {
             updateTaskDescription(null, null);
             return;
@@ -230,7 +230,7 @@ public class ActivityTabTaskDescriptionHelper {
         ApiCompatibilityUtils.setTaskDescription(mActivity, label, icon, color);
     }
 
-    private void refreshSelectedTab() {
+    void refreshSelectedTab() {
         Tab tab = mTabModelSelector.getCurrentTab();
         if (mCurrentTab == tab) return;
 

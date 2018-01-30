@@ -33,7 +33,7 @@ public class ResourceExtractor {
     private class ExtractTask extends AsyncTask<Void, Void, Void> {
         private static final int BUFFER_SIZE = 16 * 1024;
 
-        private final List<Runnable> mCompletionCallbacks = new ArrayList<Runnable>();
+        final List<Runnable> mCompletionCallbacks = new ArrayList<Runnable>();
 
         private void extractResourceHelper(InputStream is, File outFile, byte[] buffer)
                 throws IOException {
@@ -127,7 +127,7 @@ public class ResourceExtractor {
     }
 
     private ExtractTask mExtractTask;
-    private final String[] mAssetsToExtract = detectFilesToExtract();
+    final String[] mAssetsToExtract = detectFilesToExtract();
 
     private static ResourceExtractor sInstance;
 
@@ -232,7 +232,7 @@ public class ResourceExtractor {
         return new File(PathUtils.getDataDirectory());
     }
 
-    private File getOutputDir() {
+    File getOutputDir() {
         return new File(getAppDataDir(), "paks");
     }
 
@@ -242,7 +242,7 @@ public class ResourceExtractor {
         }
     }
 
-    private void deleteFiles(String[] existingFileNames) {
+    void deleteFiles(String[] existingFileNames) {
         // These used to be extracted, but no longer are, so just clean them up.
         deleteFile(new File(getAppDataDir(), ICU_DATA_FILENAME));
         deleteFile(new File(getAppDataDir(), V8_NATIVES_DATA_FILENAME));

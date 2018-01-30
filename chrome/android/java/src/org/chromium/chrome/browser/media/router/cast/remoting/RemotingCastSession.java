@@ -34,16 +34,16 @@ import java.util.Set;
  * A wrapper around a RemoteMediaPlayer, used in remote playback.
  */
 public class RemotingCastSession implements MediaNotificationListener, CastSession {
-    private final CastDevice mCastDevice;
+    final CastDevice mCastDevice;
     private final MediaSource mSource;
 
-    private GoogleApiClient mApiClient;
-    private String mSessionId;
+    GoogleApiClient mApiClient;
+    String mSessionId;
     private String mApplicationStatus;
     private ApplicationMetadata mApplicationMetadata;
-    private MediaNotificationInfo.Builder mNotificationBuilder;
-    private RemoteMediaPlayer mMediaPlayer;
-    private boolean mStoppingApplication = false;
+    MediaNotificationInfo.Builder mNotificationBuilder;
+    RemoteMediaPlayer mMediaPlayer;
+    boolean mStoppingApplication = false;
 
     public RemotingCastSession(GoogleApiClient apiClient, String sessionId,
             ApplicationMetadata metadata, String applicationStatus, CastDevice castDevice,

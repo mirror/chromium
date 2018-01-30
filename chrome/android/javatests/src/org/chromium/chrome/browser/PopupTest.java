@@ -49,7 +49,7 @@ public class PopupTest {
     private String mPopupHtmlUrl;
     private EmbeddedTestServer mTestServer;
 
-    private int getNumInfobarsShowing() {
+    int getNumInfobarsShowing() {
         return mActivityTestRule.getInfoBars().size();
     }
 

@@ -70,9 +70,9 @@ public class AndroidViewIntegrationTest {
         }
     }
 
-    private OnContentSizeChangedHelper mOnContentSizeChangedHelper =
+    OnContentSizeChangedHelper mOnContentSizeChangedHelper =
             new OnContentSizeChangedHelper();
-    private CallbackHelper mOnPageScaleChangedHelper = new CallbackHelper();
+    CallbackHelper mOnPageScaleChangedHelper = new CallbackHelper();
 
     private class TestAwLayoutSizer extends AwLayoutSizer {
         @Override

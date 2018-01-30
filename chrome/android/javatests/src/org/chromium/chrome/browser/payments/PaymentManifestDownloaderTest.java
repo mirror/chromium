@@ -58,10 +58,10 @@ public class PaymentManifestDownloaderTest implements ManifestDownloadCallback {
 
     private final PaymentManifestDownloader mDownloader = new PaymentManifestDownloader();
     private EmbeddedTestServer mServer;
-    private boolean mDownloadComplete;
-    private boolean mDownloadPaymentMethodManifestSuccess;
-    private boolean mDownloadWebAppManifestSuccess;
-    private boolean mDownloadFailure;
+    boolean mDownloadComplete;
+    boolean mDownloadPaymentMethodManifestSuccess;
+    boolean mDownloadWebAppManifestSuccess;
+    boolean mDownloadFailure;
     private String mPaymentMethodManifest;
     private String mWebAppManifest;
 

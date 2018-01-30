@@ -98,7 +98,7 @@ public class ChildProcessConnection {
         private final ChildServiceConnectionDelegate mDelegate;
         private boolean mBound;
 
-        private ChildServiceConnectionImpl(Context context, Intent bindIntent, int bindFlags,
+        ChildServiceConnectionImpl(Context context, Intent bindIntent, int bindFlags,
                 ChildServiceConnectionDelegate delegate) {
             mContext = context;
             mBindIntent = bindIntent;
@@ -144,7 +144,7 @@ public class ChildProcessConnection {
         }
     }
 
-    private final Handler mLauncherHandler;
+    final Handler mLauncherHandler;
     private final ComponentName mServiceName;
 
     // Parameters passed to the child process through the service binding intent.
@@ -380,7 +380,7 @@ public class ChildProcessConnection {
         notifyChildProcessDied();
     }
 
-    private void onServiceConnectedOnLauncherThread(IBinder service) {
+    void onServiceConnectedOnLauncherThread(IBinder service) {
         assert isRunningOnLauncherThread();
         // A flag from the parent class ensures we run the post-connection logic only once
         // (instead of once per each ChildServiceConnection).
@@ -425,7 +425,7 @@ public class ChildProcessConnection {
         }
     }
 
-    private void onServiceDisconnectedOnLauncherThread() {
+    void onServiceDisconnectedOnLauncherThread() {
         assert isRunningOnLauncherThread();
         // Ensure that the disconnection logic runs only once (instead of once per each
         // ChildServiceConnection).
@@ -444,7 +444,7 @@ public class ChildProcessConnection {
         }
     }
 
-    private void onSetupConnectionResult(int pid) {
+    void onSetupConnectionResult(int pid) {
         mPid = pid;
         assert mPid != 0 : "Child service claims to be run by a process of pid=0.";
 

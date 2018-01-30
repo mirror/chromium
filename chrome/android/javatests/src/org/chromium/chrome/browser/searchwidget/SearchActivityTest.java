@@ -138,7 +138,7 @@ public class SearchActivityTest {
     @Rule
     public MultiActivityTestRule mTestRule = new MultiActivityTestRule();
 
-    private TestDelegate mTestDelegate;
+    TestDelegate mTestDelegate;
 
     @Before
     public void setUp() {

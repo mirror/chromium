@@ -44,7 +44,7 @@ public class MediaPlayerBridge {
     // want it.
     private LoadDataUriTask mLoadDataUriTask;
     private MediaPlayer mPlayer;
-    private long mNativeMediaPlayerBridge;
+    long mNativeMediaPlayerBridge;
 
     @CalledByNative
     private static MediaPlayerBridge create(long nativeMediaPlayerBridge) {
@@ -389,8 +389,8 @@ public class MediaPlayerBridge {
         return new AllowedOperations(canPause, canSeekForward, canSeekBackward);
     }
 
-    private native void nativeOnDidSetDataUriDataSource(long nativeMediaPlayerBridge,
-                                                        boolean success);
+    native void nativeOnDidSetDataUriDataSource(long nativeMediaPlayerBridge,
+            boolean success);
 
     private void cancelLoadDataUriTask() {
         if (mLoadDataUriTask != null) {

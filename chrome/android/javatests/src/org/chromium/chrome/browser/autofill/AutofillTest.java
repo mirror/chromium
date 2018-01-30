@@ -49,7 +49,7 @@ public class AutofillTest {
     public ChromeActivityTestRule<ChromeActivity> mActivityTestRule =
             new ChromeActivityTestRule<>(ChromeActivity.class);
 
-    private AutofillPopup mAutofillPopup;
+    AutofillPopup mAutofillPopup;
     private WindowAndroid mWindowAndroid;
     private MockAutofillCallback mMockAutofillCallback;
 
@@ -76,11 +76,11 @@ public class AutofillTest {
         });
     }
 
-    private static final long CALLBACK_TIMEOUT_MS = scaleTimeout(4000);
+    static final long CALLBACK_TIMEOUT_MS = scaleTimeout(4000);
     private static final int CHECK_INTERVAL_MS = 100;
 
     private class MockAutofillCallback implements AutofillDelegate {
-        private final AtomicBoolean mGotPopupSelection = new AtomicBoolean(false);
+        final AtomicBoolean mGotPopupSelection = new AtomicBoolean(false);
         public int mListIndex = -1;
 
         @Override

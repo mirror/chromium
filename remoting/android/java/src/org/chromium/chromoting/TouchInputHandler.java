@@ -27,29 +27,29 @@ public class TouchInputHandler {
 
     private final List<Pair<Object, Event<?>>> mAttachedEvents = new ArrayList<>();
     private final Desktop mDesktop;
-    private final RenderData mRenderData;
-    private final DesktopCanvas mDesktopCanvas;
-    private final RenderStub mRenderStub;
+    final RenderData mRenderData;
+    final DesktopCanvas mDesktopCanvas;
+    final RenderStub mRenderStub;
     private final GestureDetector mScroller;
     private final ScaleGestureDetector mZoomer;
     private final TapGestureDetector mTapDetector;
 
     /** Used to disambiguate a 2-finger gesture as a swipe or a pinch. */
-    private final SwipePinchDetector mSwipePinchDetector;
+    final SwipePinchDetector mSwipePinchDetector;
 
     // Used for processing cursor & scroller fling animations.
     // May consider using a List of AnimationJob if we have more than two animation jobs in
     // the future.
-    private final FlingAnimationJob mCursorAnimationJob;
-    private final FlingAnimationJob mScrollAnimationJob;
+    final FlingAnimationJob mCursorAnimationJob;
+    final FlingAnimationJob mScrollAnimationJob;
 
-    private InputStrategyInterface mInputStrategy;
+    InputStrategyInterface mInputStrategy;
 
     /**
      * Used for tracking swipe gestures. Only the Y-direction is needed for responding to swipe-up
      * or swipe-down.
      */
-    private float mTotalMotionY = 0;
+    float mTotalMotionY = 0;
 
     /**
      * Distance in pixels beyond which a motion gesture is considered to be a swipe. This is
@@ -67,37 +67,37 @@ public class TouchInputHandler {
      * Defines an inset boundary within which pan gestures are allowed.  Pan gestures which
      * originate outside of this boundary will be ignored.
      */
-    private Rect mPanGestureBounds = new Rect();
+    Rect mPanGestureBounds = new Rect();
 
     /**
      * Set to true to prevent any further movement of the cursor, for example, when showing the
      * keyboard to prevent the cursor wandering from the area where keystrokes should be sent.
      */
-    private boolean mSuppressCursorMovement = false;
+    boolean mSuppressCursorMovement = false;
 
     /**
      * Set to true to suppress the fling animation at the end of a gesture, for example, when
      * dragging whilst a button is held down.
      */
-    private boolean mSuppressFling = false;
+    boolean mSuppressFling = false;
 
     /**
      * Set to true when 2-finger fling (scroll gesture with final velocity) is detected to trigger
      * a scrolling animation.
      */
-    private boolean mScrollFling = false;
+    boolean mScrollFling = false;
 
     /**
      * Set to true when 3-finger swipe gesture is complete, so that further movement doesn't
      * trigger more swipe actions.
      */
-    private boolean mSwipeCompleted = false;
+    boolean mSwipeCompleted = false;
 
     /**
      * Set to true when a 1 finger pan gesture originates with a longpress.  This means the user
      * is performing a drag operation.
      */
-    private boolean mIsDragging = false;
+    boolean mIsDragging = false;
 
     private Event.ParameterCallback<Boolean, Void> mProcessAnimationCallback;
 
@@ -292,14 +292,14 @@ public class TouchInputHandler {
      * Steps forward the animation.
      * @return true if the animation is not finished yet.
      */
-    private boolean processAnimation() {
+    boolean processAnimation() {
         return mCursorAnimationJob.processAnimation() || mScrollAnimationJob.processAnimation();
     }
 
     /**
      * Start stepping animation when onCanvasRendered is triggered.
      */
-    private void startAnimation() {
+    void startAnimation() {
         mRenderStub.onCanvasRendered().addSelfRemovable(mProcessAnimationCallback);
     }
 
@@ -311,7 +311,7 @@ public class TouchInputHandler {
         mScrollAnimationJob.abortAnimation();
     }
 
-    private void handleInputModeChanged(
+    void handleInputModeChanged(
             InputModeChangedEventParameter parameter, InputEventSender injector) {
         final Desktop.InputMode inputMode = parameter.inputMode;
         final CapabilityManager.HostCapability hostTouchCapability =
@@ -348,7 +348,7 @@ public class TouchInputHandler {
         mRenderStub.setCursorVisibility(mRenderData.drawCursor);
     }
 
-    private boolean handleTouchEvent(MotionEvent event) {
+    boolean handleTouchEvent(MotionEvent event) {
         // Give the underlying input strategy a chance to observe the current motion event before
         // passing it to the gesture detectors.  This allows the input strategy to react to the
         // event or save the payload for use in recreating the gesture remotely.
@@ -380,7 +380,7 @@ public class TouchInputHandler {
         return handled;
     }
 
-    private void handleClientSizeChanged(int width, int height) {
+    void handleClientSizeChanged(int width, int height) {
         mRenderData.screenWidth = width;
         mRenderData.screenHeight = height;
 
@@ -389,7 +389,7 @@ public class TouchInputHandler {
         resizeImageToFitScreen();
     }
 
-    private void handleHostSizeChanged(int width, int height) {
+    void handleHostSizeChanged(int width, int height) {
         mRenderData.imageWidth = width;
         mRenderData.imageHeight = height;
 
@@ -425,7 +425,7 @@ public class TouchInputHandler {
     }
 
     /** Moves the desired center of the viewport using the specified deltas. */
-    private void moveViewportByOffset(float deltaX, float deltaY) {
+    void moveViewportByOffset(float deltaX, float deltaY) {
         // If we are in an indirect mode or are in the middle of a drag operation, then we want to
         // invert the direction of the operation (i.e. follow the motion of the finger).
         boolean followCursor = (mInputStrategy.isIndirectInputMode() || mIsDragging);
@@ -447,7 +447,7 @@ public class TouchInputHandler {
     }
 
     /** Moves the cursor to the specified position on the screen. */
-    private void moveCursorToScreenPoint(float screenX, float screenY) {
+    void moveCursorToScreenPoint(float screenX, float screenY) {
         float[] imagePoint = mapScreenPointToImagePoint(screenX, screenY);
         moveCursor(imagePoint[0], imagePoint[1]);
     }
@@ -463,7 +463,7 @@ public class TouchInputHandler {
     }
 
     /** Processes a (multi-finger) swipe gesture. */
-    private boolean onSwipe() {
+    boolean onSwipe() {
         if (mTotalMotionY > mSwipeThreshold) {
             // Swipe down occurred.
             mDesktop.showSystemUi();
@@ -481,7 +481,7 @@ public class TouchInputHandler {
     }
 
     /** Translates a point in screen coordinates to a location on the desktop image. */
-    private float[] mapScreenPointToImagePoint(float screenX, float screenY) {
+    float[] mapScreenPointToImagePoint(float screenX, float screenY) {
         float[] mappedPoints = {screenX, screenY};
         Matrix screenToImage = new Matrix();
 

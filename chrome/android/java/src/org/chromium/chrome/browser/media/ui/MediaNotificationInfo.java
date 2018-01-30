@@ -271,7 +271,7 @@ public class MediaNotificationInfo {
      * @param listener The listener for the control events.
      * @param mediaSessionActions The actions supported by the page.
      */
-    private MediaNotificationInfo(MediaMetadata metadata, boolean isPaused, String origin,
+    MediaNotificationInfo(MediaMetadata metadata, boolean isPaused, String origin,
             int tabId, boolean isPrivate, int notificationSmallIcon, Bitmap notificationLargeIcon,
             int defaultNotificationLargeIcon, Bitmap mediaSessionImage, int actions, int id,
             Intent contentIntent, MediaNotificationListener listener,

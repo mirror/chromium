@@ -165,7 +165,7 @@ public class Tab
 
     private static final String PRODUCT_VERSION = ChromeVersionInfo.getProductVersion();
 
-    private long mNativeTabAndroid;
+    long mNativeTabAndroid;
 
     /** Unique id of this tab (within its container). */
     private final int mId;
@@ -180,7 +180,7 @@ public class Tab
     private final Context mThemedApplicationContext;
 
     /** Gives {@link Tab} a way to interact with the Android window. */
-    private WindowAndroid mWindowAndroid;
+    WindowAndroid mWindowAndroid;
 
     /** Whether or not this {@link Tab} is initialized and should be interacted with. */
     private boolean mIsInitialized;
@@ -287,7 +287,7 @@ public class Tab
      * The external application that this Tab is associated with (null if not associated with any
      * app). Allows reusing of tabs opened from the same application.
      */
-    private String mAppAssociatedWith;
+    String mAppAssociatedWith;
 
     /**
      * Keeps track of whether the Tab should be kept in the TabModel after the user hits "back".
@@ -362,7 +362,7 @@ public class Tab
 
     private TabRedirectHandler mTabRedirectHandler;
 
-    private FullscreenManager mFullscreenManager;
+    FullscreenManager mFullscreenManager;
     private float mPreviousTopControlsOffsetY = Float.NaN;
     private float mPreviousBottomControlsOffsetY = Float.NaN;
     private float mPreviousContentOffsetY = Float.NaN;
@@ -455,7 +455,7 @@ public class Tab
     // TODO(dtrainor): Port more methods to the observer.
     private final TabObserver mTabObserver = new EmptyTabObserver() {
         /** A runnable to delay the enabling of fullscreen mode if necessary. */
-        private Runnable mEnterFullscreenRunnable;
+        Runnable mEnterFullscreenRunnable;
 
         @Override
         public void onSSLStateUpdated(Tab tab) {
@@ -514,7 +514,7 @@ public class Tab
          * Do the actual enter/exit of fullscreen mode.
          * @param enable Whether or not fullscreen is enabled.
          */
-        private void toggleFullscreenInternal(boolean enable) {
+        void toggleFullscreenInternal(boolean enable) {
             if (mFullscreenManager != null) {
                 mFullscreenManager.setPersistentFullscreenMode(enable);
             }
@@ -543,7 +543,7 @@ public class Tab
     private boolean mInteractableState;
 
     /** Whether or not the tab's active view is attached to the window. */
-    private boolean mIsViewAttachedToWindow;
+    boolean mIsViewAttachedToWindow;
 
     /**
      * Creates an instance of a {@link Tab}.
@@ -2330,7 +2330,7 @@ public class Tab
      * Update the interactable state of the tab. If the state has changed, it will call the
      * {@link #onInteractableStateChanged(boolean)} method.
      */
-    private void updateInteractableState() {
+    void updateInteractableState() {
         boolean currentState =
                 !mIsHidden && !isFrozen() && (mIsViewAttachedToWindow || VrShellDelegate.isInVr());
 
@@ -3442,7 +3442,7 @@ public class Tab
     }
 
     @CalledByNative
-    private void hideMediaDownloadInProductHelp() {
+    void hideMediaDownloadInProductHelp() {
         if (mPulsePopupWindow != null && mPulsePopupWindow.isShowing()) {
             mPulsePopupWindow.dismiss();
             mPulsePopupWindow = null;
@@ -3486,7 +3486,7 @@ public class Tab
             InterceptNavigationDelegate delegate);
     private native void nativeAttachToTabContentManager(long nativeTabAndroid,
             TabContentManager tabContentManager);
-    private native void nativeClearThumbnailPlaceholder(long nativeTabAndroid);
+    native void nativeClearThumbnailPlaceholder(long nativeTabAndroid);
     private native boolean nativeHasPrerenderedUrl(long nativeTabAndroid, String url);
     private native void nativeSetWebappManifestScope(long nativeTabAndroid, String scope);
     private native void nativeEnableEmbeddedMediaExperience(long nativeTabAndroid, boolean enabled);

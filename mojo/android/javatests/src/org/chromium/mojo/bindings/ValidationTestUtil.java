@@ -38,7 +38,7 @@ public class ValidationTestUtil {
             return mErrorMessage;
         }
 
-        private Data(ByteBuffer data, int handlesCount, String errorMessage) {
+        Data(ByteBuffer data, int handlesCount, String errorMessage) {
             this.mData = data;
             this.mHandlesCount = handlesCount;
             this.mErrorMessage = errorMessage;

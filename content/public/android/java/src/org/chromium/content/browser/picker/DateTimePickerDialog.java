@@ -216,7 +216,7 @@ public class DateTimePickerDialog extends AlertDialog implements OnClickListener
         @CheckForNull
         private Resources mWrappedResources;
 
-        private WorkaroundContextForSamsungLDateTimeBug(Context context) {
+        WorkaroundContextForSamsungLDateTimeBug(Context context) {
             super(context);
         }
 

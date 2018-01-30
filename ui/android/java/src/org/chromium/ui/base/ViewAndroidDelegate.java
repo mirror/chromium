@@ -355,7 +355,7 @@ public abstract class ViewAndroidDelegate {
         return new ViewAndroidDelegate() {
             private ViewGroup mContainerView;
 
-            private ViewAndroidDelegate init(ViewGroup containerView) {
+            ViewAndroidDelegate init(ViewGroup containerView) {
                 mContainerView = containerView;
                 return this;
             }

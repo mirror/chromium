@@ -145,7 +145,7 @@ public class ParameterizedRunnerDelegateFactory {
      * to be empty
      */
     public static class ParameterizedRunnerDelegateInstantiationException extends Exception {
-        private ParameterizedRunnerDelegateInstantiationException(
+        ParameterizedRunnerDelegateInstantiationException(
                 String runnerDelegateClass, Exception e) {
             super(String.format("Current class runner delegate %s can not be instantiated.",
                           runnerDelegateClass),

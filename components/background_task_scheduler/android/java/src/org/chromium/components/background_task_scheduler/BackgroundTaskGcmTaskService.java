@@ -64,7 +64,7 @@ public class BackgroundTaskGcmTaskService extends GcmTaskService {
 
     private static class TaskFinishedCallbackGcmTaskService
             implements BackgroundTask.TaskFinishedCallback {
-        private final Waiter mWaiter;
+        final Waiter mWaiter;
 
         public TaskFinishedCallbackGcmTaskService(Waiter waiter) {
             mWaiter = waiter;

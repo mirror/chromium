@@ -28,7 +28,7 @@ class VideoCaptureFactory {
         private static int sNumberOfSystemCameras = -1;
         private static final String TAG = "cr.media";
 
-        private static int getNumberOfCameras() {
+        static int getNumberOfCameras() {
             if (sNumberOfSystemCameras == -1) {
                 // getNumberOfCameras() would not fail due to lack of permission, but the
                 // following operations on camera would. "No permission" isn't a fatal
@@ -57,7 +57,7 @@ class VideoCaptureFactory {
         }
     }
 
-    private static boolean isLReleaseOrLater() {
+    static boolean isLReleaseOrLater() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
     }
 

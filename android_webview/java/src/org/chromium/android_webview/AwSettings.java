@@ -71,7 +71,7 @@ public class AwSettings {
     private double mDIPScale = 1.0;
 
     // Lock to protect all settings.
-    private final Object mAwSettingsLock = new Object();
+    final Object mAwSettingsLock = new Object();
 
     @LayoutAlgorithm
     private int mLayoutAlgorithm = LAYOUT_ALGORITHM_NARROW_COLUMNS;
@@ -143,7 +143,7 @@ public class AwSettings {
 
     static class LazyDefaultUserAgent{
         // Lazy Holder pattern
-        private static final String sInstance = nativeGetDefaultUserAgent();
+        static final String sInstance = nativeGetDefaultUserAgent();
     }
 
     // Protects access to settings global fields.
@@ -154,7 +154,7 @@ public class AwSettings {
     private static boolean sAppCachePathIsSet;
 
     // The native side of this object. It's lifetime is bounded by the WebContent it is attached to.
-    private long mNativeAwSettings;
+    long mNativeAwSettings;
 
     // Custom handler that queues messages to call native code on the UI thread.
     private final EventHandler mEventHandler;
@@ -167,9 +167,9 @@ public class AwSettings {
         // Message id for running a Runnable with mAwSettingsLock held.
         private static final int RUN_RUNNABLE_BLOCKING = 0;
         // Actual UI thread handler
-        private Handler mHandler;
+        Handler mHandler;
         // Synchronization flag.
-        private boolean mSynchronizationPending;
+        boolean mSynchronizationPending;
 
         EventHandler() {
         }
@@ -1808,7 +1808,7 @@ public class AwSettings {
         }
     }
 
-    private void updateWebkitPreferencesOnUiThreadLocked() {
+    void updateWebkitPreferencesOnUiThreadLocked() {
         assert mEventHandler.mHandler != null;
         ThreadUtils.assertOnUiThread();
         if (mNativeAwSettings != 0) {
@@ -1832,7 +1832,7 @@ public class AwSettings {
 
     private native void nativeUpdateWebkitPreferencesLocked(long nativeAwSettings);
 
-    private static native String nativeGetDefaultUserAgent();
+    static native String nativeGetDefaultUserAgent();
 
     private native void nativeUpdateFormDataPreferencesLocked(long nativeAwSettings);
 

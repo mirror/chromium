@@ -58,8 +58,8 @@ public class BottomSheetLocationBarTest {
     private static final String THEME_COLOR_TEST_PAGE =
             "/chrome/test/data/android/theme_color_test.html";
 
-    private final CallbackHelper mDidThemeColorChangedCallbackHelper = new CallbackHelper();
-    private final CallbackHelper mOnSSLStateUpdatedCallbackHelper = new CallbackHelper();
+    final CallbackHelper mDidThemeColorChangedCallbackHelper = new CallbackHelper();
+    final CallbackHelper mOnSSLStateUpdatedCallbackHelper = new CallbackHelper();
 
     @Before
     public void setUp() throws Exception {

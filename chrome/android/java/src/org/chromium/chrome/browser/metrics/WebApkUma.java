@@ -259,14 +259,14 @@ public class WebApkUma {
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    private static void logSpaceUsageUMA(long availableSpaceInByte, long cacheSizeInByte) {
+    static void logSpaceUsageUMA(long availableSpaceInByte, long cacheSizeInByte) {
         WebsitePermissionsFetcher fetcher = new WebsitePermissionsFetcher(
                 new UnimportantStorageSizeCalculator(availableSpaceInByte, cacheSizeInByte));
         fetcher.fetchPreferencesForCategory(
                 SiteSettingsCategory.fromString(SiteSettingsCategory.CATEGORY_USE_STORAGE));
     }
 
-    private static void logSpaceUsageUMAOnDataAvailable(
+    static void logSpaceUsageUMAOnDataAvailable(
             long spaceSize, long cacheSize, long unimportantSiteSize) {
         RecordHistogram.recordSparseSlowlyHistogram(
                 "WebApk.Install.AvailableSpace.Fail", roundByteToMb(spaceSize));

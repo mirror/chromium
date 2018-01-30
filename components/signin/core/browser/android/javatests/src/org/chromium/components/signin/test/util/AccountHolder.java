@@ -24,7 +24,7 @@ public class AccountHolder {
     private final boolean mAlwaysAccept;
     private final Set<String> mFeatures;
 
-    private AccountHolder(Account account, String password, Map<String, String> authTokens,
+    AccountHolder(Account account, String password, Map<String, String> authTokens,
             Map<String, Boolean> hasBeenAccepted, boolean alwaysAccept, Set<String> features) {
         assert account != null;
         assert authTokens != null;

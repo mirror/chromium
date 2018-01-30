@@ -29,7 +29,7 @@ public class DownloadItemSelectionDelegate extends SelectionDelegate<DownloadHis
 
     private final Set<SubsectionHeader> mSelectedHeaders = new HashSet<>();
     private final ObserverList<SubsectionHeaderSelectionObserver> mObservers = new ObserverList<>();
-    private DownloadHistoryAdapter mAdapter;
+    DownloadHistoryAdapter mAdapter;
 
     /**
      * Adds an observer to be notified of selection changes for subsection headers.
@@ -120,7 +120,7 @@ public class DownloadItemSelectionDelegate extends SelectionDelegate<DownloadHis
         }
     }
 
-    private void notifySubsectionHeaderSelectionStateChanged() {
+    void notifySubsectionHeaderSelectionStateChanged() {
         for (SubsectionHeaderSelectionObserver observer : mObservers) {
             observer.onSubsectionHeaderSelectionStateChanged(mSelectedHeaders);
         }

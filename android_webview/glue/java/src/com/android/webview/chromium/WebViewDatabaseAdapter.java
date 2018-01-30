@@ -20,7 +20,7 @@ import java.util.concurrent.Callable;
 @SuppressWarnings("deprecation")
 final class WebViewDatabaseAdapter extends WebViewDatabase {
     private final WebViewChromiumFactoryProvider mFactory;
-    private final HttpAuthDatabase mHttpAuthDatabase;
+    final HttpAuthDatabase mHttpAuthDatabase;
 
     public WebViewDatabaseAdapter(
             WebViewChromiumFactoryProvider factory, HttpAuthDatabase httpAuthDatabase) {

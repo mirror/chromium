@@ -40,7 +40,7 @@ public class ProviderTestRule extends ChromeActivityTestRule<ChromeActivity> {
         }, description);
     }
 
-    private void setUp() throws Exception {
+    void setUp() throws Exception {
         startMainActivityOnBlankPage();
 
         final ChromeActivity activity = getActivity();

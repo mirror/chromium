@@ -83,7 +83,7 @@ class PwsClientImpl implements PwsClient {
         return jsonObject;
     }
 
-    private static Collection<PwsResult> parseResolveScanResponse(JSONObject result) {
+    static Collection<PwsResult> parseResolveScanResponse(JSONObject result) {
         // Get the metadata array.
         Collection<PwsResult> pwsResults = new ArrayList<>();
         JSONArray metadata = result.optJSONArray("results");

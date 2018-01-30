@@ -107,57 +107,57 @@ public class ContextualSearchManager
     private final ObserverList<ContextualSearchObserver> mObservers =
             new ObserverList<ContextualSearchObserver>();
 
-    private final ChromeActivity mActivity;
+    final ChromeActivity mActivity;
     private final ContextualSearchTabPromotionDelegate mTabPromotionDelegate;
     private final ViewTreeObserver.OnGlobalFocusChangeListener mOnFocusChangeListener;
     private final TabModelObserver mTabModelObserver;
 
     // The Ranker logger to use to write Tap Suppression Ranker logs to UMA.
-    private final ContextualSearchRankerLogger mTapSuppressionRankerLogger;
+    final ContextualSearchRankerLogger mTapSuppressionRankerLogger;
 
     private final ContextualSearchSelectionClient mContextualSearchSelectionClient;
 
-    private ContextualSearchSelectionController mSelectionController;
-    private ContextualSearchNetworkCommunicator mNetworkCommunicator;
-    private ContextualSearchPolicy mPolicy;
-    private ContextualSearchInternalStateController mInternalStateController;
+    ContextualSearchSelectionController mSelectionController;
+    ContextualSearchNetworkCommunicator mNetworkCommunicator;
+    ContextualSearchPolicy mPolicy;
+    ContextualSearchInternalStateController mInternalStateController;
 
     @VisibleForTesting
     protected ContextualSearchTranslateController mTranslateController;
 
     // The Overlay panel.
-    private ContextualSearchPanel mSearchPanel;
+    ContextualSearchPanel mSearchPanel;
 
     // The native manager associated with this object.
-    private long mNativeContextualSearchManagerPtr;
+    long mNativeContextualSearchManagerPtr;
 
     private ViewGroup mParentView;
-    private TabRedirectHandler mTabRedirectHandler;
-    private OverlayPanelContentViewDelegate mSearchContentViewDelegate;
+    TabRedirectHandler mTabRedirectHandler;
+    OverlayPanelContentViewDelegate mSearchContentViewDelegate;
     private TabModelSelectorTabObserver mTabModelSelectorTabObserver;
     private FindToolbarManager mFindToolbarManager;
     private FindToolbarObserver mFindToolbarObserver;
     private ContextualSearchIPH mInProductHelp;
 
-    private boolean mDidStartLoadingResolvedSearchRequest;
+    boolean mDidStartLoadingResolvedSearchRequest;
     private long mLoadedSearchUrlTimeMs;
     // TODO(donnd): consider changing this member's name to indicate "opened" instead of "seen".
-    private boolean mWereSearchResultsSeen;
+    boolean mWereSearchResultsSeen;
     private boolean mWereInfoBarsHidden;
-    private boolean mDidPromoteSearchNavigation;
+    boolean mDidPromoteSearchNavigation;
 
     private boolean mWasActivatedByTap;
     private boolean mIsInitialized;
     private boolean mReceivedContextualCardsEntityData;
 
     // The current search context, or null.
-    private ContextualSearchContext mContext;
+    ContextualSearchContext mContext;
 
     /**
      * This boolean is used for loading content after a long-press when content is not immediately
      * loaded.
      */
-    private boolean mShouldLoadDelayedSearch;
+    boolean mShouldLoadDelayedSearch;
 
     private boolean mIsShowingPromo;
     private boolean mIsMandatoryPromo;
@@ -167,12 +167,12 @@ public class ContextualSearchManager
      * Whether contextual search manager is currently promoting a tab. We should be ignoring hide
      * requests when mIsPromotingTab is set to true.
      */
-    private boolean mIsPromotingToTab;
+    boolean mIsPromotingToTab;
 
     // TODO(pedrosimonetti): also store selected text, surroundings, url, bounding rect of selected
     // text, and make sure that all states are cleared when starting a new contextual search to
     // avoid having the values in a funky state.
-    private ContextualSearchRequest mSearchRequest;
+    ContextualSearchRequest mSearchRequest;
     private ContextualSearchRequest mLastSearchRequestLoaded;
 
     /** Whether the Accessibility Mode is enabled. */
@@ -183,10 +183,10 @@ public class ContextualSearchManager
 
     // Counter for how many times we've called SelectWordAroundCaret without an ACK returned.
     // TODO(donnd): replace with a more systematic approach using the InternalStateController.
-    private int mSelectWordAroundCaretCounter;
+    int mSelectWordAroundCaretCounter;
 
     /** Whether ContextualSearch UI is suppressed for Smart Selection. */
-    private boolean mDoSuppressContextualSearchForSmartSelection;
+    boolean mDoSuppressContextualSearchForSmartSelection;
 
     /**
      * The delegate that is responsible for promoting a {@link ContentViewCore} to a {@link Tab}
@@ -339,7 +339,7 @@ public class ContextualSearchManager
     }
 
     /** @return Whether the {@code mSearchPanel} is not {@code null} and is showing. */
-    private boolean isSearchPanelShowing() {
+    boolean isSearchPanelShowing() {
         return mSearchPanel != null && mSearchPanel.isShowing();
     }
 
@@ -347,14 +347,14 @@ public class ContextualSearchManager
      * @return the {@link ContentViewCore} of the {@code mSearchPanel} or {@code null} if
      *         {@code mSearchPanel} is null or the search panel doesn't currently hold a CVC.
      */
-    private @Nullable ContentViewCore getSearchPanelContentViewCore() {
+    @Nullable ContentViewCore getSearchPanelContentViewCore() {
         return mSearchPanel == null ? null : mSearchPanel.getContentViewCore();
     }
 
     /**
      * @return the {@link WebContents} of the {@code mSearchPanel} or {@code null}.
      */
-    private @Nullable WebContents getSearchPanelWebContents() {
+    @Nullable WebContents getSearchPanelWebContents() {
         return getSearchPanelContentViewCore() == null
                 ? null
                 : getSearchPanelContentViewCore().getWebContents();
@@ -362,7 +362,7 @@ public class ContextualSearchManager
 
     /** @return The Base Page's {@link WebContents}. */
     @Nullable
-    private WebContents getBaseWebContents() {
+    WebContents getBaseWebContents() {
         return mSelectionController.getBaseWebContents();
     }
 
@@ -445,7 +445,7 @@ public class ContextualSearchManager
      * Shows the Contextual Search UX.
      * @param stateChangeReason The reason explaining the change of state.
      */
-    private void showContextualSearch(StateChangeReason stateChangeReason) {
+    void showContextualSearch(StateChangeReason stateChangeReason) {
         assert mSearchPanel != null;
         if (mFindToolbarManager != null) {
             mFindToolbarManager.hideToolbar(false);
@@ -806,7 +806,7 @@ public class ContextualSearchManager
     }
 
     /** Loads a Search Request in the Contextual Search's Content View. */
-    private void loadSearchUrl() {
+    void loadSearchUrl() {
         assert mSearchPanel != null;
         mLoadedSearchUrlTimeMs = System.currentTimeMillis();
         mLastSearchRequestLoaded = mSearchRequest;
@@ -900,7 +900,7 @@ public class ContextualSearchManager
      * Notifies Icing of the current selection.
      * Also notifies the panel whether the selection was part of a URL.
      */
-    private void notifyObserversOfContextSelectionChanged() {
+    void notifyObserversOfContextSelectionChanged() {
         assert mContext != null;
         String surroundingText = mContext.getSurroundingText();
         assert surroundingText != null;
@@ -1106,7 +1106,7 @@ public class ContextualSearchManager
      * a load of a user-visible search result.
      * @param isFailure Whether the navigation failed.
      */
-    private void onContextualSearchRequestNavigation(boolean isFailure) {
+    void onContextualSearchRequestNavigation(boolean isFailure) {
         if (mSearchRequest == null) return;
 
         if (mSearchRequest.isUsingLowPriority()) {
@@ -1331,7 +1331,7 @@ public class ContextualSearchManager
     /**
      * @return Whether the display is in a full-screen video overlay mode.
      */
-    private boolean isOverlayVideoMode() {
+    boolean isOverlayVideoMode() {
         return mActivity.getFullscreenManager() != null
                 && mActivity.getFullscreenManager().isOverlayVideoMode();
     }
@@ -1399,7 +1399,7 @@ public class ContextualSearchManager
      * Finishes work on the suppression decision if that work is still in progress.
      * If no longer working on the suppression decision then resets the Ranker-logger.
      */
-    private void finishSuppressionDecision() {
+    void finishSuppressionDecision() {
         if (mInternalStateController.isStillWorkingOn(InternalState.DECIDING_SUPPRESSION)) {
             mInternalStateController.notifyFinishedWorkOn(InternalState.DECIDING_SUPPRESSION);
         } else {
@@ -1501,7 +1501,7 @@ public class ContextualSearchManager
     }
 
     /** Shows the given selection as the Search Term in the Bar. */
-    private void showSelectionAsSearchInBar(String selection) {
+    void showSelectionAsSearchInBar(String selection) {
         if (isSearchPanelShowing()) mSearchPanel.setSearchTerm(selection);
     }
 
@@ -1783,7 +1783,7 @@ public class ContextualSearchManager
             ContextualSearchContext contextualSearchContext, WebContents baseWebContents);
     private native void nativeWhitelistContextualSearchJsApiUrl(
             long nativeContextualSearchManager, String url);
-    private native void nativeEnableContextualSearchJsApiForWebContents(
+    native void nativeEnableContextualSearchJsApiForWebContents(
             long nativeContextualSearchManager, WebContents overlayWebContents);
     // Don't call these directly, instead call the private methods that cache the results.
     private native String nativeGetTargetLanguage(long nativeContextualSearchManager);

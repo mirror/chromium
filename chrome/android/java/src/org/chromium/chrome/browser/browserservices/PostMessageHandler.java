@@ -30,8 +30,8 @@ public class PostMessageHandler
     private final MessageCallback mMessageCallback;
     private WebContents mWebContents;
     private boolean mMessageChannelCreated;
-    private boolean mBoundToService;
-    private AppWebMessagePort[] mChannel;
+    boolean mBoundToService;
+    AppWebMessagePort[] mChannel;
     private Uri mOrigin;
     private String mPackageName;
 
@@ -120,7 +120,7 @@ public class PostMessageHandler
                 ContextUtils.getApplicationContext(), mPackageName);
     }
 
-    private void initializeWithWebContents(final WebContents webContents) {
+    void initializeWithWebContents(final WebContents webContents) {
         mChannel = (AppWebMessagePort[]) webContents.createMessageChannel();
         mChannel[0].setMessageCallback(mMessageCallback, null);
 
@@ -131,7 +131,7 @@ public class PostMessageHandler
         if (mBoundToService) notifyMessageChannelReady(null);
     }
 
-    private void disconnectChannel() {
+    void disconnectChannel() {
         if (mChannel == null) return;
         mChannel[0].close();
         mChannel = null;

@@ -23,9 +23,9 @@ import org.chromium.chrome.browser.widget.accessibility.AccessibilityTabModelLis
 public class AccessibilityTabModelAdapter extends BaseAdapter {
     private final Context mContext;
 
-    private TabList mUndoneTabModel;
-    private TabModel mActualTabModel;
-    private AccessibilityTabModelAdapterListener mListener;
+    TabList mUndoneTabModel;
+    TabModel mActualTabModel;
+    AccessibilityTabModelAdapterListener mListener;
     private final AccessibilityTabModelListView mCanScrollListener;
 
     /**

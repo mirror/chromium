@@ -25,11 +25,11 @@ import java.lang.reflect.Method;
 public class DropdownPopupWindow extends ListPopupWindow {
 
     private final Context mContext;
-    private final View mAnchorView;
+    final View mAnchorView;
     private boolean mRtl;
     private int mInitialSelection = -1;
-    private OnLayoutChangeListener mLayoutChangeListener;
-    private PopupWindow.OnDismissListener mOnDismissListener;
+    OnLayoutChangeListener mLayoutChangeListener;
+    PopupWindow.OnDismissListener mOnDismissListener;
     private CharSequence mDescription;
     ListAdapter mAdapter;
 

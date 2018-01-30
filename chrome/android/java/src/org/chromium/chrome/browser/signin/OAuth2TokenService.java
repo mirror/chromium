@@ -374,7 +374,7 @@ public final class OAuth2TokenService
     }
 
     private static native Object nativeGetForProfile(Profile profile);
-    private static native void nativeOAuth2TokenFetched(
+    static native void nativeOAuth2TokenFetched(
             String authToken, boolean isTransientError, long nativeCallback);
     private native void nativeValidateAccounts(long nativeOAuth2TokenServiceDelegateAndroid,
             String currentlySignedInAccount, boolean forceNotifications);

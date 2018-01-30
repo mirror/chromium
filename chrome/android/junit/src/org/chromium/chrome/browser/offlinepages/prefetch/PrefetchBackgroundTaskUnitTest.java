@@ -91,7 +91,7 @@ public class PrefetchBackgroundTaskUnitTest {
     public static final int LOW_BATTERY_LEVEL = 25;
 
     @Spy
-    private PrefetchBackgroundTask mPrefetchBackgroundTask = new PrefetchBackgroundTask();
+    PrefetchBackgroundTask mPrefetchBackgroundTask = new PrefetchBackgroundTask();
     @Mock
     private ChromeBrowserInitializer mChromeBrowserInitializer;
     @Captor

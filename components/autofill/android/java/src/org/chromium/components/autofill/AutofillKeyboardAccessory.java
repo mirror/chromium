@@ -48,15 +48,15 @@ public class AutofillKeyboardAccessory extends LinearLayout
     // suggestion label.
     private final int mMaximumLabelWidthPx;
     private final int mMaximumSublabelWidthPx;
-    private final int mAnimationDurationMillis;
+    final int mAnimationDurationMillis;
     // We start animating by scrolling the suggestions from beyond the viewport.
     private final int mStartAnimationTranslationPx;
 
-    private int mSeparatorPosition;
-    private Animator mAnimator;
+    int mSeparatorPosition;
+    Animator mAnimator;
     private Runnable mReverseAnimationRunnable;
     // Boolean to track if the keyboard accessory has just popped up or has already been showing.
-    private boolean mFirstAppearance;
+    boolean mFirstAppearance;
 
     /**
      * Creates an AutofillKeyboardAccessory with specified parameters.
@@ -292,7 +292,7 @@ public class AutofillKeyboardAccessory extends LinearLayout
 
     // Schedules the reverse of the animation. Scrolls the first suggestion (which is a non-fillable
     // hint) out of the viewport at the end of the reversed animation.
-    private void scheduleReverseAnimation(final View view) {
+    void scheduleReverseAnimation(final View view) {
         assert getChildCount() > 1;
         // We may have removed the keyboardAccessoryHint from a previous animation that we
         // cancelled.

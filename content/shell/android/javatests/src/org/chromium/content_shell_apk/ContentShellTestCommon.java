@@ -52,7 +52,7 @@ public final class ContentShellTestCommon {
     private static final long WAIT_FOR_ACTIVE_SHELL_LOADING_TIMEOUT = scaleTimeout(10000);
     static final long WAIT_PAGE_LOADING_TIMEOUT_SECONDS = scaleTimeout(15);
 
-    private final TestCommonCallback<ContentShellActivity> mCallback;
+    final TestCommonCallback<ContentShellActivity> mCallback;
 
     ContentShellTestCommon(TestCommonCallback<ContentShellActivity> callback) {
         mCallback = callback;

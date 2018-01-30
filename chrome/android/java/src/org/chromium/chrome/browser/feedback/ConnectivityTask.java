@@ -74,7 +74,7 @@ public class ConnectivityTask {
     @VisibleForTesting
     static final String SYSTEM_HTTPS_KEY = "HTTPS connection check (Android network stack)";
 
-    private static String getHumanReadableType(Type type) {
+    static String getHumanReadableType(Type type) {
         switch (type) {
             case CHROME_HTTP:
                 return CHROME_HTTP_KEY;
@@ -255,9 +255,9 @@ public class ConnectivityTask {
         }
     }
 
-    private final Map<Type, Integer> mResult = new EnumMap<Type, Integer>(Type.class);
+    final Map<Type, Integer> mResult = new EnumMap<Type, Integer>(Type.class);
     private final int mTimeoutMs;
-    private final ConnectivityResult mCallback;
+    final ConnectivityResult mCallback;
     private final long mStartCheckTimeMs;
 
     @VisibleForTesting

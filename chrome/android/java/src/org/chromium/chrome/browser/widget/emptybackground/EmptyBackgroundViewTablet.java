@@ -30,15 +30,15 @@ import org.chromium.ui.UiUtils;
 public class EmptyBackgroundViewTablet extends FrameLayout {
     private static final int ANIMATE_DURATION_MS = 200;
 
-    private TabModelSelector mTabModelSelector;
-    private TabCreator mTabCreator;
+    TabModelSelector mTabModelSelector;
+    TabCreator mTabCreator;
 
-    private Animator mCurrentTransitionAnimation;
+    Animator mCurrentTransitionAnimation;
 
     private Animator mAnimateInAnimation;
     private Animator mAnimateOutAnimation;
 
-    private IncognitoToggleButtonTablet mIncognitoToggleButton;
+    IncognitoToggleButtonTablet mIncognitoToggleButton;
 
     /**
      * Creates an instance of {@link EmptyBackgroundViewTablet}.

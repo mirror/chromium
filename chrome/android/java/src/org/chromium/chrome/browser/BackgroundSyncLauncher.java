@@ -37,7 +37,7 @@ public class BackgroundSyncLauncher {
     // BackgroundSyncLauncherAndroid, if any. If it is non-null then the browser is running.
     private static BackgroundSyncLauncher sInstance;
 
-    private GcmNetworkManager mScheduler;
+    GcmNetworkManager mScheduler;
 
     /**
      * Disables the automatic use of the GCMNetworkManager. When disabled, the methods which
@@ -47,7 +47,7 @@ public class BackgroundSyncLauncher {
      * Automatic GCM use is disabled by tests, and also by this class if it is determined on
      * creation that the installed Play Services library is out of date.
      */
-    private static boolean sGCMEnabled = true;
+    static boolean sGCMEnabled = true;
 
     @VisibleForTesting
     protected AsyncTask<Void, Void, Void> mLaunchBrowserIfStoppedTask;
@@ -187,7 +187,7 @@ public class BackgroundSyncLauncher {
         return !sGCMEnabled;
     }
 
-    private static boolean scheduleLaunchTask(GcmNetworkManager scheduler, long minDelayMs) {
+    static boolean scheduleLaunchTask(GcmNetworkManager scheduler, long minDelayMs) {
         // Google Play Services may not be up to date, if the application was not installed through
         // the Play Store. In this case, scheduling the task will fail silently.
         final long minDelaySecs = minDelayMs / 1000;
@@ -211,7 +211,7 @@ public class BackgroundSyncLauncher {
         return true;
     }
 
-    private static boolean removeScheduledTasks(GcmNetworkManager scheduler) {
+    static boolean removeScheduledTasks(GcmNetworkManager scheduler) {
         // Third-party code causes broadcast to touch disk. http://crbug.com/614679
         StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskReads();
         try {

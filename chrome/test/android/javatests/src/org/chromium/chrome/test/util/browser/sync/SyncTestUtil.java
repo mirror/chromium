@@ -121,7 +121,7 @@ public final class SyncTestUtil {
         }, TIMEOUT_MS, INTERVAL_MS);
     }
 
-    private static long getCurrentSyncTime() {
+    static long getCurrentSyncTime() {
         return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Long>() {
             @Override
             public Long call() {

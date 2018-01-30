@@ -135,14 +135,14 @@ public class SyncCustomizationFragment extends PreferenceFragment
     private CheckBoxPreference mSyncPasswords;
     private CheckBoxPreference mSyncRecentTabs;
     private CheckBoxPreference mSyncSettings;
-    private CheckBoxPreference mPaymentsIntegration;
+    CheckBoxPreference mPaymentsIntegration;
     private Preference mSyncEncryption;
     private Preference mManageSyncData;
     private Preference mSyncErrorCard;
     private CheckBoxPreference[] mAllTypes;
     private SyncedAccountPreference mSyncedAccountPreference;
 
-    private ProfileSyncService mProfileSyncService;
+    ProfileSyncService mProfileSyncService;
 
     @SyncError private int mCurrentSyncError = SYNC_NO_ERROR;
 
@@ -252,7 +252,7 @@ public class SyncCustomizationFragment extends PreferenceFragment
     /**
      * @return Whether Sync can be disabled.
      */
-    private boolean canDisableSync() {
+    boolean canDisableSync() {
         return !Profile.getLastUsedProfile().isChild();
     }
 
@@ -347,7 +347,7 @@ public class SyncCustomizationFragment extends PreferenceFragment
     /**
      * Update the state of settings using the switch state to determine if sync is enabled.
      */
-    private void updateSyncStateFromSwitch() {
+    void updateSyncStateFromSwitch() {
         updateSyncEverythingState();
         updateDataTypeState();
         updateEncryptionState();
@@ -588,7 +588,7 @@ public class SyncCustomizationFragment extends PreferenceFragment
      * checked. Note that the Password data type will be shown as disabled and unchecked between
      * sync being turned on and the engine initialization completing.
      */
-    private void updateDataTypeState() {
+    void updateDataTypeState() {
         boolean isSyncEnabled = mSyncSwitchPreference.isChecked();
         boolean syncEverything = mSyncEverything.isChecked();
         boolean passwordSyncConfigurable = mProfileSyncService.isEngineInitialized()
@@ -765,7 +765,7 @@ public class SyncCustomizationFragment extends PreferenceFragment
      *
      * @return true if Sync has been disabled, false otherwise.
      */
-    private boolean maybeDisableSync() {
+    boolean maybeDisableSync() {
         if (mSyncEverything.isChecked()
                 || !getSelectedModelTypes().isEmpty()
                 || !canDisableSync()) {
@@ -778,7 +778,7 @@ public class SyncCustomizationFragment extends PreferenceFragment
         return true;
     }
 
-    private void stopSync() {
+    void stopSync() {
         if (mProfileSyncService.isSyncRequested()) {
             RecordHistogram.recordEnumeratedHistogram("Sync.StopSource",
                     StopSource.CHROME_SYNC_SETTINGS, StopSource.STOP_SOURCE_LIMIT);

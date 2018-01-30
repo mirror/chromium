@@ -26,7 +26,7 @@ public class FindToolbarTablet extends FindToolbar {
 
     private static final float Y_INSET_DP = 8.f;
 
-    private ObjectAnimator mCurrentAnimation;
+    ObjectAnimator mCurrentAnimation;
 
     private ObjectAnimator mAnimationEnter;
     private ObjectAnimator mAnimationLeave;
@@ -178,7 +178,7 @@ public class FindToolbarTablet extends FindToolbar {
     /**
      * This is here so that Animation inner classes can access the parent activate methods.
      */
-    private void superActivate() {
+    void superActivate() {
         super.activate();
     }
 }

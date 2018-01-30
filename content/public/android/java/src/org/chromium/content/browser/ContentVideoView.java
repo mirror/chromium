@@ -45,8 +45,8 @@ public class ContentVideoView extends FrameLayout
     private static final int STATE_NO_ERROR = 0;
 
     private SurfaceHolder mSurfaceHolder;
-    private int mVideoWidth;
-    private int mVideoHeight;
+    int mVideoWidth;
+    int mVideoHeight;
     private boolean mIsVideoLoaded;
 
     // Native pointer to C++ ContentVideoView object.
@@ -65,11 +65,11 @@ public class ContentVideoView extends FrameLayout
 
     private final ContentVideoViewEmbedder mEmbedder;
 
-    private boolean mInitialOrientation;
-    private boolean mPossibleAccidentalChange;
-    private boolean mUmaRecorded;
-    private long mOrientationChangedTime;
-    private long mPlaybackStartTime;
+    boolean mInitialOrientation;
+    boolean mPossibleAccidentalChange;
+    boolean mUmaRecorded;
+    long mOrientationChangedTime;
+    long mPlaybackStartTime;
 
     private class VideoSurfaceView extends SurfaceView {
 
@@ -360,7 +360,7 @@ public class ContentVideoView extends FrameLayout
         return nativeGetSingletonJavaContentVideoView();
     }
 
-    private boolean isOrientationPortrait() {
+    boolean isOrientationPortrait() {
         Context context = getContext();
         WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = manager.getDefaultDisplay();

@@ -48,7 +48,7 @@ public class SuggestionsSection extends InnerNode {
 
     // Children
     private final SectionHeader mHeader;
-    private final SuggestionsList mSuggestionsList;
+    final SuggestionsList mSuggestionsList;
     private final @Nullable StatusItem mStatus;
     private final ActionItem mMoreButton;
 
@@ -160,7 +160,7 @@ public class SuggestionsSection extends InnerNode {
         /**
          * Clears all suggestions except for the first {@code n} suggestions.
          */
-        private void clearAllButFirstN(int n) {
+        void clearAllButFirstN(int n) {
             int itemCount = mSuggestions.size();
             if (itemCount > n) {
                 mSuggestions.subList(n, itemCount).clear();

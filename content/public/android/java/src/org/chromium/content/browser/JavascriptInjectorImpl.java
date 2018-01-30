@@ -25,7 +25,7 @@ import java.util.Set;
 @JNINamespace("content")
 public class JavascriptInjectorImpl implements JavascriptInjector {
     private static final class UserDataFactoryLazyHolder {
-        private static final UserDataFactory<JavascriptInjectorImpl> INSTANCE =
+        static final UserDataFactory<JavascriptInjectorImpl> INSTANCE =
                 JavascriptInjectorImpl::new;
     }
 

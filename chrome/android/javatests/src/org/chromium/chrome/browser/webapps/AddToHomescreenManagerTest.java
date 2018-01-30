@@ -139,7 +139,7 @@ public class AddToHomescreenManagerTest {
      * adds the shortcut to the home screen once it is ready.
      */
     private static class TestAddToHomescreenManager extends AddToHomescreenManager {
-        private String mTitle;
+        String mTitle;
 
         /**
          * Creates an instance of {@link TestAddToHomescreenManager}.
@@ -172,8 +172,8 @@ public class AddToHomescreenManagerTest {
     }
 
     private ChromeActivity mActivity;
-    private Tab mTab;
-    private TestShortcutHelperDelegate mShortcutHelperDelegate;
+    Tab mTab;
+    TestShortcutHelperDelegate mShortcutHelperDelegate;
 
     @Before
     public void setUp() throws Exception {

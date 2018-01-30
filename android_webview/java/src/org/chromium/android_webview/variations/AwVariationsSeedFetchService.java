@@ -84,7 +84,7 @@ public class AwVariationsSeedFetchService extends JobService {
         }
     }
 
-    private void fetchVariationsSeed() {
+    void fetchVariationsSeed() {
         assert !ThreadUtils.runningOnUiThread();
         try {
             // TODO(paulmiller): Addd milestone and channel information to seed request.

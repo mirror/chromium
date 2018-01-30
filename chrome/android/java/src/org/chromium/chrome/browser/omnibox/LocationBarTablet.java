@@ -80,7 +80,7 @@ public class LocationBarTablet extends LocationBarLayout {
     private View mLocationBarIcon;
     private View mBookmarkButton;
     private View mSaveOfflineButton;
-    private float mUrlFocusChangePercent;
+    float mUrlFocusChangePercent;
     private Animator mUrlFocusChangeAnimator;
     private View[] mTargets;
     private final Rect mCachedTargetBounds = new Rect();
@@ -94,8 +94,8 @@ public class LocationBarTablet extends LocationBarLayout {
     // Variables needed for animating the location bar and toolbar buttons hiding/showing.
     private final int mToolbarButtonsWidth;
     private final int mMicButtonWidth;
-    private boolean mAnimatingWidthChange;
-    private float mWidthChangePercent;
+    boolean mAnimatingWidthChange;
+    float mWidthChangePercent;
     private float mLayoutLeft;
     private float mLayoutRight;
     private int mToolbarStartPaddingDifference;
@@ -208,7 +208,7 @@ public class LocationBarTablet extends LocationBarLayout {
         mUrlFocusChangeAnimator.start();
     }
 
-    private void finishUrlFocusChange(boolean hasFocus) {
+    void finishUrlFocusChange(boolean hasFocus) {
         if (hasFocus) {
             if (mSecurityButton.getVisibility() == VISIBLE) mSecurityButton.setVisibility(GONE);
             if (getWindowDelegate().getWindowSoftInputMode()
@@ -256,7 +256,7 @@ public class LocationBarTablet extends LocationBarLayout {
      * Updates percentage of current the URL focus change animation.
      * @param percent 1.0 is 100% focused, 0 is completely unfocused.
      */
-    private void setUrlFocusChangePercent(float percent) {
+    void setUrlFocusChangePercent(float percent) {
         mUrlFocusChangePercent = percent;
 
         NewTabPage ntp = getToolbarDataProvider().getNewTabPageForCurrentTab();
@@ -471,7 +471,7 @@ public class LocationBarTablet extends LocationBarLayout {
      * Resets the alpha and translation X for all views affected by the animations for showing or
      * hiding buttons.
      */
-    private void resetValuesAfterAnimation() {
+    void resetValuesAfterAnimation() {
         mMicButton.setTranslationX(0);
         mDeleteButton.setTranslationX(0);
         mBookmarkButton.setTranslationX(0);
@@ -491,7 +491,7 @@ public class LocationBarTablet extends LocationBarLayout {
      *                buttons fully visible) and 1.f represents the expanded width (toolbar buttons
      *                fully hidden).
      */
-    private void setWidthChangeAnimationPercent(float percent) {
+    void setWidthChangeAnimationPercent(float percent) {
         mWidthChangePercent = percent;
         float offset = (mToolbarButtonsWidth + mToolbarStartPaddingDifference) * percent;
 

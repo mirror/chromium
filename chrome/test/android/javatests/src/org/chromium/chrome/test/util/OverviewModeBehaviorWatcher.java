@@ -15,8 +15,8 @@ import org.chromium.content.browser.test.util.CriteriaHelper;
  */
 public class OverviewModeBehaviorWatcher implements OverviewModeObserver {
     private final OverviewModeBehavior mOverviewModeBehavior;
-    private boolean mWaitingForShow;
-    private boolean mWaitingForHide;
+    boolean mWaitingForShow;
+    boolean mWaitingForHide;
 
     private final Criteria mCriteria = new Criteria() {
         @Override

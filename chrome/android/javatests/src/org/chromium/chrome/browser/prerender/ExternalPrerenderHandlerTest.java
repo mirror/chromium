@@ -45,10 +45,10 @@ public class ExternalPrerenderHandlerTest {
     private static final int ENSURE_COMPLETED_PRERENDER_TIMEOUT_MS =
             ENSURE_COMPLETED_PRERENDER_RETRIES * PRERENDER_DELAY_MS;
 
-    private ExternalPrerenderHandler mExternalPrerenderHandler;
-    private Profile mProfile;
-    private String mTestPage;
-    private String mTestPage2;
+    ExternalPrerenderHandler mExternalPrerenderHandler;
+    Profile mProfile;
+    String mTestPage;
+    String mTestPage2;
     private EmbeddedTestServer mTestServer;
 
     @Before

@@ -78,7 +78,7 @@ public class FakeInstanceIDWithSubtype extends InstanceIDWithSubtype {
         }
     }
 
-    private FakeInstanceIDWithSubtype(String subtype) {
+    FakeInstanceIDWithSubtype(String subtype) {
         super(null);
         mSubtype = subtype;
 

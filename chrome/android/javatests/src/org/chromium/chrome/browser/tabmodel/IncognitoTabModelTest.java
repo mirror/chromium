@@ -32,7 +32,7 @@ public class IncognitoTabModelTest {
     @Rule
     public ChromeTabbedActivityTestRule mActivityTestRule = new ChromeTabbedActivityTestRule();
 
-    private TabModel mTabModel;
+    TabModel mTabModel;
 
     @Before
     public void setUp() throws InterruptedException {

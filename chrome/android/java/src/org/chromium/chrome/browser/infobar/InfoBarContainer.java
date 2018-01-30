@@ -138,7 +138,7 @@ public class InfoBarContainer extends SwipableOverlayView {
      * Adds/removes the {@link InfoBarContainer} when the tab's view is attached/detached. This is
      * mostly to ensure the infobars are not shown in tab switcher overview mode.
      */
-    private final OnAttachStateChangeListener mAttachedStateListener =
+    final OnAttachStateChangeListener mAttachedStateListener =
             new OnAttachStateChangeListener() {
         @Override
         public void onViewDetachedFromWindow(View v) {
@@ -169,13 +169,13 @@ public class InfoBarContainer extends SwipableOverlayView {
     private ViewGroup mParentView;
 
     /** The view that {@link Tab#getView()} returns. */
-    private View mTabView;
+    View mTabView;
 
     /** Whether or not this View should be hidden. */
     private boolean mIsHidden;
 
     /** Animation used to snap the container to the nearest state if scroll direction changes. */
-    private Animator mScrollDirectionChangeAnimation;
+    Animator mScrollDirectionChangeAnimation;
 
     /** Whether or not the current scroll is downward. */
     private boolean mIsScrollingDownward;
@@ -190,7 +190,7 @@ public class InfoBarContainer extends SwipableOverlayView {
             new ObserverList<InfoBarContainerObserver>();
 
     /** The tab that hosts this infobar container. */
-    private Tab mTab;
+    Tab mTab;
 
     public InfoBarContainer(Context context, final ViewGroup parentView, Tab tab) {
         super(context, null);
@@ -291,7 +291,7 @@ public class InfoBarContainer extends SwipableOverlayView {
         return mLayout.isAnimating();
     }
 
-    private void addToParentView() {
+    void addToParentView() {
         super.addToParentView(mParentView);
     }
 

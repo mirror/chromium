@@ -76,11 +76,11 @@ public class PasswordEntryEditor extends Fragment {
     private static final int PASSWORD_ACTION_BOUNDARY = 3;
 
     // ID of this name/password or exception.
-    private int mID;
+    int mID;
 
     // If true this is an exception site (never save here).
     // If false this represents a saved name/password.
-    private boolean mException;
+    boolean mException;
 
     private ClipboardManager mClipboard;
     private Bundle mExtras;

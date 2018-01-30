@@ -56,7 +56,7 @@ public class VrShellNavigationTest {
     @Rule
     public ChromeTabbedActivityVrTestRule mVrTestRule = new ChromeTabbedActivityVrTestRule();
 
-    private VrTestFramework mVrTestFramework;
+    VrTestFramework mVrTestFramework;
 
     private static final String TEST_PAGE_2D_URL =
             VrTestFramework.getHtmlTestFile("test_navigation_2d_page");
@@ -74,7 +74,7 @@ public class VrShellNavigationTest {
         VrTransitionUtils.waitForVrEntry(POLL_TIMEOUT_LONG_MS);
     }
 
-    private String getUrl(Page page) {
+    String getUrl(Page page) {
         switch (page) {
             case PAGE_2D:
                 return TEST_PAGE_2D_URL + "?id=0";
