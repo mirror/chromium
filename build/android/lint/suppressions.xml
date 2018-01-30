@@ -367,6 +367,8 @@ Still reading?
     <ignore regexp="chrome/android/java/res/anim/fullscreen_notification_in.xml"/>
     <ignore regexp="chrome/android/java/res/values-v17/styles.xml"/>
     <ignore regexp="chrome/android/java/res/values-v21/styles.xml"/>
+    <!-- 1 resource used after AndroidManifest merging -->
+    <ignore regexp="third_party/custom_tabs_client/src/customtabs/res/xml/filepaths.xml"/>
     <!-- Endnote: Please specify number of suppressions when adding more -->
   </issue>
   <issue id="UseCompoundDrawables">
