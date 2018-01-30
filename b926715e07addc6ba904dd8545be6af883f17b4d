@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "550da8b2_2acda84c",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-30T20:33:31Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "0c79a6e6_c80b1e77",
+      "range": {
+        "startLine": 246,
+        "startChar": 19,
+        "endLine": 246,
+        "endChar": 43
+      },
+      "revId": "b926715e07addc6ba904dd8545be6af883f17b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0ec4ea4_ae4e7981",
         "filename": "content/browser/loader/resource_loader.cc",
         "patchSetId": 2
@@ -285,6 +309,30 @@
     },
     {
       "key": {
+        "uuid": "45f92e77_ac56fe31",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-30T20:33:31Z",
+      "side": 1,
+      "message": "|read_more_body_supressed_| and defer/resume are not orthogonal. -- Agreed.\n\nI see what you are saying. When I wrote the code, I wasn\u0027t super sure about the part \"If read_more_body_suppressed_ is true, we won\u0027t try to advance the state of the request (Since we\u0027ve already deferred the next read, implicitly), so defer won\u0027t be set to true.\"\n\nI changed it to a DCHECK. WDYT? Thanks!",
+      "parentUuid": "c2677311_fd63b78d",
+      "range": {
+        "startLine": 368,
+        "startChar": 25,
+        "endLine": 368,
+        "endChar": 0
+      },
+      "revId": "b926715e07addc6ba904dd8545be6af883f17b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c325957b_e1a712f1",
         "filename": "content/browser/loader/resource_loader.h",
         "patchSetId": 2
@@ -353,6 +401,30 @@
       "revId": "b926715e07addc6ba904dd8545be6af883f17b4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f426727_b1b4727e",
+        "filename": "content/browser/loader/resource_loader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-30T20:33:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cc62bcb_ca447d74",
+      "range": {
+        "startLine": 205,
+        "startChar": 10,
+        "endLine": 205,
+        "endChar": 32
+      },
+      "revId": "b926715e07addc6ba904dd8545be6af883f17b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
