@@ -66,7 +66,7 @@ class GpuMemoryBufferVideoFramePool::PoolImpl
   // |frame_ready_cb| will be called on |media_task_runner_| once all the data
   // has been copied.
   void CreateHardwareFrame(const scoped_refptr<VideoFrame>& video_frame,
-                           const FrameReadyCB& cb);
+                           FrameReadyCB cb);
 
   bool OnMemoryDump(const base::trace_event::MemoryDumpArgs& args,
                     base::trace_event::ProcessMemoryDump* pmd) override;
@@ -117,26 +117,24 @@ class GpuMemoryBufferVideoFramePool::PoolImpl
     base::TimeTicks last_use_time_;
   };
 
-  // Copy |video_frame| data into |frame_resouces|
-  // and calls |done| when done.
+  // Copy |video_frame| data into |frame_resouces| and calls |done| when done.
   void CopyVideoFrameToGpuMemoryBuffers(
       const scoped_refptr<VideoFrame>& video_frame,
       FrameResources* frame_resources,
-      const FrameReadyCB& frame_ready_cb);
+      FrameReadyCB frame_ready_cb);
 
   // Called when all the data has been copied.
   void OnCopiesDone(const scoped_refptr<VideoFrame>& video_frame,
                     FrameResources* frame_resources,
-                    const FrameReadyCB& frame_ready_cb);
+                    FrameReadyCB frame_ready_cb);
 
   // Prepares GL resources, mailboxes and calls |frame_ready_cb| with the new
-  // VideoFrame.
-  // This has to be run on |media_task_runner_| where |frame_ready_cb| will also
-  // be run.
+  // VideoFrame. This has to be run on |media_task_runner_| where
+  // |frame_ready_cb| will also be run.
   void BindAndCreateMailboxesHardwareFrameResources(
       const scoped_refptr<VideoFrame>& video_frame,
       FrameResources* frame_resources,
-      const FrameReadyCB& frame_ready_cb);
+      FrameReadyCB frame_ready_cb);
 
   // Return true if |resources| can be used to represent a frame for
   // specific |format| and |size|.
@@ -494,7 +492,7 @@ gfx::Size CodedSize(const scoped_refptr<VideoFrame>& video_frame,
 // This has to be called on the thread where |media_task_runner_| is current.
 void GpuMemoryBufferVideoFramePool::PoolImpl::CreateHardwareFrame(
     const scoped_refptr<VideoFrame>& video_frame,
-    const FrameReadyCB& frame_ready_cb) {
+    FrameReadyCB frame_ready_cb) {
   DCHECK(media_task_runner_->BelongsToCurrentThread());
   // Lazily initialize output_format_ since VideoFrameOutputFormat() has to be
   // called on the media_thread while this object might be instantiated on any.
@@ -504,7 +502,7 @@ void GpuMemoryBufferVideoFramePool::PoolImpl::CreateHardwareFrame(
   }
 
   if (output_format_ == GpuVideoAcceleratorFactories::OutputFormat::UNDEFINED) {
-    frame_ready_cb.Run(video_frame);
+    std::move(frame_ready_cb).Run(video_frame);
     return;
   }
   switch (video_frame->format()) {
@@ -537,7 +535,7 @@ void GpuMemoryBufferVideoFramePool::PoolImpl::CreateHardwareFrame(
     case PIXEL_FORMAT_YUV444P12:
     case PIXEL_FORMAT_Y16:
     case PIXEL_FORMAT_UNKNOWN:
-      frame_ready_cb.Run(video_frame);
+      std::move(frame_ready_cb).Run(video_frame);
       return;
   }
 
@@ -546,13 +544,14 @@ void GpuMemoryBufferVideoFramePool::PoolImpl::CreateHardwareFrame(
   FrameResources* frame_resources =
       GetOrCreateFrameResources(coded_size, output_format_);
   if (!frame_resources) {
-    frame_ready_cb.Run(video_frame);
+    std::move(frame_ready_cb).Run(video_frame);
     return;
   }
 
   worker_task_runner_->PostTask(
-      FROM_HERE, base::Bind(&PoolImpl::CopyVideoFrameToGpuMemoryBuffers, this,
-                            video_frame, frame_resources, frame_ready_cb));
+      FROM_HERE,
+      base::Bind(&PoolImpl::CopyVideoFrameToGpuMemoryBuffers, this, video_frame,
+                 frame_resources, base::Passed(&frame_ready_cb)));
 }
 
 bool GpuMemoryBufferVideoFramePool::PoolImpl::OnMemoryDump(
@@ -601,7 +600,7 @@ bool GpuMemoryBufferVideoFramePool::PoolImpl::OnMemoryDump(
 void GpuMemoryBufferVideoFramePool::PoolImpl::OnCopiesDone(
     const scoped_refptr<VideoFrame>& video_frame,
     FrameResources* frame_resources,
-    const FrameReadyCB& frame_ready_cb) {
+    FrameReadyCB frame_ready_cb) {
   for (const auto& plane_resource : frame_resources->plane_resources) {
     if (plane_resource.gpu_memory_buffer) {
       plane_resource.gpu_memory_buffer->Unmap();
@@ -616,7 +615,7 @@ void GpuMemoryBufferVideoFramePool::PoolImpl::OnCopiesDone(
   media_task_runner_->PostTask(
       FROM_HERE,
       base::Bind(&PoolImpl::BindAndCreateMailboxesHardwareFrameResources, this,
-                 video_frame, frame_resources, frame_ready_cb));
+                 video_frame, frame_resources, base::Passed(&frame_ready_cb)));
 }
 
 // Copies |video_frame| into |frame_resources| asynchronously, posting n tasks
@@ -625,7 +624,7 @@ void GpuMemoryBufferVideoFramePool::PoolImpl::OnCopiesDone(
 void GpuMemoryBufferVideoFramePool::PoolImpl::CopyVideoFrameToGpuMemoryBuffers(
     const scoped_refptr<VideoFrame>& video_frame,
     FrameResources* frame_resources,
-    const FrameReadyCB& frame_ready_cb) {
+    FrameReadyCB frame_ready_cb) {
   // Compute the number of tasks to post and create the barrier.
   const size_t num_planes = VideoFrame::NumPlanes(VideoFormat(output_format_));
   const size_t planes_per_copy = PlanesPerCopy(output_format_);
@@ -643,7 +642,7 @@ void GpuMemoryBufferVideoFramePool::PoolImpl::CopyVideoFrameToGpuMemoryBuffers(
 
   const base::Closure copies_done =
       base::Bind(&PoolImpl::OnCopiesDone, this, video_frame, frame_resources,
-                 frame_ready_cb);
+                 base::Passed(&frame_ready_cb));
   const base::Closure barrier = base::BarrierClosure(copies, copies_done);
 
   // Map the buffers.
@@ -733,12 +732,12 @@ void GpuMemoryBufferVideoFramePool::PoolImpl::
     BindAndCreateMailboxesHardwareFrameResources(
         const scoped_refptr<VideoFrame>& video_frame,
         FrameResources* frame_resources,
-        const FrameReadyCB& frame_ready_cb) {
+        FrameReadyCB frame_ready_cb) {
   std::unique_ptr<GpuVideoAcceleratorFactories::ScopedGLContextLock> lock(
       gpu_factories_->GetGLContextLock());
   if (!lock) {
     frame_resources->MarkUnused(tick_clock_->NowTicks());
-    frame_ready_cb.Run(video_frame);
+    std::move(frame_ready_cb).Run(video_frame);
     return;
   }
   gpu::gles2::GLES2Interface* gles2 = lock->ContextGL();
@@ -793,7 +792,7 @@ void GpuMemoryBufferVideoFramePool::PoolImpl::
   if (!frame) {
     frame_resources->MarkUnused(tick_clock_->NowTicks());
     release_mailbox_callback.Run(gpu::SyncToken());
-    frame_ready_cb.Run(video_frame);
+    std::move(frame_ready_cb).Run(video_frame);
     return;
   }
 
@@ -833,7 +832,7 @@ void GpuMemoryBufferVideoFramePool::PoolImpl::
   frame->metadata()->SetBoolean(VideoFrameMetadata::READ_LOCK_FENCES_ENABLED,
                                 true);
 
-  frame_ready_cb.Run(frame);
+  std::move(frame_ready_cb).Run(frame);
 }
 
 // Destroy all the resources posting one task per FrameResources
@@ -1001,9 +1000,9 @@ GpuMemoryBufferVideoFramePool::~GpuMemoryBufferVideoFramePool() {
 
 void GpuMemoryBufferVideoFramePool::MaybeCreateHardwareFrame(
     const scoped_refptr<VideoFrame>& video_frame,
-    const FrameReadyCB& frame_ready_cb) {
+    FrameReadyCB frame_ready_cb) {
   DCHECK(video_frame);
-  pool_impl_->CreateHardwareFrame(video_frame, frame_ready_cb);
+  pool_impl_->CreateHardwareFrame(video_frame, std::move(frame_ready_cb));
 }
 
 void GpuMemoryBufferVideoFramePool::SetTickClockForTesting(
