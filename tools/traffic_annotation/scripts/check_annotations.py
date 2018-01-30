@@ -17,6 +17,7 @@ import sys
 # If this test starts failing, please set TEST_IS_ENABLED to "False" and file a
 # bug to get this reenabled, and cc the people listed in
 # //tools/traffic_annotation/OWNERS.
+#TEST_IS_ENABLED = sys.platform != 'win32'
 TEST_IS_ENABLED = False
 
 
@@ -121,14 +122,11 @@ class NetworkTrafficAnnotationChecker():
                                stderr=subprocess.PIPE)
     stdout_text, stderr_text = command.communicate()
 
-    if stderr_text:
-      print("Could not run network traffic annotation presubmit check. "
-            "Returned error from traffic_annotation_auditor is: %s"
-            % stderr_text)
-      print("Exit code is: %i" % command.returncode)
-      return 1
     if stdout_text:
       print(stdout_text)
+    if stderr_text:
+      print("Network traffic annotation presubmit check returned the following "
+            "error: %s" % stderr_text)
     return command.returncode
 
 
