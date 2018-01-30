@@ -533,6 +533,11 @@ base::string16 SystemTray::GetAccessibleTimeString(
                                                     base::kKeepAmPm);
 }
 
+void SystemTray::SetTextToGivenTooltip(base::string16* tooltip) {
+  tooltip->assign(
+      l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_SYSTEM_TRAY_TOOLTIP));
+}
+
 void SystemTray::UpdateAfterShelfAlignmentChange() {
   TrayBackgroundView::UpdateAfterShelfAlignmentChange();
   UpdateItemsAfterShelfAlignmentChange();

@@ -310,7 +310,6 @@ ImeMenuTray::ImeMenuTray(Shelf* shelf)
   SetInkDropMode(InkDropMode::ON);
   SetupLabelForTray(label_);
   label_->SetElideBehavior(gfx::TRUNCATE);
-  label_->SetTooltipText(l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_IME));
   tray_container()->AddChildView(label_);
   SystemTrayNotifier* tray_notifier = Shell::Get()->system_tray_notifier();
   tray_notifier->AddIMEObserver(this);
@@ -431,6 +430,10 @@ bool ImeMenuTray::ShouldShowBottomButtons() {
 bool ImeMenuTray::ShouldShowKeyboardToggle() const {
   return keyboard_suppressed_ &&
          !Shell::Get()->accessibility_delegate()->IsVirtualKeyboardEnabled();
+}
+
+void ImeMenuTray::SetTextToGivenTooltip(base::string16* tooltip) {
+  tooltip->assign(l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_IME));
 }
 
 base::string16 ImeMenuTray::GetAccessibleNameForTray() {

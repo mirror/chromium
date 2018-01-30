@@ -14,7 +14,7 @@
 #include "ash/public/interfaces/shelf.mojom.h"
 #include "ash/shelf/ink_drop_button_listener.h"
 #include "ash/shelf/shelf_button_pressed_metric_tracker.h"
-#include "ash/shelf/shelf_tooltip_manager.h"
+#include "ash/shelf/shelf_view_tooltip_manager.h"
 #include "ash/wm/tablet_mode/tablet_mode_observer.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
@@ -410,7 +410,7 @@ class ASH_EXPORT ShelfView : public views::View,
 
   OverflowBubble* owner_overflow_bubble_ = nullptr;
 
-  ShelfTooltipManager tooltip_;
+  ShelfViewTooltipManager tooltip_;
 
   // Pointer device that initiated the current drag operation. If there is no
   // current dragging operation, this is NONE.

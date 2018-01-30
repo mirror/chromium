@@ -155,7 +155,6 @@ PaletteTray::PaletteTray(Shelf* shelf)
   SetInkDropMode(InkDropMode::ON);
   SetLayoutManager(std::make_unique<views::FillLayout>());
   icon_ = new views::ImageView();
-  icon_->SetTooltipText(l10n_util::GetStringUTF16(IDS_ASH_STYLUS_TOOLS_TITLE));
   UpdateTrayIcon();
 
   tray_container()->SetMargin(kTrayIconMainAxisInset, kTrayIconCrossAxisInset);
@@ -260,6 +259,10 @@ void PaletteTray::OnLocalStatePrefServiceInitialized(
                  base::Unretained(this)));
 
   OnHasSeenStylusPrefChanged();
+}
+
+void PaletteTray::SetTextToGivenTooltip(base::string16* tooltip) {
+  tooltip->assign(l10n_util::GetStringUTF16(IDS_ASH_STYLUS_TOOLS_TITLE));
 }
 
 void PaletteTray::ClickedOutsideBubble() {
