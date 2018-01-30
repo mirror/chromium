@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1641bd67_ca373310",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCollection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-30T18:46:52Z",
+      "side": 1,
+      "message": "This is now the unique case of kTreeScope, right? Maybe it deserves a more descriptive name, if so.",
+      "revId": "07dfa360432e40acc630e22393975c2d1790e5c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
