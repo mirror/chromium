@@ -5579,36 +5579,77 @@ void RenderFrameImpl::UpdateZoomLevel() {
 bool RenderFrameImpl::UpdateNavigationHistory(
     const blink::WebHistoryItem& item,
     blink::WebHistoryCommitType commit_type) {
-  DocumentState* document_state =
-      DocumentState::FromDocumentLoader(frame_->GetDocumentLoader());
-  NavigationStateImpl* navigation_state =
-      static_cast<NavigationStateImpl*>(document_state->navigation_state());
-  const RequestNavigationParams& request_params =
-      navigation_state->request_params();
+  bool is_new_navigation = (commit_type == blink::kWebStandardCommit);
 
   // Update the current history item for this frame.
   current_history_item_ = item;
+
   // Note: don't reference |item| after this point, as its value may not match
   // |current_history_item_|.
   current_history_item_.SetTarget(
       blink::WebString::FromUTF8(unique_name_helper_.value()));
-  bool is_new_navigation = commit_type == blink::kWebStandardCommit;
-  if (is_new_navigation) {
-    DCHECK(!navigation_state->common_params().should_replace_current_entry ||
-           render_view_->history_list_length_ > 0);
-    if (!navigation_state->common_params().should_replace_current_entry) {
-      // Advance our offset in session history, applying the length limit.
-      // There is now no forward history.
+
+  DocumentState* document_state =
+      DocumentState::FromDocumentLoader(frame_->GetDocumentLoader());
+  NavigationStateImpl* navigation_state =
+      static_cast<NavigationStateImpl*>(document_state->navigation_state());
+
+  // TODO(arthursonzogni): Stop doing this condition. This is needed only
+  // for one reason: When the NavigationStateImpl is created from
+  // NavigationStateImpl::CreateContentInitiated(), then its
+  // CommonNavigationParams and RequestNavigationParams are default initialized
+  // and don't contains any informations about the current history state.
+  // TODO(arthursonzogni): Rename NavigationStateImpl::IsContentInitiated().
+  // What it really means is that the navigation hasn't used the browser side
+  // path. Most of the content initiated navigation are using it.
+  if (navigation_state->IsContentInitiated()) {
+    if (is_new_navigation) {
       render_view_->history_list_offset_++;
-      if (render_view_->history_list_offset_ >= kMaxSessionHistoryEntries)
+      if (render_view_->history_list_offset_ > kMaxSessionHistoryEntries) {
         render_view_->history_list_offset_ = kMaxSessionHistoryEntries - 1;
+      }
       render_view_->history_list_length_ =
           render_view_->history_list_offset_ + 1;
     }
-  } else if (request_params.nav_entry_id != 0 &&
+  } else {
+    const CommonNavigationParams& common_params =
+        navigation_state->common_params();
+    const RequestNavigationParams& request_params =
+        navigation_state->request_params();
+
+    // 1) New navigation with a clean history.
+    if (request_params.should_clear_history_list) {
+      render_view_->OnSetHistoryOffsetAndLength(0 /* offset */, 1 /* length */);
+
+    }
+    // 2) History navigation.
+    else if (request_params.nav_entry_id != 0 &&
              !request_params.intended_as_new_entry) {
-    render_view_->history_list_offset_ =
-        navigation_state->request_params().pending_history_list_offset;
+      render_view_->OnSetHistoryOffsetAndLength(
+          request_params.pending_history_list_offset,
+          request_params.current_history_list_length);
+
+    }
+    // 3) Normal navigation. The history offset increase by one.
+    else if (is_new_navigation && !common_params.should_replace_current_entry) {
+      // Advance our offset in session history.
+      int next_offset = request_params.current_history_list_offset + 1;
+      // Applying the length limit.
+      if (next_offset >= kMaxSessionHistoryEntries) {
+        next_offset = kMaxSessionHistoryEntries - 1;
+      }
+      render_view_->OnSetHistoryOffsetAndLength(
+          next_offset,
+          next_offset + 1  // There is now no forward history.
+          );
+    }
+    // 4) A normal navigation overriding the current history item. It happens
+    //    for renderer side redirects.
+    else {
+      render_view_->OnSetHistoryOffsetAndLength(
+          request_params.current_history_list_offset,
+          request_params.current_history_list_length);
+    }
   }
 
   if (commit_type == blink::WebHistoryCommitType::kWebBackForwardCommit)
@@ -6646,15 +6687,6 @@ void RenderFrameImpl::PrepareRenderViewForNavigation(
   if (is_main_frame_) {
     for (auto& observer : render_view_->observers_)
       observer.Navigate(url);
-  }
-
-  render_view_->history_list_offset_ =
-      request_params.current_history_list_offset;
-  render_view_->history_list_length_ =
-      request_params.current_history_list_length;
-  if (request_params.should_clear_history_list) {
-    CHECK_EQ(-1, render_view_->history_list_offset_);
-    CHECK_EQ(0, render_view_->history_list_length_);
   }
 }
 
