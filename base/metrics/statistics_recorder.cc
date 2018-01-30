@@ -138,6 +138,11 @@ const BucketRanges* StatisticsRecorder::RegisterOrDeleteDuplicateRanges(
 void StatisticsRecorder::WriteHTMLGraph(const std::string& query,
                                         std::string* output) {
   for (const HistogramBase* const histogram : GetSnapshot(query)) {
+    output->append("Histogram: <a href=\"");
+    output->append(histogram->histogram_name());
+    output->append("\">");
+    output->append(histogram->histogram_name());
+    output->append("</a><br>");
     histogram->WriteHTMLGraph(output);
     *output += "<br><hr><br>";
   }
@@ -152,6 +157,9 @@ void StatisticsRecorder::WriteGraph(const std::string& query,
     output->append("Collections of all histograms\n");
 
   for (const HistogramBase* const histogram : GetSnapshot(query)) {
+    output->append("Histogram: ");
+    output->append(histogram->histogram_name());
+    output->append(": ");
     histogram->WriteAscii(output);
     output->append("\n");
   }
