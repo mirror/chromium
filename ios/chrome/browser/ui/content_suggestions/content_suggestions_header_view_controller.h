@@ -22,6 +22,7 @@
 @protocol FakeboxFocuser;
 @protocol UrlLoader;
 class ReadingListModel;
+@class PrimaryToolbarViewController;
 
 // Controller for the header containing the logo and the fake omnibox, handling
 // the interactions between the header and the collection, and the rest of the
@@ -62,6 +63,9 @@ class ReadingListModel;
 // |YES| if its view is visible.  When set to |NO| various UI updates are
 // ignored.
 @property(nonatomic, assign) BOOL isShowing;
+
+@property(nonatomic, strong)
+    PrimaryToolbarViewController* toolbarViewController;
 
 // Return the toolbar view;
 - (UIView*)toolBarView;
