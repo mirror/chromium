@@ -16,6 +16,24 @@
       "revId": "3f0818158db3cfc387fce917ac34184c89cb6263",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fc87b39_ade9677f",
+        "filename": "third_party/WebKit/Tools/lldb/lldb_webkit.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-30T23:37:44Z",
+      "side": 1,
+      "message": "That\u0027s the number of significant digits in total, before and after the decimal point.\nLayoutUnit::Max() is 33554431.984375, exactly 14 digits.",
+      "parentUuid": "1580afb4_4ecc8000",
+      "revId": "3f0818158db3cfc387fce917ac34184c89cb6263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
