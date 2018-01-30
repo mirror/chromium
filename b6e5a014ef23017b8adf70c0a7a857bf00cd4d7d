@@ -49,6 +49,47 @@
     },
     {
       "key": {
+        "uuid": "459fa326_76d8d441",
+        "filename": "chrome/test/vr/auto_bisect.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-30T21:55:09Z",
+      "side": 1,
+      "message": "Ian has switched to the external checkout as well, FTR.",
+      "parentUuid": "faa5940b_b768eddd",
+      "range": {
+        "startLine": 55,
+        "startChar": 25,
+        "endLine": 55,
+        "endChar": 39
+      },
+      "revId": "b6e5a014ef23017b8adf70c0a7a857bf00cd4d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bac012f_5fd095ba",
+        "filename": "chrome/test/vr/auto_bisect.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-30T21:55:09Z",
+      "side": 1,
+      "message": "What about instead bailing if git reports outstanding edits?  That seems safer than trampling.",
+      "revId": "b6e5a014ef23017b8adf70c0a7a857bf00cd4d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c2db0fab_20d93e5a",
         "filename": "chrome/test/vr/auto_bisect.py",
         "patchSetId": 1
