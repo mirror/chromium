@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e57ab6f7_4eecad26",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationAvailabilityCallbacks.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-30T23:52:31Z",
+      "side": 1,
+      "message": "Ack. We can probably make PresentationAvailabilityState hold on to PresentationAvailabilityProperty directly. Let\u0027s do that in a followup patch.",
+      "parentUuid": "fee062d7_0c6c0279",
+      "revId": "41c9855db62f8171d85674210208a7d133803f56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e0f5456_5b938c32",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnectionCallbacks.cpp",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "41c9855db62f8171d85674210208a7d133803f56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f3b6f46_bd0c3083",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnectionCallbacks.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-30T23:52:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6e0f5456_5b938c32",
+      "revId": "41c9855db62f8171d85674210208a7d133803f56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
