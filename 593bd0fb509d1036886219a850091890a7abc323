@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b4bcb85_45d1f6b9",
+        "filename": "chrome/browser/conflicts/module_database_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-30T11:24:17Z",
+      "side": 1,
+      "message": "move below idle_timer_ here, too",
+      "revId": "593bd0fb509d1036886219a850091890a7abc323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4210ea6_ac7f9f61",
+        "filename": "chrome/browser/conflicts/module_database_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-30T11:24:17Z",
+      "side": 1,
+      "message": "nit: \"record\"",
+      "range": {
+        "startLine": 35,
+        "startChar": 3,
+        "endLine": 35,
+        "endChar": 12
+      },
+      "revId": "593bd0fb509d1036886219a850091890a7abc323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e59534e2_2f4f4860",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-30T11:24:17Z",
+      "side": 1,
+      "message": "?\n    base::Value element(base::Value::Type::DICTIONARY);",
+      "revId": "593bd0fb509d1036886219a850091890a7abc323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8dc3efb_b9079ba9",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-30T11:24:17Z",
+      "side": 1,
+      "message": "SetKey(\"...\", Value(program.registry_root \u003d\u003d HKEY_CURRENT_USER));",
+      "range": {
+        "startLine": 66,
+        "startChar": 12,
+        "endLine": 66,
+        "endChar": 22
+      },
+      "revId": "593bd0fb509d1036886219a850091890a7abc323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac42dbaa_f9316ec9",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-30T11:24:17Z",
+      "side": 1,
+      "message": "wdyt of DCHECK_CURRENTLY_ON(content::BrowserThread::UI) in all of these public functions? i think it\u0027s the right thing since many touch g_browser_process.",
+      "revId": "593bd0fb509d1036886219a850091890a7abc323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec4a29f4_ded49ce9",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-30T11:24:17Z",
+      "side": 1,
+      "message": "wdyt of using ClearPref if |programs| is empty? (same comment in OnModuleDatabaseIdle)",
+      "revId": "593bd0fb509d1036886219a850091890a7abc323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbfc07c5_e3a896b4",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-30T11:24:17Z",
+      "side": 1,
+      "message": "is this guaranteed to run on the UI thread? it kinda looks like ModuleDatabase::OnModuleInspected, which could lead here, runs on some other thread. do you need a thread bounce (either in ModuleDatabase so that observers are only invoked on the main thread, or here to handle the case where they aren\u0027t)?",
+      "revId": "593bd0fb509d1036886219a850091890a7abc323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8e82612_51a8ddc7",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-30T11:24:17Z",
+      "side": 1,
+      "message": "nit: move the call to Get() out of the loop.",
+      "range": {
+        "startLine": 181,
+        "startChar": 13,
+        "endLine": 181,
+        "endChar": 18
+      },
+      "revId": "593bd0fb509d1036886219a850091890a7abc323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b9e4099_490db0cf",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-30T11:24:17Z",
+      "side": 1,
+      "message": "nit: protected:",
+      "revId": "593bd0fb509d1036886219a850091890a7abc323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

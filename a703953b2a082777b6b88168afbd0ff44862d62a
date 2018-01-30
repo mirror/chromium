@@ -131,6 +131,24 @@
     },
     {
       "key": {
+        "uuid": "7071b195_30f89a7a",
+        "filename": "chrome/browser/conflicts/module_database_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-30T11:24:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a3497741_0875b7ce",
+      "revId": "a703953b2a082777b6b88168afbd0ff44862d62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6c2b93c_790156be",
         "filename": "chrome/browser/conflicts/module_database_win.h",
         "patchSetId": 1
@@ -499,6 +517,24 @@
       "side": 1,
       "message": "Do you have any reference for this?\n\nChecking cppreference.com, it says that \"The iterator first does not need to be dereferenceable if first\u003d\u003dlast: erasing an empty range is a no-op.\".",
       "parentUuid": "cc91baa8_636e6f88",
+      "revId": "a703953b2a082777b6b88168afbd0ff44862d62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6b68645_cd96584c",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-30T11:24:17Z",
+      "side": 1,
+      "message": "Ah, awesomeness! I stopped reading after the line above that. :-) I don\u0027t think that was the case prior to C++-11.",
+      "parentUuid": "74ed3e66_7597075e",
       "revId": "a703953b2a082777b6b88168afbd0ff44862d62a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
