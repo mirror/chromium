@@ -346,7 +346,7 @@ SkColor RenderWidgetHostViewChildFrame::background_color() const {
 
 gfx::Size RenderWidgetHostViewChildFrame::GetPhysicalBackingSize() const {
   if (frame_connector_)
-    return frame_connector_->frame_rect_in_pixels().size();
+    return frame_connector_->physical_backing_size();
   return gfx::Size();
 }
 

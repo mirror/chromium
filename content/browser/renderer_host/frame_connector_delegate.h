@@ -71,6 +71,11 @@ class CONTENT_EXPORT FrameConnectorDelegate {
   virtual void SendIntrinsicSizingInfoToParent(
       const blink::WebIntrinsicSizingInfo&) {}
 
+  // Return the size of the CompositorFrame to use in the child renderer.
+  const gfx::Size& physical_backing_size() {
+    return physical_backing_size_in_pixels_;
+  }
+
   // Return the rect in DIP that the RenderWidgetHostViewChildFrame's content
   // will render into.
   const gfx::Rect& frame_rect_in_dip() { return frame_rect_in_dip_; }
@@ -176,6 +181,11 @@ class CONTENT_EXPORT FrameConnectorDelegate {
   // nested child RWHVCFs inside it.
   virtual void SetVisibilityForChildViews(bool visible) const {}
 
+  // Called to resize the child renderer's CompositorFrame.
+  // |physical_backing_size| is in pixels if zoom-for-dsf is enabled, and in DIP
+  // if not.
+  virtual void SetPhysicalBackingSize(const gfx::Size& physical_backing_size);
+
   // Called to resize the child renderer. |frame_rect| is in pixels if
   // zoom-for-dsf is enabled, and in DIP if not.
   virtual void SetRect(const gfx::Rect& frame_rect);
@@ -202,6 +212,8 @@ class CONTENT_EXPORT FrameConnectorDelegate {
   gfx::Rect viewport_intersection_rect_;
 
   ScreenInfo screen_info_;
+  gfx::Size physical_backing_size_in_dip_;
+  gfx::Size physical_backing_size_in_pixels_;
   gfx::Rect frame_rect_in_dip_;
   gfx::Rect frame_rect_in_pixels_;
   viz::LocalSurfaceId local_surface_id_;

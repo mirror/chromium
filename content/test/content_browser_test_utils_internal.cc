@@ -370,7 +370,8 @@ viz::FrameSinkId UpdateResizeParamsMessageFilter::GetOrWaitForId() {
 UpdateResizeParamsMessageFilter::~UpdateResizeParamsMessageFilter() {}
 
 void UpdateResizeParamsMessageFilter::OnUpdateResizeParams(
-    const gfx::Rect& rect,
+    const gfx::Rect& frame_rect,
+    const gfx::Size& physical_backing_size,
     const ScreenInfo& screen_info,
     uint64_t sequence_number,
     const viz::SurfaceId& surface_id) {
@@ -378,7 +379,7 @@ void UpdateResizeParamsMessageFilter::OnUpdateResizeParams(
   content::BrowserThread::PostTask(
       content::BrowserThread::UI, FROM_HERE,
       base::BindOnce(&UpdateResizeParamsMessageFilter::OnUpdatedFrameRectOnUI,
-                     this, rect));
+                     this, frame_rect));
 
   // Record the received value. We cannot check the current state of the child
   // frame, as it can only be processed on the UI thread, and we cannot block
