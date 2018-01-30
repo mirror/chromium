@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "45e3a6d1_f15c7e6c",
+        "filename": "chrome/browser/conflicts/module_database_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2018-01-30T21:26:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b4bcb85_45d1f6b9",
+      "revId": "593bd0fb509d1036886219a850091890a7abc323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4210ea6_ac7f9f61",
         "filename": "chrome/browser/conflicts/module_database_win.h",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "abaaa3b3_f2c3b7dd",
+        "filename": "chrome/browser/conflicts/module_database_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2018-01-30T21:26:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4210ea6_ac7f9f61",
+      "range": {
+        "startLine": 35,
+        "startChar": 3,
+        "endLine": 35,
+        "endChar": 12
+      },
+      "revId": "593bd0fb509d1036886219a850091890a7abc323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e59534e2_2f4f4860",
         "filename": "chrome/browser/conflicts/problematic_programs_updater_win.cc",
         "patchSetId": 2
@@ -56,6 +98,24 @@
       "revId": "593bd0fb509d1036886219a850091890a7abc323",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca1c725d_73dec983",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2018-01-30T21:26:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e59534e2_2f4f4860",
+      "revId": "593bd0fb509d1036886219a850091890a7abc323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "9e01faa4_7e962938",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2018-01-30T21:26:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8dc3efb_b9079ba9",
+      "range": {
+        "startLine": 66,
+        "startChar": 12,
+        "endLine": 66,
+        "endChar": 22
+      },
+      "revId": "593bd0fb509d1036886219a850091890a7abc323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac42dbaa_f9316ec9",
         "filename": "chrome/browser/conflicts/problematic_programs_updater_win.cc",
         "patchSetId": 2
@@ -96,6 +180,24 @@
       "revId": "593bd0fb509d1036886219a850091890a7abc323",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa5af5ee_f52079e7",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2018-01-30T21:26:40Z",
+      "side": 1,
+      "message": "Sounds good.",
+      "parentUuid": "ac42dbaa_f9316ec9",
+      "revId": "593bd0fb509d1036886219a850091890a7abc323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "8abe3608_9ba0e7da",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2018-01-30T21:26:40Z",
+      "side": 1,
+      "message": "Sounds good.",
+      "parentUuid": "ec4a29f4_ded49ce9",
+      "revId": "593bd0fb509d1036886219a850091890a7abc323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbfc07c5_e3a896b4",
         "filename": "chrome/browser/conflicts/problematic_programs_updater_win.cc",
         "patchSetId": 2
@@ -130,6 +250,24 @@
       "revId": "593bd0fb509d1036886219a850091890a7abc323",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "012bb93e_85c5fcf9",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2018-01-30T21:26:40Z",
+      "side": 1,
+      "message": "Yes it is guaranteed. OnModuleInspected() is always posted back to the thread who called AddModule().",
+      "parentUuid": "fbfc07c5_e3a896b4",
+      "revId": "593bd0fb509d1036886219a850091890a7abc323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +294,30 @@
     },
     {
       "key": {
+        "uuid": "6c1227a6_7fa57e32",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2018-01-30T21:26:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8e82612_51a8ddc7",
+      "range": {
+        "startLine": 181,
+        "startChar": 13,
+        "endLine": 181,
+        "endChar": 18
+      },
+      "revId": "593bd0fb509d1036886219a850091890a7abc323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b9e4099_490db0cf",
         "filename": "chrome/browser/conflicts/problematic_programs_updater_win_unittest.cc",
         "patchSetId": 2
@@ -170,6 +332,24 @@
       "revId": "593bd0fb509d1036886219a850091890a7abc323",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aa7a655_7eaa03f9",
+        "filename": "chrome/browser/conflicts/problematic_programs_updater_win_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2018-01-30T21:26:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b9e4099_490db0cf",
+      "revId": "593bd0fb509d1036886219a850091890a7abc323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
