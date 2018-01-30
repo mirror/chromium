@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "9a86d322_016c2795",
+        "filename": "chrome/browser/notifications/notification_display_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T22:09:02Z",
+      "side": 1,
+      "message": "On ChromeOS, we should be good as long as the the profile is the sign-in profile, which is loaded in ChromeBrowserMainPartsChromeos::PostProfileInit and should be before any notification is about to display.",
+      "parentUuid": "6df5d276_53303485",
+      "revId": "477ec8f032ee5abbbaae713ed5dca149a9e7347a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9b84e5a_7718e17f",
         "filename": "chrome/browser/notifications/notification_display_service.cc",
         "patchSetId": 4
@@ -47,6 +65,24 @@
       "writtenOn": "2018-01-30T18:50:14Z",
       "side": 1,
       "message": "The other disadvantage to the above approach is that if a notification is opened then closed before the profile is loaded (an edge case for certain), it would still be displayed.",
+      "revId": "477ec8f032ee5abbbaae713ed5dca149a9e7347a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f48b95d9_9bd45b8b",
+        "filename": "chrome/browser/notifications/notification_display_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-30T22:09:02Z",
+      "side": 1,
+      "message": "+1 as this might be a problem for non-chromeos platform, where the \"system profile\" could be asynchronously loaded.",
+      "parentUuid": "d9b84e5a_7718e17f",
       "revId": "477ec8f032ee5abbbaae713ed5dca149a9e7347a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
