@@ -31,7 +31,6 @@
 import json
 import re
 import StringIO
-import sys
 import unittest
 
 from webkitpy.common import exit_codes
@@ -416,6 +415,10 @@ class RunTest(unittest.TestCase, StreamTestingMixin):
         tests_run = get_tests_run(['--skipped=ignore', 'passes'])
         self.assertIn('passes/skipped/skip.html', tests_run)
         self.assertEqual(len(tests_run), num_tests_run_by_default + 1)
+        # Check that --gtest_also_run_disabled_tests is equivalent to
+        # --skipped=ignore and overrides --skipped.
+        self.assertEqual(get_tests_run(['--gtest_also_run_disabled_tests', 'passes']), tests_run)
+        self.assertEqual(get_tests_run(['--gtest_also_run_disabled_tests', '--skipped=always', 'passes']), tests_run)
 
         # Now check that we only run the skipped test.
         self.assertEqual(get_tests_run(['--skipped=only', 'passes']), ['passes/skipped/skip.html'])
