@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f9cff3e4_1fe3538e",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathAVX.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2018-01-30T20:33:13Z",
+      "side": 1,
+      "message": "If the AVX namespace were defined here, it would not be possible to include system header files in VectorMathImpl so it would be mandatory to duplicate all system header inclusions in VectorMathAVX.cpp and VectorMathSSE.cpp. That would be a bit ugly.\n\nSo instead of that, I moved all macro definitions from VectorMathImpl to here and replaced the namespace name in VectorMathImpl with a macro defined here. That way I could remove add #ifdefs from VectorMathImpl and make it thus simpler to read.",
+      "parentUuid": "30508b0f_c2d694e6",
+      "revId": "c0de2553d55b6440df559b791df904d751d330c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d6b7788_6e2fa9ed",
         "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathImpl.cpp",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "c0de2553d55b6440df559b791df904d751d330c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "668ee71f_444827b5",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2018-01-30T20:33:13Z",
+      "side": 1,
+      "message": "I moved the namespace name to VectorMathAVX and to VectorMathSSE, so these #if\u0027s are not needed any more. The original reason not to use #else was to avoid git cl lint complains about mismatched namespace open and close statements.",
+      "parentUuid": "9d6b7788_6e2fa9ed",
+      "revId": "c0de2553d55b6440df559b791df904d751d330c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "007979d2_aa098627",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathX86.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2018-01-30T20:33:13Z",
+      "side": 1,
+      "message": "In VectorMathAVX.h like the rest of AVX namespace.",
+      "parentUuid": "99afbe12_cbf9c8d7",
+      "revId": "c0de2553d55b6440df559b791df904d751d330c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8513b5d1_aa812a7c",
         "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathX86.h",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "c0de2553d55b6440df559b791df904d751d330c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52e251c8_a8381533",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathX86.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2018-01-30T20:33:13Z",
+      "side": 1,
+      "message": "In VectorMathAVX.h like the rest of AVX namespace.",
+      "parentUuid": "8513b5d1_aa812a7c",
+      "revId": "c0de2553d55b6440df559b791df904d751d330c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -101,6 +173,24 @@
       "revId": "c0de2553d55b6440df559b791df904d751d330c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e01fa4b_d56a05de",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathX86.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2018-01-30T20:33:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1c8902a_6f0f2fca",
+      "revId": "c0de2553d55b6440df559b791df904d751d330c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
