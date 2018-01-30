@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18b66b09_7dc73916",
+        "filename": "chrome/browser/media/mirror_service_video_capture_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-30T00:58:59Z",
+      "side": 1,
+      "message": "Restricting to something as specific as BrowserThread::IO makes it unnecessarily difficult to reuse this class in a different context, one of which is unit testing. I recommend changing this to a SequenceChecker. This should also allow getting rid of the need for BrowserThreadBundle in the tests.",
+      "revId": "32485eb69a9b6ce1722b8ccd41dab7d3dad5e397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a836095_b1559f7a",
+        "filename": "chrome/browser/media/mirror_service_video_capture_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-30T00:58:59Z",
+      "side": 1,
+      "message": "This global method call (hidden in the implementation) makes this class more difficult to test, reuse, and understand (when looking at only the declaration and description) than it needs to be.\n\nI recommend passing in a factory interface or callback to the constructor and move the knowledge of how to create a |device_launcher_| into the implementation of that. This will allow the unit test code to control the behavior of the |device_launcher_| via mocking.",
+      "revId": "32485eb69a9b6ce1722b8ccd41dab7d3dad5e397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b5ad27c_21321ab1",
+        "filename": "chrome/browser/media/mirror_service_video_capture_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-30T00:58:59Z",
+      "side": 1,
+      "message": "Is the use of |this| safe here, and if so, why?\nIf I recall correctly, the contract of LaunchDeviceAsync() is that the caller must guarantee that the given Callback* stays alive until |done_cb| is invoked. With |done_cb| being bound to an empty lambda, it is not obvious to me if/why our invocation here satisfies this guarantee.",
+      "revId": "32485eb69a9b6ce1722b8ccd41dab7d3dad5e397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1461639a_bb1cac8d",
+        "filename": "chrome/browser/media/mirror_service_video_capture_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-30T00:58:59Z",
+      "side": 1,
+      "message": "I recommend passing a factory interface or callback |device_launcher_factory| into the constructor that can then be used to create a |device_launcher_| as needed. With that the class-level description for what the class does could be:\n\n\"Implements mojom::VideoCaptureHost using a given |device_launcher_factory|. On Start(), uses |device_launcher_factory| to create a LaunchedVideoCaptureDevice that outputs video frames to |this|. The frames are received through the media::VideoFrameReceiver interface and are forwarded to the client of mojom::VideoCaptureHost that invoked Start(). Only supports one client at a time.\"",
+      "revId": "32485eb69a9b6ce1722b8ccd41dab7d3dad5e397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78981606_0b95b1dc",
+        "filename": "chrome/browser/media/mirror_service_video_capture_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-30T00:58:59Z",
+      "side": 1,
+      "message": "To encourage/enable reuse of the functionality offered by this class, I recommend choosing a name that is not more specific than what the class does. I don\u0027t see anything specific to a \"MirrorService\", so I feel a more appropriate name would be something like DeviceLauncherBasedVideoCaptureHost.",
+      "revId": "32485eb69a9b6ce1722b8ccd41dab7d3dad5e397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e6e2548_2e390c84",
+        "filename": "chrome/browser/media/mirror_service_video_capture_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-30T00:58:59Z",
+      "side": 1,
+      "message": "I understand that this is fairly common in the Chromium codebase, but I consider this bad practice and would like to discourage it for newly written code. Access to private members/methods of the unit under test should not be required to be able to verify the intended behavior. If it is, this usually indicates a design issue.\n\nTypically the need for this can be eliminated by passing in things that the test needs to know about and/or control into the constructor or configuration methods of the class under test.",
+      "revId": "32485eb69a9b6ce1722b8ccd41dab7d3dad5e397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
