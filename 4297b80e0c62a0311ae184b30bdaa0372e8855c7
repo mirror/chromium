@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "67b53662_e16637ca",
+        "filename": "chrome/browser/chromeos/policy/remote_commands/screenshot_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2018-01-30T15:05:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3b18541_ca935755",
+      "range": {
+        "startLine": 66,
+        "startChar": 6,
+        "endLine": 66,
+        "endChar": 41
+      },
+      "revId": "4297b80e0c62a0311ae184b30bdaa0372e8855c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6b86b6c_269faa04",
         "filename": "chrome/browser/chromeos/policy/remote_commands/screenshot_delegate.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "4297b80e0c62a0311ae184b30bdaa0372e8855c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a8720fe_544f4812",
+        "filename": "chrome/browser/chromeos/policy/remote_commands/screenshot_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2018-01-30T15:05:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6b86b6c_269faa04",
+      "range": {
+        "startLine": 78,
+        "startChar": 20,
+        "endLine": 80,
+        "endChar": 23
+      },
+      "revId": "4297b80e0c62a0311ae184b30bdaa0372e8855c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f0772936_9d69d0f8",
+        "filename": "chrome/browser/chromeos/policy/system_log_uploader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2018-01-30T15:05:42Z",
+      "side": 1,
+      "message": "Done, \"Admins can ask that their devices regularly upload their system logs.\"",
+      "parentUuid": "f2f8782e_6028b782",
+      "range": {
+        "startLine": 160,
+        "startChar": 30,
+        "endLine": 160,
+        "endChar": 49
+      },
+      "revId": "4297b80e0c62a0311ae184b30bdaa0372e8855c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b840155c_e62c04cd",
         "filename": "chrome/browser/chromeos/policy/system_log_uploader.cc",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "4297b80e0c62a0311ae184b30bdaa0372e8855c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b9eed0d_ed2bd1df",
+        "filename": "chrome/browser/chromeos/policy/system_log_uploader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2018-01-30T15:05:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b840155c_e62c04cd",
+      "range": {
+        "startLine": 167,
+        "startChar": 20,
+        "endLine": 167,
+        "endChar": 24
+      },
+      "revId": "4297b80e0c62a0311ae184b30bdaa0372e8855c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
