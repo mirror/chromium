@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b636325_a1a696d1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-30T17:46:32Z",
+      "side": 1,
+      "message": "What\u0027s \"TransTableContainer\" there for?",
+      "revId": "9fb9c56d3ca3e72b914f3cfed08df6553fb78563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90318e48_c0bc98da",
+        "filename": "third_party/WebKit/LayoutTests/tables/table-transform-absolute-position-child-expected.png",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-30T17:46:32Z",
+      "side": 1,
+      "message": "Please explain this change in the commit comment.",
+      "revId": "9fb9c56d3ca3e72b914f3cfed08df6553fb78563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
