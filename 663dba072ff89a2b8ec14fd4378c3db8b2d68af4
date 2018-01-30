@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "356cd58d_14262c52",
+        "filename": "cc/trees/layer_tree_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2018-01-30T19:51:27Z",
+      "side": 1,
+      "message": "Would it make sense for this to be a LayerTreeSetting?",
+      "revId": "663dba072ff89a2b8ec14fd4378c3db8b2d68af4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e17ba41_bd91c37f",
         "filename": "cc/trees/layer_tree_host_impl.cc",
         "patchSetId": 3
