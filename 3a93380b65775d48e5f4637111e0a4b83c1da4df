@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e6d20bd_3acd0560",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2018-01-30T10:47:40Z",
+      "side": 1,
+      "message": "StyleEngine.cpp and StyleInvalidator.cpp uses GetDistributedNodes() for ::slotted()\ninvalidation, so change them to call FlattenedAssignedNodes() and resolve\nyour TODO by moving GetDistributedNodes() to private?",
+      "revId": "3a93380b65775d48e5f4637111e0a4b83c1da4df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
