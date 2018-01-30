@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "112b9f09_f7f2b92d",
+        "filename": "content/renderer/media/media_stream_audio_processor.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1232627
+      },
+      "writtenOn": "2018-01-30T13:00:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "525c7f82_9ca1d769",
+      "revId": "f041207d5e5b46de330d198f7ce844b554f20bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6abe24b6_c0a5779a",
         "filename": "content/renderer/media/media_stream_audio_processor.cc",
         "patchSetId": 15
@@ -33,6 +51,24 @@
       "revId": "f041207d5e5b46de330d198f7ce844b554f20bd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1e94ade_ea0e3637",
+        "filename": "content/renderer/media/media_stream_audio_processor.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1232627
+      },
+      "writtenOn": "2018-01-30T13:00:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6abe24b6_c0a5779a",
+      "revId": "f041207d5e5b46de330d198f7ce844b554f20bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fc6042f0_ced36566",
+        "filename": "content/renderer/media/media_stream_audio_processor.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1232627
+      },
+      "writtenOn": "2018-01-30T13:00:40Z",
+      "side": 1,
+      "message": "I didn\u0027t think longer than that we needed an arbitrary cap, much like [1], and 1 second is long enough to catch it if one is looking at the logs.\n\nChanged to 10, that\u0027s 100 ms. Should be enough to cover fairly transient stuff (e.g. if only the first call is in error, for whatever reason) while not spamming the log for several seconds.\nhttps://cs.chromium.org/chromium/src/components/app_modal/javascript_dialog_manager.cc?type\u003dcs\u0026q\u003d%22arbitrarily+cap%22\u0026l\u003d178",
+      "parentUuid": "9bb41e21_4c416efe",
+      "revId": "f041207d5e5b46de330d198f7ce844b554f20bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ebc112d_318b34a9",
         "filename": "content/renderer/media/media_stream_audio_processor.cc",
         "patchSetId": 15
@@ -67,6 +121,24 @@
       "revId": "f041207d5e5b46de330d198f7ce844b554f20bd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41368b10_443f06c8",
+        "filename": "content/renderer/media/media_stream_audio_processor.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1232627
+      },
+      "writtenOn": "2018-01-30T13:00:40Z",
+      "side": 1,
+      "message": "Done, but won\u0027t this cause a non-logcapped log on ChromeOS non-debug builds?\nhttps://cs.chromium.org/chromium/src/base/logging.h?type\u003dcs\u0026q\u003dNOTREACHED\u0026l\u003d939",
+      "parentUuid": "5ebc112d_318b34a9",
+      "revId": "f041207d5e5b46de330d198f7ce844b554f20bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "9ff1b291_21bab4f0",
+        "filename": "content/renderer/media/media_stream_audio_processor.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1232627
+      },
+      "writtenOn": "2018-01-30T13:00:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a59ec21_93f535da",
+      "revId": "f041207d5e5b46de330d198f7ce844b554f20bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9906a9fa_51da4cfe",
         "filename": "content/renderer/media/media_stream_audio_processor.h",
         "patchSetId": 15
@@ -101,6 +191,24 @@
       "revId": "f041207d5e5b46de330d198f7ce844b554f20bd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc6b2397_44b12d3b",
+        "filename": "content/renderer/media/media_stream_audio_processor.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1232627
+      },
+      "writtenOn": "2018-01-30T13:00:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9906a9fa_51da4cfe",
+      "revId": "f041207d5e5b46de330d198f7ce844b554f20bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "9eed1db2_c2d72033",
+        "filename": "content/renderer/media/webrtc_audio_device_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1232627
+      },
+      "writtenOn": "2018-01-30T13:00:40Z",
+      "side": 1,
+      "message": "The RenderData implementation already DCHECKs the sample rate.\nAdded check for channel count.",
+      "parentUuid": "691d7f24_72111f28",
+      "revId": "f041207d5e5b46de330d198f7ce844b554f20bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbb6dced_7e541ce9",
         "filename": "content/renderer/media/webrtc_audio_device_impl.h",
         "patchSetId": 15
@@ -135,6 +261,24 @@
       "revId": "f041207d5e5b46de330d198f7ce844b554f20bd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ade81938_f1a1f9ce",
+        "filename": "content/renderer/media/webrtc_audio_device_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1232627
+      },
+      "writtenOn": "2018-01-30T13:00:40Z",
+      "side": 1,
+      "message": "Same as for Apm, i.e. only mono/stereo.\nI\u0027ll add checks for it (but no logs, since the code change in this CL doesn\u0027t change any behavior with respect to channel count).",
+      "parentUuid": "dbb6dced_7e541ce9",
+      "revId": "f041207d5e5b46de330d198f7ce844b554f20bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
