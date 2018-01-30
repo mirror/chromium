@@ -278,7 +278,9 @@ QuicConnection::QuicConnection(
       use_control_frame_manager_(
           GetQuicReloadableFlag(quic_use_control_frame_manager)) {
   QUIC_DLOG(INFO) << ENDPOINT
-                  << "Created connection with connection_id: " << connection_id;
+                  << "Created connection with connection_id: " << connection_id
+                  << " and version: "
+                  << QuicVersionToString(transport_version());
   framer_.set_visitor(this);
   stats_.connection_creation_time = clock_->ApproximateNow();
   // TODO(ianswett): Supply the NetworkChangeVisitor as a constructor argument
@@ -1207,7 +1209,7 @@ QuicConsumedData QuicConnection::SendStreamData(QuicStreamId id,
 bool QuicConnection::SendControlFrame(const QuicFrame& frame) {
   DCHECK(use_control_frame_manager_);
   if (!CanWrite(HAS_RETRANSMITTABLE_DATA) && frame.type != PING_FRAME) {
-    QUIC_DVLOG(1) << "Failed to send control frame: " << frame;
+    QUIC_DVLOG(1) << ENDPOINT << "Failed to send control frame: " << frame;
     // Do not check congestion window for ping.
     return false;
   }
