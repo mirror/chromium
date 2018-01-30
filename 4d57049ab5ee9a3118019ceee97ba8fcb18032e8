@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d3d2f9ec_4c7ba64b",
+        "filename": "chromeos/network/client_cert_resolver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-30T10:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d9d7354_f55576bf",
+      "range": {
+        "startLine": 40,
+        "startChar": 19,
+        "endLine": 40,
+        "endChar": 35
+      },
+      "revId": "4d57049ab5ee9a3118019ceee97ba8fcb18032e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1277127d_c34635b2",
         "filename": "chromeos/network/client_cert_resolver.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "4d57049ab5ee9a3118019ceee97ba8fcb18032e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca3572ba_e05d309a",
+        "filename": "chromeos/network/client_cert_resolver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-30T10:00:45Z",
+      "side": 1,
+      "message": "Actually, deleted this and changed the class to pass around std::vectors directly instead of unique_ptr\u003cstd::vector\u003e.",
+      "parentUuid": "1277127d_c34635b2",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 7
+      },
+      "revId": "4d57049ab5ee9a3118019ceee97ba8fcb18032e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8bdfdbd2_8b9dd42f",
+        "filename": "chromeos/network/client_cert_resolver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-30T10:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d32f0cc_1af09a9b",
+      "range": {
+        "startLine": 268,
+        "startChar": 46,
+        "endLine": 268,
+        "endChar": 62
+      },
+      "revId": "4d57049ab5ee9a3118019ceee97ba8fcb18032e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d56512dd_da3ccd83",
         "filename": "chromeos/network/client_cert_resolver.cc",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "4d57049ab5ee9a3118019ceee97ba8fcb18032e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26126420_ce64b1a3",
+        "filename": "chromeos/network/client_cert_resolver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-30T10:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d56512dd_da3ccd83",
+      "range": {
+        "startLine": 312,
+        "startChar": 22,
+        "endLine": 313,
+        "endChar": 23
+      },
+      "revId": "4d57049ab5ee9a3118019ceee97ba8fcb18032e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "c96e2fd3_24b4db4d",
+        "filename": "chromeos/network/client_cert_resolver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-30T10:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be125962_18ccd8bf",
+      "range": {
+        "startLine": 460,
+        "startChar": 2,
+        "endLine": 461,
+        "endChar": 56
+      },
+      "revId": "4d57049ab5ee9a3118019ceee97ba8fcb18032e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b2716ff_669b1594",
         "filename": "chromeos/network/client_cert_resolver.cc",
         "patchSetId": 4
@@ -131,6 +251,24 @@
       "revId": "4d57049ab5ee9a3118019ceee97ba8fcb18032e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c628e654_2a5a3aa6",
+        "filename": "chromeos/network/client_cert_resolver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-30T10:00:45Z",
+      "side": 1,
+      "message": "True, we actually want to insert a new default-constructed element.",
+      "parentUuid": "5b2716ff_669b1594",
+      "revId": "4d57049ab5ee9a3118019ceee97ba8fcb18032e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -151,6 +289,24 @@
     },
     {
       "key": {
+        "uuid": "9c562178_0a18bf1a",
+        "filename": "chromeos/network/client_cert_resolver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-30T10:00:45Z",
+      "side": 1,
+      "message": "Done (also in a few other places)",
+      "parentUuid": "c7c99304_8decfb6b",
+      "revId": "4d57049ab5ee9a3118019ceee97ba8fcb18032e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67b53225_25df2b23",
         "filename": "chromeos/network/client_cert_resolver.h",
         "patchSetId": 4
@@ -165,6 +321,24 @@
       "revId": "4d57049ab5ee9a3118019ceee97ba8fcb18032e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68cc4d7e_f0b4b9ba",
+        "filename": "chromeos/network/client_cert_resolver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-30T10:00:45Z",
+      "side": 1,
+      "message": "Done. Had to make a few dependencies private members of the class too:\n* struct NetworkAndCertPattern\n* FindCertificateMatches function\nbut IMO that\u0027s not an issue.",
+      "parentUuid": "67b53225_25df2b23",
+      "revId": "4d57049ab5ee9a3118019ceee97ba8fcb18032e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "4ab32c81_4105aac2",
+        "filename": "chromeos/network/client_cert_resolver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-30T10:00:45Z",
+      "side": 1,
+      "message": "Done. Most of the information was already there :)",
+      "parentUuid": "055b1421_8b89cfdf",
+      "range": {
+        "startLine": 127,
+        "startChar": 76,
+        "endLine": 133,
+        "endChar": 71
+      },
+      "revId": "4d57049ab5ee9a3118019ceee97ba8fcb18032e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37ff84ba_e1ecfb16",
         "filename": "chromeos/network/client_cert_resolver_unittest.cc",
         "patchSetId": 4
@@ -211,6 +409,30 @@
       "revId": "4d57049ab5ee9a3118019ceee97ba8fcb18032e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31c3d6bc_474135de",
+        "filename": "chromeos/network/client_cert_resolver_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-30T10:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37ff84ba_e1ecfb16",
+      "range": {
+        "startLine": 552,
+        "startChar": 6,
+        "endLine": 552,
+        "endChar": 14
+      },
+      "revId": "4d57049ab5ee9a3118019ceee97ba8fcb18032e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
