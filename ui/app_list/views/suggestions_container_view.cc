@@ -96,11 +96,9 @@ views::View* SuggestionsContainerView::GetSelectedView() const {
              : nullptr;
 }
 
-views::View* SuggestionsContainerView::GetFirstResultView() {
+SearchResultBaseView* SuggestionsContainerView::GetFirstResultView() {
   return nullptr;
 }
-
-void SuggestionsContainerView::SetFirstResultSelected(bool selected) {}
 
 const char* SuggestionsContainerView::GetClassName() const {
   return "SuggestionsContainerView";

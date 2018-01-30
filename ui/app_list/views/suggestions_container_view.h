@@ -37,8 +37,7 @@ class SuggestionsContainerView : public SearchResultContainerView {
   void NotifyFirstResultYIndex(int y_index) override;
   int GetYSize() override;
   views::View* GetSelectedView() const override;
-  views::View* GetFirstResultView() override;
-  void SetFirstResultSelected(bool selected) override;
+  SearchResultBaseView* GetFirstResultView() override;
   const char* GetClassName() const override;
 
  private:
