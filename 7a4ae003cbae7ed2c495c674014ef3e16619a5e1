@@ -16,6 +16,24 @@
       "revId": "7a4ae003cbae7ed2c495c674014ef3e16619a5e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1afd5071_2dffda2e",
+        "filename": "chrome/browser/ui/webui/settings/browser_lifetime_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-30T17:42:35Z",
+      "side": 1,
+      "message": "I am really not that familiar with this code. I made this patch because it was clearly incorrect before and was straightforward. Could you open a new bug for this issue since you were the owner of issue 554648 and hopefully understand better what the problem is? Maybe assign it to atwilson@ abd ccL mnissler@ who wrote the code? Thanks.",
+      "parentUuid": "d42f7cb7_c968a240",
+      "revId": "7a4ae003cbae7ed2c495c674014ef3e16619a5e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
