@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72690163_507da8f8",
+        "filename": "third_party/WebKit/Source/devtools/scripts/build/build_release_applications.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-30T23:20:08Z",
+      "side": 1,
+      "message": "This is already done at line 222.",
+      "revId": "9d9ab8e1e05a7bab77459a3a5389f91d1be313c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
