@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c6d607bf_bf8848f2",
+        "filename": "ui/message_center/views/message_popup_collection.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2018-01-30T02:27:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c13aa1ad_ed57ae93",
+      "range": {
+        "startLine": 150,
+        "startChar": 5,
+        "endLine": 150,
+        "endChar": 43
+      },
+      "revId": "cca426cb62a8e4382ef4e825892d880416d701d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ef7938b_143da57b",
         "filename": "ui/message_center/views/message_popup_collection.cc",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4a53afd7_6a1f942d",
+        "filename": "ui/message_center/views/message_popup_collection.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2018-01-30T02:27:46Z",
+      "side": 1,
+      "message": "now the condition fits into one line so no need for curlies?",
+      "parentUuid": "8ef7938b_143da57b",
+      "range": {
+        "startLine": 152,
+        "startChar": 66,
+        "endLine": 152,
+        "endChar": 68
+      },
+      "revId": "cca426cb62a8e4382ef4e825892d880416d701d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af71779f_79316f94",
         "filename": "ui/message_center/views/message_popup_collection_unittest.cc",
         "patchSetId": 7
@@ -68,6 +116,30 @@
       "revId": "cca426cb62a8e4382ef4e825892d880416d701d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77ce001e_0c6e4e51",
+        "filename": "ui/message_center/views/message_popup_collection_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2018-01-30T02:27:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af71779f_79316f94",
+      "range": {
+        "startLine": 767,
+        "startChar": 32,
+        "endLine": 767,
+        "endChar": 64
+      },
+      "revId": "cca426cb62a8e4382ef4e825892d880416d701d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
