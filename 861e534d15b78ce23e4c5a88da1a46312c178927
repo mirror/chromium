@@ -2,6 +2,167 @@
   "comments": [
     {
       "key": {
+        "uuid": "a6e75e0f_7f414ed7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 50
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-31T01:03:12Z",
+      "side": 1,
+      "message": "Nit: Lowercase \u0027B\u0027",
+      "range": {
+        "startLine": 12,
+        "startChar": 70,
+        "endLine": 12,
+        "endChar": 71
+      },
+      "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6a67e75_f6068e04",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 50
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-31T01:03:12Z",
+      "side": 1,
+      "message": "The issue here isn\u0027t incomplete object dereferencing.\n\nThe object is that the making chrome.exe a COM server means Chrome is now bound to the lifetime of objects owned outside of chrome.exe.",
+      "range": {
+        "startLine": 15,
+        "startChar": 45,
+        "endLine": 17,
+        "endChar": 61
+      },
+      "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6b06827_480efc75",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 50
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-31T01:03:12Z",
+      "side": 1,
+      "message": "Nit: Lowercase \u0027I\u0027",
+      "range": {
+        "startLine": 29,
+        "startChar": 60,
+        "endLine": 29,
+        "endChar": 61
+      },
+      "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "947cb1d6_4d139cb8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 50
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-31T01:03:12Z",
+      "side": 1,
+      "message": "Maybe: This allows COM to create the object in the COM server and call the objects Active() method [...]",
+      "range": {
+        "startLine": 32,
+        "startChar": 55,
+        "endLine": 34,
+        "endChar": 8
+      },
+      "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5bf3021_7ecd32a3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 50
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-31T01:03:12Z",
+      "side": 1,
+      "message": "This CL does not change the existing toast activation behavior which requires Chrome to be running.",
+      "range": {
+        "startLine": 36,
+        "startChar": 11,
+        "endLine": 37,
+        "endChar": 11
+      },
+      "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd4e300d_96fec1dc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 50
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-31T01:03:12Z",
+      "side": 1,
+      "message": "Nit: activation",
+      "range": {
+        "startLine": 42,
+        "startChar": 40,
+        "endLine": 42,
+        "endChar": 48
+      },
+      "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6380f000_baee0524",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-31T01:03:12Z",
+      "side": 1,
+      "message": "Nit: 64-bit and 32-bit (and the ones after this)",
+      "range": {
+        "startLine": 215,
+        "startChar": 53,
+        "endLine": 215,
+        "endChar": 62
+      },
+      "revId": "861e534d15b78ce23e4c5a88da1a46312c178927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ebaae4d_38a273af",
         "filename": "chrome/tools/build/win/FILES.cfg",
         "patchSetId": 50

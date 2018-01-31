@@ -566,6 +566,30 @@
     },
     {
       "key": {
+        "uuid": "e7d96efa_8b0f555a",
+        "filename": "chrome/installer/setup/setup_util.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-31T01:03:12Z",
+      "side": 1,
+      "message": "Ah, I missed that the non-const version is C++17.\n\nNow that I think about it, this might be an abuse of the underlying representation of std::string. Perhaps the right thing to do here is to have a wchar_t array and then pass that to the string16.",
+      "parentUuid": "6f7a5661_f58478a3",
+      "range": {
+        "startLine": 866,
+        "startChar": 66,
+        "endLine": 866,
+        "endChar": 74
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cedb5342_e144bd30",
         "filename": "chrome/installer/setup/setup_util.cc",
         "patchSetId": 34
@@ -601,6 +625,30 @@
       "side": 1,
       "message": "StingFromGUID2 takes \"int\" as its 3rd paramater, while path.capacity() returns \"size_t\". We need to do static_cast\u003cint\u003e to stop win-msvc-rel trybot from complaining. \n\nI really don\u0027t like to put a static_cast here though.",
       "parentUuid": "cedb5342_e144bd30",
+      "range": {
+        "startLine": 867,
+        "startChar": 24,
+        "endLine": 867,
+        "endChar": 39
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36a27cec_aa634859",
+        "filename": "chrome/installer/setup/setup_util.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 867,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-31T01:03:12Z",
+      "side": 1,
+      "message": "It\u0027s the right thing to do. Similar to how we prefer to use sizeof(variable) instead of sizeof(type). capacity() is never wrong whereas kGuidLengthFull is not guaranteed to be the length of path. If we need a static_cast, then that\u0027s what we\u0027ll use.",
+      "parentUuid": "6644dabd_ea0f38d7",
       "range": {
         "startLine": 867,
         "startChar": 24,

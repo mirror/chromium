@@ -262,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "7ef2155c_5c28344c",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 48
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2018-01-31T01:03:12Z",
+      "side": 1,
+      "message": "I would be fine with StringPrintf as well. The reason why I want to avoid the append is that it splits up the building of the value when a single statement can do the job.",
+      "parentUuid": "7cff3409_35b0eee4",
+      "range": {
+        "startLine": 248,
+        "startChar": 12,
+        "endLine": 248,
+        "endChar": 22
+      },
+      "revId": "d44296643d823f3fd0bf596404843363790dd15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "91bc3753_31af03ee",
         "filename": "chrome/installer/util/util_constants.h",
         "patchSetId": 48
