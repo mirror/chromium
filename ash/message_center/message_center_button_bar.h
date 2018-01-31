@@ -31,11 +31,10 @@ class MessageCenterButtonBar : public views::View,
                                public views::ButtonListener,
                                public ui::ImplicitAnimationObserver {
  public:
-  MessageCenterButtonBar(
-      MessageCenterView* message_center_view,
-      message_center::MessageCenter* message_center,
-      bool settings_initially_visible,
-      const base::string16& title);
+  MessageCenterButtonBar(MessageCenterView* message_center_view,
+                         message_center::MessageCenter* message_center,
+                         bool settings_initially_visible,
+                         bool locked);
   ~MessageCenterButtonBar() override;
 
   void SetQuietModeState(bool is_quiet_mode);
@@ -44,6 +43,7 @@ class MessageCenterButtonBar : public views::View,
   void ChildVisibilityChanged(views::View* child) override;
   void Layout() override;
   gfx::Size CalculatePreferredSize() const override;
+  void GetAccessibleNodeData(ui::AXNodeData* node_data) override;
 
   // Overridden from views::ButtonListener:
   void ButtonPressed(views::Button* sender, const ui::Event& event) override;
@@ -71,6 +71,9 @@ class MessageCenterButtonBar : public views::View,
 
   void SetButtonsVisible(bool visible);
 
+  // Updates label suitable for state specified by |locked|.
+  void UpdateLabel(bool locked);
+
  private:
   MessageCenterView* message_center_view() const {
     return message_center_view_;
@@ -78,6 +81,9 @@ class MessageCenterButtonBar : public views::View,
   message_center::MessageCenter* message_center() const {
     return message_center_;
   }
+
+  // Returns title for state specified by |locked|.
+  base::string16 GetTitle(bool locked) const;
 
   MessageCenterView* message_center_view_;
   message_center::MessageCenter* message_center_;
