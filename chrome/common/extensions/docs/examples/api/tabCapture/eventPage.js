@@ -4,7 +4,7 @@
 
 // The window (tab) opened and navigated to receiver.html.
 var receiver = null;
-
+var prefer_stream_id = true;
 // Open a new window of receiver.html when browser action icon is clicked.
 chrome.browserAction.onClicked.addListener(function(tab) {
   chrome.tabCapture.capture(
@@ -22,18 +22,48 @@ chrome.browserAction.onClicked.addListener(function(tab) {
          maxFrameRate: 60,  // Note: Frame rate is variable (0 <= x <= 60).
        },
      },
+     streamId: prefer_stream_id,
     },
-    function(stream) {
-      if (!stream) {
+    function(response) {
+      if (!response) {
         console.error('Error starting tab capture: ' +
                       (chrome.runtime.lastError.message || 'UNKNOWN'));
         return;
       }
-      if (receiver != null) {
-        receiver.close();
+
+      if (!prefer_stream_id) {
+        console.log("Get stream and display directly.");
+        if (receiver != null) {
+          receiver.close();
+        }
+        receiver = window.open('receiver.html');
+        receiver.currentStream = response;
+      } else {
+        console.log("Get tab id and request user media.");
+        var options = {};
+        if (response.audioConstraints)
+          options.audio = response.audioConstraints;
+        if (response.videoConstraints)
+          options.video = response.videoConstraints;
+        try {
+          navigator.webkitGetUserMedia(
+            options,
+            function onSuccess(stream) {
+              if (receiver != null) {
+                receiver.close();
+              }
+              receiver = window.open('receiver.html');
+              receiver.currentStream = stream;
+            },
+            function onError(error) {
+              console.log("brave: gUM error.");
+            });
+        } catch (error) {
+          runCallbackWithLastError(
+            name, getErrorMessage(error, "Invalid argument(s)."), request.stack,
+            function() { callback(null); });
+        }
       }
-      receiver = window.open('receiver.html');
-      receiver.currentStream = stream;
     }
   );
 });

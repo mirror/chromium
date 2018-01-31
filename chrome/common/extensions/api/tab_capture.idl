@@ -40,6 +40,7 @@ namespace tabCapture {
     MediaStreamConstraint? audioConstraints;
     MediaStreamConstraint? videoConstraints;
     [nodoc] DOMString? presentationId;
+    boolean? streamId;
   };
 
   callback GetTabMediaCallback =

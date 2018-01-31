@@ -20,7 +20,7 @@ function runCallbackWithLastError(name, message, stack, callback, args) {
 binding.registerCustomHook(function(bindingsAPI, extensionId) {
   var apiFunctions = bindingsAPI.apiFunctions;
 
-  function proxyToGetUserMedia(name, request, callback, response) {
+  function proxyToGetUserMedia(name, request, callback, response, streamId) {
     if (!callback)
       return;
 
@@ -31,6 +31,10 @@ binding.registerCustomHook(function(bindingsAPI, extensionId) {
       return;
     }
 
+    if (streamId) {
+      callback(response);
+      return;
+    }
     // Convenience function for processing webkitGetUserMedia() error objects to
     // provide runtime.lastError messages for the tab capture API.
     function getErrorMessage(error, fallbackMessage) {

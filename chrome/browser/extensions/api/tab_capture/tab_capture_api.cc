@@ -20,21 +20,26 @@
 #include "base/values.h"
 #include "chrome/browser/extensions/api/tab_capture/offscreen_tab.h"
 #include "chrome/browser/extensions/api/tab_capture/tab_capture_registry.h"
+#include "chrome/browser/media/webrtc/desktop_streams_registry.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/sessions/session_tab_helper.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/chrome_switches.h"
+#include "content/public/browser/desktop_media_id.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents.h"
+#include "extensions/browser/extension_function.h"
 #include "extensions/common/features/feature.h"
 #include "extensions/common/features/feature_provider.h"
 #include "extensions/common/features/simple_feature.h"
 #include "extensions/common/permissions/permissions_data.h"
 #include "extensions/common/switches.h"
 
+using content::DesktopMediaID;
+using content::WebContentsMediaCaptureId;
 using extensions::api::tab_capture::MediaStreamConstraint;
 
 namespace TabCapture = extensions::api::tab_capture;
@@ -63,6 +68,7 @@ const char kCapturingSameOffscreenTab[] =
 // Keys/values passed to renderer-side JS bindings.
 const char kMediaStreamSource[] = "chromeMediaSource";
 const char kMediaStreamSourceId[] = "chromeMediaSourceId";
+const char kMediaStreamSourceDesktop[] = "desktop";
 const char kMediaStreamSourceTab[] = "tab";
 
 // Tab Capture-specific video constraint to enable automatic resolution/rate
@@ -71,6 +77,10 @@ const char kEnableAutoThrottlingKey[] = "enableAutoThrottling";
 
 bool OptionsSpecifyAudioOrVideo(const TabCapture::CaptureOptions& options) {
   return (options.audio && *options.audio) || (options.video && *options.video);
+}
+
+bool OptionsPreferSteamId(const TabCapture::CaptureOptions& options) {
+  return options.stream_id && *options.stream_id;
 }
 
 bool IsAcceptableOffscreenTabUrl(const GURL& url) {
@@ -119,7 +129,11 @@ void FilterDeprecatedGoogConstraints(TabCapture::CaptureOptions* options) {
 // Add Chrome-specific source identifiers to the MediaStreamConstraints objects
 // in |options| to provide references to the |target_contents| to be captured.
 void AddMediaStreamSourceConstraints(content::WebContents* target_contents,
-                                     TabCapture::CaptureOptions* options) {
+                                     TabCapture::CaptureOptions* options,
+                                     const GURL& origin,
+                                     const std::string& target_name,
+                                     content::WebContents* sender_contents,
+                                     bool is_stream_id_preferred) {
   DCHECK(options);
   DCHECK(target_contents);
 
@@ -153,21 +167,41 @@ void AddMediaStreamSourceConstraints(content::WebContents* target_contents,
   }
 
   // Format the device ID that references the target tab.
-  content::RenderFrameHost* const main_frame = target_contents->GetMainFrame();
-  // TODO(miu): We should instead use a "randomly generated device ID" scheme,
-  // like that employed by the desktop capture API.  http://crbug.com/163100
-  const std::string device_id = base::StringPrintf(
-      "web-contents-media-stream://%i:%i%s",
-      main_frame->GetProcess()->GetID(),
-      main_frame->GetRoutingID(),
-      enable_auto_throttling ? "?throttling=auto" : "");
+  content::RenderFrameHost* const target_frame =
+      target_contents->GetMainFrame();
+  std::string device_id;
+  if (is_stream_id_preferred) {
+    DesktopMediaID source(
+        DesktopMediaID::TYPE_WEB_CONTENTS, DesktopMediaID::kNullId,
+        WebContentsMediaCaptureId(target_frame->GetProcess()->GetID(),
+                                  target_frame->GetRoutingID(),
+                                  enable_auto_throttling, false));
+
+    content::RenderFrameHost* const main_frame =
+        sender_contents->GetMainFrame();
+    DesktopStreamsRegistry* registry =
+        MediaCaptureDevicesDispatcher::GetInstance()
+            ->GetDesktopStreamsRegistry();
+    device_id = registry->RegisterStream(main_frame->GetProcess()->GetID(),
+                                         main_frame->GetRoutingID(), origin,
+                                         source, target_name);
+  } else {
+    // TODO(miu): We should instead use a "randomly generated device ID" scheme,
+    // like that employed by the desktop capture API.  http://crbug.com/163100
+    device_id = base::StringPrintf(
+        "web-contents-media-stream://%i:%i%s",
+        target_frame->GetProcess()->GetID(), target_frame->GetRoutingID(),
+        enable_auto_throttling ? "?throttling=auto" : "");
+  }
 
   // Append chrome specific tab constraints.
   for (MediaStreamConstraint* msc : constraints_to_modify) {
     if (!msc)
       continue;
     base::DictionaryValue* constraint = &msc->mandatory.additional_properties;
-    constraint->SetString(kMediaStreamSource, kMediaStreamSourceTab);
+    constraint->SetString(kMediaStreamSource, is_stream_id_preferred
+                                                  ? kMediaStreamSourceDesktop
+                                                  : kMediaStreamSourceTab);
     constraint->SetString(kMediaStreamSourceId, device_id);
   }
 }
@@ -222,8 +256,11 @@ ExtensionFunction::ResponseAction TabCaptureCaptureFunction::Run() {
     // http://crbug.com/535336
     return RespondNow(Error(kCapturingSameTab));
   }
+  bool is_stream_id_preferred = OptionsPreferSteamId(params->options);
   FilterDeprecatedGoogConstraints(&params->options);
-  AddMediaStreamSourceConstraints(target_contents, &params->options);
+  AddMediaStreamSourceConstraints(
+      target_contents, &params->options, extension()->url(),
+      extension()->name(), GetSenderWebContents(), is_stream_id_preferred);
 
   // At this point, everything is set up in the browser process.  It's now up to
   // the custom JS bindings in the extension's render process to request a
@@ -235,7 +272,8 @@ ExtensionFunction::ResponseAction TabCaptureCaptureFunction::Run() {
   // chrome/renderer/resources/extensions/tab_capture_custom_bindings.js
   std::unique_ptr<base::DictionaryValue> result(new base::DictionaryValue());
   result->MergeDictionary(params->options.ToValue().get());
-  return RespondNow(OneArgument(std::move(result)));
+  std::unique_ptr<base::Value> option(new base::Value(is_stream_id_preferred));
+  return RespondNow(TwoArguments(std::move(result), std::move(option)));
 }
 
 ExtensionFunction::ResponseAction TabCaptureGetCapturedTabsFunction::Run() {
@@ -243,7 +281,8 @@ ExtensionFunction::ResponseAction TabCaptureGetCapturedTabsFunction::Run() {
   std::unique_ptr<base::ListValue> list(new base::ListValue());
   if (registry)
     registry->GetCapturedTabs(extension()->id(), list.get());
-  return RespondNow(OneArgument(std::move(list)));
+  std::unique_ptr<base::Value> option(new base::Value(true));
+  return RespondNow(TwoArguments(std::move(list), std::move(option)));
 }
 
 ExtensionFunction::ResponseAction TabCaptureCaptureOffscreenTabFunction::Run() {
@@ -288,15 +327,18 @@ ExtensionFunction::ResponseAction TabCaptureCaptureOffscreenTabFunction::Run() {
     // http://crbug.com/535336
     return RespondNow(Error(kCapturingSameOffscreenTab));
   }
+  bool is_stream_id_preferred = false;
   FilterDeprecatedGoogConstraints(&params->options);
-  AddMediaStreamSourceConstraints(offscreen_tab->web_contents(),
-                                  &params->options);
-
+  AddMediaStreamSourceConstraints(
+      offscreen_tab->web_contents(), &params->options, extension()->url(),
+      extension()->name(), extension_web_contents, is_stream_id_preferred);
+  GURL origin = extension()->url();
   // At this point, everything is set up in the browser process.  It's now up to
   // the custom JS bindings in the extension's render process to complete the
   // request.  See the comment at end of TabCaptureCaptureFunction::RunSync()
   // for more details.
-  return RespondNow(OneArgument(params->options.ToValue()));
+  std::unique_ptr<base::Value> option(new base::Value(is_stream_id_preferred));
+  return RespondNow(TwoArguments(params->options.ToValue(), std::move(option)));
 }
 
 // static
