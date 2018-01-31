@@ -39,6 +39,52 @@
       "revId": "686e0afb60196ef11b40e614baf31c50c3512d68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29f1a33c_791899ee",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-31T02:34:44Z",
+      "side": 1,
+      "message": "Can this check be folded into ContainsMagicNumber()?",
+      "range": {
+        "startLine": 748,
+        "startChar": 15,
+        "endLine": 748,
+        "endChar": 32
+      },
+      "revId": "686e0afb60196ef11b40e614baf31c50c3512d68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "728cf612_f68b74e7",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-31T02:34:44Z",
+      "side": 1,
+      "message": "Maybe mention |path| is used only for display purposes? My initial impression was \"why do we need to know what |path| is, if we already read out its |contents|?\"",
+      "range": {
+        "startLine": 150,
+        "startChar": 47,
+        "endLine": 150,
+        "endChar": 51
+      },
+      "revId": "686e0afb60196ef11b40e614baf31c50c3512d68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
