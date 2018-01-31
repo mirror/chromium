@@ -239,10 +239,10 @@ CommandHandler.onCommand = function(command) {
   }
 
   // Require a current range.
-  if (!ChromeVoxState.instance.currentRange_)
+  if (!ChromeVoxState.instance.currentRange)
     return true;
 
-  var current = ChromeVoxState.instance.currentRange_;
+  var current = ChromeVoxState.instance.currentRange;
 
   // Allow edit commands first.
   if (!CommandHandler.onEditCommand_(command))
@@ -497,11 +497,11 @@ CommandHandler.onCommand = function(command) {
       ChromeVoxState.isReadingContinuously = true;
       var continueReading = function() {
         if (!ChromeVoxState.isReadingContinuously ||
-            !ChromeVoxState.instance.currentRange_)
+            !ChromeVoxState.instance.currentRange)
           return;
 
-        var prevRange = ChromeVoxState.instance.currentRange_;
-        var newRange = ChromeVoxState.instance.currentRange_.move(
+        var prevRange = ChromeVoxState.instance.currentRange;
+        var newRange = ChromeVoxState.instance.currentRange.move(
             cursors.Unit.NODE, Dir.FORWARD);
 
         // Stop if we've wrapped back to the document.
@@ -516,7 +516,7 @@ CommandHandler.onCommand = function(command) {
 
         new Output()
             .withRichSpeechAndBraille(
-                ChromeVoxState.instance.currentRange_, prevRange,
+                ChromeVoxState.instance.currentRange, prevRange,
                 Output.EventType.NAVIGATE)
             .onSpeechEnd(continueReading)
             .go();
@@ -531,8 +531,8 @@ CommandHandler.onCommand = function(command) {
 
       return false;
     case 'contextMenu':
-      if (ChromeVoxState.instance.currentRange_) {
-        var actionNode = ChromeVoxState.instance.currentRange_.start.node;
+      if (ChromeVoxState.instance.currentRange) {
+        var actionNode = ChromeVoxState.instance.currentRange.start.node;
         if (actionNode.role == RoleType.INLINE_TEXT_BOX)
           actionNode = actionNode.parent;
         actionNode.showContextMenu();
@@ -561,7 +561,7 @@ CommandHandler.onCommand = function(command) {
       (new PanelCommand(PanelCommandType.SEARCH)).send();
       return false;
     case 'readCurrentTitle':
-      var target = ChromeVoxState.instance.currentRange_.start.node;
+      var target = ChromeVoxState.instance.currentRange.start.node;
       var output = new Output();
       target = AutomationUtil.getTopLevelRoot(target) || target.parent;
 
@@ -579,14 +579,14 @@ CommandHandler.onCommand = function(command) {
       return false;
     case 'readCurrentURL':
       var output = new Output();
-      var target = ChromeVoxState.instance.currentRange_.start.node.root;
+      var target = ChromeVoxState.instance.currentRange.start.node.root;
       output.withString(target.docUrl || '').go();
       return false;
     case 'toggleSelection':
       if (!ChromeVoxState.instance.pageSel_) {
         ChromeVoxState.instance.pageSel_ = ChromeVoxState.instance.currentRange;
       } else {
-        var root = ChromeVoxState.instance.currentRange_.start.node.root;
+        var root = ChromeVoxState.instance.currentRange.start.node.root;
         if (root && root.anchorObject && root.focusObject) {
           var sel = new cursors.Range(
               new cursors.Cursor(root.anchorObject, root.anchorOffset),
@@ -884,7 +884,7 @@ CommandHandler.onImageFrameUpdated_ = function(event) {
 /**
  * Handle the command to view the first graphic within the current range
  * as braille.
- * @param {!AutomationNode} current The current range.
+ * @param {!cursors.Range} current The current range.
  * @private
  */
 CommandHandler.viewGraphicAsBraille_ = function(current) {
@@ -926,6 +926,10 @@ CommandHandler.onEditCommand_ = function(command) {
       !current.start.node || !current.start.node.state[StateType.EDITABLE])
     return true;
 
+  var textEditHandler = DesktopAutomationHandler.instance.textEditHandler;
+  if (!textEditHandler)
+    return true;
+
   var isMultiline = AutomationPredicate.multiline(current.start.node);
   switch (command) {
     case 'previousCharacter':
@@ -943,23 +947,35 @@ CommandHandler.onEditCommand_ = function(command) {
           35, 'End', Mod.SHIFT | Mod.CONTROL);
       break;
     case 'previousObject':
-      if (!isMultiline)
+      if (!isMultiline || textEditHandler.isSelectionOnFirstLine())
         return true;
       BackgroundKeyboardHandler.sendKeyPress(36, 'Home');
       break;
     case 'nextObject':
       if (!isMultiline)
         return true;
+
+      if (textEditHandler.isSelectionOnLastLine()) {
+        textEditHandler.moveToAfterEditText();
+        return false;
+      }
+
       BackgroundKeyboardHandler.sendKeyPress(35, 'End');
       break;
     case 'previousLine':
-      if (!isMultiline)
+      if (!isMultiline || textEditHandler.isSelectionOnFirstLine())
         return true;
       BackgroundKeyboardHandler.sendKeyPress(33, 'PageUp');
       break;
     case 'nextLine':
       if (!isMultiline)
         return true;
+
+      if (textEditHandler.isSelectionOnLastLine()) {
+        textEditHandler.moveToAfterEditText();
+        return false;
+      }
+
       BackgroundKeyboardHandler.sendKeyPress(34, 'PageDown');
       break;
     case 'jumpToTop':
