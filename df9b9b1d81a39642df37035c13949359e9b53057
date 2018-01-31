@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74d900a7_452faa0e",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 1429,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2018-01-31T14:37:49Z",
+      "side": 1,
+      "message": "Shouldn\u0027t build_config technically also be an input and dep?",
+      "range": {
+        "startLine": 1429,
+        "startChar": 50,
+        "endLine": 1429,
+        "endChar": 62
+      },
+      "revId": "df9b9b1d81a39642df37035c13949359e9b53057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
