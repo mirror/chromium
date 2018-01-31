@@ -345,7 +345,7 @@ AccessibilityRole AXNodeObject::NativeAccessibilityRoleIgnoringAria() const {
   if (IsHTMLDetailsElement(*GetNode()))
     return kDetailsRole;
 
-  if (IsHTMLSummaryElement(*GetNode())) {
+  if (GetNode()->HasTagName(summaryTag)) {
     ContainerNode* parent = FlatTreeTraversal::Parent(*GetNode());
     if (parent && IsHTMLSlotElement(parent))
       parent = FlatTreeTraversal::Parent(*parent);
@@ -437,7 +437,7 @@ AccessibilityRole AXNodeObject::NativeAccessibilityRoleIgnoringAria() const {
   if (IsHTMLLegendElement(*GetNode()))
     return kLegendRole;
 
-  if (IsHTMLRubyElement(*GetNode()))
+  if (GetNode()->HasTagName(rubyTag))
     return kRubyRole;
 
   if (IsHTMLDListElement(*GetNode()))
@@ -1053,7 +1053,7 @@ AccessibilityExpanded AXNodeObject::IsExpanded() const {
   if (!SupportsARIAExpanded())
     return kExpandedUndefined;
 
-  if (GetNode() && IsHTMLSummaryElement(*GetNode())) {
+  if (GetNode() && GetNode()->HasTagName(summaryTag)) {
     if (GetNode()->parentNode() &&
         IsHTMLDetailsElement(GetNode()->parentNode()))
       return ToElement(GetNode()->parentNode())->hasAttribute(openAttr)
@@ -3126,7 +3126,7 @@ String AXNodeObject::Description(AXNameFrom name_from,
 
   // summary, 5.6.2 from:
   // http://rawgit.com/w3c/aria/master/html-aam/html-aam.html
-  if (name_from != kAXNameFromContents && IsHTMLSummaryElement(GetNode())) {
+  if (name_from != kAXNameFromContents && GetNode()->HasTagName(summaryTag)) {
     description_from = kAXDescriptionFromContents;
     if (description_sources) {
       description_sources->push_back(DescriptionSource(found_description));

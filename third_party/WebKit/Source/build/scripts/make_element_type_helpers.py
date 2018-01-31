@@ -87,6 +87,8 @@ class MakeElementTypeHelpersWriter(json5_generator.Writer):
         return self._template_context
 
     def _interface(self, tag):
+        if self.namespace == 'HTML' and tag['JSInterfaceName']:
+            return tag['JSInterfaceName']
         if tag['interfaceName']:
             return tag['interfaceName']
         name = name_utilities.upper_first(tag['name'])
