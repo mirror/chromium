@@ -27,6 +27,8 @@ component("cpp") {
     "proxy_resolving_client_socket.h",
     "proxy_resolving_client_socket_factory.cc",
     "proxy_resolving_client_socket_factory.h",
+    "resource_scheduler.cc",
+    "resource_scheduler.h",
     "url_request_context_builder_mojo.h",
     "url_request_context_owner.cc",
     "url_request_context_owner.h",
@@ -111,6 +113,7 @@ source_set("tests") {
     "network_struct_traits_unittest.cc",
     "proxy_config_traits_unittest.cc",
     "proxy_resolving_client_socket_unittest.cc",
+    "resource_scheduler_unittest.cc",
   ]
   deps = [
     ":cpp",
