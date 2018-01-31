@@ -418,6 +418,24 @@
     },
     {
       "key": {
+        "uuid": "93c2ddaf_0b6fca36",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-31T22:57:24Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s a nice solution. Done.",
+      "parentUuid": "b69f70a5_8249b3eb",
+      "revId": "5552f8011b3a547f02b2de5f4dacafbfbf23893e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "879cdd51_867acbcc",
         "filename": "ui/app_list/views/app_list_folder_view.cc",
         "patchSetId": 2
@@ -468,6 +486,24 @@
       "revId": "5552f8011b3a547f02b2de5f4dacafbfbf23893e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6eb2d16_1cf21ee5",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-31T22:57:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dd1d306f_36d8c9e8",
+      "revId": "5552f8011b3a547f02b2de5f4dacafbfbf23893e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -940,6 +976,30 @@
       "side": 1,
       "message": "Can you elaborate why we need to remove the line in AppsGridView::ResetForShowApps? Don\u0027t we have nullptr protection?",
       "parentUuid": "ad073255_5c9e3c75",
+      "range": {
+        "startLine": 575,
+        "startChar": 2,
+        "endLine": 575,
+        "endChar": 29
+      },
+      "revId": "5552f8011b3a547f02b2de5f4dacafbfbf23893e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f4356c9_d4e484f4",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-31T22:57:24Z",
+      "side": 1,
+      "message": "If we don\u0027t not remove this line, when exiting folder, AppsGridView::ResetForShowApps is called to clear AppsGridView::activated_folder_item_view_ before folder animation runs. But in the middle and end of FolderItemTitleAnimation, we need to udpate the visibility of AppsGridView::activated_folder_item_view_.",
+      "parentUuid": "509177ef_08a5d28a",
       "range": {
         "startLine": 575,
         "startChar": 2,

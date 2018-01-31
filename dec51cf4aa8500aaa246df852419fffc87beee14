@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dd45eea8_09351de0",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-31T22:57:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a360d52_4b90fcc6",
+      "revId": "dec51cf4aa8500aaa246df852419fffc87beee14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fe12b29_0700e837",
         "filename": "ui/app_list/views/app_list_folder_view.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-31T18:51:44Z",
       "side": 1,
       "message": "nit: move this to private since external code should not access it.",
+      "revId": "dec51cf4aa8500aaa246df852419fffc87beee14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9ecaf04_dac5aa87",
+        "filename": "ui/app_list/views/app_list_folder_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-31T22:57:24Z",
+      "side": 1,
+      "message": "As discussed offline, we decided not to move this as it is extended by classes in anonymous namespace in .cc file.",
+      "parentUuid": "3fe12b29_0700e837",
       "revId": "dec51cf4aa8500aaa246df852419fffc87beee14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
