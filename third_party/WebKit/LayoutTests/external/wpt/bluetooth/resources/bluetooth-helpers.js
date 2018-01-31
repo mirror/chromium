@@ -90,6 +90,8 @@ var request_disconnection_characteristic_uuid =
   "01d7d88a-7451-419f-aeb8-d65e7b9277af";
 // Descriptors:
 var blocklist_test_descriptor_uuid = "bad2ddcf-60db-45cd-bef9-fd72b153cf7c";
+var blocklist_exclude_reads_descriptor_uuid =
+    "bad3ec61-3cc3-4954-9702-7977df514114";
 
 // Sometimes we need to test that using either the name, alias, or UUID
 // produces the same result. The following objects help us do that.
@@ -671,6 +673,117 @@ function getConnectedHealthThermometerDevice(options) {
     .then(_ => fakes = _)
     .then(() => device.gatt.connect())
     .then(() => Object.assign({device}, fakes));
+}
+
+// Returns an object containing a fake_peripheral with a fake service for
+// testing blocklisted characteristics.
+function getBlocklistTestService(
+    options = {filters: [{services: [blocklist_test_service_uuid]}]}) {
+  let device, service, fake_peripheral, fake_service;
+  return setUpPreconnectedDevice({
+    address: '09:09:09:09:09:09',
+    name: 'Blocklist Device',
+    knownServiceUUIDs: [blocklist_test_service_uuid],
+  })
+      .then(_ => fake_peripheral = _)
+      .then(() => fake_peripheral.setNextGATTConnectionResponse({
+        code: HCI_SUCCESS,
+      }))
+      .then(() => fake_peripheral.setNextGATTDiscoveryResponse({
+        code: HCI_SUCCESS,
+      }))
+      .then(() => fake_peripheral.addFakeService({
+        uuid: blocklist_test_service_uuid,
+      }))
+      .then(_ => fake_service = _)
+      .then(() => requestDeviceWithTrustedClick(options))
+      .then(_ => device = _)
+      .then(() => device.gatt.connect())
+      .then(gatt => gatt.getPrimaryService(blocklist_test_service_uuid))
+      .then(_ => service = _)
+      .then(fake_blocklist_service => ({
+        device: device,
+        service: service,
+        fake_peripheral: fake_peripheral,
+        fake_service: fake_service,
+      }));
+}
+
+// Returns an object containing a blocklisted BluetoothRemoteGATTCharacteristic
+// that excludes reads and its corresponding FakeRemoteGATTCharacteristic.
+function getBlocklistExcludeReadsCharacteristic() {
+  let result, fake_characteristic;
+  return getBlocklistTestService()
+      .then(_ => result = _)
+      .then(() => result.fake_service.addFakeCharacteristic({
+        uuid: blocklist_exclude_reads_characteristic_uuid,
+        properties: ['write'],
+      }))
+      .then(_ => fake_characteristic = _)
+      .then(() => fake_characteristic.setNextWriteResponse(HCI_SUCCESS))
+      .then(() => result.service.getCharacteristic(
+          blocklist_exclude_reads_characteristic_uuid))
+      .then(characteristic =>
+          Object.assign(result, {characteristic, fake_characteristic}));
+}
+
+// Returns an object containing a blocklisted BluetoothRemoteGATTCharacteristic
+// that excludes writes and its corresponding FakeRemoteGATTCharacteristic.
+function getBlocklistExcludeWritesCharacteristic() {
+  let result, fake_characteristic;
+  return getBlocklistTestService()
+      .then(_ => result = _)
+      .then(() => result.fake_service.addFakeCharacteristic({
+        uuid: 'gap.peripheral_privacy_flag',
+        properties: ['read'],
+      }))
+      .then(_ => fake_characteristic = _)
+      .then(() => fake_characteristic.setNextReadResponse(HCI_SUCCESS, 'true'))
+      .then(() => result.service.getCharacteristic(
+          'gap.peripheral_privacy_flag'))
+      .then(characteristic =>
+          Object.assign(result, {characteristic, fake_characteristic}));
+}
+
+// Returns an object containing a blocklisted BluetoothRemoteGATTDescriptor on
+// the Measurement Interval characteristic of the Health Thermometer Device.
+function setUpBlocklistDescriptor() {
+  let result;
+  return getMeasurementIntervalCharacteristic()
+      .then(_ => result = _)
+      .then(() => result.fake_characteristic.addFakeDescriptor({
+          uuid: blocklist_test_descriptor_uuid,
+      }))
+      .then(fake_descriptor => Object.assign(result, {fake_descriptor}));
+}
+
+// Returns an object containing a blocklisted BluetoothRemoteGATTDescriptor that
+// excludes reads and its corresponding FakeRemoteGATTDescriptor.
+function getBlocklistExcludeReadsDescriptor() {
+  let result, fake_descriptor;
+  return getMeasurementIntervalCharacteristic()
+      .then(_ => result = _)
+      .then(() => result.fake_characteristic.addFakeDescriptor({
+        uuid: blocklist_exclude_reads_descriptor_uuid,
+      }))
+      .then(_ => fake_descriptor = _)
+      .then(() => result.characteristic.getDescriptor(
+          blocklist_exclude_reads_descriptor_uuid))
+      .then(descriptor => Object.assign(result, {descriptor, fake_descriptor}));
+}
+
+// Returns an object containing a blocklisted BluetoothRemoteGATTDescriptor taht
+// excludes writes and its corresponding FakeRemoteGATTDescriptor.
+function getBlocklistExcludeWritesDescriptor() {
+  let result;
+  return getMeasurementIntervalCharacteristic()
+      .then(_ => result = _)
+      .then(() => result.characteristic.getDescriptor(
+          'gatt.client_characteristic_configuration'))
+      .then(descriptor => Object.assign(result, {
+        descriptor: descriptor,
+        fake_descriptor: result.fake_cccd,
+      }));
 }
 
 // Returns the same device and fake peripheral as getHealthThermometerDevice()
