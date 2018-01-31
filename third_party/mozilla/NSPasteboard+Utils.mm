@@ -181,9 +181,13 @@ NSString* const kWebURLsWithTitlesPboardType  = @"WebURLsWithTitlesPboardType"; 
   NSURL* urlFromNSURL = nil;  // Used below in getting an URL from the NSURLPboardType.
   if ([types containsObject:kWebURLsWithTitlesPboardType]) {
     NSArray* urlAndTitleContainer = [self propertyListForType:kWebURLsWithTitlesPboardType];
-    *outUrls = [urlAndTitleContainer objectAtIndex:0];
-    *outTitles = [urlAndTitleContainer objectAtIndex:1];
-  } else if ([types containsObject:NSFilenamesPboardType]) {
+    if ([urlAndTitleContainer count] >= 2) {
+      *outUrls = [urlAndTitleContainer objectAtIndex:0];
+      *outTitles = [urlAndTitleContainer objectAtIndex:1];
+      return;
+    }
+  }
+  if ([types containsObject:NSFilenamesPboardType]) {
     NSArray *files = [self propertyListForType:NSFilenamesPboardType];
     *outUrls = [NSMutableArray arrayWithCapacity:[files count]];
     *outTitles = [NSMutableArray arrayWithCapacity:[files count]];
@@ -222,7 +226,10 @@ NSString* const kWebURLsWithTitlesPboardType  = @"WebURLsWithTitlesPboardType"; 
       [(NSMutableArray*) *outUrls addObject:urlString];
       [(NSMutableArray*) *outTitles addObject:title];
     }
-  } else if ([types containsObject:NSURLPboardType] && (urlFromNSURL = [NSURL URLFromPasteboard:self])) {
+    if ([*outUrls count])
+      return;
+  }
+  if ([types containsObject:NSURLPboardType] && (urlFromNSURL = [NSURL URLFromPasteboard:self])) {
     *outUrls = [NSArray arrayWithObject:[urlFromNSURL absoluteString]];
     NSString* title = nil;
     if ([types containsObject:kCorePasteboardFlavorType_urld])
@@ -232,7 +239,9 @@ NSString* const kWebURLsWithTitlesPboardType  = @"WebURLsWithTitlesPboardType"; 
     if (!title && [types containsObject:NSStringPboardType])
       title = [self stringForType:NSStringPboardType];
     *outTitles = [NSArray arrayWithObject:(title ? title : @"")];
-  } else if (convertTextToURL && [types containsObject:NSStringPboardType]) {
+    return;
+  }
+  if (convertTextToURL && [types containsObject:NSStringPboardType]) {
     NSString* potentialURLString = [self cleanedStringWithPasteboardString:[self stringForType:NSStringPboardType]];
     if ([potentialURLString isValidURI]) {
       *outUrls = [NSArray arrayWithObject:potentialURLString];
@@ -242,16 +251,12 @@ NSString* const kWebURLsWithTitlesPboardType  = @"WebURLsWithTitlesPboardType"; 
       if (!title && [types containsObject:kCorePasteboardFlavorType_urln])
         title = [self stringForType:kCorePasteboardFlavorType_urln];
       *outTitles = [NSArray arrayWithObject:(title ? title : @"")];
-    } else {
-      // The string doesn't look like a URL - return empty arrays
-      *outUrls = [NSArray array];
-      *outTitles = [NSArray array];
+      return;
     }
-  } else {
-    // We don't recognise any of these formats - return empty arrays
-    *outUrls = [NSArray array];
-    *outTitles = [NSArray array];
   }
+  // We don't recognise any of these formats - return empty arrays
+  *outUrls = [NSArray array];
+  *outTitles = [NSArray array];
 }
 
 //
