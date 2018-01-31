@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "d1b1486e_c5f5fc2a",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1768,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-31T05:44:57Z",
+      "side": 1,
+      "message": "this shows up whenever metadata is available from the pipeline.  i think it\u0027s only called once, which means this code probably doesn\u0027t need to be there.\n\nwhatever it does, EnableSubmission should do (if it doesn\u0027t already).",
+      "parentUuid": "9ae2eb3f_c30abffa",
+      "revId": "bfdc509e6149ac5eaf89d4b1c50dc34c48bc6c62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b2435ef_2caca94b",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
         "patchSetId": 8
