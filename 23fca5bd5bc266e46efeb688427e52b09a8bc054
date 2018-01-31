@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "17995260_125c35d1",
+        "filename": "ios/chrome/browser/ui/settings/password_exporter.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1251006
+      },
+      "writtenOn": "2018-01-31T11:56:01Z",
+      "side": 1,
+      "message": "Thank you for catching this! Done.",
+      "parentUuid": "2d630061_4eeec72c",
+      "revId": "23fca5bd5bc266e46efeb688427e52b09a8bc054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c703a93_b6e50b7a",
         "filename": "ios/chrome/browser/ui/settings/password_exporter.h",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "23fca5bd5bc266e46efeb688427e52b09a8bc054",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "880a961f_0f33bfc0",
+        "filename": "ios/chrome/browser/ui/settings/password_exporter.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1251006
+      },
+      "writtenOn": "2018-01-31T11:56:01Z",
+      "side": 1,
+      "message": "I see. Thank you for the explanation. \n\nDone.",
+      "parentUuid": "8c703a93_b6e50b7a",
+      "revId": "23fca5bd5bc266e46efeb688427e52b09a8bc054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "11a01dd2_ea509c2a",
+        "filename": "ios/chrome/browser/ui/settings/password_exporter.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1251006
+      },
+      "writtenOn": "2018-01-31T11:56:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa93952a_f9596c9f",
+      "revId": "23fca5bd5bc266e46efeb688427e52b09a8bc054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b30138e_a83d2a36",
         "filename": "ios/chrome/browser/ui/settings/password_exporter.mm",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "23fca5bd5bc266e46efeb688427e52b09a8bc054",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e1d2712_218e7c91",
+        "filename": "ios/chrome/browser/ui/settings/password_exporter.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1251006
+      },
+      "writtenOn": "2018-01-31T11:56:01Z",
+      "side": 1,
+      "message": "Changed it and moved it to save_passwords_collection_view_controller.mm.",
+      "parentUuid": "1b30138e_a83d2a36",
+      "revId": "23fca5bd5bc266e46efeb688427e52b09a8bc054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "f23c551b_db4d00ea",
+        "filename": "ios/chrome/browser/ui/settings/password_exporter.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1251006
+      },
+      "writtenOn": "2018-01-31T11:56:01Z",
+      "side": 1,
+      "message": "Thanks for the advice! I am now setting self.serializedPasswords to nil as you suggested below.",
+      "parentUuid": "827f5080_1a41399e",
+      "revId": "23fca5bd5bc266e46efeb688427e52b09a8bc054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61b2d272_b822a078",
         "filename": "ios/chrome/browser/ui/settings/password_exporter.mm",
         "patchSetId": 9
@@ -128,6 +218,30 @@
     },
     {
       "key": {
+        "uuid": "60d17e46_1791b8ab",
+        "filename": "ios/chrome/browser/ui/settings/password_exporter.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1251006
+      },
+      "writtenOn": "2018-01-31T11:56:01Z",
+      "side": 1,
+      "message": "Hm... It seems I don\u0027t need to write this here. I only needed it before when I combine it with base::BindOnce.",
+      "parentUuid": "61b2d272_b822a078",
+      "range": {
+        "startLine": 82,
+        "startChar": 6,
+        "endLine": 82,
+        "endChar": 77
+      },
+      "revId": "23fca5bd5bc266e46efeb688427e52b09a8bc054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cea228e9_fb31b5ea",
         "filename": "ios/chrome/browser/ui/settings/password_exporter.mm",
         "patchSetId": 9
@@ -142,6 +256,24 @@
       "revId": "23fca5bd5bc266e46efeb688427e52b09a8bc054",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "040e7abc_cdbba20b",
+        "filename": "ios/chrome/browser/ui/settings/password_exporter.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1251006
+      },
+      "writtenOn": "2018-01-31T11:56:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cea228e9_fb31b5ea",
+      "revId": "23fca5bd5bc266e46efeb688427e52b09a8bc054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +323,54 @@
     },
     {
       "key": {
+        "uuid": "98a00b1f_8641f97b",
+        "filename": "ios/chrome/browser/ui/settings/password_exporter.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1251006
+      },
+      "writtenOn": "2018-01-31T11:56:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e3f1a43_bd8c5038",
+      "range": {
+        "startLine": 207,
+        "startChar": 32,
+        "endLine": 207,
+        "endChar": 59
+      },
+      "revId": "23fca5bd5bc266e46efeb688427e52b09a8bc054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "23ec2029_e08d837e",
+        "filename": "ios/chrome/browser/ui/settings/password_exporter.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1251006
+      },
+      "writtenOn": "2018-01-31T11:56:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efb2f0cd_6c5f0711",
+      "range": {
+        "startLine": 207,
+        "startChar": 7,
+        "endLine": 207,
+        "endChar": 27
+      },
+      "revId": "23fca5bd5bc266e46efeb688427e52b09a8bc054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b4c0b55_dda1fcd5",
         "filename": "ios/chrome/browser/ui/settings/password_exporter.mm",
         "patchSetId": 9
@@ -202,6 +382,24 @@
       "writtenOn": "2018-01-30T16:24:11Z",
       "side": 1,
       "message": "I think we should reset _serializingFinished, _serializedPasswords and _reauthenticationSuccessful here (or just before calling -writeData:toURL:handler:).\n\n  NSString* serializedPasswords \u003d self.serializedPasswords;\n  self.serializingFinished \u003d NO;\n  self.serializedPasswords \u003d nil;\n  self.reauthenticationSuccessfull \u003d NO;\n\n  [_passwordFileWriter writeData:serializedPasswords\n                           toUrl:tempPasswordsFileURL\n                         handler:onFileWritten];\n\nThis also mean that we do not have to worry about \"data\" parameter of passwordFileWriter being accessed from multiple threads.",
+      "revId": "23fca5bd5bc266e46efeb688427e52b09a8bc054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "462ad698_cece66cc",
+        "filename": "ios/chrome/browser/ui/settings/password_exporter.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1251006
+      },
+      "writtenOn": "2018-01-31T11:56:01Z",
+      "side": 1,
+      "message": "I am now setting self.serializedPasswords to nil.\n\nI added a method responsible with resetting the entire exporter state. Considering this new method, I think it might be clearer if the resetting happened in only one place. WDYT?\n\nCurrently that method is called after cleanup (in the case of a successful export).",
+      "parentUuid": "4b4c0b55_dda1fcd5",
       "revId": "23fca5bd5bc266e46efeb688427e52b09a8bc054",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -222,6 +420,24 @@
       "revId": "23fca5bd5bc266e46efeb688427e52b09a8bc054",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02e21768_cab36d76",
+        "filename": "ios/chrome/browser/ui/settings/save_passwords_collection_view_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1251006
+      },
+      "writtenOn": "2018-01-31T11:56:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de30161c_da946b4b",
+      "revId": "23fca5bd5bc266e46efeb688427e52b09a8bc054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
