@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad5e7f89_0eb99082",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 60449,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T10:34:29Z",
+      "side": 1,
+      "message": "add enum\u003d\"Boolean\" or even define a custom enum BooleanAborted with \"Aborted\" and \"Not aborted\" descriptions?",
+      "range": {
+        "startLine": 60449,
+        "startChar": 33,
+        "endLine": 60449,
+        "endChar": 46
+      },
+      "revId": "3f2bc2a2c6145812e38be4a98b9cfd406a6e7d22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "083f1dff_8498b09e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 60451,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T10:34:29Z",
+      "side": 1,
+      "message": "Please also add ioanap@.",
+      "range": {
+        "startLine": 60450,
+        "startChar": 2,
+        "endLine": 60451,
+        "endChar": 34
+      },
+      "revId": "3f2bc2a2c6145812e38be4a98b9cfd406a6e7d22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0ed26c3_d8115d0f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 60464,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T10:34:29Z",
+      "side": 1,
+      "message": "I still think this should have an associated enum.",
+      "range": {
+        "startLine": 60464,
+        "startChar": 33,
+        "endLine": 60464,
+        "endChar": 58
+      },
+      "revId": "3f2bc2a2c6145812e38be4a98b9cfd406a6e7d22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee9474ee_beef9c84",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 61204,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T10:34:29Z",
+      "side": 1,
+      "message": "Please specify units.",
+      "range": {
+        "startLine": 61204,
+        "startChar": 33,
+        "endLine": 61204,
+        "endChar": 37
+      },
+      "revId": "3f2bc2a2c6145812e38be4a98b9cfd406a6e7d22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
