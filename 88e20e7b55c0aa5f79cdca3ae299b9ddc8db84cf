@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "579abb7a_8a289369",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastCrashUploader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2018-01-31T00:45:38Z",
+      "side": 1,
+      "message": "Let\u0027s rename this to checkForCrashDumps() (and likewise the Runnable variable to mCheckForCrashDumpsRunnable)",
+      "range": {
+        "startLine": 95,
+        "startChar": 17,
+        "endLine": 95,
+        "endChar": 41
+      },
+      "revId": "88e20e7b55c0aa5f79cdca3ae299b9ddc8db84cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
