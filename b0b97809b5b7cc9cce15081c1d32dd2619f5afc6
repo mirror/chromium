@@ -16,6 +16,24 @@
       "revId": "b0b97809b5b7cc9cce15081c1d32dd2619f5afc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a1dca8c_ae845be1",
+        "filename": "build/toolchain/concurrent_links.gni",
+        "patchSetId": 18
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1151126
+      },
+      "writtenOn": "2018-01-31T22:35:19Z",
+      "side": 1,
+      "message": "I see, let me do in follow-up patch.\nI\u0027ll investigate memory usage of link on some other configs for default value lower than current 8 mem_per_link_gb.",
+      "parentUuid": "40e5fc10_42e29367",
+      "revId": "b0b97809b5b7cc9cce15081c1d32dd2619f5afc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
