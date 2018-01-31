@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aecc829e_73182c05",
+        "filename": "third_party/WebKit/Source/core/script/ClassicPendingScript.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1175774
+      },
+      "writtenOn": "2018-01-31T11:47:47Z",
+      "side": 1,
+      "message": "They\u0027re not mixed because they\u0027re on CachedMetadataHandlers of different resources -- this MAP_DATA_TYPE was just a random value to bootstrap this hack.",
+      "parentUuid": "048adf7d_69194069",
+      "revId": "a3fa559ceac28512db0cb2a3242cae8b7f0db6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4cfd285d_9d04f253",
         "filename": "third_party/WebKit/Source/core/script/ClassicPendingScript.cpp",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "19460403_4c4eb2dd",
+        "filename": "third_party/WebKit/Source/core/script/ClassicPendingScript.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1175774
+      },
+      "writtenOn": "2018-01-31T11:47:47Z",
+      "side": 1,
+      "message": "Working on 16-bit strings would be tricky, since ComputeDigest takes a char*. StringHash processes characters one at a time, and it converts (masks) the 16-bit characters to 8-bit. Feels unnecessary for what I effectively want to interpret as an arbitrary byte stream.",
+      "parentUuid": "4cfd285d_9d04f253",
+      "revId": "a3fa559ceac28512db0cb2a3242cae8b7f0db6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e8519c4_ae8d2ef6",
         "filename": "third_party/WebKit/Source/core/script/ClassicPendingScript.cpp",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-30T19:10:12Z",
       "side": 1,
       "message": "IIUC caching the code for non-kInline scripts doesn\u0027t affect the correctness, but caching non-kInline scripts will have much less performance win (and thus wasting memory and time), so this condition is for performance optimization.\nIf correct, adding a comment is helpful.",
+      "revId": "a3fa559ceac28512db0cb2a3242cae8b7f0db6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d06f85b_7a8de588",
+        "filename": "third_party/WebKit/Source/core/script/ClassicPendingScript.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1175774
+      },
+      "writtenOn": "2018-01-31T11:47:47Z",
+      "side": 1,
+      "message": "Good point, thanks.",
+      "parentUuid": "2e8519c4_ae8d2ef6",
       "revId": "a3fa559ceac28512db0cb2a3242cae8b7f0db6f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
