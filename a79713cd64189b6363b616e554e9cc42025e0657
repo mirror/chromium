@@ -22,6 +22,57 @@
       "revId": "a79713cd64189b6363b616e554e9cc42025e0657",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cddb79f_d7e08b43",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8EmbedderGraphBuilder.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-31T02:28:10Z",
+      "side": 1,
+      "message": "You were saying that you can dump all retaining paths by doing DFS but it won\u0027t be the case. DFS will just find the retaining path that happens to be found first. All other retaining paths won\u0027t be found.\n\nI\u0027m fine with this for now though.",
+      "revId": "a79713cd64189b6363b616e554e9cc42025e0657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e2d83c1_d5d6211a",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8EmbedderGraphBuilder.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-31T02:28:10Z",
+      "side": 1,
+      "message": "Add STACK_ALLOCATED.",
+      "revId": "a79713cd64189b6363b616e554e9cc42025e0657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b13c49f_08094661",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8EmbedderGraphBuilder.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-31T02:28:10Z",
+      "side": 1,
+      "message": "You can drop WTF::.",
+      "revId": "a79713cd64189b6363b616e554e9cc42025e0657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
