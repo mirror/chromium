@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "961f4777_dc29fc60",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-31T17:53:30Z",
+      "side": 1,
+      "message": "mmoss",
+      "range": {
+        "startLine": 190,
+        "startChar": 13,
+        "endLine": 190,
+        "endChar": 22
+      },
+      "revId": "628b7b99572e4e5eb90270b869e4b1b0bea62603",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e67e12ed_0be87314",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-31T17:53:30Z",
+      "side": 1,
+      "message": "mmoss",
+      "range": {
+        "startLine": 275,
+        "startChar": 13,
+        "endLine": 275,
+        "endChar": 22
+      },
+      "revId": "628b7b99572e4e5eb90270b869e4b1b0bea62603",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "434b1e77_0d77f8bd",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-31T17:53:30Z",
+      "side": 1,
+      "message": "mmoss",
+      "range": {
+        "startLine": 299,
+        "startChar": 13,
+        "endLine": 299,
+        "endChar": 22
+      },
+      "revId": "628b7b99572e4e5eb90270b869e4b1b0bea62603",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
