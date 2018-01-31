@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "733660ec_6d3f00c6",
+        "filename": "services/service_manager/public/cpp/service_context.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-31T21:24:09Z",
+      "side": 1,
+      "message": "note removed entirely.",
+      "parentUuid": "41f32d97_80aaa3a9",
+      "revId": "ff7df0c01d11bf0d4b7f0ec2869f0017c08d2413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "503b32e5_bf61b398",
         "filename": "services/service_manager/public/cpp/service_context.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "ff7df0c01d11bf0d4b7f0ec2869f0017c08d2413",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6c20f6d_c5da7829",
+        "filename": "services/service_manager/public/cpp/service_context.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-31T21:24:09Z",
+      "side": 1,
+      "message": "Done, though i then noticed that it\u0027s a bit confusing to have \"SetQuitClosure\" and \"GetQuitClosure\" that aren\u0027t talking about the same quit closure :) .  so, i called it \"CreateQuitClosure\" instead.",
+      "parentUuid": "503b32e5_bf61b398",
+      "revId": "ff7df0c01d11bf0d4b7f0ec2869f0017c08d2413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
