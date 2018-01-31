@@ -1576,6 +1576,8 @@ source_set("chromeos") {
     "upgrade_detector_chromeos.h",
 
     # Extension API implementations.
+    "extensions/auth_private/auth_private_api.cc",
+    "extensions/auth_private/auth_private_api.h",
     "extensions/backdrop_wallpaper_handlers/backdrop_wallpaper_handlers.cc",
     "extensions/backdrop_wallpaper_handlers/backdrop_wallpaper_handlers.h",
     "extensions/echo_private_api.cc",
