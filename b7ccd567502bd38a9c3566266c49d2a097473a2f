@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "183f2243_9565a101",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/util/VrInfoBarUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-31T19:44:32Z",
+      "side": 1,
+      "message": "nit: periods.",
+      "range": {
+        "startLine": 29,
+        "startChar": 73,
+        "endLine": 30,
+        "endChar": 70
+      },
+      "revId": "b7ccd567502bd38a9c3566266c49d2a097473a2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
