@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "346f77b1_e8f2f64b",
+        "filename": "components/omnibox/browser/autocomplete_input.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-31T01:11:18Z",
+      "side": 1,
+      "message": "Nit: Maybe add a comment:\n\nStore the canonicalized url if the user might be trying to navigate to it and it looks as if it\u0027s actually navigable.\n\nThen below on the IsRegistry call itself you could add the comment:\n\nTreat \"URLs\" whose host is a TLD (\"http://co.uk/\") as unlikely to be navigable; this prevents the alternate nav machinery from attempting TCP connections to these, which can leak user data.  See https://crbug.com/669785.",
+      "revId": "b02f9fe21ce98f2683a9d2c4fb8cd9034767b028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9c27bb0_56474804",
+        "filename": "net/base/registry_controlled_domains/registry_controlled_domain.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-31T01:11:18Z",
+      "side": 1,
+      "message": "Nit: \"header\" file?",
+      "revId": "b02f9fe21ce98f2683a9d2c4fb8cd9034767b028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6a4da9d_618a8be2",
+        "filename": "net/base/registry_controlled_domains/registry_controlled_domain.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-31T01:11:18Z",
+      "side": 1,
+      "message": "Nit: No else after return, and no {} necessary (braces only required when at least one arm of the conditional is more than one physical line), but I\u0027d have just used ?:.  (3 places)",
+      "revId": "b02f9fe21ce98f2683a9d2c4fb8cd9034767b028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

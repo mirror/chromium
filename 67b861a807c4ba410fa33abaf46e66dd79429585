@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "60a94996_2a4b608b",
+        "filename": "net/base/registry_controlled_domains/registry_controlled_domain.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-31T01:11:18Z",
+      "side": 1,
+      "message": "That might work too.  But it sounded like you preferred not to muck with the meaning of the APIs :)",
+      "parentUuid": "5111f5cd_e9f55361",
+      "revId": "67b861a807c4ba410fa33abaf46e66dd79429585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9dbdd208_4d85ec37",
         "filename": "net/base/registry_controlled_domains/registry_controlled_domain.cc",
         "patchSetId": 3
