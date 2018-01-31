@@ -16,6 +16,24 @@
       "revId": "be2504c0ffa2bf84913ec8db0b5fd15d9e060e0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fbb4a03_8884960c",
+        "filename": "third_party/zlib/contrib/optimizations/arm/armv8_crc32.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2018-01-31T17:39:56Z",
+      "side": 1,
+      "message": "Ack.\n\nWill upload a new version today.",
+      "parentUuid": "37296c5a_237c0225",
+      "revId": "be2504c0ffa2bf84913ec8db0b5fd15d9e060e0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
