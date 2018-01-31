@@ -16,6 +16,24 @@
       "revId": "d6466fd4536b1a32cc81f230c607f03122674250",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab6a39a9_9f289dcf",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1159,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-01-31T23:59:23Z",
+      "side": 0,
+      "message": "No, it\u0027s still broken :\\  but it\u0027s more accurate",
+      "parentUuid": "41a74220_78ec6f9c",
+      "revId": "d6466fd4536b1a32cc81f230c607f03122674250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
