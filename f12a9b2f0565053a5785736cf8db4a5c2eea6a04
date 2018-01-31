@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "55be15ef_ebf4c164",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2466,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-31T22:26:00Z",
+      "side": 0,
+      "message": "We should still add a DCHECK to make it easy to see what the assumptions are for the function.",
+      "parentUuid": "aa5e9461_f9280953",
+      "range": {
+        "startLine": 2466,
+        "startChar": 2,
+        "endLine": 2466,
+        "endChar": 31
+      },
+      "revId": "f12a9b2f0565053a5785736cf8db4a5c2eea6a04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea0d4e86_234b7872",
         "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
         "patchSetId": 6
@@ -84,6 +108,30 @@
       "side": 0,
       "message": "I did this on purpose :). \n\nThe call to IsElementEditalbe(element) above it will call element-\u003eGetDocument().UpdateStyleAndLayoutTree()...so I deduced that this call here is actually unnecessary (even before this CL). Is this correct?",
       "parentUuid": "ea0d4e86_234b7872",
+      "range": {
+        "startLine": 2484,
+        "startChar": 2,
+        "endLine": 2484,
+        "endChar": 72
+      },
+      "revId": "f12a9b2f0565053a5785736cf8db4a5c2eea6a04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f04ff4a_7128156f",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2484,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-31T22:26:00Z",
+      "side": 0,
+      "message": "Though the names are similar, UpdateStyleAndLayout and UpdateStyleAndLayoutTree are actually different. The former means layout as a verb (i.e. perform layout) whereas the latter updates style and creates any required LayoutObjects (but doesn\u0027t actually perform layout). So I think you should add it back.",
+      "parentUuid": "3356f31a_2062bed9",
       "range": {
         "startLine": 2484,
         "startChar": 2,

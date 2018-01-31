@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af9b2561_0fa12059",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-31T22:26:00Z",
+      "side": 1,
+      "message": "Remove",
+      "range": {
+        "startLine": 31,
+        "startChar": 21,
+        "endLine": 31,
+        "endChar": 32
+      },
+      "revId": "538539f1198c6c8ba0f4d2fbf1f5e99691795083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a988de74_18102744",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1180,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-31T22:26:00Z",
+      "side": 1,
+      "message": "Sorry to make you change this after requesting this, but I only found out recently that Blink style is to pass out params by non-const-ref (it\u0027s one of the few places Blink style differs from Chromium/Google C++ style).",
+      "range": {
+        "startLine": 1180,
+        "startChar": 9,
+        "endLine": 1180,
+        "endChar": 23
+      },
+      "revId": "538539f1198c6c8ba0f4d2fbf1f5e99691795083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ea149a3_9fa347dc",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1206,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-31T22:26:00Z",
+      "side": 1,
+      "message": "Another thing I just realized here, the rect_to_scroll you return is in root frame coordinates. However, checking PaintLayerScrollableArea::ScrollIntoView, it seems the rect is expected in absolute coordinates. (Meaning document coordinates until we ship --root-layer-scrolling, frame coordinates after we ship it, see https://www.chromium.org/developers/design-documents/blink-coordinate-spaces). Assuming RootFrame in an OOPIF means \"local root frame\", use frame_view-\u003eDocumentToAbsolute(frame_view-\u003eRootFrameToDocument(maximal_rect)) to convert appropriately (or add a RootFrameToAbsolute method in FrameView.\n\nAlso, please make sure we have test cases that invoke these methods starting from a non-0 scroll offset.",
+      "range": {
+        "startLine": 1206,
+        "startChar": 2,
+        "endLine": 1206,
+        "endChar": 16
+      },
+      "revId": "538539f1198c6c8ba0f4d2fbf1f5e99691795083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

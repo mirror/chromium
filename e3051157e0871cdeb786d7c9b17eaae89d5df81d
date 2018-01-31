@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "1e1a9430_8c29e2a1",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2458,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-31T22:26:00Z",
+      "side": 1,
+      "message": "Please add a DCHECK so we document our assumptions.",
+      "parentUuid": "6a4a4c97_23c26c8f",
+      "range": {
+        "startLine": 2458,
+        "startChar": 7,
+        "endLine": 2458,
+        "endChar": 20
+      },
+      "revId": "e3051157e0871cdeb786d7c9b17eaae89d5df81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2b19a46_dc6e6b22",
         "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.h",
         "patchSetId": 6
@@ -238,6 +262,29 @@
     },
     {
       "key": {
+        "uuid": "6eaac327_013737b9",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1169,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-31T22:26:00Z",
+      "side": 1,
+      "message": "Please use references here (sorry, I just learned the other day this is Blink style and one of the few places we diverge from Chromium/Google C++ style)",
+      "range": {
+        "startLine": 1169,
+        "startChar": 4,
+        "endLine": 1169,
+        "endChar": 28
+      },
+      "revId": "e3051157e0871cdeb786d7c9b17eaae89d5df81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0acb550_2de2d365",
         "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
         "patchSetId": 6
@@ -332,6 +379,30 @@
     },
     {
       "key": {
+        "uuid": "60b43b90_2ecd120c",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1180,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-31T22:26:00Z",
+      "side": 1,
+      "message": "Ah, ok, I hadn\u0027t thought of the contenteditable with overflow: visible case.",
+      "parentUuid": "0d825790_f73e92e5",
+      "range": {
+        "startLine": 1180,
+        "startChar": 25,
+        "endLine": 1180,
+        "endChar": 34
+      },
+      "revId": "e3051157e0871cdeb786d7c9b17eaae89d5df81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c11c7a7_919c5c55",
         "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
         "patchSetId": 6
@@ -367,6 +438,30 @@
       "side": 1,
       "message": "\u003e This is hard to follow, it looks like you\u0027re just making sure maximal_rect doesn\u0027t spill outside the frame rect?\n\nYes exactly. Basically I want to make sure the rectangle is visible. The actual logic for main frame case uses VisualViewport but I don\u0027t think I can use that here -- for one thing we do not have the PageScaleFactor() correctly setup and can\u0027t or shouldn\u0027t decide on the zoom value from an OOPIF since it only happens in the root (I actually do not understand visual viewport for OOPIFs). So instead I am trying to makes sure the rect I am scrolling into view is moderately sized and definitely makes the caret visible (inside its own frame). Since we usually scroll into view in response to touch/tap then the caret would be guaranteed to be visible at the end.\n\n\u003e \n\u003e IntRect frame_rect \u003d IntRect(IntPoint(), frame_view-\u003eSize());\n\u003e maximal_rect.Intersect(frame_rect);\n\nWhat about this:\n\u003cinput style\u003d\"width: 40px; padding-left: 5000px;\"\u003e\nInside an \u003ciframe src\u003d\"oopif.com\" style\u003d\"width: 400px\"\u003e\u003c/iframe\u003e.\n\nI see (by logging inside the code here that) the element and caret bounds are way off and the intersection is empty. But the actual input fits inside the frame after scrolling.",
       "parentUuid": "6c11c7a7_919c5c55",
+      "range": {
+        "startLine": 1182,
+        "startChar": 2,
+        "endLine": 1192,
+        "endChar": 3
+      },
+      "revId": "e3051157e0871cdeb786d7c9b17eaae89d5df81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26f1c7c6_73c17a8b",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1192,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-31T22:26:00Z",
+      "side": 1,
+      "message": "Right, I was thinking the caret was already in view.\n\nBut this brings up a new question: if we\u0027re taking the union of the element bounds and the caret, in the case you have here, wouldn\u0027t you end up zooming in on the element rather than the caret? i.e. if you have \u003cinput style\u003d\"width: 40px; padding-right: 5000px\"\u003e, the caret will be all the way on the left but the element bounds will be very wide. Because you clamp as far right as you can (because of MaxXMaxYCorner - max_visible_size), won\u0027t we end up scrolling way to the right (in cases where we don\u0027t zoom)? It seems like we should try to center the caret. Is this preserving current behavior? It seems WebViewImpl::ScrollFocusedEditableElementIntoView doesn\u0027t clamp the bounding box today, could we just not clamp to frame size? Also, could we maybe center on the caret? Would that remove the need for the relative_rect_of_interest and the questions of transforms?\n\nBack to my original comment: I think it\u0027s helpful to readability in these cases to use geometric operations like union and intersect, rather than max/min manually. In this case, I would start with the frame_rect but move it to where you want to intersect. So maybe:\n\n// Frame rect centered around origin (you may need to add IntSize::ScaledBy)\nIntRect frame_rect \u003d IntRect(IntPoint(-frame_view-\u003eSize().ScaledBy(0.5f)), frame_view-\u003eSize());\n\n// Now frame rect is centered around caret center\nframe_rect.Move(caret_in_root_frame.Center())\n\n// Now intersect against the unioned rect to make sure we cut out anything outside\nmaximal_rect.Intersect(frame_rect);\n\nWDYT?",
+      "parentUuid": "e37cf48d_1a33379b",
       "range": {
         "startLine": 1182,
         "startChar": 2,
@@ -508,6 +603,30 @@
       "side": 1,
       "message": "\u003e Why are you using proportions here (i.e. dividing by the maximal_rect size)?\n\nThanks for asking this! Yes I am normalizing the caret bounds to the dimensions of the maximal rect (which is the rect we would have at the end) so that we can reconstruct the caret bounds (with good precision).\n\n\u003e Couldn\u0027t you just store the caret_rect with location relative to maximal_rect (unscaled) and size as-is?\n\nI was not quite sure how \"transforms\" would work in this case. Essentially lines of code like this:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/exported/WebRemoteFrameImpl.cpp?rcl\u003dd372280b432c74f278faeddfcd5ec59f65fe17cf\u0026l\u003d357\n\nseems to be taking into account some transforms before converting the coordinates. Would all these transforms be just translates? I was not sure if they could contain scale and rotations in which case the offset alone would not do the job.",
       "parentUuid": "7785e85c_06dacdf6",
+      "range": {
+        "startLine": 1204,
+        "startChar": 51,
+        "endLine": 1204,
+        "endChar": 52
+      },
+      "revId": "e3051157e0871cdeb786d7c9b17eaae89d5df81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da2b4633_2fa4dd17",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1204,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-31T22:26:00Z",
+      "side": 1,
+      "message": "Right, I hadn\u0027t thought of transforms. Hmm, couldn\u0027t we instead apply the same transform to the relative_rect_of_interest as we do to the caret_in_root_frame rect? Or perhaps could we just send the rect centered around the caret, re: my comments above?",
+      "parentUuid": "3b9c1cf1_e3ec2b7a",
       "range": {
         "startLine": 1204,
         "startChar": 51,
