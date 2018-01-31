@@ -148,14 +148,18 @@ void AcceleratedWidgetMac::UpdateCALayerTree(
     GotCALayerFrame(base::scoped_nsobject<CALayer>(remote_layer_.get(),
                                                    base::scoped_policy::RETAIN),
                     ca_layer_params.pixel_size, ca_layer_params.scale_factor);
-  } else {
+  } else if (ca_layer_params.io_surface_mach_port) {
     base::ScopedCFTypeRef<IOSurfaceRef> io_surface(
         IOSurfaceLookupFromMachPort(ca_layer_params.io_surface_mach_port));
-    if (!io_surface) {
-      LOG(ERROR) << "Unable to open IOSurface for frame.";
-    }
+    // TODO(ccameron): This is being used to determine the frequency of
+    // corruption due to IOSurface ports failing to open, and should eventually
+    // be removed.
+    // https://crbug.com/795649
+    CHECK_NE(nullptr, io_surface) << "Failed to open mach port for frame.";
     GotIOSurfaceFrame(io_surface, ca_layer_params.pixel_size,
                       ca_layer_params.scale_factor);
+  } else {
+    LOG(ERROR) << "Frame had neither valid IOSurface nor valid CAContext.";
   }
   if (view_)
     view_->AcceleratedWidgetSwapCompleted();
