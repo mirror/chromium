@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f272707_f2301e58",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-31T04:28:44Z",
+      "side": 1,
+      "message": "This is a bit subtle, but the comment on the method signature will hopefully help..",
+      "revId": "9b0fa21cf038ce24f80cc19c8a29186c74796f5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2cc37cd_d944688e",
+        "filename": "content/common/content_param_traits.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-31T04:28:44Z",
+      "side": 1,
+      "message": "Reg: which is better on this one, no strong opinion but I prefer the hand-written one (PS 10), that one looks easier to read / deal with and we\u0027re sure that the code should just go away soonish. (dcheng@ may have stronger/different opinion though)",
+      "revId": "9b0fa21cf038ce24f80cc19c8a29186c74796f5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd61ea1e_2612b846",
+        "filename": "third_party/WebKit/Source/core/messaging/BlinkTransferableMessage.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-31T04:28:44Z",
+      "side": 1,
+      "message": "Not sure if FromCommon / AsCommon naming makes a good sense... what do you feel if we instead have two top-level static methods like\n\nstatic BlinkTransferableMessage ToBlinkTransferableMessage(...);\nstatic TransferableMessage ToTransferableMessage(...);\n\n?",
+      "revId": "9b0fa21cf038ce24f80cc19c8a29186c74796f5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
