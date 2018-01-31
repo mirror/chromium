@@ -46,6 +46,30 @@
       "revId": "e9b4b7147a0915f38bd2350a6851a76625727e59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "378a5ac5_2c884388",
+        "filename": "base/memory/shared_memory_mapping.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-31T13:15:09Z",
+      "side": 1,
+      "message": "That\u0027s a good point. It does have the downside that the implementations always need to do an invalid check, but I guess we\u0027d have to do that anyway as Create() could always return an invalid mapping if there\u0027s an error.",
+      "parentUuid": "380f2755_17cac651",
+      "range": {
+        "startLine": 71,
+        "startChar": 31,
+        "endLine": 71,
+        "endChar": 32
+      },
+      "revId": "e9b4b7147a0915f38bd2350a6851a76625727e59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
