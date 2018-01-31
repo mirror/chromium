@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c8928953_be5074de",
+        "filename": "chrome/browser/extensions/extension_apitest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-31T14:31:00Z",
+      "side": 1,
+      "message": "I\u0027ve now moved this after StartFTPServer because it\u0027s after StartFTPServer in the header :)",
+      "parentUuid": "fd1b7ba8_8ad36df6",
+      "revId": "1134975f0247a36a1e8e6f058812241a5616e8e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3bb0ecd5_6ac632a3",
         "filename": "chrome/browser/extensions/extension_apitest.h",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "29d513bb_59cc8d5e",
+        "filename": "chrome/browser/extensions/extension_apitest.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-31T14:31:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bb0ecd5_6ac632a3",
+      "revId": "1134975f0247a36a1e8e6f058812241a5616e8e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e891a90_fee4eb43",
         "filename": "chrome/test/data/extensions/api_test/enterprise_device_attributes/basic.js",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "1134975f0247a36a1e8e6f058812241a5616e8e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "252c1acd_341c8d14",
+        "filename": "chrome/test/data/extensions/api_test/enterprise_device_attributes/basic.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-31T14:31:00Z",
+      "side": 1,
+      "message": "Done. Do you know if chrome.test.callbackPass is preferred (Patchset 6) or explicitly calling succeed (Patchset 8)?",
+      "parentUuid": "4e891a90_fee4eb43",
+      "revId": "1134975f0247a36a1e8e6f058812241a5616e8e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
