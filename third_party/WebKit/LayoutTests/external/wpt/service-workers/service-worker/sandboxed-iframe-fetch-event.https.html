@@ -50,6 +50,14 @@ promise_test(function(t) {
         })
       .then(function(result) {
           assert_equals(result, 'done');
+          return with_iframe(SCOPE + '?script-header&sandbox=allow-scripts');
+        })
+      .then(function(frame) {
+          frames.push(frame);
+          return postMessageAndWaitResult(frame);
+        })
+      .then(function(result) {
+          assert_equals(result, 'done');
           return with_sandboxed_iframe(SCOPE + '?script-origin',
                                        'allow-scripts allow-same-origin');
         })
@@ -123,6 +131,28 @@ promise_test(function(t) {
           assert_false(
               expected_base_url + '?script_script-origin' in request_set,
               'The request for sandboxed iframe with allow-scripts and ' +
+              'allow-same-origin flag inside sandboxed iframe with ' +
+              'allow-scripts flag should not be handled by SW.');
+          assert_false(
+              expected_base_url + '?script-header_fetch' in request_set,
+              'X The fetch request from sandboxed iframe with allow-scripts ' +
+              'flag should not be handled by SW.');
+          assert_false(
+              expected_base_url + '?script-header_workerfetch' in request_set,
+              'X The fetch request from worker from sandboxed iframe with ' +
+              'allow-scripts flag should not be handled by SW.');
+          assert_false(
+              expected_base_url + '?script-header_iframe' in request_set,
+              'X The request for normal iframe inside sandboxed iframe with ' +
+              'allow-scripts flag should not be handled by SW.');
+          assert_false(
+              expected_base_url + '?script-header_script' in request_set,
+              'X The request for sandboxed iframe with allow-scripts flag ' +
+              'inside sandboxed iframe with allow-scripts flag should not be ' +
+              'handled by SW.');
+          assert_false(
+              expected_base_url + '?script-header_script-origin' in request_set,
+              'X The request for sandboxed iframe with allow-scripts and ' +
               'allow-same-origin flag inside sandboxed iframe with ' +
               'allow-scripts flag should not be handled by SW.');
           assert_true(

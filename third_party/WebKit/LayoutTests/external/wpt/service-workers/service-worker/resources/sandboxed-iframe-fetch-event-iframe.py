@@ -1,3 +1,12 @@
+# This is a copy of fetch/api/resources/echo-content.py since it's more
+# convenient in this directory due to service worker's path restriction.
+
+def main(request, response):
+  header = [("Content-Type", "text/html")]
+  if 'sandbox' in request.GET:
+    header.append(('Content-Security-Policy',
+                   'sandbox %s' % request.GET['sandbox']))
+  return (header, """
 <script>
 function with_iframe(url) {
   return new Promise(function(resolve) {
@@ -54,3 +63,4 @@ window.onmessage = function (e) {
       });
 };
 </script>
+""")
