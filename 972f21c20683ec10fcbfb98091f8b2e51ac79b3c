@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97189ad5_a3baeacc",
+        "filename": "ui/base/resource/resource_bundle.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-31T16:23:56Z",
+      "side": 1,
+      "message": "Can this ifdef be moved to 763?",
+      "range": {
+        "startLine": 760,
+        "startChar": 0,
+        "endLine": 760,
+        "endChar": 6
+      },
+      "revId": "972f21c20683ec10fcbfb98091f8b2e51ac79b3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
