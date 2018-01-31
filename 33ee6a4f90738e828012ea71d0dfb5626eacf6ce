@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3869bff8_9fce7288",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-31T23:52:33Z",
+      "side": 1,
+      "message": "Bug: 777222",
+      "revId": "33ee6a4f90738e828012ea71d0dfb5626eacf6ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
