@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "beb74bbd_76032d87",
+        "filename": "tools/perf/core/results_dashboard.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2018-01-31T18:02:19Z",
+      "side": 1,
+      "message": "mastername actually already exists in build properties, but it is the wrong one for the perf dashboard. \n\nAFAIK, All uploads to the dashboard will fail given you don\u0027t have a valid mastername.",
+      "range": {
+        "startLine": 537,
+        "startChar": 13,
+        "endLine": 537,
+        "endChar": 29
+      },
+      "revId": "c47bd921a4751f3f1da145d6cde81711f5d85e51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b669160c_feb4f980",
+        "filename": "tools/perf/core/results_dashboard.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2018-01-31T18:02:19Z",
+      "side": 1,
+      "message": "Eventually this will be build_properties[perf_dashboard_mastername] once Ned\u0027s implementation is done.",
+      "revId": "c47bd921a4751f3f1da145d6cde81711f5d85e51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6913bf40_be5f0543",
+        "filename": "tools/perf/core/results_merger.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2018-01-31T18:02:19Z",
+      "side": 1,
+      "message": "I don\u0027t have much context on the correctness of this file.  I assume it was copy paste?\n\nPlease add a comment at the top to talk about where this was copied from and what this file does.",
+      "revId": "c47bd921a4751f3f1da145d6cde81711f5d85e51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cd127a1_c527e33f",
+        "filename": "tools/perf/core/upload_results_to_perf_dashboard.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2018-01-31T18:02:19Z",
+      "side": 1,
+      "message": "nit: Should this naming format follow the camel case above instead of underscores?",
+      "revId": "c47bd921a4751f3f1da145d6cde81711f5d85e51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84cf4709_c4936605",
+        "filename": "tools/perf/process_perf_results.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2018-01-31T18:02:19Z",
+      "side": 1,
+      "message": "doesn\u0027t this \"name\" here need to be the benchmark name (ie test name) for the upload?  I think we need to parse it from the directory structure.\n\nIf you look here for the name we pass in: https://logs.chromium.org/v/?s\u003dchrome%2Fbb%2Fchromium.perf%2FMac_10.11_Perf%2F1771%2F%2B%2Frecipes%2Fsteps%2Fblink_perf.bindings_Dashboard_Upload%2F0%2Fstdout\n\nI think we need to keep a map of benchmark name to file path instead of just a list of filepaths so we can pass in the right test name.",
+      "revId": "c47bd921a4751f3f1da145d6cde81711f5d85e51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7cf3c39_40db011d",
+        "filename": "tools/perf/process_perf_results.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2018-01-31T18:02:19Z",
+      "side": 1,
+      "message": "can you add a comment here since directory structure is so important to talk about the specific files we are looking for and what the difference is?  If users aren\u0027t familiar with our recipe code they might not understand the name distinction.",
+      "revId": "c47bd921a4751f3f1da145d6cde81711f5d85e51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e016680d_7ca0364a",
+        "filename": "tools/perf/process_perf_results.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2018-01-31T18:02:19Z",
+      "side": 1,
+      "message": "we should add comments for both of these since these are perf specific.  I had to double check what configuration name was :)  \n\nI think the file we were pulling these from might be actually going away.  Please mention the file we are referencing since I think this needs to stay constant for the perf dashboard upload.",
+      "revId": "c47bd921a4751f3f1da145d6cde81711f5d85e51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
