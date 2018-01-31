@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e89f875_d3896c8c",
+        "filename": "ui/message_center/views/message_popup_collection.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-31T17:16:09Z",
+      "side": 0,
+      "message": "it would be really nice if you could also fix the capitalization here and in alignment delegate (should be GetBaseline)",
+      "range": {
+        "startLine": 364,
+        "startChar": 28,
+        "endLine": 364,
+        "endChar": 39
+      },
+      "revId": "99c730c6ce14ca0290cf8c05eedd5c66ecb8bb93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

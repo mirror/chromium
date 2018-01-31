@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76894827_8fa20cb1",
+        "filename": "ui/message_center/views/message_popup_collection.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-31T17:16:09Z",
+      "side": 1,
+      "message": "nit: no curlies",
+      "range": {
+        "startLine": 365,
+        "startChar": 22,
+        "endLine": 365,
+        "endChar": 24
+      },
+      "revId": "6059c72d0ac69da15e92cbe1c0b6eb063e4c2c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc30d999_47cfd7cc",
+        "filename": "ui/message_center/views/message_popup_collection.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-31T17:16:09Z",
+      "side": 1,
+      "message": "nit: no else after return",
+      "range": {
+        "startLine": 367,
+        "startChar": 4,
+        "endLine": 367,
+        "endChar": 8
+      },
+      "revId": "6059c72d0ac69da15e92cbe1c0b6eb063e4c2c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e17ca5fe_f2d0af26",
+        "filename": "ui/message_center/views/message_popup_collection.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-31T17:16:09Z",
+      "side": 1,
+      "message": "ditto nit",
+      "range": {
+        "startLine": 369,
+        "startChar": 4,
+        "endLine": 369,
+        "endChar": 8
+      },
+      "revId": "6059c72d0ac69da15e92cbe1c0b6eb063e4c2c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
