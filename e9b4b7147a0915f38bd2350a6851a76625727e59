@@ -70,6 +70,30 @@
       "revId": "e9b4b7147a0915f38bd2350a6851a76625727e59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72bbcc8a_ddb4f7f0",
+        "filename": "base/memory/shared_memory_mapping.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2018-01-31T14:34:42Z",
+      "side": 1,
+      "message": "Exactly. Anyway we need to have some way to report about an error and a caller should check if there was an error. \nAnother option would be to return a boolean or a null pointer.",
+      "parentUuid": "378a5ac5_2c884388",
+      "range": {
+        "startLine": 71,
+        "startChar": 31,
+        "endLine": 71,
+        "endChar": 32
+      },
+      "revId": "e9b4b7147a0915f38bd2350a6851a76625727e59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

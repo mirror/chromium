@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8e8caf33_a9826ae3",
+        "filename": "base/memory/read_only_shared_memory_region.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2018-01-31T14:34:42Z",
+      "side": 1,
+      "message": "So we make. The writable mapping is created by calling shm.Map(size) at the line 26.\nProbably you\u0027ve looked at the previous patch set, it was a bug :)",
+      "parentUuid": "15f6a7c0_2c8a3e88",
+      "range": {
+        "startLine": 30,
+        "startChar": 14,
+        "endLine": 30,
+        "endChar": 21
+      },
+      "revId": "c74d0c2f762f9f31a49d0c31b56faa66565bec6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba0067c0_8c7d697e",
         "filename": "base/memory/read_only_shared_memory_region.cc",
         "patchSetId": 7
@@ -54,6 +78,24 @@
       "side": 1,
       "message": "Looks like we can: http://nullprogram.com/blog/2016/04/10/",
       "parentUuid": "ba0067c0_8c7d697e",
+      "revId": "c74d0c2f762f9f31a49d0c31b56faa66565bec6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df53ab56_5d6a1814",
+        "filename": "base/memory/read_only_shared_memory_region.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2018-01-31T14:34:42Z",
+      "side": 1,
+      "message": "I think we get ERROR_ALREADY_EXISTS when we create a file (for backing shared memory) that already exists. It\u0027s not about mapping the same region twice.",
+      "parentUuid": "82382f54_0eebef10",
       "revId": "c74d0c2f762f9f31a49d0c31b56faa66565bec6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
