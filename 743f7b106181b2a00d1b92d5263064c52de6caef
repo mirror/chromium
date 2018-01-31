@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73bff69e_78e527ef",
+        "filename": "ui/base/material_design/material_design_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-31T20:45:47Z",
+      "side": 1,
+      "message": "Should we only allow this for chromeos? Is there any value in supporting on non-chromeos platforms?",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 38
+      },
+      "revId": "743f7b106181b2a00d1b92d5263064c52de6caef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
