@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b9de5f1_f05bb587",
+        "filename": "chrome/common/stack_sampling_configuration.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-01-31T03:16:00Z",
+      "side": 1,
+      "message": "We\u0027ll need to update the configuration state since we\u0027re adding a new process. Rather than adding another state for the renderer though we can simplify the set of configurations:\n\nremove PROFILE_GPU_PROCESS and PROFILE_BROWSER_PROCESS\nchange PROFILE_BROWSER_AND_GPU_PROCESS to PROFILE_ENABLED\nenable renderer profiling on PROFILE_ENABLED || PROFILE_CONTROL",
+      "range": {
+        "startLine": 141,
+        "startChar": 17,
+        "endLine": 141,
+        "endChar": 59
+      },
+      "revId": "96a6097c985bd71a70d48da2e025a816348b4a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ef24831_8a6193f3",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-01-31T03:16:00Z",
+      "side": 1,
+      "message": "IO \u003d\u003e compositor (and next line)",
+      "range": {
+        "startLine": 235,
+        "startChar": 70,
+        "endLine": 235,
+        "endChar": 72
+      },
+      "revId": "96a6097c985bd71a70d48da2e025a816348b4a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58989ff9_2271876d",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1252,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-01-31T03:16:00Z",
+      "side": 1,
+      "message": "Ideally the profiler creation task should be the very first task posted on the message loop. Is it feasible to make this call from InitializeCompositorThread right after the thread is created to ensure this?",
+      "range": {
+        "startLine": 1251,
+        "startChar": 4,
+        "endLine": 1252,
+        "endChar": 37
+      },
+      "revId": "96a6097c985bd71a70d48da2e025a816348b4a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
