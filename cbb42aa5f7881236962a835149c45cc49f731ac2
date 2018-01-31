@@ -70,6 +70,30 @@
       "revId": "cbb42aa5f7881236962a835149c45cc49f731ac2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "929471cb_ee9a409d",
+        "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1815,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2018-01-31T00:16:03Z",
+      "side": 1,
+      "message": "Almost there. I have the test moved with one quirk - I had an issue with instantiating ControllableHttpResponses because the SetUp* Start()-ed the embedded server. My workaround was to create another test class so please pay attention to that and advise.",
+      "parentUuid": "5928e65c_a7b73111",
+      "range": {
+        "startLine": 1815,
+        "startChar": 4,
+        "endLine": 1815,
+        "endChar": 65
+      },
+      "revId": "cbb42aa5f7881236962a835149c45cc49f731ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
