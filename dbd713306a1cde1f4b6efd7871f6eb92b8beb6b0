@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a4a082a4_350d2a36",
+        "filename": "device/geolocation/geolocation_provider_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2018-01-31T06:18:07Z",
+      "side": 1,
+      "message": "Sorry I didn\u0027t catch what you mean.\nThis Initialize() is static function and will be called by DeviceService::CreateDeviceService().\nYou mentioned \"Init()\", which is virtual function of base::Thread. This Init() should be called only by ThreadMain.\n\nI guess I mis-understood something?",
+      "parentUuid": "6ed8091b_c48abf44",
+      "revId": "dbd713306a1cde1f4b6efd7871f6eb92b8beb6b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e12287b3_eb2c93aa",
         "filename": "services/device/device_service.cc",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-30T12:08:42Z",
       "side": 1,
       "message": "this one could get folded into Initialize() as well, right?",
+      "revId": "dbd713306a1cde1f4b6efd7871f6eb92b8beb6b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44121e1d_ce848de7",
+        "filename": "services/device/device_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2018-01-31T06:18:07Z",
+      "side": 1,
+      "message": "Yes! will do:)",
+      "parentUuid": "e12287b3_eb2c93aa",
       "revId": "dbd713306a1cde1f4b6efd7871f6eb92b8beb6b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
