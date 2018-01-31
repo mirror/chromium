@@ -386,15 +386,13 @@ bool FrameSelection::Modify(SelectionModifyAlteration alter,
                    .SetShouldClearTypingStyle(true)
                    .SetSetSelectionBy(set_selection_by)
                    .SetIsDirectional(selection_is_directional)
+                   .SetGranularity(granularity)
                    .Build());
 
   if (granularity == TextGranularity::kLine ||
       granularity == TextGranularity::kParagraph)
     x_pos_for_vertical_arrow_navigation_ =
         selection_modifier.XPosForVerticalArrowNavigation();
-
-  if (set_selection_by == SetSelectionBy::kUser)
-    granularity_ = TextGranularity::kCharacter;
 
   ScheduleVisualUpdateForPaintInvalidationIfNeeded();
 

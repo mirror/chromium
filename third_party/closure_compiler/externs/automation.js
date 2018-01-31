@@ -698,6 +698,13 @@ chrome.automation.AutomationNode.prototype.anchorOffset;
 chrome.automation.AutomationNode.prototype.anchorAffinity;
 
 /**
+ * The text granularity of the tree selection anchor, if any.
+ * @type {(string|undefined)}
+ * @see https://developer.chrome.com/extensions/automation#type-textGranularity
+ */
+chrome.automation.AutomationNode.prototype.textGranularity;
+
+/**
  * The focus node of the tree selection, if any.
  * @type {(!chrome.automation.AutomationNode|undefined)}
  * @see https://developer.chrome.com/extensions/automation#type-focusObject

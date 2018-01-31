@@ -82,6 +82,12 @@ var GetFocusAffinity = natives.GetFocusAffinity;
 
 /**
  * @param {number} axTreeID The id of the accessibility tree.
+ * @return {?string} The selection focus affinity.
+ */
+var GetTextGranularity = natives.GetTextGranularity;
+
+/**
+ * @param {number} axTreeID The id of the accessibility tree.
  * @param {number} nodeID The id of a node.
  * @return {?number} The id of the node's parent, or undefined if it's the
  *    root of its tree or if the tree or node wasn't found.
@@ -1164,6 +1170,12 @@ AutomationRootNodeImpl.prototype = {
       return GetFocusAffinity(this.treeID);
   },
 
+  get textGranularity() {
+    var id = GetFocusObjectID(this.treeID);
+    if (id && id != -1)
+      return GetTextGranularity(this.treeID);
+  },
+
   get: function(id) {
     if (id == undefined)
       return undefined;
@@ -1328,6 +1340,7 @@ utils.expose(AutomationRootNode, AutomationRootNodeImpl, {
     'focusObject',
     'focusOffset',
     'focusAffinity',
+    'textGranularity'
   ],
 });
 
