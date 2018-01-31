@@ -16,6 +16,24 @@
       "revId": "ca4f459cce8b7b7900bc7e139e53e37eae64bbd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02d0469c_728bf084",
+        "filename": "media/capture/mojo/image_capture_types.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2018-01-31T15:41:37Z",
+      "side": 1,
+      "message": "Maybe it is because my file is added via Windows and contains CR/LF before git commit.\nI guess we will see what the trybots tell us.",
+      "parentUuid": "2302fe15_19bc1aea",
+      "revId": "ca4f459cce8b7b7900bc7e139e53e37eae64bbd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
