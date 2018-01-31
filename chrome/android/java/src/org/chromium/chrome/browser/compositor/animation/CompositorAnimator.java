@@ -205,13 +205,6 @@ public class CompositorAnimator extends Animator {
     }
 
     /**
-     * @param listener The listener to remove.
-     */
-    public void removeUpdateListener(AnimatorUpdateListener listener) {
-        mAnimatorUpdateListeners.remove(listener);
-    }
-
-    /**
      * @return Whether or not the animation has ended after being started. If the animation is
      *         started after ending, this value will be reset to true.
      */
@@ -255,6 +248,7 @@ public class CompositorAnimator extends Animator {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void start() {
         if (mAnimationState != AnimationState.ENDED) return;
 
@@ -270,6 +264,7 @@ public class CompositorAnimator extends Animator {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void cancel() {
         if (mAnimationState == AnimationState.ENDED) return;
 
@@ -284,6 +279,7 @@ public class CompositorAnimator extends Animator {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void end() {
         if (mAnimationState == AnimationState.ENDED) return;
 
