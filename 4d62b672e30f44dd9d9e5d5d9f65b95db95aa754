@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ba33eab_d492e113",
+        "filename": "remoting/protocol/ssl_hmac_channel_authenticator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2018-01-31T19:22:14Z",
+      "side": 1,
+      "message": "Missing \"connection\".",
+      "range": {
+        "startLine": 61,
+        "startChar": 49,
+        "endLine": 61,
+        "endChar": 0
+      },
+      "revId": "4d62b672e30f44dd9d9e5d5d9f65b95db95aa754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dc5e69a_ddc06eb5",
+        "filename": "remoting/protocol/ssl_hmac_channel_authenticator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2018-01-31T19:22:14Z",
+      "side": 1,
+      "message": "Optional: There are lots of policies for restricting CRD use; I\u0027m not sure it\u0027s worth calling this one out specifically. A better justification would be the text from https://support.google.com/chrome/a/answer/2799701?hl\u003den under \"Enable Chrome Remote Desktop hosts for managed devices only\" which talks about a combination of DNS black-holing and RemoteAccessHostTalkGadgetPrefix.",
+      "range": {
+        "startLine": 76,
+        "startChar": 41,
+        "endLine": 76,
+        "endChar": 0
+      },
+      "revId": "4d62b672e30f44dd9d9e5d5d9f65b95db95aa754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
