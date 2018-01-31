@@ -573,6 +573,10 @@ BrowserContext::~BrowserContext() {
 
   if (GetUserData(kDownloadManagerKeyName))
     GetDownloadManager(this)->Shutdown();
+
+  // TODO(eladalon): Discuss with Guido before landing - is there a way to
+  // be informed when a BrowserContext is being torn down, so that active
+  // uploads could be stopped, etc.?
 }
 
 void BrowserContext::ShutdownStoragePartitions() {

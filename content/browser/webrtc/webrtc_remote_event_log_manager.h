@@ -60,7 +60,8 @@ class CONTENT_EXPORT WebRtcRemoteEventLogManager final
   bool StartRemoteLogging(int render_process_id,
                           int lid,
                           const BrowserContext* browser_context,
-                          size_t max_file_size_bytes);
+                          size_t max_file_size_bytes,
+                          const std::string& metadata);
 
   // If an active remote-bound log exists for the given peer connection, this
   // will append |output| to that log. If writing |output| to the log would
@@ -146,7 +147,8 @@ class CONTENT_EXPORT WebRtcRemoteEventLogManager final
   bool StartWritingLog(int render_process_id,
                        int lid,
                        const BrowserContext* browser_context,
-                       size_t max_file_size_bytes);
+                       size_t max_file_size_bytes,
+                       const std::string& metadata);
 
   // Checks if the referenced peer connection has an associated active
   // remote-bound log. If it does, the log is changed from ACTIVE to PENDING.
