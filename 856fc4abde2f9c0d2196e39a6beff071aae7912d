@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28a2788c_2d5d10a4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-01-31T17:16:17Z",
+      "side": 1,
+      "message": "In cl description, we trying to make each line close to 80 chars unless it\u0027s end of a paragraph. You don\u0027t need to start the sentence in a new line. You also don\u0027t really need to repeat what you said in the first sentence in the second sentence. I would do something like:\n\nRefactored filter_operations_struct_traits (.h and .cc) files in order to have declarations in header and definitions in source, so that we can reducing the build time....",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 74
+      },
+      "revId": "856fc4abde2f9c0d2196e39a6beff071aae7912d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
