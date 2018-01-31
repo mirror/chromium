@@ -47,6 +47,7 @@ struct QueuedRequest {
     enum Type {
       kChromeDump,
       kOSDump,
+      kMemlogDump,
     };
     PendingResponse(const mojom::ClientProcess* client, const Type type);
 

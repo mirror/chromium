@@ -613,7 +613,7 @@ void MemoryDumpManager::ContinueAsyncProcessDump(
     // If |RunsTasksInCurrentSequence()| is true then no PostTask is
     // required since we are on the right SequencedTaskRunner.
     if (task_runner->RunsTasksInCurrentSequence()) {
-      InvokeOnMemoryDump(mdpinfo, pmd_async_state->process_memory_dump.get());
+      InvokeOnMemoryDump(mdpinfo, pmd_async_state->process_memory_dump.get(), pmd_async_state);
       pmd_async_state->pending_dump_providers.pop_back();
       continue;
     }
@@ -671,7 +671,8 @@ bool MemoryDumpManager::IsDumpProviderAllowedToDump(
 // MDP did not specify task runner. Invokes the dump provider's OnMemoryDump()
 // (unless disabled).
 void MemoryDumpManager::InvokeOnMemoryDump(MemoryDumpProviderInfo* mdpinfo,
-                                           ProcessMemoryDump* pmd) {
+                                           ProcessMemoryDump* pmd,
+                          ProcessMemoryDumpAsyncState* pmd_async_state) {
   HEAP_PROFILER_SCOPED_IGNORE;
   DCHECK(!mdpinfo->task_runner ||
          mdpinfo->task_runner->RunsTasksInCurrentSequence());
@@ -718,10 +719,23 @@ void MemoryDumpManager::InvokeOnMemoryDump(MemoryDumpProviderInfo* mdpinfo,
   ANNOTATE_BENIGN_RACE(&mdpinfo->disabled, "best-effort race detection");
   CHECK(!is_thread_bound ||
         !*(static_cast<volatile bool*>(&mdpinfo->disabled)));
-  bool dump_successful =
-      mdpinfo->dump_provider->OnMemoryDump(pmd->dump_args(), pmd);
-  mdpinfo->consecutive_failures =
-      dump_successful ? 0 : mdpinfo->consecutive_failures + 1;
+  if (mdpinfo->requires_async_dump) {
+    // Hop to the BG thread to get the weak ptr, then hop back.
+    GetOrCreateBgTaskRunnerLocked
+
+    base::AutoLock l(pmd_async_state->dump_provider_and_outstanding_requests_lock);
+    pmd_async_state->outstanding_async_requests++;
+    mdpinfo->dump_provider->OnAsyncMemoryDump();
+    base::BindOnce([](ProcessMemoryDumpAsyncState* pmd_async_state){
+
+    }, )
+    base::Callback
+  } else {
+    bool dump_successful =
+        mdpinfo->dump_provider->OnMemoryDump(pmd->dump_args(), pmd);
+    mdpinfo->consecutive_failures =
+        dump_successful ? 0 : mdpinfo->consecutive_failures + 1;
+  }
 }
 
 void MemoryDumpManager::FinishAsyncProcessDump(

@@ -203,11 +203,6 @@ class BASE_EXPORT MemoryDumpManager {
     // The arguments passed to the initial CreateProcessDump() request.
     const MemoryDumpRequestArgs req_args;
 
-    // An ordered sequence of dump providers that have to be invoked to complete
-    // the dump. This is a copy of |dump_providers_| at the beginning of a dump
-    // and becomes empty at the end, when all dump providers have been invoked.
-    std::vector<scoped_refptr<MemoryDumpProviderInfo>> pending_dump_providers;
-
     // The HeapProfilerSerializationState object, which is shared by all
     // the ProcessMemoryDump and MemoryAllocatorDump instances through all the
     // tracing session lifetime.
@@ -228,6 +223,25 @@ class BASE_EXPORT MemoryDumpManager {
     // threads outside of the lock_ to avoid races when disabling tracing.
     // It is immutable for all the duration of a tracing session.
     const scoped_refptr<SequencedTaskRunner> dump_thread_task_runner;
+
+    // Both |pending_dump_providers| and |outstanding_async_requests_| are
+    // protected by this lock, as they may be modified on different threads..
+    base::Lock dump_provider_and_outstanding_requests_lock;
+
+    // An ordered sequence of dump providers that have to be invoked to complete
+    // the dump. This is a copy of |dump_providers_| at the beginning of a dump
+    // and becomes empty at the end, when all dump providers have been invoked.
+    std::vector<scoped_refptr<MemoryDumpProviderInfo>> pending_dump_providers;
+
+    // The count of the number of Outstanding async dump requests.
+    int outstanding_async_requests = 0;
+
+    // Returns true when pending_dump_providers is empty and
+    // outstanding_async_requests is 0.
+    bool IsFinished() {
+      base::AutoLock l(dump_provider_and_outstanding_requests_lock);
+      return pending_dump_providers.empty() && outstanding_async_requests == 0;
+    }
 
    private:
     DISALLOW_COPY_AND_ASSIGN(ProcessMemoryDumpAsyncState);
@@ -259,7 +273,11 @@ class BASE_EXPORT MemoryDumpManager {
   // Invokes OnMemoryDump() of the given MDP. Should be called on the MDP task
   // runner.
   void InvokeOnMemoryDump(MemoryDumpProviderInfo* mdpinfo,
-                          ProcessMemoryDump* pmd);
+                          ProcessMemoryDump* pmd,
+                          ProcessMemoryDumpAsyncState* pmd_async_state);
+
+  // Called by async MDPs to indicate that they have finished dumping.
+  void OnAsyncMemoryDumpFinished(ProcessMemoryDumpAsyncState* pmd_async_state);
 
   void FinishAsyncProcessDump(
       std::unique_ptr<ProcessMemoryDumpAsyncState> pmd_async_state);
@@ -324,6 +342,10 @@ class BASE_EXPORT MemoryDumpManager {
   bool dumper_registrations_ignored_for_testing_;
 
   HeapProfilingMode heap_profiling_mode_;
+
+  // WeakPtrs and |weak_factory_| are task-runner affine. WeakPtrs must only be
+  // created or derefenced on dump_thread_.
+  WeakPtrFactory<MemoryDumpManager> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(MemoryDumpManager);
 };

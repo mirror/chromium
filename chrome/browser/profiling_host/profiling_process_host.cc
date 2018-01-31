@@ -722,10 +722,12 @@ void ProfilingProcessHost::LaunchAsService() {
   }
 
   // No need to unregister since ProfilingProcessHost is never destroyed.
+  base::MemoryDumpProvider::Options options;
+  options.requires_async_dump = true;
   base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
       this, "OutOfProcessHeapProfilingDumpProvider",
       content::BrowserThread::GetTaskRunnerForThread(
-          content::BrowserThread::IO));
+          content::BrowserThread::IO), options);
 
   // Bind to the memlog service. This will start it if it hasn't started
   // already.
