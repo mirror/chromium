@@ -2,12 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_ZYGOTE_ZYGOTE_MAIN_H_
-#define CONTENT_ZYGOTE_ZYGOTE_MAIN_H_
+#ifndef CONTENT_ZYGOTE_ZYGOTE_MAIN_LINUX_H_
+#define CONTENT_ZYGOTE_ZYGOTE_MAIN_LINUX_H_
 
 #include <memory>
 #include <vector>
 
+#include "base/callback.h"
+#include "base/posix/global_descriptors.h"
 #include "build/build_config.h"
 
 namespace content {
@@ -15,8 +17,10 @@ namespace content {
 class ZygoteForkDelegate;
 
 bool ZygoteMain(
+    base::OnceClosure pre_sandbox_init,
+    base::GlobalDescriptors::Descriptor backchannel_descriptor,
     std::vector<std::unique_ptr<ZygoteForkDelegate>> fork_delegates);
 
 }  // namespace content
 
-#endif  // CONTENT_ZYGOTE_ZYGOTE_MAIN_H_
+#endif  // CONTENT_ZYGOTE_ZYGOTE_MAIN_LINUX_H_

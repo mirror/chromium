@@ -82,11 +82,9 @@
 #include "base/posix/global_descriptors.h"
 #include "content/public/common/content_descriptors.h"
 
-#if !defined(OS_MACOSX)
-#include "content/public/common/zygote_fork_delegate_linux.h"
-#endif
 #if !defined(OS_MACOSX) && !defined(OS_ANDROID)
-#include "content/zygote/zygote_main.h"
+#include "content/public/common/zygote_fork_delegate_linux.h"
+#include "content/zygote/content_zygote_main_linux.h"
 #include "sandbox/linux/services/libc_interceptor.h"
 #endif
 
@@ -322,7 +320,7 @@ int RunZygote(ContentMainDelegate* delegate) {
   }
 
   // This function call can return multiple times, once per fork().
-  if (!ZygoteMain(std::move(zygote_fork_delegates)))
+  if (!ContentZygoteMain(std::move(zygote_fork_delegates)))
     return 1;
 
   if (delegate)

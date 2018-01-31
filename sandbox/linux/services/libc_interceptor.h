@@ -68,7 +68,7 @@ SANDBOX_EXPORT void SetUseLocaltimeOverride(bool enable);
 
 // Turns on/off the libc interception. Called by the zygote and inherited by it
 // children. |backchannel_fd| must be the fd to use for proxying calls.
-SANDBOX_EXPORT void SetAmZygoteOrRenderer(bool enable, int backchannel_fd);
+SANDBOX_EXPORT void SetAmZygoteOrDescendant(bool enable, int backchannel_fd);
 
 }  // namespace sandbox
 
