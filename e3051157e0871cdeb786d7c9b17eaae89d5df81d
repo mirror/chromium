@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2443841b_abe63d01",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2458,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-31T06:18:57Z",
+      "side": 1,
+      "message": "\u003e Uh tough question :).\n\u003e \n\u003e First, we get here only by calling WebViewFrameWidget::ScrollFocusedEditableElementIntoView(). So definitely a WebLocalFrameImpl exists at the time. But this does not prove MainFrameImpl() is not nullptr since the frame could be provisional.\n\nCorrect, MainFrameImpl() could be null for a provisional main frame, i.e., if called during a cross-process navigation on the new frame after it\u0027s created but before the navigation commits.\n\n\u003e \n\u003e Now the concern could be whether it is possible to get here on a RenderFrameImpl which is provisional. This IPC is input related coming from FrameInputHandler.\n\u003e \n\u003e As I understand the two call sites are RenderWidgetHostViewAura and WebContentsViewAndroid and both use:\n\u003e GetFocusedFrame()-\u003eGetFrameInputHandler()-\u003eScrollFocusedEditableNodeIntoRect().\n\u003e \n\u003e I don\u0027t think a provisional frame can be returned as focused but am not sure.\n\nYou\u0027re right :)\n\nRenderWidgetHostViewAura::GetFocusedFrame() can\u0027t return provisional frames: it looks up the focused FrameTreeNode and returns its current_frame_host() which can\u0027t be a provisional (pending) frame.\n\nWebContentsAndroid::ScrollFocusedEditableNodeIntoView() calls WebContentsImpl::GetFocusedFrame(), which also returns current_frame_host(), so it also can\u0027t be a provisional frame.\n\n\u003e \n\u003e Also, a newer way to trigger this method is to call RWHVAura::SetInsets() which would indirectly call ScrollFocusedEditableNodeIntoRect() though the WasResized IPC. For that as well I can guarantee we don\u0027t hit MainFrameImpl().\n\nThat\u0027s ScrollFocusedEditableNodeIntoView and not ScrollFocusedEditableNodeIntoRect, right?  This one seems more uncertain to me -- how do you know it won\u0027t hit MainFrameImpl()?\n\n\u003e \n\u003e So all in all I think we should guard against MainFrameImpl() -- and perhaps leave a TODO to fix the issue later.\n\u003e \n\u003e alexmos@: Would you say the hypothesis here makes sense or basically, is it currently plausible to hit MainFrameImpl() \u003d\u003d nullptr?\n\nCombining your analysis with mine, it seems like MainFrameImpl() shouldn\u0027t ever be null here. :)",
+      "parentUuid": "67c9ad72_c83db01b",
+      "range": {
+        "startLine": 2458,
+        "startChar": 7,
+        "endLine": 2458,
+        "endChar": 20
+      },
+      "revId": "e3051157e0871cdeb786d7c9b17eaae89d5df81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2b19a46_dc6e6b22",
         "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.h",
         "patchSetId": 6
