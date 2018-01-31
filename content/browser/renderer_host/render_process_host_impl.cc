@@ -2943,6 +2943,7 @@ void RenderProcessHostImpl::OnChannelConnected(int32_t peer_pid) {
 }
 
 void RenderProcessHostImpl::OnChannelError() {
+  UMA_HISTOGRAM_COUNTS("BrowserRenderProcessHost.OnChannelError", 1);
   ProcessDied(true /* already_dead */, nullptr);
 }
 
