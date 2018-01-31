@@ -42,6 +42,7 @@
 #include "ui/base/models/list_selection_model.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/base/theme_provider.h"
+#include "ui/compositor/clip_recorder.h"
 #include "ui/gfx/animation/animation_container.h"
 #include "ui/gfx/animation/tween.h"
 #include "ui/gfx/canvas.h"
@@ -542,15 +543,28 @@ void Tab::OnPaint(gfx::Canvas* canvas) {
   PaintTab(canvas, clip);
 }
 
+void Tab::PaintChildren(const views::PaintInfo& info) {
+  ui::ClipRecorder clip_recorder(info.context());
+  if (IconCapacity() < 1) {
+    clip_recorder.ClipPath(
+        GetFillPath(1 /* scale */, size(), GetTabEndcapWidth()));
+    icon_->set_fade_tail(true);
+  } else {
+    icon_->set_fade_tail(false);
+  }
+  View::PaintChildren(info);
+}
+
 void Tab::Layout() {
   const gfx::Rect lb = GetContentsBounds();
   const bool was_showing_icon = showing_icon_;
   showing_icon_ = ShouldShowIcon();
 
   // See comments in IconCapacity().
+  const int icon_capacity = IconCapacity();
   const int extra_padding =
       (controller_->ShouldHideCloseButtonForInactiveTabs() ||
-       (IconCapacity() < 3)) ? 0 : kExtraLeftPaddingToBalanceCloseButtonPadding;
+       (icon_capacity < 3)) ? 0 : kExtraLeftPaddingToBalanceCloseButtonPadding;
   const int start = lb.x() + extra_padding;
 
   // The bounds for the favicon will include extra width for the attention
@@ -562,7 +576,10 @@ void Tab::Layout() {
     favicon_bounds.set_y(lb.y() + (lb.height() - gfx::kFaviconSize + 1) / 2);
     favicon_bounds.set_size(gfx::Size(icon_->GetPreferredSize().width(),
                                       lb.height() - favicon_bounds.y()));
-    MaybeAdjustLeftForPinnedTab(&favicon_bounds, gfx::kFaviconSize);
+    if (icon_capacity >= 1)
+      MaybeAdjustLeftForPinnedTab(&favicon_bounds, gfx::kFaviconSize);
+    else
+      AlignCenterForInactiveTab(&favicon_bounds, gfx::kFaviconSize);
   }
   icon_->SetBoundsRect(favicon_bounds);
   icon_->SetVisible(showing_icon_);
@@ -829,6 +846,14 @@ void Tab::MaybeAdjustLeftForPinnedTab(gfx::Rect* bounds,
           (1 - static_cast<float>(ideal_delta) /
               static_cast<float>(kPinnedTabExtraWidthToRenderAsNormal)) *
           (ideal_x - bounds->x())));
+}
+
+void Tab::AlignCenterForInactiveTab(gfx::Rect* bounds, int visual_width) const {
+  if (!ShouldRenderAsNormalTab() || IsActive())
+    return;
+
+  DCHECK(bounds);
+  bounds->set_x(GetContentsBounds().CenterPoint().x() - visual_width / 2);
 }
 
 void Tab::PaintTab(gfx::Canvas* canvas, const gfx::Path& clip) {
