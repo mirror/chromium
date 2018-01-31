@@ -504,6 +504,10 @@ void ContentSettingsObserver::PersistClientHints(
 void ContentSettingsObserver::GetAllowedClientHintsFromSource(
     const blink::WebURL& url,
     blink::WebEnabledClientHints* client_hints) const {
+  blink::WebLocalFrame* frame = render_frame()->GetWebFrame();
+  const GURL document_url =
+      url::Origin(frame->GetDocument().GetSecurityOrigin()).GetURL();
+
   if (!content_setting_rules_)
     return;
 
@@ -511,7 +515,8 @@ void ContentSettingsObserver::GetAllowedClientHintsFromSource(
     return;
 
   client_hints::GetAllowedClientHintsFromSource(
-      url, content_setting_rules_->client_hints_rules, client_hints);
+      url, document_url, content_setting_rules_->client_hints_rules,
+      client_hints);
 }
 
 void ContentSettingsObserver::DidNotAllowPlugins() {
