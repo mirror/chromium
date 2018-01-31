@@ -346,6 +346,14 @@ bool SharedMemory::Unmap() {
   return true;
 }
 
+void* SharedMemory::TakeMemory() {
+  void* memory = memory_;
+  memory_ = nullptr;
+  mapped_size_ = 0;
+  mapped_id_ = UnguessableToken();
+  return memory;
+}
+
 SharedMemoryHandle SharedMemory::GetReadOnlyHandle() const {
   HANDLE result;
   ProcessHandle process = GetCurrentProcess();
