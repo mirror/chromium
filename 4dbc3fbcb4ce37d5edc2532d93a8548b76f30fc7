@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a4aee5a_4fa1cca3",
+        "filename": "content/browser/loader/merkle_integrity_source_stream.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-31T03:28:37Z",
+      "side": 1,
+      "message": "I feel this can be a bit larger even to start with, say 3 or 5, while we can change this anytime later..",
+      "revId": "4dbc3fbcb4ce37d5edc2532d93a8548b76f30fc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
