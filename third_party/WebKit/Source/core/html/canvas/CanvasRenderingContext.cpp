@@ -37,32 +37,36 @@ CanvasRenderingContext::CanvasRenderingContext(
     CanvasRenderingContextHost* host,
     const CanvasContextCreationAttributes& attrs)
     : host_(host),
-      color_params_(kSRGBCanvasColorSpace, kRGBA8CanvasPixelFormat, kNonOpaque),
-      creation_attributes_(attrs) {
+      creation_attributes_(nullptr),
+      color_params_(kSRGBCanvasColorSpace,
+                    kRGBA8CanvasPixelFormat,
+                    kNonOpaque) {
+  creation_attributes_ = &attrs;
+
   // Supported color spaces: srgb-8888, srgb-f16, p3-f16, rec2020-f16. For wide
   // gamut color spaces, user must explicitly request for float16 storage.
   // Otherwise, we fall back to srgb-8888. Invalid requests fall back to
   // srgb-8888 too.
-  if (creation_attributes_.pixelFormat() == kF16CanvasPixelFormatName) {
+  if (creation_attributes_->pixelFormat() == kF16CanvasPixelFormatName) {
     color_params_.SetCanvasPixelFormat(kF16CanvasPixelFormat);
-    if (creation_attributes_.colorSpace() == kRec2020CanvasColorSpaceName)
+    if (creation_attributes_->colorSpace() == kRec2020CanvasColorSpaceName)
       color_params_.SetCanvasColorSpace(kRec2020CanvasColorSpace);
-    else if (creation_attributes_.colorSpace() == kP3CanvasColorSpaceName)
+    else if (creation_attributes_->colorSpace() == kP3CanvasColorSpaceName)
       color_params_.SetCanvasColorSpace(kP3CanvasColorSpace);
   }
 
-  if (!creation_attributes_.alpha()) {
+  if (!creation_attributes_->alpha()) {
     color_params_.SetOpacityMode(kOpaque);
   }
 
   if (!RuntimeEnabledFeatures::LowLatencyCanvasEnabled() &&
-      creation_attributes_.hasLowLatency())
-    creation_attributes_.setLowLatency(false);
+      creation_attributes_->hasLowLatency())
+    creation_attributes_->setLowLatency(false);
 
   // Make m_creationAttributes reflect the effective colorSpace and pixelFormat
   // rather than the requested one.
-  creation_attributes_.setColorSpace(ColorSpaceAsString());
-  creation_attributes_.setPixelFormat(PixelFormatAsString());
+  creation_attributes_->setColorSpace(ColorSpaceAsString());
+  creation_attributes_->setPixelFormat(PixelFormatAsString());
 }
 
 WTF::String CanvasRenderingContext::ColorSpaceAsString() const {
@@ -192,6 +196,7 @@ bool CanvasRenderingContext::WouldTaintOrigin(
 }
 
 void CanvasRenderingContext::Trace(blink::Visitor* visitor) {
+  visitor->Trace(creation_attributes_);
   visitor->Trace(host_);
   ScriptWrappable::Trace(visitor);
 }

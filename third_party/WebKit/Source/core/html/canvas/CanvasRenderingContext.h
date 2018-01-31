@@ -188,7 +188,7 @@ class CORE_EXPORT CanvasRenderingContext : public ScriptWrappable,
   void DetachHost() { host_ = nullptr; }
 
   const CanvasContextCreationAttributes& CreationAttributes() const {
-    return creation_attributes_;
+    return *creation_attributes_;
   }
 
   virtual void Trace(blink::Visitor*);
@@ -202,10 +202,10 @@ class CORE_EXPORT CanvasRenderingContext : public ScriptWrappable,
   void Dispose();
 
   Member<CanvasRenderingContextHost> host_;
+  Member<CanvasContextCreationAttributes> creation_attributes_;
   HashSet<String> clean_urls_;
   HashSet<String> dirty_urls_;
   CanvasColorParams color_params_;
-  CanvasContextCreationAttributes creation_attributes_;
   bool finalize_frame_scheduled_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(CanvasRenderingContext);
