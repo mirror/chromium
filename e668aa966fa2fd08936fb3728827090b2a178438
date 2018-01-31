@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b532fca_7deacc12",
+        "filename": "ios/chrome/browser/web/forms_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-31T03:15:30Z",
+      "side": 1,
+      "message": "Optional nit: consider dropping |result| local variable",
+      "range": {
+        "startLine": 137,
+        "startChar": 16,
+        "endLine": 137,
+        "endChar": 22
+      },
+      "revId": "e668aa966fa2fd08936fb3728827090b2a178438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fb3e591_c7d13781",
+        "filename": "ios/chrome/browser/web/forms_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-31T03:15:30Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 144,
+        "startChar": 25,
+        "endLine": 144,
+        "endChar": 29
+      },
+      "revId": "e668aa966fa2fd08936fb3728827090b2a178438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb98c984_ed13f22b",
+        "filename": "ios/chrome/browser/web/forms_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-31T03:15:30Z",
+      "side": 1,
+      "message": "Normally in EG tests we create helpers for matchers, or actions. Wrapping |performAction:| calls into helpers makes logging less useful (performAction: prints line number, which is rarely useful when log points to a helper). We have some EG tests for context menu, which also uses action sheet on the phone and popover on iPad. Can we use the same approach here?",
+      "range": {
+        "startLine": 157,
+        "startChar": 5,
+        "endLine": 157,
+        "endChar": 29
+      },
+      "revId": "e668aa966fa2fd08936fb3728827090b2a178438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b00a7f4_6e77cbe9",
+        "filename": "ios/chrome/browser/web/forms_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-31T03:15:30Z",
+      "side": 1,
+      "message": "I remember Chrome on desktop and Android used to show form resubmission UI for back forward navigations. Charlie, by any chance do you know id we made this change intentionally in Chrome?",
+      "range": {
+        "startLine": 268,
+        "startChar": 31,
+        "endLine": 268,
+        "endChar": 37
+      },
+      "revId": "e668aa966fa2fd08936fb3728827090b2a178438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c2e5257_5592d7d6",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1950,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-31T03:15:30Z",
+      "side": 1,
+      "message": "Does this fix testCachingBehaviorOnNavigateBackAndPageReload by any chance?",
+      "range": {
+        "startLine": 1950,
+        "startChar": 18,
+        "endLine": 1950,
+        "endChar": 24
+      },
+      "revId": "e668aa966fa2fd08936fb3728827090b2a178438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8329f3c6_9b3d5b25",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 4216,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-31T03:15:30Z",
+      "side": 1,
+      "message": "It may sound surprising, but calling this callback asynchronously can break certain things (\nlike loadHTML API):\nhttps://chromium-review.googlesource.com/782744\n\nThis may not be a problem for form reposts navigations, but you still you be aware about our unsuccessful attempt to call this asynchronously.",
+      "range": {
+        "startLine": 4216,
+        "startChar": 14,
+        "endLine": 4216,
+        "endChar": 29
+      },
+      "revId": "e668aa966fa2fd08936fb3728827090b2a178438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
