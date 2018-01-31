@@ -1027,6 +1027,21 @@ const FeatureEntry::FeatureVariation
         {"12 matches", kOmniboxUIMaxAutocompleteMatches12,
          arraysize(kOmniboxUIMaxAutocompleteMatches12), nullptr}};
 
+const FeatureEntry::FeatureParam
+    kOmniboxUISteadyStateElisionsShowOnMousedown[] = {
+        {OmniboxFieldTrial::kUISteadyStateElisionsModeParam,
+         "ShowOnMousedown"}};
+const FeatureEntry::FeatureParam kOmniboxUISteadyStateElisionsShowOnMouseup[] =
+    {{OmniboxFieldTrial::kUISteadyStateElisionsModeParam, "ShowOnMouseup"}};
+
+const FeatureEntry::FeatureVariation
+    kOmniboxUISteadyStateElisionsModeVariations[] = {
+        {"Show full URL on mousedown",
+         kOmniboxUISteadyStateElisionsShowOnMousedown,
+         arraysize(kOmniboxUISteadyStateElisionsShowOnMousedown), nullptr},
+        {"Show full URL on mouseup", kOmniboxUISteadyStateElisionsShowOnMouseup,
+         arraysize(kOmniboxUISteadyStateElisionsShowOnMouseup), nullptr}};
+
 const FeatureEntry::FeatureParam kOmniboxUIVerticalMargin4px[] = {
     {OmniboxFieldTrial::kUIVerticalMarginParam, "4"}};
 const FeatureEntry::FeatureParam kOmniboxUIVerticalMargin6px[] = {
@@ -3206,9 +3221,11 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kOmniboxUIHideSteadyStateUrlSchemeAndSubdomainsName,
      flag_descriptions::
          kOmniboxUIHideSteadyStateUrlSchemeAndSubdomainsDescription,
-     kOsAll,
-     FEATURE_VALUE_TYPE(
-         omnibox::kUIExperimentHideSteadyStateUrlSchemeAndSubdomains)},
+     kOsDesktop,
+     FEATURE_WITH_PARAMS_VALUE_TYPE(
+         omnibox::kUIExperimentHideSteadyStateUrlSchemeAndSubdomains,
+         kOmniboxUISteadyStateElisionsModeVariations,
+         "OmniboxUISteadyStateElisionsModeVariations")},
 
     {"omnibox-ui-hide-suggestion-url-scheme",
      flag_descriptions::kOmniboxUIHideSuggestionUrlSchemeName,
