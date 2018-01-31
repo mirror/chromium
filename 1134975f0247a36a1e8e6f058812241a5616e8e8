@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd1b7ba8_8ad36df6",
+        "filename": "chrome/browser/extensions/extension_apitest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-31T01:31:00Z",
+      "side": 1,
+      "message": "Nit: definitions in the .cc file should match declaration order in the .h file (as much as possible - don\u0027t worry about existing inconsistencies).",
+      "revId": "1134975f0247a36a1e8e6f058812241a5616e8e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bb0ecd5_6ac632a3",
+        "filename": "chrome/browser/extensions/extension_apitest.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-31T01:31:00Z",
+      "side": 1,
+      "message": "nit: put this above accessors",
+      "revId": "1134975f0247a36a1e8e6f058812241a5616e8e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e891a90_fee4eb43",
+        "filename": "chrome/test/data/extensions/api_test/enterprise_device_attributes/basic.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-31T01:31:00Z",
+      "side": 1,
+      "message": "Let\u0027s break these into separate tests:\nchrome.test.runTests([\n  function testDirectoryDeviceId() {\n    chrome.enterprise.deviceAttributes.getDirectoryDeviceId(\n        function(deviceId) {\n      chrome.test.assertEq(expectedDirectoryDeviceId, deviceId);\n      chrome.test.succeed();\n    });\n  },\n  function testDeviceSerialNumber() {\n    chrome.enterprise.deviceAttributes.getDeviceSerialNumber(\n        function(serialNumber) {\n      assertEq(expectedSerialNumber, serialNumber);\n      chrome.test.succeed();\n    });\n  },\n  ...\n]);",
+      "revId": "1134975f0247a36a1e8e6f058812241a5616e8e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
