@@ -103,6 +103,8 @@ class TouchSelectionControllerTest : public testing::Test,
     last_event_handle_bound_middle_ = controller_->GetActiveHandleBoundPoint();
   }
 
+  void OnDragUpdate(const gfx::PointF& position) override {}
+
   std::unique_ptr<TouchHandleDrawable> CreateDrawable() override {
     return std::make_unique<MockTouchHandleDrawable>(&dragging_enabled_);
   }
