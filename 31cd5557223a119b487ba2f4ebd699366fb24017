@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dac9e277_1852b3a6",
+        "filename": "third_party/WebKit/Source/modules/screen_orientation/ScreenOrientationControllerImpl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-31T16:21:23Z",
+      "side": 1,
+      "message": "`orientation` vs `scren_orientation_` is very weird... Can this be called `screen_orientation_service_` maybe?",
+      "range": {
+        "startLine": 87,
+        "startChar": 33,
+        "endLine": 87,
+        "endChar": 52
+      },
+      "revId": "31cd5557223a119b487ba2f4ebd699366fb24017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
