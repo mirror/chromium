@@ -22,6 +22,30 @@
       "revId": "56866ab7c40082efd9e8524b4dbccf98beb8dd44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b4608fc_fa44077a",
+        "filename": "extensions/common/extension.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-31T22:36:52Z",
+      "side": 1,
+      "message": "I changed the sensitivity because there shouldn\u0027t be any reason that the case changed with just resolving the URL, but you\u0027re right that there isn\u0027t really any benefit in keeping the DCHECK at all.  Removed.",
+      "parentUuid": "f112c074_a1294f0e",
+      "range": {
+        "startLine": 180,
+        "startChar": 32,
+        "endLine": 180,
+        "endChar": 43
+      },
+      "revId": "56866ab7c40082efd9e8524b4dbccf98beb8dd44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
