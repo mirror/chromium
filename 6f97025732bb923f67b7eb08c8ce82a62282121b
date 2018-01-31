@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "f5e4c325_9be7c454",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/heap-profiler/heap-snapshot-with-detached-dom-tree.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-31T20:04:07Z",
+      "side": 0,
+      "message": "can we keep this test?",
+      "revId": "6f97025732bb923f67b7eb08c8ce82a62282121b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6daf1594_575f7a06",
         "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
         "patchSetId": 4

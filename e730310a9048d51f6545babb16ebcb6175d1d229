@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82b0229b_e3ac21d0",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/heap-profiler/heap-snapshot-with-event-listener-expected.txt",
+        "patchSetId": 12
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-31T20:04:07Z",
+      "side": 1,
+      "message": "Should we skip nodes like InternalNode as it implementation dependent and may change over time?",
+      "revId": "e730310a9048d51f6545babb16ebcb6175d1d229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80cde97d_747a3689",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8EmbedderGraphBuilder.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-31T20:04:07Z",
+      "side": 1,
+      "message": "nit: drop {}",
+      "revId": "e730310a9048d51f6545babb16ebcb6175d1d229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61189da7_87324ad0",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8EmbedderGraphBuilder.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-31T20:04:07Z",
+      "side": 1,
+      "message": "nit: you can remember Node* returned by AddNode to avoid extra \u0027at\u0027 call. Also you can replace Contains with find to avoid double lookup.",
+      "revId": "e730310a9048d51f6545babb16ebcb6175d1d229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ab5cab7_540a621e",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8EmbedderGraphBuilder.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-31T20:04:07Z",
+      "side": 1,
+      "message": "not needed?",
+      "revId": "e730310a9048d51f6545babb16ebcb6175d1d229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
