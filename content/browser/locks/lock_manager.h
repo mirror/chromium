@@ -34,6 +34,7 @@ class LockManager : public base::RefCountedThreadSafe<LockManager>,
   void RequestLock(const std::string& name,
                    blink::mojom::LockMode mode,
                    WaitMode wait,
+                   Priority priority,
                    blink::mojom::LockRequestPtr request) override;
 
   // Called by a LockHandle's implementation when destructed.
@@ -48,7 +49,7 @@ class LockManager : public base::RefCountedThreadSafe<LockManager>,
 
  private:
   // Internal representation of a lock request or held lock.
-  struct Lock;
+  class Lock;
 
   // State for a particular origin.
   class OriginState;
@@ -62,6 +63,8 @@ class LockManager : public base::RefCountedThreadSafe<LockManager>,
   bool IsGrantable(const url::Origin& origin,
                    const std::string& name,
                    blink::mojom::LockMode mode) const;
+
+  void Drop(const url::Origin& origin, const std::string& name);
 
   // Called when a lock is requested and optionally when a lock is released,
   // to process outstanding requests within the origin.
