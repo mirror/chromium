@@ -93,7 +93,8 @@ class MetaBuildWrapper(object):
       subp.add_argument('-i', '--isolate-map-file', metavar='PATH',
                         default=self.default_isolate_map,
                         help='path to isolate map file '
-                             '(default is %(default)s)')
+                             '(default is %(default)s)',
+                        nargs='*')
       subp.add_argument('-g', '--goma-dir',
                         help='path to goma directory')
       subp.add_argument('--android-version-code',
@@ -585,7 +586,11 @@ class MetaBuildWrapper(object):
       raise MBErr('isolate map file not found at %s' %
                   self.args.isolate_map_file)
     try:
-      return ast.literal_eval(self.ReadFile(self.args.isolate_map_file))
+      isolate_maps = ast.literal_eval(
+          self.ReadFile(self.args.isolate_map_file[0]))
+      for isolate_map in self.args.isolate_map_file[1:]:
+        isolate_maps.update(ast.literal_eval(isolate_map))
+      return isolate_maps
     except SyntaxError as e:
       raise MBErr('Failed to parse isolate map file "%s": %s' %
                   (self.args.isolate_map_file, e))
