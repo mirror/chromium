@@ -95,6 +95,8 @@ AudioOutputController::AudioOutputController(
     : audio_manager_(audio_manager),
       params_(params),
       handler_(handler),
+      message_loop_(audio_manager->GetTaskRunner()),
+      synchronous_operations_mode_(message_loop_->BelongsToCurrentThread()),
       output_device_id_(output_device_id),
       stream_(NULL),
       diverting_to_stream_(NULL),
@@ -102,7 +104,6 @@ AudioOutputController::AudioOutputController(
       volume_(1.0),
       state_(kEmpty),
       sync_reader_(sync_reader),
-      message_loop_(audio_manager->GetTaskRunner()),
       power_monitor_(
           params.sample_rate(),
           TimeDelta::FromMilliseconds(kPowerMeasurementTimeConstantMillis)),
@@ -134,6 +135,10 @@ scoped_refptr<AudioOutputController> AudioOutputController::Create(
 
   scoped_refptr<AudioOutputController> controller(new AudioOutputController(
       audio_manager, event_handler, params, output_device_id, sync_reader));
+  if (controller->synchronous_operations_mode_) {
+    controller->DoCreate(false);
+    return controller;
+  }
   controller->message_loop_->PostTask(
       FROM_HERE,
       base::BindOnce(&AudioOutputController::DoCreate, controller, false));
@@ -142,18 +147,37 @@ scoped_refptr<AudioOutputController> AudioOutputController::Create(
 
 void AudioOutputController::Play() {
   CHECK_EQ(AudioManager::Get(), audio_manager_);
+  DCHECK_EQ(message_loop_->BelongsToCurrentThread(),
+            synchronous_operations_mode_);
+  if (synchronous_operations_mode_) {
+    DoPlay();
+    return;
+  }
   message_loop_->PostTask(FROM_HERE,
                           base::BindOnce(&AudioOutputController::DoPlay, this));
 }
 
 void AudioOutputController::Pause() {
   CHECK_EQ(AudioManager::Get(), audio_manager_);
+  DCHECK_EQ(message_loop_->BelongsToCurrentThread(),
+            synchronous_operations_mode_);
+  if (synchronous_operations_mode_) {
+    DoPause();
+    return;
+  }
   message_loop_->PostTask(
       FROM_HERE, base::BindOnce(&AudioOutputController::DoPause, this));
 }
 
 void AudioOutputController::Close(base::OnceClosure closed_task) {
   CHECK_EQ(AudioManager::Get(), audio_manager_);
+  DCHECK_EQ(message_loop_->BelongsToCurrentThread(),
+            synchronous_operations_mode_);
+  if (synchronous_operations_mode_) {
+    DCHECK(closed_task.is_null());
+    DoClose();
+    return;
+  }
   DCHECK(!closed_task.is_null());
   message_loop_->PostTaskAndReply(
       FROM_HERE, base::BindOnce(&AudioOutputController::DoClose, this),
@@ -162,6 +186,12 @@ void AudioOutputController::Close(base::OnceClosure closed_task) {
 
 void AudioOutputController::SetVolume(double volume) {
   CHECK_EQ(AudioManager::Get(), audio_manager_);
+  DCHECK_EQ(message_loop_->BelongsToCurrentThread(),
+            synchronous_operations_mode_);
+  if (synchronous_operations_mode_) {
+    DoSetVolume(volume);
+    return;
+  }
   message_loop_->PostTask(
       FROM_HERE,
       base::BindOnce(&AudioOutputController::DoSetVolume, this, volume));
