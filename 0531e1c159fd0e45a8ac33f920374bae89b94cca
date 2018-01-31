@@ -45,6 +45,47 @@
       "revId": "0531e1c159fd0e45a8ac33f920374bae89b94cca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e3ac0f0_19a14091",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/custom/V8HTMLAllCollectionCustom.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-31T10:14:12Z",
+      "side": 0,
+      "message": "The counter looks ignorable.  Let\u0027s go ahead.",
+      "parentUuid": "e23353a2_ef28e669",
+      "range": {
+        "startLine": 120,
+        "startChar": 19,
+        "endLine": 120,
+        "endChar": 25
+      },
+      "revId": "0531e1c159fd0e45a8ac33f920374bae89b94cca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaf4f284_d4d6c347",
+        "filename": "third_party/WebKit/public/platform/web_feature.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-31T10:14:12Z",
+      "side": 0,
+      "message": "For a removed item, please prepend \"OBSOLETE_\" to the corresponding item in histogram/enums.xml.  It\u0027s a common practice in histogram XMLs.",
+      "revId": "0531e1c159fd0e45a8ac33f920374bae89b94cca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
