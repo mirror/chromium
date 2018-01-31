@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "4fa365a6_e0fc84e2",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-31T18:07:34Z",
+      "side": 1,
+      "message": "I removed these angles here and use the angle larger than kMaxStableAngle (340) as fully opened angle. In the following naming, I think it would be better to use fully opened angle than unstable angle, because unstable angle indicates both [0,20] and [340,360] but we only need to consider [340,360].",
+      "parentUuid": "9e9a8a23_908366ba",
+      "revId": "aece28e532d15096180f095452a320ed643572a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0110258a_75b66e3f",
         "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
         "patchSetId": 8

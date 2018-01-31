@@ -70,6 +70,24 @@
       "revId": "4a01f668c00486eb34ae9aab1eca6f346ca1405c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a794c81_908d1b2b",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-31T18:07:34Z",
+      "side": 1,
+      "message": "Even without the |tablet_mode_switch_is_on_| being set, scenario c and d still work fine because  unstable angle [0, 20] won\u0027t be used to exit tablet mode.",
+      "parentUuid": "4c153401_1f78f751",
+      "revId": "4a01f668c00486eb34ae9aab1eca6f346ca1405c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
