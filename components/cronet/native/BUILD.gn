@@ -39,6 +39,10 @@ source_set("cronet_native_impl") {
     "generated/cronet.idl_impl_struct.cc",
     "generated/cronet.idl_impl_struct.h",
   ]
+
+  if (is_fuchsia) {
+    sources += [ "../fuchsia/cronet_global_state_fuchsia.cc" ]
+  }
 }
 
 source_set("cronet_native_testutil") {
@@ -58,15 +62,24 @@ source_set("cronet_native_testutil") {
   ]
 }
 
+shared_library("cronet") {
+  output_name = "cronet_native"
+  deps = [
+    ":cronet_native_impl",
+  ]
+}
+
 # Unit tests for Cronet native API. Depends on cronet_native_impl to test
 # implementation details.
-source_set("cronet_native_unittests") {
+test("cronet_native_unittests") {
   testonly = true
 
   deps = [
     ":cronet_native_impl",
     ":cronet_native_testutil",
     "//net:test_support",
+    "//testing/gtest",
+    "//testing/gtest:gtest_main",
   ]
 
   configs += [ ":cronet_native_include_config" ]
@@ -82,15 +95,17 @@ source_set("cronet_native_unittests") {
 
 # Tests for publicly exported Cronet Native API. This target does NOT depend on
 # cronet_native_impl to prevent static linking of implementation into test app.
-source_set("cronet_native_tests") {
+test("cronet_native_tests") {
   testonly = true
 
   deps = [
+    ":cronet",
     ":cronet_native_testutil",
     "//base",
     "//base/test:test_support",
     "//net:test_support",
     "//testing/gtest",
+    "//testing/gtest:gtest_main",
   ]
 
   configs += [ ":cronet_native_include_config" ]
