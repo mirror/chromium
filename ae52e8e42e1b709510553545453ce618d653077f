@@ -1,0 +1,579 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "069b2b35_da92c55e",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T16:19:42Z",
+      "side": 1,
+      "message": "#include \u003cvector\u003e",
+      "range": {
+        "startLine": 16,
+        "startChar": 33,
+        "endLine": 16,
+        "endChar": 39
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef287d8d_e6e5d73e",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T16:19:42Z",
+      "side": 1,
+      "message": "nit: Please separate lines 18 and 19 with a blank line.",
+      "range": {
+        "startLine": 18,
+        "startChar": 11,
+        "endLine": 18,
+        "endChar": 0
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84c52448_f889ac29",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T16:19:42Z",
+      "side": 1,
+      "message": "constexpr? (also below)",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 5
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb7c9f83_6667fb3a",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T16:19:42Z",
+      "side": 1,
+      "message": "Why not range-based for loop?\nfor (const FormFieldData\u0026 field : fields) {...}",
+      "range": {
+        "startLine": 68,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 43
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84be8a4a_31ab64bb",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T16:19:42Z",
+      "side": 1,
+      "message": "I\u0027d suggest to use const FormFieldData* instead of const auto*. The specific type name is not so long and makes it easier to check without the need to scroll up to look up the definition of FieldPointersVector.\n(Also below.)",
+      "range": {
+        "startLine": 76,
+        "startChar": 13,
+        "endLine": 76,
+        "endChar": 17
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d854aa6_79a4844c",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T16:19:42Z",
+      "side": 1,
+      "message": "nit: While \"auto\" here resolves to \"const FormFieldData*\", maybe let\u0027s not leave out the explicit \"const\" in the for loop definition. Especially because the explicit const is present on line 76.",
+      "range": {
+        "startLine": 84,
+        "startChar": 7,
+        "endLine": 84,
+        "endChar": 11
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a44e9ee_1bbf2a81",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T16:19:42Z",
+      "side": 1,
+      "message": "What about\nfor (const FormFieldData* field : fields) {...}\n?",
+      "range": {
+        "startLine": 100,
+        "startChar": 2,
+        "endLine": 101,
+        "endChar": 34
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "969ce82d_e69a5382",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T16:19:42Z",
+      "side": 1,
+      "message": "#include \u003cutility\u003e",
+      "range": {
+        "startLine": 124,
+        "startChar": 44,
+        "endLine": 124,
+        "endChar": 48
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "246f7421_e49a9242",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T16:19:42Z",
+      "side": 1,
+      "message": "This is a bit terse, and not very clear.\nWhile I like the subtle naming of |is_password| vs. |only_...|, I only enjoyed it after reading the code itself. :) What about:\n// Returns the fields of |fields| which are password fields if |is_password| is true and text fields otherwise. In addition, it drops non-focusable fields if |only_focusable| is true, and empty fields if |only_non_empty| is true.",
+      "range": {
+        "startLine": 127,
+        "startChar": 26,
+        "endLine": 127,
+        "endChar": 43
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c4ac362_099ee51e",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T16:19:42Z",
+      "side": 1,
+      "message": "const FormFieldData instead of auto?",
+      "range": {
+        "startLine": 133,
+        "startChar": 7,
+        "endLine": 133,
+        "endChar": 11
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc605896_017d3f64",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T16:19:42Z",
+      "side": 1,
+      "message": "Typo: missing closing |.",
+      "range": {
+        "startLine": 145,
+        "startChar": 47,
+        "endLine": 145,
+        "endChar": 53
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6044f216_5cb822af",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T16:19:42Z",
+      "side": 1,
+      "message": "Perhaps you need to explain how focusable and visible are related.",
+      "range": {
+        "startLine": 146,
+        "startChar": 20,
+        "endLine": 146,
+        "endChar": 65
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "676daad3_63668cf7",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T16:19:42Z",
+      "side": 1,
+      "message": "Indeed! :)",
+      "range": {
+        "startLine": 151,
+        "startChar": 40,
+        "endLine": 151,
+        "endChar": 56
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3009f17_6b28efd7",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T16:19:42Z",
+      "side": 1,
+      "message": "optional: const",
+      "range": {
+        "startLine": 152,
+        "startChar": 2,
+        "endLine": 152,
+        "endChar": 6
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a3e6fad_89a1b8cb",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T16:19:42Z",
+      "side": 1,
+      "message": "It might have the same logic now, but it\u0027s likely to diverge with time. If there is a plan to pull the logic out and share it, I\u0027d suggest having a tracking bug for that and a TODO.",
+      "range": {
+        "startLine": 161,
+        "startChar": 55,
+        "endLine": 162,
+        "endChar": 79
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "968f3755_59bf9b5e",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T16:19:42Z",
+      "side": 1,
+      "message": "optional: I\u0027d strip unnecessary comments, this file is long already. :)",
+      "range": {
+        "startLine": 169,
+        "startChar": 4,
+        "endLine": 169,
+        "endChar": 31
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "576adc07_471ce07f",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T16:19:42Z",
+      "side": 1,
+      "message": "From where do we know that there are not more than 3 passwords?",
+      "range": {
+        "startLine": 193,
+        "startChar": 11,
+        "endLine": 193,
+        "endChar": 20
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c300abae_3f5444cb",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T16:19:42Z",
+      "side": 1,
+      "message": "optional: const?",
+      "range": {
+        "startLine": 237,
+        "startChar": 2,
+        "endLine": 237,
+        "endChar": 6
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e5c7c32_5fd7807e",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T16:19:42Z",
+      "side": 1,
+      "message": "Did you mean username_candidates here? Otherwise we are just throwing away the value from line 233.\n(If this was a mistake, could you please also add a test for that?)",
+      "range": {
+        "startLine": 239,
+        "startChar": 19,
+        "endLine": 239,
+        "endChar": 25
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53df628e_dcb6d5bd",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T16:19:42Z",
+      "side": 1,
+      "message": "optional: This seems unnecessary, the passed argument already has a good name.\n(Also below.)",
+      "range": {
+        "startLine": 240,
+        "startChar": 43,
+        "endLine": 240,
+        "endChar": 63
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a2755c7_6be2292c",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T16:19:42Z",
+      "side": 1,
+      "message": "nit: join the two sentences, the first one does not make sense alone.",
+      "range": {
+        "startLine": 269,
+        "startChar": 35,
+        "endLine": 269,
+        "endChar": 38
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07fafdf0_e4888f17",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T16:19:42Z",
+      "side": 1,
+      "message": "nit: to -\u003e in",
+      "range": {
+        "startLine": 275,
+        "startChar": 56,
+        "endLine": 275,
+        "endChar": 58
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dab12bd_23346e03",
+        "filename": "ios/chrome/browser/passwords/form_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T16:19:42Z",
+      "side": 1,
+      "message": "I don\u0027t think the code in //ios/chrome uses a namespace (similarly to //chrome). Please remove the \"passwords\" namespace.",
+      "range": {
+        "startLine": 300,
+        "startChar": 10,
+        "endLine": 300,
+        "endChar": 19
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c7df205_20cf9aed",
+        "filename": "ios/chrome/browser/passwords/form_parser.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T16:19:42Z",
+      "side": 1,
+      "message": "What is this used for?",
+      "range": {
+        "startLine": 10,
+        "startChar": 23,
+        "endLine": 10,
+        "endChar": 34
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9bc883e_b08b3842",
+        "filename": "ios/chrome/browser/passwords/form_parser.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T16:19:42Z",
+      "side": 1,
+      "message": "Could you replace these two with forward-declarations and move the #includes to the .cc file?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "ae52e8e42e1b709510553545453ce618d653077f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
