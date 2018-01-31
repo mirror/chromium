@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "ae3703c6_42d0ebe7",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-01-31T19:03:19Z",
+      "side": 1,
+      "message": "I don\u0027t think we want or need to split things into separate compilation units here.  We always have NEON on ARM now, so there\u0027s no technical need to split, and when possible I think it\u0027s better to keep related code together rather than splitting by platform.  It\u0027s essential that changes made to any one of these are made in lock step to the others, so you really want to see them all laid out in front of you in the same file.  It is generally _not_ preferable to pull platform details out of generic source files... if anything, please err the other way.  Otherwise we\u0027re making it much more likely to write platform-specific bugs.\n\nFor this reason I would like to see this code moved into the file it\u0027s related to rather than templated in a header.  If you like you can make the functions extern so they can be called from your unit tests... as long as they\u0027re defined in the same compilation unit as our primary use case, the compiler ought to be able to inline them just fine.",
+      "parentUuid": "f47086e4_7764c056",
+      "range": {
+        "startLine": 501,
+        "startChar": 0,
+        "endLine": 510,
+        "endChar": 6
+      },
+      "revId": "9ffc11e7625ed0ab35bb9097113783b2f838c6a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23a0459d_b70b0e97",
         "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
         "patchSetId": 4

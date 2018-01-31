@@ -253,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "19f0e633_9a4fd30b",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-01-31T19:03:19Z",
+      "side": 1,
+      "message": "I\u0027d definitely not change these.  Names for 32,16,8 that are not \"32\", \"16\" and \"8\" would make this much harder to read.",
+      "parentUuid": "78714080_7b231494",
+      "revId": "5173c996ca0496ef194bf0d0f97a34784ac408e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85e2ce66_5df74543",
         "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
         "patchSetId": 1
