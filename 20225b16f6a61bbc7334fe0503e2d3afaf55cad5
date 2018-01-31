@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "9b26b3d2_c1fb147b",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002525
+      },
+      "writtenOn": "2018-01-31T19:26:13Z",
+      "side": 1,
+      "message": "\"Unmuting failed and the element was paused instead because user didn\u0027t interact with the page before https://goo.gl/ximf56\"",
+      "revId": "20225b16f6a61bbc7334fe0503e2d3afaf55cad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21977679_df562c20",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002525
+      },
+      "writtenOn": "2018-01-31T19:26:13Z",
+      "side": 1,
+      "message": "\"Autoplay failed because user didn\u0027t interact with document first. https://goo.gl/ximf56\"",
+      "revId": "20225b16f6a61bbc7334fe0503e2d3afaf55cad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b56d0e3a_6644962c",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002525
+      },
+      "writtenOn": "2018-01-31T19:26:13Z",
+      "side": 1,
+      "message": "\"play() failed because user didn\u0027t interact with document first. https://goo.gl/ximf56\"",
+      "revId": "20225b16f6a61bbc7334fe0503e2d3afaf55cad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49454644_b7ac4059",
         "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.cpp",
         "patchSetId": 1
