@@ -36,6 +36,29 @@
     },
     {
       "key": {
+        "uuid": "1392081e_86999df5",
+        "filename": "content/renderer/media/media_stream_audio_processor.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2018-01-31T13:13:36Z",
+      "side": 1,
+      "message": "NOTREACHED is only used for stuff that cannot be reached. Replace entire thing with DCHECK_EQ(audio_bus-\u003eframes(), frames_per_10_ms) (because stuff like logging and returning isn\u0027t meaningful if it\u0027s never reached), or remove the NOTREACHED.\n\nThe code can either be reached or not, see style guide: https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#check_dcheck_and-notreached.",
+      "range": {
+        "startLine": 519,
+        "startChar": 2,
+        "endLine": 527,
+        "endChar": 3
+      },
+      "revId": "69e5178f4bda4022597a5446f50ab2635ee51a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49b2a511_b4928497",
         "filename": "content/renderer/media/media_stream_audio_processor.cc",
         "patchSetId": 16
@@ -47,6 +70,29 @@
       "writtenOn": "2018-01-31T13:11:59Z",
       "side": 1,
       "message": "Ditto.",
+      "revId": "69e5178f4bda4022597a5446f50ab2635ee51a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b679023e_936c4cc7",
+        "filename": "content/renderer/media/media_stream_audio_processor.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2018-01-31T13:13:36Z",
+      "side": 1,
+      "message": "Same",
+      "range": {
+        "startLine": 544,
+        "startChar": 2,
+        "endLine": 550,
+        "endChar": 3
+      },
       "revId": "69e5178f4bda4022597a5446f50ab2635ee51a5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
