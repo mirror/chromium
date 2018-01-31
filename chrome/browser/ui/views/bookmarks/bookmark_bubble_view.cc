@@ -106,6 +106,10 @@ BookmarkBubbleView::~BookmarkBubbleView() {
     if (node)
       model->Remove(node);
   }
+  // bookmark_contents_view_ is owned by this class and must be removed to
+  // prevent it from being accessed in a parent destructor after going out of
+  // scope.
+  RemoveChildView(bookmark_contents_view_.get());
 }
 
 // ui::DialogModel -------------------------------------------------------------
@@ -297,9 +301,12 @@ void BookmarkBubbleView::Init() {
   using views::GridLayout;
 
   SetLayoutManager(std::make_unique<views::FillLayout>());
-  bookmark_contents_view_ = new views::View();
+  bookmark_contents_view_ = std::make_unique<views::View>();
+  // |bookmark_contents_view_| is accessed in the destructor and and must remain
+  // alive even if removed from its parent.
+  bookmark_contents_view_->set_owned_by_client();
   GridLayout* layout = bookmark_contents_view_->SetLayoutManager(
-      std::make_unique<views::GridLayout>(bookmark_contents_view_));
+      std::make_unique<views::GridLayout>(bookmark_contents_view_.get()));
 
   constexpr int kColumnId = 0;
   ConfigureTextfieldStack(layout, kColumnId);
@@ -321,7 +328,7 @@ void BookmarkBubbleView::Init() {
   parent_combobox_->SetAccessibleName(
       l10n_util::GetStringUTF16(IDS_BOOKMARK_AX_BUBBLE_FOLDER_LABEL));
 
-  AddChildView(bookmark_contents_view_);
+  AddChildView(bookmark_contents_view_.get());
 }
 
 // Private methods -------------------------------------------------------------
@@ -397,17 +404,18 @@ void BookmarkBubbleView::ShowIOSPromotion(
     desktop_ios_promotion::PromotionEntryPoint entry_point) {
   DCHECK(!is_showing_ios_promotion_);
   edit_button_->SetVisible(false);
-  // Hide the contents, but don't delete. Its child views are accessed in the
-  // destructor if there are edits to apply.
-  bookmark_contents_view_->SetVisible(false);
+  RemoveChildView(bookmark_contents_view_.get());
   delete footnote_view_;
   footnote_view_ = nullptr;
   is_showing_ios_promotion_ = true;
   ios_promo_view_ = new DesktopIOSPromotionBubbleView(profile_, entry_point);
+  set_margins(ChromeLayoutProvider::Get()->GetDialogInsetsForContentType(
+      views::TEXT, views::TEXT));
   AddChildView(ios_promo_view_);
   GetWidget()->UpdateWindowIcon();
   GetWidget()->UpdateWindowTitle();
   DialogModelChanged();
+
   SizeToContents();
 }
 #endif
