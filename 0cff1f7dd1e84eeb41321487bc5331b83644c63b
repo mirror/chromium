@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0af7a5bd_6325182e",
+        "filename": "third_party/WebKit/LayoutTests/media/picture-in-picture/exit-picture-in-picture.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002525
+      },
+      "writtenOn": "2018-01-31T07:43:36Z",
+      "side": 1,
+      "message": "I\u0027ve updated the spec to reject with a \"InvalidStateError\": https://github.com/WICG/picture-in-picture/pull/48\n\nTests have been updated as well.\nThank you!",
+      "parentUuid": "7a790c75_8ec286d4",
+      "revId": "0cff1f7dd1e84eeb41321487bc5331b83644c63b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffc95aec_2051a182",
         "filename": "third_party/WebKit/LayoutTests/media/picture-in-picture/picture-in-picture-element.html",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "0cff1f7dd1e84eeb41321487bc5331b83644c63b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "632e502b_ed3fa6c7",
+        "filename": "third_party/WebKit/LayoutTests/media/picture-in-picture/picture-in-picture-element.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002525
+      },
+      "writtenOn": "2018-01-31T07:43:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffc95aec_2051a182",
+      "revId": "0cff1f7dd1e84eeb41321487bc5331b83644c63b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "0cff1f7dd1e84eeb41321487bc5331b83644c63b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e5cdf76_a1678f01",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002525
+      },
+      "writtenOn": "2018-01-31T07:43:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff0fdbb4_6fa248fb",
+      "range": {
+        "startLine": 44,
+        "startChar": 20,
+        "endLine": 44,
+        "endChar": 43
+      },
+      "revId": "0cff1f7dd1e84eeb41321487bc5331b83644c63b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
