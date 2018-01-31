@@ -54,10 +54,13 @@ class TestURLLoaderRequestHandler : public URLLoaderRequestHandler {
                    network::mojom::URLLoaderClientPtr client) {
     *most_recent_resource_request_ = resource_request;
     // The URLLoader will delete itself upon completion.
-    new network::URLLoader(context_.get(), std::move(request), 0 /* options */,
-                           resource_request, false /* report_raw_headers */,
-                           std::move(client), TRAFFIC_ANNOTATION_FOR_TESTS,
-                           0 /* process_id */);
+    network::mojom::URLLoaderFactoryPtr loader_factory;
+    context_->CreateURLLoaderFactory(mojo::MakeRequest(&loader_factory),
+                                     0 /* process_id */);
+    loader_factory->CreateLoaderAndStart(
+        std::move(request), 0 /* routing_id */, 0 /* request_id */,
+        0 /* options */, resource_request, std::move(client),
+        net::MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
   }
 
   bool MaybeCreateLoaderForResponse(
