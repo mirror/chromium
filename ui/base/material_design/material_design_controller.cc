@@ -118,6 +118,15 @@ MaterialDesignController::Mode MaterialDesignController::DefaultMode() {
 }
 
 // static
+bool MaterialDesignController::IsTouchOptimizedUiEnabled() {
+#if defined(OS_CHROMEOS)
+  return base::FeatureList::IsEnabled(features::kTouchOptimizedUi);
+#else
+  return false;
+#endif  // defined(OS_CHROMEOS)
+}
+
+// static
 void MaterialDesignController::Uninitialize() {
   is_mode_initialized_ = false;
 }

@@ -23,7 +23,7 @@ class UI_BASE_EXPORT MaterialDesignController {
     // Basic material design.
     MATERIAL_NORMAL = 0,
     // Material design targeted at mouse/touch hybrid devices.
-    MATERIAL_HYBRID = 1
+    MATERIAL_HYBRID = 1,
   };
 
   // Initializes |mode_|. Must be called before checking |mode_|.
@@ -38,6 +38,9 @@ class UI_BASE_EXPORT MaterialDesignController {
 
   // Returns the per-platform default material design variant.
   static Mode DefaultMode();
+
+  // Returns true if the touch-optimized UI is enabled on Chrome OS.
+  static bool IsTouchOptimizedUiEnabled();
 
   static bool is_mode_initialized() { return is_mode_initialized_; }
 

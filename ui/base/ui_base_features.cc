@@ -25,8 +25,8 @@ const base::Feature kSecondaryUiMd = {"SecondaryUiMd",
 #endif
 };
 
-// Enables the touchable chrome.
-const base::Feature kTouchableChrome = {"TouchableChrome",
-                                        base::FEATURE_DISABLED_BY_DEFAULT};
+// Enables the touch optimized UI.
+const base::Feature kTouchOptimizedUi = {"TouchOptimizedUi",
+                                         base::FEATURE_DISABLED_BY_DEFAULT};
 
 }  // namespace features

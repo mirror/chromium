@@ -62,13 +62,15 @@ int FrameHeaderUtil::GetThemeBackgroundXInset() {
 gfx::Rect FrameHeaderUtil::GetAvailableTitleBounds(
     const views::View* left_view,
     const views::View* right_view,
-    const gfx::FontList& title_font_list) {
+    const gfx::FontList& title_font_list,
+    int header_height) {
   int x = left_view ? left_view->bounds().right() + kTitleIconOffsetX
                     : kTitleNoIconOffsetX;
   int height = title_font_list.GetHeight();
   // Floor when computing the center of |caption_button_container| and when
   // computing the center of the text.
-  int y = std::max(0, (right_view->height() / 2) - (height / 2));
+  DCHECK_LE(right_view->height(), header_height);
+  int y = std::max(0, (header_height / 2) - (height / 2));
   int width = std::max(0, right_view->x() - kTitleCaptionButtonSpacing - x);
   return gfx::Rect(x, y, width, height);
 }
