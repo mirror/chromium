@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0c3e6059_8ee8dfe4",
+        "filename": "third_party/WebKit/Source/build/scripts/gperf.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-31T13:32:23Z",
+      "side": 1,
+      "message": "\"(since that added   the input\u003d parameter)\" in cl description :-)",
+      "parentUuid": "c2d03720_0d10eed4",
+      "revId": "f5e331b8e95c8bb83c2a6a22a2e2e749d3a18033",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d3e3271_b857cec3",
         "filename": "third_party/WebKit/Source/build/scripts/gperf.py",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e0463e0e_14371248",
+        "filename": "third_party/WebKit/Source/build/scripts/gperf.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-31T13:32:23Z",
+      "side": 1,
+      "message": "sure, done.",
+      "parentUuid": "2d3e3271_b857cec3",
+      "revId": "f5e331b8e95c8bb83c2a6a22a2e2e749d3a18033",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1bf87ca8_9c3f18c2",
         "filename": "third_party/WebKit/Source/core/BUILD.gn",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-31T06:24:27Z",
       "side": 1,
       "message": "I guess there\u0027s no way to automatically catch when people forget to do this?",
+      "revId": "f5e331b8e95c8bb83c2a6a22a2e2e749d3a18033",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "819135ce_9c6022d0",
+        "filename": "third_party/WebKit/Source/core/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 1182,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-31T13:32:23Z",
+      "side": 1,
+      "message": "no easy way. someone at opera has a locally-hacked-up ninja that uses a heuristic to look for missing deps, but we don\u0027t have a good solution for this yet. (i think code_generator doesn\u0027t have deps on most python scripts it imports. it\u0027d be neat if we could get python to write a depfile for imports -- like -MMD for gcc)",
+      "parentUuid": "1bf87ca8_9c3f18c2",
       "revId": "f5e331b8e95c8bb83c2a6a22a2e2e749d3a18033",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
