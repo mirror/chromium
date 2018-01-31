@@ -32,6 +32,17 @@ extern const char kAccessControlAllowSuborigin[];
 
 }  // namespace header_names
 
+// Registers whitelisted secure origins for CORS checks. Once network service
+// is enabled by default, this registration should not be needed since only
+// network schemes should be passed to the network service. When the network
+// service is disabled, this affects CORSURLLoaderFactory used in content.
+COMPONENT_EXPORT(NETWORK_CPP)
+void RegisterSecureOrigins(const std::vector<url::Origin>& secure_origins);
+
+// Refers the registered shitelisted secure origins.
+COMPONENT_EXPORT(NETWORK_CPP)
+const std::vector<url::Origin>& GetSecureOrigins();
+
 // Performs a CORS access check on the response parameters.
 COMPONENT_EXPORT(NETWORK_CPP)
 base::Optional<mojom::CORSError> CheckAccess(

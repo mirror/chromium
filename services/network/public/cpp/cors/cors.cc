@@ -4,6 +4,9 @@
 
 #include "services/network/public/cpp/cors/cors.h"
 
+#include <algorithm>
+#include <vector>
+
 #include "url/gurl.h"
 #include "url/origin.h"
 #include "url/url_util.h"
@@ -12,6 +15,8 @@ namespace {
 
 const char kAsterisk[] = "*";
 const char kLowerCaseTrue[] = "true";
+
+std::vector<url::Origin>* secure_origins = nullptr;
 
 }  // namespace
 
@@ -27,6 +32,18 @@ const char kAccessControlAllowOrigin[] = "Access-Control-Allow-Origin";
 const char kAccessControlAllowSuborigin[] = "Access-Control-Allow-Suborigin";
 
 }  // namespace header_names
+
+void RegisterSecureOrigins(const std::vector<url::Origin>& origins) {
+  delete secure_origins;
+  secure_origins = new std::vector<url::Origin>(origins.size());
+  std::copy(origins.begin(), origins.end(), secure_origins->begin());
+}
+
+const std::vector<url::Origin>& GetSecureOrigins() {
+  if (!secure_origins)
+    secure_origins = new std::vector<url::Origin>;
+  return *secure_origins;
+}
 
 // See https://fetch.spec.whatwg.org/#cors-check.
 base::Optional<mojom::CORSError> CheckAccess(

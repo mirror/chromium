@@ -10,6 +10,8 @@ component("cpp") {
   sources = [
     "cors/cors.cc",
     "cors/cors.h",
+    "cors/cors_url_loader.cc",
+    "cors/cors_url_loader.h",
     "features.cc",
     "features.h",
     "ignore_errors_cert_verifier.cc",
