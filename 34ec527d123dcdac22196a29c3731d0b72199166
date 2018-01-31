@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9eda43ab_d1b29c7b",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2378,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-31T00:20:01Z",
+      "side": 1,
+      "message": "There\u0027s a function which already calls this called Browser::OnWindowClosing().  From its name, I\u0027d have expected that to be reached automatically in response to the Close() call just below.  It seems like if that\u0027s not happening we might also have other problems (e.g. the shutdown-related code there not running).\n\nI\u0027m also worried about calling this (or that, if you change the call) twice in some codepaths.  If we try to trigger a normal window close, and that calls OnWindowClosing(), then closes all the tabs, which calls this function -- we get duplicate notifications.\n\nIt seems like we want to ensure this gets called exactly once.  I don\u0027t know what the right solution is.  I don\u0027t know if all codepaths that close the browser window ultimately go through CloseFrame() (so it\u0027d be safe to make this be the single call point).  I don\u0027t know if the notifications fired by that method need to happen before we close tabs (in which case it wouldn\u0027t be safe to consolidate all calls to it into a single one here even if it otherwise worked).  If we need to instead add a call elsewhere, I don\u0027t know precisely what the right place is.  Maybe in the code that currently calls TabstripEmpty()?",
+      "revId": "34ec527d123dcdac22196a29c3731d0b72199166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
