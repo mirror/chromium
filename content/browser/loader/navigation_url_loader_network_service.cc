@@ -96,6 +96,16 @@ WebContents* GetWebContentsFromFrameTreeNodeID(int frame_tree_node_id) {
   return WebContentsImpl::FromFrameTreeNode(frame_tree_node);
 }
 
+void GetContextsCallbackForCertificateFetcherForSignedExchange(
+    ResourceContext* resource_context,
+    net::URLRequestContext* request_context,
+    ResourceType resource_type,
+    ResourceContext** resource_context_out,
+    net::URLRequestContext** request_context_out) {
+  *resource_context_out = resource_context;
+  *request_context_out = request_context;
+}
+
 const net::NetworkTrafficAnnotationTag kNavigationUrlLoaderTrafficAnnotation =
     net::DefineNetworkTrafficAnnotation("navigation_url_loader", R"(
       semantics {
@@ -306,7 +316,16 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
 
     default_loader_used_ = true;
     if (base::FeatureList::IsEnabled(features::kSignedHTTPExchange)) {
-      handlers_.push_back(base::MakeUnique<WebPackageRequestHandler>());
+      DCHECK(!default_url_loader_factory_getter_);
+      handlers_.push_back(base::MakeUnique<WebPackageRequestHandler>(
+          nullptr /* default_url_loader_factory_getter */,
+          base::BindOnce(&URLLoaderRequestController::CreateURLLoaderThrottles,
+                         base::Unretained(this)),
+          base::BindRepeating(
+              &GetContextsCallbackForCertificateFetcherForSignedExchange,
+              base::Unretained(resource_context_),
+              base::Unretained(
+                  url_request_context_getter->GetURLRequestContext()))));
     }
 
     // The ResourceDispatcherHostImpl can be null in unit tests.
@@ -394,9 +413,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
       url_loader_ = ThrottlingURLLoader::CreateLoaderAndStart(
           base::MakeRefCounted<WrapperSharedURLLoaderFactory>(
               std::move(factory_for_webui)),
-          GetContentClient()->browser()->CreateURLLoaderThrottles(
-              web_contents_getter_, navigation_ui_data_.get()),
-          0 /* routing_id */, 0 /* request_id? */,
+          CreateURLLoaderThrottles(), 0 /* routing_id */, 0 /* request_id? */,
           network::mojom::kURLLoadOptionNone, resource_request_.get(), this,
           kNavigationUrlLoaderTrafficAnnotation,
           base::ThreadTaskRunnerHandle::Get());
@@ -433,7 +450,13 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
     }
 
     if (base::FeatureList::IsEnabled(features::kSignedHTTPExchange)) {
-      handlers_.push_back(base::MakeUnique<WebPackageRequestHandler>());
+      handlers_.push_back(base::MakeUnique<WebPackageRequestHandler>(
+          default_url_loader_factory_getter_.get(),
+          base::BindOnce(&URLLoaderRequestController::CreateURLLoaderThrottles,
+                         base::Unretained(this)),
+          base::RepeatingCallback<void(ResourceType resource_type,
+                                       ResourceContext**,
+                                       net::URLRequestContext**)>()));
     }
 
     Restart();
@@ -469,11 +492,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
       url_loader_ = ThrottlingURLLoader::CreateLoaderAndStart(
           base::MakeRefCounted<SingleRequestURLLoaderFactory>(
               std::move(single_request_handler)),
-          base::FeatureList::IsEnabled(network::features::kNetworkService)
-              ? GetContentClient()->browser()->CreateURLLoaderThrottles(
-                    web_contents_getter_, navigation_ui_data_.get())
-              : std::vector<std::unique_ptr<content::URLLoaderThrottle>>(),
-          frame_tree_node_id_, 0 /* request_id? */,
+          CreateURLLoaderThrottles(), frame_tree_node_id_, 0 /* request_id? */,
           network::mojom::kURLLoadOptionNone, resource_request_.get(), this,
           kNavigationUrlLoaderTrafficAnnotation,
           base::ThreadTaskRunnerHandle::Get());
@@ -547,10 +566,9 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
     // getters.
     url_loader_ = ThrottlingURLLoader::CreateLoaderAndStart(
         base::MakeRefCounted<WeakWrapperSharedURLLoaderFactory>(factory),
-        GetContentClient()->browser()->CreateURLLoaderThrottles(
-            web_contents_getter_, navigation_ui_data_.get()),
-        frame_tree_node_id_, 0 /* request_id? */, options,
-        resource_request_.get(), this, kNavigationUrlLoaderTrafficAnnotation,
+        CreateURLLoaderThrottles(), frame_tree_node_id_, 0 /* request_id? */,
+        options, resource_request_.get(), this,
+        kNavigationUrlLoaderTrafficAnnotation,
         base::ThreadTaskRunnerHandle::Get());
   }
 
@@ -754,6 +772,14 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
       }
     }
     return false;
+  }
+
+  std::vector<std::unique_ptr<content::URLLoaderThrottle>>
+  CreateURLLoaderThrottles() {
+    return base::FeatureList::IsEnabled(network::features::kNetworkService)
+               ? GetContentClient()->browser()->CreateURLLoaderThrottles(
+                     web_contents_getter_, navigation_ui_data_.get())
+               : std::vector<std::unique_ptr<content::URLLoaderThrottle>>();
   }
 
   std::vector<std::unique_ptr<URLLoaderRequestHandler>> handlers_;
