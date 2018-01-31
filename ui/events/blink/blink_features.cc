@@ -13,4 +13,7 @@ const base::Feature kVsyncAlignedInputEvents{"VsyncAlignedInput",
 
 const base::Feature kSendMouseLeaveEvents{"SendMouseLeaveEvents",
                                           base::FEATURE_ENABLED_BY_DEFAULT};
+
+const base::Feature kCompositorTouchAction{"kCompositorTouchAction",
+                                           base::FEATURE_DISABLED_BY_DEFAULT};
 }

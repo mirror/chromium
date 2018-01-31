@@ -1418,6 +1418,9 @@ TEST_P(InputHandlerProxyTest, TouchMoveBlockingAddedAfterPassiveTouchStart) {
   touch.touches_length = 1;
   touch.touch_start_or_first_touch_move = true;
   touch.touches[0] = CreateWebTouchPoint(WebTouchPoint::kStateMoved, 10, 10);
+  // TODO(xidachen): Change the expected dispotion to DID_HANDLE_NON_BLOCKING
+  // when |kCompositorTouchAction| is enabled because we are able to ACK the
+  // event from the compositor.
   EXPECT_EQ(InputHandlerProxy::DID_NOT_HANDLE,
             input_handler_->HandleInputEvent(touch));
   VERIFY_AND_RESET_MOCKS();
@@ -1587,6 +1590,9 @@ TEST_P(InputHandlerProxyTest, GestureScrollingThreadStatusHistogram) {
               SetWhiteListedTouchAction(testing::_, testing::_, testing::_))
       .WillOnce(testing::Return());
 
+  // TODO(xidachen): Change the expected dispotion to DID_HANDLE_NON_BLOCKING
+  // when |kCompositorTouchAction| is enabled because we are able to ACK the
+  // event from the compositor.
   expected_disposition_ = InputHandlerProxy::DID_NOT_HANDLE;
   EXPECT_EQ(expected_disposition_,
             input_handler_->HandleInputEvent(touch_start));
