@@ -328,23 +328,23 @@ void MessagePopupCollection::RepositionWidgetsWithTarget() {
 
   // Nothing to do if there are no widgets above target if bottom-aligned or no
   // widgets below target if top-aligned.
-  if (top_down ? toasts_.back()->origin().y() < target_top_edge_
-               : toasts_.back()->origin().y() > target_top_edge_)
+  if (top_down ? GetTargetEdge(toasts_.back()) < target_edge_
+               : GetTargetEdge(toasts_.back()) > target_edge_)
     return;
 
   Toasts::reverse_iterator iter = toasts_.rbegin();
   for (; iter != toasts_.rend(); ++iter) {
     // We only reposition widgets above target if bottom-aligned or widgets
     // below target if top-aligned.
-    if (top_down ? (*iter)->origin().y() < target_top_edge_
-                 : (*iter)->origin().y() > target_top_edge_)
+    if (top_down ? GetTargetEdge(*iter) < target_edge_
+                 : GetTargetEdge(*iter) > target_edge_)
       break;
   }
   --iter;
 
   // Slide length is the number of pixels the widgets should move so that their
   // bottom edge (top-edge if top-aligned) touches the target.
-  int slide_length = std::abs(target_top_edge_ - (*iter)->origin().y());
+  int slide_length = std::abs(target_edge_ - GetTargetEdge(*iter));
   for (;; --iter) {
     gfx::Rect bounds((*iter)->bounds());
 
@@ -371,6 +371,13 @@ int MessagePopupCollection::GetBaseLine(ToastContentsView* last_toast) const {
   }
 }
 
+int MessagePopupCollection::GetTargetEdge(ToastContentsView* toast) const {
+  if (alignment_delegate_->IsTopDown())
+    return toast->origin().y();
+  else
+    return toast->bounds().bottom();
+}
+
 void MessagePopupCollection::OnNotificationAdded(
     const std::string& notification_id) {
   DoUpdateIfPossible();
@@ -388,7 +395,7 @@ void MessagePopupCollection::OnNotificationRemoved(
   if (iter == toasts_.end())
     return;
 
-  target_top_edge_ = (*iter)->bounds().y();
+  target_edge_ = GetTargetEdge(*iter);
   if (by_user && !user_is_closing_toasts_by_clicking_) {
     // [Re] start a timeout after which the toasts re-position to their
     // normal locations after tracking the mouse pointer for easy deletion.
