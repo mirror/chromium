@@ -154,6 +154,8 @@ gfx::FontList GetHeaderTextFontList() {
   gfx::Font font = default_font.Derive(font_size_delta, gfx::Font::NORMAL,
                                        gfx::Font::Weight::NORMAL);
   DCHECK_EQ(kHeaderTextFontSize, font.GetFontSize());
+  LOG(ERROR) << "GetHeaderTextFontList Default: " << default_font.GetFontName().c_str() << " " << default_font.GetFontSize();
+  LOG(ERROR) << "GetHeaderTextFontList Custom : " << font.GetFontName().c_str() << " " << font.GetFontSize();
   return gfx::FontList(font);
 }
 
@@ -190,7 +192,7 @@ NotificationHeaderView::NotificationHeaderView(
 
   // Font list for text views. The height must be 15px to match with the mock.
   gfx::FontList font_list = GetHeaderTextFontList();
-  DCHECK_EQ(15, font_list.GetHeight());
+  DCHECK_EQ(0, font_list.GetHeight());
 
   const int font_list_height = font_list.GetHeight();
 
