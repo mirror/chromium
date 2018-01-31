@@ -17,6 +17,7 @@
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
 #include "platform/bindings/ScriptState.h"
+#include "platform/runtime_enabled_features.h"
 
 namespace blink {
 
@@ -27,11 +28,11 @@ Animation* ElementAnimation::animate(
     UnrestrictedDoubleOrKeyframeAnimationOptions options,
     ExceptionState& exception_state) {
   EffectModel::CompositeOperation composite = EffectModel::kCompositeReplace;
-  if (options.IsKeyframeAnimationOptions() &&
-      !EffectModel::StringToCompositeOperation(
-          options.GetAsKeyframeAnimationOptions().composite(), composite,
-          &exception_state)) {
-    return nullptr;
+  if (options.IsKeyframeAnimationOptions()) {
+    composite = EffectModel::ExtractCompositeOperation(
+        options.GetAsKeyframeAnimationOptions(), exception_state);
+    if (exception_state.HadException())
+      return nullptr;
   }
 
   KeyframeEffectModelBase* effect = EffectInput::Convert(
