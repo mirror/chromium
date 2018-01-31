@@ -52,6 +52,24 @@
       "revId": "5b7f1d69f1eb334e64dfff4b42fde77e37e98b80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81699f96_d83ccf77",
+        "filename": "ash/wm/workspace/backdrop_controller.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-31T19:29:05Z",
+      "side": 0,
+      "message": "Right. It doesn\u0027t affect splitview mode for now if we don\u0027t have spoken feedback enabled. (I remember I had some backdrop issues for ARC apps in splitscreen when I worked on this which forced me to make this change, but I could not repro it anymore...).  So I reverted the change here and filed a separate bug for other accessibility we may need to tweak for splitscreen (crbug.com/807722).",
+      "parentUuid": "2b7e1f88_cdbf6106",
+      "revId": "5b7f1d69f1eb334e64dfff4b42fde77e37e98b80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
