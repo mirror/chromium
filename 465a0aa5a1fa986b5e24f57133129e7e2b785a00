@@ -22,6 +22,30 @@
       "revId": "465a0aa5a1fa986b5e24f57133129e7e2b785a00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0f04cd4_d779c444",
+        "filename": "chrome/browser/extensions/active_tab_permission_granter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-31T01:48:23Z",
+      "side": 1,
+      "message": "I can\u0027t think of any reason we\u0027d need it to be, so I\u0027d prefer to avoid adding any extra complexity.  Any downside you can think of?",
+      "parentUuid": "5a8ca624_2fbaf0ef",
+      "range": {
+        "startLine": 128,
+        "startChar": 34,
+        "endLine": 128,
+        "endChar": 43
+      },
+      "revId": "465a0aa5a1fa986b5e24f57133129e7e2b785a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
