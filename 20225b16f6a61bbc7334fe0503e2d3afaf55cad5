@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49454644_b7ac4059",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2018-01-31T18:47:55Z",
+      "side": 1,
+      "message": "nit: I\u0027m fine either way, but given that we have this exact check in at least 4 places, it might make sense to have a IsDocumentUserActivationRequired() helper method, which would make these a bit more readable",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 199,
+        "endChar": 66
+      },
+      "revId": "20225b16f6a61bbc7334fe0503e2d3afaf55cad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eefc5df_c4e9a1e8",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2018-01-31T18:47:55Z",
+      "side": 1,
+      "message": "nit: should probably add a comment here",
+      "revId": "20225b16f6a61bbc7334fe0503e2d3afaf55cad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
