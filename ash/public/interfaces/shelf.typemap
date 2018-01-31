@@ -14,11 +14,9 @@ sources = [
 ]
 public_deps = [
   "//mojo/common:common_custom_types",
-  "//ui/base",
   "//ui/gfx/image/mojo:struct_traits",
 ]
 type_mappings = [
-  "ash.mojom.MenuItemType=ui::MenuModel::ItemType",
   "ash.mojom.ShelfAction=ash::ShelfAction",
   "ash.mojom.ShelfAlignment=ash::ShelfAlignment",
   "ash.mojom.ShelfAutoHideBehavior=ash::ShelfAutoHideBehavior",

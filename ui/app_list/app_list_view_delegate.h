@@ -8,6 +8,8 @@
 #include <string>
 #include <vector>
 
+#include "ash/public/interfaces/menu.mojom.h"
+#include "base/callback_forward.h"
 #include "base/strings/string16.h"
 #include "base/time/time.h"
 #include "third_party/skia/include/core/SkColor.h"
@@ -19,10 +21,6 @@ class Size;
 
 namespace views {
 class View;
-}
-
-namespace ui {
-class MenuModel;
 }
 
 namespace app_list {
@@ -71,7 +69,10 @@ class APP_LIST_EXPORT AppListViewDelegate {
   virtual void ViewClosing() = 0;
 
   // Gets the wallpaper prominent colors.
-  virtual void GetWallpaperProminentColors(std::vector<SkColor>* colors) = 0;
+  using GetWallpaperProminentColorsCallback =
+      base::OnceCallback<void(const std::vector<uint32_t>&)>;
+  virtual void GetWallpaperProminentColors(
+      GetWallpaperProminentColorsCallback callback) = 0;
 
   // Activates (opens) the item.
   virtual void ActivateItem(const std::string& id, int event_flags) = 0;
@@ -79,7 +80,15 @@ class APP_LIST_EXPORT AppListViewDelegate {
   // Returns the context menu model for this item, or NULL if there is currently
   // no menu for the item (e.g. during install).
   // Note the returned menu model is owned by this item.
-  virtual ui::MenuModel* GetContextMenuModel(const std::string& id) = 0;
+  using GetContextMenuModelCallback =
+      base::OnceCallback<void(std::vector<ash::mojom::MenuItemPtr>)>;
+  virtual void GetContextMenuModel(const std::string& id,
+                                   GetContextMenuModelCallback callback) = 0;
+
+  // Invoked when a context menu item of an app list item is clicked.
+  virtual void ContextMenuItemSelected(const std::string& id,
+                                       int command_id,
+                                       int event_flags) = 0;
 
   // Add/remove observer for AppListViewDelegate.
   virtual void AddObserver(AppListViewDelegateObserver* observer) = 0;
