@@ -46,12 +46,6 @@ const float kExitTabletModeAngle = 160.0f;
 const float kMinStableAngle = 20.0f;
 const float kMaxStableAngle = 340.0f;
 
-// The time duration to consider the lid to be recently opened.
-// This is used to prevent entering tablet mode if an erroneous accelerometer
-// reading makes the lid appear to be fully open when the user is opening the
-// lid from a closed position.
-const int kLidRecentlyOpenedDurationSeconds = 2;
-
 // When the device approaches vertical orientation (i.e. portrait orientation)
 // the accelerometers for the base and lid approach the same values (i.e.
 // gravity pointing in the direction of the hinge). When this happens abrupt
@@ -69,6 +63,12 @@ const float kHingeVerticalSmoothingMaximum = 8.7f;
 // which to detect hinge angle in m/s^2. These accelerometers are attached to
 // the same physical device and so should be under the same acceleration.
 const float kNoisyMagnitudeDeviation = 1.0f;
+
+// The time duration to consider the lid to be recently fully opened.
+// This is used to prevent entering tablet mode if an erroneous accelerometer
+// reading makes the lid appear to be fully open when the user is opening the
+// lid from a closed position or is closing the lid from an opened position.
+const int kLidRecentlyFullyOpenedDurationSeconds = 2;
 
 // The angle between chromeos::AccelerometerReadings are considered stable if
 // their magnitudes do not differ greatly. This returns false if the deviation
@@ -261,8 +261,6 @@ void TabletModeController::LidEventReceived(
     return;
 
   const bool open = state == chromeos::PowerManagerClient::LidState::OPEN;
-  if (open)
-    last_lid_open_time_ = time;
   lid_is_closed_ = !open;
   LeaveTabletMode();
 }
@@ -355,11 +353,17 @@ void TabletModeController::HandleHingeRotation(
   bool is_angle_stable = is_angle_reliable && lid_angle >= kMinStableAngle &&
                          lid_angle <= kMaxStableAngle;
 
-  // Clear the last_lid_open_time_ for a stable reading so that there is less
-  // chance of a delay if the lid is moved from the close state to the fully
-  // open state very quickly.
-  if (is_angle_stable)
-    last_lid_open_time_ = base::TimeTicks();
+  bool is_fully_opened_angle = lid_angle >= kMaxStableAngle;
+
+  // The lid is considered fully opened only only if the angle readings
+  // continuously fall into fully opened range [340, 360] for 2 seconds. Reset
+  // the timer if an angle reading less than kExitTabletModeAngle is received
+  // and record the current time if an angle reading within the range is
+  // received for the first time.
+  if (lid_angle < kExitTabletModeAngle)
+    last_lid_fully_opened_time_ = base::TimeTicks();
+  if (is_fully_opened_angle && last_lid_fully_opened_time_.is_null())
+    last_lid_fully_opened_time_ = tick_clock_->NowTicks();
 
   // Toggle tablet mode on or off when corresponding thresholds are passed.
   if (IsTabletModeWindowManagerEnabled() && is_angle_stable &&
@@ -367,7 +371,7 @@ void TabletModeController::HandleHingeRotation(
     LeaveTabletMode();
   } else if (!IsTabletModeWindowManagerEnabled() && !lid_is_closed_ &&
              lid_angle >= kEnterTabletModeAngle &&
-             (is_angle_stable || !WasLidOpenedRecently())) {
+             (!is_fully_opened_angle || !WasLidFullyOpenedRecently())) {
     EnterTabletMode();
   }
 }
@@ -482,14 +486,14 @@ void TabletModeController::OnGetSwitchStates(
   TabletModeEventReceived(result->tablet_mode, base::TimeTicks::Now());
 }
 
-bool TabletModeController::WasLidOpenedRecently() const {
-  if (last_lid_open_time_.is_null())
+bool TabletModeController::WasLidFullyOpenedRecently() const {
+  if (last_lid_fully_opened_time_.is_null())
     return false;
 
   base::TimeTicks now = tick_clock_->NowTicks();
-  DCHECK(now >= last_lid_open_time_);
-  base::TimeDelta elapsed_time = now - last_lid_open_time_;
-  return elapsed_time.InSeconds() <= kLidRecentlyOpenedDurationSeconds;
+  DCHECK(now >= last_lid_fully_opened_time_);
+  base::TimeDelta elapsed_time = now - last_lid_fully_opened_time_;
+  return elapsed_time.InSeconds() < kLidRecentlyFullyOpenedDurationSeconds;
 }
 
 void TabletModeController::SetTickClockForTest(
