@@ -19,14 +19,14 @@
 #include "ui/base/class_property.h"
 #include "ui/base/ui_base_types.h"
 #include "ui/compositor/layer.h"
-#include "ui/wm/core/shadow.h"
+#include "ui/compositor/shadow_layer.h"
 #include "ui/wm/core/window_util.h"
 #include "ui/wm/public/activation_client.h"
 
 using std::make_pair;
 
-DEFINE_UI_CLASS_PROPERTY_TYPE(::wm::Shadow*);
-DEFINE_OWNED_UI_CLASS_PROPERTY_KEY(::wm::Shadow, kShadowLayerKey, nullptr);
+DEFINE_UI_CLASS_PROPERTY_TYPE(ui::Shadow*);
+DEFINE_OWNED_UI_CLASS_PROPERTY_KEY(ui::Shadow, kShadowLayerKey, nullptr);
 
 namespace wm {
 
@@ -187,7 +187,7 @@ void ShadowController::Impl::OnWindowBoundsChanged(
     const gfx::Rect& old_bounds,
     const gfx::Rect& new_bounds,
     ui::PropertyChangeReason reason) {
-  Shadow* shadow = GetShadowForWindow(window);
+  ui::Shadow* shadow = GetShadowForWindow(window);
   if (shadow)
     shadow->SetContentBounds(gfx::Rect(new_bounds.size()));
 }
@@ -201,12 +201,12 @@ void ShadowController::Impl::OnWindowActivated(ActivationReason reason,
                                                aura::Window* gained_active,
                                                aura::Window* lost_active) {
   if (gained_active) {
-    Shadow* shadow = GetShadowForWindow(gained_active);
+    ui::Shadow* shadow = GetShadowForWindow(gained_active);
     if (shadow)
       shadow->SetElevation(GetShadowElevationForActiveState(gained_active));
   }
   if (lost_active) {
-    Shadow* shadow = GetShadowForWindow(lost_active);
+    ui::Shadow* shadow = GetShadowForWindow(lost_active);
     if (shadow &&
         GetShadowElevationConvertDefault(lost_active) ==
             kInactiveNormalShadowElevation) {
@@ -231,7 +231,7 @@ bool ShadowController::Impl::ShouldShowShadowForWindow(
 void ShadowController::Impl::HandlePossibleShadowVisibilityChange(
     aura::Window* window) {
   const bool should_show = ShouldShowShadowForWindow(window);
-  Shadow* shadow = GetShadowForWindow(window);
+  ui::Shadow* shadow = GetShadowForWindow(window);
   if (shadow) {
     shadow->SetElevation(GetShadowElevationForActiveState(window));
     shadow->layer()->SetVisible(should_show);
@@ -241,7 +241,7 @@ void ShadowController::Impl::HandlePossibleShadowVisibilityChange(
 }
 
 void ShadowController::Impl::CreateShadowForWindow(aura::Window* window) {
-  Shadow* shadow = new Shadow();
+  ui::Shadow* shadow = new ui::Shadow();
   window->SetProperty(kShadowLayerKey, shadow);
   shadow->Init(GetShadowElevationForActiveState(window));
   shadow->SetContentBounds(gfx::Rect(window->bounds().size()));
@@ -262,7 +262,7 @@ ShadowController::Impl::~Impl() {
 
 // ShadowController ------------------------------------------------------------
 
-Shadow* ShadowController::GetShadowForWindow(aura::Window* window) {
+ui::Shadow* ShadowController::GetShadowForWindow(aura::Window* window) {
   return window->GetProperty(kShadowLayerKey);
 }
 

@@ -49,6 +49,8 @@ void CompositorTestSuite::Initialize() {
   scoped_task_environment_ =
       std::make_unique<base::test::ScopedTaskEnvironment>(
           base::test::ScopedTaskEnvironment::MainThreadType::UI);
+
+  base::DiscardableMemoryAllocator::SetInstance(&discardable_memory_allocator_);
 }
 
 void CompositorTestSuite::Shutdown() {
