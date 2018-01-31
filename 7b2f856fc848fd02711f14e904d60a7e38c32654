@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ad6c0e8c_3ff7cbc0",
+        "filename": "chrome/browser/permissions/permission_uma_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2018-01-31T05:41:54Z",
+      "side": 1,
+      "message": "This bucketing was suggested to avoid logging unbounded raw counts. I changed it to cap at 10 which is probably sufficient as we don\u0027t have any immediate use for this.",
+      "parentUuid": "a9b3bcb7_9186a66f",
+      "revId": "7b2f856fc848fd02711f14e904d60a7e38c32654",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c521bea_d767e340",
         "filename": "chrome/browser/permissions/permission_uma_util.cc",
         "patchSetId": 5
@@ -84,6 +102,24 @@
       "revId": "7b2f856fc848fd02711f14e904d60a7e38c32654",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ef2a45b_aa188300",
+        "filename": "chrome/browser/permissions/permission_uma_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2018-01-31T05:41:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73e1d04e_aa017713",
+      "revId": "7b2f856fc848fd02711f14e904d60a7e38c32654",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
