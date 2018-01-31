@@ -8,6 +8,7 @@
 #include <stddef.h>
 
 #include <algorithm>
+#include <limits>
 #include <memory>
 #include <utility>
 
@@ -360,7 +361,10 @@ PDFiumPage::Area PDFiumPage::GetDestinationTarget(FPDF_DEST destination,
   if (!target)
     return NONSELECTABLE_AREA;
 
-  target->page = FPDFDest_GetPageIndex(engine_->doc(), destination);
+  unsigned long page_index = FPDFDest_GetPageIndex(engine_->doc(), destination);
+  if (page_index == static_cast<unsigned long>(-1))
+    return NONSELECTABLE_AREA;
+  target->page = page_index;
 
   base::Optional<std::pair<float, float>> xy = GetPageXYTarget(destination);
   if (!xy)
