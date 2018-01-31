@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9803f7c1_0780b90f",
+        "filename": "content/browser/loader/merkle_integrity_source_stream.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2018-01-31T02:32:06Z",
+      "side": 1,
+      "message": "Added a note at the top of this function.",
+      "parentUuid": "9e712fad_85e98647",
+      "revId": "461f2206d558ad747a3d8c189a086f906400bee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b3075ca_7e91951b",
         "filename": "content/browser/loader/merkle_integrity_source_stream.cc",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "0ab0daf5_198f6c6d",
+        "filename": "content/browser/loader/merkle_integrity_source_stream.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2018-01-31T02:32:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b3075ca_7e91951b",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 79
+      },
+      "revId": "461f2206d558ad747a3d8c189a086f906400bee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "526cb49d_f1e77629",
         "filename": "content/browser/loader/merkle_integrity_source_stream.cc",
         "patchSetId": 4
@@ -53,6 +95,24 @@
       "writtenOn": "2018-01-30T10:43:35Z",
       "side": 1,
       "message": "I think we should have the record size limit to avoid the browser process to be OOM killed.\n\nif (input_.size() \u003e max_record_size_)\n  return false;",
+      "revId": "461f2206d558ad747a3d8c189a086f906400bee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "714b42d0_239b6bbf",
+        "filename": "content/browser/loader/merkle_integrity_source_stream.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2018-01-31T02:32:06Z",
+      "side": 1,
+      "message": "Added 1MiB limit (may be a little conservative, we can increase it later).",
+      "parentUuid": "526cb49d_f1e77629",
       "revId": "461f2206d558ad747a3d8c189a086f906400bee2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
