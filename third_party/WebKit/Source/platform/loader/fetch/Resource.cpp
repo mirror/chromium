@@ -1276,4 +1276,36 @@ bool Resource::IsLoadEventBlockingResourceType() const {
   return false;
 }
 
+static String GetDebugString(const SecurityOrigin* security_origin) {
+  if (!security_origin)
+    return "<nullptr>";
+  return security_origin->ToString();
+}
+
+bool Resource::IsSameOriginOrCORSSuccessful(
+    const SecurityOrigin* security_origin) const {
+  // if security_origin_used_for_cors_status_ is null, there might be another issue, but let's focus non-null cases for now.
+  if (security_origin_used_for_cors_status_) {
+  // If not matched, this is a problem of DetermineRevalidationPolicy().
+/*
+  if (Options().security_origin.get()) {
+    DCHECK_EQ(GetDebugString(security_origin_used_for_cors_status_.get()),
+              GetDebugString(Options().security_origin.get())) << "REVALIDATION POLICY";
+  }
+*/
+
+  // If not matched, another issue.
+  DCHECK_EQ(GetDebugString(security_origin_used_for_cors_status_.get()),
+            GetDebugString(security_origin)) << "SOMETHING WRONG";
+  }
+
+  return cors_status_ == CORSStatus::kSameOrigin ||
+         cors_status_ == CORSStatus::kSuccessful ||
+         cors_status_ == CORSStatus::kServiceWorkerSuccessful;
+}
+
+void Resource::SetCORSStatus(const CORSStatus cors_status) {
+  cors_status_ = cors_status;
+}
+
 }  // namespace blink

@@ -98,7 +98,8 @@ bool SubresourceIntegrity::CheckSubresourceIntegrity(
     const KURL& resource_url,
     const Resource& resource,
     ReportInfo& report_info) {
-  if (!resource.IsSameOriginOrCORSSuccessful()) {
+  if (!resource.IsSameOriginOrCORSSuccessful(
+          resource.security_origin_used_for_cors_status_.get())) {
     report_info.AddConsoleErrorMessage(
         "Subresource Integrity: The resource '" + resource_url.ElidedString() +
         "' has an integrity attribute, but the resource "

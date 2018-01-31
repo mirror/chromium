@@ -672,7 +672,7 @@ bool ImageResource::IsAccessAllowed(
       ImageResourceInfo::kHasSingleSecurityOrigin)
     return false;
 
-  if (IsSameOriginOrCORSSuccessful())
+  if (IsSameOriginOrCORSSuccessful(security_origin))
     return true;
 
   return !security_origin->TaintsCanvas(GetResponse().Url());

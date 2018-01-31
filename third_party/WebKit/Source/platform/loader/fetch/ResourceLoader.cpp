@@ -292,6 +292,7 @@ bool ResourceLoader::WillFollowRedirect(
               redirect_response.HttpHeaderFields(), fetch_credentials_mode,
               resource_->MutableOptions());
       if (cors_error) {
+        // resource_->security_origin_used_for_cors_status_ = source_origin;
         resource_->SetCORSStatus(CORSStatus::kFailed);
 
         if (!unused_preload) {
@@ -429,6 +430,8 @@ CORSStatus ResourceLoader::DetermineCORSStatus(const ResourceResponse& response,
     source_origin = Context().GetSecurityOrigin();
 
   DCHECK(source_origin);
+
+  resource_->security_origin_used_for_cors_status_ = Context().GetSecurityOrigin();
 
   if (source_origin->CanRequestNoSuborigin(response.Url()))
     return CORSStatus::kSameOrigin;
@@ -570,7 +573,8 @@ void ResourceLoader::DidReceiveResponse(
   } else if (options.cors_handling_by_resource_fetcher ==
                  kEnableCORSHandlingByResourceFetcher &&
              fetch_request_mode == network::mojom::FetchRequestMode::kCORS) {
-    if (!resource_->IsSameOriginOrCORSSuccessful()) {
+    if (!resource_->IsSameOriginOrCORSSuccessful(
+            resource_->security_origin_used_for_cors_status_.get())) {
       if (!resource_->IsUnusedPreload())
         Context().AddErrorConsoleMessage(cors_error_msg.ToString(),
                                          FetchContext::kJSSource);

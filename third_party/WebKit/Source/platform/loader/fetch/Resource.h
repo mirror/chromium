@@ -273,11 +273,7 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
 
   CORSStatus GetCORSStatus() const { return cors_status_; }
 
-  bool IsSameOriginOrCORSSuccessful() const {
-    return cors_status_ == CORSStatus::kSameOrigin ||
-           cors_status_ == CORSStatus::kSuccessful ||
-           cors_status_ == CORSStatus::kServiceWorkerSuccessful;
-  }
+  bool IsSameOriginOrCORSSuccessful(const SecurityOrigin*) const;
 
   void SetCacheIdentifier(const String& cache_identifier) {
     cache_identifier_ = cache_identifier;
@@ -351,6 +347,8 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   WebScopedVirtualTimePauser& VirtualTimePauser() {
     return virtual_time_pauser_;
   }
+
+  scoped_refptr<const SecurityOrigin> security_origin_used_for_cors_status_;
 
  protected:
   Resource(const ResourceRequest&, Type, const ResourceLoaderOptions&);
@@ -428,9 +426,7 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
 
   String ReasonNotDeletable() const;
 
-  void SetCORSStatus(const CORSStatus cors_status) {
-    cors_status_ = cors_status;
-  }
+  void SetCORSStatus(const CORSStatus cors_status);
 
   // MemoryCoordinatorClient overrides:
   void OnPurgeMemory() override;

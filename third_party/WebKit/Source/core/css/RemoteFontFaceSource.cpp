@@ -321,12 +321,14 @@ void RemoteFontFaceSource::FontLoadHistograms::RecordRemoteFont(
     int duration = static_cast<int>(CurrentTimeMS() - load_start_time_);
     RecordLoadTimeHistogram(font, duration);
 
-    enum { kCORSFail, kCORSSuccess, kCORSEnumMax };
-    int cors_value =
-        font->IsSameOriginOrCORSSuccessful() ? kCORSSuccess : kCORSFail;
-    DEFINE_THREAD_SAFE_STATIC_LOCAL(EnumerationHistogram, cors_histogram,
-                                    ("WebFont.CORSSuccess", kCORSEnumMax));
-    cors_histogram.Count(cors_value);
+    /*
+        enum { kCORSFail, kCORSSuccess, kCORSEnumMax };
+        int cors_value =
+            font->IsSameOriginOrCORSSuccessful() ? kCORSSuccess : kCORSFail;
+        DEFINE_THREAD_SAFE_STATIC_LOCAL(EnumerationHistogram, cors_histogram,
+                                        ("WebFont.CORSSuccess", kCORSEnumMax));
+        cors_histogram.Count(cors_value);
+    */
   }
 }
 

@@ -484,6 +484,12 @@ Resource* ResourceFetcher::ResourceForBlockedRequest(
       params.GetResourceRequest(), params.Options(), params.DecoderOptions());
   resource->SetStatus(ResourceStatus::kPending);
   resource->NotifyStartLoad();
+
+      scoped_refptr<const SecurityOrigin> source_origin =
+          resource->Options().security_origin;
+      if (!source_origin.get())
+        source_origin = Context().GetSecurityOrigin();
+  resource->security_origin_used_for_cors_status_ = source_origin;
   resource->FinishAsError(ResourceError::CancelledDueToAccessCheckError(
                               params.Url(), blocked_reason),
                           Context().GetLoadingTaskRunner().get());
