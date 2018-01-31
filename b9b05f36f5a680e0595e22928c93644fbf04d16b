@@ -321,6 +321,30 @@
     },
     {
       "key": {
+        "uuid": "80d68347_27a931df",
+        "filename": "base/threading/thread_local_storage.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-31T10:08:13Z",
+      "side": 1,
+      "message": "Looks like there are 6 instances of StaticSlot : https://cs.chromium.org/search/?q\u003dStaticSlot+-file:thread_local\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n\nI\u0027d just say let\u0027s replace all of them with LazyInstance\u003cThreadLocalStorage::Slot\u003e and remove the StaticSlot type altogether. Then we know that Initialize() is only called once per slot and we\u0027re done (sure we still need a Lock because we touch metadata shared across every Slot but that\u0027s an implementation detail, member state is safe to access).\n\nCallers also don\u0027t need to check initialized() anymore, woohoo :)",
+      "parentUuid": "3822ecde_e8dc01f2",
+      "range": {
+        "startLine": 133,
+        "startChar": 39,
+        "endLine": 133,
+        "endChar": 40
+      },
+      "revId": "b9b05f36f5a680e0595e22928c93644fbf04d16b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a26bd57_32856554",
         "filename": "base/threading/thread_local_storage.h",
         "patchSetId": 1
@@ -350,6 +374,24 @@
       "side": 1,
       "message": "about the initializers - with the current initialization (i.e. TLS_INITIALIZER), default member initializers + constexpr constructor will lead to constant initialization, which would be ok, although not to the letter of the styleguide since it would be non-POD. \n\nHowever, if your point is to deprecate TLS_INITIALIZER and just use global StaticSlots without it - that such a case is without dynamic initialization is seemingly not something guaranteed by the standard and is probably not a very good idea. Isn\u0027t this the case that stimulated the codestyle requirement in the first place?\n\nIf TLS_INITIALIZER is still required, should we probably keep StaticSlot without a constructor so that initialization with TLS_INITIALIZER is more obviously required?",
       "parentUuid": "5a26bd57_32856554",
+      "revId": "b9b05f36f5a680e0595e22928c93644fbf04d16b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52a5d6f7_98ff569e",
+        "filename": "base/threading/thread_local_storage.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-31T10:08:13Z",
+      "side": 1,
+      "message": "I don\u0027t think we need TLS_INITIALIZER anymore. At least I recently changed LazyInstance to be constexpr with private members and it works (//base now compiles with -Wglobal-constructors and doesn\u0027t throw up on this).",
+      "parentUuid": "77b97e56_2af310e4",
       "revId": "b9b05f36f5a680e0595e22928c93644fbf04d16b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
