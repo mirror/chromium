@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2bec10d0_2c2cc72a",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-31T02:07:03Z",
+      "side": 1,
+      "message": "Blink hasn\u0027t yet widely adopted base::subtle. Consider using platform/wtf/Atomics.h.",
+      "revId": "58ef7803356c449243196f3642b4ab0b1db4f6f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33119d9f_454d1e17",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-31T02:07:03Z",
+      "side": 1,
+      "message": "Use DEFINE_STATIC_LOCAL for these variables.",
+      "revId": "58ef7803356c449243196f3642b4ab0b1db4f6f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e55558ee_e6573daa",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-31T02:07:03Z",
+      "side": 1,
+      "message": "This will conflict with the heap profiler because it may override the allocation/free hooks installed by the heap profiler.\n\nWe\u0027ll need to implement a mechanism to chain allocation/free hooks.",
+      "revId": "58ef7803356c449243196f3642b4ab0b1db4f6f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abf8c848_31148e2b",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-31T02:07:03Z",
+      "side": 1,
+      "message": "base::Lock is discouraged in Blink. Use MutexLock.",
+      "revId": "58ef7803356c449243196f3642b4ab0b1db4f6f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "595a87c4_13134160",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-31T02:07:03Z",
+      "side": 1,
+      "message": "std::unordered_map is discouraged in Blink. Use HashMap.",
+      "revId": "58ef7803356c449243196f3642b4ab0b1db4f6f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
