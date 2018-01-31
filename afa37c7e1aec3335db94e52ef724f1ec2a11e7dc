@@ -16,6 +16,24 @@
       "revId": "afa37c7e1aec3335db94e52ef724f1ec2a11e7dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "111cbf7a_161f899d",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5437,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2018-01-31T21:49:01Z",
+      "side": 1,
+      "message": "I added that validation to ResizeOffscreenFramebuffer but kept these overflow checks because this is the only callsite that has to convert from uints to gfx::Size.",
+      "parentUuid": "9ab65e99_91098aac",
+      "revId": "afa37c7e1aec3335db94e52ef724f1ec2a11e7dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
