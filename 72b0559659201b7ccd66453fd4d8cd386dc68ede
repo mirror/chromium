@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a4f950e_5958ea3c",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingReasonFinder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2018-01-31T18:39:47Z",
+      "side": 1,
+      "message": "This needs to be added in order to check whether we have a running experiment or not. It was removed in this CL: https://chromium-review.googlesource.com/c/chromium/src/+/802315/10/third_party/WebKit/Source/core/paint/compositing/CompositingReasonFinder.cpp#b192\n\nOnce the experiment is finished, we should do some clean up.",
+      "revId": "72b0559659201b7ccd66453fd4d8cd386dc68ede",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
