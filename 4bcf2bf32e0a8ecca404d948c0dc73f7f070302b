@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b26e7197_4e3a5fc0",
+        "filename": "chrome/android/webapk/libs/client/src/org/chromium/webapk/lib/client/WebApkServiceConnectionManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-31T19:08:28Z",
+      "side": 1,
+      "message": "clang-format fail :(",
+      "revId": "4bcf2bf32e0a8ecca404d948c0dc73f7f070302b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
