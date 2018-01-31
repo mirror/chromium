@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0d2d8419_56427b00",
+        "filename": "pdf/pdfium/pdfium_page.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2018-01-31T22:29:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03beeb2b_45393486",
+      "range": {
+        "startLine": 11,
+        "startChar": 9,
+        "endLine": 11,
+        "endChar": 10
+      },
+      "revId": "cbe6f5a38fad53d681ad9082490e196bcff161ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00426dc7_b0a002ce",
         "filename": "pdf/pdfium/pdfium_page.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-31T22:03:41Z",
       "side": 1,
       "message": "did we decide on this vs. signed?",
+      "range": {
+        "startLine": 364,
+        "startChar": 1,
+        "endLine": 364,
+        "endChar": 16
+      },
+      "revId": "cbe6f5a38fad53d681ad9082490e196bcff161ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2a29e39_355e348c",
+        "filename": "pdf/pdfium/pdfium_page.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2018-01-31T22:29:20Z",
+      "side": 1,
+      "message": "I changed to signed since I agree with you it makes way more sense as signed. Let\u0027s see what Lei thinks, though.",
+      "parentUuid": "00426dc7_b0a002ce",
       "range": {
         "startLine": 364,
         "startChar": 1,
