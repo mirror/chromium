@@ -15,8 +15,8 @@ import android.view.inputmethod.InputConnection;
 import org.chromium.base.Log;
 import org.chromium.base.annotations.UsedByReflection;
 import org.chromium.content.browser.input.InputMethodManagerWrapper;
-import org.chromium.content.browser.input.Range;
 import org.chromium.content_public.browser.ImeAdapter;
+import org.chromium.content_public.browser.Range;
 
 import java.util.ArrayList;
 import java.util.List;

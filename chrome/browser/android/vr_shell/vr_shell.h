@@ -144,6 +144,25 @@ class VrShell : device::GvrGamepadDataProvider,
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj,
       int mode);
+  void ShowSoftInput(JNIEnv* env,
+                     const base::android::JavaParamRef<jobject>& obj);
+  void HideSoftInput(JNIEnv* env,
+                     const base::android::JavaParamRef<jobject>& obj);
+  void UpdateWebInputSelectionIndices(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& obj,
+      int selection_start,
+      int selection_end);
+  void UpdateWebInputCompositionIndices(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& obj,
+      int composition_start,
+      int composition_end);
+  void UpdateWebInputText(JNIEnv* env,
+                          const base::android::JavaParamRef<jobject>& obj,
+                          jstring text);
+  void OnTextInputEdited(vr::TextInputInfo info);
+  void OnTextInputCommitted(vr::TextInputInfo info);
 
   void ContentWebContentsDestroyed();
 
