@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ce3aea7f_0c6441e0",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 5157,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-31T19:55:55Z",
+      "side": 1,
+      "message": "Hmm... how about hooking console.log? https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/exported/WebViewTest.cpp?rcl\u003d06faf3de3d76f5efc37a9a833ce3df0e2278bd3d\u0026l\u003d4995\n\nKind of hacky, but no less so than gin, if you ask me \u003d)",
+      "parentUuid": "de91ac26_dae95593",
+      "revId": "18c5961c1213cb55021caf7e1626e3be47cc7c03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35370da6_c5ccb000",
         "filename": "third_party/WebKit/Source/core/page/PageWidgetDelegate.cpp",
         "patchSetId": 5
