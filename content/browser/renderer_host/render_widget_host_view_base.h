@@ -508,8 +508,6 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   virtual bool ShouldContinueToPauseForFrame();
 #endif
 
-  virtual void DidNavigate() {}
-
  protected:
   // Interface class only, do not construct.
   RenderWidgetHostViewBase();

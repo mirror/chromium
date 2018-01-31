@@ -21,7 +21,6 @@
 #include "extensions/browser/api_test_utils.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension_builder.h"
-#include "ui/display/test/test_screen.h"
 
 namespace extensions {
 
@@ -58,8 +57,6 @@ class TabsApiUnitTest : public ExtensionServiceTestBase {
   std::unique_ptr<TestBrowserWindow> browser_window_;
   std::unique_ptr<Browser> browser_;
 
-  display::test::TestScreen test_screen_;
-
   DISALLOW_COPY_AND_ASSIGN(TabsApiUnitTest);
 };
 
@@ -75,7 +72,6 @@ void TabsApiUnitTest::SetUp() {
   params.type = Browser::TYPE_TABBED;
   params.window = browser_window_.get();
   browser_.reset(new Browser(params));
-  display::Screen::SetScreenInstance(&test_screen_);
 }
 
 void TabsApiUnitTest::TearDown() {

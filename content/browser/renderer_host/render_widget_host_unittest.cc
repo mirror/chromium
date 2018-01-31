@@ -19,7 +19,6 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/timer/timer.h"
 #include "build/build_config.h"
-#include "components/viz/common/features.h"
 #include "components/viz/common/surfaces/local_surface_id.h"
 #include "components/viz/common/surfaces/parent_local_surface_id_allocator.h"
 #include "components/viz/test/begin_frame_args_test.h"
@@ -1731,15 +1730,9 @@ TEST_F(RenderWidgetHostTest, MultipleInputEvents) {
   EXPECT_TRUE(delegate_->unresponsive_timer_fired());
 }
 
-// Test that the rendering timeout for newly loaded content fires when enough
-// time passes without receiving a new compositor frame. This test assumes
-// Surface Synchronization is off.
-TEST_F(RenderWidgetHostTest, NewContentRenderingTimeoutWithoutSurfaceSync) {
-  // If Surface Synchronization is on, we have a separate code path for
-  // cancelling new content rendering timeout that is tested separately.
-  if (features::IsSurfaceSynchronizationEnabled())
-    return;
-
+// Test that the rendering timeout for newly loaded content fires
+// when enough time passes without receiving a new compositor frame.
+TEST_F(RenderWidgetHostTest, NewContentRenderingTimeout) {
   const viz::LocalSurfaceId local_surface_id(1,
                                              base::UnguessableToken::Create());
 
@@ -1756,7 +1749,7 @@ TEST_F(RenderWidgetHostTest, NewContentRenderingTimeoutWithoutSurfaceSync) {
 
   // Start the timer and immediately send a CompositorFrame with the
   // content_source_id of the new page. The timeout shouldn't fire.
-  host_->DidNavigate(5);
+  host_->StartNewContentRenderingTimeout(5);
   auto frame = viz::CompositorFrameBuilder()
                    .AddDefaultRenderPass()
                    .SetContentSourceId(5)
@@ -1772,7 +1765,7 @@ TEST_F(RenderWidgetHostTest, NewContentRenderingTimeoutWithoutSurfaceSync) {
 
   // Start the timer but receive frames only from the old page. The timer
   // should fire.
-  host_->DidNavigate(10);
+  host_->StartNewContentRenderingTimeout(10);
   frame = viz::CompositorFrameBuilder()
               .AddDefaultRenderPass()
               .SetContentSourceId(9)
@@ -1793,7 +1786,7 @@ TEST_F(RenderWidgetHostTest, NewContentRenderingTimeoutWithoutSurfaceSync) {
               .SetContentSourceId(7)
               .Build();
   host_->SubmitCompositorFrame(local_surface_id, std::move(frame), nullptr, 0);
-  host_->DidNavigate(7);
+  host_->StartNewContentRenderingTimeout(7);
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(),
       TimeDelta::FromMicroseconds(20));
@@ -1803,7 +1796,7 @@ TEST_F(RenderWidgetHostTest, NewContentRenderingTimeoutWithoutSurfaceSync) {
   host_->reset_new_content_rendering_timeout_fired();
 
   // Don't send any frames after the timer starts. The timer should fire.
-  host_->DidNavigate(20);
+  host_->StartNewContentRenderingTimeout(20);
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(),
       TimeDelta::FromMicroseconds(20));
@@ -1815,14 +1808,10 @@ TEST_F(RenderWidgetHostTest, NewContentRenderingTimeoutWithoutSurfaceSync) {
 // This tests that a compositor frame received with a stale content source ID
 // in its metadata is properly discarded.
 TEST_F(RenderWidgetHostTest, SwapCompositorFrameWithBadSourceId) {
-  // If Surface Synchronization is on, we don't keep track of content_source_id
-  // in CompositorFrameMetadata.
-  if (features::IsSurfaceSynchronizationEnabled())
-    return;
   const viz::LocalSurfaceId local_surface_id(1,
                                              base::UnguessableToken::Create());
 
-  host_->DidNavigate(100);
+  host_->StartNewContentRenderingTimeout(100);
   host_->set_new_content_rendering_delay_for_testing(
       base::TimeDelta::FromMicroseconds(9999));
 

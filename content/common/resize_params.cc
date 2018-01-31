@@ -13,8 +13,7 @@ ResizeParams::ResizeParams()
       bottom_controls_height(0.f),
       is_fullscreen_granted(false),
       display_mode(blink::kWebDisplayModeUndefined),
-      needs_resize_ack(false),
-      content_source_id(0u) {}
+      needs_resize_ack(false) {}
 
 ResizeParams::ResizeParams(const ResizeParams& other) = default;
 

@@ -28,7 +28,6 @@ class BrowserCompositorMacClient {
   virtual SkColor BrowserCompositorMacGetGutterColor() const = 0;
   virtual void BrowserCompositorMacOnBeginFrame() = 0;
   virtual void OnFrameTokenChanged(uint32_t frame_token) = 0;
-  virtual void DidReceiveFirstFrameAfterNavigation() = 0;
 };
 
 // This class owns a DelegatedFrameHost, and will dynamically attach and
@@ -119,12 +118,9 @@ class CONTENT_EXPORT BrowserCompositorMac : public DelegatedFrameHostClient {
   void OnBeginFrame(base::TimeTicks frame_time) override;
   bool IsAutoResizeEnabled() const override;
   void OnFrameTokenChanged(uint32_t frame_token) override;
-  void DidReceiveFirstFrameAfterNavigation() override;
 
   // Returns nullptr if no compositor is attached.
   ui::Compositor* CompositorForTesting() const;
-
-  void DidNavigate();
 
   void BeginPauseForFrame(bool auto_resize_enabled);
   void EndPauseForFrame();

@@ -44,7 +44,6 @@
 #include "extensions/common/value_builder.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/base/l10n/l10n_util.h"
-#include "ui/display/test/test_screen.h"
 #include "ui/gfx/image/image.h"
 
 namespace extensions {
@@ -191,7 +190,6 @@ class ExtensionContextMenuModelTest : public ExtensionServiceTestBase {
  private:
   std::unique_ptr<TestBrowserWindow> test_window_;
   std::unique_ptr<Browser> browser_;
-  display::test::TestScreen test_screen_;
 
   DISALLOW_COPY_AND_ASSIGN(ExtensionContextMenuModelTest);
 };
@@ -245,7 +243,6 @@ void ExtensionContextMenuModelTest::SetUp() {
   ExtensionServiceTestBase::SetUp();
   if (content::IsBrowserSideNavigationEnabled())
     content::BrowserSideNavigationSetUp();
-  display::Screen::SetScreenInstance(&test_screen_);
 }
 
 void ExtensionContextMenuModelTest::TearDown() {

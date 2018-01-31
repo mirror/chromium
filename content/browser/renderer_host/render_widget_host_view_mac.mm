@@ -399,10 +399,6 @@ void RenderWidgetHostViewMac::OnFrameTokenChanged(uint32_t frame_token) {
   OnFrameTokenChangedForView(frame_token);
 }
 
-void RenderWidgetHostViewMac::DidReceiveFirstFrameAfterNavigation() {
-  render_widget_host_->DidReceiveFirstFrameAfterNavigation();
-}
-
 ////////////////////////////////////////////////////////////////////////////////
 // AcceleratedWidgetMacNSView, public:
 
@@ -1096,10 +1092,6 @@ void RenderWidgetHostViewMac::ResizeDueToAutoResize(const gfx::Size& new_size,
                                                     uint64_t sequence_number) {
   browser_compositor_->OnNSViewWillAutoResize(new_size);
   RenderWidgetHostViewBase::ResizeDueToAutoResize(new_size, sequence_number);
-}
-
-void RenderWidgetHostViewMac::DidNavigate() {
-  browser_compositor_->DidNavigate();
 }
 
 gfx::Size RenderWidgetHostViewMac::GetRequestedRendererSize() const {
