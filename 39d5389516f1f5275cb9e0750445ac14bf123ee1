@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15b419a4_521dbd97",
+        "filename": "base/trace_event/memory_dump_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-31T23:04:57Z",
+      "side": 1,
+      "message": "actually, this is no longer true. We only need the lock to protect outstanding_async_requests_",
+      "revId": "39d5389516f1f5275cb9e0750445ac14bf123ee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
