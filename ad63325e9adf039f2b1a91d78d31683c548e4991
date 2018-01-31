@@ -16,6 +16,24 @@
       "revId": "ad63325e9adf039f2b1a91d78d31683c548e4991",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aa495d5_171f3297",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlock.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2018-01-31T22:01:04Z",
+      "side": 1,
+      "message": "Yes, we also have to avoid out-of-flow boxes as grid items:\n\n\"https://drafts.csswg.org/css-grid/#grid-item\nEach in-flow child of a grid container becomes a grid item, and each contiguous sequence of child text runs is wrapped in an anonymous block container grid item. \"",
+      "parentUuid": "72b43709_6483ed6c",
+      "revId": "ad63325e9adf039f2b1a91d78d31683c548e4991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
