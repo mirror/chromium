@@ -166,6 +166,7 @@ class PLATFORM_EXPORT KURL {
   bool IsLocalFile() const;
   bool IsAboutBlankURL() const;   // Is exactly about:blank.
   bool IsAboutSrcdocURL() const;  // Is exactly about:srcdoc.
+  bool IsPluginNoneURL() const;
 
   bool SetProtocol(const String&);
   void SetHost(const String&);
@@ -262,6 +263,7 @@ PLATFORM_EXPORT bool EqualIgnoringFragmentIdentifier(const KURL&, const KURL&);
 PLATFORM_EXPORT const KURL& BlankURL();
 PLATFORM_EXPORT const KURL& SrcdocURL();
 PLATFORM_EXPORT const KURL& NullURL();
+PLATFORM_EXPORT const KURL& PluginNoneURL();
 
 // Functions to do URL operations on strings.
 // These are operations that aren't faster on a parsed URL.
