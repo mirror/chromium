@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "18591878_eb2d3d27",
+        "filename": "chrome/browser/notifications/system_notification_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-31T01:29:15Z",
+      "side": 1,
+      "message": "a) Currently ProfileManager::CreateProfileAsync invokes callback.Run directly, so you\u0027re right, for now. If someone changes that to post the callback so that it is always called asynchronously (I tend to prefer that model) the behavior would change. (The header just says that |callback| will be invoked asynchronously).\nb) If the profile didn\u0027t exist when Display() was called, it might exist when Close() is called but DoDisplayNotification() wasn\u0027t called yet.\n\nIt\u0027s definitely an edge case, but startup can be slow with a lot happening in the initial \"frames\".",
+      "parentUuid": "c21a4744_35bd2f41",
+      "revId": "542286d820819572c578d218e587a639b725e4e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f9dd247_059be4c0",
         "filename": "chrome/browser/notifications/system_notification_helper.h",
         "patchSetId": 5
