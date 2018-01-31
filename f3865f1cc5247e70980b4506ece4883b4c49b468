@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0694c86e_d1175d52",
+        "filename": "chromeos/network/client_cert_resolver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-31T13:16:59Z",
+      "side": 1,
+      "message": "Good idea, done.",
+      "parentUuid": "27a92409_3c8bad78",
+      "revId": "f3865f1cc5247e70980b4506ece4883b4c49b468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5757f31_8b3ee12f",
         "filename": "chromeos/network/client_cert_resolver.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "f3865f1cc5247e70980b4506ece4883b4c49b468",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "617f23d4_72aff8a4",
+        "filename": "chromeos/network/client_cert_resolver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-31T13:16:59Z",
+      "side": 1,
+      "message": "Done with enum class and const-like naming (kResolving, kResolved)",
+      "parentUuid": "b5757f31_8b3ee12f",
+      "revId": "f3865f1cc5247e70980b4506ece4883b4c49b468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ca9b1a3f_84e611ff",
+        "filename": "chromeos/network/client_cert_resolver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-31T13:16:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30661934_188fc542",
+      "revId": "f3865f1cc5247e70980b4506ece4883b4c49b468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45e26431_879a051f",
         "filename": "chromeos/network/client_cert_resolver.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "f3865f1cc5247e70980b4506ece4883b4c49b468",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fbabbd0_fa7438de",
+        "filename": "chromeos/network/client_cert_resolver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-31T13:16:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45e26431_879a051f",
+      "revId": "f3865f1cc5247e70980b4506ece4883b4c49b468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1e0cf81f_06d3fabf",
+        "filename": "chromeos/network/client_cert_resolver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-31T13:16:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d785a4bb_2d2dc7ee",
+      "revId": "f3865f1cc5247e70980b4506ece4883b4c49b468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "790d7969_e010a340",
         "filename": "chromeos/network/client_cert_resolver.cc",
         "patchSetId": 6
@@ -101,6 +191,24 @@
       "revId": "f3865f1cc5247e70980b4506ece4883b4c49b468",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d88e3b4a_f52d7b2f",
+        "filename": "chromeos/network/client_cert_resolver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-31T13:16:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "790d7969_e010a340",
+      "revId": "f3865f1cc5247e70980b4506ece4883b4c49b468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -148,6 +256,30 @@
       "revId": "f3865f1cc5247e70980b4506ece4883b4c49b468",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ec45f0c_fa9b10ea",
+        "filename": "chromeos/network/client_cert_resolver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-01-31T13:16:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91c7bf15_5e8fa8b9",
+      "range": {
+        "startLine": 116,
+        "startChar": 6,
+        "endLine": 116,
+        "endChar": 47
+      },
+      "revId": "f3865f1cc5247e70980b4506ece4883b4c49b468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
