@@ -29,6 +29,7 @@
 #include "components/download/public/background_service/download_metadata.h"
 #include "components/download/public/background_service/navigation_monitor.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
+#include "storage/browser/blob/blob_data_handle.h"
 
 namespace download {
 namespace {
@@ -877,6 +878,9 @@ void ControllerImpl::UpdateDriverState(Entry* entry) {
     return;
   }
 
+  if (pending_uploads_.find(entry->guid) != pending_uploads_.end())
+    return;
+
   base::Optional<DriverEntry> driver_entry = driver_->Find(entry->guid);
 
   // Check if the DriverEntry is in a finished state already.  If so we need to
@@ -956,13 +960,33 @@ void ControllerImpl::UpdateDriverState(Entry* entry) {
       driver_->Resume(entry->guid);
     } else {
       stats::LogEntryEvent(stats::DownloadEvent::START);
-      driver_->Start(
-          entry->request_params, entry->guid, entry->target_file_path,
-          net::NetworkTrafficAnnotationTag(entry->traffic_annotation));
+      PrepareToStartDownload(entry);
     }
   }
 
   log_sink_->OnServiceDownloadChanged(entry->guid);
+}
+
+void ControllerImpl::PrepareToStartDownload(Entry* entry) {
+  pending_uploads_.insert(entry->guid);
+  auto* client = clients_->GetClient(entry->client);
+  DCHECK(client);
+  client->GetUploadData(
+      entry->guid, base::BindOnce(&ControllerImpl::OnPrepareToStartDownload,
+                                  weak_ptr_factory_.GetWeakPtr(), entry->guid));
+}
+
+void ControllerImpl::OnPrepareToStartDownload(
+    const std::string& guid,
+    std::unique_ptr<storage::BlobDataHandle> handle) {
+  pending_uploads_.erase(guid);
+  auto* entry = model_->Get(guid);
+  if (!entry)
+    return;
+
+  driver_->Start(entry->request_params, entry->guid, entry->target_file_path,
+                 std::move(handle),
+                 net::NetworkTrafficAnnotationTag(entry->traffic_annotation));
 }
 
 void ControllerImpl::NotifyClientsOfStartup(bool state_lost) {

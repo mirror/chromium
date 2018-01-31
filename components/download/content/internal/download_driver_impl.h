@@ -42,6 +42,7 @@ class DownloadDriverImpl : public DownloadDriver,
       const RequestParams& request_params,
       const std::string& guid,
       const base::FilePath& file_path,
+      std::unique_ptr<storage::BlobDataHandle> blob_handle,
       const net::NetworkTrafficAnnotationTag& traffic_annotation) override;
   void Remove(const std::string& guid) override;
   void Pause(const std::string& guid) override;

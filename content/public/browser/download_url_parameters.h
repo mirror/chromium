@@ -22,9 +22,14 @@
 #include "content/public/common/referrer.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_request_context_getter.h"
+#include "services/network/public/cpp/resource_request_body.h"
 #include "storage/browser/blob/blob_data_handle.h"
 #include "url/gurl.h"
 #include "url/origin.h"
+
+namespace network {
+class ResourceRequestBody;
+}  // namespace network
 
 namespace content {
 
@@ -62,6 +67,9 @@ class CONTENT_EXPORT DownloadUrlParameters {
 
   typedef std::pair<std::string, std::string> RequestHeadersNameValuePair;
   typedef std::vector<RequestHeadersNameValuePair> RequestHeadersType;
+
+  using BlobStorageContextGetter =
+      base::OnceCallback<storage::BlobStorageContext*()>;
 
   // Construct DownloadUrlParameters for downloading the resource at |url| and
   // associating the download with the main frame of the given WebContents.
@@ -141,8 +149,13 @@ class CONTENT_EXPORT DownloadUrlParameters {
   }
 
   // Body of the HTTP POST request.
-  void set_post_body(const std::string& post_body) {
+  void set_post_body(scoped_refptr<network::ResourceRequestBody> post_body) {
     post_body_ = post_body;
+  }
+
+  // The blob storage context to be used for uploading blobs, if any.
+  void set_blob_storage_context_getter(BlobStorageContextGetter blob_getter) {
+    blob_storage_context_getter_ = std::move(blob_getter);
   }
 
   // If |prefer_cache| is true and the response to |url| is in the HTTP cache,
@@ -256,13 +269,16 @@ class CONTENT_EXPORT DownloadUrlParameters {
   const std::string& etag() const { return etag_; }
   bool use_if_range() const { return use_if_range_; }
   const std::string& method() const { return method_; }
-  const std::string& post_body() const { return post_body_; }
+  scoped_refptr<network::ResourceRequestBody> post_body() { return post_body_; }
   int64_t post_id() const { return post_id_; }
   bool prefer_cache() const { return prefer_cache_; }
   const Referrer& referrer() const { return referrer_; }
   const std::string& referrer_encoding() const { return referrer_encoding_; }
   const base::Optional<url::Origin>& initiator() const { return initiator_; }
   const std::string& request_origin() const { return request_origin_; }
+  BlobStorageContextGetter get_blob_storage_context_getter() {
+    return std::move(blob_storage_context_getter_);
+  }
 
   // These will be -1 if the request is not associated with a frame. See
   // the constructors for more.
@@ -317,7 +333,8 @@ class CONTENT_EXPORT DownloadUrlParameters {
   std::string etag_;
   bool use_if_range_;
   std::string method_;
-  std::string post_body_;
+  scoped_refptr<network::ResourceRequestBody> post_body_;
+  BlobStorageContextGetter blob_storage_context_getter_;
   int64_t post_id_;
   bool prefer_cache_;
   Referrer referrer_;

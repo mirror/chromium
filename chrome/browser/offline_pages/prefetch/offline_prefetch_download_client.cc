@@ -14,6 +14,7 @@
 #include "components/download/public/background_service/download_metadata.h"
 #include "components/offline_pages/core/prefetch/prefetch_downloader.h"
 #include "components/offline_pages/core/prefetch/prefetch_service.h"
+#include "storage/browser/blob/blob_data_handle.h"
 
 namespace offline_pages {
 
@@ -97,6 +98,13 @@ bool OfflinePrefetchDownloadClient::CanServiceRemoveDownloadedFile(
     const std::string& guid,
     bool force_delete) {
   return true;
+}
+
+void OfflinePrefetchDownloadClient::GetUploadData(
+    const std::string& guid,
+    download::GetUploadDataCallback callback) {
+  std::unique_ptr<storage::BlobDataHandle> handle;
+  std::move(callback).Run(std::move(handle));
 }
 
 PrefetchDownloader* OfflinePrefetchDownloadClient::GetPrefetchDownloader()

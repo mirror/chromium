@@ -202,6 +202,10 @@ class ControllerImpl : public Controller,
   void RemoveCleanupEligibleDownloads();
 
   void HandleExternalDownload(const std::string& guid, bool active);
+  void PrepareToStartDownload(Entry* entry);
+  void OnPrepareToStartDownload(
+      const std::string& guid,
+      std::unique_ptr<storage::BlobDataHandle> handle);
 
   // Postable methods meant to just be pass throughs to Client APIs.  This is
   // meant to help prevent reentrancy.
@@ -251,6 +255,7 @@ class ControllerImpl : public Controller,
   State controller_state_;
   StartupStatus startup_status_;
   std::set<std::string> externally_active_downloads_;
+  std::set<std::string> pending_uploads_;
   std::map<std::string, DownloadParams::StartCallback> start_callbacks_;
   std::map<DownloadTaskType, TaskFinishedCallback> task_finished_callbacks_;
   base::CancelableClosure cancel_downloads_callback_;
