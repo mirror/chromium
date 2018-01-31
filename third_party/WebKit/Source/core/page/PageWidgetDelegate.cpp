@@ -249,11 +249,30 @@ WebInputEventResult PageWidgetDelegate::HandleInputEvent(
 // javascript dispatching untrusted input events.
 void PageWidgetDelegate::ReportFirstInputDelay(const WebInputEvent& event,
                                                LocalFrame* root) {
-  if (event.GetType() != WebInputEvent::kMouseDown &&
-      event.GetType() != WebInputEvent::kKeyDown &&
-      event.GetType() != WebInputEvent::kRawKeyDown &&
-      event.GetType() != WebInputEvent::kGestureTap)
+  static TimeDelta pending_pointerdown_delay;
+
+  DCHECK(event.GetType() != WebInputEvent::kTouchStart);
+
+  // We can't report a pointerDown until the pointerUp, in case it turns into a
+  // scroll.
+  if (event.GetType() == WebInputEvent::kPointerDown) {
+    pending_pointerdown_delay = TimeDelta::FromSecondsD(
+        CurrentTimeTicksInSeconds() - event.TimeStampSeconds());
     return;
+  }
+
+  bool event_is_meaningful =
+      event.GetType() == WebInputEvent::kMouseDown ||
+      event.GetType() == WebInputEvent::kKeyDown ||
+      event.GetType() == WebInputEvent::kRawKeyDown ||
+      // We need to explicitly include tap, as if there are no listeners, we
+      // won't receive the pointer events.
+      event.GetType() == WebInputEvent::kGestureTap ||
+      event.GetType() == WebInputEvent::kPointerUp;
+
+  if (!event_is_meaningful)
+    return;
+
   Document* document = root->GetDocument();
   if (!document)
     return;
@@ -264,8 +283,14 @@ void PageWidgetDelegate::ReportFirstInputDelay(const WebInputEvent& event,
   if (!interactive_detector)
     return;
 
-  interactive_detector->OnFirstInputDelay(TimeDelta::FromSecondsD(
-      CurrentTimeTicksInSeconds() - event.TimeStampSeconds()));
+  const TimeDelta delay =
+      event.GetType() == WebInputEvent::kPointerUp
+          ? pending_pointerdown_delay
+          : TimeDelta::FromSecondsD(CurrentTimeTicksInSeconds() -
+                                    event.TimeStampSeconds());
+  pending_pointerdown_delay = base::TimeDelta();
+
+  interactive_detector->OnFirstInputDelay(delay);
 }
 
 // ----------------------------------------------------------------
