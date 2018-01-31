@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e239ded_0fd697c3",
+        "filename": "net/socket/socket_bio_adapter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-31T18:40:52Z",
+      "side": 1,
+      "message": "Nit: a TLS connection",
+      "range": {
+        "startLine": 32,
+        "startChar": 30,
+        "endLine": 32,
+        "endChar": 31
+      },
+      "revId": "e61fd857aa84034335ff05d08f99fb7ebee3249b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70e5f0db_e0268ae3",
+        "filename": "net/socket/socket_bio_adapter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-31T18:40:52Z",
+      "side": 1,
+      "message": "Nit: TLS",
+      "range": {
+        "startLine": 36,
+        "startChar": 37,
+        "endLine": 36,
+        "endChar": 40
+      },
+      "revId": "e61fd857aa84034335ff05d08f99fb7ebee3249b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "069b7182_4d64f22d",
+        "filename": "net/socket/socket_bio_adapter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-31T18:40:52Z",
+      "side": 1,
+      "message": "Nit: Either \"HTTPS URL\" here or \"https:// URL\" below. (My bad. I didn\u0027t notice you spelled it differently when I wrote my sample text.)",
+      "range": {
+        "startLine": 37,
+        "startChar": 22,
+        "endLine": 37,
+        "endChar": 30
+      },
+      "revId": "e61fd857aa84034335ff05d08f99fb7ebee3249b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
