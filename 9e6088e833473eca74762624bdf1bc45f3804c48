@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7a181ea_2efbecbe",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 4
+      },
+      "lineNbr": 2542,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-31T18:10:34Z",
+      "side": 1,
+      "message": "Tag sent by client to track DataEntry identity across multiple requestData calls",
+      "range": {
+        "startLine": 2542,
+        "startChar": 24,
+        "endLine": 2542,
+        "endChar": 32
+      },
+      "revId": "9e6088e833473eca74762624bdf1bc45f3804c48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d294add_79e2eea9",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 4
+      },
+      "lineNbr": 2558,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-31T18:10:34Z",
+      "side": 1,
+      "message": "# This tag helps to track identity of the DataEntry object when the key\n# is not a primitive value.\n# For primitive values, client can just compare the value itself, but for\n# objects we generate a different RemoteObject every time and so additional\n# identity tracking is necessary.",
+      "range": {
+        "startLine": 2558,
+        "startChar": 31,
+        "endLine": 2558,
+        "endChar": 39
+      },
+      "revId": "9e6088e833473eca74762624bdf1bc45f3804c48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a131e1d9_5ab4003f",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 4
+      },
+      "lineNbr": 2562,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-31T18:10:34Z",
+      "side": 1,
+      "message": "Runtime.RemoteObjectId primaryKeyObjectId",
+      "range": {
+        "startLine": 2562,
+        "startChar": 6,
+        "endLine": 2562,
+        "endChar": 12
+      },
+      "revId": "9e6088e833473eca74762624bdf1bc45f3804c48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e83b6660_ce66a5d3",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 4
+      },
+      "lineNbr": 2616,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-31T18:10:34Z",
+      "side": 1,
+      "message": "# Numeric DataEntry identity tags for values client is interested in.\n# These tags will be reported in resulting DataEntry objects when the identity\n# matches.",
+      "revId": "9e6088e833473eca74762624bdf1bc45f3804c48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
