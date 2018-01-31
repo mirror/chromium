@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c5b39f43_4a495cb1",
+        "filename": "components/storage_monitor/media_transfer_protocol_device_observer_chromeos.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1127279
+      },
+      "writtenOn": "2018-01-31T07:47:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e58de3e0_061dff20",
+      "revId": "e3c8304cc80a2d2b59e63ba586566e618e710071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d32584ed_105bb244",
         "filename": "components/storage_monitor/media_transfer_protocol_device_observer_chromeos.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "e3c8304cc80a2d2b59e63ba586566e618e710071",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fbb66ad_577f9af5",
+        "filename": "components/storage_monitor/media_transfer_protocol_device_observer_chromeos.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1127279
+      },
+      "writtenOn": "2018-01-31T07:47:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d32584ed_105bb244",
+      "revId": "e3c8304cc80a2d2b59e63ba586566e618e710071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
