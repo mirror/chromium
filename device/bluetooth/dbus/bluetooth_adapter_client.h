@@ -157,6 +157,14 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdapterClient : public BluezDBusClient {
                              const base::Closure& callback,
                              const ErrorCallback& error_callback) = 0;
 
+  virtual void ResumeDiscovery(const dbus::ObjectPath& object_path,
+                               const base::Closure& callback,
+                               const ErrorCallback& error_callback) = 0;
+
+  virtual void SuspendDiscovery(const dbus::ObjectPath& object_path,
+                                const base::Closure& callback,
+                                const ErrorCallback& error_callback) = 0;
+
   // Removes from the adapter with object path |object_path| the remote
   // device with object path |object_path| from the list of known devices
   // and discards any pairing information.
