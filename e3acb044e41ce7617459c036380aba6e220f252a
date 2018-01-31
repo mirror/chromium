@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7eb153c1_db821d3c",
+        "filename": "ash/wm/wm_toplevel_window_event_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-31T18:03:12Z",
+      "side": 1,
+      "message": "I think hiding would be ok (say you switched from clamshell with shadow to tablet)?",
+      "revId": "e3acb044e41ce7617459c036380aba6e220f252a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0ba0434_3e335719",
+        "filename": "components/exo/client_controlled_shell_surface_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-31T18:03:12Z",
+      "side": 1,
+      "message": "why this change?",
+      "revId": "e3acb044e41ce7617459c036380aba6e220f252a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
