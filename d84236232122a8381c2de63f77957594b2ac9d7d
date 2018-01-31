@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0dd8e00_5da5157a",
+        "filename": "content/browser/loader/signed_exchange_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-01-31T06:36:20Z",
+      "side": 1,
+      "message": "DCHECK(pending_callback_)?",
+      "revId": "d84236232122a8381c2de63f77957594b2ac9d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a42b1d80_a1e276c7",
+        "filename": "content/browser/loader/signed_exchange_handler.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-01-31T06:36:20Z",
+      "side": 1,
+      "message": "delete this",
+      "revId": "d84236232122a8381c2de63f77957594b2ac9d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
