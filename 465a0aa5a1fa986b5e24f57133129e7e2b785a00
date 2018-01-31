@@ -70,6 +70,30 @@
       "revId": "465a0aa5a1fa986b5e24f57133129e7e2b785a00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cfb2c45_678cd47a",
+        "filename": "chrome/browser/extensions/active_tab_permission_granter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-31T16:05:59Z",
+      "side": 1,
+      "message": "Yep, that\u0027s my reading as well.  So let\u0027s keep it like this to eliminate a couple of unnecessary logic branches.",
+      "parentUuid": "58be5a55_3e3f4e24",
+      "range": {
+        "startLine": 128,
+        "startChar": 34,
+        "endLine": 128,
+        "endChar": 43
+      },
+      "revId": "465a0aa5a1fa986b5e24f57133129e7e2b785a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
