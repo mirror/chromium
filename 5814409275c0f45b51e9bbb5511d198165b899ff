@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c81c46dd_2aa68a12",
+        "filename": "components/viz/service/main/viz_main_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-31T18:45:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2d80174_138eb44b",
+      "revId": "5814409275c0f45b51e9bbb5511d198165b899ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3719cff1_f36152cc",
         "filename": "components/viz/service/main/viz_main_impl.cc",
         "patchSetId": 3
@@ -50,6 +68,24 @@
       "revId": "5814409275c0f45b51e9bbb5511d198165b899ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2b3d02d_c5b46bf2",
+        "filename": "components/viz/service/main/viz_main_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-31T18:45:26Z",
+      "side": 1,
+      "message": "Yep, exactly. I guess there are enough places that use RunLoop::QuitClosure() that updating them all is a nightmare.",
+      "parentUuid": "f835d2a9_9a466e7c",
+      "revId": "5814409275c0f45b51e9bbb5511d198165b899ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

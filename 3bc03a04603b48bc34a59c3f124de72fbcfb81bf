@@ -16,6 +16,24 @@
       "revId": "3bc03a04603b48bc34a59c3f124de72fbcfb81bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61cb6a57_cd6afa49",
+        "filename": "components/viz/service/main/viz_main_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-31T18:45:26Z",
+      "side": 1,
+      "message": "That\u0027s a good point. The problem used to be that we didn\u0027t have any way to know that a RootCompositorFrameSinkImpls was destroyed, since a request was made to destroy it asynchronously, but I made that synchronous last week. We can be sure the compositor thread won\u0027t call back to the GPU thread now and I\u0027ve removed the RunLoop.",
+      "parentUuid": "ecc5e9af_d8f45bcd",
+      "revId": "3bc03a04603b48bc34a59c3f124de72fbcfb81bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
