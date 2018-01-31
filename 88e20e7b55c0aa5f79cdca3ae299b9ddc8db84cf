@@ -22,6 +22,23 @@
       "revId": "88e20e7b55c0aa5f79cdca3ae299b9ddc8db84cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fff4b41a_89fe3b09",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/ExternalServiceDeviceLogcatProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2018-01-31T00:55:09Z",
+      "side": 1,
+      "message": "is this whole file formatted properly?  This line looks weird :)",
+      "revId": "88e20e7b55c0aa5f79cdca3ae299b9ddc8db84cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
