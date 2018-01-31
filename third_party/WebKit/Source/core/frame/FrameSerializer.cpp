@@ -161,7 +161,7 @@ bool SerializerMarkupAccumulator::ShouldIgnoreElement(
     const Element& element) const {
   if (IsHTMLScriptElement(element))
     return true;
-  if (IsHTMLNoScriptElement(element))
+  if (element.HasTagName(HTMLNames::noscriptTag))
     return true;
   if (IsHTMLMetaElement(element) &&
       ToHTMLMetaElement(element).ComputeEncoding().IsValid()) {
