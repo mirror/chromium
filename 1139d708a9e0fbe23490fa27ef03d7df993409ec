@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5819c363_4f1730db",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2018-01-31T15:59:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9289ee44_732066da",
+      "range": {
+        "startLine": 9,
+        "startChar": 25,
+        "endLine": 9,
+        "endChar": 33
+      },
+      "revId": "1139d708a9e0fbe23490fa27ef03d7df993409ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ebfebae_fd6d73c8",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "87747967_bfd446ad",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2018-01-31T15:59:03Z",
+      "side": 1,
+      "message": "So far, this metric should only help us find out how often the search is actually used and how often a user ended up in an entry by using the search. \nI don\u0027t think the action following that inspection is relevant to measure if the search benefits our users - or do you have a specific aspect in mind that we should investigate?\n\nI would suggest to keep the instrumentation minimal until we need the data to answer a specific question.\n\n(If we are interested in other *AfterSearched actions, I would absolutely agree to a separate histogram.)",
+      "parentUuid": "6670c3a1_f618dbcc",
+      "range": {
+        "startLine": 11,
+        "startChar": 4,
+        "endLine": 11,
+        "endChar": 23
+      },
+      "revId": "1139d708a9e0fbe23490fa27ef03d7df993409ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "535c443d_d18ddb02",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2018-01-31T15:59:03Z",
+      "side": 1,
+      "message": "Makes sense, it\u0027s \"enum value\" now.",
+      "parentUuid": "6ebfebae_fd6d73c8",
+      "range": {
+        "startLine": 11,
+        "startChar": 32,
+        "endLine": 11,
+        "endChar": 38
+      },
+      "revId": "1139d708a9e0fbe23490fa27ef03d7df993409ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf5ed8d7_5f33af21",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "1139d708a9e0fbe23490fa27ef03d7df993409ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42bf8cde_89b943da",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2018-01-31T15:59:03Z",
+      "side": 1,
+      "message": "tl;dr: Simplified.\n\nDon\u0027t worry, this is inherently puzzling. I meant a boolean Extra for the Intent leading to the PasswordEntryEditor. It\u0027s now something less technical, more meaningful - I hope.",
+      "parentUuid": "bf5ed8d7_5f33af21",
+      "range": {
+        "startLine": 83,
+        "startChar": 21,
+        "endLine": 83,
+        "endChar": 35
+      },
+      "revId": "1139d708a9e0fbe23490fa27ef03d7df993409ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -137,6 +233,54 @@
       "revId": "1139d708a9e0fbe23490fa27ef03d7df993409ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa64b955_cbfc566a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2018-01-31T15:59:03Z",
+      "side": 1,
+      "message": "That\u0027s absolutely correct and fixed now.\n\n(I used the saved query as state.)",
+      "parentUuid": "e324db83_1b24bc8f",
+      "range": {
+        "startLine": 144,
+        "startChar": 8,
+        "endLine": 144,
+        "endChar": 65
+      },
+      "revId": "1139d708a9e0fbe23490fa27ef03d7df993409ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0808f090_df836cf2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2018-01-31T15:59:03Z",
+      "side": 1,
+      "message": "Yes, sorry.\nThis used to be a placeholder for recovering the state of the search from the bundle. The version I sent you didn\u0027t contain that yet.",
+      "parentUuid": "e5038e91_ebd0af1e",
+      "range": {
+        "startLine": 144,
+        "startChar": 27,
+        "endLine": 144,
+        "endChar": 32
+      },
+      "revId": "1139d708a9e0fbe23490fa27ef03d7df993409ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
