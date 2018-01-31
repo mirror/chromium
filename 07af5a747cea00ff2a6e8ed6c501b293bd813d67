@@ -101,6 +101,74 @@
       "revId": "07af5a747cea00ff2a6e8ed6c501b293bd813d67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c05d206_9dc5977a",
+        "filename": "components/viz/common/gpu/texture_allocation.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-31T19:18:00Z",
+      "side": 1,
+      "message": "This was a mistake here, GPU_READ_CPU_READ_WRITE is what ZeroCopy uses. ResourceProvider::CreateGpuTextureResource() uses SCANOUT, and that\u0027s what OneCopy and GpuRaster versions were calling/using. Fixed.",
+      "revId": "07af5a747cea00ff2a6e8ed6c501b293bd813d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "528e3690_b37908f6",
+        "filename": "components/viz/common/gpu/texture_allocation.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-31T19:18:00Z",
+      "side": 1,
+      "message": "This stuff comes from ResourceProvider::CreateTexture() which is called from ScopedWriteLockGpu() constructor.",
+      "revId": "07af5a747cea00ff2a6e8ed6c501b293bd813d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04444e2d_02c35055",
+        "filename": "components/viz/common/gpu/texture_allocation.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-31T19:18:00Z",
+      "side": 1,
+      "message": "This stuff comes from ResourceProvider::ScopedWriteLockGL::LazyAllocate(), in combination with things stored on the Resource from CreateGpuTextureResource().",
+      "revId": "07af5a747cea00ff2a6e8ed6c501b293bd813d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8db199a5_992c8dbb",
+        "filename": "components/viz/common/resources/resource_format_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-31T19:18:00Z",
+      "side": 1,
+      "message": "This was in LayerTreeResourceProvider before, moved here.",
+      "revId": "07af5a747cea00ff2a6e8ed6c501b293bd813d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
