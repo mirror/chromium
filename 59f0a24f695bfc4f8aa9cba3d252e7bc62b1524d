@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b9558ef_932bb5df",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-31T02:05:18Z",
+      "side": 1,
+      "message": "nit: no need to repeat the subject. Also might be beneficial to use the fairly-common roll subject of:\n\n\"Roll src/third_party/pdfium/ bc4869293..95b232f79 (10 commits)\"",
+      "revId": "59f0a24f695bfc4f8aa9cba3d252e7bc62b1524d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
