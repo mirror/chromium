@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf8a720c_17b7207c",
+        "filename": "third_party/WebKit/Source/modules/geolocation/GeoNotifier.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-31T00:55:37Z",
+      "side": 1,
+      "message": "When the callback is invoked asynchronously, the callbacks are traced by Geolocation::one_shots_being_invoked_, aren\u0027t they?",
+      "revId": "1063641d0bf9b23449f758d7e0de55b7611dcc06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
