@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef47ff77_43275164",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-tracks.https-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-31T12:16:14Z",
+      "side": 1,
+      "message": "removeTrack() twice is still \"safe\" (does not crash), but the second removeTrack() does not work because the sender has already been removed. Previously it was a NO-OP instead of throwing this exception because of an edge-case bug I happened to fix in this CL (which probably does not affect anything except this error message).\n\nThe error message is misleading, the sender was created by this PC it just is not found anymore. I don\u0027t want to add to the error message \"or has already been removed\" because that changes already shipped error messages to accommodate for an special case. When we are spec-compliant senders will never be removed and this error message will be correct.\n\nI can add \"if sender.pc \u003d\u003d this\" logic to distinguish between the two cases before landing this CL though.",
+      "revId": "b3db19d9f189a2435a8bbe4ffd989a4446240155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82003c9c_da690f67",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-AddRemoveTrack.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-31T12:16:14Z",
+      "side": 1,
+      "message": "FYI: This is an observable difference between having a separate local_streams_ and implementing legacy on top of non-legacy. This is a very obscure edge case that only shows up if you mix legacy and non-legacy APIs and trying to add it both with and without the stream. This is not worthy of an intent or even discuss-webrtc announcement.",
+      "revId": "b3db19d9f189a2435a8bbe4ffd989a4446240155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "881abf89_069135bf",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-legacy-stream-APIs-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-31T12:16:14Z",
+      "side": 1,
+      "message": "FYI: This will be fixed by the follow-up CL implementing addStream/removeStream on top of addTrack/removeTrack.",
+      "revId": "b3db19d9f189a2435a8bbe4ffd989a4446240155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da084254_0c8bd5a7",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-legacy-stream-APIs-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-31T12:16:14Z",
+      "side": 1,
+      "message": "FYI: This would have failed before this CL too. It will pass once we get rid of local_streams_ in a follow-up CL. https://crbug.com/806875",
+      "revId": "b3db19d9f189a2435a8bbe4ffd989a4446240155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4665352e_e84d54f2",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-legacy-stream-APIs-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-31T12:16:14Z",
+      "side": 1,
+      "message": "FYI: This is what the result looks like when running on master with only the test added:\n\nThis is a testharness.js-based test.\nPASS addStream() adds to local streams and senders.\nFAIL addTrack() adds to local streams and senders. assert_array_equals: lengths differ, expected 1 got 0\nPASS addTrack() fails after addStream().\nPASS addStream() after addTrack() adds the remaining track.\nPASS Adding a track to an addStream()-stream adds it to the PC.\nPASS Removing a track from an addStream()-stream removes it from the PC.\nPASS The PC stops observing the stream after removeStream().\nPASS removeStream() after addStream() removes from local streams and senders.\nFAIL removeStream() after addTrack() removes from local streams and senders. assert_array_equals: lengths differ, expected 1 got 0\nPASS removeStream() after removeTrack() removes remaining tracks.\nFAIL removeTrack() after addStream() removes from local streams and senders. assert_array_equals: lengths differ, expected 0 got 1\nFAIL removeTrack() after addTrack() removes from local streams and senders. assert_array_equals: lengths differ, expected 1 got 0\nPASS createDTMFSender() with addStream()-track.\nFAIL createDTMFSender() with addTrack()-track. promise_test: Unhandled rejection with value: object \"SyntaxError: Failed to execute \u0027createDTMFSender\u0027 on \u0027RTCPeerConnection\u0027: No local stream is available for the track provided.\"\nHarness: the test ran to completion.\n\nThe difference is that adding or removing tracks with streams using addTrack/removeTrack updates the set of local streams. Prior to this CL getLocalStreams() was only affected by addStream/removeStream. This is worthy of a PSA in discuss-webrtc.",
+      "revId": "b3db19d9f189a2435a8bbe4ffd989a4446240155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
