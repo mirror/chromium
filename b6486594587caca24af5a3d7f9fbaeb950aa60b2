@@ -22,6 +22,30 @@
       "revId": "b6486594587caca24af5a3d7f9fbaeb950aa60b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e1014e6_51ff3893",
+        "filename": "chrome/common/stack_sampling_configuration.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-31T17:54:03Z",
+      "side": 0,
+      "message": "I believe so, yes. (control and disabled both remain at 10%).",
+      "parentUuid": "e4d6c74e_d9059ca0",
+      "range": {
+        "startLine": 188,
+        "startChar": 34,
+        "endLine": 192,
+        "endChar": 55
+      },
+      "revId": "b6486594587caca24af5a3d7f9fbaeb950aa60b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
