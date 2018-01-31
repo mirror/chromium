@@ -647,6 +647,17 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
         if (navigation_data)
           cloned_navigation_data = navigation_data->Clone();
       }
+
+      ServiceWorkerProviderHost* sw_provider_host =
+          ServiceWorkerRequestHandler::GetProviderHost(url_request);
+      if (sw_provider_host && sw_provider_host->controller()) {
+        subresource_loader_params_ = SubresourceLoaderParams();
+        subresource_loader_params_->controller_service_worker_info =
+            mojom::ControllerServiceWorkerInfo::New();
+        subresource_loader_params_->controller_service_worker_info
+            ->object_info = sw_provider_host->GetOrCreateServiceWorkerHandle(
+            sw_provider_host->controller());
+      }
     }
 
     // Make a copy of the ResourceResponse before it is passed to another

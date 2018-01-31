@@ -331,7 +331,7 @@ class CONTENT_EXPORT ServiceWorkerVersion
     return event_dispatcher_.get();
   }
 
-  // S13nServiceWorker:
+  // S13nServiceWorker/NavigationMojoResponse:
   // Returns the 'controller' interface ptr of this worker. It is expected
   // that the worker is already starting or running, or is going to be started
   // soon.
@@ -779,10 +779,10 @@ class CONTENT_EXPORT ServiceWorkerVersion
   // Connected to ServiceWorkerContextClient while the worker is running.
   mojom::ServiceWorkerEventDispatcherPtr event_dispatcher_;
 
-  // S13nServiceWorker: connected to the controller service worker.
-  // |controller_request_| is non-null only when the |controller_ptr_| is
-  // requested before the worker is started, it is passed to the worker (and
-  // becomes null) once it's started.
+  // S13nServiceWorker/NavigationMojoResponse: connected to the controller
+  // service worker. |controller_request_| is non-null only when the
+  // |controller_ptr_| is requested before the worker is started, it is passed
+  // to the worker (and becomes null) once it's started.
   mojom::ControllerServiceWorkerPtr controller_ptr_;
   mojom::ControllerServiceWorkerRequest controller_request_;
 
