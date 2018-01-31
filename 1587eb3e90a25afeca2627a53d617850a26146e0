@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6c7bfa5_c3687882",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2112,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-31T21:31:31Z",
+      "side": 1,
+      "message": "Nit: exhausted :-)",
+      "range": {
+        "startLine": 2112,
+        "startChar": 7,
+        "endLine": 2112,
+        "endChar": 17
+      },
+      "revId": "1587eb3e90a25afeca2627a53d617850a26146e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
