@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37296c5a_237c0225",
+        "filename": "third_party/zlib/contrib/optimizations/arm/armv8_crc32.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-31T11:53:09Z",
+      "side": 1,
+      "message": "Chromium has a short-form copyright, and it should read as follows:\n\n * Copyright 2018 The Chromium Authors. All rights reserved.\n * Use of this source code is governed by a BSD-style license that can be\n * found in the Chromium source repository LICENSE file.",
+      "revId": "be2504c0ffa2bf84913ec8db0b5fd15d9e060e0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
