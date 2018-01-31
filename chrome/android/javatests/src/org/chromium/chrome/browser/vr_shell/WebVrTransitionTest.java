@@ -4,6 +4,7 @@
 
 package org.chromium.chrome.browser.vr_shell;
 
+import static org.chromium.chrome.browser.vr_shell.TestFramework.PAGE_LOAD_TIMEOUT_S;
 import static org.chromium.chrome.browser.vr_shell.VrTestFramework.PAGE_LOAD_TIMEOUT_S;
 import static org.chromium.chrome.browser.vr_shell.VrTestFramework.POLL_CHECK_INTERVAL_SHORT_MS;
 import static org.chromium.chrome.browser.vr_shell.VrTestFramework.POLL_TIMEOUT_LONG_MS;
@@ -27,6 +28,7 @@ import org.junit.rules.RuleChain;
 import org.junit.runner.RunWith;
 
 import org.chromium.base.ApplicationStatus;
+import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.params.ParameterAnnotations.ClassParameter;
 import org.chromium.base.test.params.ParameterAnnotations.UseRunnerDelegate;
 import org.chromium.base.test.params.ParameterSet;
@@ -37,6 +39,7 @@ import org.chromium.base.test.util.Restriction;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.customtabs.CustomTabActivity;
+import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.vr_shell.mock.MockVrIntentHandler;
 import org.chromium.chrome.browser.vr_shell.rules.VrActivityRestriction;
 import org.chromium.chrome.browser.vr_shell.util.NfcSimUtils;
@@ -51,6 +54,7 @@ import org.chromium.content_public.browser.WebContents;
 import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -277,5 +281,30 @@ public class WebVrTransitionTest {
         VrTestFramework.executeStepAndWait(
                 "stepVerifyAfterPresent()", mVrTestFramework.getFirstTabWebContents());
         VrTestFramework.endTest(mVrTestFramework.getFirstTabWebContents());
+    }
+
+    /**
+     * Tests renderer crashes while in WebVR presentation stay in VR.
+     */
+    @Test
+    @MediumTest
+    @Restriction(RESTRICTION_TYPE_VIEWER_DAYDREAM)
+    @VrActivityRestriction({VrActivityRestriction.SupportedActivity.CTA})
+    public void testRendererKilledInWebVrStaysInVr()
+            throws IllegalArgumentException, InterruptedException, TimeoutException {
+        mVrTestFramework.loadUrlAndAwaitInitialization(
+                VrTestFramework.getHtmlTestFile("generic_webvr_page"), PAGE_LOAD_TIMEOUT_S);
+        VrTransitionUtils.enterPresentationOrFail(mVrTestFramework.getFirstTabCvc());
+
+        final Tab tab = mVrTestRule.getActivity().getActivityTab();
+        ThreadUtils.runOnUiThreadBlocking(() -> tab.simulateRendererKilledForTesting(true));
+
+        CriteriaHelper.pollUiThread(new Criteria() {
+            @Override
+            public boolean isSatisfied() {
+                return tab.isShowingSadTab();
+            }
+        });
+        Assert.assertTrue("Browser is in VR", VrShellDelegate.isInVr());
     }
 }

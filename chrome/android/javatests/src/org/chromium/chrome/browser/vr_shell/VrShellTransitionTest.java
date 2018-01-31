@@ -23,6 +23,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.chromium.base.ApplicationStatus;
+import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.Restriction;
 import org.chromium.base.test.util.RetryOnFailure;
@@ -284,5 +285,28 @@ public class VrShellTransitionTest {
                 "stepVerifySecondPresent()", mVrTestFramework.getFirstTabWebContents());
 
         VrTestFramework.endTest(mVrTestFramework.getFirstTabWebContents());
+    }
+
+    /**
+     * Tests that you can enter VR with no current tab.
+     */
+    @Test
+    @CommandLineFlags.Add("enable-webvr")
+    @Restriction(RESTRICTION_TYPE_VIEWER_DAYDREAM)
+    @MediumTest
+    public void testEnterVrWithoutTab() throws InterruptedException, TimeoutException {
+        final ChromeTabbedActivity activity = mVrTestRule.getActivity();
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                activity.getTabModelSelector().closeAllTabs();
+            }
+        });
+
+        VrTransitionUtils.forceEnterVr();
+        VrTransitionUtils.waitForVrEntry(POLL_TIMEOUT_LONG_MS);
+        Assert.assertTrue(VrShellDelegateUtils.getDelegateInstance().isVrEntryComplete());
+        VrTransitionUtils.forceExitVr();
+        Assert.assertFalse(VrShellDelegate.isInVr());
     }
 }

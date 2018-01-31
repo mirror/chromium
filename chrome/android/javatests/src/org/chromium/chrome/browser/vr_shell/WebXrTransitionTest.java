@@ -4,6 +4,7 @@
 
 package org.chromium.chrome.browser.vr_shell;
 
+import static org.chromium.chrome.browser.vr_shell.TestFramework.PAGE_LOAD_TIMEOUT_S;
 import static org.chromium.chrome.browser.vr_shell.XrTestFramework.PAGE_LOAD_TIMEOUT_S;
 import static org.chromium.chrome.browser.vr_shell.XrTestFramework.POLL_CHECK_INTERVAL_SHORT_MS;
 import static org.chromium.chrome.browser.vr_shell.XrTestFramework.POLL_TIMEOUT_LONG_MS;
@@ -23,6 +24,7 @@ import org.junit.Test;
 import org.junit.rules.RuleChain;
 import org.junit.runner.RunWith;
 
+import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.params.ParameterAnnotations.ClassParameter;
 import org.chromium.base.test.params.ParameterAnnotations.UseRunnerDelegate;
 import org.chromium.base.test.params.ParameterSet;
@@ -32,8 +34,10 @@ import org.chromium.base.test.util.MinAndroidSdkLevel;
 import org.chromium.base.test.util.Restriction;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeSwitches;
+import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.vr_shell.rules.VrActivityRestriction;
 import org.chromium.chrome.browser.vr_shell.util.VrTestRuleUtils;
+import org.chromium.chrome.browser.vr_shell.util.VrTransitionUtils;
 import org.chromium.chrome.browser.vr_shell.util.XrTransitionUtils;
 import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4RunnerDelegate;
@@ -42,6 +46,7 @@ import org.chromium.content.browser.test.util.CriteriaHelper;
 
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.TimeoutException;
 
 /**
  * end-to-end tests for transitioning between WebXR's magic window (non-exclusive session) and
@@ -193,5 +198,30 @@ public class WebXrTransitionTest {
         XrTestFramework.executeStepAndWait(
                 "stepVerifyAfterPresent()", mXrTestFramework.getFirstTabWebContents());
         XrTestFramework.endTest(mXrTestFramework.getFirstTabWebContents());
+    }
+
+    /**
+     * Tests renderer crashes while in WebXR presentation stay in VR.
+     */
+    @Test
+    @MediumTest
+    @Restriction(RESTRICTION_TYPE_VIEWER_DAYDREAM)
+    @VrActivityRestriction({VrActivityRestriction.SupportedActivity.CTA})
+    public void testRendererKilledInWebVrStaysInVr()
+            throws IllegalArgumentException, InterruptedException, TimeoutException {
+        mXrTestFramework.loadUrlAndAwaitInitialization(
+                VrTestFramework.getHtmlTestFile("generic_webvr_page"), PAGE_LOAD_TIMEOUT_S);
+        VrTransitionUtils.enterPresentationOrFail(mXrTestFramework.getFirstTabCvc());
+
+        final Tab tab = mVrTestRule.getActivity().getActivityTab();
+        ThreadUtils.runOnUiThreadBlocking(() -> tab.simulateRendererKilledForTesting(true));
+
+        CriteriaHelper.pollUiThread(new Criteria() {
+            @Override
+            public boolean isSatisfied() {
+                return tab.isShowingSadTab();
+            }
+        });
+        Assert.assertTrue("Browser is in VR", VrShellDelegate.isInVr());
     }
 }
