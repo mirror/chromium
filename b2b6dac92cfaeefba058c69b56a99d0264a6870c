@@ -16,6 +16,24 @@
       "revId": "b2b6dac92cfaeefba058c69b56a99d0264a6870c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52e6d27e_527f2b44",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCollection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2018-01-31T23:23:04Z",
+      "side": 0,
+      "message": "Yes, it improves Speedometer by almost 2% for some of the frameworks (Vanilla, jQuery)",
+      "parentUuid": "4749372a_90da7b46",
+      "revId": "b2b6dac92cfaeefba058c69b56a99d0264a6870c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
