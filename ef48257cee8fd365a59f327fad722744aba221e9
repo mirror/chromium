@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5e150a5_7b9d6ca5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/share/ShareHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-31T00:03:15Z",
+      "side": 1,
+      "message": "Use TextUtils.equals here instead (that would handle the case where text was null (although that shouldn\u0027t happen)",
+      "revId": "ef48257cee8fd365a59f327fad722744aba221e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
