@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "3e1b1448_15812877",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-31T16:07:09Z",
+      "side": 1,
+      "message": "Maybe we can be slightly stronger here, and say something like not changing existing website behavior?  I think we aim for the blocking to be effectively transparent to websites, since we\u0027re only sending empty responses for things they aren\u0027t supposed to be able to read anyway.  That might also help explain how this isn\u0027t really a spec change or change in site-visible behavior, but rather a useful implementation mechanism and something that might encourage MIME type handling.\n\nI actually think that\u0027s probably worth including a section on later, perhaps between the sniffing and demo sections.  Something about how the blocking is meant to be non-disruptive, and how that applies to various related features:\n* Script tags (avoiding blocking any valid script code, apart from likely attacks)\n* Images/media (not blocking any renderable types)\n* ServiceWorkers (the opaque/non-opaque thing)\n* Prefetch (browser process can still cache the response)\netc.",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 34
+      },
+      "revId": "4bf50ccd34d2317726dfde014b33381576ced5fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d07fe97_2f990ff3",
         "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
         "patchSetId": 1
