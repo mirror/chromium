@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c08905e4_cb278824",
+        "filename": "device/u2f/u2f_request.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-31T10:18:51Z",
+      "side": 1,
+      "message": "To avoid bloating the production binary with this logic, have you considered providing just a single injector method here with a signature void(std::vector\u003cstd::unique_ptr\u003cU2fDiscovery\u003e\u003e), and introducing a test utility function to do the rest of the work?\n\nIn lieu of https://skebanga.github.io/structured-bindings/, it won\u0027t be perfect, but maybe we can write something like this:\n\nMockU2fDiscovery* mock_discovery1;\nMockU2fDiscovery* mock_discovery2;\nauto owned_discoveries \u003d PopulateMockDiscoveries(\n  \u0026mock_discovery1, \u0026mock_discovery2);",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 49
+      },
+      "revId": "5aff9c9c50df928a82044d1de41d314ec837442f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
