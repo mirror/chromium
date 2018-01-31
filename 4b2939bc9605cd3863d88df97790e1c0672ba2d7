@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3a4c79d_bfb51e27",
+        "filename": "ui/keyboard/keyboard_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2018-01-31T02:27:39Z",
+      "side": 1,
+      "message": "add comment for when this is null",
+      "range": {
+        "startLine": 248,
+        "startChar": 27,
+        "endLine": 248,
+        "endChar": 30
+      },
+      "revId": "4b2939bc9605cd3863d88df97790e1c0672ba2d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
