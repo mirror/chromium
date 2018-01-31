@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6b38e06_397d57bb",
+        "filename": "content/renderer/media/media_stream_audio_processor.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-31T13:11:59Z",
+      "side": 1,
+      "message": "Could we treat channel mismatch the same way buffer duration mismatch is treated?",
+      "revId": "69e5178f4bda4022597a5446f50ab2635ee51a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7523d07e_930fbd3c",
+        "filename": "content/renderer/media/media_stream_audio_processor.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-31T13:11:59Z",
+      "side": 1,
+      "message": "Let\u0027s remove it.",
+      "revId": "69e5178f4bda4022597a5446f50ab2635ee51a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49b2a511_b4928497",
+        "filename": "content/renderer/media/media_stream_audio_processor.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-31T13:11:59Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "69e5178f4bda4022597a5446f50ab2635ee51a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

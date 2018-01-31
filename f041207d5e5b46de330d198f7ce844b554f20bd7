@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "d7d42e6c_bb52dd16",
+        "filename": "content/renderer/media/media_stream_audio_processor.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-31T13:11:59Z",
+      "side": 1,
+      "message": "You capped it nicely :)",
+      "parentUuid": "9ff1b291_21bab4f0",
+      "revId": "f041207d5e5b46de330d198f7ce844b554f20bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9906a9fa_51da4cfe",
         "filename": "content/renderer/media/media_stream_audio_processor.h",
         "patchSetId": 15
@@ -247,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "e0776e49_7f736dfd",
+        "filename": "content/renderer/media/webrtc_audio_device_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-31T13:11:59Z",
+      "side": 1,
+      "message": "Could you update the comment re: channels?",
+      "parentUuid": "9eed1db2_c2d72033",
+      "revId": "f041207d5e5b46de330d198f7ce844b554f20bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbb6dced_7e541ce9",
         "filename": "content/renderer/media/webrtc_audio_device_impl.h",
         "patchSetId": 15
@@ -276,6 +312,24 @@
       "side": 1,
       "message": "Same as for Apm, i.e. only mono/stereo.\nI\u0027ll add checks for it (but no logs, since the code change in this CL doesn\u0027t change any behavior with respect to channel count).",
       "parentUuid": "dbb6dced_7e541ce9",
+      "revId": "f041207d5e5b46de330d198f7ce844b554f20bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4e66d67b_5b6f5ffc",
+        "filename": "content/renderer/media/webrtc_audio_device_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-31T13:11:59Z",
+      "side": 1,
+      "message": "Disagree, removing the FIFO changes the behavior (https://cs.chromium.org/chromium/src/content/renderer/media/media_stream_audio_processor.cc?type\u003dcs\u0026q\u003dMediaStreamAudioFifo\u0026sq\u003dpackage:chromium\u0026l\u003d166)\n\nAlso, could you update the comment re: channels?",
+      "parentUuid": "ade81938_f1a1f9ce",
       "revId": "f041207d5e5b46de330d198f7ce844b554f20bd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
