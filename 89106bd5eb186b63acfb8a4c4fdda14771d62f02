@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b175a9fa_d45acefc",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-31T23:51:38Z",
+      "side": 1,
+      "message": "Removed them as it appears they do not do anything.",
+      "parentUuid": "e5855f60_a1362dd0",
+      "range": {
+        "startLine": 115,
+        "startChar": 8,
+        "endLine": 115,
+        "endChar": 12
+      },
+      "revId": "89106bd5eb186b63acfb8a4c4fdda14771d62f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8baf2a2_c8874a71",
         "filename": "chrome/browser/resources/print_preview/new/destination_list_item.html",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "290fc293_bd3d07fe",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list_item.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-31T23:51:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8baf2a2_c8874a71",
+      "range": {
+        "startLine": 12,
+        "startChar": 13,
+        "endLine": 12,
+        "endChar": 33
+      },
+      "revId": "89106bd5eb186b63acfb8a4c4fdda14771d62f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79667496_44b5cc05",
         "filename": "chrome/browser/resources/print_preview/new/destination_list_item.html",
         "patchSetId": 10
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-31T03:32:51Z",
       "side": 1,
       "message": "Where do we make use of the event?",
+      "range": {
+        "startLine": 101,
+        "startChar": 47,
+        "endLine": 101,
+        "endChar": 64
+      },
+      "revId": "89106bd5eb186b63acfb8a4c4fdda14771d62f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18612ce0_67c3f520",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list_item.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-31T23:51:38Z",
+      "side": 1,
+      "message": "It was used by a listener in the JS, but have now removed the dom-repeat entirely.",
+      "parentUuid": "79667496_44b5cc05",
       "range": {
         "startLine": 101,
         "startChar": 47,
