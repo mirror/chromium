@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0af9c8bd_a29d6357",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2426,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-31T18:28:54Z",
+      "side": 1,
+      "message": "I thought about adding this to the ColorUtils method but decided against it because it depends on the view behind the toolbar.",
+      "range": {
+        "startLine": 2426,
+        "startChar": 23,
+        "endLine": 2426,
+        "endChar": 64
+      },
+      "revId": "262854d0be12a7c267eaf7ba901ce00d5fe8d52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
