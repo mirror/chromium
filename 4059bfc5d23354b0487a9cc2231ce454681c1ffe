@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "7e94242d_206fb59c",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2018-01-31T21:51:48Z",
+      "side": 1,
+      "message": "This change was breaking the browsertest AutofillPopupBaseViewTest.CorrectBoundsTest. Using insets shifts the origin by 1px, which puts the border slightly to the left of the text field rather than in line with its left edge.\n\nThat way might actually make more sense depending on the design we\u0027re going for (that way the content of the dropdown, rather than its border, would be aligned with the text field). But it\u0027s a change from existing behavior/visual design, so I\u0027m going with the original code here rather than risking a visible change without prior consideration.",
+      "parentUuid": "c14c127b_cad8cbbe",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 65
+      },
+      "revId": "4059bfc5d23354b0487a9cc2231ce454681c1ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "299903b8_bab08124",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views.cc",
         "patchSetId": 14
