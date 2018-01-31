@@ -4688,13 +4688,13 @@ static void LiveNodeListBaseWriteBarrier(void* parent,
 void Document::RegisterNodeList(const LiveNodeListBase* list) {
   node_lists_.Add(list, list->InvalidationType());
   LiveNodeListBaseWriteBarrier(this, list);
-  if (list->IsRootedAtTreeScope())
+  if (!list->ItemsAreDescendantsOfOwner())
     lists_invalidated_at_document_.insert(list);
 }
 
 void Document::UnregisterNodeList(const LiveNodeListBase* list) {
   node_lists_.Remove(list, list->InvalidationType());
-  if (list->IsRootedAtTreeScope()) {
+  if (!list->ItemsAreDescendantsOfOwner()) {
     DCHECK(lists_invalidated_at_document_.Contains(list));
     lists_invalidated_at_document_.erase(list);
   }

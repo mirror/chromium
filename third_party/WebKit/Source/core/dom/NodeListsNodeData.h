@@ -165,7 +165,7 @@ class NodeListsNodeData final : public GarbageCollected<NodeListsNodeData> {
              tag_collection_ns_caches_.begin();
          it != tag_end; ++it) {
       LiveNodeListBase* list = it->value;
-      DCHECK(!list->IsRootedAtTreeScope());
+      DCHECK(list->ItemsAreDescendantsOfOwner());
       list->DidMoveToDocument(old_document, new_document);
     }
   }
