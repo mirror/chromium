@@ -9,6 +9,7 @@
 #include "chrome/browser/notifications/notification_display_service_tester.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/ui/ash/chrome_screenshot_grabber.h"
+#include "chrome/browser/ui/ash/chrome_screenshot_grabber_test_observer.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "components/session_manager/core/session_manager.h"
@@ -22,7 +23,7 @@
 
 class ChromeScreenshotGrabberBrowserTest
     : public InProcessBrowserTest,
-      public ui::ScreenshotGrabberObserver,
+      public ChromeScreenshotGrabberTestObserver,
       public ui::ClipboardObserver {
  public:
   ChromeScreenshotGrabberBrowserTest() = default;
@@ -38,7 +39,7 @@ class ChromeScreenshotGrabberBrowserTest
 
   // Overridden from ui::ScreenshotGrabberObserver
   void OnScreenshotCompleted(
-      ScreenshotGrabberObserver::Result screenshot_result,
+      ui::ScreenshotResult screenshot_result,
       const base::FilePath& screenshot_path) override {
     screenshot_result_ = screenshot_result;
     screenshot_path_ = screenshot_path;
@@ -68,7 +69,7 @@ class ChromeScreenshotGrabberBrowserTest
   scoped_refptr<content::MessageLoopRunner> message_loop_runner_;
 
   std::unique_ptr<NotificationDisplayServiceTester> display_service_;
-  ScreenshotGrabberObserver::Result screenshot_result_;
+  ui::ScreenshotResult screenshot_result_;
   base::FilePath screenshot_path_;
   bool notification_added_ = false;
   bool clipboard_changed_ = false;
@@ -80,25 +81,24 @@ class ChromeScreenshotGrabberBrowserTest
 IN_PROC_BROWSER_TEST_F(ChromeScreenshotGrabberBrowserTest, TakeScreenshot) {
   ChromeScreenshotGrabber* chrome_screenshot_grabber =
       ChromeScreenshotGrabber::Get();
-  chrome_screenshot_grabber->screenshot_grabber()->AddObserver(this);
+  chrome_screenshot_grabber->AddTestObserver(this);
   base::ScopedTempDir directory;
   ASSERT_TRUE(directory.CreateUniqueTempDir());
   EXPECT_TRUE(chrome_screenshot_grabber->CanTakeScreenshot());
 
-  chrome_screenshot_grabber->screenshot_grabber()->TakeScreenshot(
-      ash::Shell::GetPrimaryRootWindow(), gfx::Rect(0, 0, 100, 100),
-      directory.GetPath().AppendASCII("Screenshot.png"));
+  chrome_screenshot_grabber->HandleTakeWindowScreenshot(
+      ash::Shell::GetPrimaryRootWindow());
 
   EXPECT_FALSE(
       chrome_screenshot_grabber->screenshot_grabber()->CanTakeScreenshot());
 
   RunLoop();
-  chrome_screenshot_grabber->screenshot_grabber()->RemoveObserver(this);
+  chrome_screenshot_grabber->RemoveTestObserver(this);
 
   EXPECT_TRUE(notification_added_);
   EXPECT_TRUE(display_service_->GetNotification(std::string("screenshot")));
 
-  EXPECT_EQ(ScreenshotGrabberObserver::SCREENSHOT_SUCCESS, screenshot_result_);
+  EXPECT_EQ(ui::ScreenshotResult::SUCCESS, screenshot_result_);
   EXPECT_TRUE(base::PathExists(screenshot_path_));
 
   EXPECT_FALSE(IsImageClipboardAvailable());
