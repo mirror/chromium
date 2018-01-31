@@ -69,6 +69,24 @@
       "revId": "cba72e67c7b7f1240ce5968bcd6e7943602fd3c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07d205ad_4da58eec",
+        "filename": "chromeos/components/tether/wifi_hotspot_disconnector_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-31T22:49:40Z",
+      "side": 1,
+      "message": "FWIW I think we\u0027re adding code complexity for a very small debugging benefit, but I will leave it up to you.",
+      "parentUuid": "6ec2d948_a78c7531",
+      "revId": "cba72e67c7b7f1240ce5968bcd6e7943602fd3c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
