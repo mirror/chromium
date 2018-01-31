@@ -5,17 +5,31 @@
 // Must be packed to ../enterprise_device_attributes.crx using the private key
 // ../enterprise_device_attributes.pem .
 
-// The expected directory device id, that is passed by caller.
-var expected_value = location.search.substring(1);
+chrome.test.getConfig(function(config) {
+  var customArg = JSON.parse(config.customArg);
+  var expectedDirectoryDeviceId = customArg.expectedDirectoryDeviceId;
+  var expectedSerialNumber = customArg.expectedSerialNumber;
+  var expectedAssetId = customArg.expectedAssetId;
 
-var assertEq = chrome.test.assertEq;
-var assertTrue = chrome.test.assertTrue;
-var callbackPass = chrome.test.callbackPass
-var succeed = chrome.test.succeed;
+  chrome.test.runTests([
+    function testDirectoryDeviceId() {
+      chrome.enterprise.deviceAttributes.getDirectoryDeviceId(
+          chrome.test.callbackPass(function(deviceId) {
+            chrome.test.assertEq(expectedDirectoryDeviceId, deviceId);
+          }));
+    },
+    function testDeviceSerialNumber() {
+      chrome.enterprise.deviceAttributes.getDeviceSerialNumber(
+          chrome.test.callbackPass(function(serialNumber) {
+            chrome.test.assertEq(expectedSerialNumber, serialNumber);
+          }));
 
-assertTrue(chrome.enterprise.deviceAttributes.getDirectoryDeviceId(
-    callbackPass(function(device_id) {
-      assertEq(expected_value, device_id);
-    })));
-
-succeed();
+    },
+    function testDeviceAssetId() {
+      chrome.enterprise.deviceAttributes.getDeviceAssetId(
+          chrome.test.callbackPass(function(assetId) {
+            chrome.test.assertEq(expectedAssetId, assetId);
+          }));
+    }
+  ]);
+});
