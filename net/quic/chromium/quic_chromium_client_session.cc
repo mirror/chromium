@@ -676,7 +676,10 @@ QuicChromiumClientSession::QuicChromiumClientSession(
     base::SequencedTaskRunner* task_runner,
     std::unique_ptr<SocketPerformanceWatcher> socket_performance_watcher,
     NetLog* net_log)
-    : QuicSpdyClientSessionBase(connection, push_promise_index, config),
+    : QuicSpdyClientSessionBase(connection,
+                                push_promise_index,
+                                config,
+                                headers_include_h2_stream_dependency),
       server_id_(server_id),
       require_confirmation_(require_confirmation),
       migrate_session_early_(migrate_session_early),
@@ -718,8 +721,6 @@ QuicChromiumClientSession::QuicChromiumClientSession(
       probing_manager_(this, task_runner_),
       retry_migrate_back_count_(0),
       migration_pending_(false),
-      headers_include_h2_stream_dependency_(
-          headers_include_h2_stream_dependency),
       weak_factory_(this) {
   default_network_ = socket->GetBoundNetwork();
   sockets_.push_back(std::move(socket));
@@ -866,54 +867,11 @@ void QuicChromiumClientSession::Initialize() {
   set_max_uncompressed_header_bytes(kMaxUncompressedHeaderSize);
 }
 
-size_t QuicChromiumClientSession::WriteHeaders(
-    QuicStreamId id,
-    SpdyHeaderBlock headers,
-    bool fin,
-    SpdyPriority priority,
-    QuicReferenceCountedPointer<QuicAckListenerInterface>
-        ack_notifier_delegate) {
-  if (headers_include_h2_stream_dependency_) {
-    SpdyStreamId parent_stream_id = 0;
-    bool exclusive = false;
-    priority_dependency_state_.OnStreamCreation(id, priority, &parent_stream_id,
-                                                &exclusive);
-    return QuicSpdySession::WriteHeaders(id, std::move(headers), fin, priority,
-                                         parent_stream_id, exclusive,
-                                         std::move(ack_notifier_delegate));
-  }
-  return QuicSpdySession::WriteHeaders(id, std::move(headers), fin, priority,
-                                       std::move(ack_notifier_delegate));
-}
-
 void QuicChromiumClientSession::OnHeadersHeadOfLineBlocking(
     QuicTime::Delta delta) {
   UMA_HISTOGRAM_TIMES(
       "Net.QuicSession.HeadersHOLBlockedTime",
       base::TimeDelta::FromMicroseconds(delta.ToMicroseconds()));
-}
-
-void QuicChromiumClientSession::UnregisterStreamPriority(QuicStreamId id) {
-  if (headers_include_h2_stream_dependency_) {
-    priority_dependency_state_.OnStreamDestruction(id);
-  }
-  QuicSpdySession::UnregisterStreamPriority(id);
-}
-
-void QuicChromiumClientSession::UpdateStreamPriority(
-    QuicStreamId id,
-    SpdyPriority new_priority) {
-  if (headers_include_h2_stream_dependency_) {
-    auto updates = priority_dependency_state_.OnStreamUpdate(id, new_priority);
-    for (auto update : updates) {
-      QuicSpdyStream* stream = GetSpdyDataStream(update.id);
-      DCHECK(stream);
-      int weight = Spdy3PriorityToHttp2Weight(stream->priority());
-      WritePriority(update.id, update.dependent_stream_id, weight,
-                    update.exclusive);
-    }
-  }
-  QuicSpdySession::UpdateStreamPriority(id, new_priority);
 }
 
 void QuicChromiumClientSession::OnStreamFrame(const QuicStreamFrame& frame) {

@@ -142,7 +142,8 @@ MockQuicClientSessionBase::MockQuicClientSessionBase(
     QuicClientPushPromiseIndex* push_promise_index)
     : QuicSpdyClientSessionBase(connection,
                                 push_promise_index,
-                                DefaultQuicConfig()) {
+                                DefaultQuicConfig(),
+                                false) {
   crypto_stream_.reset(new MockQuicCryptoStream(this));
   Initialize();
   ON_CALL(*this, WritevData(_, _, _, _, _))

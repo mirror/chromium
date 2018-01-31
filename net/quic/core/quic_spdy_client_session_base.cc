@@ -16,8 +16,12 @@ namespace net {
 QuicSpdyClientSessionBase::QuicSpdyClientSessionBase(
     QuicConnection* connection,
     QuicClientPushPromiseIndex* push_promise_index,
-    const QuicConfig& config)
-    : QuicSpdySession(connection, nullptr, config),
+    const QuicConfig& config,
+    bool headers_include_h2_stream_dependency)
+    : QuicSpdySession(connection,
+                      nullptr,
+                      config,
+                      headers_include_h2_stream_dependency),
       push_promise_index_(push_promise_index),
       largest_promised_stream_id_(kInvalidStreamId) {}
 

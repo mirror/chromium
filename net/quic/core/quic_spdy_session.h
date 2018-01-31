@@ -16,6 +16,7 @@
 #include "net/quic/http/decoder/quic_http_frame_decoder_adapter.h"
 #include "net/quic/platform/api/quic_export.h"
 #include "net/quic/platform/api/quic_string_piece.h"
+#include "net/spdy/chromium/http2_priority_dependencies.h"
 #include "net/spdy/core/http2_frame_decoder_adapter.h"
 
 namespace net {
@@ -50,7 +51,8 @@ class QUIC_EXPORT_PRIVATE QuicSpdySession : public QuicSession {
   // Does not take ownership of |connection| or |visitor|.
   QuicSpdySession(QuicConnection* connection,
                   QuicSession::Visitor* visitor,
-                  const QuicConfig& config);
+                  const QuicConfig& config,
+                  bool client_headers_include_h2_stream_dependency);
 
   ~QuicSpdySession() override;
 
@@ -90,16 +92,6 @@ class QUIC_EXPORT_PRIVATE QuicSpdySession : public QuicSession {
       SpdyHeaderBlock headers,
       bool fin,
       SpdyPriority priority,
-      QuicReferenceCountedPointer<QuicAckListenerInterface> ack_listener);
-
-  // |parent_stream_id| and |exclusive| are HTTP2 stream dependency info.
-  virtual size_t WriteHeaders(
-      QuicStreamId id,
-      SpdyHeaderBlock headers,
-      bool fin,
-      SpdyPriority priority,
-      QuicStreamId parent_stream_id,
-      bool exclusive,
       QuicReferenceCountedPointer<QuicAckListenerInterface> ack_listener);
 
   // Writes a PRIORITY frame the to peer. Returns the size in bytes of the
@@ -273,6 +265,11 @@ class QUIC_EXPORT_PRIVATE QuicSpdySession : public QuicSession {
   SpdyFramer spdy_framer_;
   QuicHttpDecoderAdapter hq_deframer_;
   std::unique_ptr<SpdyFramerVisitor> spdy_framer_visitor_;
+
+  // If true, client headers will include HTTP/2 stream dependency info derived
+  // from SpdyPriority.
+  bool headers_include_h2_stream_dependency_;
+  Http2PriorityDependencies priority_dependency_state_;
 
   DISALLOW_COPY_AND_ASSIGN(QuicSpdySession);
 };

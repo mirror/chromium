@@ -24,7 +24,7 @@ QuicSpdyClientSession::QuicSpdyClientSession(
     const QuicServerId& server_id,
     QuicCryptoClientConfig* crypto_config,
     QuicClientPushPromiseIndex* push_promise_index)
-    : QuicSpdyClientSessionBase(connection, push_promise_index, config),
+    : QuicSpdyClientSessionBase(connection, push_promise_index, config, false),
       server_id_(server_id),
       crypto_config_(crypto_config),
       respect_goaway_(true) {}

@@ -284,9 +284,11 @@ QuicHpackDebugVisitor::QuicHpackDebugVisitor() {}
 
 QuicHpackDebugVisitor::~QuicHpackDebugVisitor() {}
 
-QuicSpdySession::QuicSpdySession(QuicConnection* connection,
-                                 QuicSession::Visitor* visitor,
-                                 const QuicConfig& config)
+QuicSpdySession::QuicSpdySession(
+    QuicConnection* connection,
+    QuicSession::Visitor* visitor,
+    const QuicConfig& config,
+    bool client_headers_include_h2_stream_dependency)
     : QuicSession(connection, visitor, config),
       max_inbound_header_list_size_(kDefaultMaxUncompressedHeaderSize),
       server_push_enabled_(true),
@@ -299,7 +301,10 @@ QuicSpdySession::QuicSpdySession(QuicConnection* connection,
       cur_max_timestamp_(QuicTime::Zero()),
       prev_max_timestamp_(QuicTime::Zero()),
       spdy_framer_(SpdyFramer::ENABLE_COMPRESSION),
-      spdy_framer_visitor_(new SpdyFramerVisitor(this)) {
+      spdy_framer_visitor_(new SpdyFramerVisitor(this)),
+      headers_include_h2_stream_dependency_(
+          client_headers_include_h2_stream_dependency &&
+          perspective() == Perspective::IS_CLIENT) {
   hq_deframer_.set_visitor(spdy_framer_visitor_.get());
   hq_deframer_.set_debug_visitor(spdy_framer_visitor_.get());
 }
@@ -394,18 +399,12 @@ size_t QuicSpdySession::WriteHeaders(
     bool fin,
     SpdyPriority priority,
     QuicReferenceCountedPointer<QuicAckListenerInterface> ack_listener) {
-  return WriteHeadersImpl(id, std::move(headers), fin, priority, 0, false,
-                          std::move(ack_listener));
-}
-
-size_t QuicSpdySession::WriteHeaders(
-    QuicStreamId id,
-    SpdyHeaderBlock headers,
-    bool fin,
-    SpdyPriority priority,
-    QuicStreamId parent_stream_id,
-    bool exclusive,
-    QuicReferenceCountedPointer<QuicAckListenerInterface> ack_listener) {
+  QuicStreamId parent_stream_id = 0;
+  bool exclusive = false;
+  if (headers_include_h2_stream_dependency_) {
+    priority_dependency_state_.OnStreamCreation(id, priority, &parent_stream_id,
+                                                &exclusive);
+  }
   return WriteHeadersImpl(id, std::move(headers), fin, priority,
                           parent_stream_id, exclusive, std::move(ack_listener));
 }
@@ -485,11 +484,26 @@ void QuicSpdySession::RegisterStreamPriority(QuicStreamId id,
 
 void QuicSpdySession::UnregisterStreamPriority(QuicStreamId id) {
   write_blocked_streams()->UnregisterStream(id);
+
+  if (headers_include_h2_stream_dependency_) {
+    priority_dependency_state_.OnStreamDestruction(id);
+  }
 }
 
 void QuicSpdySession::UpdateStreamPriority(QuicStreamId id,
                                            SpdyPriority new_priority) {
   write_blocked_streams()->UpdateStreamPriority(id, new_priority);
+
+  if (headers_include_h2_stream_dependency_) {
+    auto updates = priority_dependency_state_.OnStreamUpdate(id, new_priority);
+    for (auto update : updates) {
+      QuicSpdyStream* stream = GetSpdyDataStream(update.id);
+      DCHECK(stream);
+      int weight = Spdy3PriorityToHttp2Weight(stream->priority());
+      WritePriority(update.id, update.dependent_stream_id, weight,
+                    update.exclusive);
+    }
+  }
 }
 
 QuicSpdyStream* QuicSpdySession::GetSpdyDataStream(

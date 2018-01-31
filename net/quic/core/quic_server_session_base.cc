@@ -23,7 +23,7 @@ QuicServerSessionBase::QuicServerSessionBase(
     QuicCryptoServerStream::Helper* helper,
     const QuicCryptoServerConfig* crypto_config,
     QuicCompressedCertsCache* compressed_certs_cache)
-    : QuicSpdySession(connection, visitor, config),
+    : QuicSpdySession(connection, visitor, config, false),
       crypto_config_(crypto_config),
       compressed_certs_cache_(compressed_certs_cache),
       helper_(helper),

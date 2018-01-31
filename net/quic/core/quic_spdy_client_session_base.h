@@ -41,7 +41,8 @@ class QUIC_EXPORT_PRIVATE QuicSpdyClientSessionBase
   // |promised_by_url|.
   QuicSpdyClientSessionBase(QuicConnection* connection,
                             QuicClientPushPromiseIndex* push_promise_index,
-                            const QuicConfig& config);
+                            const QuicConfig& config,
+                            bool headers_include_h2_stream_dependency);
 
   ~QuicSpdyClientSessionBase() override;
 

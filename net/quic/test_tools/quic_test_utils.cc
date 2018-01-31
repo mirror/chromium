@@ -421,7 +421,7 @@ CryptoMessageParser* MockQuicCryptoStream::crypto_message_parser() {
 }
 
 MockQuicSpdySession::MockQuicSpdySession(QuicConnection* connection)
-    : QuicSpdySession(connection, nullptr, DefaultQuicConfig()) {
+    : QuicSpdySession(connection, nullptr, DefaultQuicConfig(), false) {
   crypto_stream_.reset(new MockQuicCryptoStream(this));
   Initialize();
   ON_CALL(*this, WritevData(_, _, _, _, _))
@@ -499,7 +499,10 @@ TestQuicSpdyClientSession::TestQuicSpdyClientSession(
     const QuicConfig& config,
     const QuicServerId& server_id,
     QuicCryptoClientConfig* crypto_config)
-    : QuicSpdyClientSessionBase(connection, &push_promise_index_, config) {
+    : QuicSpdyClientSessionBase(connection,
+                                &push_promise_index_,
+                                config,
+                                false) {
   crypto_stream_.reset(new QuicCryptoClientStream(
       server_id, this, crypto_test_utils::ProofVerifyContextForTesting(),
       crypto_config, this));
