@@ -33,6 +33,23 @@
       "revId": "81a3a39fcecdadd0918c0b6614e80953b7e74745",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aa8cc41_3f980963",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2018-01-31T23:45:10Z",
+      "side": 0,
+      "message": "We won\u0027t lose the ability to correlate parent and child resources with this change, right? Maybe ask ericrk@ about this?",
+      "revId": "81a3a39fcecdadd0918c0b6614e80953b7e74745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
