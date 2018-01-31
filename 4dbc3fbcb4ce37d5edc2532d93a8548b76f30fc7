@@ -16,6 +16,24 @@
       "revId": "4dbc3fbcb4ce37d5edc2532d93a8548b76f30fc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fbf9fb9_1517f345",
+        "filename": "content/browser/loader/merkle_integrity_source_stream.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2018-01-31T03:38:02Z",
+      "side": 1,
+      "message": "Okay, changed to 5MiB.",
+      "parentUuid": "2a4aee5a_4fa1cca3",
+      "revId": "4dbc3fbcb4ce37d5edc2532d93a8548b76f30fc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
