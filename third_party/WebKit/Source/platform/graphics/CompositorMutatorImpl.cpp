@@ -12,79 +12,103 @@
 #include "platform/heap/Handle.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/wtf/PtrUtil.h"
-#include "public/platform/Platform.h"
 
 namespace blink {
 
-namespace {
-
-void CreateCompositorMutatorClient(
-    std::unique_ptr<CompositorMutatorClient>* ptr,
-    WaitableEvent* done_event) {
-  CompositorMutatorImpl* mutator = CompositorMutatorImpl::Create();
-  ptr->reset(new CompositorMutatorClient(mutator));
-  mutator->SetClient(ptr->get());
-  done_event->Signal();
+CompositorMutatorImpl::CompositorMutatorImpl()
+    : client_(nullptr), weak_factory_(this) {
+  // This happens for continuous integration tests,
+  // and so stays as a supported mode.
+  if (Platform::Current()->CompositorThread())
+    mutator_thread_ = Platform::Current()->CompositorThread();
+  else
+    mutator_thread_ = Platform::Current()->MainThread();
 }
 
-}  // namespace
-
-CompositorMutatorImpl::CompositorMutatorImpl() : client_(nullptr) {}
-
-std::unique_ptr<CompositorMutatorClient> CompositorMutatorImpl::CreateClient() {
-  std::unique_ptr<CompositorMutatorClient> mutator_client;
-  WaitableEvent done_event;
-  if (WebThread* compositor_thread = Platform::Current()->CompositorThread()) {
-    PostCrossThreadTask(*compositor_thread->GetWebTaskRunner(), FROM_HERE,
-                        CrossThreadBind(&CreateCompositorMutatorClient,
-                                        CrossThreadUnretained(&mutator_client),
-                                        CrossThreadUnretained(&done_event)));
-  } else {
-    CreateCompositorMutatorClient(&mutator_client, &done_event);
+CompositorMutatorImpl::~CompositorMutatorImpl() {
+  for (CompositorAnimator* animator : animators_) {
+    animator->Seal();
   }
-  // TODO(flackr): Instead of waiting for this event, we may be able to just set
-  // the mutator on the CompositorWorkerProxyClient directly from the compositor
-  // thread before it gets used there. We still need to make sure we only
-  // create one mutator though.
-  done_event.Wait();
-  return mutator_client;
+  // After calling Seal we must not do anything further with an animator.
+  animators_.clear();
 }
 
-CompositorMutatorImpl* CompositorMutatorImpl::Create() {
-  return new CompositorMutatorImpl();
+std::unique_ptr<CompositorMutatorClient>
+CompositorMutatorImpl::CreateClientOnMainThread() {
+  DCHECK(IsMainThread());
+  scoped_refptr<CompositorMutatorImpl> mutator(new CompositorMutatorImpl);
+  std::unique_ptr<CompositorMutatorClient> mutator_client =
+      std::make_unique<CompositorMutatorClient>(mutator.get());
+  mutator->SetClient(mutator_client.get());
+  return mutator_client;
 }
 
 void CompositorMutatorImpl::Mutate(
     std::unique_ptr<CompositorMutatorInputState> state) {
   TRACE_EVENT0("cc", "CompositorMutatorImpl::mutate");
+  DCHECK(mutator_thread_->IsCurrentThread());
+  DCHECK(client_);
   for (CompositorAnimator* animator : animators_) {
     animator->Mutate(*state);
   }
+  while (!outputs_.empty()) {
+    client_->SetMutationUpdate(std::move(outputs_.back()));
+    outputs_.pop_back();
+  }
 }
 
-bool CompositorMutatorImpl::HasAnimators() {
-  return !animators_.IsEmpty();
-}
-
-void CompositorMutatorImpl::RegisterCompositorAnimator(
+void CompositorMutatorImpl::RegisterCompositorAnimatorOnWorkletThread(
     CompositorAnimator* animator) {
-  DCHECK(!IsMainThread());
-  TRACE_EVENT0("cc", "CompositorMutatorImpl::registerCompositorAnimator");
+  // In order to run this code we require that the mutator_thread_
+  // be guaranteed alive, which we do with the Seal interaction.
+  DCHECK(animator);
+  DCHECK(!mutator_thread_->IsCurrentThread());
+  PostCrossThreadTask(
+      *mutator_thread_->GetWebTaskRunner(), FROM_HERE,
+      CrossThreadBind(
+          &CompositorMutatorImpl::RegisterCompositorAnimatorOnMutatorThread,
+          GetWeakPtr(), CrossThreadPersistent<CompositorAnimator>(animator)));
+}
+
+void CompositorMutatorImpl::UnregisterCompositorAnimatorOnWorkletThread(
+    CompositorAnimator* animator) {
+  // In order to run this code we require that the mutator_thread_
+  // be guaranteed alive, which we do with the Seal interaction.
+  DCHECK(animator);
+  DCHECK(!mutator_thread_->IsCurrentThread());
+  PostCrossThreadTask(
+      *mutator_thread_->GetWebTaskRunner(), FROM_HERE,
+      CrossThreadBind(
+          &CompositorMutatorImpl::UnregisterCompositorAnimatorOnMutatorThread,
+          GetWeakPtr(), CrossThreadPersistent<CompositorAnimator>(animator)));
+}
+
+void CompositorMutatorImpl::RegisterCompositorAnimatorOnMutatorThread(
+    CompositorAnimator* animator) {
+  TRACE_EVENT0(
+      "cc", "CompositorMutatorImpl::RegisterCompositorAnimatorOnMutatorThread");
+  DCHECK(mutator_thread_->IsCurrentThread());
   DCHECK(!animators_.Contains(animator));
   animators_.insert(animator);
 }
 
-void CompositorMutatorImpl::UnregisterCompositorAnimator(
+void CompositorMutatorImpl::UnregisterCompositorAnimatorOnMutatorThread(
     CompositorAnimator* animator) {
+  TRACE_EVENT0(
+      "cc",
+      "CompositorMutatorImpl::UnregisterCompositorAnimatorOnMutatorThread");
+  DCHECK(mutator_thread_->IsCurrentThread());
   DCHECK(animators_.Contains(animator));
   animators_.erase(animator);
 }
 
-void CompositorMutatorImpl::SetMutationUpdate(
+void CompositorMutatorImpl::SetMutationUpdateOnWorkletThread(
     std::unique_ptr<CompositorMutatorOutputState> state) {
-  DCHECK(!IsMainThread());
-  TRACE_EVENT0("compositor-worker", "CompositorMutatorImpl::SetMutationUpdate");
-  client_->SetMutationUpdate(std::move(state));
-}
+  DCHECK(!mutator_thread_->IsCurrentThread());
+  DCHECK(state);
 
+  // This is called during animator->Mutate(*state); above.
+  // Most importantly, they are currently blocking calls.
+  outputs_.push_back(std::move(state));
+}
 }  // namespace blink
