@@ -279,8 +279,6 @@ void ScrollbarThemeMac::PaintThumb(GraphicsContext& context,
                                                   DisplayItem::kScrollbarThumb))
     return;
 
-  // Expand dirty rect to allow for scroll thumb anti-aliasing in minimum thumb
-  // size case.
   DrawingRecorder recorder(context, scrollbar, DisplayItem::kScrollbarThumb);
 
   GraphicsContextStateSaver state_saver(context);
@@ -391,7 +389,8 @@ IntRect ScrollbarThemeMac::TrackRect(const ScrollbarThemeClient& scrollbar,
 
 int ScrollbarThemeMac::MinimumThumbLength(
     const ScrollbarThemeClient& scrollbar) {
-  return [PainterForScrollbar(scrollbar) knobMinLength];
+  return [PainterForScrollbar(scrollbar) knobMinLength] +
+         [PainterForScrollbar(scrollbar) knobEndInset];
 }
 
 void ScrollbarThemeMac::UpdateEnabledState(
