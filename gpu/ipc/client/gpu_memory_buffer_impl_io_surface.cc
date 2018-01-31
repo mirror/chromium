@@ -55,10 +55,18 @@ GpuMemoryBufferImplIOSurface::CreateFromHandle(
     gfx::BufferFormat format,
     gfx::BufferUsage usage,
     const DestructionCallback& callback) {
+  if (!handle.mach_port) {
+    LOG(ERROR) << "Invalid IOSurface mach port returned to client.";
+    return nullptr;
+  }
+
   base::ScopedCFTypeRef<IOSurfaceRef> io_surface(
       IOSurfaceLookupFromMachPort(handle.mach_port.get()));
-  if (!io_surface)
-    return nullptr;
+  // TODO(ccameron): This is being used to determine the frequency of corruption
+  // due to IOSurface ports failing to open, and is probably too aggressive to
+  // ship.
+  // https://crbug.com/795649
+  CHECK_NE(nullptr, io_surface) << "Failed to open mach port from service.";
 
   return base::WrapUnique(
       new GpuMemoryBufferImplIOSurface(handle.id, size, format, callback,
