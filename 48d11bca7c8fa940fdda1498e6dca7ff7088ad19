@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad17dc8e_3a7b70db",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/selection/SelectionPopupControllerImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1150,
+      "author": {
+        "id": 1213235
+      },
+      "writtenOn": "2018-01-31T23:55:15Z",
+      "side": 0,
+      "message": "Do we not need this? Will the magnifier still show up right after the user touches the handle?",
+      "revId": "48d11bca7c8fa940fdda1498e6dca7ff7088ad19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

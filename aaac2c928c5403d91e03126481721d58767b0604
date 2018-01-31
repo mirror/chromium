@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e69b849_998ecffa",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/selection/SelectionPopupControllerImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1197,
+      "author": {
+        "id": 1213235
+      },
+      "writtenOn": "2018-01-31T23:55:15Z",
+      "side": 1,
+      "message": "Could you also make the next two variables final?",
+      "revId": "aaac2c928c5403d91e03126481721d58767b0604",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b24c85c2_c7cb0ac4",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/selection/SelectionPopupControllerImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1204,
+      "author": {
+        "id": 1213235
+      },
+      "writtenOn": "2018-01-31T23:55:15Z",
+      "side": 1,
+      "message": "Add @VisibleForTesting",
+      "revId": "aaac2c928c5403d91e03126481721d58767b0604",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ca193a9_cfbf8fc4",
+        "filename": "ui/touch_selection/touch_selection_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1213235
+      },
+      "writtenOn": "2018-01-31T23:55:15Z",
+      "side": 1,
+      "message": "This function shouldn\u0027t be public anymore.",
+      "revId": "aaac2c928c5403d91e03126481721d58767b0604",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
