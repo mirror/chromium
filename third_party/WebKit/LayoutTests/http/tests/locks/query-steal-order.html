@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<meta charset=utf-8>
+<title>Web Locks API: navigator.locks.query response order with stolen locks</title>
+<link rel=help href="https://github.com/inexorabletash/web-locks">
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="resources/helpers.js"></script>
+<script>
+'use strict';
+
+const never_settled = new Promise(resolve => { /*never*/ });
+
+promise_test(async t => {
+  const sentinel = uniqueName(t);
+  const res = uniqueName(t);
+
+  // Hold lock forever as a sentinel.
+  navigator.locks.acquire(sentinel, lock => never_settled).catch(_ => {});
+
+  // Hold lock until stolen.
+  navigator.locks.acquire(res, lock => never_settled).catch(_ => {});
+
+  // Determine our client identifier.
+  const client_id = (await navigator.locks.query()).held[0].clientId;
+
+  // Make some blocked requests in another client. Note that we don't
+  // actually wait here - we capture the promises instead.
+  const worker = new Worker('resources/worker.js');
+  const request1 = postToWorkerAndWait(worker,
+    {op: 'request', name: res, mode: 'shared'});
+  const request2 = postToWorkerAndWait(worker,
+    {op: 'request', name: res, mode: 'shared'});
+
+  await new Promise(r => setTimeout(r, 100)); // snooze
+
+  // Wait until we know they're blocked.
+  assert_true((await postToWorkerAndWait(worker, {
+    op: 'request', name: res, ifAvailable: true, mode: 'shared'
+  })).failed, 'Lock request should have failed');
+
+  // Verify that the state is as expected.
+  let state = await navigator.locks.query();
+
+  assert_equals(state.held.length, 2, 'Two locks should be held');
+  assert_equals(state.held[0].name, sentinel, 'Sentinel should be first');
+  assert_equals(state.held[0].clientId, client_id,
+                'Sentinel should be held by this client');
+  assert_equals(state.held[1].name, res, 'Other lock should be second');
+  assert_equals(state.held[1].clientId, client_id,
+                'Other lock should be held by this client');
+
+  assert_equals(state.pending.length, 2, 'Two requests should be pending');
+  for (const pending of state.pending) {
+    assert_equals(pending.name, res, 'Requests should be for other lock');
+    assert_not_equals(pending.clientId, client_id,
+                      'Requests should not be from by this client');
+  }
+
+  // Steal the lock
+  navigator.locks.acquire(
+    res, {steal: true, mode: 'shared'}, lock => never_settled);
+
+  // Wait for the worker's requests to be satisfied.
+  await Promise.all([request1, request2]);
+
+  // Now verify the order.
+  state = await navigator.locks.query();
+
+  assert_equals(state.held.length, 4, 'Four locks should be held');
+  assert_equals(state.held[0].name, sentinel, 'Sentinel should be first');
+  assert_equals(state.held[0].clientId, client_id,
+                'Sentinel should be held by this client');
+
+  assert_equals(state.held[1].name, res, 'Other lock should be second');
+  assert_equals(state.held[1].clientId, client_id,
+                'Second lock should be held by this client');
+
+  assert_equals(state.held[2].name, res, 'Third should be the same');
+  assert_not_equals(state.held[2].clientId, client_id,
+                    'Third lock should be held by the other client');
+
+  assert_equals(state.held[3].name, res, 'Fourth should be the same');
+  assert_not_equals(state.held[3].clientId, client_id,
+                    'Fourth lock should be held by the other client');
+
+}, 'query() held list has locks in order of granting');
+
+</script>
