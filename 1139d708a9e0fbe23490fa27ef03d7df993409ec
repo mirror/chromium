@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9289ee44_732066da",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T10:15:17Z",
+      "side": 1,
+      "message": "typo: letting",
+      "range": {
+        "startLine": 9,
+        "startChar": 25,
+        "endLine": 9,
+        "endChar": 33
+      },
+      "revId": "1139d708a9e0fbe23490fa27ef03d7df993409ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ebfebae_fd6d73c8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T10:15:17Z",
+      "side": 1,
+      "message": "I\u0027m not entirely sure whether this is the correct meaning of \"bucket\". Looking at go/uma-metrics, a bucket seems to be a value range of a counting histogram (e.g., Feature.UsageCount can have buckets 0, 1-5, 6-20, 21-50, and \u003e50). For enum histograms, maybe just \"value\" is enough?",
+      "range": {
+        "startLine": 11,
+        "startChar": 32,
+        "endLine": 11,
+        "endChar": 38
+      },
+      "revId": "1139d708a9e0fbe23490fa27ef03d7df993409ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6670c3a1_f618dbcc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T10:15:17Z",
+      "side": 1,
+      "message": "I\u0027m wondering, why we are only interested in viewing, and not cancelling or deleting after search. (EDIT: Cancelling seems unused, will file a bug.)\n\nI was talking to Balázs about what would be the best way to add a new metric. Just adding a new value in the existing histogram as you do here seems OK, but even cleaner would be to have a new histogram, perhaps with the same range as PasswordManager.Android.PasswordCredentialEntry but with the meaning restricted to the actions taken after search, especially if we also want to capture the other actions besides viewing.",
+      "range": {
+        "startLine": 11,
+        "startChar": 4,
+        "endLine": 11,
+        "endChar": 23
+      },
+      "revId": "1139d708a9e0fbe23490fa27ef03d7df993409ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf5ed8d7_5f33af21",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T10:15:17Z",
+      "side": 1,
+      "message": "nit: It\u0027s probably due to my lack of Android knowledge, but I\u0027m puzzled with the \"boolean intent\". Also, I think it would help to state that this is passed to PasswordEntryEditor.",
+      "range": {
+        "startLine": 83,
+        "startChar": 21,
+        "endLine": 83,
+        "endChar": 35
+      },
+      "revId": "1139d708a9e0fbe23490fa27ef03d7df993409ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e324db83_1b24bc8f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T10:15:17Z",
+      "side": 1,
+      "message": "Looking at the activity lifecycle [1], I think this might lead to unwanted behaviour if Android kills SavePasswordsPreferences during showing PasswordEntryEditor. In that case, onCreate is called on return from PasswordEntryEditor without onDestroy being called in the meantime. That means that systems with low memory are unlikely to report that search was triggered.\n\nYou might want to store this in the bundle in onSaveInstanceState and restore from it instead.\n\n[1] https://developer.android.com/guide/components/activities/activity-lifecycle.html",
+      "range": {
+        "startLine": 144,
+        "startChar": 8,
+        "endLine": 144,
+        "endChar": 65
+      },
+      "revId": "1139d708a9e0fbe23490fa27ef03d7df993409ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5038e91_ebd0af1e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T10:15:17Z",
+      "side": 1,
+      "message": "Isn\u0027t \"false\" the default value guaranteed by Java?\n\nThe style guide forbids this explicit initialization in the constructor [1]. Because onCreate is not constructor, this is not against the guide (and IIUC the evaded issues do not include non-constructor methods), so there is no objective reason against this except it is redundant.\n\n[1] https://chromium.googlesource.com/chromium/src/+/master/styleguide/java/java.md#code-formatting",
+      "range": {
+        "startLine": 144,
+        "startChar": 27,
+        "endLine": 144,
+        "endChar": 32
+      },
+      "revId": "1139d708a9e0fbe23490fa27ef03d7df993409ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
