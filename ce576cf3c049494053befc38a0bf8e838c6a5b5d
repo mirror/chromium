@@ -1,0 +1,277 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6dd3156_fc8288fc",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-31T09:56:44Z",
+      "side": 1,
+      "message": "... I think this just needs to happen after the .Inset(..) line below? We probably want some of the old comment too. We should take some screenshots to ensure nothing is changed unintentionally -- see e.g. http://crbug.com/761701#c10",
+      "revId": "ce576cf3c049494053befc38a0bf8e838c6a5b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc289e51_15186bb3",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-31T09:56:44Z",
+      "side": 1,
+      "message": "I think here we should just use a literal 1 with a comment -- this is now the pixels, not DIPs",
+      "revId": "ce576cf3c049494053befc38a0bf8e838c6a5b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0023cf1_54557f29",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-31T09:56:44Z",
+      "side": 1,
+      "message": "ok - I think i\u0027ve figured out why this exists. The location bar has 1DIP of thickness between its bounds and its contents. So, e.g., when the scale factor is 2, BackgroundWith1PxBorder needs to pick one \"side\" of that thickness -- it can draw along the inner pixels or the outer pixels.\n\nBackgroundWith1PxBorder::Paint(..) says \"Draw the border as a 1px thick line aligned with the inside edge\" so we actually need to inset a bit further. I think the fix is simple though...",
+      "revId": "ce576cf3c049494053befc38a0bf8e838c6a5b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b45cc671_8bfac295",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_layout.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-31T09:56:44Z",
+      "side": 1,
+      "message": "nit: Returns true if any |LocationBarDecoration|s are visible. ...",
+      "range": {
+        "startLine": 75,
+        "startChar": 27,
+        "endLine": 75,
+        "endChar": 30
+      },
+      "revId": "ce576cf3c049494053befc38a0bf8e838c6a5b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff9f0d87_b35b404a",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-31T09:56:44Z",
+      "side": 1,
+      "message": "let\u0027s move this ternary out to a local var\n\nint descriptive_name \u003d InTouchableMode() ? location_height / 4 : item_padding",
+      "range": {
+        "startLine": 580,
+        "startChar": 8,
+        "endLine": 580,
+        "endChar": 62
+      },
+      "revId": "ce576cf3c049494053befc38a0bf8e838c6a5b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8d5d886_e7acfcd4",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-31T09:56:44Z",
+      "side": 1,
+      "message": "workaround -\u003e compromise",
+      "revId": "ce576cf3c049494053befc38a0bf8e838c6a5b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c58c253_e2a20e16",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-31T09:56:44Z",
+      "side": 1,
+      "message": "the \"4\" (and the \"2\" below) should be pulled out into constants since they\u0027re basically magic numbers.\n\nkTouchablePaddingHeightFactor? kTouchableIMEPAdding...\n\nor a method, like\n\nGetTouchableEndPaddingForHeight(..)",
+      "range": {
+        "startLine": 613,
+        "startChar": 57,
+        "endLine": 613,
+        "endChar": 60
+      },
+      "revId": "ce576cf3c049494053befc38a0bf8e838c6a5b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2774f123_13ad2608",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-31T09:56:44Z",
+      "side": 1,
+      "message": "nit: these lines probably don\u0027t need to change (can still use BackgroundWith1PxBorder)",
+      "revId": "ce576cf3c049494053befc38a0bf8e838c6a5b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d37be8d0_d7833d95",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1085,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-31T09:56:44Z",
+      "side": 1,
+      "message": "canvas-\u003eimage_scale()",
+      "revId": "ce576cf3c049494053befc38a0bf8e838c6a5b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84fd9b0e_106cb6e5",
+        "filename": "chrome/browser/ui/views/location_bar/omnibox_background_border.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-31T09:56:44Z",
+      "side": 1,
+      "message": "2018",
+      "revId": "ce576cf3c049494053befc38a0bf8e838c6a5b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0530d192_f89545a8",
+        "filename": "chrome/browser/ui/views/location_bar/omnibox_background_border.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-31T09:56:44Z",
+      "side": 1,
+      "message": "so.... since we inset 1 DIP and we actually want height / 2 to be the *outer* radius I think we need a tiny adjustment here to ensure the radius is not too large, since this needs to return an internal radius",
+      "revId": "ce576cf3c049494053befc38a0bf8e838c6a5b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0b5e047_40ab9eb9",
+        "filename": "chrome/browser/ui/views/location_bar/omnibox_background_border.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-31T09:56:44Z",
+      "side": 1,
+      "message": "maybe just \"Paint\"? (since it paints a background and a border..)",
+      "revId": "ce576cf3c049494053befc38a0bf8e838c6a5b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fc9cffb_7ef89c76",
+        "filename": "chrome/browser/ui/views/location_bar/omnibox_background_border.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-31T09:56:44Z",
+      "side": 1,
+      "message": "2018?",
+      "revId": "ce576cf3c049494053befc38a0bf8e838c6a5b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d8dc632_14c1d282",
+        "filename": "chrome/browser/ui/views/location_bar/omnibox_background_border.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-31T09:56:44Z",
+      "side": 1,
+      "message": "order - constructors before static methods (unless they are \"factory\" static methods)",
+      "revId": "ce576cf3c049494053befc38a0bf8e838c6a5b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df0a22b1_3dffe4ff",
+        "filename": "chrome/browser/ui/views/location_bar/omnibox_background_border.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-31T09:56:44Z",
+      "side": 1,
+      "message": "nit:  // BackgroundWith1PxBorder:",
+      "revId": "ce576cf3c049494053befc38a0bf8e838c6a5b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
