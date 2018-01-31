@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "611aed19_7bba2b06",
+        "filename": "chrome/browser/notifications/notification_display_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-31T00:29:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a7883aa_998c07e2",
+      "revId": "477ec8f032ee5abbbaae713ed5dca149a9e7347a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6df5d276_53303485",
         "filename": "chrome/browser/notifications/notification_display_service.cc",
         "patchSetId": 4
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "On ChromeOS, we should be good as long as the the profile is the sign-in profile, which is loaded in ChromeBrowserMainPartsChromeos::PostProfileInit and should be before any notification is about to display.",
       "parentUuid": "6df5d276_53303485",
+      "revId": "477ec8f032ee5abbbaae713ed5dca149a9e7347a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "094aa7d9_7c475cad",
+        "filename": "chrome/browser/notifications/notification_display_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-31T00:29:53Z",
+      "side": 1,
+      "message": "In the latest patchset, are you still worried about the !cros case? I\u0027m not sure what \"too early\" would mean. Profiles, including sometimes the system profile, are created pretty early, i.e. in ChromeBrowserMainParts::PreMainMessageLoopRunImpl().",
+      "parentUuid": "9a86d322_016c2795",
       "revId": "477ec8f032ee5abbbaae713ed5dca149a9e7347a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -89,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "bc70ff92_7943a1e0",
+        "filename": "chrome/browser/notifications/notification_display_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-31T00:29:53Z",
+      "side": 1,
+      "message": "Good point. Added a set of pending notifications for that case.",
+      "parentUuid": "f48b95d9_9bd45b8b",
+      "revId": "477ec8f032ee5abbbaae713ed5dca149a9e7347a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf94d0c5_918a4eaf",
         "filename": "chrome/browser/notifications/notification_display_service.h",
         "patchSetId": 4
@@ -100,6 +154,24 @@
       "writtenOn": "2018-01-30T18:57:43Z",
       "side": 1,
       "message": "I\u0027d much prefer this to be private. Perhaps we can friend NotificationDisplayServiceTester and have a nullptr Profile* there mean we (synchronously) load from this path?",
+      "revId": "477ec8f032ee5abbbaae713ed5dca149a9e7347a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "443a0c69_c4149351",
+        "filename": "chrome/browser/notifications/notification_display_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-31T00:29:53Z",
+      "side": 1,
+      "message": "Seems more readable if we are explicit in the (few) tests that need this, rather than passing nullptr. Added \"ForTesting\".",
+      "parentUuid": "bf94d0c5_918a4eaf",
       "revId": "477ec8f032ee5abbbaae713ed5dca149a9e7347a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -123,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "8efbed5a_fe00328f",
+        "filename": "chrome/browser/notifications/notification_display_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-31T00:29:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ec82b5e_b513d4b3",
+      "revId": "477ec8f032ee5abbbaae713ed5dca149a9e7347a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c30f93c4_01f4b7fe",
         "filename": "chrome/browser/notifications/notification_display_service.h",
         "patchSetId": 4
@@ -137,6 +227,24 @@
       "revId": "477ec8f032ee5abbbaae713ed5dca149a9e7347a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d0bf9ef_a018fab1",
+        "filename": "chrome/browser/notifications/notification_display_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-31T00:29:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c30f93c4_01f4b7fe",
+      "revId": "477ec8f032ee5abbbaae713ed5dca149a9e7347a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "9b0f2474_757b955c",
+        "filename": "chrome/browser/notifications/notification_display_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-31T00:29:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f987562a_ccd6020c",
+      "revId": "477ec8f032ee5abbbaae713ed5dca149a9e7347a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a26ad55c_adb41f77",
         "filename": "chrome/browser/usb/web_usb_detector.cc",
         "patchSetId": 4
@@ -168,6 +294,24 @@
       "writtenOn": "2018-01-30T18:57:43Z",
       "side": 1,
       "message": "It seems sensible to DCHECK_EQ(notification.priority(), SYSTEM_PRIORITY) for calls to DisplaySystemNotification?",
+      "revId": "477ec8f032ee5abbbaae713ed5dca149a9e7347a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c607eec2_d36686dc",
+        "filename": "chrome/browser/usb/web_usb_detector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-31T00:29:53Z",
+      "side": 1,
+      "message": "Unfortunately it does not. \"System priority\" actually just means \"super high priority\". I\u0027ve been working to streamline Notification so we don\u0027t have overlapping terminology/functionality like this (SYSTEM_COMPONENT, CreateSystemNotification() x2, SetSystemPriority, etc.) but at this point they\u0027re separate things.\n\nI can change DisplaySystemNotification to DisplayUserAgnosticNotification or something like that if you prefer.",
+      "parentUuid": "a26ad55c_adb41f77",
       "revId": "477ec8f032ee5abbbaae713ed5dca149a9e7347a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
