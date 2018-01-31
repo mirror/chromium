@@ -70,6 +70,24 @@
       "revId": "72dd7ab31c46dc41912d68a186428891a7b0ee89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4323c7c4_f7d7161d",
+        "filename": "ui/ozone/platform/x11/x11_window_ozone_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-31T01:49:28Z",
+      "side": 1,
+      "message": "Why should the test live in a different place than the code? My suggestion still is to move the test in platform_window/x11. The use of gmock is fairly small here; it should not be difficult to not use that.",
+      "parentUuid": "b7259b3a_271356e9",
+      "revId": "72dd7ab31c46dc41912d68a186428891a7b0ee89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
