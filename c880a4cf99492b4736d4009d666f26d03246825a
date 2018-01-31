@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "959c66bc_6a0e2592",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 8
+      },
+      "lineNbr": 11045,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-31T19:50:11Z",
+      "side": 1,
+      "message": "grammar nit: s/window/window./",
+      "revId": "c880a4cf99492b4736d4009d666f26d03246825a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae05763a_da0fb688",
+        "filename": "chrome/browser/vr/elements/repositioner.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-31T19:50:11Z",
+      "side": 1,
+      "message": "Do you think it\u0027s worth a paragraph here to explain how this works?  In lieu of commenting individual parts like \"snap_to_world_up_\"?",
+      "revId": "c880a4cf99492b4736d4009d666f26d03246825a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff793341_035cddc8",
+        "filename": "chrome/browser/vr/elements/repositioner_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-31T19:50:11Z",
+      "side": 1,
+      "message": "Can you comment where this sea of numbers comes from?  What if the algo changes and someone needs to replace the values?  Is each casing adding unique value?",
+      "revId": "c880a4cf99492b4736d4009d666f26d03246825a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e99a1266_1921b87d",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-31T19:50:11Z",
+      "side": 1,
+      "message": "I though this was middle mouse button now?  Why keep this?",
+      "revId": "c880a4cf99492b4736d4009d666f26d03246825a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d438564_d307a44a",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-31T19:50:11Z",
+      "side": 1,
+      "message": "Whoa, why the move?  This looks odd, and at least warrants a comment.",
+      "revId": "c880a4cf99492b4736d4009d666f26d03246825a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc94dc79_a683f484",
+        "filename": "chrome/browser/vr/ui_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1101,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-31T19:50:11Z",
+      "side": 1,
+      "message": "Is this too hard to parameterize because of the controller model changes?",
+      "revId": "c880a4cf99492b4736d4009d666f26d03246825a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
