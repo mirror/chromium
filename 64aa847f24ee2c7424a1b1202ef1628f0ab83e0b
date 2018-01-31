@@ -150,6 +150,30 @@
     },
     {
       "key": {
+        "uuid": "c260dd70_816d1fea",
+        "filename": "components/cbor/cbor_writer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-31T23:42:25Z",
+      "side": 1,
+      "message": "Then, I think the comparator that should be used for CANONICAL CBOR is precisely the one that is currently being used for CTAP. \n\nIf both CTAP/signed exchanges do not use array/map as map keys, then perhaps it would suffice to simply remove CBORValue::Mode and rename current comparator used in CBORValue::MapValue so that it applies to canonical CBOR as well?",
+      "parentUuid": "521a6897_9afbcf0a",
+      "range": {
+        "startLine": 202,
+        "startChar": 0,
+        "endLine": 203,
+        "endChar": 61
+      },
+      "revId": "64aa847f24ee2c7424a1b1202ef1628f0ab83e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "076537e2_416b3930",
         "filename": "components/cbor/cbor_writer.cc",
         "patchSetId": 3
