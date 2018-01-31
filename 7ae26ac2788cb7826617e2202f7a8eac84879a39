@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19d6328f_b643a884",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/bindings/inline-styles-binding.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-31T21:46:08Z",
+      "side": 1,
+      "message": "nit: drop the line",
+      "revId": "7ae26ac2788cb7826617e2202f7a8eac84879a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac53c883_a5fe1f70",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/ResourceMapping.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-31T21:46:08Z",
+      "side": 1,
+      "message": "let\u0027s move this out and make _innerStyleSheetChanged sync.\n\nYou should also pass all the edits in here so that we don\u0027t re-create Text Objects and don\u0027t\ncommit multiple revisions.",
+      "revId": "7ae26ac2788cb7826617e2202f7a8eac84879a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
