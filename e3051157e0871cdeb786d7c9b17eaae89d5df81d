@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "6a4a4c97_23c26c8f",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2458,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-31T20:11:53Z",
+      "side": 1,
+      "message": "\u003e \u003e Uh tough question :).\n\u003e \u003e \n\u003e \u003e First, we get here only by calling WebViewFrameWidget::ScrollFocusedEditableElementIntoView(). So definitely a WebLocalFrameImpl exists at the time. But this does not prove MainFrameImpl() is not nullptr since the frame could be provisional.\n\u003e \n\u003e Correct, MainFrameImpl() could be null for a provisional main frame, i.e., if called during a cross-process navigation on the new frame after it\u0027s created but before the navigation commits.\n\u003e \n\u003e \u003e \n\u003e \u003e Now the concern could be whether it is possible to get here on a RenderFrameImpl which is provisional. This IPC is input related coming from FrameInputHandler.\n\u003e \u003e \n\u003e \u003e As I understand the two call sites are RenderWidgetHostViewAura and WebContentsViewAndroid and both use:\n\u003e \u003e GetFocusedFrame()-\u003eGetFrameInputHandler()-\u003eScrollFocusedEditableNodeIntoRect().\n\u003e \u003e \n\u003e \u003e I don\u0027t think a provisional frame can be returned as focused but am not sure.\n\u003e \n\u003e You\u0027re right :)\n\u003e \n\u003e RenderWidgetHostViewAura::GetFocusedFrame() can\u0027t return provisional frames: it looks up the focused FrameTreeNode and returns its current_frame_host() which can\u0027t be a provisional (pending) frame.\n\u003e \n\u003e WebContentsAndroid::ScrollFocusedEditableNodeIntoView() calls WebContentsImpl::GetFocusedFrame(), which also returns current_frame_host(), so it also can\u0027t be a provisional frame.\n\nThanks for the explanation!\n\n\u003e \u003e \n\u003e \u003e Also, a newer way to trigger this method is to call RWHVAura::SetInsets() which would indirectly call ScrollFocusedEditableNodeIntoRect() though the WasResized IPC. For that as well I can guarantee we don\u0027t hit MainFrameImpl().\n\u003e \n\u003e That\u0027s ScrollFocusedEditableNodeIntoView and not ScrollFocusedEditableNodeIntoRect, right?\n\nYes. Thanks. I was thinking of FrameInputHandler::ScrollFocusedEditableNodeIntoRect but here \nwe just set a flag |scroll_focused_node_into_view| in the ViewMsg_Resized IPC.\n\n\u003e This one seems more uncertain to me -- how do you know it won\u0027t hit MainFrameImpl()?\n\nI actually didn\u0027t know that and what I mean to say was \"I can\u0027t guarantee...\" :P. But I took another look at all the calls to WasResized(bool scroll_into_view) and from the looks of it the only place where we (potentially) call WasResized(true) is here:\nhttps://cs.chromium.org/chromium/src/content/browser/renderer_host/render_widget_host_view_aura.cc?rcl\u003d0b4af239dd7e31dbfdb88167c0d954532332e588\u0026l\u003d200\n\nwhich suggests we have a RenderWidgetHostViewAura.\n\n\u003e \u003e \n\u003e \u003e So all in all I think we should guard against MainFrameImpl() -- and perhaps leave a TODO to fix the issue later.\n\u003e \u003e \n\u003e \u003e alexmos@: Would you say the hypothesis here makes sense or basically, is it currently plausible to hit MainFrameImpl() \u003d\u003d nullptr?\n\u003e \n\u003e Combining your analysis with mine, it seems like MainFrameImpl() shouldn\u0027t ever be null here. :)\n\nThanks. I will remove the guard and comment then.",
+      "parentUuid": "2443841b_abe63d01",
+      "range": {
+        "startLine": 2458,
+        "startChar": 7,
+        "endLine": 2458,
+        "endChar": 20
+      },
+      "revId": "e3051157e0871cdeb786d7c9b17eaae89d5df81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2b19a46_dc6e6b22",
         "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.h",
         "patchSetId": 6
