@@ -26,8 +26,6 @@ class SingleThreadTaskRunner;
 
 namespace media {
 
-class AudioDebugRecordingHelper;
-
 // A manager for audio debug recording that handles registration of data
 // sources and hands them a recorder (AudioDebugRecordingHelper) to feed data
 // to. The recorder will unregister with the manager automatically when deleted.
@@ -65,7 +63,8 @@ class MEDIA_EXPORT AudioDebugRecordingManager {
   virtual ~AudioDebugRecordingManager();
 
   // Enables and disables debug recording.
-  virtual void EnableDebugRecording(const base::FilePath& base_file_name);
+  virtual void EnableDebugRecording(
+      AudioDebugRecordingHelper::CreateFileCallback create_file_callback);
   virtual void DisableDebugRecording();
 
   // Registers a source and returns a wrapped recorder. |file_name_extension| is
@@ -73,6 +72,10 @@ class MEDIA_EXPORT AudioDebugRecordingManager {
   std::unique_ptr<AudioDebugRecorder> RegisterDebugRecordingSource(
       const base::FilePath::StringType& file_name_extension,
       const AudioParameters& params);
+
+  base::SingleThreadTaskRunner* GetTaskRunner() const {
+    return task_runner_.get();
+  }
 
  protected:
   // Creates a AudioDebugRecordingHelper. Overridden by test.
@@ -107,9 +110,9 @@ class MEDIA_EXPORT AudioDebugRecordingManager {
   // Recorders, one per source.
   DebugRecordingHelperMap debug_recording_helpers_;
 
-  // The base file name for debug recording files. If this is non-empty, debug
-  // recording is enabled.
-  base::FilePath debug_recording_base_file_name_;
+  // Callback for creating debug recording files. When this is
+  // not null, debug recording is enabled.
+  AudioDebugRecordingHelper::CreateFileCallback create_file_callback_;
 
   base::WeakPtrFactory<AudioDebugRecordingManager> weak_factory_;
   DISALLOW_COPY_AND_ASSIGN(AudioDebugRecordingManager);
