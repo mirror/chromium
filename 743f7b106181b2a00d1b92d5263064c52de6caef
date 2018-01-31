@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "54279ac2_47340027",
+        "filename": "ash/frame/caption_buttons/frame_caption_button_container_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-31T22:57:38Z",
+      "side": 1,
+      "message": "this should move into an AshLayoutProvider, but can be a follow-up -- it needs some thought and I\u0027m not sure how it needs to look (there is AshTypography stuff plumbed in, but nothing for layout yet). E.g. there is code in chrome_layout_provider.cc that does:\n\n // static\n std::unique_ptr\u003cviews::LayoutProvider\u003e\n ChromeLayoutProvider::CreateLayoutProvider() {\n   return ui::MaterialDesignController::IsSecondaryUiMaterial()\n              ? std::make_unique\u003cHarmonyLayoutProvider\u003e()\n              : std::make_unique\u003cChromeLayoutProvider\u003e();\n }\n\n\nI think that ternary should take into account MATERIAL_TOUCH_OPTIMIZED on Ash, and provide a different instance.",
+      "revId": "743f7b106181b2a00d1b92d5263064c52de6caef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "626c8616_6420d1f0",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-31T22:57:38Z",
+      "side": 1,
+      "message": "SetUpCommandLine()?  (I think BaseTest::SetUp() actually runs the body of the test in a browser_test, so stacks get confusing otherwise)",
+      "revId": "743f7b106181b2a00d1b92d5263064c52de6caef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24d0d517_100df287",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-31T22:57:38Z",
+      "side": 1,
+      "message": "unused?",
+      "revId": "743f7b106181b2a00d1b92d5263064c52de6caef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "73bff69e_78e527ef",
         "filename": "ui/base/material_design/material_design_controller.cc",
         "patchSetId": 7
