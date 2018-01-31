@@ -159,7 +159,7 @@ test("media_blink_unittests") {
   if (is_android) {
     deps += [
       "//media/base/android:media_java",
-      "//v8:v8_external_startup_data_assets",
+      "//tools/v8_context_snapshot:v8_context_snapshot_assets",
     ]
   }
 }

@@ -1968,8 +1968,8 @@ test("content_unittests") {
       "//device/geolocation:geolocation_java",
       "//media/capture/content/android",
       "//media/capture/content/android:screen_capture_java",
+      "//tools/v8_context_snapshot:v8_context_snapshot_assets",
       "//ui/android:android",
-      "//v8:v8_external_startup_data_assets",
     ]
 
     defines += [ "APPCACHE_USE_SIMPLE_CACHE" ]
