@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24cfaf96_23a6348b",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/CustomTabActivityTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-31T15:40:33Z",
+      "side": 1,
+      "message": "I\u0027m a _tiny_ bit worried about race conditions here if the callback has not been triggered yet, because the polling in line 717 happens on the instrumentation thread... I mean, there is probably a memory barrier somewhere when accessing the instrumentation registry (because the intent that we\u0027re waiting for is fired on the UI thread, so presumably something is already synchronizing), but it still feels a bit brittle to me. All that is to say: Can we just change this to waitForCallback()?",
+      "range": {
+        "startLine": 724,
+        "startChar": 8,
+        "endLine": 724,
+        "endChar": 65
+      },
+      "revId": "10a048d95c5c0dead3654ac30c7798b92c839541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
