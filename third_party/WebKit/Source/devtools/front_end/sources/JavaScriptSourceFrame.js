@@ -180,16 +180,6 @@ Sources.JavaScriptSourceFrame = class extends Sources.UISourceCodeFrame {
     this._popoverHelper.hidePopover();
   }
 
-  /**
-   * @override
-   */
-  onUISourceCodeContentChanged() {
-    for (var decoration of this._breakpointDecorations) {
-      if (decoration.breakpoint)
-        decoration.breakpoint.remove();
-    }
-    super.onUISourceCodeContentChanged();
-  }
 
   /**
    * @override
@@ -360,10 +350,10 @@ Sources.JavaScriptSourceFrame = class extends Sources.UISourceCodeFrame {
       if (!decoration.breakpoint)
         continue;
       var enabled = decoration.enabled;
+      var location = decoration.handle.resolve() ||
+          {lineNumber: decoration.breakpoint.lineNumber(), columnNumber: decoration.breakpoint.columnNumber()};
       decoration.breakpoint.remove();
-      var location = decoration.handle.resolve();
-      if (location)
-        this._setBreakpoint(location.lineNumber, location.columnNumber, decoration.condition, enabled);
+      this._setBreakpoint(location.lineNumber, location.columnNumber, decoration.condition, enabled);
     }
   }
 

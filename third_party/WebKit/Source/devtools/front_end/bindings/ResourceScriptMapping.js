@@ -309,6 +309,7 @@ Bindings.ResourceScriptFile = class extends Common.Object {
       return;
     if (!this._script)
       return;
+    this._update();
     var debuggerModel = this._resourceScriptMapping._debuggerModel;
     var source = this._uiSourceCode.workingCopy();
     debuggerModel.setScriptSource(this._script.scriptId, source, scriptSourceWasSet.bind(this));

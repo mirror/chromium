@@ -1,0 +1,11 @@
+Verify that breakpoints survive external editing.
+
+
+Running: addFileSystem
+
+Running: setBreakpointInFileSystemUISourceCode
+    http://127.0.0.1:8000/devtools/persistence/resources/foo.js:2
+
+Running: addCommitToFilesystemUISourceCode
+    http://127.0.0.1:8000/devtools/persistence/resources/foo.js:2
+
