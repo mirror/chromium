@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c0484a4d_96dec7f5",
+        "filename": "components/viz/service/main/viz_main_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-31T20:24:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cce6eda5_3e3cc802",
+      "revId": "efc59796e118a36614aac1995dadab597c326b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f189ec46_cf3d690f",
         "filename": "services/ui/ws/gpu_host.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ede595df_e8ae0258",
+        "filename": "services/ui/ws/gpu_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-31T20:24:07Z",
+      "side": 1,
+      "message": "After some debugging of failing tests, it\u0027s needed to ensure that |viz_main_impl_| is actually set.",
+      "parentUuid": "f189ec46_cf3d690f",
+      "revId": "efc59796e118a36614aac1995dadab597c326b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2777e29_38f9fbbd",
         "filename": "services/ui/ws/gpu_host.cc",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "efc59796e118a36614aac1995dadab597c326b9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc513df0_ef28325b",
+        "filename": "services/ui/ws/gpu_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-31T20:24:07Z",
+      "side": 1,
+      "message": "Done. Stop() should be sufficient. I left the call to DeleteSoon/Stop here, since I think it makes it more obvious what is happening for people looking at the code in the future.",
+      "parentUuid": "a2777e29_38f9fbbd",
+      "revId": "efc59796e118a36614aac1995dadab597c326b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
