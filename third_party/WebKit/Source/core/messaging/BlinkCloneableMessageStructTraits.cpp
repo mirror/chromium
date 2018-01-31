@@ -5,6 +5,7 @@
 #include "core/messaging/BlinkCloneableMessageStructTraits.h"
 
 #include "platform/blob/BlobData.h"
+#include "platform/runtime_enabled_features.h"
 
 namespace mojo {
 
