@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/vr/elements/controller.h"
+#include "chrome/browser/vr/elements/gltf_controller.h"
 
 #include "base/trace_event/trace_event.h"
 #include "chrome/browser/vr/controller_mesh.h"
@@ -42,16 +42,16 @@ static constexpr char const* kFragmentShader = SHADER(
 
 }  // namespace
 
-Controller::Controller() {
+GltfController::GltfController() {
   SetName(kController);
   set_hit_testable(false);
   SetVisible(true);
 }
 
-Controller::~Controller() = default;
+GltfController::~GltfController() = default;
 
-void Controller::Render(UiElementRenderer* renderer,
-                        const CameraModel& model) const {
+void GltfController::Render(UiElementRenderer* renderer,
+                            const CameraModel& model) const {
   ControllerMesh::State state;
   if (touchpad_button_pressed_) {
     state = ControllerMesh::TOUCHPAD;
@@ -67,11 +67,11 @@ void Controller::Render(UiElementRenderer* renderer,
                            model.view_proj_matrix * world_space_transform());
 }
 
-gfx::Transform Controller::LocalTransform() const {
+gfx::Transform GltfController::LocalTransform() const {
   return local_transform_;
 }
 
-Controller::Renderer::Renderer()
+GltfController::Renderer::Renderer()
     : BaseRenderer(kVertexShader, kFragmentShader),
       texture_handles_(ControllerMesh::STATE_COUNT) {
   model_view_proj_matrix_handle_ =
@@ -81,9 +81,9 @@ Controller::Renderer::Renderer()
   opacity_handle_ = glGetUniformLocation(program_handle_, "u_Opacity");
 }
 
-Controller::Renderer::~Renderer() = default;
+GltfController::Renderer::~Renderer() = default;
 
-void Controller::Renderer::SetUp(std::unique_ptr<ControllerMesh> model) {
+void GltfController::Renderer::SetUp(std::unique_ptr<ControllerMesh> model) {
   TRACE_EVENT0("gpu", "ControllerRenderer::SetUp");
   glGenBuffersARB(1, &indices_buffer_);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices_buffer_);
@@ -129,9 +129,10 @@ void Controller::Renderer::SetUp(std::unique_ptr<ControllerMesh> model) {
   setup_ = true;
 }
 
-void Controller::Renderer::Draw(ControllerMesh::State state,
-                                float opacity,
-                                const gfx::Transform& model_view_proj_matrix) {
+void GltfController::Renderer::Draw(
+    ControllerMesh::State state,
+    float opacity,
+    const gfx::Transform& model_view_proj_matrix) {
   glUseProgram(program_handle_);
 
   glUniform1f(opacity_handle_, opacity);
