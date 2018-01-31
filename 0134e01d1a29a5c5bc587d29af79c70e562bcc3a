@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62ed25d9_1e39273d",
+        "filename": "content/renderer/media/media_stream_video_capturer_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2018-01-31T14:27:56Z",
+      "side": 1,
+      "message": "How do we initialize |render_frame_id_| for this constructor?\nDo you see a better alternative for getting a RenderFrame in this class?",
+      "range": {
+        "startLine": 163,
+        "startChar": 40,
+        "endLine": 163,
+        "endChar": 41
+      },
+      "revId": "0134e01d1a29a5c5bc587d29af79c70e562bcc3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
