@@ -76,6 +76,9 @@ public class SavePasswordsPreferences
     // The key for saving |mExportRequested| to instance bundle.
     private static final String SAVED_STATE_EXPORT_REQUESTED = "saved-state-export-requested";
 
+    // The key for saving |mExportConfirmed| to instance bundle.
+    private static final String SAVED_STATE_EXPORT_CONFIRMED = "saved-state-export-confirmed";
+
     // The key for saving |mExportFileUri| to instance bundle.
     private static final String SAVED_STATE_EXPORT_FILE_URI = "saved-state-export-file-uri";
 
@@ -125,6 +128,12 @@ public class SavePasswordsPreferences
     private TextMessagePreference mEmptyView;
     private Menu mMenuForTesting;
 
+    // Contains the reference to the progress-bar dialog between the user confirming the password
+    // export and the serialized passwords arriving, so that the dialog can be dismissed on their
+    // arrival. It is null during all other times.
+    @Nullable
+    private ProgressBarDialogFragment mProgressBarDialogFragment;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,8 +146,14 @@ public class SavePasswordsPreferences
         if (savedInstanceState == null) return;
 
         if (savedInstanceState.containsKey(SAVED_STATE_EXPORT_REQUESTED)) {
-            mExportRequested =
-                    savedInstanceState.getBoolean(SAVED_STATE_EXPORT_REQUESTED, mExportRequested);
+            mExportRequested = savedInstanceState.getBoolean(SAVED_STATE_EXPORT_REQUESTED);
+        }
+        if (savedInstanceState.containsKey(SAVED_STATE_EXPORT_CONFIRMED)) {
+            mExportConfirmed = savedInstanceState.getBoolean(SAVED_STATE_EXPORT_CONFIRMED);
+            if (mExportConfirmed) {
+                // If export is underway, ensure that the UI is updated.
+                tryExporting();
+            }
         }
         if (savedInstanceState.containsKey(SAVED_STATE_EXPORT_FILE_URI)) {
             String uriString = savedInstanceState.getString(SAVED_STATE_EXPORT_FILE_URI);
@@ -251,6 +266,9 @@ public class SavePasswordsPreferences
 
             @Override
             protected void onPostExecute(ExportResult result) {
+                // Don't display any UI if the user cancelled the export in the meantime.
+                if (!mExportRequested) return;
+
                 if (result.mError != null) {
                     showExportErrorAndAbort(result.mError);
                 } else {
@@ -289,6 +307,7 @@ public class SavePasswordsPreferences
                 mExportOptionSuspended = false;
             } else if (ReauthenticationManager.authenticationStillValid(
                                ReauthenticationManager.REAUTH_SCOPE_BULK)) {
+                mExportRequested = true;
                 exportAfterReauth();
             } else {
                 mExportRequested = true;
@@ -324,10 +343,27 @@ public class SavePasswordsPreferences
      * confirmation flow.
      */
     private void tryExporting() {
-        // TODO(crbug.com/788701): Display a progress indicator if user
-        // confirmed but serialising is not done yet and dismiss it once called
-        // again with serialising done.
-        if (mExportConfirmed && mExportFileUri != null) sendExportIntent();
+        if (mExportConfirmed) {
+            if (mExportFileUri == null) {
+                assert mProgressBarDialogFragment == null;
+                mProgressBarDialogFragment = new ProgressBarDialogFragment();
+                mProgressBarDialogFragment.setCancelProgressHandler(
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (which == AlertDialog.BUTTON_NEGATIVE) {
+                                    mExportRequested = false;
+                                }
+                            }
+                        });
+                mProgressBarDialogFragment.show(getFragmentManager(), null);
+            } else {
+                // Note: if the serialization is quicker than the user interacting with the
+                // confirmation dialog, then there is no progress bar shown.
+                if (mProgressBarDialogFragment != null) mProgressBarDialogFragment.dismiss();
+                sendExportIntent();
+            }
+        }
     }
 
     /**
@@ -336,6 +372,7 @@ public class SavePasswordsPreferences
      */
     private void showExportErrorAndAbort(String description) {
         // TODO(crbug.com/788701): Implement.
+        if (mProgressBarDialogFragment != null) mProgressBarDialogFragment.dismiss();
         // Re-enable exporting, the current one was just cancelled.
         mExportOptionSuspended = false;
     }
@@ -575,6 +612,7 @@ public class SavePasswordsPreferences
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean(SAVED_STATE_EXPORT_REQUESTED, mExportRequested);
+        outState.putBoolean(SAVED_STATE_EXPORT_CONFIRMED, mExportConfirmed);
         if (mExportFileUri != null) {
             outState.putString(SAVED_STATE_EXPORT_FILE_URI, mExportFileUri.toString());
         }
