@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15f6a7c0_2c8a3e88",
+        "filename": "base/memory/read_only_shared_memory_region.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-31T13:34:08Z",
+      "side": 1,
+      "message": "Isn\u0027t this too early? I thought we had to make the writable mapping before we set it read only.",
+      "range": {
+        "startLine": 30,
+        "startChar": 14,
+        "endLine": 30,
+        "endChar": 21
+      },
+      "revId": "c74d0c2f762f9f31a49d0c31b56faa66565bec6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba0067c0_8c7d697e",
+        "filename": "base/memory/read_only_shared_memory_region.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-31T13:34:08Z",
+      "side": 1,
+      "message": "Do we know that we can always map multiple times/ I\u0027m looking at ERROR_ALREADY_EXISTS in shared_memory_win.cc.\n\nI\u0027ll dig through MDN docs and see if I can learn anything.",
+      "revId": "c74d0c2f762f9f31a49d0c31b56faa66565bec6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
