@@ -6,7 +6,14 @@
 
 #include "base/feature_list.h"
 #include "base/strings/stringprintf.h"
+#include "content/browser/loader/resource_requester_info.h"
+#include "content/browser/loader/signed_exchange_cert_fetcher.h"
 #include "content/browser/loader/signed_exchange_handler.h"
+#include "content/browser/loader/url_loader_factory_impl.h"
+#include "content/browser/service_worker/service_worker_context_wrapper.h"
+#include "content/browser/url_loader_factory_getter.h"
+#include "content/common/throttling_url_loader.h"
+#include "content/common/weak_wrapper_shared_url_loader_factory.h"
 #include "content/public/common/content_features.h"
 #include "net/http/http_util.h"
 #include "services/network/public/cpp/features.h"
@@ -63,11 +70,17 @@ class WebPackageLoader::ResponseTimingInfo {
 WebPackageLoader::WebPackageLoader(
     const network::ResourceResponseHead& original_response,
     network::mojom::URLLoaderClientPtr forwarding_client,
-    network::mojom::URLLoaderClientEndpointsPtr endpoints)
+    network::mojom::URLLoaderClientEndpointsPtr endpoints,
+    URLLoaderFactoryGetter* default_url_loader_factory_getter,
+    URLLoaderThrottlesGetter url_loader_throttles_getter,
+    const GetContextsCallback& get_contexts_callback)
     : original_response_timing_info_(
           base::MakeUnique<ResponseTimingInfo>(original_response)),
       forwarding_client_(std::move(forwarding_client)),
       url_loader_client_binding_(this),
+      default_url_loader_factory_getter_(default_url_loader_factory_getter),
+      url_loader_throttles_getter_(std::move(url_loader_throttles_getter)),
+      get_contexts_callback_(get_contexts_callback),
       weak_factory_(this) {
   DCHECK(base::FeatureList::IsEnabled(features::kSignedHTTPExchange));
   url_loader_.Bind(std::move(endpoints->url_loader));
@@ -129,8 +142,8 @@ void WebPackageLoader::OnReceiveCachedMetadata(
 }
 
 void WebPackageLoader::OnTransferSizeUpdated(int32_t transfer_size_diff) {
-  // TODO(https://crbug.com/803774): Implement this to progressively update the
-  // encoded data length in DevTools.
+  // TODO(https://crbug.com/803774): Implement this to progressively update
+  // the encoded data length in DevTools.
 }
 
 void WebPackageLoader::OnStartLoadingResponseBody(
@@ -199,6 +212,28 @@ void WebPackageLoader::OnHTTPExchangeFound(
       std::move(original_response_timing_info_)->CreateRedirectResponseHead());
   forwarding_client_->OnComplete(network::URLLoaderCompletionStatus(net::OK));
   forwarding_client_.reset();
+
+  network::mojom::URLLoaderFactory* url_loader_factory = nullptr;
+  if (base::FeatureList::IsEnabled(network::features::kNetworkService)) {
+    DCHECK(default_url_loader_factory_getter_.get());
+    url_loader_factory =
+        default_url_loader_factory_getter_->GetNetworkFactory();
+  } else {
+    DCHECK(!default_url_loader_factory_getter_.get());
+    url_loader_factory_impl_ = std::make_unique<URLLoaderFactoryImpl>(
+        ResourceRequesterInfo::CreateForCertificateFetcherForSignedExchange(
+            get_contexts_callback_));
+    url_loader_factory = url_loader_factory_impl_.get();
+  }
+  DCHECK(url_loader_factory);
+  DCHECK(url_loader_throttles_getter_);
+
+  std::vector<std::unique_ptr<URLLoaderThrottle>> throttles =
+      std::move(url_loader_throttles_getter_).Run();
+  cert_fetcher_ = SignedExchangeCertFetcher::CreateAndStart(
+      base::MakeRefCounted<WeakWrapperSharedURLLoaderFactory>(
+          url_loader_factory),
+      std::move(throttles), GURL("http://127.0.0.1:8000/test.cert"), false);
 
   client_->OnReceiveResponse(resource_response, std::move(ssl_info),
                              nullptr /* downloaded_file */);
