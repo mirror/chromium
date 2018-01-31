@@ -6,7 +6,7 @@
 #define CONTENT_BROWSER_DOWNLOAD_DOWNLOAD_INTERRUPT_REASONS_IMPL_H_
 
 #include "base/files/file.h"
-#include "content/public/browser/download_interrupt_reasons.h"
+#include "components/download/public/common/download_interrupt_reasons.h"
 #include "content/public/common/download_stream.mojom.h"
 #include "net/base/net_errors.h"
 
@@ -21,15 +21,16 @@ enum DownloadInterruptSource {
 };
 
 // Safe to call from any thread.
-DownloadInterruptReason CONTENT_EXPORT ConvertNetErrorToInterruptReason(
-    net::Error file_error, DownloadInterruptSource source);
+download::DownloadInterruptReason CONTENT_EXPORT
+ConvertNetErrorToInterruptReason(net::Error file_error,
+                                 DownloadInterruptSource source);
 
 // Safe to call from any thread.
-DownloadInterruptReason CONTENT_EXPORT ConvertFileErrorToInterruptReason(
-    base::File::Error file_error);
+download::DownloadInterruptReason CONTENT_EXPORT
+ConvertFileErrorToInterruptReason(base::File::Error file_error);
 
 // Safe to call from any thread.
-DownloadInterruptReason CONTENT_EXPORT
+download::DownloadInterruptReason CONTENT_EXPORT
 ConvertMojoNetworkRequestStatusToInterruptReason(
     mojom::NetworkRequestStatus status);
 
