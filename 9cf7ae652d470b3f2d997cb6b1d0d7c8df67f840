@@ -1,0 +1,198 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e0970e2_5b493b9a",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/SetRGBA.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-01-31T18:53:20Z",
+      "side": 1,
+      "message": "Might make things a bit easier to work with if you structure this without templates, something like,\n\nIn a header,\n\n  void SetRGBARawRow_portable(...);\n  void SetRGBARawRow(...);   // This may just call _portable() or may be its own implementation.\n\nThen in the .cc file,\n\n   void SetRGBARawRow_portable(...) { ... }\n\n#if defined(__ARM_NEON)  // Pretty sure this #define is all you need.\n   void SetRGBARawRow(...) { NEON here }\n#else\n   void SetRGBARawRow(...) { return SetRGBARawRow_portable(...); }\n#endif\n\nThat way we don\u0027t have to worry about inlining, what \u003ctrue\u003e and \u003cfalse\u003e mean, etc.",
+      "revId": "9cf7ae652d470b3f2d997cb6b1d0d7c8df67f840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55ae9090_16546972",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/SetRGBA.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-01-31T18:53:20Z",
+      "side": 1,
+      "message": "Is this really the right interface?  Since we\u0027re working with blink types, why are we using png_bytep?  Something like const uint8_t* instead?",
+      "range": {
+        "startLine": 12,
+        "startChar": 26,
+        "endLine": 12,
+        "endChar": 43
+      },
+      "revId": "9cf7ae652d470b3f2d997cb6b1d0d7c8df67f840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2c0df30_7a5a8c23",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/SetRGBA.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-01-31T18:53:20Z",
+      "side": 1,
+      "message": "I think this code might read more clearly if you don\u0027t call blink::ImageFrame::SetRGBARaw, and instead just write this out with \u003c\u003c and | ?  It\u0027d be a little easier to see how it parallels the NEON code below for people who don\u0027t know blink::ImageFrame::SetRGBARaw.",
+      "revId": "9cf7ae652d470b3f2d997cb6b1d0d7c8df67f840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1efabf61_86e791c0",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/SetRGBA.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-01-31T18:53:20Z",
+      "side": 1,
+      "message": "Somewhere in here it\u0027d be nice to remind us what these functions are supposed to do.  It\u0027s something like\n\n// Swizzle RGBA to BGRA, and return the AND of all alpha channels.\n\nOr alternatively, let\u0027s put them near blink::ImageFrame::SetRGBARaw() itself so that we can just read that as a reference?",
+      "revId": "9cf7ae652d470b3f2d997cb6b1d0d7c8df67f840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25d5eeb1_693b6d18",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/SetRGBA.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-01-31T18:53:20Z",
+      "side": 1,
+      "message": "In the portable case we AND into the existing value of alpha_mask, but here we\u0027re starting at 255.  Shouldn\u0027t they be the same?",
+      "range": {
+        "startLine": 54,
+        "startChar": 32,
+        "endLine": 54,
+        "endChar": 49
+      },
+      "revId": "9cf7ae652d470b3f2d997cb6b1d0d7c8df67f840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84333ac3_8c661ab1",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/SetRGBA.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-01-31T18:53:20Z",
+      "side": 1,
+      "message": "This isn\u0027t really an endian swap, is it?  It\u0027s just rgba -\u003e bgra.",
+      "range": {
+        "startLine": 62,
+        "startChar": 35,
+        "endLine": 62,
+        "endChar": 48
+      },
+      "revId": "9cf7ae652d470b3f2d997cb6b1d0d7c8df67f840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52bd2f8b_5b833df7",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/SetRGBA.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-01-31T18:53:20Z",
+      "side": 1,
+      "message": "maybe \"into\" here?  otherwise it sort of reads like you\u0027re updating rgba.val[3].",
+      "range": {
+        "startLine": 68,
+        "startChar": 30,
+        "endLine": 68,
+        "endChar": 34
+      },
+      "revId": "9cf7ae652d470b3f2d997cb6b1d0d7c8df67f840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a301c180_48db6cab",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/SetRGBA.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-01-31T18:53:20Z",
+      "side": 1,
+      "message": "I think it might be clearer to read kPixelsPerLoad * 4 here.\n\nOr, alternatively, maybe do everything in terms of sizeof(rgba.val[0]) and sizeof(rgba)?  That way it\u0027ll be clear exactly where the numbers 16 and 64 come from.  The opaque version below could do the same with sizeof(rgb.val[0]) and sizeof(rgb).",
+      "revId": "9cf7ae652d470b3f2d997cb6b1d0d7c8df67f840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c53347b0_a2b758b9",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/SetRGBA.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-01-31T18:53:20Z",
+      "side": 1,
+      "message": "Do you think the callers of this are doing anything other than comparing against 0xff?  If so, we might be able to do a little less work here, e.g. stop folding the vectorized results at 64-bit, fold the remaining couple alphas into that, then return alpha_mask_u64 \u003d\u003d 0xffffffffffffffff?",
+      "revId": "9cf7ae652d470b3f2d997cb6b1d0d7c8df67f840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c1c4dc2_83ea3bec",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/SetRGBA.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-01-31T18:53:20Z",
+      "side": 1,
+      "message": "This one is\n\n  // Swizzle RGB to opaque BGRA.\n\nright?",
+      "revId": "9cf7ae652d470b3f2d997cb6b1d0d7c8df67f840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
