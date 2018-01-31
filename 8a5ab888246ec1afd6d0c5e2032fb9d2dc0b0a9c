@@ -22,6 +22,30 @@
       "revId": "8a5ab888246ec1afd6d0c5e2032fb9d2dc0b0a9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17ce3eb5_7e677488",
+        "filename": "ui/base/resource/resource_bundle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2018-01-31T02:22:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a997588c_d084cf6b",
+      "range": {
+        "startLine": 750,
+        "startChar": 0,
+        "endLine": 750,
+        "endChar": 19
+      },
+      "revId": "8a5ab888246ec1afd6d0c5e2032fb9d2dc0b0a9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
