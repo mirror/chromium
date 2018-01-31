@@ -25,6 +25,7 @@ class FakeSyncService : public SyncService {
 
  private:
   // SyncService implementation.
+  std::string GetSyncingAccountId() const override;
   bool IsFirstSetupComplete() const override;
   bool IsSyncAllowed() const override;
   bool IsSyncActive() const override;

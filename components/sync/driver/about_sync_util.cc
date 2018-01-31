@@ -299,11 +299,8 @@ std::string GetConnectionStatus(const SyncService::SyncTokenStatus& status) {
 std::unique_ptr<base::DictionaryValue> ConstructAboutInformation_DEPRECATED(
     SyncService* service,
     version_info::Channel channel) {
-  AccountInfo primary_account_info;
-  if (service->signin())
-    primary_account_info = service->signin()->GetAuthenticatedAccountInfo();
-
-  return ConstructAboutInformation(service, primary_account_info, channel);
+  return ConstructAboutInformation(service, service->GetSyncingAccountId(),
+                                   channel);
 }
 
 // This function both defines the structure of the message to be returned and
@@ -312,7 +309,7 @@ std::unique_ptr<base::DictionaryValue> ConstructAboutInformation_DEPRECATED(
 // classes defined above.
 std::unique_ptr<base::DictionaryValue> ConstructAboutInformation(
     SyncService* service,
-    AccountInfo primary_account_info,
+    std::string syncing_account_id,
     version_info::Channel channel) {
   auto about_info = std::make_unique<base::DictionaryValue>();
 
@@ -342,7 +339,8 @@ std::unique_ptr<base::DictionaryValue> ConstructAboutInformation(
   section_identity->Reserve(3);
   StringSyncStat sync_id(section_identity, "Sync Client ID");
   StringSyncStat invalidator_id(section_identity, "Invalidator Client ID");
-  StringSyncStat username(section_identity, "Username");
+  StringSyncStat account_id(section_identity, "Gaia Account ID");
+  // TODO also get the username again
 
   base::ListValue* section_credentials =
       AddSection(stats_list.get(), "Credentials");
@@ -356,11 +354,12 @@ std::unique_ptr<base::DictionaryValue> ConstructAboutInformation(
 
   base::ListValue* section_local = AddSection(stats_list.get(), "Local State");
   // TODO(crbug.com/702230): Remove the usages of raw pointers in this file.
-  section_local->Reserve(7);
+  section_local->Reserve(8);
   StringSyncStat server_connection(section_local, "Server Connection");
   StringSyncStat last_synced(section_local, "Last Synced");
   BoolSyncStat is_setup_complete(section_local,
                                  "Sync First-Time Setup Complete");
+  BoolSyncStat auto_started(section_local, "Sync Was Auto-Started");
   StringSyncStat backend_initialization(section_local,
                                         "Sync Backend Initialization");
   BoolSyncStat is_syncing(section_local, "Syncing");
@@ -474,7 +473,7 @@ std::unique_ptr<base::DictionaryValue> ConstructAboutInformation(
   if (is_status_valid && !full_status.invalidator_client_id.empty())
     invalidator_id.SetValue(full_status.invalidator_client_id);
 
-  username.SetValue(primary_account_info.email);
+  account_id.SetValue(syncing_account_id);
 
   const SyncService::SyncTokenStatus& token_status =
       service->GetSyncTokenStatus();
@@ -490,6 +489,8 @@ std::unique_ptr<base::DictionaryValue> ConstructAboutInformation(
 
   last_synced.SetValue(GetLastSyncedTimeString(service->GetLastSyncedTime()));
   is_setup_complete.SetValue(service->IsFirstSetupComplete());
+  // TODO :)
+  auto_started.SetValue(sync_active && !service->IsFirstSetupComplete());
   is_local_sync_enabled.SetValue(service->IsLocalSyncEnabled());
   if (service->IsLocalSyncEnabled() && is_status_valid) {
     local_backend_path.SetValue(full_status.local_sync_folder);

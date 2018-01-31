@@ -17,6 +17,10 @@ FakeSyncService::FakeSyncService()
 
 FakeSyncService::~FakeSyncService() {}
 
+std::string FakeSyncService::GetSyncingAccountId() const {
+  return std::string();
+}
+
 bool FakeSyncService::IsFirstSetupComplete() const {
   return false;
 }

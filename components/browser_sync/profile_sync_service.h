@@ -251,6 +251,7 @@ class ProfileSyncService : public syncer::SyncServiceBase,
   void Initialize();
 
   // syncer::SyncService implementation
+  std::string GetSyncingAccountId() const override;
   bool IsFirstSetupComplete() const override;
   bool IsSyncAllowed() const override;
   bool IsSyncActive() const override;
@@ -619,6 +620,8 @@ class ProfileSyncService : public syncer::SyncServiceBase,
 
   friend class TestProfileSyncService;
 
+  std::string GetAccountIdToUse() const;
+
   // Helper to install and configure a data type manager.
   void ConfigureDataTypeManager();
 
@@ -738,6 +741,10 @@ class ProfileSyncService : public syncer::SyncServiceBase,
 
   // Called when a SetupInProgressHandle issued by this instance is destroyed.
   virtual void OnSetupInProgressHandleDestroyed();
+
+  // The Gaia account ID for which we are currently syncing. Non-empty iff
+  // |engine_| is non-null.
+  std::string syncing_account_id_;
 
   // This is a cache of the last authentication response we received from the
   // sync server. The UI queries this to display appropriate messaging to the
