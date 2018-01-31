@@ -14,6 +14,11 @@
 #include "ui/aura/client/cursor_client.h"
 #include "ui/events/keycodes/dom/dom_code.h"
 
+#if defined(OS_CHROMEOS)
+#include "chromeos/system/statistics_provider.h"
+#include "ui/events/keycodes/dom/keycode_converter.h"
+#endif
+
 namespace ash {
 
 namespace {
@@ -45,6 +50,21 @@ class DefaultDelegateImpl : public TouchpadAndKeyboardDisabler::Delegate {
     allowed_keys.push_back(ui::DomCode::VOLUME_DOWN);
     allowed_keys.push_back(ui::DomCode::VOLUME_UP);
     allowed_keys.push_back(ui::DomCode::POWER);
+#if defined(OS_CHROMEOS)
+    // Keep every key enabled when running inside VM to still use host keyboard.
+    if (chromeos::system::StatisticsProvider::GetInstance()->IsRunningOnVm()) {
+      allowed_keys.clear();
+      const ui::KeycodeMapEntry* entries =
+          ui::KeycodeConverter::GetKeycodeMapForTest();
+      for (size_t i = 0;
+           i < ui::KeycodeConverter::NumKeycodeMapEntriesForTest(); ++i) {
+        if (entries[i].code) {
+          allowed_keys.push_back(
+              static_cast<ui::DomCode>(entries[i].usb_keycode));
+        }
+      }
+    }
+#endif
     const bool enable_filter = true;
     GetInputDeviceControllerClient()->SetInternalKeyboardFilter(enable_filter,
                                                                 allowed_keys);
