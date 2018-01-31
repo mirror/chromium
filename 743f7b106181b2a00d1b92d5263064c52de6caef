@@ -46,6 +46,30 @@
       "revId": "743f7b106181b2a00d1b92d5263064c52de6caef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6c7d66f_dc367b8b",
+        "filename": "ui/base/material_design/material_design_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-31T21:26:00Z",
+      "side": 1,
+      "message": "One argument for not trying to ignore the switch on non-CrOS, besides simpler code and \"it wouldn\u0027t do anything anyway\", is that if we do start touching cross-platform code, this will allow us to start testing those changes on other platforms, which could be a development win (especially as a precursor to porting to those platforms; I hope if Touchable Chrome really works that we\u0027ll use it for Windows tablets as well).",
+      "parentUuid": "4fc77bdb_0af1525e",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 38
+      },
+      "revId": "743f7b106181b2a00d1b92d5263064c52de6caef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
