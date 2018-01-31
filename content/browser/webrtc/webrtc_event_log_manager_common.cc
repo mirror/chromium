@@ -19,10 +19,14 @@ bool LogFileWriter::WriteToLogFile(LogFilesMap::iterator it,
   LogFile& log_file = it->second;
   if (log_file.max_file_size_bytes != kWebRtcEventLogManagerUnlimitedFileSize) {
     DCHECK_LT(log_file.file_size_bytes, log_file.max_file_size_bytes);
-    if (log_file.file_size_bytes + output.length() < log_file.file_size_bytes ||
+    const bool size_will_wrap_around =
+        log_file.file_size_bytes + output.length() < log_file.file_size_bytes;
+    const bool size_limit_will_be_exceeded =
         log_file.file_size_bytes + output.length() >
-            log_file.max_file_size_bytes) {
-      output_len = log_file.max_file_size_bytes - log_file.file_size_bytes;
+        log_file.max_file_size_bytes;
+    if (size_will_wrap_around || size_limit_will_be_exceeded) {
+      CloseLogFile(it);
+      return false;
     }
   }
 
