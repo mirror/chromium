@@ -65,7 +65,6 @@ class RasterMockGLES2Interface : public gles2::GLES2InterfaceStub {
   MOCK_METHOD2(DeleteTextures, void(GLsizei n, const GLuint* textures));
   MOCK_METHOD2(BindTexture, void(GLenum target, GLuint texture));
   MOCK_METHOD1(ActiveTexture, void(GLenum texture));
-  MOCK_METHOD1(GenerateMipmap, void(GLenum target));
   MOCK_METHOD2(SetColorSpaceMetadataCHROMIUM,
                void(GLuint texture_id, GLColorSpace color_space));
   MOCK_METHOD3(TexParameteri, void(GLenum target, GLenum pname, GLint param));
@@ -401,13 +400,6 @@ TEST_F(RasterImplementationGLESTest, ActiveTexture) {
 
   EXPECT_CALL(*gl_, ActiveTexture(kTextureUnit)).Times(1);
   ri_->ActiveTexture(kTextureUnit);
-}
-
-TEST_F(RasterImplementationGLESTest, GenerateMipmap) {
-  const GLenum kTarget = GL_TEXTURE_2D;
-
-  EXPECT_CALL(*gl_, GenerateMipmap(kTarget)).Times(1);
-  ri_->GenerateMipmap(kTarget);
 }
 
 TEST_F(RasterImplementationGLESTest, SetColorSpaceMetadataCHROMIUM) {

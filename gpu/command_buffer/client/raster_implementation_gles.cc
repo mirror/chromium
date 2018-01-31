@@ -228,10 +228,6 @@ void RasterImplementationGLES::ActiveTexture(GLenum texture) {
   gl_->ActiveTexture(texture);
 }
 
-void RasterImplementationGLES::GenerateMipmap(GLenum target) {
-  gl_->GenerateMipmap(target);
-}
-
 void RasterImplementationGLES::SetColorSpaceMetadataCHROMIUM(
     GLuint texture_id,
     GLColorSpace color_space) {

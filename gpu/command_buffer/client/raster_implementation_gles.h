@@ -57,7 +57,6 @@ class RASTER_EXPORT RasterImplementationGLES : public RasterInterface {
   void DeleteTextures(GLsizei n, const GLuint* textures) override;
   void BindTexture(GLenum target, GLuint texture) override;
   void ActiveTexture(GLenum texture) override;
-  void GenerateMipmap(GLenum target) override;
   void SetColorSpaceMetadataCHROMIUM(GLuint texture_id,
                                      GLColorSpace color_space) override;
   void TexParameteri(GLenum target, GLenum pname, GLint param) override;
