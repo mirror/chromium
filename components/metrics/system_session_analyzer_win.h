@@ -5,8 +5,12 @@
 #ifndef COMPONENTS_BROWSER_WATCHER_SYSTEM_SESSION_ANALYZER_WIN_H_
 #define COMPONENTS_BROWSER_WATCHER_SYSTEM_SESSION_ANALYZER_WIN_H_
 
+#include <windows.h>
+#include <winevt.h>
+
 #include <map>
 #include <memory>
+#include <utility>
 #include <vector>
 
 #include "base/gtest_prod_util.h"
@@ -34,7 +38,7 @@ class SystemSessionAnalyzer {
 
   // Creates a SystemSessionAnalyzer that will analyze system sessions based on
   // events pertaining to the last session_cnt system sessions.
-  explicit SystemSessionAnalyzer(uint32_t session_cnt);
+  explicit SystemSessionAnalyzer(uint32_t max_session_cnt);
   virtual ~SystemSessionAnalyzer();
 
   // Returns an analysis status for the system session that contains timestamp.
@@ -44,21 +48,42 @@ class SystemSessionAnalyzer {
   virtual Status IsSessionUnclean(base::Time timestamp);
 
  protected:
-  // Queries for events pertaining to the last session_cnt sessions. On success,
-  // returns true and event_infos contains events ordered from newest to oldest.
+  // Queries for the next |requested_events|. On success, returns true and
+  // event_infos contains events ordered from newest to oldest.
   // Returns false otherwise. Virtual for unit testing.
-  virtual bool FetchEvents(std::vector<EventInfo>* event_infos) const;
+  virtual bool FetchEvents(size_t requested_events,
+                           std::vector<EventInfo>* event_infos);
 
  private:
+  struct EvtHandleCloser {
+    using pointer = EVT_HANDLE;
+    void operator()(EVT_HANDLE handle) const {
+      if (handle)
+        ::EvtClose(handle);
+    }
+  };
+  using EvtHandle = std::unique_ptr<EVT_HANDLE, EvtHandleCloser>;
+
   FRIEND_TEST_ALL_PREFIXES(SystemSessionAnalyzerTest, FetchEvents);
 
+  bool EnsureInitialized();
+  bool EnsureHandlesOpened();
   bool Initialize();
+  bool ProcessSession(const EventInfo& end, const EventInfo& start);
 
-  // The number of sessions to query events for.
-  uint32_t session_cnt_;
+  EvtHandle CreateRenderContext();
+
+  // The maximal number of sessions to query events for.
+  uint32_t max_session_cnt_;
+  uint32_t sessions_queried_;
 
   bool initialized_ = false;
   bool init_success_ = false;
+
+  // A handle to the query, valid after a successful initialize.
+  EvtHandle query_handle_;
+  // A handle to the event render contenxt, valid after a successful initialize.
+  EvtHandle render_context_;
 
   // Information about unclean sessions: start time to duration until the next
   // session start, ie *not* session duration. Note: it's easier to get the

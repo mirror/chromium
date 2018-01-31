@@ -26,9 +26,9 @@ class SystemSessionEventFetcher : public SystemSessionAnalyzer {
 
 int main(int argc, char** argv) {
   // Retrieve events for the last 5 sessions.
-  SystemSessionEventFetcher fetcher(5U);
+  SystemSessionEventFetcher fetcher(0U);
   std::vector<SystemSessionEventFetcher::EventInfo> events;
-  if (!fetcher.FetchEvents(&events)) {
+  if (!fetcher.FetchEvents(11U, &events)) {
     std::cerr << "Failed to fetch events." << std::endl;
     return 1;
   }
