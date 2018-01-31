@@ -60,6 +60,10 @@ class CORE_EXPORT NGConstraintSpaceBuilder final {
   }
 
   NGConstraintSpaceBuilder& SetIsNewFormattingContext(bool is_new_fc);
+  NGConstraintSpaceBuilder& SetShouldSkipInlineMargins() {
+    should_skip_inline_margins_ = true;
+    return *this;
+  }
   NGConstraintSpaceBuilder& SetIsAnonymous(bool is_anonymous);
   NGConstraintSpaceBuilder& SetUseFirstLineStyle(bool use_first_line_style);
 
@@ -110,6 +114,7 @@ class CORE_EXPORT NGConstraintSpaceBuilder final {
   unsigned fragmentation_type_ : 2;
   unsigned separate_leading_fragmentainer_margins_ : 1;
   unsigned is_new_fc_ : 1;
+  unsigned should_skip_inline_margins_ : 1;
   unsigned is_anonymous_ : 1;
   unsigned use_first_line_style_ : 1;
   unsigned text_direction_ : 1;
