@@ -1,0 +1,237 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93f3d479_721a7dfc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-31T18:43:25Z",
+      "side": 1,
+      "message": "Nit: clarify which renderer",
+      "range": {
+        "startLine": 21,
+        "startChar": 24,
+        "endLine": 21,
+        "endChar": 32
+      },
+      "revId": "7dc4d44a880b4f66e842dfe524d2a749eb149cf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98218ff1_7288ebdf",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 1286,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-31T18:43:25Z",
+      "side": 1,
+      "message": "I know you mentioned that Optional doesn\u0027t pack as nicely, but strongly consider using it here please. It keeps the two bits of state logically associated. The Optional packing issue is something we\u0027re going to eventually need to figure out anyway…\n\nThen the getter can just return an const base::Optional\u003cgfx::Rect\u003e\u0026.",
+      "revId": "7dc4d44a880b4f66e842dfe524d2a749eb149cf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb1af577_52349f68",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2093,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-31T18:43:25Z",
+      "side": 1,
+      "message": "Nit: const gfx::Rect\u0026 to avoid copying until necessary.",
+      "revId": "7dc4d44a880b4f66e842dfe524d2a749eb149cf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "294b1d5a_e359bcc6",
+        "filename": "content/browser/frame_host/render_frame_proxy_host.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-31T18:43:25Z",
+      "side": 1,
+      "message": "Nit: add some comments here to distinguish between the two overloads.",
+      "revId": "7dc4d44a880b4f66e842dfe524d2a749eb149cf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad027110_f08720df",
+        "filename": "content/browser/frame_host/render_widget_host_view_guest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-31T18:43:25Z",
+      "side": 1,
+      "message": "Nit: add a comment that describes why this is always true",
+      "revId": "7dc4d44a880b4f66e842dfe524d2a749eb149cf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "039f3352_acc03d2c",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-31T18:43:25Z",
+      "side": 1,
+      "message": "Nit: consider updating this comment and splitting some of the unrelated parts out. For example, auto_resize_enabled_ doesn\u0027t really look related to this comment either (or perhaps renderer_initialized_)",
+      "revId": "7dc4d44a880b4f66e842dfe524d2a749eb149cf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53aaf186_122953d0",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-31T18:43:25Z",
+      "side": 1,
+      "message": "Please be a bit more specific about what this means, since this comment mostly replicates the method name atm. In addition, it\u0027s only sent for subframes, right?\n\n(Similar comment applies to WebFrameClient)",
+      "revId": "7dc4d44a880b4f66e842dfe524d2a749eb149cf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a47e5d8_96ec92f8",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 4355,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-31T18:43:25Z",
+      "side": 1,
+      "message": "Part of me feels like this almost makes more sense on WebFrameWidget: it doesn\u0027t really make sense to block the parser except for the local root frame. Of course, we wouldn\u0027t want to call it that: we\u0027d just call it suspend layout or something. WDYT?",
+      "revId": "7dc4d44a880b4f66e842dfe524d2a749eb149cf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8363f8b_377da356",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1432,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-31T18:43:25Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this only need to notify the local root?",
+      "revId": "7dc4d44a880b4f66e842dfe524d2a749eb149cf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a67de9cd_7e81f5d5",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-31T18:43:25Z",
+      "side": 1,
+      "message": "Let\u0027s only create this on demand. We can hide that with a getter, right?",
+      "revId": "7dc4d44a880b4f66e842dfe524d2a749eb149cf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86273abb_37001cf7",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1177,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-31T18:43:25Z",
+      "side": 1,
+      "message": "Isn\u0027t the size information transmitted over IPC? I wouldn\u0027t expect us to be processing those particular IPCs while in a nested message loop.\n\nI guess the other thing I\u0027m wondering: is it possible to avoid having two different buffers here?",
+      "revId": "7dc4d44a880b4f66e842dfe524d2a749eb149cf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84128633_a6f0ff5a",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-31T18:43:25Z",
+      "side": 1,
+      "message": "What nested message loop is this referring to?",
+      "range": {
+        "startLine": 325,
+        "startChar": 24,
+        "endLine": 325,
+        "endChar": 44
+      },
+      "revId": "7dc4d44a880b4f66e842dfe524d2a749eb149cf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9313a0f3_f131fc28",
+        "filename": "third_party/WebKit/public/web/WebFrameClient.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-31T18:43:25Z",
+      "side": 1,
+      "message": "Just to be clear: this is the optimization that allows us to avoid waiting, right? Because if we proactively notify, we may already have the size info when we swap.",
+      "revId": "7dc4d44a880b4f66e842dfe524d2a749eb149cf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
