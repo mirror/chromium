@@ -703,4 +703,19 @@ __gCrWeb['common'] = __gCrWeb.common;
     return new URL(url_one).origin == new URL(url_two).origin;
   }
 
+  /**
+   * Performs |action| after restoring |window.webkit| to the original working
+   * nonoverrided implementation. |window.webkit| is the reset back to the value
+   * it had before calling |restoreWebKit|.
+   */
+  __gCrWeb.common.restoreWebKit = function(block) {
+    // A web page can override |window.webkit| with any value. Deleting the
+    // object ensures that original and working implementation of
+    // window.webkit is restored.
+    var oldWebkit = window.webkit;
+    delete window['webkit'];
+    block();
+    window.webkit = oldWebkit;
+  }
+
 }());  // End of anonymous object

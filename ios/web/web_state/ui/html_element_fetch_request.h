@@ -1,0 +1,33 @@
+// Copyright 2018 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef IOS_WEB_WEB_STATE_UI_CRW_CONTEXT_MENU_ELEMENT_FETCH_DETAILS_H_
+#define IOS_WEB_WEB_STATE_UI_CRW_CONTEXT_MENU_ELEMENT_FETCH_DETAILS_H_
+
+#import <Foundation/Foundation.h>
+
+namespace base {
+class TimeTicks;
+}  // namespace base
+
+// Details of a request to get element details.
+@interface HTMLElementFetchRequest : NSObject
+
+// The time this object was created.
+@property(nonatomic, readonly) base::TimeTicks fetchStartTime;
+// Unique string identifing this element fetch. This identifier is used to
+// ensure a received JavaScript message is expected and only acted upon once.
+@property(nonatomic, readonly) NSString* identifier;
+
+- (instancetype)init NS_UNAVAILABLE;
+// Designated initializer to create a new object with the given completion
+// handler |foundElementHandler|.
+- (instancetype)initWithFoundElementHandler:
+    (void (^)(NSDictionary*))foundElementHandler NS_DESIGNATED_INITIALIZER;
+
+- (void)receivedResponse:(NSDictionary*)response;
+
+@end
+
+#endif  // IOS_WEB_WEB_STATE_UI_CRW_CONTEXT_MENU_ELEMENT_FETCH_DETAILS_H_

@@ -71,6 +71,18 @@ void WebTestWithWebState::AddTransientItem(const GURL& url) {
       .AddTransientItem(url);
 }
 
+void WebTestWithWebState::AddScriptMessageHandler(
+    NSString* message_name,
+    ScriptMessageHandlerBlock handler) {
+  [GetWebController(web_state()) addScriptMessageHandler:handler
+                                          forMessageName:message_name];
+}
+
+void WebTestWithWebState::RemoveScriptMessageHandler(NSString* message_name) {
+  [GetWebController(web_state())
+      removeScriptMessageHandlerForMessageName:message_name];
+}
+
 void WebTestWithWebState::LoadHtml(NSString* html, const GURL& url) {
   // Sets MIME type to "text/html" once navigation is committed.
   class MimeTypeUpdater : public WebStateObserver {
