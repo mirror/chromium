@@ -88,6 +88,24 @@
       "revId": "72dd7ab31c46dc41912d68a186428891a7b0ee89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa2e3026_856febb0",
+        "filename": "ui/ozone/platform/x11/x11_window_ozone_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2018-01-31T14:13:29Z",
+      "side": 1,
+      "message": "Because the test uses ui/ozone/test/mock_platform_window_delegate.h, which uses gmock. But gmock can\u0027t be used in ui/platform.\n\nDo you suggest have a TestPlatformWindowDelegate here, and thus avoid using gmock?",
+      "parentUuid": "4323c7c4_f7d7161d",
+      "revId": "72dd7ab31c46dc41912d68a186428891a7b0ee89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
