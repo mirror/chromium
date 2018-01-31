@@ -69,4 +69,12 @@ const base::Feature kSyncUSSBookmarks{"SyncUSSBookmarks",
 const base::Feature kSyncUSSTypedURL{"SyncUSSTypedURL",
                                      base::FEATURE_DISABLED_BY_DEFAULT};
 
+// TODO: should be disabled by default :)
+const base::Feature kSyncAutosync{"SyncAutosync",
+                                  base::FEATURE_ENABLED_BY_DEFAULT};
+
+bool IsAutosyncEnabled() {
+  return base::FeatureList::IsEnabled(kSyncAutosync);
+}
+
 }  // namespace switches

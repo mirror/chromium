@@ -29,6 +29,8 @@ extern const base::Feature kSyncUSSAutocomplete;
 extern const base::Feature kSyncUSSBookmarks;
 extern const base::Feature kSyncUSSTypedURL;
 
+bool IsAutosyncEnabled();
+
 }  // namespace switches
 
 #endif  // COMPONENTS_SYNC_DRIVER_SYNC_DRIVER_SWITCHES_H_
