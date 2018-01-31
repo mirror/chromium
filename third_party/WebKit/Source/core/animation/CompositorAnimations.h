@@ -160,6 +160,8 @@ class CORE_EXPORT CompositorAnimations {
                            canStartElementOnCompositorEffectSPv2);
   FRIEND_TEST_ALL_PREFIXES(AnimationCompositorAnimationsTest,
                            canStartElementOnCompositorEffect);
+  FRIEND_TEST_ALL_PREFIXES(AnimationCompositorAnimationsTest,
+                           cannotStartElementOnCompositorEffectSVG);
   FRIEND_TEST_ALL_PREFIXES(
       AnimationCompositorAnimationsTest,
       cannotStartElementOnCompositorEffectWithRuntimeFeature);
