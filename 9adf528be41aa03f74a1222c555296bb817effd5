@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8889484c_1109027d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/images/image-decode-in-frame-expected.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-31T00:36:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d1c794b_2ea5321f",
+      "revId": "9adf528be41aa03f74a1222c555296bb817effd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a751d141_69748d28",
         "filename": "third_party/WebKit/LayoutTests/http/tests/images/image-decode-in-frame.html",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "9adf528be41aa03f74a1222c555296bb817effd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9810995a_546f0852",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/images/image-decode-in-frame.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-31T00:36:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a751d141_69748d28",
+      "revId": "9adf528be41aa03f74a1222c555296bb817effd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d2a82e28_6a7c62ac",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/images/image-decode-in-frame.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-31T00:36:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95e111c4_e37a89aa",
+      "revId": "9adf528be41aa03f74a1222c555296bb817effd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea1da8c2_3d2a1235",
         "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetBase.cpp",
         "patchSetId": 2
@@ -64,6 +118,30 @@
       "writtenOn": "2018-01-31T00:02:59Z",
       "side": 1,
       "message": "Is it possible to exercise this branch in a test as well? Perhaps an iframe that removes itself and then tries to use decode()?",
+      "range": {
+        "startLine": 280,
+        "startChar": 0,
+        "endLine": 282,
+        "endChar": 3
+      },
+      "revId": "9adf528be41aa03f74a1222c555296bb817effd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01d11f02_7bfb99c2",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetBase.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-31T00:36:25Z",
+      "side": 1,
+      "message": "Hmm... the case you\u0027re describing would already be caught earlier in the stack. We have a WP test for that: https://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/the-img-element/decode/image-decode-iframe.html",
+      "parentUuid": "ea1da8c2_3d2a1235",
       "range": {
         "startLine": 280,
         "startChar": 0,
