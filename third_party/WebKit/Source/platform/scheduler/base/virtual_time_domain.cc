@@ -7,12 +7,21 @@
 #include "base/bind.h"
 #include "platform/scheduler/base/task_queue_impl.h"
 #include "platform/scheduler/base/task_queue_manager.h"
+#include "v8/include/v8.h"
 
 namespace blink {
 namespace scheduler {
 
-VirtualTimeDomain::VirtualTimeDomain(base::TimeTicks initial_time)
-    : now_(initial_time), task_queue_manager_(nullptr) {}
+VirtualTimeDomain::VirtualTimeDomain(base::Time initial_time,
+                                     base::TimeTicks initial_time_ticks)
+    : thread_id_(base::PlatformThread::CurrentId()),
+      initial_time_(initial_time),
+      initial_time_ticks_(initial_time_ticks),
+      min_time_offset_(base::TimeDelta::FromMilliseconds(1)),
+      now_ticks_(initial_time_ticks),
+      previous_time_(initial_time),
+      v8_initalized_(false),
+      task_queue_manager_(nullptr) {}
 
 VirtualTimeDomain::~VirtualTimeDomain() = default;
 
@@ -24,12 +33,33 @@ void VirtualTimeDomain::OnRegisterWithTaskQueueManager(
 
 LazyNow VirtualTimeDomain::CreateLazyNow() const {
   base::AutoLock lock(lock_);
-  return LazyNow(now_);
+  return LazyNow(now_ticks_);
 }
 
 base::TimeTicks VirtualTimeDomain::Now() const {
   base::AutoLock lock(lock_);
-  return now_;
+  return now_ticks_;
+}
+
+base::Time VirtualTimeDomain::Date() const {
+  base::AutoLock lock(lock_);
+  base::TimeDelta offset = now_ticks_ - initial_time_ticks_;
+  base::Time next_time = initial_time_ + offset;
+
+  // Make sure time doesn't go backwards.
+  if (next_time <= previous_time_)
+    next_time = previous_time_;
+
+  previous_time_ = next_time;
+
+  // If called on in the main thread from v8, make sure that time advances in
+  // case Date.now is called in a loop.
+  if (v8_initalized_ && thread_id_ == base::PlatformThread::CurrentId() &&
+      v8::Isolate::GetCurrent() && v8::Isolate::GetCurrent()->InContext()) {
+    previous_time_ += min_time_offset_;
+  }
+
+  return next_time;
 }
 
 void VirtualTimeDomain::RequestWakeUpAt(base::TimeTicks now,
@@ -51,10 +81,15 @@ base::Optional<base::TimeDelta> VirtualTimeDomain::DelayTillNextTask(
 void VirtualTimeDomain::AsValueIntoInternal(
     base::trace_event::TracedValue* state) const {}
 
-void VirtualTimeDomain::AdvanceTo(base::TimeTicks now) {
+void VirtualTimeDomain::AdvanceNowTo(base::TimeTicks now) {
   base::AutoLock lock(lock_);
-  DCHECK_GE(now, now_);
-  now_ = now;
+  DCHECK_GE(now, now_ticks_);
+  now_ticks_ = now;
+}
+
+void VirtualTimeDomain::V8Initalized() {
+  base::AutoLock lock(lock_);
+  v8_initalized_ = true;
 }
 
 void VirtualTimeDomain::RequestDoWork() {

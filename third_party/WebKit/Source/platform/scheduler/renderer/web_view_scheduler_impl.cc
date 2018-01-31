@@ -173,7 +173,7 @@ void WebViewSchedulerImpl::ReportIntervention(const std::string& message) {
 }
 
 base::TimeTicks WebViewSchedulerImpl::EnableVirtualTime() {
-  return renderer_scheduler_->EnableVirtualTime();
+  return renderer_scheduler_->EnableVirtualTime(false);
 }
 
 void WebViewSchedulerImpl::DisableVirtualTimeForTesting() {
