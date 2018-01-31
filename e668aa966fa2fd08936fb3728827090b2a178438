@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "d05daba4_e51fbbee",
+        "filename": "ios/chrome/browser/web/forms_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-31T21:57:49Z",
+      "side": 1,
+      "message": "Context Menu popover does not have cancel button on iPad as well (would ElementToDismissContextMenu work for you?)",
+      "parentUuid": "e76c62cd_3ffc860a",
+      "range": {
+        "startLine": 157,
+        "startChar": 5,
+        "endLine": 157,
+        "endChar": 29
+      },
+      "revId": "e668aa966fa2fd08936fb3728827090b2a178438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b00a7f4_6e77cbe9",
         "filename": "ios/chrome/browser/web/forms_egtest.mm",
         "patchSetId": 2
@@ -214,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "ded7569a_76c5e31e",
+        "filename": "ios/chrome/browser/web/forms_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-31T21:57:49Z",
+      "side": 1,
+      "message": "Still trying to understand what\u0027s going on in WKWebView. Are the following statements true?:\n - Safari does not show report form dialog for fast back-forward navigations\n - Safari shows report form dialog for slow back-forward navigations \n - decidePolicyForNavigationRequest is not called for fast back-forward navigations\n\nIf these are true then the tests will definitely be flaky. In which case we should do something like PurgeCachedWebViewPages(), which is used in VisibleURLTestCase.",
+      "parentUuid": "f14938f2_76e37539",
+      "range": {
+        "startLine": 268,
+        "startChar": 31,
+        "endLine": 268,
+        "endChar": 37
+      },
+      "revId": "e668aa966fa2fd08936fb3728827090b2a178438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c2e5257_5592d7d6",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 2
@@ -261,6 +309,30 @@
     },
     {
       "key": {
+        "uuid": "41783b32_c94d6675",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1950,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-31T21:57:49Z",
+      "side": 1,
+      "message": "No :(",
+      "parentUuid": "77ecd704_2a7d1f21",
+      "range": {
+        "startLine": 1950,
+        "startChar": 18,
+        "endLine": 1950,
+        "endChar": 24
+      },
+      "revId": "e668aa966fa2fd08936fb3728827090b2a178438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8329f3c6_9b3d5b25",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 2
@@ -305,6 +377,30 @@
       "revId": "e668aa966fa2fd08936fb3728827090b2a178438",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af06d126_8fceab17",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 4216,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-31T21:57:49Z",
+      "side": 1,
+      "message": "There is a way (spin NSRunLoop), but we should not use this technique in production code as it may break other things. We can land this and see if there are any issues with async callback.",
+      "parentUuid": "176104db_8eaadc4b",
+      "range": {
+        "startLine": 4216,
+        "startChar": 14,
+        "endLine": 4216,
+        "endChar": 29
+      },
+      "revId": "e668aa966fa2fd08936fb3728827090b2a178438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
