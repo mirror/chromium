@@ -59,6 +59,7 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.NativePage;
 import org.chromium.chrome.browser.UrlConstants;
@@ -1537,15 +1538,17 @@ public class LocationBarLayout extends FrameLayout
             for (int i = urlContainerChildIndex + 1; i < getChildCount(); i++) {
                 View childView = getChildAt(i);
                 if (childView.getVisibility() != GONE) {
-                    LayoutParams childLayoutParams = (LayoutParams) childView.getLayoutParams();
+                    MarginLayoutParams childLayoutParams =
+                            (MarginLayoutParams) childView.getLayoutParams();
+                    int childWidth = Math.max(childLayoutParams.width, childView.getWidth());
                     urlContainerMarginEnd = Math.max(urlContainerMarginEnd,
-                            childLayoutParams.width
-                                    + ApiCompatibilityUtils.getMarginStart(childLayoutParams)
+                            childWidth + ApiCompatibilityUtils.getMarginStart(childLayoutParams)
                                     + ApiCompatibilityUtils.getMarginEnd(childLayoutParams));
                 }
             }
         }
 
+        android.util.Log.w("thildebr", "margin end = " + urlContainerMarginEnd);
         LayoutParams urlLayoutParams = (LayoutParams) mUrlBar.getLayoutParams();
         if (ApiCompatibilityUtils.getMarginEnd(urlLayoutParams) != urlContainerMarginEnd) {
             ApiCompatibilityUtils.setMarginEnd(urlLayoutParams, urlContainerMarginEnd);
@@ -2521,10 +2524,12 @@ public class LocationBarLayout extends FrameLayout
 
     /**
      * Updates the display of the mic button.
-     * @param urlFocusChangePercent The completeion percentage of the URL focus change animation.
+     * @param urlFocusChangePercent The completion percentage of the URL focus change animation.
      */
     protected void updateMicButtonVisibility(float urlFocusChangePercent) {
-        boolean visible = !shouldShowDeleteButton();
+        boolean visible = !shouldShowDeleteButton()
+                || ChromeFeatureList.isEnabled(
+                           ChromeFeatureList.OMNIBOX_VOICE_SEARCH_ALWAYS_VISIBLE);
         boolean showMicButton = mVoiceSearchEnabled && visible
                 && (mUrlBar.hasFocus() || mUrlFocusChangeInProgress
                         || urlFocusChangePercent > 0f);
