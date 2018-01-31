@@ -22,6 +22,30 @@
       "revId": "cfb1d3b5bca9a4b84e187304866acfa43046c00d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c98b00a7_3eeffcde",
+        "filename": "net/android/java/src/org/chromium/net/NetworkChangeNotifier.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1226606
+      },
+      "writtenOn": "2018-01-31T21:05:16Z",
+      "side": 1,
+      "message": "I don\u0027t want to use SupressWarnings for the whole method, I don\u0027t want to create new one and I don\u0027t see any other way to silence warning",
+      "parentUuid": "f0e62ed7_0a62789f",
+      "range": {
+        "startLine": 400,
+        "startChar": 19,
+        "endLine": 400,
+        "endChar": 30
+      },
+      "revId": "cfb1d3b5bca9a4b84e187304866acfa43046c00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
