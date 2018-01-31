@@ -88,6 +88,8 @@ public class CustomTabsConnection {
     @VisibleForTesting
     static final String PAGE_LOAD_METRICS_CALLBACK = "NavigationMetrics";
     static final String BOTTOM_BAR_SCROLL_STATE_CALLBACK = "onBottomBarScrollStateChanged";
+    @VisibleForTesting
+    static final String OPEN_IN_BROWSER_CALLBACK = "onOpenInBrowser";
 
     // For CustomTabs.SpeculationStatusOnStart, see tools/metrics/enums.xml. Append only.
     private static final int SPECULATION_STATUS_ON_START_ALLOWED = 0;
@@ -1114,10 +1116,30 @@ public class CustomTabsConnection {
         try {
             callback.extraCallback(PAGE_LOAD_METRICS_CALLBACK, args);
         } catch (Exception e) {
-            // Pokemon exception handling, see above and crbug.com/517023.
+            // Pokemon exception handling, see above and https://crbug.com/517023.
             return false;
         }
         logPageLoadMetricsCallback(args);
+        return true;
+    }
+
+    /**
+     * Notifies the application that the user has selected to open the page in their browser.
+     * @param session Session identifier.
+     * @return true if success. To protect Chrome exceptions in the client application are swallowed
+     *     and false is returned.
+     */
+    boolean notifyOpenInBrowser(CustomTabsSessionToken session) {
+        CustomTabsCallback callback = mClientManager.getCallbackForSession(session);
+        if (callback == null) return false;
+
+        try {
+            callback.extraCallback(OPEN_IN_BROWSER_CALLBACK,
+                    getExtrasBundleForNavigationEventForSession(session));
+        } catch (Exception e) {
+            // Pokemon exception handling, see above and https://crbug.com/517023.
+            return false;
+        }
         return true;
     }
 
