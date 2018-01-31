@@ -7,16 +7,34 @@
 
 #include "base/memory/weak_ptr.h"
 #include "content/browser/loader/url_loader_request_handler.h"
+#include "content/public/common/resource_type.h"
+
+namespace net {
+class URLRequestContext;
+}  // namespace net
 
 namespace content {
 
+class ResourceContext;
+class URLLoaderFactoryGetter;
+class URLLoaderThrottle;
 class WebPackageLoader;
 
 class WebPackageRequestHandler final : public URLLoaderRequestHandler {
  public:
+  using URLLoaderThrottlesGetter = base::OnceCallback<
+      std::vector<std::unique_ptr<content::URLLoaderThrottle>>()>;
+  using GetContextsCallback =
+      base::RepeatingCallback<void(ResourceType resource_type,
+                                   ResourceContext**,
+                                   net::URLRequestContext**)>;
+
   static bool IsSupportedMimeType(const std::string& mime_type);
 
-  WebPackageRequestHandler();
+  WebPackageRequestHandler(
+      URLLoaderFactoryGetter* default_url_loader_factory_getter,
+      URLLoaderThrottlesGetter url_loader_throttles_getter,
+      const GetContextsCallback& get_contexts_callback);
   ~WebPackageRequestHandler() override;
 
   // URLLoaderRequestHandler implementation
@@ -37,6 +55,10 @@ class WebPackageRequestHandler final : public URLLoaderRequestHandler {
   // the loader is re-bound to the new client for the redirected request in
   // StartResponse.
   std::unique_ptr<WebPackageLoader> web_package_loader_;
+
+  scoped_refptr<URLLoaderFactoryGetter> default_url_loader_factory_getter_;
+  URLLoaderThrottlesGetter url_loader_throttles_getter_;
+  const GetContextsCallback get_contexts_callback_;
 
   base::WeakPtrFactory<WebPackageRequestHandler> weak_factory_;
 

@@ -7,6 +7,7 @@
 #include "base/bind.h"
 #include "base/feature_list.h"
 #include "content/browser/loader/web_package_loader.h"
+#include "content/browser/url_loader_factory_getter.h"
 #include "content/common/throttling_url_loader.h"
 #include "content/public/common/content_features.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
@@ -23,7 +24,14 @@ bool WebPackageRequestHandler::IsSupportedMimeType(
   return mime_type == "application/http-exchange+cbor";
 }
 
-WebPackageRequestHandler::WebPackageRequestHandler() : weak_factory_(this) {
+WebPackageRequestHandler::WebPackageRequestHandler(
+    URLLoaderFactoryGetter* default_url_loader_factory_getter,
+    URLLoaderThrottlesGetter url_loader_throttles_getter,
+    const GetContextsCallback& get_contexts_callback)
+    : default_url_loader_factory_getter_(default_url_loader_factory_getter),
+      url_loader_throttles_getter_(std::move(url_loader_throttles_getter)),
+      get_contexts_callback_(get_contexts_callback),
+      weak_factory_(this) {
   DCHECK(base::FeatureList::IsEnabled(features::kSignedHTTPExchange));
 }
 
@@ -65,7 +73,9 @@ bool WebPackageRequestHandler::MaybeCreateLoaderForResponse(
   // or reusing the existing ThrottlingURLLoader by reattaching URLLoaderClient,
   // to support SafeBrowsing checking of the content of the WebPackage.
   web_package_loader_ = base::MakeUnique<WebPackageLoader>(
-      response, std::move(client), url_loader->Unbind());
+      response, std::move(client), url_loader->Unbind(),
+      default_url_loader_factory_getter_.get(),
+      std::move(url_loader_throttles_getter_), get_contexts_callback_);
   return true;
 }
 
