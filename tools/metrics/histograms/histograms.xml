@@ -79079,10 +79079,33 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="Security.PageInfo.Action.HttpsUrl.Valid"
     enum="WebsiteSettingsAction">
+  <obsolete>
+    Deprecated 2018-01-31, split into ValidEV and ValidNonEV.
+  </obsolete>
   <owner>estark@chromium.org</owner>
   <summary>
     Tracks Page Info bubble actions that take place on a valid HTTPS URL with no
     security issues (e.g. no mixed content).
+  </summary>
+</histogram>
+
+<histogram name="Security.PageInfo.Action.HttpsUrl.ValidEV"
+    enum="WebsiteSettingsAction">
+  <owner>estark@chromium.org</owner>
+  <summary>
+    Tracks Page Info bubble actions that take place on a valid HTTPS URL with no
+    security issues (e.g. no mixed content) and an Extended Validation
+    Certificate.
+  </summary>
+</histogram>
+
+<histogram name="Security.PageInfo.Action.HttpsUrl.ValidNonEV"
+    enum="WebsiteSettingsAction">
+  <owner>estark@chromium.org</owner>
+  <summary>
+    Tracks Page Info bubble actions that take place on a valid HTTPS URL with no
+    security issues (e.g. no mixed content), but no Extended Validation
+    Certificate.
   </summary>
 </histogram>
 
