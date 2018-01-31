@@ -13350,6 +13350,9 @@ Called by update_net_error_codes.py.-->
   <int value="413" label="OMNIBOX_ON_DELETE_SUGGESTION"/>
   <int value="414" label="VIRTUAL_KEYBOARD_PRIVATE_ON_KEYBOARD_CONFIG_CHANGED"/>
   <int value="415" label="PASSWORDS_PRIVATE_ON_PASSWORDS_FILE_EXPORT_PROGRESS"/>
+  <int value="416"
+      label="SAFE_BROWSING_PRIVATE_ON_PROTECTED_PASSWORD_REUSE_DETECTED"/>
+  <int value="417" label="SAFE_BROWSING_PRIVATE_ON_PROTECTED_PASSWORD_CHANGED"/>
 </enum>
 
 <enum name="ExtensionFileWriteResult">
