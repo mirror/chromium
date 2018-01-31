@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b2458ea_664b0bcf",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-31T19:45:32Z",
+      "side": 1,
+      "message": "What is this variable referring to?  I don\u0027t see it in the local text, and if it\u0027s referring to something in another structure it would be useful to quality the reference.",
+      "range": {
+        "startLine": 18,
+        "startChar": 46,
+        "endLine": 18,
+        "endChar": 61
+      },
+      "revId": "a9bb87485d71e44e7648651cf527cc927422f5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf20bc29_85067746",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-31T19:45:32Z",
+      "side": 1,
+      "message": "I\u0027m not sure in context what this phrase means.  Could you provide more clarification?  Maybe something like \"If this flag is true and the socket joins a group through JoinGroup() (below), the socket will received packets sent to the joined group from itself\".",
+      "range": {
+        "startLine": 26,
+        "startChar": 38,
+        "endLine": 26,
+        "endChar": 50
+      },
+      "revId": "a9bb87485d71e44e7648651cf527cc927422f5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f37da211_6b815786",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-31T19:45:32Z",
+      "side": 1,
+      "message": "Willing to put in some words as to what can be done with the socket if an error is returned?  I\u0027m assuming \"nothing\", but it\u0027s probably worthwhile being clear.\n\nRelated: Remind me why we don\u0027t open the socket as part of creating it?  (I.e. fold these arguments and result into the creation routine?)  If we can\u0027t do anything with the socket if Open() fails, it seems like the interface would be simpler if we created it opened.",
+      "range": {
+        "startLine": 56,
+        "startChar": 22,
+        "endLine": 56,
+        "endChar": 30
+      },
+      "revId": "a9bb87485d71e44e7648651cf527cc927422f5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "529e140b_5d0ce0c2",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-31T19:45:32Z",
+      "side": 1,
+      "message": "Could you include a reference to documentation on what a multicast group is?  I think a pointer to RFC 1112 is probably enough.",
+      "range": {
+        "startLine": 99,
+        "startChar": 15,
+        "endLine": 99,
+        "endChar": 30
+      },
+      "revId": "a9bb87485d71e44e7648651cf527cc927422f5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "349c38f8_4cc0d568",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-31T19:45:32Z",
+      "side": 1,
+      "message": "nit, suggestion: the-\u003ea.",
+      "range": {
+        "startLine": 99,
+        "startChar": 11,
+        "endLine": 99,
+        "endChar": 14
+      },
+      "revId": "a9bb87485d71e44e7648651cf527cc927422f5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65fc52f7_46efd137",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-31T19:45:32Z",
+      "side": 1,
+      "message": "nit: it-\u003ethis call",
+      "range": {
+        "startLine": 105,
+        "startChar": 12,
+        "endLine": 105,
+        "endChar": 14
+      },
+      "revId": "a9bb87485d71e44e7648651cf527cc927422f5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07806c1b_769c7833",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-31T19:45:32Z",
+      "side": 1,
+      "message": "nit: \". It\" -\u003e \"; if a socket is in a multicast group on destruction, it will be removed by the OS.\" (Or, alternatively, just remove the second sentence; I think that behavior is implied by removal being optional.)",
+      "range": {
+        "startLine": 106,
+        "startChar": 33,
+        "endLine": 106,
+        "endChar": 37
+      },
+      "revId": "a9bb87485d71e44e7648651cf527cc927422f5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "293028e6_08c793e4",
+        "filename": "services/network/udp_socket.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-31T19:45:32Z",
+      "side": 1,
+      "message": "I\u0027m a bit uncomfortable with the partial configuration possibilities of this routine (i.e. if an intermediate setter fails, |socket_| will be partially but not completely configured in a way that\u0027s impossible to figure out from outside the class).  My belief is that all code paths that use ConfigureOptions (currently only Open()?) treat the socket as unusuable if this routine returns result !\u003d net::OK, but I think that the code would be a little less fragile if we guaranteed that at this level.  Can we set a boolean indicating that socket_ is invalid, or optionally make socket_ a std::unique_ptr\u003c\u003e and reset it, if any of these return an error?",
+      "range": {
+        "startLine": 99,
+        "startChar": 6,
+        "endLine": 99,
+        "endChar": 12
+      },
+      "revId": "a9bb87485d71e44e7648651cf527cc927422f5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8ff7074_a26e218d",
+        "filename": "services/network/udp_socket.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-31T19:45:32Z",
+      "side": 1,
+      "message": "Similarly to the above, how would you feel about somehow marking the UDPSocket as invalid if result was non-net::OK?",
+      "range": {
+        "startLine": 144,
+        "startChar": 15,
+        "endLine": 144,
+        "endChar": 30
+      },
+      "revId": "a9bb87485d71e44e7648651cf527cc927422f5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dbe4cf3_e98630f1",
+        "filename": "services/network/udp_socket.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-31T19:45:32Z",
+      "side": 1,
+      "message": "Does it really make sense to join a multicast group if the socket is connected?  That seems very counter-intuitive.",
+      "range": {
+        "startLine": 228,
+        "startChar": 7,
+        "endLine": 228,
+        "endChar": 25
+      },
+      "revId": "a9bb87485d71e44e7648651cf527cc927422f5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a7691ab_6663784d",
+        "filename": "services/network/udp_socket.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-31T19:45:32Z",
+      "side": 1,
+      "message": "Why is this part of SocketWrapper?  It seems like it\u0027s unused outside of the implementation classes.  Am I missing something?",
+      "range": {
+        "startLine": 74,
+        "startChar": 16,
+        "endLine": 74,
+        "endChar": 32
+      },
+      "revId": "a9bb87485d71e44e7648651cf527cc927422f5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
