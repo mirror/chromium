@@ -1,0 +1,8 @@
+rootWebArea
+++genericContainer
+++++link name='The moon is Europa'
+++++++staticText name='The'
+++++++++inlineTextBox name='The'
+++++++image name='moon'
+++++++staticText name='is Europa'
+++++++++inlineTextBox name='is Europa'
