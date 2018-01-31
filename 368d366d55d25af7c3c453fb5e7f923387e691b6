@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "d7e9a40e_e85cef82",
+        "filename": "chrome/browser/permissions/permission_uma_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2018-01-31T20:11:39Z",
+      "side": 1,
+      "message": "You could still record the revoke action here with a dummy source ID (we just won\u0027t have a URL associated with it), e.g.\n\nukm::SourceId source_id \u003d web_contents ?\n        ukm::GetSourceIdForWebContentsDocument(web_contents) :\n        ukm::UkmRecorder::GetNewSourceID();",
+      "range": {
+        "startLine": 439,
+        "startChar": 6,
+        "endLine": 439,
+        "endChar": 18
+      },
+      "revId": "368d366d55d25af7c3c453fb5e7f923387e691b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "169dafe1_3c6737f2",
         "filename": "chrome/browser/permissions/permission_uma_util.cc",
         "patchSetId": 7
@@ -30,6 +53,29 @@
       "writtenOn": "2018-01-31T19:29:49Z",
       "side": 1,
       "message": "Do we want to record requests from iframes as the top level frame? Or drop them. I think top level site definitely makes sense in a permission delegation world. Maybe we should just do that now.",
+      "revId": "368d366d55d25af7c3c453fb5e7f923387e691b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa74d91c_7207ee40",
+        "filename": "chrome/browser/permissions/permission_uma_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2018-01-31T20:11:39Z",
+      "side": 1,
+      "message": "Nit: You can pass ukm::UkmRecorder::Get() directly here, since Record() will just discard the data if the recorder is null.",
+      "range": {
+        "startLine": 451,
+        "startChar": 16,
+        "endLine": 451,
+        "endChar": 28
+      },
       "revId": "368d366d55d25af7c3c453fb5e7f923387e691b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
