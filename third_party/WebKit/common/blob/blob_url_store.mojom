@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 module blink.mojom;
 
+import "services/network/public/interfaces/url_loader_factory.mojom";
 import "third_party/WebKit/common/blob/blob.mojom";
 import "url/mojo/url.mojom";
 
@@ -21,4 +22,11 @@ interface BlobURLStore {
 
   // Resolves a public Blob URL.
   Resolve(url.mojom.Url url) => (blink.mojom.Blob? blob);
+
+  // Resolves a public Blob URL to a URLLoaderFactory that can only load the
+  // specified URL. The reason the API is shaped like this rather than just
+  // having a URLLoaderFactory for all Blob URLs is that resolution of blob URLs
+  // has to happen separately before fetching starts.
+  ResolveAsURLLoaderFactory(url.mojom.Url url,
+                            network.mojom.URLLoaderFactory& factory);
 };
