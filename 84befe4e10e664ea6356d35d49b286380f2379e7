@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ee9f6f6_2a18f232",
+        "filename": "third_party/WebKit/Source/platform/wtf/HashTable.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 2103,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-31T19:33:29Z",
+      "side": 1,
+      "message": "This call here is not only an optimization. It also guards against re-registering nested hash tables during weak table processing.\n\nNot calling tracing but just checking IsAlive allows us to get rid of this call here.",
+      "range": {
+        "startLine": 2103,
+        "startChar": 28,
+        "endLine": 2103,
+        "endChar": 45
+      },
+      "revId": "84befe4e10e664ea6356d35d49b286380f2379e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
