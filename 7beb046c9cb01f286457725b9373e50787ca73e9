@@ -16,6 +16,24 @@
       "revId": "7beb046c9cb01f286457725b9373e50787ca73e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2145b93f_7b6599b7",
+        "filename": "build/android/lint/suppressions.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1233200
+      },
+      "writtenOn": "2018-01-31T22:04:05Z",
+      "side": 1,
+      "message": "Ha, the for_lint in BUILD.gn is used for here.",
+      "parentUuid": "5dbd6583_f4287bb4",
+      "revId": "7beb046c9cb01f286457725b9373e50787ca73e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
