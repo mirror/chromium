@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a1670525_9f1efbd1",
+        "filename": "components/cbor/cbor_writer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2018-01-31T16:50:22Z",
+      "side": 1,
+      "message": "Ah! Based on the discussion in https://github.com/fido-alliance/fido-2-specs/pull/400, the two modes are actually the same, even though they\u0027re expressed differently. I believe CBOR is likely to eventually have two canonicalization modes (https://github.com/cbor-wg/CBORbis/pull/9), but so far all web specs use this one.",
+      "parentUuid": "42050b72_0cebb82c",
+      "revId": "64aa847f24ee2c7424a1b1202ef1628f0ab83e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6826da9a_67799825",
         "filename": "components/cbor/cbor_writer.cc",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2018-01-31T11:49:31Z",
       "side": 1,
       "message": "I would like to make the implementations more consistent across modes here. I see the following options:\n\n -- If serializing to byte arrays per-element is deemed performant enough in the CBOR canonical case, it should be performant enough for the CTAP case too, so we could just unify the implementation here so that the only thing different is the predicate used.\n\n -- If it is not performant enough, we should consider either:\n\n   1) Pre-serializing only keys, but not values.\n\n   2) Implementing CTAP/CBORCanonical comparison operators between CBORValues that can tell the right sort order without serializing the key value. Maybe we can prohibit using compound values (arrays, maps) as keys to simplify things?\n\n   3) Serializing keys + values into the final byte buffer in the wrong order, and then shuffling them around to create the desired order. This will still do some copying, but could help if allocations are expensive (which I suspect is probably not the case with tcmalloc?).\n\nLooks like two-phase serialization won\u0027t help, because we don\u0027t only need the size, but also to be able to lexicographically compare the binary representation of values.",
+      "range": {
+        "startLine": 202,
+        "startChar": 0,
+        "endLine": 203,
+        "endChar": 61
+      },
+      "revId": "64aa847f24ee2c7424a1b1202ef1628f0ab83e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6a90bf3_d97fd2b6",
+        "filename": "components/cbor/cbor_writer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2018-01-31T16:50:22Z",
+      "side": 1,
+      "message": "I believe #2 is feasible by recursively walking the compared elements, but I haven\u0027t proven it. For signed-exchanges, there are no complex keys, and comparing both kinds of strings is definitely possible without serializing.",
+      "parentUuid": "6826da9a_67799825",
       "range": {
         "startLine": 202,
         "startChar": 0,
