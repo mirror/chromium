@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3dabd26_d59f7201",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/braille_command_handler.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-31T17:58:34Z",
+      "side": 1,
+      "message": "Can you explain why you don\u0027t need to call\ntextEditHandler.moveToBeforeEditText here\n(and same in command_handler.js)?\n\nI don\u0027t see why they\u0027re not symmetrical.",
+      "revId": "52fc70f4dafc7fdc7fc79fcf5f0290cef0b64654",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
