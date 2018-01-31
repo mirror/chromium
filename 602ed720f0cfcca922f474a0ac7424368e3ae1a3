@@ -22,6 +22,30 @@
       "revId": "602ed720f0cfcca922f474a0ac7424368e3ae1a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd195890_310a8237",
+        "filename": "chrome/browser/resources/md_bookmarks/command_manager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-31T03:56:31Z",
+      "side": 0,
+      "message": "I solutioned the problem.\n\nThis works decently because we preventDefault on key event handling. Wew.",
+      "parentUuid": "6722b4f8_a228cfd2",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 59
+      },
+      "revId": "602ed720f0cfcca922f474a0ac7424368e3ae1a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
