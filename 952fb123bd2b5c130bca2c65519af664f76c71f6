@@ -16,6 +16,24 @@
       "revId": "952fb123bd2b5c130bca2c65519af664f76c71f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4f53a76_fbb0c653",
+        "filename": "build/toolchain/concurrent_links.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1151126
+      },
+      "writtenOn": "2018-01-31T03:49:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "123fda26_4a4a6354",
+      "revId": "952fb123bd2b5c130bca2c65519af664f76c71f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
