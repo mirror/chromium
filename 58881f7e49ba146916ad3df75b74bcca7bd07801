@@ -22,6 +22,29 @@
       "revId": "58881f7e49ba146916ad3df75b74bcca7bd07801",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61f1728f_3d6e66ec",
+        "filename": "chrome/test/data/webui/media_router/media_router_elements_browsertest.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-31T18:43:00Z",
+      "side": 0,
+      "message": "Is there a bug tracking the work to fully remove/port the old A11y checks? See [1] for remaining cases.\n\n[1] https://cs.chromium.org/search/?q\u003d%22runAccessibilityChecks:+true%22+-file:third_party+-file:infra\u0026type\u003dcs",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 31
+      },
+      "revId": "58881f7e49ba146916ad3df75b74bcca7bd07801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
