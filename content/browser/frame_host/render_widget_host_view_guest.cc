@@ -470,6 +470,10 @@ void RenderWidgetHostViewGuest::SetIsLoading(bool is_loading) {
   platform_view_->SetIsLoading(is_loading);
 }
 
+bool RenderWidgetHostViewGuest::HasSize() const {
+  return true;
+}
+
 void RenderWidgetHostViewGuest::TextInputStateChanged(
     const TextInputState& params) {
   if (!guest_)

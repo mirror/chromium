@@ -71,6 +71,7 @@
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/base/mojo/window_open_disposition.mojom.h"
 #include "ui/base/page_transition_types.h"
+#include "ui/gfx/geometry/rect.h"
 
 #if defined(OS_ANDROID)
 #include "services/device/public/interfaces/nfc.mojom.h"
@@ -99,7 +100,6 @@ struct WebScrollIntoViewParams;
 
 namespace gfx {
 class Range;
-class Rect;
 }
 
 namespace network {
@@ -685,6 +685,10 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // Notifies the render frame that a user gesture was received.
   void SetHasReceivedUserGesture();
 
+  // Returns the current rect for this frame.
+  bool has_frame_rect() const { return has_frame_rect_; }
+  const gfx::Rect& frame_rect() const { return frame_rect_; }
+
  protected:
   friend class RenderFrameHostFactory;
 
@@ -880,6 +884,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
       const blink::ParsedFeaturePolicy& parsed_header) override;
   void CancelInitialHistoryLoad() override;
   void UpdateEncoding(const std::string& encoding) override;
+  void FrameRectsChanged(const gfx::Rect& frame_rect) override;
 
   // Registers Mojo interfaces that this frame host makes available.
   void RegisterMojoInterfaces();
@@ -1278,6 +1283,10 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // signal. If false, all audio streams are currently silent (or there are no
   // audio streams).
   bool is_audible_;
+
+  // Used for tracking the latest rect of the RenderFrame.
+  bool has_frame_rect_ = false;
+  gfx::Rect frame_rect_ = gfx::Rect();
 
   // The Previews state of the last navigation. This is used during history
   // navigation of subframes to ensure that subframes navigate with the same
