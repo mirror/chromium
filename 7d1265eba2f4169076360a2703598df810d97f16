@@ -51,6 +51,24 @@
       "revId": "7d1265eba2f4169076360a2703598df810d97f16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b80e042_f91cd2ee",
+        "filename": "chrome/browser/extensions/content_verifier_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2018-01-31T19:04:22Z",
+      "side": 1,
+      "message": "Ack, added a TODO to tackle this separately.",
+      "parentUuid": "436e5c7d_416939f7",
+      "revId": "7d1265eba2f4169076360a2703598df810d97f16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
