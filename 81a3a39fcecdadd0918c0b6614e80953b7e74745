@@ -50,6 +50,24 @@
       "revId": "81a3a39fcecdadd0918c0b6614e80953b7e74745",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dd3ca91_27bd332f",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-31T23:49:50Z",
+      "side": 0,
+      "message": "The resource_id in ResourceProvider in the parent would be a mapped id, so it wouldn\u0027t be the same, so I don\u0027t think so. +ericrk",
+      "parentUuid": "5aa8cc41_3f980963",
+      "revId": "81a3a39fcecdadd0918c0b6614e80953b7e74745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

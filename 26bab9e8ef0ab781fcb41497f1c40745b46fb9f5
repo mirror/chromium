@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "504b5aca_f90edac8",
+        "filename": "cc/raster/gpu_raster_buffer_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-31T23:49:50Z",
+      "side": 1,
+      "message": "Yeah, I didn\u0027t notice that but it\u0027d be more obvious as we delete all lock-related stuff on LayerTreeResourceProvider.",
+      "parentUuid": "942bd0c9_0e4b29e3",
+      "revId": "26bab9e8ef0ab781fcb41497f1c40745b46fb9f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5df502b9_9e7a23c9",
         "filename": "cc/raster/gpu_raster_buffer_provider.cc",
         "patchSetId": 7
