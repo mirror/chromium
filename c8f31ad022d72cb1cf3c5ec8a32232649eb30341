@@ -590,6 +590,30 @@
     },
     {
       "key": {
+        "uuid": "fbe95ebf_9bcc907b",
+        "filename": "chrome/installer/setup/setup_util.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-31T22:32:23Z",
+      "side": 1,
+      "message": "ACK. I will keep this version for now.",
+      "parentUuid": "e7d96efa_8b0f555a",
+      "range": {
+        "startLine": 866,
+        "startChar": 66,
+        "endLine": 866,
+        "endChar": 74
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cedb5342_e144bd30",
         "filename": "chrome/installer/setup/setup_util.cc",
         "patchSetId": 34
@@ -658,6 +682,30 @@
       "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2c90ff1_4575894c",
+        "filename": "chrome/installer/setup/setup_util.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 867,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-31T22:32:23Z",
+      "side": 1,
+      "message": "Done. Changed to path.capacity().",
+      "parentUuid": "36a27cec_aa634859",
+      "range": {
+        "startLine": 867,
+        "startChar": 24,
+        "endLine": 867,
+        "endChar": 39
+      },
+      "revId": "c8f31ad022d72cb1cf3c5ec8a32232649eb30341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

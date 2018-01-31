@@ -286,6 +286,30 @@
     },
     {
       "key": {
+        "uuid": "b0541522_cfa110b4",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 48
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2018-01-31T22:32:23Z",
+      "side": 1,
+      "message": "ACK.",
+      "parentUuid": "7ef2155c_5c28344c",
+      "range": {
+        "startLine": 248,
+        "startChar": 12,
+        "endLine": 248,
+        "endChar": 22
+      },
+      "revId": "d44296643d823f3fd0bf596404843363790dd15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91bc3753_31af03ee",
         "filename": "chrome/installer/util/util_constants.h",
         "patchSetId": 48
