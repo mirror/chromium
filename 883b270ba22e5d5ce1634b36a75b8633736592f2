@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "870230d8_8975e066",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-31T17:39:15Z",
+      "side": 1,
+      "message": "I dunno--I don\u0027t feel like making \"The StringPiece may not be valid after SimpleURLLoader destruction\" part of the interface contract for OnDataReceived as being a very large burden on consumers.  Destroying an object that is responsible for calling you is something that seems reasonable to ask consumers to be aware of and sensitive to.  I wouldn\u0027t have any objection to adding that warning to the SimpleURLLoaderStreamHandler::OnDataReceived interface contract and skipping saving the body_data_pipe_ across this call.\n\nHaving said that, the increased fragility may be an illusion.  The fragility I noticed when I first read this was \"What happens if some other call into the BodyReader happens during the callback?\"  But I think the BodyReader is assuming at a reasonably basic architectural level that that won\u0027t happen, so getting an invalid reference if it does is probably better than just blindly executing code without realizing the reentrancy has occurred.  So I wouldn\u0027t object to leaving this here if you want to preserve the interface contract.\n\nIf there are specific vulnerabilities (at the use case level, or at the implementation level) I\u0027m missing, please call them out to me and I\u0027ll re-evaluate.",
+      "parentUuid": "b5811c7d_43c26bd8",
+      "range": {
+        "startLine": 465,
+        "startChar": 20,
+        "endLine": 465,
+        "endChar": 35
+      },
+      "revId": "883b270ba22e5d5ce1634b36a75b8633736592f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a9438c36_2f6afcb6",
         "filename": "content/public/common/simple_url_loader.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-24T23:14:03Z",
       "side": 1,
       "message": "Any consumer that wants to stream data, and not treat 4xx/5xx responses as failure, will likely want ResponseInfo before we start streaming data to it.  I think we\u0027re safe leaving this for another day, though.  The main thing is I don\u0027t want to encourage consumers to try and get data that may or may not be available yet - URLRequest has a ton of fields that are available at very unclear times, and I would like to avoid that here.\n\nI think the simplest thing to do would be to either add a way to set an OnHeadersReceived callback, or add a callback for it to SimpleURLLoaderStreamHandler.  I\u0027d tend to favor the former, just because I could see doing the latter, only to discover some consumers that don\u0027t download responses as streams really want it, and having two callbacks introduces some ordering issues that I think it\u0027s simplest not to worry about.",
+      "range": {
+        "startLine": 1184,
+        "startChar": 25,
+        "endLine": 1184,
+        "endChar": 33
+      },
+      "revId": "883b270ba22e5d5ce1634b36a75b8633736592f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77163945_c1296224",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1184,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-31T17:39:15Z",
+      "side": 1,
+      "message": "Good point.  Though to me it feels funny to design an API, worry about its generality, then leave off a piece that we\u0027re pretty sure is going to be wanted.  So I\u0027d rather address this in this CL, but I\u0027ll defer to you if you don\u0027t want to.\n\nThinking about it, I agree that the best choice is to set an OnHeadersReceived callback, mostly because I don\u0027t want to have a different way to get the headers for the streaming case and for the regular case; that seems weird.  I\u0027d vote for then removing this method and making consumers use the OnHeadersReceived callback if they want that information, just in the name of minimal interfaces.\n\nAll up to you, though.",
+      "parentUuid": "a9438c36_2f6afcb6",
       "range": {
         "startLine": 1184,
         "startChar": 25,

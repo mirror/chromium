@@ -1,0 +1,349 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b77c63e_19dafa33",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-31T17:39:15Z",
+      "side": 1,
+      "message": "nit, suggestion: I\u0027d put the two lifetime admonitions together, partially because they feel like they contradict each other, so that makes it clearer that \"No, that\u0027s what I meant to say\".  You might even want to combine them and throw some extra words at it, something like \"While the BodyReader may not be deleted during this callback, it is safe to delete |*this| (the Delegate).\"",
+      "range": {
+        "startLine": 360,
+        "startChar": 27,
+        "endLine": 360,
+        "endChar": 30
+      },
+      "revId": "8ba8dc491a3a3b51ae87536e10164862717f8fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9635ef3c_f8370130",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-31T17:39:15Z",
+      "side": 1,
+      "message": "Not part of this CL, but: It looks to me as if this error return is only used for ERR_IO_PENDING.  Am I confused?  I ask because if the consumer can arrange for a non-ERR_IO_PENDING/OK return here, we\u0027ll stop reading from the Mojo pipe, which makes a little ambigous whether or not the guarantee in the simple_url_loader_stream_handler.h (\"In the case of error, all received data will be passed to this method before calling OnComplete\").  All data received from Mojo will be passed, but that\u0027s not the same thing as all data received from the network.\n\nThis may be a pretty corner case concern :-}.",
+      "range": {
+        "startLine": 361,
+        "startChar": 17,
+        "endLine": 361,
+        "endChar": 22
+      },
+      "revId": "8ba8dc491a3a3b51ae87536e10164862717f8fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "759722e4_c2efa79c",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-31T17:39:15Z",
+      "side": 1,
+      "message": "Willing to put a note here indicating that this is *not* safe to call synchronously from a delegate OnDataRead() callback?  Possibly with an assertion to that effect?  This function is only called internally from other places in this file, but this file has a complicated enough control flow that I think it\u0027s worthwhile putting in things to aid future maintainers of it.",
+      "range": {
+        "startLine": 404,
+        "startChar": 7,
+        "endLine": 404,
+        "endChar": 13
+      },
+      "revId": "8ba8dc491a3a3b51ae87536e10164862717f8fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47c42353_6793e18c",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-31T17:39:15Z",
+      "side": 1,
+      "message": "Why have this comment here and not above?",
+      "range": {
+        "startLine": 443,
+        "startChar": 25,
+        "endLine": 443,
+        "endChar": 31
+      },
+      "revId": "8ba8dc491a3a3b51ae87536e10164862717f8fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a7fdfe3_aa9756c9",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-31T17:39:15Z",
+      "side": 1,
+      "message": "\"but also\"?  \"but only if\"?  I\u0027m not figuring out how these two clauses fit together.",
+      "range": {
+        "startLine": 502,
+        "startChar": 22,
+        "endLine": 502,
+        "endChar": 29
+      },
+      "revId": "8ba8dc491a3a3b51ae87536e10164862717f8fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e7db14c_564da17e",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-31T17:39:15Z",
+      "side": 1,
+      "message": "This comment doesn\u0027t look like it has to do with the conditional immediately following it.  Am I wrong on that?  If not, I\u0027d suggest vertical whitespace, and if possible some form of DCHECK?",
+      "range": {
+        "startLine": 982,
+        "startChar": 19,
+        "endLine": 982,
+        "endChar": 20
+      },
+      "revId": "8ba8dc491a3a3b51ae87536e10164862717f8fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d10329b9_a7ebe98a",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-31T17:39:15Z",
+      "side": 1,
+      "message": "Suggestion: My sense is you\u0027re talking around the difference between streaming (in which case the partial response body will already have been provided to the caller) and downloading to a string (in which case it will be when the error occurs).  Maybe shift \"will be\" to \"is\" to make this description more accurate in an umbrella sense?",
+      "range": {
+        "startLine": 180,
+        "startChar": 10,
+        "endLine": 180,
+        "endChar": 12
+      },
+      "revId": "8ba8dc491a3a3b51ae87536e10164862717f8fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "323ef423_999f6794",
+        "filename": "content/public/common/simple_url_loader_stream_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-31T17:39:15Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused as to why this is a separate header file instead of part of simple_url_loader.h; can you say a bit about that?  Just compilation time optimization?",
+      "range": {
+        "startLine": 1,
+        "startChar": 18,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "8ba8dc491a3a3b51ae87536e10164862717f8fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc48a38c_a05cce6c",
+        "filename": "content/public/common/simple_url_loader_stream_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-31T17:39:15Z",
+      "side": 1,
+      "message": "Suggestion: I\u0027d remove \"including during a callback\" given that that safety is called out next to each callback below (which I think is a good thing).",
+      "range": {
+        "startLine": 18,
+        "startChar": 23,
+        "endLine": 18,
+        "endChar": 29
+      },
+      "revId": "8ba8dc491a3a3b51ae87536e10164862717f8fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1cc85bf_e0af257d",
+        "filename": "content/public/common/simple_url_loader_stream_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-31T17:39:15Z",
+      "side": 1,
+      "message": "I\u0027m a bit uncomfortable with the similarity in name between this and the SimpleURLLoader BodyHandlers.  I dunno if there\u0027s some other reasonably descriptive name for what this is doing, but I wouldn\u0027t mind calling it something that doesn\u0027t create that confusion.",
+      "range": {
+        "startLine": 19,
+        "startChar": 21,
+        "endLine": 19,
+        "endChar": 49
+      },
+      "revId": "8ba8dc491a3a3b51ae87536e10164862717f8fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "760c64ca_9deb47ef",
+        "filename": "content/public/common/simple_url_loader_stream_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-31T17:39:15Z",
+      "side": 1,
+      "message": "Given that there isn\u0027t an OnResponseStart() on this interface, this is a little confusing.  Remove it or annotate it with the interface context in which that call occurs?",
+      "range": {
+        "startLine": 21,
+        "startChar": 18,
+        "endLine": 21,
+        "endChar": 33
+      },
+      "revId": "8ba8dc491a3a3b51ae87536e10164862717f8fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39dda701_53d92aeb",
+        "filename": "content/public/common/simple_url_loader_stream_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-31T17:39:15Z",
+      "side": 1,
+      "message": "Same comment as above about OnResponseStart().",
+      "range": {
+        "startLine": 38,
+        "startChar": 5,
+        "endLine": 38,
+        "endChar": 20
+      },
+      "revId": "8ba8dc491a3a3b51ae87536e10164862717f8fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4df8daf8_ad8399eb",
+        "filename": "content/public/common/simple_url_loader_stream_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-31T17:39:15Z",
+      "side": 1,
+      "message": "nit, suggestion: I think that this should be \"body, false otherwise\" rather than a period and a capital for a phrase that\u0027s not actually a sentence.",
+      "range": {
+        "startLine": 39,
+        "startChar": 35,
+        "endLine": 39,
+        "endChar": 40
+      },
+      "revId": "8ba8dc491a3a3b51ae87536e10164862717f8fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73d11a78_cf354adb",
+        "filename": "content/public/common/simple_url_loader_stream_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-31T17:39:15Z",
+      "side": 1,
+      "message": "I\u0027m confused about this; does that mean that \"success\" will be true in the case of partial responses?  \n\nAlso, I\u0027d find this comment to flow a bit better if this sentence was part of the next paragraph rather than this one.",
+      "range": {
+        "startLine": 40,
+        "startChar": 25,
+        "endLine": 40,
+        "endChar": 31
+      },
+      "revId": "8ba8dc491a3a3b51ae87536e10164862717f8fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00e78cdc_33c3da90",
+        "filename": "content/public/common/simple_url_loader_stream_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-31T17:39:15Z",
+      "side": 1,
+      "message": "nit: lowercase \"they\", I think.",
+      "range": {
+        "startLine": 49,
+        "startChar": 45,
+        "endLine": 49,
+        "endChar": 49
+      },
+      "revId": "8ba8dc491a3a3b51ae87536e10164862717f8fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
