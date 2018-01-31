@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "2c579759_8689b608",
+        "filename": "mojo/public/cpp/bindings/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-31T18:20:21Z",
+      "side": 1,
+      "message": "Both line 174 and 176 are in \"public_deps\" already.",
+      "revId": "1f497abedd37f1828afbaa773d612b3b5fd790ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "873b0102_426afb7a",
+        "filename": "mojo/public/interfaces/bindings/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-31T18:20:21Z",
+      "side": 1,
+      "message": "Does it make sense to be \"mojo_bindings_mojom\" instead?",
+      "revId": "1f497abedd37f1828afbaa773d612b3b5fd790ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20013eed_d633179e",
         "filename": "mojo/public/interfaces/bindings/BUILD.gn",
         "patchSetId": 2
@@ -13,6 +47,87 @@
       "writtenOn": "2018-01-30T21:52:21Z",
       "side": 1,
       "message": "I realize there is some weirdness in the incongruity between having one \"allow\" and one \"disallow\" feature. My thinking is, it\u0027s weird for the bindings generator to need a special flag just to operate normally. So if we wanted to be consistent, I\u0027d prefer for these to both be \"disallow\" settings, and I didn\u0027t think changing the native_structs option here made sense.\n\nAlternatively I could merge them into one dedicated setting \u0026 flag like [--]for_internal_bindings or something.\n\nWDYT?",
+      "revId": "1f497abedd37f1828afbaa773d612b3b5fd790ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e3dfe1d_0df8101d",
+        "filename": "mojo/public/interfaces/bindings/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-31T18:20:21Z",
+      "side": 1,
+      "message": "I like the idea of having more consistent flags, either \"allow\" or \"disallow\" doesn\u0027t matter to me. And I am fine with \"for_internal_bindings\" too.",
+      "parentUuid": "20013eed_d633179e",
+      "revId": "1f497abedd37f1828afbaa773d612b3b5fd790ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "191b6a6f_fdcc3fb9",
+        "filename": "mojo/public/tools/bindings/mojom.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-31T18:20:21Z",
+      "side": 1,
+      "message": "nit: redundant \"(\".",
+      "range": {
+        "startLine": 208,
+        "startChar": 23,
+        "endLine": 208,
+        "endChar": 24
+      },
+      "revId": "1f497abedd37f1828afbaa773d612b3b5fd790ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0afbfab3_e0c4005f",
+        "filename": "mojo/public/tools/bindings/mojom.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-31T18:20:21Z",
+      "side": 1,
+      "message": "Does this mean that *not all* combinations of \"allow_native_structs\" and \"allow_native_structs\" values actually work?\n\nIf that is true, then I would prefer merging the two flags.",
+      "revId": "1f497abedd37f1828afbaa773d612b3b5fd790ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0baa6017_92c29919",
+        "filename": "mojo/public/tools/bindings/mojom_bindings_generator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-31T18:20:21Z",
+      "side": 1,
+      "message": "\"/\" doesn\u0027t seems necessary?",
+      "range": {
+        "startLine": 388,
+        "startChar": 20,
+        "endLine": 388,
+        "endChar": 21
+      },
       "revId": "1f497abedd37f1828afbaa773d612b3b5fd790ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
