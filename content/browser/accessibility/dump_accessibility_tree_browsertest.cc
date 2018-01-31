@@ -1260,6 +1260,10 @@ IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest, AccessibilityImgEmptyAlt) {
   RunHtmlTest(FILE_PATH_LITERAL("img-empty-alt.html"));
 }
 
+IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest, AccessibilityImgJammed) {
+  RunHtmlTest(FILE_PATH_LITERAL("img-jammed.html"));
+}
+
 IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest,
                        AccessibilityImgLinkEmptyAlt) {
   RunHtmlTest(FILE_PATH_LITERAL("img-link-empty-alt.html"));
