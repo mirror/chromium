@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d55a3cae_00e0f775",
+        "filename": "chrome/browser/installable/pwa_ambient_badge_infobar_delegate_android.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-31T00:02:10Z",
+      "side": 1,
+      "message": "nit: please add class level docs.",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 43
+      },
+      "revId": "9debee7523e2d38bb8efbfbd240056bdf4b92bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5615224f_6a30df6d",
+        "filename": "chrome/browser/ui/android/infobars/pwa_ambient_badge_infobar.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-31T00:02:10Z",
+      "side": 1,
+      "message": "nit: please add class level docs",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 28
+      },
+      "revId": "9debee7523e2d38bb8efbfbd240056bdf4b92bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "109e6bcf_57dbf913",
+        "filename": "components/infobars/core/infobar_delegate.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-31T00:02:10Z",
+      "side": 1,
+      "message": "why not _ANDROID?",
+      "range": {
+        "startLine": 151,
+        "startChar": 4,
+        "endLine": 151,
+        "endChar": 38
+      },
+      "revId": "9debee7523e2d38bb8efbfbd240056bdf4b92bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
