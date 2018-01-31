@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b772da17_58276941",
+        "filename": "third_party/WebKit/Source/core/page/PageWidgetDelegate.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-31T16:28:14Z",
+      "side": 1,
+      "message": "Why is this a static? Seems like it should be a member variable. (will cause issues with multiple renderers in the same process).",
+      "revId": "e68d39de1a3d7febe2583b9809cfba16d82d49f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
