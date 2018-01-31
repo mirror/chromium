@@ -108,6 +108,8 @@ class MockFetchContext : public FetchContext {
     return frame_scheduler_->GetTaskRunner(TaskType::kInternalTest);
   }
 
+  void RunTasksUntilIdle() { runner_->RunUntilIdle(); }
+
  private:
   class MockFrameScheduler final : public scheduler::FakeWebFrameScheduler {
    public:
@@ -127,10 +129,12 @@ class MockFetchContext : public FetchContext {
         security_origin_(SecurityOrigin::CreateUnique()),
         frame_scheduler_(new MockFrameScheduler(runner_)),
         complete_(false),
-        transfer_size_(-1) {}
+        transfer_size_(-1) {
+    runner_->SetTime(1);
+  }
 
   enum LoadPolicy load_policy_;
-  scoped_refptr<WebTaskRunner> runner_;
+  scoped_refptr<scheduler::FakeWebTaskRunner> runner_;
   scoped_refptr<const SecurityOrigin> security_origin_;
   std::unique_ptr<WebFrameScheduler> frame_scheduler_;
   std::unique_ptr<WebURLLoaderFactory> url_loader_factory_;

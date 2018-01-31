@@ -191,6 +191,7 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
   // FetchContext overrides:
   WebFrameScheduler* GetFrameScheduler() const override;
   scoped_refptr<WebTaskRunner> GetLoadingTaskRunner() override;
+  scoped_refptr<WebTaskRunner> GetLoadingControlTaskRunner() override;
 
   // BaseFetchContext overrides:
   KURL GetSiteForCookies() const override;

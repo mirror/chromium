@@ -257,6 +257,9 @@ class PLATFORM_EXPORT FetchContext
   virtual scoped_refptr<WebTaskRunner> GetLoadingTaskRunner() {
     return Platform::Current()->CurrentThread()->GetWebTaskRunner();
   }
+  virtual scoped_refptr<WebTaskRunner> GetLoadingControlTaskRunner() {
+    return GetLoadingTaskRunner();
+  }
 
   // Called when the underlying context is detached. Note that some
   // FetchContexts continue working after detached (e.g., for fetch() operations
