@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f5a1a233_2701a429",
+        "filename": "mojo/public/cpp/bindings/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-31T20:48:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c579759_8689b608",
+      "revId": "1f497abedd37f1828afbaa773d612b3b5fd790ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "873b0102_426afb7a",
         "filename": "mojo/public/interfaces/bindings/BUILD.gn",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-31T18:20:21Z",
       "side": 1,
       "message": "Does it make sense to be \"mojo_bindings_mojom\" instead?",
+      "revId": "1f497abedd37f1828afbaa773d612b3b5fd790ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3334c098_7b7121cc",
+        "filename": "mojo/public/interfaces/bindings/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-31T20:48:11Z",
+      "side": 1,
+      "message": "That seemed more natural to me too, but I think this is more in line with other conventional names based loosely on directory structure. e.g. we have mojo_cpp_bindings too.\n\nThis may be less confusing once mojo/public/interfaces is renamed to mojo/public/mojom/bindings.",
+      "parentUuid": "873b0102_426afb7a",
       "revId": "1f497abedd37f1828afbaa773d612b3b5fd790ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "94864dac_0abfea1d",
+        "filename": "mojo/public/interfaces/bindings/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-31T20:48:11Z",
+      "side": 1,
+      "message": "OK SGTM. Renamed allow_native_structs to disallow_native_types (it affects enums too).",
+      "parentUuid": "2e3dfe1d_0df8101d",
+      "revId": "1f497abedd37f1828afbaa773d612b3b5fd790ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "191b6a6f_fdcc3fb9",
         "filename": "mojo/public/tools/bindings/mojom.gni",
         "patchSetId": 2
@@ -94,6 +148,30 @@
     },
     {
       "key": {
+        "uuid": "e0b4e43c_d7300525",
+        "filename": "mojo/public/tools/bindings/mojom.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-31T20:48:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "191b6a6f_fdcc3fb9",
+      "range": {
+        "startLine": 208,
+        "startChar": 23,
+        "endLine": 208,
+        "endChar": 24
+      },
+      "revId": "1f497abedd37f1828afbaa773d612b3b5fd790ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0afbfab3_e0c4005f",
         "filename": "mojo/public/tools/bindings/mojom.gni",
         "patchSetId": 2
@@ -108,6 +186,24 @@
       "revId": "1f497abedd37f1828afbaa773d612b3b5fd790ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaf2c012_a33bfbb9",
+        "filename": "mojo/public/tools/bindings/mojom.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-31T20:48:11Z",
+      "side": 1,
+      "message": "All combinations will work. This just means that if either feature is allowed, your target will depend on public/cpp/bindings instead of only bindings_base.\n\nThere are some conceivable, non-dependency-related reasons why one might want to disable either one.",
+      "parentUuid": "0afbfab3_e0c4005f",
+      "revId": "1f497abedd37f1828afbaa773d612b3b5fd790ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -131,6 +227,30 @@
       "revId": "1f497abedd37f1828afbaa773d612b3b5fd790ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9d78876_b3dd8f62",
+        "filename": "mojo/public/tools/bindings/mojom_bindings_generator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-31T20:48:11Z",
+      "side": 1,
+      "message": "Done (typo :))\n\nNOTE: I also removed comments regarding internal bindings usage, because I don\u0027t think they are actually useful for --help to emit.",
+      "parentUuid": "0baa6017_92c29919",
+      "range": {
+        "startLine": 388,
+        "startChar": 20,
+        "endLine": 388,
+        "endChar": 21
+      },
+      "revId": "1f497abedd37f1828afbaa773d612b3b5fd790ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
