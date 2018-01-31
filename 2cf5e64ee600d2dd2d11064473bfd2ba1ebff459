@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa019963_f4f873fb",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-31T18:37:29Z",
+      "side": 1,
+      "message": "nit: are \"labs\" the same thing as \"flags\"?",
+      "range": {
+        "startLine": 422,
+        "startChar": 20,
+        "endLine": 422,
+        "endChar": 24
+      },
+      "revId": "2cf5e64ee600d2dd2d11064473bfd2ba1ebff459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e738d912_8bb2053a",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 1376,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-31T18:37:29Z",
+      "side": 1,
+      "message": "I\u0027m following the startup order hard to follow.  Let me share a concern that may or may not be appropriate.\n\nI don\u0027t think you can create this before field trials are created.  It has settings that depend on field trial parameters.  ref:\nhttps://cs.chromium.org/chromium/src/chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.cc?q\u003dDesktopSessionDurationTrac\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d169",
+      "range": {
+        "startLine": 1376,
+        "startChar": 11,
+        "endLine": 1376,
+        "endChar": 40
+      },
+      "revId": "2cf5e64ee600d2dd2d11064473bfd2ba1ebff459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
