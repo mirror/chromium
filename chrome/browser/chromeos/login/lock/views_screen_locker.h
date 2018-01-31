@@ -5,7 +5,10 @@
 #ifndef CHROME_BROWSER_CHROMEOS_LOGIN_LOCK_VIEWS_SCREEN_LOCKER_H_
 #define CHROME_BROWSER_CHROMEOS_LOGIN_LOCK_VIEWS_SCREEN_LOCKER_H_
 
+#include "base/bind.h"
 #include "base/memory/weak_ptr.h"
+#include "base/threading/thread_task_runner_handle.h"
+#include "base/time/time.h"
 #include "chrome/browser/chromeos/lock_screen_apps/focus_cycler_delegate.h"
 #include "chrome/browser/chromeos/login/lock/screen_locker.h"
 #include "chrome/browser/chromeos/login/version_info_updater.h"
@@ -83,6 +86,9 @@ class ViewsScreenLocker : public LoginScreenClient::Delegate,
   void UpdatePinKeyboardState(const AccountId& account_id);
   void OnAllowedInputMethodsChanged();
   void OnDevChannelInfoUpdated();
+
+  // Notifies the session manager that the lock animations are complete.
+  void NotifyChromeLockAnimationsComplete();
 
   std::unique_ptr<UserSelectionScreenProxy> user_selection_screen_proxy_;
   std::unique_ptr<UserSelectionScreen> user_selection_screen_;
