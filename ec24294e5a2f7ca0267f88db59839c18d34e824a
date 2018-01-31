@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "88a3c1a9_cc2933c3",
+        "filename": "base/message_loop/message_pump_libevent.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2018-01-31T18:35:55Z",
+      "side": 1,
+      "message": "I am not trying to make sense of the interface.  There are too many objects involved.  I figure it makes sense in a multi-platform context and I don\u0027t need to know why.\n\nSo the comment is not only incomplete but also wrong?  Agh.\n\nRegarding your proposed change, I think the current comment is more useful.  \"Aborting events\" is stronger than \"stopping watching them\", and the former implies the latter, but the opposite is less clear.\n\nI also object to \"events\", it\u0027s more like \"conditions\" since if \"persistent\" is true, you\u0027re not attaching specific events to the controller.  But then again I was only trying to fix the most blatant problems.\n\nSigh.",
+      "parentUuid": "3b887b82_146d2319",
+      "revId": "ec24294e5a2f7ca0267f88db59839c18d34e824a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e453fc25_4a3744ff",
         "filename": "base/message_loop/message_pump_libevent.h",
         "patchSetId": 2
