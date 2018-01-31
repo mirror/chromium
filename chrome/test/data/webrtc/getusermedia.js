@@ -154,7 +154,7 @@ function getUserMediaOkCallback_(stream) {
   gLocalStream = stream;
   gRequestWebcamAndMicrophoneResult = 'ok-got-stream';
 
-  attachMediaStream($('local-view'), stream);
+  $('local-view').srcObject = stream;
 
   returnToTest('request-callback-granted');
 }
