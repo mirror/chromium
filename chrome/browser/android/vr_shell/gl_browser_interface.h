@@ -26,15 +26,15 @@ class GlBrowserInterface {
  public:
   virtual ~GlBrowserInterface() = default;
 
-  virtual void ContentSurfaceCreated(jobject surface,
-                                     gl::SurfaceTexture* texture) = 0;
-  virtual void ContentOverlaySurfaceCreated(jobject surface,
-                                            gl::SurfaceTexture* texture) = 0;
+  virtual void SurfacesCreated(jobject content_surface,
+                               gl::SurfaceTexture* content_texture,
+                               jobject overlay_surface,
+                               gl::SurfaceTexture* overlay_texture,
+                               jobject hosted_ui_surface,
+                               gl::SurfaceTexture* hosted_ui_texture) = 0;
   virtual void GvrDelegateReady(
       gvr::ViewerType viewer_type,
       device::mojom::VRDisplayFrameTransportOptionsPtr) = 0;
-  virtual void DialogSurfaceCreated(jobject surface,
-                                    gl::SurfaceTexture* texture) = 0;
   virtual void UpdateGamepadData(device::GvrGamepadData) = 0;
   virtual void ForceExitVr() = 0;
   virtual void OnContentPaused(bool enabled) = 0;

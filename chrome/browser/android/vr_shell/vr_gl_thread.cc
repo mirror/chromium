@@ -87,29 +87,19 @@ void VrGLThread::CleanUp() {
   vr_shell_gl_.reset();
 }
 
-void VrGLThread::ContentSurfaceCreated(jobject surface,
-                                       gl::SurfaceTexture* texture) {
-  DCHECK(OnGlThread());
-  main_thread_task_runner_->PostTask(
-      FROM_HERE, base::BindOnce(&VrShell::ContentSurfaceCreated, weak_vr_shell_,
-                                surface, base::Unretained(texture)));
-}
-
-void VrGLThread::ContentOverlaySurfaceCreated(jobject surface,
-                                              gl::SurfaceTexture* texture) {
+void VrGLThread::SurfacesCreated(jobject content_surface,
+                                 gl::SurfaceTexture* content_texture,
+                                 jobject overlay_surface,
+                                 gl::SurfaceTexture* overlay_texture,
+                                 jobject hosted_ui_surface,
+                                 gl::SurfaceTexture* hosted_ui_texture) {
   DCHECK(OnGlThread());
   main_thread_task_runner_->PostTask(
       FROM_HERE,
-      base::BindOnce(&VrShell::ContentOverlaySurfaceCreated, weak_vr_shell_,
-                     surface, base::Unretained(texture)));
-}
-
-void VrGLThread::DialogSurfaceCreated(jobject surface,
-                                      gl::SurfaceTexture* texture) {
-  DCHECK(OnGlThread());
-  main_thread_task_runner_->PostTask(
-      FROM_HERE, base::Bind(&VrShell::DialogSurfaceCreated, weak_vr_shell_,
-                            surface, base::Unretained(texture)));
+      base::BindOnce(&VrShell::SurfacesCreated, weak_vr_shell_, content_surface,
+                     base::Unretained(content_texture), overlay_surface,
+                     base::Unretained(overlay_texture), hosted_ui_surface,
+                     base::Unretained(hosted_ui_texture)));
 }
 
 void VrGLThread::GvrDelegateReady(

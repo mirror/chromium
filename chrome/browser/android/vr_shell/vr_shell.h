@@ -152,15 +152,17 @@ class VrShell : device::GvrGamepadDataProvider,
 
   void ContentWebContentsDestroyed();
 
-  void ContentSurfaceCreated(jobject surface, gl::SurfaceTexture* texture);
-  void ContentOverlaySurfaceCreated(jobject surface,
-                                    gl::SurfaceTexture* texture);
+  void SurfacesCreated(jobject content_surface,
+                       gl::SurfaceTexture* content_texture,
+                       jobject overlay_surface,
+                       gl::SurfaceTexture* overlay_texture,
+                       jobject hosted_ui_surface,
+                       gl::SurfaceTexture* hosted_ui_texture);
   void GvrDelegateReady(gvr::ViewerType viewer_type,
                         device::mojom::VRDisplayFrameTransportOptionsPtr);
 
   device::mojom::VRDisplayFrameTransportOptionsPtr
   GetVRDisplayFrameTransportOptions();
-  void DialogSurfaceCreated(jobject surface, gl::SurfaceTexture* texture);
 
   void BufferBoundsChanged(JNIEnv* env,
                            const base::android::JavaParamRef<jobject>& object,

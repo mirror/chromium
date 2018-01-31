@@ -538,28 +538,22 @@ void VrShell::RequestToExitVr(JNIEnv* env,
   ui_->SetExitVrPromptEnabled(true, static_cast<vr::UiUnsupportedMode>(reason));
 }
 
-void VrShell::ContentSurfaceCreated(jobject surface,
-                                    gl::SurfaceTexture* texture) {
-  content_surface_texture_ = texture;
+void VrShell::SurfacesCreated(jobject content_surface,
+                              gl::SurfaceTexture* content_texture,
+                              jobject overlay_surface,
+                              gl::SurfaceTexture* overlay_texture,
+                              jobject hosted_ui_surface,
+                              gl::SurfaceTexture* hosted_ui_texture) {
+  content_surface_texture_ = content_texture;
+  overlay_surface_texture_ = overlay_texture;
+  ui_surface_texture_ = hosted_ui_texture;
   JNIEnv* env = base::android::AttachCurrentThread();
-  base::android::ScopedJavaGlobalRef<jobject> ref(env, surface);
-  Java_VrShellImpl_contentSurfaceCreated(env, j_vr_shell_, ref);
-}
-
-void VrShell::ContentOverlaySurfaceCreated(jobject surface,
-                                           gl::SurfaceTexture* texture) {
-  overlay_surface_texture_ = texture;
-  JNIEnv* env = base::android::AttachCurrentThread();
-  base::android::ScopedJavaGlobalRef<jobject> ref(env, surface);
-  Java_VrShellImpl_contentOverlaySurfaceCreated(env, j_vr_shell_, ref);
-}
-
-void VrShell::DialogSurfaceCreated(jobject surface,
-                                   gl::SurfaceTexture* texture) {
-  ui_surface_texture_ = texture;
-  JNIEnv* env = base::android::AttachCurrentThread();
-  base::android::ScopedJavaGlobalRef<jobject> ref(env, surface);
-  Java_VrShellImpl_dialogSurfaceCreated(env, j_vr_shell_, ref);
+  base::android::ScopedJavaGlobalRef<jobject> content_ref(env, content_surface);
+  base::android::ScopedJavaGlobalRef<jobject> overlay_ref(env, overlay_surface);
+  base::android::ScopedJavaGlobalRef<jobject> hosted_ui_ref(env,
+                                                            hosted_ui_surface);
+  Java_VrShellImpl_surfacesCreated(env, j_vr_shell_, content_ref, overlay_ref,
+                                   hosted_ui_ref);
 }
 
 void VrShell::GvrDelegateReady(

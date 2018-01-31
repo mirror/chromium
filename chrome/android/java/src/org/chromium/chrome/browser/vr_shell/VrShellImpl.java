@@ -506,26 +506,20 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
     }
 
     @CalledByNative
-    public void contentSurfaceCreated(Surface surface) {
-        mContentSurface = surface;
+    public void surfacesCreated(Surface contentSurface, Surface overlaySurface, Surface uiSurface) {
+        mContentSurface = contentSurface;
         if (mLastContentWidth == 0) return;
         int width = (int) Math.ceil(mLastContentWidth * mLastContentDpr);
         int height = (int) Math.ceil(mLastContentHeight * mLastContentDpr);
         mVrCompositorSurfaceManager.setSurface(mContentSurface, PixelFormat.OPAQUE, width, height);
-    }
 
-    @CalledByNative
-    public void contentOverlaySurfaceCreated(Surface surface) {
-        if (mVrBrowsingEnabled) mNonVrViews.setSurface(surface);
-    }
+        if (mVrBrowsingEnabled) mNonVrViews.setSurface(overlaySurface);
 
-    @CalledByNative
-    public void dialogSurfaceCreated(Surface surface) {
         if (mVrUiViewContainer == null) {
             mVrUiViewContainer = new VrViewContainer(mActivity);
             mUiView.addView(mVrUiViewContainer);
         }
-        mVrUiViewContainer.setSurface(surface);
+        mVrUiViewContainer.setSurface(uiSurface);
     }
 
     @Override
