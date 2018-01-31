@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f112c074_a1294f0e",
+        "filename": "extensions/common/extension.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-01-31T21:26:08Z",
+      "side": 1,
+      "message": "Why the change in case sensitivity? Is the DCHECK even doing anything meaningful or can it just be removed?",
+      "range": {
+        "startLine": 180,
+        "startChar": 32,
+        "endLine": 180,
+        "endChar": 43
+      },
+      "revId": "56866ab7c40082efd9e8524b4dbccf98beb8dd44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
