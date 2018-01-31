@@ -1377,7 +1377,35 @@ void ChromeBrowserMainParts::PostBrowserStart() {
     // Initialize the TabActivityWatcher to begin logging tab activity events.
     resource_coordinator::TabActivityWatcher::GetInstance();
   }
-#endif
+
+  BrowserThread::PostAfterStartupTask(
+      FROM_HERE, BrowserThread::GetTaskRunnerForThread(BrowserThread::UI),
+      base::BindOnce(
+          [](PrefService* prefs, bool not_test) {
+            TranslateService::Initialize();
+            if (not_test) {
+              translate::TranslateDownloadManager::RequestLanguageList(prefs);
+              // Some tests don't set parameters.ui_task, so they started
+              // translate language fetch that was never completed so we need to
+              // cleanup here otherwise it will be done by the destructor in a
+              // wrong thread.
+              BrowserThread::PostDelayedTask(
+                  BrowserThread::UI, FROM_HERE,
+                  base::BindOnce(&TranslateService::Shutdown, not_test),
+                  base::TimeDelta::FromSeconds(10));
+            }
+          },
+          profile_->GetPrefs(), parameters().ui_task == NULL));
+#else
+  BrowserThread::PostAfterStartupTask(
+      FROM_HERE, BrowserThread::GetTaskRunnerForThread(BrowserThread::UI),
+      base::BindOnce(
+          [](PrefService* prefs) {
+            TranslateService::Initialize();
+            translate::TranslateDownloadManager::RequestLanguageList(prefs);
+          },
+          profile_->GetPrefs()));
+#endif  // !defined(OS_ANDROID)
 
   // At this point, StartupBrowserCreator::Start has run creating initial
   // browser windows and tabs, but no progress has been made in loading
@@ -1614,7 +1642,6 @@ int ChromeBrowserMainParts::PreMainMessageLoopRunImpl() {
 #endif  // BUILDFLAG(ENABLE_BACKGROUND_MODE)
   // Post-profile init ---------------------------------------------------------
 
-  TranslateService::Initialize();
   if (base::FeatureList::IsEnabled(features::kGeoLanguage)) {
     language::GeoLanguageProvider::GetInstance()->StartUp(
         content::ServiceManagerConnection::GetForProcess()
@@ -1815,8 +1842,6 @@ int ChromeBrowserMainParts::PreMainMessageLoopRunImpl() {
     // will be initialized when the app enters foreground mode.
     variations_service->set_policy_pref_service(profile_->GetPrefs());
   }
-  translate::TranslateDownloadManager::RequestLanguageList(
-      profile_->GetPrefs());
 
 #else
   // Most general initialization is behind us, but opening a
@@ -1885,9 +1910,6 @@ int ChromeBrowserMainParts::PreMainMessageLoopRunImpl() {
           browser_process_->variations_service();
       if (variations_service)
         variations_service->PerformPreMainMessageLoopStartup();
-
-      translate::TranslateDownloadManager::RequestLanguageList(
-          profile_->GetPrefs());
     }
   }
   run_message_loop_ = started;
@@ -1983,11 +2005,6 @@ void ChromeBrowserMainParts::PostMainMessageLoopRun() {
 
   for (size_t i = 0; i < chrome_extra_parts_.size(); ++i)
     chrome_extra_parts_[i]->PostMainMessageLoopRun();
-
-  // Some tests don't set parameters.ui_task, so they started translate
-  // language fetch that was never completed so we need to cleanup here
-  // otherwise it will be done by the destructor in a wrong thread.
-  TranslateService::Shutdown(parameters().ui_task == NULL);
 
   if (notify_result_ == ProcessSingleton::PROCESS_NONE)
     process_singleton_->Cleanup();
