@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27e05e29_2760eb13",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-31T16:41:30Z",
+      "side": 1,
+      "message": "InspectHistograms is just moved (without any changes) from 1) a static method of CrossSiteDocumentBlockingBaseTest to 2) a standalone function in an anonymous namespace.  This helps reuse InspectHistograms from the new CrossSiteDocumentBlockingServiceWorkerTest (which inherits directly from ContentBrowserTest rather than from CrossSiteDocumentBlockingBaseTest).",
+      "range": {
+        "startLine": 31,
+        "startChar": 5,
+        "endLine": 31,
+        "endChar": 22
+      },
+      "revId": "01b958e3fb94702b5b421f25690db94449bf3f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

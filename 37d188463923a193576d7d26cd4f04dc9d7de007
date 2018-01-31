@@ -95,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "a8913531_291a3ad1",
+        "filename": "chrome/browser/chrome_service_worker_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-31T16:41:30Z",
+      "side": 1,
+      "message": "Thanks - that helped! :-)\n\nI also realized that /cross_site_document_blocking/service_worker.js cannot apply to /title1.html, because the scopes don\u0027t match.  Doh...   Things started to work (or at least go through the service worker) after the change you suggested above + after switching to testing from /cross_site_document_blocking/request.html (instead of /title1.html),",
+      "parentUuid": "911e164f_ab573d8e",
+      "range": {
+        "startLine": 757,
+        "startChar": 34,
+        "endLine": 757,
+        "endChar": 68
+      },
+      "revId": "37d188463923a193576d7d26cd4f04dc9d7de007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45a09548_888f932e",
         "filename": "chrome/browser/chrome_service_worker_browsertest.cc",
         "patchSetId": 6
@@ -286,6 +310,30 @@
       "side": 1,
       "message": "Also if you do the .ready + new page as suggested, you can remove install/activate entirely and just have a fetch event.",
       "parentUuid": "971803cf_1fb035f0",
+      "range": {
+        "startLine": 10,
+        "startChar": 2,
+        "endLine": 10,
+        "endChar": 41
+      },
+      "revId": "37d188463923a193576d7d26cd4f04dc9d7de007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "42061849_cc00b0e1",
+        "filename": "content/test/data/cross_site_document_blocking/service_worker.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-31T16:41:30Z",
+      "side": 1,
+      "message": "\u003e Also if you do the .ready + new page as suggested, you can remove install/activate entirely and just have a fetch event.\n\nI\u0027ve removed the \"install\" event handler without any impact to the tests, but removing the \"activate\" handler would results in test failures (I think the fetches go to the network in this case).  I am not sure exactly why this is, but it seems safer / better to leave the \"activate\" event handler unchanged.",
+      "parentUuid": "14908178_43d20fb9",
       "range": {
         "startLine": 10,
         "startChar": 2,
