@@ -43,11 +43,12 @@ bool ReturnsValidPath(int dir_type) {
     check_path_exists = false;
 #endif
 #if defined(OS_MACOSX)
-  if (dir_type != DIR_EXE && dir_type != DIR_MODULE &&
-      dir_type != FILE_EXE && dir_type != FILE_MODULE) {
+  if (dir_type != DIR_EXE && dir_type != DIR_MODULE && dir_type != FILE_EXE &&
+      dir_type != FILE_MODULE && dir_type != DIR_ASSETS) {
     if (path.ReferencesParent())
       return false;
   }
+  LOG(ERROR) << "Path " << dir_type << " " << path;
 #else
   if (path.ReferencesParent())
     return false;

@@ -46,6 +46,10 @@ bool PathProviderAndroid(int key, FilePath* result) {
       return false;
     case base::DIR_CACHE:
       return base::android::GetCacheDirectory(result);
+    case base::DIR_ASSETS:
+      // Android packages assets are packaged APKs.
+      // base::android::OpenApkAsset() must be used to access them.
+      return false;
     case base::DIR_ANDROID_APP_DATA:
       return base::android::GetDataDirectory(result);
     case base::DIR_ANDROID_EXTERNAL_STORAGE:
