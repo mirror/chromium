@@ -393,6 +393,30 @@
     },
     {
       "key": {
+        "uuid": "60082a05_e5b5f335",
+        "filename": "base/threading/thread_local_storage.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1146127
+      },
+      "writtenOn": "2018-01-31T19:17:06Z",
+      "side": 1,
+      "message": "Regarding LazyInstance\u003cSlot\u003e:\nWe would need to pass TLSDestructorFunc to it somehow, so we would probably need  something like template\u003cTLSDestructorFunc destr\u003e struct StaticSlotTraits; and we\u0027ll have a weird looking StaticSlot\u003cOnThreadTermination\u003e my_slot; where OnThreadTermination is a TLSDestructorFunc. Does this look ok to you? Also, calls to member functions would be weird: static_slot.Get().Get() or static_slot.Pointer()-\u003eGet().\n\nWe could probably have StaticSlot as a separate class that incapsulates a member variable of the LazyInstance\u003cSlot, StaticSlotTraits\u003e type with a constexpr constructor(TLSDestructorFunc*), but that looks like another step on the path that violates the POD-only styleguide requirement",
+      "parentUuid": "b3e74533_53504319",
+      "range": {
+        "startLine": 133,
+        "startChar": 39,
+        "endLine": 133,
+        "endChar": 40
+      },
+      "revId": "b9b05f36f5a680e0595e22928c93644fbf04d16b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a26bd57_32856554",
         "filename": "base/threading/thread_local_storage.h",
         "patchSetId": 1
