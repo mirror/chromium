@@ -16,6 +16,41 @@
       "revId": "7d1265eba2f4169076360a2703598df810d97f16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "188bb04e_0d6f75cc",
+        "filename": "chrome/browser/extensions/content_verifier_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-31T16:12:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "10609ea7_7f627108",
+      "revId": "7d1265eba2f4169076360a2703598df810d97f16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "436e5c7d_416939f7",
+        "filename": "chrome/browser/extensions/content_verifier_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-31T16:12:08Z",
+      "side": 1,
+      "message": "Not for this patch, but as a note, it looks like we could get rid of this and just use TestExtensionRegistryObserver?",
+      "revId": "7d1265eba2f4169076360a2703598df810d97f16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
