@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "547df6e7_e0034408",
+        "filename": "chrome/common/crash_keys.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2018-01-31T16:33:24Z",
+      "side": 0,
+      "message": "We use this flag when we want to test the FrE on a dev device or by running Chrome OS in VM, like e.g. in https://buganizer.corp.google.com/issues/71781097 repro steps.\n\nOtherwise FrE is disabled for devices in dev mode. I think we should keep this flag.",
+      "parentUuid": "8a11c595_81b7027d",
+      "revId": "8390438fe23581433838a2ccd5f088337fb62a2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "987cfd05_14784473",
         "filename": "chrome/common/crash_keys.cc",
         "patchSetId": 1
