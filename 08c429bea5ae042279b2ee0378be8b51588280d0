@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72dc0b81_2d477977",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-01-31T20:39:53Z",
+      "side": 1,
+      "message": "What\u0027s this doing?\nNit: add clarifying comment?",
+      "range": {
+        "startLine": 278,
+        "startChar": 22,
+        "endLine": 278,
+        "endChar": 36
+      },
+      "revId": "08c429bea5ae042279b2ee0378be8b51588280d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
