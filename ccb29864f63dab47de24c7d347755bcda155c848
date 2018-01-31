@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20106fec_eec09efa",
+        "filename": "chrome/renderer/resources/plugins/pdf_plugin.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2018-01-31T01:42:32Z",
+      "side": 1,
+      "message": "Did you check setting the font size to 100% works consistently across all the platforms?\n\nFor the web UI we generally insert the appropriate font and size setting as the template is built as different languages have different type settings.\n\nSee: webui::AppendWebUiCssTextDefaults\n\nExample of usage:\nhttps://cs.chromium.org/chromium/src/components/security_interstitials/content/security_interstitial_page.cc?type\u003dcs\u0026q\u003dAppendWebUiCssTextDefaults\u0026sq\u003dpackage:chromium\u0026l\u003d77",
+      "revId": "ccb29864f63dab47de24c7d347755bcda155c848",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bca51f1_3b242fcb",
+        "filename": "chrome/renderer/resources/plugins/pdf_plugin.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2018-01-31T01:42:32Z",
+      "side": 1,
+      "message": "Seems like you replicate most of this from:\ncomponents/security_interstitials/core/browser/resources/interstitial_webview_quiet.css\n\nCould you not include that file and just include any overrides here? There would be a maintenance cost if the interstitial spec changed and it need to changed in multiple places.\n\nMaybe that file needs to be renamed and placed into components/security_interstitials/core/common/resources/\n\nAs we\u0027re making the interstitials consistent, we should be changing them in the single file for consistency.",
+      "revId": "ccb29864f63dab47de24c7d347755bcda155c848",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0015c274_6b89aecc",
+        "filename": "components/security_interstitials/core/common/resources/interstitial_common.css",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2018-01-31T01:42:32Z",
+      "side": 1,
+      "message": "Remove extra line. Reinstate line break after }",
+      "revId": "ccb29864f63dab47de24c7d347755bcda155c848",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0a7971c_58bc3f29",
+        "filename": "components/security_interstitials/core/common/resources/interstitial_common.css",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2018-01-31T01:42:32Z",
+      "side": 1,
+      "message": "Could you alphabetise your PDF selector.",
+      "revId": "ccb29864f63dab47de24c7d347755bcda155c848",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
