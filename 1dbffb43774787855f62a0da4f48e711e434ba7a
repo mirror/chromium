@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5231098_0a16af81",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 4010,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2018-01-31T06:08:22Z",
+      "side": 1,
+      "message": "I patched this in, and while it looks okay, it\u0027s not fully correct yet.  Because we\u0027re scaling the progress value here, but not in the broadcasted toolbarHeight value, the toolbar height is changing at a different rate than the content is scrolling.  I think that adjusting in BVC\u0027s implementation of |-toolbarHeight| might also not be the right choice here because that\u0027s used by other places as well.  We should define an interface for fullscreen to specify the maximum and minimum heights of each header in BVC\u0027s |headerViews| array.  I will lgtm now, but will probably file bugs describing what needs to be fixed once I add the interface to FullscreenController.",
+      "revId": "1dbffb43774787855f62a0da4f48e711e434ba7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "d7a0391d_c950ab17",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2018-01-31T06:08:22Z",
+      "side": 1,
+      "message": "Hmm interesting.  The toolbar is translated by updating its constraint relative to the BVC\u0027s topAnchor, so changing that via updating |primaryToolbarOffsetConstraint|\u0027s constant *should* also update the safeAreaLayoutGuide/topLayoutGuide.  This approach looks like it\u0027s implementing the equivalent logic for now; maybe this will resolve properly once BVC\u0027s |headerViews| layout is implemented entirely with autolayout instead of the current mixture of constraints + frames.",
+      "parentUuid": "625b61d8_5342aed1",
+      "range": {
+        "startLine": 205,
+        "startChar": 0,
+        "endLine": 205,
+        "endChar": 64
+      },
+      "revId": "b724747446e45a215781aa3262afc1d3d37267c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d68f3c99_67526257",
         "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view_controller.mm",
         "patchSetId": 2
