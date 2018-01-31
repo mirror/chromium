@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10e77146_d98667b4",
+        "filename": "ios/chrome/browser/metrics/ukm_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-01-31T20:39:21Z",
+      "side": 1,
+      "message": "nit, .",
+      "revId": "4f17af97457ba0409cab959b615bc9c3d2fe15f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
