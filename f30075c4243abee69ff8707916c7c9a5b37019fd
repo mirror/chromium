@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "122de0c6_044a0d74",
+        "filename": "content/browser/network_service_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T17:27:54Z",
+      "side": 1,
+      "message": "I don\u0027t think this is the context - if an isolate app gets the challenge, we want to use the isolate app\u0027s request context.",
+      "range": {
+        "startLine": 184,
+        "startChar": 8,
+        "endLine": 184,
+        "endChar": 24
+      },
+      "revId": "f30075c4243abee69ff8707916c7c9a5b37019fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
