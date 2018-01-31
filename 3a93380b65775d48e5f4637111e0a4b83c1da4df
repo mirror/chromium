@@ -34,6 +34,24 @@
       "revId": "3a93380b65775d48e5f4637111e0a4b83c1da4df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "405519fa_55e9172d",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2018-01-31T02:12:09Z",
+      "side": 1,
+      "message": "I think this is why virtual/incremental-shadow-dom/external/wpt/css/css-scoping/slotted-invalidation.html is failing.\nSo I guess you need to include the change in this CL.",
+      "parentUuid": "3f941fbd_3a133bc6",
+      "revId": "3a93380b65775d48e5f4637111e0a4b83c1da4df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
