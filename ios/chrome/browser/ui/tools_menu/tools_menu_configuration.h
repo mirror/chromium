@@ -62,7 +62,8 @@ class Tracker;
 // Records events for the use of in-product help. Does not take ownership of
 // tracker. Tracker must not be destroyed during lifetime of
 // ToolsMenuConfiguration. Defaults to |nullptr|.
-@property(nonatomic, assign) feature_engagement::Tracker* engagementTracker;
+@property(nonatomic, assign)
+    feature_engagement::Tracker* NS_RETURNS_INNER_POINTER engagementTracker;
 
 // Initialize a ToolsMenuContext instance with default values. |displayView| is
 // the weakly-held parent view within which the popup tools menu using this

@@ -137,7 +137,7 @@ initWithRootViewController:(UIViewController*)rootViewController
 - (UIBarButtonItem*)doneButton;
 
 // Returns the current main browser state.
-- (ios::ChromeBrowserState*)mainBrowserState;
+- (ios::ChromeBrowserState*)mainBrowserState NS_RETURNS_INNER_POINTER;
 
 // Closes this |SettingsNavigationController| by asking its delegate.
 - (void)closeSettings;

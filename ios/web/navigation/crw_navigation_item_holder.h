@@ -30,7 +30,7 @@ class NavigationItemImpl;
 - (instancetype)initWithBackForwardListItem:(WKBackForwardListItem*)item;
 
 // Returns the NavigationItemImpl stored in this instance.
-- (web::NavigationItemImpl*)navigationItem;
+- (web::NavigationItemImpl*)navigationItem NS_RETURNS_INNER_POINTER;
 
 // Stores the NavigationItemImpl object in this instance.
 - (void)setNavigationItem:

@@ -83,7 +83,7 @@ bool TabSwitcherSessionTypeIsLocalSession(TabSwitcherSessionType sessionType);
 - (void)setMainTabModel:(TabModel*)mainTabModel
             otrTabModel:(TabModel*)otrTabModel;
 // Returns the browserState.
-- (ios::ChromeBrowserState*)browserState;
+- (ios::ChromeBrowserState*)browserState NS_RETURNS_INNER_POINTER;
 // Returns the latest data for the local session of type |type|.
 - (std::unique_ptr<TabModelSnapshot>)tabModelSnapshotForLocalSession:
     (TabSwitcherSessionType)type;

@@ -712,7 +712,8 @@ NSString* const kBrowserViewControllerSnackbarCategory =
 @property(nonatomic, readonly) CGFloat headerHeight;
 
 // The webState of the active tab.
-@property(nonatomic, readonly) web::WebState* currentWebState;
+@property(nonatomic, readonly)
+    web::WebState* NS_RETURNS_INNER_POINTER currentWebState;
 
 // BVC initialization
 // ------------------

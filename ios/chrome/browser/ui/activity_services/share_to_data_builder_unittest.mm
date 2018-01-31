@@ -40,7 +40,7 @@ const char kExpectedTitle[] = "title";
   std::unique_ptr<web::TestWebState> _webState;
 }
 
-@property(nonatomic, readonly) web::WebState* webState;
+@property(nonatomic, readonly) web::WebState* NS_RETURNS_INNER_POINTER webState;
 
 @end
 

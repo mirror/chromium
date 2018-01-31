@@ -28,7 +28,8 @@ class ChromeBrowserState;
     NS_DESIGNATED_INITIALIZER;
 
 // When executed this command will remove browsing data for this BrowserState.
-@property(nonatomic, readonly) ios::ChromeBrowserState* browserState;
+@property(nonatomic, readonly)
+    ios::ChromeBrowserState* NS_RETURNS_INNER_POINTER browserState;
 
 // Removal mask: see BrowsingDataRemover::RemoveDataMask.
 @property(nonatomic, readonly) int mask;

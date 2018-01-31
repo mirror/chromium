@@ -36,13 +36,15 @@ class WebState;
                                          VoiceSearchControllerDelegate>
 
 // Weak reference to ChromeBrowserState;
-@property(nonatomic, assign) ios::ChromeBrowserState* browserState;
+@property(nonatomic, assign)
+    ios::ChromeBrowserState* NS_RETURNS_INNER_POINTER browserState;
 // The dispatcher for this view controller.
 @property(nonatomic, weak)
     id<ApplicationCommands, BrowserCommands, OmniboxFocuser, ToolbarCommands>
         dispatcher;
 // The web state list this ToolbarCoordinator is handling.
-@property(nonatomic, assign) WebStateList* webStateList;
+@property(nonatomic, assign)
+    WebStateList* NS_RETURNS_INNER_POINTER webStateList;
 // Delegate for this coordinator. Only used for plumbing to Location Bar
 // coordinator.
 // TODO(crbug.com/799446): Change this.

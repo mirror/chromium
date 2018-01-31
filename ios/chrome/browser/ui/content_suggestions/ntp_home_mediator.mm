@@ -75,13 +75,15 @@ const char kRateThisAppCommand[] = "ratethisapp";
 
 @property(nonatomic, strong) AlertCoordinator* alertCoordinator;
 // The WebStateList that is being observed by this mediator.
-@property(nonatomic, assign, readonly) WebStateList* webStateList;
+@property(nonatomic, assign, readonly)
+    WebStateList* NS_RETURNS_INNER_POINTER webStateList;
 // TemplateURL used to get the search engine.
-@property(nonatomic, assign) TemplateURLService* templateURLService;
+@property(nonatomic, assign)
+    TemplateURLService* NS_RETURNS_INNER_POINTER templateURLService;
 // Logo vendor to display the doodle on the NTP.
 @property(nonatomic, strong) id<LogoVendor> logoVendor;
 // The web state associated with this NTP.
-@property(nonatomic, assign) web::WebState* webState;
+@property(nonatomic, assign) web::WebState* NS_RETURNS_INNER_POINTER webState;
 
 @end
 

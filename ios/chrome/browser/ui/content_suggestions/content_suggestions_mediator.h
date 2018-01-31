@@ -65,7 +65,8 @@ initWithContentService:
 @property(nonatomic, assign) BOOL readingListNeedsReload;
 
 // The notification promo owned by this mediator.
-- (nonnull NotificationPromoWhatsNew*)notificationPromo;
+- (nonnull NotificationPromoWhatsNew*)notificationPromo
+    NS_RETURNS_INNER_POINTER;
 
 // Blacklists the URL from the Most Visited sites.
 - (void)blacklistMostVisitedURL:(GURL)URL;

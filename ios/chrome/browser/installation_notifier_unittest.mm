@@ -104,7 +104,7 @@
                                 withSelector:(SEL)notificationSelector
                                    forScheme:(NSString*)scheme
                                 startPolling:(BOOL)poll;
-- (net::BackoffEntry::Policy const*)backOffPolicy;
+- (net::BackoffEntry::Policy const*)backOffPolicy NS_RETURNS_INNER_POINTER;
 @end
 
 namespace {

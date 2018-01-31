@@ -19,7 +19,8 @@ void RecordNTPImpression(IOSNTPImpression impression_type) {
 }  // namespace ntp_home
 
 @interface NTPHomeMetrics ()
-@property(nonatomic, assign) ios::ChromeBrowserState* browserState;
+@property(nonatomic, assign)
+    ios::ChromeBrowserState* NS_RETURNS_INNER_POINTER browserState;
 @end
 
 @implementation NTPHomeMetrics

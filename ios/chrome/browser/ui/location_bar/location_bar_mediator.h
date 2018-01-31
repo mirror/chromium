@@ -14,7 +14,8 @@ class WebStateList;
 @interface LocationBarMediator : NSObject
 // The WebStateList that this mediator listens for any changes on the active web
 // state.
-@property(nonatomic, assign) WebStateList* webStateList;
+@property(nonatomic, assign)
+    WebStateList* NS_RETURNS_INNER_POINTER webStateList;
 
 // The consumer for this object. This can change during the lifetime of this
 // object and may be nil.

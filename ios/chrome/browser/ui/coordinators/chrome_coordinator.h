@@ -44,7 +44,7 @@ initWithBaseViewController:(nullable UIViewController*)viewController
 
 // The coordinator's BrowserState.
 @property(assign, nonatomic, nullable, readonly)
-    ios::ChromeBrowserState* browserState;
+    ios::ChromeBrowserState* NS_RETURNS_INNER_POINTER browserState;
 
 // The basic lifecycle methods for coordinators are -start and -stop. These
 // are blank template methods; child classes are expected to implement them and

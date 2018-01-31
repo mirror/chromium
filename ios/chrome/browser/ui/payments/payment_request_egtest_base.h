@@ -44,7 +44,7 @@ class WebState;
 - (void)waitForWebViewContainingTexts:(const std::vector<std::string>&)texts;
 
 // Returns the instance of PersonalDataManager for current ChromeBrowserState.
-- (autofill::PersonalDataManager*)personalDataManager;
+- (autofill::PersonalDataManager*)personalDataManager NS_RETURNS_INNER_POINTER;
 
 // Loads the specified |page|, which should be the name of a file in the
 // //components/test/data/payments directory.

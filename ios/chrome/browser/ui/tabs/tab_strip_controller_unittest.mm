@@ -64,7 +64,8 @@
 
 @interface TabStripControllerTestTabModel : NSObject
 
-@property(nonatomic, assign) ios::ChromeBrowserState* browserState;
+@property(nonatomic, assign)
+    ios::ChromeBrowserState* NS_RETURNS_INNER_POINTER browserState;
 
 @end
 

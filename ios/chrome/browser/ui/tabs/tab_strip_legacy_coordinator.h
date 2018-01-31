@@ -27,7 +27,8 @@ class ChromeBrowserState;
     : ChromeCoordinator<BubbleViewAnchorPointProvider, TabStripHighlighting>
 
 // BrowserState for this coordinator.
-@property(nonatomic, assign) ios::ChromeBrowserState* browserState;
+@property(nonatomic, assign)
+    ios::ChromeBrowserState* NS_RETURNS_INNER_POINTER browserState;
 
 // Dispatcher for sending commands.
 @property(nonatomic, weak) id dispatcher;

@@ -55,7 +55,7 @@ enum StateChangeReason {
 // The current web state being watched for contextual search events.
 // Only tests should set this directly; for general use, use -setTab:, which
 // will set this property with the tab's webState.
-@property(nonatomic, assign) web::WebState* webState;
+@property(nonatomic, assign) web::WebState* NS_RETURNS_INNER_POINTER webState;
 
 // Designated initializer.
 - (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState;

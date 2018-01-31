@@ -21,7 +21,8 @@ class ChromeBrowserState;
 @interface ActivityServiceLegacyCoordinator : ChromeCoordinator
 
 // Models.
-@property(nonatomic, readwrite, assign) ios::ChromeBrowserState* browserState;
+@property(nonatomic, readwrite, assign)
+    ios::ChromeBrowserState* NS_RETURNS_INNER_POINTER browserState;
 @property(nonatomic, readwrite, weak) CommandDispatcher* dispatcher;
 @property(nonatomic, readwrite, weak) TabModel* tabModel;
 

@@ -30,7 +30,8 @@ using payments::GetShippingOptionSectionString;
 // The PaymentRequest object owning an instance of payments::WebPaymentRequest
 // as provided by the page invoking the Payment Request API. This is a weak
 // pointer and should outlive this class.
-@property(nonatomic, assign) payments::PaymentRequest* paymentRequest;
+@property(nonatomic, assign)
+    payments::PaymentRequest* NS_RETURNS_INNER_POINTER paymentRequest;
 
 // The selectable items to display in the collection.
 @property(nonatomic, strong) NSMutableArray<PaymentsTextItem*>* items;

@@ -43,7 +43,8 @@ const CGFloat kMostVisitedFaviconMinimalSize = 32;
 
 // The ContentSuggestionsService, serving suggestions.
 @property(nonatomic, assign)
-    ntp_snippets::ContentSuggestionsService* contentService;
+    ntp_snippets::ContentSuggestionsService* NS_RETURNS_INNER_POINTER
+        contentService;
 
 // FaviconAttributesProvider to fetch the favicon for the suggestions.
 @property(nonatomic, nullable, strong)

@@ -21,7 +21,8 @@
   std::unique_ptr<ScopedFullscreenDisabler> _keyboardDisabler;
 }
 // The FullscreenController being enabled/disabled for VoiceOver.
-@property(nonatomic, readonly, nonnull) FullscreenController* controller;
+@property(nonatomic, readonly, nonnull)
+    FullscreenController* NS_RETURNS_INNER_POINTER controller;
 // Creates or destroys |_voiceOverDisabler| depending on whether VoiceOver is
 // enabled.
 - (void)voiceOverStatusChanged;

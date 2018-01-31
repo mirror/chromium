@@ -24,7 +24,8 @@ class SerializableUserData;
 @property(nonatomic, copy) NSArray* itemStorages;
 @property(nonatomic, strong)
     CRWSessionCertificatePolicyCacheStorage* certPolicyCacheStorage;
-@property(nonatomic, readonly) web::SerializableUserData* userData;
+@property(nonatomic, readonly)
+    web::SerializableUserData* NS_RETURNS_INNER_POINTER userData;
 
 // Setter for |userData|.  The receiver takes ownership of |userData|.
 - (void)setSerializableUserData:

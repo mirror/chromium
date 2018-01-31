@@ -28,7 +28,8 @@
 
 @interface CreditCardEditCoordinator ()
 
-@property(nonatomic, assign) autofill::CreditCard* creditCard;
+@property(nonatomic, assign)
+    autofill::CreditCard* NS_RETURNS_INNER_POINTER creditCard;
 
 @property(nonatomic, strong)
     BillingAddressSelectionCoordinator* billingAddressSelectionCoordinator;

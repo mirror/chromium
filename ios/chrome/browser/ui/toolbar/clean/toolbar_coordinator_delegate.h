@@ -20,7 +20,7 @@ class ToolbarModelIOS;
 // Called when the location bar receives a key press.
 - (void)locationBarBeganEdit;
 // Returns the toolbar model.
-- (ToolbarModelIOS*)toolbarModelIOS;
+- (ToolbarModelIOS*)toolbarModelIOS NS_RETURNS_INNER_POINTER;
 
 @end
 

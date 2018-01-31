@@ -98,7 +98,8 @@ extern NSString* const kOverscrollActionsDidEnd;
 // properly.
 @property(nonatomic, weak) id<OverscrollActionsControllerDelegate> delegate;
 // The BrowserState.
-@property(nonatomic, assign) ios::ChromeBrowserState* browserState;
+@property(nonatomic, assign)
+    ios::ChromeBrowserState* NS_RETURNS_INNER_POINTER browserState;
 
 // Used to clear state maintained by the controller and de-register from
 // notifications. After this call the controller ceases to function and will

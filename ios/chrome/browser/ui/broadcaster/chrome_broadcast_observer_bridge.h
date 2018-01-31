@@ -31,7 +31,7 @@ class ChromeBroadcastObserverInterface {
 
 // The observer being updated.
 @property(nonatomic, readonly, nonnull)
-    ChromeBroadcastObserverInterface* observer;
+    ChromeBroadcastObserverInterface* NS_RETURNS_INNER_POINTER observer;
 
 // Initializer for a bridge that updates |observer|.
 - (nullable instancetype)initWithObserver:

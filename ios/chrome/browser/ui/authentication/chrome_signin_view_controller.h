@@ -89,7 +89,8 @@ class ChromeBrowserState;
 
 @interface ChromeSigninViewController (Subclassing)
 
-@property(nonatomic, readonly) ios::ChromeBrowserState* browserState;
+@property(nonatomic, readonly)
+    ios::ChromeBrowserState* NS_RETURNS_INNER_POINTER browserState;
 
 @property(nonatomic, readonly) UIColor* backgroundColor;
 

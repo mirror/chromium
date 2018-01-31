@@ -52,13 +52,15 @@ NSUInteger const kTabPositionAutomatically = NSNotFound;
 
 // The delegate for sync.
 @property(nonatomic, readonly)
-    TabModelSyncedWindowDelegate* syncedWindowDelegate;
+    TabModelSyncedWindowDelegate* NS_RETURNS_INNER_POINTER syncedWindowDelegate;
 
 // BrowserState associated with this TabModel.
-@property(nonatomic, readonly) ios::ChromeBrowserState* browserState;
+@property(nonatomic, readonly)
+    ios::ChromeBrowserState* NS_RETURNS_INNER_POINTER browserState;
 
 // Records UMA metrics about Tab usage.
-@property(nonatomic, readonly) TabUsageRecorder* tabUsageRecorder;
+@property(nonatomic, readonly)
+    TabUsageRecorder* NS_RETURNS_INNER_POINTER tabUsageRecorder;
 
 // Whether web usage is enabled (meaning web views can be created in its tabs).
 // Defaults to NO.
@@ -75,7 +77,8 @@ NSUInteger const kTabPositionAutomatically = NSNotFound;
 @property(nonatomic, readonly) NSUInteger count;
 
 // The WebStateList owned by the TabModel.
-@property(nonatomic, readonly) WebStateList* webStateList;
+@property(nonatomic, readonly)
+    WebStateList* NS_RETURNS_INNER_POINTER webStateList;
 
 // Initializes tabs from a restored session. |-setCurrentTab| needs to be called
 // in order to display the views associated with the tabs. Waits until the views

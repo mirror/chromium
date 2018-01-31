@@ -23,7 +23,7 @@
 - (web::WebState*)webState:(web::WebState*)webState
     createNewWebStateForURL:(const GURL&)URL
                   openerURL:(const GURL&)openerURL
-            initiatedByUser:(BOOL)initiatedByUser;
+            initiatedByUser:(BOOL)initiatedByUser NS_RETURNS_INNER_POINTER;
 
 // Called when the page calls wants to close self by calling window.close()
 // JavaScript API.
@@ -32,7 +32,8 @@
 // Returns the WebState the URL is opened in, or nullptr if the URL wasn't
 // opened immediately.
 - (web::WebState*)webState:(web::WebState*)webState
-         openURLWithParams:(const web::WebState::OpenURLParams&)params;
+         openURLWithParams:(const web::WebState::OpenURLParams&)params
+    NS_RETURNS_INNER_POINTER;
 
 // Called when the user triggers the context menu with the given
 // |ContextMenuParams|. If this method is not implemented, no context menu will
@@ -49,7 +50,7 @@
 // Returns a pointer to a service to manage dialogs. May return null in which
 // case dialogs aren't shown.
 - (web::JavaScriptDialogPresenter*)javaScriptDialogPresenterForWebState:
-    (web::WebState*)webState;
+    (web::WebState*)webState NS_RETURNS_INNER_POINTER;
 
 // Called when a request receives an authentication challenge specified by
 // |protectionSpace|, and is unable to respond using cached credentials.

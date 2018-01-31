@@ -24,7 +24,8 @@
 @property(nonatomic, weak) ChromeIdentity* identity;
 @property(weak, nonatomic, readonly) NSDictionary* userInfo;
 @property(nonatomic, readonly)
-    ios::ChromeIdentityService::Observer* observerBridge;
+    ios::ChromeIdentityService::Observer* NS_RETURNS_INNER_POINTER
+        observerBridge;
 @end
 
 @implementation TestChromeIdentityServiceObserver {

@@ -88,15 +88,18 @@ class PaymentShippingOption;
 // The PaymentRequest object having a copy of payments::WebPaymentRequest as
 // provided by the page invoking the Payment Request API. This pointer is not
 // owned by this class and should outlive it.
-@property(nonatomic, assign) payments::PaymentRequest* paymentRequest;
+@property(nonatomic, assign)
+    payments::PaymentRequest* NS_RETURNS_INNER_POINTER paymentRequest;
 
 // An instance of autofill::AutofillManager used for credit card unmasking. This
 // reference is not owned by this class.
-@property(nonatomic, assign) autofill::AutofillManager* autofillManager;
+@property(nonatomic, assign)
+    autofill::AutofillManager* NS_RETURNS_INNER_POINTER autofillManager;
 
 // An ios::ChromeBrowserState instance. This reference is not owned by this
 // class.
-@property(nonatomic, assign) ios::ChromeBrowserState* browserState;
+@property(nonatomic, assign)
+    ios::ChromeBrowserState* NS_RETURNS_INNER_POINTER browserState;
 
 // The favicon of the page invoking the PaymentRequest API. Should be set before
 // calling |start|.

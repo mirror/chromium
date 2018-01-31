@@ -105,7 +105,7 @@
 - (void)addObserver:(id<TabModelObserver>)observer;
 - (void)removeObserver:(id<TabModelObserver>)observer;
 - (id<TabModelObserver>)observer;
-- (WebStateList*)webStateList;
+- (WebStateList*)webStateList NS_RETURNS_INNER_POINTER;
 
 @end
 

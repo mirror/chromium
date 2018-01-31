@@ -24,7 +24,8 @@ class ChromeBrowserState;
 - (instancetype)init NS_UNAVAILABLE;
 
 // BrowserState.
-@property(nonatomic, assign) ios::ChromeBrowserState* browserState;
+@property(nonatomic, assign)
+    ios::ChromeBrowserState* NS_RETURNS_INNER_POINTER browserState;
 // Positioner for the popup.
 @property(nonatomic, weak) id<OmniboxPopupPositioner> positioner;
 // Whether this coordinator has results to show.

@@ -28,9 +28,10 @@
 // The updater being driven by this object.
 @property(nonatomic, readonly, strong) MainContentUIStateUpdater* updater;
 // The WebStateList whose active WebState's scroll state is being forwaded.
-@property(nonatomic, readonly) WebStateList* webStateList;
+@property(nonatomic, readonly)
+    WebStateList* NS_RETURNS_INNER_POINTER webStateList;
 // The WebStateList's active WebState.
-@property(nonatomic, assign) web::WebState* webState;
+@property(nonatomic, assign) web::WebState* NS_RETURNS_INNER_POINTER webState;
 // The scroll view proxy whose scroll events are forwarded to |updater|.
 @property(nonatomic, readonly, strong) CRWWebViewScrollViewProxy* proxy;
 @end

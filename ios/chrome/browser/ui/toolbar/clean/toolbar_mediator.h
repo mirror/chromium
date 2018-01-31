@@ -24,17 +24,20 @@ class WebStateList;
 
 // The WebStateList that this mediator listens for any changes on the total
 // number of Webstates.
-@property(nonatomic, assign) WebStateList* webStateList;
+@property(nonatomic, assign)
+    WebStateList* NS_RETURNS_INNER_POINTER webStateList;
 
 // The bookmarks model to know if the page is bookmarked.
-@property(nonatomic, assign) bookmarks::BookmarkModel* bookmarkModel;
+@property(nonatomic, assign)
+    bookmarks::BookmarkModel* NS_RETURNS_INNER_POINTER bookmarkModel;
 
 // The consumer for this object. This can change during the lifetime of this
 // object and may be nil.
 @property(nonatomic, strong) id<ToolbarConsumer> consumer;
 
 // The voice search provider for this mediator.
-@property(nonatomic, assign) VoiceSearchProvider* voiceSearchProvider;
+@property(nonatomic, assign)
+    VoiceSearchProvider* NS_RETURNS_INNER_POINTER voiceSearchProvider;
 
 // Updates the consumer to conforms to |webState|.
 - (void)updateConsumerForWebState:(web::WebState*)webState;

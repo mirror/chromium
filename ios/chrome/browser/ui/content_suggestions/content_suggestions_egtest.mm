@@ -114,9 +114,11 @@ GREYElementInteraction* CellWithMatcher(id<GREYMatcher> matcher) {
 @interface ContentSuggestionsTestCase : ChromeTestCase
 
 // Current non-incognito browser state.
-@property(nonatomic, assign, readonly) ios::ChromeBrowserState* browserState;
+@property(nonatomic, assign, readonly)
+    ios::ChromeBrowserState* NS_RETURNS_INNER_POINTER browserState;
 // Mock provider from the singleton.
-@property(nonatomic, assign, readonly) MockContentSuggestionsProvider* provider;
+@property(nonatomic, assign, readonly)
+    MockContentSuggestionsProvider* NS_RETURNS_INNER_POINTER provider;
 // Article category, used by the singleton.
 @property(nonatomic, assign, readonly) Category category;
 

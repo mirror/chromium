@@ -63,7 +63,8 @@ extern NSString* const kUserInfo;
 
 // The Chromoting Client Runtime, this holds the threads and other shared
 // resources used by the Chromoting clients
-@property(nonatomic, readonly) remoting::ChromotingClientRuntime* runtime;
+@property(nonatomic, readonly)
+    remoting::ChromotingClientRuntime* NS_RETURNS_INNER_POINTER runtime;
 
 // Returns the last failure reason when fetching the host list. Returns
 // HostListFetchFailureReasonNoFailure when the host list has never been fetched

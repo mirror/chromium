@@ -16,7 +16,8 @@ class InfoBarDelegate;
 // InfoBar for iOS acts as a UIViewController for InfoBarView.
 @interface InfoBarController : NSObject
 
-@property(nonatomic, readonly) InfoBarViewDelegate* delegate;
+@property(nonatomic, readonly)
+    InfoBarViewDelegate* NS_RETURNS_INNER_POINTER delegate;
 
 // Designated initializer.
 - (instancetype)initWithDelegate:(InfoBarViewDelegate*)delegate

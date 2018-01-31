@@ -86,7 +86,7 @@ BOOL CGFloatEquals(CGFloat a, CGFloat b) {
 @property(weak, nonatomic, readonly) CRWWebViewScrollViewProxy* scrollViewProxy;
 // The navigation controller of the page.
 @property(nonatomic, readonly, assign)
-    web::NavigationManager* navigationManager;
+    web::NavigationManager* NS_RETURNS_INNER_POINTER navigationManager;
 // The gesture recognizer set on the scrollview to detect tap. Must be readwrite
 // for property releaser to work.
 @property(nonatomic, readwrite, strong)

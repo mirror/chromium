@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface CWVTranslationController ()
 
 // Set to create a new translate stack under the new webState.
-@property(nonatomic, assign) web::WebState* webState;
+@property(nonatomic, assign) web::WebState* NS_RETURNS_INNER_POINTER webState;
 
 // Called to keep this class informed of the current translate progress.
 // |step| the state of current translation.

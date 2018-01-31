@@ -19,7 +19,7 @@
 
 @interface LocationBarMediator ()<CRWWebStateObserver, WebStateListObserving>
 // The current web state associated with the toolbar.
-@property(nonatomic, assign) web::WebState* webState;
+@property(nonatomic, assign) web::WebState* NS_RETURNS_INNER_POINTER webState;
 @end
 
 @implementation LocationBarMediator {

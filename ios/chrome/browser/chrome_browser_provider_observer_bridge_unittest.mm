@@ -19,9 +19,11 @@
     : NSObject<ChromeBrowserProviderObserver>
 @property(nonatomic) BOOL chromeIdentityServiceDidChangeCalled;
 @property(nonatomic) BOOL chromeBrowserProviderWillBeDestroyedCalled;
-@property(nonatomic) ios::ChromeIdentityService* identityService;
+@property(nonatomic)
+    ios::ChromeIdentityService* NS_RETURNS_INNER_POINTER identityService;
 @property(nonatomic, readonly)
-    ios::ChromeBrowserProvider::Observer* observerBridge;
+    ios::ChromeBrowserProvider::Observer* NS_RETURNS_INNER_POINTER
+        observerBridge;
 @end
 
 @implementation TestChromeBrowserProviderObserver {

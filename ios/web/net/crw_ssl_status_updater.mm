@@ -27,7 +27,8 @@ using web::SecurityStyle;
 }
 
 // Unowned pointer to web::NavigationManager.
-@property(nonatomic, readonly) web::NavigationManager* navigationManager;
+@property(nonatomic, readonly)
+    web::NavigationManager* NS_RETURNS_INNER_POINTER navigationManager;
 
 // Updates |security_style| and |cert_status| for the NavigationItem with ID
 // |navigationItemID|, if URL and certificate chain still match |host| and

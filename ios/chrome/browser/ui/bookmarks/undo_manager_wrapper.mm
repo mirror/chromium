@@ -19,7 +19,7 @@
 @interface UndoManagerWrapper ()<UndoManagerBridgeObserver> {
   std::unique_ptr<bookmarks::UndoManagerBridge> _bridge;
 }
-@property(nonatomic, assign) UndoManager* undoManager;
+@property(nonatomic, assign) UndoManager* NS_RETURNS_INNER_POINTER undoManager;
 @property(nonatomic, assign) BOOL hasUndoManagerChanged;
 @end
 

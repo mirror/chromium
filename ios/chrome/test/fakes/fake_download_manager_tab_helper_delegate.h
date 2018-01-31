@@ -14,7 +14,8 @@
 
 // The state of current download task. null if there is no current download task
 // or when DownloadManager's WebState was hidden.
-@property(nonatomic, readonly) web::DownloadTask::State* state;
+@property(nonatomic, readonly)
+    web::DownloadTask::State* NS_RETURNS_INNER_POINTER state;
 
 @end
 

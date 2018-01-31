@@ -68,7 +68,8 @@ typedef Tab* (^mock_gurl_nsuinteger_pagetransition)(const GURL&,
 // Mock BVC class to use for test cases where OCMock gets handled incorrectly
 // by UIViewController.
 @interface URLOpenerMockBVC : UIViewController
-@property(nonatomic, assign) ios::ChromeBrowserState* browserState;
+@property(nonatomic, assign)
+    ios::ChromeBrowserState* NS_RETURNS_INNER_POINTER browserState;
 @property(nonatomic, assign) GURL tabURL;
 @property(nonatomic, assign) NSUInteger position;
 @property(nonatomic, assign) ui::PageTransition transition;

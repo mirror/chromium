@@ -28,7 +28,8 @@
 @property(nonatomic, assign) CGPoint location;
 
 // Tab helper which delegates to this class.
-@property(nonatomic, assign) RepostFormTabHelper* tabHelper;
+@property(nonatomic, assign)
+    RepostFormTabHelper* NS_RETURNS_INNER_POINTER tabHelper;
 
 // Calls |repostFormTabHelper:presentRepostFromDialogAtPoint:completionHandler:|
 // completion handler.

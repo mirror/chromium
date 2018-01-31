@@ -48,20 +48,26 @@ struct Referrer;
 // The current NavigationItem.  During a pending navigation, returns the
 // NavigationItem for that navigation.  If a transient NavigationItem exists,
 // this NavigationItem will be returned.
-@property(nonatomic, readonly) web::NavigationItemImpl* currentItem;
+@property(nonatomic, readonly)
+    web::NavigationItemImpl* NS_RETURNS_INNER_POINTER currentItem;
 // Returns the NavigationItem whose URL should be displayed to the user.
-@property(nonatomic, readonly) web::NavigationItemImpl* visibleItem;
+@property(nonatomic, readonly)
+    web::NavigationItemImpl* NS_RETURNS_INNER_POINTER visibleItem;
 // Returns the NavigationItem corresponding to a load for which no data has yet
 // been received.
-@property(nonatomic, readonly) web::NavigationItemImpl* pendingItem;
+@property(nonatomic, readonly)
+    web::NavigationItemImpl* NS_RETURNS_INNER_POINTER pendingItem;
 // Returns the transient NavigationItem, if any.  The transient item will be
 // discarded on any navigation, and is used to represent interstitials in the
 // session history.
-@property(nonatomic, readonly) web::NavigationItemImpl* transientItem;
+@property(nonatomic, readonly)
+    web::NavigationItemImpl* NS_RETURNS_INNER_POINTER transientItem;
 // Returns the NavigationItem corresponding with the last committed load.
-@property(nonatomic, readonly) web::NavigationItemImpl* lastCommittedItem;
+@property(nonatomic, readonly)
+    web::NavigationItemImpl* NS_RETURNS_INNER_POINTER lastCommittedItem;
 // Returns the NavigationItem corresponding with the previously loaded page.
-@property(nonatomic, readonly) web::NavigationItemImpl* previousItem;
+@property(nonatomic, readonly)
+    web::NavigationItemImpl* NS_RETURNS_INNER_POINTER previousItem;
 // Returns a list of all non-redirected NavigationItems whose index precedes
 // |lastCommittedItemIndex|.
 @property(nonatomic, readonly) web::NavigationItemList backwardItems;
@@ -143,7 +149,8 @@ struct Referrer;
 - (int)indexOfItem:(const web::NavigationItem*)item;
 
 // Returns the item at |index| in |items|.
-- (web::NavigationItemImpl*)itemAtIndex:(NSInteger)index;
+- (web::NavigationItemImpl*)itemAtIndex:(NSInteger)index
+    NS_RETURNS_INNER_POINTER;
 
 @end
 

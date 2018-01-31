@@ -150,9 +150,10 @@ enum CellType {
 - (size_t)indexOfSessionAtIndexPath:(NSIndexPath*)indexPath;
 // Returns the session at |indexPath|.
 - (synced_sessions::DistantSession const*)sessionAtIndexPath:
-    (NSIndexPath*)indexPath;
+    (NSIndexPath*)indexPath NS_RETURNS_INNER_POINTER;
 // Returns the session tab at the index |indexPath|.
-- (synced_sessions::DistantTab const*)distantTabAtIndex:(NSIndexPath*)indexPath;
+- (synced_sessions::DistantTab const*)distantTabAtIndex:(NSIndexPath*)indexPath
+    NS_RETURNS_INNER_POINTER;
 // Opens in new tabs all the tabs of the distant session at index |indexPath|.
 - (void)openTabsFromSessionAtIndexPath:(NSIndexPath*)indexPath;
 // Removes all the cells of the session section at index |indexPath|.

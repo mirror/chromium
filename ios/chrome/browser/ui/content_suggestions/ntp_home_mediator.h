@@ -50,7 +50,8 @@ initWithWebStateList:(nonnull WebStateList*)webStateList
         dispatcher;
 // Suggestions service used to get the suggestions.
 @property(nonatomic, assign, nonnull)
-    ntp_snippets::ContentSuggestionsService* suggestionsService;
+    ntp_snippets::ContentSuggestionsService* NS_RETURNS_INNER_POINTER
+        suggestionsService;
 // Recorder for the metrics related to ContentSuggestions.
 @property(nonatomic, strong, nullable)
     ContentSuggestionsMetricsRecorder* metricsRecorder;

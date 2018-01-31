@@ -35,7 +35,8 @@ extern NSString* const kStatusSerializationKey;
 - (instancetype)init NS_UNAVAILABLE;
 
 // The certificate represented by this storage.
-@property(nonatomic, readonly) net::X509Certificate* certificate;
+@property(nonatomic, readonly)
+    net::X509Certificate* NS_RETURNS_INNER_POINTER certificate;
 // The hostname of the page that issued |certificate|.
 @property(nonatomic, readonly) std::string& host;
 // The allowance chosen for the certificate.

@@ -28,7 +28,8 @@ class TimeTicks;
 // Start of the application, used for UMA.
 @property(nonatomic, assign) base::TimeTicks appLaunchTime;
 // An object to record metrics related to the user's first action.
-@property(nonatomic, readonly) FirstUserActionRecorder* firstUserActionRecorder;
+@property(nonatomic, readonly)
+    FirstUserActionRecorder* NS_RETURNS_INNER_POINTER firstUserActionRecorder;
 
 // Disables the FirstUserActionRecorder.
 - (void)resetFirstUserActionRecorder;

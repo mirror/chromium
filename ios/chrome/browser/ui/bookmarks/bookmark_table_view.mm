@@ -119,9 +119,11 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
 }
 
 // The model holding bookmark data.
-@property(nonatomic, assign) bookmarks::BookmarkModel* bookmarkModel;
+@property(nonatomic, assign)
+    bookmarks::BookmarkModel* NS_RETURNS_INNER_POINTER bookmarkModel;
 // The browser state.
-@property(nonatomic, assign) ios::ChromeBrowserState* browserState;
+@property(nonatomic, assign)
+    ios::ChromeBrowserState* NS_RETURNS_INNER_POINTER browserState;
 // The delegate for actions on the table.
 @property(nonatomic, weak) id<BookmarkTableViewDelegate> delegate;
 // Background shown when there is no bookmarks or folders at the current root

@@ -33,7 +33,8 @@ const void* const kFullscreenDisablerKey = &kFullscreenDisablerKey;
 }
 
 // The FullscreenController being disabled.
-@property(nonatomic, readonly) FullscreenController* controller;
+@property(nonatomic, readonly)
+    FullscreenController* NS_RETURNS_INNER_POINTER controller;
 
 // Factory method that returns the disabler wrapper associated with
 // |coordinator|, lazily instantiating it if necessary.

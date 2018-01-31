@@ -18,7 +18,7 @@ class WebState;
 @interface TextToSpeechListener : NSObject
 
 // The WebState passed on initialization.
-@property(nonatomic, readonly) web::WebState* webState;
+@property(nonatomic, readonly) web::WebState* NS_RETURNS_INNER_POINTER webState;
 
 // Designated initializer.
 - (instancetype)initWithWebState:(web::WebState*)webState

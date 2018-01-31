@@ -87,7 +87,8 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint
 @property(nonatomic, weak, readonly) TabModel* tabModel;
 
 // Returns the ios::ChromeBrowserState passed to the initializer.
-@property(nonatomic, assign, readonly) ios::ChromeBrowserState* browserState;
+@property(nonatomic, assign, readonly)
+    ios::ChromeBrowserState* NS_RETURNS_INNER_POINTER browserState;
 
 // Whether the receiver is currently the primary BVC.
 - (void)setPrimary:(BOOL)primary;

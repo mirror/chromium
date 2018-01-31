@@ -51,7 +51,8 @@ class ReadingListModel;
 @property(nonatomic, weak) id<ContentSuggestionsHeaderViewControllerDelegate>
     delegate;
 @property(nonatomic, weak) id<ContentSuggestionsCommands> commandHandler;
-@property(nonatomic, assign) ReadingListModel* readingListModel;
+@property(nonatomic, assign)
+    ReadingListModel* NS_RETURNS_INNER_POINTER readingListModel;
 
 // Whether the Google logo or doodle is being shown.
 @property(nonatomic, assign) BOOL logoIsShowing;

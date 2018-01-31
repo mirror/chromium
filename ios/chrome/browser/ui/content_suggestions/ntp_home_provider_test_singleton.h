@@ -18,7 +18,8 @@
 + (instancetype)sharedInstance;
 
 // Returns the provider registered.
-- (ntp_snippets::MockContentSuggestionsProvider*)provider;
+- (ntp_snippets::MockContentSuggestionsProvider*)provider
+    NS_RETURNS_INNER_POINTER;
 // Registers a provider in the |service|.
 - (void)registerArticleProvider:
     (ntp_snippets::ContentSuggestionsService*)service;

@@ -115,7 +115,7 @@ const int kMaxTimesHistoryNoticeShown = 1;
 @property(nonatomic, assign) int dataTypeMask;
 
 // Pref name associated with the item.
-@property(nonatomic, assign) const char* prefName;
+@property(nonatomic, assign) const char* NS_RETURNS_INNER_POINTER prefName;
 
 // Sets the counter associated with the data type represented by the item.
 - (void)setCounter:(std::unique_ptr<BrowsingDataCounterWrapper>)counter;

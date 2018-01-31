@@ -48,7 +48,8 @@ NSString* const kJavaScriptDialogTextFieldAccessibiltyIdentifier =
 @property(nonatomic, readonly, getter=isShowingDialog) BOOL showingDialog;
 
 // The webState for |presentedDialog|.
-@property(nonatomic) web::WebState* presentedDialogWebState;
+@property(nonatomic)
+    web::WebState* NS_RETURNS_INNER_POINTER presentedDialogWebState;
 
 // The dialog that's currently being shown, if any.
 @property(nonatomic, strong) AlertCoordinator* presentedDialogCoordinator;

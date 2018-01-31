@@ -109,7 +109,8 @@ class ChromeBrowserState;
 - (UICollectionView*)collectionView;
 
 // Returns the distantSession owned and displayed by this controller.
-- (const synced_sessions::DistantSession*)distantSession;
+- (const synced_sessions::DistantSession*)distantSession
+    NS_RETURNS_INNER_POINTER;
 
 @end
 

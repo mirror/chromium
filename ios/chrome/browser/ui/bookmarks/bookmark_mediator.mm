@@ -37,7 +37,8 @@ const int64_t kLastUsedFolderNone = -1;
 @interface BookmarkMediator ()
 
 // BrowserState for this mediator.
-@property(nonatomic, assign) ios::ChromeBrowserState* browserState;
+@property(nonatomic, assign)
+    ios::ChromeBrowserState* NS_RETURNS_INNER_POINTER browserState;
 
 @end
 

@@ -126,7 +126,8 @@ NS_INLINE void AnimateInViews(NSArray* views,
 // Tracks events for the purpose of in-product help. Does not take ownership of
 // tracker. Tracker must not be destroyed during lifetime of
 // ToolsMenuViewController. Defaults to |NULL|.
-@property(nonatomic, assign) feature_engagement::Tracker* engagementTracker;
+@property(nonatomic, assign)
+    feature_engagement::Tracker* NS_RETURNS_INNER_POINTER engagementTracker;
 @property(nonatomic, strong) ToolsMenuCollectionView* menuView;
 @property(nonatomic, strong) MDCInkView* touchFeedbackView;
 @property(nonatomic, assign) ToolbarType toolbarType;

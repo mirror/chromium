@@ -45,7 +45,8 @@ class ReadingListModel;
 @property(nonatomic, readonly) NSLayoutConstraint* heightConstraint;
 
 // The reading list model reflected by the toolbar.
-@property(nonatomic, readwrite, assign) ReadingListModel* readingListModel;
+@property(nonatomic, readwrite, assign)
+    ReadingListModel* NS_RETURNS_INNER_POINTER readingListModel;
 
 // The command dispatcher this and any subordinate objects should use.
 @property(nonatomic, readonly, weak)

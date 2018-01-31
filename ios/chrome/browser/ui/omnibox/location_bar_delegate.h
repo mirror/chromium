@@ -18,8 +18,8 @@ class WebState;
 - (void)locationBarHasBecomeFirstResponder;
 - (void)locationBarHasResignedFirstResponder;
 - (void)locationBarBeganEdit;
-- (web::WebState*)webState;
-- (ToolbarModel*)toolbarModel;
+- (web::WebState*)webState NS_RETURNS_INNER_POINTER;
+- (ToolbarModel*)toolbarModel NS_RETURNS_INNER_POINTER;
 @end
 
 #endif  // IOS_SHARED_CHROME_BROWSER_UI_OMNIBOX_LOCATION_BAR_DELEGATE_H_

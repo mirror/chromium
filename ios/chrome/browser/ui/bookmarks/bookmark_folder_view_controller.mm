@@ -65,10 +65,12 @@ const NSInteger BookmarkFolderSectionCount = 2;
 @property(nonatomic, assign) BOOL allowsNewFolders;
 
 // Reference to the main bookmark model.
-@property(nonatomic, assign) bookmarks::BookmarkModel* bookmarkModel;
+@property(nonatomic, assign)
+    bookmarks::BookmarkModel* NS_RETURNS_INNER_POINTER bookmarkModel;
 
 // The currently selected folder.
-@property(nonatomic, readonly) const BookmarkNode* selectedFolder;
+@property(nonatomic, readonly)
+    const BookmarkNode* NS_RETURNS_INNER_POINTER selectedFolder;
 
 // The view controller to present when creating a new folder.
 @property(nonatomic, strong)

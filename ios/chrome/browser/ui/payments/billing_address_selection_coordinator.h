@@ -45,12 +45,14 @@ class PaymentRequest;
                         AddressEditCoordinatorDelegate>
 
 // The selected billing profile, if any.
-@property(nonatomic, assign) autofill::AutofillProfile* selectedBillingProfile;
+@property(nonatomic, assign)
+    autofill::AutofillProfile* NS_RETURNS_INNER_POINTER selectedBillingProfile;
 
 // The PaymentRequest object having a copy of payments::WebPaymentRequest as
 // provided by the page invoking the Payment Request API. This pointer is not
 // owned by this class and should outlive it.
-@property(nonatomic, assign) payments::PaymentRequest* paymentRequest;
+@property(nonatomic, assign)
+    payments::PaymentRequest* NS_RETURNS_INNER_POINTER paymentRequest;
 
 // The delegate to be notified when the user selects a billing address or
 // returns without selecting one.

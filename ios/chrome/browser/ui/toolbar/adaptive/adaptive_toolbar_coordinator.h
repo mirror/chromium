@@ -43,7 +43,8 @@ class WebStateList;
     id<ApplicationCommands, BrowserCommands, OmniboxFocuser, ToolbarCommands>
         dispatcher;
 // The web state list this ToolbarCoordinator is handling.
-@property(nonatomic, assign) WebStateList* webStateList;
+@property(nonatomic, assign)
+    WebStateList* NS_RETURNS_INNER_POINTER webStateList;
 
 @end
 

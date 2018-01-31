@@ -21,7 +21,8 @@
 + (void)closeAllTabs;
 
 // The EmbeddedTestServer instance that hosts HTTP requests for tests.
-@property(nonatomic, readonly) net::test_server::EmbeddedTestServer* testServer;
+@property(nonatomic, readonly)
+    net::test_server::EmbeddedTestServer* NS_RETURNS_INNER_POINTER testServer;
 
 // Sets a block to always be executed at the end of a test during tearDown,
 // whether the test passes or fails. This shall only be set once per test.

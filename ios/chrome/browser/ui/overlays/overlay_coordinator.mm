@@ -17,7 +17,7 @@
 
 @interface OverlayCoordinator ()
 // The queue that presented this overlay.
-@property(nonatomic, assign) OverlayQueue* queue;
+@property(nonatomic, assign) OverlayQueue* NS_RETURNS_INNER_POINTER queue;
 @end
 
 @implementation OverlayCoordinator

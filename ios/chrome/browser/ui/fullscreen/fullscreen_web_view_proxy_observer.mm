@@ -17,8 +17,9 @@
 
 @interface FullscreenWebViewProxyObserver ()<CRWWebViewScrollViewProxyObserver>
 // The model and mediator passed on initialization.
-@property(nonatomic, readonly) FullscreenModel* model;
-@property(nonatomic, readonly) FullscreenMediator* mediator;
+@property(nonatomic, readonly) FullscreenModel* NS_RETURNS_INNER_POINTER model;
+@property(nonatomic, readonly)
+    FullscreenMediator* NS_RETURNS_INNER_POINTER mediator;
 @end
 
 @implementation FullscreenWebViewProxyObserver

@@ -50,7 +50,7 @@
 }
 
 - (NSString*)error;
-- (net::HttpResponseHeaders*)headers;
+- (net::HttpResponseHeaders*)headers NS_RETURNS_INNER_POINTER;
 @end
 
 @implementation RequestTrackerNotificationReceiverTest

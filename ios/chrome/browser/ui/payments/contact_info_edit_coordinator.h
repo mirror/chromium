@@ -43,12 +43,14 @@ class PaymentRequest;
 
 // The profile to be edited, if any. This pointer is not owned by this class
 // and should outlive it.
-@property(nonatomic, assign) autofill::AutofillProfile* profile;
+@property(nonatomic, assign)
+    autofill::AutofillProfile* NS_RETURNS_INNER_POINTER profile;
 
 // The PaymentRequest object owning an instance of payments::WebPaymentRequest
 // as provided by the page invoking the Payment Request API. This pointer is not
 // owned by this class and should outlive it.
-@property(nonatomic, assign) payments::PaymentRequest* paymentRequest;
+@property(nonatomic, assign)
+    payments::PaymentRequest* NS_RETURNS_INNER_POINTER paymentRequest;
 
 // The delegate to be notified when the user returns or finishes creating or
 // editing a profile.

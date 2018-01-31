@@ -22,7 +22,8 @@
 @property(nonatomic, strong) AlertCoordinator* alertCoordinator;
 
 // The BrowserState for this coordinator.
-@property(nonatomic, assign) ios::ChromeBrowserState* browserState;
+@property(nonatomic, assign)
+    ios::ChromeBrowserState* NS_RETURNS_INNER_POINTER browserState;
 
 // The controller managed by this coordinator.
 @property(nonatomic, strong) SigninInteractionController* controller;

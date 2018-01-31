@@ -138,7 +138,8 @@ struct PendingPaymentResponse {
 @property(readonly) BOOL enabled;
 
 // The ios::ChromeBrowserState instance passed to the initializer.
-@property(nonatomic, assign) ios::ChromeBrowserState* browserState;
+@property(nonatomic, assign)
+    ios::ChromeBrowserState* NS_RETURNS_INNER_POINTER browserState;
 
 // Coordinator used to create and present the PaymentRequest view controller.
 @property(nonatomic, strong)
@@ -149,10 +150,12 @@ struct PendingPaymentResponse {
 
 // Maintains a map of web::WebState to a list of payments::PaymentRequest
 // instances maintained for that WebState.
-@property(nonatomic, assign) payments::PaymentRequestCache* paymentRequestCache;
+@property(nonatomic, assign)
+    payments::PaymentRequestCache* NS_RETURNS_INNER_POINTER paymentRequestCache;
 
 // The payments::PaymentRequest instance currently showing, if any.
-@property(nonatomic, assign) payments::PaymentRequest* pendingPaymentRequest;
+@property(nonatomic, assign)
+    payments::PaymentRequest* NS_RETURNS_INNER_POINTER pendingPaymentRequest;
 
 // The dispatcher for Payment Requests.
 @property(nonatomic, weak, readonly) id<ApplicationCommands> dispatcher;
@@ -241,7 +244,8 @@ struct PendingPaymentResponse {
 
 // Returns the instance of payments::PaymentRequest for self.activeWebState that
 // has the identifier |paymentRequestId|, if any. Otherwise returns nullptr.
-- (payments::PaymentRequest*)paymentRequestWithId:(std::string)paymentRequestId;
+- (payments::PaymentRequest*)paymentRequestWithId:(std::string)paymentRequestId
+    NS_RETURNS_INNER_POINTER;
 
 @end
 

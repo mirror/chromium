@@ -37,7 +37,7 @@
                           index:(NSUInteger)index NS_DESIGNATED_INITIALIZER;
 
 // web::NavigationContextImpl for this navigation.
-- (web::NavigationContextImpl*)context;
+- (web::NavigationContextImpl*)context NS_RETURNS_INNER_POINTER;
 - (void)setContext:(std::unique_ptr<web::NavigationContextImpl>)context;
 
 @end

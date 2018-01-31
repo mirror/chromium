@@ -28,19 +28,22 @@ class WebStateList;
 // LocationBarView containing the omnibox.
 @property(nonatomic, strong) LocationBarView* locationBarView;
 // Weak reference to ChromeBrowserState;
-@property(nonatomic, assign) ios::ChromeBrowserState* browserState;
+@property(nonatomic, assign)
+    ios::ChromeBrowserState* NS_RETURNS_INNER_POINTER browserState;
 // The dispatcher for this view controller.
 @property(nonatomic, weak) id<ApplicationCommands, BrowserCommands> dispatcher;
 // URL loader for the location bar.
 @property(nonatomic, weak) id<UrlLoader> URLLoader;
 // The location bar controller.
 // TODO: this class needs to own this instance instead of ToolbarCoordinator.
-@property(nonatomic, assign) LocationBarControllerImpl* locationBarController;
+@property(nonatomic, assign)
+    LocationBarControllerImpl* NS_RETURNS_INNER_POINTER locationBarController;
 // Delegate for this coordinator.
 // TODO(crbug.com/799446): Change this.
 @property(nonatomic, weak) id<ToolbarCoordinatorDelegate> delegate;
 // The web state list this ToolbarCoordinator is handling.
-@property(nonatomic, assign) WebStateList* webStateList;
+@property(nonatomic, assign)
+    WebStateList* NS_RETURNS_INNER_POINTER webStateList;
 
 // Start this coordinator.
 - (void)start;

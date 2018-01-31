@@ -87,10 +87,12 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
 }
 
 // The bookmark model used.
-@property(nonatomic, assign) bookmarks::BookmarkModel* bookmarks;
+@property(nonatomic, assign)
+    bookmarks::BookmarkModel* NS_RETURNS_INNER_POINTER bookmarks;
 
 // The user's browser state model used.
-@property(nonatomic, assign) ios::ChromeBrowserState* browserState;
+@property(nonatomic, assign)
+    ios::ChromeBrowserState* NS_RETURNS_INNER_POINTER browserState;
 
 // The main view showing all the bookmarks.
 @property(nonatomic, strong) BookmarkTableView* bookmarksTableView;

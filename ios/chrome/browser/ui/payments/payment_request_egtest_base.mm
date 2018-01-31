@@ -38,7 +38,7 @@ const NSTimeInterval kPDMMaxDelaySeconds = 10.0;
 @interface PaymentRequestEGTestBase ()
 
 // Returns the PersonalDataManager instance for the current browser state.
-- (autofill::PersonalDataManager*)personalDataManager;
+- (autofill::PersonalDataManager*)personalDataManager NS_RETURNS_INNER_POINTER;
 
 @end
 

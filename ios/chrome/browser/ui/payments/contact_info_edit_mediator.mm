@@ -29,11 +29,13 @@
 // The PaymentRequest object owning an instance of payments::WebPaymentRequest
 // as provided by the page invoking the Payment Request API. This is a weak
 // pointer and should outlive this class.
-@property(nonatomic, assign) payments::PaymentRequest* paymentRequest;
+@property(nonatomic, assign)
+    payments::PaymentRequest* NS_RETURNS_INNER_POINTER paymentRequest;
 
 // The profile to be edited, if any. This pointer is not owned by this class and
 // should outlive it.
-@property(nonatomic, assign) autofill::AutofillProfile* profile;
+@property(nonatomic, assign)
+    autofill::AutofillProfile* NS_RETURNS_INNER_POINTER profile;
 
 // The list of current editor fields.
 @property(nonatomic, strong) NSMutableArray<EditorField*>* fields;

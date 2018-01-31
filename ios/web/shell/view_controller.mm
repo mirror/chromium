@@ -40,7 +40,8 @@ using web::NavigationManager;
   std::unique_ptr<web::WebStateObserverBridge> _webStateObserver;
   std::unique_ptr<web::WebStateDelegateBridge> _webStateDelegate;
 }
-@property(nonatomic, assign, readonly) NavigationManager* navigationManager;
+@property(nonatomic, assign, readonly)
+    NavigationManager* NS_RETURNS_INNER_POINTER navigationManager;
 @property(nonatomic, readwrite, strong) UITextField* field;
 @end
 

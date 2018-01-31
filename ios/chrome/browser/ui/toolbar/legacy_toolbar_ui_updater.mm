@@ -29,9 +29,10 @@
 // The ToolbarOwner passed on initialization.
 @property(nonatomic, readonly, strong) id<ToolbarOwner> owner;
 // The WebStateList whose navigations are driving this updater.
-@property(nonatomic, readonly) WebStateList* webStateList;
+@property(nonatomic, readonly)
+    WebStateList* NS_RETURNS_INNER_POINTER webStateList;
 // The active WebState in |webStateList|.
-@property(nonatomic, assign) web::WebState* webState;
+@property(nonatomic, assign) web::WebState* NS_RETURNS_INNER_POINTER webState;
 
 // Updates |state| using |toolbarOwner|.
 - (void)updateState;

@@ -84,7 +84,8 @@ const NSInteger kMaxNumMostVisitedTiles = 8;
 @property(nonatomic, assign) BOOL recordedPageImpression;
 // The ContentSuggestionsService, serving suggestions.
 @property(nonatomic, assign)
-    ntp_snippets::ContentSuggestionsService* contentService;
+    ntp_snippets::ContentSuggestionsService* NS_RETURNS_INNER_POINTER
+        contentService;
 // Map the section information created to the relevant category.
 @property(nonatomic, strong, nonnull)
     NSMutableDictionary<ContentSuggestionsCategoryWrapper*,

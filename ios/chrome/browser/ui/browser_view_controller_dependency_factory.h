@@ -49,7 +49,7 @@ class ChromeBrowserState;
     (infobars::InfoBarManager*)infoBarManager;
 
 - (ToolbarModelIOS*)newToolbarModelIOSWithDelegate:
-    (ToolbarModelDelegateIOS*)delegate;
+    (ToolbarModelDelegateIOS*)delegate NS_RETURNS_INNER_POINTER;
 
 - (id<Toolbar>)newToolbarControllerWithDelegate:(id<WebToolbarDelegate>)delegate
                                       urlLoader:(id<UrlLoader>)urlLoader

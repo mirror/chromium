@@ -23,7 +23,8 @@ class TranslateInfoBarDelegate;
 
 // The object that provides language data for the selection.
 @property(nonatomic, readonly)
-    const translate::TranslateInfoBarDelegate* languageData;
+    const translate::TranslateInfoBarDelegate* NS_RETURNS_INNER_POINTER
+        languageData;
 // The index of the language that's initially selected.
 @property(nonatomic, readonly) size_t initialLanguageIndex;
 // The index of the language that can't be selected (because this context is

@@ -58,7 +58,8 @@ enum UMAContextMenuAction {
 
 @interface ReadingListCoordinator ()
 
-@property(nonatomic, assign) ios::ChromeBrowserState* browserState;
+@property(nonatomic, assign)
+    ios::ChromeBrowserState* NS_RETURNS_INNER_POINTER browserState;
 // Used to load the Reading List pages.
 @property(nonatomic, weak) id<UrlLoader> URLLoader;
 @property(nonatomic, strong) ReadingListViewController* containerViewController;

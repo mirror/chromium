@@ -27,10 +27,12 @@ class WebStateList;
     : ChromeCoordinator<NewTabPagePanelProtocol>
 
 // BrowserState used to create the ContentSuggestionFactory.
-@property(nonatomic, assign) ios::ChromeBrowserState* browserState;
+@property(nonatomic, assign)
+    ios::ChromeBrowserState* NS_RETURNS_INNER_POINTER browserState;
 // URLLoader used to open pages.
 @property(nonatomic, weak) id<UrlLoader> URLLoader;
-@property(nonatomic, assign) WebStateList* webStateList;
+@property(nonatomic, assign)
+    WebStateList* NS_RETURNS_INNER_POINTER webStateList;
 @property(nonatomic, weak) id<ApplicationCommands,
                               BrowserCommands,
                               OmniboxFocuser,

@@ -29,7 +29,8 @@ class PaymentRequest;
 @property(nonatomic, weak) id<PaymentRequestEditConsumer> consumer;
 
 // The billing profile, if any.
-@property(nonatomic, assign) autofill::AutofillProfile* billingProfile;
+@property(nonatomic, assign)
+    autofill::AutofillProfile* NS_RETURNS_INNER_POINTER billingProfile;
 
 // Initializes this object with an instance of PaymentRequest which has a copy
 // of payments::WebPaymentRequest as provided by the page invoking the Payment

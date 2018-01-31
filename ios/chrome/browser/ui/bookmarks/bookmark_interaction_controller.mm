@@ -59,7 +59,8 @@ using bookmarks::BookmarkNode;
 }
 
 // The bookmark model in use.
-@property(nonatomic, assign) BookmarkModel* bookmarkModel;
+@property(nonatomic, assign)
+    BookmarkModel* NS_RETURNS_INNER_POINTER bookmarkModel;
 
 // A reference to the potentially presented bookmark browser.
 @property(nonatomic, strong) BookmarkHomeViewController* bookmarkBrowser;

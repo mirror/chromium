@@ -34,7 +34,8 @@ class GURL;
                           completion:(void (^)(FaviconAttributes*))completion;
 
 // LargeIconService used to fetch favicons.
-@property(nonatomic, readonly) favicon::LargeIconService* largeIconService;
+@property(nonatomic, readonly)
+    favicon::LargeIconService* NS_RETURNS_INNER_POINTER largeIconService;
 // Minimal acceptable favicon size. Below that, will fall back to a monogram.
 @property(nonatomic, readonly) CGFloat minSize;
 // Expected favicon size (in points). Will downscale favicon to this.
@@ -42,7 +43,7 @@ class GURL;
 // Cache for the favicon. Using a cache makes the |completion| block to be
 // called synchronously and potentially multiple times. If this is null, no
 // cache is used.
-@property(nonatomic, assign) LargeIconCache* cache;
+@property(nonatomic, assign) LargeIconCache* NS_RETURNS_INNER_POINTER cache;
 
 @end
 

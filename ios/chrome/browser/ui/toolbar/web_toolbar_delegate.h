@@ -18,7 +18,7 @@ class WebState;
 // Delegate interface, to be implemented by the WebToolbarController's delegate.
 @protocol WebToolbarDelegate<ToolbarCoordinatorDelegate>
 // Returns the WebState.
-- (web::WebState*)currentWebState;
+- (web::WebState*)currentWebState NS_RETURNS_INNER_POINTER;
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_TOOLBAR_WEB_TOOLBAR_DELEGATE_H_

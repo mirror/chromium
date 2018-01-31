@@ -64,8 +64,9 @@ class WebStateImpl;
 @property(nonatomic, weak) id<CRWNativeContentProvider> nativeProvider;
 @property(nonatomic, weak) id<CRWSwipeRecognizerProvider>
     swipeRecognizerProvider;
-@property(nonatomic, readonly) web::WebState* webState;
-@property(nonatomic, readonly) web::WebStateImpl* webStateImpl;
+@property(nonatomic, readonly) web::WebState* NS_RETURNS_INNER_POINTER webState;
+@property(nonatomic, readonly)
+    web::WebStateImpl* NS_RETURNS_INNER_POINTER webStateImpl;
 
 // The container view used to display content.  If the view has been purged due
 // to low memory, this will recreate it.

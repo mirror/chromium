@@ -181,7 +181,8 @@ class UpgradeInfoBarDismissObserver
                          upgradeCenter:(UpgradeCenter*)upgradeCenter
                                  tabId:(NSString*)tabId;
 
-@property(nonatomic, readonly) UpgradeInfoBarDelegate* infoBarDelegate;
+@property(nonatomic, readonly)
+    UpgradeInfoBarDelegate* NS_RETURNS_INNER_POINTER infoBarDelegate;
 @end
 
 @implementation DelegateHolder

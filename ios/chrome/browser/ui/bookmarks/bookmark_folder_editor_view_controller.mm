@@ -65,11 +65,15 @@ typedef NS_ENUM(NSInteger, ItemType) {
   BOOL _ignoresOwnMove;
 }
 @property(nonatomic, assign) BOOL editingExistingFolder;
-@property(nonatomic, assign) bookmarks::BookmarkModel* bookmarkModel;
-@property(nonatomic, assign) ios::ChromeBrowserState* browserState;
-@property(nonatomic, assign) const BookmarkNode* folder;
+@property(nonatomic, assign)
+    bookmarks::BookmarkModel* NS_RETURNS_INNER_POINTER bookmarkModel;
+@property(nonatomic, assign)
+    ios::ChromeBrowserState* NS_RETURNS_INNER_POINTER browserState;
+@property(nonatomic, assign)
+    const BookmarkNode* NS_RETURNS_INNER_POINTER folder;
 @property(nonatomic, strong) BookmarkFolderViewController* folderViewController;
-@property(nonatomic, assign) const BookmarkNode* parentFolder;
+@property(nonatomic, assign)
+    const BookmarkNode* NS_RETURNS_INNER_POINTER parentFolder;
 @property(nonatomic, weak) UIBarButtonItem* doneItem;
 @property(nonatomic, strong) BookmarkTextFieldItem* titleItem;
 @property(nonatomic, strong) BookmarkParentFolderItem* parentFolderItem;

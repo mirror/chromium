@@ -22,7 +22,8 @@ class WebViewBrowserState;
 + (void)shutDown;
 
 // The browser state associated with this configuration.
-@property(nonatomic, readonly) ios_web_view::WebViewBrowserState* browserState;
+@property(nonatomic, readonly)
+    ios_web_view::WebViewBrowserState* NS_RETURNS_INNER_POINTER browserState;
 
 // Registers a |webView| so that this class can call |shutDown| on it later on.
 // Only weak references are held, so no need for de-register method.

@@ -30,7 +30,7 @@ class WebStateImpl;
 // NavigationManagerImpl. This should only be used by tests and will be
 // removed when Tab can wrap TestWebState (see issue crbug.com/620465 for
 // progress).
-- (web::NavigationManagerImpl*)navigationManagerImpl;
+- (web::NavigationManagerImpl*)navigationManagerImpl NS_RETURNS_INNER_POINTER;
 
 // The CRWWebController from the Tab's WebState. This should only be used
 // by tests and will be removed when Tab can wrap TestWebState (see issue

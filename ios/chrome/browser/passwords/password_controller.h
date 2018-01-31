@@ -45,11 +45,13 @@ class PasswordManagerDriver;
 
 // The PasswordManagerClient owned by this PasswordController.
 @property(nonatomic, readonly)
-    password_manager::PasswordManagerClient* passwordManagerClient;
+    password_manager::PasswordManagerClient* NS_RETURNS_INNER_POINTER
+        passwordManagerClient;
 
 // The PasswordManagerDriver owned by this PasswordController.
 @property(nonatomic, readonly)
-    password_manager::PasswordManagerDriver* passwordManagerDriver;
+    password_manager::PasswordManagerDriver* NS_RETURNS_INNER_POINTER
+        passwordManagerDriver;
 
 // The PasswordFormFiller owned by this PasswordController.
 @property(nonatomic, readonly) id<PasswordFormFiller> passwordFormFiller;

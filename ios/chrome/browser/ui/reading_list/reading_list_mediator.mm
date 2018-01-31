@@ -35,7 +35,7 @@ bool EntrySorter(const ReadingListEntry* rhs, const ReadingListEntry* lhs) {
   std::unique_ptr<ReadingListModel::ScopedReadingListBatchUpdate> _batchToken;
 }
 
-@property(nonatomic, assign) ReadingListModel* model;
+@property(nonatomic, assign) ReadingListModel* NS_RETURNS_INNER_POINTER model;
 
 @property(nonatomic, assign) BOOL shouldMonitorModel;
 
@@ -44,7 +44,7 @@ bool EntrySorter(const ReadingListEntry* rhs, const ReadingListEntry* lhs) {
     FaviconAttributesProvider* attributesProvider;
 
 @property(nonatomic, assign, readonly)
-    favicon::LargeIconService* largeIconService;
+    favicon::LargeIconService* NS_RETURNS_INNER_POINTER largeIconService;
 
 @end
 

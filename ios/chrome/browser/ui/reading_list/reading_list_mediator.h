@@ -31,7 +31,7 @@ class ReadingListModel;
 // ReadingListCollectionViewItem. Returns nullptr if there is no corresponding
 // entry.
 - (nullable const ReadingListEntry*)entryFromItem:
-    (nonnull CollectionViewItem*)item;
+    (nonnull CollectionViewItem*)item NS_RETURNS_INNER_POINTER;
 
 // Marks the entry with |URL| as read.
 - (void)markEntryRead:(const GURL&)URL;

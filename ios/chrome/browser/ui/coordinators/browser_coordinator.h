@@ -31,7 +31,7 @@ typedef NS_ENUM(NSInteger, BrowserCoordinatorMode) {
 // The browser object used by this coordinator and passed into any child
 // coordinators added to it. This is a weak pointer, and setting this property
 // doesn't transfer ownership of the browser.
-@property(nonatomic, assign) Browser* browser;
+@property(nonatomic, assign) Browser* NS_RETURNS_INNER_POINTER browser;
 
 // The dispatcher this object should use to register and send commands.
 // By default this is populated with the parent coordinator's dispatcher.

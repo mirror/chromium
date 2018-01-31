@@ -13,7 +13,8 @@ class NavigationItem;
 
 // Table cell used in TabHistoryViewController.
 @interface TabHistoryCell : UICollectionViewCell
-@property(assign, nonatomic) const web::NavigationItem* item;
+@property(assign, nonatomic)
+    const web::NavigationItem* NS_RETURNS_INNER_POINTER item;
 @property(strong, nonatomic, readonly) UILabel* titleLabel;
 @end
 

@@ -7,7 +7,8 @@
 @interface LanguageSelectionContext ()
 // Redeclare public properties readwrite.
 @property(nonatomic, readwrite)
-    const translate::TranslateInfoBarDelegate* languageData;
+    const translate::TranslateInfoBarDelegate* NS_RETURNS_INNER_POINTER
+        languageData;
 @property(nonatomic, readwrite) size_t initialLanguageIndex;
 @property(nonatomic, readwrite) size_t unavailableLanguageIndex;
 @end

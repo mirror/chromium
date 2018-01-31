@@ -17,7 +17,8 @@ class ChromeBrowserState;
 // Coordinator for presenting recent tabs on iPhone.
 @interface RecentTabsHandsetCoordinator : ChromeCoordinator
 
-@property(nonatomic, assign) ios::ChromeBrowserState* browserState;
+@property(nonatomic, assign)
+    ios::ChromeBrowserState* NS_RETURNS_INNER_POINTER browserState;
 @property(nonatomic, weak) id<ApplicationCommands> dispatcher;
 @property(nonatomic, weak) id<UrlLoader> loader;
 

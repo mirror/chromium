@@ -13,12 +13,13 @@
     : OCMockComplexTypeHelper<CRWWebStateDelegate>
 // web::WebState::OpenURLParams in |webState:openURLWithParams:| call.
 @property(nonatomic, readonly)
-    const web::WebState::OpenURLParams* openURLParams;
+    const web::WebState::OpenURLParams* NS_RETURNS_INNER_POINTER openURLParams;
 // web::WebState received in delegate method calls.
-@property(nonatomic, readonly) web::WebState* webState;
+@property(nonatomic, readonly) web::WebState* NS_RETURNS_INNER_POINTER webState;
 // ContextMenuParams reveived in |webState:handleContextMenu:| call.
 // nullptr if that delegate method was not called.
-@property(nonatomic, readonly) web::ContextMenuParams* contextMenuParams;
+@property(nonatomic, readonly)
+    web::ContextMenuParams* NS_RETURNS_INNER_POINTER contextMenuParams;
 // Whether |webState:createNewWebStateForURL:openerURL:initiatedByUser:| has
 // been called or not.
 @property(nonatomic, readonly) BOOL webStateCreationRequested;

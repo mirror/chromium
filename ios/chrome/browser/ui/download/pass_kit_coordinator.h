@@ -46,7 +46,7 @@ enum class PresentAddPassesDialogResult {
 
 // Must be set before calling |start| method. Set to null when stop method is
 // called or web state is destroyed.
-@property(nonatomic, nonnull) web::WebState* webState;
+@property(nonatomic, nonnull) web::WebState* NS_RETURNS_INNER_POINTER webState;
 
 // If the PKPass is a valid pass, then the coordinator will present the "Add
 // pkpass UI". Otherwise, the coordinator will present the "failed to add

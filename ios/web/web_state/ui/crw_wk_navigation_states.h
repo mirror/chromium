@@ -76,7 +76,8 @@ enum class WKNavigationState : int {
 
 // Returns context if one was previously associated with given |navigation|.
 // Returns null if |navigation| is null.
-- (web::NavigationContextImpl*)contextForNavigation:(WKNavigation*)navigation;
+- (web::NavigationContextImpl*)contextForNavigation:(WKNavigation*)navigation
+    NS_RETURNS_INNER_POINTER;
 
 // WKNavigation which was added the most recently via |setState:forNavigation:|.
 // Updating navigation state via |setState:forNavigation:| does not change the

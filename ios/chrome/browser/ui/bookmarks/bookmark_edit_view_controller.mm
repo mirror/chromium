@@ -85,22 +85,26 @@ typedef NS_ENUM(NSInteger, ItemType) {
 
 // The bookmark this controller displays or edits.
 // Redefined to be readwrite.
-@property(nonatomic, assign) const BookmarkNode* bookmark;
+@property(nonatomic, assign)
+    const BookmarkNode* NS_RETURNS_INNER_POINTER bookmark;
 
 // Reference to the bookmark model.
-@property(nonatomic, assign) BookmarkModel* bookmarkModel;
+@property(nonatomic, assign)
+    BookmarkModel* NS_RETURNS_INNER_POINTER bookmarkModel;
 
 // The parent of the bookmark. This may be different from |bookmark->parent()|
 // if the changes have not been saved yet. |folder| then represents the
 // candidate for the new parent of |bookmark|.  This property is always a
 // non-NULL, valid folder.
-@property(nonatomic, assign) const BookmarkNode* folder;
+@property(nonatomic, assign)
+    const BookmarkNode* NS_RETURNS_INNER_POINTER folder;
 
 // The folder picker view controller.
 // Redefined to be readwrite.
 @property(nonatomic, strong) BookmarkFolderViewController* folderViewController;
 
-@property(nonatomic, assign) ios::ChromeBrowserState* browserState;
+@property(nonatomic, assign)
+    ios::ChromeBrowserState* NS_RETURNS_INNER_POINTER browserState;
 
 // Cancel button item in navigation bar.
 @property(nonatomic, strong) UIBarButtonItem* cancelItem;

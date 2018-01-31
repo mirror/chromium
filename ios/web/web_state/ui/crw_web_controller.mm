@@ -417,7 +417,8 @@ NSError* WKWebViewErrorWithSource(NSError* error, WKWebViewErrorSource source) {
 // Returns NavigationManager's session controller.
 @property(weak, nonatomic, readonly) CRWSessionController* sessionController;
 // The associated NavigationManagerImpl.
-@property(nonatomic, readonly) NavigationManagerImpl* navigationManagerImpl;
+@property(nonatomic, readonly)
+    NavigationManagerImpl* NS_RETURNS_INNER_POINTER navigationManagerImpl;
 // Whether the associated WebState has an opener.
 @property(nonatomic, readonly) BOOL hasOpener;
 // Dictionary where keys are the names of WKWebView properties and values are
@@ -449,12 +450,14 @@ NSError* WKWebViewErrorWithSource(NSError* error, WKWebViewErrorSource source) {
 @property(nonatomic, readonly) web::UserAgentType userAgentType;
 
 // Facade for Mojo API.
-@property(nonatomic, readonly) web::MojoFacade* mojoFacade;
+@property(nonatomic, readonly)
+    web::MojoFacade* NS_RETURNS_INNER_POINTER mojoFacade;
 
 // TODO(crbug.com/692871): Remove these functions and replace with more
 // appropriate NavigationItem getters.
 // Returns the navigation item for the current page.
-@property(nonatomic, readonly) web::NavigationItemImpl* currentNavItem;
+@property(nonatomic, readonly)
+    web::NavigationItemImpl* NS_RETURNS_INNER_POINTER currentNavItem;
 // Returns the current transition type.
 @property(nonatomic, readonly) ui::PageTransition currentTransition;
 // Returns the referrer for current navigation item. May be empty.
@@ -547,7 +550,8 @@ NSError* WKWebViewErrorWithSource(NSError* error, WKWebViewErrorSource source) {
 // Returns a NSMutableURLRequest that represents the current NavigationItem.
 - (NSMutableURLRequest*)requestForCurrentNavigationItem;
 // Returns the WKBackForwardListItemHolder for the current navigation item.
-- (web::WKBackForwardListItemHolder*)currentBackForwardListItemHolder;
+- (web::WKBackForwardListItemHolder*)currentBackForwardListItemHolder
+    NS_RETURNS_INNER_POINTER;
 // Updates the WKBackForwardListItemHolder navigation item.
 - (void)updateCurrentBackForwardListItemHolder;
 
@@ -562,7 +566,7 @@ NSError* WKWebViewErrorWithSource(NSError* error, WKWebViewErrorSource source) {
 // callback of the placeholder navigation. See "Handling App-specific URLs"
 // section of go/bling-navigation-experiment for details.
 - (web::NavigationContextImpl*)loadPlaceholderInWebViewForURL:
-    (const GURL&)originalURL;
+    (const GURL&)originalURL NS_RETURNS_INNER_POINTER;
 // Transitions |item| to web::ErrorRetryState::kNavigatingToFailedNavigationItem
 // state. This is part of auto reloading an item that previously triggered a
 // native error view.
@@ -807,7 +811,7 @@ typedef void (^ViewportStateCompletion)(const web::PageViewportState*);
 // Returns context for pending navigation that has |URL|. null if there is no
 // matching pending navigation.
 - (web::NavigationContextImpl*)contextForPendingNavigationWithURL:
-    (const GURL&)URL;
+    (const GURL&)URL NS_RETURNS_INNER_POINTER;
 // Loads request for the URL of the current navigation item. Subclasses may
 // choose to build a new NSURLRequest and call |loadRequest| on the underlying
 // web view, or use native web view navigation where possible (for example,

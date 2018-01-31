@@ -80,7 +80,8 @@ extern NSString* const kProxyPassthroughHeaderValue;
 @interface Tab : NSObject
 
 // Browser state associated with this Tab.
-@property(nonatomic, readonly) ios::ChromeBrowserState* browserState;
+@property(nonatomic, readonly)
+    ios::ChromeBrowserState* NS_RETURNS_INNER_POINTER browserState;
 
 // The Passkit Dialog provider used to show the UI to download a passkit object.
 @property(nonatomic, weak) id<PassKitDialogProvider> passKitDialogProvider;
@@ -94,7 +95,7 @@ extern NSString* const kProxyPassthroughHeaderValue;
 @property(nonatomic, readonly) NSString* tabId;
 
 // The Webstate associated with this Tab.
-@property(nonatomic, readonly) web::WebState* webState;
+@property(nonatomic, readonly) web::WebState* NS_RETURNS_INNER_POINTER webState;
 
 @property(nonatomic, readonly) BOOL canGoBack;
 @property(nonatomic, readonly) BOOL canGoForward;
@@ -151,7 +152,7 @@ extern NSString* const kProxyPassthroughHeaderValue;
 
 // Returns the NavigationManager for this tab's WebState. Requires WebState to
 // be populated. Can return null.
-- (web::NavigationManager*)navigationManager;
+- (web::NavigationManager*)navigationManager NS_RETURNS_INNER_POINTER;
 
 // Navigate forwards or backwards to |item|.
 - (void)goToItem:(const web::NavigationItem*)item;

@@ -35,11 +35,13 @@ class WebState;
 
 // IOS specific version of ToolbarModel that is used for grabbing security
 // info.
-@property(nonatomic, assign) ToolbarModelIOS* toolbarModel;
+@property(nonatomic, assign)
+    ToolbarModelIOS* NS_RETURNS_INNER_POINTER toolbarModel;
 
 // The WebState being observed for invocations of the Payment Request API.
 // Should outlive this instance. May be nullptr.
-@property(nonatomic, assign) web::WebState* activeWebState;
+@property(nonatomic, assign)
+    web::WebState* NS_RETURNS_INNER_POINTER activeWebState;
 
 // Designated initializer.
 - (instancetype)initWithBaseViewController:(UIViewController*)viewController

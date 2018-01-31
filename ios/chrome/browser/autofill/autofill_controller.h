@@ -29,7 +29,8 @@ class WebState;
 // Handles Autofill.
 @interface AutofillController : NSObject
 
-@property(nonatomic, readonly) ios::ChromeBrowserState* browserState;
+@property(nonatomic, readonly)
+    ios::ChromeBrowserState* NS_RETURNS_INNER_POINTER browserState;
 @property(weak, nonatomic, readonly) id<FormSuggestionProvider>
     suggestionProvider;
 

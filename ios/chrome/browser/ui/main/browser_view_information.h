@@ -30,7 +30,7 @@ class ChromeBrowserState;
 @property(nonatomic, assign) BrowserViewController* currentBVC;
 
 // Returns the browser state corresponding to the current browser view.
-- (ios::ChromeBrowserState*)currentBrowserState;
+- (ios::ChromeBrowserState*)currentBrowserState NS_RETURNS_INNER_POINTER;
 
 // Returns the tab model corresponding to the current browser view.
 - (TabModel*)currentTabModel;

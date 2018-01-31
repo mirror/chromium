@@ -78,7 +78,8 @@ NSString* const kMessageTextViewBulletRTLFormat = @"\u202E%@\u202C";
 // text to be laid out using as many lines as necessary.
 @property(nonatomic, readonly) CGRect containerBounds;
 // Allows this view to perform navigation actions such as reloading.
-@property(nonatomic, readonly) web::NavigationManager* navigationManager;
+@property(nonatomic, readonly)
+    web::NavigationManager* NS_RETURNS_INNER_POINTER navigationManager;
 
 // Subview layout methods.  Must be called in the following order, as subsequent
 // layouts reference the values set in previous functions.

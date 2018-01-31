@@ -256,7 +256,8 @@ layoutAttributesForSupplementaryViewOfKind:(NSString*)kind
 }
 
 // Returns the NavigationItem corresponding with |indexPath|.
-- (const web::NavigationItem*)itemAtIndexPath:(NSIndexPath*)indexPath;
+- (const web::NavigationItem*)itemAtIndexPath:(NSIndexPath*)indexPath
+    NS_RETURNS_INNER_POINTER;
 
 // Removes all NavigationItem pointers from this class.  Tapping a cell that
 // triggers a navigation may delete NavigationItems, so NavigationItem
