@@ -22,6 +22,53 @@
       "revId": "080c8f2ec1170eb3e1cb232a26deade254450905",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7862f05_018d857d",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1395,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2018-01-31T22:54:02Z",
+      "side": 1,
+      "message": "It was previously called on UI thread too.\n\nThis seems incredibly racey though - either it forces every test to take 10s (presumably the test flushes the queue?) or if you had a longer test it randomly shuts down?\nCan you not execute the task where it was previously? Is the concern that startuptaskrunner didn\u0027t run by then?",
+      "parentUuid": "d55aa8bf_7820ae10",
+      "range": {
+        "startLine": 1395,
+        "startChar": 50,
+        "endLine": 1395,
+        "endChar": 58
+      },
+      "revId": "080c8f2ec1170eb3e1cb232a26deade254450905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "24ba5bda_6c55ac6c",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1905,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2018-01-31T22:54:02Z",
+      "side": 1,
+      "message": "update comment",
+      "range": {
+        "startLine": 1905,
+        "startChar": 12,
+        "endLine": 1905,
+        "endChar": 31
+      },
+      "revId": "080c8f2ec1170eb3e1cb232a26deade254450905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
