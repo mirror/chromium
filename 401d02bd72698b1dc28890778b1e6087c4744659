@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a6b70bc9_cb8abaf4",
+        "filename": "components/password_manager/core/browser/export/password_manager_exporter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2018-01-31T11:45:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd4c6e93_3f0825a7",
+      "range": {
+        "startLine": 60,
+        "startChar": 49,
+        "endLine": 60,
+        "endChar": 68
+      },
+      "revId": "401d02bd72698b1dc28890778b1e6087c4744659",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d4028e9_863e0642",
         "filename": "components/password_manager/core/browser/export/password_manager_exporter.h",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6d338738_df0595ae",
+        "filename": "components/password_manager/core/browser/export/password_manager_exporter.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2018-01-31T11:45:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d4028e9_863e0642",
+      "range": {
+        "startLine": 60,
+        "startChar": 40,
+        "endLine": 60,
+        "endChar": 45
+      },
+      "revId": "401d02bd72698b1dc28890778b1e6087c4744659",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e98d0886_1369bdf4",
         "filename": "components/password_manager/core/browser/export/password_manager_exporter.h",
         "patchSetId": 8
@@ -68,6 +116,30 @@
       "revId": "401d02bd72698b1dc28890778b1e6087c4744659",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18ed3cde_fbdea3fc",
+        "filename": "components/password_manager/core/browser/export/password_manager_exporter.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2018-01-31T11:45:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e98d0886_1369bdf4",
+      "range": {
+        "startLine": 93,
+        "startChar": 9,
+        "endLine": 93,
+        "endChar": 28
+      },
+      "revId": "401d02bd72698b1dc28890778b1e6087c4744659",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
