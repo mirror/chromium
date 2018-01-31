@@ -36,6 +36,21 @@ class ChromeScreenshotGrabber : public ash::ScreenshotDelegate,
     return screenshot_grabber_.get();
   }
 
+  ///  ----- <NEW>
+  void NewHandleTakeScreenshotForAllRootWindows();
+
+  void OnTookRootWindowScreenshot(
+      const base::Time& screenshot_time,
+      const base::Optional<int>& display_num,
+      ScreenshotGrabberObserver::Result result,
+      scoped_refptr<base::RefCountedMemory> png_data);
+
+  void NewPrepareFileAndRunOnBlockingPool(
+      const base::FilePath& path,
+      const FileCallback& callback);
+
+  ///  ---- <NEW/>
+
   // ash::ScreenshotDelegate:
   void HandleTakeScreenshotForAllRootWindows() override;
   void HandleTakePartialScreenshot(aura::Window* window,

@@ -267,9 +267,9 @@ bool GetScreenshotDirectory(base::FilePath* directory) {
   return true;
 }
 
-std::string GetScreenshotBaseFilename() {
+std::string GetScreenshotBaseFilename(const base::Time& unexploded_now) {
   base::Time::Exploded now;
-  base::Time::Now().LocalExplode(&now);
+  unexploded_now.LocalExplode(&now);
 
   // We don't use base/i18n/time_formatting.h here because it doesn't
   // support our format.  Don't use ICU either to avoid i18n file names
@@ -325,7 +325,18 @@ ChromeScreenshotGrabber* ChromeScreenshotGrabber::Get() {
   return g_chrome_screenshot_grabber_instance;
 }
 
+// OK, so the ordering here means that the notification shown is for the
+// secondary display's screenshot. Is that what we really want?
+//
+// Otherwise, this isn't the
+//
+// Time needs to go into the default separation. As written, we start doing
+// time when we start,
+
 void ChromeScreenshotGrabber::HandleTakeScreenshotForAllRootWindows() {
+  NewHandleTakeScreenshotForAllRootWindows();
+  return;
+
   if (ScreenshotsDisabled()) {
     screenshot_grabber_->NotifyScreenshotCompleted(
         ui::ScreenshotGrabberObserver::SCREENSHOTS_DISABLED, base::FilePath());
@@ -340,7 +351,8 @@ void ChromeScreenshotGrabber::HandleTakeScreenshotForAllRootWindows() {
     return;
   }
 
-  std::string screenshot_basename = GetScreenshotBaseFilename();
+  std::string screenshot_basename = GetScreenshotBaseFilename(
+      base::Time::Now());
   aura::Window::Windows root_windows = ash::Shell::GetAllRootWindows();
   // Reorder root_windows to take the primary root window's snapshot at first.
   aura::Window* primary_root = ash::Shell::GetPrimaryRootWindow();
@@ -363,6 +375,176 @@ void ChromeScreenshotGrabber::HandleTakeScreenshotForAllRootWindows() {
   base::RecordAction(base::UserMetricsAction("Screenshot_TakeFull"));
 }
 
+// -------------------
+// -------------------
+// -------------------
+
+
+void ChromeScreenshotGrabber::NewHandleTakeScreenshotForAllRootWindows() {
+  aura::Window::Windows root_windows = ash::Shell::GetAllRootWindows();
+  // Reorder root_windows to take the primary root window's snapshot at first.
+  aura::Window* primary_root = ash::Shell::GetPrimaryRootWindow();
+  if (*(root_windows.begin()) != primary_root) {
+    root_windows.erase(
+        std::find(root_windows.begin(), root_windows.end(), primary_root));
+    root_windows.insert(root_windows.begin(), primary_root);
+  }
+  base::Time time = base::Time::Now();
+  for (size_t i = 0; i < root_windows.size(); ++i) {
+    aura::Window* root_window = root_windows[i];
+    gfx::Rect rect = root_window->bounds();
+
+    base::Optional<int> display_id;
+    if (root_windows.size() > 1)
+      display_id = static_cast<int>(i + 1);
+    screenshot_grabber_->TakeScreenshotAndCall(
+        root_window,
+        rect,
+        base::Bind(&ChromeScreenshotGrabber::OnTookRootWindowScreenshot,
+                   weak_factory_.GetWeakPtr(),
+                   time,
+                   display_id));
+  }
+  base::RecordAction(base::UserMetricsAction("Screenshot_TakeFull"));
+}
+
+// THIS IS ALL COPY PASTA FROM SCREENSHOT GRABBER CC.
+namespace {
+
+using ui::ScreenshotGrabberDelegate;
+using ui::ScreenshotGrabberObserver;
+
+using ShowNotificationCallback =
+    base::Callback<void(ScreenshotGrabberObserver::Result screenshot_result,
+                        const base::FilePath& screenshot_path)>;
+
+void SaveScreenshot(scoped_refptr<base::TaskRunner> ui_task_runner,
+                    const ShowNotificationCallback& callback,
+                    const base::FilePath& screenshot_path,
+                    scoped_refptr<base::RefCountedMemory> png_data,
+                    ScreenshotGrabberDelegate::FileResult result,
+                    const base::FilePath& local_path) {
+  DCHECK(!base::MessageLoopForUI::IsCurrent());
+  DCHECK(!screenshot_path.empty());
+
+  // Convert FileResult into ScreenshotGrabberObserver::Result.
+  ScreenshotGrabberObserver::Result screenshot_result =
+      ScreenshotGrabberObserver::SCREENSHOT_SUCCESS;
+  switch (result) {
+    case ScreenshotGrabberDelegate::FILE_SUCCESS:
+      // Successfully got a local file to write to, write png data.
+      DCHECK_GT(static_cast<int>(png_data->size()), 0);
+      if (static_cast<size_t>(base::WriteFile(
+              local_path, reinterpret_cast<const char*>(png_data->front()),
+              static_cast<int>(png_data->size()))) != png_data->size()) {
+        LOG(ERROR) << "Failed to save to " << local_path.value();
+        screenshot_result =
+            ScreenshotGrabberObserver::SCREENSHOT_WRITE_FILE_FAILED;
+      }
+      break;
+    case ScreenshotGrabberDelegate::FILE_CHECK_DIR_FAILED:
+      screenshot_result =
+          ScreenshotGrabberObserver::SCREENSHOT_CHECK_DIR_FAILED;
+      break;
+    case ScreenshotGrabberDelegate::FILE_CREATE_DIR_FAILED:
+      screenshot_result =
+          ScreenshotGrabberObserver::SCREENSHOT_CREATE_DIR_FAILED;
+      break;
+    case ScreenshotGrabberDelegate::FILE_CREATE_FAILED:
+      screenshot_result =
+          ScreenshotGrabberObserver::SCREENSHOT_CREATE_FILE_FAILED;
+      break;
+  }
+
+  // Report the result on the UI thread.
+  ui_task_runner->PostTask(
+      FROM_HERE, base::Bind(callback, screenshot_result, screenshot_path));
+}
+
+void EnsureLocalDirectoryExists(
+    const base::FilePath& path,
+    ScreenshotGrabberDelegate::FileCallback callback) {
+  DCHECK(!base::MessageLoopForUI::IsCurrent());
+  DCHECK(!path.empty());
+
+  if (!base::CreateDirectory(path.DirName())) {
+    LOG(ERROR) << "Failed to ensure the existence of "
+               << path.DirName().value();
+    callback.Run(ScreenshotGrabberDelegate::FILE_CREATE_DIR_FAILED, path);
+    return;
+  }
+
+  callback.Run(ScreenshotGrabberDelegate::FILE_SUCCESS, path);
+}
+
+}  // namespace
+
+void ChromeScreenshotGrabber::OnTookRootWindowScreenshot(
+    const base::Time& screenshot_time,
+    const base::Optional<int>& display_num,
+    ScreenshotGrabberObserver::Result result,
+    scoped_refptr<base::RefCountedMemory> png_data) {
+  if (result != ui::ScreenshotGrabberObserver::SCREENSHOT_SUCCESS) {
+    // We didn't complete taking the screenshot.
+    OnScreenshotCompleted(result, base::FilePath());
+    return;
+  }
+
+  if (ScreenshotsDisabled()) {
+    OnScreenshotCompleted(
+        ui::ScreenshotGrabberObserver::SCREENSHOTS_DISABLED,
+        base::FilePath());
+    return;
+  }
+
+  base::FilePath screenshot_directory;
+  if (!GetScreenshotDirectory(&screenshot_directory)) {
+    OnScreenshotCompleted(
+        ui::ScreenshotGrabberObserver::SCREENSHOT_GET_DIR_FAILED,
+        base::FilePath());
+    return;
+  }
+
+  // Calculate the path.
+  std::string screenshot_basename = GetScreenshotBaseFilename(screenshot_time);
+  if (display_num.has_value()) {
+    screenshot_basename +=
+        base::StringPrintf(" - Display %d", *display_num);
+  }
+  base::FilePath screenshot_path =
+      screenshot_directory.AppendASCII(screenshot_basename + ".png");
+
+  ShowNotificationCallback screenshot_complete_callback(base::Bind(
+      &ChromeScreenshotGrabber::OnScreenshotCompleted,
+      weak_factory_.GetWeakPtr()));
+
+  NewPrepareFileAndRunOnBlockingPool(
+      screenshot_path,
+      base::Bind(&SaveScreenshot, base::ThreadTaskRunnerHandle::Get(),
+                 screenshot_complete_callback, screenshot_path, png_data));
+}
+
+void ChromeScreenshotGrabber::NewPrepareFileAndRunOnBlockingPool(
+    const base::FilePath& path,
+    const FileCallback& callback) {
+  Profile* profile = ProfileManager::GetActiveUserProfile();
+  if (drive::util::IsUnderDriveMountPoint(path)) {
+    drive::util::EnsureDirectoryExists(
+        profile, path.DirName(),
+        base::Bind(&EnsureDirectoryExistsCallback, callback, profile, path));
+    return;
+  }
+
+  base::PostTaskWithTraits(
+      FROM_HERE,
+      {base::MayBlock(), base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN},
+      base::Bind(EnsureLocalDirectoryExists, path, callback));
+}
+
+// -------------------
+// -------------------
+// -------------------
+
 void ChromeScreenshotGrabber::HandleTakePartialScreenshot(
     aura::Window* window,
     const gfx::Rect& rect) {
@@ -381,7 +563,8 @@ void ChromeScreenshotGrabber::HandleTakePartialScreenshot(
   }
 
   base::FilePath screenshot_path =
-      screenshot_directory.AppendASCII(GetScreenshotBaseFilename() + ".png");
+      screenshot_directory.AppendASCII(GetScreenshotBaseFilename(
+      base::Time::Now()) + ".png");
   screenshot_grabber_->TakeScreenshot(window, rect, screenshot_path);
   base::RecordAction(base::UserMetricsAction("Screenshot_TakePartial"));
 }
@@ -402,7 +585,8 @@ void ChromeScreenshotGrabber::HandleTakeWindowScreenshot(aura::Window* window) {
   }
 
   base::FilePath screenshot_path =
-      screenshot_directory.AppendASCII(GetScreenshotBaseFilename() + ".png");
+      screenshot_directory.AppendASCII(GetScreenshotBaseFilename(
+      base::Time::Now()) + ".png");
   screenshot_grabber_->TakeScreenshot(
       window, gfx::Rect(window->bounds().size()), screenshot_path);
   base::RecordAction(base::UserMetricsAction("Screenshot_TakeWindow"));
@@ -422,6 +606,7 @@ void ChromeScreenshotGrabber::PrepareFileAndRunOnBlockingPool(
         base::Bind(&EnsureDirectoryExistsCallback, callback, profile, path));
     return;
   }
+
   ui::ScreenshotGrabberDelegate::PrepareFileAndRunOnBlockingPool(path,
                                                                  callback);
 }
@@ -429,6 +614,11 @@ void ChromeScreenshotGrabber::PrepareFileAndRunOnBlockingPool(
 void ChromeScreenshotGrabber::OnScreenshotCompleted(
     ui::ScreenshotGrabberObserver::Result result,
     const base::FilePath& screenshot_path) {
+  LOG(ERROR) << "OnScreenshotCompleted(" << result << ", " << screenshot_path << ")";
+  
+  // TODO(erg): This is the only thing actually called by
+  // ScreenshotGrabber::NotifyScreenshotCompleted.
+
   // Do not show a notification that a screenshot was taken while no user is
   // logged in, since it is confusing for the user to get a message about it
   // after they log in (crbug.com/235217).

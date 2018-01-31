@@ -55,6 +55,21 @@ class SNAPSHOT_EXPORT ScreenshotGrabber {
   explicit ScreenshotGrabber(ScreenshotGrabberDelegate* client);
   ~ScreenshotGrabber();
 
+  // Callback for the new system, which ignores the observer crud.
+  using ScreenshotCallback = base::Callback<void(
+      ScreenshotGrabberObserver::Result screenshot_result,
+      scoped_refptr<base::RefCountedMemory> png_data)>;
+
+  void TakeScreenshotAndCall(gfx::NativeWindow window,
+                             const gfx::Rect& rect,
+                             ScreenshotCallback callback);
+
+  void NewAsyncCallback(
+      const std::string& window_identifier,
+      bool is_partial,
+      ScreenshotCallback callback,
+      scoped_refptr<base::RefCountedMemory> png_data);
+
   // Takes a screenshot of |rect| in |window| in that window's coordinate space
   // saving the result to |screenshot_path|.
   void TakeScreenshot(gfx::NativeWindow window,

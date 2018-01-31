@@ -9,6 +9,7 @@
 #include <climits>
 
 #include "base/bind.h"
+#include "base/bind_helpers.h"
 #include "base/callback.h"
 #include "base/files/file_util.h"
 #include "base/location.h"
@@ -144,6 +145,33 @@ ScreenshotGrabber::ScreenshotGrabber(ScreenshotGrabberDelegate* client)
 ScreenshotGrabber::~ScreenshotGrabber() {
 }
 
+void ScreenshotGrabber::TakeScreenshotAndCall(
+    gfx::NativeWindow window,
+    const gfx::Rect& rect,
+    ScreenshotCallback callback) {
+  DCHECK(base::MessageLoopForUI::IsCurrent());
+  last_screenshot_timestamp_ = base::TimeTicks::Now();
+
+  bool is_partial = true;
+  // Window identifier is used to log a message on failure to capture a full
+  // screen (i.e. non partial) screenshot. The only time is_partial can be
+  // false, we will also have an identification string for the window.
+  std::string window_identifier;
+#if defined(USE_AURA)
+  aura::Window* aura_window = static_cast<aura::Window*>(window);
+  is_partial = rect.size() != aura_window->bounds().size();
+  window_identifier = aura_window->GetBoundsInScreen().ToString();
+
+  cursor_hider_ = ScopedCursorHider::Create(aura_window->GetRootWindow());
+#endif
+  ui::GrabWindowSnapshotAsyncPNG(
+      window, rect,
+      base::Bind(&ScreenshotGrabber::NewAsyncCallback,
+                 factory_.GetWeakPtr(), window_identifier, is_partial,
+                 base::Passed(&callback)));
+}
+
+// TODO(erg): Eventually delete me.
 void ScreenshotGrabber::TakeScreenshot(gfx::NativeWindow window,
                                        const gfx::Rect& rect,
                                        const base::FilePath& screenshot_path) {
@@ -199,6 +227,39 @@ bool ScreenshotGrabber::HasObserver(
   return observers_.HasObserver(observer);
 }
 
+void ScreenshotGrabber::NewAsyncCallback(
+    const std::string& window_identifier,
+    bool is_partial,
+    ScreenshotCallback callback,
+    scoped_refptr<base::RefCountedMemory> png_data) {
+  DCHECK(base::MessageLoopForUI::IsCurrent());
+
+#if defined(USE_AURA)
+  cursor_hider_.reset();
+#endif
+
+  if (!png_data.get()) {
+    if (is_partial) {
+      LOG(ERROR) << "Failed to grab the window screenshot";
+      std::move(callback).Run(
+          ScreenshotGrabberObserver::SCREENSHOT_GRABWINDOW_PARTIAL_FAILED,
+          scoped_refptr<base::RefCountedMemory>());
+    } else {
+      LOG(ERROR) << "Failed to grab the window screenshot for "
+                 << window_identifier;
+      std::move(callback).Run(
+          ScreenshotGrabberObserver::SCREENSHOT_GRABWINDOW_FULL_FAILED,
+          scoped_refptr<base::RefCountedMemory>());
+    }
+    return;
+  }
+
+  std::move(callback).Run(
+      ScreenshotGrabberObserver::SCREENSHOT_SUCCESS,
+      std::move(png_data));
+}
+
+// TODO(erg): Transition all call sites to NewAsyncCallback() above.
 void ScreenshotGrabber::GrabWindowSnapshotAsyncCallback(
     const std::string& window_identifier,
     base::FilePath screenshot_path,
@@ -228,5 +289,7 @@ void ScreenshotGrabber::GrabWindowSnapshotAsyncCallback(
       base::Bind(&SaveScreenshot, base::ThreadTaskRunnerHandle::Get(),
                  notification_callback, screenshot_path, png_data));
 }
+
+
 
 }  // namespace ui
