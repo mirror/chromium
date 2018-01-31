@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "028de7fb_c25d84be",
+        "filename": "ui/app_list/views/search_result_container_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2018-01-31T17:06:09Z",
+      "side": 1,
+      "message": "nit: Needed?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 54
+      },
+      "revId": "b28e5847520739ab08973b50af86bfd090db3889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "573ab256_9ce47aec",
+        "filename": "ui/app_list/views/search_result_list_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2018-01-31T17:06:09Z",
+      "side": 1,
+      "message": "nit: probably const here is not required once you return non-const value.",
+      "range": {
+        "startLine": 35,
+        "startChar": 50,
+        "endLine": 35,
+        "endChar": 55
+      },
+      "revId": "b28e5847520739ab08973b50af86bfd090db3889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa1095cc_12311b34",
+        "filename": "ui/app_list/views/search_result_page_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2018-01-31T17:06:09Z",
+      "side": 1,
+      "message": "nit: Move comment above and \nif (Contains(focused_view)) \n  return;",
+      "range": {
+        "startLine": 283,
+        "startChar": 4,
+        "endLine": 284,
+        "endChar": 14
+      },
+      "revId": "b28e5847520739ab08973b50af86bfd090db3889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c96b44d_98dafc15",
+        "filename": "ui/app_list/views/search_result_page_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2018-01-31T17:06:09Z",
+      "side": 1,
+      "message": "nit:\nif (!first_result_view_)\n  return;\n....",
+      "range": {
+        "startLine": 288,
+        "startChar": 2,
+        "endLine": 288,
+        "endChar": 27
+      },
+      "revId": "b28e5847520739ab08973b50af86bfd090db3889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26ab75dd_54738666",
+        "filename": "ui/app_list/views/search_result_page_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2018-01-31T17:06:09Z",
+      "side": 1,
+      "message": "nit: Move this into SetBackgroundHighlighted() ?\nI think it is always needed to schedule paint if highlighted is changed.",
+      "range": {
+        "startLine": 294,
+        "startChar": 24,
+        "endLine": 294,
+        "endChar": 37
+      },
+      "revId": "b28e5847520739ab08973b50af86bfd090db3889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd977376_00689c63",
+        "filename": "ui/app_list/views/search_result_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2018-01-31T17:06:09Z",
+      "side": 1,
+      "message": "nit: Highlighted?",
+      "range": {
+        "startLine": 286,
+        "startChar": 39,
+        "endLine": 286,
+        "endChar": 47
+      },
+      "revId": "b28e5847520739ab08973b50af86bfd090db3889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
