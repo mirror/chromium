@@ -20,6 +20,7 @@
 #include "build/build_config.h"
 #include "content/public/browser/certificate_request_result_type.h"
 #include "content/public/browser/navigation_throttle.h"
+#include "content/public/browser/resource_request_info.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/media_stream_request.h"
 #include "content/public/common/resource_type.h"
@@ -84,6 +85,7 @@ struct BindSourceInfo;
 }
 
 namespace net {
+class AuthChallengeInfo;
 class ClientCertIdentity;
 using ClientCertIdentityList = std::vector<std::unique_ptr<ClientCertIdentity>>;
 class ClientCertStore;
@@ -145,6 +147,7 @@ class RenderFrameHost;
 class RenderProcessHost;
 class RenderViewHost;
 class ResourceContext;
+class ResourceDispatcherHostLoginDelegate;
 class SiteInstance;
 class SpeechRecognitionManagerDelegate;
 class StoragePartition;
@@ -1051,6 +1054,15 @@ class CONTENT_EXPORT ContentBrowserClient {
   // Get platform ClientCertStore. May return nullptr.
   virtual std::unique_ptr<net::ClientCertStore> CreateClientCertStore(
       ResourceContext* resource_context);
+
+  // Creates a ResourceDispatcherHostLoginDelegate that asks the user for a
+  // username and password.
+  virtual ResourceDispatcherHostLoginDelegate* CreateLoginDelegate(
+      net::AuthChallengeInfo* auth_info,
+      net::URLRequestContext* context,
+      content::ResourceRequestInfo::WebContentsGetter web_contents_getter,
+      int load_flags,
+      const GURL& url);
 };
 
 }  // namespace content

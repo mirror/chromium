@@ -407,6 +407,13 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
   std::unique_ptr<net::ClientCertStore> CreateClientCertStore(
       content::ResourceContext* resource_context) override;
 
+  content::ResourceDispatcherHostLoginDelegate* CreateLoginDelegate(
+      net::AuthChallengeInfo* auth_info,
+      net::URLRequestContext* context,
+      content::ResourceRequestInfo::WebContentsGetter web_contents_getter,
+      int load_flags,
+      const GURL& url) override;
+
  protected:
   static bool HandleWebUI(GURL* url, content::BrowserContext* browser_context);
   static bool HandleWebUIReverse(GURL* url,
