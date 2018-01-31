@@ -20,28 +20,27 @@ class BASE_EXPORT MemoryDumpProvider {
  public:
   // Optional arguments for MemoryDumpManager::RegisterDumpProvider().
   struct Options {
-    Options()
-        : dumps_on_single_thread_task_runner(false),
-          is_fast_polling_supported(false),
-          supports_heap_profiling(false) {}
-
     // |dumps_on_single_thread_task_runner| is true if the dump provider runs on
     // a SingleThreadTaskRunner, which is usually the case. It is faster to run
     // all providers that run on the same thread together without thread hops.
-    bool dumps_on_single_thread_task_runner;
+    bool dumps_on_single_thread_task_runner = false;
 
     // Set to true if the dump provider implementation supports high frequency
     // polling. Only providers running without task runner affinity are
     // supported.
-    bool is_fast_polling_supported;
+    bool is_fast_polling_supported = false;
 
     // Set to true when the dump provider supports heap profiling. MDM sends
     // OnHeapProfiling() notifications only if this is set to true.
-    bool supports_heap_profiling;
+    bool supports_heap_profiling = false;
+
+    // Set to true when the dump provider requires dumping asynchronously.
+    bool requires_async_dump = false;
   };
 
   virtual ~MemoryDumpProvider() = default;
 
+  // Only called if |requires_async_dump| is |false|.
   // Called by the MemoryDumpManager when generating memory dumps.
   // The |args| specify if the embedder should generate light/heavy dumps on
   // dump requests. The embedder should return true if the |pmd| was
@@ -50,7 +49,13 @@ class BASE_EXPORT MemoryDumpProvider {
   // (Note, the MemoryDumpManager has a fail-safe logic which will disable the
   // MemoryDumpProvider for the entire trace session if it fails consistently).
   virtual bool OnMemoryDump(const MemoryDumpArgs& args,
-                            ProcessMemoryDump* pmd) = 0;
+                            ProcessMemoryDump* pmd) {}
+
+  // Only called if |requires_async_dump| is |true|.
+  // The client is expected to dump directly into the TraceLog.
+  // The client must call |finished| on completion.
+  virtual bool OnAsyncMemoryDump(const MemoryDumpArgs& args,
+                                 base::OnceCallback finished) {}
 
   // Called by the MemoryDumpManager when an allocator should start or stop
   // collecting extensive allocation data, if supported. Called only when
