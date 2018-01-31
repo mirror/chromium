@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3651029d_ba3e31a3",
+        "filename": "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-31T08:42:24Z",
+      "side": 1,
+      "message": "Is the background color of the bottom toolbar updated on NTP?\nIf yes, I think this should moved to the AdaptiveToolbarViewController.\n\nIn any case, please remove the TODO(crbug.com/804848) in AdaptiveToolbarViewController.",
+      "revId": "76c6e2642a9845681fac432a2af7cd438d93c3aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
