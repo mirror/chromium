@@ -3144,7 +3144,12 @@ void LayoutBox::ComputeLogicalHeight(
 
   Length h;
   if (IsOutOfFlowPositioned()) {
-    ComputePositionedLogicalHeight(computed_values);
+    if (HasOverrideLogicalContentHeight()) {
+      computed_values.extent_ =
+          OverrideLogicalContentHeight() + BorderAndPaddingLogicalHeight();
+    } else {
+      ComputePositionedLogicalHeight(computed_values);
+    }
   } else {
     LayoutBlock* cb = ContainingBlock();
 
