@@ -81988,6 +81988,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Signin.ChromeAccountStateOnWebSignout"
+    enum="ChromeAccountStateInGaiaCookies">
+  <owner>droger@chromium.org</owner>
+  <summary>
+    Logs the state of the Chrome account when the user signs out on the web.
+  </summary>
+</histogram>
+
 <histogram name="Signin.CookieJar.ChromeAccountRelation" enum="AccountRelation">
   <owner>skym@chromium.org</owner>
   <summary>
