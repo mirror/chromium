@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "472fafa9_d71ec91b",
+        "filename": "content/browser/devtools/protocol/devtools_download_item.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-01-31T18:03:31Z",
+      "side": 1,
+      "message": "no {} needed",
+      "revId": "0340aebe979088be362257ca210c319ba84eab9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c88a9266_c80b60f5",
+        "filename": "content/browser/devtools/protocol/devtools_download_item.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-01-31T18:03:31Z",
+      "side": 1,
+      "message": "no (c) and all other files",
+      "revId": "0340aebe979088be362257ca210c319ba84eab9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "710bbf9a_c8232fe6",
+        "filename": "content/browser/devtools/protocol/devtools_download_item.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-01-31T18:03:31Z",
+      "side": 1,
+      "message": "does any class need to override this method?",
+      "revId": "0340aebe979088be362257ca210c319ba84eab9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4d833b3_05cd2355",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-01-31T18:03:31Z",
+      "side": 1,
+      "message": "Is devtool using a different BrowserContext? otherwise, whhile devtool is running on one tab, is it possible user start download on another tab? In that case, the DownloadManager retrieved by the other tab will be wrong",
+      "revId": "0340aebe979088be362257ca210c319ba84eab9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a76ccc0_f783f844",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-01-31T18:03:31Z",
+      "side": 1,
+      "message": "no {}",
+      "revId": "0340aebe979088be362257ca210c319ba84eab9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
