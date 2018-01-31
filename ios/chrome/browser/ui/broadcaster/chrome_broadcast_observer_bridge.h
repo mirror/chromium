@@ -12,6 +12,15 @@ class ChromeBroadcastObserverInterface {
  public:
   virtual ~ChromeBroadcastObserverInterface();
 
+  // Invoked by |-broadcastScrollViewSize:|.
+  virtual void OnScrollViewSizeBroadcasted(CGSize scroll_view_size) {}
+
+  // Invoked by |-broadcastScrollViewContentSize:|.
+  virtual void OnScrollViewContentSizeBroadcasted(CGSize content_size) {}
+
+  // Invoked by |-broadcastScrollViewContentInset:|.
+  virtual void OnScrollViewContentInsetBroadcasted(UIEdgeInsets conent_inset) {}
+
   // Invoked by |-broadcastContentScrollOffset:|.
   virtual void OnContentScrollOffsetBroadcasted(CGFloat offset) {}
 

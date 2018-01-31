@@ -13,6 +13,9 @@
 
 @interface MainContentUIState ()
 // Redefine broadcast properties as readwrite.
+@property(nonatomic, assign) CGSize scrollViewSize;
+@property(nonatomic, assign) CGSize contentSize;
+@property(nonatomic, assign) UIEdgeInsets contentInset;
 @property(nonatomic, assign) CGFloat yContentOffset;
 @property(nonatomic, assign, getter=isScrolling) BOOL scrolling;
 @property(nonatomic, assign, getter=isDragging) BOOL dragging;
@@ -25,6 +28,9 @@
 @end
 
 @implementation MainContentUIState
+@synthesize scrollViewSize = _scrollViewSize;
+@synthesize contentSize = _contentSize;
+@synthesize contentInset = _contentInset;
 @synthesize yContentOffset = _yContentOffset;
 @synthesize scrolling = _scrolling;
 @synthesize dragging = _dragging;
@@ -77,6 +83,18 @@
 }
 
 #pragma mark Public
+
+- (void)scrollViewSizeDidChange:(CGSize)scrollViewSize {
+  self.state.scrollViewSize = scrollViewSize;
+}
+
+- (void)scrollViewDidResetContentSize:(CGSize)contentSize {
+  self.state.contentSize = contentSize;
+}
+
+- (void)scrollViewDidResetContentInset:(UIEdgeInsets)contentInset {
+  self.state.contentInset = contentInset;
+}
 
 - (void)scrollViewDidScrollToOffset:(CGPoint)offset {
   self.state.yContentOffset = offset.y;
