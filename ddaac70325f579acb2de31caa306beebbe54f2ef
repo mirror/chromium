@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4ec142d_095a0f66",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-31T05:44:00Z",
+      "side": 1,
+      "message": "Should this be CloseWebWidget(), or something like \"the closing of WebWidget\"?",
+      "range": {
+        "startLine": 779,
+        "startChar": 57,
+        "endLine": 779,
+        "endChar": 62
+      },
+      "revId": "ddaac70325f579acb2de31caa306beebbe54f2ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e693c4a4_e2348e47",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 780,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-31T05:44:00Z",
+      "side": 1,
+      "message": "nit: might as well capitalize this while you\u0027re here.",
+      "range": {
+        "startLine": 780,
+        "startChar": 70,
+        "endLine": 780,
+        "endChar": 71
+      },
+      "revId": "ddaac70325f579acb2de31caa306beebbe54f2ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5dafa46_dc0ac853",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-31T05:44:00Z",
+      "side": 1,
+      "message": "I see that Close() also calls CloseWebWidget(), so combined with the call above, we\u0027ll end up calling CloseWebWidget() twice in the oopif case.  But that\u0027s ok, since CloseWebWidget already null-checks |webwidget_internal_|, and WillCloseLayerTreeView() also early-returns if host_closing_ is true, so the second call will be a no-op, right?  Might be worth adding a short comment to CloseWebWidget() to note some of this.",
+      "revId": "ddaac70325f579acb2de31caa306beebbe54f2ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
