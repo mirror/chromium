@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ed148a8_20136dec",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-31T16:49:48Z",
+      "side": 1,
+      "message": "nit: These could be JavaDocs above the static ints",
+      "range": {
+        "startLine": 69,
+        "startChar": 5,
+        "endLine": 75,
+        "endChar": 35
+      },
+      "revId": "4b5efe34f9d5469526273accb02bf97c381e1e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7470232e_21875f74",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-31T16:49:48Z",
+      "side": 1,
+      "message": "nit: early return to avoid one level of indentation",
+      "range": {
+        "startLine": 352,
+        "startChar": 8,
+        "endLine": 352,
+        "endChar": 53
+      },
+      "revId": "4b5efe34f9d5469526273accb02bf97c381e1e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "946f4aa7_6a42265b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-31T16:49:48Z",
+      "side": 1,
+      "message": "Can tryExporting() be called multiple times while a download is in progress or is this guaranteed to only be hit once?",
+      "range": {
+        "startLine": 356,
+        "startChar": 16,
+        "endLine": 356,
+        "endChar": 58
+      },
+      "revId": "4b5efe34f9d5469526273accb02bf97c381e1e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d1abb88_94e9c423",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-31T16:49:48Z",
+      "side": 1,
+      "message": "Should this and the \"Export passwords...\" above use a real ellipsis (e.g. similar to DS_CLEAR_BROWSING_DATA_SUMMARY)? (This is a good question for your UX designer if it\u0027s not obvious from the mocks)",
+      "range": {
+        "startLine": 505,
+        "startChar": 27,
+        "endLine": 505,
+        "endChar": 30
+      },
+      "revId": "4b5efe34f9d5469526273accb02bf97c381e1e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "144f3e1d_53c969ce",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferencesTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-31T16:49:48Z",
+      "side": 1,
+      "message": "nit: Can any of this be pulled into a helper method(s) shared between tests?",
+      "range": {
+        "startLine": 672,
+        "startChar": 0,
+        "endLine": 700,
+        "endChar": 34
+      },
+      "revId": "4b5efe34f9d5469526273accb02bf97c381e1e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5682d58f_df165bfe",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferencesTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-31T16:49:48Z",
+      "side": 1,
+      "message": "s/shown/hidden?",
+      "range": {
+        "startLine": 711,
+        "startChar": 11,
+        "endLine": 711,
+        "endChar": 17
+      },
+      "revId": "4b5efe34f9d5469526273accb02bf97c381e1e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
