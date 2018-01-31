@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8a11c595_81b7027d",
+        "filename": "chrome/common/crash_keys.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2018-01-31T15:55:39Z",
+      "side": 0,
+      "message": "I believe so, but I defer to the current owner of the feature. I\u0027m not sure who the current owner is, but I\u0027ll add a couple educated owner guesses to cc.",
+      "parentUuid": "810218c8_38c2f5a2",
+      "revId": "8390438fe23581433838a2ccd5f088337fb62a2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "987cfd05_14784473",
         "filename": "chrome/common/crash_keys.cc",
         "patchSetId": 1
