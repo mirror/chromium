@@ -2334,7 +2334,7 @@ ScriptPromise HTMLMediaElement::playForBindings(ScriptState* script_state) {
     String message;
     switch (code.value()) {
       case kNotAllowedError:
-        message = "play() can only be initiated by a user gesture.";
+        message = autoplay_policy_->GetPlayErrorMessage();
         RecordPlayPromiseRejected(
             PlayPromiseRejectReason::kFailedAutoplayPolicy);
         break;

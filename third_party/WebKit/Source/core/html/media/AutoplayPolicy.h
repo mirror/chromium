@@ -78,6 +78,8 @@ class AutoplayPolicy final : public GarbageCollected<AutoplayPolicy> {
   // gesture is currently being processed.
   bool IsGestureNeededForPlayback() const;
 
+  String GetPlayErrorMessage() const;
+
   virtual void Trace(blink::Visitor*);
 
  private:

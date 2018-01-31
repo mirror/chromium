@@ -11,6 +11,7 @@
 #include "core/frame/Settings.h"
 #include "core/html/media/AutoplayUmaHelper.h"
 #include "core/html/media/HTMLMediaElement.h"
+#include "core/inspector/ConsoleMessage.h"
 #include "platform/network/NetworkStateNotifier.h"
 #include "platform/runtime_enabled_features.h"
 #include "platform/wtf/Assertions.h"
@@ -21,6 +22,20 @@
 namespace blink {
 
 namespace {
+
+const char kErrorUnmuteFailed[] =
+    "Unmuting failed and the element was instead "
+    "paused. The page needs to be interacted with by the user before muted "
+    "playback can be unmuted. https://goo.gl/ximf56";
+const char kErrorAutoplayAttr[] =
+    "Autoplay failed because the document wasn't "
+    "interacted with by the user. https://goo.gl/ximf56";
+const char kErrorAutoplayFuncUnified[] =
+    "play() failed because the document "
+    "wasn't interacted with by the user. https://goo.gl/ximf56";
+const char kErrorAutoplayFuncMobile[] =
+    "play() can only be initiated by a "
+    "user gesture.";
 
 bool IsDocumentCrossOrigin(const Document& document) {
   const LocalFrame* frame = document.GetFrame();
@@ -180,6 +195,12 @@ bool AutoplayPolicy::RequestAutoplayUnmute() {
 
   if (was_autoplaying_muted) {
     if (IsGestureNeededForPlayback()) {
+      if (GetAutoplayPolicyForDocument(element_->GetDocument()) ==
+          AutoplayPolicy::Type::kDocumentUserActivationRequired) {
+        element_->GetDocument().AddConsoleMessage(ConsoleMessage::Create(
+            kJSMessageSource, kErrorMessageLevel, kErrorUnmuteFailed));
+      }
+
       autoplay_uma_helper_->RecordAutoplayUnmuteStatus(
           AutoplayUnmuteActionStatus::kFailure);
       return false;
@@ -197,6 +218,12 @@ bool AutoplayPolicy::RequestAutoplayByAttribute() {
   autoplay_uma_helper_->OnAutoplayInitiated(AutoplaySource::kAttribute);
 
   if (IsGestureNeededForPlayback()) {
+    if (GetAutoplayPolicyForDocument(element_->GetDocument()) ==
+        AutoplayPolicy::Type::kDocumentUserActivationRequired) {
+      element_->GetDocument().AddConsoleMessage(ConsoleMessage::Create(
+          kJSMessageSource, kErrorMessageLevel, kErrorAutoplayAttr));
+    }
+
     autoplay_uma_helper_->RecordCrossOriginAutoplayResult(
         CrossOriginAutoplayResult::kAutoplayBlocked);
     return false;
@@ -293,6 +320,14 @@ bool AutoplayPolicy::IsGestureNeededForPlayback() const {
     return false;
 
   return IsGestureNeededForPlaybackIfPendingUserGestureIsLocked();
+}
+
+String AutoplayPolicy::GetPlayErrorMessage() const {
+  if (GetAutoplayPolicyForDocument(element_->GetDocument()) ==
+      AutoplayPolicy::Type::kDocumentUserActivationRequired) {
+    return kErrorAutoplayFuncUnified;
+  }
+  return kErrorAutoplayFuncMobile;
 }
 
 bool AutoplayPolicy::IsGestureNeededForPlaybackIfPendingUserGestureIsLocked()
