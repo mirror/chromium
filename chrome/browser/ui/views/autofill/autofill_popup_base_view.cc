@@ -9,6 +9,8 @@
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
+#include "chrome/browser/platform_util.h"
+#include "ui/base/ui_features.h"
 #include "ui/native_theme/native_theme.h"
 #include "ui/views/border.h"
 #include "ui/views/controls/scroll_view.h"
@@ -41,31 +43,20 @@ AutofillPopupBaseView::~AutofillPopupBaseView() {
   if (delegate_) {
     delegate_->ViewDestroyed();
 
-    RemoveObserver();
+    views::WidgetFocusManager::GetInstance()->RemoveFocusChangeListener(this);
   }
 }
 
 void AutofillPopupBaseView::DoShow() {
   const bool initialize_widget = !GetWidget();
   if (initialize_widget) {
-    parent_widget_->AddObserver(this);
-    views::FocusManager* focus_manager = parent_widget_->GetFocusManager();
-    focus_manager->RegisterAccelerator(
-        ui::Accelerator(ui::VKEY_RETURN, ui::EF_NONE),
-        ui::AcceleratorManager::kNormalPriority,
-        this);
-    focus_manager->RegisterAccelerator(
-        ui::Accelerator(ui::VKEY_ESCAPE, ui::EF_NONE),
-        ui::AcceleratorManager::kNormalPriority,
-        this);
-
     // The widget is destroyed by the corresponding NativeWidget, so we use
     // a weak pointer to hold the reference and don't have to worry about
     // deletion.
     views::Widget* widget = new views::Widget;
     views::Widget::InitParams params(views::Widget::InitParams::TYPE_POPUP);
     params.delegate = this;
-    params.parent = parent_widget_->GetNativeView();
+    params.parent = parent_widget_ ? parent_widget_->GetNativeView() : nullptr;
     widget->Init(params);
 
     scroll_view_ = new views::ScrollView;
@@ -98,7 +89,7 @@ void AutofillPopupBaseView::DoHide() {
   // The controller is no longer valid after it hides us.
   delegate_ = NULL;
 
-  RemoveObserver();
+  views::WidgetFocusManager::GetInstance()->RemoveFocusChangeListener(this);
 
   if (GetWidget()) {
     // Don't call CloseNow() because some of the functions higher up the stack
@@ -117,12 +108,6 @@ void AutofillPopupBaseView::OnWidgetBoundsChanged(views::Widget* widget,
   HideController();
 }
 
-void AutofillPopupBaseView::RemoveObserver() {
-  parent_widget_->GetFocusManager()->UnregisterAccelerators(this);
-  parent_widget_->RemoveObserver(this);
-  views::WidgetFocusManager::GetInstance()->RemoveFocusChangeListener(this);
-}
-
 void AutofillPopupBaseView::DoUpdateBoundsAndRedrawPopup() {
   gfx::Rect bounds = delegate_->popup_bounds();
 
@@ -133,10 +118,18 @@ void AutofillPopupBaseView::DoUpdateBoundsAndRedrawPopup() {
 
   // Compute the space available for the popup. It's the space between its top
   // and the bottom of its parent view, minus some margin space.
-  int available_vertical_space =
-      parent_widget_->GetClientAreaBoundsInScreen().height() -
-      (bounds.y() - parent_widget_->GetClientAreaBoundsInScreen().y()) -
-      kPopupBottomMargin;
+  gfx::Rect clipping_bounds;
+#if !defined(OS_MACOSX) || BUILDFLAG(MAC_VIEWS_BROWSER)
+  clipping_bounds = parent_widget_->GetClientAreaBoundsInScreen();
+#else
+  gfx::NativeWindow window =
+      platform_util::GetTopLevel(delegate_->container_view());
+  clipping_bounds = platform_util::GetWindowBounds(window);
+#endif
+
+  int available_vertical_space = clipping_bounds.height() -
+                                 (bounds.y() - clipping_bounds.y()) -
+                                 kPopupBottomMargin;
 
   if (available_vertical_space < bounds.height()) {
     // The available space is not enough for the full popup so clamp the widget
@@ -239,22 +232,6 @@ void AutofillPopupBaseView::OnGestureEvent(ui::GestureEvent* event) {
       return;
   }
   event->SetHandled();
-}
-
-bool AutofillPopupBaseView::AcceleratorPressed(
-    const ui::Accelerator& accelerator) {
-  DCHECK_EQ(accelerator.modifiers(), ui::EF_NONE);
-
-  if (accelerator.key_code() == ui::VKEY_ESCAPE) {
-    HideController();
-    return true;
-  }
-
-  if (accelerator.key_code() == ui::VKEY_RETURN)
-    return delegate_->AcceptSelectedLine();
-
-  NOTREACHED();
-  return false;
 }
 
 void AutofillPopupBaseView::SetSelection(const gfx::Point& point) {

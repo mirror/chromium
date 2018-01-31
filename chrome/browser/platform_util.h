@@ -20,6 +20,12 @@ namespace base {
 class FilePath;
 }
 
+#if defined(OS_MACOSX)
+namespace gfx {
+class Rect;
+}
+#endif
+
 namespace platform_util {
 
 // Result of calling OpenFile() or OpenFolder() passed into OpenOperationResult.
@@ -104,6 +110,9 @@ bool IsVisible(gfx::NativeView view);
 // gesture, if enabled in System Preferences. This function returns true if
 // the feature is supported and enabled, and false otherwise.
 bool IsSwipeTrackingFromScrollEventsEnabled();
+
+// Returns the window bounds on the screen.
+gfx::Rect GetWindowBounds(gfx::NativeWindow window);
 #endif
 
 }  // namespace platform_util
