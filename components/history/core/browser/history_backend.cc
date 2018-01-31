@@ -81,8 +81,6 @@ void RunUnlessCanceled(
     closure.Run();
 }
 
-}  // namespace
-
 // How long we'll wait to do a commit, so that things are batched together.
 const int kCommitIntervalSeconds = 10;
 
@@ -96,6 +94,13 @@ const int kMaxRedirectCount = 32;
 // The number of days old a history entry can be before it is considered "old"
 // and is deleted.
 const int kExpireDaysThreshold = 90;
+
+bool IsFaviconBitmapExpired(base::Time last_updated) {
+  return (Time::Now() - last_updated) >
+         TimeDelta::FromDays(kFaviconRefetchDays);
+}
+
+}  // namespace
 
 QueuedHistoryDBTask::QueuedHistoryDBTask(
     std::unique_ptr<HistoryDBTask> task,
@@ -1535,8 +1540,7 @@ void HistoryBackend::GetLargestFaviconForURL(
     return;
   }
 
-  bitmap_result.expired =
-      (Time::Now() - last_updated) > TimeDelta::FromDays(kFaviconRefetchDays);
+  bitmap_result.expired = IsFaviconBitmapExpired(last_updated);
   bitmap_result.fetched_because_of_page_visit = last_requested.is_null();
   if (bitmap_result.is_valid())
     *favicon_bitmap_result = bitmap_result;
@@ -1647,7 +1651,8 @@ void HistoryBackend::MergeFavicon(
         // Expire the favicon bitmap because sync can provide incorrect
         // |bitmap_data|. See crbug.com/474421 for more details. Expiring the
         // favicon bitmap causes it to be redownloaded the next time that the
-        // user visits any page which uses |icon_url|.
+        // user visits any page which uses |icon_url|. It also allows storing an
+        // on-demand icon along with the icon from sync.
         thumbnail_db_->SetFaviconBitmap(bitmap_id_sizes[i].bitmap_id,
                                         bitmap_data, base::Time());
         replaced_bitmap = true;
@@ -1673,9 +1678,13 @@ void HistoryBackend::MergeFavicon(
       thumbnail_db_->DeleteFaviconBitmap(bitmap_id_sizes[0].bitmap_id);
       favicon_sizes.erase(favicon_sizes.begin());
     }
+    // Set the new bitmap as expired because the bitmaps from sync are not
+    // authoritative. Expiring the favicon bitmap causes it to be redownloaded
+    // the next time that the user visits any page which uses |icon_url|. It
+    // also allows storing an on-demand icon along with the icon from sync.
     thumbnail_db_->AddFaviconBitmap(favicon_id, bitmap_data,
-                                    FaviconBitmapType::ON_VISIT,
-                                    base::Time::Now(), pixel_size);
+                                    FaviconBitmapType::ON_VISIT, base::Time(),
+                                    pixel_size);
     favicon_sizes.push_back(pixel_size);
   }
 
@@ -1817,18 +1826,45 @@ void HistoryBackend::CloneFaviconMappingsForPages(
   }
 }
 
+bool HistoryBackend::CanSetOnDemandFavicons(const GURL& page_url) {
+  if (backend_client_ && backend_client_->IsBookmarked(page_url)) {
+    // For bookmarked urls we allow to write on demand favicons even if there is
+    // a synced favicon. We cannot surely distinguish icons from sync. A good
+    // enough proxy for icons from sync is that the icon is of type kFavicon and
+    // expired (icons from sync are immediately set as expired). There can be
+    // pages with only a small-ish icon of type kFavicon. If the icon is expired
+    // (currently after 1 week after the visit), we allow setting on-demand
+    // favicons here. They get deleted again when the page is visited.
+    std::vector<IconMapping> mapping_data;
+    thumbnail_db_->GetIconMappingsForPageURL(page_url, &mapping_data);
+
+    for (const IconMapping& mapping : mapping_data) {
+      // Icons from sync are of type kFavicon.
+      if (mapping.icon_type != favicon_base::IconType::kFavicon)
+        return false;
+
+      // Icons from sync are expired.
+      base::Time last_updated;
+      if (thumbnail_db_->GetFaviconLastUpdatedTime(mapping.icon_id,
+                                                   &last_updated) &&
+          !IsFaviconBitmapExpired(last_updated)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  // Otherwise, block the write if there is any icon stored for the page URL.
+  return !thumbnail_db_->GetIconMappingsForPageURL(page_url,
+                                                   /*mapping_data=*/nullptr);
+}
+
 bool HistoryBackend::SetOnDemandFavicons(const GURL& page_url,
                                          favicon_base::IconType icon_type,
                                          const GURL& icon_url,
                                          const std::vector<SkBitmap>& bitmaps) {
-  if (!thumbnail_db_ || !db_)
+  if (!thumbnail_db_ || !CanSetOnDemandFavicons(page_url))
     return false;
-
-  // Verify there's no known data for the page URL.
-  if (thumbnail_db_->GetIconMappingsForPageURL(page_url,
-                                               /*mapping_data=*/nullptr)) {
-    return false;
-  }
 
   return SetFaviconsImpl({page_url}, icon_type, icon_url, bitmaps,
                          FaviconBitmapType::ON_DEMAND);
