@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/network/resource_scheduler.h"
+#include "services/network/public/cpp/resource_scheduler.h"
 
 #include <stdint.h>
 
@@ -31,7 +31,7 @@
 #include "services/network/public/cpp/features.h"
 #include "url/scheme_host_port.h"
 
-namespace content {
+namespace network {
 
 namespace {
 
@@ -1303,4 +1303,4 @@ ResourceScheduler::ThrottleDelayable::GetParamsForNetworkQualityContainer() {
   }
 }
 
-}  // namespace content
+}  // namespace network
