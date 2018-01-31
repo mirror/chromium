@@ -117,6 +117,7 @@ enum UiElementName {
   kSpeechRecognitionListeningCloseButton,
   kDownloadedSnackbar,
   kControllerTrackpadLabel,
+  kControllerTrackpadRepositionLabel,
   kControllerExitButtonLabel,
   kControllerBackButtonLabel,
 
