@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b0eab37f_d4ff9436",
+        "filename": "chrome/browser/resources/settings/people_page/sync_account_control.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-31T00:56:49Z",
+      "side": 1,
+      "message": "As we discussed offline, we can address this later in another CL after talking to dschuyler@",
+      "parentUuid": "24ba4797_c39981a6",
+      "range": {
+        "startLine": 64,
+        "startChar": 11,
+        "endLine": 64,
+        "endChar": 40
+      },
+      "revId": "145945380165b2a927ddde04a7b9e2356fc9f3bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e9ff028_51f21304",
         "filename": "chrome/browser/resources/settings/people_page/sync_account_control.js",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "145945380165b2a927ddde04a7b9e2356fc9f3bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d081cf5f_a8a32d3b",
+        "filename": "chrome/browser/resources/settings/people_page/sync_account_control.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-31T00:56:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e9ff028_51f21304",
+      "range": {
+        "startLine": 101,
+        "startChar": 12,
+        "endLine": 101,
+        "endChar": 30
+      },
+      "revId": "145945380165b2a927ddde04a7b9e2356fc9f3bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1960e18e_f47415d8",
+        "filename": "chrome/browser/resources/settings/people_page/sync_account_control.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-31T00:56:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e25b3b7d_661801e6",
+      "range": {
+        "startLine": 108,
+        "startChar": 4,
+        "endLine": 108,
+        "endChar": 67
+      },
+      "revId": "145945380165b2a927ddde04a7b9e2356fc9f3bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3811f1ec_46d57a2a",
         "filename": "chrome/browser/resources/settings/people_page/sync_browser_proxy.js",
         "patchSetId": 11
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "3cd3a2f2_fdd55197",
+        "filename": "chrome/browser/resources/settings/people_page/sync_browser_proxy.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-31T00:56:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3811f1ec_46d57a2a",
+      "range": {
+        "startLine": 185,
+        "startChar": 7,
+        "endLine": 185,
+        "endChar": 56
+      },
+      "revId": "145945380165b2a927ddde04a7b9e2356fc9f3bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0862c541_4dbeb779",
         "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
         "patchSetId": 11
@@ -105,6 +201,30 @@
       "writtenOn": "2018-01-30T20:32:04Z",
       "side": 1,
       "message": "Should these be added only if DICE is enabled? (same for the one already added in previous CLs). Is it easy to get that info here?",
+      "range": {
+        "startLine": 1429,
+        "startChar": 2,
+        "endLine": 1432,
+        "endChar": 55
+      },
+      "revId": "145945380165b2a927ddde04a7b9e2356fc9f3bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d1882b7_57f7db1c",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1432,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-31T00:56:49Z",
+      "side": 1,
+      "message": "There\u0027s a build-flag for if the build supports dice at all, but it\u0027s not very easy to get whether or not the profile-in-use is actually DICE-enabled.\n\nI can wrap the build-flag check here.",
+      "parentUuid": "0862c541_4dbeb779",
       "range": {
         "startLine": 1429,
         "startChar": 2,
@@ -137,6 +257,30 @@
       "revId": "145945380165b2a927ddde04a7b9e2356fc9f3bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "164fd8c9_5c1a4837",
+        "filename": "chrome/browser/ui/webui/settings/people_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-31T00:56:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f027253b_b70ad3bf",
+      "range": {
+        "startLine": 461,
+        "startChar": 43,
+        "endLine": 461,
+        "endChar": 44
+      },
+      "revId": "145945380165b2a927ddde04a7b9e2356fc9f3bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
