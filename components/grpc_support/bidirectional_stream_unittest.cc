@@ -15,8 +15,8 @@
 #include "base/synchronization/waitable_event.h"
 #include "components/grpc_support/include/bidirectional_stream_c.h"
 #include "components/grpc_support/test/get_stream_engine.h"
-#include "components/grpc_support/test/quic_test_server.h"
 #include "net/base/net_errors.h"
+#include "net/test/quic_simple_test_server.h"
 #include "net/test/test_data_directory.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
@@ -36,23 +36,27 @@ namespace grpc_support {
 class BidirectionalStreamTest : public ::testing::TestWithParam<bool> {
  protected:
   void SetUp() override {
-    StartQuicTestServer();
-    StartTestStreamEngine(GetQuicTestServerPort());
+    quic_server_.Start();
+    StartTestStreamEngine(net::QuicSimpleTestServer::GetPort());
   }
 
   void TearDown() override {
     ShutdownTestStreamEngine();
-    ShutdownQuicTestServer();
+    quic_server_.Shutdown();
   }
 
   BidirectionalStreamTest() {}
   ~BidirectionalStreamTest() override {}
 
   stream_engine* engine() {
-    return GetTestStreamEngine(GetQuicTestServerPort());
+    return GetTestStreamEngine(net::QuicSimpleTestServer::GetPort());
   }
 
+  net::QuicSimpleTestServer* quic_server() { return &quic_server_; }
+
  private:
+  net::QuicSimpleTestServer quic_server_;
+
   DISALLOW_COPY_AND_ASSIGN(BidirectionalStreamTest);
 };
 
@@ -277,19 +281,21 @@ TEST_P(BidirectionalStreamTest, StartExampleBidiStream) {
   DCHECK(test.stream);
   bidirectional_stream_delay_request_headers_until_flush(test.stream,
                                                          GetParam());
-  bidirectional_stream_start(test.stream, kTestServerUrl, 0,
+  bidirectional_stream_start(test.stream, quic_server()->url().c_str(), 0,
                              "POST", &kTestHeadersArray, false);
   test.BlockForDone();
-  ASSERT_EQ(std::string(kHelloStatus), test.response_headers[kStatusHeader]);
-  ASSERT_EQ(std::string(kHelloHeaderValue),
-            test.response_headers[kHelloHeaderName]);
+  ASSERT_EQ(quic_server()->hello_status(),
+            test.response_headers[quic_server()->status_header_name()]);
+  ASSERT_EQ(quic_server()->hello_header_value(),
+            test.response_headers[quic_server()->hello_header_name()]);
   ASSERT_EQ(TestBidirectionalStreamCallback::ON_SUCCEEDED, test.response_step);
-  ASSERT_EQ(std::string(kHelloBodyValue, 2), test.read_data.front());
+  ASSERT_EQ(std::string(quic_server()->hello_body_value(), 2),
+            test.read_data.front());
   // Verify that individual read data joined using empty separator match
   // expected body.
-  ASSERT_EQ(std::string(kHelloBodyValue), base::StrCat(test.read_data));
-  ASSERT_EQ(std::string(kHelloTrailerValue),
-            test.response_trailers[kHelloTrailerName]);
+  ASSERT_EQ(quic_server()->hello_body_value(), base::StrCat(test.read_data));
+  ASSERT_EQ(quic_server()->hello_trailer_value(),
+            test.response_trailers[quic_server()->hello_trailer_name()]);
   bidirectional_stream_destroy(test.stream);
 }
 
@@ -302,16 +308,17 @@ TEST_P(BidirectionalStreamTest, SimplePutWithEmptyWriteDataAtTheEnd) {
   DCHECK(test.stream);
   bidirectional_stream_delay_request_headers_until_flush(test.stream,
                                                          GetParam());
-  bidirectional_stream_start(test.stream, kTestServerUrl, 0,
+  bidirectional_stream_start(test.stream, quic_server()->url().c_str(), 0,
                              "PUT", &kTestHeadersArray, false);
   test.BlockForDone();
-  ASSERT_EQ(std::string(kHelloStatus), test.response_headers[kStatusHeader]);
-  ASSERT_EQ(std::string(kHelloHeaderValue),
-            test.response_headers[kHelloHeaderName]);
+  ASSERT_EQ(quic_server()->hello_status(),
+            test.response_headers[quic_server()->status_header_name()]);
+  ASSERT_EQ(quic_server()->hello_header_value(),
+            test.response_headers[quic_server()->hello_header_name()]);
   ASSERT_EQ(TestBidirectionalStreamCallback::ON_SUCCEEDED, test.response_step);
-  ASSERT_EQ(std::string(kHelloBodyValue), test.read_data.front());
-  ASSERT_EQ(std::string(kHelloTrailerValue),
-            test.response_trailers[kHelloTrailerName]);
+  ASSERT_EQ(quic_server()->hello_body_value(), test.read_data.front());
+  ASSERT_EQ(quic_server()->hello_trailer_value(),
+            test.response_trailers[quic_server()->hello_trailer_name()]);
   bidirectional_stream_destroy(test.stream);
 }
 
@@ -324,16 +331,17 @@ TEST_P(BidirectionalStreamTest, SimpleGetWithFlush) {
                                                          GetParam());
   // Flush before start is ignored.
   bidirectional_stream_flush(test.stream);
-  bidirectional_stream_start(test.stream, kTestServerUrl, 0,
+  bidirectional_stream_start(test.stream, quic_server()->url().c_str(), 0,
                              "GET", &kTestHeadersArray, true);
   test.BlockForDone();
-  ASSERT_EQ(std::string(kHelloStatus), test.response_headers[kStatusHeader]);
-  ASSERT_EQ(std::string(kHelloHeaderValue),
-            test.response_headers[kHelloHeaderName]);
+  ASSERT_EQ(quic_server()->hello_status(),
+            test.response_headers[quic_server()->status_header_name()]);
+  ASSERT_EQ(quic_server()->hello_header_value(),
+            test.response_headers[quic_server()->hello_header_name()]);
   ASSERT_EQ(TestBidirectionalStreamCallback::ON_SUCCEEDED, test.response_step);
-  ASSERT_EQ(std::string(kHelloBodyValue), base::StrCat(test.read_data));
-  ASSERT_EQ(std::string(kHelloTrailerValue),
-            test.response_trailers[kHelloTrailerName]);
+  ASSERT_EQ(quic_server()->hello_body_value(), test.read_data.front());
+  ASSERT_EQ(quic_server()->hello_trailer_value(),
+            test.response_trailers[quic_server()->hello_trailer_name()]);
   // Flush after done is ignored.
   bidirectional_stream_flush(test.stream);
   bidirectional_stream_destroy(test.stream);
@@ -351,16 +359,17 @@ TEST_P(BidirectionalStreamTest, SimplePostWithFlush) {
                                                          GetParam());
   // Flush before start is ignored.
   bidirectional_stream_flush(test.stream);
-  bidirectional_stream_start(test.stream, kTestServerUrl, 0,
+  bidirectional_stream_start(test.stream, quic_server()->url().c_str(), 0,
                              "POST", &kTestHeadersArray, false);
   test.BlockForDone();
-  ASSERT_EQ(std::string(kHelloStatus), test.response_headers[kStatusHeader]);
-  ASSERT_EQ(std::string(kHelloHeaderValue),
-            test.response_headers[kHelloHeaderName]);
+  ASSERT_EQ(quic_server()->hello_status(),
+            test.response_headers[quic_server()->status_header_name()]);
+  ASSERT_EQ(quic_server()->hello_header_value(),
+            test.response_headers[quic_server()->hello_header_name()]);
   ASSERT_EQ(TestBidirectionalStreamCallback::ON_SUCCEEDED, test.response_step);
-  ASSERT_EQ(std::string(kHelloBodyValue), base::StrCat(test.read_data));
-  ASSERT_EQ(std::string(kHelloTrailerValue),
-            test.response_trailers[kHelloTrailerName]);
+  ASSERT_EQ(quic_server()->hello_body_value(), base::StrCat(test.read_data));
+  ASSERT_EQ(quic_server()->hello_trailer_value(),
+            test.response_trailers[quic_server()->hello_trailer_name()]);
   // Flush after done is ignored.
   bidirectional_stream_flush(test.stream);
   bidirectional_stream_destroy(test.stream);
@@ -381,16 +390,17 @@ TEST_P(BidirectionalStreamTest, SimplePostWithFlushTwice) {
                                                          GetParam());
   // Flush before start is ignored.
   bidirectional_stream_flush(test.stream);
-  bidirectional_stream_start(test.stream, kTestServerUrl, 0,
+  bidirectional_stream_start(test.stream, quic_server()->url().c_str(), 0,
                              "POST", &kTestHeadersArray, false);
   test.BlockForDone();
-  ASSERT_EQ(std::string(kHelloStatus), test.response_headers[kStatusHeader]);
-  ASSERT_EQ(std::string(kHelloHeaderValue),
-            test.response_headers[kHelloHeaderName]);
+  ASSERT_EQ(quic_server()->hello_status(),
+            test.response_headers[quic_server()->status_header_name()]);
+  ASSERT_EQ(quic_server()->hello_header_value(),
+            test.response_headers[quic_server()->hello_header_name()]);
   ASSERT_EQ(TestBidirectionalStreamCallback::ON_SUCCEEDED, test.response_step);
-  ASSERT_EQ(std::string(kHelloBodyValue), base::StrCat(test.read_data));
-  ASSERT_EQ(std::string(kHelloTrailerValue),
-            test.response_trailers[kHelloTrailerName]);
+  ASSERT_EQ(quic_server()->hello_body_value(), base::StrCat(test.read_data));
+  ASSERT_EQ(quic_server()->hello_trailer_value(),
+            test.response_trailers[quic_server()->hello_trailer_name()]);
   // Flush after done is ignored.
   bidirectional_stream_flush(test.stream);
   bidirectional_stream_destroy(test.stream);
@@ -408,16 +418,17 @@ TEST_P(BidirectionalStreamTest, SimplePostWithFlushAfterOneWrite) {
                                                          GetParam());
   // Flush before start is ignored.
   bidirectional_stream_flush(test.stream);
-  bidirectional_stream_start(test.stream, kTestServerUrl, 0,
+  bidirectional_stream_start(test.stream, quic_server()->url().c_str(), 0,
                              "POST", &kTestHeadersArray, false);
   test.BlockForDone();
-  ASSERT_EQ(std::string(kHelloStatus), test.response_headers[kStatusHeader]);
-  ASSERT_EQ(std::string(kHelloHeaderValue),
-            test.response_headers[kHelloHeaderName]);
+  ASSERT_EQ(quic_server()->hello_status(),
+            test.response_headers[quic_server()->status_header_name()]);
+  ASSERT_EQ(quic_server()->hello_header_value(),
+            test.response_headers[quic_server()->hello_header_name()]);
   ASSERT_EQ(TestBidirectionalStreamCallback::ON_SUCCEEDED, test.response_step);
-  ASSERT_EQ(std::string(kHelloBodyValue), base::StrCat(test.read_data));
-  ASSERT_EQ(std::string(kHelloTrailerValue),
-            test.response_trailers[kHelloTrailerName]);
+  ASSERT_EQ(quic_server()->hello_body_value(), base::StrCat(test.read_data));
+  ASSERT_EQ(quic_server()->hello_trailer_value(),
+            test.response_trailers[quic_server()->hello_trailer_name()]);
   // Flush after done is ignored.
   bidirectional_stream_flush(test.stream);
   bidirectional_stream_destroy(test.stream);
@@ -463,7 +474,7 @@ TEST_P(BidirectionalStreamTest, TestDelayedFlush) {
                                                          GetParam());
   // Flush before start is ignored.
   bidirectional_stream_flush(test.stream);
-  bidirectional_stream_start(test.stream, kTestServerUrl, 0,
+  bidirectional_stream_start(test.stream, quic_server()->url().c_str(), 0,
                              "POST", &kTestHeadersArray, false);
   test.BlockForDone();
   // Flush after done is ignored.
@@ -478,11 +489,12 @@ TEST_P(BidirectionalStreamTest, CancelOnRead) {
   bidirectional_stream_delay_request_headers_until_flush(test.stream,
                                                          GetParam());
   test.cancel_from_step = TestBidirectionalStreamCallback::ON_READ_COMPLETED;
-  bidirectional_stream_start(test.stream, kTestServerUrl, 0,
+  bidirectional_stream_start(test.stream, quic_server()->url().c_str(), 0,
                              "POST", &kTestHeadersArray, true);
   test.BlockForDone();
-  ASSERT_EQ(std::string(kHelloStatus), test.response_headers[kStatusHeader]);
-  ASSERT_EQ(std::string(kHelloBodyValue), test.read_data.front());
+  ASSERT_EQ(quic_server()->hello_status(),
+            test.response_headers[quic_server()->status_header_name()]);
+  ASSERT_EQ(quic_server()->hello_body_value(), test.read_data.front());
   ASSERT_EQ(TestBidirectionalStreamCallback::ON_CANCELED, test.response_step);
   bidirectional_stream_destroy(test.stream);
 }
@@ -494,10 +506,11 @@ TEST_P(BidirectionalStreamTest, CancelOnResponse) {
   bidirectional_stream_delay_request_headers_until_flush(test.stream,
                                                          GetParam());
   test.cancel_from_step = TestBidirectionalStreamCallback::ON_RESPONSE_STARTED;
-  bidirectional_stream_start(test.stream, kTestServerUrl, 0,
+  bidirectional_stream_start(test.stream, quic_server()->url().c_str(), 0,
                              "POST", &kTestHeadersArray, true);
   test.BlockForDone();
-  ASSERT_EQ(std::string(kHelloStatus), test.response_headers[kStatusHeader]);
+  ASSERT_EQ(quic_server()->hello_status(),
+            test.response_headers[quic_server()->status_header_name()]);
   ASSERT_TRUE(test.read_data.empty());
   ASSERT_EQ(TestBidirectionalStreamCallback::ON_CANCELED, test.response_step);
   bidirectional_stream_destroy(test.stream);
@@ -510,11 +523,12 @@ TEST_P(BidirectionalStreamTest, CancelOnSucceeded) {
   bidirectional_stream_delay_request_headers_until_flush(test.stream,
                                                          GetParam());
   test.cancel_from_step = TestBidirectionalStreamCallback::ON_SUCCEEDED;
-  bidirectional_stream_start(test.stream, kTestServerUrl, 0,
+  bidirectional_stream_start(test.stream, quic_server()->url().c_str(), 0,
                              "POST", &kTestHeadersArray, true);
   test.BlockForDone();
-  ASSERT_EQ(std::string(kHelloStatus), test.response_headers[kStatusHeader]);
-  ASSERT_EQ(std::string(kHelloBodyValue), test.read_data.front());
+  ASSERT_EQ(quic_server()->hello_status(),
+            test.response_headers[quic_server()->status_header_name()]);
+  ASSERT_EQ(quic_server()->hello_body_value(), test.read_data.front());
   ASSERT_EQ(TestBidirectionalStreamCallback::ON_SUCCEEDED, test.response_step);
   bidirectional_stream_destroy(test.stream);
 }
@@ -540,7 +554,7 @@ TEST_P(BidirectionalStreamTest, StreamFailBeforeReadIsExecutedOnNetworkThread) {
     bool MaybeCancel(bidirectional_stream* stream, ResponseStep step) override {
       if (step == ResponseStep::ON_READ_COMPLETED) {
         // Shut down the server dispatcher, and the stream should error out.
-        ShutdownQuicTestServerDispatcher();
+        net::QuicSimpleTestServer::ShutdownDispatcher();
       }
       return TestBidirectionalStreamCallback::MaybeCancel(stream, step);
     }
@@ -554,7 +568,7 @@ TEST_P(BidirectionalStreamTest, StreamFailBeforeReadIsExecutedOnNetworkThread) {
   DCHECK(test.stream);
   bidirectional_stream_delay_request_headers_until_flush(test.stream,
                                                          GetParam());
-  bidirectional_stream_start(test.stream, kTestServerUrl, 0,
+  bidirectional_stream_start(test.stream, quic_server()->url().c_str(), 0,
                              "POST", &kTestHeadersArray, false);
   test.BlockForDone();
   ASSERT_EQ(TestBidirectionalStreamCallback::ON_FAILED, test.response_step);
@@ -583,7 +597,7 @@ TEST_P(BidirectionalStreamTest, StreamFailAfterStreamReadyCallback) {
     bool MaybeCancel(bidirectional_stream* stream, ResponseStep step) override {
       if (step == ResponseStep::ON_STREAM_READY) {
         // Shut down the server dispatcher, and the stream should error out.
-        ShutdownQuicTestServerDispatcher();
+        net::QuicSimpleTestServer::ShutdownDispatcher();
       }
       return TestBidirectionalStreamCallback::MaybeCancel(stream, step);
     }
@@ -595,7 +609,7 @@ TEST_P(BidirectionalStreamTest, StreamFailAfterStreamReadyCallback) {
   DCHECK(test.stream);
   bidirectional_stream_delay_request_headers_until_flush(test.stream,
                                                          GetParam());
-  bidirectional_stream_start(test.stream, kTestServerUrl, 0,
+  bidirectional_stream_start(test.stream, quic_server()->url().c_str(), 0,
                              "POST", &kTestHeadersArray, false);
   test.BlockForDone();
   ASSERT_EQ(TestBidirectionalStreamCallback::ON_FAILED, test.response_step);
@@ -612,7 +626,7 @@ TEST_P(BidirectionalStreamTest,
     bool MaybeCancel(bidirectional_stream* stream, ResponseStep step) override {
       if (step == ResponseStep::ON_WRITE_COMPLETED) {
         // Shut down the server dispatcher, and the stream should error out.
-        ShutdownQuicTestServerDispatcher();
+        net::QuicSimpleTestServer::ShutdownDispatcher();
       }
       return TestBidirectionalStreamCallback::MaybeCancel(stream, step);
     }
@@ -626,7 +640,7 @@ TEST_P(BidirectionalStreamTest,
   DCHECK(test.stream);
   bidirectional_stream_delay_request_headers_until_flush(test.stream,
                                                          GetParam());
-  bidirectional_stream_start(test.stream, kTestServerUrl, 0,
+  bidirectional_stream_start(test.stream, quic_server()->url().c_str(), 0,
                              "POST", &kTestHeadersArray, false);
   test.BlockForDone();
   ASSERT_EQ(TestBidirectionalStreamCallback::ON_FAILED, test.response_step);
