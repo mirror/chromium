@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "014d857c_dbc5217f",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-31T18:44:04Z",
+      "side": 1,
+      "message": "Swapping the order of Run() and EndEventWithNetErrorCode() should not matter.",
+      "range": {
+        "startLine": 752,
+        "startChar": 0,
+        "endLine": 752,
+        "endChar": 71
+      },
+      "revId": "9ce3c401b81205bf670fc2a9f3264f87653237f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec566bac_39ea337f",
+        "filename": "net/dns/mojo_host_resolver_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-31T18:44:04Z",
+      "side": 1,
+      "message": "Swapping the order of Run() and Reset() should not matter (unless the callback calls Resolve() again, in which case it\u0027s probably better to reset it first anyway).",
+      "range": {
+        "startLine": 122,
+        "startChar": 10,
+        "endLine": 122,
+        "endChar": 24
+      },
+      "revId": "9ce3c401b81205bf670fc2a9f3264f87653237f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e45c8fb5_e96f1732",
+        "filename": "net/socket/ssl_server_socket_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-31T18:44:04Z",
+      "side": 1,
+      "message": "Swapping the order of resetting |read_buf_*| and resetting the callback does not matter because no external code is executed before Run().",
+      "range": {
+        "startLine": 177,
+        "startChar": 10,
+        "endLine": 177,
+        "endChar": 24
+      },
+      "revId": "9ce3c401b81205bf670fc2a9f3264f87653237f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
