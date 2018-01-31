@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a360d52_4b90fcc6",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-31T18:51:44Z",
+      "side": 1,
+      "message": "nit: insert an empty line before",
+      "revId": "dec51cf4aa8500aaa246df852419fffc87beee14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fe12b29_0700e837",
+        "filename": "ui/app_list/views/app_list_folder_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-31T18:51:44Z",
+      "side": 1,
+      "message": "nit: move this to private since external code should not access it.",
+      "revId": "dec51cf4aa8500aaa246df852419fffc87beee14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

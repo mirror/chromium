@@ -400,6 +400,24 @@
     },
     {
       "key": {
+        "uuid": "b69f70a5_8249b3eb",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-31T18:51:44Z",
+      "side": 1,
+      "message": "But on the L86 above, TopIconAnimationView would notify its observers. This class is one of its observers. TopIconAnimationView should not call into this class after its dtor runs.\n\nThink the problem exists before this CL. It would be nice to fix this edge case (i.e. dismissing app list while the top icon animation is in progress).\n\nHow about do the following:\n1. Make TopIconAnimationObserver::OnTopIconAnimationsComplete to also pass back a TopIconAnimationView when notifying the observers;\n2. Use that to remove relevant entry in |top_icon_views_| when notified;\n3. Here, call RemoveObserver for the remaining entries in |top_icon_views_|;",
+      "parentUuid": "ba45b8d0_8454a50f",
+      "revId": "5552f8011b3a547f02b2de5f4dacafbfbf23893e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "879cdd51_867acbcc",
         "filename": "ui/app_list/views/app_list_folder_view.cc",
         "patchSetId": 2
@@ -429,6 +447,24 @@
       "side": 1,
       "message": "TopIconAnimationView desctructs itself [1], so it may have already been desctructed in the dtor.\n\n[1] https://cs.chromium.org/chromium/src/ui/app_list/views/top_icon_animation_view.cc?q\u003dtop_icon_animation\u0026dr\u003dC\u0026l\u003d87",
       "parentUuid": "879cdd51_867acbcc",
+      "revId": "5552f8011b3a547f02b2de5f4dacafbfbf23893e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd1d306f_36d8c9e8",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-31T18:51:44Z",
+      "side": 1,
+      "message": "See my comment in the dtor.",
+      "parentUuid": "cd941b61_b9abd1ad",
       "revId": "5552f8011b3a547f02b2de5f4dacafbfbf23893e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -880,6 +916,30 @@
       "side": 1,
       "message": "Yes, we could. AppsGridView::ResetForShowApps will be called when exiting the folder, and this function clears activated_folder_item_view_. This will cause null pointer error when animation ends. So I need to remove this line https://cs.chromium.org/chromium/src/ui/app_list/views/apps_grid_view.cc?sq\u003dpackage:chromium\u0026dr\u0026l\u003d436\n\nI think it should be fine, because it will be updated to the new folder item view once another folder is opened.",
       "parentUuid": "51457fe9_db636fe8",
+      "range": {
+        "startLine": 575,
+        "startChar": 2,
+        "endLine": 575,
+        "endChar": 29
+      },
+      "revId": "5552f8011b3a547f02b2de5f4dacafbfbf23893e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "509177ef_08a5d28a",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-31T18:51:44Z",
+      "side": 1,
+      "message": "Can you elaborate why we need to remove the line in AppsGridView::ResetForShowApps? Don\u0027t we have nullptr protection?",
+      "parentUuid": "ad073255_5c9e3c75",
       "range": {
         "startLine": 575,
         "startChar": 2,
