@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "b779ddb8_dc0be2eb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-31T18:30:44Z",
+      "side": 1,
+      "message": "This could also probably use the feature utils directly.",
+      "range": {
+        "startLine": 830,
+        "startChar": 20,
+        "endLine": 830,
+        "endChar": 50
+      },
+      "revId": "262854d0be12a7c267eaf7ba901ce00d5fe8d52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0af9c8bd_a29d6357",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
         "patchSetId": 1
