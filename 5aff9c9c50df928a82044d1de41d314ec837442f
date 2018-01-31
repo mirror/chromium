@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e6e9f341_21f68f6a",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-31T19:46:04Z",
+      "side": 1,
+      "message": "Nope, removed them.",
+      "parentUuid": "5d2bc499_7ec76b7e",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 41
+      },
+      "revId": "5aff9c9c50df928a82044d1de41d314ec837442f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c08905e4_cb278824",
         "filename": "device/u2f/u2f_request.h",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "5aff9c9c50df928a82044d1de41d314ec837442f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfdbe4c4_20f74512",
+        "filename": "device/u2f/u2f_request.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-31T19:46:04Z",
+      "side": 1,
+      "message": "Done. I decided to do a poor man\u0027s structured binding using std::tie: https://crrev.com/c/887482/6..7/device/u2f/u2f_request_unittest.cc#146\n\nI also went ahead and restructured the unit tests a bit, trying to move down test expectations as much as possible.",
+      "parentUuid": "c08905e4_cb278824",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 49
+      },
+      "revId": "5aff9c9c50df928a82044d1de41d314ec837442f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

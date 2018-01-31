@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "48d8aedc_7a63f45d",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-31T19:46:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22fd4189_75ae3092",
+      "revId": "5b8ea0d803c5d3500079ff3240c60cb23d36a6c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0f2ce40_d13c1666",
         "filename": "device/u2f/u2f_register.cc",
         "patchSetId": 5
