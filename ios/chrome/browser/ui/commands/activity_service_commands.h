@@ -5,6 +5,8 @@
 #ifndef IOS_CHROME_BROWSER_UI_COMMANDS_ACTIVITY_SERVICE_COMMANDS_H_
 #define IOS_CHROME_BROWSER_UI_COMMANDS_ACTIVITY_SERVICE_COMMANDS_H_
 
+#import <Foundation/Foundation.h>
+
 @protocol ActivityServiceCommands<NSObject>
 
 // Shows the share sheet for the current page.

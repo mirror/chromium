@@ -8,11 +8,13 @@
 #import <UIKit/UIKit.h>
 
 #include "ios/chrome/browser/ui/qr_scanner/camera_controller.h"
+#import "ios/chrome/browser/ui/qr_scanner/requirements/qr_scanner_result_loading.h"
 
 @protocol QRScannerPresenting;
 @protocol QRScannerResultLoading;
 
-@interface QRScannerViewController : UIViewController<CameraControllerDelegate>
+@interface QRScannerViewController
+    : UIViewController<CameraControllerDelegate, QRScannerResultLoading>
 
 - (instancetype)
 initWithPresentationProvider:(id<QRScannerPresenting>)presentationProvider

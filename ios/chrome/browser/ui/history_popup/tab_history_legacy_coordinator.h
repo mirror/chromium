@@ -5,6 +5,7 @@
 #ifndef IOS_CHROME_BROWSER_UI_HISTORY_POPUP_TAB_HISTORY_LEGACY_COORDINATOR_H_
 #define IOS_CHROME_BROWSER_UI_HISTORY_POPUP_TAB_HISTORY_LEGACY_COORDINATOR_H_
 
+#import "ios/chrome/browser/ui/commands/history_popup_commands.h"
 #import "ios/chrome/browser/ui/coordinators/chrome_coordinator.h"
 
 @class CommandDispatcher;
@@ -17,7 +18,8 @@
 // The coordinator in charge of displaying and dismissing the TabHistoryPopup.
 // The TabHistoryPopup is presented when the user long presses the back or
 // forward Toolbar button.
-@interface LegacyTabHistoryCoordinator : ChromeCoordinator
+@interface LegacyTabHistoryCoordinator
+    : ChromeCoordinator<TabHistoryPopupCommands>
 
 // The dispatcher for this Coordinator.
 @property(nonatomic, weak) CommandDispatcher* dispatcher;

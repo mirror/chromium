@@ -5,6 +5,7 @@
 #ifndef IOS_CHROME_BROWSER_UI_ACTIVITY_SERVICES_ACTIVITY_SERVICE_LEGACY_COORDINATOR_H_
 #define IOS_CHROME_BROWSER_UI_ACTIVITY_SERVICES_ACTIVITY_SERVICE_LEGACY_COORDINATOR_H_
 
+#import "ios/chrome/browser/ui/commands/activity_service_commands.h"
 #import "ios/chrome/browser/ui/coordinators/chrome_coordinator.h"
 
 @protocol ActivityServicePositioner;
@@ -18,7 +19,8 @@ class ChromeBrowserState;
 
 // ActivityServiceLegacyCoordinator provides a public interface for the share
 // menu feature.
-@interface ActivityServiceLegacyCoordinator : ChromeCoordinator
+@interface ActivityServiceLegacyCoordinator
+    : ChromeCoordinator<ActivityServiceCommands>
 
 // Models.
 @property(nonatomic, readwrite, assign) ios::ChromeBrowserState* browserState;

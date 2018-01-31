@@ -10,6 +10,8 @@
 #include <set>
 #include <vector>
 
+#import "ios/chrome/browser/ui/material_components/app_bar_presenting.h"
+
 @protocol ApplicationCommands;
 @protocol UrlLoader;
 class GURL;
@@ -46,7 +48,7 @@ class BookmarkNode;
 @end
 
 // Class to navigate the bookmark hierarchy.
-@interface BookmarkHomeViewController : UIViewController
+@interface BookmarkHomeViewController : UIViewController<AppBarPresenting>
 
 // Set to YES, only when this view controller instance is being created
 // from cached path. Once the view controller is shown, this is set to NO.

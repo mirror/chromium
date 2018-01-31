@@ -5,6 +5,8 @@
 #ifndef IOS_CHROME_BROWSER_UI_COMMANDS_QR_SCANNER_COMMANDS_H_
 #define IOS_CHROME_BROWSER_UI_COMMANDS_QR_SCANNER_COMMANDS_H_
 
+#import <Foundation/Foundation.h>
+
 // QRScannerCommands contains commands related to scanning QR codes.
 @protocol QRScannerCommands<NSObject>
 

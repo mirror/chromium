@@ -8,6 +8,8 @@
 #import <UIKit/UIKit.h>
 #include <set>
 
+#import "ios/chrome/browser/ui/authentication/signin_promo_view_consumer.h"
+
 class GURL;
 @protocol SigninPresenter;
 @class SigninPromoViewConfigurator;
@@ -69,7 +71,7 @@ class ChromeBrowserState;
 
 @end
 
-@interface BookmarkTableView : UIView
+@interface BookmarkTableView : UIView<SigninPromoViewConsumer>
 // If the table is in edit mode.
 @property(nonatomic, assign) BOOL editing;
 // The UITableView to show bookmarks.

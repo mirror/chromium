@@ -7,8 +7,10 @@
 
 #import <UIKit/UIKit.h>
 
+#import "remoting/ios/app/app_view_controller.h"
+
 // Default created delegate class for the entire application.
-@interface AppDelegate : UIResponder<UIApplicationDelegate>
+@interface AppDelegate : UIResponder<UIApplicationDelegate, AppController>
 
 - (void)showMenuAnimated:(BOOL)animated;
 - (void)hideMenuAnimated:(BOOL)animated;

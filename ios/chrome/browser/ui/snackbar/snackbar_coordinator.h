@@ -7,10 +7,12 @@
 
 #import <Foundation/Foundation.h>
 
+#import "ios/chrome/browser/ui/commands/snackbar_commands.h"
+
 @class CommandDispatcher;
 
 // Coodinator that handles commands to show snackbars.
-@interface SnackbarCoordinator : NSObject
+@interface SnackbarCoordinator : NSObject<SnackbarCommands>
 
 // The dispatcher used to register commands.
 @property(nonatomic, weak) CommandDispatcher* dispatcher;

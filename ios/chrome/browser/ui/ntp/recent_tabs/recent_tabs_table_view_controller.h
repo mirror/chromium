@@ -5,8 +5,9 @@
 #ifndef IOS_CHROME_BROWSER_UI_NTP_RECENT_TABS_RECENT_TABS_TABLE_VIEW_CONTROLLER_H_
 #define IOS_CHROME_BROWSER_UI_NTP_RECENT_TABS_RECENT_TABS_TABLE_VIEW_CONTROLLER_H_
 
-#import "ios/chrome/browser/ui/ntp/new_tab_page_panel_protocol.h"
+#import <UIKit/UIKit.h>
 
+#import "ios/chrome/browser/ui/ntp/new_tab_page_panel_protocol.h"
 #import "ios/chrome/browser/ui/ntp/recent_tabs/recent_tabs_table_coordinator.h"
 #import "ios/chrome/browser/ui/ntp/recent_tabs/sessions_sync_user_state.h"
 
