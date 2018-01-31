@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4e3a40e8_93affa89",
+        "filename": "chrome/browser/vr/elements/procedural_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-31T23:01:56Z",
+      "side": 1,
+      "message": "Done. I need the comments inside the array to make it be formatted in pairs.",
+      "parentUuid": "55263459_849a8377",
+      "revId": "013bea69c09769135ada756a3c77bd519e451efe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7be4b6d5_5f259f97",
         "filename": "chrome/browser/vr/elements/procedural_controller.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "013bea69c09769135ada756a3c77bd519e451efe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b8aea29_f4cc653f",
+        "filename": "chrome/browser/vr/elements/procedural_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-31T23:01:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7be4b6d5_5f259f97",
+      "revId": "013bea69c09769135ada756a3c77bd519e451efe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
