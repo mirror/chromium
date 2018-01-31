@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5dd5dec_ab0e8bed",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 984,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-31T00:24:47Z",
+      "side": 1,
+      "message": "Can you remind me which process is in control of setting these scales? Is it possible for excessively interesting values to be passed? I see the struct traits does check for \u003c\u003d 0, but I\u0027m wondering if overflow is something we\u0027d need to care about?",
+      "revId": "d594b34e1ce45bce0a41a9c401584443e229e3db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
