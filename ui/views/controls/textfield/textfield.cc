@@ -38,6 +38,7 @@
 #include "ui/gfx/selection_bound.h"
 #include "ui/native_theme/native_theme.h"
 #include "ui/strings/grit/ui_strings.h"
+#include "ui/views/accessibility/view_accessibility.h"
 #include "ui/views/background.h"
 #include "ui/views/controls/focus_ring.h"
 #include "ui/views/controls/focusable_border.h"
@@ -254,7 +255,7 @@ const gfx::FontList& Textfield::GetDefaultFontList() {
   return rb.GetFontListWithDelta(ui::kLabelFontSizeDelta);
 }
 
-Textfield::Textfield()
+Textfield::Textfield(Label* label)
     : model_(new TextfieldModel(this)),
       controller_(NULL),
       scheduled_text_edit_command_(ui::TextEditCommand::INVALID_COMMAND),
@@ -270,6 +271,9 @@ Textfield::Textfield()
       selection_background_color_(SK_ColorBLUE),
       placeholder_text_draw_flags_(gfx::Canvas::DefaultCanvasTextAlignment()),
       invalid_(false),
+      ax_label_id_(label ? label->GetViewAccessibility().GetUniqueId().Get()
+                         : 0),
+      accessible_name_(label ? label->text() : base::string16()),
       text_input_type_(ui::TEXT_INPUT_TYPE_TEXT),
       text_input_flags_(0),
       performing_user_action_(false),
@@ -935,6 +939,10 @@ void Textfield::OnDragDone() {
 
 void Textfield::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   node_data->role = ax::mojom::Role::kTextField;
+  if (ax_label_id_)
+    node_data->AddIntListAttribute(ax::mojom::IntListAttribute::kLabelledbyIds,
+                                   {ax_label_id_});
+
   node_data->SetName(accessible_name_);
   // Editable state indicates support of editable interface, and is always set
   // for a textfield, even if disabled or readonly.

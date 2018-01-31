@@ -42,6 +42,7 @@ namespace views {
 
 class MenuRunner;
 class TextfieldController;
+class Label;
 
 // A views/skia textfield implementation. No platform-specific code is used.
 class VIEWS_EXPORT Textfield : public View,
@@ -62,7 +63,7 @@ class VIEWS_EXPORT Textfield : public View,
   // Returns the default FontList used by all textfields.
   static const gfx::FontList& GetDefaultFontList();
 
-  Textfield();
+  explicit Textfield(Label* label = nullptr);
   ~Textfield() override;
 
   // Set the controller for this textfield.
@@ -218,7 +219,8 @@ class VIEWS_EXPORT Textfield : public View,
   // Clears Edit history.
   void ClearEditHistory();
 
-  // Set the accessible name of the text field.
+  // Set the accessible name of the text field. Not necessary if the textfield
+  // was constructed with a label.
   void SetAccessibleName(const base::string16& name);
 
   // Set extra spacing placed between glyphs; used for obscured text styling.
@@ -503,6 +505,9 @@ class VIEWS_EXPORT Textfield : public View,
   // True when the contents are deemed unacceptable and should be indicated as
   // such.
   bool invalid_;
+
+  // The unique id for the label's accessible object.
+  const int32_t ax_label_id_;
 
   // The accessible name of the text field.
   base::string16 accessible_name_;

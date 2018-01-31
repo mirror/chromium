@@ -228,8 +228,19 @@ bool IconLabelBubbleView::OnMousePressed(const ui::MouseEvent& event) {
   return Button::OnMousePressed(event);
 }
 
+bool IconLabelBubbleView::IsDrawn() const {
+  return Button::IsDrawn() && IsBubbleShowing();
+}
+
 void IconLabelBubbleView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   label_->GetAccessibleNodeData(node_data);
+  if (node_data->GetStringAttribute(ax::mojom::StringAttribute::kName)
+          .empty()) {
+    // Fallback name when there is no accessible name from the label.
+    base::string16 tooltip_text;
+    GetTooltipText(gfx::Point(), &tooltip_text);
+    node_data->SetName(tooltip_text);
+  }
 }
 
 void IconLabelBubbleView::OnBoundsChanged(const gfx::Rect& previous_bounds) {

@@ -121,6 +121,7 @@ class IconLabelBubbleView : public views::InkDropObserver,
   gfx::Size CalculatePreferredSize() const override;
   void Layout() override;
   bool OnMousePressed(const ui::MouseEvent& event) override;
+  bool IsDrawn() const override;
   void GetAccessibleNodeData(ui::AXNodeData* node_data) override;
   void OnBoundsChanged(const gfx::Rect& previous_bounds) override;
   void OnNativeThemeChanged(const ui::NativeTheme* native_theme) override;
