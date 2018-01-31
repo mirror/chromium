@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "5e7785f5_235d6f48",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 984,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-31T16:52:21Z",
+      "side": 1,
+      "message": "Renderers are not meant to be able to make copy requests. It would be good to make that enforced in the IPC layer.",
+      "parentUuid": "7cb838f5_70943bed",
+      "revId": "d594b34e1ce45bce0a41a9c401584443e229e3db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "768e7723_c76b181c",
         "filename": "cc/trees/property_tree.cc",
         "patchSetId": 5
