@@ -65,6 +65,24 @@
     },
     {
       "key": {
+        "uuid": "ac70a1cd_a5dc25d8",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2018-01-31T04:20:45Z",
+      "side": 1,
+      "message": "+1 for factoring the PaymentHandler code out to their directory.\nI think we can add an associated interface ptr to DispatchPaymentRequestEvent (or re-use existing PaymentHandlerResponseCallback), and it can handle the OpenWindow() for payment handler.",
+      "parentUuid": "afbe7e05_3c5b01bf",
+      "revId": "928d30938930b256da00b1923b65dfc245196753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f243f362_7ea4b6c0",
         "filename": "content/browser/service_worker/service_worker_version.cc",
         "patchSetId": 2
