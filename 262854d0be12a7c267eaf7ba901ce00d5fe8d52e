@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "e32f8b3b_eaefa665",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-31T18:56:42Z",
+      "side": 1,
+      "message": "Should we list both this bug and 803091 and possibly 803090?",
+      "revId": "262854d0be12a7c267eaf7ba901ce00d5fe8d52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b779ddb8_dc0be2eb",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
         "patchSetId": 1
@@ -18,6 +35,53 @@
         "startChar": 20,
         "endLine": 830,
         "endChar": 50
+      },
+      "revId": "262854d0be12a7c267eaf7ba901ce00d5fe8d52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc9f1571_4572ef00",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-31T18:56:42Z",
+      "side": 1,
+      "message": "I like using mLocationBar.useModernDesign()... consolidates the check to one place.",
+      "parentUuid": "b779ddb8_dc0be2eb",
+      "range": {
+        "startLine": 830,
+        "startChar": 20,
+        "endLine": 830,
+        "endChar": 50
+      },
+      "revId": "262854d0be12a7c267eaf7ba901ce00d5fe8d52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d14fc8_3bc0167a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-31T18:56:42Z",
+      "side": 1,
+      "message": "In the incognito accessibility tab switcher, I think the toolbar color should be dark grey to match the background color. What happens if we always use a transparent toolbar for the accessibility tab switcher too?",
+      "range": {
+        "startLine": 831,
+        "startChar": 26,
+        "endLine": 832,
+        "endChar": 95
       },
       "revId": "262854d0be12a7c267eaf7ba901ce00d5fe8d52e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -45,6 +109,30 @@
       "revId": "262854d0be12a7c267eaf7ba901ce00d5fe8d52e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30fa80eb_e2571287",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2426,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-31T18:56:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0af9c8bd_a29d6357",
+      "range": {
+        "startLine": 2426,
+        "startChar": 23,
+        "endLine": 2426,
+        "endChar": 64
+      },
+      "revId": "262854d0be12a7c267eaf7ba901ce00d5fe8d52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
