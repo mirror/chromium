@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a63576f_085dc35b",
+        "filename": "services/audio/public/cpp/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-31T18:42:30Z",
+      "side": 1,
+      "message": "You can remove this file. //services already removes all of //services from allowed deps, and then public/cpp can implicitly depend on itself no matter what.\n\nWhat is technically incorrect in the build now (with pretty much every service directory we have) is that public/cpp freely depends on public/interfaces with no special DEPS entry, and I believe this is because  DEPS checks must not care about generated headers.\n\nIf you do want to be explicitly correct with your deps in the event that we correct that behavior at some point, I think I would recommend just adding \"+services/audio/public\" to //services/audio/DEPS. Really every service should have such in entry in its toplevel DEPS.",
+      "revId": "c5d4332ac9d41f8b3a76c503215ad61e7b76d9cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
