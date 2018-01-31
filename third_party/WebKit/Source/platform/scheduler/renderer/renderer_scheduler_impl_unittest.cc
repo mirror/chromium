@@ -208,9 +208,10 @@ class RendererSchedulerImplForTest : public RendererSchedulerImpl {
   using RendererSchedulerImpl::OnIdlePeriodStarted;
   using RendererSchedulerImpl::EstimateLongestJankFreeTaskDuration;
 
-  explicit RendererSchedulerImplForTest(
-      std::unique_ptr<TaskQueueManager> manager)
-      : RendererSchedulerImpl(std::move(manager)), update_policy_count_(0) {}
+  RendererSchedulerImplForTest(std::unique_ptr<TaskQueueManager> manager,
+                               base::Optional<base::Time> initial_virtual_time)
+      : RendererSchedulerImpl(std::move(manager), initial_virtual_time),
+        update_policy_count_(0) {}
 
   void UpdatePolicyLocked(UpdateType update_type) override {
     update_policy_count_++;
@@ -243,6 +244,10 @@ class RendererSchedulerImplForTest : public RendererSchedulerImpl {
   bool waiting_for_meaningful_paint() const {
     base::AutoLock lock(any_thread_lock_);
     return any_thread().waiting_for_meaningful_paint;
+  }
+
+  VirtualTimePolicy virtual_time_policy() const {
+    return main_thread_only().virtual_time_policy;
   }
 
   int update_policy_count_;
@@ -283,7 +288,8 @@ class RendererSchedulerImplTest : public ::testing::Test {
         CreateTaskQueueManagerForTest(
             message_loop_.get(),
             message_loop_ ? message_loop_->task_runner() : mock_task_runner_,
-            &clock_)));
+            &clock_),
+        base::nullopt));
   }
 
   void Initialize(std::unique_ptr<RendererSchedulerImplForTest> scheduler) {
@@ -1866,7 +1872,8 @@ class RendererSchedulerImplWithMockSchedulerTest
     mock_task_runner_ =
         base::MakeRefCounted<cc::OrderedSimpleTaskRunner>(&clock_, false);
     mock_scheduler_ = new RendererSchedulerImplForTest(
-        CreateTaskQueueManagerForTest(nullptr, mock_task_runner_, &clock_));
+        CreateTaskQueueManagerForTest(nullptr, mock_task_runner_, &clock_),
+        base::nullopt);
     Initialize(base::WrapUnique(mock_scheduler_));
   }
 
@@ -3766,7 +3773,9 @@ TEST_F(RendererSchedulerImplTest, UnthrottledTaskRunner) {
 }
 
 TEST_F(RendererSchedulerImplTest, EnableVirtualTime) {
+  EXPECT_FALSE(scheduler_->IsVirualTimeEnabled());
   scheduler_->EnableVirtualTime();
+  EXPECT_TRUE(scheduler_->IsVirualTimeEnabled());
 
   scoped_refptr<MainThreadTaskQueue> loading_tq =
       scheduler_->NewLoadingTaskQueue(
@@ -4151,6 +4160,30 @@ TEST_F(RendererSchedulerImplTest, PauseTimersForAndroidWebView) {
   EXPECT_THAT(run_order, ::testing::ElementsAre(std::string("T1")));
 }
 #endif  // defined(OS_ANDROID)
+
+class RendererSchedulerImplWithInitalVirtualTimeTest
+    : public RendererSchedulerImplTest {
+ public:
+  void SetUp() override {
+    if (!message_loop_) {
+      mock_task_runner_ =
+          base::MakeRefCounted<cc::OrderedSimpleTaskRunner>(&clock_, false);
+    }
+    Initialize(std::make_unique<RendererSchedulerImplForTest>(
+        CreateTaskQueueManagerForTest(
+            message_loop_.get(),
+            message_loop_ ? message_loop_->task_runner() : mock_task_runner_,
+            &clock_),
+        base::Time::FromJsTime(1000000.0)));
+  }
+};
+
+TEST_F(RendererSchedulerImplWithInitalVirtualTimeTest, VirtualTimeOverride) {
+  EXPECT_TRUE(scheduler_->IsVirualTimeEnabled());
+  EXPECT_EQ(WebViewSchedulerImpl::VirtualTimePolicy::kPause,
+            scheduler_->virtual_time_policy());
+  EXPECT_EQ(base::Time::Now(), base::Time::FromJsTime(1000000.0));
+}
 
 }  // namespace renderer_scheduler_impl_unittest
 }  // namespace scheduler

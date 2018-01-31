@@ -716,4 +716,74 @@ class VirtualTimeAndResourceErrorLoopTest : public VirtualTimeBrowserTest {
 
 HEADLESS_ASYNC_DEVTOOLED_TEST_F(VirtualTimeAndResourceErrorLoopTest);
 
+class DateDotNowInitialOverrideTest : public HeadlessAsyncDevTooledBrowserTest {
+ public:
+  void CustomizeHeadlessBrowserContext(
+      HeadlessBrowserContext::Builder& builder) override {
+    builder.SetInitialVirtualTime(base::Time::FromJsTime(123450.0));
+  }
+
+  void RunDevTooledTest() override {
+    devtools_client_->GetRuntime()->Evaluate(
+        "Date.now()",
+        base::BindRepeating(&DateDotNowInitialOverrideTest::OnEvaluateResult,
+                            base::Unretained(this)));
+  }
+
+  void OnEvaluateResult(std::unique_ptr<runtime::EvaluateResult> result) {
+    EXPECT_EQ(123450.0, result->GetResult()->GetValue()->GetDouble());
+    FinishAsynchronousTest();
+  }
+};
+
+HEADLESS_ASYNC_DEVTOOLED_TEST_F(DateDotNowInitialOverrideTest);
+
+class JavascriptTimeAlwaysAdvancesTest : public VirtualTimeBrowserTest {
+ public:
+  JavascriptTimeAlwaysAdvancesTest() {
+    EXPECT_TRUE(embedded_test_server()->Start());
+    SetInitialURL(
+        embedded_test_server()->GetURL("/virtual_time_and_date.html").spec());
+  }
+
+  void CustomizeHeadlessBrowserContext(
+      HeadlessBrowserContext::Builder& builder) override {
+    builder.SetInitialVirtualTime(base::Time::FromJsTime(1000000.0));
+  }
+
+  void SetAfterLoadVirtualTimePolicy() override {
+    devtools_client_->GetEmulation()->GetExperimental()->SetVirtualTimePolicy(
+        emulation::SetVirtualTimePolicyParams::Builder()
+            .SetPolicy(
+                emulation::VirtualTimePolicy::PAUSE_IF_NETWORK_FETCHES_PENDING)
+            .SetBudget(5000)
+            .SetWaitForNavigation(true)
+            .Build());
+  }
+
+  void OnConsoleAPICalled(
+      const runtime::ConsoleAPICalledParams& params) override {
+    EXPECT_EQ(runtime::ConsoleAPICalledType::LOG, params.GetType());
+    ASSERT_EQ(1u, params.GetArgs()->size());
+    ASSERT_EQ(runtime::RemoteObjectType::STRING,
+              (*params.GetArgs())[0]->GetType());
+    std::string result_string = (*params.GetArgs())[0]->GetValue()->GetString();
+    EXPECT_EQ("pass", result_string);
+    console_log_seen_ = true;
+  }
+
+  // emulation::Observer implementation:
+  void OnVirtualTimeBudgetExpired(
+      const emulation::VirtualTimeBudgetExpiredParams& params) override {
+    // If SetMaxVirtualTimeTaskStarvationCount was not set, this callback would
+    // never fire.
+    EXPECT_TRUE(console_log_seen_);
+    FinishAsynchronousTest();
+  }
+
+  bool console_log_seen_ = false;
+};
+
+HEADLESS_ASYNC_DEVTOOLED_TEST_F(JavascriptTimeAlwaysAdvancesTest);
+
 }  // namespace headless

@@ -114,8 +114,12 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   // The number of buckets for fine-grained Expected Queueing Time reporting.
   static const int kNumberExpectedQueueingTimeBuckets = 50;
 
-  explicit RendererSchedulerImpl(
-      std::unique_ptr<TaskQueueManager> task_queue_manager);
+  // If |initial_virtual_time| is specified then the scheduler will be created
+  // with virtual time enabled and paused with base::Time will be overridden to
+  // start at |initial_virtual_time|.
+  RendererSchedulerImpl(std::unique_ptr<TaskQueueManager> task_queue_manager,
+                        base::Optional<base::Time> initial_virtual_time);
+
   ~RendererSchedulerImpl() override;
 
   // RendererScheduler implementation:
@@ -706,7 +710,8 @@ class PLATFORM_EXPORT RendererSchedulerImpl
                    kTracingCategoryNameInfo>
         task_description_for_tracing;  // Don't use except for tracing.
     base::ObserverList<VirtualTimeObserver> virtual_time_observers;
-    base::TimeTicks initial_virtual_time;
+    base::Time initial_virtual_time;
+    base::TimeTicks initial_virtual_time_ticks;
     VirtualTimePolicy virtual_time_policy;
 
     // In VirtualTimePolicy::kDeterministicLoading virtual time is only allowed

@@ -197,7 +197,8 @@ const char* OptionalTaskDescriptionToString(
 }  // namespace
 
 RendererSchedulerImpl::RendererSchedulerImpl(
-    std::unique_ptr<TaskQueueManager> task_queue_manager)
+    std::unique_ptr<TaskQueueManager> task_queue_manager,
+    base::Optional<base::Time> initial_virtual_time)
     : helper_(std::move(task_queue_manager), this),
       idle_helper_(
           &helper_,
@@ -285,6 +286,12 @@ RendererSchedulerImpl::RendererSchedulerImpl(
 
   internal::ProcessState::Get()->is_process_backgrounded =
       main_thread_only().renderer_backgrounded;
+
+  if (initial_virtual_time) {
+    main_thread_only().initial_virtual_time = *initial_virtual_time;
+    EnableVirtualTime();
+    SetVirtualTimePolicy(VirtualTimePolicy::kPause);
+  }
 }
 
 RendererSchedulerImpl::~RendererSchedulerImpl() {
@@ -1758,12 +1765,15 @@ WakeUpBudgetPool* RendererSchedulerImpl::GetWakeUpBudgetPoolForTesting() {
 
 base::TimeTicks RendererSchedulerImpl::EnableVirtualTime() {
   if (main_thread_only().use_virtual_time)
-    return main_thread_only().initial_virtual_time;
+    return main_thread_only().initial_virtual_time_ticks;
   main_thread_only().use_virtual_time = true;
   DCHECK(!virtual_time_domain_);
-  main_thread_only().initial_virtual_time = tick_clock()->NowTicks();
+  if (main_thread_only().initial_virtual_time.is_null())
+    main_thread_only().initial_virtual_time = base::Time::Now();
+  main_thread_only().initial_virtual_time_ticks = tick_clock()->NowTicks();
   virtual_time_domain_.reset(new AutoAdvancingVirtualTimeDomain(
-      main_thread_only().initial_virtual_time, &helper_));
+      main_thread_only().initial_virtual_time,
+      main_thread_only().initial_virtual_time_ticks, &helper_));
   RegisterTimeDomain(virtual_time_domain_.get());
   virtual_time_domain_->SetObserver(this);
 
@@ -1783,7 +1793,7 @@ base::TimeTicks RendererSchedulerImpl::EnableVirtualTime() {
 
   if (main_thread_only().virtual_time_stopped)
     VirtualTimePaused();
-  return main_thread_only().initial_virtual_time;
+  return main_thread_only().initial_virtual_time_ticks;
 }
 
 bool RendererSchedulerImpl::IsVirualTimeEnabled() const {
@@ -1838,7 +1848,7 @@ void RendererSchedulerImpl::VirtualTimePaused() {
   }
   for (auto& observer : main_thread_only().virtual_time_observers) {
     observer.OnVirtualTimePaused(virtual_time_domain_->Now() -
-                                 main_thread_only().initial_virtual_time);
+                                 main_thread_only().initial_virtual_time_ticks);
   }
 }
 
@@ -1894,8 +1904,9 @@ void RendererSchedulerImpl::RemoveVirtualTimeObserver(
 
 void RendererSchedulerImpl::OnVirtualTimeAdvanced() {
   for (auto& observer : main_thread_only().virtual_time_observers) {
-    observer.OnVirtualTimeAdvanced(virtual_time_domain_->Now() -
-                                   main_thread_only().initial_virtual_time);
+    observer.OnVirtualTimeAdvanced(
+        virtual_time_domain_->Now() -
+        main_thread_only().initial_virtual_time_ticks);
   }
 }
 
