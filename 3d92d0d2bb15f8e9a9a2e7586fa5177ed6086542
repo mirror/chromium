@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d41a672f_d1d50c21",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-page-selector/viewer-page-selector.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-31T03:18:10Z",
+      "side": 1,
+      "message": "There are a lot more places where an \u003cinput\u003e inside a \u003cpaper-input-container\u003e is used, see https://cs.chromium.org/search/?q\u003d%22%3Cpaper-input-container%22+-file:third_party+-file:infra\u0026type\u003dcs.\n\nIf adding the slot is necessary, let\u0027s remove from this CL, and have a separate CL that does this for all cases.",
+      "parentUuid": "3fb062c6_826af275",
+      "range": {
+        "startLine": 57,
+        "startChar": 59,
+        "endLine": 57,
+        "endChar": 71
+      },
+      "revId": "3d92d0d2bb15f8e9a9a2e7586fa5177ed6086542",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33859f4e_92373a5b",
         "filename": "chrome/test/data/webui/settings/a11y/manage_profile_a11y_test.js",
         "patchSetId": 3
