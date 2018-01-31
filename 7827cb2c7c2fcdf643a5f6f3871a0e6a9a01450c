@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b0167f3e_469fd4e3",
+        "filename": "services/ui/display/BUILD.gn",
+        "patchSetId": 18
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1128690
+      },
+      "writtenOn": "2018-01-31T00:11:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "147d3267_9f37b1b8",
+      "range": {
+        "startLine": 9,
+        "startChar": 17,
+        "endLine": 9,
+        "endChar": 18
+      },
+      "revId": "7827cb2c7c2fcdf643a5f6f3871a0e6a9a01450c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c284a6cb_a9bdf575",
         "filename": "services/ui/display/BUILD.gn",
         "patchSetId": 18
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "db05f243_c52e9b8c",
+        "filename": "services/ui/display/BUILD.gn",
+        "patchSetId": 18
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1128690
+      },
+      "writtenOn": "2018-01-31T00:11:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c284a6cb_a9bdf575",
+      "range": {
+        "startLine": 30,
+        "startChar": 20,
+        "endLine": 30,
+        "endChar": 21
+      },
+      "revId": "7827cb2c7c2fcdf643a5f6f3871a0e6a9a01450c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56987e4f_c99a994c",
         "filename": "services/ui/display/BUILD.gn",
         "patchSetId": 18
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-30T01:55:44Z",
       "side": 1,
       "message": "I don\u0027t think this is correct; screen_manager_ozone_internal.cc includes \"chromeos/system/devicemode.h\" unconditionally and so the dependency is always needed when building that file.\n\nYou likely need to move those includes under #if defined(OS_CHROMEOS).",
+      "range": {
+        "startLine": 51,
+        "startChar": 19,
+        "endLine": 51,
+        "endChar": 20
+      },
+      "revId": "7827cb2c7c2fcdf643a5f6f3871a0e6a9a01450c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79adb9a9_0a3b3c70",
+        "filename": "services/ui/display/BUILD.gn",
+        "patchSetId": 18
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1128690
+      },
+      "writtenOn": "2018-01-31T00:11:35Z",
+      "side": 1,
+      "message": "I will separate this change because it is not required to run ozone_demo, but mus_demo needs this change.",
+      "parentUuid": "56987e4f_c99a994c",
       "range": {
         "startLine": 51,
         "startChar": 19,
