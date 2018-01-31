@@ -761,6 +761,10 @@ NSString* const kTransitionToolbarAnimationKey =
 
   _toolbarController =
       [[StackViewToolbarController alloc] initWithDispatcher:self.dispatcher];
+  [_toolbarController.stackButton
+             addTarget:self
+                action:@selector(dismissWithSelectedTabAnimation)
+      forControlEvents:UIControlEventTouchUpInside];
   [self addChildViewController:_toolbarController];
   self.toolsMenuCoordinator.presentationProvider = _toolbarController;
   CGRect toolbarFrame = [self.view bounds];
