@@ -279,6 +279,9 @@ void LockManager::RequestLock(const std::string& name,
   const auto& context = bindings_.dispatch_context();
   int64_t lock_id = next_lock_id++;
 
+  DCHECK(!(priority == Priority::OVERRIDE && wait == WaitMode::NO_WAIT))
+      << "The 'steal' and 'ifAvailable' options are mutually exclusive.";
+
   if (priority == Priority::OVERRIDE) {
     Drop(context.origin, name);
     // Inverting the ID puts it at the front of the request queue.
