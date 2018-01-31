@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19c3fa27_1e5dd52f",
+        "filename": "ios/chrome/browser/ui/settings/password_exporter.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-31T14:05:51Z",
+      "side": 1,
+      "message": "nit: I think you can remove the \"base::OnceCallback\u003cvoid(std::string)\u003e()\" here too.",
+      "range": {
+        "startLine": 46,
+        "startChar": 6,
+        "endLine": 46,
+        "endChar": 43
+      },
+      "revId": "1cbf6b6f31e4ce4499e98c847ebd0127c6b2d5a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
