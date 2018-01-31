@@ -10,6 +10,15 @@
 // An object encapsulating the broadcasted state of the main scrollable content.
 @interface MainContentUIState : NSObject
 
+// The size of the scroll view displaying the main content.
+// This should be broadcast using |-broadcastScrollViewSize:|.
+@property(nonatomic, readonly) CGSize scrollViewSize;
+// The height of the current page's rendered content.
+// This should be broadcast using |-broadcastScrollViewContentSize:|.
+@property(nonatomic, readonly) CGSize contentSize;
+// The content inset of the scroll view displaying the main content.
+// This should be broadcast using |-broadcastScrollViewContentInset:|.
+@property(nonatomic, readonly) UIEdgeInsets contentInset;
 // The vertical offset of the main content.
 // This should be broadcast using |-broadcastContentScrollOffset:|.
 @property(nonatomic, readonly) CGFloat yContentOffset;
@@ -33,6 +42,12 @@
     NS_DESIGNATED_INITIALIZER;
 - (nullable instancetype)init NS_UNAVAILABLE;
 
+// Called to broadcast changed in the scroll view's size.
+- (void)scrollViewSizeDidChange:(CGSize)scrollViewSize;
+// Called to broadcast changes in the content size.
+- (void)scrollViewDidResetContentSize:(CGSize)contentSize;
+// Called to broadcast changes in the content inset.
+- (void)scrollViewDidResetContentInset:(UIEdgeInsets)contentInset;
 // Called to broadcast scroll offset changes due to scrolling.
 - (void)scrollViewDidScrollToOffset:(CGPoint)offset;
 // Called when a drag event with |panGesture| begins.

@@ -26,6 +26,12 @@ FullscreenControllerImpl::FullscreenControllerImpl()
       mediator_(std::make_unique<FullscreenMediator>(this, model_.get())) {
   DCHECK(broadcaster_);
   [broadcaster_ addObserver:bridge_
+                forSelector:@selector(broadcastScrollViewSize:)];
+  [broadcaster_ addObserver:bridge_
+                forSelector:@selector(broadcastScrollViewContentSize:)];
+  [broadcaster_ addObserver:bridge_
+                forSelector:@selector(broadcastScrollViewContentInset:)];
+  [broadcaster_ addObserver:bridge_
                 forSelector:@selector(broadcastContentScrollOffset:)];
   [broadcaster_ addObserver:bridge_
                 forSelector:@selector(broadcastScrollViewIsScrolling:)];
@@ -79,6 +85,12 @@ void FullscreenControllerImpl::Shutdown() {
   [disabler_ disconnect];
   if (web_state_list_observer_)
     web_state_list_observer_->Disconnect();
+  [broadcaster_ removeObserver:bridge_
+                   forSelector:@selector(broadcastScrollViewSize:)];
+  [broadcaster_ removeObserver:bridge_
+                   forSelector:@selector(broadcastScrollViewContentSize:)];
+  [broadcaster_ removeObserver:bridge_
+                   forSelector:@selector(broadcastScrollViewContentInset:)];
   [broadcaster_ removeObserver:bridge_
                    forSelector:@selector(broadcastContentScrollOffset:)];
   [broadcaster_ removeObserver:bridge_
