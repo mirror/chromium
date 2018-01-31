@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "630613ed_7a7b2f62",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_paint_fragment.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2018-01-31T18:50:08Z",
+      "side": 1,
+      "message": "It took me a bit to figure out what first_fragment_map/last_fragment_map do. \n\nMight be nice to add a comment about what they do, such as \"(first|last)_fragment_map keep pointers to first|last fragment found for a given LayoutObject\"",
+      "revId": "4b405ef531d634c18d921fdd2194c747ac778321",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ccfdfc8_be643cdc",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_paint_fragment.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2018-01-31T18:50:08Z",
+      "side": 1,
+      "message": "For outline painting, I also need to find \"All inline descendants painted by this container\". I think this is first_fragment_map_.keys(). Could we add a method for this?",
+      "revId": "4b405ef531d634c18d921fdd2194c747ac778321",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9877104d_131b3eca",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_paint_fragment.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2018-01-31T18:50:08Z",
+      "side": 1,
+      "message": "Can Parent() return null? What does parent_ being null mean?",
+      "revId": "4b405ef531d634c18d921fdd2194c747ac778321",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "448fe7a0_25090a80",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_paint_fragment.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2018-01-31T18:50:08Z",
+      "side": 1,
+      "message": "This is great, thank you.",
+      "revId": "4b405ef531d634c18d921fdd2194c747ac778321",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
