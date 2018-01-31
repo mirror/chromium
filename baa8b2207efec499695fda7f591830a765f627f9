@@ -46,6 +46,30 @@
       "revId": "baa8b2207efec499695fda7f591830a765f627f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "812798c4_8d5739e9",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 2299,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-31T00:34:50Z",
+      "side": 1,
+      "message": "\u003e Does that seem reasonable to you?\nYup.",
+      "parentUuid": "fcd96215_e3aefac0",
+      "range": {
+        "startLine": 2299,
+        "startChar": 25,
+        "endLine": 2299,
+        "endChar": 59
+      },
+      "revId": "baa8b2207efec499695fda7f591830a765f627f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
