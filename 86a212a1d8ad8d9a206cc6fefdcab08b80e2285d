@@ -16,6 +16,24 @@
       "revId": "86a212a1d8ad8d9a206cc6fefdcab08b80e2285d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e26a996_42aed7ef",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1322,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-31T15:37:46Z",
+      "side": 1,
+      "message": "You\u0027re right. Even in production code, ViewMsg_EnableDeviceEmulation can issue resizes.",
+      "parentUuid": "aca3c83f_51cca37a",
+      "revId": "86a212a1d8ad8d9a206cc6fefdcab08b80e2285d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
