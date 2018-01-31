@@ -79,11 +79,11 @@ DefaultGpuHost::DefaultGpuHost(GpuHostDelegate* delegate,
 
 DefaultGpuHost::~DefaultGpuHost() {
   // TODO(crbug.com/620927): This should be removed once ozone-mojo is done.
-  // Make sure |viz_main_impl_| has been successfully created (i.e. the task
-  // posted in the constructor to run InitializeVizMain() has actually run).
   if (gpu_thread_.IsRunning()) {
+    // This ensures that |viz_main_impl_| has been set before we destroy it.
     viz_main_wait_.Wait();
-    viz_main_impl_->TearDown();
+
+    // Stop() will return after |viz_main_impl_| has been destroyed.
     gpu_thread_.task_runner()->DeleteSoon(FROM_HERE, std::move(viz_main_impl_));
     gpu_thread_.Stop();
   }

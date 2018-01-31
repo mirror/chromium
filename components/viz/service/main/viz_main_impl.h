@@ -71,18 +71,13 @@ class VizMainImpl : public gpu::GpuSandboxHelper, public mojom::VizMain {
   VizMainImpl(Delegate* delegate,
               ExternalDependencies dependencies,
               std::unique_ptr<gpu::GpuInit> gpu_init = nullptr);
+  // Destruction must happen on the GPU thread.
   ~VizMainImpl() override;
 
   void SetLogMessagesForHost(LogMessages messages);
 
   void Bind(mojom::VizMainRequest request);
   void BindAssociated(mojom::VizMainAssociatedRequest request);
-
-  // Calling this from the gpu or compositor thread can lead to crash/deadlock.
-  // So this must be called from a different thread.
-  // TODO(crbug.com/609317): After the process split, we should revisit to make
-  // this cleaner.
-  void TearDown();
 
   // mojom::VizMain implementation:
   void CreateGpuService(mojom::GpuServiceRequest request,
@@ -101,9 +96,7 @@ class VizMainImpl : public gpu::GpuSandboxHelper, public mojom::VizMain {
   void CreateFrameSinkManagerOnCompositorThread(
       mojom::FrameSinkManagerParamsPtr params);
 
-  void CloseVizMainBindingOnGpuThread(base::WaitableEvent* wait);
-  void TearDownOnCompositorThread(base::WaitableEvent* wait);
-  void TearDownOnGpuThread(base::WaitableEvent* wait);
+  void TearDownOnCompositorThread();
 
   // gpu::GpuSandboxHelper:
   void PreSandboxStartup() override;
