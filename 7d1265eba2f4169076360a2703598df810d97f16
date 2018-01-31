@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10609ea7_7f627108",
+        "filename": "chrome/browser/extensions/content_verifier_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2018-01-31T05:02:58Z",
+      "side": 1,
+      "message": "NOTE: This is extracted from\nhttps://chromium.googlesource.com/chromium/src/+/b5216cec25a8efa22418c5c9526eb2d4695d125f/chrome/browser/extensions/content_verifier_browsertest.cc#481\nwith the exception of how we turn a resource to fail below on line 596 - 602",
+      "revId": "7d1265eba2f4169076360a2703598df810d97f16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
