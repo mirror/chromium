@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40e5fc10_42e29367",
+        "filename": "build/toolchain/concurrent_links.gni",
+        "patchSetId": 18
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-31T17:01:59Z",
+      "side": 1,
+      "message": "At this point there\u0027s enough conditionals that we should make the args required in get_concurrent_links.py and specify the default values for --mem_per_link_gb and --reserve_mem_gb here, though that can be done in a follow-up patch if you like.",
+      "revId": "b0b97809b5b7cc9cce15081c1d32dd2619f5afc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
