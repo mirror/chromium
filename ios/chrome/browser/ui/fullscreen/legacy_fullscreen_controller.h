@@ -79,9 +79,10 @@ extern NSString* const kSetupForTestingWillCloseAllTabsNotification;
 @property(nonatomic, assign) BOOL immediateDragDown;
 
 // Designated initializer.
-- (id)initWithDelegate:(id<LegacyFullscreenControllerDelegate>)delegate
-              webState:(web::WebState*)webState
-             sessionID:(NSString*)sessionID;
+- (instancetype)initWithDelegate:
+                    (id<LegacyFullscreenControllerDelegate>)delegate
+                        webState:(web::WebState*)webState
+                       sessionID:(NSString*)sessionID;
 
 // Used to clear state maintained by the controller and de-register from
 // notifications. After this call the controller cease to function and will

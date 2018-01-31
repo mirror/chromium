@@ -109,20 +109,20 @@ const CGFloat kToolbarHeight = 56;
 @synthesize contentSuggestionsCoordinator = _contentSuggestionsCoordinator;
 @synthesize headerController = _headerController;
 
-- (id)initWithUrl:(const GURL&)url
-                  loader:(id<UrlLoader>)loader
-                 focuser:(id<OmniboxFocuser>)focuser
-            browserState:(ios::ChromeBrowserState*)browserState
-         toolbarDelegate:(id<IncognitoViewControllerDelegate>)toolbarDelegate
-                tabModel:(TabModel*)tabModel
-    parentViewController:(UIViewController*)parentViewController
-              dispatcher:(id<ApplicationCommands,
-                             BrowserCommands,
-                             OmniboxFocuser,
-                             FakeboxFocuser,
-                             SnackbarCommands,
-                             UrlLoader>)dispatcher
-           safeAreaInset:(UIEdgeInsets)safeAreaInset {
+- (instancetype)initWithUrl:(const GURL&)url
+                     loader:(id<UrlLoader>)loader
+                    focuser:(id<OmniboxFocuser>)focuser
+               browserState:(ios::ChromeBrowserState*)browserState
+            toolbarDelegate:(id<IncognitoViewControllerDelegate>)toolbarDelegate
+                   tabModel:(TabModel*)tabModel
+       parentViewController:(UIViewController*)parentViewController
+                 dispatcher:(id<ApplicationCommands,
+                                BrowserCommands,
+                                OmniboxFocuser,
+                                FakeboxFocuser,
+                                SnackbarCommands,
+                                UrlLoader>)dispatcher
+              safeAreaInset:(UIEdgeInsets)safeAreaInset {
   self = [super initWithNibName:nil url:url];
   if (self) {
     DCHECK(browserState);

@@ -25,7 +25,7 @@
 
 - (instancetype)initWithMainViewController:
     (UIViewController*)mainViewController {
-  if (self = [super init]) {
+  if (self = [super initWithNibName:nil bundle:nil]) {
     _mainViewController = mainViewController;
   }
   return self;

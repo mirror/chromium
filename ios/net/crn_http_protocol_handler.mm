@@ -74,7 +74,8 @@ void DoNothing(bool flag) {}
   net::HttpProtocolHandlerCore* _core;  // weak
 }
 - (instancetype)initWithHttpProtocolHandlerCore:
-    (net::HttpProtocolHandlerCore*)core;
+    (net::HttpProtocolHandlerCore*)core NS_DESIGNATED_INITIALIZER;
+- (instancetype)init NS_UNAVAILABLE;
 // NSStreamDelegate method.
 - (void)stream:(NSStream*)theStream handleEvent:(NSStreamEvent)streamEvent;
 @end
@@ -872,7 +873,9 @@ void HttpProtocolHandlerCore::StripPostSpecificHeaders(
 // behavior in an object.
 @interface DeferredCancellation : NSObject
 
-- (instancetype)initWithCore:(scoped_refptr<net::HttpProtocolHandlerCore>)core;
+- (instancetype)initWithCore:(scoped_refptr<net::HttpProtocolHandlerCore>)core
+    NS_DESIGNATED_INITIALIZER;
+- (instancetype)init NS_UNAVAILABLE;
 - (void)cancel;
 
 @end

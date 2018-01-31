@@ -55,7 +55,7 @@
 
 @implementation RequestTrackerNotificationReceiverTest
 
-- (id)init {
+- (instancetype)init {
   self = [super init];
   if (self) {
     value_ = 0.0f;

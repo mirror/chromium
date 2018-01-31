@@ -30,7 +30,10 @@ enum QRScannerTransition { PRESENT, DISMISS };
   QRScannerTransition _transition;
 }
 
-- (instancetype)initWithTransition:(QRScannerTransition)transition;
+- (instancetype)initWithTransition:(QRScannerTransition)transition
+    NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)init NS_UNAVAILABLE;
 
 @end
 

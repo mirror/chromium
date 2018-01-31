@@ -53,7 +53,7 @@ const CGFloat kAnimateOutAnchorY = 0;
 
 @implementation PaperView
 
-- (id)initWithFrame:(CGRect)frame {
+- (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
     const UIEdgeInsets kShadowStretchInsets = {28.0, 28.0, 28.0, 28.0};

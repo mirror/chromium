@@ -19,11 +19,12 @@
 
 - (instancetype)initWithTitle:(NSString*)title
                      delegate:(id<ToolbarAssistiveKeyboardDelegate>)delegate {
-  self = [super initWithTitle:title
-                        style:UIBarButtonItemStylePlain
-                       target:self
-                       action:@selector(pressed)];
+  self = [super init];
   if (self) {
+    self.title = title;
+    self.style = UIBarButtonItemStylePlain;
+    self.target = self;
+    self.action = @selector(pressed);
     _delegate = delegate;
   }
   return self;

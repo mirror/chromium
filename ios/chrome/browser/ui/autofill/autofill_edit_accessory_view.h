@@ -19,7 +19,12 @@ extern NSString* const kAutofillEditAccessoryViewAccessibilityID;
 // (both profile and credit card).
 @interface AutofillEditAccessoryView : UIView
 
-- (instancetype)initWithDelegate:(id<AutofillEditAccessoryDelegate>)delegate;
+- (instancetype)initWithDelegate:(id<AutofillEditAccessoryDelegate>)delegate
+    NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
+
+- (instancetype)initWithCoder:(NSCoder*)decoder NS_UNAVAILABLE;
 
 @property(nonatomic, readonly) UIButton* previousButton;
 @property(nonatomic, readonly) UIButton* nextButton;

@@ -71,7 +71,13 @@ const CGFloat kPrefHeight = 300;
 // Initializes with the |title| of the dialog and the |coordinator| which will
 // be notified if the cancel callback occurs.
 - (instancetype)initWithTitle:(NSString*)title
-                  coordinator:(LoadingAlertCoordinator*)coordinator;
+                  coordinator:(LoadingAlertCoordinator*)coordinator
+    NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithNibName:(NSString*)nibNameOrNil
+                         bundle:(NSBundle*)nibBundleOrNil NS_UNAVAILABLE;
+
+- (instancetype)initWithCoder:(NSCoder*)decoder NS_UNAVAILABLE;
 
 // Returns the maximum possible width for the dialog, taking into account the
 // MDC constraints.

@@ -65,7 +65,7 @@ static NSDictionary<NSString*, NSNumber*>* const kOfflineReasonL10nId = @{
 
 @synthesize hostInfo = _hostInfo;
 
-- (id)initWithFrame:(CGRect)frame {
+- (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
     self.backgroundColor = [UIColor clearColor];

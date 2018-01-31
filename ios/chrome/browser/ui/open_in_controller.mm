@@ -206,8 +206,9 @@ class OpenInControllerBridge
   scoped_refptr<base::SequencedTaskRunner> sequencedTaskRunner_;
 }
 
-- (id)initWithRequestContext:(net::URLRequestContextGetter*)requestContext
-               webController:(CRWWebController*)webController {
+- (instancetype)initWithRequestContext:
+                    (net::URLRequestContextGetter*)requestContext
+                         webController:(CRWWebController*)webController {
   self = [super init];
   if (self) {
     requestContext_ = requestContext;

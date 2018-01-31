@@ -17,11 +17,17 @@
 // Designated initializer. Initializes with |proposedFrame| and |client| for
 // |suggestion|. Its width will be adjusted according to the length of
 // |suggestion| and width in |proposedFrame| is ignored.
-- (id)initWithSuggestion:(FormSuggestion*)suggestion
-           proposedFrame:(CGRect)proposedFrame
-                   index:(NSUInteger)index
-          numSuggestions:(NSUInteger)numSuggestions
-                  client:(id<FormSuggestionViewClient>)client;
+- (instancetype)initWithSuggestion:(FormSuggestion*)suggestion
+                     proposedFrame:(CGRect)proposedFrame
+                             index:(NSUInteger)index
+                    numSuggestions:(NSUInteger)numSuggestions
+                            client:(id<FormSuggestionViewClient>)client
+    NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithNibName:(NSString*)nibNameOrNil
+                         bundle:(NSBundle*)nibBundleOrNil NS_UNAVAILABLE;
+
+- (instancetype)initWithCoder:(NSCoder*)decoder NS_UNAVAILABLE;
 
 @end
 

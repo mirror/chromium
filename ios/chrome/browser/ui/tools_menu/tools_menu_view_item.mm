@@ -30,7 +30,7 @@ static NSString* const kMenuItemCellID = @"MenuItemCellID";
 @synthesize selector = _selector;
 @synthesize tableViewCell = _tableViewCell;
 
-- (id)init {
+- (instancetype)init {
   self = [super init];
   if (self) {
     _active = YES;

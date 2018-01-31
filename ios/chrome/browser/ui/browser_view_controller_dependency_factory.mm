@@ -34,8 +34,8 @@
   WebStateList* webStateList_;
 }
 
-- (id)initWithBrowserState:(ios::ChromeBrowserState*)browserState
-              webStateList:(WebStateList*)webStateList {
+- (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
+                        webStateList:(WebStateList*)webStateList {
   self = [super init];
   if (self) {
     browserState_ = browserState;

@@ -33,7 +33,10 @@ class ChromeBrowserState;
                 presentationProvider:(id<SigninInteractionPresenting>)presenter
                          accessPoint:(signin_metrics::AccessPoint)accessPoint
                          promoAction:(signin_metrics::PromoAction)promoAction
-                          dispatcher:(id<ApplicationCommands>)dispatcher;
+                          dispatcher:(id<ApplicationCommands>)dispatcher
+    NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)init NS_UNAVAILABLE;
 
 // Starts user sign-in.
 // * |identity|, if not nil, the user will be signed in without requiring user

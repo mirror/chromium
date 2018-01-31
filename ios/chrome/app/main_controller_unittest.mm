@@ -20,11 +20,11 @@
 #pragma mark - MainController Testing Additions
 
 @interface MainController (TestingAdditions)
-- (id)initForTesting;
+- (instancetype)initForTesting;
 @end
 
 @implementation MainController (TestingAdditions)
-- (id)initForTesting {
+- (instancetype)initForTesting {
   self = [self init];
   if (self) {
     [self setUpAsForegrounded];

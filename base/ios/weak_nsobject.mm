@@ -24,7 +24,7 @@ WeakContainer::~WeakContainer() {}
 // Container to notify on dealloc.
 @property(readonly, assign) scoped_refptr<base::WeakContainer> container;
 // Designed initializer.
-- (id)initWithContainer:(scoped_refptr<base::WeakContainer>)container;
+- (instancetype)initWithContainer:(scoped_refptr<base::WeakContainer>)container;
 @end
 
 @implementation CRBWeakNSProtocolSentinel
@@ -53,7 +53,8 @@ WeakContainer::~WeakContainer() {}
   return [sentinel container];
 }
 
-- (id)initWithContainer:(scoped_refptr<base::WeakContainer>)container {
+- (instancetype)initWithContainer:
+    (scoped_refptr<base::WeakContainer>)container {
   DCHECK(container.get());
   self = [super init];
   if (self)

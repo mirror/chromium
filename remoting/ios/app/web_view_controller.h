@@ -11,7 +11,13 @@
 // navigation button when it is the first VC in the navigation stack.
 @interface WebViewController : UIViewController
 
-- (instancetype)initWithUrl:(NSString*)url title:(NSString*)title;
+- (instancetype)initWithUrl:(NSString*)url
+                      title:(NSString*)title NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithNibName:(NSString*)nibNameOrNil
+                         bundle:(NSBundle*)nibBundleOrNil NS_UNAVAILABLE;
+
+- (instancetype)initWithCoder:(NSCoder*)aDecoder NS_UNAVAILABLE;
 
 @end
 

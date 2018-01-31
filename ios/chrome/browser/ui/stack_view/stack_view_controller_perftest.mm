@@ -80,7 +80,7 @@
 @synthesize dismissAnimationEnded = dismissAnimationEnded_;
 @synthesize preloadCardViewsEnded = preloadCardViewsEnded_;
 
-- (id)initWithBrowserViewController:(BrowserViewController*)bvc {
+- (instancetype)initWithBrowserViewController:(BrowserViewController*)bvc {
   self = [super init];
   if (self)
     bvc_ = bvc;

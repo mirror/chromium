@@ -15,9 +15,13 @@
 // active state.
 @interface MDCActionImageView : UIView
 
-- (id)initWithFrame:(CGRect)frame
-       primaryImage:(UIImage*)primary
-        activeImage:(UIImage*)active;
+- (instancetype)initWithFrame:(CGRect)frame
+                 primaryImage:(UIImage*)primary
+                  activeImage:(UIImage*)active NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
+
+- (instancetype)initWithCoder:(NSCoder*)decoder NS_UNAVAILABLE;
 
 - (void)setActive:(BOOL)active animated:(BOOL)animated;
 

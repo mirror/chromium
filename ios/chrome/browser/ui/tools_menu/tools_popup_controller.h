@@ -33,7 +33,8 @@ extern NSString* const kToolsMenuTableViewId;
 initAndPresentWithConfiguration:(ToolsMenuConfiguration*)configuration
                      dispatcher:
                          (id<ApplicationCommands, BrowserCommands>)dispatcher
-                     completion:(ProceduralBlock)animationCompletion;
+                     completion:(ProceduralBlock)animationCompletion
+    NS_DESIGNATED_INITIALIZER;
 
 // Called when the current tab loading state changes.
 - (void)setIsTabLoading:(BOOL)isTabLoading;

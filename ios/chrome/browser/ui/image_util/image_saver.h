@@ -13,8 +13,10 @@
 @interface ImageSaver : NSObject
 
 // Init the ImageSaver with a |baseViewController| used to display alerts.
-- (instancetype)initWithBaseViewController:
-    (UIViewController*)baseViewController;
+- (instancetype)initWithBaseViewController:(UIViewController*)baseViewController
+    NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)init NS_UNAVAILABLE;
 
 // Saves the image's |data|, with |metadata| to the system's album.
 - (void)saveImageData:(NSData*)data

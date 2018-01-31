@@ -49,7 +49,13 @@ initWithBookmarkModel:(bookmarks::BookmarkModel*)bookmarkModel
      allowsNewFolders:(BOOL)allowsNewFolders
           editedNodes:(const std::set<const bookmarks::BookmarkNode*>&)nodes
          allowsCancel:(BOOL)allowsCancel
-       selectedFolder:(const bookmarks::BookmarkNode*)selectedFolder;
+       selectedFolder:(const bookmarks::BookmarkNode*)selectedFolder
+    NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithNibName:(NSString*)nibNameOrNil
+                         bundle:(NSBundle*)nibBundleOrNil NS_UNAVAILABLE;
+
+- (instancetype)initWithCoder:(NSCoder*)decoder NS_UNAVAILABLE;
 
 // This method changes the currently selected folder and updates the UI. The
 // delegate is not notified of the change.

@@ -135,14 +135,17 @@ class XmlWrapper : public OmahaXmlWriter {
 
 // Initialization method. |appId| is the application id one expects to find in
 // the response message.
-- (instancetype)initWithAppId:(NSString*)appId;
+- (instancetype)initWithAppId:(NSString*)appId NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)init NS_UNAVAILABLE;
 
 // Returns YES if the message has been correctly parsed.
 - (BOOL)isCorrect;
 
 // If an upgrade is possible, returns the details of the notification to send.
 // Otherwise, return NULL.
-- (UpgradeRecommendedDetails*)upgradeRecommendedDetails;
+- (UpgradeRecommendedDetails*)upgradeRecommendedDetails
+    NS_RETURNS_INNER_POINTER;
 
 @end
 

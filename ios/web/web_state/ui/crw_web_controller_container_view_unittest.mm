@@ -37,7 +37,9 @@ const CGFloat kTestToolbarViewHeight = 50.0f;
     : NSObject<CRWWebControllerContainerViewDelegate> {
   CRWWebViewProxyImpl* _proxy;
 }
-- (instancetype)initWithContentViewProxy:(CRWWebViewProxyImpl*)proxy;
+- (instancetype)initWithContentViewProxy:(CRWWebViewProxyImpl*)proxy
+    NS_DESIGNATED_INITIALIZER;
+- (instancetype)init NS_UNAVAILABLE;
 @end
 
 @implementation TestWebControllerContainerViewDelegate

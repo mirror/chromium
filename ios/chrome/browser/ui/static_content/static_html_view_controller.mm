@@ -24,7 +24,8 @@
 #endif
 
 @implementation IdrHtmlGenerator
-- (id)initWithResourceId:(int)resourceId encoding:(NSStringEncoding)encoding {
+- (instancetype)initWithResourceId:(int)resourceId
+                          encoding:(NSStringEncoding)encoding {
   if ((self = [super init])) {
     resourceId_ = resourceId;
     encoding_ = encoding;
@@ -32,7 +33,7 @@
   return self;
 }
 
-- (id)initWithResourceId:(int)resourceId {
+- (instancetype)initWithResourceId:(int)resourceId {
   return [self initWithResourceId:resourceId encoding:NSUTF8StringEncoding];
 }
 

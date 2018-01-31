@@ -101,8 +101,8 @@ static NSString* gSearchTerm;
   return gSearchTerm;
 }
 
-- (id)initWithWebState:(web::WebState*)webState
-              delegate:(id<FindInPageControllerDelegate>)delegate {
+- (instancetype)initWithWebState:(web::WebState*)webState
+                        delegate:(id<FindInPageControllerDelegate>)delegate {
   self = [super init];
   if (self) {
     DCHECK(webState);

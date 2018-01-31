@@ -33,7 +33,10 @@ class OmniboxPopupMediatorDelegate {
 - (instancetype)initWithFetcher:
                     (std::unique_ptr<image_fetcher::IOSImageDataFetcherWrapper>)
                         imageFetcher
-                       delegate:(OmniboxPopupMediatorDelegate*)delegate;
+                       delegate:(OmniboxPopupMediatorDelegate*)delegate
+    NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)init NS_UNAVAILABLE;
 
 // Whether the mediator has results to show.
 @property(nonatomic, assign) BOOL hasResults;

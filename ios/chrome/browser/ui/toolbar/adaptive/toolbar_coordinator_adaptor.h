@@ -21,7 +21,10 @@
 - (instancetype)initWithToolsMenuConfigurationProvider:
                     (id<ToolsMenuConfigurationProvider>)configurationProvider
                                             dispatcher:
-                                                (CommandDispatcher*)dispatcher;
+                                                (CommandDispatcher*)dispatcher
+    NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)init NS_UNAVAILABLE;
 
 // Adds a |toolbarCoordinator| to the set of coordinators this object is
 // interfacing with.

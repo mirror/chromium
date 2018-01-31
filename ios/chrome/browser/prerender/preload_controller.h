@@ -44,7 +44,10 @@ class WebState;
 @property(nonatomic, weak) id<PreloadControllerDelegate> delegate;
 
 // Designated initializer.
-- (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState;
+- (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
+    NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)init NS_UNAVAILABLE;
 
 // Called when the browser state this object was initialized with is being
 // destroyed.

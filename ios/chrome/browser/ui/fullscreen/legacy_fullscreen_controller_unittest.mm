@@ -34,7 +34,7 @@ CGFloat kHeaderHeight = 42.0;
 @synthesize currentPosition = currentPosition_;
 @synthesize fakeIsTabWithIDCurrentFlag = fakeIsTabWithIDCurrentFlag_;
 
-- (id)init {
+- (instancetype)init {
   if ((self = [super init])) {
     currentPosition_ = 0.0;
     fakeIsTabWithIDCurrentFlag_ = YES;

@@ -38,7 +38,7 @@ const CFTimeInterval kSecondsPerDay = 60 * 60 * 24;
 
 - (instancetype)initWithURL:(const GURL&)URL
                browserState:(web::BrowserState*)browserState {
-  self = [super initWithURL:URL];
+  self = [super initWithNibName:nil url:URL];
   if (self) {
     _webView = web::BuildWKWebView(CGRectZero, browserState);
     [_webView setBackgroundColor:[UIColor whiteColor]];

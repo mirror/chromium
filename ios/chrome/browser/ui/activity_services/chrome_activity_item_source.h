@@ -14,7 +14,9 @@
 @interface UIActivityImageSource : NSObject<UIActivityItemSource>
 
 // Default initializer. |image| must not be nil.
-- (instancetype)initWithImage:(UIImage*)image;
+- (instancetype)initWithImage:(UIImage*)image NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)init NS_UNAVAILABLE;
 
 @end
 
@@ -33,7 +35,10 @@
 - (instancetype)initWithShareURL:(NSURL*)shareURL
               passwordManagerURL:(NSURL*)passwordManagerURL
                          subject:(NSString*)subject
-              thumbnailGenerator:(ThumbnailGeneratorBlock)thumbnailGenerator;
+              thumbnailGenerator:(ThumbnailGeneratorBlock)thumbnailGenerator
+    NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)init NS_UNAVAILABLE;
 
 @end
 

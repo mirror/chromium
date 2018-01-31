@@ -29,7 +29,9 @@ class UpgradeCenterTest : public PlatformTest {
 }  // namespace
 
 @interface FakeUpgradeCenterClient : NSObject<UpgradeCenterClient>
-- (instancetype)initWithTest:(UpgradeCenterTest*)test;
+- (instancetype)initWithTest:(UpgradeCenterTest*)test NS_DESIGNATED_INITIALIZER;
+- (instancetype)init NS_UNAVAILABLE;
+
 @end
 
 @implementation FakeUpgradeCenterClient {

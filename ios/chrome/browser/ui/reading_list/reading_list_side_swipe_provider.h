@@ -10,7 +10,9 @@
 class ReadingListModel;
 
 @interface ReadingListSideSwipeProvider : NSObject<SideSwipeContentProvider>
-- (instancetype)initWithReadingList:(ReadingListModel*)readingListModel;
+- (instancetype)initWithReadingList:(ReadingListModel*)readingListModel
+    NS_DESIGNATED_INITIALIZER;
+- (instancetype)init NS_UNAVAILABLE;
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_READING_LIST_READING_LIST_SIDE_SWIPE_PROVIDER_H_

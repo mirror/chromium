@@ -13,7 +13,12 @@
 // superview's size.
 @interface IncognitoView : UIScrollView
 
-- (instancetype)initWithFrame:(CGRect)frame urlLoader:(id<UrlLoader>)loader;
+- (instancetype)initWithFrame:(CGRect)frame
+                    urlLoader:(id<UrlLoader>)loader NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
+
+- (instancetype)initWithCoder:(NSCoder*)decoder NS_UNAVAILABLE;
 
 @end
 

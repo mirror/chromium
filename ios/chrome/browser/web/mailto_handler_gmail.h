@@ -9,6 +9,9 @@
 
 // Handler for Gmail client.
 @interface MailtoHandlerGmail : MailtoHandler
+- (instancetype)init NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithName:(NSString*)appName
+                  appStoreID:(NSString*)appStoreID NS_UNAVAILABLE;
 @end
 
 #endif  // _IOS_CHROME_BROWSER_WEB_MAILTO_HANDLER_GMAIL_H_

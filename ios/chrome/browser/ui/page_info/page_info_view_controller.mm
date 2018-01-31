@@ -201,11 +201,12 @@ void PageInfoModelBubbleBridge::PerformLayout() {
 @synthesize popupContainer = popupContainer_;
 @synthesize dispatcher = dispatcher_;
 
-- (id)initWithModel:(PageInfoModel*)model
-                  bridge:(PageInfoModelObserver*)bridge
-             sourcePoint:(CGPoint)sourcePoint
-    presentationProvider:(id<PageInfoPresentation>)provider
-              dispatcher:(id<PageInfoCommands, PageInfoReloading>)dispatcher {
+- (instancetype)initWithModel:(PageInfoModel*)model
+                       bridge:(PageInfoModelObserver*)bridge
+                  sourcePoint:(CGPoint)sourcePoint
+         presentationProvider:(id<PageInfoPresentation>)provider
+                   dispatcher:
+                       (id<PageInfoCommands, PageInfoReloading>)dispatcher {
   DCHECK(provider);
   self = [super init];
   if (self) {

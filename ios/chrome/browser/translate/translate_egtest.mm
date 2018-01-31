@@ -257,7 +257,8 @@ using translate::LanguageDetectionController;
 // have all been invoked
 @property bool translateStatusChecked;
 
-- (instancetype)initWithWebState:(web::WebState*)webState;
+- (instancetype)initWithWebState:(web::WebState*)webState
+    NS_DESIGNATED_INITIALIZER;
 
 @end
 

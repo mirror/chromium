@@ -34,7 +34,7 @@ static const int kMinPinLength = 6;
 @synthesize delegate = _delegate;
 @synthesize supportsPairing = _supportsPairing;
 
-- (id)initWithFrame:(CGRect)frame {
+- (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
     self.backgroundColor = [UIColor clearColor];

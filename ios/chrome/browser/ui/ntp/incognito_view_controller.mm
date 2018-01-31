@@ -38,9 +38,10 @@ const CGFloat kDistanceToFadeToolbar = 50.0;
 // Property declared in NewTabPagePanelProtocol.
 @synthesize delegate = _delegate;
 
-- (id)initWithLoader:(id<UrlLoader>)loader
-     toolbarDelegate:(id<IncognitoViewControllerDelegate>)toolbarDelegate {
-  self = [super init];
+- (instancetype)initWithLoader:(id<UrlLoader>)loader
+               toolbarDelegate:
+                   (id<IncognitoViewControllerDelegate>)toolbarDelegate {
+  self = [super initWithNibName:nil bundle:nil];
   if (self) {
     _loader = loader;
     if (!IsIPadIdiom()) {

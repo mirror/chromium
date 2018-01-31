@@ -13,7 +13,7 @@
 
 @synthesize keyboardVisible = _keyboardVisible;
 
-- (id)init {
+- (instancetype)init {
   self = [super init];
   if (self) {
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];

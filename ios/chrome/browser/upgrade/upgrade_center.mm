@@ -179,7 +179,10 @@ class UpgradeInfoBarDismissObserver
 - (instancetype)initWithInfoBarManager:(infobars::InfoBarManager*)infoBarManager
                        infoBarDelegate:(UpgradeInfoBarDelegate*)infoBarDelegate
                          upgradeCenter:(UpgradeCenter*)upgradeCenter
-                                 tabId:(NSString*)tabId;
+                                 tabId:(NSString*)tabId
+    NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)init NS_UNAVAILABLE;
 
 @property(nonatomic, readonly) UpgradeInfoBarDelegate* infoBarDelegate;
 @end

@@ -47,7 +47,10 @@ typedef void (^WebUIDelegateCompletion)(NSString*, const GURL&);
 @interface CRWWebUIPageBuilder : NSObject
 
 // Designated initializer.
-- (instancetype)initWithDelegate:(id<CRWWebUIPageBuilderDelegate>)delegate;
+- (instancetype)initWithDelegate:(id<CRWWebUIPageBuilderDelegate>)delegate
+    NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)init NS_UNAVAILABLE;
 
 // Builds and flattens page for webUIURL, and invokes completionHandler with the
 // result.

@@ -72,7 +72,7 @@ static const CGFloat kMoveFABAnimationTime = 0.3;
 
 @implementation HostViewController
 
-- (id)initWithClient:(RemotingClient*)client {
+- (instancetype)initWithClient:(RemotingClient*)client {
   self = [super init];
   if (self) {
     _client = client;

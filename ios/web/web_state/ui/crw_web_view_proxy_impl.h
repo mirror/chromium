@@ -21,7 +21,10 @@
 @property(nonatomic, weak) CRWContentView* contentView;
 
 // Init with a weak reference of web controller, used for passing through calls.
-- (instancetype)initWithWebController:(CRWWebController*)webController;
+- (instancetype)initWithWebController:(CRWWebController*)webController
+    NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)init NS_UNAVAILABLE;
 
 @end
 

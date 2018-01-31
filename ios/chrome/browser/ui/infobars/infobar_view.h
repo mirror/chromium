@@ -14,7 +14,12 @@ class InfoBarViewDelegate;
 @interface InfoBarView : BidiContainerView
 
 - (instancetype)initWithFrame:(CGRect)frame
-                     delegate:(InfoBarViewDelegate*)delegate;
+                     delegate:(InfoBarViewDelegate*)delegate
+    NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
+
+- (instancetype)initWithCoder:(NSCoder*)decoder NS_UNAVAILABLE;
 
 // How much of infobar is visible. The infobar is only partly visible during
 // showing/hiding animation.

@@ -29,7 +29,9 @@
 
 // Initialize the row with the given incognito state. The colors and styling are
 // dependent on whether or not the row is displayed in incognito mode.
-- (instancetype)initWithIncognito:(BOOL)incognito;
+- (instancetype)initWithIncognito:(BOOL)incognito NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithCoder:(NSCoder*)decoder NS_UNAVAILABLE;
 
 // Update the match type icon with the supplied image ID and adjust its position
 // based on the current size of the row.

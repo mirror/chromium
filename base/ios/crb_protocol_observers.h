@@ -26,6 +26,8 @@ typedef void (^ExecutionWithObserverBlock)(id);
 // |protocol|.
 + (instancetype)observersWithProtocol:(Protocol*)protocol;
 
+- (instancetype)init NS_UNAVAILABLE;
+
 // Adds |observer| to this container.
 - (void)addObserver:(id)observer;
 

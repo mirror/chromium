@@ -26,11 +26,15 @@ class PageInfoModel;
 // The |sourcePoint| parameter should be in the coordinate system of
 // |provider|'s view. Typically, |sourcePoint| would be the midpoint of a button
 // that resulted in this popup being displayed.
-- (id)initWithModel:(PageInfoModel*)model
-                  bridge:(PageInfoModelObserver*)bridge
-             sourcePoint:(CGPoint)sourcePoint
-    presentationProvider:(id<PageInfoPresentation>)provider
-              dispatcher:(id<PageInfoCommands, PageInfoReloading>)dispatcher;
+- (instancetype)initWithModel:(PageInfoModel*)model
+                       bridge:(PageInfoModelObserver*)bridge
+                  sourcePoint:(CGPoint)sourcePoint
+         presentationProvider:(id<PageInfoPresentation>)provider
+                   dispatcher:
+                       (id<PageInfoCommands, PageInfoReloading>)dispatcher
+    NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)init NS_UNAVAILABLE;
 
 // Dispatcher for this view controller.
 @property(nonatomic, weak) id<PageInfoCommands, PageInfoReloading> dispatcher;

@@ -40,7 +40,7 @@
 @property(nonatomic, weak) id<ApplicationCommands, BrowserCommands> dispatcher;
 
 // Initializes the PopupMenuController and adds its views inside of parent.
-- (id)initWithParentView:(UIView*)parent;
+- (instancetype)initWithParentView:(UIView*)parent;
 
 // The designated initializer.
 // Initializes the PopupMenuController and adds its views inside of parent.
@@ -53,12 +53,12 @@
 // backgroundButtonTag is the tag to set for |backgroundButton_|.
 // backgroundButtonSelector is the action to add for touch down events on
 // |backgroundButton_|.
-- (id)initWithParentView:(UIView*)parent
-      backgroundButtonParent:(UIView*)backgroundButtonParent
-       backgroundButtonColor:(UIColor*)backgroundButtonColor
-       backgroundButtonAlpha:(CGFloat)backgroundButtonAlpha
-         backgroundButtonTag:(NSInteger)backgroundButtonTag
-    backgroundButtonSelector:(SEL)backgroundButtonSelector;
+- (instancetype)initWithParentView:(UIView*)parent
+            backgroundButtonParent:(UIView*)backgroundButtonParent
+             backgroundButtonColor:(UIColor*)backgroundButtonColor
+             backgroundButtonAlpha:(CGFloat)backgroundButtonAlpha
+               backgroundButtonTag:(NSInteger)backgroundButtonTag
+          backgroundButtonSelector:(SEL)backgroundButtonSelector;
 
 // Sets the optimal size of the popup needed to display its contents without
 // exceeding the bounds of the window. Also positions the arrow to point at

@@ -34,7 +34,7 @@
 - (instancetype)initWithText:(NSString*)labelText
                  destructive:(BOOL)isDestructive
                     position:(ButtonPositioning)position {
-  self = [super init];
+  self = [super initWithFrame:CGRectZero];
   if (!self) {
     return self;
   }

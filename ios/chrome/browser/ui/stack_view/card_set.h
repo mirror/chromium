@@ -89,7 +89,7 @@ struct LayoutRect;
 
 // Initializes a card set backed by |model|. |model| is not retained, and must
 // outlive the card set.
-- (id)initWithModel:(TabModel*)model;
+- (instancetype)initWithModel:(TabModel*)model;
 
 // Tears down any observation or other state. After this method is called, the
 // receiver should be set to nil or otherwise marked for deallocation.

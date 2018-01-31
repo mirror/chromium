@@ -363,7 +363,9 @@ NSString* const kBrowserViewControllerSnackbarCategory =
 - (instancetype)initWithView:(UIView*)view
              headerBehaviour:(HeaderBehaviour)behaviour
             heightAdjustment:(CGFloat)heightAdjustment
-                       inset:(CGFloat)inset;
+                       inset:(CGFloat)inset NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)init NS_UNAVAILABLE;
 
 + (instancetype)definitionWithView:(UIView*)view
                    headerBehaviour:(HeaderBehaviour)behaviour

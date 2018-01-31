@@ -43,7 +43,10 @@ class ChromeBrowserState;
 - (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
                             delegate:
                                 (id<BookmarkPromoControllerDelegate>)delegate
-                           presenter:(id<SigninPresenter>)presenter;
+                           presenter:(id<SigninPresenter>)presenter
+    NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)init NS_UNAVAILABLE;
 
 // Hides the promo cell. It won't be presented again on this profile.
 - (void)hidePromoCell;

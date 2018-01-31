@@ -30,8 +30,8 @@ extern NSString* const kFindBarTextFieldDidResignFirstResponderNotification;
 @property(nonatomic, readonly, strong) FindInPageModel* findInPageModel;
 
 // Designated initializer.
-- (id)initWithWebState:(web::WebState*)webState
-              delegate:(id<FindInPageControllerDelegate>)delegate;
+- (instancetype)initWithWebState:(web::WebState*)webState
+                        delegate:(id<FindInPageControllerDelegate>)delegate;
 // Inject the find in page scripts into the web state.
 - (void)initFindInPage;
 // Is Find In Page available right now (given the state of the WebState)?

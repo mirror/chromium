@@ -20,7 +20,11 @@
                 withDirection:(UISwipeGestureRecognizerDirection)direction
                   canNavigate:(BOOL)canNavigate
                         image:(UIImage*)image
-                rotateForward:(BOOL)rotateForward;
+                rotateForward:(BOOL)rotateForward NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
+
+- (instancetype)initWithCoder:(NSCoder*)decoder NS_UNAVAILABLE;
 
 // Update views for latest gesture, and call completion blocks whether
 // |threshold| is met.

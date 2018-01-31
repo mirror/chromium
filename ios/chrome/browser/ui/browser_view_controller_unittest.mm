@@ -112,6 +112,7 @@ using web::WebStateImpl;
 
 @interface BVCTestTabModel : OCMockComplexTypeHelper
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithRepresentedObject:(id)object NS_UNAVAILABLE;
 @property(nonatomic, assign) ios::ChromeBrowserState* browserState;
 @end
 

@@ -17,8 +17,15 @@
 // Init with the given loader object. |loader| may be nil, but isn't
 // retained so it must outlive this controller.
 // |toolbarDelegate| is used to fade the toolbar views on page scroll.
-- (id)initWithLoader:(id<UrlLoader>)loader
-     toolbarDelegate:(id<IncognitoViewControllerDelegate>)toolbarDelegate;
+- (instancetype)initWithLoader:(id<UrlLoader>)loader
+               toolbarDelegate:
+                   (id<IncognitoViewControllerDelegate>)toolbarDelegate
+    NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithNibName:(NSString*)nibNameOrNil
+                         bundle:(NSBundle*)nibBundleOrNil NS_UNAVAILABLE;
+
+- (instancetype)initWithCoder:(NSCoder*)decoder NS_UNAVAILABLE;
 
 @end
 

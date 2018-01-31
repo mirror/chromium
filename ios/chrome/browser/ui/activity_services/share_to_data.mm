@@ -45,17 +45,17 @@
 @synthesize isOriginalTitle = isOriginalTitle_;
 @synthesize isPagePrintable = isPagePrintable_;
 
-- (id)init {
+- (instancetype)init {
   NOTREACHED();
   return nil;
 }
 
-- (id)initWithShareURL:(const GURL&)shareURL
-    passwordManagerURL:(const GURL&)passwordManagerURL
-                 title:(NSString*)title
-       isOriginalTitle:(BOOL)isOriginalTitle
-       isPagePrintable:(BOOL)isPagePrintable
-    thumbnailGenerator:(ThumbnailGeneratorBlock)thumbnailGenerator {
+- (instancetype)initWithShareURL:(const GURL&)shareURL
+              passwordManagerURL:(const GURL&)passwordManagerURL
+                           title:(NSString*)title
+                 isOriginalTitle:(BOOL)isOriginalTitle
+                 isPagePrintable:(BOOL)isPagePrintable
+              thumbnailGenerator:(ThumbnailGeneratorBlock)thumbnailGenerator {
   DCHECK(shareURL.is_valid());
   DCHECK(passwordManagerURL.is_valid());
   DCHECK(title);

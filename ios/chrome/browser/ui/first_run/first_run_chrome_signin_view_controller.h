@@ -27,7 +27,8 @@ class ChromeBrowserState;
                       firstRunConfig:(FirstRunConfiguration*)firstRunConfig
                       signInIdentity:(ChromeIdentity*)identity
                            presenter:(id<SyncPresenter>)presenter
-                          dispatcher:(id<ApplicationCommands>)dispatcher;
+                          dispatcher:(id<ApplicationCommands>)dispatcher
+    NS_DESIGNATED_INITIALIZER;
 
 @end
 

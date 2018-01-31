@@ -23,8 +23,9 @@ class URLRequestContextGetter;
 @interface OpenInController : NSObject<UIGestureRecognizerDelegate,
                                        UIDocumentInteractionControllerDelegate>
 // Designated initializer.
-- (id)initWithRequestContext:(net::URLRequestContextGetter*)requestContext
-               webController:(CRWWebController*)webController;
+- (instancetype)initWithRequestContext:
+                    (net::URLRequestContextGetter*)requestContext
+                         webController:(CRWWebController*)webController;
 
 // Removes the |openInToolbar_| from the |webController_|'s view and resets the
 // variables specific to the loaded document.

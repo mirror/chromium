@@ -23,7 +23,11 @@ enum SectionHeaderType {
 
 // Designated initializer.
 - (instancetype)initWithType:(recent_tabs::SectionHeaderType)type
-          sectionIsCollapsed:(BOOL)collapsed;
+          sectionIsCollapsed:(BOOL)collapsed NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
+
+- (instancetype)initWithCoder:(NSCoder*)decoder NS_UNAVAILABLE;
 
 // Returns the desired height when included in a UITableViewCell.
 + (CGFloat)desiredHeightInUITableViewCell;

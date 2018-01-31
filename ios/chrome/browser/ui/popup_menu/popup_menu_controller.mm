@@ -69,7 +69,7 @@ static CGPoint AnimateInIntermediaryPoint(CGPoint source, CGPoint destination) {
 @synthesize delegate = delegate_;
 @synthesize dispatcher = dispatcher_;
 
-- (id)initWithParentView:(UIView*)parent {
+- (instancetype)initWithParentView:(UIView*)parent {
   return [self initWithParentView:parent
            backgroundButtonParent:nil
             backgroundButtonColor:nil
@@ -78,12 +78,12 @@ static CGPoint AnimateInIntermediaryPoint(CGPoint source, CGPoint destination) {
          backgroundButtonSelector:nil];
 }
 
-- (id)initWithParentView:(UIView*)parent
-      backgroundButtonParent:(UIView*)backgroundButtonParent
-       backgroundButtonColor:(UIColor*)backgroundButtonColor
-       backgroundButtonAlpha:(CGFloat)backgroundButtonAlpha
-         backgroundButtonTag:(NSInteger)backgroundButtonTag
-    backgroundButtonSelector:(SEL)backgroundButtonSelector {
+- (instancetype)initWithParentView:(UIView*)parent
+            backgroundButtonParent:(UIView*)backgroundButtonParent
+             backgroundButtonColor:(UIColor*)backgroundButtonColor
+             backgroundButtonAlpha:(CGFloat)backgroundButtonAlpha
+               backgroundButtonTag:(NSInteger)backgroundButtonTag
+          backgroundButtonSelector:(SEL)backgroundButtonSelector {
   DCHECK(parent);
   self = [super init];
   if (self) {

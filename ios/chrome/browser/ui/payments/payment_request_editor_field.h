@@ -55,7 +55,9 @@ typedef NS_ENUM(NSInteger, EditorFieldType) {
                              fieldType:(EditorFieldType)fieldType
                                  label:(NSString*)label
                                  value:(NSString*)value
-                              required:(BOOL)required;
+                              required:(BOOL)required NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)init NS_UNAVAILABLE;
 
 @end
 

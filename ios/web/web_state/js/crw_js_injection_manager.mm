@@ -24,7 +24,7 @@
   __weak CRWJSInjectionReceiver* _receiver;
 }
 
-- (id)initWithReceiver:(CRWJSInjectionReceiver*)receiver {
+- (instancetype)initWithReceiver:(CRWJSInjectionReceiver*)receiver {
   DCHECK(receiver);
   self = [super init];
   if (self) {

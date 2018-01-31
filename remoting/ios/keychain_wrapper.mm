@@ -38,7 +38,7 @@ NSString* const kKeychainPairingSecret = @"kKeychainPairingSecret";
   return sharedInstance;
 }
 
-- (id)init {
+- (instancetype)init {
   if ((self = [super init])) {
     OSStatus keychainErr = noErr;
     _userInfoQuery = [[NSMutableDictionary alloc] init];

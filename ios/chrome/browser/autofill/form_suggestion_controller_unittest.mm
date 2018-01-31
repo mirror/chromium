@@ -45,7 +45,10 @@
 @property(nonatomic, assign) BOOL askedIfSuggestionsAvailable;
 @property(nonatomic, assign) BOOL askedForSuggestions;
 
-- (instancetype)initWithSuggestions:(NSArray*)suggestions;
+- (instancetype)initWithSuggestions:(NSArray*)suggestions
+    NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)init NS_UNAVAILABLE;
 
 @end
 

@@ -233,7 +233,7 @@ NSString* FormattedTitle(const base::string16& title, const GURL& url) {
 @synthesize detailTextLabel = _detailTextLabel;
 @synthesize timeLabel = _timeLabel;
 
-- (id)initWithFrame:(CGRect)frame {
+- (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
 

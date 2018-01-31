@@ -58,7 +58,7 @@
 
 @implementation CRWTestJSInjectionReceiver
 
-- (id)init {
+- (instancetype)init {
   CRWTestWKWebViewEvaluator* evaluator =
       [[CRWTestWKWebViewEvaluator alloc] init];
   if (self = [super initWithEvaluator:evaluator])
