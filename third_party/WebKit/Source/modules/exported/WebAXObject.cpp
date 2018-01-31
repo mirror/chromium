@@ -743,7 +743,8 @@ void WebAXObject::Selection(WebAXObject& anchor_object,
                             WebAXTextAffinity& anchor_affinity,
                             WebAXObject& focus_object,
                             int& focus_offset,
-                            WebAXTextAffinity& focus_affinity) const {
+                            WebAXTextAffinity& focus_affinity,
+                            WebAXTextGranularity& text_granularity) const {
   if (IsDetached()) {
     anchor_object = WebAXObject();
     anchor_offset = -1;
@@ -751,6 +752,7 @@ void WebAXObject::Selection(WebAXObject& anchor_object,
     focus_object = WebAXObject();
     focus_offset = -1;
     focus_affinity = kWebAXTextAffinityDownstream;
+    text_granularity = kWebAXTextGranularityCharacter;
     return;
   }
 
@@ -762,6 +764,8 @@ void WebAXObject::Selection(WebAXObject& anchor_object,
   focus_object = WebAXObject(ax_selection.focus_object);
   focus_offset = ax_selection.focus_offset;
   focus_affinity = static_cast<WebAXTextAffinity>(ax_selection.focus_affinity);
+  text_granularity =
+      static_cast<WebAXTextGranularity>(ax_selection.text_granularity);
   return;
 }
 
@@ -779,9 +783,9 @@ bool WebAXObject::SetSelection(const WebAXObject& anchor_object,
   if (IsDetached())
     return false;
 
-  AXObject::AXRange ax_selection(anchor_object, anchor_offset,
-                                 TextAffinity::kUpstream, focus_object,
-                                 focus_offset, TextAffinity::kDownstream);
+  AXObject::AXRange ax_selection = {
+      *anchor_object, anchor_offset, TextAffinity::kUpstream,
+      *focus_object,  focus_offset,  TextAffinity::kDownstream};
   return private_->RequestSetSelectionAction(ax_selection);
 }
 

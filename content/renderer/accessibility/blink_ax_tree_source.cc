@@ -320,8 +320,9 @@ bool BlinkAXTreeSource::GetTreeData(AXContentTreeData* tree_data) const {
   WebAXObject anchor_object, focus_object;
   int anchor_offset, focus_offset;
   blink::WebAXTextAffinity anchor_affinity, focus_affinity;
+  blink::WebAXTextGranularity text_granularity;
   root().Selection(anchor_object, anchor_offset, anchor_affinity, focus_object,
-                   focus_offset, focus_affinity);
+                   focus_offset, focus_affinity, text_granularity);
   if (!anchor_object.IsNull() && !focus_object.IsNull() && anchor_offset >= 0 &&
       focus_offset >= 0) {
     int32_t anchor_id = anchor_object.AxID();
@@ -332,6 +333,8 @@ bool BlinkAXTreeSource::GetTreeData(AXContentTreeData* tree_data) const {
     tree_data->sel_focus_offset = focus_offset;
     tree_data->sel_anchor_affinity = AXTextAffinityFromBlink(anchor_affinity);
     tree_data->sel_focus_affinity = AXTextAffinityFromBlink(focus_affinity);
+    tree_data->sel_text_granularity =
+        AXTextGranularityFromBlink(text_granularity);
   }
 
   // Get the tree ID for this frame and the parent frame.

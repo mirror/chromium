@@ -67,6 +67,8 @@ struct AX_EXPORT AXTreeData {
   int32_t sel_focus_offset = -1;
   ax::mojom::TextAffinity sel_focus_affinity =
       ax::mojom::TextAffinity::kDownstream;
+  ax::mojom::TextGranularity sel_text_granularity =
+      ax::mojom::TextGranularity::kCharacter;
 };
 
 AX_EXPORT bool operator==(const AXTreeData& lhs, const AXTreeData& rhs);
