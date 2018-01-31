@@ -2363,6 +2363,15 @@
           'hard_timeout': 0,
         },
       },
+
+      # chromium.linux
+      'Fuchsia x64': {
+        # TODO(kbr): remove this spurious filter.
+        'args': [
+          '--use-new-test-runner',
+          '-v',  # Useful for getting debug info and SCP throughput stats.
+        ],
+      },
     },
   },
   'mojo_public_bindings_unittests': {
