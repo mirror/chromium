@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1172ff79_0d9bb8cb",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 23913,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-01-31T20:52:43Z",
+      "side": 1,
+      "message": "the number of extensions - what? Possibly \"The number of extensions that exist each time..\"? I\u0027m not 100% sure :) maybe this can be clarified",
+      "revId": "abba4c54d64bd815b9bf7f9b855b96e7e2917d38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6e4fd60_bba6fcaa",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 23918,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2018-01-31T20:52:43Z",
+      "side": 1,
+      "message": "you\u0027re still missing unit. possibly use \u0027extensions\u0027",
+      "revId": "abba4c54d64bd815b9bf7f9b855b96e7e2917d38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
