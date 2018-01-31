@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1dcf9500_d8daa238",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-31T15:49:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01eb4e5a_4746d323",
+      "revId": "fa4ca3066f24248c470f97d9d443e025e0ba84aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47909223_f5f9b42e",
         "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "fa4ca3066f24248c470f97d9d443e025e0ba84aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9a743bb_62c5b237",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-31T15:49:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47909223_f5f9b42e",
+      "revId": "fa4ca3066f24248c470f97d9d443e025e0ba84aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "80b5c40e_bbe636d9",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-31T15:49:22Z",
+      "side": 1,
+      "message": "I think for now we\u0027ll stick with the default spacing and probably adjust it in a future CL.\nThanks for the hint!",
+      "parentUuid": "6d5aa45f_b93d8317",
+      "revId": "fa4ca3066f24248c470f97d9d443e025e0ba84aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18d2720e_0e931d67",
         "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "a54c65e8_f30a0cf2",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-31T15:49:22Z",
+      "side": 1,
+      "message": "Here Mihai and I also want to stick with the default for now and if the designer or PM is unhappy we\u0027ll change it.",
+      "parentUuid": "18d2720e_0e931d67",
+      "revId": "fa4ca3066f24248c470f97d9d443e025e0ba84aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8641b1ab_c245c574",
         "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
         "patchSetId": 1
@@ -84,6 +156,24 @@
       "revId": "fa4ca3066f24248c470f97d9d443e025e0ba84aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ccdf873_8207d3cd",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2018-01-31T15:49:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8641b1ab_c245c574",
+      "revId": "fa4ca3066f24248c470f97d9d443e025e0ba84aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
