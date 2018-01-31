@@ -66,7 +66,6 @@ class RasterInterface {
   virtual void DeleteTextures(GLsizei n, const GLuint* textures) = 0;
   virtual void BindTexture(GLenum target, GLuint texture) = 0;
   virtual void ActiveTexture(GLenum texture) = 0;
-  virtual void GenerateMipmap(GLenum target) = 0;
   virtual void SetColorSpaceMetadataCHROMIUM(GLuint texture_id,
                                              GLColorSpace color_space) = 0;
   virtual void TexParameteri(GLenum target, GLenum pname, GLint param) = 0;
