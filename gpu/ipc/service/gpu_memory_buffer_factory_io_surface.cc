@@ -115,7 +115,12 @@ GpuMemoryBufferFactoryIOSurface::CreateAnonymousImage(const gfx::Size& size,
 
   base::ScopedCFTypeRef<IOSurfaceRef> io_surface;
   io_surface.reset(IOSurfaceLookupFromMachPort(handle.mach_port.get()));
-  DCHECK_NE(nullptr, io_surface.get());
+  // TODO(ccameron): This should never happens, but it has been seen in the
+  // wild. If this happens frequently, it can be replaced by directly using the
+  // allocated IOSurface, rather than going through the handle creation.
+  // https://crbug.com/795649
+  CHECK_NE(nullptr, io_surface.get())
+      << "Failed to reconstitute just-created IOSurface from mach port.";
 
   scoped_refptr<gl::GLImageIOSurface> image(
       gl::GLImageIOSurface::Create(size, internalformat));
