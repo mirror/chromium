@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72b43709_6483ed6c",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlock.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2018-01-31T21:44:26Z",
+      "side": 1,
+      "message": "I suspect both your ifs need to check for grid as well?",
+      "revId": "ad63325e9adf039f2b1a91d78d31683c548e4991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
