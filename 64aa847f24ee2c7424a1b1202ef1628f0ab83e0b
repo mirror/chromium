@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a5aaa874_0faf0c7a",
+        "filename": "components/cbor/cbor_writer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-31T19:46:52Z",
+      "side": 1,
+      "message": "I agree. Once this CL is merged, I\u0027ll create a follow up CL that makes default mode to be CanonicalCBOR (not CTAPCanonicalCBOR).",
+      "parentUuid": "a1670525_9f1efbd1",
+      "revId": "64aa847f24ee2c7424a1b1202ef1628f0ab83e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6826da9a_67799825",
         "filename": "components/cbor/cbor_writer.cc",
         "patchSetId": 3
@@ -84,6 +102,30 @@
     },
     {
       "key": {
+        "uuid": "2384352f_72fbee2d",
+        "filename": "components/cbor/cbor_writer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-31T19:46:52Z",
+      "side": 1,
+      "message": "I agree that prohibiting array/map as keys will simplify things. \n\nAs for comparison operator for Canonical CBOR, I was wondering if below operator could work:\n\n1) Given 2 keys K1 and K2 with respective type, length, and value T1, T2 / L1, L2 / V1, V2. \n2) If L1 !\u003d L2, return L1 - L2\n3) Else if T1 !\u003d T1 return T1-T2\n4) Else return |V1| - |V2|",
+      "parentUuid": "a6a90bf3_d97fd2b6",
+      "range": {
+        "startLine": 202,
+        "startChar": 0,
+        "endLine": 203,
+        "endChar": 61
+      },
+      "revId": "64aa847f24ee2c7424a1b1202ef1628f0ab83e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "076537e2_416b3930",
         "filename": "components/cbor/cbor_writer.cc",
         "patchSetId": 3
@@ -95,6 +137,30 @@
       "writtenOn": "2018-01-31T11:49:31Z",
       "side": 1,
       "message": "Hang on, this does lexicographical compare only, I think we will need to sort based on key length first.",
+      "range": {
+        "startLine": 216,
+        "startChar": 25,
+        "endLine": 216,
+        "endChar": 38
+      },
+      "revId": "64aa847f24ee2c7424a1b1202ef1628f0ab83e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6cd0a0a_3dd471d8",
+        "filename": "components/cbor/cbor_writer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-31T19:46:52Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "076537e2_416b3930",
       "range": {
         "startLine": 216,
         "startChar": 25,
