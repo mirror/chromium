@@ -5872,6 +5872,16 @@
       Note that if the input is empty, the result will be a null value which
       will produce an error if assigned to a variable.
 
+  "json"
+      Parse the input as a JSON and convert it to equivalent GN rvalue. The data
+      type mapping is:
+        a string in JSON maps to string in GN
+        a number in JSON maps to integer in GN (floats are unsupported)
+        an object in JSON maps to scope in GN
+        an array in JSON maps to list in GN
+        a boolean in JSON maps to boolean in GN
+        a null in JSON null maps to nothing in GN
+
   "trim ..."
       Prefixing any of the other transformations with the word "trim" will
       result in whitespace being trimmed from the beginning and end of the
