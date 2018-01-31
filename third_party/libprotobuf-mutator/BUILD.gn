@@ -26,7 +26,8 @@ source_set("libprotobuf-mutator") {
       "src/src/text_format.cc",
       "src/src/utf8_fix.cc",
     ]
-    deps = [
+
+    public_deps = [
       "//third_party/protobuf:protobuf_full",
     ]
 
