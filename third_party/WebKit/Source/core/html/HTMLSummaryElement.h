@@ -48,6 +48,9 @@ class HTMLSummaryElement final : public HTMLElement {
   bool SupportsFocus() const override;
 };
 
+DEFINE_ELEMENT_TYPE_CASTS(HTMLSummaryElement,
+                          HasTagName(HTMLNames::summaryTag));
+
 }  // namespace blink
 
 #endif  // HTMLSummaryElement_h

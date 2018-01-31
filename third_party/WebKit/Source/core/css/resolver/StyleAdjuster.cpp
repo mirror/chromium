@@ -133,7 +133,7 @@ static bool DoesNotInheritTextDecoration(const ComputedStyle& style,
          style.Display() == EDisplay::kWebkitInlineBox ||
          IsAtShadowBoundary(element) || style.IsFloating() ||
          style.HasOutOfFlowPosition() || IsOutermostSVGElement(element) ||
-         IsHTMLRTElement(element);
+         (element && element->HasTagName(rtTag));
 }
 
 // Certain elements (<a>, <font>) override text decoration colors.  "The font
@@ -238,7 +238,7 @@ static void AdjustStyleForHTMLElement(ComputedStyle& style,
     return;
   }
 
-  if (IsHTMLRTElement(element)) {
+  if (element.HasTagName(rtTag)) {
     // Ruby text does not support float or position. This might change with
     // evolution of the specification.
     style.SetPosition(EPosition::kStatic);
@@ -282,7 +282,7 @@ static void AdjustStyleForHTMLElement(ComputedStyle& style,
   if (style.Display() == EDisplay::kContents) {
     // See https://drafts.csswg.org/css-display/#unbox-html
     // Some of these elements are handled with other adjustments above.
-    if (IsHTMLBRElement(element) || IsHTMLWBRElement(element) ||
+    if (IsHTMLBRElement(element) || element.HasTagName(wbrTag) ||
         IsHTMLMeterElement(element) || IsHTMLProgressElement(element) ||
         IsHTMLCanvasElement(element) || IsHTMLMediaElement(element) ||
         IsHTMLInputElement(element) || IsHTMLTextAreaElement(element) ||
