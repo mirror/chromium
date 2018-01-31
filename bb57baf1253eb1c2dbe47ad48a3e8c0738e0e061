@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a2e20fe_29afa4c5",
+        "filename": "components/history/core/browser/history_backend.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1830,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2018-01-31T18:23:53Z",
+      "side": 1,
+      "message": "I think it makes sense to relax the conditions only for bookmarked pages.\nThis is still a hack targeted solely on synced icons (for bookmarks). \nThis way, we limit the potential \"icon\" back-and-forths to bookmarks only and document clearly that this edge condition can be removed if favicon sync gets removed.",
+      "range": {
+        "startLine": 1830,
+        "startChar": 25,
+        "endLine": 1830,
+        "endChar": 64
+      },
+      "revId": "bb57baf1253eb1c2dbe47ad48a3e8c0738e0e061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

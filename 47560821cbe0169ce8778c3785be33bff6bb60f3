@@ -88,6 +88,24 @@
       "revId": "47560821cbe0169ce8778c3785be33bff6bb60f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06bcc0ff_98d77a85",
+        "filename": "components/history/core/browser/history_backend.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2313,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2018-01-31T18:23:53Z",
+      "side": 1,
+      "message": "I\u0027ve updated the implementation based on our gvc.",
+      "parentUuid": "5f7fef83_dbaf1e9e",
+      "revId": "47560821cbe0169ce8778c3785be33bff6bb60f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
