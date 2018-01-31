@@ -455,6 +455,10 @@
         "test": "crypto_unittests"
       },
       {
+        "args": [
+          "--use-new-test-runner",
+          "-v"
+        ],
         "swarming": {
           "can_use_on_swarming_builders": true,
           "dimension_sets": [
