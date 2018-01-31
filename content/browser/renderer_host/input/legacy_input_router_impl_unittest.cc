@@ -171,6 +171,12 @@ class LegacyInputRouterImplTest : public testing::Test {
                                                   MSG_ROUTING_NONE, config_));
     client_->set_input_router(input_router());
     disposition_handler_->set_input_router(input_router());
+
+    // Before crbug.com/772130 is fixed, the touch action is always set to auto
+    // when a touch action filter is created. This is no longer true, but a lot
+    // of the tests here are relying on that. So for the tests here, we make the
+    // touch action auto by default.
+    input_router_->SetTouchActionFromMain(cc::kTouchActionAuto);
   }
 
   void TearDown() override {
