@@ -24,6 +24,7 @@
 #import "ios/web/public/test/http_server/http_server.h"
 #include "ios/web/public/test/http_server/http_server_util.h"
 #include "ios/web/public/test/url_test_util.h"
+#import "ios/web/public/web_client.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -59,7 +60,7 @@ const GURL GetFormUrl() {
 
 // GURL of a page with a form that posts data to |GetDestinationUrl|.
 const GURL GetFormPostOnSamePageUrl() {
-  return web::test::HttpServer::MakeUrl("http://form");
+  return web::test::HttpServer::MakeUrl("http://formsamepage");
 }
 
 // GURL of the page to which the |GetFormUrl| posts data to.
@@ -88,13 +89,16 @@ class TestFormResponseProvider : public web::DataResponseProvider {
       const Request& request,
       scoped_refptr<net::HttpResponseHeaders>* headers,
       std::string* response_body) override;
+
+ private:
+  int request_count_ = 0;
 };
 
 bool TestFormResponseProvider::CanHandleRequest(const Request& request) {
   const GURL& url = request.url;
   return url == GetDestinationUrl() || url == GetRedirectUrl() ||
          url == GetRedirectFormUrl() || url == GetFormPostOnSamePageUrl() ||
-         url == GetGenericUrl();
+         url == GetGenericUrl() || url == GetFormUrl();
 }
 
 void TestFormResponseProvider::GetResponseHeadersAndBody(
@@ -128,11 +132,45 @@ void TestFormResponseProvider::GetResponseHeadersAndBody(
     *response_body =
         base::StringPrintf(kFormHtmlTemplate, GetRedirectUrl().spec().c_str());
     return;
-  } else if (url == GetDestinationUrl()) {
-    *response_body = request.method + std::string(" ") + request.body;
+  }
+  if (url == GetDestinationUrl()) {
+    std::string result =
+        base::StringPrintf("%s %s [post #%d]", request.method.c_str(),
+                           request.body.c_str(), request_count_++);
+    *response_body = result;
+    return;
+  }
+  if (url == GetFormUrl()) {
+    std::string result = base::StringPrintf(kFormHtmlTemplate,
+                                            GetDestinationUrl().spec().c_str());
+    *response_body = result;
     return;
   }
   NOTREACHED();
+}
+
+#pragma mark - CancelRepostHelper
+
+// Dismiss repost confirmation dialog by cancelling.
+// TODO (crbug.com/705020): Use something like ElementToDismissContextMenu
+// to cancel form repost.
+void CancelRepostConfirmation() {
+  if (IsIPadIdiom()) {
+    // On tablet, dismiss the popover.
+    GREYElementMatcherBlock* matcher = [[GREYElementMatcherBlock alloc]
+        initWithMatchesBlock:^BOOL(UIView* view) {
+          return [NSStringFromClass([view class]) hasPrefix:@"UIDimmingView"];
+        }
+        descriptionBlock:^(id<GREYDescription> description) {
+          [description appendText:@"class prefixed with UIDimmingView"];
+        }];
+    [[EarlGrey selectElementWithMatcher:matcher]
+        performAction:grey_tapAtPoint(CGPointMake(50.0f, 50.0f))];
+  } else {
+    // On handset, dismiss via the cancel button.
+    [[EarlGrey selectElementWithMatcher:chrome_test_util::CancelButton()]
+        performAction:grey_tap()];
+  }
 }
 
 }  // namespace
@@ -225,6 +263,11 @@ id<GREYMatcher> GoButtonMatcher() {
   // Go to a new page and go back and check that the data is reposted.
   [ChromeEarlGrey loadURL:GetGenericUrl()];
   [ChromeEarlGrey goBack];
+  if (web::GetWebClient()->IsSlimNavigationManagerEnabled()) {
+    // WKBasedNavigationManager only checks repost when reloading a post page.
+    // This is consistent with Safari and Chrome on other platforms.
+    [ChromeEarlGrey reload];
+  }
   [self confirmResendWarning];
   [ChromeEarlGrey waitForWebViewContainingText:kDestinationText];
   [[EarlGrey selectElementWithMatcher:OmniboxText(destinationURL.GetContent())]
@@ -245,6 +288,11 @@ id<GREYMatcher> GoButtonMatcher() {
 
   [ChromeEarlGrey goBack];
   [ChromeEarlGrey goForward];
+  if (web::GetWebClient()->IsSlimNavigationManagerEnabled()) {
+    // WKBasedNavigationManager only checks repost when reloading a post page.
+    // This is consistent with Safari and Chrome on other platforms.
+    [ChromeEarlGrey reload];
+  }
   [self confirmResendWarning];
   [ChromeEarlGrey waitForWebViewContainingText:kDestinationText];
   [[EarlGrey selectElementWithMatcher:OmniboxText(destinationURL.GetContent())]
@@ -272,14 +320,23 @@ id<GREYMatcher> GoButtonMatcher() {
   [[EarlGrey selectElementWithMatcher:historyItem] performAction:grey_tap()];
   [ChromeEarlGrey waitForPageToFinishLoading];
 
+  if (web::GetWebClient()->IsSlimNavigationManagerEnabled()) {
+    // WKBasedNavigationManager only checks repost when reloading a post page.
+    // This is consistent with Safari and Chrome on other platforms.
+    [ChromeEarlGrey reload];
+  }
   [self confirmResendWarning];
   [ChromeEarlGrey waitForWebViewContainingText:kDestinationText];
   [[EarlGrey selectElementWithMatcher:OmniboxText(destinationURL.GetContent())]
       assertWithMatcher:grey_notNil()];
 }
 
-// When data is not reposted, the request is canceled.
-- (void)testRepostFormCancelling {
+// When data is not reposted, the request is canceled. This test assumes legacy
+// navigation manager behavior, which checks repost on back/forward navigation.
+- (void)testRepostFormCancellingLegacy {
+  if (web::GetWebClient()->IsSlimNavigationManagerEnabled())
+    return;
+
   [self setUpFormTestSimpleHttpServer];
   const GURL destinationURL = GetDestinationUrl();
 
@@ -292,25 +349,7 @@ id<GREYMatcher> GoButtonMatcher() {
   [ChromeEarlGrey goBack];
   [ChromeEarlGrey goForward];
 
-  // Abort the reload.
-  // TODO (crbug.com/705020): Use something like ElementToDismissContextMenu
-  // to cancel form repost.
-  if (IsIPadIdiom()) {
-    // On tablet, dismiss the popover.
-    GREYElementMatcherBlock* matcher = [[GREYElementMatcherBlock alloc]
-        initWithMatchesBlock:^BOOL(UIView* view) {
-          return [NSStringFromClass([view class]) hasPrefix:@"UIDimmingView"];
-        }
-        descriptionBlock:^(id<GREYDescription> description) {
-          [description appendText:@"class prefixed with UIDimmingView"];
-        }];
-    [[EarlGrey selectElementWithMatcher:matcher]
-        performAction:grey_tapAtPoint(CGPointMake(50.0f, 50.0f))];
-  } else {
-    // On handset, dismiss via the cancel button.
-    [[EarlGrey selectElementWithMatcher:chrome_test_util::CancelButton()]
-        performAction:grey_tap()];
-  }
+  CancelRepostConfirmation();
   [ChromeEarlGrey waitForPageToFinishLoading];
 
   // Verify that navigation was cancelled, and forward navigation is possible.
@@ -319,6 +358,33 @@ id<GREYMatcher> GoButtonMatcher() {
       assertWithMatcher:grey_notNil()];
   [[EarlGrey selectElementWithMatcher:chrome_test_util::ForwardButton()]
       assertWithMatcher:grey_interactable()];
+}
+
+// Tests when repost is canceled, no request is sent to the server. This test
+// assumes WKBasedNavigationManager behavior, which doesn't trigger repost
+// confirmation on back/forward navigation.
+- (void)testRepostFormCancelling {
+  if (!web::GetWebClient()->IsSlimNavigationManagerEnabled())
+    return;
+
+  web::test::SetUpHttpServer(std::make_unique<TestFormResponseProvider>());
+  const GURL destinationURL = GetDestinationUrl();
+
+  [ChromeEarlGrey loadURL:GetFormUrl()];
+  chrome_test_util::TapWebViewElementWithId(kSubmitButtonLabel);
+  [ChromeEarlGrey waitForWebViewContainingText:"post #0"];
+  [[EarlGrey selectElementWithMatcher:OmniboxText(destinationURL.GetContent())]
+      assertWithMatcher:grey_notNil()];
+
+  [ChromeEarlGrey goBack];
+  [ChromeEarlGrey goForward];
+  // WKBasedNavigationManager only checks repost when reloading a post page.
+  // This is consistent with Safari and Chrome on other platforms.
+  [ChromeEarlGrey reload];
+
+  CancelRepostConfirmation();
+  // Verify that no new request has been sent.
+  [ChromeEarlGrey waitForWebViewContainingText:"post #0"];
 }
 
 // Tests that pressing the button on a POST-based form changes the page and that
