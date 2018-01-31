@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1afdeda4_abf9069e",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T17:02:05Z",
+      "side": 1,
+      "message": "This also pauses things that can\u0027t come from the network (chrome URLs, file URLs, data URLs, etc), no?  Maybe make that clear as well?  Alternatively, could limit it to web schemes (http, https, ftp - ws/wss don\u0027t go through this code), but not sure how future proof such a check would be, and not sure if blobs can come be streamed from the network.",
+      "range": {
+        "startLine": 344,
+        "startChar": 12,
+        "endLine": 344,
+        "endChar": 0
+      },
+      "revId": "98ee1120e7ca2691798435f44cc0e2d5f0af4d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19b8ca69_a45f89a6",
+        "filename": "content/browser/loader/resource_loader_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1645,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T17:02:05Z",
+      "side": 1,
+      "message": "Worth checking the histogram?  Up to you, I don\u0027t have strong opinions on checking histograms, though suppose if you care about the results, should probably test them.",
+      "range": {
+        "startLine": 1645,
+        "startChar": 12,
+        "endLine": 1645,
+        "endChar": 25
+      },
+      "revId": "98ee1120e7ca2691798435f44cc0e2d5f0af4d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "272db0de_bb051a92",
+        "filename": "content/browser/loader/resource_loader_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1679,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T17:02:05Z",
+      "side": 1,
+      "message": "To make this test more deterministic, I think we should wait until we\u0027ve received the first part of the body before resuming.  Same with the next test.  While this means we have no coverage of the case where we pause when there\u0027s no pending headers/body read, I think this test is unlikely to run into that situation anyways (And if it does, and that case is broken, it will run into it rarely enough that we get very rare flaky failures, which are unlikely to be investigated).\n\nIf we want a test where we pause after one read, but before starting the next, that would take a lot more work, which I\u0027m not sure is worth the additional coverage.",
+      "range": {
+        "startLine": 1679,
+        "startChar": 25,
+        "endLine": 1679,
+        "endChar": 0
+      },
+      "revId": "98ee1120e7ca2691798435f44cc0e2d5f0af4d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8ab3e81_5d9d23a4",
+        "filename": "services/network/public/interfaces/url_loader.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T17:02:05Z",
+      "side": 1,
+      "message": "Should document this from a consumers standpoint, not an implementor\u0027s.  Maybe:\n\n\"If the URLLoader is fetching a resource from the network, pauses reading the response body. Also pauses the request before reading a response body from the network, if the request hasn\u0027t yet started doing so.\" (And maybe remove the \"It is allowed to call Pause...\" comment).",
+      "range": {
+        "startLine": 64,
+        "startChar": 35,
+        "endLine": 64,
+        "endChar": 0
+      },
+      "revId": "98ee1120e7ca2691798435f44cc0e2d5f0af4d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8ff1a97_1bc88ee3",
+        "filename": "services/network/public/interfaces/url_loader.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T17:02:05Z",
+      "side": 1,
+      "message": "Mention that redundant calls are ignored?  (i.e., we don\u0027t count number of pauses and make sure it matches the number of resumes, nor is it an error to resume a non-paused request, or pause a request twice)",
+      "range": {
+        "startLine": 74,
+        "startChar": 8,
+        "endLine": 74,
+        "endChar": 17
+      },
+      "revId": "98ee1120e7ca2691798435f44cc0e2d5f0af4d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61f74d69_f0715e89",
+        "filename": "services/network/url_loader.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T17:02:05Z",
+      "side": 1,
+      "message": "Not related to this CL, but this could be the case if we haven\u0027t received the headers yet, too, though that would only affects metrics.",
+      "range": {
+        "startLine": 355,
+        "startChar": 20,
+        "endLine": 355,
+        "endChar": 26
+      },
+      "revId": "98ee1120e7ca2691798435f44cc0e2d5f0af4d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4638384_a67e234e",
+        "filename": "services/network/url_loader.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T17:02:05Z",
+      "side": 1,
+      "message": "Hrm...  Not all deletion paths go through this method.  Successful completions don\u0027t, nor does shutdown.  In those cases, though, we don\u0027t know need to update |body_read_before_paused_| (On success, we would have updated it when the last read completed.  On shutdown, we\u0027ve already updated it all we\u0027re going to).  So I think we can just move the \"if (body_read_before_paused_ !\u003d -1)\" block back to the destructor?",
+      "range": {
+        "startLine": 635,
+        "startChar": 16,
+        "endLine": 635,
+        "endChar": 47
+      },
+      "revId": "98ee1120e7ca2691798435f44cc0e2d5f0af4d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

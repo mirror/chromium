@@ -333,6 +333,30 @@
     },
     {
       "key": {
+        "uuid": "2bc8e5cf_d76d2e60",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-31T17:02:05Z",
+      "side": 1,
+      "message": "A DCHECK works for me!",
+      "parentUuid": "45f92e77_ac56fe31",
+      "range": {
+        "startLine": 368,
+        "startChar": 25,
+        "endLine": 368,
+        "endChar": 0
+      },
+      "revId": "b926715e07addc6ba904dd8545be6af883f17b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c325957b_e1a712f1",
         "filename": "content/browser/loader/resource_loader.h",
         "patchSetId": 2
