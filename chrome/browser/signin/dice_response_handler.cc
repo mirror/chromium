@@ -40,6 +40,8 @@ namespace {
 // The UMA histograms that logs events related to Dice responses.
 const char kDiceResponseHeaderHistogram[] = "Signin.DiceResponseHeader";
 const char kDiceTokenFetchResultHistogram[] = "Signin.DiceTokenFetchResult";
+const char kChromeAccountStateOnWebSignoutHistogram[] =
+    "Signin.ChromeAccountStateOnWebSignout";
 
 // Used for UMA. Do not reorder, append new values at the end.
 enum DiceResponseHeader {
@@ -68,6 +70,24 @@ enum DiceTokenFetchResult {
   kFetchTimeout = 3,
 
   kDiceTokenFetchResultCount
+};
+
+// Used for UMA. Do not reorder, append new values at the end.
+enum ChromeAccountStateInGaiaCookies {
+  // The user is not authenticated in Chrome.
+  kNoChromeAccount = 0,
+
+  // The user is authenticated in Chrome with the first Gaia account.
+  kChromeAccountIsFirstGaiaAccount = 1,
+
+  // The user is authenticated in Chrome with another Gaia account.
+  kChromeAccountIsOtherGaiaAccount = 2,
+
+  // The user is authenticated in Chrome with an account that is not in Gaia
+  // cookies.
+  kChromeAccountIsNotInGaiaAccounts = 3,
+
+  kChromeAccountStateInGaiaCookiesCount
 };
 
 class DiceResponseHandlerFactory : public BrowserContextKeyedServiceFactory {
@@ -127,6 +147,34 @@ void RecordDiceResponseHeader(DiceResponseHeader header) {
 void RecordDiceFetchTokenResult(DiceTokenFetchResult result) {
   UMA_HISTOGRAM_ENUMERATION(kDiceTokenFetchResultHistogram, result,
                             kDiceTokenFetchResultCount);
+}
+
+// Records metrics related to Gaia signout.
+void RecordGaiaSignoutMetrics(
+    AccountTrackerService* account_tracker,
+    const std::vector<signin::DiceResponseParams::AccountInfo>& account_infos,
+    const std::string& chrome_primary_account) {
+  DCHECK(account_tracker);
+  ChromeAccountStateInGaiaCookies state = kNoChromeAccount;
+
+  if (!chrome_primary_account.empty()) {
+    state = kChromeAccountIsNotInGaiaAccounts;
+    // Look for the chrome primary account in |account_infos|.
+    for (const auto& account_info : account_infos) {
+      std::string signed_out_account = account_tracker->PickAccountIdForAccount(
+          account_info.gaia_id, account_info.email);
+      if (signed_out_account == chrome_primary_account) {
+        if (account_info.session_index == 0)
+          state = kChromeAccountIsFirstGaiaAccount;
+        else
+          state = kChromeAccountIsOtherGaiaAccount;
+        break;
+      }
+    }
+  }
+
+  UMA_HISTOGRAM_ENUMERATION(kChromeAccountStateOnWebSignoutHistogram, state,
+                            kChromeAccountStateInGaiaCookiesCount);
 }
 
 }  // namespace
@@ -334,6 +382,10 @@ void DiceResponseHandler::ProcessEnableSyncHeader(
 void DiceResponseHandler::ProcessDiceSignoutHeader(
     const std::vector<signin::DiceResponseParams::AccountInfo>& account_infos) {
   VLOG(1) << "Start processing Dice signout response";
+  std::string primary_account = signin_manager_->GetAuthenticatedAccountId();
+  RecordGaiaSignoutMetrics(account_tracker_service_, account_infos,
+                           primary_account);
+
   if (!signin::IsDicePrepareMigrationEnabled()) {
     // Ignore signout responses when using kDiceFixAuthErrors.
     DCHECK_EQ(signin::AccountConsistencyMethod::kDiceFixAuthErrors,
@@ -343,7 +395,6 @@ void DiceResponseHandler::ProcessDiceSignoutHeader(
 
   // If one of the signed out accounts is the main Chrome account, then force a
   // complete signout. Otherwise simply revoke the corresponding tokens.
-  std::string primary_account = signin_manager_->GetAuthenticatedAccountId();
   std::vector<std::string> secondary_accounts;
   for (const auto& account_info : account_infos) {
     std::string signed_out_account =
