@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "42eaa7fc_71541685",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-31T19:54:37Z",
+      "side": 1,
+      "message": "Ah I was missing the ServiceCompat.STOP_FOREGROUND_DETACH, fixed!",
+      "parentUuid": "fe128fa0_583cf668",
+      "range": {
+        "startLine": 131,
+        "startChar": 16,
+        "endLine": 131,
+        "endChar": 63
+      },
+      "revId": "a8e576e741132a67ea5f5a8d3095547cd4110b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9281b14f_ebf1f48b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
         "patchSetId": 9
