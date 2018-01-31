@@ -64,26 +64,26 @@ class Target(object):
     return remote_cmd.RunSsh(self._GetSshConfigPath(), host, port, command,
                              silent)
 
-  def CopyTo(self, source, dest):
+  def CopyTo(self, sources, dest):
     """Copies a file from the local filesystem to the target filesystem.
 
-    source: The path of the file being copied.
+    sources: List of local file paths to copy from, or a single path.
     dest: The path on the remote filesystem which will be copied to."""
 
     self._AssertStarted()
     host, port = self._GetEndpoint()
     command = remote_cmd.RunScp(self._GetSshConfigPath(), host, port,
-                                source, dest, remote_cmd.COPY_TO_TARGET)
+                                sources, dest, remote_cmd.COPY_TO_TARGET)
 
-  def CopyFrom(self, source, dest):
+  def CopyFrom(self, sources, dest):
     """Copies a file from the target filesystem to the local filesystem.
 
-    source: The path of the file being copied.
+    sources: List of remote file paths to copy, or a single path.
     dest: The path on the local filesystem which will be copied to."""
     self._AssertStarted()
     host, port = self._GetEndpoint()
     return remote_cmd.RunScp(self._GetSshConfigPath(), host, port,
-                             source, dest, remote_cmd.COPY_FROM_TARGET)
+                             sources, dest, remote_cmd.COPY_FROM_TARGET)
 
   def Shutdown(self):
     self.RunCommand(_SHUTDOWN_CMD)
