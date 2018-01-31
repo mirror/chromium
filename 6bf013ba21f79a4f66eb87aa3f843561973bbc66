@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7be106ae_90c5976b",
+        "filename": "chrome/browser/accessibility/accessibility_extension_api.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-31T17:51:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "afa5ad11_2275aa35",
+      "revId": "6bf013ba21f79a4f66eb87aa3f843561973bbc66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a2da145_4cd60252",
         "filename": "chrome/browser/accessibility/accessibility_extension_api.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "6bf013ba21f79a4f66eb87aa3f843561973bbc66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "136d92b6_743457df",
+        "filename": "chrome/browser/accessibility/accessibility_extension_api.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-31T17:51:10Z",
+      "side": 1,
+      "message": "Done. I can foresee at some point a client wanting to direct key events to a non-primary window (e.g. for CFM)? However, for now, I don\u0027t have any reason to do so.",
+      "parentUuid": "9a2da145_4cd60252",
+      "revId": "6bf013ba21f79a4f66eb87aa3f843561973bbc66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "5568c614_d6f7bc6c",
+        "filename": "chrome/browser/resources/chromeos/chromevox/braille/braille_input_handler.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-31T17:51:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a626735a_42e2fa62",
+      "revId": "6bf013ba21f79a4f66eb87aa3f843561973bbc66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0abbbaa3_29b2482e",
         "filename": "chrome/common/extensions/api/accessibility_private.json",
         "patchSetId": 6
@@ -111,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "cd4fd82b_2b39fa51",
+        "filename": "chrome/common/extensions/api/accessibility_private.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-31T17:51:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0abbbaa3_29b2482e",
+      "range": {
+        "startLine": 44,
+        "startChar": 24,
+        "endLine": 44,
+        "endChar": 47
+      },
+      "revId": "6bf013ba21f79a4f66eb87aa3f843561973bbc66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3002b62_4e8bbed3",
         "filename": "chrome/common/extensions/api/accessibility_private.json",
         "patchSetId": 6
@@ -122,6 +200,30 @@
       "writtenOn": "2018-01-26T22:20:23Z",
       "side": 1,
       "message": "Is this supposed to be a bitmask?  If so, might be helpful to call that out.\n\nIt might also be more readable if this were a struct with\n{\n  alt: bool?,\n  ctrl: bool?,\n  shift: bool?,\n}\n\nand then script would pass in, e.g., {alt: true}.  But I don\u0027t feel very strongly, since this is a private API, so whichever y\u0027all prefer is fine.",
+      "range": {
+        "startLine": 53,
+        "startChar": 76,
+        "endLine": 53,
+        "endChar": 156
+      },
+      "revId": "6bf013ba21f79a4f66eb87aa3f843561973bbc66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44f5a41c_5332cf33",
+        "filename": "chrome/common/extensions/api/accessibility_private.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-31T17:51:10Z",
+      "side": 1,
+      "message": "Good suggestion; written as a struct.",
+      "parentUuid": "f3002b62_4e8bbed3",
       "range": {
         "startLine": 53,
         "startChar": 76,
