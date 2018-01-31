@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "191ff099_e7370952",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-31T02:07:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a83a524_07e7fab1",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 28
+      },
+      "revId": "50337e1c9b9ad28c71ca49ac32e571c2325625d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d72485ef_5fcf9c02",
         "filename": "chrome/browser/resources/print_preview/new/destination_list.js",
         "patchSetId": 8
@@ -36,6 +60,24 @@
       "writtenOn": "2018-01-30T22:22:18Z",
       "side": 1,
       "message": "I am  wondering if we can  simplify the search logic. Currently IIUC, there are two (redundant?) searches.\n\n1) To calculate the count of the matching destinations.\n2) isDestinationHidden_() is called on every destination.\n\nCan you take a look at how MD Extensions does filtering, which seems like a very similar case. Specifically it uses the built-in |filter| functionality of dom-repeat, see more details at [1]. \n\nThe count can be exctracted from the dom-repeat as rendered-item-count, see [1] line 78. You can try MD Extensions search locally by passing the --enable-features\u003dMaterialDesignExtensions flag.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/resources/md_extensions/item_list.html?l\u003d77,78.",
+      "revId": "50337e1c9b9ad28c71ca49ac32e571c2325625d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b78702e3_cde3a902",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-31T02:07:50Z",
+      "side": 1,
+      "message": "Per offline discussion, used filter + isDestinationHidden_ to determine displayed destinations, and added new destination list item custom element to handle highlighting so that highlighting works correctly with this approach.",
+      "parentUuid": "d72485ef_5fcf9c02",
       "revId": "50337e1c9b9ad28c71ca49ac32e571c2325625d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "b50e7718_9ec035eb",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-31T02:07:50Z",
+      "side": 1,
+      "message": "Done (function moved to destination_list_item.js)",
+      "parentUuid": "6e44f3e9_53bdfdc6",
+      "revId": "50337e1c9b9ad28c71ca49ac32e571c2325625d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6b4fbed_f11f54c2",
         "filename": "chrome/browser/resources/settings/search_settings.js",
         "patchSetId": 8
@@ -73,6 +133,24 @@
       "revId": "50337e1c9b9ad28c71ca49ac32e571c2325625d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af1fb274_9478ce97",
+        "filename": "chrome/browser/resources/settings/search_settings.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-31T02:07:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6b4fbed_f11f54c2",
+      "revId": "50337e1c9b9ad28c71ca49ac32e571c2325625d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -96,6 +174,30 @@
       "revId": "50337e1c9b9ad28c71ca49ac32e571c2325625d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a85271d_adf0da93",
+        "filename": "ui/webui/resources/js/search_highlight_utils.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-31T02:07:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c96322b9_c8840d05",
+      "range": {
+        "startLine": 17,
+        "startChar": 65,
+        "endLine": 18,
+        "endChar": 40
+      },
+      "revId": "50337e1c9b9ad28c71ca49ac32e571c2325625d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
