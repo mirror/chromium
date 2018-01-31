@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8a3abe02_ea1abe7e",
+        "filename": "chrome/common/stack_sampling_configuration.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-31T06:05:17Z",
+      "side": 1,
+      "message": "Interesting! I did add a RENDERER_PROCESS config at first, but then noticed the somewhat weird BROWSER_AND_GPU config, and decided against adding a new one (and turned out that was not really necessary anyway). But merging the configs into a single ENABLED sounds like a good idea. So I have put that up for review separately in https://chromium-review.googlesource.com/#/c/chromium/src/+/894451\n\nWe do still need the check about process-type here though, right? So that we do not end up adding the flag for other process-types (e.g. utility process, etc.)",
+      "parentUuid": "9b9de5f1_f05bb587",
+      "range": {
+        "startLine": 141,
+        "startChar": 17,
+        "endLine": 141,
+        "endChar": 59
+      },
+      "revId": "96a6097c985bd71a70d48da2e025a816348b4a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ef24831_8a6193f3",
         "filename": "chrome/renderer/chrome_content_renderer_client.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "84344876_ff4a30bf",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-31T06:05:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ef24831_8a6193f3",
+      "range": {
+        "startLine": 235,
+        "startChar": 70,
+        "endLine": 235,
+        "endChar": 72
+      },
+      "revId": "96a6097c985bd71a70d48da2e025a816348b4a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58989ff9_2271876d",
         "filename": "content/renderer/render_thread_impl.cc",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-31T03:16:00Z",
       "side": 1,
       "message": "Ideally the profiler creation task should be the very first task posted on the message loop. Is it feasible to make this call from InitializeCompositorThread right after the thread is created to ensure this?",
+      "range": {
+        "startLine": 1251,
+        "startChar": 4,
+        "endLine": 1252,
+        "endChar": 37
+      },
+      "revId": "96a6097c985bd71a70d48da2e025a816348b4a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b59a008d_58a5571f",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1252,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-31T06:05:17Z",
+      "side": 1,
+      "message": "Good point. Moved the call into InitializeCompositorThread, although still after the task to disable IO on the thread. I think that\u0027d be OK? But happy to move this before that too.",
+      "parentUuid": "58989ff9_2271876d",
       "range": {
         "startLine": 1251,
         "startChar": 4,
