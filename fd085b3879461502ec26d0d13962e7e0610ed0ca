@@ -22,6 +22,40 @@
       "revId": "fd085b3879461502ec26d0d13962e7e0610ed0ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01727906_8a5f2d1a",
+        "filename": "device/bluetooth/bluetooth_adapter_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-31T23:59:47Z",
+      "side": 1,
+      "message": "Sorry for not bringing this up earlier. What do you think of following a similar pattern to CreateGattConnection:\n\n// bluetooth_adapter.cc\nvoid BluetoothAdapter::SetPowered(/* ... */) {\n\n  if (set_powered_callbacks_) {\n    // Run error callback\n  }\n \n  if (powered \u003d\u003d IsPowered()) {\n    // Run callback\n  }\n\n  if (SetPoweredImpl(powered)) {\n    // Store powered callbacks\n    return\n  }\n\n  // Run error callback\n}\n\nvoid BluetoothAdapter::DidChangePoweredState() {\n  if (set_powered_callbacks_) {\n    // Move into a local variable to clear out both callbacks at the end of the\n    // scope and to allow scheduling another SetPowered() call in either of the\n    // callbacks.\n    std::unique_ptr\u003cSetPoweredCallbacks\u003e callbacks \u003d\n        std::move(set_powered_callbacks_);\n    callbacks-\u003epowered \u003d\u003d IsPowered() ? std::move(callbacks-\u003ecallback).Run()\n                                      : callbacks-\u003eerror_callback.Run();\n  }\n\n// bluetooth_adapter_android.cc\nbool BluetoothAdapterAndroid::SetPoweredImpl(bool powered) {\n  return Java_ChromeBluetoothAdapter_setPowered(/* ... */, powered);\n}\n\n// bluetooth_adapter_mac.mm\nbool BluetoothAdapterMac::SetPoweredImpl(bool powered) {\n  if (!IsLowEnergyAvailable())\n    return false;\n\n  power_state_function_.Run(base::strict_cast\u003cint\u003e(powered));\n}\n\nThat way we repeat less logic and the base classes don\u0027t need to know about the callbacks.",
+      "revId": "fd085b3879461502ec26d0d13962e7e0610ed0ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dd7823d_3280ad92",
+        "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-31T23:59:47Z",
+      "side": 1,
+      "message": "Update comment.",
+      "revId": "fd085b3879461502ec26d0d13962e7e0610ed0ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
