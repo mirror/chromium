@@ -362,7 +362,7 @@ void DownloadTaskImpl::GetCookies(
     GetWKCookies(callback);
   } else {
     WebThread::PostTask(WebThread::UI, FROM_HERE, base::BindBlockArc(^{
-                          callback.Run([NSArray array]);
+                          callback.Run(@[]);
                         }));
   }
 }

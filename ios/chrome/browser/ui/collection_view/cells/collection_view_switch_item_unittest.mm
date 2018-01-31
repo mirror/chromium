@@ -86,7 +86,7 @@ TEST_F(CollectionViewSwitchItemTest, EnabledAndDisabled) {
 TEST_F(CollectionViewSwitchItemTest, PrepareForReuseClearsActions) {
   CollectionViewSwitchCell* cell = [[CollectionViewSwitchCell alloc] init];
   UISwitch* switchView = cell.switchView;
-  NSArray* target = [NSArray array];
+  NSArray* target = @[];
 
   EXPECT_EQ(0U, [[switchView allTargets] count]);
   [switchView addTarget:target

@@ -164,8 +164,7 @@ UIImage* GetFallbackImageWithStringAndColor(NSString* string,
   [attributeSet setThumbnailData:UIImagePNGRepresentation(favicon)];
 
   NSString* itemID = [self spotlightIDForURL:indexedURL title:defaultTitle];
-  return [NSArray arrayWithObject:[self spotlightItemWithItemID:itemID
-                                                   attributeSet:attributeSet]];
+  return @[ [self spotlightItemWithItemID:itemID attributeSet:attributeSet] ];
 }
 
 UIImage* GetFallbackImageWithStringAndColor(NSString* string,

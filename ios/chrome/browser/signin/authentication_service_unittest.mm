@@ -593,7 +593,7 @@ TEST_F(AuthenticationServiceTest, MDMErrorsClearedOnForeground) {
   authentication_service_->SignIn(identity_, std::string());
   EXPECT_EQ(2, refresh_token_available_count_);
 
-  NSDictionary* user_info = [NSDictionary dictionary];
+  NSDictionary* user_info = @{};
   SetCachedMDMInfo(identity_, user_info);
   GoogleServiceAuthError error(
       GoogleServiceAuthError::INVALID_GAIA_CREDENTIALS);
@@ -620,7 +620,7 @@ TEST_F(AuthenticationServiceTest, MDMErrorsClearedOnSignout) {
   SetExpectationsForSignIn();
   authentication_service_->SignIn(identity_, std::string());
 
-  NSDictionary* user_info = [NSDictionary dictionary];
+  NSDictionary* user_info = @{};
   SetCachedMDMInfo(identity_, user_info);
   int refresh_token_available_count_before_signout =
       refresh_token_available_count_;
@@ -716,7 +716,7 @@ TEST_F(AuthenticationServiceTest, ShowMDMErrorDialogNoCachedError) {
 // Tests that MDM dialog isn't shown when there is a cached MDM error but no
 // corresponding error for the account.
 TEST_F(AuthenticationServiceTest, ShowMDMErrorDialogInvalidCachedError) {
-  NSDictionary* user_info = [NSDictionary dictionary];
+  NSDictionary* user_info = @{};
   SetCachedMDMInfo(identity_, user_info);
 
   EXPECT_CALL(*identity_service_,
@@ -738,7 +738,7 @@ TEST_F(AuthenticationServiceTest, ShowMDMErrorDialog) {
       ->GetDelegate()
       ->UpdateAuthError(base::SysNSStringToUTF8([identity_ gaiaID]), error);
 
-  NSDictionary* user_info = [NSDictionary dictionary];
+  NSDictionary* user_info = @{};
   SetCachedMDMInfo(identity_, user_info);
 
   EXPECT_CALL(*identity_service_,

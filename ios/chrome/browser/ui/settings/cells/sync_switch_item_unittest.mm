@@ -88,7 +88,7 @@ TEST_F(SyncSwitchItemTest, EnabledAndDisabled) {
 TEST_F(SyncSwitchItemTest, PrepareForReuseClearsActions) {
   SyncSwitchCell* cell = [[SyncSwitchCell alloc] init];
   UISwitch* switchView = cell.switchView;
-  NSArray* target = [NSArray array];
+  NSArray* target = @[];
 
   EXPECT_EQ(0U, [[switchView allTargets] count]);
   [switchView addTarget:target

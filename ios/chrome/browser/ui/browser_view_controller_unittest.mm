@@ -379,15 +379,13 @@ TEST_F(BrowserViewControllerTest, TestNativeContentController) {
 TEST_F(BrowserViewControllerTest, TestErrorController) {
   const GURL badUrl("http://floofywhizbangzzz.com");
   NSString* badURLString = base::SysUTF8ToNSString(badUrl.spec());
-  NSDictionary* userInfoDic = [NSDictionary
-      dictionaryWithObjectsAndKeys:badURLString,
-                                   NSURLErrorFailingURLStringErrorKey,
-                                   [NSError
-                                       errorWithDomain:base::SysUTF8ToNSString(
-                                                           net::kErrorDomain)
-                                                  code:-104
-                                              userInfo:nil],
-                                   NSUnderlyingErrorKey, nil];
+  NSDictionary* userInfoDic = @{
+    NSURLErrorFailingURLStringErrorKey : badURLString,
+    NSUnderlyingErrorKey :
+        [NSError errorWithDomain:base::SysUTF8ToNSString(net::kErrorDomain)
+                            code:-104
+                        userInfo:nil]
+  };
   NSError* testError =
       [NSError errorWithDomain:@"testdomain" code:-1 userInfo:userInfoDic];
   id<CRWNativeContent> controller =

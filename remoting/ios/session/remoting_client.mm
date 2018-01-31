@@ -146,8 +146,7 @@ NSString* const kHostSessionPin = @"kHostSessionPin";
                                 object:weakSelf
                               userInfo:@{
                                 kSessionDetails : strongSelf->_sessionDetails,
-                                kSessionSupportsPairing :
-                                    [NSNumber numberWithBool:pairing_supported],
+                                kSessionSupportsPairing : @(pairing_supported),
                               }];
             }));
       });
@@ -309,8 +308,7 @@ NSString* const kHostSessionPin = @"kHostSessionPin";
   [[NSNotificationCenter defaultCenter]
       postNotificationName:kHostSessionStatusChanged
                     object:self
-                  userInfo:[NSDictionary dictionaryWithObject:_sessionDetails
-                                                       forKey:kSessionDetails]];
+                  userInfo:@{kSessionDetails : _sessionDetails}];
 }
 
 - (void)commitPairingCredentialsForHost:(NSString*)host
@@ -332,8 +330,7 @@ NSString* const kHostSessionPin = @"kHostSessionPin";
   [[NSNotificationCenter defaultCenter]
       postNotificationName:kHostSessionStatusChanged
                     object:self
-                  userInfo:[NSDictionary dictionaryWithObject:_sessionDetails
-                                                       forKey:kSessionDetails]];
+                  userInfo:@{kSessionDetails : _sessionDetails}];
 }
 
 - (void)setCapabilities:(NSString*)capabilities {

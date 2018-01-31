@@ -20,7 +20,8 @@
 
 // Item for a footer of a Content Suggestions section.
 @interface ContentSuggestionsFooterItem
-    : CollectionViewItem<ContentSuggestionsFooterCellDelegate>
+    : CollectionViewItem<ContentSuggestionsFooterCellDelegate,
+                         UIPreviewActionItem>
 
 // Initialize a footer with a button taking all the space, with a |title| and a
 // |callback| run when the cell button is tapped.

@@ -84,9 +84,7 @@ TEST_F(PrefsTest, HttpSeverProperties) {
   ASSERT_TRUE(result);
   storage_path =
       storage_path.Append(FILE_PATH_LITERAL("cronet/prefs/local_prefs.json"));
-  NSString* prefs_file_name =
-      [NSString stringWithCString:storage_path.AsUTF8Unsafe().c_str()
-                         encoding:NSUTF8StringEncoding];
+  NSString* prefs_file_name = @(storage_path.AsUTF8Unsafe().c_str());
 
   // Delete the prefs file if it exists.
   [[NSFileManager defaultManager] removeItemAtPath:prefs_file_name error:nil];

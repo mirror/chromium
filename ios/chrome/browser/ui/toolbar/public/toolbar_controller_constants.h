@@ -107,9 +107,9 @@ enum ToolbarButtonName {
 };
 
 // Style used to specify the direction of the toolbar transition animations.
-typedef enum {
+typedef NS_ENUM(unsigned int, ToolbarTransitionStyle) {
   TOOLBAR_TRANSITION_STYLE_TO_STACK_VIEW,
   TOOLBAR_TRANSITION_STYLE_TO_BVC
-} ToolbarTransitionStyle;
+};
 
 #endif  // IOS_CHROME_BROWSER_UI_TOOLBAR_TOOLBAR_CONTROLLER_CONSTANTS_H_

@@ -369,22 +369,22 @@ const int styleCount = 2;
   if (ios::GetChromeBrowserProvider()
           ->GetBrandedImageProvider()
           ->GetToolbarVoiceSearchButtonImageId(&imageID)) {
-    return [NSArray
-        arrayWithObjects:NativeImage(imageID), NativeImage(imageID), nil];
+    return @[ NativeImage(imageID), NativeImage(imageID) ];
   }
   int voiceSearchImages[styleCount][TOOLBAR_STATE_COUNT] =
       TOOLBAR_IDR_TWO_STATE(VOICE);
-  return [NSArray
-      arrayWithObjects:NativeImage(voiceSearchImages[self.style][DEFAULT]),
-                       NativeImage(voiceSearchImages[self.style][PRESSED]),
-                       nil];
+  return @[
+    NativeImage(voiceSearchImages[self.style][DEFAULT]),
+    NativeImage(voiceSearchImages[self.style][PRESSED])
+  ];
 }
 
 - (NSArray<UIImage*>*)TTSImages {
   int TTSImages[styleCount][TOOLBAR_STATE_COUNT] = TOOLBAR_IDR_TWO_STATE(TTS);
-  return [NSArray arrayWithObjects:NativeImage(TTSImages[self.style][DEFAULT]),
-                                   NativeImage(TTSImages[self.style][PRESSED]),
-                                   nil];
+  return @[
+    NativeImage(TTSImages[self.style][DEFAULT]),
+    NativeImage(TTSImages[self.style][PRESSED])
+  ];
 }
 
 // Returns a forward button without visibility mask configured.

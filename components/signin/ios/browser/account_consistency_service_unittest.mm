@@ -286,7 +286,7 @@ TEST_F(AccountConsistencyServiceTest, SignInSignOut) {
 
   id delegate =
       [OCMockObject mockForProtocol:@protocol(ManageAccountsDelegate)];
-  NSDictionary* headers = [NSDictionary dictionary];
+  NSDictionary* headers = @{};
   NSHTTPURLResponse* response =
       [[NSHTTPURLResponse alloc] initWithURL:kCountryGoogleUrl
                                   statusCode:200
@@ -345,9 +345,7 @@ TEST_F(AccountConsistencyServiceTest, ChromeManageAccountsNotOnGaia) {
   id delegate =
       [OCMockObject mockForProtocol:@protocol(ManageAccountsDelegate)];
 
-  NSDictionary* headers =
-      [NSDictionary dictionaryWithObject:@"action=DEFAULT"
-                                  forKey:@"X-Chrome-Manage-Accounts"];
+  NSDictionary* headers = @{@"X-Chrome-Manage-Accounts" : @"action=DEFAULT"};
   NSHTTPURLResponse* response = [[NSHTTPURLResponse alloc]
        initWithURL:[NSURL URLWithString:@"https://google.com"]
         statusCode:200
@@ -367,7 +365,7 @@ TEST_F(AccountConsistencyServiceTest, ChromeManageAccountsNoHeader) {
   id delegate =
       [OCMockObject mockForProtocol:@protocol(ManageAccountsDelegate)];
 
-  NSDictionary* headers = [NSDictionary dictionary];
+  NSDictionary* headers = @{};
   NSHTTPURLResponse* response = [[NSHTTPURLResponse alloc]
        initWithURL:[NSURL URLWithString:@"https://accounts.google.com/"]
         statusCode:200
@@ -390,9 +388,7 @@ TEST_F(AccountConsistencyServiceTest, ChromeManageAccountsDefault) {
   // Default action is |onManageAccounts|.
   [[delegate expect] onManageAccounts];
 
-  NSDictionary* headers =
-      [NSDictionary dictionaryWithObject:@"action=DEFAULT"
-                                  forKey:@"X-Chrome-Manage-Accounts"];
+  NSDictionary* headers = @{@"X-Chrome-Manage-Accounts" : @"action=DEFAULT"};
   NSHTTPURLResponse* response = [[NSHTTPURLResponse alloc]
        initWithURL:[NSURL URLWithString:@"https://accounts.google.com/"]
         statusCode:200

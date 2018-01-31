@@ -167,19 +167,17 @@ NSArray* GetTestFormInputElementWithLabelFromPrevious() {
   return @[
       @("* First name: "
           "<INPUT type='text' name='firstname' value='John'/>"),
-      [NSDictionary dictionaryWithObjectsAndKeys:
-          @"'* First name:'", @"label",
-          @"'firstname'", @"name",
-          @"'text'", @"form_control_type",
-          @"undefined", @"autocomplete_attribute",
-          GetDefaultMaxLengthString(), @"max_length",
-          @"true", @"should_autocomplete",
-          @"false", @"is_checkable",
-          @"'John'", @"value",
-          @"'John'", @"value_option_text",
-          @"undefined", @"option_values",
-          @"undefined", @"option_contents",
-          nil]];
+      @{@"label": @"'* First name:'",
+          @"name": @"'firstname'",
+          @"form_control_type": @"'text'",
+          @"autocomplete_attribute": @"undefined",
+          @"max_length": GetDefaultMaxLengthString(),
+          @"should_autocomplete": @"true",
+          @"is_checkable": @"false",
+          @"value": @"'John'",
+          @"value_option_text": @"'John'",
+          @"option_values": @"undefined",
+          @"option_contents": @"undefined"}];
 }
 
 NSArray* GetTestFormInputElementWithLabelFromEnclosingLabelBefore() {
@@ -187,133 +185,119 @@ NSArray* GetTestFormInputElementWithLabelFromEnclosingLabelBefore() {
       @("<LABEL>* First name: "
           "<INPUT type='text' name='firstname' value='John'/>"
           "</LABEL>"),
-      [NSDictionary dictionaryWithObjectsAndKeys:
-          @"'* First name:'", @"label",
-          @"'firstname'", @"name",
-          @"'text'", @"form_control_type",
-          @"undefined", @"autocomplete_attribute",
-          GetDefaultMaxLengthString(), @"max_length",
-          @"true", @"should_autocomplete",
-          @"false", @"is_checkable",
-          @"'John'", @"value",
-          @"'John'", @"value_option_text",
-          @"undefined", @"option_values",
-          @"undefined", @"option_contents",
-          nil]];
+      @{@"label": @"'* First name:'",
+          @"name": @"'firstname'",
+          @"form_control_type": @"'text'",
+          @"autocomplete_attribute": @"undefined",
+          @"max_length": GetDefaultMaxLengthString(),
+          @"should_autocomplete": @"true",
+          @"is_checkable": @"false",
+          @"value": @"'John'",
+          @"value_option_text": @"'John'",
+          @"option_values": @"undefined",
+          @"option_contents": @"undefined"}];
 }
 
 NSArray* GetTestFormInputElementWithLabelFromPreviousSpan() {
   return @[
       @("* Last name<span>:</span> "
           "<INPUT type='text' name='lastname' value='John'/>"),
-      [NSDictionary dictionaryWithObjectsAndKeys:
-          @"'* Last name:'", @"label",
-          @"'lastname'", @"name",
-          @"'text'", @"form_control_type",
-          @"undefined", @"autocomplete_attribute",
-          GetDefaultMaxLengthString(), @"max_length",
-          @"true", @"should_autocomplete",
-          @"false", @"is_checkable",
-          @"'John'", @"value",
-          @"'John'", @"value_option_text",
-          @"undefined", @"option_values",
-          @"undefined", @"option_contents",
-          nil]];
+      @{@"label": @"'* Last name:'",
+          @"name": @"'lastname'",
+          @"form_control_type": @"'text'",
+          @"autocomplete_attribute": @"undefined",
+          @"max_length": GetDefaultMaxLengthString(),
+          @"should_autocomplete": @"true",
+          @"is_checkable": @"false",
+          @"value": @"'John'",
+          @"value_option_text": @"'John'",
+          @"option_values": @"undefined",
+          @"option_contents": @"undefined"}];
 }
 
 NSArray* GetTestFormInputElementWithLabelFromPreviousParagraph() {
   return @[
       @("<p>* Email:</p> "
           "<INPUT type='email' name='email' value='john@example.com'/>"),
-      [NSDictionary dictionaryWithObjectsAndKeys:
-          @"'* Email:'", @"label",
-          @"'email'", @"name",
-          @"'email'", @"form_control_type",
-          @"undefined", @"autocomplete_attribute",
-          GetDefaultMaxLengthString(), @"max_length",
-          @"true", @"should_autocomplete",
-          @"false", @"is_checkable",
-          @"'john@example.com'", @"value",
-          @"'john@example.com'", @"value_option_text",
-          @"undefined", @"option_values",
-          @"undefined", @"option_contents",
-          nil]];
+      @{@"label": @"'* Email:'",
+          @"name": @"'email'",
+          @"form_control_type": @"'email'",
+          @"autocomplete_attribute": @"undefined",
+          @"max_length": GetDefaultMaxLengthString(),
+          @"should_autocomplete": @"true",
+          @"is_checkable": @"false",
+          @"value": @"'john@example.com'",
+          @"value_option_text": @"'john@example.com'",
+          @"option_values": @"undefined",
+          @"option_contents": @"undefined"}];
 }
 
 NSArray* GetTestFormInputElementWithLabelFromPreviousLabel() {
   return @[
       @("<label>* Telephone: </label> "
           "<INPUT type='tel' id='telephone' value='12345678'/>"),
-      [NSDictionary dictionaryWithObjectsAndKeys:
-          @"'* Telephone:'", @"label",
-          @"'telephone'", @"name",
-          @"'tel'", @"form_control_type",
-          @"undefined", @"autocomplete_attribute",
-          GetDefaultMaxLengthString(), @"max_length",
-          @"true", @"should_autocomplete",
-          @"false", @"is_checkable",
-          @"'12345678'", @"value",
-          @"'12345678'", @"value_option_text",
-          @"undefined", @"option_values",
-          @"undefined", @"option_contents",
-          nil]];
+      @{@"label": @"'* Telephone:'",
+          @"name": @"'telephone'",
+          @"form_control_type": @"'tel'",
+          @"autocomplete_attribute": @"undefined",
+          @"max_length": GetDefaultMaxLengthString(),
+          @"should_autocomplete": @"true",
+          @"is_checkable": @"false",
+          @"value": @"'12345678'",
+          @"value_option_text": @"'12345678'",
+          @"option_values": @"undefined",
+          @"option_contents": @"undefined"}];
 }
 
 NSArray* GetTestFormInputElementWithLabelFromPreviousLabelOtherIgnored() {
   return @[
       @("Other Text <label>* Blog:</label> "
           "<INPUT type='url' autocomplete='off' value='www.jogh.blog'/>"),
-      [NSDictionary dictionaryWithObjectsAndKeys:
-          @"'* Blog:'", @"label",
-          @"''", @"name",
-          @"'url'", @"form_control_type",
-          @"'off'", @"autocomplete_attribute",
-          GetDefaultMaxLengthString(), @"max_length",
-          @"false", @"should_autocomplete",
-          @"false", @"is_checkable",
-          @"'www.jogh.blog'", @"value",
-          @"'www.jogh.blog'", @"value_option_text",
-          @"undefined", @"option_values",
-          @"undefined", @"option_contents",
-          nil]];
+      @{@"label": @"'* Blog:'",
+          @"name": @"''",
+          @"form_control_type": @"'url'",
+          @"autocomplete_attribute": @"'off'",
+          @"max_length": GetDefaultMaxLengthString(),
+          @"should_autocomplete": @"false",
+          @"is_checkable": @"false",
+          @"value": @"'www.jogh.blog'",
+          @"value_option_text": @"'www.jogh.blog'",
+          @"option_values": @"undefined",
+          @"option_contents": @"undefined"}];
 }
 
 NSArray* GetTestFormInputElementWithLabelFromPreviousTextSpanBr() {
   return @[
       @("* Expected visits<span>:</span> <br>"
           "<INPUT type='number' name='expected number of clicks'/>"),
-      [NSDictionary dictionaryWithObjectsAndKeys:
-          @"'* Expected visits:'", @"label",
-          @"'expected number of clicks'", @"name",
-          @"'number'", @"form_control_type",
-          @"undefined", @"autocomplete_attribute",
-          GetDefaultMaxLengthString(), @"max_length",
-          @"true", @"should_autocomplete",
-          @"false", @"is_checkable",
-          @"''", @"value",
-          @"''", @"value_option_text",
-          @"undefined", @"option_values",
-          @"undefined", @"option_contents",
-          nil]];
+      @{@"label": @"'* Expected visits:'",
+          @"name": @"'expected number of clicks'",
+          @"form_control_type": @"'number'",
+          @"autocomplete_attribute": @"undefined",
+          @"max_length": GetDefaultMaxLengthString(),
+          @"should_autocomplete": @"true",
+          @"is_checkable": @"false",
+          @"value": @"''",
+          @"value_option_text": @"''",
+          @"option_values": @"undefined",
+          @"option_contents": @"undefined"}];
 }
 
 NSArray* GetTestFormInputElementWithLabelFromPreviousTextBrAndSpan() {
   return @[
       @("Other <br> * Password<span>:</span> "
           "<INPUT type='password' autocomplete='off' name='pwd'/>"),
-      [NSDictionary dictionaryWithObjectsAndKeys:
-          @"'* Password:'", @"label",
-          @"'pwd'", @"name",
-          @"'password'", @"form_control_type",
-          @"'off'", @"autocomplete_attribute",
-          GetDefaultMaxLengthString(), @"max_length",
-          @"false", @"should_autocomplete",
-          @"false", @"is_checkable",
-          @"''", @"value",
-          @"''", @"value_option_text",
-          @"undefined", @"option_values",
-          @"undefined", @"option_contents",
-          nil]];
+      @{@"label": @"'* Password:'",
+          @"name": @"'pwd'",
+          @"form_control_type": @"'password'",
+          @"autocomplete_attribute": @"'off'",
+          @"max_length": GetDefaultMaxLengthString(),
+          @"should_autocomplete": @"false",
+          @"is_checkable": @"false",
+          @"value": @"''",
+          @"value_option_text": @"''",
+          @"option_values": @"undefined",
+          @"option_contents": @"undefined"}];
 }
 
 NSArray* GetTestFormInputElementWithLabelFromListItem() {
@@ -324,45 +308,39 @@ NSArray* GetTestFormInputElementWithLabelFromListItem() {
           "<INPUT type='text' id='middle code' value='555'/>"
           "<INPUT type='text' id='last code' value='1212'/>"
           "</LI>"),
-      [NSDictionary dictionaryWithObjectsAndKeys:
-          @"'* Code:'", @"label",
-          @"'first code'", @"name",
-          @"'text'", @"form_control_type",
-          @"undefined", @"autocomplete_attribute",
-          GetDefaultMaxLengthString(), @"max_length",
-          @"true", @"should_autocomplete",
-          @"false", @"is_checkable",
-          @"'415'", @"value",
-          @"'415'", @"value_option_text",
-          @"undefined", @"option_values",
-          @"undefined", @"option_contents",
-          nil],
-      [NSDictionary dictionaryWithObjectsAndKeys:
-          @"'* Code:'", @"label",
-          @"'middle code'", @"name",
-          @"'text'", @"form_control_type",
-          @"undefined", @"autocomplete_attribute",
-          GetDefaultMaxLengthString(), @"max_length",
-          @"true", @"should_autocomplete",
-          @"false", @"is_checkable",
-          @"'555'", @"value",
-          @"'555'", @"value_option_text",
-          @"undefined", @"option_values",
-          @"undefined", @"option_contents",
-          nil],
-      [NSDictionary dictionaryWithObjectsAndKeys:
-          @"'* Code:'", @"label",
-          @"'last code'", @"name",
-          @"'text'", @"form_control_type",
-          @"undefined", @"autocomplete_attribute",
-          GetDefaultMaxLengthString(), @"max_length",
-          @"true", @"should_autocomplete",
-          @"false", @"is_checkable",
-          @"'1212'", @"value",
-          @"'1212'", @"value_option_text",
-          @"undefined", @"option_values",
-          @"undefined", @"option_contents",
-          nil]];
+      @{@"label": @"'* Code:'",
+          @"name": @"'first code'",
+          @"form_control_type": @"'text'",
+          @"autocomplete_attribute": @"undefined",
+          @"max_length": GetDefaultMaxLengthString(),
+          @"should_autocomplete": @"true",
+          @"is_checkable": @"false",
+          @"value": @"'415'",
+          @"value_option_text": @"'415'",
+          @"option_values": @"undefined",
+          @"option_contents": @"undefined"},
+      @{@"label": @"'* Code:'",
+          @"name": @"'middle code'",
+          @"form_control_type": @"'text'",
+          @"autocomplete_attribute": @"undefined",
+          @"max_length": GetDefaultMaxLengthString(),
+          @"should_autocomplete": @"true",
+          @"is_checkable": @"false",
+          @"value": @"'555'",
+          @"value_option_text": @"'555'",
+          @"option_values": @"undefined",
+          @"option_contents": @"undefined"},
+      @{@"label": @"'* Code:'",
+          @"name": @"'last code'",
+          @"form_control_type": @"'text'",
+          @"autocomplete_attribute": @"undefined",
+          @"max_length": GetDefaultMaxLengthString(),
+          @"should_autocomplete": @"true",
+          @"is_checkable": @"false",
+          @"value": @"'1212'",
+          @"value_option_text": @"'1212'",
+          @"option_values": @"undefined",
+          @"option_contents": @"undefined"}];
 }
 
 NSArray* GetTestFormInputElementWithLabelFromTableColumnTD() {
@@ -378,32 +356,28 @@ NSArray* GetTestFormInputElementWithLabelFromTableColumnTD() {
           "             value='john@example.com'/></TD>"
           "</TR>"
           "</TABLE>"),
-      [NSDictionary dictionaryWithObjectsAndKeys:
-          @"'* First name:'", @"label",
-          @"'tabletdname'", @"name",
-          @"'text'", @"form_control_type",
-          @"undefined", @"autocomplete_attribute",
-          GetDefaultMaxLengthString(), @"max_length",
-          @"true", @"should_autocomplete",
-          @"false", @"is_checkable",
-          @"'John'", @"value",
-          @"'John'", @"value_option_text",
-          @"undefined", @"option_values",
-          @"undefined", @"option_contents",
-          nil],
-      [NSDictionary dictionaryWithObjectsAndKeys:
-          @"'Email:'", @"label",
-          @"'tabletdemail'", @"name",
-          @"'email'", @"form_control_type",
-          @"undefined", @"autocomplete_attribute",
-          GetDefaultMaxLengthString(), @"max_length",
-          @"true", @"should_autocomplete",
-          @"false", @"is_checkable",
-          @"'john@example.com'", @"value",
-          @"'john@example.com'", @"value_option_text",
-          @"undefined", @"option_values",
-          @"undefined", @"option_contents",
-          nil]];
+      @{@"label": @"'* First name:'",
+          @"name": @"'tabletdname'",
+          @"form_control_type": @"'text'",
+          @"autocomplete_attribute": @"undefined",
+          @"max_length": GetDefaultMaxLengthString(),
+          @"should_autocomplete": @"true",
+          @"is_checkable": @"false",
+          @"value": @"'John'",
+          @"value_option_text": @"'John'",
+          @"option_values": @"undefined",
+          @"option_contents": @"undefined"},
+      @{@"label": @"'Email:'",
+          @"name": @"'tabletdemail'",
+          @"form_control_type": @"'email'",
+          @"autocomplete_attribute": @"undefined",
+          @"max_length": GetDefaultMaxLengthString(),
+          @"should_autocomplete": @"true",
+          @"is_checkable": @"false",
+          @"value": @"'john@example.com'",
+          @"value_option_text": @"'john@example.com'",
+          @"option_values": @"undefined",
+          @"option_contents": @"undefined"}];
 }
 
 NSArray* GetTestFormInputElementWithLabelFromTableColumnTH() {
@@ -419,32 +393,28 @@ NSArray* GetTestFormInputElementWithLabelFromTableColumnTH() {
           "             value='john@example.com'/></TD>"
           "</TR>"
           "</TABLE>"),
-      [NSDictionary dictionaryWithObjectsAndKeys:
-          @"'* First name:'", @"label",
-          @"'nameintableth'", @"name",
-          @"'text'", @"form_control_type",
-          @"undefined", @"autocomplete_attribute",
-          GetDefaultMaxLengthString(), @"max_length",
-          @"true", @"should_autocomplete",
-          @"false", @"is_checkable",
-          @"'John'", @"value",
-          @"'John'", @"value_option_text",
-          @"undefined", @"option_values",
-          @"undefined", @"option_contents",
-          nil],
-      [NSDictionary dictionaryWithObjectsAndKeys:
-          @"'Email:'", @"label",
-          @"'emailtableth'",  @"name",
-          @"'email'", @"form_control_type",
-          @"undefined", @"autocomplete_attribute",
-          GetDefaultMaxLengthString(), @"max_length",
-          @"true", @"should_autocomplete",
-          @"false", @"is_checkable",
-          @"'john@example.com'", @"value",
-          @"'john@example.com'", @"value_option_text",
-          @"undefined", @"option_values",
-          @"undefined", @"option_contents",
-          nil]];
+      @{@"label": @"'* First name:'",
+          @"name": @"'nameintableth'",
+          @"form_control_type": @"'text'",
+          @"autocomplete_attribute": @"undefined",
+          @"max_length": GetDefaultMaxLengthString(),
+          @"should_autocomplete": @"true",
+          @"is_checkable": @"false",
+          @"value": @"'John'",
+          @"value_option_text": @"'John'",
+          @"option_values": @"undefined",
+          @"option_contents": @"undefined"},
+      @{@"label": @"'Email:'",
+          @"name": @"'emailtableth'",
+          @"form_control_type": @"'email'",
+          @"autocomplete_attribute": @"undefined",
+          @"max_length": GetDefaultMaxLengthString(),
+          @"should_autocomplete": @"true",
+          @"is_checkable": @"false",
+          @"value": @"'john@example.com'",
+          @"value_option_text": @"'john@example.com'",
+          @"option_values": @"undefined",
+          @"option_contents": @"undefined"}];
 }
 
 NSArray* GetTestFormInputElementWithLabelFromTableNested() {
@@ -455,19 +425,17 @@ NSArray* GetTestFormInputElementWithLabelFromTableNested() {
           "  <TD><INPUT type='text' id='nametablenested' value='John'/></TD>"
           "</TR>"
           "</TABLE>"),
-      [NSDictionary dictionaryWithObjectsAndKeys:
-          @"'* First name:'", @"label",
-          @"'nametablenested'", @"name",
-          @"'text'", @"form_control_type",
-          @"undefined", @"autocomplete_attribute",
-          GetDefaultMaxLengthString(), @"max_length",
-          @"true", @"should_autocomplete",
-          @"false", @"is_checkable",
-          @"'John'", @"value",
-          @"'John'", @"value_option_text",
-          @"undefined", @"option_values",
-          @"undefined", @"option_contents",
-          nil]];
+      @{@"label": @"'* First name:'",
+          @"name": @"'nametablenested'",
+          @"form_control_type": @"'text'",
+          @"autocomplete_attribute": @"undefined",
+          @"max_length": GetDefaultMaxLengthString(),
+          @"should_autocomplete": @"true",
+          @"is_checkable": @"false",
+          @"value": @"'John'",
+          @"value_option_text": @"'John'",
+          @"option_values": @"undefined",
+          @"option_contents": @"undefined"}];
 }
 
 NSArray* GetTestFormInputElementWithLabelFromTableRow() {
@@ -480,19 +448,17 @@ NSArray* GetTestFormInputElementWithLabelFromTableRow() {
           "  <TD><INPUT type='text'  name='nametablerow' value='John'/></TD>"
           "</TR>"
           "</TABLE>"),
-      [NSDictionary dictionaryWithObjectsAndKeys:
-          @"'* First name:'", @"label",
-          @"'nametablerow'", @"name",
-          @"'text'", @"form_control_type",
-          @"undefined", @"autocomplete_attribute",
-          GetDefaultMaxLengthString(), @"max_length",
-          @"true", @"should_autocomplete",
-          @"false", @"is_checkable",
-          @"'John'", @"value",
-          @"'John'", @"value_option_text",
-          @"undefined", @"option_values",
-          @"undefined", @"option_contents",
-          nil]];
+      @{@"label": @"'* First name:'",
+          @"name": @"'nametablerow'",
+          @"form_control_type": @"'text'",
+          @"autocomplete_attribute": @"undefined",
+          @"max_length": GetDefaultMaxLengthString(),
+          @"should_autocomplete": @"true",
+          @"is_checkable": @"false",
+          @"value": @"'John'",
+          @"value_option_text": @"'John'",
+          @"option_values": @"undefined",
+          @"option_contents": @"undefined"}];
 }
 
 NSArray* GetTestFormInputElementWithLabelFromDivTable() {
@@ -502,19 +468,17 @@ NSArray* GetTestFormInputElementWithLabelFromDivTable() {
           "<INPUT type='text' name='namedivtable' value='John'>"
           "</SPAN>"
           "</DIV>"),
-      [NSDictionary dictionaryWithObjectsAndKeys:
-          @"'* First name:'", @"label",
-          @"'namedivtable'", @"name",
-          @"'text'", @"form_control_type",
-          @"undefined", @"autocomplete_attribute",
-          GetDefaultMaxLengthString(), @"max_length",
-          @"true", @"should_autocomplete",
-          @"false", @"is_checkable",
-          @"'John'", @"value",
-          @"'John'", @"value_option_text",
-          @"undefined", @"option_values",
-          @"undefined", @"option_contents",
-          nil]];
+      @{@"label": @"'* First name:'",
+          @"name": @"'namedivtable'",
+          @"form_control_type": @"'text'",
+          @"autocomplete_attribute": @"undefined",
+          @"max_length": GetDefaultMaxLengthString(),
+          @"should_autocomplete": @"true",
+          @"is_checkable": @"false",
+          @"value": @"'John'",
+          @"value_option_text": @"'John'",
+          @"option_values": @"undefined",
+          @"option_contents": @"undefined"}];
 }
 
 NSArray* GetTestFormInputElementWithLabelFromDefinitionList() {
@@ -534,51 +498,45 @@ NSArray* GetTestFormInputElementWithLabelFromDefinitionList() {
           "    </FONT>"
           "  </DD>"
           " </DL>"),
-      [NSDictionary dictionaryWithObjectsAndKeys:
-          @"'* Favorite Sport'", @"label",
-          @"'sport'", @"name",
-          @"'text'", @"form_control_type",
-          @"undefined", @"autocomplete_attribute",
-          GetDefaultMaxLengthString(), @"max_length",
-          @"true", @"should_autocomplete",
-          @"false", @"is_checkable",
-          @"'Tennis'", @"value",
-          @"'Tennis'", @"value_option_text",
-          @"undefined", @"option_values",
-          @"undefined", @"option_contents",
-          nil]];
+      @{@"label": @"'* Favorite Sport'",
+          @"name": @"'sport'",
+          @"form_control_type": @"'text'",
+          @"autocomplete_attribute": @"undefined",
+          @"max_length": GetDefaultMaxLengthString(),
+          @"should_autocomplete": @"true",
+          @"is_checkable": @"false",
+          @"value": @"'Tennis'",
+          @"value_option_text": @"'Tennis'",
+          @"option_values": @"undefined",
+          @"option_contents": @"undefined"}];
 }
 
 NSArray* GetTestInputRadio() {
   return @[
       @("<input type='radio' name='boolean' value='true'/> True"
           "<input type='radio' name='boolean' value='false'/> False"),
-      [NSDictionary dictionaryWithObjectsAndKeys:
-          @"'True'", @"label",
-          @"'boolean'", @"name",
-          @"'radio'", @"form_control_type",
-          @"undefined", @"autocomplete_attribute",
-          @"undefined", @"max_length",
-          @"true", @"should_autocomplete",
-          @"true", @"is_checkable",
-          @"'true'", @"value",
-          @"'true'", @"value_option_text",
-          @"undefined", @"option_values",
-          @"undefined", @"option_contents",
-          nil],
-      [NSDictionary dictionaryWithObjectsAndKeys:
-          @"'False'", @"label",
-          @"'boolean'", @"name",
-          @"'radio'", @"form_control_type",
-          @"undefined", @"autocomplete_attribute",
-          @"undefined", @"max_length",
-          @"true", @"should_autocomplete",
-          @"true", @"is_checkable",
-          @"'false'", @"value",
-          @"'false'", @"value_option_text",
-          @"undefined", @"option_values",
-          @"undefined", @"option_contents",
-          nil]];
+      @{@"label": @"'True'",
+          @"name": @"'boolean'",
+          @"form_control_type": @"'radio'",
+          @"autocomplete_attribute": @"undefined",
+          @"max_length": @"undefined",
+          @"should_autocomplete": @"true",
+          @"is_checkable": @"true",
+          @"value": @"'true'",
+          @"value_option_text": @"'true'",
+          @"option_values": @"undefined",
+          @"option_contents": @"undefined"},
+      @{@"label": @"'False'",
+          @"name": @"'boolean'",
+          @"form_control_type": @"'radio'",
+          @"autocomplete_attribute": @"undefined",
+          @"max_length": @"undefined",
+          @"should_autocomplete": @"true",
+          @"is_checkable": @"true",
+          @"value": @"'false'",
+          @"value_option_text": @"'false'",
+          @"option_values": @"undefined",
+          @"option_contents": @"undefined"}];
 }
 
 NSArray* GetTestInputCheckbox() {
@@ -586,45 +544,39 @@ NSArray* GetTestInputCheckbox() {
       @("<input type='checkbox' name='vehicle' value='Bike'> Bicycle"
           "<input type='checkbox' name='vehicle' value='Car'> Automobile"
           "<input type='checkbox' name='vehicle' value='Rocket'> Missile"),
-      [NSDictionary dictionaryWithObjectsAndKeys:
-          @"'Bicycle'", @"label",
-          @"'vehicle'", @"name",
-          @"'checkbox'", @"form_control_type",
-          @"undefined", @"autocomplete_attribute",
-          @"undefined", @"max_length",
-          @"true", @"should_autocomplete",
-          @"true", @"is_checkable",
-          @"'Bike'", @"value",
-          @"'Bike'", @"value_option_text",
-          @"undefined", @"option_values",
-          @"undefined", @"option_contents",
-          nil],
-      [NSDictionary dictionaryWithObjectsAndKeys:
-          @"'Automobile'", @"label",
-          @"'vehicle'", @"name",
-          @"'checkbox'", @"form_control_type",
-          @"undefined", @"autocomplete_attribute",
-          @"undefined", @"max_length",
-          @"true", @"should_autocomplete",
-          @"true", @"is_checkable",
-          @"'Car'", @"value",
-          @"'Car'", @"value_option_text",
-          @"undefined", @"option_values",
-          @"undefined", @"option_contents",
-          nil],
-      [NSDictionary dictionaryWithObjectsAndKeys:
-          @"'Missile'", @"label",
-          @"'vehicle'", @"name",
-          @"'checkbox'", @"form_control_type",
-          @"undefined", @"autocomplete_attribute",
-          @"undefined", @"max_length",
-          @"true", @"should_autocomplete",
-          @"true", @"is_checkable",
-          @"'Rocket'", @"value",
-          @"'Rocket'", @"value_option_text",
-          @"undefined", @"option_values",
-          @"undefined", @"option_contents",
-          nil]];
+      @{@"label": @"'Bicycle'",
+          @"name": @"'vehicle'",
+          @"form_control_type": @"'checkbox'",
+          @"autocomplete_attribute": @"undefined",
+          @"max_length": @"undefined",
+          @"should_autocomplete": @"true",
+          @"is_checkable": @"true",
+          @"value": @"'Bike'",
+          @"value_option_text": @"'Bike'",
+          @"option_values": @"undefined",
+          @"option_contents": @"undefined"},
+      @{@"label": @"'Automobile'",
+          @"name": @"'vehicle'",
+          @"form_control_type": @"'checkbox'",
+          @"autocomplete_attribute": @"undefined",
+          @"max_length": @"undefined",
+          @"should_autocomplete": @"true",
+          @"is_checkable": @"true",
+          @"value": @"'Car'",
+          @"value_option_text": @"'Car'",
+          @"option_values": @"undefined",
+          @"option_contents": @"undefined"},
+      @{@"label": @"'Missile'",
+          @"name": @"'vehicle'",
+          @"form_control_type": @"'checkbox'",
+          @"autocomplete_attribute": @"undefined",
+          @"max_length": @"undefined",
+          @"should_autocomplete": @"true",
+          @"is_checkable": @"true",
+          @"value": @"'Rocket'",
+          @"value_option_text": @"'Rocket'",
+          @"option_values": @"undefined",
+          @"option_contents": @"undefined"}];
 }
 
 NSArray* GetTestFormSelectElement() {
@@ -635,19 +587,17 @@ NSArray* GetTestFormSelectElement() {
           "      <option value='TX'>Texas</option>"
           "    </select>"
           "   </label>"),
-      [NSDictionary dictionaryWithObjectsAndKeys:
-          @"'State:'", @"label",
-          @"'state'", @"name",
-          @"'select-one'", @"form_control_type",
-          @"undefined", @"autocomplete_attribute",
-          @"undefined", @"max_length",
-          @"true", @"should_autocomplete",
-          @"undefined", @"is_checkable",
-          @"'CA'", @"value",
-          @"'California'", @"value_option_text",
-          @[@"'CA'", @"'TX'"], @"option_values",
-          @[@"'California'", @"'Texas'"], @"option_contents",
-          nil]];
+      @{@"label": @"'State:'",
+          @"name": @"'state'",
+          @"form_control_type": @"'select-one'",
+          @"autocomplete_attribute": @"undefined",
+          @"max_length": @"undefined",
+          @"should_autocomplete": @"true",
+          @"is_checkable": @"undefined",
+          @"value": @"'CA'",
+          @"value_option_text": @"'California'",
+          @"option_values": @[@"'CA'", @"'TX'"],
+          @"option_contents": @[@"'California'", @"'Texas'"]}];
 }
 
 NSArray* GetTestFormSelectElementWithOptgroup() {
@@ -664,29 +614,27 @@ NSArray* GetTestFormSelectElementWithOptgroup() {
           "      <option value='8.02.3'>Lecture 03: Electric Flux"
           "    </select>"
           "  </label>"),
-      [NSDictionary dictionaryWithObjectsAndKeys:
-          @"'Course:'", @"label",
-          @"'course'", @"name",
-          @"'select-one'", @"form_control_type",
-          @"undefined", @"autocomplete_attribute",
-          @"undefined", @"max_length",
-          @"true", @"should_autocomplete",
-          @"undefined", @"is_checkable",
-          @"'8.01.1'", @"value",
-          @"'Lecture 01: Powers of Ten'", @"value_option_text",
-          @[@"'8.01.1'",
+      @{@"label": @"'Course:'",
+          @"name": @"'course'",
+          @"form_control_type": @"'select-one'",
+          @"autocomplete_attribute": @"undefined",
+          @"max_length": @"undefined",
+          @"should_autocomplete": @"true",
+          @"is_checkable": @"undefined",
+          @"value": @"'8.01.1'",
+          @"value_option_text": @"'Lecture 01: Powers of Ten'",
+          @"option_values": @[@"'8.01.1'",
               @"'8.01.2'",
               @"'8.01.3'",
               @"'8.02.1'",
               @"'8.02.2'",
-              @"'8.02.3'"], @"option_values",
-          @[@"'Lecture 01: Powers of Ten'",
+              @"'8.02.3'"],
+          @"option_contents": @[@"'Lecture 01: Powers of Ten'",
               @"'Lecture 02: 1D Kinematics'",
               @"'Lecture 03: Vectors'",
               @"'Lecture 01: What holds world together?'",
               @"'Lecture 02: Electric Field'",
-              @"'Lecture 03: Electric Flux'"], @"option_contents",
-          nil]];
+              @"'Lecture 03: Electric Flux'"]}];
 }
 
 // clang-format on

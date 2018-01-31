@@ -50,7 +50,7 @@ CWVWebViewConfiguration* gIncognitoConfiguration = nil;
   [gIncognitoConfiguration shutDown];
 }
 
-+ (instancetype)defaultConfiguration {
++ (CWVWebViewConfiguration*)defaultConfiguration {
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
     auto browserState =

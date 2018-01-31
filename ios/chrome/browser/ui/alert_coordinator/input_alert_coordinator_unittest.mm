@@ -43,7 +43,7 @@ TEST_F(InputAlertCoordinatorTest, GetTextFields) {
                                                           title:@"Test"
                                                         message:nil];
 
-  NSArray<UITextField*>* array = [NSArray array];
+  NSArray<UITextField*>* array = @[];
   id alert =
       [OCMockObject partialMockForObject:alertCoordinator.alertController];
   [[[alert expect] andReturn:array] textFields];

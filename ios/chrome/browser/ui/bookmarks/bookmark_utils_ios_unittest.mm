@@ -178,8 +178,8 @@ TEST_F(BookmarkIOSUtilsUnitTest, TestCreateBookmarkPath) {
       bookmark_utils_ios::CreateBookmarkPath(_bookmarkModel, f1->id());
   NSMutableArray* expectedPath = [NSMutableArray array];
   [expectedPath addObject:@0];
-  [expectedPath addObject:[NSNumber numberWithLongLong:mobileNode->id()]];
-  [expectedPath addObject:[NSNumber numberWithLongLong:f1->id()]];
+  [expectedPath addObject:@(mobileNode->id())];
+  [expectedPath addObject:@(f1->id())];
   EXPECT_TRUE([expectedPath isEqualToArray:path]);
 }
 

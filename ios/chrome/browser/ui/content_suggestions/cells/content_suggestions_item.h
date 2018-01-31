@@ -27,7 +27,8 @@ class GURL;
 @end
 
 // Item for an article in the suggestions.
-@interface ContentSuggestionsItem : CollectionViewItem<SuggestedContent>
+@interface ContentSuggestionsItem
+    : CollectionViewItem<SuggestedContent, UIPreviewActionItem>
 
 // Initialize an article with a |title|, a |subtitle|, an |image| and the |url|
 // to the full article. |type| is the type of the item.

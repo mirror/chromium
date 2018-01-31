@@ -126,7 +126,7 @@ TEST_F(CRWWebViewScrollViewProxyTest, ScrollViewPresent) {
   [[[mockScrollView_ expect] andReturnValue:@NO] scrollsToTop];
   EXPECT_FALSE([webViewScrollViewProxy_ scrollsToTop]);
 
-  NSArray<__kindof UIView*>* subviews = [NSArray array];
+  NSArray<__kindof UIView*>* subviews = @[];
   [[[mockScrollView_ expect] andReturn:subviews] subviews];
   EXPECT_EQ(subviews, [webViewScrollViewProxy_ subviews]);
 

@@ -34,7 +34,7 @@ const NSTimeInterval kLocationShouldRefreshAge = 5.0 * 60.0;  // 5 minutes
 }
 
 - (void)cr_setAcquisitionInterval:(NSTimeInterval)interval {
-  NSNumber* boxedInterval = [[NSNumber alloc] initWithDouble:interval];
+  NSNumber* boxedInterval = @(interval);
   objc_setAssociatedObject(self, &g_acquisitionIntervalKey, boxedInterval,
                            OBJC_ASSOCIATION_RETAIN);
 }

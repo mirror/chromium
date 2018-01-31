@@ -256,45 +256,45 @@ TEST_F(URLOpenerTest, HandleOpenURL) {
   // The keys for this dictionary is the URL to call openURL:. The value
   // from the key is either YES or NO to indicate if this is a valid URL
   // or not.
-  NSNumber* kIsValid = [NSNumber numberWithBool:YES];
-  NSNumber* kNotValid = [NSNumber numberWithBool:NO];
-  NSDictionary* urlsToTest = [NSDictionary
-      dictionaryWithObjectsAndKeys:
-          kNotValid, [NSNull null],
-          // Tests for http, googlechrome, and chromium scheme URLs.
-          kNotValid, @"", kIsValid, @"http://www.google.com/", kIsValid,
-          @"https://www.google.com/settings/account/", kIsValid,
-          @"googlechrome://www.google.com/", kIsValid,
-          @"googlechromes://www.google.com/settings/account/", kIsValid,
-          @"chromium://www.google.com/", kIsValid,
-          @"chromiums://www.google.com/settings/account/",
-          // Google search results page URLs.
-          kIsValid, @"https://www.google.com/search?q=pony&"
-                     "sugexp=chrome,mod=7&sourceid=chrome&ie=UTF-8",
-          kIsValid, @"googlechromes://www.google.com/search?q=pony&"
-                     "sugexp=chrome,mod=7&sourceid=chrome&ie=UTF-8",
-          // Other protocols.
-          kIsValid, @"chromium-x-callback://x-callback-url/open?url=https://"
-                     "www.google.com&x-success=http://success",
-          kIsValid, @"file://localhost/path/to/file.pdf",
-          // Invalid format input URL will be ignored.
-          kNotValid, @"this.is.not.a.valid.url",
-          // Valid format but invalid data.
-          kIsValid, @"this://is/garbage/but/valid", nil];
-  NSArray* sourcesToTest = [NSArray
-      arrayWithObjects:[NSNull null], @"", @"com.google.GoogleMobile",
-                       @"com.google.GooglePlus", @"com.google.SomeOtherProduct",
-                       @"com.apple.mobilesafari",
-                       @"com.othercompany.otherproduct", nil];
+  NSNumber* kIsValid = @YES;
+  NSNumber* kNotValid = @NO;
+  NSDictionary* urlsToTest = @{
+        [NSNull null] : kNotValid,
+        // Tests for http, googlechrome, and chromium scheme URLs.
+        @"" : kNotValid,
+        @"http://www.google.com/" : kIsValid,
+        @"https://www.google.com/settings/account/" : kIsValid,
+        @"googlechrome://www.google.com/" : kIsValid,
+        @"googlechromes://www.google.com/settings/account/" : kIsValid,
+        @"chromium://www.google.com/" : kIsValid,
+        @"chromiums://www.google.com/settings/account/" : kIsValid,
+        // Google search results page URLs.
+        @"https://www.google.com/search?q=pony&"
+         "sugexp=chrome,mod=7&sourceid=chrome&ie=UTF-8" : kIsValid,
+        @"googlechromes://www.google.com/search?q=pony&"
+         "sugexp=chrome,mod=7&sourceid=chrome&ie=UTF-8" : kIsValid,
+        // Other protocols.
+        @"chromium-x-callback://x-callback-url/open?url=https://"
+         "www.google.com&x-success=http://success" : kIsValid,
+        @"file://localhost/path/to/file.pdf" : kIsValid,
+        // Invalid format input URL will be ignored.
+        @"this.is.not.a.valid.url" : kNotValid,
+        // Valid format but invalid data.
+        @"this://is/garbage/but/valid" : kIsValid
+  };
+  NSArray* sourcesToTest = @[
+    [NSNull null], @"", @"com.google.GoogleMobile", @"com.google.GooglePlus",
+    @"com.google.SomeOtherProduct", @"com.apple.mobilesafari",
+    @"com.othercompany.otherproduct"
+  ];
   // See documentation for |annotation| property in
   // UIDocumentInteractionController Class Reference.  The following values are
   // mostly to detect garbage-in situations and ensure that the app won't crash
   // or garbage out.
-  NSArray* annotationsToTest = [NSArray
-      arrayWithObjects:[NSNull null],
-                       [NSArray arrayWithObjects:@"foo", @"bar", nil],
-                       [NSDictionary dictionaryWithObject:@"bar" forKey:@"foo"],
-                       @"a string annotation object", nil];
+  NSArray* annotationsToTest = @[
+    [NSNull null], @[ @"foo", @"bar" ], @{@"foo" : @"bar"},
+    @"a string annotation object"
+  ];
   for (id urlString in [urlsToTest allKeys]) {
     for (id source in sourcesToTest) {
       for (id annotation in annotationsToTest) {

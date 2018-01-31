@@ -106,7 +106,7 @@ typedef NSMutableArray<CollectionViewItem*> SectionItems;
 
 - (void)setHeader:(CollectionViewItem*)header
     forSectionWithIdentifier:(NSInteger)sectionIdentifier {
-  NSNumber* key = [NSNumber numberWithInteger:sectionIdentifier];
+  NSNumber* key = @(sectionIdentifier);
   if (header) {
     [_headers setObject:header forKey:key];
   } else {
@@ -116,7 +116,7 @@ typedef NSMutableArray<CollectionViewItem*> SectionItems;
 
 - (void)setFooter:(CollectionViewItem*)footer
     forSectionWithIdentifier:(NSInteger)sectionIdentifier {
-  NSNumber* key = [NSNumber numberWithInteger:sectionIdentifier];
+  NSNumber* key = @(sectionIdentifier);
   if (footer) {
     [_footers setObject:footer forKey:key];
   } else {
@@ -169,13 +169,13 @@ typedef NSMutableArray<CollectionViewItem*> SectionItems;
 
 - (CollectionViewItem*)headerForSection:(NSInteger)section {
   NSInteger sectionIdentifier = [self sectionIdentifierForSection:section];
-  NSNumber* key = [NSNumber numberWithInteger:sectionIdentifier];
+  NSNumber* key = @(sectionIdentifier);
   return [_headers objectForKey:key];
 }
 
 - (CollectionViewItem*)footerForSection:(NSInteger)section {
   NSInteger sectionIdentifier = [self sectionIdentifierForSection:section];
-  NSNumber* key = [NSNumber numberWithInteger:sectionIdentifier];
+  NSNumber* key = @(sectionIdentifier);
   return [_footers objectForKey:key];
 }
 
@@ -188,13 +188,13 @@ typedef NSMutableArray<CollectionViewItem*> SectionItems;
 
 - (CollectionViewItem*)headerForSectionWithIdentifier:
     (NSInteger)sectionIdentifier {
-  NSNumber* key = [NSNumber numberWithInteger:sectionIdentifier];
+  NSNumber* key = @(sectionIdentifier);
   return [_headers objectForKey:key];
 }
 
 - (CollectionViewItem*)footerForSectionWithIdentifier:
     (NSInteger)sectionIdentifier {
-  NSNumber* key = [NSNumber numberWithInteger:sectionIdentifier];
+  NSNumber* key = @(sectionIdentifier);
   return [_footers objectForKey:key];
 }
 

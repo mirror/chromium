@@ -267,7 +267,7 @@ TEST_F(HttpTest, SystemCookieWithNullCreationTime) {
     NSHTTPCookieName : cookieName,
     NSHTTPCookieValue : cookieValue,
     NSHTTPCookieDomain : [echoCookieUrl host],
-    @"Created" : [NSNumber numberWithDouble:0.0],
+    @"Created" : @0.0,
   }];
   [systemCookieStorage setCookie:nullCreationTimeCookie];
   NSHTTPCookie* normalCookie = [NSHTTPCookie cookieWithProperties:@{

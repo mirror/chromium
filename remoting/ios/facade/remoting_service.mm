@@ -174,7 +174,7 @@ NSString* const kUserInfo = @"kUserInfo";
   }
   [self setHostListState:HostListStateNotFetched];
   if (user) {
-    userInfo = [NSDictionary dictionaryWithObject:user forKey:kUserInfo];
+    userInfo = @{kUserInfo : user};
     [self requestHostListFetch];
     [_authentication
         callbackWithAccessToken:^(RemotingAuthenticationStatus status,

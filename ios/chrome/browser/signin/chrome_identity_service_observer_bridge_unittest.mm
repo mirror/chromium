@@ -107,7 +107,7 @@ TEST_F(ChromeIdentityServiceObserverBridgeTest, onIdentityListChanged) {
 // Tests that |onAccessTokenRefreshFailed| is forwarded.
 TEST_F(ChromeIdentityServiceObserverBridgeTest, onAccessTokenRefreshFailed) {
   ChromeIdentity* identity = [[ChromeIdentity alloc] init];
-  NSDictionary* userInfo = [NSDictionary dictionary];
+  NSDictionary* userInfo = @{};
   ASSERT_FALSE(GetTestObserver().onAccessTokenRefreshFailedCalled);
   GetObserverBridge()->OnAccessTokenRefreshFailed(identity, userInfo);
   EXPECT_FALSE(GetTestObserver().onIdentityListChangedCalled);

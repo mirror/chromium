@@ -7,13 +7,12 @@
 
 #import <UIKit/UIKit.h>
 
-
-typedef enum {
+typedef NS_OPTIONS(unsigned int, OmniboxPopupTruncatingMode) {
   OmniboxPopupTruncatingTail = 0x1,
   OmniboxPopupTruncatingHead = 0x2,
-  OmniboxPopupTruncatingHeadAndTail =
-      OmniboxPopupTruncatingHead | OmniboxPopupTruncatingTail
-} OmniboxPopupTruncatingMode;
+  OmniboxPopupTruncatingHeadAndTail = OmniboxPopupTruncatingHead |
+                                      OmniboxPopupTruncatingTail
+};
 
 // A label which applies a fade-to-background color gradient to one or both ends
 // of the string if it is too large to fit the available area. It is based on
