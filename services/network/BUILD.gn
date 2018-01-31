@@ -30,6 +30,8 @@ static_library("network_service") {
     "network_service_url_loader_factory.h",
     "proxy_config_service_mojo.cc",
     "proxy_config_service_mojo.h",
+    "resource_scheduler_client.cc",
+    "resource_scheduler_client.h",
     "restricted_cookie_manager.cc",
     "restricted_cookie_manager.h",
     "throttling/network_conditions.cc",
