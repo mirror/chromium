@@ -83,6 +83,10 @@
       status: "stable",
     },
     {
+      name: "OnlyClassAndTagNameSelectors",
+      status: "stable",
+    },
+    {
       name: "AnimationWorklet",
       status: "experimental",
     },
