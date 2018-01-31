@@ -16,6 +16,24 @@
       "revId": "a6ca7975ea4dab8057535cb54a42d7c53d17069d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "066f99f3_fdb552c5",
+        "filename": "base/files/dir_reader_posix_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-31T10:09:33Z",
+      "side": 1,
+      "message": "Sigh. Thanks for the comment, and especially for the understanding :)",
+      "parentUuid": "9f2b070f_57fcca36",
+      "revId": "a6ca7975ea4dab8057535cb54a42d7c53d17069d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
