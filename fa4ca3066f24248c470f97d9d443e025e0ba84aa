@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01eb4e5a_4746d323",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-31T06:18:44Z",
+      "side": 1,
+      "message": "DCHECK_EQ",
+      "revId": "fa4ca3066f24248c470f97d9d443e025e0ba84aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47909223_f5f9b42e",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-31T06:18:44Z",
+      "side": 1,
+      "message": "this probably needs to be a data member, \n\n  ui::SimpleMenuModel menu_model_;",
+      "revId": "fa4ca3066f24248c470f97d9d443e025e0ba84aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d5aa45f_b93d8317",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-31T06:18:44Z",
+      "side": 1,
+      "message": "to pad the images.... something like \n\nclass PaddedImageSource : public gfx::CanvasImageSource {\n  ...\n  void Draw(gfx::Canvas* canvas) override {\n    canvas-\u003eDrawImageInt(image_, left, top);\n  }\n}\n\ngfx::Image padded_image \u003d\n  gfx::Image(gfx::ImageSkia(std::make_unique\u003cPaddedImageSource\u003e(image), kDesiredSize));",
+      "revId": "fa4ca3066f24248c470f97d9d443e025e0ba84aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18d2720e_0e931d67",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-31T06:18:44Z",
+      "side": 1,
+      "message": "there\u0027s some code in menu_runner_impl_cocoa and views/controls/menu/menu_controller.cc that control the width for combo boxes. E.g.\n\nMenuController::CalculateMenuBounds(..)\n  // For comboboxes, ensure the menu is at least as wide as the anchor.\n  if (is_combobox_)\n    pref.set_width(std::max(pref.width(), state_.initial_bounds.width()));\n\n\nI think you want \"is_combobox_\" in this context and the others in menu_controller.mm to be true\n\nperhaps all you need is to pass \n\n views::MenuRunner::COMBOBOX | views::MenuRunner::DROPDOWN\n\n(add DROPDOWN, and have menu_runner_impl_cocoa to position differently when it sees DROPDOWN)\n\nProbably good for a follow-up, if COMBOBOX is headed in the right direction here.",
+      "revId": "fa4ca3066f24248c470f97d9d443e025e0ba84aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8641b1ab_c245c574",
+        "filename": "chrome/browser/ui/views/profiles/dice_accounts_menu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-31T06:18:44Z",
+      "side": 1,
+      "message": "NOTIMPLEMENTED() \u003c\u003c ...",
+      "revId": "fa4ca3066f24248c470f97d9d443e025e0ba84aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
