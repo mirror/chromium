@@ -1716,6 +1716,12 @@ IPC_MESSAGE_ROUTED2(FrameHostMsg_ScrollRectToVisibleInParentFrame,
                     gfx::Rect /* rect_to_scroll */,
                     blink::WebScrollIntoViewParams /* properties */)
 
+// Ask the frame host to print a cross-process subframe.
+IPC_MESSAGE_ROUTED3(FrameHostMsg_PrintSubframe,
+                    gfx::Rect /* rect area of the frame content */,
+                    int /* rendered document cookie */,
+                    int /* rendered in page number */)
+
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
 
 // Message to show/hide a popup menu using native controls.

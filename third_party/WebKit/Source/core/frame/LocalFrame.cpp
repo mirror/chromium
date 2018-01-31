@@ -564,7 +564,6 @@ void LocalFrame::SetPrinting(bool printing,
   // Subframes of the one we're printing don't lay out to the page size.
   for (Frame* child = Tree().FirstChild(); child;
        child = child->Tree().NextSibling()) {
-    // TODO(tkent): Support remote frames. crbug.com/455764.
     if (child->IsLocalFrame())
       ToLocalFrame(child)->SetPrinting(printing, FloatSize(), FloatSize(), 0);
   }
@@ -576,11 +575,12 @@ void LocalFrame::SetPrinting(bool printing,
 }
 
 bool LocalFrame::ShouldUsePrintingLayout() const {
-  // Only top frame being printed should be fit to page size.
+  // Only the top frame being printed should be fit to page size.
   // Subframes should be constrained by parents only.
   return GetDocument()->Printing() &&
-         (!Tree().Parent() || !Tree().Parent()->IsLocalFrame() ||
-          !ToLocalFrame(Tree().Parent())->GetDocument()->Printing());
+         (!Tree().Parent() ||
+          (Tree().Parent()->IsLocalFrame() &&
+           !ToLocalFrame(Tree().Parent())->GetDocument()->Printing()));
 }
 
 FloatSize LocalFrame::ResizePageRectsKeepingRatio(
