@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "070ebbc3_05f4aa1a",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-31T18:15:24Z",
+      "side": 1,
+      "message": "(do you remember why we have the !is_nacl?)",
+      "revId": "56f249fbf429c1acd2c07df4644732a431f986c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
