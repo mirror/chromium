@@ -48,7 +48,7 @@ BOOL IsDefaultSettingValueValid(id value) {
                                               bundle:(NSBundle*)bundle {
   // Save the current app version in user defaults.
   NSDictionary* infoDictionary = [bundle infoDictionary];
-  NSString* version = [infoDictionary objectForKey:@"CFBundleVersion"];
+  NSString* version = infoDictionary[@"CFBundleVersion"];
   [userDefaults setObject:version forKey:@"Version"];
 
   NSString* bundlePath = [bundle bundlePath];
@@ -96,16 +96,15 @@ BOOL IsDefaultSettingValueValid(id value) {
   // Array with all the preference specifiers. The plist is composed of many
   // Preference specifiers; one for each preference row in the settings
   // panel.
-  NSArray* preferencesArray =
-      [rootDictionary objectForKey:@"PreferenceSpecifiers"];
+  NSArray* preferencesArray = rootDictionary[@"PreferenceSpecifiers"];
 
   // Scan through all the preferences in the plist file.
   for (NSDictionary* preferenceSpecifier in preferencesArray) {
-    NSString* keyValue = [preferenceSpecifier objectForKey:@"Key"];
+    NSString* keyValue = preferenceSpecifier[@"Key"];
     if (!keyValue)
       continue;
 
-    id defaultValue = [preferenceSpecifier objectForKey:@"DefaultValue"];
+    id defaultValue = preferenceSpecifier[@"DefaultValue"];
     // Within the app, the default for all experimental prefs is nil (matching
     // the behavior of Stable channel, where there is no settings bundle). To
     // make mistakes obvious, fail if someone tries to set any actual value as

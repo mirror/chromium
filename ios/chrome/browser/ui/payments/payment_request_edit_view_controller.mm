@@ -331,7 +331,7 @@ PaymentsTextItem* ErrorMessageItemForError(NSString* errorMessage) {
 
     field.sectionIdentifier = sectionIdentifier;
     NSNumber* key = [NSNumber numberWithInt:sectionIdentifier];
-    [self.fieldsMap setObject:field forKey:key];
+    (self.fieldsMap)[key] = field;
   }];
 
   [model addSectionWithIdentifier:SectionIdentifierFooter];
@@ -399,14 +399,14 @@ PaymentsTextItem* ErrorMessageItemForError(NSString* errorMessage) {
   // Cache the options if there are any and set the text field's UIPickerView.
   if (options.count) {
     NSNumber* key = [NSNumber numberWithInt:field.autofillUIType];
-    [self.options setObject:options forKey:key];
+    (self.options)[key] = options;
 
     UIPickerView* pickerView = [[UIPickerView alloc] initWithFrame:CGRectZero];
     pickerView.delegate = self;
     pickerView.dataSource = self;
     pickerView.accessibilityIdentifier =
         [NSString stringWithFormat:@"%@_pickerView", field.label];
-    [self.pickerViews setObject:pickerView forKey:key];
+    (self.pickerViews)[key] = pickerView;
     item.inputView = pickerView;
 
     [pickerView reloadAllComponents];
@@ -483,7 +483,7 @@ PaymentsTextItem* ErrorMessageItemForError(NSString* errorMessage) {
   EditorField* field = [self currentEditingField];
   DCHECK(field);
   NSNumber* key = [NSNumber numberWithInt:field.autofillUIType];
-  if ([self.pickerViews objectForKey:key])
+  if ((self.pickerViews)[key])
     return NO;
 
   field.value = [textField.text stringByReplacingCharactersInRange:range
@@ -664,7 +664,7 @@ PaymentsTextItem* ErrorMessageItemForError(NSString* errorMessage) {
   if (indexPath.row != 0)
     return;
 
-  EditorField* field = [self.fields objectAtIndex:index];
+  EditorField* field = (self.fields)[index];
 
   // If a selector field is selected, blur the currently focused UITextField.
   // And if a text field is selected, focus the corresponding UITextField.

@@ -199,8 +199,8 @@ void LogHistogramReceivedItem(ShareExtensionItemReceived type) {
     return NO;
   }
 
-  NSNumber* cancelled = base::mac::ObjCCast<NSNumber>(
-      [entry objectForKey:app_group::kShareItemCancel]);
+  NSNumber* cancelled =
+      base::mac::ObjCCast<NSNumber>(entry[app_group::kShareItemCancel]);
   if (!cancelled) {
     if (completion) {
       completion();
@@ -215,16 +215,15 @@ void LogHistogramReceivedItem(ShareExtensionItemReceived type) {
     return YES;
   }
 
-  GURL entryURL =
-      net::GURLWithNSURL([entry objectForKey:app_group::kShareItemURL]);
+  GURL entryURL = net::GURLWithNSURL(entry[app_group::kShareItemURL]);
   std::string entryTitle =
-      base::SysNSStringToUTF8([entry objectForKey:app_group::kShareItemTitle]);
-  NSDate* entryDate = base::mac::ObjCCast<NSDate>(
-      [entry objectForKey:app_group::kShareItemDate]);
-  NSNumber* entryType = base::mac::ObjCCast<NSNumber>(
-      [entry objectForKey:app_group::kShareItemType]);
-  NSString* entrySource = base::mac::ObjCCast<NSString>(
-      [entry objectForKey:app_group::kShareItemSource]);
+      base::SysNSStringToUTF8(entry[app_group::kShareItemTitle]);
+  NSDate* entryDate =
+      base::mac::ObjCCast<NSDate>(entry[app_group::kShareItemDate]);
+  NSNumber* entryType =
+      base::mac::ObjCCast<NSNumber>(entry[app_group::kShareItemType]);
+  NSString* entrySource =
+      base::mac::ObjCCast<NSString>(entry[app_group::kShareItemSource]);
 
   if (!entryURL.is_valid() || !entrySource || !entryDate || !entryType ||
       !entryURL.SchemeIsHTTPOrHTTPS()) {

@@ -70,7 +70,7 @@ static PreviousSessionInfo* gSharedInstance = nil;
         ![lastRanVersion isEqualToString:currentVersion];
 
     NSString* lastRanLanguage = [defaults stringForKey:kLastRanLanguage];
-    NSString* currentLanguage = [[NSLocale preferredLanguages] objectAtIndex:0];
+    NSString* currentLanguage = [NSLocale preferredLanguages][0];
     gSharedInstance.isFirstSessionAfterLanguageChange =
         ![lastRanLanguage isEqualToString:currentLanguage];
   }
@@ -94,7 +94,7 @@ static PreviousSessionInfo* gSharedInstance = nil;
   [defaults setObject:currentVersion forKey:kLastRanVersion];
 
   // Set the new language.
-  NSString* currentLanguage = [[NSLocale preferredLanguages] objectAtIndex:0];
+  NSString* currentLanguage = [NSLocale preferredLanguages][0];
   [defaults setObject:currentLanguage forKey:kLastRanLanguage];
 
   // Clear the memory warning flag.

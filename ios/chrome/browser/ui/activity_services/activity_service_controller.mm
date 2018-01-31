@@ -268,7 +268,7 @@ NSString* const kActivityServicesSnackbarCategory =
     // is a property list which can be converted into a NSDictionary object.
     // If not, early return.
     if (extensionItem.attachments.count > 0) {
-      itemProvider = [extensionItem.attachments objectAtIndex:0];
+      itemProvider = (extensionItem.attachments)[0];
       if (![itemProvider
               hasItemConformingToTypeIdentifier:(NSString*)kUTTypePropertyList])
         itemProvider = nil;

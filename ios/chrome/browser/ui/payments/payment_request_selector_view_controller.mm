@@ -270,8 +270,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
           DCHECK(currentlySelectedItemIndex <
                  [[self.dataSource selectableItems] count]);
           CollectionViewItem<PaymentsIsSelectable>* oldSelectedItem =
-              [[self.dataSource selectableItems]
-                  objectAtIndex:currentlySelectedItemIndex];
+              [self.dataSource selectableItems][currentlySelectedItemIndex];
           oldSelectedItem.accessoryType = MDCCollectionViewCellAccessoryNone;
           [self reconfigureCellsForItems:@[ oldSelectedItem ]];
         }

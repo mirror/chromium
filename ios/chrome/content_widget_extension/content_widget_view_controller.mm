@@ -183,7 +183,7 @@ NSString* const kXCallbackURLHost = @"x-callback-url";
     commandPrefKey :
         base::SysUTF8ToNSString(app_group::kChromeAppGroupOpenURLCommand),
     URLPrefKey : URL.absoluteString,
-    indexKey : [NSNumber numberWithInt:[self.sites objectForKey:URL].position]
+    indexKey : [NSNumber numberWithInt:(self.sites)[URL].position]
   };
 
   [sharedDefaults setObject:commandDict forKey:defaultsKey];

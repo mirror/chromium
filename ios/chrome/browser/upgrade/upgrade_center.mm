@@ -309,7 +309,7 @@ class UpgradeInfoBarDismissObserver
     return;
 
   // Nothing to do if the infobar is already there.
-  if ([upgradeInfoBarDelegates_ objectForKey:tabId])
+  if (upgradeInfoBarDelegates_[tabId])
     return;
 
   auto infobarDelegate = std::make_unique<UpgradeInfoBarDelegate>();
@@ -319,7 +319,7 @@ class UpgradeInfoBarDismissObserver
                                        upgradeCenter:self
                                                tabId:tabId];
 
-  [upgradeInfoBarDelegates_ setObject:delegateHolder forKey:tabId];
+  upgradeInfoBarDelegates_[tabId] = delegateHolder;
   infoBarManager->AddInfoBar(
       infoBarManager->CreateConfirmInfoBar(std::move(infobarDelegate)));
 }
@@ -333,8 +333,7 @@ class UpgradeInfoBarDismissObserver
   // notification. In all likelihood it was trigerred by calling
   // -hideUpgradeInfoBars. Or because a tab was closed without dismissing the
   // infobar.
-  DelegateHolder* delegateHolder =
-      [upgradeInfoBarDelegates_ objectForKey:tabId];
+  DelegateHolder* delegateHolder = upgradeInfoBarDelegates_[tabId];
   if (!delegateHolder)
     return;
 
@@ -394,8 +393,7 @@ class UpgradeInfoBarDismissObserver
   for (NSString* tabId in [upgradeInfoBarDelegates_ allKeys]) {
     // It is important to retain the delegateHolder as otherwise it is
     // deallocated as soon as it is removed from the dictionary.
-    DelegateHolder* delegateHolder =
-        [upgradeInfoBarDelegates_ objectForKey:tabId];
+    DelegateHolder* delegateHolder = upgradeInfoBarDelegates_[tabId];
     if (delegateHolder) {
       [upgradeInfoBarDelegates_ removeObjectForKey:tabId];
       UpgradeInfoBarDelegate* delegate = [delegateHolder infoBarDelegate];

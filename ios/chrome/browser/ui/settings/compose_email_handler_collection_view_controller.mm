@@ -244,7 +244,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
   if (itemType != ItemTypeMailtoHandlers)
     return nil;
   NSUInteger handlerIndex = [model indexInItemTypeForIndexPath:indexPath];
-  return [[_manager defaultHandlers] objectAtIndex:handlerIndex];
+  return [_manager defaultHandlers][handlerIndex];
 }
 
 @end

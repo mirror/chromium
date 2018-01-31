@@ -141,9 +141,9 @@ TEST_F(WKWebViewConfigurationProviderTest, UserScript) {
   WKWebViewConfiguration* config = GetProvider().GetWebViewConfiguration();
   NSArray* scripts = config.userContentController.userScripts;
   ASSERT_EQ(3U, scripts.count);
-  EXPECT_FALSE(((WKUserScript*)[scripts objectAtIndex:0]).isForMainFrameOnly);
-  EXPECT_TRUE(((WKUserScript*)[scripts objectAtIndex:1]).isForMainFrameOnly);
-  EXPECT_FALSE(((WKUserScript*)[scripts objectAtIndex:2]).isForMainFrameOnly);
+  EXPECT_FALSE(((WKUserScript*)scripts[0]).isForMainFrameOnly);
+  EXPECT_TRUE(((WKUserScript*)scripts[1]).isForMainFrameOnly);
+  EXPECT_FALSE(((WKUserScript*)scripts[2]).isForMainFrameOnly);
   NSString* early_all_frames_script =
       GetDocumentStartScriptForAllFrames(&browser_state_);
   NSString* main_frame_script =

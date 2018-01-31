@@ -118,10 +118,8 @@ class AuthenticationServiceTest : public PlatformTest,
     identity_service_ =
         ios::FakeChromeIdentityService::GetInstanceFromChromeProvider();
     identity_service_->AddIdentities(@[ @"foo", @"foo2" ]);
-    identity_ =
-        [identity_service_->GetAllIdentitiesSortedForDisplay() objectAtIndex:0];
-    identity2_ =
-        [identity_service_->GetAllIdentitiesSortedForDisplay() objectAtIndex:1];
+    identity_ = identity_service_->GetAllIdentitiesSortedForDisplay()[0];
+    identity2_ = identity_service_->GetAllIdentitiesSortedForDisplay()[1];
 
     TestChromeBrowserState::Builder builder;
     builder.SetPrefService(CreatePrefService());

@@ -938,7 +938,7 @@ UIColor* BackgroundColor() {
   // Keep the actual view around while it is animating out.  Once the animation
   // is done, remove the view.
   NSUInteger index = [self indexForModelIndex:modelIndex];
-  TabView* view = [_tabArray objectAtIndex:index];
+  TabView* view = _tabArray[index];
   [_closingTabs addObject:view];
   _targetFrames.RemoveFrame(view);
 
@@ -977,7 +977,7 @@ UIColor* BackgroundColor() {
 
   // Reorder the objects in _tabArray to keep in sync with the model ordering.
   NSUInteger arrayIndex = [self indexForModelIndex:fromIndex];
-  TabView* view = [_tabArray objectAtIndex:arrayIndex];
+  TabView* view = _tabArray[arrayIndex];
   [_tabArray removeObject:view];
   [_tabArray insertObject:view atIndex:toIndex];
   [self setNeedsLayoutWithAnimation];
@@ -993,7 +993,7 @@ UIColor* BackgroundColor() {
   }
 
   NSUInteger index = [self indexForModelIndex:modelIndex];
-  TabView* activeView = [_tabArray objectAtIndex:index];
+  TabView* activeView = _tabArray[index];
   [activeView setSelected:YES];
 
   // No need to animate this change, as selecting a new tab simply changes the
@@ -1011,7 +1011,7 @@ UIColor* BackgroundColor() {
     return;
   }
   NSUInteger index = [self indexForModelIndex:modelIndex];
-  TabView* view = [_tabArray objectAtIndex:index];
+  TabView* view = _tabArray[index];
   [view setTitle:tab.title];
   [view setFavicon:nil];
 
@@ -1242,7 +1242,7 @@ UIColor* BackgroundColor() {
                                animated:YES];
       }
     } else {
-      TabView* tabView = [_tabArray objectAtIndex:tabIndex];
+      TabView* tabView = _tabArray[tabIndex];
       CGRect scrollRect =
           CGRectInset(tabView.frame, -_tabStripView.contentInset.right, 0);
       if (tabView)
@@ -1341,7 +1341,7 @@ UIColor* BackgroundColor() {
   BOOL hasPlaceholderGap = NO;
   for (NSUInteger arrayIndex = 0; arrayIndex < [_tabArray count];
        ++arrayIndex) {
-    TabView* view = (TabView*)[_tabArray objectAtIndex:arrayIndex];
+    TabView* view = (TabView*)_tabArray[arrayIndex];
 
     // Arrange the tabs in a V going backwards from the selected tab.  This
     // differs from desktop in order to make the tab overflow behavior work (on

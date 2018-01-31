@@ -153,11 +153,9 @@ reauthenticationModule:(id<ReauthenticationProtocol>)reauthenticationModule {
   if (![origin rangeOfString:@"://"].length) {
     originWithoutScheme = origin;
   } else {
-    originWithoutScheme =
-        [[origin componentsSeparatedByString:@"://"] objectAtIndex:1];
+    originWithoutScheme = [origin componentsSeparatedByString:@"://"][1];
   }
-  return
-      [[originWithoutScheme componentsSeparatedByString:@"/"] objectAtIndex:0];
+  return [originWithoutScheme componentsSeparatedByString:@"/"][0];
 }
 
 #pragma mark - SettingsRootCollectionViewController

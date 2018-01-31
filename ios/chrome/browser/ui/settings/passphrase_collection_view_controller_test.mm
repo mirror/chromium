@@ -96,7 +96,7 @@ void PassphraseCollectionViewControllerTest::SetUp() {
       ios::FakeChromeIdentityService::GetInstanceFromChromeProvider();
   identityService->AddIdentities(@[ @"identity1" ]);
   ChromeIdentity* identity =
-      [identityService->GetAllIdentitiesSortedForDisplay() objectAtIndex:0];
+      identityService->GetAllIdentitiesSortedForDisplay()[0];
   AuthenticationServiceFactory::GetForBrowserState(chrome_browser_state_.get())
       ->SignIn(identity, "");
 }

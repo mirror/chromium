@@ -38,8 +38,7 @@
 #pragma mark Testing methods
 
 - (void)executeAfter:(int)dispatchCount block:(ProceduralBlock)block {
-  [_blocks setObject:[block copy]
-              forKey:[NSNumber numberWithInt:dispatchCount]];
+  _blocks[@(dispatchCount)] = [block copy];
 }
 
 - (int64_t)lastDelayInNSec {
@@ -51,8 +50,7 @@
 
 - (void)dispatchAfter:(int64_t)delayInNSec withBlock:(dispatch_block_t)block {
   _lastDelayInNSec = delayInNSec;
-  void (^blockToCallForThisIteration)(void) =
-      [_blocks objectForKey:[NSNumber numberWithInt:_dispatchCount]];
+  void (^blockToCallForThisIteration)(void) = _blocks[@(_dispatchCount)];
   if (blockToCallForThisIteration)
     blockToCallForThisIteration();
   _dispatchCount++;

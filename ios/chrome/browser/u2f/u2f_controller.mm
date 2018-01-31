@@ -97,7 +97,7 @@ const char kRequestIDKey[] = "requestId";
   std::string randomUUID(base::HexEncode(randomBytes, sizeof(randomBytes)));
   NSString* requestUUID = base::SysUTF8ToNSString(randomUUID);
   NSString* tabURLString = base::SysUTF8ToNSString(tabURL.spec());
-  [_requestToURLMap setObject:tabURLString forKey:requestUUID];
+  _requestToURLMap[requestUUID] = tabURLString;
 
   // Compose callback string.
   NSString* chromeScheme =
@@ -136,7 +136,7 @@ const char kRequestIDKey[] = "requestId";
   }
 
   NSString* originalTabURL =
-      [_requestToURLMap objectForKey:base::SysUTF8ToNSString(requestUUID)];
+      _requestToURLMap[base::SysUTF8ToNSString(requestUUID)];
   if (!originalTabURL) {
     // If no corresponding original URL, ignore it.
     return;

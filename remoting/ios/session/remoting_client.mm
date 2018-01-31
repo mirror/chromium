@@ -103,10 +103,9 @@ NSString* const kHostSessionPin = @"kHostSessionPin";
   NSDictionary* pairing =
       [KeychainWrapper.instance pairingCredentialsForHost:hostInfo.hostId];
   if (pairing) {
-    info.pairing_id =
-        base::SysNSStringToUTF8([pairing objectForKey:kKeychainPairingId]);
+    info.pairing_id = base::SysNSStringToUTF8(pairing[kKeychainPairingId]);
     info.pairing_secret =
-        base::SysNSStringToUTF8([pairing objectForKey:kKeychainPairingSecret]);
+        base::SysNSStringToUTF8(pairing[kKeychainPairingSecret]);
   } else {
     info.pairing_id = "";
     info.pairing_secret = "";
@@ -199,10 +198,10 @@ NSString* const kHostSessionPin = @"kHostSessionPin";
 #pragma mark - Eventing
 
 - (void)hostSessionPinProvided:(NSNotification*)notification {
-  NSString* pin = [[notification userInfo] objectForKey:kHostSessionPin];
+  NSString* pin = [notification userInfo][kHostSessionPin];
   NSString* name = UIDevice.currentDevice.name;
-  BOOL createPairing = [[[notification userInfo]
-      objectForKey:kHostSessionCreatePairing] boolValue];
+  BOOL createPairing =
+      [[notification userInfo][kHostSessionCreatePairing] boolValue];
 
   // TODO(nicholss): Look into refactoring ProvideSecret. It is mis-named and
   // does not use pin.

@@ -710,23 +710,23 @@ NSString* GenerateElementItemVerifyingJavaScripts(NSString* results,
   for (NSString* attribute in attributes_to_check) {
     if ([attribute isEqualToString:@"option_values"] ||
         [attribute isEqualToString:@"option_contents"]) {
-      id expected_value = [expected objectForKey:attribute];
+      id expected_value = expected[attribute];
       if ([expected_value isKindOfClass:[NSString class]]) {
         [verifying_javascripts
-            addObject:[NSString
-                          stringWithFormat:@"%@['%@']===%@", results, attribute,
-                                           [expected objectForKey:attribute]]];
+            addObject:[NSString stringWithFormat:@"%@['%@']===%@", results,
+                                                 attribute,
+                                                 expected[attribute]]];
       } else {
         for (NSUInteger i = 0; i < [(NSArray*)expected_value count]; ++i) {
           [verifying_javascripts
-              addObject:[NSString
-                            stringWithFormat:@"%@['%@'][%" PRIuNS "] === %@",
-                                             results, attribute, i,
-                                             [expected_value objectAtIndex:i]]];
+              addObject:[NSString stringWithFormat:@"%@['%@'][%" PRIuNS
+                                                    "] === %@",
+                                                   results, attribute, i,
+                                                   expected_value[i]]];
         }
       }
     } else {
-      NSString* expected_value = [expected objectForKey:attribute];
+      NSString* expected_value = expected[attribute];
       if ([attribute isEqualToString:@"name"] &&
           [expected_value isEqualToString:@"''"] && index >= 0) {
         expected_value =
@@ -734,7 +734,7 @@ NSString* GenerateElementItemVerifyingJavaScripts(NSString* results,
       }
       // Option text is used as value for extract_mask 1 << 1
       if ((extract_mask & 1 << 1) && [attribute isEqualToString:@"value"])
-        expected_value = [expected objectForKey:@"value_option_text"];
+        expected_value = expected[@"value_option_text"];
       [verifying_javascripts
           addObject:[NSString stringWithFormat:@"%@['%@']===%@", results,
                                                attribute, expected_value]];
@@ -758,9 +758,9 @@ NSString* GenerateTestItemVerifyingJavaScripts(NSString* results,
   NSUInteger controlCount = 0;
   for (NSUInteger indexOfTestData = 0; indexOfTestData < [expected count];
        ++indexOfTestData) {
-    NSArray* expectedData = [expected objectAtIndex:indexOfTestData];
+    NSArray* expectedData = expected[indexOfTestData];
     for (NSUInteger i = 1; i < [expectedData count]; ++i, ++controlCount) {
-      NSDictionary* expected = [expectedData objectAtIndex:i];
+      NSDictionary* expected = expectedData[i];
       NSString* itemVerifyingJavaScripts =
           GenerateElementItemVerifyingJavaScripts(
               [NSString stringWithFormat:@"%@['fields'][%" PRIuNS "]", results,
@@ -926,7 +926,7 @@ void AutofillControllerJsTest::TestInputElementDataEvaluation(
     NSString* attribute_name,
     NSArray* test_data,
     NSString* tag_name) {
-  NSString* html_fragment = [test_data objectAtIndex:0U];
+  NSString* html_fragment = test_data[0U];
   LoadHtml(html_fragment);
 
   for (NSUInteger i = 1; i < [test_data count]; ++i) {
@@ -936,7 +936,7 @@ void AutofillControllerJsTest::TestInputElementDataEvaluation(
                          tag_name, i - 1];
     id actual = ExecuteJavaScriptWithFormat(
         @"%@(%@) === %@", javascripts_statement, get_element_javascripts,
-        [[test_data objectAtIndex:i] objectForKey:attribute_name]);
+        test_data[i][attribute_name]);
     EXPECT_NSEQ(@YES, actual);
   }
 }
@@ -1119,7 +1119,7 @@ TEST_F(AutofillControllerJsTest, FillFormField) {
   ];
   for (size_t i = 0; i < arraysize(elements); ++i) {
     NSString* get_element_javascript = GetElementByNameJavaScript(elements[i]);
-    NSString* new_value = [values objectAtIndex:i];
+    NSString* new_value = values[i];
     EXPECT_NSEQ(new_value,
                 ExecuteJavaScriptWithFormat(
                     @"var element=%@;var data={'value':'%@'};"
@@ -1260,7 +1260,7 @@ void AutofillControllerJsTest::TestWebFormControlElementToFormField(
                                       "window.document.getElementsByTagName('%"
                                       "@')[%" PRIuNS "]",
                                      tag_name, i - 1];
-      NSDictionary* expected = [test_data objectAtIndex:i];
+      NSDictionary* expected = test_data[i];
       // Generates JavaScripts to verify the results. Parameter |results| is
       // @"field" as in the evaluation JavaScripts the results are returned in
       // |field|.
@@ -1345,9 +1345,8 @@ void AutofillControllerJsTest::TestWebFormElementToFormData(
   NSString* form_html_fragment =
       @"<form name='TestForm' action='http://cnn.com' method='post'>";
   for (NSUInteger i = 0; i < [test_items count]; ++i) {
-    form_html_fragment = [form_html_fragment
-        stringByAppendingString:[[test_items objectAtIndex:i]
-                                    objectAtIndex:0U]];
+    form_html_fragment =
+        [form_html_fragment stringByAppendingString:test_items[i][0U]];
   }
   form_html_fragment = [form_html_fragment stringByAppendingString:@"</form>"];
   LoadHtml(form_html_fragment);
@@ -1464,7 +1463,7 @@ void AutofillControllerJsTest::TestExtractNewForms(
     [verifying_javascripts
         addObject:GenerateTestItemVerifyingJavaScripts(
                       [NSString stringWithFormat:@"forms[%" PRIuNS "]", i],
-                      extract_mask, [expected_items objectAtIndex:i],
+                      extract_mask, expected_items[i],
                       // The relevant attributes for the extract mask
                       GetFormFieldAttributeListsToCheck(extract_mask))];
   }
@@ -1515,7 +1514,7 @@ TEST_F(AutofillControllerJsTest, ExtractFormsAndFormElements) {
         stringByAppendingString:
             @"<form name='TestForm' action='http://c.com' method='post'>"];
     for (NSArray* testItem in testFormItems) {
-      html = [html stringByAppendingString:[testItem objectAtIndex:0U]];
+      html = [html stringByAppendingString:testItem[0U]];
     }
     html = [html stringByAppendingFormat:@"</form>"];
   }
@@ -1553,19 +1552,15 @@ TEST_F(AutofillControllerJsTest, ExtractForms) {
   html =
       [html stringByAppendingString:
                 @"<form name='TestForm' action='http://c.com' method='post'>"];
-  html = [html
-      stringByAppendingString:[GetTestFormInputElementWithLabelFromPrevious()
-                                  objectAtIndex:0U]];
-  html =
-      [html stringByAppendingString:[GetTestInputCheckbox() objectAtIndex:0U]];
   html = [html stringByAppendingString:
-                   [GetTestFormInputElementWithLabelFromTableColumnTH()
-                       objectAtIndex:0U]];
+                   GetTestFormInputElementWithLabelFromPrevious()[0U]];
+  html = [html stringByAppendingString:GetTestInputCheckbox()[0U]];
   html = [html stringByAppendingString:
-                   [GetTestFormInputElementWithLabelFromPreviousTextBrAndSpan()
-                       objectAtIndex:0U]];
+                   GetTestFormInputElementWithLabelFromTableColumnTH()[0U]];
   html = [html
-      stringByAppendingString:[GetTestFormSelectElement() objectAtIndex:0U]];
+      stringByAppendingString:
+          GetTestFormInputElementWithLabelFromPreviousTextBrAndSpan()[0U]];
+  html = [html stringByAppendingString:GetTestFormSelectElement()[0U]];
   html = [html stringByAppendingFormat:@"</form>"];
   html = [html stringByAppendingFormat:@"</body></html>"];
 
@@ -1665,7 +1660,7 @@ TEST_F(AutofillControllerJsTest, ExtractForms) {
                    error:nil];
   ASSERT_NSNE(nil, resultDict);
 
-  NSDictionary* forms = [resultDict[@"forms"] objectAtIndex:0];
+  NSDictionary* forms = (resultDict[@"forms"])[0];
   [expected enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL* stop) {
     EXPECT_NSEQ(forms[key], obj);
   }];
@@ -1681,7 +1676,7 @@ TEST_F(AutofillControllerJsTest, ExtractForms) {
                    error:nil];
   ASSERT_NSNE(nil, resultDict);
 
-  forms = [resultDict[@"forms"] objectAtIndex:0];
+  forms = (resultDict[@"forms"])[0];
   [expected enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL* stop) {
     EXPECT_NSEQ(forms[key], obj);
   }];
@@ -1697,7 +1692,7 @@ TEST_F(AutofillControllerJsTest, ExtractForms) {
                    error:nil];
   ASSERT_NSNE(nil, resultDict);
 
-  forms = [resultDict[@"forms"] objectAtIndex:0];
+  forms = (resultDict[@"forms"])[0];
   [expected enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL* stop) {
     EXPECT_NSEQ(forms[key], obj);
   }];

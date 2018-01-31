@@ -107,8 +107,8 @@ const CGFloat kNewTabButtonWidth = 48;
 }
 
 - (void)removePanelViewAtIndex:(NSUInteger)index updateScrollView:(BOOL)update {
-  DCHECK_EQ([[_panels objectAtIndex:index] superview], _scrollView);
-  [[_panels objectAtIndex:index] removeFromSuperview];
+  DCHECK_EQ([_panels[index] superview], _scrollView);
+  [_panels[index] removeFromSuperview];
   [_panels removeObjectAtIndex:index];
   if (update)
     [self updateScrollViewContent];
@@ -175,7 +175,7 @@ const CGFloat kNewTabButtonWidth = 48;
   currentContentSize.width = [_panels count] * panelSize.width;
   [_scrollView setContentSize:currentContentSize];
   for (NSUInteger i = 0; i < [_panels count]; i++) {
-    id panelView = [_panels objectAtIndex:i];
+    id panelView = _panels[i];
     [panelView setFrame:[self frameForPanelAtIndex:i]];
   }
 }
@@ -337,13 +337,13 @@ const CGFloat kNewTabButtonWidth = 48;
 }
 
 - (void)panelWasHiddenAtIndex:(NSInteger)index {
-  id panel = [_panels objectAtIndex:index];
+  id panel = _panels[index];
   if ([panel respondsToSelector:@selector(wasHidden)])
     [panel wasHidden];
 }
 
 - (void)currentPanelWasShown {
-  id panel = [_panels objectAtIndex:self.currentPanelIndex];
+  id panel = _panels[self.currentPanelIndex];
   if ([panel respondsToSelector:@selector(wasShown)])
     [panel wasShown];
 }

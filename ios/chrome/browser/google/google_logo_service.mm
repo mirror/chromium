@@ -23,7 +23,7 @@ static NSArray* const kDoodleCacheDirectory = @[ @"Chromium", @"Doodle" ];
 base::FilePath DoodleDirectory() {
   NSArray* paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory,
                                                        NSUserDomainMask, YES);
-  NSString* path = [paths objectAtIndex:0];
+  NSString* path = paths[0];
   NSArray* path_components =
       [NSArray arrayWithObjects:path, kDoodleCacheDirectory[0],
                                 kDoodleCacheDirectory[1], nil];

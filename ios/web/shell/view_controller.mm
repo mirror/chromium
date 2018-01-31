@@ -244,7 +244,7 @@ using web::NavigationManager;
     // of colors or allowing the user to choose color randomization.
     newIndex = 0;
   }
-  _toolbarView.barTintColor = [colors objectAtIndex:newIndex];
+  _toolbarView.barTintColor = colors[newIndex];
 }
 
 // -----------------------------------------------------------------------

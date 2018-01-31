@@ -316,9 +316,7 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
 
 - (void)keyboardWillShow:(NSNotification*)notification {
   CGSize keyboardSize =
-      [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey]
-          CGRectValue]
-          .size;
+      [[notification userInfo][UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
 
   CGFloat newHeight = self.view.frame.size.height - keyboardSize.height;
   CGFloat overlap = newHeight - (_pinEntryView.frame.origin.y +
@@ -588,7 +586,7 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
   NSLog(@"hostSessionStatusChanged: %@", [notification userInfo]);
   ClientConnectionViewState state;
   ClientSessionDetails* sessionDetails =
-      [[notification userInfo] objectForKey:kSessionDetails];
+      [notification userInfo][kSessionDetails];
   switch (sessionDetails.state) {
     case SessionInitializing:
     // Same as HostConnecting in UI. Fall-though.
@@ -598,8 +596,8 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
       state = ClientViewConnecting;
       break;
     case SessionPinPrompt:
-      _pinEntryView.supportsPairing = [[[notification userInfo]
-          objectForKey:kSessionSupportsPairing] boolValue];
+      _pinEntryView.supportsPairing =
+          [[notification userInfo][kSessionSupportsPairing] boolValue];
       state = ClientViewPinPrompt;
       break;
     case SessionConnected:

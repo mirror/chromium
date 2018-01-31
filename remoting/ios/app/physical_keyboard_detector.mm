@@ -68,8 +68,9 @@
     return;
   }
 
-  CGRect keyboardFrame = [(NSValue*)[notification.userInfo
-      objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+  CGRect keyboardFrame =
+      [(NSValue*)(notification.userInfo)[UIKeyboardFrameEndUserInfoKey]
+          CGRectValue];
 
   // iPad will still show the toolbar at the top of the soft keyboard even if
   // the physical keyboard is presented, so the safer check is to see if the

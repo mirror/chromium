@@ -133,16 +133,15 @@ UIView* GetFirstResponderSubview(UIView* view) {
 
 - (void)registerInsets:(UIEdgeInsets)insets forCaller:(id)caller {
   NSValue* callerValue = [NSValue valueWithNonretainedObject:caller];
-  if ([_registeredInsets objectForKey:callerValue])
+  if (_registeredInsets[callerValue])
     [self unregisterInsetsForCaller:caller];
   [self.scrollViewProxy cr_addInsets:insets];
-  [_registeredInsets setObject:[NSValue valueWithUIEdgeInsets:insets]
-                        forKey:callerValue];
+  _registeredInsets[callerValue] = [NSValue valueWithUIEdgeInsets:insets];
 }
 
 - (void)unregisterInsetsForCaller:(id)caller {
   NSValue* callerValue = [NSValue valueWithNonretainedObject:caller];
-  NSValue* insetsValue = [_registeredInsets objectForKey:callerValue];
+  NSValue* insetsValue = _registeredInsets[callerValue];
   [self.scrollViewProxy cr_removeInsets:[insetsValue UIEdgeInsetsValue]];
   [_registeredInsets removeObjectForKey:callerValue];
 }

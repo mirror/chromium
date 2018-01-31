@@ -188,7 +188,7 @@ NS_INLINE void AnimateInViews(NSArray* views,
 
     NSIndexPath* path = [_menuView indexPathForCell:cell];
     NSInteger itemIndex = [self dataIndexForIndexPath:path];
-    [cell configureForMenuItem:[_menuItems objectAtIndex:itemIndex]];
+    [cell configureForMenuItem:_menuItems[itemIndex]];
   }
 }
 
@@ -541,7 +541,7 @@ NS_INLINE void AnimateInViews(NSArray* views,
 
   NSInteger item = [self dataIndexForIndexPath:path];
   DCHECK_GE(item, 0);
-  ToolsMenuViewItem* menuItem = [_menuItems objectAtIndex:item];
+  ToolsMenuViewItem* menuItem = _menuItems[item];
   DCHECK(menuItem);
   if ([menuItem active]) {
     [_touchFeedbackView setFrame:cell.bounds];
@@ -573,7 +573,7 @@ NS_INLINE void AnimateInViews(NSArray* views,
   if (item < 0)
     return NO;
 
-  return [[_menuItems objectAtIndex:item] active];
+  return [_menuItems[item] active];
 }
 
 - (void)collectionView:(UICollectionView*)view
@@ -586,23 +586,23 @@ NS_INLINE void AnimateInViews(NSArray* views,
 
   dispatch_time_t delayTime = dispatch_time(
       DISPATCH_TIME_NOW, (int64_t)(NSEC_PER_SEC * kMDCInkTouchDelayInterval));
-  dispatch_after(
-      _waitForInk ? delayTime : 0, dispatch_get_main_queue(), ^(void) {
-        ToolsMenuViewItem* menuItem = [_menuItems objectAtIndex:item];
-        // Tag values > 0, and use of the ChromeExecuteCommand pattern from the
-        // menu, is no longer supported.
-        DCHECK([menuItem tag] < 0);
-        [_delegate commandWasSelected:[menuItem tag]];
+  dispatch_after(_waitForInk ? delayTime : 0, dispatch_get_main_queue(),
+                 ^(void) {
+                   ToolsMenuViewItem* menuItem = _menuItems[item];
+                   // Tag values > 0, and use of the ChromeExecuteCommand
+                   // pattern from the menu, is no longer supported.
+                   DCHECK([menuItem tag] < 0);
+                   [_delegate commandWasSelected:[menuItem tag]];
 
-        // The menuItem will handle executing the command if it can.
-        // Otherwise, the dispatching should have been handled by the preceding
-        // -commandWasSelected: call on |_delegate|.
-        // This is so that a baseViewController can be sent with the dispatch
-        // command.
-        if ([menuItem canExecuteCommand]) {
-          [menuItem executeCommandWithDispatcher:self.dispatcher];
-        }
-      });
+                   // The menuItem will handle executing the command if it can.
+                   // Otherwise, the dispatching should have been handled by the
+                   // preceding -commandWasSelected: call on |_delegate|. This
+                   // is so that a baseViewController can be sent with the
+                   // dispatch command.
+                   if ([menuItem canExecuteCommand]) {
+                     [menuItem executeCommandWithDispatcher:self.dispatcher];
+                   }
+                 });
 }
 
 #pragma mark - UICollectionViewDataSource Implementation
@@ -651,7 +651,7 @@ NS_INLINE void AnimateInViews(NSArray* views,
     return cell;
   }
 
-  ToolsMenuViewItem* menuItem = [_menuItems objectAtIndex:item];
+  ToolsMenuViewItem* menuItem = _menuItems[item];
   ToolsMenuViewCell* menuItemCell =
       [view dequeueReusableCellWithReuseIdentifier:[[menuItem class] cellID]
                                       forIndexPath:path];

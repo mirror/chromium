@@ -274,8 +274,8 @@ NSString* const kJavaScriptDialogTextFieldAccessibiltyIdentifier =
   __weak InputAlertCoordinator* weakCoordinator = alertCoordinator;
   ProceduralBlock confirmAction = ^{
     if (handler) {
-      NSString* username = [[weakCoordinator textFields] objectAtIndex:0].text;
-      NSString* password = [[weakCoordinator textFields] objectAtIndex:1].text;
+      NSString* username = [weakCoordinator textFields][0].text;
+      NSString* password = [weakCoordinator textFields][1].text;
       handler(username, password);
     }
   };

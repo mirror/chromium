@@ -74,14 +74,14 @@ TEST_F(PaymentRequestShippingOptionSelectionMediatorTest, TestSelectableItems) {
   // The second item must be selected.
   EXPECT_EQ(1U, mediator.selectedItemIndex);
 
-  CollectionViewItem* item_1 = [[mediator selectableItems] objectAtIndex:0];
+  CollectionViewItem* item_1 = [mediator selectableItems][0];
   DCHECK([item_1 isKindOfClass:[PaymentsTextItem class]]);
   PaymentsTextItem* text_item_1 =
       base::mac::ObjCCastStrict<PaymentsTextItem>(item_1);
   EXPECT_TRUE([text_item_1.text isEqualToString:@"option 1"]);
   EXPECT_TRUE([text_item_1.detailText isEqualToString:@"$0.99"]);
 
-  CollectionViewItem* item_2 = [[mediator selectableItems] objectAtIndex:0];
+  CollectionViewItem* item_2 = [mediator selectableItems][0];
   DCHECK([item_2 isKindOfClass:[PaymentsTextItem class]]);
   PaymentsTextItem* text_item_2 =
       base::mac::ObjCCastStrict<PaymentsTextItem>(item_2);

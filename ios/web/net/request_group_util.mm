@@ -103,8 +103,7 @@ NSURL* AddRequestGroupIDToURL(NSURL* base_url, NSString* request_group_id) {
 
 NSString* ExtractRequestGroupIDFromRequest(NSURLRequest* request,
                                            NSString* application_scheme) {
-  NSString* user_agent =
-      [[request allHTTPHeaderFields] objectForKey:@"User-Agent"];
+  NSString* user_agent = [request allHTTPHeaderFields][@"User-Agent"];
   NSString* request_group_id = ExtractRequestGroupIDFromUserAgent(user_agent);
   if (request_group_id)
     return request_group_id;

@@ -133,7 +133,7 @@ NSHTTPCookie* GetNSHTTPCookieFromCookieLine(const std::string& cookie_line,
   if ([cookies count] != 1)
     return nil;
 
-  NSHTTPCookie* cookie = [cookies objectAtIndex:0];
+  NSHTTPCookie* cookie = cookies[0];
   if (![cookie expiresDate] || server_time.is_null())
     return cookie;
 
@@ -143,7 +143,7 @@ NSHTTPCookie* GetNSHTTPCookieFromCookieLine(const std::string& cookie_line,
       [[cookie expiresDate] dateByAddingTimeInterval:clock_skew.InSecondsF()];
   NSMutableDictionary* properties =
       [NSMutableDictionary dictionaryWithDictionary:[cookie properties]];
-  [properties setObject:corrected_expire_date forKey:NSHTTPCookieExpires];
+  properties[NSHTTPCookieExpires] = corrected_expire_date;
   NSHTTPCookie* corrected_cookie =
       [NSHTTPCookie cookieWithProperties:properties];
   DCHECK(corrected_cookie);

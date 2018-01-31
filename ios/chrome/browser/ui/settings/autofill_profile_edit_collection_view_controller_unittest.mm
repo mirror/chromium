@@ -36,7 +36,7 @@ static NSArray* FindTextFieldDescendants(UIView* root) {
   [descendants addObject:root];
 
   while ([descendants count]) {
-    UIView* view = [descendants objectAtIndex:0];
+    UIView* view = descendants[0];
     if ([view isKindOfClass:[UITextField class]])
       [textFields addObject:view];
 
@@ -112,7 +112,7 @@ TEST_F(AutofillProfileEditCollectionViewControllerTest, TestOneProfile) {
 
   NSArray* textFields = FindTextFieldDescendants(cell);
   EXPECT_TRUE([textFields count] > 0);
-  UITextField* field = [textFields objectAtIndex:0];
+  UITextField* field = textFields[0];
   EXPECT_TRUE([field isKindOfClass:[UITextField class]]);
   EXPECT_TRUE(
       [[field text] isEqualToString:base::SysUTF8ToNSString(kTestFullName)]);
@@ -123,7 +123,7 @@ TEST_F(AutofillProfileEditCollectionViewControllerTest, TestOneProfile) {
   EXPECT_TRUE([cell isKindOfClass:[MDCCollectionViewCell class]]);
   textFields = FindTextFieldDescendants(cell);
   EXPECT_TRUE([textFields count] > 0);
-  field = [textFields objectAtIndex:0];
+  field = textFields[0];
   EXPECT_TRUE([field isKindOfClass:[UITextField class]]);
   EXPECT_TRUE([[field text]
       isEqualToString:base::SysUTF8ToNSString(kTestAddressLine1)]);

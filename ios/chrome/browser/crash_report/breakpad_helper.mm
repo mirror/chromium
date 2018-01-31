@@ -129,7 +129,7 @@ void Start(const std::string& channel_name) {
   // can be displayed to the user on the about:crashes page.
   NSArray* cachesDirectories = NSSearchPathForDirectoriesInDomains(
       NSCachesDirectory, NSUserDomainMask, YES);
-  NSString* cachePath = [cachesDirectories objectAtIndex:0];
+  NSString* cachePath = cachesDirectories[0];
   NSString* dumpDirectory =
       [cachePath stringByAppendingPathComponent:@kDefaultLibrarySubdirectory];
   PathService::Override(ios::DIR_CRASH_DUMPS,

@@ -103,12 +103,12 @@ NSHTTPCookie* SystemCookieFromCanonicalCookie(
   if (cookie.IsPersistent()) {
     NSDate* expiry =
         [NSDate dateWithTimeIntervalSince1970:cookie.ExpiryDate().ToDoubleT()];
-    [properties setObject:expiry forKey:NSHTTPCookieExpires];
+    properties[NSHTTPCookieExpires] = expiry;
   }
   if (cookie.IsSecure())
-    [properties setObject:@"Y" forKey:NSHTTPCookieSecure];
+    properties[NSHTTPCookieSecure] = @"Y";
   if (cookie.IsHttpOnly())
-    [properties setObject:@YES forKey:kNSHTTPCookieHttpOnly];
+    properties[kNSHTTPCookieHttpOnly] = @YES;
   NSHTTPCookie* system_cookie = [NSHTTPCookie cookieWithProperties:properties];
   DCHECK(system_cookie);
   return system_cookie;

@@ -135,12 +135,11 @@ NSURLResponse* GetNSURLResponseForRequest(URLRequest* request) {
         }
 
         // Duplicate keys are appended using a comma separator (RFC 2616).
-        NSMutableString* existing = [header_fields objectForKey:key];
+        NSMutableString* existing = header_fields[key];
         if (existing) {
           [existing appendFormat:@",%@", v];
         } else {
-          [header_fields setObject:[NSMutableString stringWithString:v]
-                            forKey:key];
+          header_fields[key] = [NSMutableString stringWithString:v];
         }
       }
     }
@@ -151,21 +150,21 @@ NSURLResponse* GetNSURLResponseForRequest(URLRequest* request) {
       request->GetMimeType(&mime_type);
       NSString* type = base::SysUTF8ToNSString(mime_type);
       if ([type length])
-        [header_fields setObject:type forKey:kContentType];
+        header_fields[kContentType] = type;
     }
-    NSString* content_type = [header_fields objectForKey:kContentType];
+    NSString* content_type = header_fields[kContentType];
     if (content_type) {
       NSRange range = [content_type rangeOfString:@","];
       // If there are several "Content-Type" headers, keep only the first one.
       if (range.location != NSNotFound) {
-        [header_fields setObject:[content_type substringToIndex:range.location]
-                          forKey:kContentType];
+        header_fields[kContentType] =
+            [content_type substringToIndex:range.location];
       }
     }
 
     // Use a "no-store" cache control to ensure that the response is not cached
     // by the system. See b/7045043.
-    [header_fields setObject:@"no-store" forKey:@"Cache-Control"];
+    header_fields[@"Cache-Control"] = @"no-store";
 
     // Parse the HTTP version.
     NSString* version_string = @"HTTP/1.1";
@@ -192,8 +191,7 @@ void CopyHttpHeaders(NSURLRequest* in_request, URLRequest* out_request) {
     if ([key isEqualToString:@"Referer"]) {
       // The referrer must be set through the set_referrer method rather than as
       // a header.
-      out_request->SetReferrer(
-          base::SysNSStringToUTF8([headers objectForKey:key]));
+      out_request->SetReferrer(base::SysNSStringToUTF8(headers[key]));
       // If the referrer is explicitly set, we don't want the network stack to
       // strip it.
       out_request->set_referrer_policy(URLRequest::NEVER_CLEAR_REFERRER);
@@ -202,7 +200,7 @@ void CopyHttpHeaders(NSURLRequest* in_request, URLRequest* out_request) {
     if (![key isEqualToString:@"User-Agent"]) {
       // The user agent string is added by the network stack, and might be
       // different from the one provided by UIWebView. Do not copy it.
-      NSString* value = [headers objectForKey:key];
+      NSString* value = headers[key];
       net_headers.SetHeader(base::SysNSStringToUTF8(key),
                             base::SysNSStringToUTF8(value));
     }

@@ -51,13 +51,13 @@
   DCHECK(group);
   DCHECK_GT(numTasks, 0U);
   NSUInteger count = 0;
-  NSNumber* number = [_groupCounts objectForKey:group];
+  NSNumber* number = _groupCounts[group];
   if (number) {
     count = [number unsignedIntegerValue];
     DCHECK_GT(count, 0U);
   }
   count += numTasks;
-  [_groupCounts setObject:@(count) forKey:group];
+  _groupCounts[group] = @(count);
   _totalCount += numTasks;
   if (_totalCount == numTasks) {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
@@ -68,7 +68,7 @@
   DCHECK(_threadChecker.CalledOnValidThread());
   DCHECK(group);
   DCHECK_GT(numTasks, 0U);
-  NSNumber* number = [_groupCounts objectForKey:group];
+  NSNumber* number = _groupCounts[group];
   DCHECK(number);
   NSUInteger count = [number unsignedIntegerValue];
   DCHECK(count >= numTasks);
@@ -76,7 +76,7 @@
   if (count == 0) {
     [_groupCounts removeObjectForKey:group];
   } else {
-    [_groupCounts setObject:@(count) forKey:group];
+    _groupCounts[group] = @(count);
   }
   _totalCount -= numTasks;
   if (_totalCount == 0) {
@@ -87,7 +87,7 @@
 - (NSUInteger)clearNetworkTasksForGroup:(NSString*)group {
   DCHECK(_threadChecker.CalledOnValidThread());
   DCHECK(group);
-  NSNumber* number = [_groupCounts objectForKey:group];
+  NSNumber* number = _groupCounts[group];
   if (!number) {
     return 0;
   }
@@ -100,7 +100,7 @@
 - (NSUInteger)numNetworkTasksForGroup:(NSString*)group {
   DCHECK(_threadChecker.CalledOnValidThread());
   DCHECK(group);
-  NSNumber* number = [_groupCounts objectForKey:group];
+  NSNumber* number = _groupCounts[group];
   if (!number) {
     return 0;
   }

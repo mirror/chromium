@@ -25,7 +25,7 @@ namespace {
 base::Time GetCreationTimeFromObject(NSHTTPCookie* cookie) {
   // The "Created" key is not documented.
   // Return a null time if the key is missing.
-  id created = [[cookie properties] objectForKey:kHTTPCookieCreated];
+  id created = [cookie properties][kHTTPCookieCreated];
   DCHECK(created && [created isKindOfClass:[NSNumber class]]);
   if (!created || ![created isKindOfClass:[NSNumber class]])
     return base::Time();

@@ -113,7 +113,7 @@ const NSTimeInterval kLocationUpdateInterval = 365.0 * 24.0 * 60.0 * 60.0;
   NSString* newLocationKey = ios::GetChromeBrowserProvider()
                                  ->GetGeolocationUpdaterProvider()
                                  ->GetUpdateNewLocationKey();
-  CLLocation* location = [[notification userInfo] objectForKey:newLocationKey];
+  CLLocation* location = [notification userInfo][newLocationKey];
   if (location) {
     _currentLocation = location;
 

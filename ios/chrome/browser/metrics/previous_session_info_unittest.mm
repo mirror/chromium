@@ -53,7 +53,7 @@ TEST_F(PreviousSessionInfoTest, InitializationWithSameLanguage) {
   [defaults removeObjectForKey:kLastRanLanguage];
 
   // Set the current language as the last ran language.
-  NSString* currentVersion = [[NSLocale preferredLanguages] objectAtIndex:0];
+  NSString* currentVersion = [NSLocale preferredLanguages][0];
   [defaults setObject:currentVersion forKey:kLastRanVersion];
 
   // Instantiate the PreviousSessionInfo sharedInstance.

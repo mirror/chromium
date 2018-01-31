@@ -27,7 +27,7 @@ class CookieCreationTimeManagerTest : public PlatformTest {
     if ([cookies count] != 1)
       return nil;
 
-    return [cookies objectAtIndex:0];
+    return cookies[0];
   }
 
  protected:

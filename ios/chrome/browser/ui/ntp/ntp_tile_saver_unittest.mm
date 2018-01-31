@@ -140,12 +140,12 @@ TEST_F(NTPTileSaverControllerTest, SaveMostVisitedToDisk) {
 
   NSString* fallbackTitle = base::SysUTF16ToNSString(fallbackTile.title);
   NSURL* fallbackURL = net::NSURLWithGURL(fallbackTile.url);
-  NTPTile* fallbackSavedTile = [savedTiles objectForKey:fallbackURL];
+  NTPTile* fallbackSavedTile = savedTiles[fallbackURL];
   verifyWithFallback(fallbackSavedTile, fallbackTitle, fallbackURL);
 
   NSString* imageTitle = base::SysUTF16ToNSString(imageTile.title);
   NSURL* imageURL = net::NSURLWithGURL(imageTile.url);
-  NTPTile* imageSavedTile = [savedTiles objectForKey:imageURL];
+  NTPTile* imageSavedTile = savedTiles[imageURL];
   verifyWithImage(imageSavedTile, imageTitle, imageURL);
 }
 
@@ -182,17 +182,17 @@ TEST_F(NTPTileSaverControllerTest, UpdateSingleFaviconFallback) {
 
   NSString* image1Title = base::SysUTF16ToNSString(imageTile1.title);
   NSURL* image1URL = net::NSURLWithGURL(imageTile1.url);
-  NTPTile* image1SavedTile = [savedTiles objectForKey:image1URL];
+  NTPTile* image1SavedTile = savedTiles[image1URL];
   verifyWithImage(image1SavedTile, image1Title, image1URL);
 
   NSString* image2Title = base::SysUTF16ToNSString(imageTile2.title);
   NSURL* image2URL = net::NSURLWithGURL(imageTile2.url);
-  NTPTile* image2SavedTile = [savedTiles objectForKey:image2URL];
+  NTPTile* image2SavedTile = savedTiles[image2URL];
   verifyWithImage(image2SavedTile, image2Title, image2URL);
 
   NSString* fallbackTitle = base::SysUTF16ToNSString(fallbackTile.title);
   NSURL* fallbackURL = net::NSURLWithGURL(fallbackTile.url);
-  NTPTile* fallbackSavedTile = [savedTiles objectForKey:fallbackURL];
+  NTPTile* fallbackSavedTile = savedTiles[fallbackURL];
   verifyWithFallback(fallbackSavedTile, fallbackTitle, fallbackURL);
 
   // Mock returning a fallback value for the first image tile.
@@ -211,13 +211,13 @@ TEST_F(NTPTileSaverControllerTest, UpdateSingleFaviconFallback) {
   EXPECT_EQ(savedTilesAfterUpdate.count, 3U);
 
   // Verify that the first image tile now has callback data.
-  image1SavedTile = [savedTilesAfterUpdate objectForKey:image1URL];
+  image1SavedTile = savedTilesAfterUpdate[image1URL];
   verifyWithFallback(image1SavedTile, image1Title, image1URL);
 
   // Verify that the other two tiles did not change.
-  image2SavedTile = [savedTiles objectForKey:image2URL];
+  image2SavedTile = savedTiles[image2URL];
   verifyWithImage(image2SavedTile, image2Title, image2URL);
-  fallbackSavedTile = [savedTilesAfterUpdate objectForKey:fallbackURL];
+  fallbackSavedTile = savedTilesAfterUpdate[fallbackURL];
   verifyWithFallback(fallbackSavedTile, fallbackTitle, fallbackURL);
 }
 

@@ -43,7 +43,7 @@ IOSChromeMain::IOSChromeMain() {
   // returning pointer to the object internals in that case).
   argv_store.resize([arguments count]);
   for (NSUInteger i = 0; i < [arguments count]; i++) {
-    argv_store[i] = base::SysNSStringToUTF8([arguments objectAtIndex:i]);
+    argv_store[i] = base::SysNSStringToUTF8(arguments[i]);
     argv[i] = argv_store[i].c_str();
   }
   main_params.argv = argv;

@@ -315,7 +315,7 @@ bool IsValidCreditCardNumber(const base::string16& card_number,
                                    IDS_PAYMENTS_BILLING_ADDRESS)
                          value:nil
                       required:YES];
-    [self.fieldsMap setObject:billingAddressField forKey:fieldKey];
+    (self.fieldsMap)[fieldKey] = billingAddressField;
   }
   billingAddressField.value =
       self.billingProfile ? base::SysUTF8ToNSString(self.billingProfile->guid())
@@ -346,7 +346,7 @@ bool IsValidCreditCardNumber(const base::string16& card_number,
                          value:creditCardNumber
                       required:YES];
     creditCardNumberField.keyboardType = UIKeyboardTypeNumberPad;
-    [self.fieldsMap setObject:creditCardNumberField forKey:fieldKey];
+    (self.fieldsMap)[fieldKey] = creditCardNumberField;
   }
   [fields addObject:creditCardNumberField];
 
@@ -364,7 +364,7 @@ bool IsValidCreditCardNumber(const base::string16& card_number,
                          label:l10n_util::GetNSString(IDS_PAYMENTS_NAME_ON_CARD)
                          value:creditCardName
                       required:YES];
-    [self.fieldsMap setObject:creditCardNameField forKey:fieldKey];
+    (self.fieldsMap)[fieldKey] = creditCardNameField;
   }
   [fields addObject:creditCardNameField];
 
@@ -393,7 +393,7 @@ bool IsValidCreditCardNumber(const base::string16& card_number,
                          label:l10n_util::GetNSString(IDS_PAYMENTS_EXP_DATE)
                          value:expDate
                       required:YES];
-    [self.fieldsMap setObject:expirationDateField forKey:fieldKey];
+    (self.fieldsMap)[fieldKey] = expirationDateField;
   }
   self.creditCardExpDateField = expirationDateField;
   [fields addObject:expirationDateField];
@@ -412,7 +412,7 @@ bool IsValidCreditCardNumber(const base::string16& card_number,
                                    IDS_PAYMENTS_SAVE_CARD_TO_DEVICE_CHECKBOX)
                          value:@"YES"
                       required:YES];
-    [self.fieldsMap setObject:saveToChromeField forKey:fieldKey];
+    (self.fieldsMap)[fieldKey] = saveToChromeField;
   }
   [fields addObject:saveToChromeField];
 

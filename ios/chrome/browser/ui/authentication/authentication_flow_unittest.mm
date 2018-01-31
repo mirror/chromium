@@ -45,10 +45,8 @@ class AuthenticationFlowTest : public PlatformTest {
     ios::FakeChromeIdentityService* identityService =
         ios::FakeChromeIdentityService::GetInstanceFromChromeProvider();
     identityService->AddIdentities(@[ @"identity1", @"identity2" ]);
-    identity1_ =
-        [identityService->GetAllIdentitiesSortedForDisplay() objectAtIndex:0];
-    identity2_ =
-        [identityService->GetAllIdentitiesSortedForDisplay() objectAtIndex:1];
+    identity1_ = identityService->GetAllIdentitiesSortedForDisplay()[0];
+    identity2_ = identityService->GetAllIdentitiesSortedForDisplay()[1];
     sign_in_completion_ = ^(BOOL success) {
       finished_ = true;
       signed_in_success_ = success;

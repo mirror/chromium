@@ -301,8 +301,8 @@ static const CGFloat kMoveFABAnimationTime = 0.3;
 
   // On iOS 10 the keyboard might be partially shown, i.e. part of the keyboard
   // is below the screen.
-  CGRect keyboardRect = [[[notification userInfo]
-      objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+  CGRect keyboardRect =
+      [[notification userInfo][UIKeyboardFrameEndUserInfoKey] CGRectValue];
   CGSize visibleKeyboardSize =
       CGRectIntersection(self.view.bounds, keyboardRect).size;
   [self setKeyboardSize:visibleKeyboardSize needsLayout:YES];

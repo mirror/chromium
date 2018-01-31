@@ -137,8 +137,8 @@ class SnapshotCacheTest : public PlatformTest {
     // Put color images in the cache.
     for (NSUInteger i = 0; i < count; ++i) {
       @autoreleasepool {
-        UIImage* image = [testImages_ objectAtIndex:i];
-        NSString* sessionID = [testSessions_ objectAtIndex:i];
+        UIImage* image = testImages_[i];
+        NSString* sessionID = testSessions_[i];
         [cache setImage:image withSessionID:sessionID];
       }
     }
@@ -146,7 +146,7 @@ class SnapshotCacheTest : public PlatformTest {
       FlushRunLoops();
       for (NSUInteger i = 0; i < count; ++i) {
         // Check that images are on the disk.
-        NSString* sessionID = [testSessions_ objectAtIndex:i];
+        NSString* sessionID = testSessions_[i];
         base::FilePath path([cache imagePathForSessionID:sessionID]);
         EXPECT_TRUE(base::PathExists(path));
       }
@@ -219,16 +219,16 @@ TEST_F(SnapshotCacheTest, Cache) {
 
   // Put all images in the cache.
   for (NSUInteger i = 0; i < expectedCacheSize; ++i) {
-    UIImage* image = [testImages_ objectAtIndex:i];
-    NSString* sessionID = [testSessions_ objectAtIndex:i];
+    UIImage* image = testImages_[i];
+    NSString* sessionID = testSessions_[i];
     [cache setImage:image withSessionID:sessionID];
   }
 
   // Get images back.
   __block NSUInteger numberOfCallbacks = 0;
   for (NSUInteger i = 0; i < expectedCacheSize; ++i) {
-    NSString* sessionID = [testSessions_ objectAtIndex:i];
-    UIImage* expectedImage = [testImages_ objectAtIndex:i];
+    NSString* sessionID = testSessions_[i];
+    UIImage* expectedImage = testImages_[i];
     EXPECT_TRUE(expectedImage != nil);
     [cache retrieveImageForSessionID:sessionID
                             callback:^(UIImage* image) {
@@ -248,15 +248,15 @@ TEST_F(SnapshotCacheTest, SaveToDisk) {
 
   // Put all images in the cache.
   for (NSUInteger i = 0; i < kSessionCount; ++i) {
-    UIImage* image = [testImages_ objectAtIndex:i];
-    NSString* sessionID = [testSessions_ objectAtIndex:i];
+    UIImage* image = testImages_[i];
+    NSString* sessionID = testSessions_[i];
     [cache setImage:image withSessionID:sessionID];
   }
   FlushRunLoops();
 
   for (NSUInteger i = 0; i < kSessionCount; ++i) {
     // Check that images are on the disk.
-    NSString* sessionID = [testSessions_ objectAtIndex:i];
+    NSString* sessionID = testSessions_[i];
 
     base::FilePath path([cache imagePathForSessionID:sessionID]);
     EXPECT_TRUE(base::PathExists(path));
@@ -274,7 +274,7 @@ TEST_F(SnapshotCacheTest, SaveToDisk) {
         reinterpret_cast<const char*>(CFDataGetBytePtr(pixelData));
     EXPECT_TRUE(pixels);
 
-    UIImage* referenceImage = [testImages_ objectAtIndex:i];
+    UIImage* referenceImage = testImages_[i];
     CGImageRef referenceCgImage = [referenceImage CGImage];
     base::ScopedCFTypeRef<CFDataRef> referenceData(
         CGDataProviderCopyData(CGImageGetDataProvider(referenceCgImage)));
@@ -306,13 +306,13 @@ TEST_F(SnapshotCacheTest, Purge) {
 
   // Put all images in the cache.
   for (NSUInteger i = 0; i < kSessionCount; ++i) {
-    UIImage* image = [testImages_ objectAtIndex:i];
-    NSString* sessionID = [testSessions_ objectAtIndex:i];
+    UIImage* image = testImages_[i];
+    NSString* sessionID = testSessions_[i];
     [cache setImage:image withSessionID:sessionID];
   }
 
   NSMutableSet* liveSessions = [NSMutableSet setWithCapacity:1];
-  [liveSessions addObject:[testSessions_ objectAtIndex:0]];
+  [liveSessions addObject:testSessions_[0]];
 
   // Purge the cache.
   [cache purgeCacheOlderThan:(base::Time::Now() - base::TimeDelta::FromHours(1))
@@ -322,7 +322,7 @@ TEST_F(SnapshotCacheTest, Purge) {
   // Check that nothing has been deleted.
   for (NSUInteger i = 0; i < kSessionCount; ++i) {
     // Check that images are on the disk.
-    NSString* sessionID = [testSessions_ objectAtIndex:i];
+    NSString* sessionID = testSessions_[i];
 
     base::FilePath path([cache imagePathForSessionID:sessionID]);
     EXPECT_TRUE(base::PathExists(path));
@@ -335,7 +335,7 @@ TEST_F(SnapshotCacheTest, Purge) {
   // Check that the file have been deleted.
   for (NSUInteger i = 0; i < kSessionCount; ++i) {
     // Check that images are on the disk.
-    NSString* sessionID = [testSessions_ objectAtIndex:i];
+    NSString* sessionID = testSessions_[i];
 
     base::FilePath path([cache imagePathForSessionID:sessionID]);
     if (i == 0)
@@ -352,8 +352,8 @@ TEST_F(SnapshotCacheTest, HandleMemoryWarning) {
 
   SnapshotCache* cache = GetSnapshotCache();
 
-  NSString* firstPinnedID = [testSessions_ objectAtIndex:4];
-  NSString* secondPinnedID = [testSessions_ objectAtIndex:6];
+  NSString* firstPinnedID = testSessions_[4];
+  NSString* secondPinnedID = testSessions_[6];
   NSMutableSet* set = [NSMutableSet set];
   [set addObject:firstPinnedID];
   [set addObject:secondPinnedID];
@@ -364,7 +364,7 @@ TEST_F(SnapshotCacheTest, HandleMemoryWarning) {
   EXPECT_EQ(YES, [cache hasImageInMemory:firstPinnedID]);
   EXPECT_EQ(YES, [cache hasImageInMemory:secondPinnedID]);
 
-  NSString* notPinnedID = [testSessions_ objectAtIndex:2];
+  NSString* notPinnedID = testSessions_[2];
   EXPECT_FALSE([cache hasImageInMemory:notPinnedID]);
 
   // Wait for the final image to be pulled off disk.
@@ -440,9 +440,9 @@ TEST_F(SnapshotCacheTest, MostRecentGreyBlock) {
   const NSUInteger kNumImages = 3;
   NSMutableArray* sessionIDs =
       [[NSMutableArray alloc] initWithCapacity:kNumImages];
-  [sessionIDs addObject:[testSessions_ objectAtIndex:0]];
-  [sessionIDs addObject:[testSessions_ objectAtIndex:1]];
-  [sessionIDs addObject:[testSessions_ objectAtIndex:2]];
+  [sessionIDs addObject:testSessions_[0]];
+  [sessionIDs addObject:testSessions_[1]];
+  [sessionIDs addObject:testSessions_[2]];
 
   SnapshotCache* cache = GetSnapshotCache();
 
@@ -459,15 +459,15 @@ TEST_F(SnapshotCacheTest, MostRecentGreyBlock) {
   __block BOOL firstCallbackCalled = NO;
   __block BOOL secondCallbackCalled = NO;
   __block BOOL thirdCallbackCalled = NO;
-  [cache greyImageForSessionID:[testSessions_ objectAtIndex:0]
+  [cache greyImageForSessionID:testSessions_[0]
                       callback:^(UIImage*) {
                         firstCallbackCalled = YES;
                       }];
-  [cache greyImageForSessionID:[testSessions_ objectAtIndex:1]
+  [cache greyImageForSessionID:testSessions_[1]
                       callback:^(UIImage*) {
                         secondCallbackCalled = YES;
                       }];
-  [cache greyImageForSessionID:[testSessions_ objectAtIndex:2]
+  [cache greyImageForSessionID:testSessions_[2]
                       callback:^(UIImage*) {
                         thirdCallbackCalled = YES;
                       }];
@@ -489,7 +489,7 @@ TEST_F(SnapshotCacheTest, GreyImageAllInBackground) {
 
   // Now convert every image into a grey image, on disk, in the background.
   for (NSUInteger i = 0; i < kSessionCount; ++i) {
-    [cache saveGreyInBackgroundForSessionID:[testSessions_ objectAtIndex:i]];
+    [cache saveGreyInBackgroundForSessionID:testSessions_[i]];
   }
 
   // Waits for the grey images for the sessions in |testSessions_| to be written

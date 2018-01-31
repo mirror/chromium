@@ -201,7 +201,7 @@ UIImage* GetFallbackImageWithStringAndColor(NSString* string,
 - (void)refreshItemsWithURL:(const GURL&)URLToRefresh title:(NSString*)title {
   NSURL* NSURL = net::NSURLWithGURL(URLToRefresh);
 
-  if (!NSURL || [_pendingTasks objectForKey:NSURL]) {
+  if (!NSURL || _pendingTasks[NSURL]) {
     return;
   }
 
@@ -247,7 +247,7 @@ UIImage* GetFallbackImageWithStringAndColor(NSString* string,
           URL, kMinIconSize * [UIScreen mainScreen].scale,
           kIconSize * [UIScreen mainScreen].scale,
           base::BindBlockArc(faviconBlock), &_largeIconTaskTracker);
-  [_pendingTasks setObject:[NSNumber numberWithLongLong:taskID] forKey:NSURL];
+  _pendingTasks[NSURL] = @(taskID);
 }
 
 - (NSUInteger)pendingLargeIconTasksCount {

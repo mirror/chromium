@@ -59,7 +59,7 @@ TEST_F(SerializableUserDataManagerImplTest, TestLegacyKeyConversion) {
     id value = user_data_manager->GetValueForSerializationKey(key);
     EXPECT_NSEQ(nil, value);
     value = user_data_manager->GetValueForSerializationKey(
-        [legacy_key_conversion objectForKey:key]);
+        legacy_key_conversion[key]);
     EXPECT_NSEQ(key, value);
   }
 }

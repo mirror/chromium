@@ -51,7 +51,7 @@ TEST_F(PaymentRequestShippingAddressSelectionMediatorTest,
   // The first item must be selected.
   EXPECT_EQ(0U, mediator.selectedItemIndex);
 
-  CollectionViewItem* item_1 = [[mediator selectableItems] objectAtIndex:0];
+  CollectionViewItem* item_1 = [mediator selectableItems][0];
   DCHECK([item_1 isKindOfClass:[AutofillProfileItem class]]);
   AutofillProfileItem* profile_item_1 =
       base::mac::ObjCCastStrict<AutofillProfileItem>(item_1);
@@ -67,7 +67,7 @@ TEST_F(PaymentRequestShippingAddressSelectionMediatorTest,
   EXPECT_EQ(nil, profile_item_1.notification);
   EXPECT_TRUE(profile_item_1.complete);
 
-  CollectionViewItem* item_2 = [[mediator selectableItems] objectAtIndex:1];
+  CollectionViewItem* item_2 = [mediator selectableItems][1];
   DCHECK([item_2 isKindOfClass:[AutofillProfileItem class]]);
   AutofillProfileItem* profile_item_2 =
       base::mac::ObjCCastStrict<AutofillProfileItem>(item_2);
@@ -119,14 +119,14 @@ TEST_F(PaymentRequestShippingAddressSelectionMediatorTest, TestNoSelectedItem) {
   // The selected item index must be invalid.
   EXPECT_EQ(NSUIntegerMax, mediator.selectedItemIndex);
 
-  CollectionViewItem* item_1 = [[mediator selectableItems] objectAtIndex:0];
+  CollectionViewItem* item_1 = [mediator selectableItems][0];
   DCHECK([item_1 isKindOfClass:[AutofillProfileItem class]]);
   AutofillProfileItem* profile_item_1 =
       base::mac::ObjCCastStrict<AutofillProfileItem>(item_1);
   EXPECT_FALSE([profile_item_1.notification isEqualToString:@""]);
   EXPECT_FALSE(profile_item_1.complete);
 
-  CollectionViewItem* item_2 = [[mediator selectableItems] objectAtIndex:0];
+  CollectionViewItem* item_2 = [mediator selectableItems][0];
   DCHECK([item_2 isKindOfClass:[AutofillProfileItem class]]);
   AutofillProfileItem* profile_item_2 =
       base::mac::ObjCCastStrict<AutofillProfileItem>(item_2);

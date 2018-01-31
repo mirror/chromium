@@ -192,28 +192,28 @@ enum SearchExtensionAction {
 
   NSString* commandCallerPreference =
       base::SysUTF8ToNSString(app_group::kChromeAppGroupCommandAppPreference);
-  NSString* commandCaller = base::mac::ObjCCast<NSString>(
-      [commandDictionary objectForKey:commandCallerPreference]);
+  NSString* commandCaller =
+      base::mac::ObjCCast<NSString>(commandDictionary[commandCallerPreference]);
 
   NSString* commandPreference = base::SysUTF8ToNSString(
       app_group::kChromeAppGroupCommandCommandPreference);
-  NSString* command = base::mac::ObjCCast<NSString>(
-      [commandDictionary objectForKey:commandPreference]);
+  NSString* command =
+      base::mac::ObjCCast<NSString>(commandDictionary[commandPreference]);
 
   NSString* commandTimePreference =
       base::SysUTF8ToNSString(app_group::kChromeAppGroupCommandTimePreference);
-  id commandTime = base::mac::ObjCCast<NSDate>(
-      [commandDictionary objectForKey:commandTimePreference]);
+  id commandTime =
+      base::mac::ObjCCast<NSDate>(commandDictionary[commandTimePreference]);
 
   NSString* commandURLPreference =
       base::SysUTF8ToNSString(app_group::kChromeAppGroupCommandURLPreference);
-  NSString* externalURL = base::mac::ObjCCast<NSString>(
-      [commandDictionary objectForKey:commandURLPreference]);
+  NSString* externalURL =
+      base::mac::ObjCCast<NSString>(commandDictionary[commandURLPreference]);
 
   NSString* commandIndexPreference =
       base::SysUTF8ToNSString(app_group::kChromeAppGroupCommandIndexPreference);
-  NSNumber* index = base::mac::ObjCCast<NSNumber>(
-      [commandDictionary objectForKey:commandIndexPreference]);
+  NSNumber* index =
+      base::mac::ObjCCast<NSNumber>(commandDictionary[commandIndexPreference]);
 
   if (!commandCaller || !command || !commandTimePreference) {
     return nil;

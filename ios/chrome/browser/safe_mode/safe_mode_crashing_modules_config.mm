@@ -41,7 +41,7 @@ NSString* const kModuleFriendlyNameKey = @"ModuleFriendlyName";
 
 - (NSString*)startupCrashModuleFriendlyName:(NSString*)modulePath {
   NSDictionary* modules = base::mac::ObjCCastStrict<NSDictionary>(
-      [_configuration objectForKey:kStartupCrashModulesKey]);
+      _configuration[kStartupCrashModulesKey]);
   NSDictionary* module =
       base::mac::ObjCCastStrict<NSDictionary>(modules[modulePath]);
   return base::mac::ObjCCast<NSString>(module[kModuleFriendlyNameKey]);

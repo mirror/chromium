@@ -395,12 +395,11 @@ TEST_F(ActivityServiceControllerTest, ActivityItemsForDataWithPasswordAppEx) {
   });
   EXPECT_EQ(2U, [result count]);
   // Checks version.
-  NSNumber* version =
-      [result objectForKey:activity_services::kPasswordAppExVersionNumberKey];
+  NSNumber* version = result[activity_services::kPasswordAppExVersionNumberKey];
   EXPECT_NSEQ(activity_services::kPasswordAppExVersionNumber, version);
   // Checks URL.
   NSString* appExUrlString =
-      [result objectForKey:activity_services::kPasswordAppExURLStringKey];
+      result[activity_services::kPasswordAppExURLStringKey];
   EXPECT_NSEQ(@"https://m.chromium.org/login.html", appExUrlString);
 
   // Checks that the list includes the page's title.
@@ -534,7 +533,7 @@ TEST_F(ActivityServiceControllerTest, ApplicationActivitiesForData) {
   NSArray* items = [activityController applicationActivitiesForData:data
                                                          dispatcher:nil];
   ASSERT_EQ(2U, [items count]);
-  EXPECT_EQ([PrintActivity class], [[items objectAtIndex:0] class]);
+  EXPECT_EQ([PrintActivity class], [items[0] class]);
 
   // Verify non-printable data.
   data = [[ShareToData alloc]

@@ -99,8 +99,8 @@ bool AccountConsistencyHandler::ShouldAllowResponse(NSURLResponse* response,
 
   if (!gaia::IsGaiaSignonRealm(url.GetOrigin()))
     return true;
-  NSString* manage_accounts_header = [[http_response allHeaderFields]
-      objectForKey:@"X-Chrome-Manage-Accounts"];
+  NSString* manage_accounts_header =
+      [http_response allHeaderFields][@"X-Chrome-Manage-Accounts"];
   if (!manage_accounts_header)
     return true;
 

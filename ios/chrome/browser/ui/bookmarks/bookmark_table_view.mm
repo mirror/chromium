@@ -1035,7 +1035,7 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
   }
   NSDictionary* info = [aNotification userInfo];
   CGFloat keyboardTop =
-      [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].origin.y;
+      [info[UIKeyboardFrameEndUserInfoKey] CGRectValue].origin.y;
   CGFloat tableBottom =
       CGRectGetMaxY([self convertRect:self.tableView.frame toView:nil]);
   CGFloat shiftY = tableBottom - keyboardTop + kKeyboardSpacing;

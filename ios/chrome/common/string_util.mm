@@ -139,7 +139,7 @@ NSString* SubstringOfWidth(NSString* string,
   if (![string length])
     return nil;
 
-  UIFont* font = [attributes objectForKey:NSFontAttributeName];
+  UIFont* font = attributes[NSFontAttributeName];
   DCHECK(font);
 
   // Function to get the correct substring while insulating against

@@ -607,7 +607,7 @@ initWithRootViewController:(UIViewController*)rootViewController
     appBarContainedViewControllers_ = [[NSMutableDictionary alloc] init];
   }
   NSValue* key = [self keyForController:[container contentViewController]];
-  [appBarContainedViewControllers_ setObject:container forKey:key];
+  appBarContainedViewControllers_[key] = container;
 }
 
 // Removes the app bar container entry from the aforementioned dictionary.
@@ -621,7 +621,7 @@ initWithRootViewController:(UIViewController*)rootViewController
 - (MDCAppBarContainerViewController*)appBarContainerForController:
     (UIViewController*)controller {
   NSValue* key = [self keyForController:controller];
-  return [appBarContainedViewControllers_ objectForKey:key];
+  return appBarContainedViewControllers_[key];
 }
 
 // Returns the dictionary key to use when dealing with |controller|.

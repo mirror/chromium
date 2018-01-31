@@ -52,7 +52,7 @@ NSString* NormalizeRegionName(NSString* region, NSArray<RegionData*>* regions) {
       }];
   if ([matchingRegions count]) {
     DCHECK_EQ(1U, [matchingRegions count]);
-    return [regions objectAtIndex:[matchingRegions firstIndex]].regionName;
+    return regions[[matchingRegions firstIndex]].regionName;
   }
 
   // See if |region| is a valid region name, and return that if it is.
@@ -263,9 +263,8 @@ NSString* NormalizeRegionName(NSString* region, NSArray<RegionData*>* regions) {
           initWithCapacity:static_cast<NSUInteger>(countriesVector.size())];
   for (size_t i = 0; i < countriesVector.size(); ++i) {
     if (countriesVector[i].get()) {
-      [countries setObject:base::SysUTF16ToNSString(countriesVector[i]->name())
-                    forKey:base::SysUTF8ToNSString(
-                               countriesVector[i]->country_code())];
+      countries[base::SysUTF8ToNSString(countriesVector[i]->country_code())] =
+          base::SysUTF16ToNSString(countriesVector[i]->name());
     }
   }
   _countries = countries;
@@ -278,7 +277,7 @@ NSString* NormalizeRegionName(NSString* region, NSArray<RegionData*>* regions) {
       [self fieldValueFromProfile:_address
                         fieldType:autofill::ADDRESS_HOME_COUNTRY];
 
-  if ([countries objectForKey:country]) {
+  if (countries[country]) {
     _selectedCountryCode = country;
   } else if ([[countries allKeysForObject:country] count]) {
     DCHECK_EQ(1U, [[countries allKeysForObject:country] count]);
@@ -358,7 +357,7 @@ NSString* NormalizeRegionName(NSString* region, NSArray<RegionData*>* regions) {
               UITextAutocapitalizationTypeAllCharacters;
         }
 
-        [self.fieldsMap setObject:field forKey:fieldKey];
+        (self.fieldsMap)[fieldKey] = field;
       }
 
       std::string fieldLabel;
@@ -392,7 +391,7 @@ NSString* NormalizeRegionName(NSString* region, NSArray<RegionData*>* regions) {
                                label:label
                                value:nil
                             required:YES];
-          [self.fieldsMap setObject:field forKey:countryFieldKey];
+          (self.fieldsMap)[countryFieldKey] = field;
         }
         field.value = self.selectedCountryCode;
         field.displayValue = self.countries[self.selectedCountryCode];
@@ -420,7 +419,7 @@ NSString* NormalizeRegionName(NSString* region, NSArray<RegionData*>* regions) {
                       required:YES];
     field.keyboardType = UIKeyboardTypePhonePad;
     field.returnKeyType = UIReturnKeyDone;
-    [self.fieldsMap setObject:field forKey:phoneNumberFieldKey];
+    (self.fieldsMap)[phoneNumberFieldKey] = field;
   }
   [self.fields addObject:field];
 

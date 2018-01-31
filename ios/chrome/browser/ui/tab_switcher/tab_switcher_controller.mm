@@ -1147,7 +1147,7 @@ enum class SnapshotViewOption {
 
       if (index < _controllersOfDistantSessions.count) {
         TabSwitcherPanelController* panel =
-            [_controllersOfDistantSessions objectAtIndex:index];
+            _controllersOfDistantSessions[index];
         const synced_sessions::DistantSession* distantSession =
             [panel distantSession];
         deviceType = distantSession->device_type;

@@ -121,7 +121,7 @@
 
   DeferredInitializationBlock* deferredBlock =
       [[DeferredInitializationBlock alloc] initWithName:name block:block];
-  [_runBlocks setObject:deferredBlock forKey:name];
+  _runBlocks[name] = deferredBlock;
 
   if (!_isBlockScheduled) {
     [self scheduleNextBlockWithDelay:self.delayBeforeFirstBlock];
@@ -135,8 +135,7 @@
   if (!nextBlockName)
     return;
 
-  DeferredInitializationBlock* nextBlock =
-      [_runBlocks objectForKey:nextBlockName];
+  DeferredInitializationBlock* nextBlock = _runBlocks[nextBlockName];
   DCHECK(nextBlock);
 
   __weak DeferredInitializationRunner* weakSelf = self;
@@ -154,14 +153,14 @@
 
 - (void)runBlockIfNecessary:(NSString*)name {
   DCHECK([NSThread isMainThread]);
-  [[_runBlocks objectForKey:name] run];
+  [_runBlocks[name] run];
 }
 
 - (void)cancelBlockNamed:(NSString*)name {
   DCHECK([NSThread isMainThread]);
   DCHECK(name);
   [_blocksNameQueue removeObject:name];
-  [[_runBlocks objectForKey:name] cancel];
+  [_runBlocks[name] cancel];
   [_runBlocks removeObjectForKey:name];
 }
 

@@ -261,7 +261,7 @@ void NavigationManagerImpl::LoadURLWithParams(
   if (params.extra_headers)
     added_item->AddHttpRequestHeaders(params.extra_headers);
   if (params.post_data) {
-    DCHECK([added_item->GetHttpRequestHeaders() objectForKey:@"Content-Type"])
+    DCHECK(added_item->GetHttpRequestHeaders()[@"Content-Type"])
         << "Post data should have an associated content type";
     added_item->SetPostData(params.post_data);
     added_item->SetShouldSkipRepostFormConfirmation(true);

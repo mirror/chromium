@@ -66,8 +66,8 @@ CGFloat LayoutOffset(CardStackLayoutManager* stack,
 CGFloat SeparationOnLayoutAxis(CardStackLayoutManager* stack,
                                NSUInteger firstIndex,
                                NSUInteger secondIndex) {
-  StackCard* firstCard = [[stack cards] objectAtIndex:firstIndex];
-  StackCard* secondCard = [[stack cards] objectAtIndex:secondIndex];
+  StackCard* firstCard = [stack cards][firstIndex];
+  StackCard* secondCard = [stack cards][secondIndex];
   CGFloat firstCardOffset = LayoutOffset(stack, firstCard.layout.position);
   CGFloat secondCardOffset = LayoutOffset(stack, secondCard.layout.position);
   return secondCardOffset - firstCardOffset;
@@ -219,7 +219,7 @@ TEST_F(CardStackLayoutManagerTest, StackLayout) {
     EXPECT_EQ(0, [stack lastStartStackCardIndex]);
     EXPECT_LT(0, [stack firstEndStackCardIndex]);
     for (NSInteger i = 0; i < [stack firstEndStackCardIndex]; i++) {
-      StackCard* card = [[stack cards] objectAtIndex:i];
+      StackCard* card = [stack cards][i];
       EXPECT_FLOAT_EQ(kMargin + i * kMaxStagger,
                       LayoutOffset(stack, card.layout.position));
     }
@@ -242,7 +242,7 @@ TEST_F(CardStackLayoutManagerTest, PreservingPositionsOnCardSizeChange) {
     EXPECT_EQ(0, [stack lastStartStackCardIndex]);
     EXPECT_LT(0, [stack firstEndStackCardIndex]);
     for (NSInteger i = 0; i < [stack firstEndStackCardIndex]; i++) {
-      StackCard* card = [[stack cards] objectAtIndex:i];
+      StackCard* card = [stack cards][i];
       EXPECT_FLOAT_EQ(kMargin + i * kMaxStagger,
                       LayoutOffset(stack, card.layout.position));
     }
@@ -255,7 +255,7 @@ TEST_F(CardStackLayoutManagerTest, PreservingPositionsOnCardSizeChange) {
     EXPECT_EQ(0, [stack lastStartStackCardIndex]);
     EXPECT_LT(0, [stack firstEndStackCardIndex]);
     for (NSInteger i = 0; i < [stack firstEndStackCardIndex]; i++) {
-      StackCard* card = [[stack cards] objectAtIndex:i];
+      StackCard* card = [stack cards][i];
       EXPECT_FLOAT_EQ(kMargin + i * kMaxStagger,
                       LayoutOffset(stack, card.layout.position));
     }
@@ -278,7 +278,7 @@ TEST_F(CardStackLayoutManagerTest, SwappingPositionsOnOrientationChange) {
     EXPECT_EQ(0, [stack lastStartStackCardIndex]);
     EXPECT_LT(0, [stack firstEndStackCardIndex]);
     for (NSInteger i = 0; i < [stack firstEndStackCardIndex]; i++) {
-      StackCard* card = [[stack cards] objectAtIndex:i];
+      StackCard* card = [stack cards][i];
       EXPECT_FLOAT_EQ(kMargin + i * kMaxStagger,
                       LayoutOffset(stack, card.layout.position));
     }
@@ -291,7 +291,7 @@ TEST_F(CardStackLayoutManagerTest, SwappingPositionsOnOrientationChange) {
     EXPECT_EQ(0, [stack lastStartStackCardIndex]);
     EXPECT_LT(0, [stack firstEndStackCardIndex]);
     for (NSInteger i = 0; i < [stack firstEndStackCardIndex]; i++) {
-      StackCard* card = [[stack cards] objectAtIndex:i];
+      StackCard* card = [stack cards][i];
       EXPECT_FLOAT_EQ(kMargin + i * kMaxStagger,
                       LayoutOffset(stack, card.layout.position));
     }
@@ -312,7 +312,7 @@ TEST_F(CardStackLayoutManagerTest, EndStackRecomputationOnEndLimitChange) {
     EXPECT_EQ(0, [stack lastStartStackCardIndex]);
     EXPECT_EQ((int)kCardCount, [stack firstEndStackCardIndex]);
     for (NSInteger i = 0; i < [stack firstEndStackCardIndex]; i++) {
-      StackCard* card = [[stack cards] objectAtIndex:i];
+      StackCard* card = [stack cards][i];
       EXPECT_FLOAT_EQ(kMargin + i * kMaxStagger,
                       LayoutOffset(stack, card.layout.position));
     }
@@ -336,7 +336,7 @@ TEST_F(CardStackLayoutManagerTest, EndStackRecomputationOnEndLimitChange) {
     EXPECT_EQ(0, [stack lastStartStackCardIndex]);
     EXPECT_EQ((int)kCardCount, [stack firstEndStackCardIndex]);
     for (NSInteger i = 0; i < [stack firstEndStackCardIndex]; i++) {
-      StackCard* card = [[stack cards] objectAtIndex:i];
+      StackCard* card = [stack cards][i];
       EXPECT_FLOAT_EQ(kMargin + i * kMaxStagger,
                       LayoutOffset(stack, card.layout.position));
     }
@@ -361,12 +361,12 @@ TEST_F(CardStackLayoutManagerTest, StackLayoutAtSpecificIndex) {
     EXPECT_EQ(startIndex, [stack lastStartStackCardIndex]);
     // Take into account start stack when verifying position of card at
     // |startIndex|.
-    StackCard* startCard = [[stack cards] objectAtIndex:startIndex];
+    StackCard* startCard = [stack cards][startIndex];
     EXPECT_FLOAT_EQ(kMargin + [stack staggerOffsetForIndexFromEdge:startIndex],
                     LayoutOffset(stack, startCard.layout.position));
     NSInteger firstEndStackCardIndex = [stack firstEndStackCardIndex];
     for (NSInteger i = startIndex + 1; i < firstEndStackCardIndex; i++) {
-      StackCard* card = [[stack cards] objectAtIndex:i];
+      StackCard* card = [stack cards][i];
       EXPECT_FLOAT_EQ(kMargin + (i - startIndex) * kMaxStagger,
                       LayoutOffset(stack, card.layout.position));
     }
@@ -390,13 +390,13 @@ TEST_F(CardStackLayoutManagerTest, CardIsCovered) {
     // Since no cards are hidden in the start or end stack, all cards should
     // be visible (i.e., not covered).
     for (NSUInteger i = 0; i < kCardCount; i++) {
-      StackCard* card = [[stack cards] objectAtIndex:i];
+      StackCard* card = [stack cards][i];
       EXPECT_FALSE([stack cardIsCovered:card]);
     }
     // Moving the second card to the same location as the third card should
     // result in the third card covering the second card.
-    StackCard* secondCard = [[stack cards] objectAtIndex:1];
-    StackCard* thirdCard = [[stack cards] objectAtIndex:2];
+    StackCard* secondCard = [stack cards][1];
+    StackCard* thirdCard = [stack cards][2];
     secondCard.layout = thirdCard.layout;
     EXPECT_TRUE([stack cardIsCovered:secondCard]);
     EXPECT_FALSE([stack cardIsCovered:thirdCard]);
@@ -419,13 +419,13 @@ TEST_F(CardStackLayoutManagerTest, CardIsCollapsed) {
     EXPECT_EQ((int)kCardCount, [stack firstEndStackCardIndex]);
     // Since the cards are fully fanned out, no cards should be collapsed.
     for (NSUInteger i = 0; i < kCardCount; i++) {
-      StackCard* card = [[stack cards] objectAtIndex:i];
+      StackCard* card = [stack cards][i];
       EXPECT_FALSE([stack cardIsCollapsed:card]);
     }
     // Moving the second card to be |minStackStaggerAmount| away from the
     // third card should result in the second card being collapsed.
-    StackCard* secondCard = [[stack cards] objectAtIndex:1];
-    StackCard* thirdCard = [[stack cards] objectAtIndex:2];
+    StackCard* secondCard = [stack cards][1];
+    StackCard* thirdCard = [stack cards][2];
     LayoutRect collapsedLayout = thirdCard.layout;
     if ([stack layoutIsVertical])
       collapsedLayout.position.originY -= [stack minStackStaggerAmount];
@@ -441,7 +441,7 @@ TEST_F(CardStackLayoutManagerTest, BasicScroll) {
   for (unsigned long i = 0; i < arraysize(boolValues); i++) {
     const unsigned int kCardCount = 3;
     CardStackLayoutManager* stack = newStackOfNCards(kCardCount, boolValues[i]);
-    StackCard* firstCard = [[stack cards] objectAtIndex:0];
+    StackCard* firstCard = [stack cards][0];
 
     const float kEndLimit =
         kDefaultEndLimitFraction * [stack fannedStackLength];
@@ -480,7 +480,7 @@ TEST_F(CardStackLayoutManagerTest, ScrollCardAwayFromNeighbor) {
   for (unsigned long i = 0; i < arraysize(boolValues); i++) {
     const unsigned int kCardCount = 3;
     CardStackLayoutManager* stack = newStackOfNCards(kCardCount, boolValues[i]);
-    StackCard* firstCard = [[stack cards] objectAtIndex:0];
+    StackCard* firstCard = [stack cards][0];
 
     // Configure the stack so that the first card is > the scroll-away distance
     // from the end stack, but the second card is not.
@@ -527,7 +527,7 @@ TEST_F(CardStackLayoutManagerTest, ScrollCardAwayFromNeighbor) {
     // Scrolling the third card away from the end stack should result in it
     // being |scrollAwayAmount| away from the endLimit and not being in the
     // end stack.
-    StackCard* thirdCard = [[stack cards] objectAtIndex:2];
+    StackCard* thirdCard = [stack cards][2];
     separation =
         std::min([stack maximumCardSeparation],
                  kEndLimit - LayoutOffset(stack, thirdCard.layout.position) +
@@ -546,7 +546,7 @@ TEST_F(CardStackLayoutManagerTest, ScrollNotScrollingLeadingCards) {
   for (unsigned long i = 0; i < arraysize(boolValues); i++) {
     const unsigned int kCardCount = 4;
     CardStackLayoutManager* stack = newStackOfNCards(kCardCount, boolValues[i]);
-    StackCard* firstCard = [[stack cards] objectAtIndex:0];
+    StackCard* firstCard = [stack cards][0];
 
     // Make the stack large enough to fan out all its cards to avoid having to
     // worry about the end stack below.
@@ -658,7 +658,7 @@ TEST_F(CardStackLayoutManagerTest, ScrollCollapseExpansionOfStackCornerCases) {
 
     // A stack with no cards is fully collapsed, fully fanned out, and fully
     // overextended.
-    [stack removeCard:[[stack cards] objectAtIndex:0]];
+    [stack removeCard:[stack cards][0]];
     EXPECT_TRUE([stack stackIsFullyFannedOut]);
     EXPECT_TRUE([stack stackIsFullyCollapsed]);
     EXPECT_TRUE([stack stackIsFullyOverextended]);
@@ -671,7 +671,7 @@ TEST_F(CardStackLayoutManagerTest, OneCardOverscroll) {
     const unsigned int kCardCount = 1;
     const float kScrollAwayAmount = 20.0;
     CardStackLayoutManager* stack = newStackOfNCards(kCardCount, boolValues[i]);
-    StackCard* firstCard = [[stack cards] objectAtIndex:0];
+    StackCard* firstCard = [stack cards][0];
 
     const float kEndLimit =
         kDefaultEndLimitFraction * [stack fannedStackLength];
@@ -718,7 +718,7 @@ TEST_F(CardStackLayoutManagerTest, MaximumOverextensionAmount) {
     const unsigned int kCardCount = 1;
     const float kScrollAwayAmount = 20.0;
     CardStackLayoutManager* stack = newStackOfNCards(kCardCount, boolValues[i]);
-    StackCard* firstCard = [[stack cards] objectAtIndex:0];
+    StackCard* firstCard = [stack cards][0];
 
     const float kEndLimit =
         kDefaultEndLimitFraction * [stack fannedStackLength];
@@ -790,7 +790,7 @@ TEST_F(CardStackLayoutManagerTest, DecayOnOverscroll) {
     const unsigned int kCardCount = 1;
     const float kScrollAwayAmount = 10.0;
     CardStackLayoutManager* stack = newStackOfNCards(kCardCount, boolValues[i]);
-    StackCard* firstCard = [[stack cards] objectAtIndex:0];
+    StackCard* firstCard = [stack cards][0];
 
     const float kEndLimit =
         kDefaultEndLimitFraction * [stack fannedStackLength];
@@ -845,8 +845,8 @@ TEST_F(CardStackLayoutManagerTest, EliminateOverextension) {
     const unsigned int kCardCount = 2;
     const float kScrollAwayAmount = 20.0;
     CardStackLayoutManager* stack = newStackOfNCards(kCardCount, boolValues[i]);
-    StackCard* firstCard = [[stack cards] objectAtIndex:0];
-    StackCard* secondCard = [[stack cards] objectAtIndex:1];
+    StackCard* firstCard = [stack cards][0];
+    StackCard* secondCard = [stack cards][1];
 
     const float kEndLimit =
         kDefaultEndLimitFraction * [stack fannedStackLength];
@@ -937,7 +937,7 @@ TEST_F(CardStackLayoutManagerTest, MultiCardOverscroll) {
     const unsigned int kCardCount = 3;
     const float kScrollAwayAmount = 100.0;
     CardStackLayoutManager* stack = newStackOfNCards(kCardCount, boolValues[i]);
-    StackCard* firstCard = [[stack cards] objectAtIndex:0];
+    StackCard* firstCard = [stack cards][0];
 
     const float kEndLimit =
         kDefaultEndLimitFraction * [stack fannedStackLength];
@@ -971,7 +971,7 @@ TEST_F(CardStackLayoutManagerTest, MultiCardOverscroll) {
     // stack should result in overscroll toward the start.
     CGFloat lastCardCollapsedPosition =
         kMargin + [stack staggerOffsetForIndexFromEdge:kCardCount - 1];
-    StackCard* lastCard = [[stack cards] objectAtIndex:kCardCount - 1];
+    StackCard* lastCard = [stack cards][kCardCount - 1];
     CGFloat distanceToCollapsedStack =
         lastCardCollapsedPosition -
         LayoutOffset(stack, lastCard.layout.position);
@@ -993,7 +993,7 @@ TEST_F(CardStackLayoutManagerTest, Fling) {
   for (unsigned long i = 0; i < arraysize(boolValues); i++) {
     const unsigned int kCardCount = 3;
     CardStackLayoutManager* stack = newStackOfNCards(kCardCount, boolValues[i]);
-    StackCard* firstCard = [[stack cards] objectAtIndex:0];
+    StackCard* firstCard = [stack cards][0];
 
     const float kEndLimit =
         kDefaultEndLimitFraction * [stack fannedStackLength];
@@ -1044,7 +1044,7 @@ TEST_F(CardStackLayoutManagerTest, ScrollAroundStartStack) {
     CGFloat cardTwoStartStackOffset =
         kMargin + [stack staggerOffsetForIndexFromEdge:1];
     LayoutRectPosition cardTwoPosition =
-        ((StackCard*)[[stack cards] objectAtIndex:1]).layout.position;
+        ((StackCard*)[stack cards][1]).layout.position;
     [stack scrollCardAtIndex:1
                      byDelta:cardTwoStartStackOffset -
                              LayoutOffset(stack, cardTwoPosition)
@@ -1107,7 +1107,7 @@ TEST_F(CardStackLayoutManagerTest, ScrollAroundEndStack) {
         kEndLimit - ([stack staggerOffsetForIndexFromEdge:0] +
                      [stack minStackStaggerAmount]);
     LayoutRectPosition cardSevenPosition =
-        ((StackCard*)[[stack cards] objectAtIndex:6]).layout.position;
+        ((StackCard*)[stack cards][6]).layout.position;
     [stack scrollCardAtIndex:6
                      byDelta:cardSevenEndStackOffset -
                              LayoutOffset(stack, cardSevenPosition)
@@ -1231,9 +1231,9 @@ TEST_F(CardStackLayoutManagerTest, OverpinchTowardStart) {
     [stack fanOutCardsWithStartIndex:0];
 
     ValidateCardPositioningConstraints(stack, kEndLimit, true);
-    StackCard* firstCard = [[stack cards] objectAtIndex:0];
+    StackCard* firstCard = [stack cards][0];
     LayoutRectPosition firstCardPosition = firstCard.layout.position;
-    StackCard* secondCard = [[stack cards] objectAtIndex:1];
+    StackCard* secondCard = [stack cards][1];
     LayoutRectPosition secondCardPosition = secondCard.layout.position;
 
     [stack handleMultitouchWithFirstDelta:-20
@@ -1264,9 +1264,9 @@ TEST_F(CardStackLayoutManagerTest, OverpinchTowardEnd) {
     [stack fanOutCardsWithStartIndex:0];
 
     ValidateCardPositioningConstraints(stack, kEndLimit, true);
-    StackCard* firstCard = [[stack cards] objectAtIndex:0];
+    StackCard* firstCard = [stack cards][0];
     LayoutRectPosition firstCardPosition = firstCard.layout.position;
-    StackCard* secondCard = [[stack cards] objectAtIndex:1];
+    StackCard* secondCard = [stack cards][1];
     LayoutRectPosition secondCardPosition = secondCard.layout.position;
 
     [stack handleMultitouchWithFirstDelta:20
@@ -1460,7 +1460,7 @@ TEST_F(CardStackLayoutManagerTest, ScrollAroundStartStackAfterMultitouch) {
     // Scroll the cards completely into the start stack.
     CGFloat lastCardCollapsedPosition =
         kMargin + [stack staggerOffsetForIndexFromEdge:kCardCount - 1];
-    StackCard* lastCard = [[stack cards] objectAtIndex:kCardCount - 1];
+    StackCard* lastCard = [stack cards][kCardCount - 1];
     CGFloat distanceToCollapsedStack =
         lastCardCollapsedPosition -
         LayoutOffset(stack, lastCard.layout.position);
@@ -1519,15 +1519,14 @@ TEST_F(CardStackLayoutManagerTest, ScrollAroundEndStackAfterMultitouch) {
     CGFloat cardSixEndStackPosition =
         kEndLimit - [stack staggerOffsetForIndexFromEdge:1];
     LayoutRectPosition cardSixPosition =
-        ((StackCard*)[[stack cards] objectAtIndex:5]).layout.position;
+        ((StackCard*)[stack cards][5]).layout.position;
     [stack scrollCardAtIndex:5
                      byDelta:cardSixEndStackPosition -
                              LayoutOffset(stack, cardSixPosition)
         allowEarlyOverscroll:YES
            decayOnOverscroll:YES
           scrollLeadingCards:YES];
-    cardSixPosition =
-        ((StackCard*)[[stack cards] objectAtIndex:5]).layout.position;
+    cardSixPosition = ((StackCard*)[stack cards][5]).layout.position;
     ValidateCardPositioningConstraints(stack, kEndLimit, false);
     EXPECT_EQ(5, [stack firstEndStackCardIndex]);
     // Scroll the cards out of the end stack: cards should now be
@@ -1577,7 +1576,7 @@ TEST_F(CardStackLayoutManagerTest, ScrollAfterPinchOutOfStartStack) {
     // Scroll the cards completely into the start stack.
     CGFloat lastCardCollapsedPosition =
         kMargin + [stack staggerOffsetForIndexFromEdge:kCardCount - 1];
-    StackCard* lastCard = [[stack cards] objectAtIndex:kCardCount - 1];
+    StackCard* lastCard = [stack cards][kCardCount - 1];
     CGFloat distanceToCollapsedStack =
         lastCardCollapsedPosition -
         LayoutOffset(stack, lastCard.layout.position);
@@ -1650,15 +1649,14 @@ TEST_F(CardStackLayoutManagerTest, ScrollAfterPinchOutOfEndStack) {
         kEndLimit - ([stack staggerOffsetForIndexFromEdge:1] +
                      [stack minStackStaggerAmount]);
     LayoutRectPosition cardSixPosition =
-        ((StackCard*)[[stack cards] objectAtIndex:5]).layout.position;
+        ((StackCard*)[stack cards][5]).layout.position;
     [stack scrollCardAtIndex:5
                      byDelta:cardSixEndStackOffset -
                              LayoutOffset(stack, cardSixPosition)
         allowEarlyOverscroll:YES
            decayOnOverscroll:YES
           scrollLeadingCards:YES];
-    cardSixPosition =
-        ((StackCard*)[[stack cards] objectAtIndex:5]).layout.position;
+    cardSixPosition = ((StackCard*)[stack cards][5]).layout.position;
     ValidateCardPositioningConstraints(stack, kEndLimit, false);
     EXPECT_EQ(5, [stack firstEndStackCardIndex]);
     CGFloat inStackSeparation = SeparationOnLayoutAxis(stack, 5, 6);

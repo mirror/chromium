@@ -293,16 +293,16 @@ initWithLargeIconService:(favicon::LargeIconService*)largeIconService
   for (auto* node : nodes) {
     NSString* nodeTitle = base::SysUTF16ToNSString(node->GetTitle());
     NSString* spotlightID = [self spotlightIDForURL:URL title:nodeTitle];
-    CSSearchableItem* item = [spotlightItems objectForKey:spotlightID];
+    CSSearchableItem* item = spotlightItems[spotlightID];
     if (!item) {
-      item = [[super spotlightItemsWithURL:URL
-                                   favicon:favicon
-                              defaultTitle:nodeTitle] objectAtIndex:0];
+      item = [super spotlightItemsWithURL:URL
+                                  favicon:favicon
+                             defaultTitle:nodeTitle][0];
     }
     NSMutableArray* nodeKeywords = [[NSMutableArray alloc] init];
     [self getParentKeywordsForNode:node inArray:nodeKeywords];
     [self addKeywords:nodeKeywords toSearchableItem:item];
-    [spotlightItems setObject:item forKey:spotlightID];
+    spotlightItems[spotlightID] = item;
   }
   return [spotlightItems allValues];
 }
