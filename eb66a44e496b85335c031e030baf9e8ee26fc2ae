@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ad54136_7180e124",
+        "filename": "components/arc/test/fake_arc_session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-31T04:19:12Z",
+      "side": 1,
+      "message": "Clarification: with this design, it is necessary to call SimulateExecution to complete simulating ARC container starts? If so, there are more usage of FakeArcSession, and this needs to be called for them, too?\n\ncf) https://cs.chromium.org/search/?q\u003dFakeArcSession\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "revId": "eb66a44e496b85335c031e030baf9e8ee26fc2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
