@@ -16,6 +16,8 @@ class FindBarIcon : public BubbleIconView {
 
   void SetActive(bool activate, bool should_animate);
 
+  void GetAccessibleNodeData(ui::AXNodeData* node_data) override;
+
  protected:
   // BubbleIconView:
   void OnExecuting(ExecuteSource execute_source) override;

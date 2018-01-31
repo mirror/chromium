@@ -47,6 +47,59 @@ const ui::AXUniqueId& ViewAccessibility::GetUniqueId() const {
   return unique_id_;
 }
 
+#if DCHECK_IS_ON()
+static std::string GetViewAncestryDebugString(views::View* view) {
+  std::string view_ancestry;  // e.g. BrowserView>OmniboxView.
+  std::string kSeparator = " > ";
+  while (view) {
+    view_ancestry = kSeparator + view->GetClassName() + view_ancestry;
+    view = view->parent();
+  }
+  return view_ancestry.substr(kSeparator.length());  // Remove first separator.
+}
+
+static bool HasGoodText(ui::AXNodeData* data) {
+  if (data->GetNameFrom() == ax::mojom::NameFrom::kAttributeExplicitlyEmpty)
+    return true;  // No name is intentional.
+  if (!data->GetStringAttribute(ax::mojom::StringAttribute::kName).empty())
+    return true;  // Has a non-empty name
+  if (data->role == ax::mojom::Role::kTextField &&
+      !data->GetStringAttribute(ax::mojom::StringAttribute::kPlaceholder)
+           .empty())
+    return true;  // Textfields are allowed to rely on a placeholder instead.
+
+  return false;
+}
+
+static void CheckAccessibility(views::View* view, ui::AXNodeData* data) {
+  if (!view->IsAccessibilityFocusable())
+    return;  // Currently no checks for unfocusable items.
+
+  // Focusable views have are visible + enabled, have a name/label.
+  const bool is_visible = view->IsDrawn();
+  const bool is_enabled = view->enabled();
+  const bool has_good_text = HasGoodText(data);
+
+  if (is_visible && is_enabled && has_good_text)
+    return;  // Passed all checks.
+
+  // Log the accessibility error.
+  LOG(ERROR) << "Accessibility error in " << GetViewAncestryDebugString(view)
+             << " (id " << view->id() << "):\n";
+  if (!is_visible)
+    LOG(ERROR) << "Focusable view not visible";
+  if (!is_enabled)
+    LOG(ERROR) << "Focusable view not enabled";
+  if (!has_good_text)
+    LOG(ERROR) << "Focusable view does not have a name, placeholder or "
+                  "ax::mojom::NameFrom::kAttributeExplicitlyEmpty";
+  LOG(ERROR) << "Constructor stack for debugging:\n"
+             << view->GetConstructorStackForDebugging()->ToString()
+             << "\n-------------------------------------";
+  DCHECK(false);
+}
+#endif  // DCHECK
+
 void ViewAccessibility::GetAccessibleNodeData(ui::AXNodeData* data) const {
   // Views may misbehave if their widget is closed; return an unknown role
   // rather than possibly crashing.
@@ -81,11 +134,15 @@ void ViewAccessibility::GetAccessibleNodeData(ui::AXNodeData* data) const {
   if (!owner_view_->enabled())
     data->SetRestriction(ax::mojom::Restriction::kDisabled);
 
-  if (!owner_view_->visible())
+  if (!owner_view_->IsDrawn())
     data->AddState(ax::mojom::State::kInvisible);
 
   if (owner_view_->context_menu_controller())
     data->AddAction(ax::mojom::Action::kShowContextMenu);
+
+#if DCHECK_IS_ON()
+  CheckAccessibility(owner_view_, data);
+#endif  // DCHECK
 }
 
 void ViewAccessibility::OverrideRole(ax::mojom::Role role) {
