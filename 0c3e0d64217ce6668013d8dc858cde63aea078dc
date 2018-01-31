@@ -244,6 +244,24 @@
       "revId": "0c3e0d64217ce6668013d8dc858cde63aea078dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ca93fdf_998e4559",
+        "filename": "media/audio/audio_manager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-31T11:32:32Z",
+      "side": 1,
+      "message": "\"because ADRM is initialized at AM construction\" - Why? This is not true. See AM::InitializeDebugRecording.",
+      "parentUuid": "fd016936_426a0312",
+      "revId": "0c3e0d64217ce6668013d8dc858cde63aea078dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
