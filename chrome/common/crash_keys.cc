@@ -52,13 +52,10 @@ static bool IsBoringSwitch(const std::string& flag) {
     "default-wallpaper-small",
     "guest-wallpaper-large",
     "guest-wallpaper-small",
-    "enterprise-enable-forced-re-enrollment",
     "enterprise-enrollment-initial-modulus",
     "enterprise-enrollment-modulus-limit",
     "login-profile",
     "login-user",
-    "max-unused-resource-memory-usage-percentage",
-    "termination-message-file",
     "use-cras",
 #endif
   };
