@@ -34,6 +34,24 @@
       "revId": "d32f180dca5eebae43dee31e26a2d0737e3c1713",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7826b77d_9c804c98",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 955,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-31T19:53:17Z",
+      "side": 1,
+      "message": "Now I think we should stick on PaintingLayer() because ColumnSpanAll etc. can escape its EnclosingLayer().",
+      "parentUuid": "42649766_b4b23569",
+      "revId": "d32f180dca5eebae43dee31e26a2d0737e3c1713",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
