@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "06d50837_6d229056",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-31T23:25:28Z",
+      "side": 1,
+      "message": "Change this to:\n  if (use_viz_hit_test) {\n    DCHECK(is_root);\n    ....\n  }",
+      "revId": "bdd508329b16dfcc70ef85901217a2d4a1604c4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef43675d_0219eef5",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-31T23:25:28Z",
+      "side": 1,
+      "message": "Document that this is the FSI of the root surface. (or all it root_frame_sink_id_?)",
+      "revId": "bdd508329b16dfcc70ef85901217a2d4a1604c4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65201f6d_6c2a9773",
         "filename": "components/viz/service/hit_test/hit_test_aggregator_delegate.h",
         "patchSetId": 10
