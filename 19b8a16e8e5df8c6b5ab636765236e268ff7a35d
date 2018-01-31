@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d83373b_d95693ea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2018-01-31T03:20:59Z",
+      "side": 1,
+      "message": "please put \"internal b/xxx\"",
+      "revId": "19b8a16e8e5df8c6b5ab636765236e268ff7a35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
