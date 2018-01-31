@@ -26,6 +26,8 @@ struct Cronet_Buffer {
   virtual void InitWithAlloc(uint64_t size) = 0;
   virtual uint64_t GetSize() = 0;
   virtual RawDataPtr GetData() = 0;
+  virtual uint64_t GetPosition() = 0;
+  virtual void SetPosition(uint64_t position) = 0;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(Cronet_Buffer);
@@ -120,7 +122,7 @@ struct Cronet_UrlRequestCallback {
                            Cronet_UrlResponseInfoPtr info) = 0;
   virtual void OnFailed(Cronet_UrlRequestPtr request,
                         Cronet_UrlResponseInfoPtr info,
-                        Cronet_ExceptionPtr error) = 0;
+                        Cronet_ErrorPtr error) = 0;
   virtual void OnCanceled(Cronet_UrlRequestPtr request,
                           Cronet_UrlResponseInfoPtr info) = 0;
 
@@ -136,9 +138,9 @@ struct Cronet_UploadDataSink {
   virtual Cronet_UploadDataSinkContext GetContext() = 0;
 
   virtual void OnReadSucceeded(bool finalChunk) = 0;
-  virtual void OnReadError(Cronet_ExceptionPtr error) = 0;
+  virtual void OnReadError(Cronet_ErrorPtr error) = 0;
   virtual void OnRewindSucceded() = 0;
-  virtual void OnRewindError(Cronet_ExceptionPtr error) = 0;
+  virtual void OnRewindError(Cronet_ErrorPtr error) = 0;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(Cronet_UploadDataSink);
