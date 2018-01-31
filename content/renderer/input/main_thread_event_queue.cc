@@ -11,6 +11,7 @@
 #include "content/common/input/event_with_latency_info.h"
 #include "content/common/input_messages.h"
 #include "content/renderer/render_widget.h"
+#include "ui/events/base_event_utils.h"
 
 namespace content {
 
@@ -32,7 +33,9 @@ class QueuedClosure : public MainThreadEventQueueTask {
 
   bool IsWebInputEvent() const override { return false; }
 
-  void Dispatch(MainThreadEventQueue*) override { std::move(closure_).Run(); }
+  void Dispatch(MainThreadEventQueue*, base::TimeTicks) override {
+    std::move(closure_).Run();
+  }
 
  private:
   base::OnceClosure closure_;
@@ -96,14 +99,19 @@ class QueuedWebInputEvent : public ScopedWebInputEventWithLatencyInfo,
 
   bool IsWebInputEvent() const override { return true; }
 
-  void Dispatch(MainThreadEventQueue* queue) override {
+  void Dispatch(MainThreadEventQueue* queue,
+                base::TimeTicks frame_time) override {
+    for (size_t i = 0; i < coalesced_event().CoalescedEventSize(); i++) {
+      queue->event_predictor_.HandleEvent(coalesced_event().CoalescedEvent(i));
+    }
+    base::TimeTicks now = base::TimeTicks::Now();
+    queue->event_predictor_.ResampleEvent(event(), now);
     // Report the coalesced count only for continuous events; otherwise
     // the zero value would be dominated by non-continuous events.
     if (IsContinuousEvent()) {
       UMA_HISTOGRAM_COUNTS_1000("Event.MainThreadEventQueue.CoalescedCount",
                                 coalescedCount());
     }
-
     HandledEventCallback callback =
         base::BindOnce(&QueuedWebInputEvent::HandledEvent,
                        base::Unretained(this), base::RetainedRef(queue));
@@ -400,7 +408,7 @@ void MainThreadEventQueue::DispatchEvents() {
     }
 
     // Dispatching the event is outside of critical section.
-    task->Dispatch(this);
+    task->Dispatch(this, base::TimeTicks::Now());
   }
   PossiblyScheduleMainFrame();
 }
@@ -457,8 +465,10 @@ void MainThreadEventQueue::DispatchRafAlignedInput(base::TimeTicks frame_time) {
       }
       task = shared_state_.events_.Pop();
     }
+    if (task->IsWebInputEvent()) {
+    }
     // Dispatching the event is outside of critical section.
-    task->Dispatch(this);
+    task->Dispatch(this, frame_time);
   }
 
   PossiblyScheduleMainFrame();

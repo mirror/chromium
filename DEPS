@@ -341,6 +341,11 @@ deps = {
   'src/third_party/dom_distiller_js/dist':
     Var('chromium_git') + '/chromium/dom-distiller/dist.git' + '@' + '60b46718e28f553ab57e3d2bbda5b3b41456f417',
 
+  # Display server protocol for Linux.
+  'src/third_party/eigen/src': {
+      'url': Var('chromium_git') + '/external/github.com/RLovelett/eigen' + '@' + 'dde02fceedfc1ba09d4d4f71a2b5dafcfcb85491',
+  },
+
   'src/third_party/elfutils/src': {
       'url': Var('chromium_git') + '/external/elfutils.git' + '@' + '249673729a7e5dbd5de4f3760bdcaa3d23d154d7',
       'condition': 'checkout_android',

@@ -52,6 +52,7 @@
 /devtools-node-modules
 /directxsdk
 /dom_distiller_js/dist
+/eigen/src
 /elfutils/src
 /errorprone/lib
 /espresso/lib/
