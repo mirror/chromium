@@ -26,8 +26,11 @@ cr.define('test_util', function() {
             return;
           }
         }
-      }).observe(
-          target, {attributes: true, childList: false, characterData: false});
+      }).observe(target, {
+        attributes: true,
+        childList: false,
+        characterData: false
+      });
     });
   }
 
@@ -66,9 +69,109 @@ cr.define('test_util', function() {
     el2.addEventListener(property + '-changed', forwardChange.bind(null, el1));
   }
 
+  /**
+   * Helper to create an object containing a ContentSettingsType key to array or
+   * object value. This is a convenience function that can eventually be
+   * replaced with ES6 computed properties.
+   * @param {settings.ContentSettingsTypes} contentType The ContentSettingsType
+   *     to use as the key.
+   * @param {Array<RawSiteException>|DefaultContentSetting} value The value to
+   *     map to |contentType|.
+   * @return {Object<settings.ContentSettingsTypes,
+   *     Array<RawSiteException|DefaultContentSetting>}
+   */
+  function createObjectWithContentSettingType(contentType, value) {
+    const result = {};
+    result[contentType] = value;
+    return result;
+  }
+
+  /**
+   * Helper to create a mock {DefaultContentSetting}.
+   * @param {Object} override An object with a subset of the properties of
+   *     |DefaultContentSetting|. Properties defined in |override| will
+   * overwrite the defaults in this function's return value.
+   * @return {DefaultContentSetting}
+   */
+  function createDefaultContentSetting(override) {
+    return Object.assign(
+        {
+          setting: settings.ContentSetting.ASK,
+          source: settings.SiteSettingSource.PREFERENCE,
+        },
+        override);
+  }
+
+  /**
+   * Helper to create a mock {RawSiteException}.
+   * @param {Object} override An object with a subset of the properties of
+   *     |RawSiteException|. Properties defined in |override| will overwrite the
+   *     defaults in this function's return value.
+   * @return {RawSiteException}
+   */
+  function createRawSiteException(override) {
+    return Object.assign(
+        {
+          embeddingOrigin: '',
+          incognito: false,
+          origin: 'https://foo.com',
+          displayName: '',
+          setting: settings.ContentSetting.ALLOW,
+          source: settings.SiteSettingSource.PREFERENCE,
+        },
+        override);
+  }
+
+  /**
+   * Helper to create a mock |SiteSettingsPref|.
+   * @param {Object} override A object containing a subset of the properties in
+   *     |SiteSettingsPref| which will overwrite the default |SiteSettingsPref|
+   *     returned by this function.
+   * @return {SiteSettingsPref}
+   */
+  function createSiteSettingsPrefs(defaultsOverride, exceptionsOverride) {
+    const siteSettingsPref = {
+      defaults: {},
+      exceptions: {},
+    };
+    // These test defaults reflect the actual defaults assigned to each
+    // ContentSettingType, but keeping these in sync shouldn't matter for tests.
+    for (let type in settings.ContentSettingsTypes) {
+      siteSettingsPref.defaults[settings.ContentSettingsTypes[type]] =
+          createDefaultContentSetting({});
+    }
+    siteSettingsPref.defaults[settings.ContentSettingsTypes.COOKIES].setting =
+        settings.ContentSetting.ALLOW;
+    siteSettingsPref.defaults[settings.ContentSettingsTypes.IMAGES].setting =
+        settings.ContentSetting.ALLOW;
+    siteSettingsPref.defaults[settings.ContentSettingsTypes.JAVASCRIPT]
+        .setting = settings.ContentSetting.ALLOW;
+    siteSettingsPref.defaults[settings.ContentSettingsTypes.SOUND].setting =
+        settings.ContentSetting.ALLOW;
+    siteSettingsPref.defaults[settings.ContentSettingsTypes.POPUPS].setting =
+        settings.ContentSetting.BLOCK;
+    siteSettingsPref.defaults[settings.ContentSettingsTypes.PROTOCOL_HANDLERS]
+        .setting = settings.ContentSetting.ALLOW;
+    siteSettingsPref.defaults[settings.ContentSettingsTypes.BACKGROUND_SYNC]
+        .setting = settings.ContentSetting.ALLOW;
+    siteSettingsPref.defaults[settings.ContentSettingsTypes.ADS].setting =
+        settings.ContentSetting.BLOCK;
+    for (let type in settings.ContentSettingsTypes) {
+      siteSettingsPref.exceptions[settings.ContentSettingsTypes[type]] = [];
+    }
+    Object.assign(siteSettingsPref.defaults, defaultsOverride);
+    Object.assign(siteSettingsPref.exceptions, exceptionsOverride);
+    return siteSettingsPref;
+  }
+
   return {
     eventToPromise: eventToPromise,
     fakeDataBind: fakeDataBind,
     whenAttributeIs: whenAttributeIs,
+    createObjectWithContentSettingType: createObjectWithContentSettingType,
+    createDefaultContentSetting: createDefaultContentSetting,
+    createRawSiteException: createRawSiteException,
+    createSiteSettingsPrefs: createSiteSettingsPrefs,
   };
+
 });
