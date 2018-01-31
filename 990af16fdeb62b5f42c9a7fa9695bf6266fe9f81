@@ -22,6 +22,30 @@
       "revId": "990af16fdeb62b5f42c9a7fa9695bf6266fe9f81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1071511e_bbedcf97",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 2455,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-31T00:46:05Z",
+      "side": 1,
+      "message": "Fixed this in the next patchset (I think we\u0027re OK with leaving the stopgap measure in for another milestone, so no need to merge). Thanks!",
+      "parentUuid": "c2082688_686f9c5c",
+      "range": {
+        "startLine": 2455,
+        "startChar": 41,
+        "endLine": 2455,
+        "endChar": 66
+      },
+      "revId": "990af16fdeb62b5f42c9a7fa9695bf6266fe9f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
