@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2dbc762e_9d69ecf8",
+        "filename": "chromeos/components/tether/message_transfer_operation_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-31T01:52:58Z",
+      "side": 1,
+      "message": "This seems to break compile in https://ci.chromium.org/buildbot/chromium.chromiumos/linux-chromeos-dbg/4001\n\n../../chromeos/components/tether/message_transfer_operation_unittest.cc:2677: error: undefined reference to \u0027chromeos::tether::MessageTransferOperation::kMaxEmptyScansPerDevice\u0027\nobj/chromeos/components/tether/unit_tests/message_transfer_operation_unittest.o:message_transfer_operation_unittest.cc:function chromeos::tether::MessageTransferOperationTest::MessageTransferOperationTest(): error: undefined reference to \u0027chromeos::tether::MessageTransferOperation::kMaxGattConnectionAttemptsPerDevice\u0027",
+      "revId": "d5bd9807e5ba2490bc4165b7ae78492d9be4820a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
