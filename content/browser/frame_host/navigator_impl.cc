@@ -1012,11 +1012,11 @@ void NavigatorImpl::RequestNavigation(
       entry,                           // entry
       frame_entry,                     // frame_entry
       is_same_document_history_load);  // is_same_document_history_load
-  bool is_same_document =
-      FrameMsg_Navigate_Type::IsSameDocument(navigation_type);
-  bool should_dispatch_beforeunload =
-      !is_same_document && !is_history_navigation_in_new_child &&
-      frame_tree_node->current_frame_host()->ShouldDispatchBeforeUnload();
+  // bool is_same_document =
+  //     FrameMsg_Navigate_Type::IsSameDocument(navigation_type);
+  // bool should_dispatch_beforeunload =
+  //     !is_same_document && !is_history_navigation_in_new_child &&
+  //     frame_tree_node->current_frame_host()->ShouldDispatchBeforeUnload();
   std::unique_ptr<NavigationRequest> scoped_request =
       NavigationRequest::CreateBrowserInitiated(
           frame_tree_node, dest_url, dest_referrer, frame_entry, entry,
@@ -1055,7 +1055,7 @@ void NavigatorImpl::RequestNavigation(
   // Have the current renderer execute its beforeunload event if needed. If it
   // is not needed then NavigationRequest::BeginNavigation should be directly
   // called instead.
-  if (should_dispatch_beforeunload && !IsRendererDebugURL(dest_url)) {
+  if (false) {
     navigation_request->SetWaitingForRendererResponse();
     frame_tree_node->current_frame_host()->DispatchBeforeUnload(
         true, reload_type != ReloadType::NONE);
