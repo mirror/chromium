@@ -105,4 +105,27 @@ bool IndexedRulesetMatcher::ShouldDisallowResourceLoad(
                                FindRuleStrategy::kAny);
 }
 
+const url_pattern_index::flat::UrlRule* IndexedRulesetMatcher::MatchedUrlRule(
+    const GURL& url,
+    const FirstPartyOrigin& first_party,
+    url_pattern_index::proto::ElementType element_type,
+    bool disable_generic_rules) const {
+  const bool is_third_party = first_party.IsThirdParty(url);
+
+  const url_pattern_index::flat::UrlRule* blacklist_rule =
+      blacklist_.FindMatch(url, first_party.origin(), element_type,
+                           proto::ACTIVATION_TYPE_UNSPECIFIED, is_third_party,
+                           disable_generic_rules, FindRuleStrategy::kAny);
+  if (blacklist_rule) {
+    const url_pattern_index::flat::UrlRule* whitelist_rule =
+        whitelist_.FindMatch(url, first_party.origin(), element_type,
+                             proto::ACTIVATION_TYPE_UNSPECIFIED, is_third_party,
+                             disable_generic_rules, FindRuleStrategy::kAny);
+
+    return whitelist_rule ? whitelist_rule : blacklist_rule;
+  }
+
+  return nullptr;
+}
+
 }  // namespace subresource_filter
