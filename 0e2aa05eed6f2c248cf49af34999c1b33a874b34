@@ -34,6 +34,24 @@
       "revId": "0e2aa05eed6f2c248cf49af34999c1b33a874b34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6db954a_57859263",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/touch/gesture/gesture-tap-frame-scrollbar.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-31T00:20:18Z",
+      "side": 1,
+      "message": "Sure, sounds fine.",
+      "parentUuid": "b7bbf0d2_7a5ded0a",
+      "revId": "0e2aa05eed6f2c248cf49af34999c1b33a874b34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
