@@ -86,7 +86,6 @@ ResourcePool::ResourcePool(
     : resource_provider_(resource_provider),
       use_gpu_resources_(true),
       use_gpu_memory_buffers_(false),
-      hint_(hint),
       task_runner_(std::move(task_runner)),
       resource_expiration_delay_(expiration_delay),
       disallow_non_exact_reuse_(disallow_non_exact_reuse),
@@ -105,7 +104,6 @@ ResourcePool::ResourcePool(
     : resource_provider_(resource_provider),
       use_gpu_resources_(false),
       use_gpu_memory_buffers_(false),
-      hint_(viz::ResourceTextureHint::kDefault),
       task_runner_(std::move(task_runner)),
       resource_expiration_delay_(expiration_delay),
       disallow_non_exact_reuse_(disallow_non_exact_reuse),
@@ -145,14 +143,9 @@ ResourcePool::PoolResource* ResourcePool::ReuseResource(
   for (auto it = unused_resources_.begin(); it != unused_resources_.end();
        ++it) {
     PoolResource* resource = it->get();
-// TODO(danakj): When gpu raster buffer providers make their own backings,
-// then they need to switch to the else branch.
-#if DCHECK_IS_ON()
-    if (use_gpu_resources_)
-      DCHECK(resource_provider_->CanLockForWrite(resource->resource_id()));
-    else
-      DCHECK(!resource->resource_id());
-#endif
+    // TODO(danakj): When gpu raster buffer providers make their own backings,
+    // then they need to switch to the else branch.
+    DCHECK(!resource->resource_id());
 
     if (resource->format() != format)
       continue;
@@ -178,17 +171,8 @@ ResourcePool::PoolResource* ResourcePool::CreateResource(
     const gfx::ColorSpace& color_space) {
   DCHECK(ResourceUtil::VerifySizeInBytes<size_t>(size, format));
 
-  viz::ResourceId resource_id;
-  if (use_gpu_memory_buffers_) {
-    resource_id = 0;
-  } else if (use_gpu_resources_) {
-    resource_id = resource_provider_->CreateGpuTextureResource(
-        size, hint_, format, color_space);
-  } else {
-    resource_id = 0;
-  }
   auto pool_resource = std::make_unique<PoolResource>(
-      next_resource_unique_id_++, size, format, color_space, resource_id);
+      next_resource_unique_id_++, size, format, color_space);
 
   total_memory_usage_bytes_ +=
       ResourceUtil::UncheckedSizeInBytes<size_t>(size, format);
@@ -274,14 +258,9 @@ ResourcePool::TryAcquireResourceForPartialRaster(
   // |in_use_resources_| and return it.
   if (iter_resource_to_return != unused_resources_.end()) {
     PoolResource* resource = iter_resource_to_return->get();
-// TODO(danakj): When gpu raster buffer providers make their own backings,
-// then they need to switch to the else branch.
-#if DCHECK_IS_ON()
-    if (use_gpu_resources_)
-      DCHECK(resource_provider_->CanLockForWrite(resource->resource_id()));
-    else
-      DCHECK(!resource->resource_id());
-#endif
+    // TODO(danakj): When gpu raster buffer providers make their own backings,
+    // then they need to switch to the else branch.
+    DCHECK(!resource->resource_id());
 
     // Transfer resource to |in_use_resources_|.
     in_use_resources_[resource->unique_id()] =
@@ -330,28 +309,21 @@ void ResourcePool::OnResourceReleased(size_t unique_id,
   }
 
   resource->set_resource_id(0);
-  // TODO(danakj): Use this branch for gpu resources that aren't gpu memory
-  // buffers.
-  if (use_gpu_memory_buffers_)
+  if (use_gpu_memory_buffers_ || use_gpu_resources_)
     resource->gpu_backing()->returned_sync_token = sync_token;
   DidFinishUsingResource(std::move(*busy_it));
   busy_resources_.erase(busy_it);
 }
 
 void ResourcePool::PrepareForExport(const InUsePoolResource& resource) {
-  // TODO(danakj): Add branches for gpu too once a gpu-backed raster provider
-  // does this.
-  if (use_gpu_resources_)
-    return;
-
   viz::TransferableResource transferable;
-  if (use_gpu_memory_buffers_) {
+  if (use_gpu_memory_buffers_ || use_gpu_resources_) {
     transferable = viz::TransferableResource::MakeGLOverlay(
         resource.resource_->gpu_backing()->mailbox, GL_LINEAR,
         resource.resource_->gpu_backing()->texture_target,
         resource.resource_->gpu_backing()->mailbox_sync_token,
         resource.resource_->size(),
-        /*is_overlay_candidate=*/true);
+        resource.resource_->gpu_backing()->overlay_candidate);
     // Clear the SyncToken that we have sent away to the display compositor. It
     // will be owned by the ResourceProvider now.
     resource.resource_->gpu_backing()->mailbox_sync_token = gpu::SyncToken();
@@ -423,15 +395,11 @@ void ResourcePool::ReleaseResource(InUsePoolResource in_use_resource) {
     busy_resources_.push_front(std::move(it->second));
   in_use_resources_.erase(it);
 
-  // TODO(danakj): When gpu raster buffer providers make their own backings,
-  // then they need to switch to this branch.
-  if (!use_gpu_resources_) {
-    // If the resource was exported, then it has a resource id. By removing the
-    // resource id, we will be notified in the ReleaseCallback when the resource
-    // is no longer exported and can be reused.
-    if (pool_resource->resource_id())
-      resource_provider_->RemoveImportedResource(pool_resource->resource_id());
-  }
+  // If the resource was exported, then it has a resource id. By removing the
+  // resource id, we will be notified in the ReleaseCallback when the resource
+  // is no longer exported and can be reused.
+  if (pool_resource->resource_id())
+    resource_provider_->RemoveImportedResource(pool_resource->resource_id());
 
   // Now that we have evictable resources, schedule an eviction call for this
   // resource if necessary.
@@ -484,10 +452,6 @@ void ResourcePool::DeleteResource(std::unique_ptr<PoolResource> resource) {
       resource->size(), resource->format());
   total_memory_usage_bytes_ -= resource_bytes;
   --total_resource_count_;
-  // TODO(danakj): When gpu raster buffer providers make their own backings,
-  // then they need to switch off this branch.
-  if (use_gpu_resources_)
-    resource_provider_->DeleteResource(resource->resource_id());
 }
 
 void ResourcePool::UpdateResourceContentIdAndInvalidation(
@@ -503,31 +467,7 @@ void ResourcePool::UpdateResourceContentIdAndInvalidation(
 }
 
 void ResourcePool::CheckBusyResources() {
-  // TODO(danakj): When gpu raster buffer providers make their own backings,
-  // then they need to switch to this branch.
-  if (!use_gpu_resources_) {
-    // The ReleaseCallback tells ResourcePool when they are no longer busy, so
-    // there is nothing to do here.
-    return;
-  }
-
-  for (auto it = busy_resources_.begin(); it != busy_resources_.end();) {
-    PoolResource* resource = it->get();
-
-    if (resource_provider_->CanLockForWrite(resource->resource_id())) {
-      if (evict_busy_resources_when_unused_)
-        DeleteResource(std::move(*it));
-      else
-        DidFinishUsingResource(std::move(*it));
-      it = busy_resources_.erase(it);
-    } else if (resource_provider_->IsLost(resource->resource_id())) {
-      // Remove lost resources from pool.
-      DeleteResource(std::move(*it));
-      it = busy_resources_.erase(it);
-    } else {
-      ++it;
-    }
-  }
+  // TODO(danakj): Delete this.
 }
 
 void ResourcePool::DidFinishUsingResource(
@@ -633,13 +573,11 @@ void ResourcePool::OnMemoryStateChange(base::MemoryState state) {
 ResourcePool::PoolResource::PoolResource(size_t unique_id,
                                          const gfx::Size& size,
                                          viz::ResourceFormat format,
-                                         const gfx::ColorSpace& color_space,
-                                         viz::ResourceId resource_id)
+                                         const gfx::ColorSpace& color_space)
     : unique_id_(unique_id),
       size_(size),
       format_(format),
-      color_space_(color_space),
-      resource_id_(resource_id) {}
+      color_space_(color_space) {}
 
 ResourcePool::PoolResource::~PoolResource() = default;
 

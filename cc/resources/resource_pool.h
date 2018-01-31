@@ -50,7 +50,8 @@ class CC_EXPORT ResourcePool : public base::trace_event::MemoryDumpProvider,
 
     gpu::Mailbox mailbox;
     gpu::SyncToken mailbox_sync_token;
-    uint32_t texture_target;
+    uint32_t texture_target = 0;
+    bool overlay_candidate = false;
     gpu::SyncToken returned_sync_token;
   };
 
@@ -93,12 +94,6 @@ class CC_EXPORT ResourcePool : public base::trace_event::MemoryDumpProvider,
       return resource_->resource_id();
     }
 
-    // Only valid when the ResourcePool is vending gpu-backed resources.
-    const viz::ResourceId& gpu_backing_resource_id() const {
-      DCHECK(is_gpu_);
-      return resource_->resource_id();
-    }
-
     // Only valid when the ResourcePool is vending texture-backed resources.
     GpuBacking* gpu_backing() const {
       DCHECK(is_gpu_);
@@ -121,6 +116,10 @@ class CC_EXPORT ResourcePool : public base::trace_event::MemoryDumpProvider,
       resource_->set_shared_bitmap(std::move(shared_bitmap));
     }
 
+    // Production code should not be built around these ids, but tests use them
+    // to check for identity.
+    size_t unique_id_for_testing() const { return resource_->unique_id(); }
+
    private:
     friend ResourcePool;
     explicit InUsePoolResource(PoolResource* resource, bool is_gpu)
@@ -141,6 +140,7 @@ class CC_EXPORT ResourcePool : public base::trace_event::MemoryDumpProvider,
   // Constructor for creating standard Gpu resources.
   ResourcePool(LayerTreeResourceProvider* resource_provider,
                scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+               // TODO(danakj): Remove this.
                viz::ResourceTextureHint hint,
                const base::TimeDelta& expiration_delay,
                bool disallow_non_exact_reuse);
@@ -222,8 +222,7 @@ class CC_EXPORT ResourcePool : public base::trace_event::MemoryDumpProvider,
     PoolResource(size_t unique_id,
                  const gfx::Size& size,
                  viz::ResourceFormat format,
-                 const gfx::ColorSpace& color_space,
-                 viz::ResourceId resource_id);
+                 const gfx::ColorSpace& color_space);
     ~PoolResource();
 
     size_t unique_id() const { return unique_id_; }
@@ -318,7 +317,6 @@ class CC_EXPORT ResourcePool : public base::trace_event::MemoryDumpProvider,
   const bool use_gpu_resources_ = false;
   const bool use_gpu_memory_buffers_ = false;
   const gfx::BufferUsage usage_ = gfx::BufferUsage::GPU_READ_CPU_READ_WRITE;
-  const viz::ResourceTextureHint hint_ = viz::ResourceTextureHint::kDefault;
   const scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
   const base::TimeDelta resource_expiration_delay_;
   const bool disallow_non_exact_reuse_ = false;
