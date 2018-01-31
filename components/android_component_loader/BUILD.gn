@@ -1,0 +1,48 @@
+import("//build/config/android/config.gni")
+import("//build/config/android/rules.gni")
+
+_component_interface_source_files =
+    [ "java/src/org/chromium/android_component_loader/ComponentInterface.java" ]
+
+java_stable_api("plugin_interface_api") {
+  sources = _component_interface_source_files
+  output = "$target_gen_dir/api.txt"
+  compare = "//components/android_component_loader/api.txt"
+}
+
+android_library("component_interface_java") {
+  deps = [
+    ":check_plugin_interface_api",
+    "//base:base_java",
+  ]
+  proguard_configs = [ "keep_interface.flags" ]
+  java_files = _component_interface_source_files
+}
+
+android_plugin("test_plugin") {
+  apk_name = "TestPlugin"
+  api_file = "test_plugin_api.txt"
+  java_interface_files =
+      [ "java/src/org/chromium/test/component/TestComponentInterface.java" ]
+  java_files = [ "java/src/org/chromium/test/component/TestComponent.java" ]
+}
+
+android_library("android_component_loader_javatests") {
+  testonly = true
+
+  java_files =
+      [ "javatests/src/org/chromium/android_component_loader/LoaderTest.java" ]
+
+  deps = [
+    ":component_interface_java",
+    ":test_plugin_interface_java",
+    "//base:base_java",
+    "//base:base_java_test_support",
+    "//third_party/android_support_test_runner:runner_java",
+    "//third_party/junit",
+  ]
+
+  data_deps = [
+    ":test_plugin_apk",
+  ]
+}

@@ -2944,6 +2944,104 @@ if (enable_java_templates) {
     }
   }
 
+  template("java_stable_api") {
+    _gen_target_name = target_name
+    action(_gen_target_name) {
+      script = "//components/android_component_loader/generate_api.py"
+      sources = invoker.sources
+      outputs = [
+        invoker.output,
+      ]
+      args = [
+        "--output",
+        rebase_path(invoker.output, root_build_dir),
+      ]
+      args += rebase_path(sources, root_build_dir)
+    }
+
+    _check_target_name = "check_${target_name}"
+    action(_check_target_name) {
+      deps = [
+        ":${_gen_target_name}",
+      ]
+      sources = [
+        invoker.output,
+      ]
+      outputs = [
+        "$target_gen_dir/$_check_target_name.stamp",
+      ]
+      script = "//components/android_component_loader/api_check.py"
+      args = [
+        "--old-api",
+        rebase_path(invoker.compare, root_build_dir),
+        "--new-api",
+        rebase_path(invoker.output, root_build_dir),
+        "--stamp",
+        rebase_path(outputs[0], root_build_dir),
+      ]
+    }
+  }
+
+  # Declare an Android component APK
+  #
+  # Variables
+  #   apk_name:
+  #   java_files:
+  #   jar_excluded_patterns:
+  #   deps:
+  template("android_plugin") {
+    _api_target_name = "${target_name}_api"
+
+    if (defined(invoker.api_file)) {
+      java_stable_api(_api_target_name) {
+        sources = invoker.java_interface_files
+        output = "$target_gen_dir/$target_name.txt"
+        compare = invoker.api_file
+      }
+    }
+
+    # This library contains the plugin's public interface definition. It should
+    # be linked into the main Chrome APK. It should be made available to the
+    # plugin at compile time, but not included in the final plugin APK.
+    _interface_lib_target_name = "${target_name}_interface_java"
+    android_library(_interface_lib_target_name) {
+      deps = [
+        "//components/android_component_loader:component_interface_java",
+      ]
+      if (defined(invoker.api_file)) {
+        deps += [ ":check_${_api_target_name}" ]
+      }
+      if (defined(invoker.deps)) {
+        deps += invoker.deps
+      }
+      java_files = invoker.java_interface_files
+    }
+
+    # This library contains the plugin. The final plugin APK should depend
+    # on this. The interface library above is included in classpath_deps so
+    # this library can compile against it, but not include it in the jar (at
+    # runtime, the interface type will be resolved by the host class loader)/
+    _lib_target_name = "${target_name}__lib_java"
+    android_library(_lib_target_name) {
+      if (defined(invoker.deps)) {
+        deps = invoker.deps
+      }
+      classpath_deps = [
+        "//components/android_component_loader:component_interface_java",
+        ":${_interface_lib_target_name}",
+      ]
+      java_files = invoker.java_files
+    }
+
+    android_apk("${target_name}_apk") {
+      apk_name = invoker.apk_name
+      android_manifest = "java/AndroidManifest.xml"
+      deps = [
+        ":${_lib_target_name}",
+      ]
+    }
+  }
+
   # Generate .java files from .aidl files.
   #
   # This target will store the .java files in a srcjar and should be included in

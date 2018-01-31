@@ -503,6 +503,7 @@ android_library("chrome_test_java") {
     "//chrome/android/webapk/libs/client:client_java",
     "//chrome/android/webapk/libs/common:common_java",
     "//chrome/test/android:chrome_java_test_support",
+    "//components/android_component_loader:android_component_loader_javatests",
     "//components/autofill/android:autofill_java",
     "//components/background_task_scheduler:background_task_scheduler_java",
     "//components/background_task_scheduler:background_task_scheduler_javatests",

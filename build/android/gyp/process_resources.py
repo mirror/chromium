@@ -705,7 +705,8 @@ def _FixManifest(options, temp_dir):
 
   if options.debuggable:
     app_node = original_manifest.find('application')
-    app_node.set('{%s}%s' % (_ANDROID_NAMESPACE, 'debuggable'), 'true')
+    if app_node is not None:
+      app_node.set('{%s}%s' % (_ANDROID_NAMESPACE, 'debuggable'), 'true')
 
   with open(debug_manifest_path, 'w') as debug_manifest:
     debug_manifest.write(ElementTree.tostring(
