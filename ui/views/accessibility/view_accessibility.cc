@@ -47,6 +47,18 @@ const ui::AXUniqueId& ViewAccessibility::GetUniqueId() const {
   return unique_id_;
 }
 
+#if DCHECK_IS_ON()
+static std::string GetViewAncestryDebugString(views::View* view) {
+  std::string view_ancestry;  // e.g. BrowserView>OmniboxView.
+  std::string kSeparator = " > ";
+  while (view) {
+    view_ancestry = kSeparator + view->GetClassName() + view_ancestry;
+    view = view->parent();
+  }
+  return view_ancestry.substr(kSeparator.length());  // Remove first separator.
+}
+#endif  // DCHECK
+
 void ViewAccessibility::GetAccessibleNodeData(ui::AXNodeData* data) const {
   // Views may misbehave if their widget is closed; return an unknown role
   // rather than possibly crashing.
@@ -75,14 +87,44 @@ void ViewAccessibility::GetAccessibleNodeData(ui::AXNodeData* data) const {
   data->AddStringAttribute(ax::mojom::StringAttribute::kClassName,
                            owner_view_->GetClassName());
 
-  if (owner_view_->IsAccessibilityFocusable())
+  const bool is_focusable = owner_view_->IsAccessibilityFocusable();
+  if (is_focusable)
     data->AddState(ax::mojom::State::kFocusable);
 
-  if (!owner_view_->enabled())
+  const bool is_enabled = owner_view_->enabled();
+  if (!is_enabled)
     data->SetRestriction(ax::mojom::Restriction::kDisabled);
 
-  if (!owner_view_->visible())
+  const bool is_visible = owner_view_->IsDrawn();
+  if (!is_visible)
     data->AddState(ax::mojom::State::kInvisible);
+
+#if DCHECK_IS_ON()
+  if (is_focusable) {
+    // Focusable views are visible/enabled & have a name or are explicitly
+    // nameless.
+    bool has_good_name =
+        data->GetNameFrom() == ax::mojom::NameFrom::kAttributeExplicitlyEmpty ||
+        !data->GetStringAttribute(ax::mojom::StringAttribute::kName).empty();
+    // Focusable views are visible.
+    if (!is_visible || !is_enabled || !has_good_name) {
+      LOG(ERROR) << "Accessibility error in "
+                 << GetViewAncestryDebugString(owner_view_) << " (id "
+                 << owner_view_->id() << "):\n";
+      if (!is_visible)
+        LOG(ERROR) << "Focusable view not visible";
+      if (!is_enabled)
+        LOG(ERROR) << "Focusable view not enabled";
+      if (!has_good_name)
+        LOG(ERROR) << "Focusable view does not have a name or "
+                      "ax::mojom::NameFrom::kAttributeExplicitlyEmpty";
+      LOG(ERROR) << "Constructor stack for debugging:\n"
+                 << owner_view_->GetConstructorStackForDebugging()
+                 << "\n-------------------------------------";
+      DCHECK(false);
+    }
+  }
+#endif  // DCHECK
 
   if (owner_view_->context_menu_controller())
     data->AddAction(ax::mojom::Action::kShowContextMenu);

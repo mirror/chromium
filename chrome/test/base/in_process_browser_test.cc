@@ -16,6 +16,7 @@
 #include "base/path_service.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/strings/stringprintf.h"
 #include "base/test/test_file_util.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
@@ -40,6 +41,7 @@
 #include "chrome/browser/ui/browser_tabstrip.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
+#include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_paths.h"
@@ -61,7 +63,10 @@
 #include "content/public/test/test_launcher.h"
 #include "content/public/test/test_navigation_observer.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
+#include "ui/accessibility/ax_node_data.h"
 #include "ui/display/display_switches.h"
+#include "ui/views/accessibility/view_accessibility.h"
+#include "ui/views/view.h"
 
 #if defined(OS_MACOSX)
 #include "base/mac/scoped_nsautorelease_pool.h"
@@ -102,53 +107,15 @@ const char kBrowserTestType[] = "browser";
 InProcessBrowserTest::SetUpBrowserFunction*
     InProcessBrowserTest::global_browser_set_up_function_ = nullptr;
 
-// Library used for testing accessibility.
-const base::FilePath::CharType kAXSTesting[] =
-    FILE_PATH_LITERAL("third_party/accessibility-audit/axs_testing.js");
-// JavaScript snippet to configure and run the accessibility audit.
-const char kAccessibilityTestString[] =
-    "var config = new axs.AuditConfiguration();"
-    "/* Disable warning about rules that cannot be checked. */"
-    "config.showUnsupportedRulesWarning = false;"
-    "config.auditRulesToIgnore = ["
-    "  /*"
-    "   * The 'elements with meaningful background image' accessibility"
-    "   * audit (AX_IMAGE_01) does not apply, since Chrome doesn't"
-    "   * disable background images in high-contrast mode like some"
-    "   * browsers do."
-    "   */"
-    "  'elementsWithMeaningfulBackgroundImage',"
-    "  /*"
-    "   * Most WebUI pages are inside an IFrame, so the 'web page should"
-    "   * have a title that describes topic or purpose' test (AX_TITLE_01)"
-    "   * generally does not apply."
-    "   */"
-    "  'pageWithoutTitle',"
-    "  /*"
-    "   * Enable when crbug.com/267035 is fixed."
-    "   * Until then it's just noise."
-    "   */"
-    "  'lowContrastElements'"
-    "];"
-    "var result = axs.Audit.run(config);"
-    "var error = '';"
-    "for (var i = 0; i < result.length; ++i) {"
-    "  if (result[i].result == axs.constants.AuditResult.FAIL) {"
-    "    error = axs.Audit.createReport(result);"
-    "    break;"
-    "  }"
-    "}"
-    "domAutomationController.send(error);";
-
 InProcessBrowserTest::InProcessBrowserTest()
     : browser_(NULL),
       exit_when_last_browser_closes_(true),
-      open_about_blank_on_browser_launch_(true),
-      run_accessibility_checks_for_test_case_(false)
+      open_about_blank_on_browser_launch_(true)
 #if defined(OS_MACOSX)
-      , autorelease_pool_(NULL)
+      ,
+      autorelease_pool_(NULL)
 #endif  // OS_MACOSX
-    {
+{
 #if defined(OS_MACOSX)
   // TODO(phajdan.jr): Make browser_tests self-contained on Mac, remove this.
   // Before we run the browser, we have to hack the path to the exe to match
@@ -299,55 +266,81 @@ void InProcessBrowserTest::SetUpDefaultCommandLine(
     command_line->AppendArg(url::kAboutBlankURL);
 }
 
-bool InProcessBrowserTest::RunAccessibilityChecks(std::string* error_message) {
-  base::ScopedAllowBlockingForTesting allow_blocking;
-  if (!browser()) {
-    *error_message = "browser is NULL";
-    return false;
+std::string GetViewAncestry(views::View* view) {
+  std::string view_ancestry;  // e.g. BrowserView>OmniboxView.
+  std::string kSeparator = " > ";
+  while (view) {
+    view_ancestry = kSeparator + view->GetClassName() + view_ancestry;
+    view = view->parent();
   }
-  auto* tab_strip = browser()->tab_strip_model();
-  if (!tab_strip) {
-    *error_message = "tab_strip is NULL";
-    return false;
-  }
-  auto* web_contents = tab_strip->GetActiveWebContents();
-  if (!web_contents) {
-    *error_message = "web_contents is NULL";
-    return false;
-  }
-  auto* focused_frame = web_contents->GetFocusedFrame();
-  if (!focused_frame) {
-    *error_message = "focused_frame is NULL";
+  return view_ancestry.substr(kSeparator.length());  // Remove first separator.
+}
+
+bool CheckFocusableHasName(views::View* view, std::string* error_message) {
+  if (!view->IsAccessibilityFocusable())
+    return true;  // No accessibility checks for unfocusable views.
+
+  // Focusable nodes must have an accessible name, otherwise screen reader users
+  // will not know what they landed on. For example, the reload button should
+  // have an accessible name of "Reload".
+  // Note: explictly setting the name to "" is allowed.
+  views::ViewAccessibility& view_ax = view->GetViewAccessibility();
+  ui::AXNodeData node_data;
+  view_ax.GetAccessibleNodeData(&node_data);
+  if (node_data.GetNameFrom() == ax::mojom::NameFrom::kAttributeExplicitlyEmpty)
+    return true;  // Empty name is intentional.
+
+  if (node_data.GetStringAttribute(ax::mojom::StringAttribute::kName).empty()) {
+    *error_message = base::StringPrintf(
+        "Accessibility error: focusable view requires accessible name: %s",
+        GetViewAncestry(view).c_str());
     return false;
   }
 
-  // Load accessibility library.
-  base::FilePath src_dir;
-  if (!PathService::Get(base::DIR_SOURCE_ROOT, &src_dir)) {
-    *error_message = "PathService::Get failed";
+  return true;  // One view passed all checks.
+}
+
+bool CheckViewAccessibility(views::View* view, std::string* error_message) {
+  return CheckFocusableHasName(view, error_message);
+}
+
+bool CheckViewSubtreeAccessibility(views::View* view,
+                                   std::string* error_message) {
+  if (!CheckViewAccessibility(view, error_message))
     return false;
-  }
-  base::FilePath script_path = src_dir.Append(kAXSTesting);
-  std::string script;
-  if (!base::ReadFileToString(script_path, &script)) {
-    *error_message = "Could not read accessibility library";
-    return false;
-  }
-  if (!content::ExecuteScript(web_contents, script)) {
-    *error_message = "Failed to load accessibility library";
-    return false;
+  for (int i = 0; i < view->child_count(); ++i) {
+    if (!CheckViewSubtreeAccessibility(view->child_at(i), error_message))
+      return false;
   }
 
-  // Run accessibility audit.
-  if (!content::ExecuteScriptAndExtractString(focused_frame,
-                                              kAccessibilityTestString,
-                                              error_message)) {
-    *error_message = "Failed to run accessibility audit";
-    return false;
+  return true;  // All views in this subtree passed all checks.
+}
+
+bool InProcessBrowserTest::RunUIAccessibilityChecks(
+    std::string* error_message) {
+#if defined(OS_MACOSX) && !BUILDFLAG(MAC_VIEWS_BROWSER)
+  return true;
+#else
+  const BrowserList* active_browser_list = BrowserList::GetInstance();
+  for (size_t index = 0; index < active_browser_list->size(); index++) {
+    Browser* browser = active_browser_list->get(index);
+    if (browser->IsAttemptingToCloseBrowser())
+      continue;
+    BrowserWindow* browser_window = browser->window();
+    if (!browser_window) {
+      *error_message = base::StringPrintf(
+          "Accessibility error: no browser window for browser %zu", index);
+      return false;
+    }
+    BrowserView* browser_view = static_cast<BrowserView*>(browser_window);
+
+    CheckViewSubtreeAccessibility(browser_view, error_message);
+    if (!error_message->empty())
+      return false;
   }
 
-  // Test result should be empty if there are no errors.
-  return error_message->empty();
+  return true;
+#endif  // OS_MACOSX && !BUILDFLAG(MAC_VIEWS_BROWSER)
 }
 
 bool InProcessBrowserTest::CreateUserDataDirectory() {
@@ -563,11 +556,6 @@ void InProcessBrowserTest::PreRunTestOnMainThread() {
   // browser.
   content::RunAllPendingInMessageLoop();
 
-  // run_accessibility_checks_for_test_case_ must be set before calling
-  // SetUpOnMainThread or RunTestOnMainThread so that one or all tests can
-  // enable/disable the accessibility audit.
-  run_accessibility_checks_for_test_case_ = false;
-
   if (browser_ && global_browser_set_up_function_)
     ASSERT_TRUE(global_browser_set_up_function_(browser_));
 
@@ -585,11 +573,10 @@ void InProcessBrowserTest::PostRunTestOnMainThread() {
   autorelease_pool_->Recycle();
 #endif
 
-  if (run_accessibility_checks_for_test_case_) {
-    std::string error_message;
-    EXPECT_TRUE(RunAccessibilityChecks(&error_message));
-    EXPECT_EQ("", error_message);
-  }
+  // Currently we always run UI accessibility checks.
+  std::string error_message;
+  EXPECT_TRUE(RunUIAccessibilityChecks(&error_message));
+  EXPECT_EQ("", error_message);
 
 #if defined(OS_MACOSX)
   autorelease_pool_->Recycle();
