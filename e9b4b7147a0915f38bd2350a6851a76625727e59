@@ -22,6 +22,30 @@
       "revId": "e9b4b7147a0915f38bd2350a6851a76625727e59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "380f2755_17cac651",
+        "filename": "base/memory/shared_memory_mapping.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2018-01-31T12:46:08Z",
+      "side": 1,
+      "message": "It\u0027s allowed to have an invalid mapping, so I think it won\u0027t be convenient not being able to use the empty constructor. I look at it as a null pointer.\nConsider this example from unittests which is not possible to write without the empty constructor:\n\n    ReadOnlySharedMemoryRegion region;\n    WritableSharedMemoryMapping rw_mapping;\n    std::tie(region, rw_mapping) \u003d ReadOnlySharedMemoryRegion::Create(kRegionSize);",
+      "parentUuid": "273610f9_4b3e2cb1",
+      "range": {
+        "startLine": 71,
+        "startChar": 31,
+        "endLine": 71,
+        "endChar": 32
+      },
+      "revId": "e9b4b7147a0915f38bd2350a6851a76625727e59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
