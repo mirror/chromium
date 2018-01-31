@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "38246f38_06bf6966",
+        "filename": "chrome/browser/ui/views/frame/contents_web_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-31T06:56:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52748ef3_a0159e6e",
+      "revId": "428e85f048c44d2546bf7e27ad6b9542c572da50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfd4029d_3d15b2d5",
         "filename": "chrome/browser/ui/views/sad_tab_view.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-29T05:10:09Z",
       "side": 1,
       "message": "web_contents-\u003eGetTopLevelNativeWindow() might not match web_contents-\u003eGetNativeView() which is sued above -- I think \n\n  GetWidgetForNativeView(web_contents-\u003eGetNativeView());\n\nwill be more reliable.\n\nPerhaps up around line 130, start with\n\n  gfx::NativeView native_parent \u003d web_contents-\u003eGetNativeView();\n  sad_tab_params.parent \u003d native_parent;",
+      "revId": "428e85f048c44d2546bf7e27ad6b9542c572da50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4ea50ae_b5a0b99f",
+        "filename": "chrome/browser/ui/views/sad_tab_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-31T06:56:20Z",
+      "side": 1,
+      "message": "I\u0027m not sure GetWidgetForNativeView(web_contents-\u003eGetNativeView()) does what I want.\nI\u0027m pretty sure that would return the Widget that the web contents is drawn into.\n\nWhat I want is the widget corresponding to the whole browser window, which is\nwhere focus traversal through the browser UI is taking place.",
+      "parentUuid": "bfd4029d_3d15b2d5",
       "revId": "428e85f048c44d2546bf7e27ad6b9542c572da50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "926514a7_a3e24f37",
+        "filename": "chrome/browser/ui/views/sad_tab_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-31T06:56:20Z",
+      "side": 1,
+      "message": "I don\u0027t understand why...\n\nAll this code does is establish what should happen if the\nuser is inside the Sad Tab widget, and they tab out of it.",
+      "parentUuid": "db0042c5_834d5572",
+      "revId": "428e85f048c44d2546bf7e27ad6b9542c572da50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77ab8d05_9aa7ac86",
         "filename": "chrome/browser/ui/views/sad_tab_view_interactive_uitest.cc",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "a15a82ac_d12a5e06",
+        "filename": "chrome/browser/ui/views/sad_tab_view_interactive_uitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-31T06:56:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77ab8d05_9aa7ac86",
+      "revId": "428e85f048c44d2546bf7e27ad6b9542c572da50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74d7cc46_1537ea69",
         "filename": "chrome/browser/ui/views/sad_tab_view_interactive_uitest.cc",
         "patchSetId": 2
@@ -81,6 +153,24 @@
       "writtenOn": "2018-01-29T05:10:09Z",
       "side": 1,
       "message": "some tests navigate to GURL(content::kChromeUICrashURL) instead - (seems about the same amount of effort, so I\u0027m indifferent)",
+      "revId": "428e85f048c44d2546bf7e27ad6b9542c572da50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35bcea0b_c610083a",
+        "filename": "chrome/browser/ui/views/sad_tab_view_interactive_uitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-31T06:56:20Z",
+      "side": 1,
+      "message": "This feels like it\u0027s testing a more realistic scenario, so I\nslightly prefer it this way, but I agree either one could work.",
+      "parentUuid": "74d7cc46_1537ea69",
       "revId": "428e85f048c44d2546bf7e27ad6b9542c572da50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "c11b8dbc_9188444c",
+        "filename": "chrome/browser/ui/views/sad_tab_view_interactive_uitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-31T06:56:20Z",
+      "side": 1,
+      "message": "Sure, done.",
+      "parentUuid": "d55528d1_52e9be28",
+      "revId": "428e85f048c44d2546bf7e27ad6b9542c572da50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7cc2e2ab_2f100381",
         "filename": "chrome/test/BUILD.gn",
         "patchSetId": 2
@@ -118,6 +226,24 @@
       "revId": "428e85f048c44d2546bf7e27ad6b9542c572da50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbe48d78_f39b9691",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 4643,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-01-31T06:56:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cc2e2ab_2f100381",
+      "revId": "428e85f048c44d2546bf7e27ad6b9542c572da50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
