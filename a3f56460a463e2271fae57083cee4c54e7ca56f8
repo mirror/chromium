@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7734e714_8a36c78f",
+        "filename": "net/data/ocsp_unittest/make_ocsp.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2018-01-31T00:20:54Z",
+      "side": 0,
+      "message": "This was giving a \"pyasn1.error.PyAsn1Error: Component value is tag-incompatible: Null() vs Any()\" on my version of pyasn1. Dunno if removing this is the \"right\" fix but it seems to work.",
+      "revId": "a3f56460a463e2271fae57083cee4c54e7ca56f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
