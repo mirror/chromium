@@ -1,0 +1,327 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "206af263_66005d87",
+        "filename": "media/audio/BUILD.gn",
+        "patchSetId": 20
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-31T11:30:41Z",
+      "side": 1,
+      "message": "recording?",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66acfdbe_28772313",
+        "filename": "media/audio/audio_debug_recording_helper_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-31T11:30:41Z",
+      "side": 1,
+      "message": "Needed?",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b0fa6fc_73fd7921",
+        "filename": "media/audio/audio_debug_recording_helper_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-31T11:30:41Z",
+      "side": 1,
+      "message": "you mean MockAudioDebugFileWriter::Start()? Could you please clarify the comment.\n\"file can be removed right away\" is true only if the call stack down to MockAudioDebugFileWriter::Start() is synchronous, so could you clarify it in the comment?",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7f06efd_05b6bef4",
+        "filename": "media/audio/audio_debug_recording_helper_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-31T11:30:41Z",
+      "side": 1,
+      "message": "Could you rearrange the tests to make sure Create() is called with the expected file name?",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8e478f8_0aedb884",
+        "filename": "media/audio/audio_debug_recording_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-31T11:30:41Z",
+      "side": 1,
+      "message": "Could you clarify \"to be added as suffix\" part? Isn\u0027t it what \"append\" means?\nAlso, could you fix formatting?\n(\"format\" does do anything to comments at the moment except wrapping lines if they are too long)",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "891ff9a3_77f3602e",
+        "filename": "media/audio/audio_debug_recording_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-31T11:30:41Z",
+      "side": 1,
+      "message": "What is \"file name extension\" here? Now I\u0027m confused with the terminology for both function and parameter names.",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eca6af94_871b6d9d",
+        "filename": "media/audio/audio_debug_recording_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-31T11:30:41Z",
+      "side": 1,
+      "message": "DCHECK it first?",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e606739d_fef1966a",
+        "filename": "media/audio/audio_debug_recording_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-31T11:30:41Z",
+      "side": 1,
+      "message": "DCHECK it first?",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e80a58f1_2e2f2c05",
+        "filename": "media/audio/audio_debug_recording_manager.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-31T11:30:41Z",
+      "side": 1,
+      "message": "Not needed (see my other comments)",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38ed9f95_0ddb1e40",
+        "filename": "media/audio/audio_debug_recording_session_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-31T11:30:41Z",
+      "side": 1,
+      "message": "Please see your implementation of AudioManagerBase::GetAudioDebugRecordingManager() in this CL.\nIt cannot be called here, only on AM thread.",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01abad72_c9fc52df",
+        "filename": "media/audio/audio_debug_recording_session_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-31T11:30:41Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19dda9aa_3c16f768",
+        "filename": "media/audio/audio_debug_recording_session_impl_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-31T11:30:41Z",
+      "side": 1,
+      "message": "Nit: empty line",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02c147b0_596b997a",
+        "filename": "media/audio/audio_debug_recording_session_impl_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-31T11:30:41Z",
+      "side": 1,
+      "message": "Could you just place this code into the constructor?",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c27ed06a_d7de749e",
+        "filename": "media/audio/audio_debug_recording_session_impl_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-31T11:30:41Z",
+      "side": 1,
+      "message": "Could you do both of them EXPECT_TRUE? Otherwise, if first deletion fails, the second one won\u0027t be executed and we\u0027ll end up with 2 files leaked.",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f64fb74_978cc9e2",
+        "filename": "media/audio/audio_manager.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-31T11:30:41Z",
+      "side": 1,
+      "message": "Not really \"must\". Will return non-nullptr if InitializeDebugRecording() has been called.",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef9df7cf_9f36b3ef",
+        "filename": "media/audio/audio_manager.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-31T11:30:41Z",
+      "side": 1,
+      "message": "This can be called only on AudioManager thread",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9375628f_6698899a",
+        "filename": "media/audio/audio_manager.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-31T11:30:41Z",
+      "side": 1,
+      "message": "Please format the comment.",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca7258d5_4a789d8f",
+        "filename": "media/audio/mock_audio_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-31T11:30:41Z",
+      "side": 1,
+      "message": "Please add a thread check.\nWould be better to override AudioManager::InitializeDebugRecording():\nwe need to test for the situations when it has not been called as well.",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42b74593_0bc67ea2",
+        "filename": "media/audio/mock_audio_manager.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2018-01-31T11:30:41Z",
+      "side": 1,
+      "message": "Not needed",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
