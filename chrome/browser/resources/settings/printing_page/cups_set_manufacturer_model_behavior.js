@@ -57,7 +57,7 @@ const SetManufacturerModelBehavior = {
   /** @private */
   onBrowseFile_: function() {
     settings.CupsPrintersBrowserProxyImpl.getInstance()
-        .getCupsPrinterPPDPath()
+        .getCupsPrinterPPDInfo()
         .then(this.printerPPDPathChanged_.bind(this));
   },
 
@@ -86,10 +86,12 @@ const SetManufacturerModelBehavior = {
   },
 
   /**
-   * @param {string} path
+   * @param {string} path The full path to the selected PPD file
    * @private
    */
   printerPPDPathChanged_: function(path) {
+    // TODO(valleau): Display an error message to users
+    // (https://crbug.com/806915)
     this.set('activePrinter.printerPPDPath', path);
   },
 
