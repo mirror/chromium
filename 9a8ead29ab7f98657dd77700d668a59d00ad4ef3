@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24c0492f_365d1e70",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20404,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-31T05:27:52Z",
+      "side": 1,
+      "message": "We should never read the same field twice out of the command structure. pixel_config is read on l.20389 and here, and this could potentially cause time-of-check/time-of-use (TOCTOU) issues if a malicious client changes the shared memory between the 2 reads.\n\nTo avoid this, a common pattern used for \"custom\" commands is to extract every field out of the command into local variables, and never use the command again.",
+      "revId": "9a8ead29ab7f98657dd77700d668a59d00ad4ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b2ec647_004ad422",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20429,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-31T05:27:52Z",
+      "side": 1,
+      "message": "It seems unfortunate to have to serialize and deserialize the color space for every single tile, given that most likely they\u0027re all the same. Could it make sense to use the transport cache for the color space, and reference it by id, to avoid this?\n\nIncidentally that might allow us to go back to a non-custom command.",
+      "revId": "9a8ead29ab7f98657dd77700d668a59d00ad4ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
