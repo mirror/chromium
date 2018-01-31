@@ -207,6 +207,7 @@ void TaskQueueManager::OnExitNestedRunLoop() {
     while (!main_thread_only().non_nestable_task_queue.empty()) {
       NonNestableTask& non_nestable_task =
           *main_thread_only().non_nestable_task_queue.begin();
+      non_nestable_task.task_queue->IsQueueEnabled();
       non_nestable_task.task_queue->RequeueDeferredNonNestableTask(
           std::move(non_nestable_task.task), non_nestable_task.work_type);
       main_thread_only().non_nestable_task_queue.pop_front();
