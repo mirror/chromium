@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54a75b93_aa86bdf6",
+        "filename": "third_party/WebKit/LayoutTests/tables/table-transform-absolute-position-child-expected.png",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-31T19:06:36Z",
+      "side": 1,
+      "message": "Please check if this passes now in SPv175 mode.",
+      "revId": "6fb1a7278aa921b152e5b21e382fc07d57a669c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
