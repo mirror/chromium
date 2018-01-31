@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4efa3e36_413b1a0d",
+        "filename": "chrome/browser/browser_process_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1047,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-31T07:56:58Z",
+      "side": 1,
+      "message": "This is wrong, it should be std::move(pref_registry).\n\nAs-is this reads as:\n\n1038: Create an object owned on this stack\n1047: Pass a non-owned reference to it to CreateLocalState() which can use it for initialization but should NOT store it.\n1073: Stack pops and |pref_registry| is no longer owned.\n\nThis is worse than before where at least the scoped_refptr\u0026 let the use know ownership acquisition was still possible (though not done per today\u0027s style guidelines)",
+      "range": {
+        "startLine": 1047,
+        "startChar": 6,
+        "endLine": 1047,
+        "endChar": 25
+      },
+      "revId": "0aa36d9632743c61e2b9b738ab5d2a3660df16f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "549411a1_a747d06e",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-31T07:56:58Z",
+      "side": 1,
+      "message": "move here too",
+      "range": {
+        "startLine": 398,
+        "startChar": 41,
+        "endLine": 398,
+        "endChar": 55
+      },
+      "revId": "0aa36d9632743c61e2b9b738ab5d2a3660df16f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "215cbe5a_1a6d35a2",
+        "filename": "chrome/browser/prefs/chrome_pref_service_factory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-31T07:56:58Z",
+      "side": 1,
+      "message": "Take scoped_refptr by value here and elsewhere and move it down the chain",
+      "range": {
+        "startLine": 81,
+        "startChar": 4,
+        "endLine": 81,
+        "endChar": 37
+      },
+      "revId": "0aa36d9632743c61e2b9b738ab5d2a3660df16f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -46,6 +46,30 @@
       "revId": "121b5a571a41810970ed67b31d2818c46358c372",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "88f07262_21d72e59",
+        "filename": "chrome/browser/prefs/chrome_pref_service_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-31T07:56:58Z",
+      "side": 1,
+      "message": "\u003e True.\n\u003e \n\u003e But that would require changing PrefService\u0027s constructor, which is currently taking a PrefRegistry by naked pointer.\n\nCorrect, this is what should be changed.\n\n\u003e \n\u003e Also, the fact that PrefService is keeping a PrefRegistry by scoped_refptr is an implementation detail that might not need to perspire through PrefService\u0027s API.\n\nNo it\u0027s not. They\u0027re no such thing as \"taking ownership from under the hood\" ever being correct in chrome (legacy code does it sometimes but it never should and should be fixed).\n\n\u003e \n\u003e This CL doesn\u0027t introduce any runtime pessimization (or optimization). It doesn\u0027t change the number of AddRef and Release being called.\n\nTrue but that\u0027s not why I object to this change.\n\n\u003e \n\u003e We might be able to optimize the number of AddRef/Release using the technique you described.",
+      "parentUuid": "9e19c5e9_e6ed84dd",
+      "range": {
+        "startLine": 483,
+        "startChar": 32,
+        "endLine": 483,
+        "endChar": 45
+      },
+      "revId": "121b5a571a41810970ed67b31d2818c46358c372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
