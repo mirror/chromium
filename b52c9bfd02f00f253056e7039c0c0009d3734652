@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c5659d70_56613437",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathImpl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2018-01-31T11:33:08Z",
+      "side": 1,
+      "message": "NS means namespace. I replaced the acronym with full word.",
+      "parentUuid": "3f54e1b5_cb95960b",
+      "revId": "b52c9bfd02f00f253056e7039c0c0009d3734652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f3c8639_d31adab1",
         "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathImpl.h",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "cde87dc2_92ccaeaf",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathImpl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2018-01-31T11:33:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f3c8639_d31adab1",
+      "revId": "b52c9bfd02f00f253056e7039c0c0009d3734652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b45c612c_46052298",
         "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathSSE.h",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "b52c9bfd02f00f253056e7039c0c0009d3734652",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4956d2a5_4b0285d9",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathSSE.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2018-01-31T11:33:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b45c612c_46052298",
+      "revId": "b52c9bfd02f00f253056e7039c0c0009d3734652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
