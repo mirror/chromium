@@ -121,6 +121,8 @@ class MESSAGE_CENTER_EXPORT MessageCenterImpl
 
   base::string16 system_notification_app_name_;
 
+  MessageCenterStatsCollector stats_collector_;
+
   DISALLOW_COPY_AND_ASSIGN(MessageCenterImpl);
 };
 

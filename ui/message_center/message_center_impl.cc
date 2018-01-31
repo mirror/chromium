@@ -17,6 +17,7 @@
 #include "base/stl_util.h"
 #include "base/strings/string_util.h"
 #include "build/build_config.h"
+#include "ui/message_center/message_center_stats_collector.h"
 #include "ui/message_center/message_center_types.h"
 #include "ui/message_center/notification_blocker.h"
 #include "ui/message_center/notification_list.h"
@@ -67,7 +68,8 @@ class ScopedNotificationsIterationLock {
 
 MessageCenterImpl::MessageCenterImpl()
     : MessageCenter(),
-      popup_timers_controller_(new PopupTimersController(this)) {
+      popup_timers_controller_(std::make_unique<PopupTimersController>(this)),
+      stats_collector_(this) {
   notification_list_.reset(new NotificationList(this));
   notification_change_queue_.reset(new ChangeQueue());
 }
