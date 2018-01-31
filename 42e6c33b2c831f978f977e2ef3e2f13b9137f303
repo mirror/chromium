@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "feb965c6_778173cd",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_io_surface.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2018-01-31T02:45:17Z",
+      "side": 1,
+      "message": "driveby cleanup",
+      "revId": "42e6c33b2c831f978f977e2ef3e2f13b9137f303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aadab865_cd3c483d",
+        "filename": "ui/gl/gl_image_io_surface.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2018-01-31T02:45:17Z",
+      "side": 1,
+      "message": "I predict that this will never be hit (since other CHECKs will hit it first), but I want to be sure.",
+      "revId": "42e6c33b2c831f978f977e2ef3e2f13b9137f303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
