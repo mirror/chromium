@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5da43d12_0e4e1ada",
+        "filename": "content/renderer/android/synchronous_compositor_proxy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-31T23:49:12Z",
+      "side": 1,
+      "message": "invalidate only when compute_scroll_called_via_ipc_ is false",
+      "revId": "9821b54f0a061d936eecb266bcfd1e8c888e9bdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d72c1d1b_c0497b4f",
+        "filename": "content/renderer/android/synchronous_compositor_proxy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-31T23:49:12Z",
+      "side": 1,
+      "message": "not ok, you need to maintain an independent signal\n\nso you\u0027ll need to two separate bool states, needs_begin_frame_ and needs_begin_frame_for_animimate_input, then depending on these state, only do one or the other in BeginFrame",
+      "revId": "9821b54f0a061d936eecb266bcfd1e8c888e9bdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
