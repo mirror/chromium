@@ -293,7 +293,7 @@ const CGFloat kScrollAwayFromNeighborAmount = 200;
   layoutIsVertical_ = layoutIsVertical;
   // Restore the cards' positions along the new layout axis.
   for (NSUInteger i = 0; i < [cards_ count]; i++) {
-    LayoutRectPosition position = [[cards_ objectAtIndex:i] layout].position;
+    LayoutRectPosition position = [cards_[i] layout].position;
     CGFloat prevLayoutAxisOffset =
         layoutIsVertical_ ? position.leading : position.originY;
     [self moveOriginOfCardAtIndex:i toOffset:prevLayoutAxisOffset];
@@ -375,15 +375,15 @@ const CGFloat kScrollAwayFromNeighborAmount = 200;
   NSUInteger stackBoundaryIndex =
       startStack ? lastStartStackCardIndex_ : firstEndStackCardIndex_;
   CGFloat startOffset =
-      [self cardOffsetOnLayoutAxis:[cards_ objectAtIndex:stackBoundaryIndex]];
+      [self cardOffsetOnLayoutAxis:cards_[stackBoundaryIndex]];
   if ((startStack && stackBoundaryIndex < numCards - 1) ||
       (!startStack && stackBoundaryIndex > 0)) {
     // Ensure that the stack is laid out starting at least |maxStagger_|
     // separation from the neighboring non-collapsed card.
     NSUInteger nonCollapsedLimitIndex =
         startStack ? stackBoundaryIndex + 1 : stackBoundaryIndex - 1;
-    CGFloat nonCollapsedLimitOffset = [self
-        cardOffsetOnLayoutAxis:[cards_ objectAtIndex:nonCollapsedLimitIndex]];
+    CGFloat nonCollapsedLimitOffset =
+        [self cardOffsetOnLayoutAxis:cards_[nonCollapsedLimitIndex]];
     CGFloat distance = fabs(nonCollapsedLimitOffset - startOffset);
     if (distance < maxStagger_) {
       startOffset = startStack ? nonCollapsedLimitOffset - maxStagger_
@@ -405,16 +405,14 @@ const CGFloat kScrollAwayFromNeighborAmount = 200;
                        andCardAtIndex:(NSUInteger)secondIndex {
   DCHECK(firstIndex < [cards_ count]);
   DCHECK(secondIndex < [cards_ count]);
-  CGFloat firstOrigin =
-      [self cardOffsetOnLayoutAxis:[cards_ objectAtIndex:firstIndex]];
-  CGFloat secondOrigin =
-      [self cardOffsetOnLayoutAxis:[cards_ objectAtIndex:secondIndex]];
+  CGFloat firstOrigin = [self cardOffsetOnLayoutAxis:cards_[firstIndex]];
+  CGFloat secondOrigin = [self cardOffsetOnLayoutAxis:cards_[secondIndex]];
   return std::abs(secondOrigin - firstOrigin);
 }
 
 - (BOOL)overextensionTowardStartOnCardAtIndex:(NSUInteger)index {
   DCHECK(index < [cards_ count]);
-  CGFloat offset = [self cardOffsetOnLayoutAxis:[cards_ objectAtIndex:index]];
+  CGFloat offset = [self cardOffsetOnLayoutAxis:cards_[index]];
   CGFloat collapsedOffset =
       startLimit_ + [self staggerOffsetForIndexFromEdge:index];
   // Uses an epsilon to allow for floating-point imprecision.
@@ -578,8 +576,7 @@ const CGFloat kScrollAwayFromNeighborAmount = 200;
   if (index == 0)
     return;
 
-  CGFloat currentOffset =
-      [self cardOffsetOnLayoutAxis:[cards_ objectAtIndex:index]];
+  CGFloat currentOffset = [self cardOffsetOnLayoutAxis:cards_[index]];
   CGFloat offsetToScrollTo =
       preceding ? currentOffset + kScrollAwayFromNeighborAmount
                 : currentOffset - kScrollAwayFromNeighborAmount;
@@ -589,9 +586,8 @@ const CGFloat kScrollAwayFromNeighborAmount = 200;
     limitOffsetToScrollTo = endLimit_ - [self maximumCardSeparation];
   } else {
     CGFloat neighborOffset =
-        preceding
-            ? [self cardOffsetOnLayoutAxis:[cards_ objectAtIndex:index - 1]]
-            : [self cardOffsetOnLayoutAxis:[cards_ objectAtIndex:index + 1]];
+        preceding ? [self cardOffsetOnLayoutAxis:cards_[index - 1]]
+                  : [self cardOffsetOnLayoutAxis:cards_[index + 1]];
     limitOffsetToScrollTo = preceding
                                 ? neighborOffset + [self maximumCardSeparation]
                                 : neighborOffset - [self maximumCardSeparation];
@@ -676,7 +672,7 @@ const CGFloat kScrollAwayFromNeighborAmount = 200;
 
 - (CGFloat)clipDelta:(CGFloat)delta forCardAtIndex:(NSInteger)index {
   DCHECK(index < (NSInteger)[cards_ count]);
-  StackCard* card = [cards_ objectAtIndex:index];
+  StackCard* card = cards_[index];
   CGFloat startingOffset = [self cardOffsetOnLayoutAxis:card];
   if (delta < 0) {
     // |delta| is towards start stack.
@@ -744,7 +740,7 @@ const CGFloat kScrollAwayFromNeighborAmount = 200;
 
 - (void)moveOriginOfCardAtIndex:(NSUInteger)index toOffset:(CGFloat)offset {
   DCHECK(index < [cards_ count]);
-  StackCard* card = [cards_ objectAtIndex:index];
+  StackCard* card = cards_[index];
   CGFloat startingOffset = [self cardOffsetOnLayoutAxis:card];
   [self moveCard:card byAmount:offset - startingOffset];
 }
@@ -762,8 +758,8 @@ const CGFloat kScrollAwayFromNeighborAmount = 200;
   else
     DCHECK(index < (NSInteger)[cards_ count] - 1);
 
-  CGFloat constrainingIndex = isPrevious ? index - 1 : index + 1;
-  StackCard* constrainingCard = [cards_ objectAtIndex:constrainingIndex];
+  NSInteger constrainingIndex = isPrevious ? index - 1 : index + 1;
+  StackCard* constrainingCard = cards_[constrainingIndex];
   CGFloat constrainingCardOffset =
       [self cardOffsetOnLayoutAxis:constrainingCard];
   // Ensures that the above constraints are mutually satisfiable.
@@ -811,7 +807,7 @@ const CGFloat kScrollAwayFromNeighborAmount = 200;
   NSInteger currentIndex = index;
   CGFloat currentDelta = drivingDelta / kDecayFactor;
   for (int i = 0; i < numCardsToMove; i++) {
-    StackCard* card = [cards_ objectAtIndex:currentIndex];
+    StackCard* card = cards_[currentIndex];
     CGFloat cardStartingOffset = [self cardOffsetOnLayoutAxis:card];
     CGFloat cardEndingOffset =
         [self constrainedOffset:cardStartingOffset + currentDelta
@@ -844,9 +840,9 @@ const CGFloat kScrollAwayFromNeighborAmount = 200;
                                  secondDelta:(CGFloat)secondDelta {
   DCHECK(firstIndex < secondIndex);
   DCHECK(secondIndex < (NSInteger)[cards_ count]);
-  StackCard* firstCard = [cards_ objectAtIndex:firstIndex];
+  StackCard* firstCard = cards_[firstIndex];
   CGFloat firstStartingOffset = [self cardOffsetOnLayoutAxis:firstCard];
-  StackCard* secondCard = [cards_ objectAtIndex:secondIndex];
+  StackCard* secondCard = cards_[secondIndex];
   CGFloat secondStartingOffset = [self cardOffsetOnLayoutAxis:secondCard];
   CGFloat firstEndingOffset = firstStartingOffset + firstDelta;
   CGFloat secondEndingOffset = secondStartingOffset + secondDelta;
@@ -855,7 +851,7 @@ const CGFloat kScrollAwayFromNeighborAmount = 200;
   // the contribution of each being weighted by the card's closeness
   // to |firstStartingOffset| and |secondStartingOffset| respectively.
   for (NSInteger i = firstIndex; i <= secondIndex; i++) {
-    StackCard* card = [cards_ objectAtIndex:i];
+    StackCard* card = cards_[i];
     CGFloat cardStartingOffset = [self cardOffsetOnLayoutAxis:card];
     CGFloat weightOfSecondDelta = (cardStartingOffset - firstStartingOffset) /
                                   (secondStartingOffset - firstStartingOffset);
@@ -951,9 +947,8 @@ const CGFloat kScrollAwayFromNeighborAmount = 200;
     return startLimit_;
   // Calculate the start limit that will lay the start stack into place around
   // the card at |index|.
-  CGFloat startLimit =
-      [self cardOffsetOnLayoutAxis:[cards_ objectAtIndex:index]] -
-      [self staggerOffsetForIndexFromEdge:index];
+  CGFloat startLimit = [self cardOffsetOnLayoutAxis:cards_[index]] -
+                       [self staggerOffsetForIndexFromEdge:index];
   return std::max(startLimit, [self limitOfOverextensionTowardStart]);
 }
 
@@ -1012,7 +1007,7 @@ const CGFloat kScrollAwayFromNeighborAmount = 200;
   NSInteger numCards = [cards_ count];
   NSInteger boundaryIndex = startStack ? -1 : numCards;
   for (NSInteger i = 0; i < numCards; ++i) {
-    StackCard* card = [cards_ objectAtIndex:i];
+    StackCard* card = cards_[i];
     CGFloat uncappedPosition = [self cardOffsetOnLayoutAxis:card];
     if (startStack) {
       CGFloat pushThreshold =
@@ -1038,7 +1033,7 @@ const CGFloat kScrollAwayFromNeighborAmount = 200;
       startStack ? lastStartStackCardIndex_ : firstEndStackCardIndex_;
   DCHECK(boundaryIndex >= 0);
   DCHECK(boundaryIndex < (NSInteger)[cards_ count]);
-  StackCard* card = [cards_ objectAtIndex:boundaryIndex];
+  StackCard* card = cards_[boundaryIndex];
   CGFloat offset = [self cardOffsetOnLayoutAxis:card];
   NSUInteger indexFromEnd = [cards_ count] - 1 - boundaryIndex;
   CGFloat cap = startStack
@@ -1102,7 +1097,7 @@ const CGFloat kScrollAwayFromNeighborAmount = 200;
   // Card positions are non-decreasing, and cards are all the same size, so a
   // card is completely covered iff the next card is in exactly the same
   // position (in terms of screen coordinates).
-  StackCard* nextCard = [cards_ objectAtIndex:(index + 1)];
+  StackCard* nextCard = cards_[(index + 1)];
   LayoutRectPosition position =
       AlignLayoutRectPositionToPixel(card.layout.position);
   LayoutRectPosition nextPosition =
@@ -1169,7 +1164,7 @@ const CGFloat kScrollAwayFromNeighborAmount = 200;
 
 - (BOOL)stackIsFullyFannedOut {
   for (NSUInteger i = 0; i < [cards_ count]; i++) {
-    CGFloat offset = [self cardOffsetOnLayoutAxis:[cards_ objectAtIndex:i]];
+    CGFloat offset = [self cardOffsetOnLayoutAxis:cards_[i]];
     if (offset < [self cappedFanoutOffsetForCardAtIndex:i])
       return NO;
   }
@@ -1182,7 +1177,7 @@ const CGFloat kScrollAwayFromNeighborAmount = 200;
     return YES;
 
   // Test for being fully overextended toward the start.
-  StackCard* lastCard = [cards_ objectAtIndex:numCards - 1];
+  StackCard* lastCard = cards_[numCards - 1];
   CGFloat lastCardOrigin = [self cardOffsetOnLayoutAxis:lastCard];
   // Note that -limitOfOverextensionTowardStart is defined with respect to the
   // *start* of the stack.

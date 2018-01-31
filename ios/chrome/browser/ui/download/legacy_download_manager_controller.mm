@@ -892,8 +892,8 @@ class DownloadContentDelegate : public URLFetcherDelegate {
 
 - (void)interfaceOrientationWillChangeNotification:
     (NSNotification*)notification {
-  NSNumber* orientationNumber = [[notification userInfo]
-      objectForKey:UIApplicationStatusBarOrientationUserInfoKey];
+  NSNumber* orientationNumber =
+      [notification userInfo][UIApplicationStatusBarOrientationUserInfoKey];
   UIInterfaceOrientation orientation =
       static_cast<UIInterfaceOrientation>([orientationNumber integerValue]);
   [self updateConstraints:orientation];
@@ -1455,7 +1455,7 @@ class DownloadContentDelegate : public URLFetcherDelegate {
         [[NSFileManager defaultManager] attributesOfItemAtPath:filePathString
                                                          error:&error];
     if (!error) {
-      NSNumber* fileSizeNumber = [attributes objectForKey:NSFileSize];
+      NSNumber* fileSizeNumber = attributes[NSFileSize];
       NSString* fileSizeText = [NSByteCountFormatter
           stringFromByteCount:[fileSizeNumber longLongValue]
                    countStyle:NSByteCountFormatterCountStyleFile];

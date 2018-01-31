@@ -598,9 +598,9 @@ TEST_F(UserActivityHandlerTest, performActionForShortcutItemWithRealShortcut) {
     // Tests.
     EXPECT_EQ(gurlNewTab,
               [fakeStartupInformation startupParameters].externalURL);
-    EXPECT_EQ([[parameters objectAtIndex:1] boolValue],
+    EXPECT_EQ([parameters[1] boolValue],
               [fakeStartupInformation startupParameters].launchInIncognito);
-    EXPECT_EQ([[parameters objectAtIndex:2] intValue],
+    EXPECT_EQ([parameters[2] intValue],
               [fakeStartupInformation startupParameters].postOpeningAction);
     EXPECT_TRUE(completionHandlerExecuted());
     EXPECT_TRUE(completionHandlerArgument());

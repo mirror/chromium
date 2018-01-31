@@ -2296,7 +2296,7 @@ NSString* const kTransitionToolbarAnimationKey =
     if (cardIndex == NSNotFound)
       return NO;
     DCHECK(cardIndex < [[_activeCardSet cards] count]);
-    card = [[_activeCardSet cards] objectAtIndex:cardIndex];
+    card = [_activeCardSet cards][cardIndex];
     // This case seems like it should never happen, but it can be easily
     // handled anyway.
     if (![card viewIsLive])
@@ -2674,7 +2674,7 @@ NSString* const kTransitionToolbarAnimationKey =
   }
   // Take action only if the card being swiped is not collapsed.
   DCHECK(cardIndex < [[_activeCardSet cards] count]);
-  StackCard* card = [[_activeCardSet cards] objectAtIndex:cardIndex];
+  StackCard* card = [_activeCardSet cards][cardIndex];
   if ([_activeCardSet cardIsCollapsed:card]) {
     [_gestureStateTracker setResetSwipedCardOnNextSwipe:YES];
     return;
@@ -2794,7 +2794,7 @@ NSString* const kTransitionToolbarAnimationKey =
     clockwise = !clockwise;
 
   NSUInteger swipedCardIndex = [_gestureStateTracker swipedCardIndex];
-  StackCard* card = [_activeCardSet.cards objectAtIndex:swipedCardIndex];
+  StackCard* card = (_activeCardSet.cards)[swipedCardIndex];
   _activeCardSet.closingCard = card;
 
   if (gesture.state == UIGestureRecognizerStateChanged) {
@@ -2945,7 +2945,7 @@ NSString* const kTransitionToolbarAnimationKey =
       // Simply lay out the card.
       [cardSet fanOutCards];
     } else {
-      StackCard* previousCard = [cards objectAtIndex:cardIndex - 1];
+      StackCard* previousCard = cards[cardIndex - 1];
       BOOL isPortrait =
           UIInterfaceOrientationIsPortrait(_lastInterfaceOrientation);
       LayoutRect layout = previousCard.layout;
@@ -2959,7 +2959,7 @@ NSString* const kTransitionToolbarAnimationKey =
   } else {
     DCHECK(cardIndex != NSNotFound);
     DCHECK(cardIndex + 1 < [cards count]);
-    newCard.layout = [[cards objectAtIndex:cardIndex + 1] layout];
+    newCard.layout = [cards[cardIndex + 1] layout];
   }
 
   // Animate the new card in at its destination location.
@@ -3552,7 +3552,7 @@ NSString* const kTransitionToolbarAnimationKey =
 
   NSUInteger firstCardIndex = std::max(
       [_activeCardSet.stackModel lastStartStackCardIndex], (NSInteger)0);
-  StackCard* card = [_activeCardSet.cards objectAtIndex:firstCardIndex];
+  StackCard* card = (_activeCardSet.cards)[firstCardIndex];
   [[card view] postAccessibilityNotification];
   [self postOpenTabsAccessibilityNotification];
 

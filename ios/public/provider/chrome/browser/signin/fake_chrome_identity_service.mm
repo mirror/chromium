@@ -159,7 +159,7 @@ ChromeIdentity* FakeChromeIdentityService::GetIdentityWithGaiaID(
   if (index == NSNotFound) {
     return nil;
   }
-  return [identities_ objectAtIndex:index];
+  return identities_[index];
 }
 
 bool FakeChromeIdentityService::HasIdentities() const {

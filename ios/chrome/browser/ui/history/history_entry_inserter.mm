@@ -97,8 +97,7 @@
       timestamp.LocalMidnight() - base::Time::UnixEpoch();
   NSDate* date = [NSDate dateWithTimeIntervalSince1970:timeDelta.InSeconds()];
 
-  NSInteger sectionIdentifier =
-      [[_sectionIdentifiers objectForKey:date] integerValue];
+  NSInteger sectionIdentifier = [_sectionIdentifiers[date] integerValue];
   // If there is a section identifier for the date, return it.
   if (sectionIdentifier) {
     return sectionIdentifier;
@@ -108,7 +107,7 @@
   sectionIdentifier =
       kSectionIdentifierEnumZero + _firstSectionIndex + _sectionIdentifierCount;
   ++_sectionIdentifierCount;
-  [_sectionIdentifiers setObject:@(sectionIdentifier) forKey:date];
+  _sectionIdentifiers[date] = @(sectionIdentifier);
 
   NSComparator comparator = ^(id obj1, id obj2) {
     // Dates are ordered from most to least recent.
@@ -145,8 +144,7 @@
   NSEnumerator* dateEnumerator = [_sectionIdentifiers keyEnumerator];
   NSDate* date = nil;
   while ((date = [dateEnumerator nextObject])) {
-    if ([[_sectionIdentifiers objectForKey:date] unsignedIntegerValue] ==
-        sectionIdentifier) {
+    if ([_sectionIdentifiers[date] unsignedIntegerValue] == sectionIdentifier) {
       [_sectionIdentifiers removeObjectForKey:date];
       [_dates removeObject:date];
       break;

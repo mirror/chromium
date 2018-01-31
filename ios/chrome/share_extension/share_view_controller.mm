@@ -290,20 +290,18 @@ const CGFloat kMediumAlpha = 0.5;
 
   NSMutableDictionary* dict = [[NSMutableDictionary alloc] init];
   if (URL)
-    [dict setObject:URL forKey:app_group::kShareItemURL];
+    dict[app_group::kShareItemURL] = URL;
   if (title)
-    [dict setObject:title forKey:app_group::kShareItemTitle];
-  [dict setObject:date forKey:app_group::kShareItemDate];
-  [dict setObject:app_group::kShareItemSourceShareExtension
-           forKey:app_group::kShareItemSource];
+    dict[app_group::kShareItemTitle] = title;
+  dict[app_group::kShareItemDate] = date;
+  dict[app_group::kShareItemSource] = app_group::kShareItemSourceShareExtension;
 
   if (!cancel) {
-    NSNumber* entryType = [NSNumber numberWithInteger:actionType];
-    [dict setObject:entryType forKey:app_group::kShareItemType];
+    NSNumber* entryType = @(actionType);
+    dict[app_group::kShareItemType] = entryType;
   }
 
-  [dict setValue:[NSNumber numberWithBool:cancel]
-          forKey:app_group::kShareItemCancel];
+  [dict setValue:@(cancel) forKey:app_group::kShareItemCancel];
   NSData* data = [NSKeyedArchiver archivedDataWithRootObject:dict];
   [[NSFileManager defaultManager] createFileAtPath:[fileURL path]
                                           contents:data

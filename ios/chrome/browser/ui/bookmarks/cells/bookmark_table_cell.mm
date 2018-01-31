@@ -252,7 +252,7 @@ const CGFloat kBookmarkTableCellImagePadding = 16.0;
 }
 
 - (id)accessibilityElementAtIndex:(NSInteger)index {
-  return [self.accessibilityElements objectAtIndex:index];
+  return (self.accessibilityElements)[index];
 }
 
 - (NSInteger)indexOfAccessibilityElement:(id)element {

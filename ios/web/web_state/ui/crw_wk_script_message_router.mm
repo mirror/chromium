@@ -55,12 +55,12 @@
   DCHECK(messageName);
   DCHECK(webView);
 
-  NSMapTable* webViewToHandlerMap = [_handlers objectForKey:messageName];
+  NSMapTable* webViewToHandlerMap = _handlers[messageName];
   if (!webViewToHandlerMap) {
     webViewToHandlerMap =
         [NSMapTable mapTableWithKeyOptions:NSPointerFunctionsStrongMemory
                               valueOptions:NSPointerFunctionsCopyIn];
-    [_handlers setObject:webViewToHandlerMap forKey:messageName];
+    _handlers[messageName] = webViewToHandlerMap;
     [_userContentController addScriptMessageHandler:self name:messageName];
   }
   DCHECK(![webViewToHandlerMap objectForKey:webView]);
@@ -71,7 +71,7 @@
                                   webView:(WKWebView*)webView {
   DCHECK(messageName);
   DCHECK(webView);
-  DCHECK([[_handlers objectForKey:messageName] objectForKey:webView]);
+  DCHECK(_handlers[messageName][webView]);
   [self tryRemoveScriptMessageHandlerForName:messageName webView:webView];
 }
 
@@ -87,7 +87,7 @@
 
 - (void)userContentController:(WKUserContentController*)userContentController
       didReceiveScriptMessage:(WKScriptMessage*)message {
-  NSMapTable* webViewToHandlerMap = [_handlers objectForKey:message.name];
+  NSMapTable* webViewToHandlerMap = _handlers[message.name];
   DCHECK(webViewToHandlerMap);
   id handler = [webViewToHandlerMap objectForKey:message.webView];
   if (handler) {
@@ -102,7 +102,7 @@
 
 - (void)tryRemoveScriptMessageHandlerForName:(NSString*)messageName
                                      webView:(WKWebView*)webView {
-  NSMapTable* webViewToHandlerMap = [_handlers objectForKey:messageName];
+  NSMapTable* webViewToHandlerMap = _handlers[messageName];
   NS_VALID_UNTIL_END_OF_SCOPE id handler =
       [webViewToHandlerMap objectForKey:webView];
   if (!handler)

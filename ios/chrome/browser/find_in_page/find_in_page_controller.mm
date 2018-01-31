@@ -350,8 +350,7 @@ static NSString* gSearchTerm;
 
 - (void)keyboardDidShow:(NSNotification*)note {
   NSDictionary* info = [note userInfo];
-  CGSize kbSize =
-      [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+  CGSize kbSize = [info[UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
   CGFloat kbHeight = kbSize.height;
   UIEdgeInsets insets = UIEdgeInsetsZero;
   insets.bottom = kbHeight;

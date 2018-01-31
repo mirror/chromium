@@ -218,7 +218,7 @@ WKWebViewErrorSource WKWebViewErrorSourceFromError(NSError* error) {
 NSError* WKWebViewErrorWithSource(NSError* error, WKWebViewErrorSource source) {
   DCHECK(error);
   NSMutableDictionary* userInfo = [error.userInfo mutableCopy];
-  [userInfo setObject:@(source) forKey:kWKWebViewErrorSourceKey];
+  userInfo[kWKWebViewErrorSourceKey] = @(source);
   return
       [NSError errorWithDomain:error.domain code:error.code userInfo:userInfo];
 }
@@ -1652,8 +1652,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
   NSDictionary* headers = self.currentHTTPHeaders;
   for (NSString* headerName in headers) {
     if (![request valueForHTTPHeaderField:headerName]) {
-      [request setValue:[headers objectForKey:headerName]
-          forHTTPHeaderField:headerName];
+      [request setValue:headers[headerName] forHTTPHeaderField:headerName];
     }
   }
 

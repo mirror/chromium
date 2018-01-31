@@ -183,7 +183,7 @@ TEST_F(AlertCoordinatorTest, ValidateActions) {
 
   // Test the results.
   for (UIAlertAction* action in alertController.actions) {
-    EXPECT_TRUE([remainingActions objectForKey:action.title]);
+    EXPECT_TRUE(remainingActions[action.title]);
     UIAlertActionStyle style =
         static_cast<UIAlertActionStyle>([actions[action.title] integerValue]);
     EXPECT_EQ(style, action.style);
@@ -223,7 +223,7 @@ TEST_F(AlertCoordinatorTest, OnlyOneCancelAction) {
   // Test the results.
   EXPECT_EQ(1LU, alertController.actions.count);
 
-  UIAlertAction* action = [alertController.actions objectAtIndex:0];
+  UIAlertAction* action = (alertController.actions)[0];
   EXPECT_EQ(firstButtonTitle, action.title);
   EXPECT_EQ(UIAlertActionStyleCancel, action.style);
 }

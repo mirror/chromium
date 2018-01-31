@@ -978,7 +978,7 @@ void HttpProtocolHandlerCore::StripPostSpecificHeaders(
     // before creating the error object. See http://crbug/349051
     NSURL* url = [[self request] URL];
     if (url)
-      [dictionary setObject:url forKey:NSURLErrorKey];
+      dictionary[NSURLErrorKey] = url;
 
     NSError* error = [NSError errorWithDomain:NSURLErrorDomain
                                          code:NSURLErrorUnsupportedURL

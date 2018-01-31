@@ -42,7 +42,7 @@ UIImage* FaviconLoader::ImageForURL(const GURL& url,
                                     ImageCompletionBlock block) {
   DCHECK(thread_checker_.CalledOnValidThread());
   NSString* key = base::SysUTF8ToNSString(url.spec());
-  id value = [favicon_cache_ objectForKey:key];
+  id value = favicon_cache_[key];
   if (value) {
     // [NSNull null] returns a singleton, so we can use it as a sentinel value
     // and just compare pointers to validate whether the value is the sentinel
@@ -84,7 +84,7 @@ void FaviconLoader::OnFaviconAvailable(
     // Return early if there were no results or if it is invalid, after adding a
     // "no favicon" entry to the cache so that we don't keep trying to fetch a
     // missing favicon over and over.
-    [favicon_cache_ setObject:[NSNull null] forKey:request_data->key];
+    favicon_cache_[request_data->key] = [NSNull null];
     return;
   }
 
@@ -94,7 +94,7 @@ void FaviconLoader::OnFaviconAvailable(
                      length:favicon_bitmap_results[0].bitmap_data->size()];
   UIImage* favicon =
       [UIImage imageWithData:image_data scale:[[UIScreen mainScreen] scale]];
-  [favicon_cache_ setObject:favicon forKey:request_data->key];
+  favicon_cache_[request_data->key] = favicon;
 
   // Call the block to tell the caller this is complete.
   if (request_data->block)

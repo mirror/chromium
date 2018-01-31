@@ -64,7 +64,7 @@ bool IsHandledProtocol(const std::string& scheme) {
         [NSSet setWithObjects:@"googlechrome", @"chromium",
                               @"ios-chrome-unittests.http", nil];
     NSDictionary* info = [[NSBundle mainBundle] infoDictionary];
-    NSArray* urlTypes = [info objectForKey:@"CFBundleURLTypes"];
+    NSArray* urlTypes = info[@"CFBundleURLTypes"];
     for (NSDictionary* urlType in urlTypes) {
       DCHECK([urlType isKindOfClass:[NSDictionary class]]);
       NSArray* schemes =

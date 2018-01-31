@@ -179,19 +179,19 @@ TEST_F(ProtocolHandlerUtilTest, GetResponseHttpTest) {
   request->Start();
   // Create a response from the request.
   NSURLResponse* response = GetNSURLResponseForRequest(request.get());
-  EXPECT_NSEQ([NSString stringWithUTF8String:kTextHtml], [response MIMEType]);
+  EXPECT_NSEQ(@(kTextHtml), [response MIMEType]);
   ASSERT_TRUE([response isKindOfClass:[NSHTTPURLResponse class]]);
   NSHTTPURLResponse* http_response = (NSHTTPURLResponse*)response;
   NSDictionary* headers = [http_response allHeaderFields];
   // Check the headers, duplicates must be appended.
   EXPECT_EQ(5u, [headers count]);
-  NSString* foo_header = [headers objectForKey:@"Foo"];
+  NSString* foo_header = headers[@"Foo"];
   EXPECT_NSEQ(@"A,D,E", foo_header);
-  NSString* bar_header = [headers objectForKey:@"Bar"];
+  NSString* bar_header = headers[@"Bar"];
   EXPECT_NSEQ(@"B,F", bar_header);
-  NSString* baz_header = [headers objectForKey:@"Baz"];
+  NSString* baz_header = headers[@"Baz"];
   EXPECT_NSEQ(@"C", baz_header);
-  NSString* cache_header = [headers objectForKey:@"Cache-Control"];
+  NSString* cache_header = headers[@"Cache-Control"];
   EXPECT_NSEQ(@"no-store", cache_header);  // Cache-Control is overridden.
   // Check the status.
   EXPECT_EQ(request->GetResponseCode(), [http_response statusCode]);
@@ -226,7 +226,7 @@ TEST_F(ProtocolHandlerUtilTest, MultipleHttpContentType) {
   EXPECT_NSEQ(@"iso-8859-4", [response textEncodingName]);
   NSHTTPURLResponse* http_response = (NSHTTPURLResponse*)response;
   NSDictionary* headers = [http_response allHeaderFields];
-  NSString* content_type_header = [headers objectForKey:@"Content-Type"];
+  NSString* content_type_header = headers[@"Content-Type"];
   EXPECT_NSEQ(@"text/plain; charset=iso-8859-4", content_type_header);
 }
 

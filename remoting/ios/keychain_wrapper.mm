@@ -42,17 +42,16 @@ NSString* const kKeychainPairingSecret = @"kKeychainPairingSecret";
   if ((self = [super init])) {
     OSStatus keychainErr = noErr;
     _userInfoQuery = [[NSMutableDictionary alloc] init];
-    [_userInfoQuery setObject:(__bridge id)kSecClassGenericPassword
-                       forKey:(__bridge id)kSecClass];
+    _userInfoQuery[(__bridge id)kSecClass] =
+        (__bridge id)kSecClassGenericPassword;
     NSData* keychainItemID =
         [NSData dataWithBytes:kKeychainItemIdentifier
                        length:strlen((const char*)kKeychainItemIdentifier)];
-    [_userInfoQuery setObject:keychainItemID
-                       forKey:(__bridge id)kSecAttrService];
-    [_userInfoQuery setObject:(__bridge id)kSecMatchLimitOne
-                       forKey:(__bridge id)kSecMatchLimit];
-    [_userInfoQuery setObject:(__bridge id)kCFBooleanTrue
-                       forKey:(__bridge id)kSecReturnAttributes];
+    _userInfoQuery[(__bridge id)kSecAttrService] = keychainItemID;
+    _userInfoQuery[(__bridge id)kSecMatchLimit] =
+        (__bridge id)kSecMatchLimitOne;
+    _userInfoQuery[(__bridge id)kSecReturnAttributes] =
+        (__bridge id)kCFBooleanTrue;
 
     base::ScopedCFTypeRef<CFMutableDictionaryRef> outDictionary;
     keychainErr =
@@ -95,14 +94,14 @@ NSString* const kKeychainPairingSecret = @"kKeychainPairingSecret";
   NSMutableDictionary* keys = [self stringToMap:keysString];
   NSString* pairingIdAndSecret = [NSString
       stringWithFormat:@"%@%@%@", pairingId, kPairingSecretSeperator, secret];
-  [keys setObject:pairingIdAndSecret forKey:host];
+  keys[host] = pairingIdAndSecret;
   [self setObject:[self mapToString:keys] forKey:(__bridge id)kSecAttrGeneric];
 }
 
 - (NSDictionary*)pairingCredentialsForHost:(NSString*)host {
   NSString* keysString = [self objectForKey:(__bridge id)kSecAttrGeneric];
   NSMutableDictionary* keys = [self stringToMap:keysString];
-  NSString* pairingIdAndSecret = [keys objectForKey:host];
+  NSString* pairingIdAndSecret = keys[host];
   if (!pairingIdAndSecret ||
       [pairingIdAndSecret rangeOfString:kPairingSecretSeperator].location ==
           NSNotFound) {
@@ -160,9 +159,9 @@ NSString* const kKeychainPairingSecret = @"kKeychainPairingSecret";
 - (void)setObject:(id)inObject forKey:(id)key {
   if (inObject == nil)
     return;
-  id currentObject = [_keychainData objectForKey:key];
+  id currentObject = _keychainData[key];
   if (![currentObject isEqual:inObject]) {
-    [_keychainData setObject:inObject forKey:key];
+    _keychainData[key] = inObject;
     [self writeToKeychain];
   }
 }
@@ -170,7 +169,7 @@ NSString* const kKeychainPairingSecret = @"kKeychainPairingSecret";
 // Implement the myObjectForKey: method, which reads an attribute value from a
 // dictionary:
 - (id)objectForKey:(id)key {
-  return [_keychainData objectForKey:key];
+  return _keychainData[key];
 }
 
 - (void)resetKeychainItem {
@@ -188,13 +187,11 @@ NSString* const kKeychainPairingSecret = @"kKeychainPairingSecret";
     }
   }
 
-  [_keychainData setObject:@"gaia_refresh_token"
-                    forKey:(__bridge id)kSecAttrLabel];
-  [_keychainData setObject:@"Gaia fresh token"
-                    forKey:(__bridge id)kSecAttrDescription];
-  [_keychainData setObject:@"" forKey:(__bridge id)kSecValueData];
-  [_keychainData setObject:@"" forKey:(__bridge id)kSecClass];
-  [_keychainData setObject:@"" forKey:(__bridge id)kSecAttrGeneric];
+  _keychainData[(__bridge id)kSecAttrLabel] = @"gaia_refresh_token";
+  _keychainData[(__bridge id)kSecAttrDescription] = @"Gaia fresh token";
+  _keychainData[(__bridge id)kSecValueData] = @"";
+  _keychainData[(__bridge id)kSecClass] = @"";
+  _keychainData[(__bridge id)kSecAttrGeneric] = @"";
 }
 
 - (NSMutableDictionary*)dictionaryToSecItemFormat:
@@ -205,16 +202,13 @@ NSString* const kKeychainPairingSecret = @"kKeychainPairingSecret";
   NSData* keychainItemID =
       [NSData dataWithBytes:kKeychainItemIdentifier
                      length:strlen((const char*)kKeychainItemIdentifier)];
-  [returnDictionary setObject:keychainItemID
-                       forKey:(__bridge id)kSecAttrService];
-  [returnDictionary setObject:(__bridge id)kSecClassGenericPassword
-                       forKey:(__bridge id)kSecClass];
+  returnDictionary[(__bridge id)kSecAttrService] = keychainItemID;
+  returnDictionary[(__bridge id)kSecClass] =
+      (__bridge id)kSecClassGenericPassword;
 
-  NSString* passwordString =
-      [dictionaryToConvert objectForKey:(__bridge id)kSecValueData];
-  [returnDictionary
-      setObject:[passwordString dataUsingEncoding:NSUTF8StringEncoding]
-         forKey:(__bridge id)kSecValueData];
+  NSString* passwordString = dictionaryToConvert[(__bridge id)kSecValueData];
+  returnDictionary[(__bridge id)kSecValueData] =
+      [passwordString dataUsingEncoding:NSUTF8StringEncoding];
   return returnDictionary;
 }
 
@@ -223,10 +217,9 @@ NSString* const kKeychainPairingSecret = @"kKeychainPairingSecret";
   NSMutableDictionary* returnDictionary =
       [NSMutableDictionary dictionaryWithDictionary:dictionaryToConvert];
 
-  [returnDictionary setObject:(__bridge id)kCFBooleanTrue
-                       forKey:(__bridge id)kSecReturnData];
-  [returnDictionary setObject:(__bridge id)kSecClassGenericPassword
-                       forKey:(__bridge id)kSecClass];
+  returnDictionary[(__bridge id)kSecReturnData] = (__bridge id)kCFBooleanTrue;
+  returnDictionary[(__bridge id)kSecClass] =
+      (__bridge id)kSecClassGenericPassword;
 
   base::ScopedCFTypeRef<CFDataRef> passwordData;
   OSStatus keychainError = noErr;
@@ -240,7 +233,7 @@ NSString* const kKeychainPairingSecret = @"kKeychainPairingSecret";
         [[NSString alloc] initWithBytes:CFDataGetBytePtr(passwordData)
                                  length:CFDataGetLength(passwordData)
                                encoding:NSUTF8StringEncoding];
-    [returnDictionary setObject:password forKey:(__bridge id)kSecValueData];
+    returnDictionary[(__bridge id)kSecValueData] = password;
   } else if (keychainError == errSecItemNotFound) {
     LOG(WARNING) << "Nothing was found in the keychain.";
   } else {
@@ -259,8 +252,7 @@ NSString* const kKeychainPairingSecret = @"kKeychainPairingSecret";
         dictionaryWithDictionary:(__bridge_transfer NSDictionary*)
                                      attributes.release()];
 
-    [updateItem setObject:[_userInfoQuery objectForKey:(__bridge id)kSecClass]
-                   forKey:(__bridge id)kSecClass];
+    updateItem[(__bridge id)kSecClass] = _userInfoQuery[(__bridge id)kSecClass];
 
     NSMutableDictionary* tempCheck =
         [self dictionaryToSecItemFormat:_keychainData];

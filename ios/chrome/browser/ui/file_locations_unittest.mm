@@ -85,7 +85,7 @@ TEST_F(FileLocationsTest, TestTermsOfServiceForSupportedLanguages) {
     NSString* normalizedLocale =
         [locale stringByReplacingOccurrencesOfString:@"_" withString:@"-"];
     NSArray* parts = [normalizedLocale componentsSeparatedByString:@"-"];
-    NSString* language = [parts objectAtIndex:0];
+    NSString* language = parts[0];
     std::string filename = GetLocalizedFileName(
         termsBaseName_,
         GetIOSLocaleMapping(base::SysNSStringToUTF8(normalizedLocale)),

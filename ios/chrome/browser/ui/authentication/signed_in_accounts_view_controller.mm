@@ -125,7 +125,7 @@ BOOL gSignedInAccountsViewControllerIsShown = NO;
                                    ->GetIdentityWithGaiaID(account.gaia);
     CollectionViewItem* item = [self accountItem:identity];
     [model addItem:item toSectionWithIdentifier:SectionIdentifierAccounts];
-    [mutableIdentityMap setObject:item forKey:identity.gaiaID];
+    mutableIdentityMap[identity.gaiaID] = item;
   }
   _identityMap = mutableIdentityMap;
 }
@@ -169,7 +169,7 @@ BOOL gSignedInAccountsViewControllerIsShown = NO;
 - (void)profileUpdate:(ChromeIdentity*)identity {
   CollectionViewAccountItem* item =
       base::mac::ObjCCastStrict<CollectionViewAccountItem>(
-          [_identityMap objectForKey:identity.gaiaID]);
+          _identityMap[identity.gaiaID]);
   [self updateAccountItem:item withIdentity:identity];
   NSIndexPath* indexPath = [self.collectionViewModel indexPathForItem:item];
   [self.collectionView reloadItemsAtIndexPaths:@[ indexPath ]];

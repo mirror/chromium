@@ -54,12 +54,11 @@
 
 - (CRWJSInjectionManager*)instanceOfClass:(Class)jsInjectionManagerClass {
   DCHECK(_managers);
-  CRWJSInjectionManager* manager =
-      [_managers objectForKey:jsInjectionManagerClass];
+  CRWJSInjectionManager* manager = _managers[jsInjectionManagerClass];
   if (!manager) {
     CRWJSInjectionManager* newManager =
         [[jsInjectionManagerClass alloc] initWithReceiver:self];
-    [_managers setObject:newManager forKey:jsInjectionManagerClass];
+    _managers[jsInjectionManagerClass] = newManager;
     manager = newManager;
   }
   DCHECK(manager);

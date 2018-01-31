@@ -66,7 +66,7 @@ typedef NSMutableArray<CollectionViewItem*> SectionItems;
     toSectionWithIdentifier:(NSInteger)sectionIdentifier {
   DCHECK_GE(item.type, kItemTypeEnumZero);
   NSInteger section = [self sectionForSectionIdentifier:sectionIdentifier];
-  SectionItems* items = [_sections objectAtIndex:section];
+  SectionItems* items = _sections[section];
   [items addObject:item];
 }
 
@@ -75,7 +75,7 @@ typedef NSMutableArray<CollectionViewItem*> SectionItems;
                     atIndex:(NSUInteger)index {
   DCHECK_GE(item.type, kItemTypeEnumZero);
   NSInteger section = [self sectionForSectionIdentifier:sectionIdentifier];
-  SectionItems* items = [_sections objectAtIndex:section];
+  SectionItems* items = _sections[section];
   DCHECK(index <= [items count]);
   [items insertObject:item atIndex:index];
 }
@@ -91,7 +91,7 @@ typedef NSMutableArray<CollectionViewItem*> SectionItems;
     fromSectionWithIdentifier:(NSInteger)sectionIdentifier
                       atIndex:(NSUInteger)index {
   NSInteger section = [self sectionForSectionIdentifier:sectionIdentifier];
-  SectionItems* items = [_sections objectAtIndex:section];
+  SectionItems* items = _sections[section];
   NSInteger item =
       [self itemForItemType:itemType inSectionItems:items atIndex:index];
   DCHECK_NE(NSNotFound, item);
@@ -108,7 +108,7 @@ typedef NSMutableArray<CollectionViewItem*> SectionItems;
     forSectionWithIdentifier:(NSInteger)sectionIdentifier {
   NSNumber* key = [NSNumber numberWithInteger:sectionIdentifier];
   if (header) {
-    [_headers setObject:header forKey:key];
+    _headers[key] = header;
   } else {
     [_headers removeObjectForKey:key];
   }
@@ -118,7 +118,7 @@ typedef NSMutableArray<CollectionViewItem*> SectionItems;
     forSectionWithIdentifier:(NSInteger)sectionIdentifier {
   NSNumber* key = [NSNumber numberWithInteger:sectionIdentifier];
   if (footer) {
-    [_footers setObject:footer forKey:key];
+    _footers[key] = footer;
   } else {
     [_footers removeObjectForKey:key];
   }
@@ -128,7 +128,7 @@ typedef NSMutableArray<CollectionViewItem*> SectionItems;
 
 - (NSInteger)sectionIdentifierForSection:(NSInteger)section {
   DCHECK_LT(static_cast<NSUInteger>(section), [_sectionIdentifiers count]);
-  return [[_sectionIdentifiers objectAtIndex:section] integerValue];
+  return [_sectionIdentifiers[section] integerValue];
 }
 
 - (NSInteger)itemTypeForIndexPath:(NSIndexPath*)indexPath {
@@ -137,7 +137,7 @@ typedef NSMutableArray<CollectionViewItem*> SectionItems;
 
 - (NSUInteger)indexInItemTypeForIndexPath:(NSIndexPath*)indexPath {
   DCHECK_LT(static_cast<NSUInteger>(indexPath.section), [_sections count]);
-  SectionItems* items = [_sections objectAtIndex:indexPath.section];
+  SectionItems* items = _sections[indexPath.section];
 
   CollectionViewItem* item = [self itemAtIndexPath:indexPath];
   NSUInteger indexInItemType =
@@ -152,7 +152,7 @@ typedef NSMutableArray<CollectionViewItem*> SectionItems;
     return NO;
 
   if (static_cast<NSUInteger>(indexPath.section) < [_sections count]) {
-    SectionItems* items = [_sections objectAtIndex:indexPath.section];
+    SectionItems* items = _sections[indexPath.section];
     return static_cast<NSUInteger>(indexPath.item) < [items count];
   }
   return NO;
@@ -161,41 +161,41 @@ typedef NSMutableArray<CollectionViewItem*> SectionItems;
 - (CollectionViewItem*)itemAtIndexPath:(NSIndexPath*)indexPath {
   DCHECK(indexPath);
   DCHECK_LT(static_cast<NSUInteger>(indexPath.section), [_sections count]);
-  SectionItems* items = [_sections objectAtIndex:indexPath.section];
+  SectionItems* items = _sections[indexPath.section];
 
   DCHECK_LT(static_cast<NSUInteger>(indexPath.item), [items count]);
-  return [items objectAtIndex:indexPath.item];
+  return items[indexPath.item];
 }
 
 - (CollectionViewItem*)headerForSection:(NSInteger)section {
   NSInteger sectionIdentifier = [self sectionIdentifierForSection:section];
   NSNumber* key = [NSNumber numberWithInteger:sectionIdentifier];
-  return [_headers objectForKey:key];
+  return _headers[key];
 }
 
 - (CollectionViewItem*)footerForSection:(NSInteger)section {
   NSInteger sectionIdentifier = [self sectionIdentifierForSection:section];
   NSNumber* key = [NSNumber numberWithInteger:sectionIdentifier];
-  return [_footers objectForKey:key];
+  return _footers[key];
 }
 
 - (NSArray<CollectionViewItem*>*)itemsInSectionWithIdentifier:
     (NSInteger)sectionIdentifier {
   NSInteger section = [self sectionForSectionIdentifier:sectionIdentifier];
   DCHECK_LT(static_cast<NSUInteger>(section), [_sections count]);
-  return [_sections objectAtIndex:section];
+  return _sections[section];
 }
 
 - (CollectionViewItem*)headerForSectionWithIdentifier:
     (NSInteger)sectionIdentifier {
   NSNumber* key = [NSNumber numberWithInteger:sectionIdentifier];
-  return [_headers objectForKey:key];
+  return _headers[key];
 }
 
 - (CollectionViewItem*)footerForSectionWithIdentifier:
     (NSInteger)sectionIdentifier {
   NSNumber* key = [NSNumber numberWithInteger:sectionIdentifier];
-  return [_footers objectForKey:key];
+  return _footers[key];
 }
 
 #pragma mark Query index paths from model coordinates
@@ -232,7 +232,7 @@ typedef NSMutableArray<CollectionViewItem*> SectionItems;
     return NO;
   }
   NSInteger section = [self sectionForSectionIdentifier:sectionIdentifier];
-  SectionItems* items = [_sections objectAtIndex:section];
+  SectionItems* items = _sections[section];
   NSInteger item =
       [self itemForItemType:itemType inSectionItems:items atIndex:index];
   return item != NSNotFound;
@@ -242,7 +242,7 @@ typedef NSMutableArray<CollectionViewItem*> SectionItems;
                    sectionIdentifier:(NSInteger)sectionIdentifier
                              atIndex:(NSUInteger)index {
   NSInteger section = [self sectionForSectionIdentifier:sectionIdentifier];
-  SectionItems* items = [_sections objectAtIndex:section];
+  SectionItems* items = _sections[section];
   NSInteger item =
       [self itemForItemType:itemType inSectionItems:items atIndex:index];
   return [NSIndexPath indexPathForItem:item inSection:section];
@@ -283,7 +283,7 @@ typedef NSMutableArray<CollectionViewItem*> SectionItems;
 
 - (NSInteger)numberOfItemsInSection:(NSInteger)section {
   DCHECK_LT(static_cast<NSUInteger>(section), [_sections count]);
-  SectionItems* items = [_sections objectAtIndex:section];
+  SectionItems* items = _sections[section];
   return items.count;
 }
 

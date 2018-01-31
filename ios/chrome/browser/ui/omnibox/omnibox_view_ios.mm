@@ -595,11 +595,10 @@ bool OmniboxViewIOS::OnCopy() {
   // item with multiple representations.  This is expressed as a single
   // NSDictionary with multiple keys, one for each representation.
   NSMutableDictionary* item = [NSMutableDictionary dictionaryWithCapacity:2];
-  [item setObject:base::SysUTF16ToNSString(text)
-           forKey:(NSString*)kUTTypePlainText];
+  item[(NSString*)kUTTypePlainText] = base::SysUTF16ToNSString(text);
 
   if (write_url)
-    [item setObject:net::NSURLWithGURL(url) forKey:(NSString*)kUTTypeURL];
+    item[(NSString*)kUTTypeURL] = net::NSURLWithGURL(url);
 
   board.items = [NSArray arrayWithObject:item];
   return true;

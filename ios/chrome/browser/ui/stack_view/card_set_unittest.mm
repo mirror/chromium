@@ -355,7 +355,7 @@ TEST_F(CardSetTest, NoticeTabAddition) {
 TEST_F(CardSetTest, NoticeTabRemoval) {
   NSArray* cards = [card_set_ cards];
   NSUInteger initial_card_count = [cards count];
-  StackCard* first_card = [cards objectAtIndex:0];
+  StackCard* first_card = cards[0];
 
   OCMockObject* observer =
       [OCMockObject mockForProtocol:@protocol(CardSetObserver)];
@@ -367,7 +367,7 @@ TEST_F(CardSetTest, NoticeTabRemoval) {
   [tab_model_ removeTabAtIndex:0];
   cards = [card_set_ cards];
   EXPECT_EQ(initial_card_count - 1, [cards count]);
-  EXPECT_NE(first_card, [cards objectAtIndex:0]);
+  EXPECT_NE(first_card, cards[0]);
 
   [card_set_ setObserver:nil];
   EXPECT_OCMOCK_VERIFY(observer);
@@ -422,7 +422,7 @@ TEST_F(CardSetTest, isCardInStartStaggerRegion) {
   NSArray* cards = [card_set_ cards];
   // First card should not be collapsed into start stagger region when stack is
   // fanned out from the first card.
-  StackCard* first_card = [cards objectAtIndex:0];
+  StackCard* first_card = cards[0];
   EXPECT_FALSE([card_set_ isCardInStartStaggerRegion:first_card]);
   // Add a bunch of cards to ensure stacking, and fan them out so that there
   // is a start stack.
@@ -446,7 +446,7 @@ TEST_F(CardSetTest, isCardInEndStaggerRegion) {
                        location:GURL("http://www.example.com")
                    browserState:browser_state_.get()];
   }
-  StackCard* last_card = [cards objectAtIndex:[cards count] - 1];
+  StackCard* last_card = cards[[cards count] - 1];
   [card_set_ fanOutCards];
   // Last card should be collapsed into end region.
   EXPECT_TRUE([card_set_ isCardInEndStaggerRegion:last_card]);

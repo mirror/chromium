@@ -204,7 +204,7 @@ void GetURLForSpotlightItemID(NSString* itemID, BlockWithNSURL completion) {
 
   [query setFoundItemsHandler:^(NSArray<CSSearchableItem*>* items) {
     if ([items count] == 1) {
-      CSSearchableItem* searchableItem = [items objectAtIndex:0];
+      CSSearchableItem* searchableItem = items[0];
       if (searchableItem) {
         completion([[searchableItem attributeSet] contentURL]);
         return;

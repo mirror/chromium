@@ -31,21 +31,21 @@
     _blocks = [[NSMutableDictionary alloc] init];
 
   NSString* key = NSStringFromSelector(selector);
-  DCHECK(![_blocks objectForKey:key]) << "Only one expectation per signature";
+  DCHECK(!_blocks[key]) << "Only one expectation per signature";
   id value = [block copy];
-  [_blocks setObject:value forKey:key];
+  _blocks[key] = value;
 }
 
 - (void)removeBlockExpectationOnSelector:(SEL)selector {
   NSString* key = NSStringFromSelector(selector);
-  DCHECK([_blocks objectForKey:key])
-      << "No expectation for selector " << base::SysNSStringToUTF8(key);
+  DCHECK(_blocks[key]) << "No expectation for selector "
+                       << base::SysNSStringToUTF8(key);
   [_blocks removeObjectForKey:key];
 }
 
 - (id)blockForSelector:(SEL)selector {
   NSString* key = NSStringFromSelector(selector);
-  id block = [_blocks objectForKey:key];
+  id block = _blocks[key];
   DCHECK(block) << "Missing block expectation for selector "
                 << base::SysNSStringToUTF8(key);
   return block;
@@ -75,7 +75,7 @@
 #pragma mark - Internal methods.
 
 - (BOOL)respondsToSelector:(SEL)selector {
-  DCHECK(![_blocks objectForKey:NSStringFromSelector(selector)]);
+  DCHECK(!_blocks[NSStringFromSelector(selector)]);
   return [super respondsToSelector:selector];
 }
 

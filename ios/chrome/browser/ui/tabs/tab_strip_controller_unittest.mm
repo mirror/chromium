@@ -207,8 +207,7 @@ TEST_F(TabStripControllerTest, LoadAndDisplay) {
 
   // There should be two TabViews and one new tab button nested within the
   // parent view (which contains exactly one scroll view).
-  EXPECT_EQ(3U,
-            [[[[[controller_ view] subviews] objectAtIndex:0] subviews] count]);
+  EXPECT_EQ(3U, [[[[controller_ view] subviews][0] subviews] count]);
 }
 
 }  // namespace

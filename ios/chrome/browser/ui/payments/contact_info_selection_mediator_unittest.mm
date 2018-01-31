@@ -71,7 +71,7 @@ TEST_F(PaymentRequestContactInfoSelectionMediatorTest, TestSelectableItems) {
   // The second item must be selected.
   EXPECT_EQ(1U, mediator().selectedItemIndex);
 
-  CollectionViewItem* item_1 = [selectable_items objectAtIndex:0];
+  CollectionViewItem* item_1 = selectable_items[0];
   DCHECK([item_1 isKindOfClass:[AutofillProfileItem class]]);
   AutofillProfileItem* profile_item_1 =
       base::mac::ObjCCastStrict<AutofillProfileItem>(item_1);
@@ -87,7 +87,7 @@ TEST_F(PaymentRequestContactInfoSelectionMediatorTest, TestSelectableItems) {
   EXPECT_EQ(nil, profile_item_1.address);
   EXPECT_EQ(nil, profile_item_1.notification);
 
-  CollectionViewItem* item_2 = [selectable_items objectAtIndex:1];
+  CollectionViewItem* item_2 = selectable_items[1];
   DCHECK([item_2 isKindOfClass:[AutofillProfileItem class]]);
   AutofillProfileItem* profile_item_2 =
       base::mac::ObjCCastStrict<AutofillProfileItem>(item_2);
@@ -103,7 +103,7 @@ TEST_F(PaymentRequestContactInfoSelectionMediatorTest, TestSelectableItems) {
   EXPECT_EQ(nil, profile_item_2.address);
   EXPECT_EQ(nil, profile_item_2.notification);
 
-  CollectionViewItem* item_3 = [selectable_items objectAtIndex:2];
+  CollectionViewItem* item_3 = selectable_items[2];
   DCHECK([item_3 isKindOfClass:[AutofillProfileItem class]]);
   AutofillProfileItem* profile_item_3 =
       base::mac::ObjCCastStrict<AutofillProfileItem>(item_3);
@@ -146,7 +146,7 @@ TEST_F(PaymentRequestContactInfoSelectionMediatorTest, TestOnlyRequestedData) {
 
   NSArray<CollectionViewItem*>* selectable_items = [mediator() selectableItems];
 
-  CollectionViewItem* item = [selectable_items objectAtIndex:0];
+  CollectionViewItem* item = selectable_items[0];
   DCHECK([item isKindOfClass:[AutofillProfileItem class]]);
   AutofillProfileItem* profile_item =
       base::mac::ObjCCastStrict<AutofillProfileItem>(item);
@@ -158,7 +158,7 @@ TEST_F(PaymentRequestContactInfoSelectionMediatorTest, TestOnlyRequestedData) {
 
   // Incomplete item should display a notification since the phone number is
   // missing.
-  CollectionViewItem* incomplete_item = [selectable_items objectAtIndex:2];
+  CollectionViewItem* incomplete_item = selectable_items[2];
   DCHECK([incomplete_item isKindOfClass:[AutofillProfileItem class]]);
   AutofillProfileItem* incomplete_profile_item =
       base::mac::ObjCCastStrict<AutofillProfileItem>(incomplete_item);
@@ -170,7 +170,7 @@ TEST_F(PaymentRequestContactInfoSelectionMediatorTest, TestOnlyRequestedData) {
 
   selectable_items = [mediator() selectableItems];
 
-  item = [selectable_items objectAtIndex:0];
+  item = selectable_items[0];
   DCHECK([item isKindOfClass:[AutofillProfileItem class]]);
   profile_item = base::mac::ObjCCastStrict<AutofillProfileItem>(item);
   EXPECT_EQ(nil, profile_item.name);
@@ -187,7 +187,7 @@ TEST_F(PaymentRequestContactInfoSelectionMediatorTest, TestOnlyRequestedData) {
 
   selectable_items = [mediator() selectableItems];
 
-  item = [selectable_items objectAtIndex:0];
+  item = selectable_items[0];
   DCHECK([item isKindOfClass:[AutofillProfileItem class]]);
   profile_item = base::mac::ObjCCastStrict<AutofillProfileItem>(item);
   EXPECT_NE(nil, profile_item.name);
@@ -198,7 +198,7 @@ TEST_F(PaymentRequestContactInfoSelectionMediatorTest, TestOnlyRequestedData) {
 
   // Incomplete item should not display a notification, since the phone number
   // is not requested.
-  incomplete_item = [selectable_items objectAtIndex:2];
+  incomplete_item = selectable_items[2];
   DCHECK([incomplete_item isKindOfClass:[AutofillProfileItem class]]);
   profile_item =
       base::mac::ObjCCastStrict<AutofillProfileItem>(incomplete_item);

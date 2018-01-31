@@ -98,7 +98,7 @@ NSURLRequest* GetRequest(const std::string& body,
         [base::SysUTF8ToNSString(body) dataUsingEncoding:NSUTF8StringEncoding];
     [request setHTTPBody:post_data];
     [request setHTTPMethod:@"POST"];
-    DCHECK(![[request allHTTPHeaderFields] objectForKey:@"Content-Type"]);
+    DCHECK(![request allHTTPHeaderFields][@"Content-Type"]);
     [request setValue:@"application/x-www-form-urlencoded"
         forHTTPHeaderField:@"Content-Type"];
   }

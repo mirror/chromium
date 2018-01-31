@@ -64,7 +64,7 @@ NSString* const kMailtoHandlerManagerUserDefaultsKey =
 
 - (void)setDefaultHandlers:(NSArray<MailtoHandler*>*)defaultHandlers {
   for (MailtoHandler* app in defaultHandlers) {
-    [_handlers setObject:app forKey:[app appStoreID]];
+    _handlers[[app appStoreID]] = app;
   }
 }
 

@@ -89,7 +89,7 @@ void ReplaceSavedFavicons(NSURL* favicons_folder) {
 void WriteToDiskIfComplete(NSDictionary<NSURL*, NTPTile*>* tiles,
                            NSURL* favicons_folder) {
   for (NSURL* siteURL : tiles) {
-    NTPTile* tile = [tiles objectForKey:siteURL];
+    NTPTile* tile = tiles[siteURL];
     if (!tile.faviconFetched) {
       return;
     }
@@ -148,7 +148,7 @@ void GetFaviconsAndSave(const ntp_tiles::NTPTilesVector& most_visited_data,
         [[NTPTile alloc] initWithTitle:base::SysUTF16ToNSString(ntp_tile.title)
                                    URL:net::NSURLWithGURL(ntp_tile.url)
                               position:i];
-    [tiles setObject:tile forKey:tile.URL];
+    tiles[tile.URL] = tile;
   }
 
   NSURL* tmpFaviconURL = GetTemporaryFaviconFolderPath();
@@ -221,7 +221,7 @@ void SaveMostVisitedToDisk(const ntp_tiles::NTPTilesVector& most_visited_data,
 
 void WriteSingleUpdatedTileToDisk(NTPTile* tile) {
   NSMutableDictionary* tiles = [ReadSavedMostVisited() mutableCopy];
-  [tiles setObject:tile forKey:tile.URL];
+  tiles[tile.URL] = tile;
   WriteSavedMostVisited(tiles);
 }
 
@@ -248,7 +248,7 @@ void UpdateSingleFavicon(const GURL& site_url,
   NSDictionary* tiles = ReadSavedMostVisited();
 
   NSURL* siteNSURL = net::NSURLWithGURL(site_url);
-  NTPTile* tile = [tiles objectForKey:siteNSURL];
+  NTPTile* tile = tiles[siteNSURL];
   if (!tile) {
     return;
   }

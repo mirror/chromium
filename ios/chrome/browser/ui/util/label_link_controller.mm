@@ -214,7 +214,7 @@
     _layoutsForURLs = [[NSMutableDictionary alloc] init];
   NSURL* key = net::NSURLWithGURL(url);
   LinkLayout* layout = [[LinkLayout alloc] initWithRange:range];
-  [_layoutsForURLs setObject:layout forKey:key];
+  _layoutsForURLs[key] = layout;
   [self updateStyles];
 }
 
@@ -408,7 +408,7 @@
 
 - (NSArray*)tapRectsForURL:(GURL)url {
   NSURL* key = net::NSURLWithGURL(url);
-  LinkLayout* layout = [_layoutsForURLs objectForKey:key];
+  LinkLayout* layout = _layoutsForURLs[key];
   return layout.frames;
 }
 

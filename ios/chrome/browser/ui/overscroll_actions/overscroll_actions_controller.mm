@@ -569,11 +569,11 @@ NSString* const kOverscrollActionsDidEnd = @"OverscrollActionsDidStop";
   NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
   for (NSString* counterpartNotificationName in _lockNotificationsCounterparts
            .allKeys) {
-    [center addObserver:self
-               selector:@selector(incrementOverscrollActionLockForNotification:)
-                   name:[_lockNotificationsCounterparts
-                            objectForKey:counterpartNotificationName]
-                 object:nil];
+    [center
+        addObserver:self
+           selector:@selector(incrementOverscrollActionLockForNotification:)
+               name:_lockNotificationsCounterparts[counterpartNotificationName]
+             object:nil];
     [center addObserver:self
                selector:@selector(decrementOverscrollActionLockForNotification:)
                    name:counterpartNotificationName
@@ -643,8 +643,7 @@ NSString* const kOverscrollActionsDidEnd = @"OverscrollActionsDidStop";
 }
 
 - (void)decrementOverscrollActionLockForNotification:(NSNotification*)notif {
-  NSString* counterpartName =
-      [_lockNotificationsCounterparts objectForKey:notif.name];
+  NSString* counterpartName = _lockNotificationsCounterparts[notif.name];
   if ([_lockIncrementNotifications containsObject:counterpartName]) {
     [_lockIncrementNotifications removeObject:counterpartName];
     if (_overscrollActionLock > 0)

@@ -109,8 +109,8 @@ TEST_F(SpotlightManagerTest, testParentKeywordsForNode) {
   NSMutableArray* keywords = [[NSMutableArray alloc] init];
   [bookmarksSpotlightManager_ getParentKeywordsForNode:eNode inArray:keywords];
   EXPECT_EQ([keywords count], 2u);
-  EXPECT_TRUE([[keywords objectAtIndex:0] isEqualToString:@"21"]);
-  EXPECT_TRUE([[keywords objectAtIndex:1] isEqualToString:@"2"]);
+  EXPECT_TRUE([keywords[0] isEqualToString:@"21"]);
+  EXPECT_TRUE([keywords[1] isEqualToString:@"2"]);
 }
 
 TEST_F(SpotlightManagerTest, testBookmarksCreateSpotlightItemsWithUrl) {
@@ -134,7 +134,7 @@ TEST_F(SpotlightManagerTest, testBookmarksCreateSpotlightItemsWithUrl) {
                     favicon:nil
                defaultTitle:base::SysUTF16ToNSString(eNode->GetTitle())];
   EXPECT_TRUE([items count] == 1);
-  CSSearchableItem* item = [items objectAtIndex:0];
+  CSSearchableItem* item = items[0];
   EXPECT_NSEQ([item uniqueIdentifier], spotlightID);
   EXPECT_NSEQ([[item attributeSet] title], @"e");
   EXPECT_NSEQ([[[item attributeSet] URL] absoluteString], @"http://e.com/");
@@ -163,7 +163,7 @@ TEST_F(SpotlightManagerTest, testDefaultKeywordsExist) {
                     favicon:nil
                defaultTitle:base::SysUTF16ToNSString(aNode->GetTitle())];
   EXPECT_TRUE([items count] == 1);
-  CSSearchableItem* item = [items objectAtIndex:0];
+  CSSearchableItem* item = items[0];
   NSSet* spotlightManagerKeywords =
       [NSSet setWithArray:[[item attributeSet] keywords]];
   EXPECT_TRUE([spotlightManagerKeywords count] > 0);

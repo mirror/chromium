@@ -117,7 +117,7 @@ const CGFloat kRegularLayoutButtonWidth = 168;
                                 2);
 
   for (NSUInteger i = 0; i < self.buttons.count; ++i) {
-    NewTabPageBarButton* button = [self.buttons objectAtIndex:i];
+    NewTabPageBarButton* button = (self.buttons)[i];
     LayoutRect layout =
         LayoutRectMake(buttonPadding + (i * buttonWidth_),
                        CGRectGetWidth(self.contentView.bounds), 0, buttonWidth_,
@@ -172,7 +172,7 @@ const CGFloat kRegularLayoutButtonWidth = 168;
   if (newItems.count) {
     NSMutableArray* newButtons = [NSMutableArray array];
     for (NSUInteger i = 0; i < newItems.count; ++i) {
-      NewTabPageBarItem* item = [newItems objectAtIndex:i];
+      NewTabPageBarItem* item = newItems[i];
       NewTabPageBarButton* button = [NewTabPageBarButton buttonWithItem:item];
       button.frame = CGRectIntegral(
           CGRectMake(i * buttonWidth_, 0, buttonWidth_, kBarHeight));
@@ -206,7 +206,7 @@ const CGFloat kRegularLayoutButtonWidth = 168;
   NSUInteger buttonIndex = [self.buttons indexOfObject:button];
   if (buttonIndex != NSNotFound) {
     self.selectedIndex = buttonIndex;
-    [delegate_ newTabBarItemDidChange:[self.items objectAtIndex:buttonIndex]];
+    [delegate_ newTabBarItemDidChange:(self.items)[buttonIndex]];
   }
 }
 

@@ -223,7 +223,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
     CollectionViewItem* item = [self accountItem:identity];
     [model addItem:item toSectionWithIdentifier:SectionIdentifierAccounts];
 
-    [mutableIdentityMap setObject:item forKey:identity.gaiaID];
+    mutableIdentityMap[identity.gaiaID] = item;
   }
   _identityMap = mutableIdentityMap;
 
@@ -661,7 +661,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
 - (void)profileUpdate:(ChromeIdentity*)identity {
   CollectionViewAccountItem* item =
       base::mac::ObjCCastStrict<CollectionViewAccountItem>(
-          [_identityMap objectForKey:identity.gaiaID]);
+          _identityMap[identity.gaiaID]);
   if (!item) {
     return;
   }

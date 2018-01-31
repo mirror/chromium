@@ -306,8 +306,8 @@ TEST_F(HttpTest, FilterOutRequest) {
 
 TEST_F(HttpTest, FileSchemeNotSupported) {
   NSString* fileData = @"Hello, World!";
-  NSString* documentsDirectory = [NSSearchPathForDirectoriesInDomains(
-      NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+  NSString* documentsDirectory = NSSearchPathForDirectoriesInDomains(
+      NSDocumentDirectory, NSUserDomainMask, YES)[0];
   NSString* filePath = [documentsDirectory
       stringByAppendingPathComponent:[[NSProcessInfo processInfo]
                                          globallyUniqueString]];

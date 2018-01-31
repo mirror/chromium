@@ -79,8 +79,8 @@ TEST_F(HistoryEntriesStatusItemTest, TestDelegate) {
 
   // Tap link for more info on browsing data.
   GURL browsing_data_url(kHistoryMyActivityURL);
-  CGRect browsing_data_rect = [[[cell.labelLinkController
-      tapRectsForURL:browsing_data_url] objectAtIndex:0] CGRectValue];
+  CGRect browsing_data_rect = [[cell.labelLinkController
+      tapRectsForURL:browsing_data_url][0] CGRectValue];
   [cell.labelLinkController
       tapLabelAtPoint:CGPointMake(CGRectGetMidX(browsing_data_rect),
                                   CGRectGetMidY(browsing_data_rect))];

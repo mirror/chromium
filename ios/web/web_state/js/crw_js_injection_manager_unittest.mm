@@ -132,7 +132,7 @@ bool JsInjectionManagerTest::HasReceiverManagers(NSArray* manager_classes) {
   NSDictionary* receiver_managers =
       [web_state()->GetJSInjectionReceiver() managers];
   for (Class manager_class in manager_classes) {
-    if (![receiver_managers objectForKey:manager_class])
+    if (!receiver_managers[manager_class])
       return false;
   }
   return true;

@@ -162,7 +162,7 @@ NSString* const kPaymentRequestPickerSearchBarAccessibilityID =
 
 - (NSString*)tableView:(UITableView*)tableView
     titleForHeaderInSection:(NSInteger)section {
-  return [[self sectionTitles] objectAtIndex:section];
+  return [self sectionTitles][section];
 }
 
 - (NSInteger)tableView:(UITableView*)tableView
@@ -179,8 +179,7 @@ NSString* const kPaymentRequestPickerSearchBarAccessibilityID =
     cell.isAccessibilityElement = YES;
     cell.accessibilityIdentifier = kPaymentRequestPickerRowAccessibilityID;
   }
-  PickerRow* row =
-      [[self rowsInSection:indexPath.section] objectAtIndex:indexPath.row];
+  PickerRow* row = [self rowsInSection:indexPath.section][indexPath.row];
   cell.textLabel.text = row.label;
   cell.accessoryType = (row == self.selectedRow)
                            ? UITableViewCellAccessoryCheckmark
@@ -249,8 +248,7 @@ NSString* const kPaymentRequestPickerSearchBarAccessibilityID =
     }
   }
 
-  self.selectedRow =
-      [[self rowsInSection:indexPath.section] objectAtIndex:indexPath.row];
+  self.selectedRow = [self rowsInSection:indexPath.section][indexPath.row];
 
   UITableViewCell* cell = [self.tableView cellForRowAtIndexPath:indexPath];
   cell.accessoryType = UITableViewCellAccessoryCheckmark;
@@ -299,7 +297,7 @@ NSString* const kPaymentRequestPickerSearchBarAccessibilityID =
     if (!sectionRows)
       sectionRows = [[NSMutableArray alloc] init];
     [sectionRows addObject:row];
-    [sectionTitleToSectionRowsMap setObject:sectionRows forKey:sectionTitle];
+    sectionTitleToSectionRowsMap[sectionTitle] = sectionRows;
   }
 
   self.sectionTitleToSectionRowsMap = sectionTitleToSectionRowsMap;
@@ -333,7 +331,7 @@ NSString* const kPaymentRequestPickerSearchBarAccessibilityID =
   NSArray<NSString*>* sectionTitles = [self sectionTitles];
   DCHECK(section >= 0 && section < static_cast<NSInteger>(sectionTitles.count));
 
-  NSString* sectionTitle = [sectionTitles objectAtIndex:section];
+  NSString* sectionTitle = sectionTitles[section];
 
   return self.sectionTitleToSectionRowsMap[sectionTitle];
 }

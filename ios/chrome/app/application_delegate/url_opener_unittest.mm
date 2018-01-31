@@ -306,15 +306,13 @@ TEST_F(URLOpenerTest, HandleOpenURL) {
           NSURL* testUrl = urlString == [NSNull null]
                                ? nil
                                : [NSURL URLWithString:urlString];
-          BOOL isValid = [[urlsToTest objectForKey:urlString] boolValue];
+          BOOL isValid = [urlsToTest[urlString] boolValue];
           NSMutableDictionary* options = [[NSMutableDictionary alloc] init];
           if (source != [NSNull null]) {
-            [options setObject:source
-                        forKey:UIApplicationOpenURLOptionsSourceApplicationKey];
+            options[UIApplicationOpenURLOptionsSourceApplicationKey] = source;
           }
           if (annotation != [NSNull null]) {
-            [options setObject:annotation
-                        forKey:UIApplicationOpenURLOptionsAnnotationKey];
+            options[UIApplicationOpenURLOptionsAnnotationKey] = annotation;
           }
           ChromeAppStartupParameters* params = [ChromeAppStartupParameters
               newChromeAppStartupParametersWithURL:testUrl

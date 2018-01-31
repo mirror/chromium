@@ -112,8 +112,8 @@ NSString* const kRootObjectKey = @"root";  // Key for the root object.
           directory:(NSString*)directory
         immediately:(BOOL)immediately {
   NSString* sessionPath = [[self class] sessionPathForDirectory:directory];
-  BOOL hadPendingSession = [_pendingSessions objectForKey:sessionPath] != nil;
-  [_pendingSessions setObject:factory forKey:sessionPath];
+  BOOL hadPendingSession = _pendingSessions[sessionPath] != nil;
+  _pendingSessions[sessionPath] = factory;
   if (immediately) {
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
     [self performSaveToPathInBackground:sessionPath];
@@ -190,11 +190,11 @@ NSString* const kRootObjectKey = @"root";  // Key for the root object.
 // Do the work of saving on a background thread.
 - (void)performSaveToPathInBackground:(NSString*)sessionPath {
   DCHECK(sessionPath);
-  DCHECK([_pendingSessions objectForKey:sessionPath] != nil);
+  DCHECK(_pendingSessions[sessionPath] != nil);
 
   // Serialize to NSData on the main thread to avoid accessing potentially
   // non-threadsafe objects on a background thread.
-  SessionIOSFactory factory = [_pendingSessions objectForKey:sessionPath];
+  SessionIOSFactory factory = _pendingSessions[sessionPath];
   [_pendingSessions removeObjectForKey:sessionPath];
   SessionIOS* session = factory();
 

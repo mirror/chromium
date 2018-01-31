@@ -117,13 +117,13 @@ const net::BackoffEntry::Policy kPollingBackoffPolicy = {
   // from its dealloc method, because the dealloc itself would never be called.
   NSValue* weakReferenceToObserver =
       [NSValue valueWithNonretainedObject:observer];
-  NSMutableSet* observers = [_installedAppObservers objectForKey:scheme];
+  NSMutableSet* observers = _installedAppObservers[scheme];
   if (!observers)
     observers = [[NSMutableSet alloc] init];
   if ([observers containsObject:weakReferenceToObserver])
     return;
   [observers addObject:weakReferenceToObserver];
-  [_installedAppObservers setObject:observers forKey:scheme];
+  _installedAppObservers[scheme] = observers;
   [_notificationCenter addObserver:observer
                           selector:notificationSelector
                               name:scheme
@@ -140,7 +140,7 @@ const net::BackoffEntry::Policy kPollingBackoffPolicy = {
   [_notificationCenter removeObserver:observer];
   for (NSString* scheme in [_installedAppObservers allKeys]) {
     DCHECK([scheme isKindOfClass:[NSString class]]);
-    NSMutableSet* observers = [_installedAppObservers objectForKey:scheme];
+    NSMutableSet* observers = _installedAppObservers[scheme];
     if ([observers containsObject:weakReferenceToObserver]) {
       [observers removeObject:weakReferenceToObserver];
       if ([observers count] == 0) {

@@ -105,7 +105,7 @@ SerializableUserDataImpl::GetDecodedLegacyValues(NSCoder* coder) {
       GetLegacyKeyConversion();
   for (NSString* legacy_key in [legacy_key_conversion allKeys]) {
     id<NSCoding> value = [coder decodeObjectForKey:legacy_key];
-    NSString* new_key = [legacy_key_conversion objectForKey:legacy_key];
+    NSString* new_key = legacy_key_conversion[legacy_key];
     legacy_values[new_key] = value;
   }
   return [legacy_values copy];
@@ -127,12 +127,12 @@ void SerializableUserDataManagerImpl::AddSerializableData(id<NSCoding> data,
                                                           NSString* key) {
   DCHECK(data);
   DCHECK(key.length);
-  [data_ setObject:data forKey:key];
+  data_[key] = data;
 }
 
 id<NSCoding> SerializableUserDataManagerImpl::GetValueForSerializationKey(
     NSString* key) {
-  return [data_ objectForKey:key];
+  return data_[key];
 }
 
 std::unique_ptr<SerializableUserData>

@@ -73,8 +73,8 @@ NSString* const kEligibleDomainsKey = @"EligibleDomains";
     return;
   }
 
-  NSArray* eligibleDomains = base::mac::ObjCCastStrict<NSArray>(
-      [configData objectForKey:kEligibleDomainsKey]);
+  NSArray* eligibleDomains =
+      base::mac::ObjCCastStrict<NSArray>(configData[kEligibleDomainsKey]);
   if (eligibleDomains) {
     for (id item in eligibleDomains) {
       NSString* domain = base::mac::ObjCCastStrict<NSString>(item);

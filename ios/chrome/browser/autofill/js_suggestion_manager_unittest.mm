@@ -89,7 +89,7 @@ TEST_F(JsSuggestionManagerTest, SelectElementInTabOrder) {
   // clang-format on
 
   for (NSString* element_id : next_expected_ids) {
-    NSString* expected_id = [next_expected_ids objectForKey:element_id];
+    NSString* expected_id = next_expected_ids[element_id];
     EXPECT_NSEQ(expected_id,
                 ExecuteJavaScriptWithFormat(
                     @"var elements=document.getElementsByTagName('input');"
@@ -111,7 +111,7 @@ TEST_F(JsSuggestionManagerTest, SelectElementInTabOrder) {
       << "element list.";
 
   for (NSString* element_id : next_expected_ids) {
-    NSString* expected_id = [next_expected_ids objectForKey:element_id];
+    NSString* expected_id = next_expected_ids[element_id];
     if ([expected_id isEqualToString:@"null"]) {
       // If the expected next element is null, the focus is not moved.
       expected_id = element_id;
@@ -154,7 +154,7 @@ TEST_F(JsSuggestionManagerTest, SelectElementInTabOrder) {
   // clang-format on
 
   for (NSString* element_id : prev_expected_ids) {
-    NSString* expected_id = [prev_expected_ids objectForKey:element_id];
+    NSString* expected_id = prev_expected_ids[element_id];
     EXPECT_NSEQ(
         expected_id,
         ExecuteJavaScriptWithFormat(
@@ -177,7 +177,7 @@ TEST_F(JsSuggestionManagerTest, SelectElementInTabOrder) {
       << "element list";
 
   for (NSString* element_id : prev_expected_ids) {
-    NSString* expected_id = [prev_expected_ids objectForKey:element_id];
+    NSString* expected_id = prev_expected_ids[element_id];
     if ([expected_id isEqualToString:@"null"]) {
       // If the expected previous element is null, the focus is not moved.
       expected_id = element_id;

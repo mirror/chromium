@@ -63,9 +63,9 @@
     NSArray* pair = [componentPair componentsSeparatedByString:@"="];
     NSString* key = [[pair firstObject] stringByRemovingPercentEncoding];
     NSString* value = [[pair lastObject] stringByRemovingPercentEncoding];
-    [components setObject:value forKey:key];
+    components[key] = value;
   }
-  NSString* authorizationCode = [components objectForKey:@"code"];
+  NSString* authorizationCode = components[@"code"];
 
   [(RemotingOAuthAuthentication*)RemotingService.instance.authentication
       authenticateWithAuthorizationCode:authorizationCode];

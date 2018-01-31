@@ -75,7 +75,7 @@ void CleanOldPendingLogs() {
 
     NSDictionary* properties =
         [file_manager attributesOfItemAtPath:[file_url path] error:nil];
-    NSDate* mod_date = [properties objectForKey:NSFileModificationDate];
+    NSDate* mod_date = properties[NSFileModificationDate];
 
     [files_and_properties addObject:@{
       @"path" : file,
@@ -86,16 +86,14 @@ void CleanOldPendingLogs() {
   // Sort files by modification date. Older files will be first.
   NSArray* sorted_files =
       [files_and_properties sortedArrayUsingComparator:^(id path1, id path2) {
-        return [[path1 objectForKey:@"lastModDate"]
-            compare:[path2 objectForKey:@"lastModDate"]];
+        return [path1[@"lastModDate"] compare:path2[@"lastModDate"]];
       }];
   if (kMaxFileNumber >= [sorted_files count])
     return;
   NSUInteger first_file_to_keep = [sorted_files count] - kMaxFileNumber;
   for (NSUInteger file_index = 0; file_index < first_file_to_keep;
        file_index++) {
-    NSString* path =
-        [[sorted_files objectAtIndex:file_index] objectForKey:@"path"];
+    NSString* path = sorted_files[file_index][@"path"];
     NSURL* file_url =
         [log_dir_url URLByAppendingPathComponent:path isDirectory:NO];
     [file_manager removeItemAtURL:file_url error:nil];

@@ -97,10 +97,10 @@ CGRect StringValueToRect(NSString* rectString) {
   if ([items count] != 4) {
     return CGRectNull;
   }
-  rectTop = [[items objectAtIndex:0] doubleValue];
-  rectBottom = [[items objectAtIndex:1] doubleValue];
-  rectLeft = [[items objectAtIndex:2] doubleValue];
-  rectRight = [[items objectAtIndex:3] doubleValue];
+  rectTop = [items[0] doubleValue];
+  rectBottom = [items[1] doubleValue];
+  rectLeft = [items[2] doubleValue];
+  rectRight = [items[3] doubleValue];
   if (isnan(rectTop) || isinf(rectTop) || isnan(rectBottom) ||
       isinf(rectBottom) || isnan(rectLeft) || isinf(rectLeft) ||
       isnan(rectRight) || isinf(rectRight) || rectRight <= rectLeft ||

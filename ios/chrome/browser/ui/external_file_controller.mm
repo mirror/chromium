@@ -67,7 +67,7 @@ const CFTimeInterval kSecondsPerDay = 60 * 60 * 24;
   if ([paths count] < 1)
     return nil;
 
-  NSString* documentsDirectoryPath = [paths objectAtIndex:0];
+  NSString* documentsDirectoryPath = paths[0];
   return [documentsDirectoryPath stringByAppendingPathComponent:kInboxPath];
 }
 
@@ -103,7 +103,7 @@ const CFTimeInterval kSecondsPerDay = 60 * 60 * 24;
                   << base::SysNSStringToUTF8([error description]);
       continue;
     }
-    NSDate* date = [attributesDictionary objectForKey:NSFileCreationDate];
+    NSDate* date = attributesDictionary[NSFileCreationDate];
     if (-[date timeIntervalSinceNow] <= (ageInDays * kSecondsPerDay))
       continue;
     // Removes the file.

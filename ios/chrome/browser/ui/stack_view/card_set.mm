@@ -121,7 +121,7 @@ const CGFloat kMaxCardStaggerPercentage = 0.35;
   if (currentTabIndex == NSNotFound)
     return nil;
   DCHECK(currentTabIndex < [self.cards count]);
-  return [self.cards objectAtIndex:currentTabIndex];
+  return (self.cards)[currentTabIndex];
 }
 
 - (void)setCurrentCard:(StackCard*)card {
@@ -411,7 +411,7 @@ const CGFloat kMaxCardStaggerPercentage = 0.35;
 
 - (void)removeCardAtIndex:(NSUInteger)index {
   DCHECK(index < [self.cards count]);
-  StackCard* card = [self.cards objectAtIndex:index];
+  StackCard* card = (self.cards)[index];
   [self.observer cardSet:self willRemoveCard:card atIndex:index];
   [stackModel_ removeCard:card];
 
@@ -455,7 +455,7 @@ const CGFloat kMaxCardStaggerPercentage = 0.35;
   NSUInteger indexOfCard = [self.cards indexOfObject:card];
   DCHECK(indexOfCard != NSNotFound);
   for (NSUInteger i = indexOfCard + 1; i < [self.cards count]; ++i) {
-    StackCard* nextCard = [self.cards objectAtIndex:i];
+    StackCard* nextCard = (self.cards)[i];
     if (nextCard.viewIsLive && nextCard.view.superview) {
       cardAboveNewCard = nextCard;
       break;
@@ -614,7 +614,7 @@ const CGFloat kMaxCardStaggerPercentage = 0.35;
   NSUInteger tabIndex = [tabModel_ indexOfTab:tab];
   if (tabIndex == NSNotFound)
     return nil;
-  return [self.cards objectAtIndex:tabIndex];
+  return (self.cards)[tabIndex];
 }
 
 - (void)setStackModelForTesting:(CardStackLayoutManager*)stackModel {

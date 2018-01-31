@@ -58,7 +58,7 @@ TEST_F(PaymentRequestPaymentMethodSelectionMediatorTest, TestSelectableItems) {
   // The first item must be selected.
   EXPECT_EQ(0U, mediator.selectedItemIndex);
 
-  CollectionViewItem* item_1 = [[mediator selectableItems] objectAtIndex:0];
+  CollectionViewItem* item_1 = [mediator selectableItems][0];
   DCHECK([item_1 isKindOfClass:[PaymentMethodItem class]]);
   PaymentMethodItem* payment_method_item_1 =
       base::mac::ObjCCastStrict<PaymentMethodItem>(item_1);
@@ -76,7 +76,7 @@ TEST_F(PaymentRequestPaymentMethodSelectionMediatorTest, TestSelectableItems) {
   EXPECT_EQ(nil, payment_method_item_1.notification);
   EXPECT_TRUE(payment_method_item_1.complete);
 
-  CollectionViewItem* item_2 = [[mediator selectableItems] objectAtIndex:1];
+  CollectionViewItem* item_2 = [mediator selectableItems][1];
   DCHECK([item_2 isKindOfClass:[PaymentMethodItem class]]);
   PaymentMethodItem* payment_method_item_2 =
       base::mac::ObjCCastStrict<PaymentMethodItem>(item_2);
@@ -127,14 +127,14 @@ TEST_F(PaymentRequestPaymentMethodSelectionMediatorTest, TestNoSelectedItem) {
   // The selected item index must be invalid.
   EXPECT_EQ(NSUIntegerMax, mediator.selectedItemIndex);
 
-  CollectionViewItem* item_1 = [[mediator selectableItems] objectAtIndex:0];
+  CollectionViewItem* item_1 = [mediator selectableItems][0];
   DCHECK([item_1 isKindOfClass:[PaymentMethodItem class]]);
   PaymentMethodItem* payment_method_item_1 =
       base::mac::ObjCCastStrict<PaymentMethodItem>(item_1);
   EXPECT_FALSE([payment_method_item_1.notification isEqualToString:@""]);
   EXPECT_FALSE(payment_method_item_1.complete);
 
-  CollectionViewItem* item_2 = [[mediator selectableItems] objectAtIndex:0];
+  CollectionViewItem* item_2 = [mediator selectableItems][0];
   DCHECK([item_2 isKindOfClass:[PaymentMethodItem class]]);
   PaymentMethodItem* payment_method_item_2 =
       base::mac::ObjCCastStrict<PaymentMethodItem>(item_2);

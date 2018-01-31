@@ -216,8 +216,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
                       : MDCCollectionViewCellAccessoryNone;
 
     CollectionViewTextItem* textItem =
-        base::mac::ObjCCastStrict<CollectionViewTextItem>(
-            [languageItems objectAtIndex:ii]);
+        base::mac::ObjCCastStrict<CollectionViewTextItem>(languageItems[ii]);
     if (textItem.accessoryType != type) {
       textItem.accessoryType = type;
       [modifiedItems addObject:textItem];

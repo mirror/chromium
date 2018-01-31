@@ -145,7 +145,7 @@ const int kNumberOfURLsToSend = 1;
   DCHECK(tab);
   if (tab.webState->GetBrowserState()->IsOffTheRecord())
     return;
-  NSString* url = [notification.userInfo objectForKey:kTabUrlKey];
+  NSString* url = (notification.userInfo)[kTabUrlKey];
   DCHECK(url);
   [self recordURL:url forTabId:tab.tabId pending:NO];
 }
@@ -155,13 +155,13 @@ const int kNumberOfURLsToSend = 1;
   DCHECK(tab);
   if (tab.webState->GetBrowserState()->IsOffTheRecord())
     return;
-  NSString* url = [notification.userInfo objectForKey:kTabUrlKey];
+  NSString* url = (notification.userInfo)[kTabUrlKey];
   DCHECK(url);
   [self recordURL:url forTabId:tab.tabId pending:YES];
 }
 
 - (void)removeTabId:(NSString*)tabId {
-  NSString* key = [breakpadKeyByTabId_ objectForKey:tabId];
+  NSString* key = breakpadKeyByTabId_[tabId];
   if (!key)
     return;
   breakpad_helper::RemoveReportParameter(key);
@@ -174,11 +174,11 @@ const int kNumberOfURLsToSend = 1;
 - (void)recordURL:(NSString*)url
          forTabId:(NSString*)tabId
           pending:(BOOL)pending {
-  NSString* breakpadKey = [breakpadKeyByTabId_ objectForKey:tabId];
+  NSString* breakpadKey = breakpadKeyByTabId_[tabId];
   BOOL reusingKey = NO;
   if (!breakpadKey) {
     // Get the first breakpad key and push it back at the end of the keys.
-    breakpadKey = [breakpadKeys_ objectAtIndex:0];
+    breakpadKey = breakpadKeys_[0];
     [breakpadKeys_ removeObject:breakpadKey];
     [breakpadKeys_ addObject:breakpadKey];
     // Remove the current mapping to the breakpad key.
@@ -188,7 +188,7 @@ const int kNumberOfURLsToSend = 1;
       [breakpadKeyByTabId_ removeObjectForKey:tabId];
     }
     // Associate the breakpad key to the tab id.
-    [breakpadKeyByTabId_ setObject:breakpadKey forKey:tabId];
+    breakpadKeyByTabId_[tabId] = breakpadKey;
   }
   NSString* pendingKey = PendingURLKeyForKey(breakpadKey);
   if (pending) {
@@ -275,24 +275,23 @@ const int kNumberOfURLsToSend = 1;
 - (void)setTabInfo:(NSString*)key
          withValue:(NSString*)value
             forTab:(NSString*)tabId {
-  NSMutableDictionary* tabCurrentState =
-      [tabCurrentStateByTabId_ objectForKey:tabId];
+  NSMutableDictionary* tabCurrentState = tabCurrentStateByTabId_[tabId];
   if (tabCurrentState == nil) {
     NSMutableDictionary* currentStateOfNewTab =
         [[NSMutableDictionary alloc] init];
-    [tabCurrentStateByTabId_ setObject:currentStateOfNewTab forKey:tabId];
-    tabCurrentState = [tabCurrentStateByTabId_ objectForKey:tabId];
+    tabCurrentStateByTabId_[tabId] = currentStateOfNewTab;
+    tabCurrentState = tabCurrentStateByTabId_[tabId];
   }
-  [tabCurrentState setObject:value forKey:key];
+  tabCurrentState[key] = value;
 }
 
 - (id)getTabInfo:(NSString*)key forTab:(NSString*)tabId {
-  NSMutableDictionary* tabValues = [tabCurrentStateByTabId_ objectForKey:tabId];
-  return [tabValues objectForKey:key];
+  NSMutableDictionary* tabValues = tabCurrentStateByTabId_[tabId];
+  return tabValues[key];
 }
 
 - (void)removeTabInfo:(NSString*)key forTab:(NSString*)tabId {
-  [[tabCurrentStateByTabId_ objectForKey:tabId] removeObjectForKey:key];
+  [tabCurrentStateByTabId_[tabId] removeObjectForKey:key];
 }
 
 - (void)showingExportableDocument:(NSNotification*)notification {

@@ -99,7 +99,7 @@ NSString* const kShortcutQRScanner = @"OpenQRScanner";
     // App was launched by iOS as the result of a tap on a Spotlight Search
     // result.
     NSString* itemID =
-        [userActivity.userInfo objectForKey:CSSearchableItemActivityIdentifier];
+        (userActivity.userInfo)[CSSearchableItemActivityIdentifier];
     spotlight::Domain domain = spotlight::SpotlightDomainFromString(itemID);
     UMA_HISTOGRAM_ENUMERATION("IOS.Spotlight.Origin", domain,
                               spotlight::DOMAIN_COUNT);
