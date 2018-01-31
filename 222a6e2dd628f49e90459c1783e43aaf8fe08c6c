@@ -1,0 +1,305 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fde85d2_db1cad32",
+        "filename": "components/subresource_filter/core/common/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-31T21:31:45Z",
+      "side": 1,
+      "message": "Maybe just include both these binaries in the same is_linux ||... conditional.",
+      "revId": "222a6e2dd628f49e90459c1783e43aaf8fe08c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90eccdeb_3af736af",
+        "filename": "components/subresource_filter/core/common/document_subresource_filter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-31T21:31:45Z",
+      "side": 1,
+      "message": "Can you document it",
+      "revId": "222a6e2dd628f49e90459c1783e43aaf8fe08c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7498fc39_95738fcd",
+        "filename": "components/subresource_filter/core/common/document_subresource_filter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-31T21:31:45Z",
+      "side": 1,
+      "message": "Do you mind adding a unit test for this new method?",
+      "revId": "222a6e2dd628f49e90459c1783e43aaf8fe08c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "337f8e27_d40e497c",
+        "filename": "components/subresource_filter/core/common/indexed_ruleset.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-31T21:31:45Z",
+      "side": 1,
+      "message": "Do you mind adding a unit test for this new method?",
+      "revId": "222a6e2dd628f49e90459c1783e43aaf8fe08c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95f15bb2_c73442cb",
+        "filename": "components/subresource_filter/core/common/tools/filter_tool.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-31T21:31:45Z",
+      "side": 1,
+      "message": "A bunch of things are included in the header already",
+      "revId": "222a6e2dd628f49e90459c1783e43aaf8fe08c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "442f7027_00fdedc9",
+        "filename": "components/subresource_filter/core/common/tools/filter_tool.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-31T21:31:45Z",
+      "side": 1,
+      "message": "included in the header already",
+      "revId": "222a6e2dd628f49e90459c1783e43aaf8fe08c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87c070db_27a3fea6",
+        "filename": "components/subresource_filter/core/common/tools/filter_tool.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-31T21:31:45Z",
+      "side": 1,
+      "message": "No need for this temporary, just inline it at the end",
+      "revId": "222a6e2dd628f49e90459c1783e43aaf8fe08c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c483ae6_c5d6fe8d",
+        "filename": "components/subresource_filter/core/common/tools/filter_tool.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-31T21:31:45Z",
+      "side": 1,
+      "message": "true /* print_each_request */, same elsewhere",
+      "revId": "222a6e2dd628f49e90459c1783e43aaf8fe08c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbdf1545_a3ca546e",
+        "filename": "components/subresource_filter/core/common/tools/filter_tool.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-31T21:31:45Z",
+      "side": 1,
+      "message": "optional: braces around the if would improve readability for me.",
+      "revId": "222a6e2dd628f49e90459c1783e43aaf8fe08c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f22fcbe7_6a16be00",
+        "filename": "components/subresource_filter/core/common/tools/filter_tool.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-31T21:31:45Z",
+      "side": 1,
+      "message": "Here and elsewhere you CHECK, fail with a error describing the issue. Actually, I think CHECKs logging is omitted in a official build. Maybe just use LOG(FATAL) or something?",
+      "revId": "222a6e2dd628f49e90459c1783e43aaf8fe08c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38104418_ec1eb744",
+        "filename": "components/subresource_filter/core/common/tools/filter_tool.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-31T21:31:45Z",
+      "side": 1,
+      "message": "Would be helpful to pull out strings[0],[1],[2] into locals to name them.",
+      "revId": "222a6e2dd628f49e90459c1783e43aaf8fe08c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d51da1f2_5c856081",
+        "filename": "components/subresource_filter/core/common/tools/filter_tool.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-31T21:31:45Z",
+      "side": 1,
+      "message": "hmm, but it returns void in the signature?",
+      "range": {
+        "startLine": 35,
+        "startChar": 41,
+        "endLine": 35,
+        "endChar": 55
+      },
+      "revId": "222a6e2dd628f49e90459c1783e43aaf8fe08c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc8d17e4_78fd4525",
+        "filename": "components/subresource_filter/core/common/tools/filter_tool.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-31T21:31:45Z",
+      "side": 1,
+      "message": "Which origin is this? The requesting context? The name should be a bit more descriptive. Maybe document_origin or context_origin",
+      "range": {
+        "startLine": 41,
+        "startChar": 32,
+        "endLine": 41,
+        "endChar": 38
+      },
+      "revId": "222a6e2dd628f49e90459c1783e43aaf8fe08c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e3330bc_4ef340de",
+        "filename": "components/subresource_filter/core/common/tools/filter_tool.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-31T21:31:45Z",
+      "side": 1,
+      "message": "base/macros",
+      "revId": "222a6e2dd628f49e90459c1783e43aaf8fe08c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89ba05fa_c580d75c",
+        "filename": "components/subresource_filter/core/common/tools/filter_tool_main.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-31T21:31:45Z",
+      "side": 1,
+      "message": "Remove whitespace lines 70 and 71",
+      "revId": "222a6e2dd628f49e90459c1783e43aaf8fe08c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0adec0d_ad170e1f",
+        "filename": "components/subresource_filter/core/common/tools/filter_tool_main.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-31T21:31:45Z",
+      "side": 1,
+      "message": "As mentioned previously, I think CHECK logging is removed in official builds.",
+      "revId": "222a6e2dd628f49e90459c1783e43aaf8fe08c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab3b2882_598a9d73",
+        "filename": "components/subresource_filter/core/common/tools/filter_tool_main.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-31T21:31:45Z",
+      "side": 1,
+      "message": "Hmm, prefer to add \"match\" here and move it closer to the top of the function.",
+      "revId": "222a6e2dd628f49e90459c1783e43aaf8fe08c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
