@@ -220,6 +220,7 @@ bool GLImageIOSurface::Initialize(IOSurfaceRef io_surface,
                                   gfx::BufferFormat format) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(!io_surface_);
+  CHECK(io_surface);
 
   if (!ValidInternalFormat(internalformat_)) {
     LOG(ERROR) << "Invalid internalformat: "
