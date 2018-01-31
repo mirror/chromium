@@ -1235,6 +1235,7 @@ bool ChromeContentBrowserClient::ShouldBypassDocumentBlocking(
   // of LinkDoctor in error pages), since the site is not critical to protect.
   if (resource_type == content::RESOURCE_TYPE_SUB_RESOURCE &&
       initiator.unique() && url == google_util::LinkDoctorBaseURL()) {
+    LOG(INFO) << "bypassing document blocking";
     return true;
   }
 

@@ -40,6 +40,7 @@
 #include "net/url_request/url_request_interceptor.h"
 #include "net/url_request/url_request_job.h"
 #include "services/network/public/cpp/features.h"
+#include "net/url_request/url_request_test_job.h"
 
 using base::Bind;
 using base::BindOnce;
@@ -239,7 +240,10 @@ class BreakableCorrectionInterceptor : public URLRequestInterceptor {
   URLRequestJob* MaybeInterceptRequest(
       URLRequest* request,
       NetworkDelegate* network_delegate) const override {
+    LOG(INFO) << "Request URL for interceptor: " << request->url().spec();
     if (net_error_ != net::OK) {
+      LOG(INFO) << "BreakableCorrectionInterceptor starting "
+                   "DelayableURLRequestFailedJob";
       DelayableURLRequestFailedJob* job =
           new DelayableURLRequestFailedJob(
               request, network_delegate, net_error_, delay_requests_,
@@ -248,6 +252,8 @@ class BreakableCorrectionInterceptor : public URLRequestInterceptor {
         delayed_requests_.insert(job);
       return job;
     } else {
+      LOG(INFO) << "BreakableCorrectionInterceptor starting "
+                   "DelayableURLRequestMockHTTPJob";
       DelayableURLRequestMockHTTPJob* job =
           new DelayableURLRequestMockHTTPJob(
               request, network_delegate, mock_corrections_file_path_,
@@ -359,6 +365,7 @@ void DnsProbeBrowserTestIOThreadHelper::SetUpOnIOThread(IOThread* io_thread) {
 
   interceptor_ =
       new BreakableCorrectionInterceptor(mock_corrections_file_path_);
+  LOG(INFO) << "Link doctor base URL: " << LinkDoctorBaseURL();
   URLRequestFilter::GetInstance()->AddUrlInterceptor(
       LinkDoctorBaseURL(),
       std::unique_ptr<URLRequestInterceptor>(interceptor_));
@@ -434,6 +441,9 @@ class DnsProbeBrowserTest : public InProcessBrowserTest {
   void TearDownOnMainThread() override;
 
  protected:
+  bool InterceptURLLoaderRequest(
+      content::URLLoaderInterceptor::RequestParams* params);
+
   // Sets the browser object that other methods apply to, and that has the
   // DnsProbeStatus messages of its currently active tab monitored.
   void SetActiveBrowser(Browser* browser);
@@ -514,11 +524,12 @@ void DnsProbeBrowserTest::SetUpOnMainThread() {
   if (base::FeatureList::IsEnabled(network::features::kNetworkService)) {
     // Just instantiating this helper is enough to respond to
     // http(s)://mock.failed.request requests.
-    url_loader_interceptor_ =
-        std::make_unique<content::URLLoaderInterceptor>(base::BindRepeating(
-            [](content::URLLoaderInterceptor::RequestParams* params) {
-              return false;
-            }));
+    // NOTE to blundell: Needed to extend to subresources to intercept the Link
+    // Doctor requests.
+    url_loader_interceptor_ = std::make_unique<content::URLLoaderInterceptor>(
+        base::BindRepeating(&DnsProbeBrowserTest::InterceptURLLoaderRequest,
+                            base::Unretained(this)),
+        true, true);
   }
 
   SetActiveBrowser(browser());
@@ -535,6 +546,39 @@ void DnsProbeBrowserTest::TearDownOnMainThread() {
 
   NetErrorTabHelper::set_state_for_testing(
       NetErrorTabHelper::TESTING_DEFAULT);
+}
+
+bool DnsProbeBrowserTest::InterceptURLLoaderRequest(
+    content::URLLoaderInterceptor::RequestParams* params) {
+  LOG(INFO) << "Received request for " << params->url_request.url.spec();
+  if (params->url_request.url.spec() == LinkDoctorBaseURL().spec()) {
+    LOG(INFO) << "link doctor URL!";
+    // TODO: This probably isn't the right place to start the
+    // embedded test server.
+    EXPECT_TRUE(embedded_test_server()->Start());
+    // TODO: This code is extracted from
+    // errorpage_browsertest.cc:WriteFileToUrlLoader(). Should
+    // reuse instead.
+    // TODO: This needs to be generalized to handle the case where
+    // corrections are supposed to fail.
+    base::ScopedAllowBlockingForTesting allow_blocking;
+
+    std::string contents;
+    const bool result =
+        base::ReadFileToString(GetMockLinkDoctorFilePath(), &contents);
+    EXPECT_TRUE(result);
+
+    GURL url = embedded_test_server()->GetURL("mock.http", "/title2.html");
+    LOG(INFO) << "Mock URL: " << url;
+    std::string placeholder = "http://mock.http/title2.html";
+    contents.replace(contents.find(placeholder), placeholder.length(),
+                     url.spec());
+
+    content::URLLoaderInterceptor::WriteResponse(
+        net::URLRequestTestJob::test_headers(), contents, params->client.get());
+    return true;
+  }
+  return false;
 }
 
 void DnsProbeBrowserTest::SetActiveBrowser(Browser* browser) {
@@ -592,6 +636,7 @@ void DnsProbeBrowserTest::NavigateToOtherError(int num_navigations) {
       active_browser_,
       URLRequestFailedJob::GetMockHttpUrl(net::ERR_CONNECTION_REFUSED),
       num_navigations);
+  LOG(INFO) << "Navigated to failed URL";
 }
 
 void DnsProbeBrowserTest::SetMockDnsClientRules(
@@ -666,7 +711,13 @@ void DnsProbeBrowserTest::ExpectDisplayingLocalErrorPage(
 
 void DnsProbeBrowserTest::ExpectDisplayingCorrections(
     const std::string& status_text) {
-  EXPECT_TRUE(PageContains("http://mock.http/title2.html"));
+  GURL url;
+  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
+    url = embedded_test_server()->GetURL("mock.http", "/title2.html");
+  } else {
+    url = GURL("http://mock.http/title2.html");
+  }
+  EXPECT_TRUE(PageContains(url.spec()));
   EXPECT_TRUE(PageContains(status_text));
 }
 
