@@ -54,6 +54,15 @@ namespace cbor {
 
 class CBOR_EXPORT CBORWriter {
  public:
+  enum class Mode {
+    // Encode CTAP CBOR, where keys in a dictionary is ordered as in
+    // CTAP spec 2.0.
+    CTAP,
+    // Encode Canonical CBOR, as defined in
+    // https://tools.ietf.org/html/rfc7049#section-3.9.
+    CANONICAL,
+  };
+
   // Default that should be sufficiently large for most use cases.
   static constexpr size_t kDefaultMaxNestingDepth = 16;
 
@@ -67,10 +76,11 @@ class CBOR_EXPORT CBORWriter {
   // depths of 0.
   static base::Optional<std::vector<uint8_t>> Write(
       const CBORValue& node,
-      size_t max_nesting_level = kDefaultMaxNestingDepth);
+      size_t max_nesting_level = kDefaultMaxNestingDepth,
+      Mode mode = Mode::CTAP);
 
  private:
-  explicit CBORWriter(std::vector<uint8_t>* cbor);
+  explicit CBORWriter(std::vector<uint8_t>* cbor, Mode mode);
 
   // Called recursively to build the CBOR bytestring. When completed,
   // |encoded_cbor_| will contain the CBOR.
@@ -89,8 +99,13 @@ class CBOR_EXPORT CBORWriter {
   // Get the number of bytes needed to store the unsigned integer.
   size_t GetNumUintBytes(uint64_t value);
 
+  // Encode Type::MAP CBORValue |node|, in current encoding |mode_|.
+  bool EncodeMap(const CBORValue& node, int max_nesting_level);
+
   // Holds the encoded CBOR data.
   std::vector<uint8_t>* encoded_cbor_;
+
+  Mode mode_;
 
   DISALLOW_COPY_AND_ASSIGN(CBORWriter);
 };

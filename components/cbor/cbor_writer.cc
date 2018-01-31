@@ -15,17 +15,18 @@ namespace cbor {
 CBORWriter::~CBORWriter() {}
 
 // static
-base::Optional<std::vector<uint8_t>> CBORWriter::Write(
-    const CBORValue& node,
-    size_t max_nesting_level) {
+base::Optional<std::vector<uint8_t>> CBORWriter::Write(const CBORValue& node,
+                                                       size_t max_nesting_level,
+                                                       CBORWriter::Mode mode) {
   std::vector<uint8_t> cbor;
-  CBORWriter writer(&cbor);
+  CBORWriter writer(&cbor, mode);
   if (writer.EncodeCBOR(node, base::checked_cast<int>(max_nesting_level)))
     return cbor;
   return base::nullopt;
 }
 
-CBORWriter::CBORWriter(std::vector<uint8_t>* cbor) : encoded_cbor_(cbor) {}
+CBORWriter::CBORWriter(std::vector<uint8_t>* cbor, CBORWriter::Mode mode)
+    : encoded_cbor_(cbor), mode_(mode) {}
 
 bool CBORWriter::EncodeCBOR(const CBORValue& node, int max_nesting_level) {
   if (max_nesting_level < 0)
@@ -83,18 +84,8 @@ bool CBORWriter::EncodeCBOR(const CBORValue& node, int max_nesting_level) {
     }
 
     // Represents a map.
-    case CBORValue::Type::MAP: {
-      const CBORValue::MapValue& map = node.GetMap();
-      StartItem(CBORValue::Type::MAP, map.size());
-
-      for (const auto& value : map) {
-        if (!EncodeCBOR(value.first, max_nesting_level - 1))
-          return false;
-        if (!EncodeCBOR(value.second, max_nesting_level - 1))
-          return false;
-      }
-      return true;
-    }
+    case CBORValue::Type::MAP:
+      return EncodeMap(node, max_nesting_level);
 
     // Represents a simple value.
     case CBORValue::Type::SIMPLE_VALUE: {
@@ -171,6 +162,70 @@ size_t CBORWriter::GetNumUintBytes(uint64_t value) {
     return 4;
   }
   return 8;
+}
+
+namespace {
+
+struct EncodedMapEntry {
+ public:
+  EncodedMapEntry() = default;
+  EncodedMapEntry(std::vector<uint8_t> in_key, std::vector<uint8_t> in_value)
+      : key(std::move(in_key)), value(std::move(in_value)) {}
+  ~EncodedMapEntry() = default;
+
+  std::vector<uint8_t> key;
+  std::vector<uint8_t> value;
+};
+
+}  // namespace
+
+bool CBORWriter::EncodeMap(const CBORValue& node, int max_nesting_level) {
+  const CBORValue::MapValue& map = node.GetMap();
+  StartItem(CBORValue::Type::MAP, map.size());
+  switch (mode_) {
+    case Mode::CTAP:
+      // |map| key is already sorted in CTAP order.
+      for (const auto& value : map) {
+        if (!EncodeCBOR(value.first, max_nesting_level - 1))
+          return false;
+        if (!EncodeCBOR(value.second, max_nesting_level - 1))
+          return false;
+      }
+      return true;
+    case Mode::CANONICAL: {
+      // Maps in "Canonical CBOR" must be sorted lowest value to highest,
+      // based on the bytes of the representation of the key items.
+      // Spec: https://tools.ietf.org/html/rfc7049#section-3.9
+      std::vector<EncodedMapEntry> encoded_entries;
+      encoded_entries.reserve(map.size());
+      for (const auto& entry : map) {
+        base::Optional<std::vector<uint8_t>> encoded_key =
+            Write(entry.first, max_nesting_level - 1, mode_);
+        if (!encoded_key)
+          return false;
+        base::Optional<std::vector<uint8_t>> encoded_value =
+            Write(entry.second, max_nesting_level - 1, mode_);
+        if (!encoded_value)
+          return false;
+
+        encoded_entries.emplace_back(std::move(*encoded_key),
+                                     std::move(*encoded_value));
+      }
+      std::sort(encoded_entries.begin(), encoded_entries.end(),
+                [](const EncodedMapEntry& a, const EncodedMapEntry& b) {
+                  return a.key < b.key;
+                });
+      for (const auto& entry : encoded_entries) {
+        encoded_cbor_->insert(encoded_cbor_->end(), entry.key.begin(),
+                              entry.key.end());
+        encoded_cbor_->insert(encoded_cbor_->end(), entry.value.begin(),
+                              entry.value.end());
+      }
+      return true;
+    }
+  }
+  NOTREACHED();
+  return true;
 }
 
 }  // namespace cbor
