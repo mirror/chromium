@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d99303c_a76025e9",
+        "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 7075,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2018-01-31T07:59:26Z",
+      "side": 1,
+      "message": "Minor nitpick: if you made this an ASSERT_TRUE you could avoid crashing the process at line 7077 if the test failed.\n\nVery low importance since if this was broken a bunch of other tests would probably crash anyway.",
+      "range": {
+        "startLine": 7075,
+        "startChar": 2,
+        "endLine": 7075,
+        "endChar": 13
+      },
+      "revId": "8dbff33b49041c83715d5b00c094be9e04caa062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
