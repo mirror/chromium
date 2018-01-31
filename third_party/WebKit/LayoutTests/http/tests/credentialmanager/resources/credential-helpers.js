@@ -216,19 +216,22 @@ var TEST_NESTED_CREDENTIAL_ID = "nestedCredentialId";
 // Use an invalid algorithm in the parameters for "success" cases
 // so each test will exercise the rpID checks in  both the renderer
 // and browser but return prior to reaching the device layer.
-var CUSTOM_PUBLIC_KEY = 'var customPublicKey = '
+var CUSTOM_MAKE_CREDENTIAL_OPTIONS = 'var customPublicKey = '
     + '{challenge : new TextEncoder().encode("challenge"), '
     + 'rp: {id: "subdomain.example.test", name: "Acme"}, '
     + 'user: {id: new TextEncoder().encode("1098237235409872"), '
     + 'name: "acme@example.com", displayName: "Acme", icon:"iconUrl"}, '
     + 'pubKeyCredParams: [{type: "public-key", alg: 0,},], excludeCredentials:[],};';
 
-var CREATE_CUSTOM_CREDENTIALS = CUSTOM_PUBLIC_KEY
+var CREATE_CUSTOM_CREDENTIALS = CUSTOM_MAKE_CREDENTIAL_OPTIONS
     + "navigator.credentials.create({publicKey : customPublicKey})"
     + ".then(c => window.parent.postMessage(c.id, '*'))"
     + ".catch(e => window.parent.postMessage(e.name, '*'));";
 
 var CREATE_CREDENTIALS = "navigator.credentials.create({publicKey : MAKE_CREDENTIAL_OPTIONS})"
+    + ".then(c => window.parent.postMessage(c.id, '*'));";
+
+var GET_ASSERTION = "navigator.credentials.get({publicKey : GET_ASSERTION_OPTIONS})"
     + ".then(c => window.parent.postMessage(c.id, '*'));";
 
 // Verifies if |r| is the valid response to credentials.create(publicKey).

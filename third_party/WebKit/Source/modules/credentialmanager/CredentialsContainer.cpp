@@ -391,9 +391,20 @@ ScriptPromise CredentialsContainer::get(
     return promise;
 
   if (options.hasPublicKey()) {
+    const String& relying_party_id = options.publicKey().rpId();
+    if (!CheckPublicKeySecurityRequirements(resolver, relying_party_id)) {
+      return promise;
+    }
+
     auto mojo_options =
         MojoPublicKeyCredentialRequestOptions::From(options.publicKey());
     if (mojo_options) {
+      if (!mojo_options->relying_party_id) {
+        mojo_options->relying_party_id = resolver->GetFrame()
+                                             ->GetSecurityContext()
+                                             ->GetSecurityOrigin()
+                                             ->Domain();
+      }
       auto* authenticator =
           CredentialManagerProxy::From(script_state)->Authenticator();
       authenticator->GetAssertion(
