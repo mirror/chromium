@@ -70,6 +70,30 @@
       "revId": "051aaa4729c0df47cc3cb65447e43646d177b097",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57e88a03_144d1591",
+        "filename": "chrome/android/java/res/layout/tabular_context_menu_page.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2018-01-31T00:19:33Z",
+      "side": 1,
+      "message": "Done.\n\nI set it to 0 first and to 30 later since the 0 case is much more common.",
+      "parentUuid": "44175748_107a980c",
+      "range": {
+        "startLine": 36,
+        "startChar": 9,
+        "endLine": 36,
+        "endChar": 17
+      },
+      "revId": "051aaa4729c0df47cc3cb65447e43646d177b097",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
