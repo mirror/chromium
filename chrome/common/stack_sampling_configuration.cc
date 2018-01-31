@@ -137,8 +137,10 @@ void StackSamplingConfiguration::AppendCommandLineSwitchForChildProcess(
   bool enable = configuration_ == PROFILE_GPU_PROCESS ||
                 configuration_ == PROFILE_BROWSER_AND_GPU_PROCESS ||
                 configuration_ == PROFILE_CONTROL;
-  if (enable && process_type == switches::kGpuProcess)
+  if (enable && (process_type == switches::kGpuProcess ||
+                 process_type == switches::kRendererProcess)) {
     command_line->AppendSwitch(switches::kStartStackProfiler);
+  }
 }
 
 // static
