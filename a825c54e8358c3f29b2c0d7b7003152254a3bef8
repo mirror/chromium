@@ -2,6 +2,125 @@
   "comments": [
     {
       "key": {
+        "uuid": "1665eddc_1f3513b6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-01-31T22:21:36Z",
+      "side": 1,
+      "message": "Totally with you on this.",
+      "revId": "a825c54e8358c3f29b2c0d7b7003152254a3bef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1eddd683_1d364bd1",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-01-31T22:21:36Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be protected?",
+      "revId": "a825c54e8358c3f29b2c0d7b7003152254a3bef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3839c508_68fff782",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-01-31T22:21:36Z",
+      "side": 1,
+      "message": "Should this also be pure virtual?",
+      "revId": "a825c54e8358c3f29b2c0d7b7003152254a3bef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74c23c8a_83211477",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-01-31T22:21:36Z",
+      "side": 1,
+      "message": "Should probably not return a raw pointer here (fine to address in follow-up CL if you think it\u0027s worth addressing?)",
+      "revId": "a825c54e8358c3f29b2c0d7b7003152254a3bef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afe4e989_29318b6a",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_common.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-01-31T22:21:36Z",
+      "side": 1,
+      "message": "I haven\u0027t gone through this file thoroughly under the assumption that it\u0027s just a move. If there are non-trivial changes, could you please call them out?",
+      "revId": "a825c54e8358c3f29b2c0d7b7003152254a3bef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "472a74a8_0c5806f0",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_common.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-01-31T22:21:36Z",
+      "side": 1,
+      "message": "Should all these methods be protected? This class is only meant to be consumed by inheritors, right? Or at least the ctor/dtor should be?",
+      "revId": "a825c54e8358c3f29b2c0d7b7003152254a3bef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ef0882a_3c742076",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_common.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-01-31T22:21:36Z",
+      "side": 1,
+      "message": "Does it make sense to not declare the pure virtuals?",
+      "revId": "a825c54e8358c3f29b2c0d7b7003152254a3bef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "995405f7_d6b7d513",
         "filename": "chrome/browser/ui/webui/chromeos/login/signin_screen_handler.cc",
         "patchSetId": 4
@@ -16,6 +135,24 @@
       "revId": "a825c54e8358c3f29b2c0d7b7003152254a3bef8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8450715_1c614363",
+        "filename": "chrome/browser/ui/webui/chromeos/login/signin_screen_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1488,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-01-31T22:21:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "995405f7_d6b7d513",
+      "revId": "a825c54e8358c3f29b2c0d7b7003152254a3bef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

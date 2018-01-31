@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ea20a45_ced270fe",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-01-31T22:21:36Z",
+      "side": 0,
+      "message": "All of this just moved, right?",
+      "revId": "d7ab99b0c2c29cd08bcddd328bedea2b5d69151f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
