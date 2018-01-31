@@ -300,20 +300,26 @@ void OneCopyRasterBufferProvider::CopyOnWorkerThread(
 
   GLuint texture_id = resource_lock->ConsumeTexture(ri);
 
-  GLenum image_target = resource_provider_->GetImageTextureTarget(
-      worker_context_provider_->ContextCapabilities(), StagingBufferUsage(),
-      staging_buffer->format);
+  // GLenum image_target = resource_provider_->GetImageTextureTarget(
+  //    worker_context_provider_->ContextCapabilities(), StagingBufferUsage(),
+  //    staging_buffer->format);
 
   // Create and bind staging texture.
   if (!staging_buffer->texture_id) {
-    ri->GenTextures(1, &staging_buffer->texture_id);
-    ri->BindTexture(image_target, staging_buffer->texture_id);
-    ri->TexParameteri(image_target, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    ri->TexParameteri(image_target, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    ri->TexParameteri(image_target, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    ri->TexParameteri(image_target, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-  } else {
-    ri->BindTexture(image_target, staging_buffer->texture_id);
+    staging_buffer->texture_id =
+        ri->CreateTexture(true, StagingBufferUsage(), staging_buffer->format);
+
+    // ri->GenTextures(1, &staging_buffer->texture_id);
+    // ri->SetTextureStorageInfo(staging_buffer->texture_id, true,
+    //                          StagingBufferUsage(), staging_buffer->format);
+    ri->TexParameteri(staging_buffer->texture_id, GL_TEXTURE_MIN_FILTER,
+                      GL_NEAREST);
+    ri->TexParameteri(staging_buffer->texture_id, GL_TEXTURE_MAG_FILTER,
+                      GL_NEAREST);
+    ri->TexParameteri(staging_buffer->texture_id, GL_TEXTURE_WRAP_S,
+                      GL_CLAMP_TO_EDGE);
+    ri->TexParameteri(staging_buffer->texture_id, GL_TEXTURE_WRAP_T,
+                      GL_CLAMP_TO_EDGE);
   }
 
   // Create and bind image.
@@ -323,15 +329,19 @@ void OneCopyRasterBufferProvider::CopyOnWorkerThread(
           staging_buffer->gpu_memory_buffer->AsClientBuffer(),
           staging_buffer->size.width(), staging_buffer->size.height(),
           GLInternalFormat(resource_lock->format()));
-      ri->BindTexImage2DCHROMIUM(image_target, staging_buffer->image_id);
+      ri->BindTexImage2DCHROMIUM(staging_buffer->texture_id,
+                                 staging_buffer->image_id);
     }
   } else {
-    ri->ReleaseTexImage2DCHROMIUM(image_target, staging_buffer->image_id);
-    ri->BindTexImage2DCHROMIUM(image_target, staging_buffer->image_id);
+    ri->ReleaseTexImage2DCHROMIUM(staging_buffer->texture_id,
+                                  staging_buffer->image_id);
+    ri->BindTexImage2DCHROMIUM(staging_buffer->texture_id,
+                               staging_buffer->image_id);
   }
 
   // Unbind staging texture.
-  ri->BindTexture(image_target, 0);
+  // TODO(vmiura): Need a way to ensure we don't hold onto bindings?
+  // ri->BindTexture(image_target, 0);
 
   if (resource_provider_->use_sync_query()) {
     if (!staging_buffer->query_id)
@@ -364,9 +374,8 @@ void OneCopyRasterBufferProvider::CopyOnWorkerThread(
       int rows_to_copy = std::min(chunk_size_in_rows, height - y);
       DCHECK_GT(rows_to_copy, 0);
 
-      ri->CopySubTextureCHROMIUM(
-          staging_buffer->texture_id, 0, GL_TEXTURE_2D, texture_id, 0, 0, y, 0,
-          y, rect_to_copy.width(), rows_to_copy, false, false, false);
+      ri->CopySubTexture(staging_buffer->texture_id, texture_id, 0, y, 0, y,
+                         rect_to_copy.width(), rows_to_copy);
       y += rows_to_copy;
 
       // Increment |bytes_scheduled_since_last_flush_| by the amount of memory
