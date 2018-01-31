@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fc2a709_638a6ecb",
+        "filename": "third_party/WebKit/Source/core/exported/WebFrameSerializer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2018-01-31T16:36:15Z",
+      "side": 1,
+      "message": "Is this just inverting the conversion done in LocalDOMWindow::innerWidth/innerHeight on the result from LocalDOMWindow::GetViewportSize?  Maybe we should call GetViewportSize instead?",
+      "range": {
+        "startLine": 200,
+        "startChar": 39,
+        "endLine": 200,
+        "endChar": 61
+      },
+      "revId": "48571347221a45b36a4ad0a4fbf76462ceccfbd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
