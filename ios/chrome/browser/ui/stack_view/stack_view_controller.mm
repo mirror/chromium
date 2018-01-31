@@ -1582,6 +1582,10 @@ NSString* const kTransitionToolbarAnimationKey =
   }
 }
 
+- (void)dismissWithModel:(TabModel*)model animated:(BOOL)animated {
+  [self animateTransitionWithStyle:STACK_TRANSITION_STYLE_DISMISSING];
+}
+
 - (void)cancelTransitionAnimation {
   // Set up transaction.
   [CATransaction begin];
@@ -2100,8 +2104,6 @@ NSString* const kTransitionToolbarAnimationKey =
 
   [_delegate tabSwitcher:self
       shouldFinishWithActiveModel:_activeCardSet.tabModel];
-
-  [self animateTransitionWithStyle:STACK_TRANSITION_STYLE_DISMISSING];
 }
 
 - (std::vector<LayoutRect>)cardTransitionLayouts {

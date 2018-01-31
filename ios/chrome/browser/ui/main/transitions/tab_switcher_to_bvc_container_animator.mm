@@ -5,6 +5,7 @@
 #import "ios/chrome/browser/ui/main/transitions/tab_switcher_to_bvc_container_animator.h"
 
 #import "base/mac/foundation_util.h"
+#import "ios/chrome/browser/tabs/tab_model.h"
 #import "ios/chrome/browser/ui/tab_switcher/tab_switcher.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -20,6 +21,7 @@
 
 @implementation TabSwitcherToBVCContainerAnimator
 
+@synthesize tabModel = _tabModel;
 @synthesize tabSwitcher = _tabSwitcher;
 @synthesize transitionContext = _transitionContext;
 
@@ -64,6 +66,8 @@
 
   DCHECK_EQ(fromViewController, self.tabSwitcher.parentViewController);
   self.tabSwitcher.animationDelegate = self;
+  [self.tabSwitcher dismissWithModel:self.tabModel animated:YES];
+
   self.transitionContext = transitionContext;
 }
 
