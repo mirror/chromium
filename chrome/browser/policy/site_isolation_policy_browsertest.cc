@@ -17,6 +17,7 @@
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/site_instance.h"
 #include "content/public/common/content_client.h"
+#include "content/public/common/content_switches.h"
 #include "content/public/test/browser_test_utils.h"
 #include "url/gurl.h"
 
@@ -90,10 +91,38 @@ class IsolateOriginsPolicyBrowserTest : public SiteIsolationPolicyBrowserTest {
                    "https://example.org/,http://example.com"),
                nullptr);
     provider_.UpdateChromePolicy(values);
+
+    base::CommandLine::ForCurrentProcess()->AppendSwitch(
+        switches::kEnableAutomation);
   }
 
  private:
   DISALLOW_COPY_AND_ASSIGN(IsolateOriginsPolicyBrowserTest);
+};
+
+class WebDriverSitePerProcessPolicyBrowserTest
+    : public SitePerProcessPolicyBrowserTest {
+ protected:
+  WebDriverSitePerProcessPolicyBrowserTest() {}
+
+  void SetUpInProcessBrowserTestFixture() override {
+    // We setup the policy here, because the policy must be 'live' before
+    // the renderer is created, since the value for this policy is passed
+    // to the renderer via a command-line. Setting the policy in the test
+    // itself or in SetUpOnMainThread works for update-able policies, but
+    // is too late for this one.
+    SitePerProcessPolicyBrowserTest::SetUpInProcessBrowserTestFixture();
+
+    policy::PolicyMap values;
+    values.Set(policy::key::kWebDriverOverridesIncompatiblePolicies,
+               policy::POLICY_LEVEL_MANDATORY, policy::POLICY_SCOPE_USER,
+               policy::POLICY_SOURCE_CLOUD, std::make_unique<base::Value>(true),
+               nullptr);
+    provider_.UpdateChromePolicy(values);
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(WebDriverSitePerProcessPolicyBrowserTest);
 };
 
 IN_PROC_BROWSER_TEST_F(SitePerProcessPolicyBrowserTest, Simple) {
@@ -115,6 +144,14 @@ IN_PROC_BROWSER_TEST_F(IsolateOriginsPolicyBrowserTest, Simple) {
       {"http://foo.com/", false},
       {"https://example.org/pumpkins.html", true},
       {"http://example.com/index.php", true},
+  };
+  CheckExpectations(expectations, arraysize(expectations));
+}
+
+IN_PROC_BROWSER_TEST_F(WebDriverSitePerProcessPolicyBrowserTest, Simple) {
+  Expectations expectations[] = {
+      {"https://foo.com/noodles.html", false},
+      {"http://example.org/pumpkins.html", false},
   };
   CheckExpectations(expectations, arraysize(expectations));
 }
