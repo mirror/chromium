@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f402e8b_445c58fd",
+        "filename": "content/browser/sandbox_parameters_mac.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-31T19:35:12Z",
+      "side": 1,
+      "message": "%zu for size_t (or PRIuS from base/format_macros.h). Or really this could just be an int and %d.",
+      "range": {
+        "startLine": 112,
+        "startChar": 49,
+        "endLine": 112,
+        "endChar": 51
+      },
+      "revId": "bb982fba1bdcfcc7f006e8beb11d3cdadf1a18cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
