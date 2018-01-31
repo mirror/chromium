@@ -1,0 +1,268 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fd6e5c5_a149deb1",
+        "filename": "ui/base/ui_base_features.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-31T00:30:58Z",
+      "side": 1,
+      "message": "Please try to keep sorted (sort in each block of ifdefs).",
+      "range": {
+        "startLine": 15,
+        "startChar": 42,
+        "endLine": 15,
+        "endChar": 60
+      },
+      "revId": "21f577d1689f9b7ed0c46cfc8528a5342be04d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80bddc60_99812263",
+        "filename": "ui/base/win/direct_manipulation.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-31T00:30:58Z",
+      "side": 1,
+      "message": "2018",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 18
+      },
+      "revId": "21f577d1689f9b7ed0c46cfc8528a5342be04d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14704edd_d4986f66",
+        "filename": "ui/base/win/direct_manipulation.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-31T00:30:58Z",
+      "side": 1,
+      "message": "Is it possible to play with the similarity to see what you\u0027ve actually changed from the old files?",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 30
+      },
+      "revId": "21f577d1689f9b7ed0c46cfc8528a5342be04d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5967034_3bf4a2a7",
+        "filename": "ui/base/win/direct_manipulation.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-31T00:30:58Z",
+      "side": 1,
+      "message": "Please add description.",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 31
+      },
+      "revId": "21f577d1689f9b7ed0c46cfc8528a5342be04d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f607ca53_1f849b09",
+        "filename": "ui/base/win/direct_manipulation.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-31T00:30:58Z",
+      "side": 1,
+      "message": "Initialize these.",
+      "range": {
+        "startLine": 48,
+        "startChar": 28,
+        "endLine": 49,
+        "endChar": 34
+      },
+      "revId": "21f577d1689f9b7ed0c46cfc8528a5342be04d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c121a2b2_7766a9a8",
+        "filename": "ui/base/win/direct_manipulation.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-31T00:30:58Z",
+      "side": 1,
+      "message": "DISALLOW...",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 2
+      },
+      "revId": "21f577d1689f9b7ed0c46cfc8528a5342be04d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c6c6572_8c6b4b88",
+        "filename": "ui/base/win/window_event_target.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-31T00:30:58Z",
+      "side": 1,
+      "message": "Please rename these functions to better match your description. Possibly ApplyPinchZoomScale and ApplyPanGestureScroll.",
+      "range": {
+        "startLine": 93,
+        "startChar": 5,
+        "endLine": 93,
+        "endChar": 15
+      },
+      "revId": "21f577d1689f9b7ed0c46cfc8528a5342be04d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5271830_d42a5f4c",
+        "filename": "ui/events/event_constants.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-31T00:30:58Z",
+      "side": 1,
+      "message": "\u0027and will\u0027 ?",
+      "revId": "21f577d1689f9b7ed0c46cfc8528a5342be04d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e054c94_368233ed",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-31T00:30:58Z",
+      "side": 1,
+      "message": "Where does the 120 come from? Add comments.",
+      "range": {
+        "startLine": 1066,
+        "startChar": 32,
+        "endLine": 1066,
+        "endChar": 68
+      },
+      "revId": "21f577d1689f9b7ed0c46cfc8528a5342be04d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd4088e1_dccf9baa",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 1075,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-31T00:30:58Z",
+      "side": 1,
+      "message": "gfx::Point has a constructor that takes a POINT. Same comment below.",
+      "range": {
+        "startLine": 1074,
+        "startChar": 2,
+        "endLine": 1075,
+        "endChar": 68
+      },
+      "revId": "21f577d1689f9b7ed0c46cfc8528a5342be04d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d07b5e12_48c93a6f",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 1078,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-31T00:30:58Z",
+      "side": 1,
+      "message": "Why do you use control down here?",
+      "range": {
+        "startLine": 1078,
+        "startChar": 62,
+        "endLine": 1078,
+        "endChar": 77
+      },
+      "revId": "21f577d1689f9b7ed0c46cfc8528a5342be04d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f417bf8b_ee1ff45b",
+        "filename": "ui/views/win/hwnd_message_handler.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-31T00:30:58Z",
+      "side": 1,
+      "message": "Generally we don\u0027t have any new linesbetween overrides (as we don\u0027t between lines 244 and 245). If you could remove the newlines here and 266 and 268.",
+      "revId": "21f577d1689f9b7ed0c46cfc8528a5342be04d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
