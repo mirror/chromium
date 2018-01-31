@@ -8,6 +8,7 @@
 
 #include "base/callback.h"
 #include "base/logging.h"
+#include "media/audio/mock_audio_debug_recording_manager.h"
 #include "media/base/audio_parameters.h"
 
 namespace media {
@@ -125,6 +126,14 @@ std::unique_ptr<AudioLog> MockAudioManager::CreateAudioLog(
 }
 
 void MockAudioManager::InitializeDebugRecording() {}
+
+AudioDebugRecordingManager* MockAudioManager::GetAudioDebugRecordingManager() {
+  if (!debug_recording_manager_)
+    debug_recording_manager_ =
+        std::make_unique<MockAudioDebugRecordingManager>(GetTaskRunner());
+  return static_cast<AudioDebugRecordingManager*>(
+      debug_recording_manager_.get());
+}
 
 const char* MockAudioManager::GetName() {
   return nullptr;
