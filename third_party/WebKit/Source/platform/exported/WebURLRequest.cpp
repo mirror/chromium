@@ -435,6 +435,14 @@ base::Optional<WebString> WebURLRequest::GetSuggestedFilename() const {
       resource_request_->GetSuggestedFilename().value());
 }
 
+mojo::ScopedMessagePipeHandle WebURLRequest::GetURLLoaderFactory() const {
+  if (!resource_request_->GetURLLoaderFactory())
+    return mojo::ScopedMessagePipeHandle();
+  network::mojom::blink::URLLoaderFactoryPtr factory_clone;
+  resource_request_->GetURLLoaderFactory()->Clone(MakeRequest(&factory_clone));
+  return factory_clone.PassInterface().PassHandle();
+}
+
 const ResourceRequest& WebURLRequest::ToResourceRequest() const {
   DCHECK(resource_request_);
   return *resource_request_;
