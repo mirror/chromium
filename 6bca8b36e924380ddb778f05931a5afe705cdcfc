@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db2fd4bc_fdb2d7a0",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-31T00:36:33Z",
+      "side": 1,
+      "message": "How do you know this cast is safe?",
+      "range": {
+        "startLine": 273,
+        "startChar": 2,
+        "endLine": 275,
+        "endChar": 54
+      },
+      "revId": "6bca8b36e924380ddb778f05931a5afe705cdcfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f8e0ef6_eb67b6ef",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-31T00:36:33Z",
+      "side": 1,
+      "message": "Please add a comment as to why the -1 check.",
+      "range": {
+        "startLine": 308,
+        "startChar": 6,
+        "endLine": 308,
+        "endChar": 38
+      },
+      "revId": "6bca8b36e924380ddb778f05931a5afe705cdcfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
