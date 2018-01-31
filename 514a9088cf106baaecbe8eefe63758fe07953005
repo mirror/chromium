@@ -19,6 +19,92 @@
     },
     {
       "key": {
+        "uuid": "d22c42a3_66e5e2dc",
+        "filename": "ash/ash_layout_constants.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-31T00:03:07Z",
+      "side": 1,
+      "message": "I believe the goal (as of the latest email thread discussions yesterday) is to replace hybrid mode with this mode.  However, hybrid mode is enabled on more than just CrOS.  I wouldn\u0027t be surprised if, in this CL, it\u0027s not possible to hijack the meaning.\n\nThough perhaps that argues for what James suggests here: add a third mode, with the goal being to remove the \"hybrid\" mode once \"touchable\" mode ships.  That would certainly make the code here cleaner.",
+      "parentUuid": "5d06bf15_474a02a6",
+      "revId": "514a9088cf106baaecbe8eefe63758fe07953005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b6e4d66_be211d1d",
+        "filename": "ash/frame/caption_buttons/frame_caption_button_container_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-31T00:03:07Z",
+      "side": 1,
+      "message": "I think the layout provider should do this determination itself and return a different value for the CAPTION_BUTTONS_SPACING constant, rather than having a separate _TOUCH_OPTIMIZED constant that callers have to know to use.\n\nThat said, now that you\u0027re only using this constant here, I wouldn\u0027t necessarily stick it in the layout provider at all, especially when it\u0027s not actually respected by other browser frames that draw caption buttons (e.g. the opaque frame).  You could just have it as a constant right here, which avoids the question.",
+      "revId": "514a9088cf106baaecbe8eefe63758fe07953005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "770cc900_38e064a0",
+        "filename": "ash/frame/frame_header_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-31T00:03:07Z",
+      "side": 1,
+      "message": "Assuming that the available height is \"0 to the bottom of the right view\" seems rather magic (and fragile) to me.  For example, if we wanted to draw a window border within the \"window bounds\", and have the caption buttons extend to the border, this probably wouldn\u0027t be right.  (What I think I\u0027m saying is I\u0027m not really convinced this change is right even today, but it\u0027s hard to tell when it\u0027s down here with no real context.)\n\nPerhaps the caller should pass in the available height as a separate argument.\n\nI suspect, honestly, that if you\u0027re extending the height of the caption buttons upward to the window top, the old code works now too.  But the concerns above kind of applied to that code as well, just a bit less so.",
+      "revId": "514a9088cf106baaecbe8eefe63758fe07953005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f741a9e_cef5571b",
+        "filename": "chrome/browser/ui/views/frame/browser_frame_header_ash.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-31T00:03:07Z",
+      "side": 1,
+      "message": "I wonder if this change is necessary anymore.",
+      "revId": "514a9088cf106baaecbe8eefe63758fe07953005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd7528dd_9ebf183c",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-31T00:03:07Z",
+      "side": 1,
+      "message": "Nit: Simpler:\n\n  return info.param ? \"TouchOptimizedUiEnabled\" : \"TouchOptimizedUiDisabled\";",
+      "revId": "514a9088cf106baaecbe8eefe63758fe07953005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "224c6a78_2e069411",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
         "patchSetId": 5
@@ -30,6 +116,23 @@
       "writtenOn": "2018-01-30T18:06:09Z",
       "side": 1,
       "message": "It\u0027s important to me that we never ship this behavior to end users. Please either wait for the other CL to land or file a release-block-stable bug for whatever milestone this feature is targeting and cite it in the TODO comment.",
+      "revId": "514a9088cf106baaecbe8eefe63758fe07953005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ac8788a_8ba7a7d2",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-31T00:03:07Z",
+      "side": 1,
+      "message": "Nit: Simpler (didn\u0027t test-compile this, syntax might be wrong):\n\n#define INSTANTIATE_TEST_CASE(name) \\\nINSTANTIATE_TEST_CASE_P(, name, ::testing::Values(true, false),\\\n                        \u0026TouchOptimizedUiStatusToString)\n\nINSTANTIATE_TEST_CASE(BrowserNonClientFrameViewAshTest);\nINSTANTIATE_TEST_CASE(ImmersiveModeBrowserViewTest);\nINSTANTIATE_TEST_CASE(HostedAppNonClientFrameViewAshTest);\nINSTANTIATE_TEST_CASE(BrowserNonClientFrameViewAshBackButtonTest);",
       "revId": "514a9088cf106baaecbe8eefe63758fe07953005",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
