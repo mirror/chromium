@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "55f1d34e_dcff0ade",
+        "filename": "ash/login/ui/login_pin_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-31T19:55:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b88d124_7e4c3a22",
+      "range": {
+        "startLine": 130,
+        "startChar": 6,
+        "endLine": 130,
+        "endChar": 10
+      },
+      "revId": "fdbd8118a0a808a8eae33831b7d4f9240550623a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85ed8264_3b4e1940",
         "filename": "ash/login/ui/login_pin_view.cc",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "fdbd8118a0a808a8eae33831b7d4f9240550623a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d05b6ae4_5457063a",
+        "filename": "ash/login/ui/login_pin_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-31T19:55:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85ed8264_3b4e1940",
+      "revId": "fdbd8118a0a808a8eae33831b7d4f9240550623a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
