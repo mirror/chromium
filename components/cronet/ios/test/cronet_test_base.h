@@ -10,6 +10,7 @@
 #include "base/bind.h"
 #include "net/cert/cert_verifier.h"
 #include "net/cert/x509_certificate.h"
+#include "net/test/quic_simple_test_server.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 #pragma mark
@@ -108,9 +109,12 @@ class CronetTestBase : public ::testing::Test {
   ::testing::AssertionResult IsResponseSuccessful(NSURLSessionDataTask* task);
   ::testing::AssertionResult IsResponseCanceled(NSURLSessionDataTask* task);
 
+  net::QuicSimpleTestServer* quic_server() { return &quic_server_; }
+
   TestDelegate* delegate_;
 
  private:
+  net::QuicSimpleTestServer quic_server_;
   void ExecuteBlock(BlockType block);
 
 };  // class CronetTestBase
