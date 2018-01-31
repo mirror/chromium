@@ -9,6 +9,7 @@
 goog.provide('BrailleCommandHandler');
 
 goog.require('BackgroundKeyboardHandler');
+goog.require('DesktopAutomationHandler');
 
 goog.scope(function() {
 var Mod = constants.ModifierFlag;
@@ -104,6 +105,10 @@ BrailleCommandHandler.onEditCommand = function(command) {
       !current.start.node || !current.start.node.state[StateType.EDITABLE])
     return true;
 
+  var textEditHandler = DesktopAutomationHandler.instance.textEditHandler;
+  if (!textEditHandler)
+    return true;
+
   var isMultiline = AutomationPredicate.multiline(current.start.node);
   switch (command) {
     case 'previousCharacter':
@@ -120,7 +125,7 @@ BrailleCommandHandler.onEditCommand = function(command) {
       break;
     case 'previousObject':
     case 'previousLine':
-      if (!isMultiline)
+      if (!isMultiline || textEditHandler.isSelectionOnFirstLine())
         return true;
       BackgroundKeyboardHandler.sendKeyPress(38, 'ArrowUp');
       break;
@@ -128,6 +133,12 @@ BrailleCommandHandler.onEditCommand = function(command) {
     case 'nextLine':
       if (!isMultiline)
         return true;
+
+      if (textEditHandler.isSelectionOnLastLine()) {
+        textEditHandler.moveToAfterEditText();
+        return false;
+      }
+
       BackgroundKeyboardHandler.sendKeyPress(40, 'ArrowDown');
       break;
     case 'previousGroup':
