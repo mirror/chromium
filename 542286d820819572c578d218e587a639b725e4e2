@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7f7574a6_581c488d",
+        "filename": "chrome/browser/notifications/system_notification_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-31T01:17:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1d27b56f_0ee9a6af",
+      "revId": "542286d820819572c578d218e587a639b725e4e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a720cb0_8d1e95e2",
         "filename": "chrome/browser/notifications/system_notification_helper.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-31T01:05:58Z",
       "side": 1,
       "message": "It\u0027s possible that |profile| exists but DoDisplayNotification has not been called so notification_id is still in pending_notifications_. We should just check if the notification is in pending_notifications_ and erase it / return in that case.",
+      "revId": "542286d820819572c578d218e587a639b725e4e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c21a4744_35bd2f41",
+        "filename": "chrome/browser/notifications/system_notification_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-31T01:17:59Z",
+      "side": 1,
+      "message": "Is that possible though? If the profile exists we should have already run the loaded callback.",
+      "parentUuid": "2a720cb0_8d1e95e2",
       "revId": "542286d820819572c578d218e587a639b725e4e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
