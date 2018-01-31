@@ -37,8 +37,11 @@ String CSSFontFeatureValue::CustomCSSText() const {
   StringBuilder builder;
   builder.Append('"');
   builder.Append(tag_);
-  builder.Append("\" ");
-  builder.AppendNumber(value_);
+  builder.Append('"');
+  if (value_ != 1) {
+    builder.Append(' ');
+    builder.AppendNumber(value_);
+  }
   return builder.ToString();
 }
 
