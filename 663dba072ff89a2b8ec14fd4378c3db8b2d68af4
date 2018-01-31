@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0da94092_366b379c",
+        "filename": "cc/trees/layer_tree_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2018-01-31T16:01:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "356cd58d_14262c52",
+      "revId": "663dba072ff89a2b8ec14fd4378c3db8b2d68af4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e17ba41_bd91c37f",
         "filename": "cc/trees/layer_tree_host_impl.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-30T19:01:24Z",
       "side": 1,
       "message": "For frame metrics in general, I think we are trying to move to setups where we compute results in C++ and report the same numbers to traces, telemetry, UMA, and UKM; rather than post processing traces.",
+      "revId": "663dba072ff89a2b8ec14fd4378c3db8b2d68af4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "138f4414_fbfee2a7",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1648,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2018-01-31T16:01:13Z",
+      "side": 1,
+      "message": "To compute frame times in C++ we need to know the start of animations which I think need more plumbing. I\u0027d say Let\u0027s land this so that we can get numbers in Telemetry ASAP and then improve to make it available in UMA too.",
+      "parentUuid": "8e17ba41_bd91c37f",
       "revId": "663dba072ff89a2b8ec14fd4378c3db8b2d68af4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
