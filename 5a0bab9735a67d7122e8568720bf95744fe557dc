@@ -1148,6 +1148,24 @@
       "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "328ac838_19f97e65",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-31T23:43:36Z",
+      "side": 1,
+      "message": "We won\u0027t show more than one dialog at the time. We decided to only have 3 textures, one for main_content, one for the overlay, and one for popups. So in case that we want to show multiple dialogs(popups) we should merge them in Java side.",
+      "parentUuid": "82bdb18e_a22dd0cf",
+      "revId": "5a0bab9735a67d7122e8568720bf95744fe557dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
