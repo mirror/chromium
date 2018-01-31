@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "662e7e20_886ee35d",
+        "filename": "base/files/dir_reader_posix_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-01-31T18:33:22Z",
+      "side": 1,
+      "message": "This passes on your Android bot, right? Can we make this a PCHECK? If it failed, isn\u0027t the line 88 chdir() behavior undefined?",
+      "revId": "940b4b61fa0d4259c0132e980d8f4b05e1dfdd40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
