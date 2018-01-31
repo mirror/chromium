@@ -29,9 +29,24 @@ interface ServiceWorkerHost {
   // client with |client_uuid|.
   GetClient(string client_uuid) => (ServiceWorkerClientInfo client);
 
+  // Corresponds to Clients#openWindow(url). Requests the browser to open a tab
+  // with |url|.
+  // On success, |error_msg| is null and |client| contains service worker client
+  // information of the newly opened window.
+  // Otherwise, |error_msg| describes the failure and |client| is null.
+  OpenNewTab(url.mojom.Url url)
+    => (string? error_msg, ServiceWorkerClientInfo? client);
+
+  // Corresponds to PaymentRequestEvent#openWindow(url).
+  // Spec: https://w3c.github.io/payment-handler/#openwindow-method
+  // Requests the browser to open a payment handler window with |url|.
+  // On success, |error_msg| is null and |client| contains service worker client
+  // information of the newly opened window.
+  // Otherwise, |error_msg| describes the failure and |client| is null.
+  OpenPaymentHandlerWindow(url.mojom.Url url)
+    => (string? error_msg, ServiceWorkerClientInfo? client);
+
   // TODO(leonhsl): Impl all methods.
-  // OpenNewTab();
-  // OpenNewPopup();
   // PostMessageToClient();
   // FocusClient();
   // NavigateClient();
