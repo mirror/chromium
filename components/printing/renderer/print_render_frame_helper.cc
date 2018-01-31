@@ -37,6 +37,7 @@
 #include "printing/features/features.h"
 #include "printing/metafile_skia_wrapper.h"
 #include "printing/pdf_metafile_skia.h"
+#include "printing/printing_utils.h"
 #include "printing/units.h"
 #include "third_party/WebKit/common/page/page_visibility_state.mojom.h"
 #include "third_party/WebKit/common/sandbox_flags.h"
@@ -1054,6 +1055,7 @@ bool PrintRenderFrameHelper::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(PrintMsg_ClosePrintPreviewDialog,
                         OnClosePrintPreviewDialog)
 #endif  // BUILDFLAG(ENABLE_PRINT_PREVIEW)
+    IPC_MESSAGE_HANDLER(PrintMsg_PrintFrameContent, OnPrintFrameContent)
     IPC_MESSAGE_HANDLER(PrintMsg_SetPrintingEnabled, OnSetPrintingEnabled)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
@@ -1422,6 +1424,66 @@ void PrintRenderFrameHelper::OnClosePrintPreviewDialog() {
   print_preview_context_.source_frame()->DispatchAfterPrintEvent();
 }
 #endif
+
+void PrintRenderFrameHelper::OnPrintFrameContent(
+    const PrintMsg_PrintFrame_Params& params) {
+  if (ipc_nesting_level_ > 1)
+    return;
+
+  // If the last request is not finished yet, do not proceed.
+  if (prep_frame_view_) {
+    DLOG(ERROR) << "Previous request is still ongoing";
+    return;
+  }
+
+  auto weak_this = weak_ptr_factory_.GetWeakPtr();
+  blink::WebLocalFrame* frame = render_frame()->GetWebFrame();
+  frame->DispatchBeforePrintEvent();
+  if (!weak_this) {
+    DLOG(ERROR) << "Weak ptr should not be nullptr";
+    return;
+  }
+
+  // If we are printing a PDF extension frame, find the plugin node and print
+  // that instead.
+  auto plugin = delegate_->GetPdfElement(frame);
+
+  PdfMetafileSkia metafile(SkiaDocumentType::MSKP);
+  PrintMsg_Print_Params print_params;
+  auto& rect = params.printable_area;
+  print_params.page_size = gfx::Size(rect.width(), rect.height());
+  print_params.content_size = print_params.page_size;
+  print_params.printable_area = rect;
+  print_params.document_cookie = params.document_cookie;
+  print_params.dpi = gfx::Size(kPointsPerInch, kPointsPerInch);
+  print_params.printed_doc_type = SkiaDocumentType::MSKP;
+  // Use default values for all other fields.
+
+  prep_frame_view_ = std::make_unique<PrepareFrameAndViewForPrint>(
+      print_params, frame, plugin, /*ignore_css_margins=*/false);
+  prep_frame_view_->StartPrinting();
+
+  PrintPageInternal(print_params, 0, 1, frame, &metafile, nullptr, nullptr);
+
+  FinishFramePrinting();
+
+  metafile.FinishFrameContent();
+
+  // Send the printed result back.
+  PrintHostMsg_DidPrintContent_Params printed_frame_params;
+  if (!CopyMetafileDataToReadOnlySharedMem(metafile, &printed_frame_params)) {
+    LOG(ERROR) << "CopyMetafileDataToSharedMem failed";
+    return;
+  }
+  printed_frame_params.subframe_content_info =
+      metafile.GetSubframeContentInfo();
+  Send(new PrintHostMsg_DidPrintFrameContent(
+      routing_id(), params.document_cookie, params.page_number,
+      printed_frame_params));
+
+  if (!render_frame_gone_)
+    frame->DispatchAfterPrintEvent();
+}
 
 bool PrintRenderFrameHelper::IsPrintingEnabled() const {
   return is_printing_enabled_;
@@ -1975,8 +2037,7 @@ bool PrintRenderFrameHelper::CopyMetafileDataToReadOnlySharedMem(
       &params->metafile_data_handle, nullptr, nullptr);
   DCHECK_EQ(MOJO_RESULT_OK, result);
   params->data_size = metafile.GetDataSize();
-  // TODO(weili): Copy the actual subframes' content information here.
-  params->subframe_content_info.clear();
+  params->subframe_content_info = metafile.GetSubframeContentInfo();
   return true;
 }
 
