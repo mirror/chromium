@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e69d5f58_56e20b94",
+        "filename": "ash/frame/caption_buttons/frame_caption_button_container_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-31T18:04:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09f7977d_2a266d1e",
+      "revId": "c26c14f60f6dbbdec10d09ae64f6009b012dd6e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d55cb9f_764f8284",
         "filename": "ash/frame/frame_header_util.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c97cd4c2_963b7998",
+        "filename": "ash/frame/frame_header_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-31T18:04:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d55cb9f_764f8284",
+      "revId": "c26c14f60f6dbbdec10d09ae64f6009b012dd6e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74920603_e3a9f4ad",
         "filename": "ui/base/material_design/material_design_controller.h",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "c26c14f60f6dbbdec10d09ae64f6009b012dd6e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18d07261_1166d7f7",
+        "filename": "ui/base/material_design/material_design_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-31T18:04:57Z",
+      "side": 1,
+      "message": "This is a leftover from when I tried to add a third mode that depends on whether the Touchable feature was enabled or not.\n\nI re-added the third mode and removed the feature entirely.",
+      "parentUuid": "74920603_e3a9f4ad",
+      "revId": "c26c14f60f6dbbdec10d09ae64f6009b012dd6e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
