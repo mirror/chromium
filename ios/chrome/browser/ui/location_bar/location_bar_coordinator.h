@@ -55,9 +55,9 @@ class WebStateList;
 // Indicates if the omnibox currently displays a popup with suggestions.
 - (BOOL)showingOmniboxPopup;
 
-// Focuses the omnibox and sets the caret visibility as if it was called from
-// the fakebox on NTP.
-- (void)focusOmniboxFromFakebox;
+// Call this method to mark the next omnibox focusing as being initiated from
+// the fakebox (this is only necessary for metrics collection).
+- (void)markNextOmniboxFocusAsFakeboxFocusForMetrics;
 
 // Indicates when the omnibox is the first responder.
 - (BOOL)isOmniboxFirstResponder;
