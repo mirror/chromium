@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7a7bec3_09b8584e",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/app.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-31T10:01:15Z",
+      "side": 1,
+      "message": "nit: could you add a short comment about what this block is doing? e.g. Do not load a zip file again if zip archiver is loading the same file, etc.",
+      "range": {
+        "startLine": 749,
+        "startChar": 18,
+        "endLine": 750,
+        "endChar": 69
+      },
+      "revId": "a91df226b9606f37279a0f99a75e4d719b56a5fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b576ccc1_2c9b5854",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/app.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-31T10:01:15Z",
+      "side": 1,
+      "message": "nit: pass fileSystemId as second argument\n\noptional: how about to use different error code (message) from EXISTS, e.g. ALREADY_LOADING. EXISTS is already used for different meaning.",
+      "range": {
+        "startLine": 751,
+        "startChar": 28,
+        "endLine": 751,
+        "endChar": 47
+      },
+      "revId": "a91df226b9606f37279a0f99a75e4d719b56a5fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
