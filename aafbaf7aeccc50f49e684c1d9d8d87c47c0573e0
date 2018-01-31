@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbafb23a_57e5854c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-31T00:45:38Z",
+      "side": 1,
+      "message": "Can this be exposed in a utility method somewhere? Perhaps a static method in SelectableItemView.java?",
+      "range": {
+        "startLine": 218,
+        "startChar": 12,
+        "endLine": 225,
+        "endChar": 96
+      },
+      "revId": "aafbaf7aeccc50f49e684c1d9d8d87c47c0573e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
