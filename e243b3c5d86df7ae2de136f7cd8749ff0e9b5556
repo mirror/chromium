@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "03cfbbed_87e3071a",
+        "filename": "content/browser/browser_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-01-31T16:36:34Z",
+      "side": 1,
+      "message": "I\u0027ve discussed KeyedService with msarda@ before, and it doesn\u0027t seem to be the right solution, imho. For one, it\u0027s in components/, which should not depend on content/.\n\nThinking about it again, I don\u0027t think I actually need to do anything special when Chrome goes down (which, to the best of my understanding, is the only case that a BrowserContext would be destroyed). I\u0027ll just remove this TODO.",
+      "parentUuid": "a8f44526_fb162da1",
+      "range": {
+        "startLine": 577,
+        "startChar": 5,
+        "endLine": 577,
+        "endChar": 9
+      },
+      "revId": "e243b3c5d86df7ae2de136f7cd8749ff0e9b5556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a1e624a_80ed16cd",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "e243b3c5d86df7ae2de136f7cd8749ff0e9b5556",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f169da0b_5cd4c74a",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-01-31T16:36:34Z",
+      "side": 1,
+      "message": "My intention in making this protected was to say \"don\u0027t go around trying to call WebRtcEventLogManager::GetInstance()-\u003eOnRemoteLogStarted() directly. Only call OnRemoteLogStarted() on this object if it\u0027s registered itself as that type of observer with you.\" One reason why this is important is that these the inherited methods are supposed to run on the internal task queue, whereas the public interface of WebRtcEventLogManager is entirely on the UI thread. (WebRtcEventLogManager registers itself as an observer of its sub-managers, which run on its internal task queue.)\n\nI can achieve this by keeping the functions private though the inheritance would be public, so that someone would have to cast WebRtcEventLogManager::GetInstance() before calling OnRemoteLogStarted(), at which point he would likely notice that what he\u0027s doing is unwise. I\u0027ll do that.",
+      "parentUuid": "1a1e624a_80ed16cd",
+      "range": {
+        "startLine": 34,
+        "startChar": 6,
+        "endLine": 34,
+        "endChar": 15
+      },
+      "revId": "e243b3c5d86df7ae2de136f7cd8749ff0e9b5556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "51525b53_3e662f46",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-01-31T16:36:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1769e42_d5a4d484",
+      "range": {
+        "startLine": 137,
+        "startChar": 7,
+        "endLine": 137,
+        "endChar": 11
+      },
+      "revId": "e243b3c5d86df7ae2de136f7cd8749ff0e9b5556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e998c517_051eae89",
         "filename": "content/browser/webrtc/webrtc_event_log_manager_common.cc",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2018-01-31T15:10:15Z",
       "side": 1,
       "message": "consider renaming |output| to something like \"payload\" or similar.\nI didn\u0027t realize it was the thing to be written to the file until I read the code.",
+      "range": {
+        "startLine": 12,
+        "startChar": 54,
+        "endLine": 12,
+        "endChar": 60
+      },
+      "revId": "e243b3c5d86df7ae2de136f7cd8749ff0e9b5556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1b45fa2_7b84eacb",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_common.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-01-31T16:36:34Z",
+      "side": 1,
+      "message": "I agree |output| is a poor choice of a name, and I want to replace it with something better. I have a naming problem here. On the one hand, I want to call it \"log\". On the other, I am afraid that this would indicate to a reader that the entire log is intended, where in reality, this is just a fragment of the log. Wdyt?",
+      "parentUuid": "e998c517_051eae89",
       "range": {
         "startLine": 12,
         "startChar": 54,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "2467b935_491c5fce",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_common.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-01-31T16:36:34Z",
+      "side": 1,
+      "message": "I think it\u0027s correct - it\u0027s meant to protect against overflow.\nThis current CL moves this code from WebRtcLocalEventLogManager, and I try to affect the least amount of changes to the code while moving it. In this other CL that I\u0027ve pushed for review today, I changed the behavior in this case, and also took the opportunity to restructure the code in a way that I hope makes it clearer:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/895744/1/content/browser/webrtc/webrtc_event_log_manager_common.cc",
+      "parentUuid": "f9db37ab_f79f5903",
+      "range": {
+        "startLine": 22,
+        "startChar": 8,
+        "endLine": 22,
+        "endChar": 77
+      },
+      "revId": "e243b3c5d86df7ae2de136f7cd8749ff0e9b5556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51ba7d7a_f2e8ce8d",
         "filename": "content/browser/webrtc/webrtc_event_log_manager_common.cc",
         "patchSetId": 5
@@ -137,6 +257,30 @@
       "revId": "e243b3c5d86df7ae2de136f7cd8749ff0e9b5556",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7445a1ed_502662b6",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_common.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-01-31T16:36:34Z",
+      "side": 1,
+      "message": "True. I guess I must have had separate error messages LOG()ed at some point? Anyway, fixed.",
+      "parentUuid": "51ba7d7a_f2e8ce8d",
+      "range": {
+        "startLine": 30,
+        "startChar": 21,
+        "endLine": 30,
+        "endChar": 28
+      },
+      "revId": "e243b3c5d86df7ae2de136f7cd8749ff0e9b5556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "b67e49c9_8f1c7eec",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_common.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-01-31T16:36:34Z",
+      "side": 1,
+      "message": "The output may have been truncated at line 25, in which case this would return |false|, or might not have, in which case it would return |true|.\n\nPlease note that the following CL will changes this, btw:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/895744/",
+      "parentUuid": "e3f96a56_e17957d6",
+      "range": {
+        "startLine": 45,
+        "startChar": 5,
+        "endLine": 45,
+        "endChar": 14
+      },
+      "revId": "e243b3c5d86df7ae2de136f7cd8749ff0e9b5556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5396673f_6bd50fb8",
         "filename": "content/browser/webrtc/webrtc_event_log_manager_common.h",
         "patchSetId": 5
@@ -183,6 +351,30 @@
       "revId": "e243b3c5d86df7ae2de136f7cd8749ff0e9b5556",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c0acba3_e9f712dc",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_common.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-01-31T16:36:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5396673f_6bd50fb8",
+      "range": {
+        "startLine": 89,
+        "startChar": 63,
+        "endLine": 89,
+        "endChar": 64
+      },
+      "revId": "e243b3c5d86df7ae2de136f7cd8749ff0e9b5556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "2b1a1c81_653aaffb",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_common.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-01-31T16:36:34Z",
+      "side": 1,
+      "message": "Done.\nWhat\u0027s the rationale, btw?",
+      "parentUuid": "afb1d737_41802a4c",
+      "range": {
+        "startLine": 124,
+        "startChar": 2,
+        "endLine": 124,
+        "endChar": 9
+      },
+      "revId": "e243b3c5d86df7ae2de136f7cd8749ff0e9b5556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80c35bd3_dc9bb0d8",
         "filename": "content/browser/webrtc/webrtc_event_log_manager_common.h",
         "patchSetId": 5
@@ -229,6 +445,30 @@
       "revId": "e243b3c5d86df7ae2de136f7cd8749ff0e9b5556",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f0bc55e_556d2365",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_common.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-01-31T16:36:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80c35bd3_dc9bb0d8",
+      "range": {
+        "startLine": 126,
+        "startChar": 7,
+        "endLine": 126,
+        "endChar": 21
+      },
+      "revId": "e243b3c5d86df7ae2de136f7cd8749ff0e9b5556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "52aa4f06_b966731e",
+        "filename": "content/browser/webrtc/webrtc_event_log_uploader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-01-31T16:36:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3887922a_2a8b1842",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 9
+      },
+      "revId": "e243b3c5d86df7ae2de136f7cd8749ff0e9b5556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c35759e_d3df961d",
         "filename": "content/browser/webrtc/webrtc_event_log_uploader.h",
         "patchSetId": 5
@@ -275,6 +539,30 @@
       "revId": "e243b3c5d86df7ae2de136f7cd8749ff0e9b5556",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad7b6c1f_314a53db",
+        "filename": "content/browser/webrtc/webrtc_event_log_uploader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-01-31T16:36:34Z",
+      "side": 1,
+      "message": "I\u0027ve made the destructor protected in a few other places, and I will follow that general guideline from now on. However, in the case of WebRtcEventLogUploader and WebRtcEventLogUploader::Factory, this is not possible, since WebRtcEventLogManager needs visibility into their destructor, since it owns them.",
+      "parentUuid": "9c35759e_d3df961d",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 9
+      },
+      "revId": "e243b3c5d86df7ae2de136f7cd8749ff0e9b5556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "1750cc48_4f267e05",
+        "filename": "content/browser/webrtc/webrtc_local_event_log_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-01-31T16:36:34Z",
+      "side": 1,
+      "message": "I\u0027ve made it public. The guide says \"Do not overuse implementation inheritance.\" I think this particular case does not constitute overuse, and trying to refactor it into composition would yield less readable code. Wdyt?",
+      "parentUuid": "41fde4a5_179fdef0",
+      "range": {
+        "startLine": 19,
+        "startChar": 41,
+        "endLine": 19,
+        "endChar": 48
+      },
+      "revId": "e243b3c5d86df7ae2de136f7cd8749ff0e9b5556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "25e3382c_df1bc094",
         "filename": "content/browser/webrtc/webrtc_remote_event_log_manager.cc",
         "patchSetId": 5
@@ -312,6 +624,30 @@
       "writtenOn": "2018-01-31T15:10:15Z",
       "side": 1,
       "message": "Why not do this on this CL?",
+      "range": {
+        "startLine": 20,
+        "startChar": 16,
+        "endLine": 20,
+        "endChar": 17
+      },
+      "revId": "e243b3c5d86df7ae2de136f7cd8749ff0e9b5556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21f5c222_e3340049",
+        "filename": "content/browser/webrtc/webrtc_remote_event_log_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-01-31T16:36:34Z",
+      "side": 1,
+      "message": "1. I don\u0027t want to make this CL too big. It seems natural to me to factor the extra constraint into a separate CL, seeing as it does not really concern the way we implement the feature for non-blocked devices.\n2. It\u0027s an open question whether we would block the JS hooks, block this in WebRtcEventLogManager, or avoid instantiating the remote-bound part of the manager altogether.",
+      "parentUuid": "25e3382c_df1bc094",
       "range": {
         "startLine": 20,
         "startChar": 16,
