@@ -274,6 +274,15 @@ enum class CertificateError {
   COUNT
 };
 
+// Metric: PasswordManager.ExportPasswordToCSVResult
+enum class ExportPasswordsResult {
+  UNKNOWN = 0,
+  SUCCESS = 1,
+  USER_ABORTED = 2,
+  WRITE_FAILED = 3,
+  COUNT,
+};
+
 // A version of the UMA_HISTOGRAM_BOOLEAN macro that allows the |name|
 // to vary over the program's runtime.
 void LogUMAHistogramBoolean(const std::string& name, bool sample);
