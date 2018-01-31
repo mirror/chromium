@@ -17,6 +17,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/test/histogram_tester.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/test/test_mock_time_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/clock.h"
@@ -63,6 +64,7 @@ const uint64_t kDeviceSecurityToken2 = 2222;
 const int64_t kSettingsCheckinInterval = 16 * 60 * 60;
 const char kProductCategoryForSubtypes[] = "com.chrome.macosx";
 const char kExtensionAppId[] = "abcdefghijklmnopabcdefghijklmnop";
+const char kRegistrationId[] = "reg_id";
 const char kSubtypeAppId[] = "app_id";
 const char kSender[] = "project_id";
 const char kSender2[] = "project_id2";
@@ -422,6 +424,7 @@ class GCMClientImplTest : public testing::Test,
 
   // Injected to GCM client.
   scoped_refptr<net::TestURLRequestContextGetter> url_request_context_getter_;
+  base::test::ScopedFeatureList scoped_feature_list_;
 };
 
 GCMClientImplTest::GCMClientImplTest()
@@ -442,6 +445,8 @@ void GCMClientImplTest::SetUp() {
   InitializeGCMClient();
   StartGCMClient();
   SetUpUrlFetcherFactory();
+  scoped_feature_list_.InitAndEnableFeature(kTokenInvalidationPeriodDays);
+  ASSERT_TRUE(IsTokenValidationEnabled());
   ASSERT_NO_FATAL_FAILURE(
       CompleteCheckin(kDeviceAndroidId, kDeviceSecurityToken, std::string(),
                       std::map<std::string, std::string>()));
@@ -560,6 +565,11 @@ void GCMClientImplTest::AddRegistration(
   registration->sender_ids = sender_ids;
   gcm_client_->registrations_[registration] = registration_id;
 }
+
+// void GCMClientImplTest::EnableFeatures() {
+//   auto params = std::make_unique<base::DictionaryValue>;
+//   params->SetInt("kParamNameTokenInvalidationPeriodDays", "1")
+// }
 
 void GCMClientImplTest::InitializeGCMClient() {
   clock()->Advance(base::TimeDelta::FromMilliseconds(1));
@@ -768,6 +778,26 @@ TEST_F(GCMClientImplTest, DestroyStoreWhenNotNeeded) {
   EXPECT_EQ(GCMClientImpl::INITIALIZED, gcm_client_state());
   EXPECT_FALSE(device_checkin_info().android_id);
   EXPECT_FALSE(device_checkin_info().secret);
+}
+
+TEST_F(GCMClientImplTest, SerializeAndDeserialize) {
+  std::vector<std::string> senders{"sender"};
+  auto gcm_info = std::make_unique<GCMRegistrationInfo>();
+  gcm_info->app_id = kExtensionAppId;
+  gcm_info->sender_ids = senders;
+  gcm_info->last_validated = clock()->Now();
+
+  std::string serialized_key = gcm_info->GetSerializedKey();
+  std::string serialized_value = gcm_info->GetSerializedValue(kRegistrationId);
+  auto gcm_info_deserialized = std::make_unique<GCMRegistrationInfo>();
+  std::string registration_id_deserialized;
+  ASSERT_TRUE(gcm_info_deserialized->Deserialize(
+      serialized_key, serialized_value, &registration_id_deserialized));
+
+  EXPECT_EQ(gcm_info->app_id, gcm_info_deserialized->app_id);
+  EXPECT_EQ(gcm_info->sender_ids, gcm_info_deserialized->sender_ids);
+  EXPECT_EQ(gcm_info->last_validated, gcm_info_deserialized->last_validated);
+  EXPECT_EQ(kRegistrationId, registration_id_deserialized);
 }
 
 TEST_F(GCMClientImplTest, RegisterApp) {

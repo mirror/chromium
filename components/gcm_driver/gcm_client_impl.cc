@@ -889,9 +889,21 @@ void GCMClientImpl::Register(
     }
 
     if (matched) {
-      delegate_->OnRegisterFinished(
-          registration_info, registrations_iter->second, SUCCESS);
-      return;
+      // Skip registration if token is fresh.
+      int token_invalidation_period = base::GetFieldTrialParamByFeatureAsInt(
+          kTokenInvalidationPeriodDays, kParamNameTokenInvalidationPeriodDays,
+          kDefaultTokenInvalidationPeriodDays);
+
+      if (token_invalidation_period) {
+        auto last_validated_at =
+            registrations_iter->first.get()->last_validated;
+        if (clock_->Now() - last_validated_at <
+            base::TimeDelta::FromDays(token_invalidation_period)) {
+          delegate_->OnRegisterFinished(registration_info,
+                                        registrations_iter->second, SUCCESS);
+          return;
+        }
+      }
     }
   }
 
@@ -981,8 +993,9 @@ void GCMClientImpl::OnRegisterCompleted(
     // Note that the existing cached record has to be removed first because
     // otherwise the key value in registrations_ will not be updated. For GCM
     // registrations, the key consists of pair of app_id and sender_ids though
-    // only app_id is used in the comparison.
+    // only app_id is used in the key comparison.
     registrations_.erase(registration_info);
+    registration_info->last_validated = clock_->Now();
     registrations_[registration_info] = registration_id;
 
     // Save it in the persistent store.

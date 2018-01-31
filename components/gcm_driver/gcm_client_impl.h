@@ -18,6 +18,8 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
+#include "base/metrics/field_trial_params.h"
+#include "components/gcm_driver/features.h"
 #include "components/gcm_driver/gcm_client.h"
 #include "components/gcm_driver/gcm_stats_recorder_impl.h"
 #include "google_apis/gcm/base/mcs_message.h"
@@ -47,6 +49,11 @@ class HttpNetworkSession;
 }  // namespace net
 
 namespace gcm {
+
+// Parameter names
+constexpr char kParamNameTokenInvalidationPeriodDays[] =
+    "token_invalidation_period";
+const int kDefaultTokenInvalidationPeriodDays = 0;
 
 class CheckinRequest;
 class ConnectionFactory;
