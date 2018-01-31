@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "bdd163d2_5e082891",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-page-selector/viewer-page-selector.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-31T18:25:33Z",
+      "side": 1,
+      "message": "SG, removed from here. New CL where we add them all coming soon.",
+      "parentUuid": "d41a672f_d1d50c21",
+      "range": {
+        "startLine": 57,
+        "startChar": 59,
+        "endLine": 57,
+        "endChar": 71
+      },
+      "revId": "3d92d0d2bb15f8e9a9a2e7586fa5177ed6086542",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33859f4e_92373a5b",
         "filename": "chrome/test/data/webui/settings/a11y/manage_profile_a11y_test.js",
         "patchSetId": 3
