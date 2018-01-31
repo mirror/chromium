@@ -1,0 +1,556 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "705f8f69_28534422",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-31T19:39:23Z",
+      "side": 1,
+      "message": "This comment is very vague. Can you please explain?",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 18
+      },
+      "revId": "9ac8ccea8416ae705657b2c545a4c43d4168d456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c40ebd7e_d87eef80",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-31T19:39:23Z",
+      "side": 1,
+      "message": "I would return a base::Optional\u003c\u003e",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 4
+      },
+      "revId": "9ac8ccea8416ae705657b2c545a4c43d4168d456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1b884e1_70c43f88",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-31T19:39:23Z",
+      "side": 1,
+      "message": "Search is called `Launcher`  in the new keyboard layout. You need to detect which layout it is and display the appropriate name.",
+      "range": {
+        "startLine": 61,
+        "startChar": 15,
+        "endLine": 61,
+        "endChar": 21
+      },
+      "revId": "9ac8ccea8416ae705657b2c545a4c43d4168d456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "681a6d98_0bb946f1",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-31T19:39:23Z",
+      "side": 1,
+      "message": "Nit: why cache span? why not:\n\nreturn base::span\u003cconst ShortcutCategory\u003e(kCategoryDisplayOrder);\n\n?",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 74,
+        "endChar": 14
+      },
+      "revId": "9ac8ccea8416ae705657b2c545a4c43d4168d456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af5443f2_327e7378",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-31T19:39:23Z",
+      "side": 1,
+      "message": "Nit: can you add some comments here explaining what this function is trying to do for someone who is not familiar with domcode/domkey business?",
+      "range": {
+        "startLine": 104,
+        "startChar": 21,
+        "endLine": 104,
+        "endChar": 45
+      },
+      "revId": "9ac8ccea8416ae705657b2c545a4c43d4168d456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67414df6_01302754",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-31T19:39:23Z",
+      "side": 1,
+      "message": "Nit: const int flags \u003d shift_down ? ui::EF_SHIFT_DOWN : 0;\n\nThis and all above declarations should be moved towards the end where they\u0027re actually used (i.e. if the if() fails).",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 30
+      },
+      "revId": "9ac8ccea8416ae705657b2c545a4c43d4168d456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb8a5550_337d7535",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-31T19:39:23Z",
+      "side": 1,
+      "message": "I would do it like this:\n\n  if (GetSpecialStringForKeyboardCode(keycode, \u0026key_label))\n    return key_label;\n\n  // Add all your needed declarations here.\n  bool has_mapping \u003d ui::DomCodeToUsLayoutDomKey(dom_code, flags, \u0026dom_key,\n                                                 \u0026keycode_ignored);\n  DCHECK(has_mapping);\n  return base::UTF8ToUTF16(ui::KeycodeConverter::DomKeyToKeyString(dom_key));",
+      "range": {
+        "startLine": 113,
+        "startChar": 2,
+        "endLine": 113,
+        "endChar": 62
+      },
+      "revId": "9ac8ccea8416ae705657b2c545a4c43d4168d456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32bb3890_96f6e501",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-31T19:39:23Z",
+      "side": 1,
+      "message": "Just to verify: This function and the ones below don\u0027t need KSV_EXPORT?",
+      "range": {
+        "startLine": 25,
+        "startChar": 41,
+        "endLine": 25,
+        "endChar": 64
+      },
+      "revId": "9ac8ccea8416ae705657b2c545a4c43d4168d456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19bfd187_1082085d",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-31T19:39:23Z",
+      "side": 1,
+      "message": "These `const`s in the return types are unnecessary since you are not returning a reference. It is possible to do this even with the `const`s you added in the return types:\n\nbase::string16 my_string_copy \u003d GetStringForKeyboardCode(...);\n\nbase::span\u003cconst ShortcutCategory\u003e my_span_copy \u003d GetCategoryDisplayOrder();\n\n\nThe copy stashes away the `const` and hence it\u0027s unnecessary.",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 5
+      },
+      "revId": "9ac8ccea8416ae705657b2c545a4c43d4168d456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54b9a9bd_6ac1ad45",
+        "filename": "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-31T19:39:23Z",
+      "side": 1,
+      "message": "Can you add a comment to explain what this `shift_down` means, why only shift and so on?",
+      "range": {
+        "startLine": 31,
+        "startChar": 51,
+        "endLine": 31,
+        "endChar": 61
+      },
+      "revId": "9ac8ccea8416ae705657b2c545a4c43d4168d456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1664c2d_764abfa8",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_item_list_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-31T19:39:23Z",
+      "side": 1,
+      "message": "Please document.",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 34
+      },
+      "revId": "9ac8ccea8416ae705657b2c545a4c43d4168d456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b766864_e4aa34e9",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_item_list_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-31T19:39:23Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 23,
+        "startChar": 15,
+        "endLine": 23,
+        "endChar": 35
+      },
+      "revId": "9ac8ccea8416ae705657b2c545a4c43d4168d456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bd7c3ab_7297b70f",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_item_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-31T19:39:23Z",
+      "side": 1,
+      "message": "Also document what this ratio *is*.",
+      "range": {
+        "startLine": 18,
+        "startChar": 16,
+        "endLine": 18,
+        "endChar": 34
+      },
+      "revId": "9ac8ccea8416ae705657b2c545a4c43d4168d456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "972201d9_907a0812",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_item_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-31T19:39:23Z",
+      "side": 1,
+      "message": "range for",
+      "range": {
+        "startLine": 31,
+        "startChar": 7,
+        "endLine": 31,
+        "endChar": 60
+      },
+      "revId": "9ac8ccea8416ae705657b2c545a4c43d4168d456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfb13490_e869fca9",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_item_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-31T19:39:23Z",
+      "side": 1,
+      "message": "emplace",
+      "range": {
+        "startLine": 35,
+        "startChar": 24,
+        "endLine": 35,
+        "endChar": 33
+      },
+      "revId": "9ac8ccea8416ae705657b2c545a4c43d4168d456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91d7bcc1_d91239b1",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_item_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-31T19:39:23Z",
+      "side": 1,
+      "message": "No need for this variable at all. You can pass the value in-place as: keycode \u003d\u003d ui::VKEY_SHIFT.",
+      "range": {
+        "startLine": 36,
+        "startChar": 61,
+        "endLine": 36,
+        "endChar": 71
+      },
+      "revId": "9ac8ccea8416ae705657b2c545a4c43d4168d456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba9b93bc_7fa81a8d",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_item_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-31T19:39:23Z",
+      "side": 1,
+      "message": "split this out. make the view creation outside of the conditionals, while the GetString/F/UTF16() is inside.",
+      "range": {
+        "startLine": 44,
+        "startChar": 8,
+        "endLine": 44,
+        "endChar": 34
+      },
+      "revId": "9ac8ccea8416ae705657b2c545a4c43d4168d456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca8803d1_ea3f4766",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_item_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-31T19:39:23Z",
+      "side": 1,
+      "message": "Nit: I would call this `shortcut_view_width`.",
+      "range": {
+        "startLine": 65,
+        "startChar": 6,
+        "endLine": 65,
+        "endChar": 25
+      },
+      "revId": "9ac8ccea8416ae705657b2c545a4c43d4168d456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f60fd7c0_87bd6a03",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_item_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-31T19:39:23Z",
+      "side": 1,
+      "message": "Nit: const correctness here and everywhere.",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 5
+      },
+      "revId": "9ac8ccea8416ae705657b2c545a4c43d4168d456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cf63fcf_fbd96882",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_item_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-31T19:39:23Z",
+      "side": 1,
+      "message": "on.",
+      "range": {
+        "startLine": 83,
+        "startChar": 49,
+        "endLine": 83,
+        "endChar": 50
+      },
+      "revId": "9ac8ccea8416ae705657b2c545a4c43d4168d456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1ddbc61_a0386c97",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_item_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-31T19:39:23Z",
+      "side": 1,
+      "message": "Nit: You can just gfx::Rect(width, height).",
+      "range": {
+        "startLine": 87,
+        "startChar": 41,
+        "endLine": 87,
+        "endChar": 63
+      },
+      "revId": "9ac8ccea8416ae705657b2c545a4c43d4168d456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f9c3d61_201cec39",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_item_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-31T19:39:23Z",
+      "side": 1,
+      "message": "Ditto: gfx::(desc_width, 0, width, height).",
+      "range": {
+        "startLine": 93,
+        "startChar": 38,
+        "endLine": 93,
+        "endChar": 57
+      },
+      "revId": "9ac8ccea8416ae705657b2c545a4c43d4168d456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6173dc3_624b2d60",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_item_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-31T19:39:23Z",
+      "side": 1,
+      "message": "Please document.",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 30
+      },
+      "revId": "9ac8ccea8416ae705657b2c545a4c43d4168d456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43af5084_55dc96a2",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-31T19:39:23Z",
+      "side": 1,
+      "message": "Please add a test that this doesn\u0027t return duplicate categories.",
+      "range": {
+        "startLine": 65,
+        "startChar": 23,
+        "endLine": 65,
+        "endChar": 46
+      },
+      "revId": "9ac8ccea8416ae705657b2c545a4c43d4168d456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
