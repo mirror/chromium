@@ -22,6 +22,30 @@
       "revId": "1cbf6b6f31e4ce4499e98c847ebd0127c6b2d5a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20f01c2b_977ebc2e",
+        "filename": "ios/chrome/browser/ui/settings/password_exporter.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1251006
+      },
+      "writtenOn": "2018-01-31T15:09:49Z",
+      "side": 1,
+      "message": "base::BindBlockArc gives a RepeatingCallback which can\u0027t be combined with a OnceCallback, because then the call to base::PostTaskWithTraitsAndReplyWithResult becomes ambiguous, so I have to convert it explicitly.",
+      "parentUuid": "19c3fa27_1e5dd52f",
+      "range": {
+        "startLine": 46,
+        "startChar": 6,
+        "endLine": 46,
+        "endChar": 43
+      },
+      "revId": "1cbf6b6f31e4ce4499e98c847ebd0127c6b2d5a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
