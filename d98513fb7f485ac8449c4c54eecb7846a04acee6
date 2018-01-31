@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "370352ae_53caabd4",
+        "filename": "components/cronet/native/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001445
+      },
+      "writtenOn": "2018-01-31T22:53:37Z",
+      "side": 1,
+      "message": "This seems like the wrong place to add this conditional - where should this live?",
+      "revId": "d98513fb7f485ac8449c4c54eecb7846a04acee6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26e46786_60b5c76c",
+        "filename": "components/cronet/native/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001445
+      },
+      "writtenOn": "2018-01-31T22:53:37Z",
+      "side": 1,
+      "message": "I couldn\u0027t find the test target that is supposed to include these source_set()s, which is why I converted them to standalone test()s.  Where are the main test targets for these supposed to live? Should they be platform-specific?",
+      "revId": "d98513fb7f485ac8449c4c54eecb7846a04acee6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
