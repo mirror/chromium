@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d921f038_0ffd6082",
+        "filename": "components/cast_channel/cast_message_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-31T08:16:48Z",
+      "side": 1,
+      "message": "nit: Please use \\n (...messages:\\n\") here and in next lines, so that this format will be preserved in the extracted text.",
+      "range": {
+        "startLine": 32,
+        "startChar": 62,
+        "endLine": 32,
+        "endChar": 63
+      },
+      "revId": "62f69f8d857da887147d434b57d3f41c276a1efd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
