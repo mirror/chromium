@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "594f3946_2246dced",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 963,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-31T01:06:13Z",
+      "side": 1,
+      "message": "What are all the use cases for copy requests? Is there any enforcement that they don\u0027t \naccidentally not have positive scale or translation?",
+      "revId": "d594b34e1ce45bce0a41a9c401584443e229e3db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5dd5dec_ab0e8bed",
         "filename": "cc/trees/property_tree.cc",
         "patchSetId": 5
@@ -31,6 +48,23 @@
       "side": 1,
       "message": "1. This code executes in the browser process.(*)\n\n2. Surfaces represent the compositing of a layer tree in another process/module. IIUC, this code should only be executed once on any given copy request since Surfaces cannot be put into layer trees again. Regardless, see #3 for why it would be safe anyway.\n\n3. gfx::ToRoundedInt() handles overflow by its use of base::saturated_cast\u003cint\u003e, to ensure the float→int conversion doesn\u0027t have a out-of-range problem. See: https://cs.chromium.org/chromium/src/ui/gfx/geometry/safe_integer_conversions.h?rcl\u003df24fdd9f84945a521665220d062544275932e246\u0026l\u003d38\n\n(*) Longer answer to #1: This code is executing in the same process as where the CopyOutputRequests originate. We know this because the entire layer tree (with their copy requests) is being \"compiled\" into a single CompositorFrame plus a list of RenderPasses (with the modified copy requests). It is the latter object graph that is being transferred to the display compositor via mojo structs/APIs.",
       "parentUuid": "c5dd5dec_ab0e8bed",
+      "revId": "d594b34e1ce45bce0a41a9c401584443e229e3db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "768e7723_c76b181c",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-31T01:06:13Z",
+      "side": 1,
+      "message": "Why does SetScaleTo have two vector parameters? Is the relative scale of the\nx coordinates of each vector (and y coordinates) all that matter? If so, why is\nit not two scalars?",
       "revId": "d594b34e1ce45bce0a41a9c401584443e229e3db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
