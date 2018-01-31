@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "aff8f00c_38eb4aab",
+        "filename": "chrome/browser/ui/views/sad_tab_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-31T08:00:35Z",
+      "side": 1,
+      "message": "\u003e I\u0027m not sure GetWidgetForNativeView(web_contents-\u003eGetNativeView()) does what I want.\n\u003e I\u0027m pretty sure that would return the Widget that the web contents is drawn into.\n\u003e \n\u003e What I want is the widget corresponding to the whole browser window, which is\n\u003e where focus traversal through the browser UI is taking place.\n\nah, chrome::FindBrowserWithWebContents(..) is probably the most reliable way to get the Browser*, then you can use BrowserView::GetBrowserViewForBrowser\n\nnote GetBrowserViewForNativeWindow used below has a comment \n\"\n  // Don\u0027t use this unless you only have a NativeWindow. In nearly all\n  // situations plumb through browser and use it.\n\"",
+      "parentUuid": "a4ea50ae_b5a0b99f",
+      "revId": "428e85f048c44d2546bf7e27ad6b9542c572da50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db0042c5_834d5572",
         "filename": "chrome/browser/ui/views/sad_tab_view.cc",
         "patchSetId": 2
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "I don\u0027t understand why...\n\nAll this code does is establish what should happen if the\nuser is inside the Sad Tab widget, and they tab out of it.",
       "parentUuid": "db0042c5_834d5572",
+      "revId": "428e85f048c44d2546bf7e27ad6b9542c572da50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55059664_db536d14",
+        "filename": "chrome/browser/ui/views/sad_tab_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-31T08:00:35Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t understand why...\n\u003e \n\u003e All this code does is establish what should happen if the\n\u003e user is inside the Sad Tab widget, and they tab out of it.\n\nThe SadTab can be dragged out of browser_view-\u003eGetContentsView() and moved into another browser_view -- if it still has a reference to the browser_view it was in when the SabTab was created then bad stuff might happen.\n\nSetFocusTraversableParentView(..) just copies a raw pointer into the Widget RootView (the |browser_view| here could even be closed and the View* destroyed.\n\n\n(it\u0027s possible there\u0027s some other magic that makes this work automatically during tab dragging. Or maybe SadTabs are recreated during tab dragging.. but it looks suspicious :)",
+      "parentUuid": "926514a7_a3e24f37",
       "revId": "428e85f048c44d2546bf7e27ad6b9542c572da50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
