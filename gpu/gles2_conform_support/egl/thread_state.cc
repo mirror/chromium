@@ -11,6 +11,7 @@
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "build/build_config.h"
 #include "gpu/command_buffer/client/gles2_lib.h"
 #include "gpu/command_buffer/common/thread_local.h"
 #include "gpu/command_buffer/service/gpu_switches.h"
@@ -78,10 +79,15 @@ egl::ThreadState* ThreadState::Get() {
       // Need to call both Init and InitFromArgv, since Windows does not use
       // argc, argv in CommandLine::Init(argc, argv).
       command_line->InitFromArgv(argv);
+      gl::init::InitializeGLNoExtensionsOneOff();
       gpu::GpuFeatureInfo gpu_feature_info;
       if (!command_line->HasSwitch(switches::kDisableGpuDriverBugWorkarounds)) {
         gpu::GPUInfo gpu_info;
+#if defined(OS_ANDROID)
+        gpu::CollectContextGraphicsInfo(&gpu_info);
+#else
         gpu::CollectBasicGraphicsInfo(&gpu_info);
+#endif  // OS_ANDROID
         gpu_feature_info = gpu::ComputeGpuFeatureInfo(
             gpu_info,
             false,  // ignore_gpu_blacklist
@@ -91,7 +97,6 @@ egl::ThreadState* ThreadState::Get() {
         Context::SetPlatformGpuFeatureInfo(gpu_feature_info);
       }
 
-      gl::init::InitializeGLNoExtensionsOneOff();
       gl::init::SetDisabledExtensionsPlatform(
           gpu_feature_info.disabled_extensions);
       gl::init::InitializeExtensionSettingsOneOffPlatform();

@@ -12,6 +12,7 @@
 #endif
 #include "base/test/launcher/unit_test_launcher.h"
 #include "base/test/test_suite.h"
+#include "build/build_config.h"
 #include "gpu/command_buffer/client/gles2_lib.h"
 #include "gpu/command_buffer/tests/gl_manager.h"
 #include "gpu/config/gpu_driver_bug_workarounds.h"
@@ -29,15 +30,19 @@ int RunHelper(base::TestSuite* testSuite) {
   base::MessageLoopForIO message_loop;
 #endif
   base::FeatureList::InitializeInstance(std::string(), std::string());
+  gl::init::InitializeGLNoExtensionsOneOff();
   gpu::GPUInfo gpu_info;
+#if defined(OS_ANDROID)
+  gpu::CollectContextGraphicsInfo(&gpu_info);
+#else
   gpu::CollectBasicGraphicsInfo(&gpu_info);
+#endif  // OS_ANDROID
   gpu::GLManager::g_gpu_feature_info = gpu::ComputeGpuFeatureInfo(
       gpu_info,
       false,  // ignore_gpu_blacklist
       false,  // disable_gpu_driver_bug_workarounds
       false,  // log_gpu_control_list_decisions
       base::CommandLine::ForCurrentProcess(), nullptr);
-  gl::init::InitializeGLNoExtensionsOneOff();
   gl::init::SetDisabledExtensionsPlatform(
       gpu::GLManager::g_gpu_feature_info.disabled_extensions);
   gl::init::InitializeExtensionSettingsOneOffPlatform();

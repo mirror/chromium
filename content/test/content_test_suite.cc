@@ -87,8 +87,13 @@ void ContentTestSuite::Initialize() {
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
   bool is_child_process = command_line->HasSwitch(switches::kTestChildProcess);
   if (!is_child_process) {
+    gl::GLSurfaceTestSupport::InitializeNoExtensionsOneOff();
     gpu::GPUInfo gpu_info;
+#if defined(OS_ANDROID)
+    gpu::CollectContextGraphicsInfo(&gpu_info);
+#else
     gpu::CollectBasicGraphicsInfo(&gpu_info);
+#endif  // OS_ANDROID
     gpu::GpuFeatureInfo gpu_feature_info =
         gpu::ComputeGpuFeatureInfo(gpu_info,
                                    false,  // ignore_gpu_blacklist
@@ -97,7 +102,6 @@ void ContentTestSuite::Initialize() {
                                    command_line, nullptr);
     gpu::InProcessCommandBuffer::InitializeDefaultServiceForTesting(
         gpu_feature_info);
-    gl::GLSurfaceTestSupport::InitializeNoExtensionsOneOff();
     gl::init::SetDisabledExtensionsPlatform(
         gpu_feature_info.disabled_extensions);
     gl::init::InitializeExtensionSettingsOneOffPlatform();
