@@ -507,11 +507,11 @@ void UiSceneCreator::CreateScene() {
   CreateFullscreenToast();
   CreateUnderDevelopmentNotice();
   CreateVoiceSearchUiGroup();
-  CreateContentRepositioningAffordance();
   CreateExitWarning();
   CreateWebVrSubtree();
   CreateKeyboard();
   CreateController();
+  CreateContentRepositioningAffordance();
 }
 
 void UiSceneCreator::Create2dBrowsingSubtreeRoots() {
@@ -534,14 +534,10 @@ void UiSceneCreator::Create2dBrowsingSubtreeRoots() {
   element->set_hit_testable(false);
   scene_->AddUiElement(k2dBrowsingRoot, std::move(element));
 
-  auto repositioner = Create<Repositioner>(k2dBrowsingRepositioner, kPhaseNone,
-                                           kContentDistance);
+  auto repositioner = Create<Repositioner>(k2dBrowsingRepositioner, kPhaseNone);
   repositioner->AddBinding(
       VR_BIND_FUNC(bool, Model, model_, model->reposition_window_enabled(),
-                   Repositioner, repositioner.get(), set_enable));
-  repositioner->AddBinding(
-      VR_BIND_FUNC(gfx::Point3F, Model, model_, model->controller.laser_origin,
-                   Repositioner, repositioner.get(), set_laser_origin));
+                   Repositioner, repositioner.get(), SetEnabled));
   repositioner->AddBinding(VR_BIND_FUNC(
       gfx::Vector3dF, Model, model_, model->controller.laser_direction,
       Repositioner, repositioner.get(), set_laser_direction));
@@ -1311,6 +1307,51 @@ void UiSceneCreator::CreateContentRepositioningAffordance() {
                         &ColorScheme::button_colors,
                         &DiscButton::SetButtonColors);
   scene_->AddUiElement(kContentQuad, std::move(reposition_button));
+
+  auto label =
+      Create<Text>(kNone, kPhaseForeground, kRepositionLabelFontHeight);
+  label->SetText(l10n_util::GetStringUTF16(IDS_VR_REPOSITION_LABEL));
+  label->SetVisible(true);
+  label->set_hit_testable(false);
+  label->SetAlignment(UiTexture::kTextAlignmentCenter);
+  label->SetLayoutMode(kMultiLineFixedWidth);
+  label->SetSize(kRepositionLabelWidth, 0.0f);
+  label->SetShadowsEnabled(true);
+  label->SetScale(kRepositionLabelFontScale, kRepositionLabelFontScale,
+                  kRepositionLabelFontScale);
+  VR_BIND_COLOR(model_, label.get(), &ColorScheme::reposition_label,
+                &Text::SetColor);
+  VR_BIND_VISIBILITY(label, model->reposition_window_enabled());
+  scene_->AddUiElement(k2dBrowsingContentGroup, std::move(label));
+
+  auto content_toggle = std::make_unique<UiElement>();
+  content_toggle->SetTransitionedProperties({OPACITY});
+  content_toggle->AddBinding(VR_BIND_FUNC(
+      float, Model, model_,
+      model->reposition_window_enabled() ? kRepositionContentOpacity : 1.0f,
+      UiElement, content_toggle.get(), SetOpacity));
+  scene_->AddParentUiElement(kContentQuad, std::move(content_toggle));
+
+  auto laser_toggle = std::make_unique<UiElement>();
+  laser_toggle->SetTransitionedProperties({OPACITY});
+  laser_toggle->SetTransitionDuration(base::TimeDelta::FromMilliseconds(700));
+  VR_BIND_VISIBILITY(laser_toggle, !model->reposition_window_enabled());
+  scene_->AddParentUiElement(kReticleLaserGroup, std::move(laser_toggle));
+
+  auto hit_plane =
+      Create<InvisibleHitTarget>(kContentRepositionHitPlane, kPhaseForeground);
+  hit_plane->SetSize(kSceneSize, kSceneSize);
+  hit_plane->SetTranslate(0.0f, 0.0f, -kContentDistance);
+  EventHandlers event_handlers;
+  event_handlers.button_up = base::BindRepeating(
+      [](Model* m) {
+        DCHECK(m->reposition_window_enabled());
+        m->pop_mode(kModeRepositionWindow);
+      },
+      base::Unretained(model_));
+  hit_plane->set_event_handlers(event_handlers);
+  VR_BIND_VISIBILITY(hit_plane, model->reposition_window_enabled());
+  scene_->AddUiElement(k2dBrowsingRepositioner, std::move(hit_plane));
 }
 
 void UiSceneCreator::CreateController() {
@@ -1369,9 +1410,17 @@ void UiSceneCreator::CreateController() {
       base::TimeDelta::FromMilliseconds(kControllerLabelTransitionDurationMs));
   VR_BIND_VISIBILITY(callout_group, model->controller.resting_in_viewport);
 
-  callout_group->AddChild(CreateControllerLabel(
+  auto trackpad_button = CreateControllerLabel(
       kControllerTrackpadLabel, kControllerTrackpadOffset,
-      l10n_util::GetStringUTF16(IDS_VR_BUTTON_TRACKPAD), model_));
+      l10n_util::GetStringUTF16(IDS_VR_BUTTON_TRACKPAD), model_);
+  VR_BIND_VISIBILITY(trackpad_button, !model->reposition_window_enabled());
+  callout_group->AddChild(std::move(trackpad_button));
+
+  auto reposition_button = CreateControllerLabel(
+      kControllerTrackpadRepositionLabel, kControllerTrackpadOffset,
+      l10n_util::GetStringUTF16(IDS_VR_BUTTON_TRACKPAD_REPOSITION), model_);
+  VR_BIND_VISIBILITY(reposition_button, model->reposition_window_enabled());
+  callout_group->AddChild(std::move(reposition_button));
 
   auto exit_button_label = CreateControllerLabel(
       kControllerExitButtonLabel, kControllerExitButtonOffset,
@@ -1391,16 +1440,21 @@ void UiSceneCreator::CreateController() {
 
   scene_->AddUiElement(kControllerGroup, std::move(controller));
 
+  auto reticle_laser_group = Create<UiElement>(kReticleLaserGroup, kPhaseNone);
+
   auto laser = std::make_unique<Laser>(model_);
   laser->SetDrawPhase(kPhaseForeground);
   laser->AddBinding(VR_BIND_FUNC(float, Model, model_,
                                  model->controller.opacity, Laser, laser.get(),
                                  SetOpacity));
-  scene_->AddUiElement(kControllerGroup, std::move(laser));
 
   auto reticle = std::make_unique<Reticle>(scene_, model_);
   reticle->SetDrawPhase(kPhaseForeground);
-  scene_->AddUiElement(kControllerGroup, std::move(reticle));
+
+  reticle_laser_group->AddChild(std::move(laser));
+  reticle_laser_group->AddChild(std::move(reticle));
+
+  scene_->AddUiElement(kControllerGroup, std::move(reticle_laser_group));
 }
 
 std::unique_ptr<TextInput> UiSceneCreator::CreateTextInput(
