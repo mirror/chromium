@@ -8,8 +8,8 @@
 #include "components/cronet/ios/test/cronet_test_base.h"
 #include "components/cronet/ios/test/start_cronet.h"
 #include "components/cronet/ios/test/test_server.h"
-#include "components/grpc_support/test/quic_test_server.h"
 #import "net/base/mac/url_conversions.h"
+#include "net/test/quic_simple_test_server.h"
 #include "testing/gtest_mac.h"
 #include "url/gurl.h"
 
@@ -26,7 +26,7 @@ class CronetMetricsTest : public CronetTestBase {
     TestServer::Start();
 
     [Cronet setMetricsEnabled:metrics_enabled];
-    StartCronet(grpc_support::GetQuicTestServerPort());
+    StartCronet(net::QuicSimpleTestServer::GetPort());
 
     [Cronet registerHttpProtocolHandler];
     NSURLSessionConfiguration* config =
@@ -67,7 +67,8 @@ class CronetDisabledMetricsTest : public CronetMetricsTest {
 // Tests that metrics data is sane for a QUIC request.
 TEST_F(CronetEnabledMetricsTest, ProtocolIsQuic) {
   if (@available(iOS 10, *)) {
-    NSURL* url = net::NSURLWithGURL(GURL(grpc_support::kTestServerSimpleUrl));
+    NSURL* url = net::NSURLWithGURL(
+        GURL(net::QuicSimpleTestServer::kTestServerSimpleUrl));
 
     __block BOOL block_used = NO;
     NSURLSessionDataTask* task = [session_ dataTaskWithURL:url];
@@ -79,7 +80,7 @@ TEST_F(CronetEnabledMetricsTest, ProtocolIsQuic) {
     StartDataTaskAndWaitForCompletion(task);
     EXPECT_TRUE(block_used);
     EXPECT_EQ(nil, [delegate_ error]);
-    EXPECT_STREQ(grpc_support::kSimpleBodyValue,
+    EXPECT_STREQ(net::QuicSimpleTestServer::kSimpleBodyValue,
                  base::SysNSStringToUTF8([delegate_ responseBody]).c_str());
 
     NSURLSessionTaskMetrics* task_metrics = delegate_.taskMetrics;
@@ -246,7 +247,8 @@ TEST_F(CronetEnabledMetricsTest, InvalidURL) {
 // Tests that the metrics API behaves sanely when the request is canceled.
 TEST_F(CronetEnabledMetricsTest, CanceledRequest) {
   if (@available(iOS 10, *)) {
-    NSURL* url = net::NSURLWithGURL(GURL(grpc_support::kTestServerSimpleUrl));
+    NSURL* url = net::NSURLWithGURL(
+        GURL(net::QuicSimpleTestServer::kTestServerSimpleUrl));
 
     __block BOOL block_used = NO;
     NSURLSessionDataTask* task = [session_ dataTaskWithURL:url];
@@ -267,7 +269,8 @@ TEST_F(CronetEnabledMetricsTest, CanceledRequest) {
 // Tests the metrics data for a reused connection is correct.
 TEST_F(CronetEnabledMetricsTest, ReusedConnection) {
   if (@available(iOS 10, *)) {
-    NSURL* url = net::NSURLWithGURL(GURL(grpc_support::kTestServerSimpleUrl));
+    NSURL* url = net::NSURLWithGURL(
+        GURL(net::QuicSimpleTestServer::kTestServerSimpleUrl));
 
     __block BOOL block_used = NO;
     NSURLSessionDataTask* task = [session_ dataTaskWithURL:url];
@@ -279,7 +282,7 @@ TEST_F(CronetEnabledMetricsTest, ReusedConnection) {
     StartDataTaskAndWaitForCompletion(task);
     EXPECT_TRUE(block_used);
     EXPECT_EQ(nil, [delegate_ error]);
-    EXPECT_STREQ(grpc_support::kSimpleBodyValue,
+    EXPECT_STREQ(net::QuicSimpleTestServer::kSimpleBodyValue,
                  base::SysNSStringToUTF8([delegate_ responseBody]).c_str());
 
     NSURLSessionTaskMetrics* task_metrics = [delegate_ taskMetrics];
@@ -301,7 +304,7 @@ TEST_F(CronetEnabledMetricsTest, ReusedConnection) {
     StartDataTaskAndWaitForCompletion(task);
     EXPECT_TRUE(block_used);
     EXPECT_EQ(nil, [delegate_ error]);
-    EXPECT_STREQ(grpc_support::kSimpleBodyValue,
+    EXPECT_STREQ(net::QuicSimpleTestServer::kSimpleBodyValue,
                  base::SysNSStringToUTF8([delegate_ responseBody]).c_str());
 
     task_metrics = delegate_.taskMetrics;
@@ -322,7 +325,8 @@ TEST_F(CronetEnabledMetricsTest, ReusedConnection) {
 // Tests that the metrics disable switch works.
 TEST_F(CronetDisabledMetricsTest, MetricsDisabled) {
   if (@available(iOS 10, *)) {
-    NSURL* url = net::NSURLWithGURL(GURL(grpc_support::kTestServerSimpleUrl));
+    NSURL* url = net::NSURLWithGURL(
+        GURL(net::QuicSimpleTestServer::kTestServerSimpleUrl));
 
     __block BOOL block_used = NO;
     NSURLSessionDataTask* task = [session_ dataTaskWithURL:url];
@@ -334,7 +338,7 @@ TEST_F(CronetDisabledMetricsTest, MetricsDisabled) {
     StartDataTaskAndWaitForCompletion(task);
     EXPECT_TRUE(block_used);
     EXPECT_EQ(nil, [delegate_ error]);
-    EXPECT_STREQ(grpc_support::kSimpleBodyValue,
+    EXPECT_STREQ(net::QuicSimpleTestServer::kSimpleBodyValue,
                  base::SysNSStringToUTF8([delegate_ responseBody]).c_str());
 
     NSURLSessionTaskMetrics* task_metrics = [delegate_ taskMetrics];
@@ -362,7 +366,8 @@ TEST_F(CronetDisabledMetricsTest, MetricsDisabled) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 TEST_F(CronetEnabledMetricsTest, LegacyApi) {
-  NSURL* url = net::NSURLWithGURL(GURL(grpc_support::kTestServerSimpleUrl));
+  NSURL* url =
+      net::NSURLWithGURL(GURL(net::QuicSimpleTestServer::kTestServerSimpleUrl));
 
   __block BOOL block_used = NO;
   [Cronet setRequestFilterBlock:^(NSURLRequest* request) {
