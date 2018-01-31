@@ -16,6 +16,24 @@
       "revId": "2492f52f0ff773831daacf55733324a879375f8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bd2d4ba_9194eb4f",
+        "filename": "chrome/renderer/extensions/extension_hooks_delegate.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-31T19:28:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29d2afa7_6d993ea0",
+      "revId": "2492f52f0ff773831daacf55733324a879375f8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
