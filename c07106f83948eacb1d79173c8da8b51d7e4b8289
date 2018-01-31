@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f2c5e0f_ac8b6693",
+        "filename": "chrome/browser/resources/settings/privacy_page/privacy_page.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-31T00:11:40Z",
+      "side": 1,
+      "message": "Is this a fake pref? Trying to understand why do we need to construct it in JS, as opposed to having it propagate through the pref mechanism that most of Settings UI uses.",
+      "range": {
+        "startLine": 355,
+        "startChar": 9,
+        "endLine": 355,
+        "endChar": 43
+      },
+      "revId": "c07106f83948eacb1d79173c8da8b51d7e4b8289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "944e46f5_b88bdc1b",
+        "filename": "chrome/test/data/webui/settings/privacy_page_test.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-31T00:11:40Z",
+      "side": 1,
+      "message": "Maybe chain this callback on the next line, instead of nesting.",
+      "range": {
+        "startLine": 423,
+        "startChar": 55,
+        "endLine": 426,
+        "endChar": 17
+      },
+      "revId": "c07106f83948eacb1d79173c8da8b51d7e4b8289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef1e0b47_cdb8c48d",
+        "filename": "chrome/test/data/webui/settings/test_privacy_page_browser_proxy.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-31T00:11:40Z",
+      "side": 1,
+      "message": "If those values are hard-coded here, does that mean that this is the only case being tested? Should the (true,false) or (false, false) cases also be tested?",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 21
+      },
+      "revId": "c07106f83948eacb1d79173c8da8b51d7e4b8289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
