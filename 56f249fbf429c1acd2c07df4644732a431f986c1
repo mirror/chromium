@@ -34,6 +34,24 @@
       "revId": "56f249fbf429c1acd2c07df4644732a431f986c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46faab05_35b1a3af",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-01-31T20:43:09Z",
+      "side": 1,
+      "message": "does icf not work in nacl builds? do nacl builds not use lld even if use_lld is set?",
+      "parentUuid": "842f8d8d_c1b7a5be",
+      "revId": "56f249fbf429c1acd2c07df4644732a431f986c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
