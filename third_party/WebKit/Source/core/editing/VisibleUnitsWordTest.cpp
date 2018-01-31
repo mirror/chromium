@@ -21,12 +21,14 @@ class VisibleUnitsWordTest : public EditingTestBase {
             .Build());
   }
 
-  std::string DoEndOfWord(const std::string& selection_text) {
+  std::string DoEndOfWord(
+      const std::string& selection_text,
+      EWordSide word_side = EWordSide::kNextWordIfOnBoundary) {
     const Position position = SetSelectionTextToBody(selection_text).Base();
     return GetSelectionTextFromBody(
         SelectionInDOMTree::Builder()
-            .Collapse(
-                EndOfWord(CreateVisiblePosition(position)).DeepEquivalent())
+            .Collapse(EndOfWord(CreateVisiblePosition(position), word_side)
+                          .DeepEquivalent())
             .Build());
   }
 };
@@ -84,6 +86,68 @@ TEST_F(VisibleUnitsWordTest, StartOfWordTextSecurity) {
   EXPECT_EQ("|abc<s>foo bar</s>baz", DoStartOfWord("abc<s>foo bar|</s>baz"));
   EXPECT_EQ("|abc<s>foo bar</s>baz", DoStartOfWord("abc<s>foo bar</s>|baz"));
   EXPECT_EQ("|abc<s>foo bar</s>baz", DoStartOfWord("abc<s>foo bar</s>b|az"));
+}
+
+TEST_F(VisibleUnitsWordTest, EndOfWordBasic) {
+  EXPECT_EQ("<p> (|1) abc def</p>", DoEndOfWord("<p>| (1) abc def</p>"));
+  EXPECT_EQ("<p> (|1) abc def</p>", DoEndOfWord("<p> |(1) abc def</p>"));
+  EXPECT_EQ("<p> (1|) abc def</p>", DoEndOfWord("<p> (|1) abc def</p>"));
+  EXPECT_EQ("<p> (1)| abc def</p>", DoEndOfWord("<p> (1|) abc def</p>"));
+  EXPECT_EQ("<p> (1) |abc def</p>", DoEndOfWord("<p> (1)| abc def</p>"));
+  EXPECT_EQ("<p> (1) abc| def</p>", DoEndOfWord("<p> (1) |abc def</p>"));
+  EXPECT_EQ("<p> (1) abc| def</p>", DoEndOfWord("<p> (1) a|bc def</p>"));
+  EXPECT_EQ("<p> (1) abc| def</p>", DoEndOfWord("<p> (1) ab|c def</p>"));
+  EXPECT_EQ("<p> (1) abc |def</p>", DoEndOfWord("<p> (1) abc| def</p>"));
+  EXPECT_EQ("<p> (1) abc def|</p>", DoEndOfWord("<p> (1) abc |def</p>"));
+  EXPECT_EQ("<p> (1) abc def|</p>", DoEndOfWord("<p> (1) abc d|ef</p>"));
+  EXPECT_EQ("<p> (1) abc def|</p>", DoEndOfWord("<p> (1) abc de|f</p>"));
+  EXPECT_EQ("<p> (1) abc def|</p>", DoEndOfWord("<p> (1) abc def|</p>"));
+  EXPECT_EQ("<p> (1) abc def|</p>", DoEndOfWord("<p> (1) abc def</p>|"));
+}
+
+TEST_F(VisibleUnitsWordTest, EndOfWordPreviousWordIfOnBoundaryBasic) {
+  EXPECT_EQ("<p> |(1) abc def</p>",
+            DoEndOfWord("<p>| (1) abc def</p>",
+                        EWordSide::kPreviousWordIfOnBoundary));
+  EXPECT_EQ("<p> |(1) abc def</p>",
+            DoEndOfWord("<p> |(1) abc def</p>",
+                        EWordSide::kPreviousWordIfOnBoundary));
+  EXPECT_EQ("<p> (|1) abc def</p>",
+            DoEndOfWord("<p> (|1) abc def</p>",
+                        EWordSide::kPreviousWordIfOnBoundary));
+  EXPECT_EQ("<p> (1|) abc def</p>",
+            DoEndOfWord("<p> (1|) abc def</p>",
+                        EWordSide::kPreviousWordIfOnBoundary));
+  EXPECT_EQ("<p> (1)| abc def</p>",
+            DoEndOfWord("<p> (1)| abc def</p>",
+                        EWordSide::kPreviousWordIfOnBoundary));
+  EXPECT_EQ("<p> (1) |abc def</p>",
+            DoEndOfWord("<p> (1) |abc def</p>",
+                        EWordSide::kPreviousWordIfOnBoundary));
+  EXPECT_EQ("<p> (1) abc| def</p>",
+            DoEndOfWord("<p> (1) a|bc def</p>",
+                        EWordSide::kPreviousWordIfOnBoundary));
+  EXPECT_EQ("<p> (1) abc| def</p>",
+            DoEndOfWord("<p> (1) ab|c def</p>",
+                        EWordSide::kPreviousWordIfOnBoundary));
+  EXPECT_EQ("<p> (1) abc| def</p>",
+            DoEndOfWord("<p> (1) abc| def</p>",
+                        EWordSide::kPreviousWordIfOnBoundary));
+  EXPECT_EQ("<p> (1) abc |def</p>",
+            DoEndOfWord("<p> (1) abc |def</p>",
+                        EWordSide::kPreviousWordIfOnBoundary));
+  EXPECT_EQ("<p> (1) abc def|</p>",
+            DoEndOfWord("<p> (1) abc d|ef</p>",
+                        EWordSide::kPreviousWordIfOnBoundary));
+  EXPECT_EQ("<p> (1) abc def|</p>",
+            DoEndOfWord("<p> (1) abc de|f</p>",
+                        EWordSide::kPreviousWordIfOnBoundary));
+  EXPECT_EQ("<p> (1) abc def|</p>",
+            DoEndOfWord("<p> (1) abc def|</p>",
+                        EWordSide::kPreviousWordIfOnBoundary));
+  EXPECT_EQ("<p> (1) abc def|</p>",
+            DoEndOfWord("<p> (1) abc def</p>|",
+                        EWordSide::kPreviousWordIfOnBoundary));
 }
 
 TEST_F(VisibleUnitsWordTest, EndOfWordTextSecurity) {
