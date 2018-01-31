@@ -9,7 +9,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -506,13 +505,23 @@ public abstract class ToolbarLayout extends FrameLayout implements Toolbar {
     public void setCloseButtonImageResource(@Nullable Drawable drawable) { }
 
     /**
-     * Sets/adds a custom action button to the {@link ToolbarLayout} if it is supported.
-     * @param description  The content description for the button.
-     * @param listener     The {@link OnClickListener} to use for clicks to the button.
-     * @param buttonSource The {@link Bitmap} resource to use as the source for the button.
+     * Clears all custom action buttons on the toolbar layout, if it is supported.
      */
-    public void setCustomActionButton(Drawable drawable, String description,
-            OnClickListener listener) { }
+    public void clearCustomActionButtons() {
+        assert false;
+    }
+
+    /**
+     * Adds a custom action button to the toolbar layout, if it is supported.
+     * @param drawable The icon for the button.
+     * @param description The content description for the button.
+     * @param listener The {@link OnClickListener} to use for clicks to the button.
+     */
+    public void addCustomActionButton(
+            Drawable drawable, String description, OnClickListener listener) {
+        // This method should only be called for subclasses that override it.
+        assert false;
+    }
 
     /**
      * @return The height of the tab strip. Return 0 for toolbars that do not have a tabstrip.
