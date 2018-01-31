@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b18dc606_f6dcde87",
+        "filename": "tools/licenses.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2018-01-31T01:43:55Z",
+      "side": 1,
+      "message": "Nit: May sound more natural if it\u0027s \"Errors in %s:\\n %s\\n\" ?",
+      "revId": "86b1a805f33be48ea5c9e7dc74f31d9fa6ea5db3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
