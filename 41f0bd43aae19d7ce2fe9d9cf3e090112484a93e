@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a21bcf4_cd4bb6dd",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-31T23:58:55Z",
+      "side": 1,
+      "message": "Doesn\u0027t this also need to be moved to the list-item element?",
+      "range": {
+        "startLine": 89,
+        "startChar": 6,
+        "endLine": 93,
+        "endChar": 7
+      },
+      "revId": "41f0bd43aae19d7ce2fe9d9cf3e090112484a93e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db09c360_f580b2b8",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-31T23:58:55Z",
+      "side": 1,
+      "message": "Now that we pass |item| as |destination|, can me modify that logic to be in list-item itself? Specifically\n\n 1) Make a this.stale Polymer property with reflectToAttribute: true.\n 2) Populate that property within list-item\n 3) Modify .list-item.stale to .list-item[stale]",
+      "range": {
+        "startLine": 108,
+        "startChar": 28,
+        "endLine": 108,
+        "endChar": 74
+      },
+      "revId": "41f0bd43aae19d7ce2fe9d9cf3e090112484a93e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdc38306_a7bb9fbc",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-31T23:58:55Z",
+      "side": 1,
+      "message": "Can we remove this now, and populate this.title within the list-item itself?",
+      "range": {
+        "startLine": 109,
+        "startChar": 9,
+        "endLine": 109,
+        "endChar": 38
+      },
+      "revId": "41f0bd43aae19d7ce2fe9d9cf3e090112484a93e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
