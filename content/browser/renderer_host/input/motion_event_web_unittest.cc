@@ -43,7 +43,7 @@ TEST(MotionEventWebTest, Constructor) {
       EXPECT_GT(pointer_index, 0u);
 
       blink::WebTouchEvent web_touch_event =
-          CreateWebTouchEventFromMotionEvent(generic_event, true);
+          CreateWebTouchEventFromMotionEvent(generic_event, true, false);
 
       MotionEventWeb event(web_touch_event);
       EXPECT_EQ(tool_type, event.GetToolType(pointer_index));
