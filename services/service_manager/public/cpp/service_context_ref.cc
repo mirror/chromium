@@ -59,8 +59,8 @@ class ServiceContextRefImpl : public ServiceContextRef {
 };
 
 ServiceContextRefFactory::ServiceContextRefFactory(
-    const base::Closure& quit_closure)
-    : quit_closure_(quit_closure), weak_factory_(this) {
+    base::OnceClosure quit_closure)
+    : quit_closure_(std::move(quit_closure)), weak_factory_(this) {
   DCHECK(!quit_closure_.is_null());
 }
 
@@ -78,7 +78,7 @@ void ServiceContextRefFactory::AddRef() {
 
 void ServiceContextRefFactory::Release() {
   if (!--ref_count_)
-    quit_closure_.Run();
+    std::move(quit_closure_).Run();
 }
 
 }  // namespace service_manager
