@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "13c7b62c_d5eb7be2",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2018-01-31T17:28:36Z",
+      "side": 1,
+      "message": "I agree that anything we add further is almost certainly a specialisation of the current three. Therefore we have already reserved our multicase slots at the beginning.",
+      "parentUuid": "b38b18b3_da8854da",
+      "range": {
+        "startLine": 279,
+        "startChar": 2,
+        "endLine": 279,
+        "endChar": 9
+      },
+      "revId": "f3b36e27ca472fa7fd8b11df95d8afdd9e11c9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b81f680a_cc2aaa45",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -93,6 +117,30 @@
       "revId": "f3b36e27ca472fa7fd8b11df95d8afdd9e11c9ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0d8348e_a3fe1c93",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 60527,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2018-01-31T17:28:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b81f680a_cc2aaa45",
+      "range": {
+        "startLine": 60527,
+        "startChar": 9,
+        "endLine": 60527,
+        "endChar": 14
+      },
+      "revId": "f3b36e27ca472fa7fd8b11df95d8afdd9e11c9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
