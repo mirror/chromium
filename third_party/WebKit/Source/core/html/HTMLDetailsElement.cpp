@@ -58,7 +58,7 @@ HTMLDetailsElement::~HTMLDetailsElement() = default;
 // static
 bool HTMLDetailsElement::IsFirstSummary(const Node& node) {
   DCHECK(IsHTMLDetailsElement(node.parentElement()));
-  if (!IsHTMLSummaryElement(node))
+  if (!node.HasTagName(summaryTag))
     return false;
   return node.parentElement() &&
          &node ==
@@ -102,7 +102,7 @@ Element* HTMLDetailsElement::FindMainSummary() const {
   HTMLSlotElement* slot =
       ToHTMLSlotElementOrDie(UserAgentShadowRoot()->firstChild());
   DCHECK(slot->firstChild());
-  CHECK(IsHTMLSummaryElement(*slot->firstChild()));
+  CHECK(slot->firstChild()->HasTagName(summaryTag));
   return ToElement(slot->firstChild());
 }
 
