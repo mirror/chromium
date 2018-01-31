@@ -503,6 +503,7 @@ class OmniboxFieldTrial {
 
   // Parameter names used by UI experiments.
   static const char kUIMaxAutocompleteMatchesParam[];
+  static const char kUISteadyStateElisionsModeParam[];
   static const char kUIVerticalMarginParam[];
 
   // Parameter names used by Zero Suggest Redirect to Chrome.

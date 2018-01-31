@@ -9,6 +9,7 @@
 
 #include "base/command_line.h"
 #include "base/logging.h"
+#include "base/metrics/field_trial_params.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -103,6 +104,26 @@ OmniboxState::OmniboxState(const OmniboxEditModel::State& model_state,
 }
 
 OmniboxState::~OmniboxState() {
+}
+
+// These enum values are used internally only, and may be changed freely.
+enum SteadyStateUrlElisionsMode {
+  NO_ELISIONS = 0,
+  SHOW_FULL_URL_ON_MOUSEDOWN = 1,
+  SHOW_FULL_URL_ON_MOUSEUP = 2
+};
+
+SteadyStateUrlElisionsMode GetSteadyStateElisionsMode() {
+  std::string value = base::GetFieldTrialParamValueByFeature(
+      omnibox::kUIExperimentHideSteadyStateUrlSchemeAndSubdomains,
+      OmniboxFieldTrial::kUISteadyStateElisionsModeParam);
+
+  if (value == "ShowOnMousedown")
+    return SHOW_FULL_URL_ON_MOUSEDOWN;
+  if (value == "ShowOnMouseup")
+    return SHOW_FULL_URL_ON_MOUSEUP;
+
+  return NO_ELISIONS;
 }
 
 }  // namespace
@@ -664,6 +685,10 @@ bool OmniboxViewViews::OnMousePressed(const ui::MouseEvent& event) {
     // invalidated this saved selection is still OK.
     saved_selection_for_focus_change_ = gfx::Range::InvalidRange();
   }
+
+  if (GetSteadyStateElisionsMode() == SHOW_FULL_URL_ON_MOUSEDOWN)
+    SetUserText(controller()->GetToolbarModel()->GetFormattedFullURL(), false);
+
   return views::Textfield::OnMousePressed(event);
 }
 
@@ -682,6 +707,9 @@ bool OmniboxViewViews::OnMouseDragged(const ui::MouseEvent& event) {
 }
 
 void OmniboxViewViews::OnMouseReleased(const ui::MouseEvent& event) {
+  if (GetSteadyStateElisionsMode() == SHOW_FULL_URL_ON_MOUSEUP)
+    SetUserText(controller()->GetToolbarModel()->GetFormattedFullURL(), false);
+
   views::Textfield::OnMouseReleased(event);
   // When the user has clicked and released to give us focus, select all.
   if ((event.IsOnlyLeftMouseButton() || event.IsOnlyRightMouseButton()) &&

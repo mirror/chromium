@@ -837,6 +837,8 @@ const char OmniboxFieldTrial::kPhysicalWebAfterTypingBaseRelevanceParam[] =
 
 const char OmniboxFieldTrial::kUIMaxAutocompleteMatchesParam[] =
     "UIMaxAutocompleteMatches";
+const char OmniboxFieldTrial::kUISteadyStateElisionsModeParam[] =
+    "UISteadyStateElisionsMode";
 const char OmniboxFieldTrial::kUIVerticalMarginParam[] = "UIVerticalMargin";
 
 const char OmniboxFieldTrial::kZeroSuggestRedirectToChromeExperimentIdParam[] =
