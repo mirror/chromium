@@ -207,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "e856c4d5_fa757a84",
+        "filename": "chrome/browser/sessions/session_service.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-31T16:37:44Z",
+      "side": 1,
+      "message": "I added a separate event for deletions to NavigationController and SessionService will schedule a reset to properly remove session data",
+      "parentUuid": "4bace30c_fd46d261",
+      "revId": "330c43fc91247489f837e08dd113965bedf460f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2435d444_ab4b85c3",
         "filename": "components/browsing_data/core/features.cc",
         "patchSetId": 19
@@ -321,6 +339,24 @@
       "revId": "330c43fc91247489f837e08dd113965bedf460f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb8167f2_c9851173",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1753,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-31T16:37:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "424d5a4c_d13f2de5",
+      "revId": "330c43fc91247489f837e08dd113965bedf460f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

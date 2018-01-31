@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "e61db05d_33c9e5c2",
+        "filename": "chrome/browser/browsing_data/navigation_entry_remover.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-31T16:37:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ba7bb99_e5de2d8d",
+      "revId": "7cf10286e0ed65ed49b7fd797ede984fa3d127ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32e0d046_358ac7c2",
         "filename": "content/public/browser/navigation_details.h",
         "patchSetId": 15
@@ -87,6 +105,24 @@
       "revId": "7cf10286e0ed65ed49b7fd797ede984fa3d127ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7f6ba0b_db2ec194",
+        "filename": "content/public/browser/navigation_details.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-31T16:37:44Z",
+      "side": 1,
+      "message": "I reverted back to the old version and replaced this with a separate event for deletions.",
+      "parentUuid": "68c771f2_479c639c",
+      "revId": "7cf10286e0ed65ed49b7fd797ede984fa3d127ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
