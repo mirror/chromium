@@ -73,10 +73,9 @@ bool CanSendReport(const SBErrorOptions& error_display_options,
   bool scout_check_ok = !TriggerNeedsScout(trigger_type) ||
                         error_display_options.is_scout_reporting_enabled;
 
-  // Reports are only sent for non-incoginito users who are allowed to modify
-  // the Extended Reporting setting and have opted-in to Extended Reporting.
+  // Reports are only sent for non-incoginito users who have opted-in to
+  // Extended Reporting.
   return !error_display_options.is_off_the_record &&
-         error_display_options.is_extended_reporting_opt_in_allowed &&
          error_display_options.is_extended_reporting_enabled && scout_check_ok;
 }
 
@@ -135,12 +134,10 @@ bool TriggerManager::CanStartDataCollection(
   bool scout_check_ok = !TriggerNeedsScout(trigger_type) ||
                         error_display_options.is_scout_reporting_enabled;
 
-  // We start data collection as long as user is not incognito and is able to
-  // change the Extended Reporting opt-in, and the |trigger_type| has available
-  // quota. For some triggers we also require Scout or extended reporting opt-in
-  // in order to start data collection.
+  // We start data collection as long as user is not incognito the
+  // |trigger_type| has available quota. For some triggers we also require Scout
+  // or extended reporting opt-in in order to start data collection.
   return !error_display_options.is_off_the_record &&
-         error_display_options.is_extended_reporting_opt_in_allowed &&
          optin_required_check_ok && scout_check_ok &&
          trigger_throttler_->TriggerCanFire(trigger_type);
 }
