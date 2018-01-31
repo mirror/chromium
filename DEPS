@@ -186,6 +186,12 @@ deps = {
   'src/chrome/test/data/vr/webvr_info':
     Var('chromium_git') + '/external/github.com/toji/webvr.info.git' + '@' + 'c58ae99b9ff9e2aa4c524633519570bf33536248',
 
+  'src/clank': {
+      # TODO(sdefresne): Leave "floating" until auto-roller is working.
+      'url': 'https://chrome-internal.googlesource.com/clank/internal/apps.git' + '@' + 'refs/heads/master',
+      'condition': 'checkout_android and checkout_google_internal',
+  },
+
   'src/ios/third_party/earl_grey/src': {
       'url': Var('chromium_git') + '/external/github.com/google/EarlGrey.git' + '@' + '2fd8a7d4b76f820fb95bce495c0ceb324dbe3edb',
       'condition': 'checkout_ios',
@@ -252,7 +258,14 @@ deps = {
   },
 
   'src/ios_internal': {
-      'url': 'https://chrome-internal.googlesource.com/chrome/ios_internal.git' + '@' + '3fd2cebe6fc1ccd43675a23d492c323aa42e3b81',
+      # TODO(sdefresne): Leave "floating" until auto-roller is working.
+      'url': 'https://chrome-internal.googlesource.com/chrome/ios_internal.git' + '@' + 'refs/heads/master',
+      'condition': 'checkout_ios and checkout_google_internal',
+  },
+
+  'src/ios_internal/third_party/material_components_ios/src': {
+      # TODO(sdefresne): Leave "floating" until auto-roller is working.
+      'url': 'https://chrome-internal.googlesource.com/external/github.com/google/material-components-ios.git' + '@' + 'refs/heads/master',
       'condition': 'checkout_ios and checkout_google_internal',
   },
 
@@ -262,6 +275,12 @@ deps = {
   'src/native_client': {
       'url': Var('chromium_git') + '/native_client/src/native_client.git' + '@' + Var('nacl_revision'),
       'condition': 'checkout_nacl',
+  },
+
+  'src/signing_keys': {
+      # TODO(sdefresne): Leave "floating" until auto-roller is working.
+      'url': 'https://chrome-internal.googlesource.com/clank/apptestkey.git' + '@' + 'refs/heads/master',
+      'condition': 'checkout_android and checkout_google_internal',
   },
 
   'src/third_party/SPIRV-Tools/src':
@@ -280,6 +299,12 @@ deps = {
   'src/third_party/android_tools': {
       'url': Var('chromium_git') + '/android_tools.git' + '@' + 'c9f9bbf0a6c862fbef6115e80e8617093cd58e6b',
       'condition': 'checkout_android',
+  },
+
+  'src/third_party/android_tools_internal': {
+      # TODO(sdefresne): Leave "floating" until auto-roller is working.
+      'url': 'https://chrome-internal.googlesource.com/clank/third_party/android_tools.git' + '@' + 'refs/heads/master',
+      'condition': 'checkout_android and checkout_google_internal',
   },
 
   'src/third_party/angle':
