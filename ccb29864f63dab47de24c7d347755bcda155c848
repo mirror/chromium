@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "31c37937_56d53d6a",
+        "filename": "chrome/renderer/resources/plugins/pdf_plugin.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-31T19:51:27Z",
+      "side": 1,
+      "message": "Done. Nice! Thanks for the tip. I was struggling with this aspect for some time.",
+      "parentUuid": "20106fec_eec09efa",
+      "revId": "ccb29864f63dab47de24c7d347755bcda155c848",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0bca51f1_3b242fcb",
         "filename": "chrome/renderer/resources/plugins/pdf_plugin.html",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "ccb29864f63dab47de24c7d347755bcda155c848",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "666a4131_d749c50b",
+        "filename": "chrome/renderer/resources/plugins/pdf_plugin.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-31T19:51:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bca51f1_3b242fcb",
+      "revId": "ccb29864f63dab47de24c7d347755bcda155c848",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b1ea3b8d_5211f75d",
+        "filename": "components/security_interstitials/core/common/resources/interstitial_common.css",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-31T19:51:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0015c274_6b89aecc",
+      "revId": "ccb29864f63dab47de24c7d347755bcda155c848",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0a7971c_58bc3f29",
         "filename": "components/security_interstitials/core/common/resources/interstitial_common.css",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "ccb29864f63dab47de24c7d347755bcda155c848",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caca3bc8_27fab400",
+        "filename": "components/security_interstitials/core/common/resources/interstitial_common.css",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-31T19:51:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0a7971c_58bc3f29",
+      "revId": "ccb29864f63dab47de24c7d347755bcda155c848",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a579fea9_8598044e",
+        "filename": "components/security_interstitials/core/browser/resources/interstitial_webview_quiet.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-31T19:51:27Z",
+      "side": 1,
+      "message": "These size changes seem to make it more consistent to what\u0027s listed in the Placeholders spec provided by Max.",
+      "revId": "4c6b051ab6670ac33e7919f80c0787b24f45ec5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad40a1a6_61a1a11e",
+        "filename": "components/security_interstitials/core/browser/resources/interstitial_webview_quiet.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-31T19:51:27Z",
+      "side": 1,
+      "message": "These media queries indeed match Max\u0027s specs, but are not quite right for the PDF case. These media queries are tied to the user\u0027s viewport, but I think Max wants them tied to the actual placeholder size. In my case, the PDF can be embedded and smaller than the viewport.\n\nThe solution is probably to use ResizeObserver: https://blog.chromium.org/2017/12/chrome-64-beta-stronger-pop-up-blocker_14.html\n\nI wanted to get some feedback from you on this before I went off and implemented this though. Do you want to use ResizeObserver for the interstitial_webview_quiet as well?",
+      "revId": "4c6b051ab6670ac33e7919f80c0787b24f45ec5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
