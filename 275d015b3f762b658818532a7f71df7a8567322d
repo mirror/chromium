@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbc96e09_7fb29882",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 932,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-01-31T22:44:56Z",
+      "side": 1,
+      "message": "nit: Add /*allow_dev_tools_windows*/, Here and at other callsites.",
+      "range": {
+        "startLine": 932,
+        "startChar": 25,
+        "endLine": 932,
+        "endChar": 30
+      },
+      "revId": "275d015b3f762b658818532a7f71df7a8567322d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56f47bad_a7f0f96c",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-01-31T22:44:56Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be: unless included in the type filter mask?",
+      "range": {
+        "startLine": 308,
+        "startChar": 63,
+        "endLine": 309,
+        "endChar": 17
+      },
+      "revId": "275d015b3f762b658818532a7f71df7a8567322d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff6503ad_2073dd16",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-01-31T22:44:56Z",
+      "side": 1,
+      "message": "nit: should be accessible too, since they have been explicitly requested as part of the type filter mask.",
+      "range": {
+        "startLine": 377,
+        "startChar": 48,
+        "endLine": 377,
+        "endChar": 55
+      },
+      "revId": "275d015b3f762b658818532a7f71df7a8567322d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abd087a0_f016799b",
+        "filename": "chrome/browser/extensions/api/tabs/windows_event_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-01-31T22:44:56Z",
+      "side": 1,
+      "message": "Not sure what this is eventually used for, but since this can\u0027t be false anymore, this should probably not be a Optional anymore. Just a simple bool may suffice.",
+      "range": {
+        "startLine": 81,
+        "startChar": 23,
+        "endLine": 81,
+        "endChar": 48
+      },
+      "revId": "275d015b3f762b658818532a7f71df7a8567322d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66004177_e3f660e3",
+        "filename": "chrome/browser/extensions/extension_tab_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-01-31T22:44:56Z",
+      "side": 1,
+      "message": "What\u0027s the case where extension is null?",
+      "range": {
+        "startLine": 340,
+        "startChar": 12,
+        "endLine": 340,
+        "endChar": 21
+      },
+      "revId": "275d015b3f762b658818532a7f71df7a8567322d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6019f445_95a3a070",
+        "filename": "chrome/browser/extensions/window_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-01-31T22:44:56Z",
+      "side": 1,
+      "message": "Why the rename? Isn\u0027t this still applicable for the chrome.windows API? The current name seems good if that\u0027s the case.",
+      "range": {
+        "startLine": 106,
+        "startChar": 15,
+        "endLine": 106,
+        "endChar": 45
+      },
+      "revId": "275d015b3f762b658818532a7f71df7a8567322d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0609a7e6_5966e0e9",
+        "filename": "chrome/browser/extensions/window_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-01-31T22:44:56Z",
+      "side": 1,
+      "message": "Can\u0027t this be taken care of at call-sites when checking the filter. At the call-sites, when the filter is not specified, we can default the filter to \u003d app | normal | panel | popup (have a constant on WindowController class) which should make the code more coherent.\n\nWe might even want to have type filter specified as an arg to IsVisibleToExtension, it should make the code at call sites more cleaner.",
+      "range": {
+        "startLine": 108,
+        "startChar": 11,
+        "endLine": 108,
+        "endChar": 36
+      },
+      "revId": "275d015b3f762b658818532a7f71df7a8567322d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
