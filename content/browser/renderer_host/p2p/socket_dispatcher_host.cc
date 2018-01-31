@@ -311,12 +311,12 @@ void P2PSocketDispatcherHost::OnAcceptIncomingTcpConnection(
   }
 }
 
-void P2PSocketDispatcherHost::OnSend(int socket_id,
-                                     const net::IPEndPoint& socket_address,
-                                     const std::vector<char>& data,
-                                     const rtc::PacketOptions& options,
-                                     uint64_t packet_id) {
-  P2PSocketHost* socket = LookupSocket(socket_id);
+void P2PSocketDispatcherHost::OnSend(
+    const P2PSocketInfo& socket_info,
+    const std::vector<char>& data,
+    const P2PPacketInfo& packet_info,
+    const net::MutableNetworkTrafficAnnotationTag& traffic_annotation) {
+  P2PSocketHost* socket = LookupSocket(socket_info.socket_id);
   if (!socket) {
     LOG(ERROR) << "Received P2PHostMsg_Send for invalid socket_id.";
     return;
@@ -325,14 +325,14 @@ void P2PSocketDispatcherHost::OnSend(int socket_id,
   if (data.size() > kMaximumPacketSize) {
     LOG(ERROR) << "Received P2PHostMsg_Send with a packet that is too big: "
                << data.size();
-    Send(new P2PMsg_OnError(socket_id));
-    sockets_.erase(socket_id);  // deletes the socket
+    Send(new P2PMsg_OnError(socket_info.socket_id));
+    sockets_.erase(socket_info.socket_id);  // deletes the socket
     return;
   }
 
-  // TODO(crbug.com/656607): Get annotation from IPC message.
-  socket->Send(socket_address, data, options, packet_id,
-               NO_TRAFFIC_ANNOTATION_BUG_656607);
+  socket->Send(socket_info.socket_address, data, packet_info.packet_options,
+               packet_info.packet_id,
+               net::NetworkTrafficAnnotationTag(traffic_annotation));
 }
 
 void P2PSocketDispatcherHost::OnSetOption(int socket_id,
