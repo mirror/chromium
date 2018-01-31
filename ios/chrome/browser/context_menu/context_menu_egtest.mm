@@ -7,6 +7,7 @@
 #import <XCTest/XCTest.h>
 
 #include "base/ios/ios_util.h"
+#include "base/test/scoped_feature_list.h"
 #include "ios/chrome/browser/ui/ui_util.h"
 #include "ios/chrome/grit/ios_strings.h"
 #import "ios/chrome/test/app/chrome_test_util.h"
@@ -20,6 +21,7 @@
 #import "ios/chrome/test/earl_grey/chrome_test_case.h"
 #import "ios/testing/earl_grey/disabled_test_macros.h"
 #import "ios/testing/wait_util.h"
+#import "ios/web/public/features.h"
 #import "ios/web/public/test/earl_grey/web_view_matchers.h"
 #import "ios/web/public/test/http_server/http_server.h"
 #import "ios/web/public/test/http_server/http_server_util.h"
@@ -124,8 +126,13 @@ void SelectTabAtIndexInCurrentMode(NSUInteger index) {
 }
 
 // Tests that selecting "Open Image" from the context menu properly opens the
-// image in the current tab.
+// image in the current tab. (With the kContextMenuElementPostMessage feature
+// disabled.)
 - (void)testOpenImageInCurrentTabFromContextMenu {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndDisableFeature(
+      web::features::kContextMenuElementPostMessage);
+
   GURL pageURL = web::test::HttpServer::MakeUrl(kUrlChromiumLogoPage);
   GURL imageURL = web::test::HttpServer::MakeUrl(kUrlChromiumLogoImg);
   web::test::SetUpFileBasedHttpServer();
@@ -143,8 +150,13 @@ void SelectTabAtIndexInCurrentMode(NSUInteger index) {
 }
 
 // Tests that selecting "Open Image in New Tab" from the context menu properly
-// opens the image in a new background tab.
+// opens the image in a new background tab. (With the
+// kContextMenuElementPostMessage feature disabled.)
 - (void)testOpenImageInNewTabFromContextMenu {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndDisableFeature(
+      web::features::kContextMenuElementPostMessage);
+
   GURL pageURL = web::test::HttpServer::MakeUrl(kUrlChromiumLogoPage);
   GURL imageURL = web::test::HttpServer::MakeUrl(kUrlChromiumLogoImg);
   web::test::SetUpFileBasedHttpServer();
@@ -163,8 +175,13 @@ void SelectTabAtIndexInCurrentMode(NSUInteger index) {
   [ChromeEarlGrey waitForMainTabCount:2];
 }
 
-// Tests "Open in New Tab" on context menu.
+// Tests "Open in New Tab" on context menu. (With the
+// kContextMenuElementPostMessage feature disabled.)
 - (void)testContextMenuOpenInNewTab {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndDisableFeature(
+      web::features::kContextMenuElementPostMessage);
+
   // Set up test simple http server.
   std::map<GURL, std::string> responses;
   GURL initialURL = web::test::HttpServer::MakeUrl(kUrlInitialPage);
@@ -191,8 +208,130 @@ void SelectTabAtIndexInCurrentMode(NSUInteger index) {
   [ChromeEarlGrey waitForMainTabCount:2];
 }
 
-// Tests that the context menu is displayed for an image url.
+// Tests that the context menu is displayed for an image url. (With the
+// kContextMenuElementPostMessage feature disabled.)
 - (void)testContextMenuDisplayedOnImage {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndDisableFeature(
+      web::features::kContextMenuElementPostMessage);
+
+  GURL imageURL = web::test::HttpServer::MakeUrl(kUrlChromiumLogoImg);
+  web::test::SetUpFileBasedHttpServer();
+  [ChromeEarlGrey loadURL:imageURL];
+  [ChromeEarlGrey waitForMainTabCount:1];
+
+  // Calculate a point inside the displayed image. Javascript can not be used to
+  // find the element because no DOM exists.
+  CGPoint point = CGPointMake(
+      CGRectGetMidX([chrome_test_util::GetActiveViewController() view].bounds),
+      20.0);
+
+  id<GREYMatcher> web_view_matcher =
+      web::WebViewInWebState(chrome_test_util::GetCurrentWebState());
+  [[EarlGrey selectElementWithMatcher:web_view_matcher]
+      performAction:grey_longPressAtPointWithDuration(
+                        point, kGREYLongPressDefaultDuration)];
+
+  TapOnContextMenuButton(OpenImageInNewTabButton());
+  [ChromeEarlGrey waitForMainTabCount:2];
+
+  SelectTabAtIndexInCurrentMode(1U);
+  // Verify url.
+  [[EarlGrey selectElementWithMatcher:chrome_test_util::OmniboxText(
+                                          imageURL.GetContent())]
+      assertWithMatcher:grey_notNil()];
+}
+
+// Tests that selecting "Open Image" from the context menu properly opens the
+// image in the current tab. (With the kContextMenuElementPostMessage feature
+// enabled.)
+- (void)testOpenImageInCurrentTabFromContextMenu_PostMessage {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeature(
+      web::features::kContextMenuElementPostMessage);
+
+  GURL pageURL = web::test::HttpServer::MakeUrl(kUrlChromiumLogoPage);
+  GURL imageURL = web::test::HttpServer::MakeUrl(kUrlChromiumLogoImg);
+  web::test::SetUpFileBasedHttpServer();
+  [ChromeEarlGrey loadURL:pageURL];
+  [ChromeEarlGrey waitForMainTabCount:1];
+
+  LongPressElement(kChromiumImageID);
+  TapOnContextMenuButton(OpenImageButton());
+
+  // Verify url and tab count.
+  [[EarlGrey selectElementWithMatcher:chrome_test_util::OmniboxText(
+                                          imageURL.GetContent())]
+      assertWithMatcher:grey_notNil()];
+  [ChromeEarlGrey waitForMainTabCount:1];
+}
+
+// Tests that selecting "Open Image in New Tab" from the context menu properly
+// opens the image in a new background tab. (With the
+// kContextMenuElementPostMessage feature enabled.)
+- (void)testOpenImageInNewTabFromContextMenu_PostMessage {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeature(
+      web::features::kContextMenuElementPostMessage);
+
+  GURL pageURL = web::test::HttpServer::MakeUrl(kUrlChromiumLogoPage);
+  GURL imageURL = web::test::HttpServer::MakeUrl(kUrlChromiumLogoImg);
+  web::test::SetUpFileBasedHttpServer();
+  [ChromeEarlGrey loadURL:pageURL];
+  [ChromeEarlGrey waitForMainTabCount:1];
+
+  LongPressElement(kChromiumImageID);
+  TapOnContextMenuButton(OpenImageInNewTabButton());
+
+  SelectTabAtIndexInCurrentMode(1U);
+
+  // Verify url and tab count.
+  [[EarlGrey selectElementWithMatcher:chrome_test_util::OmniboxText(
+                                          imageURL.GetContent())]
+      assertWithMatcher:grey_notNil()];
+  [ChromeEarlGrey waitForMainTabCount:2];
+}
+
+// Tests "Open in New Tab" on context menu. (With the
+// kContextMenuElementPostMessage feature enabled.)
+- (void)testContextMenuOpenInNewTab_PostMessage {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeature(
+      web::features::kContextMenuElementPostMessage);
+
+  // Set up test simple http server.
+  std::map<GURL, std::string> responses;
+  GURL initialURL = web::test::HttpServer::MakeUrl(kUrlInitialPage);
+  GURL destinationURL = web::test::HttpServer::MakeUrl(kUrlDestinationPage);
+
+  // The initial page contains a link to the destination page.
+  responses[initialURL] = "<a style='margin-left:50px' href='" +
+                          destinationURL.spec() + "' id='link'>link</a>";
+  responses[destinationURL] = kDestinationHtml;
+
+  web::test::SetUpSimpleHttpServer(responses);
+  [ChromeEarlGrey loadURL:initialURL];
+  [ChromeEarlGrey waitForMainTabCount:1];
+
+  LongPressElement(kDestinationLinkID);
+  TapOnContextMenuButton(OpenLinkInNewTabButton());
+
+  SelectTabAtIndexInCurrentMode(1U);
+
+  // Verify url and tab count.
+  [[EarlGrey selectElementWithMatcher:chrome_test_util::OmniboxText(
+                                          destinationURL.GetContent())]
+      assertWithMatcher:grey_notNil()];
+  [ChromeEarlGrey waitForMainTabCount:2];
+}
+
+// Tests that the context menu is displayed for an image url. (With the
+// kContextMenuElementPostMessage feature enabled.)
+- (void)testContextMenuDisplayedOnImage_PostMessage {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeature(
+      web::features::kContextMenuElementPostMessage);
+
   GURL imageURL = web::test::HttpServer::MakeUrl(kUrlChromiumLogoImg);
   web::test::SetUpFileBasedHttpServer();
   [ChromeEarlGrey loadURL:imageURL];

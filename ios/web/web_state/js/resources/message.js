@@ -77,16 +77,12 @@ __gCrWeb['message'] = __gCrWeb.message;
       delete Object.prototype.toJSON;
 
     queueObject.queue.forEach(function(command) {
-        // A web page can override |window.webkit| with any value. Deleting the
-        // object ensures that original and working implementation of
-        // window.webkit is restored.
-        var oldWebkit = window.webkit;
-        delete window['webkit'];
-        window.webkit.messageHandlers[queueObject.scheme].postMessage({
-            "crwCommand": command,
-            "crwWindowId": window.top.__gCrWeb['windowId']
+        __gCrWeb.common.restoreWebKit(function() {
+            window.webkit.messageHandlers[queueObject.scheme].postMessage({
+                "crwCommand": command,
+                "crwWindowId": window.top.__gCrWeb['windowId']
+            });
         });
-        window.webkit = oldWebkit;
     });
     queueObject.reset();
 

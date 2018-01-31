@@ -8,9 +8,14 @@
 #import <Foundation/Foundation.h>
 
 // Contains keys present in dictionary returned by __gCrWeb.getElementFromPoint
-// JS API.
+// and __gCrWeb.findElementAtPoint JS APIs.
 
 namespace web {
+
+// Required in findElementAtPoint response. (Not used by getElementFromPoint.)
+// Represents a unique string request ID that is passed through to the response
+// dictionary.
+extern NSString* const kContextMenuElementRequestID;
 
 // Optional key. Represents element's href attribute if present or parent's href
 // if element is an image.
