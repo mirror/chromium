@@ -52,6 +52,24 @@
       "revId": "84d3ee6247941dd056cc150326d67fb0a31378af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73739fca_ae5c18c3",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResourceContent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1124724
+      },
+      "writtenOn": "2018-01-31T05:39:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85379378_425ae5a8",
+      "revId": "84d3ee6247941dd056cc150326d67fb0a31378af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
