@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "77192db6_b5a0b143",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 984,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-31T03:09:54Z",
+      "side": 1,
+      "message": "\u003e Just to be clear: *this* block of code runs in the compositor service...\n\nNo. This block of code here runs in the browser process. The copy requests originate in the browser process, are added to the layers in the browser process, and this function here runs in the browser process.\n\nThe modified copy requests will later be moved into RenderPasses, which then are serialized via mojo over to the display compositor. Today, the display compositor is also in the browser process, but in the VIZ-enabled world it will be in the GPU process.\n\n\u003e It\u0027s hard for me to tell that\u0027s the case currently (or that it will remain so for the forseeable future).\n\nI don\u0027t believe the compositing or GPU teams ever meant to make any guarantees about where src/cc code is run. OOC, why does it matter where this particular block of code runs?\n\n\u003e Also, it\u0027s not clear to me the same reasoning about overflow is true for lines 987-999...\n\nGood point. I\u0027ve re-examined this code and changed it to use checked math. I don\u0027t expect the values to ever be out-of-range; but if something really weird happens, the correct thing to do here is the same as what would happen downstream: When the scale ratio produces bad coordinates, we simply drop the copy request. (Note that, when the CopyOutputRequest goes out-of-scope, it auto-sends a \"failed\" response back to the client.)",
+      "parentUuid": "bd1c2faf_fcb4dea4",
+      "revId": "d594b34e1ce45bce0a41a9c401584443e229e3db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "768e7723_c76b181c",
         "filename": "cc/trees/property_tree.cc",
         "patchSetId": 5
