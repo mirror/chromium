@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d55aa8bf_7820ae10",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1395,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2018-01-31T01:18:48Z",
+      "side": 1,
+      "message": "Not sure if we still need to call shutdown if TranslateService is initialized on UI thread.",
+      "range": {
+        "startLine": 1395,
+        "startChar": 50,
+        "endLine": 1395,
+        "endChar": 58
+      },
+      "revId": "080c8f2ec1170eb3e1cb232a26deade254450905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
