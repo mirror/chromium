@@ -26,14 +26,13 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.annotation.Config;
 
-import org.chromium.base.ContextUtils;
+import org.chromium.base.test.BaseRobolectricTestRunner;
 import org.chromium.base.test.util.Feature;
-import org.chromium.testing.local.LocalRobolectricTestRunner;
 
 /**
  * Robolectric tests for {@link ExternalAuthUtils}.
  */
-@RunWith(LocalRobolectricTestRunner.class)
+@RunWith(BaseRobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
 public class ExternalAuthUtilsTest {
     private static final int ERR = 999;
@@ -44,7 +43,6 @@ public class ExternalAuthUtilsTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        ContextUtils.initApplicationContextForTests(mContext);
     }
 
     @Test
