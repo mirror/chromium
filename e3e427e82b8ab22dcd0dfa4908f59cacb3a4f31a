@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99964917_5cc66495",
+        "filename": "content/browser/android/synchronous_compositor_host.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-31T23:23:34Z",
+      "side": 1,
+      "message": "kill renderer if this or begin frame response returns false",
+      "revId": "e3e427e82b8ab22dcd0dfa4908f59cacb3a4f31a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "669061d6_2cfc53dd",
+        "filename": "content/browser/android/synchronous_compositor_host.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-31T23:23:34Z",
+      "side": 1,
+      "message": "I have a hard time wrapping my head around under what situation this happens. I don\u0027t know much about mojo integration into the top level content classes like, but this looks like the underlying \"widget\" could change for the same SCHost? That\u0027s like, not supposed to happen?",
+      "revId": "e3e427e82b8ab22dcd0dfa4908f59cacb3a4f31a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15f19a1e_2ab6e6d7",
+        "filename": "content/browser/android/synchronous_compositor_host.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-31T23:23:34Z",
+      "side": 1,
+      "message": "could we unify where this is called. either make this private in the bridge and have bridge call it where it\u0027s needed, or move all the calls to host and then add DCHECKs in bridge\n\nalso probably should guard this with !use_mojo?",
+      "revId": "e3e427e82b8ab22dcd0dfa4908f59cacb3a4f31a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2602baf_f2061704",
+        "filename": "content/browser/android/synchronous_compositor_host.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-31T23:23:34Z",
+      "side": 1,
+      "message": "this is meant to be use_mojo check right? can we have a UsingMojo method or something so this is easier to read?",
+      "revId": "e3e427e82b8ab22dcd0dfa4908f59cacb3a4f31a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b79f865b_bba40c34",
+        "filename": "content/browser/android/synchronous_compositor_host.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-31T23:23:34Z",
+      "side": 1,
+      "message": "is it ok to call this multiple times?",
+      "revId": "e3e427e82b8ab22dcd0dfa4908f59cacb3a4f31a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "854f96d1_3f85043e",
+        "filename": "content/renderer/android/synchronous_compositor_proxy.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-31T23:23:34Z",
+      "side": 1,
+      "message": "mark all the override and implemented methods in this class final",
+      "revId": "e3e427e82b8ab22dcd0dfa4908f59cacb3a4f31a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
