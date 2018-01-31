@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "beda4840_4973b744",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-31T19:58:37Z",
+      "side": 1,
+      "message": "there\u0027s an inconsistency between resource_{unique_id} above and resource_{resource_id} here. Is that intentional?",
+      "range": {
+        "startLine": 672,
+        "startChar": 60,
+        "endLine": 672,
+        "endChar": 72
+      },
+      "revId": "ddb08e889b7086dbc6e0415b0e4d69e13ed8649c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
