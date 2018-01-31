@@ -167,6 +167,54 @@
     },
     {
       "key": {
+        "uuid": "4b5da39b_b83d263b",
+        "filename": "ios/chrome/browser/web/forms_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-01-31T23:41:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d05daba4_e51fbbee",
+      "range": {
+        "startLine": 157,
+        "startChar": 5,
+        "endLine": 157,
+        "endChar": 29
+      },
+      "revId": "e668aa966fa2fd08936fb3728827090b2a178438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1f039924_db22a993",
+        "filename": "ios/chrome/browser/web/forms_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-01-31T23:41:04Z",
+      "side": 1,
+      "message": "Ah I missed ElementToDismissContextMenu. It works nicely.",
+      "parentUuid": "d05daba4_e51fbbee",
+      "range": {
+        "startLine": 157,
+        "startChar": 5,
+        "endLine": 157,
+        "endChar": 29
+      },
+      "revId": "e668aa966fa2fd08936fb3728827090b2a178438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b00a7f4_6e77cbe9",
         "filename": "ios/chrome/browser/web/forms_egtest.mm",
         "patchSetId": 2
@@ -250,6 +298,30 @@
       "side": 1,
       "message": "Still trying to understand what\u0027s going on in WKWebView. Are the following statements true?:\n - Safari does not show report form dialog for fast back-forward navigations\n - Safari shows report form dialog for slow back-forward navigations \n - decidePolicyForNavigationRequest is not called for fast back-forward navigations\n\nIf these are true then the tests will definitely be flaky. In which case we should do something like PurgeCachedWebViewPages(), which is used in VisibleURLTestCase.",
       "parentUuid": "f14938f2_76e37539",
+      "range": {
+        "startLine": 268,
+        "startChar": 31,
+        "endLine": 268,
+        "endChar": 37
+      },
+      "revId": "e668aa966fa2fd08936fb3728827090b2a178438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d4e26b5_04e326f5",
+        "filename": "ios/chrome/browser/web/forms_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-01-31T23:41:04Z",
+      "side": 1,
+      "message": "\u003e Still trying to understand what\u0027s going on in WKWebView. Are the following statements true?:\n\u003e  - Safari does not show report form dialog for fast back-forward navigations\nYes\n\u003e  - Safari shows report form dialog for slow back-forward navigations \nYes\n\u003e  - decidePolicyForNavigationRequest is not called for fast back-forward navigations\nNo. decidePolicyForNavigationRequest[sic] is called for fast back-forward navigation, but with WKNavigationTypeBackForward instead of WKNavigationTypeFormResubmitted.\n\nI prototyped decidePolicyForNavigationAction callback to also warn repost for WKNavigationTypeBackForward. This way we won\u0027t have test flakes regardless whether the back-forward navigations are fast or slow. This essentially preserves the current Bling behavior.\n\nI chose this over using PurgeCachedWebViewPages() because purging will trigger history restoration. restore_session.html currently can\u0027t restore POST request (so the page will be loaded without POST body), so it won\u0027t recognize the navigation as repost at all.\n\nA problem with this approach is that under fast back-forward navigation, if user clicks on \"Continue\", it\u0027s not actually a repost. We can fix this by forcing a reload in decidePolicyForNavigationAction (not yet implemented in this CL).\n\nAlternatively, we can match Safari behavior, and mitigate the flakiness in test using this pattern:\n\n[ChromeEarlGrey goBack]\nNSError* error;\n[[EarlGrey selectElementWithMatcher:resendWarning] performAction:grey_longPress() error:\u0026error];\nif (error) {\n  // fast back-forward navigation didn\u0027t trigger repost\n  [ChromeEarlGrey reload];\n  [self confirmResendWarning];\n}\n\nI\u0027m leaning towards the last option (i.e. match Safari and mitigate test flakes). WDYT?",
+      "parentUuid": "ded7569a_76c5e31e",
       "range": {
         "startLine": 268,
         "startChar": 31,
