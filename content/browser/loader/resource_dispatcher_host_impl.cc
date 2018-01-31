@@ -275,6 +275,9 @@ void LogBackForwardNavigationFlagsHistogram(int load_flags) {
 
 }  // namespace
 
+constexpr int ResourceDispatcherHostImpl::kMaxKeepaliveConnections;
+constexpr int ResourceDispatcherHostImpl::kMaxKeepaliveConnectionsPerProcess;
+
 class ResourceDispatcherHostImpl::ScheduledResourceRequestAdapter final
     : public ResourceThrottle {
  public:
@@ -2106,10 +2109,26 @@ void ResourceDispatcherHostImpl::BeginRequestInternal(
   // Add the memory estimate that starting this request will consume.
   info->set_memory_cost(CalculateApproximateMemoryCost(request.get()));
 
+  bool exhauseted = false;
+
   // If enqueing/starting this request will exceed our per-process memory
   // bound, abort it right away.
   OustandingRequestsStats stats = IncrementOutstandingRequestsMemory(1, *info);
-  if (stats.memory_cost > max_outstanding_requests_cost_per_process_) {
+  if (stats.memory_cost > max_outstanding_requests_cost_per_process_)
+    exhauseted = true;
+
+  // requests with keepalive set have additional limitations.
+  if (info->keepalive()) {
+    const auto& recorder = keepalive_statistics_recorder_;
+    if (recorder.num_inflight_requests() >= kMaxKeepaliveConnections)
+      exhauseted = true;
+    if (recorder.NumInflightRequestsPerProcess(info->GetChildID()) >=
+        kMaxKeepaliveConnectionsPerProcess) {
+      exhauseted = true;
+    }
+  }
+
+  if (exhauseted) {
     // We call "CancelWithError()" as a way of setting the net::URLRequest's
     // status -- it has no effect beyond this, since the request hasn't started.
     request->CancelWithError(net::ERR_INSUFFICIENT_RESOURCES);
