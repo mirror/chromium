@@ -2527,7 +2527,7 @@ TEST_F(RendererSchedulerImplTest, TestRendererBackgroundedTimerSuspension) {
   base::TimeTicks now;
 
   // The background signal will not immediately suspend the timer queue.
-  scheduler_->SetRendererBackgrounded(true);
+  scheduler_->SetSchedulerBackgrounded(true);
   now += base::TimeDelta::FromMilliseconds(1100);
   clock_.SetNowTicks(now);
   RunUntilIdle();
@@ -2558,7 +2558,7 @@ TEST_F(RendererSchedulerImplTest, TestRendererBackgroundedTimerSuspension) {
   EXPECT_THAT(run_order, ::testing::ElementsAre(std::string("V1")));
 
   run_order.clear();
-  scheduler_->SetRendererBackgrounded(false);
+  scheduler_->SetSchedulerBackgrounded(false);
   RunUntilIdle();
   EXPECT_THAT(run_order,
               ::testing::ElementsAre(std::string("T4"), std::string("T5")));
@@ -2621,6 +2621,72 @@ TEST_F(RendererSchedulerImplTest, TestRendererBackgroundedLoadingSuspension) {
   PostTestTasks(&run_order, "L6");
   RunUntilIdle();
   EXPECT_THAT(run_order, ::testing::ElementsAre(std::string("L6")));
+}
+
+TEST_F(RendererSchedulerImplTest, TestRendererBackgroundedRendererKeepActive) {
+  ScopedStopLoadingInBackgroundForTest stop_loading_enabler(true);
+  scheduler_->SetStoppingWhenBackgroundedEnabled(true);
+  scheduler_->SetSchedulerKeepActive(true);
+  std::vector<std::string> run_order;
+  PostTestTasks(&run_order, "L1 T1");
+
+  base::TimeTicks now;
+
+  // Keep-alive should prevent suspension of task queues.
+  // Though this has no effect until requisite time has elapsed.
+  scheduler_->SetRendererBackgrounded(true);
+  now += base::TimeDelta::FromMilliseconds(1100);
+  clock_.SetNowTicks(now);
+  RunUntilIdle();
+  EXPECT_THAT(run_order,
+              ::testing::ElementsAre(std::string("L1"), std::string("T1")));
+
+  run_order.clear();
+  PostTestTasks(&run_order, "L2 T2");
+
+  now += base::TimeDelta::FromSeconds(1);
+  clock_.SetNowTicks(now);
+  RunUntilIdle();
+  EXPECT_THAT(run_order,
+              ::testing::ElementsAre(std::string("L2"), std::string("T2")));
+
+  // Advance the time until after the scheduled timer queue suspension.
+  now = base::TimeTicks() + delay_for_background_tab_stopping() +
+        base::TimeDelta::FromMilliseconds(10);
+  run_order.clear();
+  clock_.SetNowTicks(now);
+  RunUntilIdle();
+  ASSERT_TRUE(run_order.empty());
+
+  // Keep-alive signal prevents suspension of task queues.
+  PostTestTasks(&run_order, "L3 T3 V1");
+  now += base::TimeDelta::FromSeconds(10);
+  clock_.SetNowTicks(now);
+  RunUntilIdle();
+  EXPECT_THAT(run_order,
+              ::testing::ElementsAre(std::string("L3"), std::string("T3"),
+                                     std::string("V1")));
+
+  run_order.clear();
+  clock_.SetNowTicks(now);
+  RunUntilIdle();
+  ASSERT_TRUE(run_order.empty());
+
+  // Setting Keep-alive to false triggers task queue suspension.
+  scheduler_->SetSchedulerKeepActive(false);
+  PostTestTasks(&run_order, "L4 T4");
+  now += base::TimeDelta::FromSeconds(10);
+  clock_.SetNowTicks(now);
+  RunUntilIdle();
+  ASSERT_TRUE(run_order.empty());
+
+  // Setting Keep-alive to true, undoes suspension.
+  scheduler_->SetSchedulerKeepActive(true);
+  now += base::TimeDelta::FromSeconds(10);
+  clock_.SetNowTicks(now);
+  RunUntilIdle();
+  EXPECT_THAT(run_order,
+              ::testing::ElementsAre(std::string("L4"), std::string("T4")));
 }
 
 TEST_F(RendererSchedulerImplTest,
