@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7da1467_84599438",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-01-31T23:18:43Z",
+      "side": 1,
+      "message": "will it make more sense if this is moved into OnClearCachedPagesDone?",
+      "revId": "f214d2fa38e0fd7bd6e3d27dac66951783f27f74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e28f38ae_f14b9844",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1296,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-01-31T23:18:43Z",
+      "side": 1,
+      "message": "following the previous comment. It seems it\u0027s not enough to confirm if the ClearPageTask has been scheduled by only checking this value if the last_clear_page_time_ is updated outside of callback?",
+      "revId": "f214d2fa38e0fd7bd6e3d27dac66951783f27f74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
