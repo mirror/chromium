@@ -34,7 +34,7 @@ bool IsProfilerSupported() {
     return true;
   #endif
 #else
-  return false;
+  return true;
 #endif
 }
 
@@ -137,8 +137,12 @@ void StackSamplingConfiguration::AppendCommandLineSwitchForChildProcess(
   bool enable = configuration_ == PROFILE_GPU_PROCESS ||
                 configuration_ == PROFILE_BROWSER_AND_GPU_PROCESS ||
                 configuration_ == PROFILE_CONTROL;
-  if (enable && process_type == switches::kGpuProcess)
+  if (enable && (process_type == switches::kGpuProcess ||
+                 process_type == switches::kRendererProcess)) {
     command_line->AppendSwitch(switches::kStartStackProfiler);
+  } else {
+    LOG(ERROR) << "Not enabling " << configuration_ << "," << process_type;
+  }
 }
 
 // static

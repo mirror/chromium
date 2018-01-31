@@ -17,7 +17,9 @@ namespace metrics {
 
 CallStackProfileCollector::CallStackProfileCollector(
     CallStackProfileParams::Process expected_process)
-    : expected_process_(expected_process) {}
+    : expected_process_(expected_process) {
+  LOG(ERROR) << "Created for " << expected_process_;
+}
 
 CallStackProfileCollector::~CallStackProfileCollector() {}
 
@@ -37,6 +39,7 @@ void CallStackProfileCollector::Collect(
   if (params.process != expected_process_)
     return;
 
+  LOG(ERROR) << "Collecting for " << expected_process_;
   CallStackProfileParams params_copy = params;
   params_copy.start_timestamp = start_timestamp;
   CallStackProfileMetricsProvider::ReceiveCompletedProfiles(

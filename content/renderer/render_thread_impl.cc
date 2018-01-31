@@ -1245,8 +1245,12 @@ void RenderThreadImpl::InitializeWebKit(
       base::Bind(base::IgnoreResult(&RenderThreadImpl::OnMessageReceived),
                  base::Unretained(this)));
 
-  if (!command_line.HasSwitch(switches::kDisableThreadedCompositing))
+  if (!command_line.HasSwitch(switches::kDisableThreadedCompositing)) {
     InitializeCompositorThread();
+    DCHECK(compositor_task_runner_);
+    GetContentClient()->renderer()->PostCompositorThreadCreated(
+        compositor_task_runner_.get());
+  }
 
   if (!input_event_filter_.get()) {
     // Always provide an input event filter implementation to ensure consistent
