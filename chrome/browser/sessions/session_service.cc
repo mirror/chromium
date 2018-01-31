@@ -405,6 +405,15 @@ void SessionService::TabNavigationPathPrunedFromFront(
       sessions::CreateTabNavigationPathPrunedFromFrontCommand(tab_id, count));
 }
 
+void SessionService::TabNavigationPathEntriesDeleted(const SessionID& window_id,
+                                                     const SessionID& tab_id) {
+  if (!ShouldTrackChangesToWindow(window_id))
+    return;
+
+  if (!base_session_service_->pending_reset())
+    ScheduleResetCommands();
+}
+
 void SessionService::UpdateTabNavigation(
     const SessionID& window_id,
     const SessionID& tab_id,
