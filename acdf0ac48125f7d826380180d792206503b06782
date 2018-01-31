@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "48bc7448_6dabe2d4",
+        "filename": "net/socket/socket_bio_adapter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-31T11:44:51Z",
+      "side": 1,
+      "message": "The \u0027sender\u0027 field just shows the module and is not specific to the usage. Therefore it does not need to be unique, and if in future, we have another annotation for this class, that one can also have this sender name.",
+      "parentUuid": "e68245d8_c721ba72",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 19
+      },
+      "revId": "acdf0ac48125f7d826380180d792206503b06782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60f64f02_fffa404b",
         "filename": "net/socket/socket_bio_adapter.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "acdf0ac48125f7d826380180d792206503b06782",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dde2fb21_5d05ec21",
+        "filename": "net/socket/socket_bio_adapter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-31T11:44:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60f64f02_fffa404b",
+      "range": {
+        "startLine": 33,
+        "startChar": 49,
+        "endLine": 35,
+        "endChar": 59
+      },
+      "revId": "acdf0ac48125f7d826380180d792206503b06782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "def6842a_850dcfbf",
+        "filename": "net/socket/socket_bio_adapter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-31T11:44:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "548ba441_7d7c18b9",
+      "range": {
+        "startLine": 36,
+        "startChar": 50,
+        "endLine": 37,
+        "endChar": 20
+      },
+      "revId": "acdf0ac48125f7d826380180d792206503b06782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79058c54_2cd18bcb",
         "filename": "net/socket/socket_bio_adapter.cc",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "acdf0ac48125f7d826380180d792206503b06782",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fea8582d_f839cc88",
+        "filename": "net/socket/socket_bio_adapter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-31T11:44:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79058c54_2cd18bcb",
+      "range": {
+        "startLine": 39,
+        "startChar": 27,
+        "endLine": 39,
+        "endChar": 30
+      },
+      "revId": "acdf0ac48125f7d826380180d792206503b06782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "000ab419_940869c7",
+        "filename": "net/socket/socket_bio_adapter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-31T11:44:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef9be574_88d763be",
+      "range": {
+        "startLine": 46,
+        "startChar": 33,
+        "endLine": 46,
+        "endChar": 42
+      },
+      "revId": "acdf0ac48125f7d826380180d792206503b06782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1406d4df_7cd18473",
         "filename": "net/socket/socket_bio_adapter.cc",
         "patchSetId": 5
@@ -137,6 +257,30 @@
       "revId": "acdf0ac48125f7d826380180d792206503b06782",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "170558c4_cd366379",
+        "filename": "net/socket/socket_bio_adapter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2018-01-31T11:44:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1406d4df_7cd18473",
+      "range": {
+        "startLine": 47,
+        "startChar": 70,
+        "endLine": 47,
+        "endChar": 71
+      },
+      "revId": "acdf0ac48125f7d826380180d792206503b06782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
