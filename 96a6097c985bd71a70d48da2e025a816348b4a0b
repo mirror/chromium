@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4bbf3060_2593bf9b",
+        "filename": "chrome/common/stack_sampling_configuration.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-01-31T18:45:52Z",
+      "side": 1,
+      "message": "With your other change this check is no longer required. But I think it\u0027s probably best to keep it so that we\u0027re not passing the --start-stack-profiler flag to child processes that aren\u0027t actually running the profiler, which could be confusing.",
+      "parentUuid": "8a3abe02_ea1abe7e",
+      "range": {
+        "startLine": 141,
+        "startChar": 17,
+        "endLine": 141,
+        "endChar": 59
+      },
+      "revId": "96a6097c985bd71a70d48da2e025a816348b4a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ef24831_8a6193f3",
         "filename": "chrome/renderer/chrome_content_renderer_client.cc",
         "patchSetId": 4
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "Good point. Moved the call into InitializeCompositorThread, although still after the task to disable IO on the thread. I think that\u0027d be OK? But happy to move this before that too.",
       "parentUuid": "58989ff9_2271876d",
+      "range": {
+        "startLine": 1251,
+        "startChar": 4,
+        "endLine": 1252,
+        "endChar": 37
+      },
+      "revId": "96a6097c985bd71a70d48da2e025a816348b4a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b108ccd_f4a857cf",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1252,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2018-01-31T18:45:52Z",
+      "side": 1,
+      "message": "I can\u0027t see setting the thread restrictions taking any significant amount of execution time so this seems fine to me.",
+      "parentUuid": "b59a008d_58a5571f",
       "range": {
         "startLine": 1251,
         "startChar": 4,
