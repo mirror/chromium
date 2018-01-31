@@ -38,6 +38,24 @@
     },
     {
       "key": {
+        "uuid": "a3aecf0b_74bf2b74",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ShortcutHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2018-01-31T22:23:41Z",
+      "side": 1,
+      "message": "That\u0027s high-praise, Peter, thank you - although I don\u0027t deserve it!\nPackageManagerDelegate in payment land looks somewhat similar and would aid testing. It would have to move out of payments (all of which is a separate CL)",
+      "parentUuid": "13e7b827_ce4d735a",
+      "revId": "44f36febe7f33cef1ac8198a7dcebaf0e3d9956c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "efe02473_2d2d287d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappLauncherActivity.java",
         "patchSetId": 6
