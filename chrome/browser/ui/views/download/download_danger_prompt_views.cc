@@ -103,7 +103,8 @@ DownloadDangerPromptViews::DownloadDangerPromptViews(
 
   views::ColumnSet* column_set = layout->AddColumnSet(0);
   column_set->AddColumn(views::GridLayout::FILL, views::GridLayout::FILL, 1,
-                        views::GridLayout::FIXED, kMessageWidth, 0);
+                        views::GridLayout::FIXED,
+                        kMessageWidth - margins().width(), 0);
 
   views::Label* message_body_label = new views::Label(GetMessageBody());
   message_body_label->SetMultiLine(true);
