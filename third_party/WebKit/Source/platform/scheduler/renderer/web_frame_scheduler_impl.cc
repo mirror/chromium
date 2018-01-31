@@ -124,7 +124,7 @@ namespace {
 void CleanUpQueue(MainThreadTaskQueue* queue) {
   if (!queue)
     return;
-  queue->DetachFromRendererScheduler();
+  queue->ShutdownTaskQueue();
   queue->SetFrameScheduler(nullptr);
   queue->SetBlameContext(nullptr);
   queue->SetQueuePriority(TaskQueue::QueuePriority::kLowPriority);
