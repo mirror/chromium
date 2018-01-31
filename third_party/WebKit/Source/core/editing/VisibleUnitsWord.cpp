@@ -31,124 +31,74 @@
 #include "core/editing/VisibleUnits.h"
 
 #include "core/editing/EditingUtilities.h"
+#include "core/editing/EphemeralRange.h"
+#include "core/editing/TextOffsetMapping.h"
 #include "core/editing/VisiblePosition.h"
+#include "core/layout/LayoutBlock.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/text/TextBoundaries.h"
 
 namespace blink {
 
-namespace {
-
-unsigned EndWordBoundary(
-    const UChar* characters,
-    unsigned length,
-    unsigned offset,
-    BoundarySearchContextAvailability may_have_more_context,
-    bool& need_more_context) {
-  DCHECK_LE(offset, length);
-  if (may_have_more_context &&
-      EndOfFirstWordBoundaryContext(characters + offset, length - offset) ==
-          static_cast<int>(length - offset)) {
-    need_more_context = true;
-    return length;
-  }
-  need_more_context = false;
-  return FindWordEndBoundary(characters, length, offset);
+EphemeralRangeInFlatTree ComputeWordAroundPosition(
+    const PositionInFlatTree& position,
+    AppendTrailingWhitespace append_trailing_whitespace) {
+  if (position.IsNull())
+    return EphemeralRangeInFlatTree();
+  const TextOffsetMapping mapping(position);
+  const String text = mapping.GetText();
+  const auto& start_end_pair = FindWordForward(
+      text.Characters16(), text.length(), mapping.ComputeTextOffset(position));
+  const int start = start_end_pair.first;
+  const int end = start_end_pair.second;
+  if (start == end)
+    return EphemeralRangeInFlatTree(mapping.MapToFirstPosition(text.length()));
+  if (append_trailing_whitespace == AppendTrailingWhitespace::kDontAppend)
+    return mapping.ComputeRange(start, end);
+  return mapping.ComputeRange(start, mapping.SkipWhitespace(end));
 }
 
-template <typename Strategy>
-PositionTemplate<Strategy> EndOfWordAlgorithm(
-    const VisiblePositionTemplate<Strategy>& c,
-    EWordSide side) {
-  DCHECK(c.IsValid()) << c;
-  VisiblePositionTemplate<Strategy> p = c;
-  if (side == kPreviousWordIfOnBoundary) {
-    if (IsStartOfParagraph(c))
-      return c.DeepEquivalent();
-
-    p = PreviousPositionOf(c);
-    if (p.IsNull())
-      return c.DeepEquivalent();
-  } else if (IsEndOfParagraph(c)) {
-    return c.DeepEquivalent();
-  }
-
-  return NextBoundary(p, EndWordBoundary);
+PositionInFlatTree EndOfWordPosition(const PositionInFlatTree& position) {
+  if (position.IsNull())
+    return PositionInFlatTree();
+  const TextOffsetMapping mapping(position);
+  const String text = mapping.GetText();
+  const int offset = mapping.ComputeTextOffset(position);
+  const auto& start_end_pair =
+      FindWordForward(text.Characters16(), text.length(), offset);
+  const int start = start_end_pair.first;
+  const int end = start_end_pair.second;
+  if (start == end)
+    return mapping.MapToFirstPosition(end);
+  return mapping.MapToLastPosition(end - 1);
 }
 
-unsigned NextWordPositionBoundary(
-    const UChar* characters,
-    unsigned length,
-    unsigned offset,
-    BoundarySearchContextAvailability may_have_more_context,
-    bool& need_more_context) {
-  if (may_have_more_context &&
-      EndOfFirstWordBoundaryContext(characters + offset, length - offset) ==
-          static_cast<int>(length - offset)) {
-    need_more_context = true;
-    return length;
-  }
-  need_more_context = false;
-  return FindNextWordFromIndex(characters, length, offset, true);
+PositionInFlatTree EndOfWordPositionBackward(
+    const PositionInFlatTree& position) {
+  if (position.IsNull())
+    return PositionInFlatTree();
+  const TextOffsetMapping mapping(position);
+  const String text = mapping.GetText();
+  const int offset = mapping.ComputeTextOffset(position);
+  const auto& start_end_pair =
+      FindWordBackward(text.Characters16(), text.length(), offset);
+  const int start = start_end_pair.first;
+  const int end = start_end_pair.second;
+  if (start == end)
+    return mapping.MapToFirstPosition(end);
+  return mapping.MapToLastPosition(end - 1);
 }
 
-unsigned PreviousWordPositionBoundary(
-    const UChar* characters,
-    unsigned length,
-    unsigned offset,
-    BoundarySearchContextAvailability may_have_more_context,
-    bool& need_more_context) {
-  if (may_have_more_context &&
-      !StartOfLastWordBoundaryContext(characters, offset)) {
-    need_more_context = true;
-    return 0;
-  }
-  need_more_context = false;
-  return FindNextWordFromIndex(characters, length, offset, false);
+PositionInFlatTree EndOfWordPosition(const PositionInFlatTree& position,
+                                     EWordSide side) {
+  if (side == kPreviousWordIfOnBoundary)
+    return EndOfWordPositionBackward(position);
+  return EndOfWordPosition(position);
 }
-
-unsigned StartWordBoundary(
-    const UChar* characters,
-    unsigned length,
-    unsigned offset,
-    BoundarySearchContextAvailability may_have_more_context,
-    bool& need_more_context) {
-  TRACE_EVENT0("blink", "startWordBoundary");
-  DCHECK(offset);
-  if (may_have_more_context &&
-      !StartOfLastWordBoundaryContext(characters, offset)) {
-    need_more_context = true;
-    return 0;
-  }
-  need_more_context = false;
-  U16_BACK_1(characters, 0, offset);
-  return FindWordStartBoundary(characters, length, offset);
-}
-
-template <typename Strategy>
-PositionTemplate<Strategy> StartOfWordAlgorithm(
-    const VisiblePositionTemplate<Strategy>& c,
-    EWordSide side) {
-  DCHECK(c.IsValid()) << c;
-  // TODO(yosin) This returns a null VP for c at the start of the document
-  // and |side| == |kPreviousWordIfOnBoundary|
-  VisiblePositionTemplate<Strategy> p = c;
-  if (side == kNextWordIfOnBoundary) {
-    // at paragraph end, the startofWord is the current position
-    if (IsEndOfParagraph(c))
-      return c.DeepEquivalent();
-
-    p = NextPositionOf(c);
-    if (p.IsNull())
-      return c.DeepEquivalent();
-  }
-  return PreviousBoundary(p, StartWordBoundary);
-}
-
-}  // namespace
 
 Position EndOfWordPosition(const VisiblePosition& position, EWordSide side) {
-  return EndOfWordAlgorithm<EditingStrategy>(position, side);
+  return ToPositionInDOMTree(
+      EndOfWordPosition(ToPositionInFlatTree(position.DeepEquivalent()), side));
 }
 
 VisiblePosition EndOfWord(const VisiblePosition& position, EWordSide side) {
@@ -158,7 +108,7 @@ VisiblePosition EndOfWord(const VisiblePosition& position, EWordSide side) {
 
 PositionInFlatTree EndOfWordPosition(const VisiblePositionInFlatTree& position,
                                      EWordSide side) {
-  return EndOfWordAlgorithm<EditingInFlatTreeStrategy>(position, side);
+  return EndOfWordPosition(position.DeepEquivalent(), side);
 }
 
 VisiblePositionInFlatTree EndOfWord(const VisiblePositionInFlatTree& position,
@@ -167,23 +117,132 @@ VisiblePositionInFlatTree EndOfWord(const VisiblePositionInFlatTree& position,
                                TextAffinity::kUpstreamIfPossible);
 }
 
-VisiblePosition NextWordPosition(const VisiblePosition& c) {
-  DCHECK(c.IsValid()) << c;
-  VisiblePosition next =
-      CreateVisiblePosition(NextBoundary(c, NextWordPositionBoundary),
-                            TextAffinity::kUpstreamIfPossible);
-  return HonorEditingBoundaryAtOrAfter(next, c.DeepEquivalent());
+// ----
+static PositionInFlatTree FirstPositionInNextBlock(
+    const PositionInFlatTree& position) {
+  DCHECK(position.IsNotNull());
+  const Node& container = *position.ComputeContainerNode();
+  LayoutBlock& block = *container.GetLayoutObject()->ContainingBlock();
+  for (LayoutObject* runner = block.NextInPreOrderAfterChildren(); runner;
+       runner = runner->NextInPreOrder()) {
+    if (runner->IsLayoutBlock())
+      return ComputeStartPosition(ToLayoutBlock(*runner));
+  }
+  return PositionInFlatTree();
 }
 
-VisiblePosition PreviousWordPosition(const VisiblePosition& c) {
-  DCHECK(c.IsValid()) << c;
-  VisiblePosition prev =
-      CreateVisiblePosition(PreviousBoundary(c, PreviousWordPositionBoundary));
-  return HonorEditingBoundaryAtOrBefore(prev, c.DeepEquivalent());
+static PositionInFlatTree NextWordPosition(
+    const PositionInFlatTree& passed_position) {
+  PositionInFlatTree block_end_position;
+  for (PositionInFlatTree position = passed_position; position.IsNotNull();
+       position = FirstPositionInNextBlock(position)) {
+    const TextOffsetMapping mapping(position);
+    const String text = mapping.GetText();
+    const int offset = mapping.ComputeTextOffset(position);
+    const bool kForward = true;
+    const int word_end = FindNextWordFromIndex(text.Characters16(),
+                                               text.length(), offset, kForward);
+    if (offset != word_end)
+      return mapping.MapToFirstPosition(word_end);
+    block_end_position = mapping.GetRange().EndPosition();
+  }
+  DCHECK(block_end_position.IsNotNull());
+  return block_end_position;
+}
+
+VisiblePosition NextWordPosition(const VisiblePosition& position_in_dom) {
+  DCHECK(position_in_dom.IsValid()) << position_in_dom;
+  const PositionInFlatTree position =
+      NextWordPosition(ToPositionInFlatTree(position_in_dom.DeepEquivalent()));
+  return CreateVisiblePosition(HonorEditingBoundaryAtOrAfter(
+      PositionWithAffinity(ToPositionInDOMTree(position),
+                           TextAffinity::kUpstreamIfPossible),
+      position_in_dom.DeepEquivalent()));
+}
+
+// ----
+static PositionInFlatTree FirstPositionInPreviousBlock(
+    const PositionInFlatTree& position) {
+  DCHECK(position.IsNotNull());
+  const Node& container = *position.ComputeContainerNode();
+  LayoutBlock& block = *container.GetLayoutObject()->ContainingBlock();
+  for (LayoutObject* runner = block.PreviousInPreOrder(); runner;
+       runner = runner->PreviousInPreOrder()) {
+    if (runner->IsLayoutBlock())
+      return ComputeStartPosition(ToLayoutBlock(*runner));
+  }
+  return PositionInFlatTree();
+}
+
+static PositionInFlatTree PreviousWordPosition(
+    const PositionInFlatTree& passed_position) {
+  for (PositionInFlatTree position = passed_position; position.IsNotNull();
+       position = FirstPositionInPreviousBlock(position)) {
+    const TextOffsetMapping mapping(position);
+    const String text = mapping.GetText();
+    const int offset = mapping.ComputeTextOffset(position);
+    const bool kBackward = false;
+    const int word_start = FindNextWordFromIndex(
+        text.Characters16(), text.length(), offset, kBackward);
+    if (offset > 0 || word_start == 0)
+      return mapping.MapToFirstPosition(word_start);
+  }
+  return PositionInFlatTree();
+}
+
+VisiblePosition PreviousWordPosition(const VisiblePosition& position_in_dom) {
+  DCHECK(position_in_dom.IsValid()) << position_in_dom;
+  const PositionInFlatTree position = PreviousWordPosition(
+      ToPositionInFlatTree(position_in_dom.DeepEquivalent()));
+  return CreateVisiblePosition(HonorEditingBoundaryAtOrBefore(
+      PositionWithAffinity(ToPositionInDOMTree(position)),
+      position_in_dom.DeepEquivalent()));
+}
+
+// ----
+PositionInFlatTree StartOfWordPosition(const PositionInFlatTree& position) {
+  if (position.IsNull())
+    return PositionInFlatTree();
+  const TextOffsetMapping mapping(position);
+  const String text = mapping.GetText();
+  const int offset = mapping.ComputeTextOffset(position);
+  const auto& start_end_pair =
+      FindWordForward(text.Characters16(), text.length(), offset);
+  const int end = start_end_pair.second;
+  if (offset != end)
+    return mapping.MapToFirstPosition(start_end_pair.first);
+  // |position| is at end of word, e.g. "abc| def", try to find following word.
+  // "abc| def" -> "abc |def"
+  if (static_cast<unsigned>(end) == text.length())
+    return mapping.MapToLastPosition(end);
+  const auto& start_end_pair2 =
+      FindWordForward(text.Characters16(), text.length(), end);
+  return mapping.MapToFirstPosition(start_end_pair2.first);
+}
+
+PositionInFlatTree StartOfWordPositionBackward(
+    const PositionInFlatTree& position) {
+  if (position.IsNull())
+    return PositionInFlatTree();
+  const TextOffsetMapping mapping(position);
+  const String text = mapping.GetText();
+  const int offset = mapping.ComputeTextOffset(position);
+  const auto& start_end_pair =
+      FindWordBackward(text.Characters16(), text.length(), offset);
+  const int start = start_end_pair.first;
+  return mapping.MapToFirstPosition(start);
+}
+
+PositionInFlatTree StartOfWordPosition(const PositionInFlatTree& position,
+                                       EWordSide side) {
+  if (side == kPreviousWordIfOnBoundary)
+    return StartOfWordPositionBackward(position);
+  return StartOfWordPosition(position);
 }
 
 Position StartOfWordPosition(const VisiblePosition& position, EWordSide side) {
-  return StartOfWordAlgorithm<EditingStrategy>(position, side);
+  return ToPositionInDOMTree(StartOfWordPosition(
+      ToPositionInFlatTree(position.DeepEquivalent()), side));
 }
 
 VisiblePosition StartOfWord(const VisiblePosition& position, EWordSide side) {
@@ -193,7 +252,7 @@ VisiblePosition StartOfWord(const VisiblePosition& position, EWordSide side) {
 PositionInFlatTree StartOfWordPosition(
     const VisiblePositionInFlatTree& position,
     EWordSide side) {
-  return StartOfWordAlgorithm<EditingInFlatTreeStrategy>(position, side);
+  return StartOfWordPosition(position.DeepEquivalent(), side);
 }
 
 VisiblePositionInFlatTree StartOfWord(const VisiblePositionInFlatTree& position,

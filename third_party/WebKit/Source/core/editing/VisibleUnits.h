@@ -42,6 +42,8 @@ class IntPoint;
 class IntRect;
 class LocalFrame;
 
+enum class AppendTrailingWhitespace { kDontAppend, kShouldAppend };
+
 // |EWordSiste| is used as a parameter of |StartOfWord()| and |EndOfWord()|
 // to control a returning position when they are called for a position before
 // word boundary.
@@ -124,6 +126,9 @@ PreviousPositionOf(const VisiblePositionInFlatTree&,
                    EditingBoundaryCrossingRule = kCanCrossEditingBoundary);
 
 // words
+CORE_EXPORT EphemeralRangeInFlatTree
+ComputeWordAroundPosition(const PositionInFlatTree&, AppendTrailingWhitespace);
+
 // TODO(yoichio): Replace |startOfWord| to |startOfWordPosition| because
 // returned Position should be canonicalized with |previousBoundary()| by
 // TextItetator.
@@ -149,7 +154,7 @@ EndOfWordPosition(const VisiblePositionInFlatTree&,
 CORE_EXPORT VisiblePositionInFlatTree
 EndOfWord(const VisiblePositionInFlatTree&, EWordSide = kNextWordIfOnBoundary);
 VisiblePosition PreviousWordPosition(const VisiblePosition&);
-VisiblePosition NextWordPosition(const VisiblePosition&);
+CORE_EXPORT VisiblePosition NextWordPosition(const VisiblePosition&);
 
 // sentences
 CORE_EXPORT VisiblePosition StartOfSentence(const VisiblePosition&);
