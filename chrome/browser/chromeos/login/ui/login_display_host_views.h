@@ -33,11 +33,11 @@ class LoginDisplayHostViews : public LoginDisplayHostCommon,
   gfx::NativeWindow GetNativeWindow() const override;
   OobeUI* GetOobeUI() const override;
   WebUILoginView* GetWebUILoginView() const override;
-  void Finalize(base::OnceClosure completion_callback) override;
+  void OnFinalize() override;
   void SetStatusAreaVisible(bool visible) override;
   void StartWizard(OobeScreen first_screen) override;
   WizardController* GetWizardController() override;
-  void StartUserAdding(base::OnceClosure completion_callback) override;
+  void OnStartUserAdding() override;
   void CancelUserAdding() override;
   void OnStartSignInScreen(const LoginScreenContext& context) override;
   void OnPreferencesChanged() override;
@@ -71,9 +71,6 @@ class LoginDisplayHostViews : public LoginDisplayHostCommon,
   AuthenticateUserCallback on_authenticated_;
 
   std::unique_ptr<ExistingUserController> existing_user_controller_;
-
-  // Called after host deletion.
-  std::vector<base::OnceClosure> completion_callbacks_;
 
   base::WeakPtrFactory<LoginDisplayHostViews> weak_factory_;
 
