@@ -5,6 +5,7 @@
 package org.chromium.content.browser.input;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Rect;
@@ -22,7 +23,6 @@ import android.text.style.UnderlineSpan;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.BaseInputConnection;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.ExtractedText;
 import android.view.inputmethod.InputConnection;
@@ -41,6 +41,8 @@ import org.chromium.content.browser.WindowEventObserver;
 import org.chromium.content.browser.picker.InputDialogContainer;
 import org.chromium.content.browser.webcontents.WebContentsUserData;
 import org.chromium.content.browser.webcontents.WebContentsUserData.UserDataFactory;
+import org.chromium.content_public.browser.ChromiumBaseInputConnection;
+import org.chromium.content_public.browser.ChromiumInputMethodManagerWrapper;
 import org.chromium.content_public.browser.ImeAdapter;
 import org.chromium.content_public.browser.ImeEventObserver;
 import org.chromium.content_public.browser.WebContents;
@@ -89,7 +91,7 @@ public class ImeAdapterImpl implements ImeAdapter, WindowEventObserver {
     private static final int DEFAULT_SUGGESTION_SPAN_COLOR = 0x88C8C8C8;
 
     private long mNativeImeAdapterAndroid;
-    private InputMethodManagerWrapper mInputMethodManagerWrapper;
+    private ChromiumInputMethodManagerWrapper mInputMethodManagerWrapper;
     private ChromiumBaseInputConnection mInputConnection;
     private ChromiumBaseInputConnection.Factory mInputConnectionFactory;
 
@@ -171,8 +173,8 @@ public class ImeAdapterImpl implements ImeAdapter, WindowEventObserver {
      * @param wrapper InputMethodManagerWrapper that should receive all the call directed to
      *                InputMethodManager.
      */
-    public static ImeAdapterImpl create(
-            WebContents webContents, View containerView, InputMethodManagerWrapper wrapper) {
+    public static ImeAdapterImpl create(WebContents webContents, View containerView,
+            ChromiumInputMethodManagerWrapper wrapper) {
         ImeAdapterImpl imeAdapter = WebContentsUserData.fromWebContents(
                 webContents, ImeAdapterImpl.class, UserDataFactoryLazyHolder.INSTANCE);
         assert imeAdapter != null && !imeAdapter.initialized();
@@ -208,7 +210,7 @@ public class ImeAdapterImpl implements ImeAdapter, WindowEventObserver {
      * @param wrapper InputMethodManagerWrapper that should receive all the call directed to
      *                InputMethodManager.
      */
-    private void init(View view, InputMethodManagerWrapper wrapper) {
+    private void init(View view, ChromiumInputMethodManagerWrapper wrapper) {
         mContainerView = view;
         mInputMethodManagerWrapper = wrapper;
 
@@ -271,9 +273,20 @@ public class ImeAdapterImpl implements ImeAdapter, WindowEventObserver {
         mEventObservers.add(eventObserver);
     }
 
-    private void createInputConnectionFactory() {
-        if (mInputConnectionFactory != null) return;
-        mInputConnectionFactory = new ThreadedInputConnectionFactory(mInputMethodManagerWrapper);
+    /**
+     * Returns an instance of the default {@link InputMethodManagerWrapper}
+     */
+    public static InputMethodManagerWrapper createDefaultInputMethodManagerWrapper(
+            Context context) {
+        return new InputMethodManagerWrapper(context);
+    }
+
+    /**
+     * Returns an instance of the default {@link ChromiumBaseInputConnection.Factory}
+     */
+    public static ChromiumBaseInputConnection.Factory createDefaultInputConnectionFactory(
+            ChromiumInputMethodManagerWrapper wrapper) {
+        return new ThreadedInputConnectionFactory(wrapper);
     }
 
     // Tells if the ImeAdapter in valid state (i.e. not in destroyed state), and is
@@ -330,15 +343,15 @@ public class ImeAdapterImpl implements ImeAdapter, WindowEventObserver {
     }
 
     @Override
-    public void setInputMethodManagerWrapperForTest(InputMethodManagerWrapper immw) {
+    public void setInputMethodManagerWrapper(ChromiumInputMethodManagerWrapper immw) {
         mInputMethodManagerWrapper = immw;
         if (mCursorAnchorInfoController != null) {
-            mCursorAnchorInfoController.setInputMethodManagerWrapperForTest(immw);
+            mCursorAnchorInfoController.setInputMethodManagerWrapper(immw);
         }
     }
 
     @VisibleForTesting
-    void setInputConnectionFactory(ChromiumBaseInputConnection.Factory factory) {
+    public void setInputConnectionFactory(ChromiumBaseInputConnection.Factory factory) {
         mInputConnectionFactory = factory;
     }
 
@@ -650,24 +663,15 @@ public class ImeAdapterImpl implements ImeAdapter, WindowEventObserver {
         }
     }
 
-    /**
-     * Update selection to input method manager.
-     *
-     * @param selectionStart   The selection start.
-     * @param selectionEnd     The selection end.
-     * @param compositionStart The composition start.
-     * @param compositionEnd   The composition end.
-     */
-    void updateSelection(
+    @Override
+    public void updateSelection(
             int selectionStart, int selectionEnd, int compositionStart, int compositionEnd) {
         mInputMethodManagerWrapper.updateSelection(
                 mContainerView, selectionStart, selectionEnd, compositionStart, compositionEnd);
     }
 
-    /**
-     * Update extracted text to input method manager.
-     */
-    void updateExtractedText(int token, ExtractedText extractedText) {
+    @Override
+    public void updateExtractedText(int token, ExtractedText extractedText) {
         mInputMethodManagerWrapper.updateExtractedText(mContainerView, token, extractedText);
     }
 
@@ -677,13 +681,10 @@ public class ImeAdapterImpl implements ImeAdapter, WindowEventObserver {
     void restartInput() {
         // This will eventually cause input method manager to call View#onCreateInputConnection().
         mInputMethodManagerWrapper.restartInput(mContainerView);
-        if (mInputConnection != null) mInputConnection.onRestartInputOnUiThread();
     }
 
-    /**
-     * @see BaseInputConnection#performContextMenuAction(int)
-     */
-    boolean performContextMenuAction(int id) {
+    @Override
+    public boolean performContextMenuAction(int id) {
         if (DEBUG_LOGS) Log.i(TAG, "performContextMenuAction: id [%d]", id);
         switch (id) {
             case android.R.id.selectAll:
@@ -703,7 +704,8 @@ public class ImeAdapterImpl implements ImeAdapter, WindowEventObserver {
         }
     }
 
-    boolean performEditorAction(int actionCode) {
+    @Override
+    public boolean performEditorAction(int actionCode) {
         if (!isValid()) return false;
         switch (actionCode) {
             case EditorInfo.IME_ACTION_NEXT:
@@ -731,10 +733,12 @@ public class ImeAdapterImpl implements ImeAdapter, WindowEventObserver {
         nativeAdvanceFocusInForm(mNativeImeAdapterAndroid, focusType);
     }
 
-    void notifyUserAction() {
+    @Override
+    public void notifyUserAction() {
         mInputMethodManagerWrapper.notifyUserAction();
     }
 
+    @Override
     public void sendSyntheticKeyPress(int keyCode, int flags) {
         long eventTime = SystemClock.uptimeMillis();
         sendKeyEvent(new KeyEvent(eventTime, eventTime, KeyEvent.ACTION_DOWN, keyCode, 0, 0,
@@ -748,7 +752,18 @@ public class ImeAdapterImpl implements ImeAdapter, WindowEventObserver {
         if (mNodeEditable) mWebContents.dismissTextHandles();
     }
 
-    boolean sendCompositionToNative(
+    @Override
+    public boolean sendCompositionToNative(
+            CharSequence text, int newCursorPosition, int unicodeFromKeyEvent) {
+        return sendCompositionToNativeInternal(text, newCursorPosition, false, unicodeFromKeyEvent);
+    }
+
+    @Override
+    public boolean sendCommitToNative(CharSequence text, int newCursorPosition) {
+        return sendCompositionToNativeInternal(text, newCursorPosition, true, 0);
+    }
+
+    private boolean sendCompositionToNativeInternal(
             CharSequence text, int newCursorPosition, boolean isCommit, int unicodeFromKeyEvent) {
         if (!isValid()) return false;
 
@@ -769,14 +784,16 @@ public class ImeAdapterImpl implements ImeAdapter, WindowEventObserver {
         return true;
     }
 
+    @Override
     @VisibleForTesting
-    boolean finishComposingText() {
+    public boolean finishComposingText() {
         if (!isValid()) return false;
         nativeFinishComposingText(mNativeImeAdapterAndroid);
         return true;
     }
 
-    boolean sendKeyEvent(KeyEvent event) {
+    @Override
+    public boolean sendKeyEvent(KeyEvent event) {
         if (!isValid()) return false;
 
         int action = event.getAction();
@@ -801,15 +818,8 @@ public class ImeAdapterImpl implements ImeAdapter, WindowEventObserver {
                 event.getScanCode(), /*isSystemKey=*/false, event.getUnicodeChar());
     }
 
-    /**
-     * Send a request to the native counterpart to delete a given range of characters.
-     * @param beforeLength Number of characters to extend the selection by before the existing
-     *                     selection.
-     * @param afterLength Number of characters to extend the selection by after the existing
-     *                    selection.
-     * @return Whether the native counterpart of ImeAdapter received the call.
-     */
-    boolean deleteSurroundingText(int beforeLength, int afterLength) {
+    @Override
+    public boolean deleteSurroundingText(int beforeLength, int afterLength) {
         onImeEvent();
         if (!isValid()) return false;
         nativeSendKeyEvent(mNativeImeAdapterAndroid, null, WebInputEventType.RAW_KEY_DOWN, 0,
@@ -820,15 +830,8 @@ public class ImeAdapterImpl implements ImeAdapter, WindowEventObserver {
         return true;
     }
 
-    /**
-     * Send a request to the native counterpart to delete a given range of characters.
-     * @param beforeLength Number of code points to extend the selection by before the existing
-     *                     selection.
-     * @param afterLength Number of code points to extend the selection by after the existing
-     *                    selection.
-     * @return Whether the native counterpart of ImeAdapter received the call.
-     */
-    boolean deleteSurroundingTextInCodePoints(int beforeLength, int afterLength) {
+    @Override
+    public boolean deleteSurroundingTextInCodePoints(int beforeLength, int afterLength) {
         onImeEvent();
         if (!isValid()) return false;
         nativeSendKeyEvent(mNativeImeAdapterAndroid, null, WebInputEventType.RAW_KEY_DOWN, 0,
@@ -840,25 +843,15 @@ public class ImeAdapterImpl implements ImeAdapter, WindowEventObserver {
         return true;
     }
 
-    /**
-     * Send a request to the native counterpart to set the selection to given range.
-     * @param start Selection start index.
-     * @param end Selection end index.
-     * @return Whether the native counterpart of ImeAdapter received the call.
-     */
-    boolean setEditableSelectionOffsets(int start, int end) {
+    @Override
+    public boolean setEditableSelectionOffsets(int start, int end) {
         if (!isValid()) return false;
         nativeSetEditableSelectionOffsets(mNativeImeAdapterAndroid, start, end);
         return true;
     }
 
-    /**
-     * Send a request to the native counterpart to set composing region to given indices.
-     * @param start The start of the composition.
-     * @param end The end of the composition.
-     * @return Whether the native counterpart of ImeAdapter received the call.
-     */
-    boolean setComposingRegion(int start, int end) {
+    @Override
+    public boolean setComposingRegion(int start, int end) {
         if (!isValid()) return false;
         if (start <= end) {
             nativeSetComposingRegion(mNativeImeAdapterAndroid, start, end);
@@ -882,19 +875,15 @@ public class ImeAdapterImpl implements ImeAdapter, WindowEventObserver {
         }
     }
 
-    /**
-     * Send a request to the native counterpart to give the latest text input state update.
-     */
-    boolean requestTextInputStateUpdate() {
+    @Override
+    public boolean requestTextInputStateUpdate() {
         if (!isValid()) return false;
         // You won't get state update anyways.
         if (mInputConnection == null) return false;
         return nativeRequestTextInputStateUpdate(mNativeImeAdapterAndroid);
     }
 
-    /**
-     * Notified when IME requested Chrome to change the cursor update mode.
-     */
+    @Override
     public boolean onRequestCursorUpdates(int cursorUpdateMode) {
         final boolean immediateRequest =
                 (cursorUpdateMode & InputConnection.CURSOR_UPDATE_IMMEDIATE) != 0;
@@ -1016,7 +1005,10 @@ public class ImeAdapterImpl implements ImeAdapter, WindowEventObserver {
     private void onConnectedToRenderProcess() {
         if (DEBUG_LOGS) Log.i(TAG, "onConnectedToRenderProcess");
         mIsConnected = true;
-        createInputConnectionFactory();
+        if (mInputConnectionFactory == null) {
+            mInputConnectionFactory =
+                    createDefaultInputConnectionFactory(mInputMethodManagerWrapper);
+        }
         resetAndHideKeyboard();
     }
 

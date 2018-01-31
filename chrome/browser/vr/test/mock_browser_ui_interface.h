@@ -40,6 +40,12 @@ class MockBrowserUiInterface : public BrowserUiInterface {
   void SetOmniboxSuggestions(std::unique_ptr<OmniboxSuggestions> suggestions) {}
   MOCK_METHOD0(OnAssetsComponentReady, void());
 
+  MOCK_METHOD0(ShowSoftInput, void());
+  MOCK_METHOD0(HideSoftInput, void());
+  MOCK_METHOD2(UpdateSelection, void(int, int));
+  MOCK_METHOD2(UpdateComposition, void(int, int));
+  MOCK_METHOD1(UpdateText, void(const base::string16&));
+
  private:
   DISALLOW_COPY_AND_ASSIGN(MockBrowserUiInterface);
 };

@@ -41,7 +41,6 @@ class GvrKeyboardDelegate : public vr::KeyboardDelegate {
 
   void OnButtonDown(const gfx::PointF& position) override;
   void OnButtonUp(const gfx::PointF& position) override;
-
   // Called to update GVR keyboard with the given text input info.
   void UpdateInput(const vr::TextInputInfo& info);
 
@@ -50,6 +49,8 @@ class GvrKeyboardDelegate : public vr::KeyboardDelegate {
   void Init(gvr_keyboard_context* keyboard_context);
   void OnGvrKeyboardEvent(EventType);
   vr::TextInputInfo GetTextInfo();
+  bool pause_keyboard_update_ = false;
+  vr::TextInputInfo cached_text_input_info_;
 
   vr::KeyboardUiInterface* ui_;
   gvr_keyboard_context* gvr_keyboard_ = nullptr;

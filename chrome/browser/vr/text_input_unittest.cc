@@ -170,8 +170,8 @@ TEST(TextInputTest, HintText) {
   UiScene scene;
 
   auto instance = std::make_unique<TextInput>(
-      kFontHeightMeters, TextInput::OnFocusChangedCallback(),
-      TextInput::OnInputEditedCallback());
+      kFontHeightMeters, TextInput::OnInputEditedCallback());
+  instance->SetFocusChangeCallback(TextInput::OnFocusChangedCallback());
   instance->SetName(kOmniboxTextField);
   instance->SetSize(1, 0);
   TextInput* element = instance.get();
@@ -193,8 +193,8 @@ TEST(TextInputTest, CursorBlinking) {
   UiScene scene;
 
   auto instance = std::make_unique<TextInput>(
-      kFontHeightMeters, TextInput::OnFocusChangedCallback(),
-      TextInput::OnInputEditedCallback());
+      kFontHeightMeters, TextInput::OnInputEditedCallback());
+  instance->SetFocusChangeCallback(TextInput::OnFocusChangedCallback());
   instance->SetName(kOmniboxTextField);
   instance->SetSize(1, 0);
   TextInput* element = instance.get();
@@ -226,8 +226,8 @@ TEST(TextInputTest, CursorBlinking) {
 // environment.  As of now, much of this is skipped due to lack of a GL context.
 TEST(TextInputTest, CursorPositionUpdatesOnKeyboardInput) {
   auto element = std::make_unique<TextInput>(
-      kFontHeightMeters, TextInput::OnFocusChangedCallback(),
-      TextInput::OnInputEditedCallback());
+      kFontHeightMeters, TextInput::OnInputEditedCallback());
+  element->SetFocusChangeCallback(TextInput::OnFocusChangedCallback());
 
   TextInputInfo info(base::UTF8ToUTF16("text"));
   info.selection_start = 0;
@@ -247,8 +247,8 @@ TEST(TextInputTest, CursorPositionUpdatesOnKeyboardInput) {
 
 TEST(TextInputTest, CursorPositionUpdatesOnClicks) {
   auto element = std::make_unique<TextInput>(
-      kFontHeightMeters, TextInput::OnFocusChangedCallback(),
-      TextInput::OnInputEditedCallback());
+      kFontHeightMeters, TextInput::OnInputEditedCallback());
+  element->SetFocusChangeCallback(TextInput::OnFocusChangedCallback());
 
   TextInputInfo info(base::UTF8ToUTF16("text"));
   element->UpdateInput(info);

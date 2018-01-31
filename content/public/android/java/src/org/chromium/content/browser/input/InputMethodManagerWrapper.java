@@ -4,7 +4,6 @@
 
 package org.chromium.content.browser.input;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.os.IBinder;
@@ -15,6 +14,7 @@ import android.view.inputmethod.CursorAnchorInfo;
 import android.view.inputmethod.InputMethodManager;
 
 import org.chromium.base.Log;
+import org.chromium.content_public.browser.ChromiumInputMethodManagerWrapper;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -22,9 +22,9 @@ import java.lang.reflect.Method;
 /**
  * Wrapper around Android's InputMethodManager
  */
-public class InputMethodManagerWrapper {
-    private static final boolean DEBUG_LOGS = false;
-    private static final String TAG = "cr_Ime";
+public class InputMethodManagerWrapper implements ChromiumInputMethodManagerWrapper {
+    private static final boolean DEBUG_LOGS = true;
+    private static final String TAG = "cr_IMM";
 
     private final Context mContext;
 
@@ -37,17 +37,13 @@ public class InputMethodManagerWrapper {
         return (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
     }
 
-    /**
-     * @see android.view.inputmethod.InputMethodManager#restartInput(View)
-     */
+    @Override
     public void restartInput(View view) {
         if (DEBUG_LOGS) Log.i(TAG, "restartInput");
         getInputMethodManager().restartInput(view);
     }
 
-    /**
-     * @see android.view.inputmethod.InputMethodManager#showSoftInput(View, int, ResultReceiver)
-     */
+    @Override
     public void showSoftInput(View view, int flags, ResultReceiver resultReceiver) {
         if (DEBUG_LOGS) Log.i(TAG, "showSoftInput");
         StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskWrites();  // crbug.com/616283
@@ -58,20 +54,16 @@ public class InputMethodManagerWrapper {
         }
     }
 
-    /**
-     * @see android.view.inputmethod.InputMethodManager#isActive(View)
-     */
+    @Override
     public boolean isActive(View view) {
         final boolean active = getInputMethodManager().isActive(view);
         if (DEBUG_LOGS) Log.i(TAG, "isActive: " + active);
         return active;
     }
 
-    /**
-     * @see InputMethodManager#hideSoftInputFromWindow(IBinder, int, ResultReceiver)
-     */
-    public boolean hideSoftInputFromWindow(IBinder windowToken, int flags,
-            ResultReceiver resultReceiver) {
+    @Override
+    public boolean hideSoftInputFromWindow(
+            IBinder windowToken, int flags, ResultReceiver resultReceiver) {
         if (DEBUG_LOGS) Log.i(TAG, "hideSoftInputFromWindow");
         StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskWrites();  // crbug.com/616283
         try {
@@ -82,11 +74,9 @@ public class InputMethodManagerWrapper {
         }
     }
 
-    /**
-     * @see android.view.inputmethod.InputMethodManager#updateSelection(View, int, int, int, int)
-     */
-    public void updateSelection(View view, int selStart, int selEnd,
-            int candidatesStart, int candidatesEnd) {
+    @Override
+    public void updateSelection(
+            View view, int selStart, int selEnd, int candidatesStart, int candidatesEnd) {
         if (DEBUG_LOGS) {
             Log.i(TAG, "updateSelection: SEL [%d, %d], COM [%d, %d]", selStart, selEnd,
                     candidatesStart, candidatesEnd);
@@ -95,11 +85,7 @@ public class InputMethodManagerWrapper {
                 candidatesEnd);
     }
 
-    /**
-     * @see android.view.inputmethod.InputMethodManager#updateCursorAnchorInfo(View,
-     * CursorAnchorInfo)
-     */
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @Override
     public void updateCursorAnchorInfo(View view, CursorAnchorInfo cursorAnchorInfo) {
         if (DEBUG_LOGS) Log.i(TAG, "updateCursorAnchorInfo");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -107,19 +93,14 @@ public class InputMethodManagerWrapper {
         }
     }
 
-    /**
-     * @see android.view.inputmethod.InputMethodManager
-     * #updateExtractedText(View,int, ExtractedText)
-     */
-    void updateExtractedText(View view, int token, android.view.inputmethod.ExtractedText text) {
+    @Override
+    public void updateExtractedText(
+            View view, int token, android.view.inputmethod.ExtractedText text) {
         if (DEBUG_LOGS) Log.d(TAG, "updateExtractedText");
         getInputMethodManager().updateExtractedText(view, token, text);
     }
 
-    /**
-     * Notify that a user took some action with the current input method. Without this call
-     * an input method app may wait longer when the user switches methods within the app.
-     */
+    @Override
     public void notifyUserAction() {
         // On N and above, this is not needed.
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) return;

@@ -1438,6 +1438,9 @@ chrome_vr_java_sources = [
   "java/src/org/chromium/chrome/browser/vr_shell/OnDispatchTouchEventCallback.java",
   "java/src/org/chromium/chrome/browser/vr_shell/keyboard/BuildConstants.java",
   "java/src/org/chromium/chrome/browser/vr_shell/keyboard/GvrKeyboardLoaderClient.java",
+  "java/src/org/chromium/chrome/browser/vr_shell/keyboard/VrInputConnection.java",
+  "java/src/org/chromium/chrome/browser/vr_shell/keyboard/VrInputConnectionFactory.java",
+  "java/src/org/chromium/chrome/browser/vr_shell/keyboard/VrInputMethodManagerWrapper.java",
 ]
 
 chrome_test_java_sources = [

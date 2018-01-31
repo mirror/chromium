@@ -22,6 +22,10 @@ import android.view.inputmethod.InputConnection;
 import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
+import org.chromium.content_public.browser.ChromiumBaseInputConnection;
+import org.chromium.content_public.browser.ImeAdapter;
+import org.chromium.content_public.browser.Range;
+import org.chromium.content_public.browser.TextInputState;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -39,7 +43,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 class ThreadedInputConnection extends BaseInputConnection implements ChromiumBaseInputConnection {
     private static final String TAG = "cr_Ime";
-    private static final boolean DEBUG_LOGS = false;
+    private static final boolean DEBUG_LOGS = true;
 
     private static final TextInputState UNBLOCKER = new TextInputState(
             "", new Range(0, 0), new Range(-1, -1), false, false /* notFromIme */) {
@@ -79,7 +83,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
         }
     };
 
-    private final ImeAdapterImpl mImeAdapter;
+    private final ImeAdapter mImeAdapter;
     private final Handler mHandler;
     private int mNumNestedBatchEdits;
 
@@ -91,7 +95,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
     private int mCurrentExtractedTextRequestToken;
     private boolean mShouldUpdateExtractedText;
 
-    ThreadedInputConnection(View view, ImeAdapterImpl imeAdapter, Handler handler) {
+    ThreadedInputConnection(View view, ImeAdapter imeAdapter, Handler handler) {
         super(view, true);
         if (DEBUG_LOGS) Log.i(TAG, "constructor");
         ImeUtils.checkOnUiThread();
@@ -136,12 +140,6 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
     public Handler getHandler() {
         return mHandler;
     }
-
-    /**
-     * @see ChromiumBaseInputConnection#onRestartInputOnUiThread()
-     */
-    @Override
-    public void onRestartInputOnUiThread() {}
 
     /**
      * @see ChromiumBaseInputConnection#sendKeyEventOnUiThread(KeyEvent)
@@ -200,7 +198,8 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
         // you should be calling updateExtractedText(View, int, ExtractedText)
         // whenever you call updateSelection(View, int, int, int, int).
         if (mShouldUpdateExtractedText) {
-            final ExtractedText extractedText = convertToExtractedText(textInputState);
+            final ExtractedText extractedText =
+                    ChromiumBaseInputConnection.convertToExtractedText(textInputState);
             mImeAdapter.updateExtractedText(mCurrentExtractedTextRequestToken, extractedText);
         }
         mImeAdapter.updateSelection(
@@ -313,7 +312,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
         int accentToSend =
                 isPendingAccent ? (mPendingAccent | KeyCharacterMap.COMBINING_ACCENT) : 0;
         cancelCombiningAccentOnUiThread();
-        mImeAdapter.sendCompositionToNative(text, newCursorPosition, false, accentToSend);
+        mImeAdapter.sendCompositionToNative(text, newCursorPosition, accentToSend);
     }
 
     /**
@@ -352,7 +351,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
 
     private void commitTextOnUiThread(final CharSequence text, final int newCursorPosition) {
         cancelCombiningAccentOnUiThread();
-        mImeAdapter.sendCompositionToNative(text, newCursorPosition, true, 0);
+        mImeAdapter.sendCommitToNative(text, newCursorPosition);
     }
 
     /**
@@ -397,22 +396,9 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
             mCurrentExtractedTextRequestToken = request != null ? request.token : 0;
         }
         TextInputState textInputState = requestAndWaitForTextInputState();
-        return convertToExtractedText(textInputState);
+        return ChromiumBaseInputConnection.convertToExtractedText(textInputState);
     }
 
-    private ExtractedText convertToExtractedText(TextInputState textInputState) {
-        if (textInputState == null) return null;
-        ExtractedText extractedText = new ExtractedText();
-        extractedText.text = textInputState.text();
-        extractedText.partialEndOffset = textInputState.text().length();
-        // Set the partial start offset to -1 because the content is the full text.
-        // See: Android documentation for ExtractedText#partialStartOffset
-        extractedText.partialStartOffset = -1;
-        extractedText.selectionStart = textInputState.selection().start();
-        extractedText.selectionEnd = textInputState.selection().end();
-        extractedText.flags = textInputState.singleLine() ? ExtractedText.FLAG_SINGLE_LINE : 0;
-        return extractedText;
-    }
 
     /**
      * @see InputConnection#beginBatchEdit()
@@ -501,7 +487,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
         StringBuilder builder = new StringBuilder();
         builder.appendCodePoint(codePoint);
         String text = builder.toString();
-        mImeAdapter.sendCompositionToNative(text, 1, true, 0);
+        mImeAdapter.sendCommitToNative(text, 1);
         setCombiningAccentOnUiThread(pendingAccentToSet);
     }
 
