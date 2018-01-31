@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "99f9c016_a8630944",
+        "filename": "media/gpu/vaapi/vaapi_wrapper.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1140,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2018-01-31T00:46:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ec2fff9f_a8e0366e",
+      "revId": "a57aa298ed3c3b76056d6e24fb09db05dca2f465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "050c00f5_2933add3",
         "filename": "media/gpu/vaapi/vaapi_wrapper.cc",
         "patchSetId": 10
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "yeah, I\u0027ll update.",
       "parentUuid": "abdb1a05_08c27692",
+      "revId": "a57aa298ed3c3b76056d6e24fb09db05dca2f465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7b553b0_4cde775a",
+        "filename": "media/gpu/vaapi/vaapi_wrapper.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1158,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2018-01-31T00:46:20Z",
+      "side": 1,
+      "message": "I meant that it\u0027s actually the InitializeStubs(paths) call above (at line 1145), which results in dlopening the libva*.so files, while this call below will only result in libva further dlopening the driver .so files.\n\nSorry for being pedantic here, but this mechanism is not clearly understandable from the code in the method, so it would be important to document it well for future readers.",
+      "parentUuid": "5e5459a8_b2be4193",
       "revId": "a57aa298ed3c3b76056d6e24fb09db05dca2f465",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
