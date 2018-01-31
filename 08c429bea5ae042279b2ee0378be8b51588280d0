@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "094ae43c_e587c980",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-31T22:09:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72dc0b81_2d477977",
+      "range": {
+        "startLine": 278,
+        "startChar": 22,
+        "endLine": 278,
+        "endChar": 36
+      },
+      "revId": "08c429bea5ae042279b2ee0378be8b51588280d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2156da75_d162d799",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrShellNavigationTest.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "08c429bea5ae042279b2ee0378be8b51588280d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50c26caa_7f93bfac",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrShellNavigationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-31T22:09:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2156da75_d162d799",
+      "range": {
+        "startLine": 377,
+        "startChar": 7,
+        "endLine": 377,
+        "endChar": 66
+      },
+      "revId": "08c429bea5ae042279b2ee0378be8b51588280d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "debb5f8b_6c10880d",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrShellNavigationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-31T22:09:09Z",
+      "side": 1,
+      "message": "Figured it wasn\u0027t necessary to test crashes from both fullscreen and 2D. Testing from fullscreen allows me to check that fullscreen was exited when we crashed and generally seemed more likely to break somehow :P",
+      "parentUuid": "6d3bddf3_f73fcd66",
+      "range": {
+        "startLine": 382,
+        "startChar": 36,
+        "endLine": 382,
+        "endChar": 46
+      },
+      "revId": "08c429bea5ae042279b2ee0378be8b51588280d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59d91f3e_1904a713",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrShellNavigationTest.java",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "08c429bea5ae042279b2ee0378be8b51588280d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aa1ffcb_abad5de0",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrShellNavigationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-31T22:09:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59d91f3e_1904a713",
+      "range": {
+        "startLine": 384,
+        "startChar": 55,
+        "endLine": 384,
+        "endChar": 74
+      },
+      "revId": "08c429bea5ae042279b2ee0378be8b51588280d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "df6abcf5_981fe403",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrShellTransitionTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-31T22:09:09Z",
+      "side": 1,
+      "message": "Nope, copy-pasted :P",
+      "parentUuid": "72706139_a8bfe802",
+      "range": {
+        "startLine": 294,
+        "startChar": 27,
+        "endLine": 294,
+        "endChar": 39
+      },
+      "revId": "08c429bea5ae042279b2ee0378be8b51588280d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabae0af_69b3d861",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrTransitionTest.java",
         "patchSetId": 1
@@ -137,6 +257,30 @@
       "revId": "08c429bea5ae042279b2ee0378be8b51588280d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2782cd44_c7459a53",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrTransitionTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-31T22:09:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dabae0af_69b3d861",
+      "range": {
+        "startLine": 299,
+        "startChar": 8,
+        "endLine": 307,
+        "endChar": 11
+      },
+      "revId": "08c429bea5ae042279b2ee0378be8b51588280d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "c4ca4e58_1ce12b28",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebXrTransitionTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-31T22:09:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26c8377b_5f2a987f",
+      "range": {
+        "startLine": 210,
+        "startChar": 36,
+        "endLine": 210,
+        "endChar": 41
+      },
+      "revId": "08c429bea5ae042279b2ee0378be8b51588280d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a4df287_1e01fd05",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebXrTransitionTest.java",
         "patchSetId": 1
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "977e6d6c_b3bfd918",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebXrTransitionTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-31T22:09:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a4df287_1e01fd05",
+      "range": {
+        "startLine": 213,
+        "startChar": 49,
+        "endLine": 213,
+        "endChar": 67
+      },
+      "revId": "08c429bea5ae042279b2ee0378be8b51588280d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be83c981_7bcf64d5",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebXrTransitionTest.java",
         "patchSetId": 1
@@ -206,6 +398,30 @@
       "revId": "08c429bea5ae042279b2ee0378be8b51588280d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b875e6e_8809a998",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebXrTransitionTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-01-31T22:09:09Z",
+      "side": 1,
+      "message": "It wasn\u0027t, I forgot to test it when I copied it over :P",
+      "parentUuid": "be83c981_7bcf64d5",
+      "range": {
+        "startLine": 214,
+        "startChar": 8,
+        "endLine": 214,
+        "endChar": 25
+      },
+      "revId": "08c429bea5ae042279b2ee0378be8b51588280d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
