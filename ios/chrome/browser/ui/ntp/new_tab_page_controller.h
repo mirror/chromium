@@ -22,13 +22,14 @@ class ChromeBrowserState;
 @protocol ApplicationCommands;
 @protocol BrowserCommands;
 @protocol CRWSwipeRecognizerProvider;
+@protocol FakeboxFocuser;
 @class GoogleLandingViewController;
 @protocol IncognitoViewControllerDelegate;
 @protocol NewTabPagePanelProtocol;
 @protocol OmniboxFocuser;
-@protocol FakeboxFocuser;
 @protocol SnackbarCommands;
 @class TabModel;
+@protocol ToolbarCommands;
 @protocol UrlLoader;
 
 // A controller for the New Tab Page user interface. Supports multiple "panels",
@@ -69,9 +70,10 @@ class ChromeBrowserState;
     parentViewController:(UIViewController*)parentViewController
               dispatcher:(id<ApplicationCommands,
                              BrowserCommands,
-                             OmniboxFocuser,
                              FakeboxFocuser,
+                             OmniboxFocuser,
                              SnackbarCommands,
+                             ToolbarCommands,
                              UrlLoader>)dispatcher
            safeAreaInset:(UIEdgeInsets)safeAreaInset;
 
