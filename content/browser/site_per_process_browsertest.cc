@@ -858,6 +858,44 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, TitleAfterCrossSiteIframe) {
   EXPECT_EQ(expected_title, entry->GetTitle());
 }
 
+// Test that the physical backing size and view bounds for a scaled out-of-
+// process iframe are set and updated correctly.
+IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, PhysicalBackingSizeTest) {
+  GURL main_url(embedded_test_server()->GetURL(
+      "a.com", "/frame_tree/page_with_scaled_frame.html"));
+  EXPECT_TRUE(NavigateToURL(shell(), main_url));
+
+  FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
+                            ->GetFrameTree()
+                            ->root();
+
+  ASSERT_EQ(1U, root->child_count());
+
+  FrameTreeNode* parent_iframe_node = root->child_at(0);
+
+  EXPECT_EQ(
+      " Site A ------------ proxies for B\n"
+      "   +--Site A ------- proxies for B\n"
+      "        +--Site B -- proxies for A\n"
+      "Where A = http://a.com/\n"
+      "      B = http://baz.com/",
+      DepictFrameTree(root));
+
+  FrameTreeNode* nested_iframe_node = parent_iframe_node->child_at(0);
+  RenderWidgetHostViewBase* rwhv_nested =
+      static_cast<RenderWidgetHostViewBase*>(
+          nested_iframe_node->current_frame_host()
+              ->GetRenderWidgetHost()
+              ->GetView());
+
+  WaitForChildFrameSurfaceReady(nested_iframe_node->current_frame_host());
+
+  // Verify that applying a CSS scale transform does not impact the size of the
+  // content of the nested iframe.
+  EXPECT_EQ(gfx::Size(100, 100), rwhv_nested->GetViewBounds().size());
+  EXPECT_EQ(gfx::Size(100, 100), rwhv_nested->GetPhysicalBackingSize());
+}
+
 // Test that the view bounds for an out-of-process iframe are set and updated
 // correctly, including accounting for local frame offsets in the parent and
 // scroll positions.
@@ -893,7 +931,6 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, ViewBoundsInNestedFrameTest) {
           nested_iframe_node->current_frame_host()
               ->GetRenderWidgetHost()
               ->GetView());
-
   WaitForChildFrameSurfaceReady(nested_iframe_node->current_frame_host());
 
   float scale_factor = GetPageScaleFactor(shell());
