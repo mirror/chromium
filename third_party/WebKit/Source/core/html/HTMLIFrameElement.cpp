@@ -207,6 +207,20 @@ void HTMLIFrameElement::ParseAttribute(
       }
     }
   } else {
+    // Websites picked up a Chromium article that used this non-specified
+    // attribute which ended up changing shape after the specification process.
+    // This error message and use count will help developers to move to the
+    // proper solution.
+    if (name == "gesture" && value == "media") {
+      UseCounter::Count(GetDocument(),
+                        WebFeature::kHTMLIFrameElementGestureMedia);
+      GetDocument().AddConsoleMessage(
+          ConsoleMessage::Create(kJSMessageSource, kErrorMessageLevel,
+                                 "<iframe gesture=\"media\"> is not supported. "
+                                 "Use <iframe allow=\"autoplay\">, "
+                                 "https://goo.gl/ximf56"));
+    }
+
     if (name == srcAttr)
       LogUpdateAttributeIfIsolatedWorldAndInDocument("iframe", params);
     HTMLFrameElementBase::ParseAttribute(params);
