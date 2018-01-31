@@ -16,6 +16,24 @@
       "revId": "3a4ee0f0aeef1c6e03d8772a52efbf9684310826",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed01c66a_67382016",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewChromium.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1147294
+      },
+      "writtenOn": "2018-01-31T08:26:52Z",
+      "side": 0,
+      "message": "Okidoke, I think the easiest thing to do here is to move sRecordWholeDocumentEnabledByApi into AwHolder - that way AwHolder (and more specifically AwHolder.getStatics()) won\u0027t have a dependency on WebViewChromium.",
+      "parentUuid": "77cfe150_96fe31fa",
+      "revId": "3a4ee0f0aeef1c6e03d8772a52efbf9684310826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
