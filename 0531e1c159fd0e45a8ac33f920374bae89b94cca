@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "3a31630f_864eee7d",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/custom/V8HTMLAllCollectionCustom.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2018-01-31T08:39:20Z",
+      "side": 0,
+      "message": "Hmm, I thought this was some old cruft, but was added recently in https://chromium.googlesource.com/chromium/src/+/b37ee32ef76eec4108db8ccdb664279ef3e40ba4. I\u0027ll add it back.",
+      "range": {
+        "startLine": 95,
+        "startChar": 2,
+        "endLine": 95,
+        "endChar": 46
+      },
+      "revId": "0531e1c159fd0e45a8ac33f920374bae89b94cca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e23353a2_ef28e669",
         "filename": "third_party/WebKit/Source/bindings/core/v8/custom/V8HTMLAllCollectionCustom.cpp",
         "patchSetId": 7
