@@ -150,7 +150,7 @@ class BASE_EXPORT ThreadLocalStorage {
     void Set(void* value);
 
    private:
-    StaticSlot tls_slot_;
+    StaticSlot tls_slot_ = TLS_INITIALIZER;
 
     DISALLOW_COPY_AND_ASSIGN(Slot);
   };

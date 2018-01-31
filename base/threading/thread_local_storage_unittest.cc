@@ -7,7 +7,11 @@
 #include <process.h>
 #endif
 
+#include <memory>
+#include <vector>
+
 #include "base/macros.h"
+#include "base/synchronization/waitable_event.h"
 #include "base/threading/simple_thread.h"
 #include "base/threading/thread_local_storage.h"
 #include "build/build_config.h"
@@ -135,6 +139,40 @@ TEST(ThreadLocalStorageTest, TLSReclaim) {
     slot.Set(reinterpret_cast<void*>(0xBAADF00D));
     EXPECT_EQ(reinterpret_cast<void*>(0xBAADF00D), slot.Get());
   }
+}
+
+// Intended for TSAN build runs
+TEST(ThreadLocalStorageTest, NotRacingOnInitialization) {
+  class SlotInitializer : public DelegateSimpleThread::Delegate {
+   public:
+    SlotInitializer(ThreadLocalStorage::StaticSlot* slot,
+                    WaitableEvent* wait_event)
+        : slot_(slot), wait_event_(wait_event) {}
+    void Run() override {
+      wait_event_->Wait();
+      slot_->Initialize(nullptr);
+    }
+
+   private:
+    ThreadLocalStorage::StaticSlot* slot_;
+    WaitableEvent* wait_event_;
+  };
+  ThreadLocalStorage::StaticSlot slot;
+  const int kNumThreads = 2;
+  std::vector<std::unique_ptr<SlotInitializer>> initializers(kNumThreads);
+  std::vector<std::unique_ptr<DelegateSimpleThread>> threads(kNumThreads);
+  WaitableEvent wait_event{WaitableEvent::ResetPolicy::MANUAL,
+                           WaitableEvent::InitialState::NOT_SIGNALED};
+  for (int index = 0; index < kNumThreads; index++) {
+    initializers[index] = std::make_unique<SlotInitializer>(&slot, &wait_event);
+    threads[index] =
+        std::make_unique<DelegateSimpleThread>(initializers[index].get(), "");
+    threads[index]->Start();
+  }
+  wait_event.Signal();
+
+  for (auto& thread : threads)
+    thread->Join();
 }
 
 }  // namespace base

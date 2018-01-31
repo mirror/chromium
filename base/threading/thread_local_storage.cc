@@ -260,26 +260,26 @@ void ThreadLocalStorage::StaticSlot::Initialize(TLSDestructorFunc destructor) {
   }
 
   // Grab a new slot.
+  base::AutoLock auto_lock(*GetTLSMetadataLock());
+  if (initialized())
+    return;
   slot_ = kInvalidSlotValue;
   version_ = 0;
-  {
-    base::AutoLock auto_lock(*GetTLSMetadataLock());
-    for (int i = 0; i < kThreadLocalStorageSize; ++i) {
-      // Tracking the last assigned slot is an attempt to find the next
-      // available slot within one iteration. Under normal usage, slots remain
-      // in use for the lifetime of the process (otherwise before we reclaimed
-      // slots, we would have run out of slots). This makes it highly likely the
-      // next slot is going to be a free slot.
-      size_t slot_candidate =
-          (g_last_assigned_slot + 1 + i) % kThreadLocalStorageSize;
-      if (g_tls_metadata[slot_candidate].status == TlsStatus::FREE) {
-        g_tls_metadata[slot_candidate].status = TlsStatus::IN_USE;
-        g_tls_metadata[slot_candidate].destructor = destructor;
-        g_last_assigned_slot = slot_candidate;
-        slot_ = slot_candidate;
-        version_ = g_tls_metadata[slot_candidate].version;
-        break;
-      }
+  for (int i = 0; i < kThreadLocalStorageSize; ++i) {
+    // Tracking the last assigned slot is an attempt to find the next
+    // available slot within one iteration. Under normal usage, slots remain
+    // in use for the lifetime of the process (otherwise before we reclaimed
+    // slots, we would have run out of slots). This makes it highly likely the
+    // next slot is going to be a free slot.
+    size_t slot_candidate =
+        (g_last_assigned_slot + 1 + i) % kThreadLocalStorageSize;
+    if (g_tls_metadata[slot_candidate].status == TlsStatus::FREE) {
+      g_tls_metadata[slot_candidate].status = TlsStatus::IN_USE;
+      g_tls_metadata[slot_candidate].destructor = destructor;
+      g_last_assigned_slot = slot_candidate;
+      slot_ = slot_candidate;
+      version_ = g_tls_metadata[slot_candidate].version;
+      break;
     }
   }
   CHECK_NE(slot_, kInvalidSlotValue);
