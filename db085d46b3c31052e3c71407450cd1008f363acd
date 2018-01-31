@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9f86c6b_2f4e2c45",
+        "filename": "third_party/WebKit/public/platform/modules/fetch/fetch_api_response.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-31T01:04:17Z",
+      "side": 1,
+      "message": "This would be better in third_party/WebKit/common/fetch, we\u0027re trying to move from public to common.",
+      "revId": "db085d46b3c31052e3c71407450cd1008f363acd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
