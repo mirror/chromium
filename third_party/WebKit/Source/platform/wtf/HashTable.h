@@ -2038,13 +2038,9 @@ struct WeakProcessingHashTableHelper<kWeakHandlingInCollections,
         // At this stage calling trace can make no difference
         // (everything is already traced), but we use the return value
         // to remove things from the collection.
-
-        // FIXME: This should be rewritten so that this can check if the
-        // element is dead without calling trace, which is semantically
-        // not correct to be called in weak processing stage.
-        if (TraceInCollectionTrait<kWeakHandlingInCollections,
-                                   kWeakPointersActWeak, ValueType,
-                                   Traits>::Trace(visitor, *element)) {
+        if (!TraceInCollectionTrait<kWeakHandlingInCollections,
+                                    kWeakPointersActWeak, ValueType,
+                                    Traits>::IsAlive(*element)) {
           table->RegisterModification();
           HashTableType::DeleteBucket(*element);  // Also calls the destructor.
           table->deleted_count_++;
