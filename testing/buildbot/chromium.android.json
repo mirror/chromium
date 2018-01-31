@@ -2171,6 +2171,12 @@
         "test": "base_junit_tests"
       },
       {
+        "test": "cast_base_junit_tests"
+      },
+      {
+        "test": "cast_shell_junit_tests"
+      },
+      {
         "test": "chrome_junit_tests"
       },
       {
@@ -3848,6 +3854,12 @@
     "junit_tests": [
       {
         "test": "base_junit_tests"
+      },
+      {
+        "test": "cast_base_junit_tests"
+      },
+      {
+        "test": "cast_shell_junit_tests"
       },
       {
         "test": "chrome_junit_tests"
