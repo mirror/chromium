@@ -31,6 +31,7 @@
 #include "platform/bindings/V8ThrowException.h"
 #include "platform/exported/WrappedResourceResponse.h"
 #include "platform/loader/SubresourceIntegrity.h"
+#include "platform/loader/cors/CORS.h"
 #include "platform/loader/fetch/FetchUtils.h"
 #include "platform/loader/fetch/ResourceError.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
@@ -753,7 +754,7 @@ void FetchManager::Loader::PerformHTTPFetch() {
                                    : WebURLRequest::ServiceWorkerMode::kAll);
 
   if (request_->Keepalive()) {
-    if (!WebCORS::IsCORSSafelistedMethod(request.HttpMethod()) ||
+    if (!CORS::IsCORSSafelistedMethod(request.HttpMethod()) ||
         !WebCORS::ContainsOnlyCORSSafelistedOrForbiddenHeaders(
             request.HttpHeaderFields())) {
       PerformNetworkError(
