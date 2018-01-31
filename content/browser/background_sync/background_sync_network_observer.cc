@@ -7,7 +7,12 @@
 #include "base/location.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "build/build_config.h"
 #include "content/public/browser/browser_thread.h"
+
+#if defined(OS_ANDROID)
+#include "base/android/build_info.h"
+#endif
 
 namespace content {
 
@@ -38,6 +43,17 @@ BackgroundSyncNetworkObserver::~BackgroundSyncNetworkObserver() {
 bool BackgroundSyncNetworkObserver::NetworkSufficient(
     SyncNetworkState network_state) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+#if defined(OS_ANDROID)
+  // We cannot rely on notifications from the NetworkChangeNotifier on Android
+  // O and later devices when they are in Doze mode. Instead, explicitly update
+  // the |connection_type_| before using it.
+  if (base::android::BuildInfo::GetInstance()->sdk_int() >=
+      base::android::SDK_VERSION_OREO) {
+    NotifyManagerIfNetworkChanged(
+        net::NetworkChangeNotifier::GetConnectionType());
+  }
+#endif
 
   switch (network_state) {
     case NETWORK_STATE_ANY:
