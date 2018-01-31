@@ -45,7 +45,7 @@ namespace {
 char kInterruptReasonCounter[] = {
   0,                                // content::DOWNLOAD_INTERRUPT_REASON_NONE
 #define INTERRUPT_REASON(name,value) 0,
-#include "content/public/browser/download_interrupt_reason_values.h"
+#include "components/download/public/common/download_interrupt_reason_values.h"
 #undef INTERRUPT_REASON
 };
 const size_t kInterruptReasonCount = arraysize(kInterruptReasonCounter);
