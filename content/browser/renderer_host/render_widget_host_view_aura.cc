@@ -2487,10 +2487,4 @@ void RenderWidgetHostViewAura::ResizeDueToAutoResize(const gfx::Size& new_size,
   WasResized(cc::DeadlinePolicy::UseDefaultDeadline());
 }
 
-void RenderWidgetHostViewAura::DidNavigate() {
-  WasResized(cc::DeadlinePolicy::UseExistingDeadline());
-  if (delegated_frame_host_)
-    delegated_frame_host_->DidNavigate();
-}
-
 }  // namespace content

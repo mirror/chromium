@@ -1730,7 +1730,7 @@ void RenderFrameHostImpl::DidCommitProvisionalLoad(
   if (frame_tree_node_->IsMainFrame() && GetView() &&
       !validated_params->was_within_same_document) {
     RenderWidgetHostImpl::From(GetView()->GetRenderWidgetHost())
-        ->DidNavigate(validated_params->content_source_id);
+        ->StartNewContentRenderingTimeout(validated_params->content_source_id);
   }
 }
 

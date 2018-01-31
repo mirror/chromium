@@ -581,23 +581,4 @@ void BrowserCompositorMac::DidReceiveFirstFrameAfterNavigation() {
   client_->DidReceiveFirstFrameAfterNavigation();
 }
 
-void BrowserCompositorMac::BeginPauseForFrame(bool auto_resize_enabled) {
-  repaint_auto_resize_enabled_ = auto_resize_enabled;
-  repaint_state_ = RepaintState::Paused;
-}
-
-void BrowserCompositorMac::EndPauseForFrame() {
-  if (repaint_state_ == RepaintState::ScreenUpdatesDisabled)
-    NSEnableScreenUpdates();
-  repaint_state_ = RepaintState::None;
-}
-
-bool BrowserCompositorMac::ShouldContinueToPauseForFrame() const {
-  if (!recyclable_compositor_)
-    return false;
-
-  return !recyclable_compositor_->accelerated_widget_mac()->HasFrameOfSize(
-      delegated_frame_host_size_dip_);
-}
-
 }  // namespace content
