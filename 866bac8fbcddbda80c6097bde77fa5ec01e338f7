@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "4cc0b86d_15469847",
+        "filename": "extensions/common/api/_permission_features.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-31T00:23:39Z",
+      "side": 1,
+      "message": "can we change it to dev, maybe?",
+      "parentUuid": "e491844b_d3513f25",
+      "revId": "866bac8fbcddbda80c6097bde77fa5ec01e338f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3dd676b8_43b42f19",
         "filename": "extensions/common/api/_permission_features.json",
         "patchSetId": 3
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Our devices are not run in Single App Kiosk Mode, but I can make our App kiosk_enabled. Is that change sufficient to enable kiosk mode here?",
       "parentUuid": "3dd676b8_43b42f19",
+      "revId": "866bac8fbcddbda80c6097bde77fa5ec01e338f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "709a89ad_291f27e1",
+        "filename": "extensions/common/api/_permission_features.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-31T00:23:39Z",
+      "side": 1,
+      "message": "no. that would not make any difference",
+      "parentUuid": "cb5c3817_27ca0c63",
       "revId": "866bac8fbcddbda80c6097bde77fa5ec01e338f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
