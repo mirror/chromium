@@ -31,9 +31,11 @@
 #include "gpu/command_buffer/service/gl_context_virtual.h"
 #include "gpu/command_buffer/service/gles2_cmd_decoder.h"
 #include "gpu/command_buffer/service/gpu_switches.h"
+#include "gpu/command_buffer/service/image_factory.h"
 #include "gpu/command_buffer/service/memory_tracking.h"
 #include "gpu/command_buffer/service/service_utils.h"
 #include "gpu/command_buffer/service/transfer_buffer_manager.h"
+#include "gpu/ipc/service/gpu_memory_buffer_factory.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/gfx/buffer_format_util.h"
 #include "ui/gfx/gpu_memory_buffer.h"
@@ -206,7 +208,9 @@ GpuFeatureInfo GLManager::g_gpu_feature_info;
 
 GLManager::Options::Options() = default;
 
-GLManager::GLManager() {
+GLManager::GLManager()
+    : gpu_memory_buffer_factory_(
+          gpu::GpuMemoryBufferFactory::CreateNativeType()) {
   SetupBaseContext();
 }
 
@@ -459,6 +463,7 @@ void GLManager::Destroy() {
     decoder_->Destroy(have_context);
     decoder_.reset();
   }
+  context_ = nullptr;
 }
 
 const GpuDriverBugWorkarounds& GLManager::workarounds() const {
@@ -494,10 +499,28 @@ int32_t GLManager::CreateImage(ClientBuffer buffer,
     gl_image = image;
   }
 #endif  // defined(OS_MACOSX)
+
+#if defined(OS_LINUX)
+  if (use_native_pixmap_memory_buffers_) {
+    gfx::GpuMemoryBuffer* gpu_memory_buffer =
+        reinterpret_cast<gfx::GpuMemoryBuffer*>(buffer);
+    DCHECK(gpu_memory_buffer);
+    if (gpu_memory_buffer->GetHandle().type == gfx::NATIVE_PIXMAP) {
+      gfx::GpuMemoryBufferHandle handle =
+          gfx::CloneHandleForIPC(gpu_memory_buffer->GetHandle());
+      gfx::BufferFormat format = gpu_memory_buffer->GetFormat();
+      gl_image = gpu_memory_buffer_factory_->AsImageFactory()
+                     ->CreateImageForGpuMemoryBuffer(handle, size, format,
+                                                     internalformat, 0, 0);
+      if (!gl_image)
+        return -1;
+    }
+  }
+#endif  // defined(OS_LINUX)
+
   if (!gl_image) {
     GpuMemoryBufferImpl* gpu_memory_buffer =
         GpuMemoryBufferImpl::FromClientBuffer(buffer);
-
     scoped_refptr<gl::GLImageRefCountedMemory> image(
         new gl::GLImageRefCountedMemory(size, internalformat));
     if (!image->Initialize(gpu_memory_buffer->bytes(),
