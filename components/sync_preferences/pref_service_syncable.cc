@@ -30,17 +30,17 @@ namespace sync_preferences {
 PrefServiceSyncable::PrefServiceSyncable(
     std::unique_ptr<PrefNotifierImpl> pref_notifier,
     std::unique_ptr<PrefValueStore> pref_value_store,
-    PersistentPrefStore* user_prefs,
-    user_prefs::PrefRegistrySyncable* pref_registry,
+    scoped_refptr<PersistentPrefStore> user_prefs,
+    scoped_refptr<user_prefs::PrefRegistrySyncable> pref_registry,
     const PrefModelAssociatorClient* pref_model_associator_client,
     base::Callback<void(PersistentPrefStore::PrefReadError)>
         read_error_callback,
     bool async)
     : PrefService(std::move(pref_notifier),
                   std::move(pref_value_store),
-                  user_prefs,
-                  pref_registry,
-                  read_error_callback,
+                  std::move(user_prefs),
+                  std::move(pref_registry),
+                  std::move(read_error_callback),
                   async),
       pref_service_forked_(false),
       pref_sync_associator_(pref_model_associator_client, syncer::PREFERENCES),
@@ -109,7 +109,7 @@ PrefServiceSyncable* PrefServiceSyncable::CreateIncognitoPrefService(
       std::move(delegate));
   PrefServiceSyncable* incognito_service = new PrefServiceSyncable(
       std::move(pref_notifier), std::move(pref_value_store),
-      incognito_pref_store.get(), forked_registry.get(),
+      std::move(incognito_pref_store), std::move(forked_registry),
       pref_sync_associator_.client(), read_error_callback_, false);
   return incognito_service;
 }
