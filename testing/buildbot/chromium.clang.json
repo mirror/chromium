@@ -7553,9 +7553,6 @@
     ],
     "isolated_scripts": [
       {
-        "args": [
-          "--filter=__main__.ChromeDriverTest.testLoadUrl"
-        ],
         "isolate_name": "chromedriver_py_tests",
         "name": "chromedriver_py_tests",
         "swarming": {
