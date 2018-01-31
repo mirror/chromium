@@ -1099,6 +1099,12 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   // Modifies |node_data| to reflect the current accessible state of this view.
   virtual void GetAccessibleNodeData(ui::AXNodeData* node_data) {}
 
+#if DCHECK_IS_ON()
+  std::string GetConstructorStackForDebugging() {
+    return constructor_stack_for_debugging_;
+  }
+#endif
+
   // Handle a request from assistive technology to perform an action on this
   // view. Returns true on success, but note that the success/failure is
   // not propagated to the client that requested the action, since the
@@ -1708,6 +1714,9 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   // True while iterating over |children_|. Used to detect and DCHECK when
   // |children_| is mutated during iteration.
   mutable bool iterating_;
+
+  // Keep stack trace for constructor.
+  std::string constructor_stack_for_debugging_;
 #endif
 
   bool can_process_events_within_subtree_;

@@ -65,6 +65,10 @@
 #include "ui/native_theme/native_theme_win.h"
 #endif
 
+#if DCHECK_IS_ON()
+#include "base/debug/stack_trace.h"
+#endif
+
 namespace views {
 
 namespace {
@@ -148,6 +152,11 @@ View::View()
       context_menu_controller_(NULL),
       drag_controller_(NULL) {
   SetTargetHandler(this);
+#if DCHECK_IS_ON()
+  const size_t kMaxStackTraceLines = 9;
+  constructor_stack_for_debugging_ =
+      base::debug::StackTrace(kMaxStackTraceLines).ToString();
+#endif
 }
 
 View::~View() {
