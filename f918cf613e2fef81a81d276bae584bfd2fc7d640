@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0488038b_df907b26",
+        "filename": "tools/gn/input_conversion.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-31T20:02:34Z",
+      "side": 1,
+      "message": "I think this should probably be an error like floats are, since GN has no real concept of \"none\".",
+      "revId": "f918cf613e2fef81a81d276bae584bfd2fc7d640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fba09c3e_cbb4b377",
+        "filename": "tools/gn/input_conversion.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-31T20:02:34Z",
+      "side": 1,
+      "message": "I might tweak the wording a bit to say that floats are unsupported and will result in an error (and the same for nulls, if you agree).",
+      "revId": "f918cf613e2fef81a81d276bae584bfd2fc7d640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
