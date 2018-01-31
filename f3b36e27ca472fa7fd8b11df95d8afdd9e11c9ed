@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "823d63fe_6533e8f6",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2018-01-31T15:59:32Z",
+      "side": 1,
+      "message": "I think it\u0027s a good idea to always reserve the first spot, because any default or all-catching case belongs at the start, not in place 4. If we decide to introduce it in the future, we won\u0027t be able to repurpose the first spot. It\u0027s a harmless way of future-proofing our enum against a common path of evolution. WDYT?",
+      "parentUuid": "7230de7d_166cee7f",
+      "range": {
+        "startLine": 279,
+        "startChar": 2,
+        "endLine": 279,
+        "endChar": 9
+      },
+      "revId": "f3b36e27ca472fa7fd8b11df95d8afdd9e11c9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b81f680a_cc2aaa45",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
