@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09f7977d_2a266d1e",
+        "filename": "ash/frame/caption_buttons/frame_caption_button_container_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-31T03:31:19Z",
+      "side": 1,
+      "message": "Nit: Just declare this right where it\u0027s used (see http://google.github.io/styleguide/cppguide.html#Local_Variables ).",
+      "revId": "c26c14f60f6dbbdec10d09ae64f6009b012dd6e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d55cb9f_764f8284",
+        "filename": "ash/frame/frame_header_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-31T03:31:19Z",
+      "side": 1,
+      "message": "Nit: Or\n\n  int y \u003d std::max(0, (header_height - height) / 2);",
+      "revId": "c26c14f60f6dbbdec10d09ae64f6009b012dd6e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74920603_e3a9f4ad",
+        "filename": "ui/base/material_design/material_design_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-31T03:31:19Z",
+      "side": 1,
+      "message": "Nit: Not harmful, but not technically necessary if you don\u0027t end up adding a new mode",
+      "revId": "c26c14f60f6dbbdec10d09ae64f6009b012dd6e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
