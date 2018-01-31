@@ -22,6 +22,30 @@
       "revId": "df9b9b1d81a39642df37035c13949359e9b53057",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c711a6a0_175c6748",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 1429,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-31T15:48:58Z",
+      "side": 1,
+      "message": "ah! Yes it should! Added.\n\nThe dep should be there from the forward_variables_from.",
+      "parentUuid": "74d900a7_452faa0e",
+      "range": {
+        "startLine": 1429,
+        "startChar": 50,
+        "endLine": 1429,
+        "endChar": 62
+      },
+      "revId": "df9b9b1d81a39642df37035c13949359e9b53057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
