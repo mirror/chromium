@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "675d56b5_f19cd5ac",
+        "filename": "chrome/browser/ui/webui/settings/people_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-31T15:29:44Z",
+      "side": 1,
+      "message": "This should be something like:\naccount_tracker_service-\u003eGetAccountImage(account.account_id);\n\nNotes:\n* We do not fire OnAccountUpdated when the image is updated. I\u0027ve told Thomas and he\u0027ll fix this.\n* Note that for now we do not store this information on disk (and it is only fetched once every 24 hours), so this will return empty in most of the cases now.",
+      "range": {
+        "startLine": 475,
+        "startChar": 36,
+        "endLine": 475,
+        "endChar": 44
+      },
+      "revId": "b486483d38af864efdc585a0bf04012e0102cfc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63e98cb8_151f122e",
+        "filename": "chrome/browser/ui/webui/settings/people_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-31T15:29:44Z",
+      "side": 1,
+      "message": "email is a very bad identifier to use (e.g. toto@gmail.com is the same as toto123@gmail.com). Ideally, you should use the AccountInfo::account_id or gaia as identifiers.",
+      "range": {
+        "startLine": 482,
+        "startChar": 20,
+        "endLine": 482,
+        "endChar": 26
+      },
+      "revId": "b486483d38af864efdc585a0bf04012e0102cfc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22ccd016_bbb3d902",
+        "filename": "components/signin/core/browser/account_tracker_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-31T15:29:44Z",
+      "side": 1,
+      "message": "Thanks for cleaning this up.",
+      "revId": "b486483d38af864efdc585a0bf04012e0102cfc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
