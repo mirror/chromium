@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52e5e049_6edaf5bb",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_views.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-01-31T23:03:13Z",
+      "side": 1,
+      "message": "Is LoginDisplayHost: better here? Common is more accurate, but LoginDisplayHost: is perhaps better documentation?",
+      "revId": "41e852cd5e38038bf010c6a9af5f73ec01cfb577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
