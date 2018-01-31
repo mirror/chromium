@@ -1312,19 +1312,43 @@ RenderFrameHostManager::DetermineSiteInstanceForURL(
   }
 
   // Keep subframes in the parent's SiteInstance unless a dedicated process is
-  // required for either the parent or the subframe's destination URL.  This
-  // isn't a strict invariant but rather a heuristic to avoid unnecessary
-  // OOPIFs; see https://crbug.com/711006.  Note that this shouldn't apply to
-  // TopDocumentIsolation, so do this after TDI checks above.
+  // required for either the parent or the subframe's destination URL.
+  // Similarly, keep frames in the opener's SiteInstance unless a dedicated
+  // process is required for the opener or the destination URL.  This isn't a
+  // strict invariant but rather a heuristic to avoid unnecessary OOPIFs (see
+  // https://crbug.com/711006), as well as to avoid breaking scripting in
+  // some OAuth cases (https://crbug.com/807184). Note that this shouldn't
+  // apply to TopDocumentIsolation, so do this after TDI checks above.
+  //
+  // TODO(alexmos): Remove these checks after fixing https://crbug.com/787576.
+  bool dest_url_requires_dedicated_process =
+      SiteInstanceImpl::DoesSiteRequireDedicatedProcess(browser_context,
+                                                        dest_url);
   if (!frame_tree_node_->IsMainFrame()) {
     RenderFrameHostImpl* parent =
         frame_tree_node_->parent()->current_frame_host();
-    bool dest_url_requires_dedicated_process =
-        SiteInstanceImpl::DoesSiteRequireDedicatedProcess(browser_context,
-                                                          dest_url);
     if (!parent->GetSiteInstance()->RequiresDedicatedProcess() &&
         !dest_url_requires_dedicated_process) {
       return SiteInstanceDescriptor(parent->GetSiteInstance());
+    }
+  }
+  if (frame_tree_node_->opener()) {
+    RenderFrameHostImpl* opener =
+        frame_tree_node_->opener()->current_frame_host();
+    // Skip this heuristic for cases with effective URLs, to allow a frame
+    // outside a hosted app to open a popup that swaps to a hosted app.
+    //
+    // TODO(alexmos): This is necessary because hosted apps are currently
+    // excluded from RequiresDedicatedProcess().  Clean this up when this is no
+    // longer the case.  See https://crbug.com/794315 and
+    // https://crbug.com/718516.
+    bool effective_urls_are_used =
+        (SiteInstanceImpl::HasEffectiveURL(browser_context, dest_url) ||
+         SiteInstanceImpl::HasEffectiveURL(
+             browser_context, opener->GetSiteInstance()->original_url()));
+    if (!opener->GetSiteInstance()->RequiresDedicatedProcess() &&
+        !dest_url_requires_dedicated_process && !effective_urls_are_used) {
+      return SiteInstanceDescriptor(opener->GetSiteInstance());
     }
   }
 
