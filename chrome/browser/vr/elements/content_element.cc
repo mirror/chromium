@@ -64,7 +64,6 @@ void ContentElement::Render(UiElementRenderer* renderer,
 
 void ContentElement::OnFocusChanged(bool focused) {
   focused_ = focused;
-  // Calls a callback that'll set editing mode and show the keyboard.
   if (event_handlers_.focus_change)
     event_handlers_.focus_change.Run(focused);
 }
