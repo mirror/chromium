@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e68be0a_ac845b68",
+        "filename": "content/common/p2p_messages.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-31T18:37:19Z",
+      "side": 1,
+      "message": "I don\u0027t think it makes sense to pack socket_id and socket_address together. socket_id is used to identify the P2P socket object on the browser side. socket_address (which should be renamed to \"destination\") is the target socket address, which may change between packets.\nI suggest moving |data| and |socket_address| fields to the P2PPacketInfo and leaving socket_id as is.",
+      "range": {
+        "startLine": 139,
+        "startChar": 4,
+        "endLine": 139,
+        "endChar": 45
+      },
+      "revId": "5378c42c37c3a642b186745d952d586c2b4614c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22e48ae3_54c60ff0",
+        "filename": "content/common/p2p_messages.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-31T18:37:19Z",
+      "side": 1,
+      "message": "move this to P2PPacketInfo?",
+      "range": {
+        "startLine": 140,
+        "startChar": 4,
+        "endLine": 140,
+        "endChar": 32
+      },
+      "revId": "5378c42c37c3a642b186745d952d586c2b4614c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e1ac309_86b098dd",
+        "filename": "content/common/p2p_socket_type.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-31T18:37:19Z",
+      "side": 1,
+      "message": "Suggest renaming it to \"destination\". socket_address is too generic and makes it hard to understand what this field is used for.",
+      "range": {
+        "startLine": 94,
+        "startChar": 18,
+        "endLine": 94,
+        "endChar": 32
+      },
+      "revId": "5378c42c37c3a642b186745d952d586c2b4614c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1f97296_44462a2f",
+        "filename": "content/common/p2p_socket_type.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-31T18:37:19Z",
+      "side": 1,
+      "message": "It carries information about an outgoing packet. No need to enumerate all fields in the top-level struct description (otherwise this comment will be obsolete quickly when new fields are added).",
+      "range": {
+        "startLine": 97,
+        "startChar": 23,
+        "endLine": 97,
+        "endChar": 44
+      },
+      "revId": "5378c42c37c3a642b186745d952d586c2b4614c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
