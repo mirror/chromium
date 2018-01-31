@@ -83,7 +83,14 @@ DefaultGpuHost::~DefaultGpuHost() {
   // posted in the constructor to run InitializeVizMain() has actually run).
   if (gpu_thread_.IsRunning()) {
     viz_main_wait_.Wait();
-    viz_main_impl_->TearDown();
+    base::WaitableEvent wait_gpu(
+        base::WaitableEvent::ResetPolicy::MANUAL,
+        base::WaitableEvent::InitialState::NOT_SIGNALED);
+    gpu_thread_.task_runner()->PostTask(
+        FROM_HERE,
+        base::BindOnce(&viz::VizMainImpl::TearDown,
+                       base::Unretained(viz_main_impl_.get()), &wait_gpu));
+    wait_gpu.Wait();
     gpu_thread_.task_runner()->DeleteSoon(FROM_HERE, std::move(viz_main_impl_));
     gpu_thread_.Stop();
   }

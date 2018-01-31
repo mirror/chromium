@@ -193,7 +193,9 @@ GpuChildThread::GpuChildThread(const ChildThreadImpl::Options& options,
   }
 }
 
-GpuChildThread::~GpuChildThread() {}
+GpuChildThread::~GpuChildThread() {
+  viz_main_.TearDown(nullptr);
+}
 
 void GpuChildThread::Init(const base::Time& process_start_time) {
   viz_main_.gpu_service()->set_start_time(process_start_time);

@@ -78,11 +78,9 @@ class VizMainImpl : public gpu::GpuSandboxHelper, public mojom::VizMain {
   void Bind(mojom::VizMainRequest request);
   void BindAssociated(mojom::VizMainAssociatedRequest request);
 
-  // Calling this from the gpu or compositor thread can lead to crash/deadlock.
-  // So this must be called from a different thread.
-  // TODO(crbug.com/609317): After the process split, we should revisit to make
-  // this cleaner.
-  void TearDown();
+  // Teardown the GPU and compositor thread, to be called from the GPU thread.
+  // When teardown is complete |wait| will be signalled if not null.
+  void TearDown(base::WaitableEvent* wait);
 
   // mojom::VizMain implementation:
   void CreateGpuService(mojom::GpuServiceRequest request,
@@ -101,9 +99,7 @@ class VizMainImpl : public gpu::GpuSandboxHelper, public mojom::VizMain {
   void CreateFrameSinkManagerOnCompositorThread(
       mojom::FrameSinkManagerParamsPtr params);
 
-  void CloseVizMainBindingOnGpuThread(base::WaitableEvent* wait);
   void TearDownOnCompositorThread(base::WaitableEvent* wait);
-  void TearDownOnGpuThread(base::WaitableEvent* wait);
 
   // gpu::GpuSandboxHelper:
   void PreSandboxStartup() override;
