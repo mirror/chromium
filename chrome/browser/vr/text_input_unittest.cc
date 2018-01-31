@@ -12,13 +12,12 @@
 #include "chrome/browser/vr/elements/keyboard.h"
 #include "chrome/browser/vr/elements/text.h"
 #include "chrome/browser/vr/elements/ui_element.h"
-#include "chrome/browser/vr/keyboard_delegate.h"
-#include "chrome/browser/vr/model/camera_model.h"
 #include "chrome/browser/vr/model/model.h"
 #include "chrome/browser/vr/test/animation_utils.h"
 #include "chrome/browser/vr/test/constants.h"
+#include "chrome/browser/vr/test/mock_keyboard_delegate.h"
+#include "chrome/browser/vr/test/mock_text_input_delegate.h"
 #include "chrome/browser/vr/test/ui_test.h"
-#include "chrome/browser/vr/text_input_delegate.h"
 #include "chrome/browser/vr/ui_scene.h"
 #include "chrome/browser/vr/ui_scene_constants.h"
 #include "chrome/browser/vr/ui_scene_creator.h"
@@ -35,40 +34,6 @@ namespace vr {
 namespace {
 constexpr float kFontHeightMeters = 0.050f;
 }
-
-class MockTextInputDelegate : public TextInputDelegate {
- public:
-  MockTextInputDelegate() = default;
-  ~MockTextInputDelegate() override = default;
-
-  MOCK_METHOD1(UpdateInput, void(const TextInputInfo& info));
-  MOCK_METHOD1(RequestFocus, void(int));
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(MockTextInputDelegate);
-};
-
-class MockKeyboardDelegate : public KeyboardDelegate {
- public:
-  MockKeyboardDelegate() = default;
-  ~MockKeyboardDelegate() override = default;
-
-  MOCK_METHOD0(ShowKeyboard, void());
-  MOCK_METHOD0(HideKeyboard, void());
-  MOCK_METHOD1(SetTransform, void(const gfx::Transform&));
-  MOCK_METHOD3(HitTest,
-               bool(const gfx::Point3F&, const gfx::Point3F&, gfx::Point3F*));
-  MOCK_METHOD0(OnBeginFrame, void());
-  MOCK_METHOD1(Draw, void(const CameraModel&));
-  MOCK_METHOD1(OnHoverEnter, void(const gfx::PointF&));
-  MOCK_METHOD0(OnHoverLeave, void());
-  MOCK_METHOD1(OnMove, void(const gfx::PointF&));
-  MOCK_METHOD1(OnButtonDown, void(const gfx::PointF&));
-  MOCK_METHOD1(OnButtonUp, void(const gfx::PointF&));
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(MockKeyboardDelegate);
-};
 
 class TextInputSceneTest : public UiTest {
  public:
@@ -170,8 +135,10 @@ TEST(TextInputTest, HintText) {
   UiScene scene;
 
   auto instance = std::make_unique<TextInput>(
-      kFontHeightMeters, TextInput::OnFocusChangedCallback(),
-      TextInput::OnInputEditedCallback());
+      kFontHeightMeters, TextInput::OnInputEditedCallback());
+  EventHandlers event_handlers;
+  event_handlers.focus_change = TextInput::OnFocusChangedCallback();
+  instance->set_event_handlers(event_handlers);
   instance->SetName(kOmniboxTextField);
   instance->SetSize(1, 0);
   TextInput* element = instance.get();
@@ -191,10 +158,11 @@ TEST(TextInputTest, HintText) {
 
 TEST(TextInputTest, CursorBlinking) {
   UiScene scene;
-
   auto instance = std::make_unique<TextInput>(
-      kFontHeightMeters, TextInput::OnFocusChangedCallback(),
-      TextInput::OnInputEditedCallback());
+      kFontHeightMeters, TextInput::OnInputEditedCallback());
+  EventHandlers event_handlers;
+  event_handlers.focus_change = TextInput::OnFocusChangedCallback();
+  instance->set_event_handlers(event_handlers);
   instance->SetName(kOmniboxTextField);
   instance->SetSize(1, 0);
   TextInput* element = instance.get();
@@ -226,8 +194,10 @@ TEST(TextInputTest, CursorBlinking) {
 // environment.  As of now, much of this is skipped due to lack of a GL context.
 TEST(TextInputTest, CursorPositionUpdatesOnKeyboardInput) {
   auto element = std::make_unique<TextInput>(
-      kFontHeightMeters, TextInput::OnFocusChangedCallback(),
-      TextInput::OnInputEditedCallback());
+      kFontHeightMeters, TextInput::OnInputEditedCallback());
+  EventHandlers event_handlers;
+  event_handlers.focus_change = TextInput::OnFocusChangedCallback();
+  element->set_event_handlers(event_handlers);
 
   TextInputInfo info(base::UTF8ToUTF16("text"));
   info.selection_start = 0;
@@ -247,8 +217,10 @@ TEST(TextInputTest, CursorPositionUpdatesOnKeyboardInput) {
 
 TEST(TextInputTest, CursorPositionUpdatesOnClicks) {
   auto element = std::make_unique<TextInput>(
-      kFontHeightMeters, TextInput::OnFocusChangedCallback(),
-      TextInput::OnInputEditedCallback());
+      kFontHeightMeters, TextInput::OnInputEditedCallback());
+  EventHandlers event_handlers;
+  event_handlers.focus_change = TextInput::OnFocusChangedCallback();
+  element->set_event_handlers(event_handlers);
 
   TextInputInfo info(base::UTF8ToUTF16("text"));
   element->UpdateInput(info);
