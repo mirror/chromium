@@ -8,6 +8,7 @@
 
 #include "base/allocator/allocator_shim.h"
 #include "base/allocator/features.h"
+#include "base/allocator/partition_allocator/partition_alloc.h"
 #include "base/atomicops.h"
 #include "base/debug/alias.h"
 #include "base/debug/stack_trace.h"
@@ -23,7 +24,8 @@ using base::subtle::AtomicWord;
 
 namespace {
 
-const unsigned kSkipAllocatorFrames = 4;
+const uint32_t kSkipBaseAllocatorFrames = 4;
+const uint32_t kSkipPartitionAllocFrames = 2;
 const size_t kDefaultSamplingInterval = 128 * 1024;
 
 bool g_deterministic;
@@ -36,7 +38,8 @@ SamplingNativeHeapProfiler* g_instance;
 
 void* AllocFn(const AllocatorDispatch* self, size_t size, void* context) {
   void* address = self->next->alloc_function(self->next, size, context);
-  SamplingNativeHeapProfiler::MaybeRecordAlloc(address, size);
+  SamplingNativeHeapProfiler::MaybeRecordAlloc(address, size,
+                                               kSkipBaseAllocatorFrames);
   return address;
 }
 
@@ -47,7 +50,8 @@ void* AllocZeroInitializedFn(const AllocatorDispatch* self,
                              void* context) {
   void* address =
       self->next->alloc_zero_initialized_function(self->next, n, size, context);
-  SamplingNativeHeapProfiler::MaybeRecordAlloc(address, n * size);
+  SamplingNativeHeapProfiler::MaybeRecordAlloc(address, n * size,
+                                               kSkipBaseAllocatorFrames);
   return address;
 }
 
@@ -58,7 +62,8 @@ void* AllocAlignedFn(const AllocatorDispatch* self,
                      void* context) {
   void* address =
       self->next->alloc_aligned_function(self->next, alignment, size, context);
-  SamplingNativeHeapProfiler::MaybeRecordAlloc(address, size);
+  SamplingNativeHeapProfiler::MaybeRecordAlloc(address, size,
+                                               kSkipBaseAllocatorFrames);
   return address;
 }
 
@@ -70,7 +75,8 @@ void* ReallocFn(const AllocatorDispatch* self,
   // Note: size == 0 actually performs free.
   SamplingNativeHeapProfiler::MaybeRecordFree(address);
   address = self->next->realloc_function(self->next, address, size, context);
-  SamplingNativeHeapProfiler::MaybeRecordAlloc(address, size);
+  SamplingNativeHeapProfiler::MaybeRecordAlloc(address, size,
+                                               kSkipBaseAllocatorFrames);
   return address;
 }
 
@@ -95,8 +101,10 @@ unsigned BatchMallocFn(const AllocatorDispatch* self,
                        void* context) {
   unsigned num_allocated = self->next->batch_malloc_function(
       self->next, size, results, num_requested, context);
-  for (unsigned i = 0; i < num_allocated; ++i)
-    SamplingNativeHeapProfiler::MaybeRecordAlloc(results[i], size);
+  for (unsigned i = 0; i < num_allocated; ++i) {
+    SamplingNativeHeapProfiler::MaybeRecordAlloc(results[i], size,
+                                                 kSkipBaseAllocatorFrames);
+  }
   return num_allocated;
 }
 
@@ -131,6 +139,15 @@ AllocatorDispatch g_allocator_dispatch = {&AllocFn,
                                           &FreeDefiniteSizeFn,
                                           nullptr};
 
+void PartitionAllocHook(void* address, size_t size, const char*) {
+  SamplingNativeHeapProfiler::MaybeRecordAlloc(address, size,
+                                               kSkipPartitionAllocFrames);
+}
+
+void PartitionFreeHook(void* address) {
+  SamplingNativeHeapProfiler::MaybeRecordFree(address);
+}
+
 }  // namespace
 
 // static
@@ -159,9 +176,13 @@ bool SamplingNativeHeapProfiler::InstallAllocatorHooks() {
   base::allocator::InsertAllocatorDispatch(&g_allocator_dispatch);
 #else
   base::debug::Alias(&g_allocator_dispatch);
-  CHECK(false)
-      << "Can't enable native sampling heap profiler without the shim.";
+  DLOG(WARNING)
+      << "base::allocator shims are not available for memory sampling.";
 #endif  // BUILDFLAG(USE_ALLOCATOR_SHIM)
+
+  base::PartitionAllocHooks::SetAllocationHook(&PartitionAllocHook);
+  base::PartitionAllocHooks::SetFreeHook(&PartitionFreeHook);
+
   return true;
 }
 
@@ -209,7 +230,9 @@ size_t SamplingNativeHeapProfiler::GetNextSampleInterval(size_t interval) {
 }
 
 // static
-void SamplingNativeHeapProfiler::MaybeRecordAlloc(void* address, size_t size) {
+void SamplingNativeHeapProfiler::MaybeRecordAlloc(void* address,
+                                                  size_t size,
+                                                  uint32_t skip_frames) {
   if (UNLIKELY(!base::subtle::NoBarrier_Load(&g_running)))
     return;
 
@@ -235,11 +258,11 @@ void SamplingNativeHeapProfiler::MaybeRecordAlloc(void* address, size_t size) {
   accumulated =
       base::subtle::NoBarrier_AtomicExchange(&g_cumulative_counter, 0);
 
-  g_instance->RecordAlloc(accumulated, size, address, kSkipAllocatorFrames);
+  g_instance->RecordAlloc(accumulated, size, address, skip_frames);
 }
 
 void SamplingNativeHeapProfiler::RecordStackTrace(Sample* sample,
-                                                  unsigned skip_frames) {
+                                                  uint32_t skip_frames) {
   // TODO(alph): Consider using debug::TraceStackFramePointers. It should be
   // somewhat faster than base::debug::StackTrace.
   base::debug::StackTrace trace;
@@ -254,7 +277,7 @@ void SamplingNativeHeapProfiler::RecordStackTrace(Sample* sample,
 void SamplingNativeHeapProfiler::RecordAlloc(size_t total_allocated,
                                              size_t size,
                                              void* address,
-                                             unsigned skip_frames) {
+                                             uint32_t skip_frames) {
   // TODO(alph): It's better to use a recursive mutex and move the check
   // inside the critical section.
   if (entered_.Get())
