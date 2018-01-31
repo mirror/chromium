@@ -167,6 +167,9 @@ SKIP_GN_ISOLATE_MAP_TARGETS = {
   # These are only run on V8 CI.
   'pdfium_test',
   'postmortem-metadata',
+
+  # Downstream tests.
+  'chrome_test_apk',
 }
 
 
