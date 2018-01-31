@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b06f8d4_c0169efd",
+        "filename": "media/mojo/interfaces/cdm_proxy.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-31T17:44:58Z",
+      "side": 1,
+      "message": "I don\u0027t quite understand what this comment means: what does it mean to connect the remote media pipeline and the CdmProxy?",
+      "revId": "4c9e2d75b10bfa6d75f78d698276fcca5241f57d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
