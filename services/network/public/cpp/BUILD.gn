@@ -10,8 +10,10 @@ component("cpp") {
   sources = [
     "cors/cors.cc",
     "cors/cors.h",
-    "cors/cors_url_loader.cc",
-    "cors/cors_url_loader.h",
+    "cors/cors_url_loader.cc",  # TODO(toyoshim): move out from public/
+    "cors/cors_url_loader.h",  # TODO(toyoshim): move out from public/
+    "cors/cors_url_loader_factory.cc",
+    "cors/cors_url_loader_factory.h",
     "features.cc",
     "features.h",
     "ignore_errors_cert_verifier.cc",
@@ -107,6 +109,7 @@ source_set("tests") {
 
   sources = [
     "cors/cors_unittest.cc",
+    "cors/cors_url_loader_unittest.cc",
     "ignore_errors_cert_verifier_unittest.cc",
     "mutable_network_traffic_annotation_tag_struct_traits_unittest.cc",
     "mutable_partial_network_traffic_annotation_tag_struct_traits_unittest.cc",

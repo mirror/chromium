@@ -10,11 +10,9 @@
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/test/scoped_feature_list.h"
-#include "content/network/cors/cors_url_loader_factory.h"
-#include "content/public/common/request_context_type.h"
-#include "content/public/common/resource_type.h"
 #include "net/http/http_request_headers.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
+#include "services/network/public/cpp/cors/cors_url_loader_factory.h"
 #include "services/network/public/cpp/features.h"
 #include "services/network/public/interfaces/url_loader.mojom.h"
 #include "services/network/public/interfaces/url_loader_factory.mojom.h"
@@ -87,7 +85,7 @@ class CORSURLLoaderTest : public testing::Test {
         std::make_unique<TestURLLoaderFactory>();
     test_url_loader_factory_ = factory->GetWeakPtr();
     cors_url_loader_factory_ =
-        std::make_unique<CORSURLLoaderFactory>(std::move(factory));
+        std::make_unique<network::CORSURLLoaderFactory>(std::move(factory));
   }
 
  protected:
@@ -100,8 +98,6 @@ class CORSURLLoaderTest : public testing::Test {
                             const GURL& url,
                             FetchRequestMode fetch_request_mode) {
     network::ResourceRequest request;
-    request.resource_type = RESOURCE_TYPE_IMAGE;
-    request.fetch_request_context_type = REQUEST_CONTEXT_TYPE_IMAGE;
     request.fetch_request_mode = fetch_request_mode;
     request.method = net::HttpRequestHeaders::kGetMethod;
     request.url = url;
@@ -266,6 +262,8 @@ TEST_F(CORSURLLoaderTest,
   EXPECT_EQ(network::mojom::CORSError::kAllowOriginMismatch,
             client().completion_status().cors_error_status->cors_error);
 }
+
+// TODO(toyoshim): Add tests for whitelisted secure origins.
 
 }  // namespace
 }  // namespace content
