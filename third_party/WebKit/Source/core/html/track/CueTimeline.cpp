@@ -188,8 +188,13 @@ void CueTimeline::UpdateActiveCues(double movie_time) {
   // element. (In the other cases, such as explicit seeks, relevant events get
   // fired as part of the overall process of changing the current playback
   // position.)
-  if (!media_element.seeking() && last_seek_time < last_time)
-    media_element.ScheduleTimeupdateEvent(true);
+
+  // DISABLED HERE BECAUSE IT LEADS TO DOUBLE FIRING.
+  // This method is called by HTMLMediaElement::ScheduleTimeupdateEvent which
+  // *also* schedules the periodic timeupdate.
+  // if (!media_element.seeking() && last_seek_time < last_time)
+  //   media_element.ScheduleTimeupdateEvent(true);  // <=== true here means
+  //   is_periodic
 
   // Explicitly cache vector sizes, as their content is constant from here.
   size_t missed_cues_size = missed_cues.size();

@@ -2014,7 +2014,7 @@ void HTMLMediaElement::Seek(double time) {
 }
 
 void HTMLMediaElement::FinishSeek() {
-  BLINK_MEDIA_LOG << "finishSeek(" << (void*)this << ")";
+  LOG(ERROR) << "finishSeek(" << (void*)this << ")";
 
   // 14 - Set the seeking IDL attribute to false.
   seeking_ = false;
@@ -2620,21 +2620,34 @@ void HTMLMediaElement::PlaybackProgressTimerFired(TimerBase*) {
 void HTMLMediaElement::ScheduleTimeupdateEvent(bool periodic_event) {
   // Per spec, consult current playback position to check for changing time.
   double media_time = CurrentPlaybackPosition();
-  TimeTicks now = CurrentTimeTicks();
 
-  bool have_not_recently_fired_timeupdate =
-      (now - last_time_update_event_wall_time_) >= kMaxTimeupdateEventFrequency;
   bool media_time_has_progressed =
       media_time != last_time_update_event_media_time_;
 
-  // Non-periodic timeupdate events must always fire as mandated by the spec,
-  // otherwise we shouldn't fire duplicate periodic timeupdate events when the
-  // movie time hasn't changed.
-  if (!periodic_event ||
-      (have_not_recently_fired_timeupdate && media_time_has_progressed)) {
-    ScheduleEvent(EventTypeNames::timeupdate);
-    last_time_update_event_wall_time_ = now;
-    last_time_update_event_media_time_ = media_time;
+  if (periodic_event && !media_time_has_progressed) {
+    LOG(ERROR) << __func__ << " skipping. no time progress";
+    return;
+  }
+
+  TimeTicks now = CurrentTimeTicks();
+  TimeDelta time_since_last_fire = now - last_time_update_event_wall_time_;
+
+  LOG(ERROR) << __func__ << " (" << time_since_last_fire.InMilliseconds()
+             << " ms since last) " << (periodic_event ? "periodic" : "one-off");
+
+  LOG_IF(ERROR, (periodic_event && time_since_last_fire.InMilliseconds() < 100))
+      << "WOOOOOAH";
+
+  ScheduleEvent(EventTypeNames::timeupdate);
+  last_time_update_event_media_time_ = media_time;
+  last_time_update_event_wall_time_ = now;
+
+  // Ensure periodic event fires 250ms from _this_ event.
+  // Restarting the timer cancels pending callbacks.
+  if (!periodic_event) {
+    LOG(ERROR) << __func__ << " delaying periodic ";
+    playback_progress_timer_.StartRepeating(kMaxTimeupdateEventFrequency,
+                                            FROM_HERE);
   }
 }
 
