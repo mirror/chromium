@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "0f89a530_cff1f282",
+        "filename": "content/browser/cache_storage/cache_storage_dispatcher_host.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-31T23:20:55Z",
+      "side": 1,
+      "message": "nit: bindings_.ReportBadMessage() instead of either of the other two bad message calls?\n(if you use mojo::ReportBadMessage you\u0027ll still need to call the callback to avoid a DCHECK, bindings_.ReportBadMessage closes the pipe for you. I assume that also means this is untested code?)",
+      "revId": "db085d46b3c31052e3c71407450cd1008f363acd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcb8aeee_759ca9cb",
+        "filename": "content/common/cache_storage/cache_storage_struct_traits.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-31T23:20:55Z",
+      "side": 1,
+      "message": "nit: new guidance (https://groups.google.com/a/chromium.org/d/msg/chromium-mojo/pHiKrZqYfmY/oG66JLOiAAAJ) says to call these files _mojom_traits rather than _struct_traits",
+      "revId": "db085d46b3c31052e3c71407450cd1008f363acd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4d31342_580d21ce",
+        "filename": "content/renderer/cache_storage/cache_storage_dispatcher.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-31T23:20:55Z",
+      "side": 1,
+      "message": "nit: naming should be CamelCase with initial capital to match chromium styleguide",
+      "revId": "db085d46b3c31052e3c71407450cd1008f363acd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9f86c6b_2f4e2c45",
         "filename": "third_party/WebKit/public/platform/modules/fetch/fetch_api_response.mojom",
         "patchSetId": 15
