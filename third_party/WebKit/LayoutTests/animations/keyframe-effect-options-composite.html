@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<title>Regression test for KeyframeEffectOptions composite value</title>
+
+<script src="../resources/testharness.js"></script>
+<script src="../resources/testharnessreport.js"></script>
+
+<div id="tester"></div>
+
+<script>
+function disableCSSAdditiveAnimationsForTest(t) {
+  var cssAdditiveAnimationsEnabled = internals.runtimeFlags.cssAdditiveAnimationsEnabled;
+  internals.runtimeFlags.cssAdditiveAnimationsEnabled = false;
+
+  t.add_cleanup(() => {
+    internals.runtimeFlags.cssAdditiveAnimationsEnabled = cssAdditiveAnimationsEnabled;
+  });
+}
+
+function disableWebAnimationsAPIForTest(t) {
+  var webAnimationsAPI = internals.runtimeFlags.webAnimationsAPI;
+  internals.runtimeFlags.webAnimationsAPI = false;
+
+  t.add_cleanup(() => {
+    internals.runtimeFlags.webAnimationsAPI = webAnimationsAPI;
+  });
+}
+
+test(t => {
+  disableCSSAdditiveAnimationsForTest(t);
+  disableWebAnimationsAPIForTest(t);
+
+  const tester = document.getElementById('tester');
+  // These should not throw.
+  tester.animate({ backgroundColor: [ 'red' ] }, { composite: 'replace' });
+  tester.animate({ backgroundColor: [ 'red' ] }, { composite: 'add' });
+  tester.animate({ backgroundColor: [ 'red' ] }, { composite: 'accumulate' });
+}, 'TODO');
+</script>

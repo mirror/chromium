@@ -5,8 +5,37 @@
 #include "core/animation/EffectModel.h"
 
 #include "bindings/core/v8/ExceptionState.h"
+#include "core/animation/KeyframeEffectOptions.h"
+#include "platform/runtime_enabled_features.h"
 
 namespace blink {
+EffectModel::CompositeOperation EffectModel::ExtractCompositeOperation(
+    const KeyframeEffectOptions& options,
+    ExceptionState& exception_state) {
+  LOG(INFO) << "ExtractCompositeOperation: " << options.composite()
+            << ", RuntimeEnabledFeatures::CSSAdditiveAnimationsEnabled(): "
+            << RuntimeEnabledFeatures::CSSAdditiveAnimationsEnabled()
+            << ", RuntimeEnabledFeatures::WebAnimationsAPIEnabled(): "
+            << RuntimeEnabledFeatures::WebAnimationsAPIEnabled();
+  CompositeOperation composite = kCompositeReplace;
+
+  // We have to be careful to keep backwards compatible behavior here. Without
+  // CSSAdditiveAnimations enabled, 'add' should be silently turned into
+  // 'replace'. Without WebAnimationsAPI enabled, 'accumulate' should be
+  // silently turned into 'replace'.
+  if (RuntimeEnabledFeatures::CSSAdditiveAnimationsEnabled() &&
+      options.composite() == "add") {
+    composite = kCompositeAdd;
+  }
+  if (RuntimeEnabledFeatures::WebAnimationsAPIEnabled() &&
+      options.composite() == "accumulate") {
+    exception_state.ThrowTypeError("Invalid composite value: '" +
+                                   options.composite() + "'");
+  }
+
+  return composite;
+}
+
 bool EffectModel::StringToCompositeOperation(String composite_string,
                                              CompositeOperation& result,
                                              ExceptionState* exception_state) {
