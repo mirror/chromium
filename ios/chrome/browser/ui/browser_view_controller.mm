@@ -714,6 +714,10 @@ NSString* const kBrowserViewControllerSnackbarCategory =
 // The webState of the active tab.
 @property(nonatomic, readonly) web::WebState* currentWebState;
 
+// A view that should be superimposed on |self.view| to hide spurious
+// appearances of this view when other views are being presented.
+@property(nonatomic, strong) UIView* spuriousAppearanceMask;
+
 // BVC initialization
 // ------------------
 // If the BVC is initialized with a valid browser state & tab model immediately,
@@ -947,6 +951,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
 // DialogPresenterDelegate property
 @synthesize dialogPresenterDelegateIsPresenting =
     _dialogPresenterDelegateIsPresenting;
+@synthesize spuriousAppearanceMask = _spuriousAppearanceMask;
 
 #pragma mark - Object lifecycle
 
@@ -1647,6 +1652,13 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
 
+  if (self.spuriousAppearanceMask) {
+    self.spuriousAppearanceMask.frame = self.view.bounds;
+    [self.view addSubview:self.spuriousAppearanceMask];
+    self.view.userInteractionEnabled = NO;
+    return;
+  }
+
   self.visible = YES;
 
   // Restore hidden infobars.
@@ -1666,15 +1678,26 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-  self.viewVisible = NO;
-  [self updateDialogPresenterActiveState];
-  [self updateBroadcastState];
-  [[_model currentTab] wasHidden];
-  [_bookmarkInteractionController dismissSnackbar];
-  if (IsIPadIdiom() && _infoBarContainer) {
-    _infoBarContainer->SuspendInfobars();
+  if (!self.spuriousAppearanceMask) {
+    self.viewVisible = NO;
+    [self updateDialogPresenterActiveState];
+    [self updateBroadcastState];
+    [[_model currentTab] wasHidden];
+    [_bookmarkInteractionController dismissSnackbar];
+    if (IsIPadIdiom() && _infoBarContainer) {
+      _infoBarContainer->SuspendInfobars();
+    }
   }
   [super viewWillDisappear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+  // If the view was hidden on appearance, reset its alpha and user interactions
+  // so that the next time it appears it will be visible.
+  if (self.spuriousAppearanceMask) {
+    [self.spuriousAppearanceMask removeFromSuperview];
+    self.viewIfLoaded.userInteractionEnabled = YES;
+  }
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)orient
@@ -1818,27 +1841,21 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     if ([navController.topViewController
             isMemberOfClass:[WelcomeToChromeViewController class]]) {
       self.hideStatusBar = YES;
-
-      // Load view from Launch Screen and add it to window.
+      // Load view from Launch Screen and add use it to mask self.view
+      // appearing and disappearing.
       NSBundle* mainBundle = base::mac::FrameworkBundle();
       NSArray* topObjects =
           [mainBundle loadNibNamed:@"LaunchScreen" owner:self options:nil];
       UIViewController* launchScreenController =
           base::mac::ObjCCastStrict<UIViewController>([topObjects lastObject]);
-      // |launchScreenView| is loaded as an autoreleased object, and is retained
-      // by the |completion| block below.
-      UIView* launchScreenView = launchScreenController.view;
-      launchScreenView.userInteractionEnabled = NO;
-      launchScreenView.frame = self.view.window.bounds;
-      [self.view.window addSubview:launchScreenView];
+      self.spuriousAppearanceMask = launchScreenController.view;
 
       // Replace the completion handler sent to the superclass with one which
-      // removes |launchScreenView| and resets the status bar. If |completion|
-      // exists, it is called from within the new completion handler.
-      __weak BrowserViewController* weakSelf = self;
+      // resets the mask view and status bar. If |completion| exists, it is
+      // called from within the new completion handler.
       finalCompletionHandler = ^{
-        [launchScreenView removeFromSuperview];
-        weakSelf.hideStatusBar = NO;
+        self.spuriousAppearanceMask = nil;
+        self.hideStatusBar = NO;
         if (completion)
           completion();
       };
