@@ -7,6 +7,8 @@
 
 #include <memory>
 
+#include "ash/session/session_controller.h"
+#include "ash/shell.h"
 #include "ash/system/power/power_button_controller.h"
 #include "ash/system/power/tablet_power_button_controller.h"
 #include "ash/test/ash_test_base.h"
@@ -107,6 +109,15 @@ class PowerButtonTestBase : public AshTestBase {
   // off is not ignored since we will ignore the repeated power button up if
   // they come too close.
   void AdvanceClockToAvoidIgnoring();
+
+  // Checks if the screen is locked.
+  bool GetLockedState() {
+    // LockScreen is an async mojo call.
+    SessionController* const session_controller =
+        Shell::Get()->session_controller();
+    session_controller->FlushMojoForTest();
+    return session_controller->IsScreenLocked();
+  }
 
   void set_has_tablet_mode_switch(bool has_tablet_mode_switch) {
     has_tablet_mode_switch_ = has_tablet_mode_switch;

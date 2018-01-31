@@ -156,6 +156,10 @@ const char kForceClamshellPowerButton[] = "force-clamshell-power-button";
 // Whether this device has an internal stylus.
 const char kHasInternalStylus[] = "has-internal-stylus";
 
+// If true, allows showing a no-auth lock screen when the device is in tablet
+// mode and other relevant conditions are met.
+const char kAllowNoAuthLock[] = "allow-no-auth-lock";
+
 // If true, a long press of the power button in tablet mode will show the power
 // button menu.
 const char kShowPowerButtonMenu[] = "show-power-button-menu";

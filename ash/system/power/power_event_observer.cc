@@ -5,7 +5,6 @@
 #include "ash/system/power/power_event_observer.h"
 
 #include "ash/public/cpp/config.h"
-#include "ash/session/session_controller.h"
 #include "ash/shell.h"
 #include "ash/system/tray/system_tray_notifier.h"
 #include "ash/wm/lock_state_controller.h"
@@ -44,10 +43,7 @@ void OnSuspendDisplaysCompleted(const base::Closure& suspend_callback,
 
 }  // namespace
 
-PowerEventObserver::PowerEventObserver()
-    : session_observer_(this),
-      screen_locked_(Shell::Get()->session_controller()->IsScreenLocked()),
-      waiting_for_lock_screen_animations_(false) {
+PowerEventObserver::PowerEventObserver() : session_observer_(this) {
   chromeos::DBusThreadManager::Get()->GetPowerManagerClient()->AddObserver(
       this);
 }
@@ -71,45 +67,44 @@ void PowerEventObserver::OnLockAnimationsComplete() {
 
 void PowerEventObserver::SuspendImminent(
     power_manager::SuspendImminent::Reason reason) {
-  SessionController* controller = Shell::Get()->session_controller();
-
   // This class is responsible for disabling all rendering requests at suspend
-  // time and then enabling them at resume time.  When the
-  // auto-screen-lock pref is not set this is easy to do since
-  // StopRenderingRequests() is just called directly from this function.  If the
-  // auto-screen-lock pref _is_ set, then the suspend needs to be delayed
-  // until the lock screen is fully visible.  While it is sufficient from a
-  // security perspective to block only until the lock screen is ready, which
-  // guarantees that the contents of the user's screen are no longer visible,
-  // this leads to poor UX on the first resume since neither the user pod nor
-  // the header bar will be visible for a few hundred milliseconds until the GPU
-  // process starts rendering again.  To deal with this, the suspend is delayed
-  // until all the lock screen animations have completed and the suspend request
-  // is unblocked from OnLockAnimationsComplete().
-  if (!screen_locked_ && controller->ShouldLockScreenAutomatically() &&
-      controller->CanLockScreen()) {
+  // time and then enabling them at resume time. If the lock screen won't be
+  // shown, this is easy to do since StopRenderingRequests() is just called
+  // directly from this function. If the lock screen will be shown, then the
+  // suspend needs to be delayed until the lock screen is fully visible.
+  //
+  // While it is sufficient from a security perspective to block only until the
+  // lock screen is ready (which guarantees that the contents of the user's
+  // screen are no longer visible), this leads to poor UX on the first resume
+  // since neither the user pod nor the header bar will be visible for a few
+  // hundred milliseconds until the GPU process starts rendering again. To deal
+  // with this, the suspend is delayed until all the lock screen animations have
+  // completed and suspend request is unblocked from OnLockAnimationsComplete().
+  if (Shell::Get()->lock_state_controller()->ShouldLockUponSuspending()) {
     screen_lock_callback_ = chromeos::DBusThreadManager::Get()
                                 ->GetPowerManagerClient()
                                 ->GetSuspendReadinessCallback(FROM_HERE);
     VLOG(1) << "Requesting screen lock from PowerEventObserver";
-    // TODO(warx): once crbug.com/748732 is fixed, we probably can treat
-    // auto-screen-lock pref set and not set cases as the same. Also remove
-    // |waiting_for_lock_screen_animations_|.
-    Shell::Get()->lock_state_controller()->LockWithoutAnimation();
+    Shell::Get()->lock_state_controller()->RequestLockUponSuspending();
   } else if (waiting_for_lock_screen_animations_) {
-    // The auto-screen-lock pref has been set and the lock screen is ready
-    // but the animations have not completed yet.  This can happen if a suspend
+    // |waiting_for_lock_screen_animations_| is true when the lock screen is
+    // ready
+    // but the animations have not completed yet. This can happen if a suspend
     // request is canceled after the lock screen is ready but before the
     // animations have completed and then another suspend request is immediately
-    // started.  In practice, it is highly unlikely that this will ever happen
+    // started. In practice, it is highly unlikely that this will ever happen,
     // but it's better to be safe since the cost of not dealing with it properly
     // is a memory leak in the GPU and weird artifacts on the screen.
+    //
+    // TODO(warx): We probably can treat the cases of showing/not showing the
+    // lock screen in the same way. Also remove
+    // |waiting_for_lock_screen_animations_|.
     screen_lock_callback_ = chromeos::DBusThreadManager::Get()
                                 ->GetPowerManagerClient()
                                 ->GetSuspendReadinessCallback(FROM_HERE);
   } else {
-    // The auto-screen-lock pref is not set or the screen has already been
-    // locked and the animations have completed.  Rendering can be stopped now.
+    // The lock screen won't be shown, or it's already shown with completed
+    // animations. Rendering can be stopped now.
     StopRenderingRequests();
   }
 
@@ -132,6 +127,7 @@ void PowerEventObserver::SuspendDone(const base::TimeDelta& sleep_duration) {
   if (Shell::GetAshConfig() != Config::MASH)
     Shell::Get()->display_configurator()->ResumeDisplays();
   Shell::Get()->system_tray_notifier()->NotifyRefreshClock();
+  Shell::Get()->lock_state_controller()->OnSuspendDone();
 
   // If the suspend request was being blocked while waiting for the lock
   // animation to complete, clear the blocker since the suspend has already
@@ -143,20 +139,17 @@ void PowerEventObserver::SuspendDone(const base::TimeDelta& sleep_duration) {
 }
 
 void PowerEventObserver::OnLockStateChanged(bool locked) {
-  if (locked) {
-    screen_locked_ = true;
-    waiting_for_lock_screen_animations_ = true;
+  if (!locked)
+    return;
 
-    // The screen is now locked but the pending suspend, if any, will be blocked
-    // until all the animations have completed.
-    if (!screen_lock_callback_.is_null()) {
-      VLOG(1) << "Screen locked due to suspend";
-    } else {
-      VLOG(1) << "Screen locked without suspend";
-    }
-  } else {
-    screen_locked_ = false;
-  }
+  waiting_for_lock_screen_animations_ = true;
+
+  // The screen is now locked but the pending suspend, if any, will be blocked
+  // until all the animations have completed.
+  if (!screen_lock_callback_.is_null())
+    VLOG(1) << "Screen locked due to suspend";
+  else
+    VLOG(1) << "Screen locked without suspend";
 }
 
 }  // namespace ash

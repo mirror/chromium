@@ -31,6 +31,8 @@ class PowerEventObserverTest : public AshTestBase {
   void SetUp() override {
     AshTestBase::SetUp();
     observer_.reset(new PowerEventObserver());
+    lock_state_test_api_ = std::make_unique<LockStateControllerTestApi>(
+        Shell::Get()->lock_state_controller());
   }
 
   void TearDown() override {
@@ -58,6 +60,7 @@ class PowerEventObserverTest : public AshTestBase {
   }
 
   std::unique_ptr<PowerEventObserver> observer_;
+  std::unique_ptr<LockStateControllerTestApi> lock_state_test_api_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(PowerEventObserverTest);
@@ -70,8 +73,7 @@ TEST_F(PowerEventObserverTest, LockBeforeSuspend) {
 
   // Check that the observer requests a suspend-readiness callback when it hears
   // that the system is about to suspend.
-  SetCanLockScreen(true);
-  SetShouldLockScreenAutomatically(true);
+  lock_state_test_api_->set_should_lock_upon_suspending(true);
   observer_->SuspendImminent(power_manager::SuspendImminent_Reason_OTHER);
   EXPECT_EQ(1, client->GetNumPendingSuspendReadinessCallbacks());
 
@@ -81,18 +83,9 @@ TEST_F(PowerEventObserverTest, LockBeforeSuspend) {
   observer_->OnLockAnimationsComplete();
   EXPECT_EQ(0, client->GetNumPendingSuspendReadinessCallbacks());
 
-  // If the system is already locked, no callback should be requested.
+  // It shouldn't request a callback if it isn't instructed to lock the screen.
   observer_->SuspendDone(base::TimeDelta());
-  UnblockUserSession();
-  BlockUserSession(BLOCKED_BY_LOCK_SCREEN);
-  observer_->OnLockAnimationsComplete();
-  observer_->SuspendImminent(power_manager::SuspendImminent_Reason_OTHER);
-  EXPECT_EQ(0, client->GetNumPendingSuspendReadinessCallbacks());
-
-  // It also shouldn't request a callback if it isn't instructed to lock the
-  // screen.
-  observer_->SuspendDone(base::TimeDelta());
-  SetShouldLockScreenAutomatically(false);
+  lock_state_test_api_->set_should_lock_upon_suspending(false);
   observer_->SuspendImminent(power_manager::SuspendImminent_Reason_OTHER);
   EXPECT_EQ(0, client->GetNumPendingSuspendReadinessCallbacks());
 }
@@ -108,8 +101,7 @@ TEST_F(PowerEventObserverTest, SetInvisibleBeforeSuspend) {
 
   // Tests that all the Compositors are marked invisible _after_ the screen lock
   // animations have completed.
-  SetCanLockScreen(true);
-  SetShouldLockScreenAutomatically(true);
+  lock_state_test_api_->set_should_lock_upon_suspending(true);
 
   observer_->SuspendImminent(power_manager::SuspendImminent_Reason_OTHER);
   EXPECT_EQ(1, GetNumVisibleCompositors());
@@ -127,8 +119,7 @@ TEST_F(PowerEventObserverTest, SetInvisibleBeforeSuspend) {
 TEST_F(PowerEventObserverTest, CanceledSuspend) {
   // Tests that the Compositors are not marked invisible if a suspend is
   // canceled or the system resumes before the lock screen is ready.
-  SetCanLockScreen(true);
-  SetShouldLockScreenAutomatically(true);
+  lock_state_test_api_->set_should_lock_upon_suspending(true);
   observer_->SuspendImminent(power_manager::SuspendImminent_Reason_OTHER);
   EXPECT_EQ(1, GetNumVisibleCompositors());
 
@@ -149,8 +140,7 @@ TEST_F(PowerEventObserverTest, DelayResuspendForLockAnimations) {
   //
   // In this case, the observer should block the second suspend request until
   // the animations have completed.
-  SetCanLockScreen(true);
-  SetShouldLockScreenAutomatically(true);
+  lock_state_test_api_->set_should_lock_upon_suspending(true);
 
   chromeos::PowerManagerClient* client =
       chromeos::DBusThreadManager::Get()->GetPowerManagerClient();
@@ -176,17 +166,13 @@ TEST_F(PowerEventObserverTest, DelayResuspendForLockAnimations) {
 // are immediate.
 TEST_F(PowerEventObserverTest, ImmediateLockAnimations) {
   TestSessionStateAnimator* test_animator = new TestSessionStateAnimator;
-  LockStateController* lock_state_controller =
-      Shell::Get()->lock_state_controller();
-  lock_state_controller->set_animator_for_test(test_animator);
-  LockStateControllerTestApi lock_state_test_api(lock_state_controller);
-  SetCanLockScreen(true);
-  SetShouldLockScreenAutomatically(true);
+  lock_state_test_api_->set_animator(test_animator);
+  lock_state_test_api_->set_should_lock_upon_suspending(true);
   ASSERT_FALSE(GetLockedState());
 
   observer_->SuspendImminent(power_manager::SuspendImminent_Reason_OTHER);
   // Tests that locking animation starts.
-  EXPECT_TRUE(lock_state_test_api.is_animating_lock());
+  EXPECT_TRUE(lock_state_test_api_->is_animating_lock());
 
   // Tests that we have two active animation containers for pre-lock animation,
   // which are non lock screen containers and shelf container.
@@ -202,7 +188,7 @@ TEST_F(PowerEventObserverTest, ImmediateLockAnimations) {
 
   // Flushes locking screen async request to start post-lock animation.
   EXPECT_TRUE(GetLockedState());
-  EXPECT_TRUE(lock_state_test_api.is_animating_lock());
+  EXPECT_TRUE(lock_state_test_api_->is_animating_lock());
   // Tests that we have two active animation container for post-lock animation,
   // which are lock screen containers and shelf container.
   EXPECT_EQ(2u, test_animator->GetAnimationCount());
@@ -216,7 +202,7 @@ TEST_F(PowerEventObserverTest, ImmediateLockAnimations) {
   test_animator->Advance(test_animator->GetDuration(
       SessionStateAnimator::ANIMATION_SPEED_IMMEDIATE));
   EXPECT_EQ(0u, test_animator->GetAnimationCount());
-  EXPECT_FALSE(lock_state_test_api.is_animating_lock());
+  EXPECT_FALSE(lock_state_test_api_->is_animating_lock());
 }
 
 }  // namespace ash

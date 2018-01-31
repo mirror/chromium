@@ -74,7 +74,7 @@ class LockStateControllerTest : public PowerButtonTestBase {
     InitPowerButtonControllerMembers(false /* SendAccelerometerUpdate */);
 
     test_animator_ = new TestSessionStateAnimator;
-    lock_state_controller_->set_animator_for_test(test_animator_);
+    lock_state_test_api_->set_animator(test_animator_);
     lock_state_test_api_->set_shutdown_controller(&test_shutdown_controller_);
 
     a11y_controller_ = Shell::Get()->accessibility_controller();
@@ -1073,6 +1073,123 @@ TEST_F(LockStateControllerTest, TouchscreenUnableWhileScreenOff) {
   power_manager_client_->SendBrightnessChanged(0, false /* user_initiated */);
   EXPECT_TRUE(Shell::Get()->touch_devices_controller()->GetTouchscreenEnabled(
       TouchscreenEnabledSource::GLOBAL));
+}
+
+// Verifies the conditions of requesting an auth lock screen upon suspending.
+TEST_F(LockStateControllerTest, ShouldRequestAuthLockUponSuspending) {
+  // Verify that |ShouldRequestAuthLockUponSuspending| is true when all the
+  // conditions are met.
+  UnblockUserSession();
+  SetCanLockScreen(true);
+  SetShouldLockScreenAutomatically(true);
+  EXPECT_TRUE(lock_state_test_api_->should_request_auth_lock_upon_suspending());
+
+  // Verify that |ShouldRequestAuthLockUponSuspending| is false when any of the
+  // conditions are not met.
+  BlockUserSession(BLOCKED_BY_LOCK_SCREEN);
+  EXPECT_FALSE(
+      lock_state_test_api_->should_request_auth_lock_upon_suspending());
+
+  UnblockUserSession();
+  SetCanLockScreen(false);
+  SetShouldLockScreenAutomatically(true);
+  EXPECT_FALSE(
+      lock_state_test_api_->should_request_auth_lock_upon_suspending());
+
+  SetCanLockScreen(true);
+  SetShouldLockScreenAutomatically(false);
+  EXPECT_FALSE(
+      lock_state_test_api_->should_request_auth_lock_upon_suspending());
+}
+
+// Verifies the conditions of requesting a no-auth lock screen upon suspending.
+TEST_F(LockStateControllerTest, ShouldRequestNoAuthLockUponSuspending) {
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kAllowNoAuthLock);
+
+  // Verify that |ShouldRequestNoAuthLockUponSuspending| is true when all the
+  // conditions are met.
+  UnblockUserSession();
+  SetCanLockScreen(true);
+  SetShouldLockScreenAutomatically(false);
+  EnableTabletMode(true);
+  EXPECT_TRUE(
+      lock_state_test_api_->should_request_no_auth_lock_upon_suspending());
+
+  // Verify that |ShouldRequestNoAuthLockUponSuspending| is false when any of
+  // the conditions are not met.
+  BlockUserSession(BLOCKED_BY_LOCK_SCREEN);
+  EXPECT_FALSE(
+      lock_state_test_api_->should_request_no_auth_lock_upon_suspending());
+
+  UnblockUserSession();
+  SetCanLockScreen(false);
+  SetShouldLockScreenAutomatically(false);
+  EnableTabletMode(true);
+  EXPECT_FALSE(
+      lock_state_test_api_->should_request_no_auth_lock_upon_suspending());
+
+  SetCanLockScreen(true);
+  SetShouldLockScreenAutomatically(true);
+  EnableTabletMode(true);
+  EXPECT_FALSE(
+      lock_state_test_api_->should_request_no_auth_lock_upon_suspending());
+
+  SetCanLockScreen(true);
+  SetShouldLockScreenAutomatically(false);
+  EnableTabletMode(false);
+  EXPECT_FALSE(
+      lock_state_test_api_->should_request_no_auth_lock_upon_suspending());
+}
+
+// Verifies |RequestLockUponSuspending| will lock the screen when the conditions
+// are met.
+TEST_F(LockStateControllerTest, RequestLockUponSuspending) {
+  // Verify that |RequestLockUponSuspending| will lock the screen when
+  // |ShouldRequestAuthLockUponSuspending| is true, but |expecting_no_auth_lock|
+  // should be still false since it's a regular lock request.
+  UnblockUserSession();
+  SetCanLockScreen(true);
+  SetShouldLockScreenAutomatically(true);
+  EXPECT_TRUE(lock_state_test_api_->should_request_auth_lock_upon_suspending());
+  EXPECT_FALSE(
+      lock_state_test_api_->should_request_no_auth_lock_upon_suspending());
+
+  lock_state_controller_->RequestLockUponSuspending();
+  EXPECT_TRUE(GetLockedState());
+  EXPECT_FALSE(lock_state_test_api_->expecting_no_auth_lock());
+  test_animator_->CompleteAllAnimations(true);
+
+  // Verify that |RequestLockUponSuspending| will lock the screen when
+  // |ShouldRequestNoAuthLockUponSuspending| is true, and
+  // |expecting_no_auth_lock| is set to true since it's a no-auth lock request.
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kAllowNoAuthLock);
+  UnblockUserSession();
+  SetCanLockScreen(true);
+  SetShouldLockScreenAutomatically(false);
+  EnableTabletMode(true);
+  EXPECT_TRUE(
+      lock_state_test_api_->should_request_no_auth_lock_upon_suspending());
+  EXPECT_FALSE(
+      lock_state_test_api_->should_request_auth_lock_upon_suspending());
+
+  lock_state_controller_->RequestLockUponSuspending();
+  EXPECT_TRUE(GetLockedState());
+  EXPECT_TRUE(lock_state_test_api_->expecting_no_auth_lock());
+  test_animator_->CompleteAllAnimations(true);
+
+  // Verify that |expecting_no_auth_lock| is reset when the suspend is done.
+  lock_state_controller_->OnSuspendDone();
+  EXPECT_FALSE(lock_state_test_api_->expecting_no_auth_lock());
+
+  // Verify that |RequestLockUponSuspending| is a no-op when neither set of
+  // conditions are met.
+  UnblockUserSession();
+  SetCanLockScreen(false);
+  lock_state_controller_->RequestLockUponSuspending();
+  EXPECT_FALSE(GetLockedState());
+  EXPECT_FALSE(lock_state_test_api_->expecting_no_auth_lock());
 }
 
 }  // namespace ash

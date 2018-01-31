@@ -8,7 +8,6 @@
 #include "ash/accessibility/test_accessibility_controller_client.h"
 #include "ash/media_controller.h"
 #include "ash/public/cpp/ash_switches.h"
-#include "ash/session/session_controller.h"
 #include "ash/shell.h"
 #include "ash/system/power/power_button_test_base.h"
 #include "ash/system/power/tablet_power_button_controller_test_api.h"
@@ -56,14 +55,6 @@ class TabletPowerButtonControllerTest : public PowerButtonTestBase {
   }
 
  protected:
-  bool GetLockedState() {
-    // LockScreen is an async mojo call.
-    SessionController* const session_controller =
-        Shell::Get()->session_controller();
-    session_controller->FlushMojoForTest();
-    return session_controller->IsScreenLocked();
-  }
-
   bool GetGlobalTouchscreenEnabled() const {
     return Shell::Get()->touch_devices_controller()->GetTouchscreenEnabled(
         TouchscreenEnabledSource::GLOBAL);
@@ -556,7 +547,7 @@ TEST_F(TabletPowerButtonControllerTest, SuspendDoneStopsForcingOff) {
 // are immediate.
 TEST_F(TabletPowerButtonControllerTest, ImmediateLockAnimations) {
   TestSessionStateAnimator* test_animator = new TestSessionStateAnimator;
-  lock_state_controller_->set_animator_for_test(test_animator);
+  lock_state_test_api_->set_animator(test_animator);
   Initialize(ButtonType::NORMAL, LoginStatus::USER);
   SetShouldLockScreenAutomatically(true);
   ASSERT_FALSE(GetLockedState());

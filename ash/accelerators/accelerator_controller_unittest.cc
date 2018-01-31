@@ -1014,11 +1014,14 @@ class PreferredReservedAcceleratorsTest : public AshTestBase {
   // AshTestBase:
   void SetUp() override {
     AshTestBase::SetUp();
-    Shell::Get()->lock_state_controller()->set_animator_for_test(
-        new TestSessionStateAnimator);
+    lock_state_test_api_ = std::make_unique<LockStateControllerTestApi>(
+        Shell::Get()->lock_state_controller());
+    lock_state_test_api_->set_animator(new TestSessionStateAnimator);
   }
 
  private:
+  std::unique_ptr<LockStateControllerTestApi> lock_state_test_api_;
+
   DISALLOW_COPY_AND_ASSIGN(PreferredReservedAcceleratorsTest);
 };
 

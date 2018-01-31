@@ -10,6 +10,7 @@
 
 #include "ash/accessibility/accessibility_controller.h"
 #include "ash/cancel_mode.h"
+#include "ash/public/cpp/ash_switches.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/public/interfaces/shutdown.mojom.h"
 #include "ash/session/session_controller.h"
@@ -21,6 +22,7 @@
 #include "ash/wallpaper/wallpaper_controller.h"
 #include "ash/wm/session_state_animator.h"
 #include "ash/wm/session_state_animator_impl.h"
+#include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/command_line.h"
@@ -134,12 +136,32 @@ void LockStateController::LockWithoutAnimation() {
   Shell::Get()->session_controller()->LockScreen();
 }
 
+bool LockStateController::ShouldLockUponSuspending() {
+  return should_lock_upon_suspending_for_testing_ ||
+         ShouldRequestAuthLockUponSuspending() ||
+         ShouldRequestNoAuthLockUponSuspending();
+}
+
+void LockStateController::RequestLockUponSuspending() {
+  if (!ShouldLockUponSuspending())
+    return;
+
+  if (ShouldRequestNoAuthLockUponSuspending())
+    expecting_no_auth_lock_ = true;
+
+  LockWithoutAnimation();
+}
+
 bool LockStateController::LockRequested() {
   return lock_fail_timer_.IsRunning();
 }
 
 bool LockStateController::ShutdownRequested() {
   return shutting_down_;
+}
+
+bool LockStateController::ExpectingNoAuthLock() {
+  return expecting_no_auth_lock_;
 }
 
 bool LockStateController::CanCancelLockAnimation() {
@@ -263,6 +285,26 @@ void LockStateController::OnLockStateChanged(bool locked) {
   }
 }
 
+bool LockStateController::ShouldRequestAuthLockUponSuspending() {
+  return !system_is_locked_ &&
+         Shell::Get()->session_controller()->ShouldLockScreenAutomatically() &&
+         Shell::Get()->session_controller()->CanLockScreen();
+}
+
+bool LockStateController::ShouldRequestNoAuthLockUponSuspending() {
+  // The lock request should have the no-auth type if the device is in tablet
+  // mode, and |ShouldLockScreenAutomatically| is false (otherwise, the user
+  // is expecting a regular lock screen with auth methods).
+  return !system_is_locked_ &&
+         base::CommandLine::ForCurrentProcess()->HasSwitch(
+             switches::kAllowNoAuthLock) &&
+         !Shell::Get()->session_controller()->ShouldLockScreenAutomatically() &&
+         Shell::Get()->session_controller()->CanLockScreen() &&
+         Shell::Get()
+             ->tablet_mode_controller()
+             ->IsTabletModeWindowManagerEnabled();
+}
+
 void LockStateController::OnLockFailTimeout() {
   UMA_HISTOGRAM_LOCK_TIMES("Ash.WindowManager.Lock.Timeout",
                            lock_duration_timer_->Elapsed());
@@ -347,6 +389,10 @@ void LockStateController::StartCancellableShutdownAnimation() {
       SessionStateAnimator::ANIMATION_GRAYSCALE_BRIGHTNESS,
       SessionStateAnimator::ANIMATION_SPEED_SHUTDOWN);
   StartPreShutdownAnimationTimer();
+}
+
+void LockStateController::OnSuspendDone() {
+  expecting_no_auth_lock_ = false;
 }
 
 void LockStateController::StartImmediatePreLockAnimation(

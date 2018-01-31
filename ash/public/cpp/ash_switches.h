@@ -16,6 +16,7 @@ namespace switches {
 
 // Please keep alphabetized.
 // TODO(sky): fix order!
+ASH_PUBLIC_EXPORT extern const char kAllowNoAuthLock[];
 ASH_PUBLIC_EXPORT extern const char kAshConstrainPointerToRoot[];
 ASH_PUBLIC_EXPORT extern const char kAshDebugShortcuts[];
 ASH_PUBLIC_EXPORT extern const char kAshDeveloperShortcuts[];

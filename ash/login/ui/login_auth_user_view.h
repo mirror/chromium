@@ -38,6 +38,8 @@ class ASH_EXPORT LoginAuthUserView : public NonAccessibleView {
 
     LoginUserView* user_view() const;
     LoginPasswordView* password_view() const;
+    LoginPinView* pin_view() const;
+    View* swipe_view() const;
 
    private:
     LoginAuthUserView* const view_;
@@ -49,6 +51,7 @@ class ASH_EXPORT LoginAuthUserView : public NonAccessibleView {
     AUTH_PASSWORD = 1 << 0,  // Display password.
     AUTH_PIN = 1 << 1,       // Display PIN keyboard.
     AUTH_TAP = 1 << 2,       // Tap to unlock.
+    AUTH_SWIPE = 1 << 3,     // Swipe to unlock.
   };
 
   using OnAuthCallback = base::Callback<void(bool auth_success)>;
@@ -113,10 +116,11 @@ class ASH_EXPORT LoginAuthUserView : public NonAccessibleView {
   // bool has_tap = HasAuthMethod(AUTH_TAP).
   bool HasAuthMethod(AuthMethods auth_method) const;
 
-  AuthMethods auth_methods_ = AUTH_NONE;
+  AuthMethods auth_methods_;
   LoginUserView* user_view_ = nullptr;
   LoginPasswordView* password_view_ = nullptr;
   LoginPinView* pin_view_ = nullptr;
+  View* swipe_view_ = nullptr;
   const OnAuthCallback on_auth_;
   const LoginUserView::OnTap on_tap_;
 

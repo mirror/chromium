@@ -18,6 +18,7 @@
 #include "ash/public/cpp/login_constants.h"
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
+#include "ash/wm/lock_state_controller.h"
 #include "base/strings/utf_string_conversions.h"
 #include "components/user_manager/user.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -94,6 +95,14 @@ LoginPasswordView* LoginAuthUserView::TestApi::password_view() const {
   return view_->password_view_;
 }
 
+LoginPinView* LoginAuthUserView::TestApi::pin_view() const {
+  return view_->pin_view_;
+}
+
+views::View* LoginAuthUserView::TestApi::swipe_view() const {
+  return view_->swipe_view_;
+}
+
 LoginAuthUserView::LoginAuthUserView(
     const mojom::LoginUserInfoPtr& user,
     const OnAuthCallback& on_auth,
@@ -129,6 +138,9 @@ LoginAuthUserView::LoginAuthUserView(
                  base::Unretained(pin_view_)),
       on_easy_unlock_icon_hovered, on_easy_unlock_icon_tapped);
 
+  // TODO(wzang): Change |swipe_view_| to match spec.
+  swipe_view_ = new View();
+
   // Child views animate outside view bounds.
   SetPaintToLayer(ui::LayerType::LAYER_NOT_DRAWN);
 
@@ -142,6 +154,7 @@ LoginAuthUserView::LoginAuthUserView(
   AddChildView(password_view_);
   AddChildView(wrapped_pin_view);
   AddChildView(wrapped_user_view);
+  AddChildView(swipe_view_);
 
   // Use views::GridLayout instead of views::BoxLayout because views::BoxLayout
   // lays out children according to the view->children order.
@@ -166,8 +179,12 @@ LoginAuthUserView::LoginAuthUserView(
   add_padding(kDistanceBetweenPasswordFieldAndPinKeyboard);
   add_view(wrapped_pin_view);
   add_padding(kDistanceFromPinKeyboardToBigUserViewBottom);
+  add_view(swipe_view_);
 
   // Update authentication UI.
+  auth_methods_ = Shell::Get()->lock_state_controller()->ExpectingNoAuthLock()
+                      ? AUTH_SWIPE
+                      : AUTH_NONE;
   SetAuthMethods(auth_methods_);
   user_view_->UpdateForUser(user, false /*animate*/);
 }
@@ -175,10 +192,14 @@ LoginAuthUserView::LoginAuthUserView(
 LoginAuthUserView::~LoginAuthUserView() = default;
 
 void LoginAuthUserView::SetAuthMethods(uint32_t auth_methods) {
-  auth_methods_ = static_cast<AuthMethods>(auth_methods);
+  // |auth_methods| is ignored if the current auth method is AUTH_SWIPE.
+  if (auth_methods_ != AUTH_SWIPE)
+    auth_methods_ = static_cast<AuthMethods>(auth_methods);
+
   bool has_password = HasAuthMethod(AUTH_PASSWORD);
   bool has_pin = HasAuthMethod(AUTH_PIN);
   bool has_tap = HasAuthMethod(AUTH_TAP);
+  bool has_swipe = HasAuthMethod(AUTH_SWIPE);
 
   password_view_->SetEnabled(has_password);
   password_view_->SetFocusEnabledForChildViews(has_password);
@@ -200,6 +221,8 @@ void LoginAuthUserView::SetAuthMethods(uint32_t auth_methods) {
     password_view_->SetPlaceholderText(
         l10n_util::GetStringUTF16(IDS_ASH_LOGIN_POD_PASSWORD_PLACEHOLDER));
   }
+
+  swipe_view_->SetVisible(has_swipe);
 
   // Only the active auth user view has a password displayed. If that is the
   // case, then render the user view as if it was always focused, since clicking

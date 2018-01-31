@@ -18,6 +18,12 @@ class LockStateControllerTestApi {
   void set_shutdown_controller(ShutdownController* shutdown_controller) {
     controller_->shutdown_controller_ = shutdown_controller;
   }
+  void set_animator(SessionStateAnimator* animator) {
+    controller_->animator_.reset(animator);
+  }
+  void set_should_lock_upon_suspending(bool should_lock) {
+    controller_->should_lock_upon_suspending_for_testing_ = should_lock;
+  }
 
   bool lock_fail_timer_is_running() const {
     return controller_->lock_fail_timer_.IsRunning();
@@ -35,6 +41,13 @@ class LockStateControllerTestApi {
   bool is_lock_cancellable() const {
     return controller_->CanCancelLockAnimation();
   }
+  bool should_request_auth_lock_upon_suspending() const {
+    return controller_->ShouldRequestAuthLockUponSuspending();
+  }
+  bool should_request_no_auth_lock_upon_suspending() const {
+    return controller_->ShouldRequestNoAuthLockUponSuspending();
+  }
+  bool expecting_no_auth_lock() { return controller_->expecting_no_auth_lock_; }
 
   void trigger_lock_fail_timeout() {
     controller_->OnLockFailTimeout();

@@ -74,12 +74,21 @@ class ASH_EXPORT LockStateController : public aura::WindowTreeHostObserver,
   // Starts locking without slow animation.
   void LockWithoutAnimation();
 
+  // Returns true if the screen should lock at suspend time.
+  bool ShouldLockUponSuspending();
+
+  // Requests the lock screen at suspend time.
+  void RequestLockUponSuspending();
+
   // Returns true if we have requested system to lock, but haven't received
   // confirmation yet.
   bool LockRequested();
 
   // Returns true if we are shutting down.
   bool ShutdownRequested();
+
+  // Returns true if the latest lock request should have no-auth type.
+  bool ExpectingNoAuthLock();
 
   // Returns true if we are within cancellable lock timeframe.
   bool CanCancelLockAnimation();
@@ -109,6 +118,9 @@ class ASH_EXPORT LockStateController : public aura::WindowTreeHostObserver,
   // Callback is guaranteed to be called once and then discarded.
   void SetLockScreenDisplayedCallback(base::OnceClosure callback);
 
+  // Called when the suspend is done.
+  void OnSuspendDone();
+
   // aura::WindowTreeHostObserver override:
   void OnHostCloseRequested(aura::WindowTreeHost* host) override;
 
@@ -116,16 +128,19 @@ class ASH_EXPORT LockStateController : public aura::WindowTreeHostObserver,
   void OnChromeTerminating() override;
   void OnLockStateChanged(bool locked) override;
 
-  void set_animator_for_test(SessionStateAnimator* animator) {
-    animator_.reset(animator);
-  }
-
  private:
   friend class LockStateControllerTestApi;
 
   struct UnlockedStateProperties {
     bool wallpaper_is_hidden;
   };
+
+  // Returns true if the lock request at suspend time should have regular auth
+  // methods.
+  bool ShouldRequestAuthLockUponSuspending();
+
+  // Returns true if the lock request at suspend time should have no-auth type.
+  bool ShouldRequestNoAuthLockUponSuspending();
 
   // Reverts the pre-lock animation, reports the error.
   void OnLockFailTimeout();
@@ -196,6 +211,9 @@ class ASH_EXPORT LockStateController : public aura::WindowTreeHostObserver,
   // Are we in the process of shutting the machine down?
   bool shutting_down_ = false;
 
+  // Whether the latest lock request should have no-auth type.
+  bool expecting_no_auth_lock_ = false;
+
   // The reason (e.g. user action) for a pending shutdown.
   ShutdownReason shutdown_reason_ = ShutdownReason::UNKNOWN;
 
@@ -211,6 +229,8 @@ class ASH_EXPORT LockStateController : public aura::WindowTreeHostObserver,
 
   // Indicates whether post lock animation should be immediate.
   bool post_lock_immediate_animation_ = false;
+
+  bool should_lock_upon_suspending_for_testing_ = false;
 
   std::unique_ptr<UnlockedStateProperties> unlocked_properties_;
 
