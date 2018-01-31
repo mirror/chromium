@@ -99,7 +99,9 @@ void HTMLVideoElementPictureInPicture::SetBooleanAttribute(
   if (PictureInPictureController::Ensure(document).PictureInPictureElement() ==
       &element) {
     // TODO(crbug.com/806249): Call element.exitPictureInPicture().
-    // TODO(crbug.com/806249): Trigger leavepictureinpicture event.
+
+    element.DispatchEvent(
+        Event::CreateBubble(EventTypeNames::leavepictureinpicture));
 
     PictureInPictureController::Ensure(document).UnsetPictureInPictureElement();
   }
