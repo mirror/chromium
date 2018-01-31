@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29daba92_ef059213",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-31T00:10:32Z",
+      "side": 1,
+      "message": "nit:\n\nconst std::string kEvToSecureVariation(...);",
+      "range": {
+        "startLine": 223,
+        "startChar": 20,
+        "endLine": 223,
+        "endChar": 40
+      },
+      "revId": "1afd7bf65bf0e38b8c403d920edc97e963543c4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
