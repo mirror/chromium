@@ -27,7 +27,8 @@ void OnChange(id<ObservableBoolean> object) {
 
 @synthesize observer = _observer;
 
-- (id)initWithPrefService:(PrefService*)prefs prefName:(const char*)prefName {
+- (instancetype)initWithPrefService:(PrefService*)prefs
+                           prefName:(const char*)prefName {
   self = [super init];
   if (self) {
     // Create a base::Closure that calls onChange.

@@ -33,7 +33,7 @@
 @synthesize taskMetrics = _taskMetrics;
 @synthesize responsePerTask = _responsePerTask;
 
-- (id)init {
+- (instancetype)init {
   if (self = [super init]) {
     _semaphores = [NSMutableDictionary dictionaryWithCapacity:0];
   }

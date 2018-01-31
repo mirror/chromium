@@ -138,8 +138,8 @@ const NSUInteger kIpadGreySwipeTabCount = 8;
 @synthesize snapshotDelegate = snapshotDelegate_;
 @synthesize tabStripDelegate = tabStripDelegate_;
 
-- (id)initWithTabModel:(TabModel*)model
-          browserState:(ios::ChromeBrowserState*)browserState {
+- (instancetype)initWithTabModel:(TabModel*)model
+                    browserState:(ios::ChromeBrowserState*)browserState {
   DCHECK(model);
   self = [super init];
   if (self) {

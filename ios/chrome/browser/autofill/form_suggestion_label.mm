@@ -77,11 +77,11 @@ UILabel* TextLabel(NSString* text, CGFloat alpha, BOOL bold) {
   FormSuggestion* suggestion_;
 }
 
-- (id)initWithSuggestion:(FormSuggestion*)suggestion
-           proposedFrame:(CGRect)proposedFrame
-                   index:(NSUInteger)index
-          numSuggestions:(NSUInteger)numSuggestions
-                  client:(id<FormSuggestionViewClient>)client {
+- (instancetype)initWithSuggestion:(FormSuggestion*)suggestion
+                     proposedFrame:(CGRect)proposedFrame
+                             index:(NSUInteger)index
+                    numSuggestions:(NSUInteger)numSuggestions
+                            client:(id<FormSuggestionViewClient>)client {
   // TODO(jimblackler): implement sizeThatFits: and layoutSubviews, and perform
   // layout in those methods instead of in the designated initializer.
   self = [super initWithFrame:CGRectZero];
@@ -147,11 +147,6 @@ UILabel* TextLabel(NSString* text, CGFloat alpha, BOOL bold) {
   }
 
   return self;
-}
-
-- (id)initWithFrame:(CGRect)frame {
-  NOTREACHED();
-  return nil;
 }
 
 #pragma mark -

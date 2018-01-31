@@ -19,7 +19,7 @@
 @synthesize stopped = _stopped;
 @synthesize currentLocation = _currentLocation;
 
-- (id)init {
+- (instancetype)init {
   self = [super init];
   if (self) {
     [self reset];

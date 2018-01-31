@@ -9,7 +9,12 @@
 
 @interface OpenInToolbar : UIView
 
-- (instancetype)initWithTarget:(id)target action:(SEL)action;
+- (instancetype)initWithTarget:(id)target
+                        action:(SEL)action NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
+
+- (instancetype)initWithCoder:(NSCoder*)decoder NS_UNAVAILABLE;
 
 @end
 

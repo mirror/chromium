@@ -22,7 +22,9 @@ class GURL;
 
 // Initializer that subclasses should call from -init.
 - (instancetype)initWithName:(NSString*)appName
-                  appStoreID:(NSString*)appStoreID;
+                  appStoreID:(NSString*)appStoreID NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)init NS_UNAVAILABLE;
 
 // Returns whether the Mail client app is installed.
 - (BOOL)isAvailable;

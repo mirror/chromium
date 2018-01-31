@@ -15,7 +15,11 @@
 // Initializes with |frame| and |client| to show |suggestions|.
 - (instancetype)initWithFrame:(CGRect)frame
                        client:(id<FormSuggestionViewClient>)client
-                  suggestions:(NSArray*)suggestions;
+                  suggestions:(NSArray*)suggestions NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
+
+- (instancetype)initWithCoder:(NSCoder*)decoder NS_UNAVAILABLE;
 
 @end
 

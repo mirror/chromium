@@ -26,7 +26,11 @@ class WebState;
 // if they don't have it installed. Present UI from |baseViewController|.
 - (instancetype)initWithWebState:(web::WebState*)webState
                      downloadURL:(const GURL&)url
-              baseViewController:(UIViewController*)baseViewController;
+              baseViewController:(UIViewController*)baseViewController
+    NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithNibName:(NSString*)nibName
+                            url:(const GURL&)url NS_UNAVAILABLE;
 
 // Starts loading the data for the file at the url passed into the
 // initializer. This should only be called once, immediately after

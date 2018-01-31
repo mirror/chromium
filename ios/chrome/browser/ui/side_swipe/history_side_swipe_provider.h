@@ -10,7 +10,8 @@
 @class TabModel;
 
 @interface HistorySideSwipeProvider : NSObject<SideSwipeContentProvider>
-- (instancetype)initWithTabModel:(TabModel*)tabModel;
+- (instancetype)initWithTabModel:(TabModel*)tabModel NS_DESIGNATED_INITIALIZER;
+- (instancetype)init NS_UNAVAILABLE;
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_SIDE_SWIPE_HISTORY_SIDE_SWIPE_PROVIDER_H_

@@ -25,8 +25,13 @@
 // and feedback.
 @interface AppViewController : UIViewController<AppController>
 
-- (instancetype)initWithMainViewController:
-    (UIViewController*)mainViewController;
+- (instancetype)initWithMainViewController:(UIViewController*)mainViewController
+    NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithNibName:(NSString*)nibNameOrNil
+                         bundle:(NSBundle*)nibBundleOrNil NS_UNAVAILABLE;
+
+- (instancetype)initWithCoder:(NSCoder*)decoder NS_UNAVAILABLE;
 
 @end
 

@@ -15,7 +15,12 @@
 
 // Default initializer.
 - (instancetype)initWithTitle:(NSString*)title
-                     delegate:(id<ToolbarAssistiveKeyboardDelegate>)delegate;
+                     delegate:(id<ToolbarAssistiveKeyboardDelegate>)delegate
+    NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)init NS_UNAVAILABLE;
+
+- (instancetype)initWithCoder:(NSCoder*)decoder NS_UNAVAILABLE;
 
 @end
 

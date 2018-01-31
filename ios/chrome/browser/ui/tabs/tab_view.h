@@ -28,7 +28,7 @@
 // |selected|, the selected state of the tab, is provided to ensure the
 // background is drawn correctly the first time, rather than requiring that
 // -setSelected be called in order for it to be drawn correctly.
-- (id)initWithEmptyView:(BOOL)emptyView selected:(BOOL)selected;
+- (instancetype)initWithEmptyView:(BOOL)emptyView selected:(BOOL)selected;
 
 // Sets the title.
 - (void)setTitle:(NSString*)title;

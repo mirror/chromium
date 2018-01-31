@@ -16,7 +16,7 @@
 // tearing issues. Instead we use GlDisplayHandler to handle the rendering loop.
 @interface HostViewController : UIViewController
 
-- (id)initWithClient:(RemotingClient*)client;
+- (instancetype)initWithClient:(RemotingClient*)client;
 
 @end
 

@@ -12,7 +12,10 @@
 // A VC that shows the help center.
 @interface HelpViewController : WebViewController
 
-- (instancetype)init;
+- (instancetype)init NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithUrl:(NSString*)url
+                      title:(NSString*)title NS_UNAVAILABLE;
 
 @end
 

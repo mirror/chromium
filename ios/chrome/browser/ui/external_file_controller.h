@@ -20,7 +20,11 @@ class BrowserState;
 // Initialize with an |url| of the form "chrome://external-file/<file_name>"
 // where |file_name| is the name of the file received from another application.
 - (instancetype)initWithURL:(const GURL&)URL
-               browserState:(web::BrowserState*)browserState;
+               browserState:(web::BrowserState*)browserState
+    NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithNibName:(NSString*)nibName
+                            url:(const GURL&)url NS_UNAVAILABLE;
 
 // Returns the path in the application sandbox of an external file from the
 // URL received for that file.

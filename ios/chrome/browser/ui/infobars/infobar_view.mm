@@ -63,7 +63,12 @@ enum InfoBarButtonPosition { ON_FIRST_LINE, CENTER, LEFT, RIGHT };
 @interface SwitchView : BidiContainerView
 
 // Initialize the view's label with |labelText|.
-- (id)initWithLabel:(NSString*)labelText isOn:(BOOL)isOn;
+- (instancetype)initWithLabel:(NSString*)labelText
+                         isOn:(BOOL)isOn NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
+
+- (instancetype)initWithCoder:(NSCoder*)decoder NS_UNAVAILABLE;
 
 // Specifies the object, action, and tag used when the switch is toggled.
 - (void)setTag:(NSInteger)tag target:(id)target action:(SEL)action;
@@ -85,7 +90,7 @@ enum InfoBarButtonPosition { ON_FIRST_LINE, CENTER, LEFT, RIGHT };
   CGFloat preferredLabelWidth_;
 }
 
-- (id)initWithLabel:(NSString*)labelText isOn:(BOOL)isOn {
+- (instancetype)initWithLabel:(NSString*)labelText isOn:(BOOL)isOn {
   // Creates switch and label.
   UILabel* tempLabel = [[UILabel alloc] initWithFrame:CGRectZero];
   [tempLabel setTextAlignment:NSTextAlignmentNatural];

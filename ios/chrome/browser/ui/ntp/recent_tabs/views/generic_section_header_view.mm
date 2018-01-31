@@ -36,11 +36,6 @@ const CGFloat kDesiredHeight = 48;
 
 @implementation GenericSectionHeaderView
 
-- (instancetype)initWithFrame:(CGRect)aRect {
-  NOTREACHED();
-  return nil;
-}
-
 - (instancetype)initWithType:(recent_tabs::SectionHeaderType)type
           sectionIsCollapsed:(BOOL)collapsed {
   self = [super initWithFrame:CGRectZero];

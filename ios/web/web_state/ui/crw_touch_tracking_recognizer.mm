@@ -17,7 +17,7 @@
 
 @synthesize touchTrackingDelegate = _delegate;
 
-- (id)initWithDelegate:(id<CRWTouchTrackingDelegate>)delegate {
+- (instancetype)initWithDelegate:(id<CRWTouchTrackingDelegate>)delegate {
   if ((self = [super init])) {
     _delegate = delegate;
     self.delegate = self;

@@ -205,7 +205,7 @@ const CGFloat kScrollAwayFromNeighborAmount = 200;
 @synthesize lastStartStackCardIndex = lastStartStackCardIndex_;
 @synthesize firstEndStackCardIndex = firstEndStackCardIndex_;
 
-- (id)init {
+- (instancetype)init {
   if ((self = [super init])) {
     cards_ = [[NSMutableArray alloc] init];
     layoutIsVertical_ = YES;

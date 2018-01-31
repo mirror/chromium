@@ -21,7 +21,13 @@ class ChromeBrowserState;
                         mainTabModel:(TabModel*)mainTabModel
                          otrTabModel:(TabModel*)otrTabModel
                       activeTabModel:(TabModel*)activeTabModel
-          applicationCommandEndpoint:(id<ApplicationCommands>)endpoint;
+          applicationCommandEndpoint:(id<ApplicationCommands>)endpoint
+    NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithNibName:(NSString*)nibNameOrNil
+                         bundle:(NSBundle*)nibBundleOrNil NS_UNAVAILABLE;
+
+- (instancetype)initWithCoder:(NSCoder*)decoder NS_UNAVAILABLE;
 
 @end
 

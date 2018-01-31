@@ -27,7 +27,12 @@ typedef NS_ENUM(NSInteger, ClientConnectionViewState) {
 // work the same way if state is set directly.
 @interface ClientConnectionViewController : UIViewController
 
-- (instancetype)initWithHostInfo:(HostInfo*)hostInfo;
+- (instancetype)initWithHostInfo:(HostInfo*)hostInfo NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithNibName:(NSString*)nibNameOrNil
+                         bundle:(NSBundle*)nibBundleOrNil NS_UNAVAILABLE;
+
+- (instancetype)initWithCoder:(NSCoder*)aDecoder NS_UNAVAILABLE;
 
 // Setting state will change the view
 @property(nonatomic, assign) ClientConnectionViewState state;

@@ -71,7 +71,7 @@ const CGFloat kMaxCardStaggerPercentage = 0.35;
   return stackModel_;
 }
 
-- (id)initWithModel:(TabModel*)model {
+- (instancetype)initWithModel:(TabModel*)model {
   if ((self = [super init])) {
     tabModel_ = model;
     [tabModel_ addObserver:self];

@@ -20,12 +20,17 @@ class BrowserState;
 // |browserState| is the user browser state and must not be null.
 // |error| (in conjunction with |isPost| and |isIncognito|) is used to generate
 // an HTML page that will be stored in the HTML generator object.
-- (id)initWithLoader:(id<UrlLoader>)loader
-        browserState:(web::BrowserState*)browserState
-                 url:(const GURL&)url
-               error:(NSError*)error
-              isPost:(BOOL)isPost
-         isIncognito:(BOOL)isIncognito;
+- (instancetype)initWithLoader:(id<UrlLoader>)loader
+                  browserState:(web::BrowserState*)browserState
+                           url:(const GURL&)url
+                         error:(NSError*)error
+                        isPost:(BOOL)isPost
+                   isIncognito:(BOOL)isIncognito NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithLoader:(id<UrlLoader>)loader
+      staticHTMLViewController:(StaticHtmlViewController*)HTMLViewController
+                           URL:(const GURL&)URL NS_UNAVAILABLE;
+
 @end
 
 #endif  // IOS_CHROME_BROWSER_WEB_ERROR_PAGE_CONTENT_H_

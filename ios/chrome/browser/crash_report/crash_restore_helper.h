@@ -16,7 +16,7 @@ class ChromeBrowserState;
 // Helper class for handling session restoration after a crash.
 @interface CrashRestoreHelper : NSObject
 
-- (id)initWithBrowserState:(ios::ChromeBrowserState*)browserState;
+- (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState;
 
 // Saves the session information stored on disk in temporary files and will
 // then delete those from their default location. This will ensure that the

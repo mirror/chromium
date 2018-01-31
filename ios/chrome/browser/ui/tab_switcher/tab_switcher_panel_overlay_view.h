@@ -62,7 +62,12 @@ TabSwitcherPanelOverlayType PanelOverlayTypeFromSignInPanelsType(
                  browserState:(ios::ChromeBrowserState*)browserState
                     presenter:(id<SigninPresenter, SyncPresenter>)presenter
                    dispatcher:
-                       (id<ApplicationCommands, BrowserCommands>)dispatcher;
+                       (id<ApplicationCommands, BrowserCommands>)dispatcher
+    NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
+
+- (instancetype)initWithCoder:(NSCoder*)decoder NS_UNAVAILABLE;
 
 @end
 

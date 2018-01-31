@@ -17,10 +17,10 @@
 
 // Initializes the popup to display |items| with the given |origin| that is
 // relevant to the |parent|'s coordinate system.
-- (id)initWithOrigin:(CGPoint)origin
-          parentView:(UIView*)parent
-               items:(const web::NavigationItemList&)items
-          dispatcher:(id<TabHistoryPopupCommands>)dispatcher
+- (instancetype)initWithOrigin:(CGPoint)origin
+                    parentView:(UIView*)parent
+                         items:(const web::NavigationItemList&)items
+                    dispatcher:(id<TabHistoryPopupCommands>)dispatcher
     NS_DESIGNATED_INITIALIZER;
 
 @end

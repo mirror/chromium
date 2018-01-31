@@ -14,7 +14,7 @@
 @interface OCMockComplexTypeHelper : GTMLightweightProxy
 // As opposed to its parent class the OCMockComplexTypeHelper retains its
 // represented object.
-- (instancetype)initWithRepresentedObject:(id)object;
+- (instancetype)initWithRepresentedObject:(id)object NS_DESIGNATED_INITIALIZER;
 // Registers a block to be called when a selector is called.
 - (void)onSelector:(SEL)selector callBlockExpectation:(id)block;
 // Unregisters the block associated to the selector.

@@ -32,9 +32,12 @@ class URLRequestContextGetter;
 // is not null, it specifies how often to retry the URL fetch on a call to
 // -startFetch. If |policy| is null, there is no retry.
 - (instancetype)
-    initWithRequestContextGetter:(net::URLRequestContextGetter*)context
-                        delegate:(id<RetryableURLFetcherDelegate>)delegate
-                   backoffPolicy:(const net::BackoffEntry::Policy*)policy;
+initWithRequestContextGetter:(net::URLRequestContextGetter*)context
+                    delegate:(id<RetryableURLFetcherDelegate>)delegate
+               backoffPolicy:(const net::BackoffEntry::Policy*)policy
+    NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)init NS_UNAVAILABLE;
 
 // Starts fetching URL. Uses the backoff policy specified when the object was
 // initialized.

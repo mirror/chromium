@@ -18,7 +18,9 @@ class PrefService;
 // frees the debugger as appropriate.
 @interface MemoryDebuggerManager : NSObject
 // Designated initializer.
-- (instancetype)initWithView:(UIView*)view prefs:(PrefService*)prefs;
+- (instancetype)initWithView:(UIView*)view
+                       prefs:(PrefService*)prefs NS_DESIGNATED_INITIALIZER;
+- (instancetype)init NS_UNAVAILABLE;
 // Registers local state preferences.
 + (void)registerLocalState:(PrefRegistrySimple*)registry;
 @end

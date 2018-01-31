@@ -55,7 +55,7 @@ const NSTimeInterval kUploadTotalTime = 5;
   NSTimer* uploadTimer_;
 }
 
-- (id)initWithDelegate:(id<SafeModeViewControllerDelegate>)delegate {
+- (instancetype)initWithDelegate:(id<SafeModeViewControllerDelegate>)delegate {
   self = [super init];
   if (self) {
     delegate_ = delegate;

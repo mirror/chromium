@@ -62,10 +62,10 @@ static const CGFloat kHeightPercentage = 0.85;
 @synthesize tabHistoryTableViewController = _tabHistoryTableViewController;
 @synthesize tabHistoryTableViewContainer = _tabHistoryTableViewContainer;
 
-- (id)initWithOrigin:(CGPoint)origin
-          parentView:(UIView*)parent
-               items:(const web::NavigationItemList&)items
-          dispatcher:(id<TabHistoryPopupCommands>)dispatcher {
+- (instancetype)initWithOrigin:(CGPoint)origin
+                    parentView:(UIView*)parent
+                         items:(const web::NavigationItemList&)items
+                    dispatcher:(id<TabHistoryPopupCommands>)dispatcher {
   DCHECK(parent);
   if ((self = [super initWithParentView:parent])) {
     // Create the table view controller.

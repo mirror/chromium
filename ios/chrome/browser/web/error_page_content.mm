@@ -31,12 +31,12 @@
       rendererInitiated:YES];
 }
 
-- (id)initWithLoader:(id<UrlLoader>)loader
-        browserState:(web::BrowserState*)browserState
-                 url:(const GURL&)url
-               error:(NSError*)error
-              isPost:(BOOL)isPost
-         isIncognito:(BOOL)isIncognito {
+- (instancetype)initWithLoader:(id<UrlLoader>)loader
+                  browserState:(web::BrowserState*)browserState
+                           url:(const GURL&)url
+                         error:(NSError*)error
+                        isPost:(BOOL)isPost
+                   isIncognito:(BOOL)isIncognito {
   ErrorPageGenerator* generator =
       [[ErrorPageGenerator alloc] initWithError:error
                                          isPost:isPost

@@ -42,7 +42,13 @@ class ChromeBrowserState;
 
 - (instancetype)
 initWithLargeIconService:(favicon::LargeIconService*)largeIconService
-           bookmarkModel:(bookmarks::BookmarkModel*)bookmarkModel;
+           bookmarkModel:(bookmarks::BookmarkModel*)bookmarkModel
+    NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithLargeIconService:
+                    (favicon::LargeIconService*)largeIconService
+                                  domain:(spotlight::Domain)domain
+    NS_UNAVAILABLE;
 
 // Recursively adds node ancestors titles to keywords. Permanent nodes are
 // ignored.

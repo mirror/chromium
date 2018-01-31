@@ -19,7 +19,10 @@ class GURL;
 
 - (instancetype)initWithURL:(const GURL&)activityURL
                       title:(NSString*)title
-                 dispatcher:(id<BrowserCommands>)dispatcher;
+                 dispatcher:(id<BrowserCommands>)dispatcher
+    NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)init NS_UNAVAILABLE;
 
 @end
 

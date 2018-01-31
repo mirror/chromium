@@ -17,9 +17,9 @@ static const CGFloat kIconShrinkScale = 0.4f;
 
 @synthesize active = _active;
 
-- (id)initWithFrame:(CGRect)frame
-       primaryImage:(UIImage*)primary
-        activeImage:(UIImage*)active {
+- (instancetype)initWithFrame:(CGRect)frame
+                 primaryImage:(UIImage*)primary
+                  activeImage:(UIImage*)active {
   if ((self = [super initWithFrame:frame])) {
     self.userInteractionEnabled = NO;
 

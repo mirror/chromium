@@ -27,7 +27,12 @@
 
 - (instancetype)initWithFrame:(CGRect)frame
                     topMargin:(CGFloat)margin
-                        model:(TabModel*)model;
+                        model:(TabModel*)model NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
+
+- (instancetype)initWithCoder:(NSCoder*)decoder NS_UNAVAILABLE;
+
 - (void)updateViewsForDirection:(UISwipeGestureRecognizerDirection)direction;
 - (void)handleHorizontalPan:(SideSwipeGestureRecognizer*)gesture;
 

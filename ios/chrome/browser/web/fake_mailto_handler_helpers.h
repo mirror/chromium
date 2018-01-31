@@ -22,6 +22,9 @@
 
 // Fake mailto: handler
 @interface FakeMailtoHandlerForTesting : MailtoHandler
+- (instancetype)init NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithName:(NSString*)appName
+                  appStoreID:(NSString*)appStoreID NS_UNAVAILABLE;
 @end
 
 // An observer object that counts and reports the number of times it has been

@@ -11,7 +11,11 @@
 @interface DisclosureView : UIImageView
 
 // Designated initializer.
-- (instancetype)init;
+- (instancetype)init NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
+
+- (instancetype)initWithCoder:(NSCoder*)decoder NS_UNAVAILABLE;
 
 // Sets whether the view indicates that the section is collapsed or not, with an
 // animation or not.

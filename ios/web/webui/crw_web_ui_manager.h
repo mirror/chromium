@@ -25,7 +25,10 @@ class WebStateImpl;
 @interface CRWWebUIManager : NSObject<CRWWebStateObserver>
 
 // Designated initializer.
-- (instancetype)initWithWebState:(web::WebStateImpl*)webState;
+- (instancetype)initWithWebState:(web::WebStateImpl*)webState
+    NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)init NS_UNAVAILABLE;
 
 // Starts loading WebUI for the given URL.
 - (void)loadWebUIForURL:(const GURL&)URL;

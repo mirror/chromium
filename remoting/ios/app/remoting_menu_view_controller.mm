@@ -73,7 +73,7 @@ std::string GetAuthorizationCodeUri() {
 // Note: this class is not localized, it will not be shipped to production.
 @implementation RemotingMenuViewController
 
-- (id)init {
+- (instancetype)init {
   self = [super init];
   if (self) {
     self.title = l10n_util::GetNSString(IDS_SETTINGS_BUTTON);

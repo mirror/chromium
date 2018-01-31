@@ -65,7 +65,11 @@
 // Convenience initializer. Initializes this object with the
 // CollectionViewControllerStyleAppBar style and sets up the leading (back)
 // button.
-- (instancetype)init;
+- (instancetype)init NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithLayout:(UICollectionViewLayout*)layout
+                         style:(CollectionViewControllerStyle)style
+    NS_UNAVAILABLE;
 
 @end
 

@@ -117,7 +117,7 @@ const int kNumberOfURLsToSend = 1;
   return instance;
 }
 
-- (id)init {
+- (instancetype)init {
   if ((self = [super init])) {
     breakpadKeyByTabId_ =
         [[NSMutableDictionary alloc] initWithCapacity:kNumberOfURLsToSend];
@@ -242,7 +242,7 @@ const int kNumberOfURLsToSend = 1;
   return instance;
 }
 
-- (id)init {
+- (instancetype)init {
   if ((self = [super init])) {
     tabCurrentStateByTabId_ = [[NSMutableDictionary alloc] init];
     // Register for url changed notifications.

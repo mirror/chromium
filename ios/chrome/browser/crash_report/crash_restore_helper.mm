@@ -182,7 +182,7 @@ int SessionCrashedInfoBarDelegate::GetIconId() const {
   BOOL _sessionRestored;
 }
 
-- (id)initWithBrowserState:(ios::ChromeBrowserState*)browserState {
+- (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState {
   if (self = [super init]) {
     _browserState = browserState;
   }

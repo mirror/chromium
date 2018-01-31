@@ -38,10 +38,11 @@ typedef void (^HtmlCallback)(NSString*);
 }
 
 // Init with the IDR_ constant that point to a UTF8 string.
-- (id)initWithResourceId:(int)resourceId;
+- (instancetype)initWithResourceId:(int)resourceId;
 
 // Init with the IDR_ constant that point to a string with the given encoding.
-- (id)initWithResourceId:(int)resourceId encoding:(NSStringEncoding)encoding;
+- (instancetype)initWithResourceId:(int)resourceId
+                          encoding:(NSStringEncoding)encoding;
 
 @end
 

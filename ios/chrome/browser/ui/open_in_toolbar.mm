@@ -51,11 +51,6 @@ const CGFloat kToolbarBackgroundTransparency = 0.97f;
 
 @implementation OpenInToolbar
 
-- (instancetype)initWithFrame:(CGRect)aRect {
-  NOTREACHED();
-  return nil;
-}
-
 - (instancetype)initWithTarget:(id)target action:(SEL)action {
   self = [super initWithFrame:CGRectZero];
   if (self) {

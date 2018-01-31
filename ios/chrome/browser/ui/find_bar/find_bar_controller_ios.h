@@ -22,7 +22,8 @@ extern NSString* const kFindInPageContainerViewId;
 @property(nonatomic, weak) id<BrowserCommands> dispatcher;
 
 // Init with incognito style.
-- (instancetype)initWithIncognito:(BOOL)isIncognito;
+- (instancetype)initWithIncognito:(BOOL)isIncognito NS_DESIGNATED_INITIALIZER;
+- (instancetype)init NS_UNAVAILABLE;
 // Current input search term.
 - (NSString*)searchTerm;
 // Update view based on model. If |focusTextfield| is YES, focus the

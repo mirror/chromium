@@ -73,7 +73,7 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
 @synthesize lastError = _lastError;
 
 - (instancetype)initWithHostInfo:(HostInfo*)hostInfo {
-  self = [super init];
+  self = [super initWithNibName:nil bundle:nil];
   if (self) {
     _hostInfo = hostInfo;
     _remoteHostName = hostInfo.hostName;

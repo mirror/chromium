@@ -26,7 +26,7 @@ static const CGFloat kPadding = 20.f;
 
 @synthesize delegate = _delegate;
 
-- (id)initWithFrame:(CGRect)frame {
+- (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
     self.backgroundColor = [UIColor clearColor];

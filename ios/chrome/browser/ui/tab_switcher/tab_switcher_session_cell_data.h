@@ -29,7 +29,10 @@ enum TabSwitcherSessionCellType {
 + (instancetype)openTabSessionCellData;
 + (instancetype)otherDevicesSessionCellData;
 
-- (instancetype)initWithSessionCellType:(TabSwitcherSessionCellType)type;
+- (instancetype)initWithSessionCellType:(TabSwitcherSessionCellType)type
+    NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)init NS_UNAVAILABLE;
 
 @property(nonatomic, readonly) TabSwitcherSessionCellType type;
 @property(nonatomic, copy) NSString* title;

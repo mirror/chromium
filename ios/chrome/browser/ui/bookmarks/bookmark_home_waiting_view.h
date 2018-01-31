@@ -15,7 +15,10 @@
 // |startWaiting| is called.
 @interface BookmarkHomeWaitingView : UIView
 
-- (instancetype)initWithFrame:(CGRect)frame backgroundColor:(UIColor*)color;
+- (instancetype)initWithFrame:(CGRect)frame
+              backgroundColor:(UIColor*)color NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithCoder:(NSCoder*)decoder NS_UNAVAILABLE;
 
 // Call this method when this view is added to the visible view hierarchy.
 // After a delay, an activity indicator will be presented if this view is still

@@ -86,8 +86,8 @@ extern NSString* const kSideSwipeDidStopNotification;
 @property(nonatomic, weak) id<TabStripHighlighting> tabStripDelegate;
 
 // Initializer.
-- (id)initWithTabModel:(TabModel*)model
-          browserState:(ios::ChromeBrowserState*)browserState;
+- (instancetype)initWithTabModel:(TabModel*)model
+                    browserState:(ios::ChromeBrowserState*)browserState;
 
 // Set up swipe gesture recognizers.
 - (void)addHorizontalGesturesToView:(UIView*)view;

@@ -60,20 +60,20 @@ class ChromeBrowserState;
 
 // Init with the given url (presumably "chrome://newtab") and loader object.
 // |loader| may be nil, but isn't retained so it must outlive this controller.
-- (id)initWithUrl:(const GURL&)url
-                  loader:(id<UrlLoader>)loader
-                 focuser:(id<OmniboxFocuser>)focuser
-            browserState:(ios::ChromeBrowserState*)browserState
-         toolbarDelegate:(id<IncognitoViewControllerDelegate>)toolbarDelegate
-                tabModel:(TabModel*)tabModel
-    parentViewController:(UIViewController*)parentViewController
-              dispatcher:(id<ApplicationCommands,
-                             BrowserCommands,
-                             OmniboxFocuser,
-                             FakeboxFocuser,
-                             SnackbarCommands,
-                             UrlLoader>)dispatcher
-           safeAreaInset:(UIEdgeInsets)safeAreaInset;
+- (instancetype)initWithUrl:(const GURL&)url
+                     loader:(id<UrlLoader>)loader
+                    focuser:(id<OmniboxFocuser>)focuser
+               browserState:(ios::ChromeBrowserState*)browserState
+            toolbarDelegate:(id<IncognitoViewControllerDelegate>)toolbarDelegate
+                   tabModel:(TabModel*)tabModel
+       parentViewController:(UIViewController*)parentViewController
+                 dispatcher:(id<ApplicationCommands,
+                                BrowserCommands,
+                                OmniboxFocuser,
+                                FakeboxFocuser,
+                                SnackbarCommands,
+                                UrlLoader>)dispatcher
+              safeAreaInset:(UIEdgeInsets)safeAreaInset;
 
 // Returns |YES| if the current visible controller should show the keyboard
 // shield.

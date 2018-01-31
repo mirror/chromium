@@ -94,9 +94,10 @@ void ContentSettingsObserverBridge::OnContentSettingChanged(
 @synthesize inverted = inverted_;
 @synthesize isModifyingContentSetting = isModifyingContentSetting_;
 
-- (id)initWithHostContentSettingsMap:(HostContentSettingsMap*)settingsMap
-                           settingID:(ContentSettingsType)settingID
-                            inverted:(BOOL)inverted {
+- (instancetype)initWithHostContentSettingsMap:
+                    (HostContentSettingsMap*)settingsMap
+                                     settingID:(ContentSettingsType)settingID
+                                      inverted:(BOOL)inverted {
   self = [super init];
   if (self) {
     settingID_ = settingID;

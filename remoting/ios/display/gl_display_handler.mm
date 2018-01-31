@@ -235,7 +235,7 @@ base::WeakPtr<remoting::GlDisplayHandler::Core> Core::GetWeakPtr() {
 
 @implementation GlDisplayHandler
 
-- (id)init {
+- (instancetype)init {
   self = [super init];
   if (self) {
     _runtime = remoting::ChromotingClientRuntime::GetInstance();

@@ -48,7 +48,10 @@ class GURL;
 // Creates a new controller for |label|, keeping a strong reference. |action| is
 // the block called for any tapped link.
 - (instancetype)initWithLabel:(UILabel*)label
-                       action:(ProceduralBlockWithURL)action;
+                       action:(ProceduralBlockWithURL)action
+    NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)init NS_UNAVAILABLE;
 
 // Adds a link to the controlled label at |range| in the label's text, which
 // will call the receiver's action block when tapped, passing in |url|.

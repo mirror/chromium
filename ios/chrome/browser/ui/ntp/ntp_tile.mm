@@ -35,13 +35,15 @@ NSString* kPosition = @"position";
 - (instancetype)initWithTitle:(NSString*)title
                           URL:(NSURL*)URL
                      position:(NSUInteger)position {
-  self = [super init];
-  if (self) {
-    _title = title;
-    _URL = URL;
-    _position = position;
-  }
-  return self;
+  return [self initWithTitle:title
+                          URL:URL
+              faviconFileName:nil
+            fallbackTextColor:nil
+      fallbackBackgroundColor:nil
+       fallbackIsDefaultColor:NO
+             fallbackMonogram:nil
+               faviconFetched:NO
+                     position:position];
 }
 
 - (instancetype)initWithTitle:(NSString*)title

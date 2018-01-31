@@ -73,7 +73,7 @@ id Iterator::GetNext() {
 @interface CRBProtocolObservers ()
 
 // Designated initializer.
-- (id)initWithProtocol:(Protocol*)protocol;
+- (instancetype)initWithProtocol:(Protocol*)protocol NS_DESIGNATED_INITIALIZER;
 
 @end
 
@@ -83,12 +83,7 @@ id Iterator::GetNext() {
   return [[[self alloc] initWithProtocol:protocol] autorelease];
 }
 
-- (id)init {
-  NOTREACHED();
-  return nil;
-}
-
-- (id)initWithProtocol:(Protocol*)protocol {
+- (instancetype)initWithProtocol:(Protocol*)protocol {
   self = [super init];
   if (self) {
     _protocol.reset([protocol retain]);

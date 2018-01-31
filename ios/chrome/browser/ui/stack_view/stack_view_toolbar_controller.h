@@ -21,7 +21,13 @@
 
 - (instancetype)initWithDispatcher:
     (id<ApplicationCommands, BrowserCommands, OmniboxFocuser, ToolbarCommands>)
-        dispatcher;
+        dispatcher NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithStyle:(ToolbarControllerStyle)style
+                   dispatcher:(id<ApplicationCommands,
+                                  BrowserCommands,
+                                  OmniboxFocuser,
+                                  ToolbarCommands>)dispatcher NS_UNAVAILABLE;
 
 @end
 

@@ -125,7 +125,7 @@ const CGFloat kFaviconSize = 16.0;
 @synthesize background = background_;
 @synthesize incognitoStyle = _incognitoStyle;
 
-- (id)initWithEmptyView:(BOOL)emptyView selected:(BOOL)selected {
+- (instancetype)initWithEmptyView:(BOOL)emptyView selected:(BOOL)selected {
   if ((self = [super initWithFrame:CGRectZero])) {
     [self setOpaque:NO];
     [self createCommonViews];

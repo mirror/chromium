@@ -12,12 +12,16 @@
 
 // Initializes the TestWebViewContentView.  Since |webView| and |scrollView| may
 // be mock objects, they will not be added as subviews.
-- (instancetype)initWithMockWebView:(id)webView scrollView:(id)scrollView;
+- (instancetype)initWithMockWebView:(id)webView
+                         scrollView:(id)scrollView NS_DESIGNATED_INITIALIZER;
 
 // TestWebViewContentViews should be initialized via |-initWithMockWebView:
 // scrollView:|.
 - (instancetype)initWithWebView:(UIView*)webView
                      scrollView:(UIScrollView*)scrollView NS_UNAVAILABLE;
+
+- (instancetype)initForTesting NS_UNAVAILABLE;
+
 @end
 
 #endif  // IOS_WEB_PUBLIC_TEST_FAKES_TEST_WEB_VIEW_CONTENT_VIEW_H_

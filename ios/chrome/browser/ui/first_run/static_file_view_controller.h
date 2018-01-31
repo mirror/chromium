@@ -27,7 +27,12 @@ enum MobileFreLinkTappedStatus {
 // Initializes with the given URL to display and browser state. Neither
 // |browserState| nor |URL| may be nil.
 - (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
-                                 URL:(NSURL*)URL;
+                                 URL:(NSURL*)URL NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithNibName:(NSString*)nibNameOrNil
+                         bundle:(NSBundle*)nibBundleOrNil NS_UNAVAILABLE;
+
+- (instancetype)initWithCoder:(NSCoder*)decoder NS_UNAVAILABLE;
 
 // The status of the load.
 @property(nonatomic, assign) MobileFreLinkTappedStatus loadStatus;

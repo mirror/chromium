@@ -61,7 +61,15 @@ extern NSString* const kRecentTabsTableViewControllerAccessibilityIdentifier;
 // and |loader| must not be nil.
 - (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
                               loader:(id<UrlLoader>)loader
-                          dispatcher:(id<ApplicationCommands>)dispatcher;
+                          dispatcher:(id<ApplicationCommands>)dispatcher
+    NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithStyle:(UITableViewStyle)style NS_UNAVAILABLE;
+
+- (instancetype)initWithNibName:(NSString*)nibNameOrNil
+                         bundle:(NSBundle*)nibBundleOrNil NS_UNAVAILABLE;
+
+- (instancetype)initWithCoder:(NSCoder*)coder NS_UNAVAILABLE;
 
 // Refreshes the table view to match the current sync state.
 - (void)refreshUserState:(SessionsSyncUserState)state;

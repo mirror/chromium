@@ -13,12 +13,12 @@
 @interface ShareToData : NSObject
 
 // Designated initializer.
-- (id)initWithShareURL:(const GURL&)shareURL
-    passwordManagerURL:(const GURL&)passwordManagerURL
-                 title:(NSString*)title
-       isOriginalTitle:(BOOL)isOriginalTitle
-       isPagePrintable:(BOOL)isPagePrintable
-    thumbnailGenerator:(ThumbnailGeneratorBlock)thumbnailGenerator;
+- (instancetype)initWithShareURL:(const GURL&)shareURL
+              passwordManagerURL:(const GURL&)passwordManagerURL
+                           title:(NSString*)title
+                 isOriginalTitle:(BOOL)isOriginalTitle
+                 isPagePrintable:(BOOL)isPagePrintable
+              thumbnailGenerator:(ThumbnailGeneratorBlock)thumbnailGenerator;
 
 // The URL to be shared with share extensions.
 @property(nonatomic, readonly) const GURL& shareURL;

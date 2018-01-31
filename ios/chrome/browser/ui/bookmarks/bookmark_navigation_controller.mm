@@ -12,7 +12,8 @@
 
 @implementation BookmarkNavigationController
 
-- (id)initWithRootViewController:(UIViewController*)rootViewController {
+- (instancetype)initWithRootViewController:
+    (UIViewController*)rootViewController {
   self = [super initWithRootViewController:rootViewController];
   if (self) {
     [self setNavigationBarHidden:YES];

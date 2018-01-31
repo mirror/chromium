@@ -29,7 +29,14 @@
                                        FakeboxFocuser,
                                        ToolbarCommands,
                                        UrlLoader,
-                                       WebToolbarDelegate>)dispatcher;
+                                       WebToolbarDelegate>)dispatcher
+    NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithStyle:(ToolbarControllerStyle)style
+                   dispatcher:(id<ApplicationCommands,
+                                  BrowserCommands,
+                                  OmniboxFocuser,
+                                  ToolbarCommands>)dispatcher NS_UNAVAILABLE;
 
 @property(nonatomic, readonly, weak) id<ApplicationCommands,
                                         BrowserCommands,

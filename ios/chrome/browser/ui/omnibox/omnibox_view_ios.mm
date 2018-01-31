@@ -86,7 +86,7 @@ UIColor* IncognitoSecureTextColor() {
 @end
 
 @implementation AutocompleteTextFieldDelegate
-- (id)initWithEditView:(OmniboxViewIOS*)editView {
+- (instancetype)initWithEditView:(OmniboxViewIOS*)editView {
   if ((self = [super init])) {
     editView_ = editView;
     forwardingOnDidChange_ = NO;

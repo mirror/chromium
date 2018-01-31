@@ -15,7 +15,10 @@
 // The value for the row. This is not displayed in the UI and is optional.
 @property(nonatomic, copy) NSString* value;
 
-- (instancetype)initWithLabel:(NSString*)label value:(NSString*)value;
+- (instancetype)initWithLabel:(NSString*)label
+                        value:(NSString*)value NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)init NS_UNAVAILABLE;
 
 @end
 

@@ -43,7 +43,7 @@ const NSTimeInterval kLocationUpdateInterval = 365.0 * 24.0 * 60.0 * 60.0;
 @synthesize delegate = _delegate;
 @synthesize currentLocation = _currentLocation;
 
-- (id)init {
+- (instancetype)init {
   self = [super init];
   if (self) {
     ios::GeolocationUpdaterProvider* provider =

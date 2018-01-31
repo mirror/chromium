@@ -17,7 +17,10 @@ class ReadingListModel;
 // Delegate for handling of changes in the reading list model.
 @property(nonatomic, weak) id<ReadingListMenuNotificationDelegate> delegate;
 
-- (instancetype)initWithReadingList:(ReadingListModel*)readingListModel;
+- (instancetype)initWithReadingList:(ReadingListModel*)readingListModel
+    NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)init NS_UNAVAILABLE;
 
 // The number of unread items in the reading list.
 - (NSInteger)readingListUnreadCount;

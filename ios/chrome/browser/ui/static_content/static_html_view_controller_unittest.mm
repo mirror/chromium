@@ -35,11 +35,12 @@
  @private
   int messageId_;
 }
-- (id)initWithMessageId:(int)messageId;
+- (instancetype)initWithMessageId:(int)messageId NS_DESIGNATED_INITIALIZER;
+- (instancetype)init NS_UNAVAILABLE;
 @end
 
 @implementation L10nHtmlGenerator
-- (id)initWithMessageId:(int)messageId {
+- (instancetype)initWithMessageId:(int)messageId {
   if ((self = [super init])) {
     messageId_ = messageId;
   }

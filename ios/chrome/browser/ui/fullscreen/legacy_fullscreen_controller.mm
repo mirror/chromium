@@ -200,9 +200,10 @@ BOOL CGFloatEquals(CGFloat a, CGFloat b) {
 @synthesize userInteractionGestureRecognizer =
     userInteractionGestureRecognizer_;
 
-- (id)initWithDelegate:(id<LegacyFullscreenControllerDelegate>)delegate
-              webState:(web::WebState*)webState
-             sessionID:(NSString*)sessionID {
+- (instancetype)initWithDelegate:
+                    (id<LegacyFullscreenControllerDelegate>)delegate
+                        webState:(web::WebState*)webState
+                       sessionID:(NSString*)sessionID {
   if (!gEnabledForTests)
     return nil;
   if ((self = [super init])) {

@@ -27,8 +27,9 @@
     : NSObject<WKNavigationDelegate>
 // Initializes a CRWWebInterstitialImplWKWebViewDelegate which will
 // forward JavaScript commands from its WKWebView to |interstitial|.
-- (instancetype)initWithInterstitial:
-    (web::HtmlWebInterstitialImpl*)interstitial;
+- (instancetype)initWithInterstitial:(web::HtmlWebInterstitialImpl*)interstitial
+    NS_DESIGNATED_INITIALIZER;
+- (instancetype)init NS_UNAVAILABLE;
 @end
 
 @implementation CRWWebInterstitialImplWKWebViewDelegate {

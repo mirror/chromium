@@ -35,6 +35,7 @@
 - (instancetype)initWithTitle:(NSString*)title
                           URL:(NSURL*)URL
                      position:(NSUInteger)position;
+
 - (instancetype)initWithTitle:(NSString*)title
                           URL:(NSURL*)URL
               faviconFileName:(NSString*)faviconFileName
@@ -43,7 +44,10 @@
        fallbackIsDefaultColor:(BOOL)fallbackIsDefaultColor
              fallbackMonogram:(NSString*)fallbackMonogram
                faviconFetched:(BOOL)faviconFetched
-                     position:(NSUInteger)position;
+                     position:(NSUInteger)position NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)init NS_UNAVAILABLE;
+
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_NTP_NTP_TILE_H_

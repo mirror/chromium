@@ -17,7 +17,12 @@ class DistantSession;
 @interface SessionSectionHeaderView : UIView<HeaderOfCollapsableSectionProtocol>
 
 // Designated initializer.
-- (instancetype)initWithFrame:(CGRect)aRect sectionIsCollapsed:(BOOL)collapsed;
+- (instancetype)initWithFrame:(CGRect)aRect
+           sectionIsCollapsed:(BOOL)collapsed NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
+
+- (instancetype)initWithCoder:(NSCoder*)decoder NS_UNAVAILABLE;
 
 // Updates view to display information for |distantSession|.
 - (void)updateWithSession:

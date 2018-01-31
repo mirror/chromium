@@ -16,7 +16,10 @@
 
 - (instancetype)initWithProtocol:(NSURLProtocol*)protocol
                     clientThread:(NSThread*)clientThread
-                     runLoopMode:(NSString*)mode;
+                     runLoopMode:(NSString*)mode NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)init NS_UNAVAILABLE;
+
 @end
 
 #endif  // IOS_NET_CRN_HTTP_PROTOCOL_HANDLER_PROXY_WITH_CLIENT_THREAD_H_

@@ -15,7 +15,7 @@
 @interface CRWJSInjectionReceiver : NSObject<CRWJSInjectionEvaluator>
 
 // Init with JavaScript evaluator.
-- (id)initWithEvaluator:(id<CRWJSInjectionEvaluator>)evaluator;
+- (instancetype)initWithEvaluator:(id<CRWJSInjectionEvaluator>)evaluator;
 
 // Returns an instance of |jsInjectionManagerClass|. Instances of the classes
 // it depends on are created if needed.

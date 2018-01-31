@@ -16,7 +16,7 @@
 @interface CRWJSInjectionManager : NSObject
 
 // Designated initializer. Initializes the object with the |receiver|.
-- (id)initWithReceiver:(CRWJSInjectionReceiver*)receiver;
+- (instancetype)initWithReceiver:(CRWJSInjectionReceiver*)receiver;
 
 // Returns whether JavaScript has already been injected into the receiver.
 - (BOOL)hasBeenInjected;

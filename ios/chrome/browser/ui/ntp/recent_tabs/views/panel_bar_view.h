@@ -11,7 +11,11 @@
 @interface PanelBarView : UIView
 
 // Designated initializer.
-- (instancetype)init;
+- (instancetype)init NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
+
+- (instancetype)initWithCoder:(NSCoder*)decoder NS_UNAVAILABLE;
 
 // Sets the target/action of the close button.
 - (void)setCloseTarget:(id)target action:(SEL)action;

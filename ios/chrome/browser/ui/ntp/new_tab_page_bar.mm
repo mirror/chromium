@@ -63,7 +63,7 @@ const CGFloat kRegularLayoutButtonWidth = 168;
 @synthesize contentView = _contentView;
 @synthesize safeAreaInsetFromNTPView = _safeAreaInsetFromNTPView;
 
-- (id)initWithFrame:(CGRect)frame {
+- (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
     [self setup];
@@ -71,7 +71,7 @@ const CGFloat kRegularLayoutButtonWidth = 168;
   return self;
 }
 
-- (id)initWithCoder:(NSCoder*)aDecoder {
+- (instancetype)initWithCoder:(NSCoder*)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
     [self setup];
