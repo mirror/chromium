@@ -18,6 +18,7 @@
 @interface StackViewToolbarController : ToolbarController
 
 @property(nonatomic, readonly) NewTabButton* openNewTabButton;
+@property(nonatomic, readonly) UIButton* stackButton;
 
 - (instancetype)initWithDispatcher:
     (id<ApplicationCommands, BrowserCommands, ToolbarCommands>)dispatcher;
