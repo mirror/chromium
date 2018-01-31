@@ -37,6 +37,7 @@
 #include "build/build_config.h"
 #include "crypto/nss_crypto_module_delegate.h"
 #include "crypto/nss_util_internal.h"
+#include "sql/initialization.h"
 
 #if defined(OS_CHROMEOS)
 #include <dlfcn.h>
@@ -619,6 +620,9 @@ class NSSInitSingleton {
     // It's safe to construct on any thread, since LazyInstance will prevent any
     // other threads from accessing until the constructor is done.
     thread_checker_.DetachFromThread();
+
+    // NSS uses SQLite indirectly.
+    sql::EnsureSqliteInitialized();
 
     EnsureNSPRInit();
 
