@@ -775,18 +775,18 @@ void RenderWidget::OnClose() {
 
   if (for_oopif_) {
     // Widgets for frames may be created and closed at any time while the frame
-    // is alive. However, the closing process must happen synchronously. Frame
-    // widget and frames hold pointers to each other. If Close() is deferred to
-    // the message loop like in the non-frame widget case, WebWidget::close()
-    // can end up accessing members of an already-deleted frame.
-    Close();
-  } else {
-    // If there is a Send call on the stack, then it could be dangerous to close
-    // now.  Post a task that only gets invoked when there are no nested message
-    // loops.
-    task_runner_->PostNonNestableTask(
-        FROM_HERE, base::BindOnce(&RenderWidget::Close, this));
+    // is alive. However, WebWidget must be closed synchronously because frame
+    // widgets and frames hold pointers to each other. The deferred call to
+    // Close() will complete cleanup and release |this|, but CloseWebWidget()
+    // prevents Close() from attempting to access members of an
+    // already-deleted frame.
+    CloseWebWidget();
   }
+  // If there is a Send call on the stack, then it could be dangerous to close
+  // now.  Post a task that only gets invoked when there are no nested message
+  // loops.
+  task_runner_->PostNonNestableTask(FROM_HERE,
+                                    base::BindOnce(&RenderWidget::Close, this));
 
   // Balances the AddRef taken when we called AddRoute.
   Release();
@@ -1660,8 +1660,12 @@ void RenderWidget::CloseWidgetSoon() {
 
 void RenderWidget::Close() {
   screen_metrics_emulator_.reset();
-  WillCloseLayerTreeView();
+  CloseWebWidget();
   compositor_.reset();
+}
+
+void RenderWidget::CloseWebWidget() {
+  WillCloseLayerTreeView();
   if (webwidget_internal_) {
     webwidget_internal_->Close();
     webwidget_internal_ = nullptr;
