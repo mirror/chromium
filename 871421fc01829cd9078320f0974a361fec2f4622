@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b2657ba_5eeb50a3",
+        "filename": "chrome/browser/resources/settings/people_page/people_page.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-31T20:17:43Z",
+      "side": 0,
+      "message": "Can we get rid of this string also?",
+      "revId": "871421fc01829cd9078320f0974a361fec2f4622",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
