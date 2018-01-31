@@ -16,6 +16,24 @@
       "revId": "5b7f1d69f1eb334e64dfff4b42fde77e37e98b80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56c04746_c94e50b9",
+        "filename": "ash/wm/workspace/backdrop_controller.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-31T00:03:17Z",
+      "side": 0,
+      "message": "For line 222-224, the ARC apps have different logic to update its kHasBackdrop window key, see https://cs.chromium.org/chromium/src/components/exo/client_controlled_shell_surface.cc?rcl\u003dba60a6c8aa3d0ad6d4d99615b7c3053e724aee04\u0026l\u003d734, which might result in a backdrop below a snapped ARC app window. \nFor line 229-234, as long as there is a active ARC App window and spoken feedback is enabled, it will always have a backdrop which conflicts with splitscreen. \n\nBesides, I think it\u0027s reasonable to move these lines codes out as they\u0027re mostly conditions for brower/app windows in laptop mode.",
+      "parentUuid": "79cd7c04_44bc254b",
+      "revId": "5b7f1d69f1eb334e64dfff4b42fde77e37e98b80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
