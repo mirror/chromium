@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48f8ed15_164d75ed",
+        "filename": "chrome/test/data/webui/settings/chrome_cleanup_page_test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-31T19:15:05Z",
+      "side": 1,
+      "message": "You can use the /deep/ selector here to simplifly.\n  let visibleItemsList \u003d visibleItems.querySelectorAll(\u0027* /deep/ .visible-item\u0027);",
+      "range": {
+        "startLine": 119,
+        "startChar": 6,
+        "endLine": 119,
+        "endChar": 58
+      },
+      "revId": "91fecc74056bccf87529e6b7dee2956be985ce17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eef36be7_bc4a160b",
+        "filename": "chrome/test/data/webui/settings/chrome_cleanup_page_test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-31T19:15:05Z",
+      "side": 1,
+      "message": "Use $$ instead:\n  const moreItemsLink \u003d visibleItems.$$(\u0027#more-items-link\u0027);",
+      "range": {
+        "startLine": 121,
+        "startChar": 6,
+        "endLine": 121,
+        "endChar": 58
+      },
+      "revId": "91fecc74056bccf87529e6b7dee2956be985ce17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
