@@ -16,6 +16,24 @@
       "revId": "659bc6555d26c1dbe73941a8fd44d784fcc32002",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb376517_7c1f6a78",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2018-01-31T16:21:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac6ae922_d48791ef",
+      "revId": "659bc6555d26c1dbe73941a8fd44d784fcc32002",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
