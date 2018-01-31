@@ -32,6 +32,7 @@
 #include "platform/instrumentation/tracing/web_memory_allocator_dump.h"
 #include "platform/instrumentation/tracing/web_process_memory_dump.h"
 #include "platform/loader/SubresourceIntegrity.h"
+#include "platform/loader/fetch/CachedMetadata.h"
 #include "platform/loader/fetch/FetchParameters.h"
 #include "platform/loader/fetch/IntegrityMetadata.h"
 #include "platform/loader/fetch/ResourceClientWalker.h"
@@ -41,6 +42,111 @@
 #include "services/network/public/interfaces/request_context_frame_type.mojom-blink.h"
 
 namespace blink {
+
+// CachedMetadataHandlerImpl should be created when a response is received,
+// and can be used independently from Resource.
+// - It doesn't have any references to Resource. Necessary data are captured
+//   from Resource when the handler is created.
+// - It is not affected by Resource's revalidation on MemoryCache.
+//   The validity of the handler is solely checked by |response_url_| and
+//   |response_time_| (not by Resource) by the browser process, and the cached
+//   metadata written to the handler is rejected if e.g. the disk cache entry
+//   has been updated and the handler refers to an older response.
+class ScriptResource::CachedMetadataHandlerImpl : public CachedMetadataHandler {
+ public:
+  CachedMetadataHandlerImpl(const Resource*,
+                            std::unique_ptr<CacheMetadataSender>);
+  ~CachedMetadataHandlerImpl() override = default;
+  void Trace(blink::Visitor*) override;
+  void SetCachedMetadata(uint32_t, const char*, size_t, CacheType) override;
+  void ClearCachedMetadata(CacheType) override;
+  scoped_refptr<CachedMetadata> GetCachedMetadata(uint32_t) const override;
+
+  // This returns the encoding at the time of ResponseReceived().
+  // Therefore this does NOT reflect encoding detection from body contents,
+  // but the final encoding after the encoding detection can be determined
+  // uniquely from Encoding(), provided the body content is the same,
+  // as we can assume the encoding detection will results in the same final
+  // encoding.
+  // TODO(hiroshige): Make this semantics cleaner.
+  String Encoding() const override { return String(encoding_.GetName()); }
+
+  bool IsServedFromCacheStorage() const override {
+    return is_served_from_cache_storage_;
+  }
+
+  // Sets the serialized metadata retrieved from the platform's cache.
+  void SetSerializedCachedMetadata(const char*, size_t);
+
+ private:
+  virtual void SendToPlatform();
+
+  scoped_refptr<CachedMetadata> cached_metadata_;
+  std::unique_ptr<CacheMetadataSender> sender_;
+  bool is_served_from_cache_storage_;
+
+  const WTF::TextEncoding encoding_;
+};
+
+ScriptResource::CachedMetadataHandlerImpl::CachedMetadataHandlerImpl(
+    const Resource* resource,
+    std::unique_ptr<CacheMetadataSender> sender)
+    : sender_(std::move(sender)),
+      is_served_from_cache_storage_(
+          !resource->GetResponse().CacheStorageCacheName().IsNull()),
+      encoding_(resource->Encoding()) {}
+
+void ScriptResource::CachedMetadataHandlerImpl::Trace(blink::Visitor* visitor) {
+  CachedMetadataHandler::Trace(visitor);
+}
+
+void ScriptResource::CachedMetadataHandlerImpl::SetCachedMetadata(
+    uint32_t data_type_id,
+    const char* data,
+    size_t size,
+    CachedMetadataHandler::CacheType cache_type) {
+  // Currently, only one type of cached metadata per resource is supported. If
+  // the need arises for multiple types of metadata per resource this could be
+  // enhanced to store types of metadata in a map.
+  DCHECK(!cached_metadata_);
+  cached_metadata_ = CachedMetadata::Create(data_type_id, data, size);
+  if (cache_type == CachedMetadataHandler::kSendToPlatform)
+    SendToPlatform();
+}
+
+void ScriptResource::CachedMetadataHandlerImpl::ClearCachedMetadata(
+    CachedMetadataHandler::CacheType cache_type) {
+  cached_metadata_ = nullptr;
+  if (cache_type == CachedMetadataHandler::kSendToPlatform)
+    SendToPlatform();
+}
+
+scoped_refptr<CachedMetadata>
+ScriptResource::CachedMetadataHandlerImpl::GetCachedMetadata(
+    uint32_t data_type_id) const {
+  if (!cached_metadata_ || cached_metadata_->DataTypeID() != data_type_id)
+    return nullptr;
+  return cached_metadata_;
+}
+
+void ScriptResource::CachedMetadataHandlerImpl::SetSerializedCachedMetadata(
+    const char* data,
+    size_t size) {
+  // We only expect to receive cached metadata from the platform once. If this
+  // triggers, it indicates an efficiency problem which is most likely
+  // unexpected in code designed to improve performance.
+  DCHECK(!cached_metadata_);
+  cached_metadata_ = CachedMetadata::CreateFromSerializedData(data, size);
+}
+
+void ScriptResource::CachedMetadataHandlerImpl::SendToPlatform() {
+  if (cached_metadata_) {
+    const Vector<char>& serialized_data = cached_metadata_->SerializedData();
+    sender_->Send(serialized_data.data(), serialized_data.size());
+  } else {
+    sender_->Send(nullptr, 0);
+  }
+}
 
 ScriptResource* ScriptResource::Fetch(FetchParameters& params,
                                       ResourceFetcher* fetcher,
@@ -59,6 +165,11 @@ ScriptResource::ScriptResource(
     : TextResource(resource_request, kScript, options, decoder_options) {}
 
 ScriptResource::~ScriptResource() = default;
+
+void ScriptResource::Trace(blink::Visitor* visitor) {
+  visitor->Trace(cache_handler_);
+  TextResource::Trace(visitor);
+}
 
 void ScriptResource::OnMemoryDump(WebMemoryDumpLevelOfDetail level_of_detail,
                                   WebProcessMemoryDump* memory_dump) const {
@@ -82,6 +193,33 @@ const String& ScriptResource::SourceText() {
 
   return source_text_;
 }
+
+CachedMetadataHandler* ScriptResource::CacheHandler() {
+  return cache_handler_.Get();
+}
+
+void ScriptResource::CreateCachedMetadataHandler(
+    std::unique_ptr<CacheMetadataSender> send_callback) {
+  cache_handler_ =
+      new CachedMetadataHandlerImpl(this, std::move(send_callback));
+}
+
+void ScriptResource::ClearCachedMetadataHandler() {
+  cache_handler_.Clear();
+};
+
+void ScriptResource::SetSerializedCachedMetadata(const char* data,
+                                                 size_t size) {
+  Resource::SetSerializedCachedMetadata(data, size);
+  if (cache_handler_) {
+    cache_handler_->SetSerializedCachedMetadata(data, size);
+  }
+};
+
+void ScriptResource::ClearCachedMetadata(
+    CachedMetadataHandler::CacheType type) {
+  cache_handler_->ClearCachedMetadata(type);
+};
 
 void ScriptResource::DestroyDecodedDataForFailedRevalidation() {
   source_text_ = AtomicString();

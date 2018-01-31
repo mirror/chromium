@@ -64,6 +64,14 @@ class ResourceTimingInfo;
 class ResourceLoader;
 class SecurityOrigin;
 
+// A callback for sending the serialized data of cached metadata back to the
+// platform.
+class CacheMetadataSender {
+ public:
+  virtual ~CacheMetadataSender() = default;
+  virtual void Send(const char*, size_t) = 0;
+};
+
 // A resource that is held in the cache. Classes who want to use this object
 // should derive from ResourceClient, to get the function calls in case the
 // requested data has arrived. This class also does the actual communication
@@ -227,11 +235,16 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
 
   virtual void ReportResourceTimingToClients(const ResourceTimingInfo&) {}
 
+  // Create a handler for the cached metadata of this resource.
+  virtual void CreateCachedMetadataHandler(
+      std::unique_ptr<CacheMetadataSender> send_callback){};
+  virtual void ClearCachedMetadataHandler(){};
   // Sets the serialized metadata retrieved from the platform's cache.
   virtual void SetSerializedCachedMetadata(const char*, size_t);
-
-  // This may return nullptr when the resource isn't cacheable.
-  CachedMetadataHandler* CacheHandler();
+  virtual void ClearCachedMetadata(CachedMetadataHandler::CacheType){};
+  // Helper for creating the send callback function for the cached metadata
+  // handler.
+  std::unique_ptr<CacheMetadataSender> CreateCacheMetadataSender() const;
 
   AtomicString HttpContentType() const;
 
@@ -418,9 +431,6 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   friend class ResourceLoader;
   friend class SubresourceIntegrityTest;
 
-  class CachedMetadataHandlerImpl;
-  class ServiceWorkerResponseCachedMetadataHandler;
-
   void RevalidationSucceeded(const ResourceResponse&);
   void RevalidationFailed();
 
@@ -442,7 +452,6 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   ResourceStatus status_;
   CORSStatus cors_status_;
 
-  Member<CachedMetadataHandlerImpl> cache_handler_;
   scoped_refptr<const SecurityOrigin> fetcher_security_origin_;
 
   Optional<ResourceError> error_;
