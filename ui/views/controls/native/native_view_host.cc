@@ -82,6 +82,11 @@ void NativeViewHost::Layout() {
     return;
 
   gfx::Rect vis_bounds = GetVisibleBounds();
+  LOG(ERROR) << "NativeViewHost GetVisibleBounds "
+	     << vis_bounds.x() << ", "
+	     << vis_bounds.y() << ", "
+	     << vis_bounds.width() << ", "
+	     << vis_bounds.height();
   bool visible = !vis_bounds.IsEmpty();
 
   if (visible && !fast_resize_) {

@@ -19,6 +19,7 @@ class WebContents;
 namespace views {
 class Label;
 class LabelButton;
+class WebView;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -34,11 +35,14 @@ class SadTabView : public SadTab,
                    public views::LinkListener,
                    public views::ButtonListener {
  public:
+  static const char kViewClassName[];
+
   SadTabView(content::WebContents* web_contents, SadTabKind kind);
   ~SadTabView() override;
 
   // Overridden from views::View:
   void Layout() override;
+  const char* GetClassName() const override;
 
   // Overridden from views::LinkListener:
   void LinkClicked(views::Link* source, int event_flags) override;
@@ -57,6 +61,7 @@ class SadTabView : public SadTab,
   views::Link* help_link_;
   views::LabelButton* action_button_;
   views::Label* title_;
+  views::WebView* owner_;
 
   DISALLOW_COPY_AND_ASSIGN(SadTabView);
 };

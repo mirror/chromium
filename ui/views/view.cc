@@ -409,6 +409,7 @@ gfx::Rect View::GetVisibleBounds() const {
   gfx::RectF views_vis_bounds(vis_bounds);
   transform.TransformRectReverse(&views_vis_bounds);
   // Partially visible pixels should be considered visible.
+
   return gfx::ToEnclosingRect(views_vis_bounds);
 }
 

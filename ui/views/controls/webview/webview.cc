@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "base/debug/stack_trace.h"
 #include "build/build_config.h"
 #include "content/public/browser/browser_accessibility_state.h"
 #include "content/public/browser/browser_context.h"
@@ -52,13 +53,35 @@ content::WebContents* WebView::GetWebContents() {
 }
 
 void WebView::SetWebContents(content::WebContents* replacement) {
+  LOG(ERROR) << "Top of SetWebContents, Holder bounds is now: "
+	     << holder_->size().width()
+	     << ", " << holder_->size().height()
+	     << " WebView height is: " << height()
+	     << " parent height is: " << parent()->height();
+    
   if (replacement == web_contents())
     return;
+
+  if (crashed_overlay_view_) {
+    //crashed_overlay_view_->SetSize(gfx::Size(0, 0));
+    RemoveChildView(crashed_overlay_view_);
+    crashed_overlay_view_ = nullptr;
+  }
+  LOG(ERROR) << "2nd of SetWebContents, Holder bounds is now: "
+	     << holder_->size().width()
+	     << ", " << holder_->size().height()
+    	     << " WebView height is: " << height()
+	     << " parent height is: " << parent()->height();
+
   DetachWebContents();
   WebContentsObserver::Observe(replacement);
+
+  LOG(ERROR) << "Middle of SetWebContents, Holder bounds is now: "
+	     << holder_->size().width()
+	     << ", " << holder_->size().height();
+
   // web_contents() now returns |replacement| from here onwards.
-  SetFocusBehavior(web_contents() ? FocusBehavior::ALWAYS
-                                  : FocusBehavior::NEVER);
+  UpdateCrashedOverlayView();
   if (wc_owner_.get() != replacement)
     wc_owner_.reset();
   if (embed_fullscreen_widget_mode_enabled_) {
@@ -91,6 +114,27 @@ void WebView::SetResizeBackgroundColor(SkColor resize_background_color) {
   holder_->set_resize_background_color(resize_background_color);
 }
 
+void WebView::SetCrashedOverlayView(View* crashed_overlay_view) {
+  LOG(ERROR) << "SetCrashedOverlayView " << crashed_overlay_view;
+  if (crashed_overlay_view_ == crashed_overlay_view)
+    return;
+
+  if (crashed_overlay_view_) {
+    LOG(ERROR) << "Removing child view";
+    RemoveChildView(crashed_overlay_view_);
+  }
+
+  crashed_overlay_view_ = crashed_overlay_view;
+  if (crashed_overlay_view_) {
+    LOG(ERROR) << "Adding CrashedOverlayView as child";
+    AddChildView(crashed_overlay_view_);
+    crashed_overlay_view_->SetPreferredSize(gfx::Size(0, 0));
+    crashed_overlay_view_->SetSize(size());
+  }
+
+  UpdateCrashedOverlayView();
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // WebView, View overrides:
 
@@ -111,6 +155,9 @@ std::unique_ptr<content::WebContents> WebView::SwapWebContents(
 }
 
 void WebView::OnBoundsChanged(const gfx::Rect& previous_bounds) {
+  if (crashed_overlay_view_ && crashed_overlay_view_->IsDrawn())
+    crashed_overlay_view_->SetSize(size());
+
   // In most cases, the holder is simply sized to fill this WebView's bounds.
   // Only WebContentses that are in fullscreen mode and being screen-captured
   // will engage the special layout/sizing behavior.
@@ -124,7 +171,23 @@ void WebView::OnBoundsChanged(const gfx::Rect& previous_bounds) {
              web_contents())))) {
     // Reset the native view size.
     holder_->SetNativeViewSize(gfx::Size());
+
+    if (holder_bounds != holder_->bounds()) {
+      LOG(ERROR) << "OnBoundsChanged changing holder bounds to: "
+		 << holder_bounds.x() << ", "
+		 << holder_bounds.y() << ", "
+		 << holder_bounds.width() << ", "
+		 << holder_bounds.height();
+
+      //LOG(ERROR) << "Stack:\n" << base::debug::StackTrace().ToString();
+    }
+
     holder_->SetBoundsRect(holder_bounds);
+
+    LOG(ERROR) << "OnBoundsChanged changing holder bounds to: "
+	       << holder_->size().width()
+	       << ", " << holder_->size().height();
+
     return;
   }
 
@@ -181,12 +244,12 @@ bool WebView::OnMousePressed(const ui::MouseEvent& event) {
 }
 
 void WebView::OnFocus() {
-  if (web_contents())
+  if (web_contents() && !web_contents()->IsCrashed())
     web_contents()->Focus();
 }
 
 void WebView::AboutToRequestFocusFromTabTraversal(bool reverse) {
-  if (web_contents())
+  if (web_contents() && !web_contents()->IsCrashed())
     web_contents()->FocusThroughTabTraversal(reverse);
 }
 
@@ -195,7 +258,7 @@ void WebView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
 }
 
 gfx::NativeViewAccessible WebView::GetNativeViewAccessible() {
-  if (web_contents()) {
+  if (web_contents() && !web_contents()->IsCrashed()) {
     content::RenderWidgetHostView* host_view =
         web_contents()->GetRenderWidgetHostView();
     if (host_view)
@@ -216,10 +279,12 @@ bool WebView::EmbedsFullscreenWidget() const {
 // WebView, content::WebContentsObserver implementation:
 
 void WebView::RenderViewReady() {
+  UpdateCrashedOverlayView();
   NotifyAccessibilityWebContentsChanged();
 }
 
 void WebView::RenderViewDeleted(content::RenderViewHost* render_view_host) {
+  UpdateCrashedOverlayView();
   NotifyAccessibilityWebContentsChanged();
 }
 
@@ -264,6 +329,7 @@ void WebView::OnWebContentsFocused(
 }
 
 void WebView::RenderProcessGone(base::TerminationStatus status) {
+  UpdateCrashedOverlayView();
   NotifyAccessibilityWebContentsChanged();
 }
 
@@ -294,8 +360,15 @@ void WebView::AttachWebContents() {
 }
 
 void WebView::DetachWebContents() {
+  LOG(ERROR) << "Top of DetachWebContents "
+    	     << " WebView height is: " << height()
+	     << " parent height is: " << parent()->height()
+	     << " parent is " << parent();
   if (web_contents())
     holder_->Detach();
+  LOG(ERROR) << "Bottom of DetachWebContents "
+    	     << " WebView height is: " << height()
+	     << " parent height is: " << parent()->height();
 }
 
 void WebView::ReattachForFullscreenChange(bool enter_fullscreen) {
@@ -315,6 +388,57 @@ void WebView::ReattachForFullscreenChange(bool enter_fullscreen) {
     OnBoundsChanged(bounds());
   }
   NotifyAccessibilityWebContentsChanged();
+}
+
+void WebView::UpdateCrashedOverlayView() {
+  if (web_contents() && web_contents()->IsCrashed() && crashed_overlay_view_) {
+    SetFocusBehavior(FocusBehavior::NEVER);
+
+    LOG(ERROR) << "Hiding Holder";
+    holder_->SetVisible(false);
+    LOG(ERROR) << "Holder bounds is now: " << holder_->size().width()
+	       << ", " << holder_->size().height();
+
+    LOG(ERROR) << "Showing CrashedOverlayView";
+    crashed_overlay_view_->SetVisible(true);
+    LOG(ERROR) << "Holder bounds is now: " << holder_->size().width()
+	       << ", " << holder_->size().height();
+
+
+    LOG(ERROR) << "Drawn: " << crashed_overlay_view_->IsDrawn();
+    LOG(ERROR) << "enabled: " << crashed_overlay_view_->enabled();
+    LOG(ERROR) << "Bounds: "
+	       << crashed_overlay_view_->GetBoundsInScreen().x() << ", "
+	       << crashed_overlay_view_->GetBoundsInScreen().y() << ", "
+	       << crashed_overlay_view_->GetBoundsInScreen().width() << ", "
+	       << crashed_overlay_view_->GetBoundsInScreen().height();
+
+    LOG(ERROR) << "Calling OnBoundsChanged";
+    OnBoundsChanged(gfx::Rect());
+    LOG(ERROR) << "Holder bounds is now: " << holder_->size().width()
+	       << ", " << holder_->size().height();
+    
+    return;
+  }
+
+  SetFocusBehavior(
+      web_contents() ? FocusBehavior::ALWAYS : FocusBehavior::NEVER);
+
+  LOG(ERROR) << "Showing WebContents";
+  LOG(ERROR) << "Holder bounds is initially: " << holder_->size().width()
+	     << ", " << holder_->size().height();
+  if (crashed_overlay_view_) {
+    LOG(ERROR) << "Hiding crashed overlay view";
+    crashed_overlay_view_->SetVisible(false);
+  }
+
+  LOG(ERROR) << "Holder bounds is now: " << holder_->size().width()
+	     << ", " << holder_->size().height();
+  LOG(ERROR) << "Calling OnBoundsChanged";
+  OnBoundsChanged(gfx::Rect());
+  LOG(ERROR) << "Holder bounds is now: " << holder_->size().width()
+	     << ", " << holder_->size().height();
+  holder_->SetVisible(true);
 }
 
 void WebView::NotifyAccessibilityWebContentsChanged() {

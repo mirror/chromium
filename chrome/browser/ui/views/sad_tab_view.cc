@@ -10,21 +10,26 @@
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "chrome/app/vector_icons/vector_icons.h"
+#include "chrome/browser/ui/browser_finder.h"
+#include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/browser/ui/views/harmony/bulleted_label_list_view.h"
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "chrome/browser/ui/views/harmony/chrome_typography.h"
 #include "content/public/browser/web_contents.h"
+#include "ui/accessibility/ax_enums.mojom.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/color_palette.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/native_theme/common_theme.h"
 #include "ui/native_theme/native_theme.h"
+#include "ui/views/accessibility/view_accessibility.h"
 #include "ui/views/background.h"
 #include "ui/views/controls/button/md_text_button.h"
 #include "ui/views/controls/image_view.h"
 #include "ui/views/controls/label.h"
 #include "ui/views/controls/link.h"
+#include "ui/views/controls/webview/webview.h"
 #include "ui/views/layout/grid_layout.h"
 #include "ui/views/widget/widget.h"
 
@@ -46,6 +51,9 @@ views::Label* CreateFormattedLabel(const base::string16& message) {
 }
 
 }  // namespace
+
+// static
+const char SadTabView::kViewClassName[] = "SadTabView";
 
 SadTabView::SadTabView(content::WebContents* web_contents, SadTabKind kind)
     : SadTab(web_contents, kind) {
@@ -119,6 +127,17 @@ SadTabView::SadTabView(content::WebContents* web_contents, SadTabKind kind)
   layout->AddPaddingRow(2, provider->GetDistanceMetric(
                                views::DISTANCE_UNRELATED_CONTROL_VERTICAL));
 
+  Browser* browser = chrome::FindBrowserWithWebContents(web_contents);
+  LOG(ERROR) << "SadTabView browser: " << browser;
+  DCHECK(browser);
+  BrowserView* browser_view = BrowserView::GetBrowserViewForBrowser(browser);
+  LOG(ERROR) << "SadTabView browser_view: " << browser_view;
+  DCHECK(browser_view);
+  owner_ = browser_view->GetContentsWebView();
+  LOG(ERROR) << "SadTabView web_view: " << owner_;
+  owner_->SetCrashedOverlayView(this);
+    
+  /*
   views::Widget::InitParams sad_tab_params(
       views::Widget::InitParams::TYPE_CONTROL);
 
@@ -137,11 +156,29 @@ SadTabView::SadTabView(content::WebContents* web_contents, SadTabKind kind)
                                     web_contents->GetNativeView());
   gfx::Rect bounds = web_contents->GetContainerBounds();
   sad_tab->SetBounds(gfx::Rect(bounds.size()));
+
+  // Set the focus traversable parent to the contents view, so that
+  // you can tab out of this widget and back to the rest of the browser.
+  views::Widget* parent_widget = views::Widget::GetWidgetForNativeWindow(
+      web_contents->GetTopLevelNativeWindow());
+  BrowserView* browser_view = BrowserView::GetBrowserViewForNativeWindow(
+      web_contents->GetTopLevelNativeWindow());
+  sad_tab->SetFocusTraversableParent(parent_widget->GetFocusTraversable());
+  sad_tab->SetFocusTraversableParentView(browser_view->GetContentsView());
+  */
+
+  // Make the accessibility role of this view an alert dialog, and
+  // put focus on the action button. This causes screen readers to
+  // immediately announce the text of this view.
+  GetViewAccessibility().OverrideRole(ax::mojom::Role::kDialog);
+  action_button_->RequestFocus();
 }
 
 SadTabView::~SadTabView() {
-  if (GetWidget())
-    GetWidget()->Close();
+  LOG(ERROR) << "SadTabView::~SadTabView";
+  if (parent())
+    owner_->SetCrashedOverlayView(nullptr);
+  LOG(ERROR) << "SadTabView::~SadTabView 2";
 }
 
 void SadTabView::LinkClicked(views::Link* source, int event_flags) {
@@ -164,6 +201,10 @@ void SadTabView::Layout() {
   title_->SizeToFit(max_width);
 
   View::Layout();
+}
+
+const char* SadTabView::GetClassName() const {
+  return kViewClassName;
 }
 
 void SadTabView::OnPaint(gfx::Canvas* canvas) {

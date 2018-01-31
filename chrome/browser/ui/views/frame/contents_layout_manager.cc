@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "base/debug/stack_trace.h"
 #include "chrome/browser/ui/views/frame/contents_layout_manager.h"
 
 #include "ui/views/view.h"
@@ -40,9 +41,17 @@ void ContentsLayoutManager::SetActiveTopMargin(int margin) {
 void ContentsLayoutManager::Layout(views::View* contents_container) {
   DCHECK(host_ == contents_container);
 
+  //LOG(ERROR) << "Stack:\n" << base::debug::StackTrace().ToString();
+
   int top = active_top_margin_;
   int height = std::max(0, contents_container->height() - top);
   int width = contents_container->width();
+
+  LOG(ERROR) << "ContentsLayoutManager::Layout " << width
+	     << ", " << height << " top=" << top;
+  LOG(ERROR) << "contents_container is: "
+	     << contents_container
+	     << " " << contents_container->GetClassName();
 
   gfx::Size container_size(width, height);
   gfx::Rect new_devtools_bounds;

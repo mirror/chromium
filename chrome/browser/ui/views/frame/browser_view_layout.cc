@@ -325,7 +325,16 @@ int BrowserViewLayout::NonClientHitTest(const gfx::Point& point) {
 
 void BrowserViewLayout::Layout(views::View* browser_view) {
   vertical_layout_rect_ = browser_view->GetLocalBounds();
+
+  LOG(ERROR) << "BrowserViewLayout "
+	     << vertical_layout_rect_.x() << ", "
+	     << vertical_layout_rect_.y() << ", "
+	     << vertical_layout_rect_.width() << ", "
+	     << vertical_layout_rect_.height();
+
   int top = LayoutTabStripRegion(delegate_->GetTopInsetInBrowserView(false));
+  LOG(ERROR) << "Top: " << top;
+
   if (delegate_->IsTabStripVisible()) {
     // By passing true to GetTopInsetInBrowserView(), we position the tab
     // background to vertically align with the frame background image of a
@@ -342,8 +351,10 @@ void BrowserViewLayout::Layout(views::View* browser_view) {
         browser_view_->y() + delegate_->GetTopInsetInBrowserView(true)));
   }
   top = LayoutToolbar(top);
+  LOG(ERROR) << "Top after toolbar: " << top;
 
   top = LayoutBookmarkAndInfoBars(top, browser_view->y());
+  LOG(ERROR) << "Top after bookmark and infobars: " << top;
 
   // Top container requires updated toolbar and bookmark bar to compute bounds.
   UpdateTopContainerBounds();
@@ -354,6 +365,8 @@ void BrowserViewLayout::Layout(views::View* browser_view) {
   int active_top_margin = GetContentsOffsetForBookmarkBar();
   contents_layout_manager_->SetActiveTopMargin(active_top_margin);
   top -= active_top_margin;
+
+  LOG(ERROR) << "LayoutContentsContainerView " << top << ", " << bottom;
   LayoutContentsContainerView(top, bottom);
 
   // This must be done _after_ we lay out the WebContents since this

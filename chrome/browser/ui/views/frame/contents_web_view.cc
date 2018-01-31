@@ -37,18 +37,21 @@ bool ContentsWebView::GetNeedsNotificationWhenVisibleBoundsChange() const {
 }
 
 void ContentsWebView::OnVisibleBoundsChanged() {
-  if (status_bubble_)
-    status_bubble_->Reposition();
+  //if (status_bubble_)
+  //  status_bubble_->Reposition();
 }
 
 void ContentsWebView::ViewHierarchyChanged(
     const ViewHierarchyChangedDetails& details) {
+  /**
   WebView::ViewHierarchyChanged(details);
   if (details.is_add)
     OnThemeChanged();
+  **/
 }
 
 void ContentsWebView::OnThemeChanged() {
+  /**
   const ui::ThemeProvider* const theme = GetThemeProvider();
   if (!theme)
     return;
@@ -73,6 +76,7 @@ void ContentsWebView::OnThemeChanged() {
     if (rwhv)
      rwhv->SetBackgroundColor(ntp_background);
   }
+  **/
 }
 
 std::unique_ptr<ui::Layer> ContentsWebView::RecreateLayer() {
