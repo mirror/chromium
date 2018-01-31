@@ -118,6 +118,13 @@ void RenderFrameProxyHost::SetChildRWHView(RenderWidgetHostView* view) {
       static_cast<RenderWidgetHostViewChildFrame*>(view));
 }
 
+void RenderFrameProxyHost::SetChildRWHView(
+    RenderWidgetHostView* view,
+    const gfx::Rect& initial_frame_rect) {
+  SetChildRWHView(view);
+  cross_process_frame_connector_->SetRect(initial_frame_rect);
+}
+
 RenderViewHostImpl* RenderFrameProxyHost::GetRenderViewHost() {
   return frame_tree_node_->frame_tree()->GetRenderViewHost(
       site_instance_.get());
