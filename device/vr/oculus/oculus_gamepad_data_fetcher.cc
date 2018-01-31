@@ -66,7 +66,8 @@ void SetTouchData(PadState* state,
   if (!state)
     return;
   Gamepad& pad = state->data;
-  if (state->active_state == GAMEPAD_NEWLY_ACTIVE) {
+  if (!state->is_initialized) {
+    state->is_initialized = true;
     pad.connected = true;
     pad.pose.not_null = true;
     pad.pose.has_orientation = true;
