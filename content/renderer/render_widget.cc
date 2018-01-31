@@ -853,6 +853,11 @@ void RenderWidget::OnWasHidden() {
   SetHidden(true);
   for (auto& observer : render_frames_)
     observer.WasHidden();
+
+  // Ack the resize if we have to, so that the next time we're visible we get a
+  // fresh ResizeParams right away; otherwise we'll start painting based on a
+  // stale ResizeParams.
+  DidResizeOrRepaintAck();
 }
 
 void RenderWidget::OnWasShown(bool needs_repainting,
