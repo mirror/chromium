@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "018287a5_c783fe3c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-31T14:22:46Z",
+      "side": 1,
+      "message": "Can you find a subject line that better describes what you are changing? I always find \"fix crash\" a bit redundant, because the crash should be referenced with the bug, and I would hope the CL fixes the crash instead of making it worse ;-) Something like \"Don\u0027t cancel ConfirmSyncDataStateMachine callback on destruction\" maybe? That\u0027s hopefully not too long.",
+      "range": {
+        "startLine": 7,
+        "startChar": 18,
+        "endLine": 7,
+        "endChar": 65
+      },
+      "revId": "600c4d669a592f054625da4c65d5e0f2fdf4e36d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4450b84_9cbe882d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-31T14:22:46Z",
+      "side": 1,
+      "message": "Nit: Can you do this as `/* isBeingDestroyed \u003d */ true`?",
+      "range": {
+        "startLine": 324,
+        "startChar": 48,
+        "endLine": 324,
+        "endChar": 75
+      },
+      "revId": "600c4d669a592f054625da4c65d5e0f2fdf4e36d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
