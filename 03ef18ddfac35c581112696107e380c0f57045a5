@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "664fb379_7132362c",
+        "filename": "chrome/browser/certificate_viewer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-31T05:41:29Z",
+      "side": 1,
+      "message": "nit: unused",
+      "revId": "03ef18ddfac35c581112696107e380c0f57045a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cd1bf93_16c52c8a",
+        "filename": "chrome/browser/ui/cocoa/certificate_viewer_mac_cocoa.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-31T05:41:29Z",
+      "side": 1,
+      "message": "unused",
+      "revId": "03ef18ddfac35c581112696107e380c0f57045a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36b02191_fa4a6715",
+        "filename": "chrome/browser/ui/cocoa/certificate_viewer_mac_cocoa.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-31T05:41:29Z",
+      "side": 1,
+      "message": "unused",
+      "revId": "03ef18ddfac35c581112696107e380c0f57045a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0f412f6_70186857",
+        "filename": "chrome/browser/ui/views/certificate_viewer_mac_views.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-31T05:41:29Z",
+      "side": 1,
+      "message": "unused?",
+      "revId": "03ef18ddfac35c581112696107e380c0f57045a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a900006_6e0ca393",
+        "filename": "chrome/browser/ui/views/ssl_client_certificate_selector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-31T05:41:29Z",
+      "side": 1,
+      "message": "nit: needs curlies",
+      "revId": "03ef18ddfac35c581112696107e380c0f57045a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "148bd76e_5476f185",
+        "filename": "chrome/browser/ui/views/ssl_client_certificate_selector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-31T05:41:29Z",
+      "side": 1,
+      "message": "I expect we want to do this on mac unconditionally, but maybe that makes hard-to-solve symbol conflicts? This is probably Ok to get started, but maybe TODO(crbug/??) use the native certificate selector on mac all the time (i.e. don\u0027t compile this file at all on mac ever).\n\nSee also http://crbug.com/766343",
+      "revId": "03ef18ddfac35c581112696107e380c0f57045a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef2d46c2_683c61ec",
+        "filename": "chrome/common/chrome_features.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-31T05:41:29Z",
+      "side": 1,
+      "message": "perhaps something like\n\n// Causes views browser builds to use views browser windows by default rather than Cocoa browser windows.",
+      "revId": "03ef18ddfac35c581112696107e380c0f57045a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60bd79f9_c749ed92",
+        "filename": "chrome/common/chrome_features.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-31T05:41:29Z",
+      "side": 1,
+      "message": "maybe kUseViewsBrowserWindows ?\n\n(perhaps guard with BUILDFLAG(MAC_VIEWS_BROWSER)?)\n\nviewsBrowserUsesViews sounds like a tautology :)",
+      "revId": "03ef18ddfac35c581112696107e380c0f57045a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a76816a_ceda307c",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 15
+      },
+      "lineNbr": 3823,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-31T05:41:29Z",
+      "side": 1,
+      "message": "nit: more context (and punctuation :). Perhaps something like\n\n# Remove this needless if (true). It exists to demarcate files that the mac build would not need if it only used toolkit-views browser windows.",
+      "revId": "03ef18ddfac35c581112696107e380c0f57045a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
