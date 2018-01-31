@@ -77,4 +77,13 @@ LoadPolicy DocumentSubresourceFilter::GetLoadPolicy(
   return LoadPolicy::ALLOW;
 }
 
+const url_pattern_index::flat::UrlRule*
+DocumentSubresourceFilter::FindMatchingUrlRule(
+    const GURL& subresource_url,
+    url_pattern_index::proto::ElementType subresource_type) {
+  return ruleset_matcher_.MatchedUrlRule(
+      subresource_url, *document_origin_, subresource_type,
+      activation_state_.generic_blocking_rules_disabled);
+}
+
 }  // namespace subresource_filter

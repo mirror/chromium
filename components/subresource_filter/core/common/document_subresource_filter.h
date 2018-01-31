@@ -56,6 +56,10 @@ class DocumentSubresourceFilter {
       const GURL& subresource_url,
       url_pattern_index::proto::ElementType subresource_type);
 
+  const url_pattern_index::flat::UrlRule* FindMatchingUrlRule(
+      const GURL& subresource_url,
+      url_pattern_index::proto::ElementType subresource_type);
+
  private:
   const ActivationState activation_state_;
   const scoped_refptr<const MemoryMappedRuleset> ruleset_;
