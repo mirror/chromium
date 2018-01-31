@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4e3feef3_c2dbeb69",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.h",
+        "patchSetId": 54
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-31T21:16:39Z",
+      "side": 1,
+      "message": "A owns B and A owns C therefore A can determine and fix the destruction order of B \u0026 C.  In this case the existing code destroys the WebFrameWidgetImpl before the Compositor, causing the other reference to always be last.\n\nIn making this less brittle I\u0027ve added ref counting to the CompositorMutatorImpl.  It can\u0027t be GC\u0027d because the last free happens from the non-Oilpan compositor thread (if present).",
+      "parentUuid": "8868becb_dd4a84b8",
+      "revId": "c242187143095f2b4ce00bbc371b9fe328ef244b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e60edf68_599f17a1",
         "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.h",
         "patchSetId": 54
@@ -33,6 +51,24 @@
       "revId": "c242187143095f2b4ce00bbc371b9fe328ef244b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91ee4aaa_3955ec33",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.h",
+        "patchSetId": 54
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-31T21:16:39Z",
+      "side": 1,
+      "message": "Yes. Commented.",
+      "parentUuid": "e60edf68_599f17a1",
+      "revId": "c242187143095f2b4ce00bbc371b9fe328ef244b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "568026e8_ab8ac902",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.cpp",
+        "patchSetId": 54
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-31T21:16:39Z",
+      "side": 1,
+      "message": "Seems like a comment would be documentation that is likely to get out of synch with the environmental reasons for the code running without a compositor thread.  e.g. a reversal of the launch of threaded rendering, or turning it off on certain architectures.",
+      "parentUuid": "5dcc4918_3af54945",
+      "revId": "c242187143095f2b4ce00bbc371b9fe328ef244b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e1d64d9_da8361e5",
         "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.cpp",
         "patchSetId": 54
@@ -67,6 +121,24 @@
       "revId": "c242187143095f2b4ce00bbc371b9fe328ef244b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee0b48fd_6aa9f0bb",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.cpp",
+        "patchSetId": 54
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-31T21:16:39Z",
+      "side": 1,
+      "message": "Just to make it clearer that we can not use the animator after Seal has been called.  More teeth than a comment, perhaps I\u0027ll add a comment too.",
+      "parentUuid": "5e1d64d9_da8361e5",
+      "revId": "c242187143095f2b4ce00bbc371b9fe328ef244b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "6f10101b_5bc4db31",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.cpp",
+        "patchSetId": 54
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-31T21:16:39Z",
+      "side": 1,
+      "message": "The constructor is private, so make_unique can\u0027t call it.\nChanging this to a refcounted smart pointer allows us to let the constructor duplicate the pointer and keep this cleaner.",
+      "parentUuid": "76ef6ef9_6e105025",
+      "revId": "c242187143095f2b4ce00bbc371b9fe328ef244b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0b492f5_a4cc8704",
         "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.cpp",
         "patchSetId": 54
@@ -101,6 +191,24 @@
       "revId": "c242187143095f2b4ce00bbc371b9fe328ef244b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6de729e_9bccf287",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.cpp",
+        "patchSetId": 54
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-31T21:16:39Z",
+      "side": 1,
+      "message": "Explicit synchronization was strongly discouraged earlier.\nIndeed, we can mutate |outputs_| because the mutator thread is blocked.\nThe next step is to queue the processing of the output on the owning thread and so an explicit lock would simply be removed in following CLs.\n\nI\u0027ll clarify the comment a little more.",
+      "parentUuid": "d0b492f5_a4cc8704",
+      "revId": "c242187143095f2b4ce00bbc371b9fe328ef244b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "78fbe8de_d3dd500e",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.h",
+        "patchSetId": 54
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-31T21:16:39Z",
+      "side": 1,
+      "message": "Not necessarily.  When there isn\u0027t a compositor thread the mutator thread is the main thread.",
+      "parentUuid": "680b6f75_c3a991f9",
+      "revId": "c242187143095f2b4ce00bbc371b9fe328ef244b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6f4a92a_0e92326c",
         "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.h",
         "patchSetId": 54
@@ -135,6 +261,24 @@
       "revId": "c242187143095f2b4ce00bbc371b9fe328ef244b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e3b7b68_208ad845",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorImpl.h",
+        "patchSetId": 54
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2018-01-31T21:16:39Z",
+      "side": 1,
+      "message": "Oops - left over from a declined suggestion.\nRemoved.",
+      "parentUuid": "a6f4a92a_0e92326c",
+      "revId": "c242187143095f2b4ce00bbc371b9fe328ef244b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
