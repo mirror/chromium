@@ -261,6 +261,9 @@ class MODULES_EXPORT RTCPeerConnection final
   MediaStreamTrack* GetTrack(const WebMediaStreamTrack&) const;
   HeapVector<Member<RTCRtpReceiver>>::iterator FindReceiver(
       const WebRTCRtpReceiver& web_receiver);
+  // TODO(hbos): Explain and link to bug.
+  void CreateMissingSendersForStream(MediaStream*);
+  void RemoveUnusedSenders();
 
   // The "Change" methods set the state asynchronously and fire the
   // corresponding event immediately after changing the state (if it was really
@@ -302,10 +305,8 @@ class MODULES_EXPORT RTCPeerConnection final
   ICEGatheringState ice_gathering_state_;
   ICEConnectionState ice_connection_state_;
 
-  MediaStreamVector local_streams_;
   // A map containing any track that is in use by the peer connection. This
-  // includes tracks of |local_streams_|, |remote_streams_|, |rtp_senders_| and
-  // |rtp_receivers_|.
+  // includes tracks of |rtp_senders_| and |rtp_receivers_|.
   HeapHashMap<WeakMember<MediaStreamComponent>, WeakMember<MediaStreamTrack>>
       tracks_;
   HeapHashMap<uintptr_t, Member<RTCRtpSender>> rtp_senders_;
