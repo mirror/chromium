@@ -74,8 +74,8 @@ Data read_file_data_or_exit(const char* name) {
   return data;
 }
 
-size_t zlib_estimate_compressed_size(size_t input_size) {
-  return compressBound(input_size);
+uLong zlib_estimate_compressed_size(size_t input_size) {
+  return compressBound((uLong)input_size);
 }
 
 enum zlib_wrapper {
