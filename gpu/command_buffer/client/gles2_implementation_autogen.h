@@ -1237,7 +1237,8 @@ void BeginRasterCHROMIUM(GLuint texture_id,
                          GLuint msaa_sample_count,
                          GLboolean can_use_lcd_text,
                          GLboolean use_distance_field_text,
-                         GLint pixel_config) override;
+                         GLint pixel_config,
+                         GLColorSpace color_space) override;
 
 void* MapRasterCHROMIUM(GLsizeiptr size) override;
 
