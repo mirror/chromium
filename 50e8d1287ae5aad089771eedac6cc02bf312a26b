@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "d8cbcd3e_ab751963",
+        "filename": "third_party/WebKit/Source/core/frame/LocalDOMWindow.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1215,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2018-01-31T20:08:19Z",
+      "side": 1,
+      "message": "\u003e In addition to all the script scrolls, there is a whole bunch of cases considered programmatic\n\u003e but are not related to script. For example:\n\u003e \n\u003e  - FrameLoader::RestoreScrollPositionAndViewState\n\u003e  - Page::DidCommitLoad\n\u003e  - RotationViewportAnchor::RestoreToAnchor\n\u003e  - SnapCoordinator::PerformSnapping\n\u003e  - TextFieldInputType::ForwardEvent\n\u003e  - ImageDocument::ImageClicked \n\u003e \n\u003e and etc.\n\u003e \n\u003e It appears to me that currently kProgrammaticScroll is treated like a generic category \n\u003e that is used when it is not user scroll and it does not fall into a more specific category (clamping, anchoring, compositor). \n\u003e \n\u003e I am not sure is there is a better term to refer to all above. But I am fine calling these\n\u003e ProgrammaticScroll and using ScriptScroll for scrolls coming directly via various scroll\n\u003e methods  from javascript. Better suggestions are welcome.\n\nHow about kBrowserScroll for the generic stuff and kPlatformScroll for scrolls from the web platform API\u0027s?",
+      "parentUuid": "fa442f1b_9f5aa20c",
+      "revId": "50e8d1287ae5aad089771eedac6cc02bf312a26b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c1fe8ac_32dab918",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
