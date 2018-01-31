@@ -16,6 +16,41 @@
       "revId": "1063641d0bf9b23449f758d7e0de55b7611dcc06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b483495_98a0cd6a",
+        "filename": "third_party/WebKit/Source/modules/geolocation/GeoNotifier.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-31T01:01:39Z",
+      "side": 1,
+      "message": "I think I understand the problem. See my comment below.",
+      "parentUuid": "cf8a720c_17b7207c",
+      "revId": "1063641d0bf9b23449f758d7e0de55b7611dcc06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8583e01e_27bb1fa1",
+        "filename": "third_party/WebKit/Source/modules/geolocation/GeoNotifier.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-31T01:01:39Z",
+      "side": 1,
+      "message": "Hmm. I\u0027m not sure if this is a right fix.\n\nSince Geolocation::one_shots_ is cleared before invoking the notifiers, Geolocation should not own the notifier at this point. I guess we unconditionally hit the early-return at line 100.\n\nI think that the problem is:\n\n- Geolocation traces one_shots_being_invoked_. However, it\u0027s possible that Geolocation itself is already gone when the callback is invoked. So tracing one_shots_being_invoked_ from Geolocation won\u0027t be useful.\n\nTo fix the problem, we\u0027ll need to either:\n\n- Trace one_shots_being_invoked_ from the root set (v8::Persistent or bind the lifetime to DOMWindow); or\n- Make Geolocation ActiveScriptWrappable and keep Geolocation alive.",
+      "revId": "1063641d0bf9b23449f758d7e0de55b7611dcc06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
