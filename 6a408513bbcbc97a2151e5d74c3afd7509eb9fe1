@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e222a579_9b96f933",
+        "filename": "chrome/browser/browsing_data/browsing_data_remover_browsertest.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-01-31T18:33:46Z",
+      "side": 1,
+      "message": "nit: const std::string kType",
+      "range": {
+        "startLine": 415,
+        "startChar": 2,
+        "endLine": 415,
+        "endChar": 18
+      },
+      "revId": "6a408513bbcbc97a2151e5d74c3afd7509eb9fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "389d4280_0d225a0f",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-01-31T18:33:46Z",
+      "side": 1,
+      "message": "No longer true.\n\nAlso, the change below seems unrelated to this CL.\n\nAlso, should be no-op, since we don\u0027t use history with filters anywhere?",
+      "range": {
+        "startLine": 571,
+        "startChar": 45,
+        "endLine": 571,
+        "endChar": 48
+      },
+      "revId": "6a408513bbcbc97a2151e5d74c3afd7509eb9fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "970e33dd_1a2c6726",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-01-31T18:33:46Z",
+      "side": 1,
+      "message": "nit: colon",
+      "range": {
+        "startLine": 172,
+        "startChar": 35,
+        "endLine": 172,
+        "endChar": 36
+      },
+      "revId": "6a408513bbcbc97a2151e5d74c3afd7509eb9fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4813c7a5_c4d7a137",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-01-31T18:33:46Z",
+      "side": 1,
+      "message": "This shouldn\u0027t happen, since BrowsingDataRemoverFactory DependsOn(HistoryServiceFactory::GetInstance()). Should we remove or DCHECK() instead?",
+      "range": {
+        "startLine": 179,
+        "startChar": 7,
+        "endLine": 179,
+        "endChar": 33
+      },
+      "revId": "6a408513bbcbc97a2151e5d74c3afd7509eb9fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c803a38_26438da7",
+        "filename": "chrome/browser/browsing_data/navigation_entry_remover.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-01-31T18:33:46Z",
+      "side": 1,
+      "message": "This method has quite unintuitive semantics.\n\nIt basically expects that either range or urls are specified. If both are, then we arbitrarily choose to create a predicate respecting time but not rows. Although it\u0027s just in anonymous namespace, a clarifying comment would be useful.",
+      "range": {
+        "startLine": 38,
+        "startChar": 49,
+        "endLine": 38,
+        "endChar": 72
+      },
+      "revId": "6a408513bbcbc97a2151e5d74c3afd7509eb9fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8908a706_011b100f",
+        "filename": "chrome/browser/browsing_data/navigation_entry_remover.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-01-31T18:33:46Z",
+      "side": 1,
+      "message": "Eh, same as above. This time the comment is actually pretty important :)\n\nSince we know that HistoryServiceObserver will always give us one or the other, we could also DCHECK() that only one is specified.",
+      "range": {
+        "startLine": 76,
+        "startChar": 5,
+        "endLine": 76,
+        "endChar": 28
+      },
+      "revId": "6a408513bbcbc97a2151e5d74c3afd7509eb9fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55d80f39_4d129ff1",
+        "filename": "chrome/browser/browsing_data/navigation_entry_remover_browsertest.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-01-31T18:33:46Z",
+      "side": 1,
+      "message": "Nice!",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 37
+      },
+      "revId": "6a408513bbcbc97a2151e5d74c3afd7509eb9fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9d3444c8_a881d194",
+        "filename": "chrome/browser/browsing_data/navigation_entry_remover_browsertest.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-01-31T18:33:46Z",
+      "side": 1,
+      "message": "remove?",
+      "range": {
+        "startLine": 198,
+        "startChar": 16,
+        "endLine": 198,
+        "endChar": 33
+      },
+      "revId": "6a408513bbcbc97a2151e5d74c3afd7509eb9fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
