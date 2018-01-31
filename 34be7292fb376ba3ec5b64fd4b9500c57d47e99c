@@ -1,0 +1,555 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdf83cfb_e4a16ee2",
+        "filename": "ios/chrome/browser/ui/content_suggestions/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-31T08:32:12Z",
+      "side": 1,
+      "message": "Are you sure you want to put it into the non-ui target?\nWhat are you using which requires it?",
+      "range": {
+        "startLine": 15,
+        "startChar": 5,
+        "endLine": 15,
+        "endChar": 36
+      },
+      "revId": "34be7292fb376ba3ec5b64fd4b9500c57d47e99c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27b46766_4be506a2",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-31T08:32:12Z",
+      "side": 1,
+      "message": "You are not setting the toolbar as child VC. It should be updating itself accordingly to the size class, so I don\u0027t think this is working if you start in portrait and rotate to landscape.",
+      "range": {
+        "startLine": 142,
+        "startChar": 10,
+        "endLine": 142,
+        "endChar": 38
+      },
+      "revId": "34be7292fb376ba3ec5b64fd4b9500c57d47e99c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d252502d_a91a72b8",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-31T08:32:12Z",
+      "side": 1,
+      "message": "You don\u0027t need this.",
+      "range": {
+        "startLine": 17,
+        "startChar": 13,
+        "endLine": 17,
+        "endChar": 25
+      },
+      "revId": "34be7292fb376ba3ec5b64fd4b9500c57d47e99c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ba4c2e4_20486563",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-31T08:32:12Z",
+      "side": 1,
+      "message": "Isn\u0027t this in the protocol declaration?",
+      "range": {
+        "startLine": 23,
+        "startChar": 8,
+        "endLine": 23,
+        "endChar": 22
+      },
+      "revId": "34be7292fb376ba3ec5b64fd4b9500c57d47e99c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "388f1d9a_f7b705ec",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-31T08:32:12Z",
+      "side": 1,
+      "message": "Isn\u0027t this in the protocol declaration?",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 30
+      },
+      "revId": "34be7292fb376ba3ec5b64fd4b9500c57d47e99c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26c4d437_0279af64",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-31T08:32:12Z",
+      "side": 1,
+      "message": "Isn\u0027t this in the protocol declaration?",
+      "revId": "34be7292fb376ba3ec5b64fd4b9500c57d47e99c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d92cb54_c260b23c",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-31T08:32:12Z",
+      "side": 1,
+      "message": "This is already in the .h.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 23
+      },
+      "revId": "34be7292fb376ba3ec5b64fd4b9500c57d47e99c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ecf94ab_ba78ce68",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-31T08:32:12Z",
+      "side": 1,
+      "message": "Why aren\u0027t you using a synthesize?",
+      "range": {
+        "startLine": 20,
+        "startChar": 10,
+        "endLine": 20,
+        "endChar": 22
+      },
+      "revId": "34be7292fb376ba3ec5b64fd4b9500c57d47e99c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b39a14d0_577a9f65",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-31T08:32:12Z",
+      "side": 1,
+      "message": "This method and the following are part of the NTPHeaderViewAdapter protocol.",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 22
+      },
+      "revId": "34be7292fb376ba3ec5b64fd4b9500c57d47e99c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b908c13_3076daed",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-31T08:32:12Z",
+      "side": 1,
+      "message": "Can you add a comment saying you can set it only once?",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 24
+      },
+      "revId": "34be7292fb376ba3ec5b64fd4b9500c57d47e99c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c46176f8_1a01149a",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-31T08:32:12Z",
+      "side": 1,
+      "message": "Add newline.",
+      "range": {
+        "startLine": 152,
+        "startChar": 0,
+        "endLine": 152,
+        "endChar": 1
+      },
+      "revId": "34be7292fb376ba3ec5b64fd4b9500c57d47e99c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28e75526_c74dd2a6",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-31T08:32:12Z",
+      "side": 1,
+      "message": "Add newline.",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 1
+      },
+      "revId": "34be7292fb376ba3ec5b64fd4b9500c57d47e99c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ece3c32_d84dd10f",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_view_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-31T08:32:12Z",
+      "side": 1,
+      "message": "Order forward declarations.",
+      "range": {
+        "startLine": 25,
+        "startChar": 7,
+        "endLine": 25,
+        "endChar": 35
+      },
+      "revId": "34be7292fb376ba3ec5b64fd4b9500c57d47e99c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cf256af_da1a66b7",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_view_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-31T08:32:12Z",
+      "side": 1,
+      "message": "Add a comment.",
+      "range": {
+        "startLine": 68,
+        "startChar": 34,
+        "endLine": 68,
+        "endChar": 55
+      },
+      "revId": "34be7292fb376ba3ec5b64fd4b9500c57d47e99c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e22c445_844681d2",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-31T08:32:12Z",
+      "side": 1,
+      "message": "Why not using forward declaration?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 59
+      },
+      "revId": "34be7292fb376ba3ec5b64fd4b9500c57d47e99c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e147cce_1784e7a7",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_header_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-31T08:32:12Z",
+      "side": 1,
+      "message": "You don\u0027t need this as the NTPHeaderViewAdapter is already inheriting from it.",
+      "range": {
+        "startLine": 18,
+        "startChar": 41,
+        "endLine": 18,
+        "endChar": 53
+      },
+      "revId": "34be7292fb376ba3ec5b64fd4b9500c57d47e99c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da3268f5_0cdb0011",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_header_view_adapter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-31T08:32:12Z",
+      "side": 1,
+      "message": "Add comment.",
+      "range": {
+        "startLine": 14,
+        "startChar": 10,
+        "endLine": 14,
+        "endChar": 30
+      },
+      "revId": "34be7292fb376ba3ec5b64fd4b9500c57d47e99c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bb3b4ac_c87998d5",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_header_view_adapter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-31T08:32:12Z",
+      "side": 1,
+      "message": "Add comment.",
+      "revId": "34be7292fb376ba3ec5b64fd4b9500c57d47e99c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6c94e56_d84128c2",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_header_view_adapter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-31T08:32:12Z",
+      "side": 1,
+      "message": "Add comment.",
+      "revId": "34be7292fb376ba3ec5b64fd4b9500c57d47e99c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6736e29e_f795a896",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_header_view_adapter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-31T08:32:12Z",
+      "side": 1,
+      "message": "Not sure this comment still makes sense.",
+      "range": {
+        "startLine": 26,
+        "startChar": 16,
+        "endLine": 26,
+        "endChar": 46
+      },
+      "revId": "34be7292fb376ba3ec5b64fd4b9500c57d47e99c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9a570c7_7a45d7ac",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_header_view_adapter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-31T08:32:12Z",
+      "side": 1,
+      "message": "Update comment.",
+      "revId": "34be7292fb376ba3ec5b64fd4b9500c57d47e99c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcc0b930_026c6e09",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_header_view_adapter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-31T08:32:12Z",
+      "side": 1,
+      "message": "s/Hide/Hides/",
+      "range": {
+        "startLine": 32,
+        "startChar": 3,
+        "endLine": 32,
+        "endChar": 7
+      },
+      "revId": "34be7292fb376ba3ec5b64fd4b9500c57d47e99c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c0073c1_6ba3a70e",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_header_view_adapter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-31T08:32:12Z",
+      "side": 1,
+      "message": "Are you going to use all those methods? Please add a TODO for the ones you will remove during cleanup.",
+      "range": {
+        "startLine": 36,
+        "startChar": 8,
+        "endLine": 36,
+        "endChar": 26
+      },
+      "revId": "34be7292fb376ba3ec5b64fd4b9500c57d47e99c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "955803a8_a5501d5f",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_header_view_adapter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-31T08:32:12Z",
+      "side": 1,
+      "message": "Can you change the comment? Something like\n// Adds the |toolbarView| to the view implementing this protocol.",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 23
+      },
+      "revId": "34be7292fb376ba3ec5b64fd4b9500c57d47e99c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fe96d67_5a061a5e",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_header_view_adapter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-31T08:32:12Z",
+      "side": 1,
+      "message": "Add a TODO to remove this method as part of the cleanup of the pre-UIPhase1 code.",
+      "range": {
+        "startLine": 49,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 38
+      },
+      "revId": "34be7292fb376ba3ec5b64fd4b9500c57d47e99c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
