@@ -2,16 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ui/wm/core/shadow.h"
+#include "ui/compositor/shadow_layer.h"
 
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/compositor/layer.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
 #include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/shadow_util.h"
-#include "ui/wm/core/shadow_types.h"
 
-namespace wm {
+namespace ui {
 
 namespace {
 
@@ -26,13 +25,13 @@ const int kDefaultRoundedCornerRadius = 2;
 }  // namespace
 
 Shadow::Shadow()
-    : desired_elevation_(ShadowElevation::NONE),
+    : desired_elevation_(0),
       rounded_corner_radius_(kDefaultRoundedCornerRadius) {}
 
 Shadow::~Shadow() {}
 
-void Shadow::Init(ShadowElevation elevation) {
-  DCHECK_NE(ShadowElevation::DEFAULT, elevation);
+void Shadow::Init(int elevation) {
+  DCHECK_LE(0, elevation);
   desired_elevation_ = elevation;
   layer_.reset(new ui::Layer(ui::LAYER_NOT_DRAWN));
   RecreateShadowLayer();
@@ -48,8 +47,8 @@ void Shadow::SetContentBounds(const gfx::Rect& content_bounds) {
   UpdateLayerBounds();
 }
 
-void Shadow::SetElevation(ShadowElevation elevation) {
-  DCHECK_NE(ShadowElevation::DEFAULT, elevation);
+void Shadow::SetElevation(int elevation) {
+  DCHECK_LE(0, elevation);
   if (desired_elevation_ == elevation)
     return;
 
@@ -181,4 +180,4 @@ void Shadow::UpdateLayerBounds() {
                 blur_region.height()));
 }
 
-}  // namespace wm
+}  // namespace ui
