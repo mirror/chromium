@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d05cba03_db0e4043",
+        "filename": "chrome/browser/signin/dice_response_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1258891
+      },
+      "writtenOn": "2018-01-31T15:41:01Z",
+      "side": 1,
+      "message": "IIUC, this will log whether the account that we sign out of was the Chrome account. I think the purpose of the request in https://bugs.chromium.org/p/chromium/issues/detail?id\u003d801607 was specifically about knowing if sync was enabled for an account that we sign out of, which could still be true or false even if it was the Chrome account right?",
+      "range": {
+        "startLine": 80,
+        "startChar": 17,
+        "endLine": 80,
+        "endChar": 30
+      },
+      "revId": "0820cf2bde64eadcb8bfc16df8c81470242fdd67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
