@@ -52,6 +52,24 @@
       "revId": "058721c2f9f8013051ba7cbcdbb9f3cab9cc078b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0805ccdd_a889d6fc",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/images/image-decode-local-expected.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-31T01:36:29Z",
+      "side": 1,
+      "message": "Will do as follow-up (as per offline discussion)",
+      "parentUuid": "cee2dac1_5e140d14",
+      "revId": "058721c2f9f8013051ba7cbcdbb9f3cab9cc078b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
