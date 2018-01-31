@@ -5,9 +5,16 @@
 #include "content/browser/loader/signed_exchange_handler.h"
 
 #include "base/feature_list.h"
+#include "content/browser/loader/resource_requester_info.h"
+#include "content/browser/loader/signed_exchange_cert_fetcher.h"
+#include "content/browser/loader/url_loader_factory_impl.h"
+#include "content/browser/url_loader_factory_getter.h"
+#include "content/common/weak_wrapper_shared_url_loader_factory.h"
 #include "content/public/common/content_features.h"
+#include "content/public/common/url_loader_throttle.h"
 #include "mojo/public/cpp/system/string_data_pipe_producer.h"
 #include "net/http/http_response_headers.h"
+#include "services/network/public/cpp/features.h"
 #include "services/network/public/cpp/resource_response.h"
 #include "services/network/public/cpp/url_loader_completion_status.h"
 
@@ -19,8 +26,14 @@ constexpr size_t kPipeSizeForSignedResponseBody = 65536;
 }  // namespace
 
 SignedExchangeHandler::SignedExchangeHandler(
-    mojo::ScopedDataPipeConsumerHandle body)
-    : body_(std::move(body)) {
+    mojo::ScopedDataPipeConsumerHandle body,
+    URLLoaderFactoryGetter* default_url_loader_factory_getter,
+    URLLoaderThrottlesGetter url_loader_throttles_getter,
+    const GetContextsCallback& get_contexts_callback)
+    : body_(std::move(body)),
+      default_url_loader_factory_getter_(default_url_loader_factory_getter),
+      url_loader_throttles_getter_(std::move(url_loader_throttles_getter)),
+      get_contexts_callback_(get_contexts_callback) {
   DCHECK(base::FeatureList::IsEnabled(features::kSignedHTTPExchange));
 }
 
@@ -43,9 +56,42 @@ void SignedExchangeHandler::OnDataAvailable(const void* data,
 }
 
 void SignedExchangeHandler::OnDataComplete() {
-  if (!found_callback_)
+  if (data_completed_)
     return;
+  data_completed_ = true;
 
+  network::mojom::URLLoaderFactory* url_loader_factory = nullptr;
+  if (base::FeatureList::IsEnabled(network::features::kNetworkService)) {
+    DCHECK(default_url_loader_factory_getter_.get());
+    url_loader_factory =
+        default_url_loader_factory_getter_->GetNetworkFactory();
+  } else {
+    DCHECK(!default_url_loader_factory_getter_.get());
+    url_loader_factory_impl_ = std::make_unique<URLLoaderFactoryImpl>(
+        ResourceRequesterInfo::CreateForCertificateFetcherForSignedExchange(
+            get_contexts_callback_));
+    url_loader_factory = url_loader_factory_impl_.get();
+  }
+  DCHECK(url_loader_factory);
+  DCHECK(url_loader_throttles_getter_);
+
+  std::vector<std::unique_ptr<URLLoaderThrottle>> throttles =
+      std::move(url_loader_throttles_getter_).Run();
+  cert_fetcher_ = SignedExchangeCertFetcher::CreateAndStart(
+      base::MakeRefCounted<WeakWrapperSharedURLLoaderFactory>(
+          url_loader_factory),
+      std::move(throttles),
+      GURL("http://127.0.0.1:8000/loading/htxg/resources/test.chain.p7c"),
+      false,
+      base::BindOnce(&SignedExchangeHandler::OnCertVerified,
+                     base::Unretained(this)));
+}
+
+void SignedExchangeHandler::OnCertVerified(
+    net::CertStatus cert_staus,
+    const base::Optional<net::SSLInfo>& ssl_info) {
+  LOG(ERROR) << "SignedExchangeHandler::OnCertVerified cert_staus: "
+             << cert_staus;
   // TODO(https://crbug.com/803774): Get the request url by parsing CBOR format.
   GURL request_url = GURL("https://example.com/test.html");
   // TODO(https://crbug.com/803774): Get the request method by parsing CBOR
@@ -64,8 +110,6 @@ void SignedExchangeHandler::OnDataComplete() {
 
   // TODO(https://crbug.com/803774): Get the certificate by parsing CBOR and
   // verify.
-  base::Optional<net::SSLInfo> ssl_info;
-
   mojo::DataPipe pipe(kPipeSizeForSignedResponseBody);
   // TODO(https://crbug.com/803774): Write the error handling code. This could
   // fail.
@@ -82,7 +126,6 @@ void SignedExchangeHandler::OnDataComplete() {
                         base::BindOnce(&SignedExchangeHandler::OnDataWritten,
                                        base::Unretained(this)));
 }
-
 void SignedExchangeHandler::OnDataWritten(MojoResult result) {
   data_producer_.reset();
   std::move(finish_callback_)
