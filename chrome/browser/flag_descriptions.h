@@ -737,6 +737,9 @@ extern const char kReducedReferrerGranularityDescription[];
 extern const char kRegionalLocalesAsDisplayUIName[];
 extern const char kRegionalLocalesAsDisplayUIDescription[];
 
+extern const char kRemoveNavigationHistoryName[];
+extern const char kRemoveNavigationHistoryDescription[];
+
 extern const char kRemoveUsageOfDeprecatedGaiaSigninEndpointName[];
 extern const char kRemoveUsageOfDeprecatedGaiaSigninEndpointDescription[];
 
