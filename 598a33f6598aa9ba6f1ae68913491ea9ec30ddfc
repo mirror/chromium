@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f36a7c7_71443f04",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/resources/client-navigate-worker.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-01-31T15:46:31Z",
+      "side": 1,
+      "message": "We can just remove this clientId check here, we already have test coverage in fetch-event.https.html for clientIds on navigation.\n\nWe don\u0027t need to call respondWith, just return. It\u0027ll fallback to network.",
+      "revId": "598a33f6598aa9ba6f1ae68913491ea9ec30ddfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
