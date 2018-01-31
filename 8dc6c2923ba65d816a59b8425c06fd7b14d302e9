@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c045bdb_4cf1be8d",
+        "filename": "chrome/renderer/autofill/password_autofill_agent_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2735,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2018-01-31T12:56:49Z",
+      "side": 1,
+      "message": "please also add one more text field.",
+      "range": {
+        "startLine": 2735,
+        "startChar": 7,
+        "endLine": 2735,
+        "endChar": 51
+      },
+      "revId": "8dc6c2923ba65d816a59b8425c06fd7b14d302e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e178523_61f4b17b",
+        "filename": "chrome/renderer/autofill/password_autofill_agent_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2736,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2018-01-31T12:56:49Z",
+      "side": 1,
+      "message": "nit: password",
+      "range": {
+        "startLine": 2736,
+        "startChar": 43,
+        "endLine": 2736,
+        "endChar": 51
+      },
+      "revId": "8dc6c2923ba65d816a59b8425c06fd7b14d302e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
