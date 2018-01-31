@@ -50,6 +50,8 @@ class MediaRouterDesktop : public MediaRouterMojoImpl {
   // MediaRouterMojoImpl override:
   base::Optional<MediaRouteProviderId> GetProviderIdForPresentation(
       const std::string& presentation_id) override;
+  bool RegisterMediaSinksObserver(MediaSinksObserver* observer) override;
+  void UnregisterMediaSinksObserver(MediaSinksObserver* observer) override;
 
  private:
   template <bool>
