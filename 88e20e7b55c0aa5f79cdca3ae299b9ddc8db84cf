@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1d71ad93_bd91ca83",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastCrashUploader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1230862
+      },
+      "writtenOn": "2018-01-31T00:57:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "579abb7a_8a289369",
+      "range": {
+        "startLine": 95,
+        "startChar": 17,
+        "endLine": 95,
+        "endChar": 41
+      },
+      "revId": "88e20e7b55c0aa5f79cdca3ae299b9ddc8db84cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fff4b41a_89fe3b09",
         "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/ExternalServiceDeviceLogcatProvider.java",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "88e20e7b55c0aa5f79cdca3ae299b9ddc8db84cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1692d39_96e9346e",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/ExternalServiceDeviceLogcatProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1230862
+      },
+      "writtenOn": "2018-01-31T00:57:28Z",
+      "side": 1,
+      "message": "I agree but it is what `git cast format` wants.",
+      "parentUuid": "fff4b41a_89fe3b09",
+      "revId": "88e20e7b55c0aa5f79cdca3ae299b9ddc8db84cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
