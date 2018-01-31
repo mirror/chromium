@@ -105,6 +105,8 @@ class CONTENT_EXPORT WebContentsDelegate {
   virtual void NavigationStateChanged(WebContents* source,
                                       InvalidateTypes changed_flags) {}
 
+  virtual void NavigationEntriesDeleted(WebContents* source) {}
+
   // Called to inform the delegate that the WebContent's visible
   // security state changed and that security UI should be updated.
   virtual void VisibleSecurityStateChanged(WebContents* source) {}
