@@ -144,10 +144,11 @@ class OopPixelTest : public testing::Test {
               static_cast<unsigned>(GL_NO_ERROR));
 
     // "Out of process" raster! \o/
+    gfx::ColorSpace color_space;
     raster_implementation_->BeginRasterCHROMIUM(
         raster_texture_id, options.background_color, options.msaa_sample_count,
         options.use_lcd_text, options.use_distance_field_text,
-        options.pixel_config);
+        options.pixel_config, reinterpret_cast<GLColorSpace>(&color_space));
     raster_implementation_->RasterCHROMIUM(
         display_item_list.get(), &image_provider_,
         options.bitmap_rect.OffsetFromOrigin(), options.playback_rect,

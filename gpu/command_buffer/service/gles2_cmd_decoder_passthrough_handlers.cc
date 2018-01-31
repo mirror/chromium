@@ -2831,5 +2831,12 @@ error::Error GLES2DecoderPassthroughImpl::HandleDestroyGpuFenceCHROMIUM(
   return DoDestroyGpuFenceCHROMIUM(gpu_fence_id);
 }
 
+error::Error GLES2DecoderPassthroughImpl::HandleBeginRasterCHROMIUM(
+    uint32_t immediate_data_size,
+    const volatile void* cmd_data) {
+  NOTIMPLEMENTED();
+  return error::kNoError;
+}
+
 }  // namespace gles2
 }  // namespace gpu
