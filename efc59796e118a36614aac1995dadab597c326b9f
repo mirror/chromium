@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "efa7965f_014651c2",
+        "filename": "services/ui/ws/gpu_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-31T21:05:46Z",
+      "side": 1,
+      "message": "We could post a task on |this| that deletes viz_main_impl_ - therefore dereferencing viz_main_impl_ on the thread that sets it, avoiding the data race.",
+      "parentUuid": "ede595df_e8ae0258",
+      "revId": "efc59796e118a36614aac1995dadab597c326b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2777e29_38f9fbbd",
         "filename": "services/ui/ws/gpu_host.cc",
         "patchSetId": 5
