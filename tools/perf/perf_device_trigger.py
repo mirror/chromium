@@ -24,82 +24,36 @@ import sys
 import tempfile
 
 from core import path_util
+from core import swarming_test_triggerer
 
 
-def get_swarming_py_path():
-  return os.path.join(
+class PerfDeviceTrigger(
+    swarming_test_triggerer.SwarmingTestTriggerer):
+  def __init__(self, file_prefix):
+    super(PerfDeviceTrigger, self, file_prefix).__init__()
+
+  def get_swarming_py_path():
+    return os.path.join(
       path_util.GetChromiumSrcDir(), 'tools', 'swarming_client', 'swarming.py')
 
-
-def modify_args(all_args, bot_id, temp_file, total_shards, shard_num):
-  """Modifies the given argument list.
-
-  Specifically, it does the following:
-    * Adds a --dump_json argument, to read in the results of the
-      individual trigger command.
-    * Adds a bot id dimension.
-    * Adds the bot id as an argument to the test, so it knows which tests to
-      run.
-
-  The arguments are structured like this:
-  <args to swarming.py trigger> -- <args to bot running isolate>
-  This means we have to add arguments to specific locations in the argument
-  list, to either affect the trigger command, or what the bot runs.
-  """
-  assert '--' in all_args, (
-      'Malformed trigger command; -- argument expected but not found')
-  dash_ind = all_args.index('--')
-
-  # These two flags are required for the swarming task.
-  # In essence we are re-using swarmings existing sharding concept
-  # to be able to collect all n triggered tasks at once.
-  shard_index_flag = 'GTEST_SHARD_INDEX %d' % shard_num
-  total_shards_flag = 'GTEST_SHARD_SHARDS %d' % total_shards
-  # TODO: Do we need to drop the shard flag from swarming?
-  return (all_args[:dash_ind] + [
-      '--dump-json', temp_file, '--dimension', 'id', bot_id]
-      + ['--env', shard_index_flag] + ['--env', total_shards_flag]
-          + all_args[dash_ind:] + ['--bot', bot_id])
+  def modify_args(
+      self, all_args, gpu_index, shard_index, total_shards, temp_file):
+    modified_args = super(PerfDeviceTrigger, self).modify_args(
+        all_args, gpu_index, shard_index, total_shards, temp_file)
+    # Find the id to trigger the job to and append to the list to
+    # be passed to the isolated script on the bot swarming bot running
+    # the test
+    if 'id' in modified_args:
+      modified_args + ['--bot', modified_args['id']]
 
 
-def trigger_tasks(args, remaining):
-  """Triggers tasks for each bot.
-
-  Args:
-    args: Parsed arguments which we need to use.
-    remaining: The remainder of the arguments, which should be passed to
-               swarming.py calls.
-
-  Returns:
-    Exit code for the script.
-  """
-  merged_json = {'tasks': {}}
-
-  # TODO: Do these in parallel
-  for shard_num, bot_id in enumerate(args.bot_id):
-    print "Triggering shard %d on bot %s " % (shard_num, bot_id)
-    # Holds the results of the swarming.py trigger call.
-    temp_fd, json_temp = tempfile.mkstemp(prefix='perf_device_trigger')
-    try:
-      args_to_pass = modify_args(
-          remaining[:], bot_id, json_temp, len(args.bot_id), shard_num)
-
-      ret = subprocess.call([get_swarming_py_path()] + args_to_pass)
-      if ret:
-        sys.stderr.write('Failed to trigger a task, aborting\n')
-        return ret
-      with open(json_temp) as f:
-        result_json = json.load(f)
-
-      for k, v in result_json['tasks'].items():
-        v['shard_index'] = shard_num
-        merged_json['tasks'][k + ':%d:%d' % (shard_num, len(args.bot_id))] = v
-    finally:
-      os.close(temp_fd)
-      os.remove(json_temp)
-  with open(args.dump_json, 'w') as f:
-    json.dump(merged_json, f)
-  return 0
+  def select_config_indices(self, args, verbose):
+    # For perf we want to trigger a job for every valid config since
+    # each config represents exactly on bot in the perf swarming pool,
+    selected_configs = []
+    for i in xrange(args.shards):
+      selected_configs.append(i)
+    return selected_configs
 
 
 def main():
@@ -113,9 +67,14 @@ def main():
                       help='(Swarming Trigger Script API) Where to dump the'
                       ' resulting json which indicates which tasks were'
                       ' triggered for which shards.')
+  parser.add_argument('--shards', type=int, default=1,
+                      help='How many shards to trigger. Duplicated from the'                                      ' `swarming.py trigger` command.')
+  parser.add_argument('--trigger-script-verbose', type=bool, default=False,
+                      help='Turn on verbose logging')
+
   args, remaining = parser.parse_known_args()
 
-  return trigger_tasks(args, remaining)
+  return PerfDeviceTrigger('trigger_perf_test').trigger_tasks(args, remaining)
 
 
 if __name__ == '__main__':
