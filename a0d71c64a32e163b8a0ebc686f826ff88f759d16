@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d380b51_9aae26d9",
+        "filename": "chrome/renderer/extensions/extension_hooks_delegate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2018-01-31T04:42:03Z",
+      "side": 1,
+      "message": "use: kExtensionScheme, url::kStandardSchemeSeparator",
+      "range": {
+        "startLine": 246,
+        "startChar": 20,
+        "endLine": 246,
+        "endChar": 41
+      },
+      "revId": "a0d71c64a32e163b8a0ebc686f826ff88f759d16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
