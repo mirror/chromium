@@ -106,6 +106,24 @@
       "revId": "3a93380b65775d48e5f4637111e0a4b83c1da4df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2d237c7_441b5f28",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2018-01-31T05:55:24Z",
+      "side": 1,
+      "message": "I see. I thought that StyleEngine::InvalidateSlottedElements and StyleInvalidator::InvalidateSlotDistributedElements\nare general invalidation mechanism which should be used for invalidate \"chilren of a slot in a flat tree\".\n\nIf they are only used for invalidating \"nodes which ::slotted() matches\", we can use FlattendAssignedNodes() there, I think.\n\nAnyway, I\u0027ve updated the CL so that they use FlattendAssignedNodes(), which should be no worse than now,\nso that we don\u0027t hit DCHECK(),",
+      "parentUuid": "5d3570e5_cb481bbf",
+      "revId": "3a93380b65775d48e5f4637111e0a4b83c1da4df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
