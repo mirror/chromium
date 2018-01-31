@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6f2c19d3_b69f7b73",
+        "filename": "media/audio/audio_debug_recording_helper.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-31T09:50:52Z",
+      "side": 1,
+      "message": "Replaced extensions with suffix as discussed. Updated everywhere I was using extensions in variable names.",
+      "parentUuid": "f9507667_cd1f710b",
+      "revId": "0c3e0d64217ce6668013d8dc858cde63aea078dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f775f251_9a09fb55",
         "filename": "media/audio/audio_debug_recording_manager.h",
         "patchSetId": 17
@@ -33,6 +51,24 @@
       "revId": "0c3e0d64217ce6668013d8dc858cde63aea078dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd53fb18_ea96da16",
+        "filename": "media/audio/audio_debug_recording_manager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-31T09:50:52Z",
+      "side": 1,
+      "message": "Ok, moved it back to helper after offline discussion.",
+      "parentUuid": "f775f251_9a09fb55",
+      "revId": "0c3e0d64217ce6668013d8dc858cde63aea078dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3a2ae5fd_f43080bb",
+        "filename": "media/audio/audio_debug_recording_manager_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-31T09:50:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da0673e5_5a003809",
+      "revId": "0c3e0d64217ce6668013d8dc858cde63aea078dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "465bda28_b4530863",
         "filename": "media/audio/audio_debug_recording_manager_unittest.cc",
         "patchSetId": 17
@@ -67,6 +121,24 @@
       "revId": "0c3e0d64217ce6668013d8dc858cde63aea078dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbe433d5_12a3aa77",
+        "filename": "media/audio/audio_debug_recording_manager_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-31T09:50:52Z",
+      "side": 1,
+      "message": "I can\u0027t because AudioDebugRecordingHelper::EnableDebugRecording is the one that runs the callback, and this method is mocked. In helper unittests however I set expectations on file writer mock, which ensure that the callback is executed.",
+      "parentUuid": "465bda28_b4530863",
+      "revId": "0c3e0d64217ce6668013d8dc858cde63aea078dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "bc97d339_5f93ff32",
+        "filename": "media/audio/audio_debug_recording_session.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-31T09:50:52Z",
+      "side": 1,
+      "message": "It absolutely should not be here, thanks for spotting this.",
+      "parentUuid": "7cf215a7_b9468f6a",
+      "revId": "0c3e0d64217ce6668013d8dc858cde63aea078dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66c720bd_f9ed2502",
         "filename": "media/audio/audio_debug_recording_session.h",
         "patchSetId": 17
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "c0ece032_9f2b0f61",
+        "filename": "media/audio/audio_debug_recording_session.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-31T09:50:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66c720bd_f9ed2502",
+      "revId": "0c3e0d64217ce6668013d8dc858cde63aea078dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26310d28_3ecf235b",
         "filename": "media/audio/audio_manager.h",
         "patchSetId": 17
@@ -118,6 +226,24 @@
       "revId": "0c3e0d64217ce6668013d8dc858cde63aea078dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd016936_426a0312",
+        "filename": "media/audio/audio_manager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-31T09:50:52Z",
+      "side": 1,
+      "message": "Done. The way I implemented ADRSessionImpl, I think calling GetAudioDebugRecordingManager() on AudioManager::Get() should be thread safe, because ADRM is initialized at AM construction and doesn\u0027t change for the lifetime of AM, can you please confirm if this sounds correct?",
+      "parentUuid": "26310d28_3ecf235b",
+      "revId": "0c3e0d64217ce6668013d8dc858cde63aea078dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
