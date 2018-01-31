@@ -5,6 +5,7 @@
 #include "core/messaging/BlinkCloneableMessageStructTraits.h"
 
 #include "platform/blob/BlobData.h"
+#include "platform/runtime_enabled_features.h"
 
 namespace mojo {
 
@@ -41,4 +42,28 @@ bool StructTraits<blink::mojom::blink::CloneableMessage::DataView,
   return true;
 }
 
+Vector<WTF::ArrayBufferContents>&
+StructTraits<blink::mojom::blink::CloneableMessage::DataView,
+             blink::BlinkCloneableMessage>::
+    arrayBufferContentsArray(blink::BlinkCloneableMessage& input) {
+  return input.message->GetArrayBufferContentsArray();
+}
+
+bool StructTraits<blink::mojom::blink::SerializedArrayBufferContents::DataView,
+                  WTF::ArrayBufferContents>::
+    Read(blink::mojom::blink::SerializedArrayBufferContents::DataView data,
+         WTF::ArrayBufferContents* out) {
+  mojo::ArrayDataView<uint8_t> contents;
+  data.GetContentsDataView(&contents);
+  void* allocation_base =
+      const_cast<void*>(static_cast<const void*>(contents.data()));
+  size_t allocation_length = contents.size();
+  WTF::ArrayBufferContents::DataHandle handle(
+      allocation_base, allocation_length, allocation_base, allocation_length,
+      WTF::ArrayBufferContents::AllocationKind::kNormal,
+      WTF::ArrayBufferContents::FreeMemory);
+  *out = WTF::ArrayBufferContents(
+      std::move(handle), WTF::ArrayBufferContents::SharingType::kNotShared);
+  return true;
+}
 }  // namespace mojo
