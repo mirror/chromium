@@ -4,17 +4,20 @@
 
 #include "core/paint/ObjectPaintInvalidator.h"
 
+#include "core/editing/FrameSelection.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/layout/LayoutBlockFlow.h"
 #include "core/layout/LayoutEmbeddedContent.h"
 #include "core/layout/LayoutView.h"
+#include "core/layout/ng/inline/ng_physical_text_fragment.h"
 #include "core/paint/FindPaintOffsetAndVisualRectNeedingUpdate.h"
 #include "core/paint/PaintInvalidator.h"
 #include "core/paint/PaintLayer.h"
 #include "core/paint/compositing/CompositedLayerMapping.h"
 #include "core/paint/ng/ng_paint_fragment.h"
 #include "platform/PlatformChromeClient.h"
+#include "platform/fonts/CharacterRange.h"
 #include "platform/graphics/GraphicsLayer.h"
 
 namespace blink {
@@ -151,6 +154,56 @@ static void InvalidateDisplayItemClients(const LayoutObject& layout_object,
   }
 
   layout_object.InvalidateDisplayItemClients(reason);
+}
+
+// Copied from Font.cpp
+inline FloatRect PixelSnappedSelectionRect(FloatRect rect) {
+  // Using roundf() rather than ceilf() for the right edge as a compromise to
+  // ensure correct caret positioning.
+  float rounded_x = roundf(rect.X());
+  return FloatRect(rounded_x, rect.Y(), roundf(rect.MaxX() - rounded_x),
+                   rect.Height());
+}
+
+static LayoutRect LocalSelectionRect(const LayoutObject& layout_object) {
+  if (LayoutBlockFlow* block_flow = layout_object.EnclosingNGBlockFlow()) {
+    DCHECK(layout_object.View());
+    DCHECK(layout_object.View()->GetFrame());
+    FrameSelection& frame_selection =
+        layout_object.View()->GetFrame()->Selection();
+    Vector<NGPaintFragment*> paint_fragments =
+        block_flow->GetPaintFragments(layout_object);
+    FloatRect rect;
+    for (const auto& paint_fragment : paint_fragments) {
+      if (!paint_fragment->PhysicalFragment().IsText())
+        continue;
+      const NGPhysicalTextFragment& text_fragment =
+          ToNGPhysicalTextFragment(paint_fragment->PhysicalFragment());
+
+      unsigned selection_start;
+      unsigned selection_end;
+      std::tie(selection_start, selection_end) =
+          frame_selection.LayoutSelectionStartEndForNG(text_fragment);
+      DCHECK_LE(selection_start, selection_end);
+      if (selection_start == selection_end)
+        continue;
+      DCHECK_LE(text_fragment.StartOffset(), selection_start);
+      DCHECK_LE(text_fragment.StartOffset(), selection_end);
+      DCHECK_GE(text_fragment.EndOffset(), selection_start);
+      DCHECK_GE(text_fragment.EndOffset(), selection_end);
+      const ShapeResult* shape_result = text_fragment.TextShapeResult();
+      const CharacterRange& range = shape_result->GetCharacterRange(
+          selection_start - text_fragment.StartOffset(),
+          selection_end - text_fragment.StartOffset());
+      const FloatRect& selection_rect = PixelSnappedSelectionRect(FloatRect(
+          range.start, 0, range.Width(), text_fragment.Size().height));
+      rect.Unite(selection_rect);
+    }
+
+    return LayoutRect(rect);
+  }
+
+  return layout_object.LocalSelectionRect();
 }
 
 DISABLE_CFI_PERF
@@ -545,7 +598,7 @@ void ObjectPaintInvalidatorWithContext::InvalidateSelection(
                                           new_selection_rect);
 #endif
   if (context_.NeedsVisualRectUpdate(object_)) {
-    new_selection_rect = object_.LocalSelectionRect();
+    new_selection_rect = LocalSelectionRect(object_);
     context_.MapLocalRectToVisualRectInBacking(object_, new_selection_rect);
   } else {
     new_selection_rect = old_selection_rect;
