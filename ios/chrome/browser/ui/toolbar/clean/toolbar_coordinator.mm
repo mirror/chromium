@@ -300,7 +300,7 @@
   if (IsIPadIdiom()) {
     // On iPhone there is no visible omnibox, so there's no need to indicate
     // interaction was initiated from the fakebox.
-    [self.locationBarCoordinator focusOmniboxFromFakebox];
+    [self.locationBarCoordinator markNextOmniboxFocusAsFakeboxFocusForMetrics];
   } else {
     [self expandOmniboxAnimated:NO];
   }
