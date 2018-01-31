@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d6cd1254_bc8c5e5e",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-31T02:35:16Z",
+      "side": 1,
+      "message": "I\u0027m considering moving the profiler into base or WebKit/common, so I\u0027m trying to avoid using WTF types.",
+      "parentUuid": "2bec10d0_2c2cc72a",
+      "revId": "58ef7803356c449243196f3642b4ab0b1db4f6f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33119d9f_454d1e17",
         "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-31T02:07:03Z",
       "side": 1,
       "message": "Use DEFINE_STATIC_LOCAL for these variables.",
+      "revId": "58ef7803356c449243196f3642b4ab0b1db4f6f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34525220_1ed10a9f",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-31T02:35:16Z",
+      "side": 1,
+      "message": "Hmm, I though DEFINE_STATIC_LOCAL is for static variables local to a function. These are global variables used across the class.",
+      "parentUuid": "33119d9f_454d1e17",
       "revId": "58ef7803356c449243196f3642b4ab0b1db4f6f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "272aca2c_553ef9e5",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-31T02:35:16Z",
+      "side": 1,
+      "message": "Yes, I\u0027m aware of it. OOPHP and SHP are currently mutually exclusive as we discussed with Erik. I plan to add support for several observers for both PartitionAlloc and WebHeap later if needed.\n\nBtw, do we really need chaining here? The current state of the hooks API does not allow any return values from hooks, so having just a list of observers seems to be sufficient.",
+      "parentUuid": "e55558ee_e6573daa",
+      "revId": "58ef7803356c449243196f3642b4ab0b1db4f6f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "abf8c848_31148e2b",
         "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.h",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "ebe1210b_e2edc4ce",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-31T02:35:16Z",
+      "side": 1,
+      "message": "Please see my comment regarding moving to base.",
+      "parentUuid": "abf8c848_31148e2b",
+      "revId": "58ef7803356c449243196f3642b4ab0b1db4f6f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "595a87c4_13134160",
         "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.h",
         "patchSetId": 2
@@ -81,6 +153,24 @@
       "writtenOn": "2018-01-31T02:07:03Z",
       "side": 1,
       "message": "std::unordered_map is discouraged in Blink. Use HashMap.",
+      "revId": "58ef7803356c449243196f3642b4ab0b1db4f6f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae455fa5_59197009",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-31T02:35:16Z",
+      "side": 1,
+      "message": "Ditto",
+      "parentUuid": "595a87c4_13134160",
       "revId": "58ef7803356c449243196f3642b4ab0b1db4f6f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
