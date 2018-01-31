@@ -762,12 +762,15 @@ TEST_P(RootScrollerTest, RemoteIFrame) {
   MainWebFrame()->FirstChild()->Swap(FrameTestHelpers::CreateRemote());
 
   // Set the root scroller in the local main frame to the iframe (which is
-  // remote).
+  // remote). Make sure we don't promote a remote frame to the root scroller.
   {
     Element* iframe = MainFrame()->GetDocument()->getElementById("iframe");
     NonThrowableExceptionState non_throw;
     MainFrame()->GetDocument()->setRootScroller(iframe, non_throw);
     EXPECT_EQ(iframe, MainFrame()->GetDocument()->rootScroller());
+    EXPECT_EQ(MainFrame()->GetDocument(),
+              EffectiveRootScroller(MainFrame()->GetDocument()));
+    MainFrameView()->UpdateAllLifecyclePhases();
   }
 }
 
