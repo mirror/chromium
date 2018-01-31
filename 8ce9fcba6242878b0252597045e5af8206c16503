@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "056921b0_77dff92f",
+        "filename": "chrome/browser/extensions/api/enterprise_device_attributes/enterprise_device_attributes_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-31T16:21:01Z",
+      "side": 1,
+      "message": "nit: This is an old code, but please add a missing include \"components/user_manager/user.h\".",
+      "revId": "8ce9fcba6242878b0252597045e5af8206c16503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d810293_d57a8250",
         "filename": "chrome/browser/extensions/api/enterprise_device_attributes/enterprise_device_attributes_api.cc",
         "patchSetId": 8
@@ -13,6 +30,52 @@
       "writtenOn": "2018-01-31T15:59:17Z",
       "side": 1,
       "message": "nit: Given these are only used in one call site, I\u0027d mildly prefer we just inline them.  But I don\u0027t feel strongly, so if you prefer this, that\u0027s fine.",
+      "revId": "8ce9fcba6242878b0252597045e5af8206c16503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a5c09e0_305c4404",
+        "filename": "chrome/browser/extensions/api/enterprise_device_attributes/enterprise_device_attributes_apitest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-31T16:21:01Z",
+      "side": 1,
+      "message": "nit: Forgotten \"\u0026\".",
+      "range": {
+        "startLine": 62,
+        "startChar": 44,
+        "endLine": 62,
+        "endChar": 45
+      },
+      "revId": "8ce9fcba6242878b0252597045e5af8206c16503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "558b738a_7a97b5a8",
+        "filename": "chrome/browser/extensions/api/enterprise_device_attributes/enterprise_device_attributes_apitest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-01-31T16:21:01Z",
+      "side": 1,
+      "message": "nit: I believe this std::move() is excessive.",
+      "range": {
+        "startLine": 69,
+        "startChar": 9,
+        "endLine": 69,
+        "endChar": 19
+      },
       "revId": "8ce9fcba6242878b0252597045e5af8206c16503",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
