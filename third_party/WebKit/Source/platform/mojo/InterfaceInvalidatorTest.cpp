@@ -14,6 +14,7 @@
 #include "mojo/public/cpp/bindings/interface_ptr.h"
 #include "mojo/public/interfaces/bindings/tests/ping_service.mojom-blink.h"
 #include "platform/mojo/InterfaceInvalidator.h"
+#include "platform/mojo/WeakBinding.h"
 #include "platform/mojo/WeakInterfacePtr.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -311,6 +312,103 @@ TEST_F(InterfaceInvalidatorTest, InvalidateDuringSyncIPCWithoutResponse) {
       base::BindLambdaForTesting([&]() { invalidator.reset(); }));
   bool result = wptr->Ping();
   EXPECT_FALSE(result);
+}
+
+class WeakPingServiceImpl : public mojo::test::blink::PingService {
+ public:
+  WeakPingServiceImpl(
+      mojo::InterfaceRequest<mojo::test::blink::PingService> request,
+      InterfaceInvalidator* invalidator,
+      bool send_response = true)
+      : send_response_(send_response),
+        error_handler_called_(false),
+        binding_(this, std::move(request), invalidator) {
+    binding_.set_connection_error_handler(
+        base::BindRepeating(DoSetFlag, &error_handler_called_));
+  }
+  ~WeakPingServiceImpl() override {}
+
+  // mojo::test::blink::PingService:
+  void Ping(const PingCallback& callback) override {
+    if (ping_handler_)
+      ping_handler_.Run();
+
+    if (send_response_) {
+      callback.Run();
+    } else {
+      saved_callback_ = callback;
+    }
+  }
+
+  void set_ping_handler(const base::RepeatingClosure& handler) {
+    ping_handler_ = handler;
+  }
+
+  bool error_handler_called() { return error_handler_called_; }
+
+  WeakBinding<mojo::test::blink::PingService>* binding() { return &binding_; }
+
+ private:
+  bool send_response_;
+  PingCallback saved_callback_;
+  base::RepeatingClosure ping_handler_;
+  bool error_handler_called_;
+  WeakBinding<mojo::test::blink::PingService> binding_;
+
+  DISALLOW_COPY_AND_ASSIGN(WeakPingServiceImpl);
+};
+
+TEST_F(InterfaceInvalidatorTest, DestroyInvalidatesWeakBinding) {
+  mojo::test::blink::PingServicePtr ptr;
+  auto invalidator = std::make_unique<InterfaceInvalidator>();
+  WeakPingServiceImpl impl(MakeRequest(&ptr), invalidator.get());
+
+  bool ping_called = false;
+  ptr->Ping(base::BindRepeating(DoSetFlag, &ping_called));
+  base::RunLoop().RunUntilIdle();
+  ASSERT_TRUE(ping_called);
+
+  bool error_handler_called = false;
+  ptr.set_connection_error_handler(
+      base::BindRepeating(DoSetFlag, &error_handler_called));
+
+  invalidator.reset();
+  impl.set_ping_handler(base::BindRepeating([] { FAIL(); }));
+  ptr->Ping(base::BindRepeating([] { FAIL(); }));
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_TRUE(error_handler_called);
+  EXPECT_TRUE(impl.error_handler_called());
+  EXPECT_TRUE(ptr.encountered_error());
+  EXPECT_TRUE(ptr);
+  EXPECT_TRUE(*impl.binding());
+}
+
+TEST_F(InterfaceInvalidatorTest, InvalidateClosedBinding) {
+  mojo::test::blink::PingServicePtr ptr;
+  auto invalidator = std::make_unique<InterfaceInvalidator>();
+  WeakPingServiceImpl impl(MakeRequest(&ptr), invalidator.get());
+
+  impl.binding()->Close();
+  invalidator.reset();
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_FALSE(impl.error_handler_called());
+  EXPECT_FALSE(*impl.binding());
+}
+
+TEST_F(InterfaceInvalidatorTest, aoeu) {
+  mojo::test::blink::PingServicePtr ptr;
+  auto invalidator = std::make_unique<InterfaceInvalidator>();
+  WeakPingServiceImpl impl(MakeRequest(&ptr), invalidator.get());
+  impl.set_ping_handler(
+      base::BindLambdaForTesting([&] { invalidator.reset(); }));
+
+  ptr->Ping(base::BindRepeating([] { FAIL(); }));
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_TRUE(impl.error_handler_called());
+  EXPECT_TRUE(*impl.binding());
 }
 
 }  // namespace
