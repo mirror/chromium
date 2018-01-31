@@ -95,13 +95,17 @@ public final class CastCrashUploader {
     private void queueAllCrashDumpUploads() {
         if (mCrashDumpPath == null) return;
         Log.i(TAG, "Checking for crash dumps");
-
-        mLogcatProvider.getElidedLogcat((String logs) -> queueAllCrashDumpUploadsWithLogs(logs));
-    }
-
-    private void queueAllCrashDumpUploadsWithLogs(String logs) {
         File crashDumpDirectory = new File(mCrashDumpPath);
 
+        int numCrashDumps = crashDumpDirectory.listFiles().length;
+        if (numCrashDumps > 0) {
+            Log.i(TAG, numCrashDumps + " crash dumps found");
+            mLogcatProvider.getElidedLogcat(
+                    (String logs) -> queueAllCrashDumpUploadsWithLogs(crashDumpDirectory, logs));
+        }
+    }
+
+    private void queueAllCrashDumpUploadsWithLogs(File crashDumpDirectory, String logs) {
         for (final File potentialDump : crashDumpDirectory.listFiles()) {
             String dumpName = potentialDump.getName();
             if (dumpName.matches(DUMP_FILE_REGEX)) {
