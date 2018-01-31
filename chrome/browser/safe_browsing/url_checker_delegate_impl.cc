@@ -5,6 +5,7 @@
 #include "chrome/browser/safe_browsing/url_checker_delegate_impl.h"
 
 #include "base/bind.h"
+#include "chrome/browser/data_reduction_proxy_util.h"
 #include "chrome/browser/prerender/prerender_contents.h"
 #include "chrome/browser/prerender/prerender_final_status.h"
 #include "chrome/browser/safe_browsing/ui_manager.h"
@@ -84,6 +85,12 @@ void UrlCheckerDelegateImpl::StartDisplayingBlockingPageHelper(
 
 bool UrlCheckerDelegateImpl::IsUrlWhitelisted(const GURL& url) {
   return false;
+}
+
+bool UrlCheckerDelegateImpl::IsRequestWhitelisted(
+    content::ResourceContext* resource_context,
+    const GURL& original_url) {
+  return IsDataReductionProxyEnabledForUrl(resource_context, original_url);
 }
 
 const SBThreatTypeSet& UrlCheckerDelegateImpl::GetThreatTypes() {
