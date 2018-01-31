@@ -16,6 +16,24 @@
       "revId": "d51a54bf92984cf1079a49d68cb604da9222c1c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8817d680_0d62f091",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 12429,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-31T09:44:03Z",
+      "side": 1,
+      "message": "It is iOS only.\nDone.",
+      "parentUuid": "a62aff3d_c4cee037",
+      "revId": "d51a54bf92984cf1079a49d68cb604da9222c1c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
