@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c60daa80_6ba04506",
+        "filename": "third_party/WebKit/Source/core/frame/RotationViewportAnchor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2018-01-31T17:49:55Z",
+      "side": 1,
+      "message": "To be clear, this is the real fix, yes?  The call to DocumentToAbsolute, and the matching calls to AbsoluteToDocument below?",
+      "revId": "302cfcc0942776fcda8fea999c25999ccee418a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
