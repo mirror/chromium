@@ -84,6 +84,91 @@
       "revId": "b3db19d9f189a2435a8bbe4ffd989a4446240155",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ad4e878_c01afbf7",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-legacy-stream-APIs.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-31T20:00:51Z",
+      "side": 1,
+      "message": "this looks odd. addTrack is called synchronously everywhere else.",
+      "revId": "b3db19d9f189a2435a8bbe4ffd989a4446240155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c51e09a6_676d4071",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-legacy-stream-APIs.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-31T20:00:51Z",
+      "side": 1,
+      "message": "grammar issue with this error message",
+      "revId": "b3db19d9f189a2435a8bbe4ffd989a4446240155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "257cd0bb_dcef398f",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1425,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-31T20:00:51Z",
+      "side": 1,
+      "message": "This looks strange. The only time the last section will be executed more than once is when there are multiple senders in web_rtp_senders with the same id. Can this ever happen?\nThis also looks through rtp_senders_ once per element in web_rtp_senders - which makes the algorithm quadratic in number of senders. Doesn\u0027t really matter, given the likely number of senders, but it looks ugly.",
+      "revId": "b3db19d9f189a2435a8bbe4ffd989a4446240155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8caf4845_9aa720f7",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1430,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-31T20:00:51Z",
+      "side": 1,
+      "message": "What happens here if a sender has been created using AddTransceiver?",
+      "revId": "b3db19d9f189a2435a8bbe4ffd989a4446240155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38b0a0e4_9c5456f1",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1445,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-31T20:00:51Z",
+      "side": 1,
+      "message": "This is another square-runtime algorithm. It looks ugly. Improve?",
+      "revId": "b3db19d9f189a2435a8bbe4ffd989a4446240155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
