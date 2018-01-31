@@ -44,6 +44,8 @@ class PLATFORM_EXPORT WebViewSchedulerImpl : public WebViewScheduler {
 
   ~WebViewSchedulerImpl() override;
 
+  static constexpr bool kDefaultPageVisibility = true;
+
   // WebViewScheduler implementation:
   void SetPageVisible(bool page_visible) override;
   void SetPageStopped(bool) override;

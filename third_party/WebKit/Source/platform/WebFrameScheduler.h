@@ -16,6 +16,10 @@ namespace blink {
 
 class WebViewScheduler;
 
+namespace scheduler {
+class WorkerSchedulerHandle;
+}
+
 class WebFrameScheduler {
  public:
   virtual ~WebFrameScheduler() = default;
@@ -159,6 +163,12 @@ class WebFrameScheduler {
   // use GetWebViewScheduler()->IsExemptFromBudgetBasedThrottling for
   // the status of the page.
   virtual bool IsExemptFromBudgetBasedThrottling() const = 0;
+
+  // Returns a handle to worker scheduler proxy. This handle should be retained
+  // by the implementation of the worker on main thread and the raw pointer
+  // should be passed to WorkerScheduler via WebThreadCreationParams.
+  virtual std::unique_ptr<scheduler::WorkerSchedulerHandle>
+  CreateWorkerSchedulerHandle() = 0;
 };
 
 }  // namespace blink
