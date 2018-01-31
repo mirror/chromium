@@ -2938,10 +2938,10 @@
             ],
             "experiments": [
                 {
-                    "name": "Enabled_3_1024",
+                    "name": "Enabled_2_1024",
                     "params": {
                         "limit": "1024",
-                        "tight_limit": "3"
+                        "tight_limit": "2"
                     },
                     "enable_features": [
                         "RendererSideResourceScheduler"
