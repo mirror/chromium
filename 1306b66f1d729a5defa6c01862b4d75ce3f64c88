@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "7b899ac1_a1a28ffa",
+        "filename": "chrome/android/java/res/layout/account_signin_view.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-31T11:56:33Z",
+      "side": 1,
+      "message": "Is it, though?",
+      "range": {
+        "startLine": 10,
+        "startChar": 33,
+        "endLine": 10,
+        "endChar": 75
+      },
+      "revId": "1306b66f1d729a5defa6c01862b4d75ce3f64c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbc03790_a9609f0d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-31T11:56:33Z",
+      "side": 1,
+      "message": "Nit: the call to .intValue() isn\u0027t necessary -- the Java compiler will auto-unbox the value.",
+      "range": {
+        "startLine": 1079,
+        "startChar": 54,
+        "endLine": 1079,
+        "endChar": 65
+      },
+      "revId": "1306b66f1d729a5defa6c01862b4d75ce3f64c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3b9a54e_1b30f5f3",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
         "patchSetId": 5
@@ -18,6 +64,46 @@
         "startChar": 49,
         "endLine": 596,
         "endChar": 55
+      },
+      "revId": "1306b66f1d729a5defa6c01862b4d75ce3f64c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cf53119_8f1c2c68",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-31T11:56:33Z",
+      "side": 1,
+      "message": "I think this will trigger the assert in line 818 -- it looks up the raw string resource, which has \u003cLINK1\u003e tags that have been stripped out to apply the span.",
+      "revId": "1306b66f1d729a5defa6c01862b4d75ce3f64c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bcbafc8_b414cf28",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-31T11:56:33Z",
+      "side": 1,
+      "message": "This sets a numeric value which happens to be a string resource ID -- it\u0027s very different from setting a string as the tag, which is what you do in the layout XML.",
+      "range": {
+        "startLine": 688,
+        "startChar": 35,
+        "endLine": 688,
+        "endChar": 60
       },
       "revId": "1306b66f1d729a5defa6c01862b4d75ce3f64c88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -48,6 +134,29 @@
     },
     {
       "key": {
+        "uuid": "da1c3e29_a6b69704",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-31T11:56:33Z",
+      "side": 1,
+      "message": "Wait, this method doesn\u0027t actually seem to use |viewGroup| -- it always iterates over this object\u0027s own children.",
+      "range": {
+        "startLine": 782,
+        "startChar": 44,
+        "endLine": 782,
+        "endChar": 63
+      },
+      "revId": "1306b66f1d729a5defa6c01862b4d75ce3f64c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a0107a0_ebe72fe9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
         "patchSetId": 5
@@ -64,6 +173,75 @@
         "startChar": 16,
         "endLine": 787,
         "endChar": 37
+      },
+      "revId": "1306b66f1d729a5defa6c01862b4d75ce3f64c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89dfcf3e_092c53e6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-31T11:56:33Z",
+      "side": 1,
+      "message": "What is the tag now? A string that matches the name of the string resource? That doesn\u0027t match the tags defined in the layout file (which have a \"consent_desc\u003d\" prefix).\n\nAlso, like Boris points out, what if someone has already set a different tag on the view?",
+      "range": {
+        "startLine": 801,
+        "startChar": 16,
+        "endLine": 801,
+        "endChar": 38
+      },
+      "revId": "1306b66f1d729a5defa6c01862b4d75ce3f64c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e2c9a64_c1823282",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-31T11:56:33Z",
+      "side": 1,
+      "message": "It\u0027s nice that you care about performance here, but I\u0027m pretty sure Resources.getIdentifier() is not particularly efficient either (see the comment at https://developer.android.com/reference/android/content/res/Resources.html#getIdentifier(java.lang.String,%20java.lang.String,%20java.lang.String)).",
+      "range": {
+        "startLine": 812,
+        "startChar": 57,
+        "endLine": 813,
+        "endChar": 73
+      },
+      "revId": "1306b66f1d729a5defa6c01862b4d75ce3f64c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac29c00d_4479684c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-31T11:56:33Z",
+      "side": 1,
+      "message": "What if you have a view that has a tag (maybe defined by someone else), but isn\u0027t a TextView or a Button?",
+      "range": {
+        "startLine": 818,
+        "startChar": 59,
+        "endLine": 818,
+        "endChar": 76
       },
       "revId": "1306b66f1d729a5defa6c01862b4d75ce3f64c88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
