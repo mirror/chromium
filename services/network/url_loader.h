@@ -100,6 +100,7 @@ class URLLoader : public mojom::URLLoader, public net::URLRequest::Delegate {
   uint32_t process_id_;
   uint32_t render_frame_id_;
   bool connected_;
+  const bool keepalive_;
   std::unique_ptr<net::URLRequest> url_request_;
   mojo::Binding<mojom::URLLoader> binding_;
   mojom::URLLoaderClientPtr url_loader_client_;
