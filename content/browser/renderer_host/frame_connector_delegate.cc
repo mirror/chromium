@@ -8,6 +8,8 @@
 
 namespace content {
 
+FrameConnectorDelegate::~FrameConnectorDelegate() {}
+
 RenderWidgetHostViewBase*
 FrameConnectorDelegate::GetParentRenderWidgetHostView() {
   return nullptr;
@@ -66,13 +68,14 @@ bool FrameConnectorDelegate::IsSubtreeThrottled() const {
 
 void FrameConnectorDelegate::SetRect(const gfx::Rect& frame_rect) {
   if (use_zoom_for_device_scale_factor_) {
-    frame_rect_in_pixels_ = frame_rect;
-    frame_rect_in_dip_ = gfx::ScaleToEnclosingRect(
-        frame_rect, 1.f / screen_info_.device_scale_factor);
+    frame_rects_.emplace(
+        gfx::ScaleToEnclosingRect(frame_rect,
+                                  1.f / screen_info_.device_scale_factor),
+        frame_rect);
   } else {
-    frame_rect_in_dip_ = frame_rect;
-    frame_rect_in_pixels_ =
-        gfx::ScaleToEnclosingRect(frame_rect, screen_info_.device_scale_factor);
+    frame_rects_.emplace(frame_rect,
+                         gfx::ScaleToEnclosingRect(
+                             frame_rect, screen_info_.device_scale_factor));
   }
 }
 

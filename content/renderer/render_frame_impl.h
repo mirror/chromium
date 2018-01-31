@@ -672,6 +672,7 @@ class CONTENT_EXPORT RenderFrameImpl
       blink::WebFileChooserCompletion* chooser_completion) override;
   void ShowContextMenu(const blink::WebContextMenuData& data) override;
   void SaveImageFromDataURL(const blink::WebString& data_url) override;
+  void FrameRectsChanged(const blink::WebRect& frame_rect) override;
   void WillSendRequest(blink::WebURLRequest& request) override;
   void DidReceiveResponse(const blink::WebURLResponse& response) override;
   void DidLoadResourceFromMemoryCache(
@@ -863,6 +864,9 @@ class CONTENT_EXPORT RenderFrameImpl
 
   void ScrollFocusedEditableElementIntoRect(const gfx::Rect& rect);
   void DidChangeVisibleViewport();
+
+  // Called when this frame's widget is initialized.
+  void DidReceiveInitialSize();
 
  protected:
   explicit RenderFrameImpl(CreateParams params);
@@ -1604,6 +1608,10 @@ class CONTENT_EXPORT RenderFrameImpl
   // |devtools_frame_token_| is only defined by the browser and is never
   // sent back from the renderer in the control calls.
   blink::WebString devtools_frame_token_;
+
+  // True if this frame is a local root and it does not have information about
+  // its size.
+  bool is_waiting_for_initial_size_ = false;
 
   // Bookkeeping to suppress redundant scroll and focus requests for an already
   // scrolled and focused editable node.

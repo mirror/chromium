@@ -148,6 +148,12 @@ class BLINK_EXPORT WebDocumentLoader {
   virtual void SetIsAdSubframe(bool is_ad_subframe) = 0;
   virtual bool GetIsAdSubframe() const = 0;
 
+  // Allows the embedder to block the parser. While blocked, data received from
+  // the network will be stored, but won't be processed until the parser is
+  // resumed.
+  virtual void BlockParser() = 0;
+  virtual void ResumeParser() = 0;
+
  protected:
   ~WebDocumentLoader() = default;
 };
