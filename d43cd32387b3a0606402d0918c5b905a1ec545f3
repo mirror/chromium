@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f5d5f16_47997768",
+        "filename": "components/cbor/cbor_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-31T20:08:04Z",
+      "side": 1,
+      "message": "Instead of having 2 CheckOutofCTAP/CBOROrderKey() functions/blocks of code, \nI think it would be better to have one CheckOutOfOrderKey(CBORReader::Mode mode) \nthat invokes comparator defined in CBORValue class. \n\nPerhaps once comparator operator in \n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/895227/3/components/cbor/cbor_writer.cc#203 \n \nis defined and implemented, we can simply call the comparator with current key and previous key?",
+      "revId": "d43cd32387b3a0606402d0918c5b905a1ec545f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
