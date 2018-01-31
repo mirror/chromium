@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85bcc0e7_be556293",
+        "filename": "services/network/public/cpp/cors/cors.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-31T10:54:18Z",
+      "side": 1,
+      "message": "I feel this is a bit questionable? The code in services/network is basically for Network Service, and having a public function that says registering something, which writes the value into a static variable, feels pretty confusing.",
+      "revId": "0bdd9967d0d61804268c7c51dcc50e4cce5f735e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
