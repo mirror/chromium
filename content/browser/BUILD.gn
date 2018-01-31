@@ -1020,6 +1020,8 @@ jumbo_source_set("browser") {
     "loader/resource_scheduler_filter.h",
     "loader/signed_exchange_handler.cc",
     "loader/signed_exchange_handler.h",
+    "loader/signed_exchange_signature_verifier.cc",
+    "loader/signed_exchange_signature_verifier.h",
     "loader/stream_resource_handler.cc",
     "loader/stream_resource_handler.h",
     "loader/stream_writer.cc",
