@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "996e8b33_f26fa9d9",
+        "filename": "ui/keyboard/keyboard_test_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-31T03:18:28Z",
+      "side": 1,
+      "message": "(foo_test_support libraries are usually statically linked, so it\u0027s maybe fine to just remove this KEYBOARD_EXPORT..)",
+      "revId": "02e508ce6230f7ee4ffd53077f98939e735313e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
