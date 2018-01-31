@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "7cb838f5_70943bed",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 984,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-31T06:44:22Z",
+      "side": 1,
+      "message": "Well, it matters if someone (like me) is trying to figure out which inputs are trusted, et cetera and where things go: that\u0027s why understanding which process things are executing in is valuable. If this were executing in the browser but the inputs could be controlled by a less privileged process, then it would be necessary to assert that the bounds are valid at runtime. Arithmetic overflow is an issue we\u0027ve had in the past (i.e. a buffer size calculation overflows to a small size, but the code still tries to write the original \u003cn\u003e elements in, leading to a trivial buffer overrun).\n\nAnyway, it sounds like there\u0027s nothing to worry about: a mistake here is the browser process shooting itself in the foot. I don\u0027t feel strongly about having runtime checks in release builds in this case, and I\u0027ll leave it up to you and the OWNERS what you prefer. Thanks for the thorough explanation.",
+      "parentUuid": "77192db6_b5a0b143",
+      "revId": "d594b34e1ce45bce0a41a9c401584443e229e3db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "768e7723_c76b181c",
         "filename": "cc/trees/property_tree.cc",
         "patchSetId": 5
