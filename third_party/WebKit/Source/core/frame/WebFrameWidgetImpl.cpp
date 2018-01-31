@@ -545,12 +545,12 @@ CompositorMutatorImpl& WebFrameWidgetImpl::Mutator() {
 CompositorMutatorImpl* WebFrameWidgetImpl::CompositorMutator() {
   if (!mutator_) {
     std::unique_ptr<CompositorMutatorClient> mutator_client =
-        CompositorMutatorImpl::CreateClient();
+        CompositorMutatorImpl::CreateClientOnMainThread();
     mutator_ = static_cast<CompositorMutatorImpl*>(mutator_client->Mutator());
     layer_tree_view_->SetMutatorClient(std::move(mutator_client));
   }
 
-  return mutator_;
+  return mutator_.get();
 }
 
 void WebFrameWidgetImpl::ApplyViewportDeltas(

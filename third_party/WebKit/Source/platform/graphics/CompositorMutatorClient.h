@@ -5,19 +5,21 @@
 #ifndef CompositorMutatorClient_h
 #define CompositorMutatorClient_h
 
+#include <memory>
+#include "base/memory/scoped_refptr.h"
 #include "platform/PlatformExport.h"
 #include "platform/heap/Handle.h"
 #include "public/platform/WebCompositorMutatorClient.h"
-#include <memory>
 
 namespace blink {
 
 class CompositorMutator;
+class CompositorMutatorImpl;
 
 class PLATFORM_EXPORT CompositorMutatorClient
     : public WebCompositorMutatorClient {
  public:
-  explicit CompositorMutatorClient(CompositorMutator*);
+  explicit CompositorMutatorClient(CompositorMutatorImpl*);
   virtual ~CompositorMutatorClient();
 
   void SetMutationUpdate(std::unique_ptr<cc::MutatorOutputState>);
@@ -25,14 +27,12 @@ class PLATFORM_EXPORT CompositorMutatorClient
   // cc::LayerTreeMutator
   void SetClient(cc::LayerTreeMutatorClient*);
   void Mutate(std::unique_ptr<cc::MutatorInputState>) override;
-  // TODO(majidvp): Remove this when CC knows about timeline input.
-  bool HasAnimators() override;
 
-  CompositorMutator* Mutator() { return mutator_.Get(); }
+  CompositorMutator* Mutator();
 
  private:
   // Accessed by main and compositor threads.
-  CrossThreadPersistent<CompositorMutator> mutator_;
+  scoped_refptr<CompositorMutatorImpl> mutator_;
   cc::LayerTreeMutatorClient* client_;
 };
 
