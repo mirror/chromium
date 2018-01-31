@@ -18,6 +18,7 @@
 #include "ui/app_list/views/search_box_view.h"
 #include "ui/app_list/views/search_result_list_view.h"
 #include "ui/app_list/views/search_result_tile_item_list_view.h"
+#include "ui/chromeos/search_box/search_box_constants.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/shadow_value.h"
@@ -148,7 +149,7 @@ SearchResultPageView::SearchResultPageView() : contents_view_(new views::View) {
   // background border corner radius. All child views' background should be
   // set transparent so that the rounded corner is not overwritten.
   SetBackground(std::make_unique<SearchResultPageBackground>(
-      kCardBackgroundColor, kSearchBoxBorderCornerRadius));
+      kCardBackgroundColor, search_box::kSearchBoxBorderCornerRadius));
   views::ScrollView* const scroller = new views::ScrollView;
   // Leaves a placeholder area for the search box and the separator below it.
   scroller->SetBorder(views::CreateEmptyBorder(
