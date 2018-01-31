@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ce2fcaa_8f640fba",
+        "filename": "services/network/network_context.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-31T22:15:33Z",
+      "side": 1,
+      "message": "If I understand correctly, NetworkContexts will be created whether or not we\u0027re running the network service, but this ResourceScheduler will only be used if the network service is enabled.  If that\u0027s accurate, can we make this allocation dependent on the network service being enabled, so we crash if current or future code uses this ResourceScheduler in a non-network service world?  (I.e. we make sure we track how the network service is being used?)",
+      "range": {
+        "startLine": 127,
+        "startChar": 11,
+        "endLine": 127,
+        "endChar": 22
+      },
+      "revId": "69b666f87eb65c74b4fa4c58d9b737449c771b9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
