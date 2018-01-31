@@ -34,6 +34,24 @@
       "revId": "700c072ea7f3ba9708d8eef8392e9e8cc944559d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cd7fad5_1d37c7c6",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-31T05:36:12Z",
+      "side": 1,
+      "message": "Found that the above statement is incorrect. Not only the root frame background but also fixed-positioned objects escape ContentsProperties. We need the special treatment for printing in either PrePaint or Paint, and I\u0027d prefer PrePaint (as this CL) because PrePaint generates paint properties which instruct the outcome of paint.",
+      "parentUuid": "5293133a_bd530828",
+      "revId": "700c072ea7f3ba9708d8eef8392e9e8cc944559d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
