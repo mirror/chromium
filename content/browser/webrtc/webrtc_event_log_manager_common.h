@@ -45,6 +45,10 @@ CONTENT_EXPORT extern const size_t kMaxPendingRemoteBoundWebRtcEventLogs;
 // kept on local disk.
 CONTENT_EXPORT extern const base::FilePath::CharType kRemoteBoundLogExtension[];
 
+// Version of the remote-bound log. Refers to the version of the event logs'
+// encoding, method for separation of metadata from the WebRTC event log, etc.
+CONTENT_EXPORT extern const uint8_t kRemoteBoundWebRtcEventLogFileVersion;
+
 // Remote-bound event logs will not be uploaded if the time since their last
 // modification (meaning the time when they were completed) exceeds this value.
 // Such expired files will be purged from disk when examined.
@@ -101,11 +105,12 @@ class WebRtcRemoteEventLogsObserver {
 struct LogFile {
   LogFile(const base::FilePath& path,
           base::File file,
-          size_t max_file_size_bytes)
+          size_t max_file_size_bytes,
+          size_t file_size_bytes = 0)
       : path(path),
         file(std::move(file)),
         max_file_size_bytes(max_file_size_bytes),
-        file_size_bytes(0) {}
+        file_size_bytes(file_size_bytes) {}
   const base::FilePath path;
   base::File file;
   const size_t max_file_size_bytes;
