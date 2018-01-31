@@ -1239,16 +1239,11 @@ TEST_F(OfflinePageModelTaskifiedTest, GetAllPages) {
 // This test is affected by https://crbug.com/725685, which only affects windows
 // platform.
 #if defined(OS_WIN)
-#define MAYBE_StartUp_ConsistencyCheckExecuted \
-  DISABLED_StartUp_ConsistencyCheckExecuted
+#define MAYBE_ConsistencyCheckExecuted DISABLED_ConsistencyCheckExecuted
 #else
-#define MAYBE_StartUp_ConsistencyCheckExecuted StartUp_ConsistencyCheckExecuted
+#define MAYBE_ConsistencyCheckExecuted ConsistencyCheckExecuted
 #endif
-TEST_F(OfflinePageModelTaskifiedTest, MAYBE_StartUp_ConsistencyCheckExecuted) {
-  // Rebuild the store so that we can insert pages before the model constructs.
-  ResetModel();
-  BuildStore();
-
+TEST_F(OfflinePageModelTaskifiedTest, MAYBE_ConsistencyCheckExecuted) {
   // Insert temporary pages
   page_generator()->SetArchiveDirectory(temporary_dir_path());
   page_generator()->SetNamespace(kDefaultNamespace);
@@ -1282,10 +1277,10 @@ TEST_F(OfflinePageModelTaskifiedTest, MAYBE_StartUp_ConsistencyCheckExecuted) {
   EXPECT_EQ(3UL,
             test_utils::GetFileCountInDirectory(private_archive_dir_path()));
 
-  // Rebuild the model in order to trigger consistency check.
-  BuildModel();
-  task_runner()->FastForwardBy(
-      OfflinePageModelTaskified::kInitializingTaskDelay);
+  // Execute GetAllPages in order to trigger consistency check.
+  base::MockCallback<MultipleOfflinePageItemCallback> callback;
+  model()->GetAllPages(callback.Get());
+  PumpLoop();
 
   EXPECT_EQ(1LL, store_test_util()->GetPageCount());
   EXPECT_EQ(0UL, test_utils::GetFileCountInDirectory(temporary_dir_path()));
@@ -1294,38 +1289,41 @@ TEST_F(OfflinePageModelTaskifiedTest, MAYBE_StartUp_ConsistencyCheckExecuted) {
 }
 
 TEST_F(OfflinePageModelTaskifiedTest, ClearStorage) {
-  // Rebuilding store and model in order to set clock before executing the clear
-  // storage during model initialization so that we can check the time.
-  ResetModel();
-  BuildStore();
-  BuildModel();
-
+  // The ClearStorage task should not be executed based on time delays after
+  // launch (aka the model being built).
+  task_runner()->FastForwardBy(base::TimeDelta::FromDays(1));
   PumpLoop();
-  // The clear storage task will be delayed on initialization.
   EXPECT_EQ(base::Time(), last_clear_page_time());
 
-  // 5 minutes passed and the last clear page time should be
-  // |now - 5mins + 30seconds| since the clear page will be triggered with a 30
-  // seconds delay. The delay is a hard-coded value in the model.
-  const base::TimeDelta short_delta = base::TimeDelta::FromMinutes(5);
-  task_runner()->FastForwardBy(short_delta);
-  auto archiver = BuildArchiver(kTestUrl, ArchiverResult::SUCCESSFULLY_CREATED);
-  int64_t offline_id = SavePageWithExpectedResult(
-      kTestUrl, kTestClientId1, kTestUrl2, kEmptyRequestOrigin,
-      std::move(archiver), SavePageResult::SUCCESS);
-  PumpLoop();
-  EXPECT_EQ(
-      task_runner()->Now() - short_delta + base::TimeDelta::FromSeconds(30),
-      last_clear_page_time());
-
-  task_runner()->FastForwardBy(
-      OfflinePageModelTaskified::kClearStorageInterval);
-  archiver = BuildArchiver(kTestUrl, ArchiverResult::SUCCESSFULLY_CREATED);
-  offline_id = SavePageWithExpectedResult(
-      kTestUrl, kTestClientId1, kTestUrl2, kEmptyRequestOrigin,
-      std::move(archiver), SavePageResult::SUCCESS);
+  // Calling GetAllPages should immediately enqueue the ClearStorage task.
+  base::MockCallback<MultipleOfflinePageItemCallback> callback;
+  model()->GetAllPages(callback.Get());
   PumpLoop();
   EXPECT_EQ(task_runner()->Now(), last_clear_page_time());
+
+  // Calling GetAllPages after only half of the enforced delay time should not
+  // enqueue the task.
+  base::Time previous_time = task_runner()->Now();
+  task_runner()->FastForwardBy(
+      OfflinePageModelTaskified::kClearStorageInterval / 2);
+  ASSERT_GT(task_runner()->Now(), previous_time);
+  model()->GetAllPages(callback.Get());
+  PumpLoop();
+  EXPECT_EQ(previous_time, last_clear_page_time());
+
+  // Forwarding by the full delay (plus 1 second just in case) should allow the
+  // task to be enqueued again.
+  task_runner()->FastForwardBy(
+      OfflinePageModelTaskified::kClearStorageInterval / 2 +
+      base::TimeDelta::FromSeconds(1));
+  // Saving a page should also immediately enqueue the ClearStorage task.
+  auto archiver = BuildArchiver(kTestUrl, ArchiverResult::SUCCESSFULLY_CREATED);
+  SavePageWithExpectedResult(kTestUrl, kTestClientId1, kTestUrl2,
+                             kEmptyRequestOrigin, std::move(archiver),
+                             SavePageResult::SUCCESS);
+  PumpLoop();
+  EXPECT_EQ(task_runner()->Now(), last_clear_page_time());
+
   histogram_tester()->ExpectUniqueSample(
       "OfflinePages.ClearTemporaryPages.Result",
       static_cast<int>(ClearStorageResult::UNNECESSARY), 2);
