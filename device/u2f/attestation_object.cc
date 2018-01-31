@@ -30,6 +30,10 @@ AttestationObject& AttestationObject::operator=(AttestationObject&& other) =
 
 AttestationObject::~AttestationObject() = default;
 
+void AttestationObject::EraseAttestation() {
+  attestation_statement_.reset(new NoneAttestationStatement);
+}
+
 std::vector<uint8_t> AttestationObject::SerializeToCBOREncodedBytes() const {
   cbor::CBORValue::MapValue map;
   map[cbor::CBORValue(kFormatKey)] =

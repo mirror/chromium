@@ -14,4 +14,14 @@ AttestationStatement::~AttestationStatement() = default;
 AttestationStatement::AttestationStatement(std::string format)
     : format_(std::move(format)) {}
 
+NoneAttestationStatement::NoneAttestationStatement()
+    : AttestationStatement("none") {}
+
+NoneAttestationStatement::~NoneAttestationStatement() = default;
+
+cbor::CBORValue::MapValue NoneAttestationStatement::GetAsCBORMap() {
+  cbor::CBORValue::MapValue empty;
+  return empty;
+}
+
 }  // namespace device

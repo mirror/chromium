@@ -30,6 +30,13 @@ class AttestationObject {
 
   ~AttestationObject();
 
+  // Replaces the attestation statement with a “none” attestation, as specified
+  // for step 20.3 in https://w3c.github.io/webauthn/#createCredential.  (This
+  // does not, currently, erase the AAGUID because it is already always zero
+  // for U2F devices. If CTAP2 is supported in the future, that will need to be
+  // taken into account.)
+  void EraseAttestation();
+
   // Produces a CBOR-encoded byte-array in the following format:
   // {"authData": authenticator data bytes,
   //  "fmt": attestation format name,
