@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "ed90dffa_2f4138a4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryAdapter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-31T17:49:03Z",
+      "side": 1,
+      "message": "Oh, yea, we should do this in the grd file so that translators can flip the order of name + modifier if needed.",
+      "parentUuid": "e1707514_ad191a54",
+      "range": {
+        "startLine": 140,
+        "startChar": 16,
+        "endLine": 141,
+        "endChar": 96
+      },
+      "revId": "9e5e3c0c0618ce81ebf50c56cbb0517f563e3c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92c396ae_c61ed615",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadPreferences.java",
         "patchSetId": 7
