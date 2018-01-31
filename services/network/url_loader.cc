@@ -24,6 +24,7 @@
 #include "services/network/data_pipe_element_reader.h"
 #include "services/network/network_context.h"
 #include "services/network/network_service_impl.h"
+#include "services/network/network_service_url_loader_factory.h"
 #include "services/network/public/cpp/loader_util.h"
 #include "services/network/public/cpp/net_adapters.h"
 #include "services/network/public/cpp/resource_request.h"
@@ -234,7 +235,8 @@ class SSLPrivateKeyInternal : public net::SSLPrivateKey {
 
 }  // namespace
 
-URLLoader::URLLoader(NetworkContext* context,
+URLLoader::URLLoader(NetworkServiceURLLoaderFactory* url_loader_factory,
+                     NetworkContext* context,
                      mojom::URLLoaderRequest url_loader_request,
                      int32_t options,
                      const ResourceRequest& request,
@@ -242,7 +244,8 @@ URLLoader::URLLoader(NetworkContext* context,
                      mojom::URLLoaderClientPtr url_loader_client,
                      const net::NetworkTrafficAnnotationTag& traffic_annotation,
                      uint32_t process_id)
-    : context_(context),
+    : url_loader_factory_(url_loader_factory),
+      context_(context),
       options_(options),
       resource_type_(request.resource_type),
       is_load_timing_enabled_(request.enable_load_timing),
@@ -257,7 +260,7 @@ URLLoader::URLLoader(NetworkContext* context,
                                   mojo::SimpleWatcher::ArmingPolicy::MANUAL),
       report_raw_headers_(report_raw_headers),
       weak_ptr_factory_(this) {
-  context_->RegisterURLLoader(this);
+  url_loader_factory_->RegisterURLLoader(this);
   binding_.set_connection_error_handler(
       base::BindOnce(&URLLoader::OnConnectionError, base::Unretained(this)));
 
@@ -306,8 +309,6 @@ URLLoader::URLLoader(NetworkContext* context,
 }
 
 URLLoader::~URLLoader() {
-  context_->DeregisterURLLoader(this);
-
   if (update_body_read_before_paused_)
     UpdateBodyReadBeforePaused();
   if (body_read_before_paused_ != -1) {
@@ -321,6 +322,7 @@ URLLoader::~URLLoader() {
                << "body_read_before_paused_: " << body_read_before_paused_;
     }
   }
+  url_loader_factory_->DeregisterURLLoader(this);
 }
 
 void URLLoader::Cleanup() {
