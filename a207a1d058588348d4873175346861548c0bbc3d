@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82641b52_569d2d00",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-01-31T02:40:02Z",
+      "side": 1,
+      "message": "Update the cl name.\nAdd a description on what you have done and why are you doing this. You can search danakj@chromium.org for cl description examples.",
+      "revId": "a207a1d058588348d4873175346861548c0bbc3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29e2358e_10c6baf9",
+        "filename": "services/viz/public/cpp/compositing/filter_operations_struct_traits.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-01-31T02:40:02Z",
+      "side": 1,
+      "message": "you don\u0027t need to include this file because it\u0027s already included in its header file.",
+      "revId": "a207a1d058588348d4873175346861548c0bbc3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9844d81_ce86ef01",
+        "filename": "services/viz/public/cpp/compositing/filter_operations_struct_traits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-01-31T02:40:02Z",
+      "side": 1,
+      "message": "This does not need to be included here because you are not calling any filter_operation specific functions in this header file.",
+      "revId": "a207a1d058588348d4873175346861548c0bbc3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
