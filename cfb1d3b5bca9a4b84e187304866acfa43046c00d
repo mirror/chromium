@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0e62ed7_0a62789f",
+        "filename": "net/android/java/src/org/chromium/net/NetworkChangeNotifier.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-31T20:55:09Z",
+      "side": 1,
+      "message": "Any particular reason why we need an explicit returnValue variable here?",
+      "range": {
+        "startLine": 400,
+        "startChar": 19,
+        "endLine": 400,
+        "endChar": 30
+      },
+      "revId": "cfb1d3b5bca9a4b84e187304866acfa43046c00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
