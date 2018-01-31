@@ -7,6 +7,7 @@
 #include "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.h"
 #include "chrome/browser/metrics/chrome_metrics_service_accessor.h"
 #include "chrome/browser/metrics/chrome_metrics_services_manager_client.h"
+#include "chrome/browser/metrics/testing/metrics_reporting_pref_helper.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/sync/profile_sync_service_factory.h"
 #include "chrome/browser/sync/test/integration/profile_sync_service_harness.h"
@@ -189,6 +190,33 @@ class UkmBrowserTest : public SyncTest {
     return g_browser_process->GetMetricsServicesManager()->GetUkmService();
   }
   base::test::ScopedFeatureList scoped_feature_list_;
+};
+
+class UkmConsentParamBrowserTest : public UkmBrowserTest,
+                                   public testing::WithParamInterface<bool> {
+ public:
+  UkmConsentParamBrowserTest() : UkmBrowserTest() {}
+
+  static bool IsMetricsAndCrashReportingEnabled() {
+    return ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled(
+        g_browser_process->local_state());
+  }
+
+  // InProcessBrowserTest overrides:
+  bool SetUpUserDataDirectory() override {
+    return prefs_helper_.SetUpUserDataDirectory(GetParam());
+  }
+
+  void CreatedBrowserMainParts(content::BrowserMainParts* parts) override {
+    // IsMetricsReportingEnabled() in non-official builds always returns false.
+    // Enable the official build checks so that this test can work in both
+    // official and non-official builds.
+    ChromeMetricsServiceAccessor::SetForceIsMetricsReportingEnabledPrefLookup(
+        GetParam());
+  }
+
+ private:
+  MetricsReportingPrefsHelper prefs_helper_;
 };
 
 class UkmEnabledChecker : public SingleClientStatusChangeChecker {
@@ -576,5 +604,25 @@ IN_PROC_BROWSER_TEST_F(UkmBrowserTest, HistoryDeleteCheck) {
   harness->service()->RequestStop(browser_sync::ProfileSyncService::CLEAR_DATA);
   CloseBrowserSynchronously(sync_browser);
 }
+
+IN_PROC_BROWSER_TEST_P(UkmConsentParamBrowserTest, GroupPolicyConsentCheck) {
+  // Note we are not using the synthetic MetricsConsentOverride since we are
+  // testing directly from prefs.
+
+  Profile* profile = ProfileManager::GetActiveUserProfile();
+  std::unique_ptr<ProfileSyncServiceHarness> harness =
+      EnableSyncForProfile(profile);
+
+  // The input param controls whether we set the prefs related to group policy
+  // enabled or not. Based on its value, we should report the same value for
+  // both if reporting is enabled and if UKM service is enabled.
+  EXPECT_EQ(GetParam(),
+            UkmConsentParamBrowserTest::IsMetricsAndCrashReportingEnabled());
+  EXPECT_EQ(GetParam(), ukm_enabled());
+}
+
+INSTANTIATE_TEST_CASE_P(UkmConsentParamBrowserTests,
+                        UkmConsentParamBrowserTest,
+                        testing::Bool());
 
 }  // namespace metrics
