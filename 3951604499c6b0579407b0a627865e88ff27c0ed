@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27857af1_5a8bb466",
+        "filename": "chrome/browser/media/single_client_video_capture_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-31T20:06:07Z",
+      "side": 1,
+      "message": "Is this a situation we actually expect to have to handle at runtime? If not, we could consider making this a crashable offense by replacing it with a CHECK or DCHECK.",
+      "revId": "3951604499c6b0579407b0a627865e88ff27c0ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1e29ec9_2afe130e",
+        "filename": "chrome/browser/media/single_client_video_capture_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-31T20:06:07Z",
+      "side": 1,
+      "message": "Is this a situation that we actually expect to have to handle at runtime? If not, we could instead do a (much cheaper) CHECK or DCHECK in the constructor.",
+      "revId": "3951604499c6b0579407b0a627865e88ff27c0ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2912cb59_dd78ed48",
+        "filename": "chrome/browser/media/single_client_video_capture_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-31T20:06:07Z",
+      "side": 1,
+      "message": "location nit: Consider moving the comment closer to what it explains, i.e. directly above line 102.\n\nphrasing nit: \"... should keep alive\" -\u003e \"... must be kept alive\"",
+      "revId": "3951604499c6b0579407b0a627865e88ff27c0ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8342cbd1_23cea2e6",
+        "filename": "chrome/browser/media/single_client_video_capture_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-31T20:06:07Z",
+      "side": 1,
+      "message": "After having read the implementation, I realize that what this class does is very similar to what class VideoCaptureController does, i.e. maintaining buffer contexts and translating between buffer_ids used by the producer side and buffer_context_ids used by the consumer side. \n\nThe only difference seems to be that VideoCaptureController allows multiple clients, but it should be possible to abstract out that distinction. I recommend exploring whether or not we can find a way to do that and share the common functionality and tests between the two classes.",
+      "revId": "3951604499c6b0579407b0a627865e88ff27c0ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "552b510c_0d8388be",
+        "filename": "chrome/browser/media/single_client_video_capture_host.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-31T20:06:07Z",
+      "side": 1,
+      "message": "nit: Class name and description is already much better now. A minor improvement that could still be considered is to give the reader something more specific than just \"a single video capture device\", i.e. pointing to an actual interface name would be nice. In our case that would probably be content::LaunchedVideoCaptureDevice.",
+      "revId": "3951604499c6b0579407b0a627865e88ff27c0ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e23a275b_0bb8832f",
+        "filename": "chrome/browser/media/single_client_video_capture_host_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-31T20:06:07Z",
+      "side": 1,
+      "message": "RunUntilIdle() is not a very robust way of waiting for an event. There should always be a way to explicitly wait for an event using base::RunLoop. If not, that typically indicates a design problem where an event to wait on is missing in the API.\n\nPlease check if you can find a way to replace with with a pair of base::RunLoop::Run() and base::RunLoop::Quit() calls.",
+      "revId": "3951604499c6b0579407b0a627865e88ff27c0ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "229a527a_303be55b",
+        "filename": "chrome/browser/media/single_client_video_capture_host_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-31T20:06:07Z",
+      "side": 1,
+      "message": "Is it valid in gmock that an expectation is set after it occurs?\nIf not, does this only work because FinishConsumingBuffer() leads to a call to OnUtilizationReport() asynchronously?",
+      "revId": "3951604499c6b0579407b0a627865e88ff27c0ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
