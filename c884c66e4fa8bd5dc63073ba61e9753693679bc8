@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48c7831b_17a4e4a7",
+        "filename": "content/browser/renderer_host/input/touch_action_browsertest.cc",
+        "patchSetId": 63
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-31T22:10:33Z",
+      "side": 1,
+      "message": "nit: Put these common properties (position: absolute; will-change: transform;) into a shared class (maybe into .box?)",
+      "revId": "c884c66e4fa8bd5dc63073ba61e9753693679bc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "911452cc_a9b654d5",
+        "filename": "content/browser/renderer_host/input/touch_action_browsertest.cc",
+        "patchSetId": 63
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-31T22:10:33Z",
+      "side": 1,
+      "message": "Do this in TouchActionBrowserTest::TearDown rather than every test.",
+      "revId": "c884c66e4fa8bd5dc63073ba61e9753693679bc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dba61975_3967e045",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 63
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-31T22:10:33Z",
+      "side": 1,
+      "message": "More specifically, we don\u0027t filter out this gesture event because we don\u0027t know yet if it will be allowed by the real touch action and we can\u0027t currently generate the ScrollBegin later if/when we decide the scroll gesture is allowed. So instead we filter the begin and zero out all scroll updates until we have decided.",
+      "range": {
+        "startLine": 70,
+        "startChar": 55,
+        "endLine": 71,
+        "endChar": 41
+      },
+      "revId": "c884c66e4fa8bd5dc63073ba61e9753693679bc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6e9e064_0ec91af2",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 63
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-31T22:10:33Z",
+      "side": 1,
+      "message": "Can you test that the double tap is still filtered if the main thread doesn\u0027t allow it?",
+      "revId": "c884c66e4fa8bd5dc63073ba61e9753693679bc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

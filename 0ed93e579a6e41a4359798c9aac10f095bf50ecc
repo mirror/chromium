@@ -422,6 +422,24 @@
     },
     {
       "key": {
+        "uuid": "7388c6b8_30a6fc17",
+        "filename": "content/browser/renderer_host/input/touch_action_browsertest.cc",
+        "patchSetId": 62
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-31T22:10:33Z",
+      "side": 1,
+      "message": "A couple thoughts for verifying this:\n\nJust before janking the main thread we can make it no longer scrollable (no longer tall). The compositor won\u0027t get the message until the main thread finishes its busy loop so it can continue to scroll the old content.\n\nThen, the only other thing we\u0027d need to somehow ensure is that the main thread has started the busy loop when we start the scroll. We could probably do this with requestAnimationFrame or setTimeout(fn, 0);. For example, the main thread could set a given start scroll position, and then requestAnimationFrame, and then busy loop. Here, we could wait for the expected scroll position, then start the gesture. As before, if it went to the main thread it would fail to scroll because on the next frame the main thread is going to make the scroller go away.",
+      "parentUuid": "47e38421_7738316b",
+      "revId": "0ed93e579a6e41a4359798c9aac10f095bf50ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a52d143a_ec04df6d",
         "filename": "content/browser/renderer_host/input/touch_action_browsertest.cc",
         "patchSetId": 62
@@ -758,6 +776,24 @@
       "revId": "0ed93e579a6e41a4359798c9aac10f095bf50ecc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92aef584_f562caa0",
+        "filename": "content/browser/renderer_host/input/touch_action_filter_unittest.cc",
+        "patchSetId": 62
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-01-31T22:10:33Z",
+      "side": 1,
+      "message": "Ack, but please describe the expected behavior when the bug is resolved.",
+      "parentUuid": "a9128d68_205ba954",
+      "revId": "0ed93e579a6e41a4359798c9aac10f095bf50ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
