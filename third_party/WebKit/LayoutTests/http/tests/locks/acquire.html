@@ -4,6 +4,7 @@
 <link rel=help href="https://github.com/inexorabletash/web-locks">
 <script src="/resources/testharness.js"></script>
 <script src="/resources/testharnessreport.js"></script>
+<script src="resources/helpers.js"></script>
 <script>
 'use strict';
 
@@ -13,42 +14,55 @@ promise_test(async t => {
 }, 'navigator.locks.acquire requires a name and a callback');
 
 promise_test(async t => {
+  const res = uniqueName(t);
   await promise_rejects(
     t, new TypeError(),
-    navigator.locks.acquire('name', {mode: 'foo'}, lock => {}));
+    navigator.locks.acquire(res, {mode: 'foo'}, lock => {}));
   await promise_rejects(
     t, new TypeError(),
-    navigator.locks.acquire('name', {mode: null }, lock => {}));
+    navigator.locks.acquire(res, {mode: null }, lock => {}));
   assert_equals(await navigator.locks.acquire(
-    'name', {mode: 'exclusive'}, lock => lock.mode), 'exclusive',
+    res, {mode: 'exclusive'}, lock => lock.mode), 'exclusive',
                 'mode is exclusive');
   assert_equals(await navigator.locks.acquire(
-    'name', {mode: 'shared'}, lock => lock.mode), 'shared',
+    res, {mode: 'shared'}, lock => lock.mode), 'shared',
                 'mode is shared');
 }, 'mode must be "shared" or "exclusive"');
 
 promise_test(async t => {
+  const res = uniqueName(t);
   await promise_rejects(
-    t, new TypeError(), navigator.locks.acquire('name', undefined));
+    t, 'NotSupportedError',
+    navigator.locks.acquire(
+      res, {steal: true, ifAvailable: true}, lock => {}),
+    "A NotSupportedError should be thrown if both " +
+    "'steal' and 'ifAvailable' are specified.");
+}, "The 'steal' and 'ifAvailable' options are mutually exclusive");
+
+promise_test(async t => {
+  const res = uniqueName(t);
   await promise_rejects(
-    t, new TypeError(), navigator.locks.acquire('name', null));
+    t, new TypeError(), navigator.locks.acquire(res, undefined));
   await promise_rejects(
-    t, new TypeError(), navigator.locks.acquire('name', 123));
+    t, new TypeError(), navigator.locks.acquire(res, null));
   await promise_rejects(
-    t, new TypeError(), navigator.locks.acquire('name', 'abc'));
+    t, new TypeError(), navigator.locks.acquire(res, 123));
   await promise_rejects(
-    t, new TypeError(), navigator.locks.acquire('name', []));
+    t, new TypeError(), navigator.locks.acquire(res, 'abc'));
   await promise_rejects(
-    t, new TypeError(), navigator.locks.acquire('name', {}));
+    t, new TypeError(), navigator.locks.acquire(res, []));
   await promise_rejects(
-    t, new TypeError(), navigator.locks.acquire('name', new Promise(r => {})));
+    t, new TypeError(), navigator.locks.acquire(res, {}));
+  await promise_rejects(
+    t, new TypeError(), navigator.locks.acquire(res, new Promise(r => {})));
 }, 'callback must be a function');
 
 promise_test(async t => {
+  const res = uniqueName(t);
   let release;
   const promise = new Promise(r => { release = r; });
 
-  let returned = navigator.locks.acquire('name', lock => { return promise; });
+  let returned = navigator.locks.acquire(res, lock => { return promise; });
 
   const order = [];
 
