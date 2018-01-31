@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "53cd8184_b2287ed0",
+        "filename": "tools/gn/input_conversion.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2018-01-31T20:51:46Z",
+      "side": 1,
+      "message": "I don\u0027t think this is safe. Things can be escaped in the JSON source such that the original in the input and the key you have here won\u0027t match. We could fix this \"properly\" but it seems not worth the effort. I\u0027m thinking we should clearly document that the keys must not have this property (should be easy for people programatically generating stuff to give GN) and give a proper error in this case rather than a DCHECK.\n\nAnother downside is that the string might not match where it actually was, so if an error references it, it might give a pretty confusing error message. This concern seems to be the case no matter what unless the JSON reader gives us more context, so I guess we\u0027ll have to just live with it.",
+      "revId": "f918cf613e2fef81a81d276bae584bfd2fc7d640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fba09c3e_cbb4b377",
         "filename": "tools/gn/input_conversion.cc",
         "patchSetId": 5
@@ -30,6 +47,23 @@
       "writtenOn": "2018-01-31T20:02:34Z",
       "side": 1,
       "message": "I might tweak the wording a bit to say that floats are unsupported and will result in an error (and the same for nulls, if you agree).",
+      "revId": "f918cf613e2fef81a81d276bae584bfd2fc7d640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9861b13_7bbd2bdf",
+        "filename": "tools/gn/input_conversion_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2018-01-31T20:51:46Z",
+      "side": 1,
+      "message": "Be sure to add a case here to test the mismatched key case I asked for an error about above.",
       "revId": "f918cf613e2fef81a81d276bae584bfd2fc7d640",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
