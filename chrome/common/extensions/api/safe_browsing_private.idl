@@ -1,0 +1,33 @@
+// Copyright 2018 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+// Use the <code>chrome.safeBrowsingPrivate</code> API to observe events.
+namespace safeBrowsingPrivate {
+
+  dictionary ProtectedPasswordReuse {
+    // URL where this reuse happened.
+    DOMString url;
+
+    // The user name of the protected password.
+    DOMString userName;
+
+    // If this a phishing url.
+    boolean isPhishing;
+  };
+
+  interface Events {
+    // Fired when Chrome detects a reuse of a protected password.
+    //
+    // |url|: URL where this reuse happened.
+    // |userName|: The user name of the protected password.
+    // |isPhishing|: If this a phishing url.
+    static void onProtectedPasswordReuseDetected(ProtectedPasswordReuse dict);
+
+    // Fired when the user changed their protected password.
+    //
+    // |userName|: The user name of the protected password.
+    static void onProtectedPasswordChanged(DOMString userName);
+  };
+
+};
