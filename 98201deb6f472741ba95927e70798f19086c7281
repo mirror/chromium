@@ -22,6 +22,30 @@
       "revId": "98201deb6f472741ba95927e70798f19086c7281",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd05cf10_e159089e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-31T17:03:29Z",
+      "side": 1,
+      "message": "Done. Good catch.",
+      "parentUuid": "1b70cc84_7ff5012a",
+      "range": {
+        "startLine": 9,
+        "startChar": 12,
+        "endLine": 9,
+        "endChar": 39
+      },
+      "revId": "98201deb6f472741ba95927e70798f19086c7281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
