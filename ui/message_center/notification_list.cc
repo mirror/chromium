@@ -127,6 +127,15 @@ NotificationList::Notifications NotificationList::GetNotificationsByNotifierId(
   return notifications;
 }
 
+bool NotificationList::SetNotificationAppId(const std::string& notification_id,
+                                            const std::string& app_id) {
+  auto iter = GetNotification(notification_id);
+  if (iter == notifications_.end())
+    return false;
+  (*iter)->set_app_id(app_id);
+  return true;
+}
+
 bool NotificationList::SetNotificationIcon(const std::string& notification_id,
                                            const gfx::Image& image) {
   auto iter = GetNotification(notification_id);

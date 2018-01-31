@@ -106,6 +106,40 @@ void MessageCenterController::SetNotifierSettingsListener(
   }
 }
 
+void MessageCenterController::UpdateNotificationAppId(
+    const std::string& package_name,
+    const std::string& notification_id) {
+  // |client_| may not be bound in unit tests.
+  if (client_.is_bound()) {
+    std::string* app_id;
+    // Look at mojo examples.
+    // The issue is that the current implementation is a hack.
+    // The solution is to get the app id, and build the notification with it.
+    // 1.  Can I pass a ptr over mojo?
+    // 2. Can I return a value over mojo instead of using a callback?
+    // If so, I should just return the app id, and construct the notification
+    // with the proper id.
+    // Reason why I haven't returned a callback:
+    // Unable to call ArcNotificationManager as is.
+    // 3. Is there a sneaky way to call ArcNotificationManager here?
+
+    // and finally... tests!!!!!
+
+    xxx
+
+        client_->GetAppId(
+            package_name,
+            base::BindOnce(&MessageCenterController::OnGotAppId,
+                           base::Unretained(this), notification_id));
+  }
+}
+
+void MessageCenterController::OnGotAppId(const std::string& notification_id,
+                                         const std::string& app_id) {
+  message_center::MessageCenter::Get()->SetNotificationAppId(notification_id,
+                                                             app_id);
+}
+
 void MessageCenterController::OnGotNotifierList(
     std::vector<mojom::NotifierUiDataPtr> ui_data) {
   if (notifier_id_)

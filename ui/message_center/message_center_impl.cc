@@ -391,6 +391,28 @@ void MessageCenterImpl::RemoveAllNotifications(bool by_user, RemoveType type) {
   }
 }
 
+void MessageCenterImpl::SetNotificationAppId(const std::string& notification_id,
+                                             const std::string& app_id) {
+  Notification* notification =
+      GetLatestNotificationIncludingQueued(notification_id);
+  if (iterating_) {
+    if (notification) {
+      std::unique_ptr<Notification> copied_notification =
+          std::make_unique<Notification>(*notification);
+      copied_notification->set_app_id(app_id);
+      notification_change_queue_->UpdateNotification(
+          notification_id, std::move(copied_notification));
+    }
+    return;
+  }
+
+  if (notification_list_->SetNotificationAppId(notification_id, app_id)) {
+    internal::ScopedNotificationsIterationLock lock(this);
+    for (auto& observer : observer_list_)
+      observer.OnNotificationUpdated(notification_id);
+  }
+}
+
 void MessageCenterImpl::SetNotificationIcon(const std::string& notification_id,
                                             const gfx::Image& image) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
