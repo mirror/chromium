@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "817acc96_0ea06638",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8EmbedderGraphBuilder.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-31T09:00:07Z",
+      "side": 1,
+      "message": "We are recording the edge (in the line above) before checking for the \"visited\" mark. This ensures that all edges are visited even though each node is visited only once.\n\nThe algorithm is similar to this DFS pseudocode:\n\nvoid Visit(parent, object) {\n  edges.add({parent, object});\n  if (!visited[object]) {\n      visited[object] \u003d true;\n      for (child : object.children) {\n         Visit(object, child);\n      }\n  }\n}\n\nThe algorithm you have in mind is probably:\n\nvoid Visit(parent, object) {\n  if (!visited[object]) {\n      edges.add({parent, object});\n      visited[object] \u003d true;\n      for (child : object.children) {\n         Visit(object, child);\n      }\n  }\n}\n\nI\u0027ll try to add a test that ensures that we find all paths.",
+      "parentUuid": "1cddb79f_d7e08b43",
+      "revId": "a79713cd64189b6363b616e554e9cc42025e0657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e2d83c1_d5d6211a",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8EmbedderGraphBuilder.h",
         "patchSetId": 10
@@ -59,6 +77,24 @@
     },
     {
       "key": {
+        "uuid": "1928b6fe_f6553e98",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8EmbedderGraphBuilder.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-31T09:00:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e2d83c1_d5d6211a",
+      "revId": "a79713cd64189b6363b616e554e9cc42025e0657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b13c49f_08094661",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8EmbedderGraphBuilder.h",
         "patchSetId": 10
@@ -73,6 +109,24 @@
       "revId": "a79713cd64189b6363b616e554e9cc42025e0657",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7e1f193_b2f5e4ac",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8EmbedderGraphBuilder.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-31T09:00:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b13c49f_08094661",
+      "revId": "a79713cd64189b6363b616e554e9cc42025e0657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
