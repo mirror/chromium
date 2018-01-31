@@ -89,6 +89,30 @@
     },
     {
       "key": {
+        "uuid": "62ba198f_93e6cb92",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-31T22:42:57Z",
+      "side": 1,
+      "message": "It depends on what the background of the tab switcher is in the compositor. I\u0027d rather handle that here than in the compositor code. I updated the patch to handle incognito.",
+      "parentUuid": "07d14fc8_3bc0167a",
+      "range": {
+        "startLine": 831,
+        "startChar": 26,
+        "endLine": 832,
+        "endChar": 95
+      },
+      "revId": "262854d0be12a7c267eaf7ba901ce00d5fe8d52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0af9c8bd_a29d6357",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
         "patchSetId": 1

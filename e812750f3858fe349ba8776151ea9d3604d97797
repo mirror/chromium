@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8010fd89_be41fb07",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-31T22:42:57Z",
+      "side": 1,
+      "message": "I don\u0027t like this one bit. But other methods triggered lint that I didn\u0027t want to suppress either...",
+      "range": {
+        "startLine": 832,
+        "startChar": 20,
+        "endLine": 832,
+        "endChar": 80
+      },
+      "revId": "e812750f3858fe349ba8776151ea9d3604d97797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
