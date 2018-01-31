@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abf9a995_1e3c9b5a",
+        "filename": "base/allocator/partition_allocator/address_space_randomization_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-31T18:48:21Z",
+      "side": 1,
+      "message": "I worry that this is still going to be flakey if we get very unlucky. \n\nThere are 64k possible 64k-pages in 4GB. So for the unmodified test, P(collision) can be very roughly approximated by n^2/2m per the birthday problem which works out to \n  100 * 100 / (2 * 2^16)\n  .07629394531250000000\nso the current test should be flakey about 7.6% of the time. Is that about what we\u0027re seeing?\n\nYou\u0027re right about the 64bit case being astronomical:\n  100 * 100 / (2 * 2^48)\n  .00000000001776356839\n\nI couldn\u0027t find a formula for K *pairs* of collisions, though (most focus on k samples all having the same value), so I\u0027m guessing here.  Can we phrase the problem as \"if we get a collision, then remove the offending pair and ask what is the probability of the remaining ones also having a collision?\"  Maybe further generalize that n approximately equals n - 2 for large N. Which devolves into being the same as \"If you were instead going to repeat from scratch for k trials\", then we get \n  .076 * .076               \u003d .005\n  .076 * .076 * .076        \u003d .0004\n  .076 * .076 * .076 * .076 \u003d .00003\n\nor 5 out of a thousand flakes for kMaxCollisions \u003d\u003d 2.  That may still be high. Maybe N is 3 or 4 to be on the safe side?\n\nThere\u0027s got to be someone smarter than me that would know this cold.",
+      "range": {
+        "startLine": 105,
+        "startChar": 2,
+        "endLine": 105,
+        "endChar": 46
+      },
+      "revId": "412df7793e9d90790682a8ed08b75f0c26ab6afd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
