@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22ff073c_1f19bd39",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2018-01-31T15:51:49Z",
+      "side": 1,
+      "message": "Is there a bug filed for that refactor?",
+      "revId": "67acbf53ebf13f59805512dfdfa5ba71fb69e0d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
