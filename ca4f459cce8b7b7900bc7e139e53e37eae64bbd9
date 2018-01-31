@@ -34,6 +34,24 @@
       "revId": "ca4f459cce8b7b7900bc7e139e53e37eae64bbd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f1912f05_dc2a089f",
+        "filename": "media/capture/mojo/image_capture_types.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-31T18:16:39Z",
+      "side": 1,
+      "message": "Yes, this can be caused by the line endings.",
+      "parentUuid": "02d0469c_728bf084",
+      "revId": "ca4f459cce8b7b7900bc7e139e53e37eae64bbd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
