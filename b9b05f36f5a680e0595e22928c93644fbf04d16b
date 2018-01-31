@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "ece67c4f_e0ee2c66",
+        "filename": "base/threading/thread_local_storage.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1146127
+      },
+      "writtenOn": "2018-01-31T09:17:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "288db4c4_0e4f57e5",
+      "revId": "b9b05f36f5a680e0595e22928c93644fbf04d16b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b709c01_db06ee62",
         "filename": "base/threading/thread_local_storage.cc",
         "patchSetId": 1
@@ -139,6 +157,24 @@
       "revId": "b9b05f36f5a680e0595e22928c93644fbf04d16b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cc4ed7f_c869d022",
+        "filename": "base/threading/thread_local_storage.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1146127
+      },
+      "writtenOn": "2018-01-31T09:17:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a44bef7_69704a6f",
+      "revId": "b9b05f36f5a680e0595e22928c93644fbf04d16b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -296,6 +332,24 @@
       "writtenOn": "2018-01-26T11:21:02Z",
       "side": 1,
       "message": "Also, I believe these members can be made private for realz now with C++11 (with a constexpr default constructor and inline POD member initialization). I did that recently for LazyInstance and it didn\u0027t generate static initializers.",
+      "revId": "b9b05f36f5a680e0595e22928c93644fbf04d16b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77b97e56_2af310e4",
+        "filename": "base/threading/thread_local_storage.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1146127
+      },
+      "writtenOn": "2018-01-31T09:17:18Z",
+      "side": 1,
+      "message": "about the initializers - with the current initialization (i.e. TLS_INITIALIZER), default member initializers + constexpr constructor will lead to constant initialization, which would be ok, although not to the letter of the styleguide since it would be non-POD. \n\nHowever, if your point is to deprecate TLS_INITIALIZER and just use global StaticSlots without it - that such a case is without dynamic initialization is seemingly not something guaranteed by the standard and is probably not a very good idea. Isn\u0027t this the case that stimulated the codestyle requirement in the first place?\n\nIf TLS_INITIALIZER is still required, should we probably keep StaticSlot without a constructor so that initialization with TLS_INITIALIZER is more obviously required?",
+      "parentUuid": "5a26bd57_32856554",
       "revId": "b9b05f36f5a680e0595e22928c93644fbf04d16b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
