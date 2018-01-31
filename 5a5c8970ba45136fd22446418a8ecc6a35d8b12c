@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e925aac_912bc213",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/run_webkit_tests.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2018-01-31T20:02:15Z",
+      "side": 0,
+      "message": "The block is intentionally removed. I believe it\u0027s a no-op now (and has been for a while). When no test list is given, the default is to retry failures, regardless of whether we are in smoke mode or not.",
+      "revId": "5a5c8970ba45136fd22446418a8ecc6a35d8b12c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ae90160_7a6931d6",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/run_webkit_tests_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 791,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2018-01-31T20:02:15Z",
+      "side": 0,
+      "message": "This whole chunk is testing something else. And the relative paths (retry_1/2/3) are wrong so the assertions would always pass.",
+      "revId": "5a5c8970ba45136fd22446418a8ecc6a35d8b12c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
