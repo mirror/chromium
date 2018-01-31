@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bd8ad7bf_0b9d2dc0",
+        "filename": "chromeos/components/tether/message_transfer_operation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-31T22:31:32Z",
+      "side": 1,
+      "message": "I think it would be convenient to have an easy-to-understand success/failure metric, since the other metric you mentioned has many different cases.",
+      "parentUuid": "e87b199e_ede92ea6",
+      "range": {
+        "startLine": 110,
+        "startChar": 50,
+        "endLine": 110,
+        "endChar": 61
+      },
+      "revId": "40d283cfede98257705e474ec1a30ec9426703f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87484f3b_63a28f63",
         "filename": "chromeos/components/tether/message_transfer_operation_unittest.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1454dfe3_f6cb6bd0",
+        "filename": "chromeos/components/tether/message_transfer_operation_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-31T22:31:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87484f3b_63a28f63",
+      "range": {
+        "startLine": 258,
+        "startChar": 8,
+        "endLine": 258,
+        "endChar": 44
+      },
+      "revId": "40d283cfede98257705e474ec1a30ec9426703f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aa14e54_17779669",
         "filename": "chromeos/components/tether/message_transfer_operation_unittest.cc",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-31T02:01:18Z",
       "side": 1,
       "message": "Is this still correct?",
+      "range": {
+        "startLine": 738,
+        "startChar": 10,
+        "endLine": 738,
+        "endChar": 17
+      },
+      "revId": "40d283cfede98257705e474ec1a30ec9426703f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01071651_f13d1fce",
+        "filename": "chromeos/components/tether/message_transfer_operation_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-31T22:31:32Z",
+      "side": 1,
+      "message": "Yes, and I edited the comment to make it clearer.",
+      "parentUuid": "5aa14e54_17779669",
       "range": {
         "startLine": 738,
         "startChar": 10,
@@ -91,6 +163,30 @@
       "revId": "40d283cfede98257705e474ec1a30ec9426703f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f8cf5db_ef1079f0",
+        "filename": "chromeos/components/tether/message_transfer_operation_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-31T22:31:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87cfc177_6fbcec34",
+      "range": {
+        "startLine": 753,
+        "startChar": 12,
+        "endLine": 753,
+        "endChar": 58
+      },
+      "revId": "40d283cfede98257705e474ec1a30ec9426703f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
