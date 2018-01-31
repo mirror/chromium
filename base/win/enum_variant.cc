@@ -21,7 +21,7 @@ EnumVariant::~EnumVariant() {
 }
 
 VARIANT* EnumVariant::ItemAt(unsigned long index) {
-  DCHECK(index < count_);
+  CHECK(index < count_);
   return &items_[index];
 }
 
