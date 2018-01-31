@@ -11,7 +11,9 @@
 #include <set>
 #include <string>
 #include <utility>
-
+#if defined(OS_CHROMEOS)
+#include "chromeos/dbus/dbus_thread_manager.h"
+#endif  // defined(OS_CHROMEOS)
 #include "base/bind.h"
 #include "base/location.h"
 #include "base/logging.h"
@@ -133,6 +135,8 @@ void DoNothingOnError(
     device::BluetoothGattService::GattErrorCode /*error_code*/) {}
 void DoNothingOnAdvertisementError(
     device::BluetoothAdvertisement::ErrorCode /*error_code*/) {}
+void DoNothingOnDiscoveryError(
+    device::UMABluetoothDiscoverySessionOutcome /*error_code*/) {}
 
 void SetIntervalErrorCallbackConnector(
     const device::BluetoothAdapter::AdvertisementErrorCallback& error_callback,
@@ -169,6 +173,32 @@ base::WeakPtr<BluetoothAdapter> BluetoothAdapterBlueZ::CreateAdapter(
   BluetoothAdapterBlueZ* adapter = new BluetoothAdapterBlueZ(init_callback);
   return adapter->weak_ptr_factory_.GetWeakPtr();
 }
+
+#if defined(OS_CHROMEOS)
+void BluetoothAdapterBlueZ::SuspendImminent(
+    power_manager::SuspendImminent::Reason reason) {
+  BLUETOOTH_LOG(EVENT) << "About to Suspend.";
+  bluez::BluezDBusManager::Get()->GetBluetoothAdapterClient()->SuspendDiscovery(
+      object_path_,
+      base::Bind(&BluetoothAdapterBlueZ::OnStopDiscovery,
+                 weak_ptr_factory_.GetWeakPtr(), base::Bind(&base::DoNothing)),
+      base::Bind(&BluetoothAdapterBlueZ::OnStopDiscoveryError,
+                 weak_ptr_factory_.GetWeakPtr(),
+                 base::Bind(&DoNothingOnDiscoveryError)));
+}
+
+void BluetoothAdapterBlueZ::SuspendDone(const base::TimeDelta& sleep_duration) {
+  BLUETOOTH_LOG(EVENT) << "About to Resume.";
+  bluez::BluezDBusManager::Get()->GetBluetoothAdapterClient()->ResumeDiscovery(
+      object_path_,
+      base::Bind(&BluetoothAdapterBlueZ::OnStartDiscovery,
+                 weak_ptr_factory_.GetWeakPtr(), base::Bind(&base::DoNothing),
+                 base::Bind(&DoNothingOnDiscoveryError)),
+      base::Bind(&BluetoothAdapterBlueZ::OnStartDiscoveryError,
+                 weak_ptr_factory_.GetWeakPtr(), base::Bind(&base::DoNothing),
+                 base::Bind(&DoNothingOnDiscoveryError)));
+}
+#endif  // defined(OS_CHROMEOS)
 
 void BluetoothAdapterBlueZ::Shutdown() {
   if (dbus_is_shutdown_)
@@ -221,6 +251,10 @@ void BluetoothAdapterBlueZ::Shutdown() {
       this);
   bluez::BluezDBusManager::Get()->GetBluetoothInputClient()->RemoveObserver(
       this);
+#if defined(OS_CHROMEOS)
+  chromeos::DBusThreadManager::Get()->GetPowerManagerClient()->RemoveObserver(
+      this);
+#endif  // defined(OS_CHROMEOS)
 
   BLUETOOTH_LOG(EVENT) << "Unregistering pairing agent";
   bluez::BluezDBusManager::Get()
@@ -271,6 +305,10 @@ void BluetoothAdapterBlueZ::Init() {
       this);
   bluez::BluezDBusManager::Get()->GetBluetoothDeviceClient()->AddObserver(this);
   bluez::BluezDBusManager::Get()->GetBluetoothInputClient()->AddObserver(this);
+#if defined(OS_CHROMEOS)
+  chromeos::DBusThreadManager::Get()->GetPowerManagerClient()->AddObserver(
+      this);
+#endif  // defined(OS_CHROMEOS)
 
   // Register the pairing agent.
   dbus::Bus* system_bus = bluez::BluezDBusManager::Get()->GetSystemBus();
