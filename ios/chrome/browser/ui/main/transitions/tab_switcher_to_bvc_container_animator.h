@@ -7,6 +7,7 @@
 
 #import <UIKit/UIKit.h>
 
+@class TabModel;
 @protocol TabSwitcher;
 
 // This class provides an animator that can animate the transition from the tab
@@ -15,8 +16,9 @@
     : NSObject<UIViewControllerAnimatedTransitioning>
 
 // The TabSwitcher to animate.
-@property(nonatomic, readwrite, weak)
-    UIViewController<TabSwitcher>* tabSwitcher;
+@property(nonatomic, weak) UIViewController<TabSwitcher>* tabSwitcher;
+// The destination TabModel.
+@property(nonatomic, weak) TabModel* tabModel;
 
 @end
 

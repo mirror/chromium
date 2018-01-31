@@ -91,6 +91,7 @@ TEST_F(MainContainingViewControllerTest, Setters) {
   [child_view_controller_1 view].frame = CGRectMake(0, 0, 10, 10);
 
   [main_view_controller showTabViewController:child_view_controller_1
+                                     tabModel:nil
                                    completion:nil];
   EXPECT_EQ(child_view_controller_1,
             [[main_view_controller childViewControllers] firstObject]);
@@ -140,6 +141,7 @@ TEST_F(MainContainingViewControllerTest, StatusBar) {
   HiddenStatusBarViewController* status_bar_hidden_view_controller =
       [[HiddenStatusBarViewController alloc] init];
   [main_view_controller showTabViewController:status_bar_hidden_view_controller
+                                     tabModel:nil
                                    completion:nil];
   EXPECT_EQ([main_view_controller childViewControllerForStatusBarHidden],
             status_bar_hidden_view_controller);
