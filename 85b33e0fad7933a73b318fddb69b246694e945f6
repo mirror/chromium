@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4ecbb32b_faecf99f",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-31T00:03:38Z",
+      "side": 1,
+      "message": "Oh, that\u0027s confusing. I was about to say isn\u0027t that not what we want but remembered the BackgroundWith1PxBorder class description says that\u0027s intended behaviour. Done, thanks!",
+      "parentUuid": "0cc0ceca_48133cca",
+      "revId": "85b33e0fad7933a73b318fddb69b246694e945f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afdd32f7_a3a7d34e",
         "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "85b33e0fad7933a73b318fddb69b246694e945f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbaa8285_f2661f64",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-31T00:03:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afdd32f7_a3a7d34e",
+      "revId": "85b33e0fad7933a73b318fddb69b246694e945f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cd8caa35_562a1380",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-31T00:03:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3408f1ac_6fc0d76a",
+      "revId": "85b33e0fad7933a73b318fddb69b246694e945f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f899711a_9fbee8b9",
         "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.h",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "85b33e0fad7933a73b318fddb69b246694e945f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac42e9c3_c1dd99f4",
+        "filename": "chrome/browser/ui/views/location_bar/background_with_1_px_border.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-31T00:03:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f899711a_9fbee8b9",
+      "revId": "85b33e0fad7933a73b318fddb69b246694e945f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "b897e4d4_d16be912",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-31T00:03:38Z",
+      "side": 1,
+      "message": "I think GetHorizontalEdgeThickness() is also used for other things and doesn\u0027t apply only to the ending edge, so I opted for a different approach instead adding LocationBarLayout::HasVisibleDecorations(). It\u0027s kinda weird though cuz it relies on the LayoutPass* methods\u0027 side effects, maybe you have a better idea? :/\n\nAs for the |keyword_hint_view_|, this is square-ish but I think there\u0027s always text after it so I also added the padding for it.\n\nI\u0027m not sure about |ime_inline_autocomplete_view_| - it\u0027s square, and needs more padding than location_bounds.height() / 4 (with this value, the corners touch the rounded bits, which look weird). I think I fixed it (see https://drive.google.com/file/d/1OqEsIfDHTmnYPsiJBrYwhTyTstsbn5t5/view?usp\u003dsharing), but the amount of padding is kinda arbitrary.",
+      "parentUuid": "ecd03f6b_fb09ff64",
+      "revId": "85b33e0fad7933a73b318fddb69b246694e945f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b2dd86e_8af8b7cf",
         "filename": "chrome/browser/ui/views/location_bar/omnibox_background_border.cc",
         "patchSetId": 5
@@ -119,6 +209,24 @@
       "revId": "85b33e0fad7933a73b318fddb69b246694e945f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f996427a_0f29f2cc",
+        "filename": "chrome/browser/ui/views/location_bar/omnibox_background_border.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-31T00:03:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b2dd86e_8af8b7cf",
+      "revId": "85b33e0fad7933a73b318fddb69b246694e945f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "8be96fb5_571c0229",
+        "filename": "chrome/browser/ui/views/location_bar/omnibox_background_border.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-31T00:03:38Z",
+      "side": 1,
+      "message": "Done, kinda.\n\nSo while investigating this I found out that other places that use |BackgroundWith1PxBorder| sometimes have background colours with alpha in them, so drawing the stroke first then the background colour isn\u0027t what we want. So switched back to drawing the border separately instead of assuming it\u0027ll get covered up by the background.",
+      "parentUuid": "fbb143ef_dfbed62a",
+      "revId": "85b33e0fad7933a73b318fddb69b246694e945f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79c1e01d_660ec5c1",
         "filename": "chrome/browser/ui/views/location_bar/omnibox_background_border.h",
         "patchSetId": 5
@@ -156,6 +282,24 @@
     },
     {
       "key": {
+        "uuid": "82d30480_7043dd90",
+        "filename": "chrome/browser/ui/views/location_bar/omnibox_background_border.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-31T00:03:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79c1e01d_660ec5c1",
+      "revId": "85b33e0fad7933a73b318fddb69b246694e945f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8acccfd_2979c048",
         "filename": "chrome/browser/ui/views/location_bar/omnibox_background_border.h",
         "patchSetId": 5
@@ -170,6 +314,24 @@
       "revId": "85b33e0fad7933a73b318fddb69b246694e945f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d168cba_12c5077d",
+        "filename": "chrome/browser/ui/views/location_bar/omnibox_background_border.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-31T00:03:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8acccfd_2979c048",
+      "revId": "85b33e0fad7933a73b318fddb69b246694e945f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
