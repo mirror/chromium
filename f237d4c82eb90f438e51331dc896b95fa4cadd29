@@ -22,6 +22,30 @@
       "revId": "f237d4c82eb90f438e51331dc896b95fa4cadd29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be01655c_89605371",
+        "filename": "third_party/libvpx/source/config/ios/arm-neon/vp9_rtcd.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1171444
+      },
+      "writtenOn": "2018-01-31T22:42:25Z",
+      "side": 0,
+      "message": "I actually don\u0027t know... These changes are made by ./generate_gni.sh. By the way, I updated my clang and clang-format from 4.0.1 to 5.0.0 (as clang was updated to 5.0.0 on Jenkins). clang-format 4.0.1 can\u0027t parse the latest .clang-format style file correctly.",
+      "parentUuid": "d3078868_2d48f015",
+      "range": {
+        "startLine": 15,
+        "startChar": 14,
+        "endLine": 15,
+        "endChar": 25
+      },
+      "revId": "f237d4c82eb90f438e51331dc896b95fa4cadd29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
