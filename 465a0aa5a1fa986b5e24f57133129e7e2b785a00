@@ -46,6 +46,30 @@
       "revId": "465a0aa5a1fa986b5e24f57133129e7e2b785a00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58be5a55_3e3f4e24",
+        "filename": "chrome/browser/extensions/active_tab_permission_granter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-01-31T06:02:07Z",
+      "side": 1,
+      "message": "Can\u0027t think of any reason. Think this should not cause any behavior change since content script matching anyway is implemented using UserScript::MatchesURL() in the renderer. And declarative and programmatic scripts use explicit hosts. So this will probably just be useful and relevant for the Click to script case, correct?",
+      "parentUuid": "e0f04cd4_d779c444",
+      "range": {
+        "startLine": 128,
+        "startChar": 34,
+        "endLine": 128,
+        "endChar": 43
+      },
+      "revId": "465a0aa5a1fa986b5e24f57133129e7e2b785a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
