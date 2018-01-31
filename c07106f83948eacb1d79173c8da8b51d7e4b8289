@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f3067a04_fef040d1",
+        "filename": "chrome/browser/resources/settings/privacy_page/privacy_page.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2018-01-31T18:16:51Z",
+      "side": 1,
+      "message": "No, it\u0027s a real pref. The reason everything is done manually like this is because of a past project where this checkbox could control one of two prefs and we had to be able to switch which one on the fly, while the pref mechanism only lets you bind to a single preference. \n\nhttp://go/ScoutTransition gives all the details.",
+      "parentUuid": "9f2c5e0f_ac8b6693",
+      "range": {
+        "startLine": 355,
+        "startChar": 9,
+        "endLine": 355,
+        "endChar": 43
+      },
+      "revId": "c07106f83948eacb1d79173c8da8b51d7e4b8289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "944e46f5_b88bdc1b",
         "filename": "chrome/test/data/webui/settings/privacy_page_test.js",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "05a45bae_e46a8790",
+        "filename": "chrome/test/data/webui/settings/privacy_page_test.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2018-01-31T18:16:51Z",
+      "side": 1,
+      "message": "Done, let me know if I misunderstood this comment (i\u0027m far from a js expert).\nFyi I\u0027m basing this test on a similar one from metrics_reporting_tests.js",
+      "parentUuid": "944e46f5_b88bdc1b",
+      "range": {
+        "startLine": 423,
+        "startChar": 55,
+        "endLine": 426,
+        "endChar": 17
+      },
+      "revId": "c07106f83948eacb1d79173c8da8b51d7e4b8289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef1e0b47_cdb8c48d",
         "filename": "chrome/test/data/webui/settings/test_privacy_page_browser_proxy.js",
         "patchSetId": 9
@@ -68,6 +116,30 @@
       "revId": "c07106f83948eacb1d79173c8da8b51d7e4b8289",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "554f8940_62a1e6f3",
+        "filename": "chrome/test/data/webui/settings/test_privacy_page_browser_proxy.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2018-01-31T18:16:51Z",
+      "side": 1,
+      "message": "This is just the initial state. privacy_page_test.js:405 is where we change this combination.",
+      "parentUuid": "ef1e0b47_cdb8c48d",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 21
+      },
+      "revId": "c07106f83948eacb1d79173c8da8b51d7e4b8289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
