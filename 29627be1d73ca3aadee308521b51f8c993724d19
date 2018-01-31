@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ac0d982_cbf7cb2c",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1844,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2018-01-31T17:42:27Z",
+      "side": 1,
+      "message": "Remove \"add\".",
+      "range": {
+        "startLine": 1844,
+        "startChar": 42,
+        "endLine": 1844,
+        "endChar": 46
+      },
+      "revId": "29627be1d73ca3aadee308521b51f8c993724d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
