@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1b2d0297_37a11443",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2018-01-31T19:33:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "018287a5_c783fe3c",
+      "range": {
+        "startLine": 7,
+        "startChar": 18,
+        "endLine": 7,
+        "endChar": 65
+      },
+      "revId": "600c4d669a592f054625da4c65d5e0f2fdf4e36d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4450b84_9cbe882d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "600c4d669a592f054625da4c65d5e0f2fdf4e36d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "741565e9_8b7dec5b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2018-01-31T19:33:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4450b84_9cbe882d",
+      "range": {
+        "startLine": 324,
+        "startChar": 48,
+        "endLine": 324,
+        "endChar": 75
+      },
+      "revId": "600c4d669a592f054625da4c65d5e0f2fdf4e36d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
