@@ -24,6 +24,11 @@ class Image;
 class PrefService;
 class ProfileInfoCache;
 
+extern const char kAvatarIconKey[];
+extern const char kBackgroundAppsKey[];
+extern const char kProfileIsEphemeral[];
+extern const char kUserNameKey[];
+
 class ProfileAttributesEntry {
  public:
   ProfileAttributesEntry();
