@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "66f8bcc6_85dbe623",
+        "filename": "ios/chrome/browser/about_flags.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-01-31T22:29:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cac1f70d_75d57a96",
+      "range": {
+        "startLine": 239,
+        "startChar": 39,
+        "endLine": 239,
+        "endChar": 68
+      },
+      "revId": "a33a21b8c5945625a2791af2fa7013c17e3a4ed6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2c973ec_33048d32",
         "filename": "ios/web/web_state/js/resources/context_menu.js",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "a33a21b8c5945625a2791af2fa7013c17e3a4ed6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a802e21_89a62d4e",
+        "filename": "ios/web/web_state/js/resources/context_menu.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-01-31T22:29:06Z",
+      "side": 1,
+      "message": "Good idea, I moved the logic to a function in common.js",
+      "parentUuid": "d2c973ec_33048d32",
+      "range": {
+        "startLine": 53,
+        "startChar": 31,
+        "endLine": 53,
+        "endChar": 37
+      },
+      "revId": "a33a21b8c5945625a2791af2fa7013c17e3a4ed6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "40f9df19_e50528b2",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-01-31T22:29:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdcd00b5_ed83be2b",
+      "range": {
+        "startLine": 66,
+        "startChar": 28,
+        "endLine": 66,
+        "endChar": 36
+      },
+      "revId": "a33a21b8c5945625a2791af2fa7013c17e3a4ed6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21e32b07_6a0376b4",
         "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "a33a21b8c5945625a2791af2fa7013c17e3a4ed6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0cb782d_9db69c9e",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-01-31T22:29:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21e32b07_6a0376b4",
+      "range": {
+        "startLine": 91,
+        "startChar": 8,
+        "endLine": 91,
+        "endChar": 29
+      },
+      "revId": "a33a21b8c5945625a2791af2fa7013c17e3a4ed6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "bf6a0b4b_f8734674",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-01-31T22:29:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88a236a0_5ef421eb",
+      "range": {
+        "startLine": 93,
+        "startChar": 8,
+        "endLine": 93,
+        "endChar": 31
+      },
+      "revId": "a33a21b8c5945625a2791af2fa7013c17e3a4ed6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82d7f973_6c322b9c",
         "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
         "patchSetId": 7
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "2d43323b_b74314a3",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-01-31T22:29:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82d7f973_6c322b9c",
+      "range": {
+        "startLine": 328,
+        "startChar": 6,
+        "endLine": 328,
+        "endChar": 18
+      },
+      "revId": "a33a21b8c5945625a2791af2fa7013c17e3a4ed6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e608cde5_dbd1d14d",
         "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
         "patchSetId": 7
@@ -151,6 +295,30 @@
       "writtenOn": "2018-01-27T02:22:20Z",
       "side": 1,
       "message": "Do we need identifier property? Would it be better to have a local variable for identifier?",
+      "range": {
+        "startLine": 405,
+        "startChar": 56,
+        "endLine": 405,
+        "endChar": 66
+      },
+      "revId": "a33a21b8c5945625a2791af2fa7013c17e3a4ed6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f4945ea_4024fd13",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-01-31T22:29:06Z",
+      "side": 1,
+      "message": "I think it makes sense inside the object because here we use a collection to hold the element requests in ongoingElementFetchRequests (renamed from ongoingElementFetchDetails.)",
+      "parentUuid": "e608cde5_dbd1d14d",
       "range": {
         "startLine": 405,
         "startChar": 56,
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "81ae6aed_bf025bb8",
+        "filename": "ios/web/web_state/ui/crw_context_menu_element_fetch_details.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-01-31T22:29:06Z",
+      "side": 1,
+      "message": "I like that, updated.",
+      "parentUuid": "29a641e1_09bace3e",
+      "range": {
+        "startLine": 15,
+        "startChar": 11,
+        "endLine": 15,
+        "endChar": 44
+      },
+      "revId": "a33a21b8c5945625a2791af2fa7013c17e3a4ed6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0dc6073_d52c6b9c",
         "filename": "ios/web/web_state/ui/crw_context_menu_element_fetch_details.h",
         "patchSetId": 7
@@ -206,6 +398,30 @@
       "revId": "a33a21b8c5945625a2791af2fa7013c17e3a4ed6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c01f02c_12e7e2fa",
+        "filename": "ios/web/web_state/ui/crw_context_menu_element_fetch_details.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-01-31T22:29:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0dc6073_d52c6b9c",
+      "range": {
+        "startLine": 20,
+        "startChar": 34,
+        "endLine": 20,
+        "endChar": 53
+      },
+      "revId": "a33a21b8c5945625a2791af2fa7013c17e3a4ed6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
