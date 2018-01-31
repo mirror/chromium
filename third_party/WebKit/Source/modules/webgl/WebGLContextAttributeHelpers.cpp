@@ -18,6 +18,7 @@ WebGLContextAttributes ToWebGLContextAttributes(
   result.setPremultipliedAlpha(attrs.premultipliedAlpha());
   result.setPreserveDrawingBuffer(attrs.preserveDrawingBuffer());
   result.setFailIfMajorPerformanceCaveat(attrs.failIfMajorPerformanceCaveat());
+  result.setCompatibleXRDevice(attrs.compatibleXRDevice());
   return result;
 }
 
