@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5e6f562b_8c883be4",
+        "filename": "third_party/WebKit/Source/modules/geolocation/GeoNotifier.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-31T04:14:34Z",
+      "side": 1,
+      "message": "\u003e When the callback is invoked asynchronously, the callbacks are traced by Geolocation::one_shots_being_invoked_, aren\u0027t they?\n\nI\u0027m pointing out a case that, when the callback is invoked asynchronously by the **timer_**, this GeoNotifier itself could be no longer owned by any geolocation.\n\nThe following scenario at least should cause a problem.  There could be more cases.\n\n    const id \u003d navigator.geolocation.watchPosition(...);\n    // The timer starts at the constructor of GeoNotifier.\n\n    navigator.geolocation.clearWatch(id);\n    // Remove the GeoNotifier from the Geolocation.\n    // The timer does NOT stop at this point.\n\n    gc();  // V8 GC runs, and it collects the GeoNotifier\u0027s\n    // callback functions (v8::Function).\n\n    // GeoNotifier::TimerFired gets invoked.",
+      "parentUuid": "0b483495_98a0cd6a",
+      "revId": "1063641d0bf9b23449f758d7e0de55b7611dcc06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8583e01e_27bb1fa1",
         "filename": "third_party/WebKit/Source/modules/geolocation/GeoNotifier.cpp",
         "patchSetId": 4
@@ -48,6 +66,24 @@
       "writtenOn": "2018-01-31T01:01:39Z",
       "side": 1,
       "message": "Hmm. I\u0027m not sure if this is a right fix.\n\nSince Geolocation::one_shots_ is cleared before invoking the notifiers, Geolocation should not own the notifier at this point. I guess we unconditionally hit the early-return at line 100.\n\nI think that the problem is:\n\n- Geolocation traces one_shots_being_invoked_. However, it\u0027s possible that Geolocation itself is already gone when the callback is invoked. So tracing one_shots_being_invoked_ from Geolocation won\u0027t be useful.\n\nTo fix the problem, we\u0027ll need to either:\n\n- Trace one_shots_being_invoked_ from the root set (v8::Persistent or bind the lifetime to DOMWindow); or\n- Make Geolocation ActiveScriptWrappable and keep Geolocation alive.",
+      "revId": "1063641d0bf9b23449f758d7e0de55b7611dcc06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a0b0f93_dc512ac6",
+        "filename": "third_party/WebKit/Source/modules/geolocation/GeoNotifier.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-31T04:14:34Z",
+      "side": 1,
+      "message": "\u003e Since Geolocation::one_shots_ is cleared before invoking the notifiers, Geolocation should not own the notifier at this point. I guess we unconditionally hit the early-return at line 100.\n\nI thought that we don\u0027t need to take *_being_invoked_ into account, however, if we\u0027d like to be much safer, then I think it\u0027s good to modify Geolocation::DoesOwnNotifier to take them into account.\n\n\nBy the way, we should have support of wrapper-tracing of\n\n    LocalDOMWindow \u003d\u003e Navigator \u003d\u003e NavigatorGeolocation \u003d\u003e Geolocation\n\nso, theoretically the Geolocation\u0027s wrapper must be always alive.  I checked this chain of wrapper-tracing again, but I didn\u0027t find a problem in this chain.",
+      "parentUuid": "8583e01e_27bb1fa1",
       "revId": "1063641d0bf9b23449f758d7e0de55b7611dcc06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
