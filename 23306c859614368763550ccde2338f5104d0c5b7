@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4c93461_8732c8b0",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-31T01:28:12Z",
+      "side": 1,
+      "message": "How about changing the type of handle_ (and of Create() and anything else I\u0027m missing) to StrongBindingPtr\u003cLockHandleImpl\u003e so the casting isn\u0027t necessary?",
+      "revId": "23306c859614368763550ccde2338f5104d0c5b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5a82207_80f1d688",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-31T01:28:12Z",
+      "side": 1,
+      "message": "Blank line before these last two members, and a comment that exactly one of them is non-null at any given time?",
+      "revId": "23306c859614368763550ccde2338f5104d0c5b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30b1ef6a_58fff4ac",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-31T01:28:12Z",
+      "side": 1,
+      "message": "This implementation LGTM if we\u0027re sticking with breaking all the lock holders. I think we should only break holders with conflicting lock modes. Specifically, an S request would only break an existing X holder, and an X request would break all existing holders.",
+      "revId": "23306c859614368763550ccde2338f5104d0c5b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bac6271_17b97109",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-31T01:28:12Z",
+      "side": 1,
+      "message": "This is cute... but could we do \"lock_id \u003d ++next_lock_id; DCHECK_GT(lock_id, 0);\" above, and \"lock_id \u003d 0;\" here? For even less magic, we could have a constexpr int64_t kHeadOfLineLockId \u003d 0;\" with an explanation that the value is below all issued IDs.\n\nIt seems mildly easier to think of a single value at the left of the axis rather than of positive vs negative values.",
+      "revId": "23306c859614368763550ccde2338f5104d0c5b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b1228ea_d7128bff",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/steal.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-31T01:28:12Z",
+      "side": 1,
+      "message": "nit: \"/* never */\"",
+      "revId": "23306c859614368763550ccde2338f5104d0c5b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57715a47_eb28fd02",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/steal.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-31T01:28:12Z",
+      "side": 1,
+      "message": "nit: Is \"steal option\" here redundant with \"steal option\" in the title?",
+      "revId": "23306c859614368763550ccde2338f5104d0c5b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c349c823_43f54240",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/steal.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-31T01:28:12Z",
+      "side": 1,
+      "message": "nit: held -\u003e broken / preempted?",
+      "revId": "23306c859614368763550ccde2338f5104d0c5b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d80fe7a_3f426be9",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/steal.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-31T01:28:12Z",
+      "side": 1,
+      "message": "Doesn\u0027t necessarily block this CL, but we should have tests covering shared lock stealing, to clarify what the formal behavior should be.",
+      "revId": "23306c859614368763550ccde2338f5104d0c5b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "357e3362_93c09fcd",
+        "filename": "third_party/WebKit/Source/modules/locks/Lock.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-31T01:28:12Z",
+      "side": 1,
+      "message": "nit: \"Lock broken by another request with the \u0027steal\u0027 option.\" -- assuming you\u0027re OK with introducing vocabulary for broken locks.",
+      "revId": "23306c859614368763550ccde2338f5104d0c5b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5618a6f4_e12f2185",
+        "filename": "third_party/WebKit/public/platform/modules/locks/lock_manager.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-31T01:28:12Z",
+      "side": 1,
+      "message": "nit: Standardize on \"Web Locks API\" (or \"web locks\", or \"Web locks\", whichever you\u0027d like)",
+      "revId": "23306c859614368763550ccde2338f5104d0c5b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30dbedd7_5b1893a0",
+        "filename": "third_party/WebKit/public/platform/modules/locks/lock_manager.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-31T01:28:12Z",
+      "side": 1,
+      "message": "\"Priority\" is confusing me here a bit. It makes me wonder if an OVERRIDE should preempt a lock holder that also used the OVERRIDE priority.\n\nHow about ConflictResolution that can be set to WAIT / ENQUEUE / QUEUE or PREEMPT / BREAK?\n\nAlso, my intuition was that we\u0027d be minimally invasive, so we\u0027d only preempt the owners whose lock mode conflicts with the current request\u0027s mode. For example, an S request would preempt an X owner, but would not preempt other S owners.\n\nSorry I didn\u0027t express this on the spec. I was generally opposed to the proposal, so I didn\u0027t tackle the details. Please let me know if you\u0027d rather discuss the above issue on GitHub.",
+      "revId": "23306c859614368763550ccde2338f5104d0c5b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
