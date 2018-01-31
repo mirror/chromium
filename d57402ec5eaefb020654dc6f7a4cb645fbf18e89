@@ -34,6 +34,24 @@
       "revId": "d57402ec5eaefb020654dc6f7a4cb645fbf18e89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb405c6a_fdf51cc6",
+        "filename": "ui/gfx/x/x11.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-31T18:58:48Z",
+      "side": 1,
+      "message": "Ah, interesting. Something like the following could work though, right?\n\n  static_assert(FocusIn \u003d\u003d 9, \"Focus In has incorrect value\");\n  #undef FocusIn\n  ...\n\n  static const int FocusIn \u003d 9;\n\nOr:\n\n  #if FocusIn !\u003d 9\n  #error \"You are going to have a bad time.\"\n  #endif\n  #undef FocusIn",
+      "parentUuid": "6c4e4370_34e46180",
+      "revId": "d57402ec5eaefb020654dc6f7a4cb645fbf18e89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
