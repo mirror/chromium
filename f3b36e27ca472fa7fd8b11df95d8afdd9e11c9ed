@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b38b18b3_da8854da",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T16:47:45Z",
+      "side": 1,
+      "message": "I agree that catch-all should go first (and so does go/uma-histogram-guidelines#enum-histograms).\n\nBut what I doubt is that there is ever going to be a catch-all error result. We already have broad categories, e.g., WRITE_FAILED can be a lot of actual I/O errors, but the new category will likely be defined to at least some point by its callsite.\n\nIf we add unused values, the dashboards will also look strange, with the first item always zero.\n\nThis is just my opinion though. If you like, feel free to get another one. For example, engedy@ has a lot of experience with designing good metrics.",
+      "parentUuid": "823d63fe_6533e8f6",
+      "range": {
+        "startLine": 279,
+        "startChar": 2,
+        "endLine": 279,
+        "endChar": 9
+      },
+      "revId": "f3b36e27ca472fa7fd8b11df95d8afdd9e11c9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b81f680a_cc2aaa45",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
