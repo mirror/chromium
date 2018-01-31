@@ -36,6 +36,7 @@
 #include "core/dom/Element.h"
 #include "core/editing/Forward.h"
 #include "core/editing/TextAffinity.h"
+#include "core/editing/TextGranularity.h"
 #include "core/editing/markers/DocumentMarker.h"
 #include "core/inspector/protocol/Accessibility.h"
 #include "modules/ModulesExport.h"
@@ -169,54 +170,27 @@ class MODULES_EXPORT AXObject : public GarbageCollectedFinalized<AXObject> {
     DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
     // The deepest descendant in which the range starts.
     // (nullptr means the current object.)
-    Persistent<AXObject> anchor_object;
+    Persistent<AXObject> anchor_object = nullptr;
     // The number of characters and child objects in the anchor object
     // before the range starts.
-    int anchor_offset;
+    int anchor_offset = -1;
     // When the same character offset could correspond to two possible
     // cursor positions, upstream means it's on the previous line rather
     // than the next line.
-    TextAffinity anchor_affinity;
+    TextAffinity anchor_affinity = TextAffinity::kDownstream;
 
     // The deepest descendant in which the range ends.
     // (nullptr means the current object.)
-    Persistent<AXObject> focus_object;
+    Persistent<AXObject> focus_object = nullptr;
     // The number of characters and child objects in the focus object
     // before the range ends.
-    int focus_offset;
+    int focus_offset = -1;
     // When the same character offset could correspond to two possible
     // cursor positions, upstream means it's on the previous line rather
     // than the next line.
-    TextAffinity focus_affinity;
+    TextAffinity focus_affinity = TextAffinity::kDownstream;
 
-    AXRange()
-        : anchor_object(nullptr),
-          anchor_offset(-1),
-          anchor_affinity(TextAffinity::kUpstream),
-          focus_object(nullptr),
-          focus_offset(-1),
-          focus_affinity(TextAffinity::kDownstream) {}
-
-    AXRange(int start_offset, int end_offset)
-        : anchor_object(nullptr),
-          anchor_offset(start_offset),
-          anchor_affinity(TextAffinity::kUpstream),
-          focus_object(nullptr),
-          focus_offset(end_offset),
-          focus_affinity(TextAffinity::kDownstream) {}
-
-    AXRange(AXObject* anchor_object,
-            int anchor_offset,
-            TextAffinity anchor_affinity,
-            AXObject* focus_object,
-            int focus_offset,
-            TextAffinity focus_affinity)
-        : anchor_object(anchor_object),
-          anchor_offset(anchor_offset),
-          anchor_affinity(anchor_affinity),
-          focus_object(focus_object),
-          focus_offset(focus_offset),
-          focus_affinity(focus_affinity) {}
+    TextGranularity text_granularity = TextGranularity::kCharacter;
 
     bool IsValid() const {
       return ((anchor_object && focus_object) ||

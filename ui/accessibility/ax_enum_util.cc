@@ -2179,6 +2179,33 @@ ax::mojom::TextAffinity ParseTextAffinity(const char* text_affinity) {
   return ax::mojom::TextAffinity::kNone;
 }
 
+const char* ToString(ax::mojom::TextGranularity text_granularity) {
+  switch (text_granularity) {
+    case ax::mojom::TextGranularity::kNone:
+      return "none";
+    case ax::mojom::TextGranularity::kCharacter:
+      return "character";
+    case ax::mojom::TextGranularity::kWord:
+      return "word";
+    case ax::mojom::TextGranularity::kSentence:
+      return "sentence";
+    case ax::mojom::TextGranularity::kLine:
+      return "line";
+    case ax::mojom::TextGranularity::kParagraph:
+      return "paragraph";
+    case ax::mojom::TextGranularity::kSentenceBoundary:
+      return "sentenceBoundary";
+    case ax::mojom::TextGranularity::kLineBoundary:
+      return "lineBoundary";
+    case ax::mojom::TextGranularity::kParagraphBoundary:
+      return "paragraphBoundary";
+    case ax::mojom::TextGranularity::kDocumentBoundary:
+      return "documentBoundary";
+  }
+
+  return "";
+}
+
 const char* ToString(ax::mojom::TreeOrder tree_order) {
   switch (tree_order) {
     case ax::mojom::TreeOrder::kNone:

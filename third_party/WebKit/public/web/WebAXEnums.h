@@ -339,6 +339,19 @@ enum WebAXTextAffinity {
   kWebAXTextAffinityDownstream
 };
 
+// Text granularity for a selection.
+enum WebAXTextGranularity {
+  kWebAXTextGranularityCharacter,
+  kWebAXTextGranularityWord,
+  kWebAXTextGranularitySentence,
+  kWebAXTextGranularityLine,
+  kWebAXTextGranularityParagraph,
+  kWebAXTextGranularitySentenceBoundary,
+  kWebAXTextGranularityLineBoundary,
+  kWebAXTextGranularityParagraphBoundary,
+  kWebAXTextGranularityDocumentBoundary
+};
+
 //
 // Sparse accessibility attributes
 //

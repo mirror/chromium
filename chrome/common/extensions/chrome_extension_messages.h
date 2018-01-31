@@ -65,6 +65,7 @@ IPC_STRUCT_TRAITS_BEGIN(ui::AXTreeData)
   IPC_STRUCT_TRAITS_MEMBER(sel_focus_object_id)
   IPC_STRUCT_TRAITS_MEMBER(sel_focus_offset)
   IPC_STRUCT_TRAITS_MEMBER(sel_focus_affinity)
+  IPC_STRUCT_TRAITS_MEMBER(sel_text_granularity)
 IPC_STRUCT_TRAITS_END()
 
 IPC_STRUCT_TRAITS_BEGIN(ui::AXTreeUpdate)

@@ -118,9 +118,12 @@ void AXInlineTextBox::GetWordBoundaries(Vector<AXRange>& words) const {
   Vector<AbstractInlineTextBox::WordBoundaries> word_boundaries;
   inline_text_box_->GetWordBoundaries(word_boundaries);
   words.resize(word_boundaries.size());
-  for (unsigned i = 0; i < word_boundaries.size(); i++)
-    words[i] =
-        AXRange(word_boundaries[i].start_index, word_boundaries[i].end_index);
+  for (unsigned i = 0; i < word_boundaries.size(); i++) {
+    AXRange range;
+    range.anchor_offset = word_boundaries[i].start_index;
+    range.focus_offset = word_boundaries[i].end_index;
+    words[i] = range;
+  }
 }
 
 String AXInlineTextBox::GetName(AXNameFrom& name_from,

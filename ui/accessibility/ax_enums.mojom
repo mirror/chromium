@@ -790,6 +790,20 @@ enum TextAffinity {
   kLast = kUpstream,
 };
 
+enum TextGranularity {
+  kNone,
+  kCharacter,
+  kWord,
+  kSentence,
+  kLine,
+  kParagraph,
+  kSentenceBoundary,
+  kLineBoundary,
+  kParagraphBoundary,
+  kDocumentBoundary,
+  kLast =   kDocumentBoundary,
+};
+
  // Compares two nodes in an accessibility tree in pre-order traversal.
 enum TreeOrder {
   kNone,

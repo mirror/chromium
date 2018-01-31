@@ -271,6 +271,8 @@ IPC_ENUM_TRAITS_MAX_VALUE(ax::mojom::StringAttribute,
                           ax::mojom::StringAttribute::kLast)
 IPC_ENUM_TRAITS_MAX_VALUE(ax::mojom::TextAffinity,
                           ax::mojom::TextAffinity::kLast)
+IPC_ENUM_TRAITS_MAX_VALUE(ax::mojom::TextGranularity,
+                          ax::mojom::TextGranularity::kLast)
 IPC_ENUM_TRAITS_MAX_VALUE(ax::mojom::EventFrom, ax::mojom::EventFrom::kLast)
 
 IPC_STRUCT_TRAITS_BEGIN(ui::AXRelativeBounds)
