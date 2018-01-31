@@ -362,8 +362,13 @@ class SingleTestRunner(object):
                 return False
             if not self._is_render_tree(actual) and not self._is_layer_tree(actual):
                 return False
-            processed = re.sub(r'LayoutNG(BlockFlow|ListItem|TableCell)', r'Layout\1', actual)
-            return not self._port.do_text_results_differ(expected, processed)
+            actual = re.sub(r'LayoutNG(BlockFlow|ListItem|TableCell)', r'Layout\1', actual)
+            # Ignore html and body fills height quriks for now.
+            # https://quirks.spec.whatwg.org/#the-html-element-fills-the-viewport-quirk
+            root_height_quriks = re.compile(r'((layer|LayoutBlockFlow {(HTML|BODY)}) at \(\d+,\d+\) size \d+x)\d+')
+            actual = root_height_quriks.sub(r'\1QUIRKS', actual)
+            expected = root_height_quriks.sub(r'\1QUIRKS', expected)
+            return not self._port.do_text_results_differ(expected, actual)
 
         # LayoutNG name mismatch (e.g., LayoutBlockFlow vs. LayoutNGBlockFlow)
         # is treated as pass
