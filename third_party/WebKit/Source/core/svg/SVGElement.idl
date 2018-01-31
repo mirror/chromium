@@ -25,9 +25,6 @@
 interface SVGElement : Element {
     [MeasureAs=SVGClassName] readonly attribute SVGAnimatedString className;
     [SameObject, PerWorldBindings] readonly attribute DOMStringMap dataset;
-    // CSS Object Model (CSSOM)
-    // https://drafts.csswg.org/cssom/#the-elementcssinlinestyle-interface
-    [SameObject, PutForwards=cssText] readonly attribute CSSStyleDeclaration style;
 
     readonly attribute SVGSVGElement? ownerSVGElement;
     readonly attribute SVGElement? viewportElement;
@@ -38,3 +35,4 @@ interface SVGElement : Element {
 
 SVGElement implements GlobalEventHandlers;
 SVGElement implements NoncedElement;
+SVGElement implements ElementCSSInlineStyle;
