@@ -16,6 +16,24 @@
       "revId": "2cbb0713549d50a4cfaa211d266b65288b80de18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdce27dc_4b4d57bb",
+        "filename": "ui/message_center/views/bounded_label.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-01-31T01:34:07Z",
+      "side": 1,
+      "message": "the reason it\u0027s part of the same CL is because I was moving constants around and found some which shouldn\u0027t exist. After removing them, there\u0027s no use for this parameter.",
+      "parentUuid": "a4ed5f1e_bf85cd9d",
+      "revId": "2cbb0713549d50a4cfaa211d266b65288b80de18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
