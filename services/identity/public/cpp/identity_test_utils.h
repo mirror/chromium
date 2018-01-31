@@ -41,7 +41,7 @@ void MakePrimaryAccountAvailable(SigninManagerForTest* signin_manager,
                                  IdentityManager* identity_manager,
                                  const std::string& refresh_token,
                                  const std::string& gaia_id,
-                                 const std::string& username);
+                                 const std::string& email_address);
 
 // Clears the primary account. On non-ChromeOS, results in the firing of the
 // IdentityManager and SigninManager callbacks for signout. Blocks until the

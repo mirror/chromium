@@ -143,8 +143,8 @@ class SuggestionsServiceTest : public testing::Test {
         mock_thumbnail_manager_(nullptr),
         mock_blacklist_store_(nullptr),
         test_suggestions_store_(nullptr) {
-    identity_test_env_.MakePrimaryAccountAvailable(kGaiaId, kEmail,
-                                                   kRefreshToken);
+    identity_test_env_.MakePrimaryAccountAvailable(kRefreshToken, kGaiaId,
+                                                   kEmail);
     identity_test_env_.SetAutomaticIssueOfAccessTokens(true);
   }
 

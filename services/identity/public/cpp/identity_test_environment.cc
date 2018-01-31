@@ -98,9 +98,9 @@ IdentityManager* IdentityTestEnvironment::identity_manager() {
 }
 
 void IdentityTestEnvironment::MakePrimaryAccountAvailable(
+    std::string refresh_token,
     std::string gaia_id,
-    std::string email_address,
-    std::string refresh_token) {
+    std::string email_address) {
   identity::MakePrimaryAccountAvailable(
       internals_->signin_manager(), internals_->token_service(),
       internals_->identity_manager(), refresh_token, gaia_id, email_address);

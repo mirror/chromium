@@ -298,8 +298,8 @@ class RemoteSuggestionsFetcherImplTestBase : public testing::Test {
   }
 
   void SignIn() {
-    identity_test_env_.MakePrimaryAccountAvailable(kTestAccount, kTestAccount,
-                                                   "token");
+    identity_test_env_.MakePrimaryAccountAvailable("token", kTestAccount,
+                                                   kTestAccount);
   }
 
   RemoteSuggestionsFetcher::SnippetsAvailableCallback

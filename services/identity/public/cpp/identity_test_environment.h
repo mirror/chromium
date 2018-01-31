@@ -27,9 +27,9 @@ class IdentityTestEnvironment : public IdentityManager::DiagnosticsObserver {
   // platforms, this will also result in the firing of the IdentityManager and
   // SigninManager callbacks for signin success. On all platforms, this method
   // blocks until the primary account is available.
-  void MakePrimaryAccountAvailable(std::string gaia_id,
-                                   std::string email_address,
-                                   std::string refresh_token);
+  void MakePrimaryAccountAvailable(std::string refresh_token,
+                                   std::string gaia_id,
+                                   std::string email_address);
 
   // Clears the primary account. On non-ChromeOS, results in the firing of the
   // IdentityManager and SigninManager callbacks for signout. Blocks until the
