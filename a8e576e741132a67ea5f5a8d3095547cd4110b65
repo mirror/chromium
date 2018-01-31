@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "fe128fa0_583cf668",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-31T17:31:36Z",
+      "side": 1,
+      "message": "ServiceCompat was added to the support library which we should always have I thought.  I think you need to use the ServiceCompat version of the detach flag.  If that doesn\u0027t work this is ok for now too, just add a TODO to use the compat library as a future CL.",
+      "parentUuid": "eb295689_a62ecec8",
+      "range": {
+        "startLine": 131,
+        "startChar": 16,
+        "endLine": 131,
+        "endChar": 63
+      },
+      "revId": "a8e576e741132a67ea5f5a8d3095547cd4110b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9281b14f_ebf1f48b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
         "patchSetId": 9

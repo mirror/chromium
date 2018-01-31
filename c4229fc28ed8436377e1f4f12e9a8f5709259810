@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0248a5dd_4bede2b5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-31T17:31:36Z",
+      "side": 1,
+      "message": "You can put the annotation here to guarantee it\u0027s one of those values (see other @IntDef usages).  I think it\u0027d be something like:\n\n...(@StopForegroundNotification int stopForegroundNotification, ...",
+      "range": {
+        "startLine": 120,
+        "startChar": 49,
+        "endLine": 120,
+        "endChar": 52
+      },
+      "revId": "c4229fc28ed8436377e1f4f12e9a8f5709259810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85cea85f_b7be7f81",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-31T17:31:36Z",
+      "side": 1,
+      "message": "@StopForegroundNotification int stopForegroundNotification;",
+      "range": {
+        "startLine": 230,
+        "startChar": 8,
+        "endLine": 230,
+        "endChar": 11
+      },
+      "revId": "c4229fc28ed8436377e1f4f12e9a8f5709259810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1915f772_b4e12ad2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-31T17:31:36Z",
+      "side": 1,
+      "message": "@BlahBlah here as well!",
+      "range": {
+        "startLine": 256,
+        "startChar": 12,
+        "endLine": 256,
+        "endChar": 13
+      },
+      "revId": "c4229fc28ed8436377e1f4f12e9a8f5709259810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
