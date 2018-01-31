@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "d95f5551_96c2f2fa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2018-01-31T05:02:48Z",
+      "side": 1,
+      "message": "\"are connected to the document (and not inside shadow trees)\"\n\nshould be rewritten in \"in a document tree\". https://dom.spec.whatwg.org/#in-a-document-tree",
+      "revId": "07dfa360432e40acc630e22393975c2d1790e5c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7f34b41_3a035f8f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2018-01-31T05:02:48Z",
+      "side": 1,
+      "message": "\"connected to the Document\" might be confusing beause a node might be in a shadow tree event if it is *connected* (to the document). https://dom.spec.whatwg.org/#connected\n\nYou can use \"in a document tree\" here as well.",
+      "revId": "07dfa360432e40acc630e22393975c2d1790e5c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1641bd67_ca373310",
         "filename": "third_party/WebKit/Source/core/html/HTMLCollection.cpp",
         "patchSetId": 3
