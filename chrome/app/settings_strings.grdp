@@ -3228,9 +3228,6 @@
     <message name="IDS_SETTINGS_USERS_GUEST_BROWSING_LABEL" desc="Label for the guest browsing setting.">
       Enable Guest browsing
     </message>
-    <message name="IDS_SETTINGS_USERS_SUPERVISED_USERS_LABEL" desc="Label for the supervised users setting.">
-      Enable supervised users
-    </message>
     <message name="IDS_SETTINGS_USERS_SHOW_ON_SIGNIN_LABEL" desc="Label for the 'show users on sign-in screen' setting.">
       Show usernames and photos on the sign-in screen
     </message>
