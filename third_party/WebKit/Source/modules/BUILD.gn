@@ -324,7 +324,7 @@ jumbo_source_set("unit_tests") {
   deps = [
     ":modules",
     ":modules_testing",
-    "//device/screen_orientation/public/interfaces:interfaces_blink",
+    "//device/gamepad/public/mojom:mojom_blink",
     "//skia",
     "//testing/gmock",
     "//testing/gtest",
