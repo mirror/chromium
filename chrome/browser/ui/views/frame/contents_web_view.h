@@ -18,6 +18,10 @@ namespace ui {
 class LayerTreeOwner;
 }
 
+namespace views {
+class FocusTraversable;
+}
+
 // ContentsWebView is used to present the WebContents of the active tab.
 class ContentsWebView
     : public views::WebView,
@@ -40,6 +44,7 @@ class ContentsWebView
 
   // ui::View overrides:
   std::unique_ptr<ui::Layer> RecreateLayer() override;
+  views::FocusTraversable* GetFocusTraversable() override;
 
   // WebContentsCloseHandlerDelegate overrides:
   void CloneWebContentsLayer() override;

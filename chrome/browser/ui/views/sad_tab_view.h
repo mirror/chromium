@@ -34,11 +34,14 @@ class SadTabView : public SadTab,
                    public views::LinkListener,
                    public views::ButtonListener {
  public:
+  static const char kViewClassName[];
+
   SadTabView(content::WebContents* web_contents, SadTabKind kind);
   ~SadTabView() override;
 
   // Overridden from views::View:
   void Layout() override;
+  const char* GetClassName() const override;
 
   // Overridden from views::LinkListener:
   void LinkClicked(views::Link* source, int event_flags) override;
