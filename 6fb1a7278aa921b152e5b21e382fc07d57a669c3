@@ -16,6 +16,24 @@
       "revId": "6fb1a7278aa921b152e5b21e382fc07d57a669c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38fa24dc_bd5c85fa",
+        "filename": "third_party/WebKit/LayoutTests/tables/table-transform-absolute-position-child-expected.png",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-31T19:53:04Z",
+      "side": 1,
+      "message": "It still fails, but with subpixel differences as opposed to a wrong orientation altogether.",
+      "parentUuid": "54a75b93_aa86bdf6",
+      "revId": "6fb1a7278aa921b152e5b21e382fc07d57a669c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
