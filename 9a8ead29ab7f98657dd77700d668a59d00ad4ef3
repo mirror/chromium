@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0aa92c04_c1b2d208",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20404,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-31T18:49:23Z",
+      "side": 1,
+      "message": "Thanks for the detailed explanation! Done and moved the reading of color space data to the beginning as well.",
+      "parentUuid": "24c0492f_365d1e70",
+      "revId": "9a8ead29ab7f98657dd77700d668a59d00ad4ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b2ec647_004ad422",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-31T05:27:52Z",
       "side": 1,
       "message": "It seems unfortunate to have to serialize and deserialize the color space for every single tile, given that most likely they\u0027re all the same. Could it make sense to use the transport cache for the color space, and reference it by id, to avoid this?\n\nIncidentally that might allow us to go back to a non-custom command.",
+      "revId": "9a8ead29ab7f98657dd77700d668a59d00ad4ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "565b2b02_5cd1d335",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20429,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-31T18:49:23Z",
+      "side": 1,
+      "message": "Hmmm, so in the most common case the color space takes 28 bytes and in the worst case 92. I could go the transfer cache route but ColorSpace doesn\u0027t have a unique id, so either need to add that or keep a map somewhere for color space to transfer cache key and then lock/unlock it for every tile which is overhead. Or just keep some number locked at a time but make sure the ones any pending raster task will use are always locked. I can look into it more, but I\u0027m not sure if the additional complexity is worth it.",
+      "parentUuid": "3b2ec647_004ad422",
       "revId": "9a8ead29ab7f98657dd77700d668a59d00ad4ef3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
