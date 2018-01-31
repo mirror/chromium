@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "994e9c8e_ec5a31ae",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/FetchContext.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-31T19:26:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec8894be_165e0445",
+      "range": {
+        "startLine": 263,
+        "startChar": 11,
+        "endLine": 263,
+        "endChar": 68
+      },
+      "revId": "08200b4e3ccd284ee734129b70dfdaad6aea639c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "794cd337_29690ae8",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
         "patchSetId": 4
@@ -53,6 +77,24 @@
       "writtenOn": "2018-01-30T17:38:57Z",
       "side": 1,
       "message": "Could you also mention briefly why this is applied only to ScriptResource?\nAlso having a crbug number is helpful for tracking this (possibly long-term) issue.",
+      "revId": "08200b4e3ccd284ee734129b70dfdaad6aea639c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35ede388_ccb60670",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-01-31T19:26:26Z",
+      "side": 1,
+      "message": "I think it\u0027s reasonable to tack this onto the track bug for making cache hits async, feel free to veto that if you feel otherwise.",
+      "parentUuid": "794cd337_29690ae8",
       "revId": "08200b4e3ccd284ee734129b70dfdaad6aea639c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
