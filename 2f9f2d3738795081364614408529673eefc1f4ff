@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fe17d62_77da7b20",
+        "filename": "chrome/browser/ui/tabs/tab_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-31T23:28:46Z",
+      "side": 1,
+      "message": "Nit: An even simpler way to do this is probably:\n\n  int other_icons \u003d 0;\n  if (ShouldShowTabCloseButton(...))\n    ++other_icons;\n  if (ShouldShowTabAlertIndicator(...))\n    ++other_icons;\n\n  // The favicon can be centered and clipped when it\u0027s alone, so if there are no\n  // other icons to show, we can show the favicon even when there\u0027s no capacity.\n  return !other_icons || (capacity \u003e other_icons);",
+      "revId": "2f9f2d3738795081364614408529673eefc1f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b612c9c_25b6affe",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-31T23:28:46Z",
+      "side": 1,
+      "message": "Am I correct that you\u0027re using fade_tail() as a proxy for \"we\u0027re in the narrow favicon case, so we need to clip to the tab bounds\"?  If so, this seems like slightly the wrong proxy, since if e.g. we decide to remove fading we\u0027d no longer be able to depend on this.\n\nIt seems like it should be safe to just always clip; I can\u0027t think when we\u0027d want to allow a child to paint outside the fill.  So I\u0027d just remove the conditional.\n\nI\u0027d also add a comment about what this clip is needed for.",
+      "revId": "2f9f2d3738795081364614408529673eefc1f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "768a6de0_7efd5539",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-31T23:28:46Z",
+      "side": 1,
+      "message": "If you get super-ambitious and want to try to implement the padding suggested in bug comment 21, here\u0027s how you could do it:\n\n* Change GetFillPath() to compute two paths.  Each path has one of the slanted tab edges, but the other edge is just rectangular, extending through the whole tab bounds.  The complete fill path is kIntersect_SkPathOp of these.  This step can basically be done by moving around the existing code in that function, discarding the fanciness about \"prevent overdraw at narrow widths\" since all that gets handled automatically now.\n* To compute the clip path with padding, just offset each of those two paths horizontally (by e.g. 1 DIP) before intersecting them.  I\u0027d do this by renaming the function something like GetInteriorPath() (since it\u0027s no longer just being used for fills) and passing an inset value, which would be 0 for the fill path and 1 (or something) for this padding case.",
+      "revId": "2f9f2d3738795081364614408529673eefc1f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec81aa42_dd826b4e",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-31T23:28:46Z",
+      "side": 1,
+      "message": "Nit: Since this is only called once, I might inline it into the caller, at least if we can eliminate the conditional below (see next comment).",
+      "revId": "2f9f2d3738795081364614408529673eefc1f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d86788b3_48cb7a26",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-31T23:28:46Z",
+      "side": 1,
+      "message": "I\u0027m not sure why we need this condition.  Is this for stacked tabs maybe?\n\nIn the case of pinned or active tabs, I\u0027d think we wouldn\u0027t get here anyway.",
+      "revId": "2f9f2d3738795081364614408529673eefc1f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd31ee03_687d5730",
+        "filename": "chrome/browser/ui/views/tabs/tab_icon.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-31T23:28:46Z",
+      "side": 1,
+      "message": "Why would we want to save an 0xff alpha layer?  I think just Save() (or better, using a ScopedCanvas) would do this, but honestly I don\u0027t even think you need to save the canvas at all, since you\u0027re not modifying anything about the canvas (its clip, transform, etc.) that would need to be restored on exit.  So I think you can remove this.\n\nThough if we\u0027re nuking fading for now this is kinda moot.",
+      "revId": "2f9f2d3738795081364614408529673eefc1f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79a64f83_42c33ac9",
+        "filename": "chrome/browser/ui/views/tabs/tab_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-31T23:28:46Z",
+      "side": 1,
+      "message": "This is too exact; the test becomes a change-detector test.\n\nI\u0027d maybe do EXPECT_LE(tab.icon_-\u003ex(), contents_bounds.x()) here.  There are other possibilities (e.g. remove this arm, check that the favicon at least still falls within the bounds if not the contents bounds, etc.).",
+      "revId": "2f9f2d3738795081364614408529673eefc1f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
