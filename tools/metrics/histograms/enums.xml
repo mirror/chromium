@@ -4729,6 +4729,13 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="10" label="Image was not required for activation."/>
 </enum>
 
+<enum name="ChromeAccountStateInGaiaCookies">
+  <int value="0" label="No Chrome account."/>
+  <int value="1" label="Chrome account is the first account in cookies."/>
+  <int value="2" label="Chrome account is another account in cookies."/>
+  <int value="3" label="Chrome account is not in cookies."/>
+</enum>
+
 <enum name="ChromeChannelForHistogram">
   <int value="0" label="UNKNOWN"/>
   <int value="1" label="CANARY"/>
