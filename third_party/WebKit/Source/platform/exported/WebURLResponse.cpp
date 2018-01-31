@@ -232,6 +232,11 @@ void WebURLResponse::SetHasMajorCertificateErrors(bool value) {
   resource_response_->SetHasMajorCertificateErrors(value);
 }
 
+void WebURLResponse::SetCTPolicyCompliance(
+    net::ct::CTPolicyCompliance compliance) {
+  resource_response_->SetCTPolicyCompliance(compliance);
+}
+
 void WebURLResponse::SetIsLegacySymantecCert(bool value) {
   resource_response_->SetIsLegacySymantecCert(value);
 }
