@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5d2bc499_7ec76b7e",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-31T17:59:15Z",
+      "side": 1,
+      "message": "Are these needed here anymore?",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 41
+      },
+      "revId": "5aff9c9c50df928a82044d1de41d314ec837442f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c08905e4_cb278824",
         "filename": "device/u2f/u2f_request.h",
         "patchSetId": 6
