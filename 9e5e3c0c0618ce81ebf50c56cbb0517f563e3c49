@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "37e81f56_69c99a63",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadFilter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-31T17:45:32Z",
+      "side": 1,
+      "message": "Let\u0027s add a TODO to move this to an IntDef (or just do it in a follow up patch IMO).",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 43
+      },
+      "revId": "9e5e3c0c0618ce81ebf50c56cbb0517f563e3c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd60ebf2_d067f982",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryAdapter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-31T17:45:32Z",
+      "side": 1,
+      "message": "I think Pair.create() is also used to remove the \u003c\u003e but I don\u0027t feel strongly either way.",
+      "range": {
+        "startLine": 69,
+        "startChar": 20,
+        "endLine": 69,
+        "endChar": 30
+      },
+      "revId": "9e5e3c0c0618ce81ebf50c56cbb0517f563e3c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1707514_ad191a54",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryAdapter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-31T17:45:32Z",
+      "side": 1,
+      "message": "We probably want to do this as part of the grd file.  e.g. have another string called \"downloads_location_sd_card_multiple\" that has a %1 entry that we can populate with the number.  That way translators can handle this case for all languages.\n\nI\u0027ll defer to twellington@ if this isn\u0027t how we\u0027re doing it in the rest of the UI, but I think this would break on RTL depending on the language?",
+      "range": {
+        "startLine": 140,
+        "startChar": 16,
+        "endLine": 141,
+        "endChar": 96
+      },
+      "revId": "9e5e3c0c0618ce81ebf50c56cbb0517f563e3c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92c396ae_c61ed615",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadPreferences.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-31T17:45:32Z",
+      "side": 1,
+      "message": "\":\" -\u003e \" implementation.\"",
+      "range": {
+        "startLine": 65,
+        "startChar": 44,
+        "endLine": 65,
+        "endChar": 45
+      },
+      "revId": "9e5e3c0c0618ce81ebf50c56cbb0517f563e3c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31cf6eb8_809cc0bb",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableItemView.java",
         "patchSetId": 7
@@ -18,6 +110,29 @@
         "startChar": 23,
         "endLine": 259,
         "endChar": 38
+      },
+      "revId": "9e5e3c0c0618ce81ebf50c56cbb0517f563e3c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d02777b_e758315d",
+        "filename": "chrome/common/chrome_features.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-31T17:45:32Z",
+      "side": 1,
+      "message": "Should this be enabled by default on M66?  Maybe leave disabled for now?",
+      "range": {
+        "startLine": 216,
+        "startChar": 59,
+        "endLine": 216,
+        "endChar": 61
       },
       "revId": "9e5e3c0c0618ce81ebf50c56cbb0517f563e3c49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
