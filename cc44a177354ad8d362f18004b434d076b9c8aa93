@@ -22,6 +22,30 @@
       "revId": "cc44a177354ad8d362f18004b434d076b9c8aa93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c32d1912_9cdf8c17",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/items_to_remove_list.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2018-01-31T15:09:07Z",
+      "side": 1,
+      "message": "This has been fixed.",
+      "parentUuid": "4fe746fb_ee710cb4",
+      "range": {
+        "startLine": 25,
+        "startChar": 33,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "cc44a177354ad8d362f18004b434d076b9c8aa93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
