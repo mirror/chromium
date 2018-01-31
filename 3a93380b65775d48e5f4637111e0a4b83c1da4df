@@ -70,6 +70,24 @@
       "revId": "3a93380b65775d48e5f4637111e0a4b83c1da4df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e78ea6ab_4ccb8298",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2018-01-31T04:11:32Z",
+      "side": 1,
+      "message": "\u003e virtual/incremental-shadow-dom/external/wpt/css/css-scoping/slotted-invalidation.html is failing.\n\nAh, good catch. That is an unexpected failure to me. Let me check that. My intention of this CL is just the refactoring. The next CL would fix the behavior.\n\n\u003e What\u0027s the reason why we cannot use FlattenedAssignedNodes() in StyleEngine/Invalidator?\n\nFlattenedAssignedNodes() doesn\u0027t includes a slot, so I guess we can\u0027t use it as is for a slot-in-flat-tree.",
+      "parentUuid": "057dde40_b0a523e4",
+      "revId": "3a93380b65775d48e5f4637111e0a4b83c1da4df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
