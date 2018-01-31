@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "ac79a607_2d3759cc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-31T17:39:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9de0c288_f756cb9d",
+      "range": {
+        "startLine": 356,
+        "startChar": 16,
+        "endLine": 356,
+        "endChar": 58
+      },
+      "revId": "4b5efe34f9d5469526273accb02bf97c381e1e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d1abb88_94e9c423",
         "filename": "chrome/android/java/strings/android_chrome_strings.grd",
         "patchSetId": 5
@@ -187,6 +211,30 @@
       "revId": "4b5efe34f9d5469526273accb02bf97c381e1e35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9632dcd8_1bf7b7dc",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-31T17:39:39Z",
+      "side": 1,
+      "message": "That sounds good!",
+      "parentUuid": "3ad3bc61_400a94ba",
+      "range": {
+        "startLine": 505,
+        "startChar": 27,
+        "endLine": 505,
+        "endChar": 30
+      },
+      "revId": "4b5efe34f9d5469526273accb02bf97c381e1e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
