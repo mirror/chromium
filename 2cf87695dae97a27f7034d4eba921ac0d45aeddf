@@ -22,6 +22,30 @@
       "revId": "2cf87695dae97a27f7034d4eba921ac0d45aeddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad6efd29_ad5c4dee",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/NavigationBarColorController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-31T19:45:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1924cf79_1ac427a4",
+      "range": {
+        "startLine": 102,
+        "startChar": 26,
+        "endLine": 102,
+        "endChar": 33
+      },
+      "revId": "2cf87695dae97a27f7034d4eba921ac0d45aeddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
