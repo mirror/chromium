@@ -63,7 +63,7 @@ class QemuTarget(target.Target):
         '-nographic',
         '-kernel', boot_data.GetKernelPath(self._GetTargetSdkArch()),
         '-initrd', boot_data_path,
-        '-smp', '4',
+        '-smp', '1',  # KM EXPERIMENTATION RESTORE THIS BACK TO 4
 
         # Use stdio for the guest OS only; don't attach the QEMU interactive
         # monitor.

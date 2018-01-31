@@ -21,7 +21,7 @@ import time
 from common_args import AddCommonArgs, ConfigureLogging, GetDeploymentTargetForArgs
 from run_package import RunPackage
 
-DEFAULT_TEST_CONCURRENCY = 4
+DEFAULT_TEST_CONCURRENCY = 1
 TEST_RESULT_PATH = '/data/test_summary.json'
 TEST_FILTER_PATH = '/data/test_filter.txt'
 
