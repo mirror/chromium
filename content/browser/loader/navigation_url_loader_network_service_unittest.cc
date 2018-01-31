@@ -26,6 +26,7 @@
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "services/network/network_context.h"
 #include "services/network/public/cpp/features.h"
+#include "services/network/resource_scheduler_client.h"
 #include "services/network/url_loader.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/common/page/page_visibility_state.mojom.h"
@@ -39,7 +40,12 @@ class TestURLLoaderRequestHandler : public URLLoaderRequestHandler {
   explicit TestURLLoaderRequestHandler(
       base::Optional<network::ResourceRequest>* most_recent_resource_request)
       : most_recent_resource_request_(most_recent_resource_request),
-        context_(network::NetworkContext::CreateForTesting()) {}
+        context_(network::NetworkContext::CreateForTesting()),
+        resource_scheduler_client_(
+            base::MakeRefCounted<network::ResourceSchedulerClient>(
+                4 /* child_id */,
+                8 /* route_id */,
+                context_.get())) {}
   ~TestURLLoaderRequestHandler() override {}
 
   void MaybeCreateLoader(const network::ResourceRequest& resource_request,
@@ -58,7 +64,7 @@ class TestURLLoaderRequestHandler : public URLLoaderRequestHandler {
     new network::URLLoader(context_.get(), std::move(request), 0 /* options */,
                            resource_request, false /* report_raw_headers */,
                            std::move(client), TRAFFIC_ANNOTATION_FOR_TESTS,
-                           0 /* process_id */);
+                           0 /* process_id */, resource_scheduler_client_);
   }
 
   bool MaybeCreateLoaderForResponse(
@@ -73,6 +79,7 @@ class TestURLLoaderRequestHandler : public URLLoaderRequestHandler {
   base::Optional<network::ResourceRequest>*
       most_recent_resource_request_;  // NOT OWNED.
   std::unique_ptr<network::NetworkContext> context_;
+  scoped_refptr<network::ResourceSchedulerClient> resource_scheduler_client_;
 };
 
 }  // namespace
