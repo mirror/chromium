@@ -1,0 +1,416 @@
+// Copyright 2018 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "chrome/browser/vr/elements/procedural_controller.h"
+
+#include "base/numerics/math_constants.h"
+#include "base/trace_event/trace_event.h"
+#include "cc/animation/keyframed_animation_curve.h"
+#include "chrome/browser/vr/ui_element_renderer.h"
+#include "chrome/browser/vr/ui_scene_constants.h"
+#include "chrome/browser/vr/vr_gl_util.h"
+#include "third_party/skia/include/core/SkColor.h"
+
+namespace vr {
+
+namespace {
+
+constexpr SkColor kColor = SK_ColorWHITE;
+constexpr float kBodyAlphaStops[] = {
+    0.1f, 0.0f,   // 1
+    0.2f, 0.49f,  // 2
+    1.0f, 0.5f,   // 3
+};
+constexpr float kTopAlphaStops[] = {
+    0.1f, 0.0f,   // 1
+    0.2f, 0.95f,  // 2
+    1.0f, 1.0f,   // 3
+};
+constexpr size_t kNumRings = 20;
+constexpr size_t kNumSectors = 20;
+const gfx::Vector3dF kUpVector(0.0f, 1.0f, 0.0f);
+constexpr float kUnitLength = 1.0f;
+constexpr float kUnitRadius = kUnitLength / 2;
+constexpr size_t kCylinderNumRings = 1;
+constexpr size_t kSquareNumSectors = 1;
+
+// clang-format off
+static constexpr char const* kVertexShader = SHADER(
+  precision mediump float;
+  uniform mat4 u_ModelViewProjMatrix;
+  attribute vec3 a_Position;
+  attribute vec4 a_Color;
+  varying vec4 v_Color;
+
+  void main() {
+    v_Color = a_Color;
+    gl_Position = u_ModelViewProjMatrix * vec4(a_Position, 1.0);
+  }
+);
+
+static constexpr char const* kFragmentShader = SHADER(
+    precision mediump float;
+  uniform float u_Opacity;
+  varying vec4 v_Color;
+
+  void main() {
+    gl_FragColor = vec4(v_Color.rgb, 1.0) * v_Color.a * u_Opacity;
+  }
+);
+// clang-format on
+
+std::unique_ptr<cc::FloatAnimationCurve> CreateAlphaCurve(
+    const float* alpha_stops,
+    size_t length) {
+  auto alpha_curve = cc::KeyframedFloatAnimationCurve::Create();
+  for (size_t i = 0; i < length; i += 2) {
+    alpha_curve->AddKeyframe(cc::FloatKeyframe::Create(
+        base::TimeDelta::FromSecondsD(alpha_stops[i + 1]), alpha_stops[i],
+        nullptr));
+  }
+  return alpha_curve;
+}
+
+void AddVertex(const gfx::Point3F& local_vertex,
+               const gfx::Transform& transform,
+               std::vector<float>* vertices) {
+  gfx::Point3F vertex(local_vertex);
+  transform.TransformPoint(&vertex);
+  vertices->push_back(vertex.x());
+  vertices->push_back(vertex.y());
+  vertices->push_back(vertex.z());
+}
+
+void AddColor(float alpha,
+              const cc::FloatAnimationCurve& alpha_curve,
+              std::vector<float>* colors) {
+  colors->push_back(SkColorGetR(kColor) / 255.0);
+  colors->push_back(SkColorGetG(kColor) / 255.0);
+  colors->push_back(SkColorGetB(kColor) / 255.0);
+  colors->push_back(alpha_curve.GetValue(base::TimeDelta::FromSecondsD(alpha)));
+}
+
+void AddSphere(size_t num_rings,
+               size_t num_sectors,
+               float arc_rings,
+               float arc_sectors,
+               const gfx::Transform& transform,
+               const cc::FloatAnimationCurve& alpha_curve,
+               std::vector<float>* vertices,
+               std::vector<float>* colors,
+               std::vector<GLushort>* indices) {
+  DCHECK_GE(vertices->capacity(),
+            vertices->size() + (num_rings + 1) * (num_sectors + 1) * 3);
+  DCHECK_GE(colors->capacity(),
+            colors->size() + (num_rings + 1) * (num_sectors + 1) * 4);
+  DCHECK_GE(indices->capacity(), indices->size() + num_rings * num_sectors * 6);
+
+  size_t index_offset = vertices->size() / 3;
+  float step_rings = arc_rings / num_rings;
+  float step_sectors = arc_sectors / num_sectors;
+
+  for (size_t ring = 0; ring < num_rings + 1; ring++) {
+    for (size_t sector = 0; sector < num_sectors + 1; sector++) {
+      gfx::Point3F vertex(
+          std::sin(2.0 * base::kPiFloat * sector * step_sectors) *
+              std::sin(base::kPiFloat * ring * step_rings) * kUnitRadius,
+          std::cos(base::kPiFloat * ring * step_rings) * kUnitRadius,
+          std::cos(2.0 * base::kPiFloat * sector * step_sectors) *
+              std::sin(base::kPiFloat * ring * step_rings) * kUnitRadius);
+      AddVertex(vertex, transform, vertices);
+
+      gfx::Vector3dF normal(vertex.x(), vertex.y(), vertex.z());
+      AddColor(gfx::AngleBetweenVectorsInDegrees(normal, kUpVector) / 180,
+               alpha_curve, colors);
+    }
+  }
+
+  for (size_t ring = 0; ring < num_rings; ring++) {
+    size_t ring_offset = ring * (num_sectors + 1);
+    for (size_t sector = 0; sector < num_sectors; sector++) {
+      size_t offset = ring_offset + sector + index_offset;
+      indices->push_back(offset);
+      indices->push_back(offset + num_sectors + 1);
+      indices->push_back(offset + num_sectors + 2);
+      indices->push_back(offset);
+      indices->push_back(offset + num_sectors + 2);
+      indices->push_back(offset + 1);
+    }
+  }
+}
+
+void AddCylinder(size_t num_rings,
+                 size_t num_sectors,
+                 float arc,
+                 const gfx::Transform& transform,
+                 const cc::FloatAnimationCurve& alpha_curve,
+                 std::vector<float>* vertices,
+                 std::vector<float>* colors,
+                 std::vector<GLushort>* indices) {
+  DCHECK_GE(vertices->capacity(),
+            vertices->size() + (num_rings + 1) * (num_sectors + 1) * 3);
+  DCHECK_GE(colors->capacity(),
+            colors->size() + (num_rings + 1) * (num_sectors + 1) * 4);
+  DCHECK_GE(indices->capacity(), indices->size() + num_rings * num_sectors * 6);
+
+  size_t index_offset = vertices->size() / 3;
+  float step_rings = 1.0 / num_rings;
+  float step_sectors = arc / num_sectors;
+
+  for (size_t ring = 0; ring < num_rings + 1; ring++) {
+    for (size_t sector = 0; sector < num_sectors + 1; sector++) {
+      gfx::Point3F vertex(
+          -kUnitLength / 2 + ring * step_rings * kUnitLength,
+          std::sin(2.0 * base::kPiFloat * sector * step_sectors) * kUnitRadius,
+          std::cos(2.0 * base::kPiFloat * sector * step_sectors) * kUnitRadius);
+      AddVertex(vertex, transform, vertices);
+
+      gfx::Vector3dF normal(0.0f, vertex.y(), vertex.z());
+      AddColor(gfx::AngleBetweenVectorsInDegrees(normal, kUpVector) / 180,
+               alpha_curve, colors);
+    }
+  }
+
+  for (size_t ring = 0; ring < num_rings; ring++) {
+    size_t ring_offset = ring * (num_sectors + 1);
+    for (size_t sector = 0; sector < num_sectors; sector++) {
+      size_t offset = ring_offset + sector + index_offset;
+      indices->push_back(offset);
+      indices->push_back(offset + num_sectors + 1);
+      indices->push_back(offset + 1);
+      indices->push_back(offset + 1);
+      indices->push_back(offset + num_sectors + 1);
+      indices->push_back(offset + num_sectors + 2);
+    }
+  }
+}
+
+void AddCircle(size_t num_rings,
+               size_t num_sectors,
+               float arc,
+               const gfx::Transform& transform,
+               const cc::FloatAnimationCurve& alpha_curve,
+               std::vector<float>* vertices,
+               std::vector<float>* colors,
+               std::vector<GLushort>* indices) {
+  DCHECK_GE(vertices->capacity(),
+            vertices->size() + (num_rings + 1) * (num_sectors + 1) * 3);
+  DCHECK_GE(colors->capacity(),
+            colors->size() + (num_rings + 1) * (num_sectors + 1) * 4);
+  DCHECK_GE(indices->capacity(), indices->size() + num_rings * num_sectors * 6);
+
+  size_t index_offset = vertices->size() / 3;
+  float step_rings = 1.0 / num_rings;
+  float step_sectors = arc / num_sectors;
+
+  for (size_t ring = 0; ring < num_rings + 1; ring++) {
+    for (size_t sector = 0; sector < num_sectors + 1; sector++) {
+      gfx::Point3F vertex(
+          std::sin(2.0 * base::kPiFloat * sector * step_sectors) * ring *
+              step_rings * kUnitRadius,
+          0.0f,
+          std::cos(2.0 * base::kPiFloat * sector * step_sectors) * ring *
+              step_rings * kUnitRadius);
+      AddVertex(vertex, transform, vertices);
+
+      AddColor(ring * step_rings, alpha_curve, colors);
+    }
+  }
+
+  for (size_t ring = 0; ring < num_rings; ring++) {
+    size_t ring_offset = ring * (num_sectors + 1);
+    for (size_t sector = 0; sector < num_sectors; sector++) {
+      size_t offset = ring_offset + sector + index_offset;
+      indices->push_back(offset);
+      indices->push_back(offset + num_sectors + 1);
+      indices->push_back(offset + num_sectors + 2);
+      indices->push_back(offset);
+      indices->push_back(offset + num_sectors + 2);
+      indices->push_back(offset + 1);
+    }
+  }
+}
+
+void AddSquare(size_t num_rings,
+               size_t num_sectors,
+               const gfx::Transform& transform,
+               const cc::FloatAnimationCurve& alpha_curve,
+               std::vector<float>* vertices,
+               std::vector<float>* colors,
+               std::vector<GLushort>* indices) {
+  DCHECK_GE(vertices->capacity(),
+            vertices->size() + (num_rings + 1) * (num_sectors + 1) * 3);
+  DCHECK_GE(colors->capacity(),
+            colors->size() + (num_rings + 1) * (num_sectors + 1) * 4);
+  DCHECK_GE(indices->capacity(), indices->size() + num_rings * num_sectors * 6);
+
+  size_t index_offset = vertices->size() / 3;
+  float step_rings = 1.0 / num_rings;
+  float step_sectors = 1.0 / num_sectors;
+
+  for (size_t ring = 0; ring < num_rings + 1; ring++) {
+    for (size_t sector = 0; sector < num_sectors + 1; sector++) {
+      gfx::Point3F vertex(
+          -kUnitLength / 2 + ring * step_rings * kUnitLength, 0.0,
+          -kUnitLength / 2 + sector * step_sectors * kUnitLength);
+      AddVertex(vertex, transform, vertices);
+
+      AddColor(std::abs(vertex.x() * kUnitLength * 2), alpha_curve, colors);
+    }
+  }
+
+  for (size_t ring = 0; ring < num_rings; ring++) {
+    size_t ring_offset = ring * (num_sectors + 1);
+    for (size_t sector = 0; sector < num_sectors; sector++) {
+      size_t offset = ring_offset + sector + index_offset;
+      indices->push_back(offset);
+      indices->push_back(offset + num_sectors + 2);
+      indices->push_back(offset + num_sectors + 1);
+      indices->push_back(offset);
+      indices->push_back(offset + 1);
+      indices->push_back(offset + num_sectors + 2);
+    }
+  }
+}
+
+}  // namespace
+
+ProceduralController::ProceduralController() {
+  SetName(kController);
+  set_hit_testable(false);
+  SetVisible(true);
+}
+
+ProceduralController::~ProceduralController() = default;
+
+void ProceduralController::Render(UiElementRenderer* renderer,
+                                  const CameraModel& model) const {
+  renderer->DrawProceduralController(
+      computed_opacity(), model.view_proj_matrix * world_space_transform());
+}
+
+gfx::Transform ProceduralController::LocalTransform() const {
+  return local_transform_;
+}
+
+ProceduralController::Renderer::Renderer()
+    : BaseRenderer(kVertexShader, kFragmentShader) {
+  model_view_proj_matrix_handle_ =
+      glGetUniformLocation(program_handle_, "u_ModelViewProjMatrix");
+  color_handle_ = glGetAttribLocation(program_handle_, "a_Color");
+  opacity_handle_ = glGetUniformLocation(program_handle_, "u_Opacity");
+
+  size_t num_vertices =
+      (kNumRings + 1) * (kNumSectors + 1) * 2 +             // Spheres.
+      (kCylinderNumRings + 1) * (kNumRings * 2 + 1) +       // Cylinder.
+      (kNumRings / 2 + 1) * (kNumSectors + 1) * 2 +         // Circles.
+      (kNumRings + 1) * (kSquareNumSectors + 1);            // Square.
+  size_t num_squares = kNumRings * kNumSectors * 2 +        // Spheres.
+                       kCylinderNumRings * kNumRings * 2 +  // Cylinder.
+                       kNumRings / 2 * kNumSectors * 2 +    // Circles.
+                       kNumRings * kSquareNumSectors;       // Square.
+  vertices_.reserve(num_vertices * 3);
+  colors_.reserve(num_vertices * 4);
+  indices_.reserve(num_squares * 6);
+
+  auto body_alpha_curve =
+      CreateAlphaCurve(kBodyAlphaStops, arraysize(kBodyAlphaStops));
+  auto top_alpha_curve =
+      CreateAlphaCurve(kTopAlphaStops, arraysize(kTopAlphaStops));
+
+  gfx::Transform transform;
+  transform.Translate3d(0.0, 0.0, (kControllerLength - kControllerWidth) / 2);
+  transform.Scale3d(kControllerWidth, kControllerHeight * 2, kControllerWidth);
+  transform.RotateAboutXAxis(180);
+  transform.RotateAboutYAxis(90);
+  AddSphere(kNumRings, kNumSectors, 0.5f, 0.5f, transform, *body_alpha_curve,
+            &vertices_, &colors_, &indices_);
+
+  transform.MakeIdentity();
+  transform.Translate3d(0.0, 0.0, -(kControllerLength - kControllerWidth) / 2);
+  transform.Scale3d(kControllerWidth, kControllerHeight * 2, kControllerWidth);
+  transform.RotateAboutXAxis(180);
+  transform.RotateAboutYAxis(-90);
+  AddSphere(kNumRings, kNumSectors, 0.5f, 0.5f, transform, *body_alpha_curve,
+            &vertices_, &colors_, &indices_);
+
+  transform.MakeIdentity();
+  transform.Scale3d(kControllerWidth, kControllerHeight * 2,
+                    kControllerLength - kControllerWidth);
+  transform.RotateAboutXAxis(180);
+  transform.RotateAboutYAxis(90);
+  AddCylinder(kCylinderNumRings, kNumRings * 2, 0.5f, transform,
+              *body_alpha_curve, &vertices_, &colors_, &indices_);
+
+  transform.MakeIdentity();
+  transform.Translate3d(0.0, 0.0, (kControllerLength - kControllerWidth) / 2);
+  transform.Scale3d(kControllerWidth, 1.0, kControllerWidth);
+  transform.RotateAboutYAxis(-90);
+  AddCircle(kNumRings / 2, kNumSectors, 0.5, transform, *top_alpha_curve,
+            &vertices_, &colors_, &indices_);
+
+  transform.MakeIdentity();
+  transform.Translate3d(0.0, 0.0, -(kControllerLength - kControllerWidth) / 2);
+  transform.Scale3d(kControllerWidth, 1.0, kControllerWidth);
+  transform.RotateAboutYAxis(90);
+  AddCircle(kNumRings / 2, kNumSectors, 0.5, transform, *top_alpha_curve,
+            &vertices_, &colors_, &indices_);
+
+  transform.MakeIdentity();
+  transform.Scale3d(kControllerWidth, 1.0,
+                    kControllerLength - kControllerWidth);
+  AddSquare(kNumRings, kSquareNumSectors, transform, *top_alpha_curve,
+            &vertices_, &colors_, &indices_);
+
+  glGenBuffersARB(1, &vertex_buffer_);
+  glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_);
+  glBufferData(GL_ARRAY_BUFFER, vertices_.size() * sizeof(float),
+               vertices_.data(), GL_STATIC_DRAW);
+  glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+  glGenBuffersARB(1, &color_buffer_);
+  glBindBuffer(GL_ARRAY_BUFFER, color_buffer_);
+  glBufferData(GL_ARRAY_BUFFER, colors_.size() * sizeof(float), colors_.data(),
+               GL_STATIC_DRAW);
+  glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+  glGenBuffersARB(1, &index_buffer_);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer_);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices_.size() * sizeof(GLushort),
+               indices_.data(), GL_STATIC_DRAW);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+
+ProceduralController::Renderer::~Renderer() = default;
+
+void ProceduralController::Renderer::Draw(
+    float opacity,
+    const gfx::Transform& model_view_proj_matrix) {
+  glUseProgram(program_handle_);
+
+  glUniform1f(opacity_handle_, opacity);
+  glUniformMatrix4fv(model_view_proj_matrix_handle_, 1, false,
+                     MatrixToGLArray(model_view_proj_matrix).data());
+
+  glEnableVertexAttribArray(position_handle_);
+  glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_);
+  glVertexAttribPointer(position_handle_, 3, GL_FLOAT, false, 3 * sizeof(float),
+                        VOID_OFFSET(0));
+
+  glEnableVertexAttribArray(color_handle_);
+  glBindBuffer(GL_ARRAY_BUFFER, color_buffer_);
+  glVertexAttribPointer(color_handle_, 4, GL_FLOAT, false, 4 * sizeof(float),
+                        VOID_OFFSET(0));
+
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer_);
+  glDrawElements(GL_TRIANGLES, indices_.size(), GL_UNSIGNED_SHORT, 0);
+
+  glBindBuffer(GL_ARRAY_BUFFER, 0);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+
+}  // namespace vr
