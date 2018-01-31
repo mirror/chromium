@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c330ced0_9f50ec3e",
+        "filename": "cc/raster/zero_copy_raster_buffer_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-31T16:57:06Z",
+      "side": 1,
+      "message": "The backing-\u003egpu_memory_buffer and backing-\u003etexture_id are set at the same time, so they will be null-or-not at the same time.\n\nIf the GMB creation failed, then this sets the (previously null) backing-\u003egpu_memory_buffer to null, ie no change.\n\nI guess Playback will keep trying to make a GMB tho on the next time the resource is pulled from the pool. We could make it recover in that case.\n\nI thought about moving ownership around but wasn\u0027t a fan.. let me look again.",
+      "parentUuid": "22e57eef_8c772f73",
+      "revId": "b500da8dd7dd9c872ed3337fa0f8932d7860f638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7eb79535_dbaf1986",
         "filename": "cc/raster/zero_copy_raster_buffer_provider.cc",
         "patchSetId": 9
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "For GL texture resources, we make one sync token per resource on the raster thread, so it should be ok here too. If I\u0027m not mistaken this is the only case that needs ResourceProvider to generate the sync token in PrepareSendToParent.\n\nI don\u0027t understand the part of your question about OrderingBarrier. RBP::OrderingBarrier is called before tasks are scheduled. This code runs after the task has run, and when the RasterBuffer is destroyed. I think you meant to say PrepareSendToParent instead of OrderingBarrier?",
       "parentUuid": "7eb79535_dbaf1986",
+      "revId": "b500da8dd7dd9c872ed3337fa0f8932d7860f638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2344a561_f5f2e835",
+        "filename": "cc/raster/zero_copy_raster_buffer_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-31T16:57:06Z",
+      "side": 1,
+      "message": "Oh, ya you\u0027re right I did. I mixed up the \"order\" of things in my head again.",
+      "parentUuid": "4d7cdb18_e73c9e80",
       "revId": "b500da8dd7dd9c872ed3337fa0f8932d7860f638",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
