@@ -10,6 +10,7 @@ group("capture") {
   public_deps = [
     ":capture_lib",
     "//media/capture/mojo:image_capture",
+    "//media/capture/mojo:image_capture_types",
     "//media/capture/mojo:video_capture",
     "//services/service_manager/public/cpp",
   ]
@@ -83,6 +84,7 @@ source_set("capture_device_specific") {
     "//gpu/command_buffer/client",
     "//media",
     "//media/capture/mojo:image_capture",
+    "//media/capture/mojo:image_capture_types",
     "//media/mojo/interfaces:interfaces",
     "//ui/gfx",
   ]
@@ -163,6 +165,7 @@ component("capture_lib") {
     "//base:i18n",
     "//media",
     "//media/capture/mojo:image_capture",
+    "//media/capture/mojo:image_capture_types",
     "//media/capture/mojo:video_capture",
     "//media/mojo/interfaces:interfaces",
     "//services/service_manager/public/cpp",
@@ -253,6 +256,7 @@ source_set("test_support") {
     "//base/test:test_support",
     "//media:test_support",
     "//media/capture/mojo:image_capture",
+    "//media/capture/mojo:image_capture_types",
     "//testing/gmock",
     "//ui/gfx:test_support",
   ]
@@ -283,6 +287,7 @@ test("capture_unittests") {
     "//base/test:test_support",
     "//media:test_support",
     "//media/capture/mojo:image_capture",
+    "//media/capture/mojo:image_capture_types",
     "//mojo/edk/system",
     "//testing/gmock",
     "//testing/gtest",
