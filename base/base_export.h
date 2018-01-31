@@ -22,6 +22,7 @@
 #endif  // defined(BASE_IMPLEMENTATION)
 #endif
 
+
 #else  // defined(COMPONENT_BUILD)
 #define BASE_EXPORT
 #endif
