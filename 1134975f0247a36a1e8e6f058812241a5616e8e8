@@ -104,6 +104,24 @@
       "revId": "1134975f0247a36a1e8e6f058812241a5616e8e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa4faa1c_6f2e881f",
+        "filename": "chrome/test/data/extensions/api_test/enterprise_device_attributes/basic.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-31T15:59:17Z",
+      "side": 1,
+      "message": "It depends a bit on the test.  callbackPass() is nice for cases when the flow may be non-deterministic, e.g.\ndoFoo(callbackPass(function() { ... } );\ndoBar(callbackPass(function() { ... } );\n\nwhere either doFoo() or doBar() may finish first.\n\ntest.succeed() is nice for deterministic flows, because it makes everything a lot less surprising and intuitive.\n\nIf we had infinite resources, it would be nice to get rid of callbackPass and replace its usage with promises and then use Promise.all() + test.succeed() to handle the non-deterministic execution order, but that\u0027s a pretty large task. :)",
+      "parentUuid": "252c1acd_341c8d14",
+      "revId": "1134975f0247a36a1e8e6f058812241a5616e8e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

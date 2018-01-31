@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d810293_d57a8250",
+        "filename": "chrome/browser/extensions/api/enterprise_device_attributes/enterprise_device_attributes_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-31T15:59:17Z",
+      "side": 1,
+      "message": "nit: Given these are only used in one call site, I\u0027d mildly prefer we just inline them.  But I don\u0027t feel strongly, so if you prefer this, that\u0027s fine.",
+      "revId": "8ce9fcba6242878b0252597045e5af8206c16503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
