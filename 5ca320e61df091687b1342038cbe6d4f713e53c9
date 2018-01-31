@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3777a368_bfecf8fc",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1020,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-31T19:30:57Z",
+      "side": 1,
+      "message": "This is not correct. This method may be called on any elements.\nThis should actually move to ScrollFrameBy.",
+      "range": {
+        "startLine": 1018,
+        "startChar": 0,
+        "endLine": 1020,
+        "endChar": 0
+      },
+      "revId": "5ca320e61df091687b1342038cbe6d4f713e53c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceb33573_a456e139",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-31T19:30:57Z",
+      "side": 1,
+      "message": "ditto. See ScrollFrameTo",
+      "range": {
+        "startLine": 1043,
+        "startChar": 0,
+        "endLine": 1043,
+        "endChar": 29
+      },
+      "revId": "5ca320e61df091687b1342038cbe6d4f713e53c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d674181_b99d1e8f",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1181,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-31T19:30:57Z",
+      "side": 1,
+      "message": "I don\u0027t think we want to mix scroll and scale here. In particular,\nscrolling in script should not affect us restoring scale so we should\nn\u0027t count these cases.",
+      "range": {
+        "startLine": 1181,
+        "startChar": 32,
+        "endLine": 1181,
+        "endChar": 52
+      },
+      "revId": "5ca320e61df091687b1342038cbe6d4f713e53c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

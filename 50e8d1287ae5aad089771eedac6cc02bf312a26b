@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "697ce72a_aa0ca5b3",
+        "filename": "third_party/WebKit/Source/core/frame/LocalDOMWindow.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1215,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-31T19:30:57Z",
+      "side": 1,
+      "message": "That is better.\n\nBut thinking about it some more, I am worried that we are sprinkling setting\nthese flags across all these different entry points for scrolling viewport via javascript. \nThis result in a fairly brittle code.\n\nIMHO, a better approach may be to perhaps split kProgrammaticScroll into two different categories: kPrgrammaticScroll and kScriptScroll and use the latter anytime we have a scroll coming from javascript. This way you can set this flag inside Viewport::SetScrollOffset in one place. Being able to differentiate between programmatic and script scrolling may end\nup useful in other ways too!\n\nI am not an expert here so let\u0027s see if skobes@ has opinion one way or another.",
+      "parentUuid": "738f736f_4932859c",
+      "revId": "50e8d1287ae5aad089771eedac6cc02bf312a26b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c1fe8ac_32dab918",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
@@ -48,6 +66,30 @@
       "writtenOn": "2018-01-26T21:45:09Z",
       "side": 1,
       "message": "This is not really a web feature API. So I don\u0027t think this is the right enum histogram\nto add it. In any case if it was you have to add it to \"web_feature.mojom\".\n\nI think you want to introduce a new enum histogram for this.",
+      "range": {
+        "startLine": 17700,
+        "startChar": 0,
+        "endLine": 17700,
+        "endChar": 61
+      },
+      "revId": "50e8d1287ae5aad089771eedac6cc02bf312a26b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bc55c34_207a0b5c",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 17700,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-31T19:30:57Z",
+      "side": 1,
+      "message": "This still seems to be an issue.",
+      "parentUuid": "7c1fe8ac_32dab918",
       "range": {
         "startLine": 17700,
         "startChar": 0,
