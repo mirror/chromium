@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a69ec42b_e42d40ba",
+        "filename": "build/fuchsia/runner_v2/target.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-31T02:18:21Z",
+      "side": 1,
+      "message": "This\u0027ll need to be rebased against the changes impending in https://chromium-review.googlesource.com/c/chromium/src/+/861283 .\n\nHow about \"PutFiles\" (plural)?",
+      "revId": "b8b5d77e8587c6a3aa55846a8f75473e9e0ea44b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f44a0770_d1dabbe9",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/fuchsia.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-31T02:18:21Z",
+      "side": 1,
+      "message": "Verify the exit status code in case mkdir fails (existing dir?)",
+      "revId": "b8b5d77e8587c6a3aa55846a8f75473e9e0ea44b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
