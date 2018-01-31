@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f637a84_e08990c3",
+        "filename": "third_party/WebKit/Source/platform/mojo/WeakBinding.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-31T01:51:16Z",
+      "side": 1,
+      "message": "2018",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "698bb3edbb4fd74b7d9c316f283f058a241197ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24c36bca_a0f67ce2",
+        "filename": "third_party/WebKit/Source/platform/mojo/WeakBinding.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-31T01:51:16Z",
+      "side": 1,
+      "message": "Remove.",
+      "revId": "698bb3edbb4fd74b7d9c316f283f058a241197ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "711a157e_a158dcae",
+        "filename": "third_party/WebKit/Source/platform/mojo/WeakBinding.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-31T01:51:16Z",
+      "side": 1,
+      "message": "Remove.",
+      "revId": "698bb3edbb4fd74b7d9c316f283f058a241197ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c90a1f6_8df375ba",
+        "filename": "third_party/WebKit/Source/platform/mojo/WeakBinding.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-31T01:51:16Z",
+      "side": 1,
+      "message": "I expect we\u0027ll want an equivalent of StrongBinding too.",
+      "range": {
+        "startLine": 39,
+        "startChar": 6,
+        "endLine": 39,
+        "endChar": 17
+      },
+      "revId": "698bb3edbb4fd74b7d9c316f283f058a241197ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c115ebd_c59837c3",
+        "filename": "third_party/WebKit/Source/platform/mojo/WeakBinding.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-31T01:51:16Z",
+      "side": 1,
+      "message": "Remove.",
+      "revId": "698bb3edbb4fd74b7d9c316f283f058a241197ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
