@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03726e62_fa694baa",
+        "filename": "base/android/java/src/org/chromium/base/ContextUtils.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2018-01-31T17:13:53Z",
+      "side": 1,
+      "message": "Where are these being moved from? These are things Android would discourage doing in general in favour of controlling initialisation paths more carefully so you don\u0027t need to discover this information in common code (since every Android component already knows whether it\u0027s an isolated process and what its process name is implicitly from how it was configured by the developer).\n\nI haven\u0027t looked into this CL in detail but I think it\u0027d be better not to put this kind of thing into base if there\u0027s a sensible way to avoid it..",
+      "revId": "5b4109b7ba69ab5871b6fee5f675b13667afdd55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
