@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d071007_685767b4",
+        "filename": "chromeos/network/client_cert_resolver.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-31T17:21:47Z",
+      "side": 1,
+      "message": "s/teh/the/",
+      "revId": "84f46de8d0006ef394921a5a7c9f4f90441e17a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
