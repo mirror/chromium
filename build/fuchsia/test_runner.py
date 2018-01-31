@@ -87,6 +87,9 @@ class PortForwarderNoop(chrome_test_server_spawner.PortForwarder):
 def main():
   parser = argparse.ArgumentParser()
   AddRunnerCommandLineArguments(parser)
+  parser.add_argument('--use-new-test-runner', action='store_true',
+                      default=False,
+                      help='Enable testserver spawner.')
   parser.add_argument('--enable-test-server', action='store_true',
                       default=False,
                       help='Enable testserver spawner.')
