@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b88d124_7e4c3a22",
+        "filename": "ash/login/ui/login_pin_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-31T18:04:51Z",
+      "side": 1,
+      "message": "nit: insert a \"return\" after L129 and get rid of \"else\"",
+      "range": {
+        "startLine": 130,
+        "startChar": 6,
+        "endLine": 130,
+        "endChar": 10
+      },
+      "revId": "fdbd8118a0a808a8eae33831b7d4f9240550623a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85ed8264_3b4e1940",
+        "filename": "ash/login/ui/login_pin_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-31T18:04:51Z",
+      "side": 1,
+      "message": "nit: insert an empty line before",
+      "revId": "fdbd8118a0a808a8eae33831b7d4f9240550623a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
