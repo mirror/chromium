@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "12229c7e_3fbc1cfb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-31T22:56:04Z",
+      "side": 1,
+      "message": ":)",
+      "parentUuid": "1665eddc_1f3513b6",
+      "revId": "a825c54e8358c3f29b2c0d7b7003152254a3bef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1eddd683_1d364bd1",
         "filename": "chrome/browser/chromeos/login/ui/login_display_host.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "a825c54e8358c3f29b2c0d7b7003152254a3bef8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef082cbd_c8f06b55",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-31T22:56:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1eddd683_1d364bd1",
+      "revId": "a825c54e8358c3f29b2c0d7b7003152254a3bef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e8288488_f50bdd9e",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-31T22:56:04Z",
+      "side": 1,
+      "message": "It would still require a body, so I left off the \u003d 0.",
+      "parentUuid": "3839c508_68fff782",
+      "revId": "a825c54e8358c3f29b2c0d7b7003152254a3bef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74c23c8a_83211477",
         "filename": "chrome/browser/chromeos/login/ui/login_display_host.h",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "a825c54e8358c3f29b2c0d7b7003152254a3bef8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaf8fa7b_19b28b2b",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-31T22:56:04Z",
+      "side": 1,
+      "message": "I\u0027ll take a look at fixing this in a follow-up, but I suspect it will remain a raw pointer since ownership is probably going to be complex given it currently lives in (at minimum) a global.",
+      "parentUuid": "74c23c8a_83211477",
+      "revId": "a825c54e8358c3f29b2c0d7b7003152254a3bef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "edd00b5c_928c7581",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_common.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-31T22:56:04Z",
+      "side": 1,
+      "message": "It is just a move.",
+      "parentUuid": "afe4e989_29318b6a",
+      "revId": "a825c54e8358c3f29b2c0d7b7003152254a3bef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "472a74a8_0c5806f0",
         "filename": "chrome/browser/chromeos/login/ui/login_display_host_common.h",
         "patchSetId": 4
@@ -98,6 +188,24 @@
       "writtenOn": "2018-01-31T22:21:36Z",
       "side": 1,
       "message": "Should all these methods be protected? This class is only meant to be consumed by inheritors, right? Or at least the ctor/dtor should be?",
+      "revId": "a825c54e8358c3f29b2c0d7b7003152254a3bef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9d65e17_b792b91b",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_common.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-31T22:56:04Z",
+      "side": 1,
+      "message": "I\u0027ve made the ctor/dtor protected, but left the interface as public. I don\u0027t think we have strong guidelines on public vs protected inheritance, if you have a preference I can switch to that. But yes, no one should use this class directly outside of sub-classes.",
+      "parentUuid": "472a74a8_0c5806f0",
       "revId": "a825c54e8358c3f29b2c0d7b7003152254a3bef8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -118,6 +226,24 @@
       "revId": "a825c54e8358c3f29b2c0d7b7003152254a3bef8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "537d2f4a_73c14b0c",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_common.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-31T22:56:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ef0882a_3c742076",
+      "revId": "a825c54e8358c3f29b2c0d7b7003152254a3bef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
