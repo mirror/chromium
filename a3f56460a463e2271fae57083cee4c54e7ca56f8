@@ -16,6 +16,41 @@
       "revId": "a3f56460a463e2271fae57083cee4c54e7ca56f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b4d87ba_12e0d9d9",
+        "filename": "net/data/ocsp_unittest/make_ocsp.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-31T00:40:24Z",
+      "side": 0,
+      "message": "I haven\u0027t had that problem.\nI did have this issue though when running last time:\nhttps://cs.chromium.org/chromium/src/net/data/ocsp_unittest/make_ocsp.py?q\u003d%22pyasn1+module+has+a+bug%22\u0026sq\u003dpackage:chromium\u0026l\u003d343",
+      "parentUuid": "7734e714_8a36c78f",
+      "revId": "a3f56460a463e2271fae57083cee4c54e7ca56f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1669f9e_7f061081",
+        "filename": "net/data/ocsp_unittest/ocsp_sign_bad_indirect.pem",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-31T00:40:24Z",
+      "side": 0,
+      "message": "Does ocsp_unittest/annotate_test_data.py no longer generate this pretty-printed version?\n(I find it more readable for OCSP responses).",
+      "revId": "a3f56460a463e2271fae57083cee4c54e7ca56f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

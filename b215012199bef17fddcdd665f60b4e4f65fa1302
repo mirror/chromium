@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57a9d589_b194ef16",
+        "filename": "net/cert/internal/ocsp.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 904,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-31T00:40:24Z",
+      "side": 1,
+      "message": "Thanks for fixing that!",
+      "revId": "b215012199bef17fddcdd665f60b4e4f65fa1302",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
