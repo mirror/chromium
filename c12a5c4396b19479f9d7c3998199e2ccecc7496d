@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6a5e23eb_6a07da4c",
+        "filename": "content/browser/loader/navigation_url_loader_network_service_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2018-01-31T14:04:24Z",
+      "side": 1,
+      "message": "I prefer initializing member variables in the member initializer list, so I would like to leave them be.",
+      "parentUuid": "465a81f8_044a94c0",
+      "range": {
+        "startLine": 45,
+        "startChar": 63,
+        "endLine": 45,
+        "endChar": 71
+      },
+      "revId": "c12a5c4396b19479f9d7c3998199e2ccecc7496d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab2fcb9f_3fc4d666",
         "filename": "content/network/resource_scheduler.cc",
         "patchSetId": 25
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6bc8bf89_3fb7de1c",
+        "filename": "content/network/resource_scheduler.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2018-01-31T14:04:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab2fcb9f_3fc4d666",
+      "range": {
+        "startLine": 419,
+        "startChar": 14,
+        "endLine": 419,
+        "endChar": 44
+      },
+      "revId": "c12a5c4396b19479f9d7c3998199e2ccecc7496d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80a039e8_b5c4f534",
         "filename": "content/network/resource_scheduler_client.h",
         "patchSetId": 25
@@ -68,6 +116,30 @@
       "revId": "c12a5c4396b19479f9d7c3998199e2ccecc7496d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61cc26c0_9df6d395",
+        "filename": "content/network/resource_scheduler_client.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2018-01-31T14:04:24Z",
+      "side": 1,
+      "message": "Added comments to network_service_url_loader_factory_h.",
+      "parentUuid": "80a039e8_b5c4f534",
+      "range": {
+        "startLine": 28,
+        "startChar": 3,
+        "endLine": 28,
+        "endChar": 10
+      },
+      "revId": "c12a5c4396b19479f9d7c3998199e2ccecc7496d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
