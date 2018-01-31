@@ -570,6 +570,30 @@
     },
     {
       "key": {
+        "uuid": "165a29ff_ff52e055",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002525
+      },
+      "writtenOn": "2018-01-31T06:12:06Z",
+      "side": 1,
+      "message": "Is that still OK?",
+      "parentUuid": "6d0b5afd_08c412f1",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 9
+      },
+      "revId": "4d45095120b36ca181d931bd22f56b7c2d37d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d3cce31b_7880aa19",
         "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.h",
         "patchSetId": 12
@@ -620,6 +644,24 @@
       "revId": "4d45095120b36ca181d931bd22f56b7c2d37d6df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "034d7fdc_0af9a83d",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002525
+      },
+      "writtenOn": "2018-01-31T06:12:06Z",
+      "side": 1,
+      "message": "I\u0027ve properly added \"const\" and it works great in patchtset #18.",
+      "parentUuid": "bb15a20a_b34db0f0",
+      "revId": "4d45095120b36ca181d931bd22f56b7c2d37d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
