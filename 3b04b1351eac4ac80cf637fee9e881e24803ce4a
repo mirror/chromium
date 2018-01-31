@@ -16,6 +16,24 @@
       "revId": "3b04b1351eac4ac80cf637fee9e881e24803ce4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d763935_cdfdb273",
+        "filename": "extensions/common/manifest_handlers/permissions_parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-01-31T06:03:06Z",
+      "side": 1,
+      "message": "Think this is still ok, we should not depend on the other method having this DCHECK.",
+      "parentUuid": "740460d5_37620c59",
+      "revId": "3b04b1351eac4ac80cf637fee9e881e24803ce4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
