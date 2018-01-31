@@ -11,9 +11,17 @@ let fakeDevices = fakeXRDevices();
 
 promise_test( (t) => {
   setFakeDevices([fakeDevices["FakeGooglePixelPhone"]]);
-  return navigator.xr.requestDevice().then( (device) =>
-    promise_rejects(t, 'NotSupportedError', device.supportsSession())
-  );
+  return navigator.xr.requestDevice().then( (device) => {
+    // Non-exclusive sessions without a outputContext should not be supported.
+    promise_rejects(t, 'NotSupportedError', device.supportsSession());
+
+    // Non-exclusive sessions with an outputContexted should be supported.
+    let output_canvas = document.createElement('canvas');
+    let output_context = output_canvas.getContext('xrpresent');
+    return device.supportsSession({
+        outputContext: output_context
+    });
+  });
 }, "supportsSession properly identifies supported non-exclusive sessions");
 
 </script>
