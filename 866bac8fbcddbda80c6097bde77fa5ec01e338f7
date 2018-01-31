@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "ddb4851a_5580914b",
+        "filename": "extensions/common/api/_permission_features.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1263483
+      },
+      "writtenOn": "2018-01-31T01:18:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cc0b86d_15469847",
+      "revId": "866bac8fbcddbda80c6097bde77fa5ec01e338f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3dd676b8_43b42f19",
         "filename": "extensions/common/api/_permission_features.json",
         "patchSetId": 3
@@ -105,6 +123,24 @@
       "revId": "866bac8fbcddbda80c6097bde77fa5ec01e338f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7037df3_993c821a",
+        "filename": "extensions/common/api/_permission_features.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1263483
+      },
+      "writtenOn": "2018-01-31T01:18:03Z",
+      "side": 1,
+      "message": "As chatted, will use regular session.",
+      "parentUuid": "709a89ad_291f27e1",
+      "revId": "866bac8fbcddbda80c6097bde77fa5ec01e338f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
