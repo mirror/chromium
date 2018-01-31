@@ -83,7 +83,7 @@ public class ThreadedInputConnectionTest {
     public void testComposeGetTextFinishGetText() {
         // IME app calls setComposingText().
         mConnection.setComposingText("hello", 1);
-        mInOrder.verify(mImeAdapter).sendCompositionToNative("hello", 1, false, 0);
+        mInOrder.verify(mImeAdapter).sendCompositionToNative("hello", 1, 0);
 
         // Renderer updates states asynchronously.
         mConnection.updateStateOnUiThread("hello", 5, 5, 0, 5, true, false);
@@ -122,8 +122,7 @@ public class ThreadedInputConnectionTest {
         mConnection.setCombiningAccentOnUiThread(0x0302);
         mConnection.updateComposingText("\u0302", 1, true);
         mInOrder.verify(mImeAdapter)
-                .sendCompositionToNative(
-                        "\u0302", 1, false, 0x0302 | KeyCharacterMap.COMBINING_ACCENT);
+                .sendCompositionToNative("\u0302", 1, 0x0302 | KeyCharacterMap.COMBINING_ACCENT);
     }
 
     @Test
@@ -142,7 +141,7 @@ public class ThreadedInputConnectionTest {
         assertTrue(mConnection.beginBatchEdit());
         // Type hello real fast.
         mConnection.commitText("hello", 1);
-        mInOrder.verify(mImeAdapter).sendCompositionToNative("hello", 1, true, 0);
+        mInOrder.verify(mImeAdapter).sendCommitToNative("hello", 1);
 
         // Renderer updates states asynchronously.
         mConnection.updateStateOnUiThread("hello", 5, 5, -1, -1, true, false);

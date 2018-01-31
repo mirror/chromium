@@ -2,12 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-package org.chromium.content.browser.input;
+package org.chromium.content_public.browser;
 
 import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.ExtractedText;
 import android.view.inputmethod.InputConnection;
 
 import org.chromium.base.VisibleForTesting;
@@ -20,7 +21,7 @@ public interface ChromiumBaseInputConnection extends InputConnection {
      * A factory class to create or reuse ChromiumBaseInputConnection.
      */
     public interface Factory {
-        ChromiumBaseInputConnection initializeAndGet(View view, ImeAdapterImpl imeAdapter,
+        ChromiumBaseInputConnection initializeAndGet(View view, ImeAdapter imeAdapter,
                 int inputType, int inputFlags, int inputMode, int selectionStart, int selectionEnd,
                 EditorInfo outAttrs);
 
@@ -58,11 +59,6 @@ public interface ChromiumBaseInputConnection extends InputConnection {
     boolean sendKeyEventOnUiThread(KeyEvent event);
 
     /**
-     * Call this when restartInput() is called.
-     */
-    void onRestartInputOnUiThread();
-
-    /**
      * @return The {@link Handler} used for this InputConnection.
      */
     @Override
@@ -74,4 +70,22 @@ public interface ChromiumBaseInputConnection extends InputConnection {
      * never get state update.
      */
     void unblockOnUiThread();
+
+    /**
+     * @return The given {@link TextInputState} converted into {@link
+     *         android.view.inputmethod.ExtractedText}
+     */
+    static ExtractedText convertToExtractedText(TextInputState textInputState) {
+        if (textInputState == null) return null;
+        ExtractedText extractedText = new ExtractedText();
+        extractedText.text = textInputState.text();
+        extractedText.partialEndOffset = textInputState.text().length();
+        // Set the partial start offset to -1 because the content is the full text.
+        // See: Android documentation for ExtractedText#partialStartOffset
+        extractedText.partialStartOffset = -1;
+        extractedText.selectionStart = textInputState.selection().start();
+        extractedText.selectionEnd = textInputState.selection().end();
+        extractedText.flags = textInputState.singleLine() ? ExtractedText.FLAG_SINGLE_LINE : 0;
+        return extractedText;
+    }
 }
