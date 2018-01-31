@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "86f2bbda_b6e22889",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/heap-profiler/heap-snapshot-with-detached-dom-tree.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-31T20:53:56Z",
+      "side": 0,
+      "message": "Since we don\u0027t do object grouping, we don\u0027t have a detached DOM tree group anymore.\n\nI can emulate the old behavior by adding an artificial \"detached DOM tree\" root and adding an edge to each detached DOM element. This however will interfere with retaining paths because the path to the artificial root will show up at the top.\n\nWe can try adding a weak reference from the artificial root to detached DOM element.\nI would like to explore this in future CLs.",
+      "parentUuid": "f5e4c325_9be7c454",
+      "revId": "6f97025732bb923f67b7eb08c8ce82a62282121b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6daf1594_575f7a06",
         "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
         "patchSetId": 4

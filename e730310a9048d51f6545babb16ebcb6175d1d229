@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "123cb1d9_368c55b9",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/heap-profiler/heap-snapshot-with-event-listener-expected.txt",
+        "patchSetId": 12
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-31T20:53:56Z",
+      "side": 1,
+      "message": "Yep, I was thinking about this too. Currently we report InternalNode for container like objects that are not TraceWrapperBase. That\u0027s a very small percentage of the objects.\n\nWe can skip them by directly tracing through them in the Visit method without pushing them to the worklist. Let\u0027s try that in another CL though to keep this one simple.",
+      "parentUuid": "82b0229b_e3ac21d0",
+      "revId": "e730310a9048d51f6545babb16ebcb6175d1d229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80cde97d_747a3689",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8EmbedderGraphBuilder.cpp",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "e730310a9048d51f6545babb16ebcb6175d1d229",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d7e5b88_d3d00c37",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8EmbedderGraphBuilder.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-31T20:53:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80cde97d_747a3689",
+      "revId": "e730310a9048d51f6545babb16ebcb6175d1d229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "45b92297_880354b2",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8EmbedderGraphBuilder.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-31T20:53:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61189da7_87324ad0",
+      "revId": "e730310a9048d51f6545babb16ebcb6175d1d229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ab5cab7_540a621e",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8EmbedderGraphBuilder.h",
         "patchSetId": 12
@@ -67,6 +121,24 @@
       "revId": "e730310a9048d51f6545babb16ebcb6175d1d229",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad8a435c_f4859459",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8EmbedderGraphBuilder.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2018-01-31T20:53:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ab5cab7_540a621e",
+      "revId": "e730310a9048d51f6545babb16ebcb6175d1d229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
