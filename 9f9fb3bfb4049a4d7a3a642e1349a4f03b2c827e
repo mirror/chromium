@@ -22,6 +22,30 @@
       "revId": "9f9fb3bfb4049a4d7a3a642e1349a4f03b2c827e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "305dc45d_9cd7a7a1",
+        "filename": "base/android/jni_generator/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2018-01-31T21:50:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69efe419_b37f744a",
+      "range": {
+        "startLine": 1,
+        "startChar": 14,
+        "endLine": 1,
+        "endChar": 15
+      },
+      "revId": "9f9fb3bfb4049a4d7a3a642e1349a4f03b2c827e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
