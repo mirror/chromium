@@ -88,6 +88,8 @@ public class CustomTabsConnection {
     @VisibleForTesting
     static final String PAGE_LOAD_METRICS_CALLBACK = "NavigationMetrics";
     static final String BOTTOM_BAR_SCROLL_STATE_CALLBACK = "onBottomBarScrollStateChanged";
+    @VisibleForTesting
+    static final String OPEN_IN_BROWSER_CALLBACK = "onOpenInBrowser";
 
     // For CustomTabs.SpeculationStatusOnStart, see tools/metrics/enums.xml. Append only.
     private static final int SPECULATION_STATUS_ON_START_ALLOWED = 0;
@@ -1015,13 +1017,8 @@ public class CustomTabsConnection {
 
         Bundle args = new Bundle();
         args.putBoolean("hidden", hidden);
-        try {
-            callback.extraCallback(BOTTOM_BAR_SCROLL_STATE_CALLBACK, args);
-        } catch (Exception e) {
-            // Pokemon exception handling, see below and crbug.com/517023.
-            return;
-        }
-        if (mLogRequests) {
+
+        if (safeExtraCallback(callback, BOTTOM_BAR_SCROLL_STATE_CALLBACK, args) && mLogRequests) {
             logCallback("extraCallback(" + BOTTOM_BAR_SCROLL_STATE_CALLBACK + ")", hidden);
         }
     }
@@ -1111,13 +1108,38 @@ public class CustomTabsConnection {
         CustomTabsCallback callback = mClientManager.getCallbackForSession(session);
         if (callback == null) return false;
 
+        if (safeExtraCallback(callback, PAGE_LOAD_METRICS_CALLBACK, args)) {
+            logPageLoadMetricsCallback(args);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Notifies the application that the user has selected to open the page in their browser.
+     * @param session Session identifier.
+     * @return true if success. To protect Chrome exceptions in the client application are swallowed
+     *     and false is returned.
+     */
+    boolean notifyOpenInBrowser(CustomTabsSessionToken session) {
+        CustomTabsCallback callback = mClientManager.getCallbackForSession(session);
+        if (callback == null) return false;
+
+        return safeExtraCallback(callback, OPEN_IN_BROWSER_CALLBACK,
+                getExtrasBundleForNavigationEventForSession(session));
+    }
+
+    /**
+     * Wraps calling extraCallback in a try/catch so exceptions thrown by the host app don't crash
+     * Chrome. See https://crbug.com/517023.
+     */
+    private boolean safeExtraCallback(CustomTabsCallback callback, String callbackName,
+            Bundle args) {
         try {
-            callback.extraCallback(PAGE_LOAD_METRICS_CALLBACK, args);
+            callback.extraCallback(callbackName, args);
         } catch (Exception e) {
-            // Pokemon exception handling, see above and crbug.com/517023.
             return false;
         }
-        logPageLoadMetricsCallback(args);
         return true;
     }
 
