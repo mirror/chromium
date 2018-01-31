@@ -212,7 +212,10 @@ group("gn_all") {
   } else if (is_ios) {
     deps += [ "//ios:all" ]
   } else if (is_fuchsia) {
-    deps += [ ":d8_fuchsia" ]
+    deps += [
+      ":d8_fuchsia",
+      "//components/cronet/native:cronet_native_impl",
+    ]
   }
 
   deps += root_extra_deps
