@@ -174,6 +174,11 @@ class SessionService : public sessions::BaseSessionServiceDelegate,
                                         const SessionID& tab_id,
                                         int count);
 
+  // Invoked when the NavigationController has deleted entries because of a
+  // history deletion.
+  void TabNavigationPathEntriesDeleted(const SessionID& window_id,
+                                       const SessionID& tab_id);
+
   // Updates the navigation entry for the specified tab.
   void UpdateTabNavigation(
       const SessionID& window_id,
