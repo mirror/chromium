@@ -16,6 +16,24 @@
       "revId": "0bdd9967d0d61804268c7c51dcc50e4cce5f735e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6569279b_cd392667",
+        "filename": "services/network/public/cpp/cors/cors.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2018-01-31T11:05:57Z",
+      "side": 1,
+      "message": "I\u0027m not sure if I understand your point correctly. But let me explain.\n\nFor Network Service, this is not needed at all. I believe only requests for network schemes arrive at Network Service, and we do not need to care for chrome/content-specific schemes in Network Service.\n\nOn the other hand, code in public/cpp are still reused even outside Network Service, and need to do something special for chrome/content-specific schemes. This is an interface to allow registering such chrome/content-specific schemes to the shared code, CORSURLLoader.\n\nSo, this registration method should not be called in network service, and this and getter below should be removed when legacy code path is removed.",
+      "parentUuid": "85bcc0e7_be556293",
+      "revId": "0bdd9967d0d61804268c7c51dcc50e4cce5f735e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
