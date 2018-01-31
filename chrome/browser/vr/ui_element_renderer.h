@@ -10,11 +10,12 @@
 
 #include "base/macros.h"
 #include "chrome/browser/vr/controller_mesh.h"
-#include "chrome/browser/vr/elements/controller.h"
 #include "chrome/browser/vr/elements/environment/background.h"
 #include "chrome/browser/vr/elements/environment/grid.h"
 #include "chrome/browser/vr/elements/environment/stars.h"
+#include "chrome/browser/vr/elements/gltf_controller.h"
 #include "chrome/browser/vr/elements/laser.h"
+#include "chrome/browser/vr/elements/procedural_controller.h"
 #include "chrome/browser/vr/elements/reticle.h"
 #include "chrome/browser/vr/elements/shadow.h"
 #include "chrome/browser/vr/macros.h"
@@ -87,6 +88,10 @@ class UiElementRenderer {
       float opacity,
       const gfx::Transform& model_view_proj_matrix);
 
+  VIRTUAL_FOR_MOCKS void DrawProceduralController(
+      float opacity,
+      const gfx::Transform& model_view_proj_matrix);
+
   VIRTUAL_FOR_MOCKS void DrawLaser(
       float opacity,
       const gfx::Transform& model_view_proj_matrix);
@@ -140,7 +145,9 @@ class UiElementRenderer {
   std::unique_ptr<WebVrRenderer> webvr_renderer_;
   std::unique_ptr<Reticle::Renderer> reticle_renderer_;
   std::unique_ptr<Laser::Renderer> laser_renderer_;
-  std::unique_ptr<Controller::Renderer> controller_renderer_;
+  std::unique_ptr<GltfController::Renderer> gltf_controller_renderer_;
+  std::unique_ptr<ProceduralController::Renderer>
+      procedural_controller_renderer_;
   std::unique_ptr<Grid::Renderer> gradient_grid_renderer_;
   std::unique_ptr<Shadow::Renderer> shadow_renderer_;
   std::unique_ptr<Stars::Renderer> stars_renderer_;

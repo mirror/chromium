@@ -121,6 +121,8 @@ struct ColorScheme {
   ButtonColors snackbar_button_colors;
 
   SkColor controller_label_callout;
+  SkColor controller_button;
+  SkColor controller_button_down;
 
   // These are used for blending between colors that are available only in
   // shaders. They are, as you might expect, one for a given mode, but zero
