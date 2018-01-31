@@ -34,6 +34,24 @@
       "revId": "5b7f1d69f1eb334e64dfff4b42fde77e37e98b80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b7e1f88_cdbf6106",
+        "filename": "ash/wm/workspace/backdrop_controller.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-31T17:58:05Z",
+      "side": 0,
+      "message": "It\u0027s not \"different\". It\u0027s the condition to tell this code when the backdrop controller should create a backdrop. It shouldn\u0027t affect split view mode as they aren\u0027t fullscreen nor maximized, am I wrong?\n\nAnd for accessibility, we may want to keep this behavior, with some tweak to make switching possible. Please contact accessibility PM/TL.",
+      "parentUuid": "56c04746_c94e50b9",
+      "revId": "5b7f1d69f1eb334e64dfff4b42fde77e37e98b80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
