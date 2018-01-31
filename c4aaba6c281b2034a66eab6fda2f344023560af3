@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e87d70a6_71d8956a",
+        "filename": "chrome/browser/ui/views/dropdown_bar_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-31T22:08:16Z",
+      "side": 1,
+      "message": "Doesn\u0027t this mean that if you hit esc, and the bar is half-closed, and then you hit ctrl-f, it will begin animating from the \"fully closed\" state (so appear discontiguous)?\n\nSeems like in an ideal world the animation would just reverse, as with the bookmark bar hiding/showing.\n\nI would expect we could have accomplished that by simply changing the bottom of the next conditional to be:\n\n  } else {\n    if (!was_visible)\n      animation_-\u003eReset();\n    animation_-\u003eShow();\n  }\n\nThough honestly, I\u0027m not sure when we would be in a case where the animation state and the overall visibility are out of sync.  So I don\u0027t know why the conditional Reset() call is even needed.  Maybe this could just be:\n\n  } else {\n    animation_-\u003eShow();\n  }\n\nDid you try things along these lines already?",
+      "revId": "c4aaba6c281b2034a66eab6fda2f344023560af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
