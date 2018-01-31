@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c021fd7e_3a6efb33",
+        "filename": "third_party/WebKit/Source/platform/WebPointerEvent.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2018-01-31T15:36:17Z",
+      "side": 1,
+      "message": "I now realized that supports_hover is definitely a bad name. I should have called it hovering and that indicates whether the pointer is hovering or not. Back then we agreed when something is hovering it does not scroll on drag. Come to think of it, I believe it is better to rename scroll_capable as well and just keep the name hovering for the rest of the pipeline too. Do you agree?",
+      "parentUuid": "705dce45_1b2cb2a8",
+      "revId": "a670fe9e5e3d26a0ef073d1b0c62d6448d51ff73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c209fdf5_ec1e6d33",
         "filename": "third_party/WebKit/public/platform/WebTouchEvent.h",
         "patchSetId": 5
