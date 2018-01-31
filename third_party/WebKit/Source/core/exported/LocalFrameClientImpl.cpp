@@ -1131,6 +1131,13 @@ void LocalFrameClientImpl::ScrollRectToVisibleInParentFrame(
                                                          params);
 }
 
+void LocalFrameClientImpl::ApplyZoomForRecursiveScroll(
+    const IntRect& rect,
+    const WebScrollIntoViewParams& params) {
+  DCHECK(web_frame_->GetFrame()->IsMainFrame());
+  web_frame_->ViewImpl()->ApplyZoomForRecursiveScroll(rect, params);
+}
+
 void LocalFrameClientImpl::SetVirtualTimePauser(
     WebScopedVirtualTimePauser virtual_time_pauser) {
   virtual_time_pauser_ = std::move(virtual_time_pauser);

@@ -117,6 +117,7 @@ class WebFrameWidgetImpl final : public WebFrameWidgetBase,
   void ClearBaseBackgroundColorOverride() override;
   void SetBaseBackgroundColor(WebColor) override;
   WebInputMethodController* GetActiveWebInputMethodController() const override;
+  bool ScrollFocusedEditableElementIntoView() override;
 
   Frame* FocusedCoreFrame() const;
 
@@ -186,6 +187,15 @@ class WebFrameWidgetImpl final : public WebFrameWidgetBase,
   LocalFrame* FocusedLocalFrameAvailableForIme() const;
 
   CompositorMutatorImpl& Mutator();
+
+  // Finds the parameters required for scrolling a focused editable element into
+  // view. This only makes sense if |element| is editable and focused because
+  // |rect_to_scroll| and |params| depend on both element bounds and caret
+  // bounds.
+  void GetScrollParamsForFocusedEditableElement(
+      const Element& element,
+      LayoutRect* rect_to_scroll,
+      WebScrollIntoViewParams* params);
 
   WebWidgetClient* client_;
 
