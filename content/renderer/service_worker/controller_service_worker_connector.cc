@@ -74,7 +74,7 @@ void ControllerServiceWorkerConnector::OnControllerConnectionClosed() {
 
 void ControllerServiceWorkerConnector::ResetControllerConnection(
     mojom::ControllerServiceWorkerPtr controller_ptr) {
-  DCHECK_NE(State::kNoContainerHost, state_);
+  // DCHECK_NE(State::kNoContainerHost, state_);
   controller_service_worker_ = std::move(controller_ptr);
   if (controller_service_worker_) {
     state_ = State::kConnected;

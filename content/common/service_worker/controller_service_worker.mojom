@@ -52,7 +52,7 @@ interface ControllerServiceWorker {
 // information from the browser process to the renderer process on navigation
 // commit, and also as a parameter of ServiceWorkerContainer.SetController().
 struct ControllerServiceWorkerInfo {
-  // S13nServiceWorker:
+  // S13nServiceWorker/NavigationMojoResponse:
   // Non-null if the controller has fetch event handlers.
   ControllerServiceWorker? endpoint;
 
