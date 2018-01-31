@@ -16,6 +16,24 @@
       "revId": "302cfcc0942776fcda8fea999c25999ccee418a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db873796_f92c5408",
+        "filename": "third_party/WebKit/Source/core/frame/RotationViewportAnchor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-31T19:58:49Z",
+      "side": 1,
+      "message": "Yes, BoundingBox() returned a box in absolute coordinates. Most of the code here was assuming that was document coordinates which it\u0027s not in RLS. This function was the only one that actually did want absolute (since it does a hit test on this point) so I converted to document above (since it\u0027s used again below) and then to absolute here.\n\nSo yes, this and the AbsoluteToDocument in GetInnerOrigin are necessary to fix the issue. The other changes are just code health improvements.",
+      "parentUuid": "c60daa80_6ba04506",
+      "revId": "302cfcc0942776fcda8fea999c25999ccee418a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
