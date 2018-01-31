@@ -124,6 +124,14 @@ bool SharedMemory::Unmap() {
   return true;
 }
 
+void* SharedMemory::TakeMemory() {
+  void* memory = memory_;
+  memory_ = nullptr;
+  mapped_id_ = UnguessableToken();
+  mapped_size_ = 0;
+  return memory;
+}
+
 void SharedMemory::Close() {
   if (shm_.IsValid()) {
     shm_.Close();
