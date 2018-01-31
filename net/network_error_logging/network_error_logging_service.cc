@@ -11,6 +11,7 @@
 #include "base/json/json_reader.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/rand_util.h"
 #include "base/time/default_tick_clock.h"
 #include "base/time/tick_clock.h"
@@ -106,6 +107,108 @@ bool GetTypeFromNetError(Error error, std::string* type_out) {
   return false;
 }
 
+enum class HeaderOutcome {
+  DISCARDED_NO_NETWORK_ERROR_LOGGING_SERVICE = 0,
+  DISCARDED_INVALID_SSL_INFO = 1,
+  DISCARDED_CERT_STATUS_ERROR = 2,
+
+  DISCARDED_INSECURE_ORIGIN = 3,
+
+  DISCARDED_INVALID_JSON = 4,
+  DISCARDED_NOT_DICTIONARY = 5,
+  DISCARDED_TTL_MISSING = 6,
+  DISCARDED_TTL_NOT_INTEGER = 7,
+  DISCARDED_TTL_NEGATIVE = 8,
+  DISCARDED_REPORT_TO_MISSING = 9,
+  DISCARDED_REPORT_TO_NOT_STRING = 10,
+
+  REMOVED = 11,
+  SET = 12,
+
+  MAX
+};
+
+void RecordHeaderOutcome(HeaderOutcome outcome) {
+  UMA_HISTOGRAM_ENUMERATION("NetworkErrorLogging.HeaderOutcome", outcome,
+                            HeaderOutcome::MAX);
+}
+
+HeaderOutcome ParseHeader(
+    const std::string& json_value,
+    base::TickClock* tick_clock,
+    NetworkErrorLoggingService::OriginPolicy* policy_out) {
+  DCHECK(policy_out);
+
+  std::unique_ptr<base::Value> value = base::JSONReader::Read(json_value);
+  if (!value)
+    return HeaderOutcome::DISCARDED_INVALID_JSON;
+
+  const base::DictionaryValue* dict = nullptr;
+  if (!value->GetAsDictionary(&dict))
+    return HeaderOutcome::DISCARDED_NOT_DICTIONARY;
+
+  if (!dict->HasKey(kMaxAgeKey))
+    return HeaderOutcome::DISCARDED_TTL_MISSING;
+  int max_age_sec;
+  if (!dict->GetInteger(kMaxAgeKey, &max_age_sec) || max_age_sec < 0)
+    return HeaderOutcome::DISCARDED_TTL_NOT_INTEGER;
+  if (max_age_sec < 0)
+    return HeaderOutcome::DISCARDED_TTL_NEGATIVE;
+
+  if (!dict->HasKey(kReportToKey))
+    return HeaderOutcome::DISCARDED_REPORT_TO_MISSING;
+  std::string report_to;
+  if (!dict->GetString(kReportToKey, &report_to) && max_age_sec > 0)
+    return HeaderOutcome::DISCARDED_REPORT_TO_NOT_STRING;
+
+  bool include_subdomains = false;
+  // includeSubdomains is optional and defaults to false, so it's okay if
+  // GetBoolean fails.
+  dict->GetBoolean(kIncludeSubdomainsKey, &include_subdomains);
+
+  double success_fraction = 0.0;
+  // success-fraction is optional and defaults to 0.0, so it's okay if
+  // GetDouble fails.
+  dict->GetDouble(kSuccessFractionKey, &success_fraction);
+
+  double failure_fraction = 1.0;
+  // failure-fraction is optional and defaults to 1.0, so it's okay if
+  // GetDouble fails.
+  dict->GetDouble(kFailureFractionKey, &failure_fraction);
+
+  policy_out->report_to = report_to;
+  policy_out->include_subdomains = include_subdomains;
+  policy_out->success_fraction = success_fraction;
+  policy_out->failure_fraction = failure_fraction;
+  if (max_age_sec > 0) {
+    policy_out->expires =
+        tick_clock->NowTicks() + base::TimeDelta::FromSeconds(max_age_sec);
+    return HeaderOutcome::SET;
+  } else {
+    policy_out->expires = base::TimeTicks();
+    return HeaderOutcome::REMOVED;
+  }
+}
+
+enum class RequestOutcome {
+  DISCARDED_NO_NETWORK_ERROR_LOGGING_SERVICE = 0,
+
+  DISCARDED_NO_REPORTING_SERVICE = 1,
+  DISCARDED_REPORTING_UPLOAD = 2,
+  DISCARDED_INSECURE_ORIGIN = 3,
+  DISCARDED_NO_ORIGIN_POLICY = 4,
+  DISCARDED_UNMAPPED_ERROR = 5,
+
+  QUEUED = 6,
+
+  MAX
+};
+
+void RecordRequestOutcome(RequestOutcome outcome) {
+  UMA_HISTOGRAM_ENUMERATION("NetworkErrorLogging.RequestOutcome", outcome,
+                            RequestOutcome::MAX);
+}
+
 }  // namespace
 
 // static:
@@ -129,6 +232,30 @@ NetworkErrorLoggingService::Create() {
   return base::WrapUnique(new NetworkErrorLoggingService());
 }
 
+// static
+void NetworkErrorLoggingService::
+    RecordHeaderDiscardedForNoNetworkErrorLoggingService() {
+  RecordHeaderOutcome(
+      HeaderOutcome::DISCARDED_NO_NETWORK_ERROR_LOGGING_SERVICE);
+}
+
+// static
+void NetworkErrorLoggingService::RecordHeaderDiscardedForInvalidSSLInfo() {
+  RecordHeaderOutcome(HeaderOutcome::DISCARDED_INVALID_SSL_INFO);
+}
+
+// static
+void NetworkErrorLoggingService::RecordHeaderDiscardedForCertStatusError() {
+  RecordHeaderOutcome(HeaderOutcome::DISCARDED_CERT_STATUS_ERROR);
+}
+
+// static
+void NetworkErrorLoggingService::
+    RecordRequestDiscardedForNoNetworkErrorLoggingService() {
+  RecordRequestOutcome(
+      RequestOutcome::DISCARDED_NO_NETWORK_ERROR_LOGGING_SERVICE);
+}
+
 NetworkErrorLoggingService::~NetworkErrorLoggingService() = default;
 
 void NetworkErrorLoggingService::SetReportingService(
@@ -144,7 +271,10 @@ void NetworkErrorLoggingService::OnHeader(const url::Origin& origin,
     return;
 
   OriginPolicy policy;
-  if (!ParseHeader(value, &policy))
+  HeaderOutcome outcome = ParseHeader(value, tick_clock_, &policy);
+  RecordHeaderOutcome(outcome);
+
+  if (outcome != HeaderOutcome::REMOVED && outcome != HeaderOutcome::SET)
     return;
 
   PolicyMap::iterator it = policies_.find(origin);
@@ -153,45 +283,58 @@ void NetworkErrorLoggingService::OnHeader(const url::Origin& origin,
     policies_.erase(it);
   }
 
-  if (policy.expires.is_null())
-    return;
-
-  auto inserted = policies_.insert(std::make_pair(origin, policy));
-  DCHECK(inserted.second);
-  MaybeAddWildcardPolicy(origin, &inserted.first->second);
+  if (outcome == HeaderOutcome::SET) {
+    auto inserted = policies_.insert(std::make_pair(origin, policy));
+    DCHECK(inserted.second);
+    MaybeAddWildcardPolicy(origin, &inserted.first->second);
+  }
 }
 
 void NetworkErrorLoggingService::OnNetworkError(const ErrorDetails& details) {
-  if (!reporting_service_)
+  if (!reporting_service_) {
+    RecordRequestOutcome(RequestOutcome::DISCARDED_NO_REPORTING_SERVICE);
     return;
+  }
 
   // It is expected for Reporting uploads to terminate with ERR_ABORTED, since
   // the ReportingUploader cancels them after receiving the response code and
   // headers.
-  if (details.is_reporting_upload && details.type == ERR_ABORTED)
+  if (details.is_reporting_upload && details.type == ERR_ABORTED) {
+    RecordRequestOutcome(RequestOutcome::DISCARDED_REPORTING_UPLOAD);
     return;
+  }
 
   // NEL is only available to secure origins, so ignore network errors from
   // insecure origins. (The check in OnHeader prevents insecure origins from
   // setting policies, but this check is needed to ensure that insecure origins
   // can't match wildcard policies from secure origins.)
-  if (!details.uri.SchemeIsCryptographic())
+  //
+  // TODO(juliatuttle): Consider moving this check to
+  // URLRequest::MaybeGenerateNetworkErrorLoggingReport().
+  if (!details.uri.SchemeIsCryptographic()) {
+    RecordRequestOutcome(RequestOutcome::DISCARDED_INSECURE_ORIGIN);
     return;
+  }
 
   const OriginPolicy* policy =
       FindPolicyForOrigin(url::Origin::Create(details.uri));
-  if (!policy)
+  if (!policy) {
+    RecordRequestOutcome(RequestOutcome::DISCARDED_NO_ORIGIN_POLICY);
     return;
+  }
 
   std::string type_string;
-  if (!GetTypeFromNetError(details.type, &type_string))
+  if (!GetTypeFromNetError(details.type, &type_string)) {
+    RecordRequestOutcome(RequestOutcome::DISCARDED_UNMAPPED_ERROR);
     return;
+  }
 
   // TODO(dcreager): Report successful requests, too.
   double sampling_fraction = policy->failure_fraction;
   if (base::RandDouble() >= sampling_fraction)
     return;
 
+  RecordRequestOutcome(RequestOutcome::QUEUED);
   reporting_service_->QueueReport(
       details.uri, policy->report_to, kReportType,
       CreateReportBody(type_string, sampling_fraction, details));
@@ -228,55 +371,6 @@ void NetworkErrorLoggingService::SetTickClockForTesting(
 NetworkErrorLoggingService::NetworkErrorLoggingService()
     : tick_clock_(base::DefaultTickClock::GetInstance()),
       reporting_service_(nullptr) {}
-
-bool NetworkErrorLoggingService::ParseHeader(const std::string& json_value,
-                                             OriginPolicy* policy_out) {
-  DCHECK(policy_out);
-
-  std::unique_ptr<base::Value> value = base::JSONReader::Read(json_value);
-  if (!value)
-    return false;
-
-  const base::DictionaryValue* dict = nullptr;
-  if (!value->GetAsDictionary(&dict))
-    return false;
-
-  int max_age_sec;
-  if (!dict->GetInteger(kMaxAgeKey, &max_age_sec) || max_age_sec < 0)
-    return false;
-
-  std::string report_to;
-  if (!dict->GetString(kReportToKey, &report_to) && max_age_sec > 0)
-    return false;
-
-  bool include_subdomains = false;
-  // includeSubdomains is optional and defaults to false, so it's okay if
-  // GetBoolean fails.
-  dict->GetBoolean(kIncludeSubdomainsKey, &include_subdomains);
-
-  double success_fraction = 0.0;
-  // success-fraction is optional and defaults to 0.0, so it's okay if
-  // GetDouble fails.
-  dict->GetDouble(kSuccessFractionKey, &success_fraction);
-
-  double failure_fraction = 1.0;
-  // failure-fraction is optional and defaults to 1.0, so it's okay if
-  // GetDouble fails.
-  dict->GetDouble(kFailureFractionKey, &failure_fraction);
-
-  policy_out->report_to = report_to;
-  if (max_age_sec > 0) {
-    policy_out->expires =
-        tick_clock_->NowTicks() + base::TimeDelta::FromSeconds(max_age_sec);
-  } else {
-    policy_out->expires = base::TimeTicks();
-  }
-  policy_out->include_subdomains = include_subdomains;
-  policy_out->success_fraction = success_fraction;
-  policy_out->failure_fraction = failure_fraction;
-
-  return true;
-}
 
 const NetworkErrorLoggingService::OriginPolicy*
 NetworkErrorLoggingService::FindPolicyForOrigin(

@@ -76,6 +76,7 @@
 #endif
 
 #if BUILDFLAG(ENABLE_REPORTING)
+#include "net/network_error_logging/network_error_logging_service.h"
 #include "net/reporting/reporting_header_parser.h"
 #include "net/reporting/reporting_service.h"
 #include "net/url_request/network_error_logging_delegate.h"
@@ -854,14 +855,23 @@ void URLRequestHttpJob::ProcessNetworkErrorLoggingHeader() {
 
   NetworkErrorLoggingDelegate* delegate =
       request_->context()->network_error_logging_delegate();
-  if (!delegate)
+  if (!delegate) {
+    NetworkErrorLoggingService::
+        RecordHeaderDiscardedForNoNetworkErrorLoggingService();
     return;
+  }
 
   // Only accept Report-To headers on HTTPS connections that have no
   // certificate errors.
   const SSLInfo& ssl_info = response_info_->ssl_info;
-  if (!ssl_info.is_valid() || IsCertStatusError(ssl_info.cert_status))
+  if (!ssl_info.is_valid()) {
+    NetworkErrorLoggingService::RecordHeaderDiscardedForInvalidSSLInfo();
     return;
+  }
+  if (IsCertStatusError(ssl_info.cert_status)) {
+    NetworkErrorLoggingService::RecordHeaderDiscardedForCertStatusError();
+    return;
+  }
 
   delegate->OnHeader(url::Origin::Create(request_info_.url), value);
 }

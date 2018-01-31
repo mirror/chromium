@@ -39,6 +39,19 @@ namespace net {
 class NET_EXPORT NetworkErrorLoggingService
     : public NetworkErrorLoggingDelegate {
  public:
+  // NEL Policy set by an origin. Exposed for static functions in .cc.
+  // TODO(juliatuttle): Split Service/ServiceImpl so this gets less messy.
+  struct OriginPolicy {
+    // Reporting API endpoint group to which reports should be sent.
+    std::string report_to;
+
+    base::TimeTicks expires;
+
+    double success_fraction;
+    double failure_fraction;
+    bool include_subdomains;
+  };
+
   static const char kReportType[];
 
   // Keys for data included in report bodies. Exposed for tests.
@@ -58,6 +71,12 @@ class NET_EXPORT NetworkErrorLoggingService
   // base::FeatureList.
   static std::unique_ptr<NetworkErrorLoggingService> Create();
 
+  static void RecordHeaderDiscardedForNoNetworkErrorLoggingService();
+  static void RecordHeaderDiscardedForInvalidSSLInfo();
+  static void RecordHeaderDiscardedForCertStatusError();
+
+  static void RecordRequestDiscardedForNoNetworkErrorLoggingService();
+
   // NetworkErrorLoggingDelegate implementation:
 
   ~NetworkErrorLoggingService() override;
@@ -74,18 +93,6 @@ class NET_EXPORT NetworkErrorLoggingService
   void SetTickClockForTesting(base::TickClock* tick_clock);
 
  private:
-  // NEL Policy set by an origin.
-  struct OriginPolicy {
-    // Reporting API endpoint group to which reports should be sent.
-    std::string report_to;
-
-    base::TimeTicks expires;
-
-    double success_fraction;
-    double failure_fraction;
-    bool include_subdomains;
-  };
-
   // Map from origin to origin's (owned) policy.
   // Would be unordered_map, but url::Origin has no hash.
   using PolicyMap = std::map<url::Origin, OriginPolicy>;
@@ -104,9 +111,6 @@ class NET_EXPORT NetworkErrorLoggingService
       std::map<std::string, std::set<const OriginPolicy*>>;
 
   NetworkErrorLoggingService();
-
-  // Would be const, but base::TickClock::NowTicks isn't.
-  bool ParseHeader(const std::string& json_value, OriginPolicy* policy_out);
 
   const OriginPolicy* FindPolicyForOrigin(const url::Origin& origin) const;
   const OriginPolicy* FindWildcardPolicyForDomain(

@@ -31026,6 +31026,31 @@ Called by update_net_trust_anchors.py.-->
   <int value="1" label="User Disconnect"/>
 </enum>
 
+<enum name="NetworkErrorLogging.HeaderOutcome">
+  <int value="0" label="Discarded: no NetworkErrorLoggingService"/>
+  <int value="1" label="Discarded: invalid SSLInfo"/>
+  <int value="2" label="Discarded: cert status error"/>
+  <int value="3" label="Discarded: insecure origin"/>
+  <int value="4" label="Discarded: invalid JSON"/>
+  <int value="5" label="Discarded: not a dictionary"/>
+  <int value="6" label="Discarded: TTL missing"/>
+  <int value="7" label="Discarded: TTL not an integer"/>
+  <int value="8" label="Discarded: TTL negative"/>
+  <int value="9" label="Discarded: report-to missing"/>
+  <int value="10" label="Discarded: report-to not a string"/>
+  <int value="11" label="Removed (max-age = 0)"/>
+  <int value="12" label="Set (max-age &gt; 0)"/>
+</enum>
+
+<enum name="NetworkErrorLogging.RequestOutcome">
+  <int value="0" label="Discarded: no NetworkErrorLoggingService"/>
+  <int value="1" label="Discarded: no ReportingService"/>
+  <int value="2" label="Discarded: Reporting upload"/>
+  <int value="3" label="Discarded: insecure origin"/>
+  <int value="4" label="Discarded: no origin policy"/>
+  <int value="5" label="Discarded: unmapped error"/>
+</enum>
+
 <enum name="NetworkErrorType">
   <int value="0" label="Unknown"/>
   <int value="1" label="Portal"/>

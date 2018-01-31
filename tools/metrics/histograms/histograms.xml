@@ -51606,6 +51606,24 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="NetworkErrorLogging.HeaderOutcome"
+    enum="NetworkErrorLogging.HeaderOutcome">
+  <owner>juliatuttle@chromium.org</owner>
+  <summary>
+    When Network Error Logging receives a &quot;NEL:&quot; header, what happens
+    to it.
+  </summary>
+</histogram>
+
+<histogram name="NetworkErrorLogging.RequestOutcome"
+    enum="NetworkErrorLogging.RequestOutcome">
+  <owner>juliatuttle@chromium.org</owner>
+  <summary>
+    When Network Error Logging observes a completed request that might generate
+    a report, what happens to it.
+  </summary>
+</histogram>
+
 <histogram name="Networks.RememberedShared">
   <owner>stevenjb@chromium.org</owner>
   <summary>
