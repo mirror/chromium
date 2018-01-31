@@ -2,14 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "build/build_config.h"
-
-#if defined(ARCH_CPU_X86_FAMILY) && !defined(OS_MACOSX)
-
-#include "platform/wtf/Assertions.h"
-
 #include <algorithm>
 #include <cmath>
+
+#include "platform/wtf/Assertions.h"
 
 namespace blink {
 namespace VectorMath {
@@ -280,5 +276,3 @@ void Zvmul(const float* real1p,
 }  // namespace VECTOR_MATH_SIMD_NAMESPACE_NAME
 }  // namespace VectorMath
 }  // namespace blink
-
-#endif  // defined(ARCH_CPU_X86_FAMILY) && !defined(OS_MACOSX)
