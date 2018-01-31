@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c2ebb51_4b8c6ba6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2018-01-31T17:15:11Z",
+      "side": 1,
+      "message": "- Mention AES and RC4\n- Be more specific that infrastructure means Active Directory server environment",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 33
+      },
+      "revId": "6a9497a9b9ab7193c9056481646bce6809ead550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df9ad2aa_ab84b81b",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 4275,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2018-01-31T17:15:11Z",
+      "side": 1,
+      "message": "types? E.g. you can select \u0027All\u0027, which would mean \"you\u0027ve selected all encryption types\".",
+      "range": {
+        "startLine": 4275,
+        "startChar": 22,
+        "endLine": 4275,
+        "endChar": 26
+      },
+      "revId": "6a9497a9b9ab7193c9056481646bce6809ead550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9717493f_c38404dc",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 4320,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2018-01-31T17:15:11Z",
+      "side": 1,
+      "message": "the specified Kerberos encryption types",
+      "range": {
+        "startLine": 4320,
+        "startChar": 74,
+        "endLine": 4320,
+        "endChar": 108
+      },
+      "revId": "6a9497a9b9ab7193c9056481646bce6809ead550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d3efb29_d4e1faa0",
+        "filename": "chrome/browser/ui/webui/chromeos/login/enrollment_screen_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2018-01-31T17:15:11Z",
+      "side": 1,
+      "message": "Can you move the logic to parse encryption_type?",
+      "range": {
+        "startLine": 590,
+        "startChar": 1,
+        "endLine": 590,
+        "endChar": 35
+      },
+      "revId": "6a9497a9b9ab7193c9056481646bce6809ead550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3861a6e8_66a64bc0",
+        "filename": "chrome/browser/ui/webui/chromeos/login/enrollment_screen_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2018-01-31T17:15:11Z",
+      "side": 1,
+      "message": "Would be nicer to strongly type this, but I assume this is called by JS directly?",
+      "range": {
+        "startLine": 88,
+        "startChar": 29,
+        "endLine": 88,
+        "endChar": 47
+      },
+      "revId": "6a9497a9b9ab7193c9056481646bce6809ead550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cae5cbb_5e4b927b",
+        "filename": "chrome/browser/ui/webui/chromeos/login/enrollment_screen_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2018-01-31T17:15:11Z",
+      "side": 1,
+      "message": "Use encryption_types consistently?",
+      "range": {
+        "startLine": 88,
+        "startChar": 48,
+        "endLine": 88,
+        "endChar": 63
+      },
+      "revId": "6a9497a9b9ab7193c9056481646bce6809ead550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e2bf1bc_db5cc6b6",
+        "filename": "chromeos/dbus/fake_auth_policy_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2018-01-31T17:15:11Z",
+      "side": 1,
+      "message": "So your fake server only supports AES encryption? Since this is more a \u0027stub\u0027 behavior than a \u0027fake\u0027, maybe add a comment in this case?",
+      "range": {
+        "startLine": 111,
+        "startChar": 1,
+        "endLine": 111,
+        "endChar": 67
+      },
+      "revId": "6a9497a9b9ab7193c9056481646bce6809ead550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35729494_0975bcf8",
+        "filename": "chromeos/dbus/fake_auth_policy_client_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2018-01-31T17:15:11Z",
+      "side": 1,
+      "message": "Update",
+      "range": {
+        "startLine": 202,
+        "startChar": 3,
+        "endLine": 202,
+        "endChar": 27
+      },
+      "revId": "6a9497a9b9ab7193c9056481646bce6809ead550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82e91825_80a10fdd",
+        "filename": "chromeos/login/auth/authpolicy_login_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2018-01-31T17:15:11Z",
+      "side": 1,
+      "message": "size_t? (return type of arraysize)",
+      "range": {
+        "startLine": 122,
+        "startChar": 7,
+        "endLine": 122,
+        "endChar": 20
+      },
+      "revId": "6a9497a9b9ab7193c9056481646bce6809ead550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a39e7ec_6fa872b2",
+        "filename": "chromeos/login/auth/authpolicy_login_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2018-01-31T17:15:11Z",
+      "side": 1,
+      "message": "Unnecessary since authpolicy::KerberosEncryptionTypes is not an enum class?",
+      "range": {
+        "startLine": 125,
+        "startChar": 17,
+        "endLine": 125,
+        "endChar": 34
+      },
+      "revId": "6a9497a9b9ab7193c9056481646bce6809ead550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bfd76a6_9e8d57f4",
+        "filename": "chromeos/login/auth/authpolicy_login_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2018-01-31T17:15:11Z",
+      "side": 1,
+      "message": "This logic should be somewhere else (when it\u0027s coming from UI?). AuthPolicyLoginHelper shouldn\u0027t have to know how the encryption types are encoded.",
+      "range": {
+        "startLine": 158,
+        "startChar": 0,
+        "endLine": 161,
+        "endChar": 41
+      },
+      "revId": "6a9497a9b9ab7193c9056481646bce6809ead550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
