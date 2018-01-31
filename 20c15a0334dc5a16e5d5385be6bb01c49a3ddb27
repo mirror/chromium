@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16c8a466_50473ac0",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathImpl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2018-01-31T17:14:02Z",
+      "side": 1,
+      "message": "Really sorry about this that I didn\u0027t see this before, but this seems different from how Vmaxmgv behaved before.\n\nI checked a version from 3 months ago, and *max_p was assigned source_max, not max(*max_p, source_max).",
+      "revId": "20c15a0334dc5a16e5d5385be6bb01c49a3ddb27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
