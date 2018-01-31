@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee9b6d47_b66797fc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2018-01-31T03:02:20Z",
+      "side": 1,
+      "message": "Reference to spec link here please?",
+      "revId": "22dcd3ee76097db00ca60f05ba687a82b3f62c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
