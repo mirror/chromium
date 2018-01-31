@@ -76,8 +76,8 @@ const HCI_CONNECTION_TIMEOUT = 0x0008;
 
 // GATT Error codes. Used for GATT operations responses.
 // BT 4.2 Vol 3 Part F 3.4.1.1 Error Response
-const GATT_SUCCESS        = 0x0000;
-const GATT_INVALID_HANDLE = 0x0001;
+const GATT_SUCCESS            = 0x0000;
+const GATT_INVALID_HANDLE     = 0x0001;
 
 // Bluetooth UUID constants:
 // Services:
@@ -616,7 +616,8 @@ function getUserDescriptionDescriptor() {
 function populateHealthThermometerFakes(fake_peripheral) {
   let fake_generic_access, fake_health_thermometer, fake_measurement_interval,
       fake_user_description, fake_cccd, fake_temperature_measurement,
-      fake_temperature_type;
+      fake_temperature_type, fake_blocklisted_service,
+      fake_exclude_reads_characteristic;
   return fake_peripheral.addFakeService({uuid: 'generic_access'})
     .then(_ => fake_generic_access = _)
     .then(() => fake_peripheral.addFakeService({
@@ -671,6 +672,49 @@ function getConnectedHealthThermometerDevice(options) {
     .then(_ => fakes = _)
     .then(() => device.gatt.connect())
     .then(() => Object.assign({device}, fakes));
+}
+
+// Returns an object containing a blocklisted exclude reads
+// BluetoothRemoteGATTCharacteristic and its corresponding
+// FakeRemoteGATTCharacteristic
+function getBlocklistExcludeReadsCharacteristic(
+    options = {filters: [{services: [blocklist_test_service_uuid]}]}) {
+  let device, service, fake_peripheral, fake_blocklist_service,
+      fake_blocklist_exclude_reads_characteristic;
+  return setUpPreconnectedDevice({
+    address: '09:09:09:09:09:09',
+    name: 'Blocklist Device',
+    knownServiceUUIDs: [blocklist_test_service_uuid],
+  })
+    .then(_ => fake_peripheral = _)
+    .then(() => fake_peripheral.setNextGATTConnectionResponse({
+      code: HCI_SUCCESS,
+    }))
+    .then(() => fake_peripheral.setNextGATTDiscoveryResponse({
+      code: HCI_SUCCESS,
+    }))
+    .then(() => fake_peripheral.addFakeService({
+      uuid: blocklist_test_service_uuid,
+    }))
+    .then(_ => fake_blocklist_service = _)
+    .then(() => fake_blocklist_service.addFakeCharacteristic({
+      uuid: blocklist_exclude_reads_characteristic_uuid,
+      properties: ['write'],
+    }))
+    .then(_ => fake_blocklist_exclude_reads_characteristic = _)
+    .then(() => fake_blocklist_exclude_reads_characteristic
+      .setNextWriteResponse(HCI_SUCCESS))
+    .then(() => requestDeviceWithTrustedClick(options))
+    .then(_ => device = _)
+    .then(() => device.gatt.connect())
+    .then(gatt => gatt.getPrimaryService(blocklist_test_service_uuid))
+    .then(_ => service = _)
+    .then(() => service.getCharacteristic(
+        blocklist_exclude_reads_characteristic_uuid))
+    .then(characteristic => Object.assign(
+        {device}, {service}, {characteristic}, {fake_peripheral},
+        {fake_blocklist_service},
+        {fake_blocklist_exclude_reads_characteristic}));
 }
 
 // Returns the same device and fake peripheral as getHealthThermometerDevice()
