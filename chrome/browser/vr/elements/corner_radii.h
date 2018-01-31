@@ -15,6 +15,11 @@ struct CornerRadii {
   float lower_left;
   float lower_right;
 
+  bool operator==(const CornerRadii& other) {
+    return upper_left == other.upper_left && upper_right == other.upper_right &&
+           lower_left == other.lower_left && lower_right == other.lower_right;
+  }
+
   bool IsZero() const {
     return upper_right == 0.0f && upper_left == 0.0f && lower_right == 0.0f &&
            lower_left == 0.0f;

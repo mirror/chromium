@@ -47,7 +47,12 @@ class ContentElement : public UiElement {
   void SetOverlayTextureLocation(UiElementRenderer::TextureLocation location);
   void SetProjectionMatrix(const gfx::Transform& matrix);
 
+  void AddScrim(std::unique_ptr<UiElement> scrim);
+  void AddRepositioningAffordance(std::unique_ptr<UiElement> element);
+
  private:
+  bool PrepareToDraw() override;
+
   ContentInputDelegate* delegate_ = nullptr;
   ScreenBoundsChangedCallback bounds_changed_callback_;
   unsigned int texture_id_ = 0;
@@ -59,6 +64,7 @@ class ContentElement : public UiElement {
   gfx::SizeF last_content_screen_bounds_;
   float last_content_aspect_ratio_ = 0.0f;
   gfx::Transform projection_matrix_;
+  std::set<int> scrim_ids_;
 
   DISALLOW_COPY_AND_ASSIGN(ContentElement);
 };

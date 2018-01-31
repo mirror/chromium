@@ -287,6 +287,9 @@ static constexpr float kRepositionButtonMaxOpacity = 1.0f;
 static constexpr float kRepositionButtonXOffset = kIndicatorGap;
 static constexpr float kRepositionButtonYOffset = 0.5f * kIndicatorGap;
 static constexpr int kRepositionButtonTransitionDurationMs = 750;
+static constexpr float kRepositionLabelWidth = 0.75f * kContentWidth;
+static constexpr float kRepositionLabelFontHeight = kControllerLabelFontHeight;
+static constexpr float kRepositionLabelFontScale = 1.5f;
 
 }  // namespace vr
 

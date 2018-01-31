@@ -190,4 +190,29 @@ bool ContentElement::OnBeginFrame(const base::TimeTicks& time,
   return false;
 }
 
+void ContentElement::AddScrim(std::unique_ptr<UiElement> scrim) {
+  scrim_ids_.insert(scrim->id());
+  AddChild(std::move(scrim));
+}
+
+bool ContentElement::PrepareToDraw() {
+  bool updated_child = false;
+  // Do not copy this code! Our layout system sizes parents based on children,
+  // but this is a rare case of the opposite. This may well conflict with other
+  // sizing/layout code if used elsewhere.
+  for (auto& child : children()) {
+    if (scrim_ids_.find(child->id()) == scrim_ids_.end())
+      continue;
+    if (child->stale_size() == stale_size() ||
+        child->corner_radii() == corner_radii()) {
+      continue;
+    }
+    child->SetSize(stale_size().width(), stale_size().height());
+    child->SetCornerRadii(corner_radii());
+    updated_child = true;
+  }
+
+  return updated_child;
+}
+
 }  // namespace vr
