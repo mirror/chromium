@@ -24,7 +24,6 @@
 #include "ui/message_center/public/cpp/notification_types.h"
 #include "ui/message_center/vector_icons.h"
 #include "ui/message_center/views/bounded_label.h"
-#include "ui/message_center/views/constants.h"
 #include "ui/message_center/views/notification_control_buttons_view.h"
 #include "ui/message_center/views/notification_header_view.h"
 #include "ui/message_center/views/padded_button.h"
@@ -110,17 +109,23 @@ constexpr int kCompactTitleMessageViewSpacing = 12;
 constexpr int kProgressBarHeight = 4;
 
 constexpr int kMessageViewWidthWithIcon =
-    message_center::kNotificationWidth - kIconViewSize.width() -
+    kNotificationWidth - kIconViewSize.width() -
     kLeftContentPaddingWithIcon.left() - kLeftContentPaddingWithIcon.right() -
     kContentRowPadding.left() - kContentRowPadding.right();
 
 constexpr int kMessageViewWidth =
-    message_center::kNotificationWidth - kLeftContentPadding.left() -
+    kNotificationWidth - kLeftContentPadding.left() -
     kLeftContentPadding.right() - kContentRowPadding.left() -
     kContentRowPadding.right();
 
-// "Roboto-Regular, 13sp" is specified in the mock.
-constexpr int kTextFontSize = 13;
+const int kMinPixelsPerTitleCharacter = 4;
+
+// Character limit = pixels per line * line limit / min. pixels per character.
+constexpr size_t kMessageCharacterLimit =
+    kNotificationWidth * kMessageExpandedLineLimit / 3;
+
+// The default is 12, so this normally come out to 13.
+constexpr int kTextFontSizeDelta = 1;
 
 // In progress notification, if both the title and the message are long, the
 // message would be prioritized and the title would be elided.
@@ -131,10 +136,8 @@ constexpr double kProgressNotificationMessageRatio = 0.7;
 // FontList for the texts except for the header.
 gfx::FontList GetTextFontList() {
   gfx::Font default_font;
-  int font_size_delta = kTextFontSize - default_font.GetFontSize();
-  gfx::Font font = default_font.Derive(font_size_delta, gfx::Font::NORMAL,
+  gfx::Font font = default_font.Derive(kTextFontSizeDelta, gfx::Font::NORMAL,
                                        gfx::Font::Weight::NORMAL);
-  DCHECK_EQ(kTextFontSize, font.GetFontSize());
   return gfx::FontList(font);
 }
 
@@ -161,7 +164,7 @@ class ClickActivator : public ui::EventHandler {
 
 // ItemView ////////////////////////////////////////////////////////////////////
 
-ItemView::ItemView(const message_center::NotificationItem& item) {
+ItemView::ItemView(const NotificationItem& item) {
   SetLayoutManager(std::make_unique<views::BoxLayout>(
       views::BoxLayout::kHorizontal, gfx::Insets(), 0));
 
@@ -171,8 +174,7 @@ ItemView::ItemView(const message_center::NotificationItem& item) {
   title->SetFontList(font_list);
   title->set_collapse_when_hidden(true);
   title->SetHorizontalAlignment(gfx::ALIGN_LEFT);
-  title->SetEnabledColor(message_center::kRegularTextColorMD);
-  title->SetBackgroundColor(message_center::kDimTextBackgroundColor);
+  title->SetAutoColorReadabilityEnabled(false);
   AddChildView(title);
 
   views::Label* message = new views::Label(l10n_util::GetStringFUTF16(
@@ -181,7 +183,7 @@ ItemView::ItemView(const message_center::NotificationItem& item) {
   message->set_collapse_when_hidden(true);
   message->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   message->SetEnabledColor(kDimTextColorMD);
-  message->SetBackgroundColor(message_center::kDimTextBackgroundColor);
+  message->SetAutoColorReadabilityEnabled(false);
   AddChildView(message);
 }
 
@@ -312,8 +314,7 @@ LargeImageContainerView::LargeImageContainerView()
     : image_view_(new LargeImageView()) {
   SetLayoutManager(std::make_unique<views::FillLayout>());
   SetBorder(views::CreateEmptyBorder(kLargeImageContainerPadding));
-  SetBackground(
-      views::CreateSolidBackground(message_center::kImageBackgroundColor));
+  SetBackground(views::CreateSolidBackground(kImageBackgroundColor));
   AddChildView(image_view_);
 }
 
@@ -802,10 +803,9 @@ void NotificationViewMD::RequestFocusOnCloseButton() {
 
 void NotificationViewMD::CreateOrUpdateContextTitleView(
     const Notification& notification) {
-  header_row_->SetAccentColor(
-      notification.accent_color() == SK_ColorTRANSPARENT
-          ? message_center::kNotificationDefaultAccentColor
-          : notification.accent_color());
+  header_row_->SetAccentColor(notification.accent_color() == SK_ColorTRANSPARENT
+                                  ? kNotificationDefaultAccentColor
+                                  : notification.accent_color());
   header_row_->SetTimestamp(notification.timestamp());
 
   base::string16 app_name = notification.display_source();
@@ -867,7 +867,7 @@ void NotificationViewMD::CreateOrUpdateMessageView(
   if (!message_view_) {
     message_view_ = new BoundedLabel(text, font_list);
     message_view_->SetLineLimit(kMaxLinesForMessageView);
-    message_view_->SetColors(kDimTextColorMD, kContextTextBackgroundColor);
+    message_view_->SetColor(kDimTextColorMD);
 
     left_content_->AddChildView(message_view_);
   } else {
@@ -911,8 +911,8 @@ void NotificationViewMD::CreateOrUpdateProgressBarView(
   if (!progress_bar_view_) {
     progress_bar_view_ = new views::ProgressBar(kProgressBarHeight,
                                                 /* allow_round_corner */ false);
-    progress_bar_view_->SetBorder(views::CreateEmptyBorder(
-        message_center::kProgressBarTopPadding, 0, 0, 0));
+    progress_bar_view_->SetBorder(
+        views::CreateEmptyBorder(kProgressBarTopPadding, 0, 0, 0));
     left_content_->AddChildView(progress_bar_view_);
   }
 
@@ -1043,8 +1043,7 @@ void NotificationViewMD::CreateOrUpdateActionButtonViews(
   for (size_t i = 0; i < buttons.size(); ++i) {
     ButtonInfo button_info = buttons[i];
     if (new_buttons) {
-      bool is_inline_reply =
-          button_info.type == message_center::ButtonType::TEXT;
+      bool is_inline_reply = button_info.type == ButtonType::TEXT;
       NotificationButtonMD* button = new NotificationButtonMD(
           this, is_inline_reply, button_info.title, button_info.placeholder);
       action_buttons_.push_back(button);
