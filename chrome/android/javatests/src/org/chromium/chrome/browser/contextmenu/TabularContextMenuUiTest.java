@@ -173,7 +173,9 @@ public class TabularContextMenuUiTest {
         });
 
         Assert.assertEquals(view.findViewById(R.id.context_header_text).getVisibility(), View.GONE);
-        Assert.assertEquals(view.findViewById(R.id.context_divider).getVisibility(), View.GONE);
+        Assert.assertEquals(view.findViewById(R.id.context_divider).getVisibility(), View.VISIBLE);
+        Assert.assertEquals(
+                view.findViewById(R.id.image_text_placeholder).getVisibility(), View.VISIBLE);
     }
 
     @Test
