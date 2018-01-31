@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e550e5f6_3edcee35",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2018-01-31T16:07:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2be09e43_b38f791d",
+      "range": {
+        "startLine": 89,
+        "startChar": 17,
+        "endLine": 89,
+        "endChar": 28
+      },
+      "revId": "3f073a194540e79cdb7dfa4a4a6e594b06bab841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c06382c_d5ac24e0",
         "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager_unittest.cc",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "3f073a194540e79cdb7dfa4a4a6e594b06bab841",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28147bdf_6def54a0",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2018-01-31T16:07:01Z",
+      "side": 1,
+      "message": "Done. Added a test that tests:\nactivated_url.html\n  - disallowed_child.html\n    - allowed_grandchild.html\n      - allowed_great_grandchild",
+      "parentUuid": "6c06382c_d5ac24e0",
+      "revId": "3f073a194540e79cdb7dfa4a4a6e594b06bab841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "ba46c745_7719ef0b",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2018-01-31T16:07:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bcb65df_839013ae",
+      "range": {
+        "startLine": 783,
+        "startChar": 7,
+        "endLine": 783,
+        "endChar": 60
+      },
+      "revId": "3f073a194540e79cdb7dfa4a4a6e594b06bab841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f33fcab7_7e93f034",
         "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager_unittest.cc",
         "patchSetId": 4
@@ -79,6 +145,24 @@
       "revId": "3f073a194540e79cdb7dfa4a4a6e594b06bab841",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "287ad1e5_55ac41fb",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2018-01-31T16:07:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f33fcab7_7e93f034",
+      "revId": "3f073a194540e79cdb7dfa4a4a6e594b06bab841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -102,6 +186,30 @@
       "revId": "3f073a194540e79cdb7dfa4a4a6e594b06bab841",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bb2a5f4_f1e48f7e",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2018-01-31T16:07:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab1633fb_55b044bf",
+      "range": {
+        "startLine": 798,
+        "startChar": 5,
+        "endLine": 798,
+        "endChar": 10
+      },
+      "revId": "3f073a194540e79cdb7dfa4a4a6e594b06bab841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
