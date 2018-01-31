@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8442688_4c58a656",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-31T02:09:05Z",
+      "side": 1,
+      "message": "Should this be mojo::ReportBadMessage()? It doesn\u0027t seem like an implementation problem in the mojo service.",
+      "revId": "0082d72ed1ce5812ea9e878aee5d34dc71def10f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edee0107_8c1462b2",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/held.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-31T02:09:05Z",
+      "side": 1,
+      "message": "nit: prevents event -\u003e even prevents (or better just \"prevents\")\n\nThis test doesn\u0027t appear connected to the rest of the CL, but I agree wouldn\u0027t be worth spinning a separate CL.",
+      "revId": "0082d72ed1ce5812ea9e878aee5d34dc71def10f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c3bfacb_69ff64de",
+        "filename": "third_party/WebKit/Source/modules/locks/LockManager.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-31T02:09:05Z",
+      "side": 1,
+      "message": "nit: can not -\u003e cannot",
+      "revId": "0082d72ed1ce5812ea9e878aee5d34dc71def10f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
