@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "78468573_e96b8d5f",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-31T22:32:34Z",
+      "side": 1,
+      "message": "Thanks for pointing this out!\n\nI think it is fine to pause everything here. Perf shouldn\u0027t be a concern, because pausing should be rare (especially for non-network requests).\n\nI updated the comments here to clarify. Besides, I changed the code in destructor to only record histograms for http/https/ftp schemes (and when not cached).",
+      "parentUuid": "1afdeda4_abf9069e",
+      "range": {
+        "startLine": 344,
+        "startChar": 12,
+        "endLine": 344,
+        "endChar": 0
+      },
+      "revId": "98ee1120e7ca2691798435f44cc0e2d5f0af4d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19b8ca69_a45f89a6",
         "filename": "content/browser/loader/resource_loader_unittest.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "98ee1120e7ca2691798435f44cc0e2d5f0af4d97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed6e2780_43a6ce85",
+        "filename": "content/browser/loader/resource_loader_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1645,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-31T22:32:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19b8ca69_a45f89a6",
+      "range": {
+        "startLine": 1645,
+        "startChar": 12,
+        "endLine": 1645,
+        "endChar": 25
+      },
+      "revId": "98ee1120e7ca2691798435f44cc0e2d5f0af4d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "17856a24_795db4a9",
+        "filename": "content/browser/loader/resource_loader_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1679,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-31T22:32:34Z",
+      "side": 1,
+      "message": "With the current setup of the test (i.e., line 1648 - 1670 unchanged) and API contract, I don\u0027t think there is any guarantee that the first half of the body will definitely be received before resuming. Depending on the implementation, we may receive none, part of the first half, or the entire first half. And I would like to avoid writing tests based on some assumptions of implementation details of ResourceLoader.\n\nBesides, the current test is deterministic -- it should never fail if ResourceLoader is correctly implemented according to the API contract.\n\nIf you don\u0027t mind, I would like to leave this test as it is. (But please let me know if I haven\u0027t fully understood your point.)",
+      "parentUuid": "272db0de_bb051a92",
+      "range": {
+        "startLine": 1679,
+        "startChar": 25,
+        "endLine": 1679,
+        "endChar": 0
+      },
+      "revId": "98ee1120e7ca2691798435f44cc0e2d5f0af4d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8ab3e81_5d9d23a4",
         "filename": "services/network/public/interfaces/url_loader.mojom",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "98ee1120e7ca2691798435f44cc0e2d5f0af4d97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75156f68_7e0aa629",
+        "filename": "services/network/public/interfaces/url_loader.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-31T22:32:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8ab3e81_5d9d23a4",
+      "range": {
+        "startLine": 64,
+        "startChar": 35,
+        "endLine": 64,
+        "endChar": 0
+      },
+      "revId": "98ee1120e7ca2691798435f44cc0e2d5f0af4d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "4a3c7ab9_fccb5dbd",
+        "filename": "services/network/public/interfaces/url_loader.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-31T22:32:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8ff1a97_1bc88ee3",
+      "range": {
+        "startLine": 74,
+        "startChar": 8,
+        "endLine": 74,
+        "endChar": 17
+      },
+      "revId": "98ee1120e7ca2691798435f44cc0e2d5f0af4d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61f74d69_f0715e89",
         "filename": "services/network/url_loader.cc",
         "patchSetId": 7
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "bf174e2c_e0a29828",
+        "filename": "services/network/url_loader.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-31T22:32:34Z",
+      "side": 1,
+      "message": "To avoid messing up the metrics, I also check whether the data pipe has been set up.\nThanks for pointing this out!",
+      "parentUuid": "61f74d69_f0715e89",
+      "range": {
+        "startLine": 355,
+        "startChar": 20,
+        "endLine": 355,
+        "endChar": 26
+      },
+      "revId": "98ee1120e7ca2691798435f44cc0e2d5f0af4d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4638384_a67e234e",
         "filename": "services/network/url_loader.cc",
         "patchSetId": 7
@@ -160,6 +304,30 @@
       "revId": "98ee1120e7ca2691798435f44cc0e2d5f0af4d97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eed9bbe8_f5d1d5a8",
+        "filename": "services/network/url_loader.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-31T22:32:34Z",
+      "side": 1,
+      "message": "Good catch! :)\n\nI cannot move the \"if (body_read_before_paused_ !\u003d -1)\" block back to the destructor if I would like to call |url_request_-\u003ewas_cached()|.\nInstead, I introduced a RecordXXXIfNeeded() method and called it both here and in the destructor.",
+      "parentUuid": "d4638384_a67e234e",
+      "range": {
+        "startLine": 635,
+        "startChar": 16,
+        "endLine": 635,
+        "endChar": 47
+      },
+      "revId": "98ee1120e7ca2691798435f44cc0e2d5f0af4d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
