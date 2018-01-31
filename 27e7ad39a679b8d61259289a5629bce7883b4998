@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "36246f76_425a3e08",
+        "filename": "components/download/content/internal/download_driver_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2018-01-31T23:59:56Z",
+      "side": 1,
+      "message": "Done. I removed the log to controller. I also removed this check for \"POST\" and letting subsequent layers handle it.",
+      "parentUuid": "aa2458c6_b83c6891",
+      "range": {
+        "startLine": 172,
+        "startChar": 6,
+        "endLine": 172,
+        "endChar": 58
+      },
+      "revId": "27e7ad39a679b8d61259289a5629bce7883b4998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f925277_7c87b4d4",
         "filename": "components/download/internal/controller_impl.cc",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-16T22:00:33Z",
       "side": 1,
       "message": "What do we want to do on the resume case?",
+      "range": {
+        "startLine": 963,
+        "startChar": 6,
+        "endLine": 963,
+        "endChar": 36
+      },
+      "revId": "27e7ad39a679b8d61259289a5629bce7883b4998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40e9e868_fc8c575f",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 963,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2018-01-31T23:59:56Z",
+      "side": 1,
+      "message": "Yea, it seems like the client can call Pause/Resume/Cancel anytime. To handle this, I am removing the driver entry during a Pause/Cancel so that the resume can work like a fresh start. LMK how this looks in the new code.",
+      "parentUuid": "9f925277_7c87b4d4",
       "range": {
         "startLine": 963,
         "startChar": 6,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9d74e024_3d1338eb",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 970,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2018-01-31T23:59:56Z",
+      "side": 1,
+      "message": "For timeout I am posting a cancelable callback after 5 minutes which would then move the entry to completed state. Let me know how this looks.",
+      "parentUuid": "10a33b07_6bb60dfb",
+      "range": {
+        "startLine": 970,
+        "startChar": 21,
+        "endLine": 970,
+        "endChar": 57
+      },
+      "revId": "27e7ad39a679b8d61259289a5629bce7883b4998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23bd02f4_1f974030",
         "filename": "components/download/internal/controller_impl.cc",
         "patchSetId": 6
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "bc20842b_2999db3e",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 985,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2018-01-31T23:59:56Z",
+      "side": 1,
+      "message": "Yes, also we should add  \"|| entry-\u003estate !\u003d Entry::State::ACTIVE\" to this?",
+      "parentUuid": "23bd02f4_1f974030",
+      "range": {
+        "startLine": 984,
+        "startChar": 2,
+        "endLine": 985,
+        "endChar": 11
+      },
+      "revId": "27e7ad39a679b8d61259289a5629bce7883b4998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf260b2b_4b0d4d90",
         "filename": "components/download/internal/controller_impl.cc",
         "patchSetId": 6
@@ -105,6 +201,30 @@
       "writtenOn": "2018-01-16T22:00:33Z",
       "side": 1,
       "message": "What if the criteria have changed at this point?",
+      "range": {
+        "startLine": 987,
+        "startChar": 2,
+        "endLine": 987,
+        "endChar": 75
+      },
+      "revId": "27e7ad39a679b8d61259289a5629bce7883b4998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deb19331_7b537a27",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 987,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2018-01-31T23:59:56Z",
+      "side": 1,
+      "message": "I think we should drop the download here?",
+      "parentUuid": "bf260b2b_4b0d4d90",
       "range": {
         "startLine": 987,
         "startChar": 2,
