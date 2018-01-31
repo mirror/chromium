@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "19730c23_b0fd90d9",
+        "filename": "ash/frame/caption_buttons/frame_caption_button_container_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-31T23:56:33Z",
+      "side": 1,
+      "message": "Yes, this needs some thought. We need to understand how all these modes should work together, which layout provider are we going to use for TouchableChrome, etc.\n\nI initially had this constant in views::LayoutProvider when I had more constants in various files. But when we changed the spec such that I needed only one constant for this CL, pkasting@ and I agreed to just define it here. I expect in future CLs, the need for a layout provider will be bigger, but for now let\u0027s keep it this way.",
+      "parentUuid": "54279ac2_47340027",
+      "revId": "743f7b106181b2a00d1b92d5263064c52de6caef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "626c8616_6420d1f0",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8c4a9859_5b20a126",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-31T23:56:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "626c8616_6420d1f0",
+      "revId": "743f7b106181b2a00d1b92d5263064c52de6caef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24d0d517_100df287",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
         "patchSetId": 7
@@ -50,6 +86,24 @@
       "revId": "743f7b106181b2a00d1b92d5263064c52de6caef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d59ce8c_778986ac",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-31T23:56:33Z",
+      "side": 1,
+      "message": "Done. Thanks for catching this!",
+      "parentUuid": "24d0d517_100df287",
+      "revId": "743f7b106181b2a00d1b92d5263064c52de6caef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
