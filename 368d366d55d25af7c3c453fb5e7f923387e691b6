@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d98d6e4_7cc23412",
+        "filename": "chrome/browser/permissions/permission_uma_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-31T19:29:49Z",
+      "side": 1,
+      "message": "nit: please document the null params, e.g.\n/*web_contents\u003d*/nullptr",
+      "revId": "368d366d55d25af7c3c453fb5e7f923387e691b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "169dafe1_3c6737f2",
+        "filename": "chrome/browser/permissions/permission_uma_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-31T19:29:49Z",
+      "side": 1,
+      "message": "Do we want to record requests from iframes as the top level frame? Or drop them. I think top level site definitely makes sense in a permission delegation world. Maybe we should just do that now.",
+      "revId": "368d366d55d25af7c3c453fb5e7f923387e691b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da13fb9e_82e49dcb",
+        "filename": "chrome/browser/permissions/permission_uma_util.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-31T19:29:49Z",
+      "side": 1,
+      "message": "nit: please add a comment that this may be null if not being called for a permission request in a website.",
+      "revId": "368d366d55d25af7c3c453fb5e7f923387e691b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85845f6d_4b043fdf",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 1897,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-31T19:29:49Z",
+      "side": 1,
+      "message": "Should we remove REVOKED here now? (and DCHECK it?)",
+      "revId": "368d366d55d25af7c3c453fb5e7f923387e691b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53335be2_5f5451a4",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 1925,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-31T19:29:49Z",
+      "side": 1,
+      "message": "Will this always be prompt now? Should we remove this field and DCHECK it?",
+      "revId": "368d366d55d25af7c3c453fb5e7f923387e691b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
