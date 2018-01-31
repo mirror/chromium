@@ -3903,7 +3903,9 @@ void WebContentsImpl::DidRunInsecureContent(const GURL& security_origin,
 }
 
 void WebContentsImpl::PassiveInsecureContentFound(const GURL& resource_url) {
-  GetDelegate()->PassiveInsecureContentFound(resource_url);
+  if (delegate_) {
+    delegate_->PassiveInsecureContentFound(resource_url);
+  }
 }
 
 bool WebContentsImpl::ShouldAllowRunningInsecureContent(
@@ -3911,8 +3913,12 @@ bool WebContentsImpl::ShouldAllowRunningInsecureContent(
     bool allowed_per_prefs,
     const url::Origin& origin,
     const GURL& resource_url) {
-  return GetDelegate()->ShouldAllowRunningInsecureContent(
-      web_contents, allowed_per_prefs, origin, resource_url);
+  if (delegate_) {
+    return delegate_->ShouldAllowRunningInsecureContent(
+        web_contents, allowed_per_prefs, origin, resource_url);
+  }
+
+  return allowed_per_prefs;
 }
 
 void WebContentsImpl::ViewSource(RenderFrameHostImpl* frame) {
