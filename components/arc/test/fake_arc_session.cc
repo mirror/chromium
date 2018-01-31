@@ -18,12 +18,6 @@ void FakeArcSession::StartMiniInstance() {}
 
 void FakeArcSession::RequestUpgrade() {
   upgrade_requested_ = true;
-  if (boot_failure_emulation_enabled_) {
-    for (auto& observer : observer_list_)
-      observer.OnSessionStopped(boot_failure_reason_, false, true);
-  } else if (!boot_suspended_) {
-    running_ = true;
-  }
 }
 
 void FakeArcSession::Stop() {
@@ -46,29 +40,14 @@ void FakeArcSession::StopWithReason(ArcStopReason reason) {
     observer.OnSessionStopped(reason, was_mojo_connected, upgrade_requested_);
 }
 
-void FakeArcSession::EnableBootFailureEmulation(ArcStopReason reason) {
-  DCHECK(!boot_failure_emulation_enabled_);
-  DCHECK(!boot_suspended_);
-
-  boot_failure_emulation_enabled_ = true;
-  boot_failure_reason_ = reason;
-}
-
-void FakeArcSession::SuspendBoot() {
-  DCHECK(!boot_failure_emulation_enabled_);
-  DCHECK(!boot_suspended_);
-
-  boot_suspended_ = true;
-}
-
-// TODO(cmtm): Change this function so that it emulates both mini-container
-// startup and upgrade. With this change, we should also be able to get rid of
-// SuspendBoot since RequestUpgrade will no longer notify observers.
-void FakeArcSession::EmulateMiniContainerStart() {
-  if (boot_failure_emulation_enabled_) {
+void FakeArcSession::SimulateExecution(
+    base::Optional<ArcStopReason> failure_reason) {
+  if (failure_reason) {
     for (auto& observer : observer_list_)
-      observer.OnSessionStopped(boot_failure_reason_, false,
+      observer.OnSessionStopped(failure_reason.value(), false,
                                 upgrade_requested_);
+  } else if (upgrade_requested_) {
+    running_ = true;
   }
 }
 

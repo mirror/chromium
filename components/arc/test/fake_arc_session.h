@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "base/macros.h"
+#include "base/optional.h"
 #include "components/arc/arc_session.h"
 #include "components/arc/arc_stop_reason.h"
 
@@ -29,18 +30,9 @@ class FakeArcSession : public ArcSession {
   // To emulate unexpected stop, such as crash.
   void StopWithReason(ArcStopReason reason);
 
-  // The following control Start() behavior for testing various situations.
-
-  // Enables/disables boot failure emulation, in which OnSessionStopped(reason)
-  // will be called when Start() or StartForLoginScreen() is called.
-  void EnableBootFailureEmulation(ArcStopReason reason);
-
-  // Emulate Start() is suspended at some phase.
-  void SuspendBoot();
-
-  // To emulate the mini-container starting. This can cause a failure if
-  // EnableBootFailureEmulation was called on this instance
-  void EmulateMiniContainerStart();
+  // To simulate the container progressing to it's requested state, or
+  // optionally, failing while trying.
+  void SimulateExecution(base::Optional<ArcStopReason> failure_reason);
 
   // Returns true if the session is considered as running.
   bool is_running() const { return running_; }
@@ -50,10 +42,6 @@ class FakeArcSession : public ArcSession {
   static std::unique_ptr<ArcSession> Create();
 
  private:
-  bool boot_failure_emulation_enabled_ = false;
-  ArcStopReason boot_failure_reason_;
-
-  bool boot_suspended_ = false;
   bool upgrade_requested_ = false;
   bool running_ = false;
   bool stop_requested_ = false;

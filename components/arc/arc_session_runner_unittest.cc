@@ -10,6 +10,7 @@
 #include "base/callback_helpers.h"
 #include "base/command_line.h"
 #include "base/macros.h"
+#include "base/optional.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/test/histogram_tester.h"
@@ -97,26 +98,6 @@ class ArcSessionRunnerTest : public testing::Test,
   bool stopped_called() { return stopped_called_; }
   bool restarting_called() { return restarting_called_; }
 
-  void ResetArcSessionFactory(
-      const ArcSessionRunner::ArcSessionFactory& factory) {
-    arc_session_runner_->RemoveObserver(this);
-    arc_session_runner_ = std::make_unique<ArcSessionRunner>(factory);
-    arc_session_runner_->AddObserver(this);
-  }
-
-  static std::unique_ptr<ArcSession> CreateSuspendedArcSession() {
-    auto arc_session = std::make_unique<FakeArcSession>();
-    arc_session->SuspendBoot();
-    return std::move(arc_session);
-  }
-
-  static std::unique_ptr<ArcSession> CreateBootFailureArcSession(
-      ArcStopReason reason) {
-    auto arc_session = std::make_unique<FakeArcSession>();
-    arc_session->EnableBootFailureEmulation(reason);
-    return std::move(arc_session);
-  }
-
  private:
   // ArcSessionRunner::Observer:
   void OnSessionStopped(ArcStopReason stop_reason, bool restarting) override {
@@ -171,6 +152,7 @@ TEST_F(ArcSessionRunnerTest, Basic) {
   EXPECT_FALSE(arc_session());
 
   arc_session_runner()->RequestStart(ArcInstanceMode::FULL_INSTANCE);
+  arc_session()->SimulateExecution(base::nullopt);
   ASSERT_TRUE(arc_session());
   EXPECT_TRUE(arc_session()->is_running());
 
@@ -182,8 +164,6 @@ TEST_F(ArcSessionRunnerTest, Basic) {
 // If the ArcSessionRunner accepts a request to stop ARC instance, it should
 // stop it, even mid-startup.
 TEST_F(ArcSessionRunnerTest, StopMidStartup) {
-  ResetArcSessionFactory(
-      base::Bind(&ArcSessionRunnerTest::CreateSuspendedArcSession));
   EXPECT_FALSE(arc_session());
 
   arc_session_runner()->RequestStart(ArcInstanceMode::FULL_INSTANCE);
@@ -197,8 +177,6 @@ TEST_F(ArcSessionRunnerTest, StopMidStartup) {
 
 // Does the same for mini instance.
 TEST_F(ArcSessionRunnerTest, StopMidStartup_MiniInstance) {
-  ResetArcSessionFactory(
-      base::Bind(&ArcSessionRunnerTest::CreateSuspendedArcSession));
   EXPECT_FALSE(arc_session());
 
   arc_session_runner()->RequestStart(ArcInstanceMode::MINI_INSTANCE);
@@ -212,12 +190,10 @@ TEST_F(ArcSessionRunnerTest, StopMidStartup_MiniInstance) {
 // If the boot procedure is failed, then restarting mechanism should not
 // triggered.
 TEST_F(ArcSessionRunnerTest, BootFailure) {
-  ResetArcSessionFactory(
-      base::Bind(&ArcSessionRunnerTest::CreateBootFailureArcSession,
-                 ArcStopReason::GENERIC_BOOT_FAILURE));
   EXPECT_FALSE(arc_session());
 
   arc_session_runner()->RequestStart(ArcInstanceMode::FULL_INSTANCE);
+  arc_session()->SimulateExecution(ArcStopReason::GENERIC_BOOT_FAILURE);
   EXPECT_EQ(ArcStopReason::GENERIC_BOOT_FAILURE, stop_reason());
   EXPECT_FALSE(arc_session());
   EXPECT_FALSE(restarting());
@@ -225,22 +201,19 @@ TEST_F(ArcSessionRunnerTest, BootFailure) {
 
 // Does the same with the mini instance.
 TEST_F(ArcSessionRunnerTest, BootFailure_MiniInstance) {
-  ResetArcSessionFactory(
-      base::Bind(&ArcSessionRunnerTest::CreateBootFailureArcSession,
-                 ArcStopReason::GENERIC_BOOT_FAILURE));
   EXPECT_FALSE(arc_session());
 
   // If starting the mini instance fails, arc_session_runner()'s state goes back
   // to STOPPED, but its observers won't be notified.
   arc_session_runner()->RequestStart(ArcInstanceMode::MINI_INSTANCE);
-  arc_session()->EmulateMiniContainerStart();
+  arc_session()->SimulateExecution(ArcStopReason::GENERIC_BOOT_FAILURE);
   EXPECT_FALSE(arc_session());
   EXPECT_FALSE(stopped_called());
 
   // Also make sure that RequestStart() works just fine after the boot
   // failure.
-  ResetArcSessionFactory(base::Bind(FakeArcSession::Create));
   arc_session_runner()->RequestStart(ArcInstanceMode::FULL_INSTANCE);
+  arc_session()->SimulateExecution(base::nullopt);
   ASSERT_TRUE(arc_session());
   EXPECT_TRUE(arc_session()->is_running());
 }
@@ -248,15 +221,12 @@ TEST_F(ArcSessionRunnerTest, BootFailure_MiniInstance) {
 // Similary, CRASH should do same for GENERIC_BOOT_FAILURE case, because
 // in mini instance, Mojo connection should not be established.
 TEST_F(ArcSessionRunnerTest, Crash_MiniInstance) {
-  ResetArcSessionFactory(
-      base::Bind(&ArcSessionRunnerTest::CreateBootFailureArcSession,
-                 ArcStopReason::CRASH));
   EXPECT_FALSE(arc_session());
 
   // If starting the mini instance fails, arc_session_runner()'s state goes back
   // to STOPPED, but its observers won't be notified.
   arc_session_runner()->RequestStart(ArcInstanceMode::MINI_INSTANCE);
-  arc_session()->EmulateMiniContainerStart();
+  arc_session()->SimulateExecution(ArcStopReason::CRASH);
   EXPECT_FALSE(arc_session());
   EXPECT_FALSE(stopped_called());
 }
@@ -271,6 +241,7 @@ TEST_F(ArcSessionRunnerTest, Upgrade) {
   EXPECT_FALSE(arc_session()->is_running());
 
   arc_session_runner()->RequestStart(ArcInstanceMode::FULL_INSTANCE);
+  arc_session()->SimulateExecution(base::nullopt);
   ASSERT_TRUE(arc_session());
   EXPECT_TRUE(arc_session()->is_running());
 }
@@ -281,6 +252,7 @@ TEST_F(ArcSessionRunnerTest, Restart) {
   EXPECT_FALSE(arc_session());
 
   arc_session_runner()->RequestStart(ArcInstanceMode::FULL_INSTANCE);
+  arc_session()->SimulateExecution(base::nullopt);
   ASSERT_TRUE(arc_session());
   EXPECT_TRUE(arc_session()->is_running());
 
@@ -290,6 +262,7 @@ TEST_F(ArcSessionRunnerTest, Restart) {
   EXPECT_FALSE(arc_session());
   EXPECT_TRUE(restarting());
   base::RunLoop().RunUntilIdle();
+  arc_session()->SimulateExecution(base::nullopt);
   EXPECT_TRUE(restarting_called());
   ASSERT_TRUE(arc_session());
   EXPECT_TRUE(arc_session()->is_running());
@@ -303,6 +276,7 @@ TEST_F(ArcSessionRunnerTest, GracefulStop) {
   EXPECT_FALSE(arc_session());
 
   arc_session_runner()->RequestStart(ArcInstanceMode::FULL_INSTANCE);
+  arc_session()->SimulateExecution(base::nullopt);
   ASSERT_TRUE(arc_session());
   EXPECT_TRUE(arc_session()->is_running());
 
@@ -319,6 +293,7 @@ TEST_F(ArcSessionRunnerTest, Shutdown) {
   EXPECT_FALSE(arc_session());
 
   arc_session_runner()->RequestStart(ArcInstanceMode::FULL_INSTANCE);
+  arc_session()->SimulateExecution(base::nullopt);
   ASSERT_TRUE(arc_session());
   EXPECT_TRUE(arc_session()->is_running());
 
@@ -390,6 +365,7 @@ TEST_F(ArcSessionRunnerTest, UmaRecording_CrashTwice) {
   tester.ExpectUniqueSample("Arc.ContainerLifetimeEvent", kContainerStarting,
                             1);
   arc_session_runner()->RequestStart(ArcInstanceMode::FULL_INSTANCE);
+  arc_session()->SimulateExecution(base::nullopt);
 
   // Stop the instance with CRASH.
   arc_session()->StopWithReason(ArcStopReason::CRASH);
@@ -399,12 +375,14 @@ TEST_F(ArcSessionRunnerTest, UmaRecording_CrashTwice) {
   // Restart the instance, then crash the instance again. The second CRASH
   // should not affect Arc.ContainerLifetimeEvent.
   base::RunLoop().RunUntilIdle();
+  arc_session()->SimulateExecution(base::nullopt);
   arc_session()->StopWithReason(ArcStopReason::CRASH);
   tester.ExpectBucketCount("Arc.ContainerLifetimeEvent", kContainerCrashed, 1);
   tester.ExpectTotalCount("Arc.ContainerLifetimeEvent", 2);
 
   // However, "2" should be recorded as a restart count on shutdown.
   base::RunLoop().RunUntilIdle();
+  arc_session()->SimulateExecution(base::nullopt);
   arc_session_runner()->OnShutdown();
   tester.ExpectUniqueSample("Arc.ContainerRestartAfterCrashCount", 2, 1);
 }
