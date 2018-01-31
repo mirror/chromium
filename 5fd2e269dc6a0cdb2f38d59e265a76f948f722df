@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1b25e22_46cf87b5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-31T06:29:16Z",
+      "side": 1,
+      "message": "nit: I wouldn\u0027t call it a regression, since it\u0027s a new feature :). Maybe call it a follow-up",
+      "revId": "5fd2e269dc6a0cdb2f38d59e265a76f948f722df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea47b7bc_2e1cc43f",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1085,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-31T06:29:16Z",
+      "side": 1,
+      "message": "can this just read gfx::Canvas::image_scale()?",
+      "revId": "5fd2e269dc6a0cdb2f38d59e265a76f948f722df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
