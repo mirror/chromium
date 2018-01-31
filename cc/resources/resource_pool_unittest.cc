@@ -28,8 +28,7 @@ class ResourcePoolTest : public testing::Test {
     task_runner_ = base::ThreadTaskRunnerHandle::Get();
     resource_pool_ = std::make_unique<ResourcePool>(
         resource_provider_.get(), task_runner_,
-        viz::ResourceTextureHint::kDefault,
-        ResourcePool::kDefaultExpirationDelay, false);
+        ResourcePool::kDefaultExpirationDelay, true, false);
   }
 
  protected:
@@ -43,7 +42,6 @@ class ResourcePoolTest : public testing::Test {
   void CheckAndReturnResource(ResourcePool::InUsePoolResource resource) {
     EXPECT_TRUE(!!resource);
     resource_pool_->ReleaseResource(std::move(resource));
-    resource_pool_->CheckBusyResources();
   }
 
   TestSharedBitmapManager shared_bitmap_manager_;
@@ -169,8 +167,7 @@ TEST_F(ResourcePoolTest, BusyResourcesNotFreed) {
   // to run.
   resource_pool_ = std::make_unique<ResourcePool>(
       resource_provider_.get(), task_runner_,
-      viz::ResourceTextureHint::kDefault, base::TimeDelta::FromMilliseconds(10),
-      false);
+      base::TimeDelta::FromMilliseconds(10), true, false);
 
   // Limits high enough to not be hit by this test.
   size_t bytes_limit = 10 * 1024 * 1024;
@@ -217,8 +214,7 @@ TEST_F(ResourcePoolTest, UnusedResourcesEventuallyFreed) {
   // to run.
   resource_pool_ = std::make_unique<ResourcePool>(
       resource_provider_.get(), task_runner_,
-      viz::ResourceTextureHint::kDefault,
-      base::TimeDelta::FromMilliseconds(100), false);
+      base::TimeDelta::FromMilliseconds(100), true, false);
 
   // Limits high enough to not be hit by this test.
   size_t bytes_limit = 10 * 1024 * 1024;
@@ -280,7 +276,6 @@ TEST_F(ResourcePoolTest, UpdateContentId) {
   resource_pool_->OnContentReplaced(resource, content_id);
   auto original_id = resource.unique_id_for_testing();
   resource_pool_->ReleaseResource(std::move(resource));
-  resource_pool_->CheckBusyResources();
 
   // Ensure that we can retrieve the resource based on |content_id|.
   gfx::Rect invalidated_rect;
@@ -319,7 +314,6 @@ TEST_F(ResourcePoolTest, UpdateContentIdAndInvalidatedRect) {
 
   // Release the original resource, returning it to the unused pool.
   resource_pool_->ReleaseResource(std::move(resource));
-  resource_pool_->CheckBusyResources();
 
   // Ensure that we cannot retrieve a resource based on the original content id.
   reacquired_resource = resource_pool_->TryAcquireResourceForPartialRaster(
@@ -515,8 +509,7 @@ TEST_F(ResourcePoolTest, ExactRequestsRespected) {
 
   resource_pool_ = std::make_unique<ResourcePool>(
       resource_provider_.get(), task_runner_,
-      viz::ResourceTextureHint::kDefault,
-      base::TimeDelta::FromMilliseconds(100), true);
+      base::TimeDelta::FromMilliseconds(100), true, true);
 
   // Create unused resource with size 100x100.
   CheckAndReturnResource(resource_pool_->AcquireResource(gfx::Size(100, 100),

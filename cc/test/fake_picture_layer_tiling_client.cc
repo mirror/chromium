@@ -26,8 +26,8 @@ FakePictureLayerTilingClient::FakePictureLayerTilingClient(
     : resource_pool_(
           std::make_unique<ResourcePool>(resource_provider,
                                          base::ThreadTaskRunnerHandle::Get(),
-                                         viz::ResourceTextureHint::kDefault,
                                          ResourcePool::kDefaultExpirationDelay,
+                                         true,
                                          false)),
       tile_manager_(
           new FakeTileManager(&tile_manager_client_, resource_pool_.get())),

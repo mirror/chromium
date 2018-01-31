@@ -360,8 +360,7 @@ class RasterBufferProviderPerfTest
                 viz::PlatformColor::BestTextureFormat());
         resource_pool_ = std::make_unique<ResourcePool>(
             resource_provider_.get(), task_runner_,
-            gfx::BufferUsage::GPU_READ_CPU_READ_WRITE,
-            ResourcePool::kDefaultExpirationDelay, false);
+            ResourcePool::kDefaultExpirationDelay, true, false);
         break;
       case RASTER_BUFFER_PROVIDER_TYPE_ONE_COPY:
         Create3dResourceProvider();
@@ -373,8 +372,7 @@ class RasterBufferProviderPerfTest
             viz::PlatformColor::BestTextureFormat());
         resource_pool_ = std::make_unique<ResourcePool>(
             resource_provider_.get(), task_runner_,
-            viz::ResourceTextureHint::kDefault,
-            ResourcePool::kDefaultExpirationDelay, false);
+            ResourcePool::kDefaultExpirationDelay, true, false);
         break;
       case RASTER_BUFFER_PROVIDER_TYPE_GPU:
         Create3dResourceProvider();
@@ -384,8 +382,7 @@ class RasterBufferProviderPerfTest
             viz::PlatformColor::BestTextureFormat(), false);
         resource_pool_ = std::make_unique<ResourcePool>(
             resource_provider_.get(), task_runner_,
-            viz::ResourceTextureHint::kFramebuffer,
-            ResourcePool::kDefaultExpirationDelay, false);
+            ResourcePool::kDefaultExpirationDelay, true, false);
         break;
       case RASTER_BUFFER_PROVIDER_TYPE_BITMAP:
         CreateSoftwareResourceProvider();
@@ -393,7 +390,7 @@ class RasterBufferProviderPerfTest
             resource_provider_.get(), &shared_bitmap_manager_);
         resource_pool_ = std::make_unique<ResourcePool>(
             resource_provider_.get(), task_runner_,
-            ResourcePool::kDefaultExpirationDelay, false);
+            ResourcePool::kDefaultExpirationDelay, false, false);
         break;
     }
 
@@ -603,8 +600,7 @@ class RasterBufferProviderCommonPerfTest
         compositor_context_provider_.get(), nullptr);
     resource_pool_ = std::make_unique<ResourcePool>(
         resource_provider_.get(), task_runner_,
-        viz::ResourceTextureHint::kFramebuffer,
-        ResourcePool::kDefaultExpirationDelay, false);
+        ResourcePool::kDefaultExpirationDelay, true, false);
   }
 
   void RunBuildTileTaskGraphTest(const std::string& test_name,

@@ -1418,7 +1418,6 @@ void LayerTreeHostImpl::UpdateTileManagerMemoryPolicy(
   }
 
   DCHECK(resource_pool_);
-  resource_pool_->CheckBusyResources();
   // Soft limit is used for resource pool such that memory returns to soft
   // limit after going over.
   resource_pool_->SetResourceUsageLimits(
@@ -1704,7 +1703,6 @@ void LayerTreeHostImpl::ReclaimResources(
           static_cast<int>(resource_pool_->memory_usage_bytes() / kMegabyte));
     }
 
-    resource_pool_->CheckBusyResources();
     resource_pool_->ReduceResourceUsage();
   }
 
@@ -2590,6 +2588,7 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
     *resource_pool = std::make_unique<ResourcePool>(
         resource_provider_.get(), GetTaskRunner(),
         ResourcePool::kDefaultExpirationDelay,
+        /*using_gpu_resources=*/false,
         settings_.disallow_non_exact_resource_reuse);
 
     *raster_buffer_provider = std::make_unique<BitmapRasterBufferProvider>(
@@ -2598,21 +2597,19 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
     return;
   }
 
+  // The ResourcePool will vend gpu resources.
+  *resource_pool = std::make_unique<ResourcePool>(
+      resource_provider_.get(), GetTaskRunner(),
+      ResourcePool::kDefaultExpirationDelay,
+      /*using_gpu_resources=*/true,
+      settings_.disallow_non_exact_resource_reuse);
+
   viz::RasterContextProvider* worker_context_provider =
       layer_tree_frame_sink_->worker_context_provider();
   if (use_gpu_rasterization_) {
     DCHECK(worker_context_provider);
 
-    // This ResourcePool will vend gpu resources optimized for binding as a
-    // framebuffer for gpu raster.
-    *resource_pool = std::make_unique<ResourcePool>(
-        resource_provider_.get(), GetTaskRunner(),
-        viz::ResourceTextureHint::kFramebuffer,
-        ResourcePool::kDefaultExpirationDelay,
-        settings_.disallow_non_exact_resource_reuse);
-
     int msaa_sample_count = use_msaa_ ? RequestedMSAASampleCount() : 0;
-
     // The worker context must support oop raster to enable oop rasterization.
     bool oop_raster_enabled = settings_.enable_oop_rasterization;
     if (oop_raster_enabled) {
@@ -2640,13 +2637,6 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
   }
 
   if (use_zero_copy) {
-    // This ResourcePool will vend gpu resources backed by gpu memory buffers.
-    *resource_pool = std::make_unique<ResourcePool>(
-        resource_provider_.get(), GetTaskRunner(),
-        gfx::BufferUsage::GPU_READ_CPU_READ_WRITE,
-        ResourcePool::kDefaultExpirationDelay,
-        settings_.disallow_non_exact_resource_reuse);
-
     *raster_buffer_provider = std::make_unique<ZeroCopyRasterBufferProvider>(
         resource_provider_.get(),
         layer_tree_frame_sink_->gpu_memory_buffer_manager(),
@@ -2654,16 +2644,9 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
     return;
   }
 
-  // This ResourcePool will vend gpu texture resources.
-  *resource_pool = std::make_unique<ResourcePool>(
-      resource_provider_.get(), GetTaskRunner(),
-      viz::ResourceTextureHint::kDefault, ResourcePool::kDefaultExpirationDelay,
-      settings_.disallow_non_exact_resource_reuse);
-
   const int max_copy_texture_chromium_size =
       compositor_context_provider->ContextCapabilities()
           .max_copy_texture_chromium_size;
-
   *raster_buffer_provider = std::make_unique<OneCopyRasterBufferProvider>(
       GetTaskRunner(), compositor_context_provider, worker_context_provider,
       resource_provider_.get(), max_copy_texture_chromium_size,
