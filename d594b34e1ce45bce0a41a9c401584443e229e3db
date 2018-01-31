@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "22d04dd7_7c736ef7",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 963,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-31T01:57:55Z",
+      "side": 1,
+      "message": "\u003e What are all the use cases for copy requests?\n\nThere are far too many to list! :) Essentially, copy requests made in the Layer tree are for \"snapshot\" use cases where the client wants a scaled+cropped SkBitmap result.\n\n\u003e Is there any enforcement that they don\u0027t accidentally not have positive scale or translation?\n\nThis is enforced in the display compositor, where all copy requests are executed. Validity of request parameters is checked as well as sanitizing the post-scaling coordinate calculations. Requests will fail gracefully if the copy cannot be made.",
+      "parentUuid": "594f3946_2246dced",
+      "revId": "d594b34e1ce45bce0a41a9c401584443e229e3db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5dd5dec_ab0e8bed",
         "filename": "cc/trees/property_tree.cc",
         "patchSetId": 5
@@ -83,6 +101,24 @@
       "writtenOn": "2018-01-31T01:06:13Z",
       "side": 1,
       "message": "Why does SetScaleTo have two vector parameters? Is the relative scale of the\nx coordinates of each vector (and y coordinates) all that matter? If so, why is\nit not two scalars?",
+      "revId": "d594b34e1ce45bce0a41a9c401584443e229e3db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a75bef6a_221c16dc",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-31T01:57:55Z",
+      "side": 1,
+      "message": "Late last Summer, there was a discussion on this when the new scaling API was introduced. OTOH, the outcome of those decisions are:\n\n1. Using integer ratios simplifies the heuristics where the copy requests are executed: The high-quality scalers are actually a multi-step rendering process where different shader programs are chosen at each step based on certain integer ratios.\n\n2. Using integers instead of floats leads to a code structure where any and all precision loss/trade-offs are very exposed (e.g., line 968 above). This prevents unintended rounding effects that are often impossible to detect during the development process (and unit testing) and then will unexpectedly show up in-the-wild.\n\n3. For quality reasons, there are times when the scale of X and Y need to be independent. For example, this can be used to correct for aspect ratio differences between devices. Or, it can be used to adjust for the client\u0027s output image format (e.g., I420 with its 2x2 subsampled chroma).",
+      "parentUuid": "768e7723_c76b181c",
       "revId": "d594b34e1ce45bce0a41a9c401584443e229e3db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
