@@ -22,6 +22,30 @@
       "revId": "e9e544c1428f07a7edb569ba74d70d3a49deddd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2768147_bf5e33bf",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 23930,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2018-01-31T22:45:55Z",
+      "side": 1,
+      "message": "Yup, didn\u0027t notice that. Thanks.",
+      "parentUuid": "13d01c12_84fb752d",
+      "range": {
+        "startLine": 23930,
+        "startChar": 28,
+        "endLine": 23930,
+        "endChar": 60
+      },
+      "revId": "e9e544c1428f07a7edb569ba74d70d3a49deddd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
