@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3ff47544_4b797154",
+        "filename": "cc/raster/zero_copy_raster_buffer_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-31T17:09:54Z",
+      "side": 1,
+      "message": "Oh, yeah now that the backing is a struct and the types are directly accessible it\u0027s not so bad. I did that.",
+      "parentUuid": "c330ced0_9f50ec3e",
+      "revId": "b500da8dd7dd9c872ed3337fa0f8932d7860f638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7eb79535_dbaf1986",
         "filename": "cc/raster/zero_copy_raster_buffer_provider.cc",
         "patchSetId": 9
