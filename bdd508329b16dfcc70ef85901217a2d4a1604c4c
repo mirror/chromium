@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65201f6d_6c2a9773",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_delegate.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-31T14:16:07Z",
+      "side": 1,
+      "message": "Please update this comment.",
+      "revId": "bdd508329b16dfcc70ef85901217a2d4a1604c4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9871379_57847e96",
+        "filename": "ui/message_center/test/run_all_unittests.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-31T14:16:07Z",
+      "side": 1,
+      "message": "You have the right deps, so nogncheck shouldn\u0027t be necessary anymore.",
+      "revId": "bdd508329b16dfcc70ef85901217a2d4a1604c4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
