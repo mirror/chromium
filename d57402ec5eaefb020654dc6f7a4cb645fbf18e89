@@ -16,6 +16,24 @@
       "revId": "d57402ec5eaefb020654dc6f7a4cb645fbf18e89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c4e4370_34e46180",
+        "filename": "ui/gfx/x/x11.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2018-01-31T17:38:18Z",
+      "side": 1,
+      "message": "You can\u0027t do it with macros. Temporary variables (with names that don\u0027t clash with the macros) might work but I think we would lose more in readability than it would gain in other areas.\n\nCan do something to double check that FocusIn and FocusOut have not changed value (or more likely been affected by some random typo edit).",
+      "parentUuid": "37a4c144_4690aa02",
+      "revId": "d57402ec5eaefb020654dc6f7a4cb645fbf18e89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
