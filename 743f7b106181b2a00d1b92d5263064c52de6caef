@@ -70,6 +70,30 @@
       "revId": "743f7b106181b2a00d1b92d5263064c52de6caef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "933e98ff_f18cce32",
+        "filename": "ui/base/material_design/material_design_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-31T21:55:14Z",
+      "side": 1,
+      "message": "Excellent point! I was assuming this would only impact chromeos specific code, but no doubt it\u0027ll impact other things.",
+      "parentUuid": "a6c7d66f_dc367b8b",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 38
+      },
+      "revId": "743f7b106181b2a00d1b92d5263064c52de6caef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
