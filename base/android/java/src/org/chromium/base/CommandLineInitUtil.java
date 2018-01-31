@@ -30,7 +30,7 @@ public final class CommandLineInitUtil {
      * 1) The "debug app" is set to the application calling this.
      * and
      * 2) ADB is enabled.
-     *
+     * 3) Force enabled by the embedder.
      */
     private static final String COMMAND_LINE_FILE_PATH_DEBUG_APP = "/data/local/tmp";
 
@@ -43,10 +43,14 @@ public final class CommandLineInitUtil {
      *                 debugged, and whether or not the publicly writable command line file should
      *                 be used.
      * @param fileName The name of the command line file to pull arguments from.
+     * @param alternativeFromFlagCallable {@link Callable} used to check whether the alternative
+     *                                    command line file is enabled by embedder.
      */
-    public static void initCommandLine(Context context, String fileName) {
+    public static void initCommandLine(Context context, String fileName,
+            NoThrowingCallable<Boolean> alternativeFromFlagCallable) {
         if (!CommandLine.isInitialized()) {
-            File commandLineFile = getAlternativeCommandLinePath(context, fileName);
+            File commandLineFile =
+                    getAlternativeCommandLinePath(context, fileName, alternativeFromFlagCallable);
             if (commandLineFile != null) {
                 Log.i(TAG,
                         "Initializing command line from alternative file "
@@ -62,14 +66,16 @@ public final class CommandLineInitUtil {
     /**
      * Use an alternative path if:
      * - The current build is "eng" or "userdebug", OR
-     * - adb is enabled and this is the debug app.
+     * - adb is enabled and this is the debug app, OR
+     * - Force enabled by the embedder.
      */
-    private static File getAlternativeCommandLinePath(Context context, String fileName) {
+    private static File getAlternativeCommandLinePath(Context context, String fileName,
+            NoThrowingCallable<Boolean> alternativeFromFlagCallable) {
         File alternativeCommandLineFile =
                 new File(COMMAND_LINE_FILE_PATH_DEBUG_APP, fileName);
         if (!alternativeCommandLineFile.exists()) return null;
         try {
-            if (BuildInfo.isDebugAndroid()) {
+            if (BuildInfo.isDebugAndroid() || alternativeFromFlagCallable.call()) {
                 return alternativeCommandLineFile;
             }
 
