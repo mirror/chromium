@@ -679,6 +679,13 @@
         <item name="android:background">@null</item>
         <item name="android:scaleType">center</item>
     </style>
+    <!-- 18dp layout width is used to scale the 24dp icon. 19dp padding is added to each side to
+         bring the total width to 56dp. -->
+    <style name="HistoryListItemEndIcon" parent="ListItemEndIcon">
+        <item name="android:layout_width">18dp</item>
+        <item name="android:paddingStart">19dp</item>
+        <item name="android:paddingEnd">19dp</item>
+    </style>
     <style name="ListMenuStyle" parent="Widget.AppCompat.ListPopupWindow">
         <item name="android:popupBackground">@drawable/menu_bg</item>
     </style>
