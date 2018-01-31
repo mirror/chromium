@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3f22d315_86bba3e7",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1211,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-31T06:57:40Z",
+      "side": 1,
+      "message": "Uh. It works, but reparents into an incognito app browser. This is... confusing at best, so I turned off the reparenting for incognito.",
+      "parentUuid": "b7291a1d_14463ef9",
+      "revId": "2c8f82d05ab7aad32eacdd26de1e138fc115fd20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00155c0f_1c3bf278",
         "filename": "chrome/browser/ui/browser_commands.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "2c8f82d05ab7aad32eacdd26de1e138fc115fd20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53a806de_4baabed6",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1234,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-01-31T06:57:40Z",
+      "side": 1,
+      "message": "Moved stuff into application_launch which I assume is extensions gated.",
+      "parentUuid": "00155c0f_1c3bf278",
+      "revId": "2c8f82d05ab7aad32eacdd26de1e138fc115fd20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
