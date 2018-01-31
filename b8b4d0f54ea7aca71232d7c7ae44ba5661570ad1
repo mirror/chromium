@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c5595dc_02c61273",
+        "filename": "media/capture/video/video_capture_device_descriptor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-31T17:30:17Z",
+      "side": 1,
+      "message": "The original code was reverted not by mistake but because \nthere were no devices in use with this planarity - so this \nwas tantamount to dead code. Back in the day also the \nlinuxtv.org test code (i.e. vivi and the likes) didn\u0027t \nproperly cover multiplanar YUV formats. So, before landing\ncode we need make sure that it\u0027s properly used and tested;\nI see you found some Qualcomm cameras using this format, so\nthat\u0027s good -- but somehow we need to make sure that this \ncode is tested on the trybots and, if possible, in the CQ\n(via unittests and also via some kind of OS emulator).",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 24
+      },
+      "revId": "b8b4d0f54ea7aca71232d7c7ae44ba5661570ad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
