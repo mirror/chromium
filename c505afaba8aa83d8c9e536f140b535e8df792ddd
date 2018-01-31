@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c83d8c79_c5c83276",
+        "filename": "extensions/renderer/binding_generating_native_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2018-01-31T19:03:34Z",
+      "side": 1,
+      "message": "nit: Would be helpful to comment here why this is always initialized...",
+      "revId": "c505afaba8aa83d8c9e536f140b535e8df792ddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
