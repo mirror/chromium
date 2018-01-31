@@ -16,6 +16,24 @@
       "revId": "8bd36c8f2f2146553a94e22a2f435028d7f765da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19408c95_2f6cb0ae",
+        "filename": "third_party/WebKit/Source/core/style/StyleFetchedImage.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2018-01-31T23:14:33Z",
+      "side": 1,
+      "message": "I think this is optional.\n\nOne random thought in my mind is to make ImageResourceContent::Fetch() take an |ImageResourceObserver*| argument just like ImageResource::Fetch(), e.g. something like:\n\n\u003e   cached_image_ \u003d StyleFetchedImageSet::Create(image.scale_factor, this);\n\u003e    ImageResourceContent::Fetch(params, document.Fetcher(), cached_image);\n\nBut this is not trivial and anyway should be done separately.",
+      "parentUuid": "1f0b0e2b_6c7d3648",
+      "revId": "8bd36c8f2f2146553a94e22a2f435028d7f765da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
