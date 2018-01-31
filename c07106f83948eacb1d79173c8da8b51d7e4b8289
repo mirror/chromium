@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b20e99e8_08e1494e",
+        "filename": "chrome/browser/resources/settings/privacy_page/privacy_page.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-31T18:36:46Z",
+      "side": 1,
+      "message": "Even if a checkbox can dynamically change which pref it is bound to, couldn\u0027t it point to a real prefs (from |this.prefs| dictionary)? The corresponding checkbox already points to a local variable here, see [1].\n\nSo couldn\u0027t this still be (pseudo-code) \n\nif (...experiment a...)\n  this.safeBrowsingExtendedReportingPref_ \u003d pref.foo.bar.experimentA;\nelse\n  this.safeBrowsingExtendedReportingPref_ \u003d pref.foo.bar.experimentB;\n\nWhy do we need to manually populate |enforcment| and |controlledBy|? Doesn\u0027t the C++ code does that already, and places the result under some key on this.prefs?\n\nSorry for the multiple questions, but still trying to understand the need for this.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/privacy_page/privacy_page.html?l\u003d84",
+      "parentUuid": "f3067a04_fef040d1",
+      "range": {
+        "startLine": 355,
+        "startChar": 9,
+        "endLine": 355,
+        "endChar": 43
+      },
+      "revId": "c07106f83948eacb1d79173c8da8b51d7e4b8289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "944e46f5_b88bdc1b",
         "filename": "chrome/test/data/webui/settings/privacy_page_test.js",
         "patchSetId": 9
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Done, let me know if I misunderstood this comment (i\u0027m far from a js expert).\nFyi I\u0027m basing this test on a similar one from metrics_reporting_tests.js",
       "parentUuid": "944e46f5_b88bdc1b",
+      "range": {
+        "startLine": 423,
+        "startChar": 55,
+        "endLine": 426,
+        "endChar": 17
+      },
+      "revId": "c07106f83948eacb1d79173c8da8b51d7e4b8289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a8a8ad2_728d05cc",
+        "filename": "chrome/test/data/webui/settings/privacy_page_test.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-31T18:36:46Z",
+      "side": 1,
+      "message": "Not exactly what I meant. Patchset 10 simply changed the choice of \\n placement. What I meant is the following\n\n// Nested promises.\ntest(function() {\n  return foo().then(function() {\n    returrn bar().then(function() {\n      assertEquals(...);\n    });\n  });\n});\n\n\n// Chained promises\ntest(function() {\n  return foo().then(function() {\n     return bar();\n  }).then(function() {\n    assertEquals(...);\n  });\n});\n\nChained promises are preferred they reduce the levels of nesting (and indentation), and they are equivalent. In your case here, something like the following:\n\ntest(\u0027test whether extended reporting is enabled/managed\u0027, function() {\n  return testBrowserProxy.whenCalled(...).then(function() {\n     ...\n     return testBrowserProxy.whenCalled(\n            \u0027setSafeBrowsingExtendedReportingEnabled\u0027);\n  }).then(function(enabled) {\n    assertTrue(enabled);\n  });",
+      "parentUuid": "05a45bae_e46a8790",
       "range": {
         "startLine": 423,
         "startChar": 55,
