@@ -122,6 +122,9 @@ struct ColorScheme {
 
   SkColor controller_label_callout;
 
+  SkColor reposition_scrim;
+  SkColor reposition_label;
+
   // These are used for blending between colors that are available only in
   // shaders. They are, as you might expect, one for a given mode, but zero
   // otherwise.

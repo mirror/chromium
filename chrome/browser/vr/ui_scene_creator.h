@@ -57,6 +57,7 @@ class UiSceneCreator {
   void CreateVoiceSearchUiGroup();
   void CreateContentRepositioningAffordance();
   void CreateExitWarning();
+  void CreateContentRepositioningHitTarget();
   void CreateWebVrSubtree();
   void CreateWebVrOverlayElements();
   void CreateSplashScreenForDirectWebVrLaunch();
