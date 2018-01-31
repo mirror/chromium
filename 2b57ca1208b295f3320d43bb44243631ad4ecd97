@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44035cf9_71e08968",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 39
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-31T16:27:59Z",
+      "side": 1,
+      "message": "Is -1 defined as a constant some where that you could compare against rather than the comment?",
+      "range": {
+        "startLine": 313,
+        "startChar": 29,
+        "endLine": 313,
+        "endChar": 58
+      },
+      "revId": "2b57ca1208b295f3320d43bb44243631ad4ecd97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
