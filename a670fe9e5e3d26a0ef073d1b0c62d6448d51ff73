@@ -50,6 +50,24 @@
       "revId": "a670fe9e5e3d26a0ef073d1b0c62d6448d51ff73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2c6f483_a23584ff",
+        "filename": "ui/events/event.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-31T02:52:18Z",
+      "side": 1,
+      "message": "Oh, also, default init to false.",
+      "parentUuid": "ad3d8161_75fcb67e",
+      "revId": "a670fe9e5e3d26a0ef073d1b0c62d6448d51ff73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
