@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c07959ff_dfc003ff",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2018-01-31T19:14:11Z",
+      "side": 0,
+      "message": "Interesting..so perhaps there is some kind of rounding happening with non-integer scale factors here which I assume means that GetLocalBounds().width() returns something larger than what the width was previously set to? Could you file a bug for someone to investigate that? Apparently oshima@ knows something about scale factors and views folks would I guess be interested.\n\nI am guessing we\u0027re applying the scale factor at some point and then we\u0027re reading back the value and it\u0027s getting rounded/clipped to something larger than what it originally was. But I don\u0027t know the code well enough.",
+      "revId": "ed10b0686bf7bb251375ddd0ff11c66c7cefeb21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
