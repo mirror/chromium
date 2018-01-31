@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7b661a7f_fa53dc10",
+        "filename": "chrome/browser/media/mirror_service_video_capture_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-31T18:22:12Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "18b66b09_7dc73916",
+      "revId": "32485eb69a9b6ce1722b8ccd41dab7d3dad5e397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a836095_b1559f7a",
         "filename": "chrome/browser/media/mirror_service_video_capture_impl.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "32485eb69a9b6ce1722b8ccd41dab7d3dad5e397",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba9e5d4d_0d54e48a",
+        "filename": "chrome/browser/media/mirror_service_video_capture_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-31T18:22:12Z",
+      "side": 1,
+      "message": "Done as suggested. Thanks.",
+      "parentUuid": "4a836095_b1559f7a",
+      "revId": "32485eb69a9b6ce1722b8ccd41dab7d3dad5e397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3061f0b3_b38637b0",
+        "filename": "chrome/browser/media/mirror_service_video_capture_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-31T18:22:12Z",
+      "side": 1,
+      "message": "\u003e Is the use of |this| safe here, and if so, why?\nThis parameter requires \n\n\u003e If I recall correctly, the contract of LaunchDeviceAsync() is that the caller must guarantee that the given Callback* stays alive until |done_cb| is invoked. With |done_cb| being bound to an empty lambda, it is not obvious to me if/why our invocation here satisfies this guarantee.\n\nYes, you are right. The Callback* should stay alive until |done_cb| is invoked. Did some changes. PTAL.",
+      "parentUuid": "5b5ad27c_21321ab1",
+      "revId": "32485eb69a9b6ce1722b8ccd41dab7d3dad5e397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1461639a_bb1cac8d",
         "filename": "chrome/browser/media/mirror_service_video_capture_impl.h",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "32485eb69a9b6ce1722b8ccd41dab7d3dad5e397",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47d05be9_ecce096c",
+        "filename": "chrome/browser/media/mirror_service_video_capture_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-31T18:22:12Z",
+      "side": 1,
+      "message": "Done. Added VideoCaptureDeviceLauncherFactory interface and impl to create InProcessVideoCaptureDeviceLauncher. Modified the comment as suggested. Thanks!",
+      "parentUuid": "1461639a_bb1cac8d",
+      "revId": "32485eb69a9b6ce1722b8ccd41dab7d3dad5e397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "f27c7c80_c71c7657",
+        "filename": "chrome/browser/media/mirror_service_video_capture_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-31T18:22:12Z",
+      "side": 1,
+      "message": "I feel that this class is more about the proxy between single device and single client. So renamed it as SingleClientVideoCaptureHost. sgty?\n\n+miu@",
+      "parentUuid": "78981606_0b95b1dc",
+      "revId": "32485eb69a9b6ce1722b8ccd41dab7d3dad5e397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e6e2548_2e390c84",
         "filename": "chrome/browser/media/mirror_service_video_capture_impl.h",
         "patchSetId": 5
@@ -101,6 +191,24 @@
       "revId": "32485eb69a9b6ce1722b8ccd41dab7d3dad5e397",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba526393_d9e13210",
+        "filename": "chrome/browser/media/mirror_service_video_capture_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-31T18:22:12Z",
+      "side": 1,
+      "message": "Done. This is not needed after introducing the VideoCaptureDeviceLauncherFactory interface.",
+      "parentUuid": "2e6e2548_2e390c84",
+      "revId": "32485eb69a9b6ce1722b8ccd41dab7d3dad5e397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
