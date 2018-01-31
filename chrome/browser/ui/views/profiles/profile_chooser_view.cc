@@ -48,6 +48,7 @@
 #include "chrome/browser/ui/views/profiles/badged_profile_photo.h"
 #include "chrome/browser/ui/views/profiles/signin_view_controller_delegate_views.h"
 #include "chrome/browser/ui/views/profiles/user_manager_view.h"
+#include "chrome/browser/ui/views/sync/dice_signin_button.h"
 #include "chrome/browser/ui/webui/signin/login_ui_service.h"
 #include "chrome/browser/ui/webui/signin/login_ui_service_factory.h"
 #include "chrome/common/pref_names.h"
@@ -652,8 +653,12 @@ void ProfileChooserView::ButtonPressed(views::Button* sender,
   } else if (sender == signin_current_profile_button_) {
     ShowViewFromMode(profiles::BUBBLE_VIEW_MODE_GAIA_SIGNIN);
   } else if (sender == signin_with_gaia_account_button_) {
-    signin_ui_util::EnableSync(browser_, dice_sync_promo_account_,
-                               access_point_);
+    DCHECK(signin_with_gaia_account_button_->account());
+    Hide();
+    signin_ui_util::EnableSync(
+        browser_, signin_with_gaia_account_button_->account().value(),
+        access_point_);
+
   } else {
     // Either one of the "other profiles", or one of the profile accounts
     // buttons was pressed.
@@ -1046,9 +1051,7 @@ views::View* ProfileChooserView::CreateDiceSigninView() {
 
   if (accounts.empty()) {
     // When there is no signed in web account, just display a sign-in button.
-    signin_current_profile_button_ =
-        views::MdTextButton::CreateSecondaryUiBlueButton(
-            this, l10n_util::GetStringUTF16(IDS_PROFILES_DICE_SIGNIN_BUTTON));
+    signin_current_profile_button_ = new DiceSigninButton(this);
 
     signin_button_view->AddChildView(signin_current_profile_button_);
     promo_button_container->AddChildView(signin_button_view);
@@ -1064,25 +1067,11 @@ views::View* ProfileChooserView::CreateDiceSigninView() {
     account_icon = ui::ResourceBundle::GetSharedInstance().GetImageNamed(
         profiles::GetPlaceholderAvatarIconResourceID());
   }
-  auto account_photo = std::make_unique<BadgedProfilePhoto>(
-      BadgedProfilePhoto::BADGE_TYPE_NONE, account_icon);
-  base::string16 first_account_button_title =
-      accounts[0].full_name.empty()
-          ? l10n_util::GetStringUTF16(
-                IDS_PROFILES_DICE_SIGNIN_FIRST_ACCOUNT_BUTTON_NO_NAME)
-          : l10n_util::GetStringFUTF16(
-                IDS_PROFILES_DICE_SIGNIN_FIRST_ACCOUNT_BUTTON,
-                base::UTF8ToUTF16(accounts[0].full_name));
-  HoverButton* first_account_button = new HoverButton(
-      this, std::move(account_photo), first_account_button_title,
-      base::UTF8ToUTF16(accounts[0].email));
-  first_account_button->SetStyle(HoverButton::STYLE_PROMINENT);
+  signin_with_gaia_account_button_ = new DiceSigninButton(
+      accounts[0], account_icon, this, false /* display drop down arrow */);
 
-  signin_button_view->AddChildView(first_account_button);
+  signin_button_view->AddChildView(signin_with_gaia_account_button_);
   promo_button_container->AddChildView(signin_button_view);
-
-  signin_with_gaia_account_button_ = first_account_button;
-  dice_sync_promo_account_ = accounts[0];
 
   constexpr int kSmallMenuIconSize = 16;
   HoverButton* sync_to_another_account_button = new HoverButton(
