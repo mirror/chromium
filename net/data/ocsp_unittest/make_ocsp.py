@@ -82,7 +82,8 @@ def CreateExtension():
   return ext
 
 
-CA = CreateCert('Test CA', None)
+ROOT_CA = CreateCert('Test CA', None)
+CA = CreateCert('Test Intermediate CA', ROOT_CA)
 CA_LINK = CreateCert('Test OCSP Signer', CA, True)
 CA_BADLINK = CreateCert('Test False OCSP Signer', CA, False)
 CERT = CreateCert('Test Cert', CA)
@@ -211,7 +212,6 @@ def Create(signer=None,
 
   sa = rfc2459.AlgorithmIdentifier()
   sa.setComponentByName('algorithm', SigAlgOid(sigAlg))
-  sa.setComponentByName('parameters', univ.Null())
 
   basic = rfc2560.BasicOCSPResponse()
   basic.setComponentByName('tbsResponseData', tbs)
