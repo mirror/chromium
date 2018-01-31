@@ -183,13 +183,22 @@ scoped_refptr<SecurityOrigin> SecurityOrigin::Create(const KURL& url) {
   if (scoped_refptr<SecurityOrigin> origin = GetOriginFromMap(url))
     return origin;
 
+  KURL relevant_url = url;
+  if (ShouldUseInnerURL(url))
+    relevant_url = ExtractInnerURL(url);
+
+  // Local URLs generate unique origins, but we continue to treat those unique
+  // origins as themselves being local.
+  if (SchemeRegistry::ShouldTreatURLSchemeAsLocal(relevant_url.Protocol())) {
+    scoped_refptr<SecurityOrigin> origin = base::AdoptRef(new SecurityOrigin());
+    origin->GrantLoadLocalResources();
+    return origin;
+  }
+
   if (ShouldTreatAsUniqueOrigin(url))
     return base::AdoptRef(new SecurityOrigin());
 
-  if (ShouldUseInnerURL(url))
-    return base::AdoptRef(new SecurityOrigin(ExtractInnerURL(url)));
-
-  return base::AdoptRef(new SecurityOrigin(url));
+  return base::AdoptRef(new SecurityOrigin(relevant_url));
 }
 
 scoped_refptr<SecurityOrigin> SecurityOrigin::CreateUnique() {
