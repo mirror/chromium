@@ -139,6 +139,44 @@ TEST_F(BoundsAnimatorTest, AnimateViewTo) {
             parent()->dirty_rect());
 }
 
+// Checks that AnimateLayoutChanges animates multiple views.
+TEST_F(BoundsAnimatorTest, AnimateLayoutChanges) {
+  View* child_a = child();
+  gfx::Rect initial_bounds_a(0, 0, 10, 10);
+  child_a->SetBoundsRect(initial_bounds_a);
+  gfx::Rect target_bounds_a(10, 10, 20, 20);
+
+  View* child_b = new TestView();
+  parent()->AddChildView(child_b);
+  gfx::Rect initial_bounds_b(50, 10, 20, 20);
+  child_b->SetBoundsRect(initial_bounds_b);
+  gfx::Rect target_bounds_b(10, 50, 10, 10);
+
+  LayoutChanges layout_changes{{child_a, target_bounds_a},
+                               {child_b, target_bounds_b}};
+  animator()->AnimateLayoutChanges(layout_changes);
+  animator()->SetAnimationDelegate(
+      child_a,
+      std::unique_ptr<gfx::AnimationDelegate>(new TestAnimationDelegate()));
+
+  // The animator should be animating now.
+  EXPECT_TRUE(animator()->IsAnimating());
+
+  // Run the message loop; the delegate exits the loop when the animation is
+  // done.
+  base::RunLoop().Run();
+
+  // Make sure the bounds match of the view that was animated match.
+  EXPECT_EQ(target_bounds_a, child_a->bounds());
+  EXPECT_EQ(target_bounds_b, child_b->bounds());
+
+  // The parent should have been told to repaint as the animation progressed.
+  // The resulting rect is the union of the original and target bounds.
+  EXPECT_EQ(gfx::UnionRects(gfx::UnionRects(target_bounds_a, initial_bounds_a),
+                            gfx::UnionRects(target_bounds_b, initial_bounds_b)),
+            parent()->dirty_rect());
+}
+
 // Make sure an AnimationDelegate is deleted when canceled.
 TEST_F(BoundsAnimatorTest, DeleteDelegateOnCancel) {
   animator()->AnimateViewTo(child(), gfx::Rect(0, 0, 10, 10));

@@ -10,6 +10,7 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "ui/gfx/geometry/insets.h"
+#include "ui/views/layout/layout_changes.h"
 #include "ui/views/layout/layout_manager.h"
 
 namespace gfx {
@@ -151,6 +152,10 @@ class VIEWS_EXPORT BoxLayout : public LayoutManager {
   gfx::Size GetPreferredSize(const View* host) const override;
   int GetPreferredHeightForWidth(const View* host, int width) const override;
 
+  using LayoutChanges = std::vector<std::pair<View*, gfx::Rect>>;
+  LayoutChanges ComputeLayoutChanges(View* host) const;
+  void ApplyLayoutChanges(const LayoutChanges&) const;
+
  private:
   // This struct is used internally to "wrap" a child view in order to obviate
   // the need for the main layout logic to be fully aware of the per-view
@@ -175,7 +180,7 @@ class VIEWS_EXPORT BoxLayout : public LayoutManager {
     int GetHeightForWidth(int width) const;
     const gfx::Insets& margins() const { return margins_; }
     gfx::Size GetPreferredSize() const;
-    void SetBoundsRect(const gfx::Rect& bounds);
+    void SetMarginSpacing(gfx::Rect* bounds) const;
     View* view() const { return view_; }
     bool visible() const;
 

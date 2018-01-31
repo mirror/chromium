@@ -16,6 +16,7 @@
 #include "ui/gfx/animation/animation_delegate.h"
 #include "ui/gfx/animation/tween.h"
 #include "ui/gfx/geometry/rect.h"
+#include "ui/views/layout/layout_changes.h"
 #include "ui/views/views_export.h"
 
 namespace gfx {
@@ -48,6 +49,9 @@ class VIEWS_EXPORT BoundsAnimator : public gfx::AnimationDelegate,
   // started. If an AnimationDelegate has been set for |view| it is removed
   // (after being notified that the animation was canceled).
   void AnimateViewTo(View* view, const gfx::Rect& target);
+
+  // Animates multiple views using |AnimateViewTo|.
+  void AnimateLayoutChanges(const LayoutChanges&);
 
   // Similar to |AnimateViewTo|, but does not reset the animation, only the
   // target bounds. If |view| is not being animated this is the same as

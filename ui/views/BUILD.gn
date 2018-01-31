@@ -181,6 +181,7 @@ jumbo_component("views") {
     "layout/box_layout.h",
     "layout/fill_layout.h",
     "layout/grid_layout.h",
+    "layout/layout_changes.h",
     "layout/layout_manager.h",
     "layout/layout_provider.h",
     "linux_ui/device_scale_factor_observer.h",

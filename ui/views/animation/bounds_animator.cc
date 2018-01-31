@@ -71,6 +71,11 @@ void BoundsAnimator::AnimateViewTo(View* view, const gfx::Rect& target) {
   CleanupData(true, &existing_data, NULL);
 }
 
+void BoundsAnimator::AnimateLayoutChanges(const LayoutChanges& layout_changes) {
+  for (const std::pair<View*, gfx::Rect>& layout_change : layout_changes)
+    AnimateViewTo(layout_change.first, layout_change.second);
+}
+
 void BoundsAnimator::SetTargetBounds(View* view, const gfx::Rect& target) {
   if (!IsAnimating(view)) {
     AnimateViewTo(view, target);

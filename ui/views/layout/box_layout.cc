@@ -71,18 +71,16 @@ gfx::Size BoxLayout::ViewWrapper::GetPreferredSize() const {
   return preferred_size;
 }
 
-void BoxLayout::ViewWrapper::SetBoundsRect(const gfx::Rect& bounds) {
-  gfx::Rect new_bounds = bounds;
+void BoxLayout::ViewWrapper::SetMarginSpacing(gfx::Rect* bounds) const {
   if (!layout_->collapse_margins_spacing_) {
     if (layout_->orientation_ == Orientation::kHorizontal) {
-      new_bounds.set_x(bounds.x() + margins_.left());
-      new_bounds.set_width(std::max(0, bounds.width() - margins_.width()));
+      bounds->set_x(bounds->x() + margins_.left());
+      bounds->set_width(std::max(0, bounds->width() - margins_.width()));
     } else {
-      new_bounds.set_y(bounds.y() + margins_.top());
-      new_bounds.set_height(std::max(0, bounds.height() - margins_.height()));
+      bounds->set_y(bounds->y() + margins_.top());
+      bounds->set_height(std::max(0, bounds->height() - margins_.height()));
     }
   }
-  view_->SetBoundsRect(new_bounds);
 }
 
 bool BoxLayout::ViewWrapper::visible() const {
@@ -126,6 +124,13 @@ void BoxLayout::SetDefaultFlex(int default_flex) {
 
 void BoxLayout::Layout(View* host) {
   DCHECK_EQ(host_, host);
+  LayoutChanges layout_changes = ComputeLayoutChanges(host);
+  for (const std::pair<View*, gfx::Rect>& layout_change : layout_changes)
+    layout_change.first->SetBoundsRect(layout_change.second);
+}
+
+LayoutChanges BoxLayout::ComputeLayoutChanges(View* host) const {
+  LayoutChanges result;
   gfx::Rect child_area(host->GetContentsBounds());
 
   AdjustMainAxisForMargin(&child_area);
@@ -135,7 +140,7 @@ void BoxLayout::Layout(View* host) {
     max_cross_axis_margin = CrossAxisMaxViewMargin();
   }
   if (child_area.IsEmpty())
-    return;
+    return result;
 
   int total_main_axis_size = 0;
   int num_visible = 0;
@@ -157,7 +162,7 @@ void BoxLayout::Layout(View* host) {
   }
 
   if (!num_visible)
-    return;
+    return result;
 
   total_main_axis_size -= between_child_spacing_;
   // Free space can be negative indicating that the views want to overflow.
@@ -273,12 +278,16 @@ void BoxLayout::Layout(View* host) {
 
     // Clamp child view bounds to |child_area|.
     bounds.Intersect(min_child_area);
-    child.SetBoundsRect(bounds);
+    child.SetMarginSpacing(&bounds);
+    if (child.view()->bounds() != bounds)
+      result.push_back(std::make_pair(child.view(), bounds));
   }
 
   // Flex views should have grown/shrunk to consume all free space.
   if (flex_sum)
     DCHECK_EQ(total_padding, main_free_space);
+
+  return result;
 }
 
 gfx::Size BoxLayout::GetPreferredSize(const View* host) const {
