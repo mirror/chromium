@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "2805659d_03c55d45",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-31T19:20:38Z",
+      "side": 1,
+      "message": "I agree about keeping the source close so updating one clearly requires updating the other.\n\nThere is probably a gradation of how obvious it is. At the end of the day, they are always separate code paths. So there has to be some amount of gray area.\n#ifdef / #else, default_implementation.cc / neon_implementation.cc, and the template / policy stuff all do the same thing (two separate code paths).\n\nThe #ifdef / #else and template / policy allow the code to at least live in the same file. That is probably is probably most clear. Both of these have the drawback where changes inside the not-taken code path still require the whole .cpp to be rebuilt.\n\ndefault_implementation.cc / neon_implementation.cc might be just over the edge of \"clearly requires updating the other\", I guess. But no matter what, the coder and reviewer need to make sure both code paths are updated.\n\n\nThe original comment was aiming at fixing the recompilation problem. But if we are using inlined function and templates, we\u0027re back to that same problem. And we\u0027ve added complication. Maybe we should just undo this. It was a worthwhile investigation but it seems to be adding more problems than it is solving.",
+      "parentUuid": "ae3703c6_42d0ebe7",
+      "range": {
+        "startLine": 501,
+        "startChar": 0,
+        "endLine": 510,
+        "endChar": 6
+      },
+      "revId": "9ffc11e7625ed0ab35bb9097113783b2f838c6a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23a0459d_b70b0e97",
         "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
         "patchSetId": 4

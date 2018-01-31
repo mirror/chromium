@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0b90084a_63e2b4c1",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/SetRGBA.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-31T19:20:38Z",
+      "side": 1,
+      "message": "Jonathan had tried that. That was my original suggestion.\nIt caused a regression because of the extra function call for each row.\n\nThat is why these functions are in a header and marked inline.\n\nMore here: https://chromium-review.googlesource.com/c/chromium/src/+/827136/4/third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp#510",
+      "parentUuid": "4e0970e2_5b493b9a",
+      "revId": "9cf7ae652d470b3f2d997cb6b1d0d7c8df67f840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "55ae9090_16546972",
         "filename": "third_party/WebKit/Source/platform/image-decoders/png/SetRGBA.h",
         "patchSetId": 6
@@ -70,6 +88,29 @@
       "writtenOn": "2018-01-31T18:53:20Z",
       "side": 1,
       "message": "Somewhere in here it\u0027d be nice to remind us what these functions are supposed to do.  It\u0027s something like\n\n// Swizzle RGBA to BGRA, and return the AND of all alpha channels.\n\nOr alternatively, let\u0027s put them near blink::ImageFrame::SetRGBARaw() itself so that we can just read that as a reference?",
+      "revId": "9cf7ae652d470b3f2d997cb6b1d0d7c8df67f840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a2bc711_e9f08fc3",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/SetRGBA.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-31T19:20:38Z",
+      "side": 1,
+      "message": "This solution works for me. Maybe rename the template param from \"optimized\" to \"use_vectorized_implementation\" or something more descriptive?\n\nAlso I see that even if someone specified \u0027true\u0027 but were on x86 for example, it would use the default implementation.\n\nI don\u0027t want to keep adding suggestions and never land your patch. But if you want (totally happy to not do this or do it in a follow-up patch), this might fit more nicely as policy based design:\n\ntemplate \u003cRowFillerPolicy\u003e\nclass RowFiller : public RowFillerPolicy {\n}\n\nclass NaiveRowFillerPolicy {\n public:\n  static SetRGBARawRow(...) { ... };\n  static SetRGBARawRowNoAlpha(...) { ... };\n}\n\nclass VectorizedRowFillerPolicy {\n public:\n  static SetRGBARawRow(...) { ... };\n  static SetRGBARawRowNoAlpha(...) { ... };\n}\n\n#ifdef NEON\ntypedef OurRowFiller RowFiller\u003cVectorizedRowFillerPolicy\u003e;\n#else\ntypedef OurRowFiller RowFiller\u003cNaiveRowFillerPolicy\u003e;\n#endif\n\nOurRowFiller foo;\nfoo.SetRGBARawRow(...);",
+      "range": {
+        "startLine": 40,
+        "startChar": 26,
+        "endLine": 40,
+        "endChar": 30
+      },
       "revId": "9cf7ae652d470b3f2d997cb6b1d0d7c8df67f840",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
