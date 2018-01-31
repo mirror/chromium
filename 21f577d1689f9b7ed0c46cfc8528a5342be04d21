@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cff8dda5_3cca2f53",
+        "filename": "ui/base/ui_base_features.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-01-31T17:08:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fd6e5c5_a149deb1",
+      "range": {
+        "startLine": 15,
+        "startChar": 42,
+        "endLine": 15,
+        "endChar": 60
+      },
+      "revId": "21f577d1689f9b7ed0c46cfc8528a5342be04d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80bddc60_99812263",
         "filename": "ui/base/win/direct_manipulation.h",
         "patchSetId": 38
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f8893f05_cd388cbe",
+        "filename": "ui/base/win/direct_manipulation.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-01-31T17:08:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80bddc60_99812263",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 18
+      },
+      "revId": "21f577d1689f9b7ed0c46cfc8528a5342be04d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14704edd_d4986f66",
         "filename": "ui/base/win/direct_manipulation.h",
         "patchSetId": 38
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-31T00:30:58Z",
       "side": 1,
       "message": "Is it possible to play with the similarity to see what you\u0027ve actually changed from the old files?",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 30
+      },
+      "revId": "21f577d1689f9b7ed0c46cfc8528a5342be04d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe51be8c_b7d5512d",
+        "filename": "ui/base/win/direct_manipulation.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-01-31T17:08:05Z",
+      "side": 1,
+      "message": "Do you mean move DirectManipulationHandler to cc file?",
+      "parentUuid": "14704edd_d4986f66",
       "range": {
         "startLine": 21,
         "startChar": 6,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "9ae3defa_85122a1d",
+        "filename": "ui/base/win/direct_manipulation.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-01-31T17:08:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5967034_3bf4a2a7",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 31
+      },
+      "revId": "21f577d1689f9b7ed0c46cfc8528a5342be04d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f607ca53_1f849b09",
         "filename": "ui/base/win/direct_manipulation.h",
         "patchSetId": 38
@@ -114,6 +210,30 @@
       "revId": "21f577d1689f9b7ed0c46cfc8528a5342be04d21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "743cf008_706c595a",
+        "filename": "ui/base/win/direct_manipulation.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-01-31T17:08:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f607ca53_1f849b09",
+      "range": {
+        "startLine": 48,
+        "startChar": 28,
+        "endLine": 49,
+        "endChar": 34
+      },
+      "revId": "21f577d1689f9b7ed0c46cfc8528a5342be04d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "52d08718_f72adfbe",
+        "filename": "ui/base/win/direct_manipulation.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-01-31T17:08:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c121a2b2_7766a9a8",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 2
+      },
+      "revId": "21f577d1689f9b7ed0c46cfc8528a5342be04d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c6c6572_8c6b4b88",
         "filename": "ui/base/win/window_event_target.h",
         "patchSetId": 38
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "6232a51c_15fcab63",
+        "filename": "ui/base/win/window_event_target.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-01-31T17:08:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c6c6572_8c6b4b88",
+      "range": {
+        "startLine": 93,
+        "startChar": 5,
+        "endLine": 93,
+        "endChar": 15
+      },
+      "revId": "21f577d1689f9b7ed0c46cfc8528a5342be04d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5271830_d42a5f4c",
         "filename": "ui/events/event_constants.h",
         "patchSetId": 38
@@ -180,6 +348,24 @@
     },
     {
       "key": {
+        "uuid": "f11a49f8_e22e4f8b",
+        "filename": "ui/events/event_constants.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-01-31T17:08:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5271830_d42a5f4c",
+      "revId": "21f577d1689f9b7ed0c46cfc8528a5342be04d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e054c94_368233ed",
         "filename": "ui/views/win/hwnd_message_handler.cc",
         "patchSetId": 38
@@ -191,6 +377,30 @@
       "writtenOn": "2018-01-31T00:30:58Z",
       "side": 1,
       "message": "Where does the 120 come from? Add comments.",
+      "range": {
+        "startLine": 1066,
+        "startChar": 32,
+        "endLine": 1066,
+        "endChar": 68
+      },
+      "revId": "21f577d1689f9b7ed0c46cfc8528a5342be04d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d47bbef9_4af6a9d6",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-01-31T17:08:05Z",
+      "side": 1,
+      "message": "Currently we do not have pinch zoom support on Windows touchpad so we receive a ctrl+wheel event. This patch we fake a ctrl+wheel event here to keep this behavior. I have a separate patch to support pinch zoom then we will send gesture event here.",
+      "parentUuid": "9e054c94_368233ed",
       "range": {
         "startLine": 1066,
         "startChar": 32,
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "bb2e51aa_f7175372",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 1075,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-01-31T17:08:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd4088e1_dccf9baa",
+      "range": {
+        "startLine": 1074,
+        "startChar": 2,
+        "endLine": 1075,
+        "endChar": 68
+      },
+      "revId": "21f577d1689f9b7ed0c46cfc8528a5342be04d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d07b5e12_48c93a6f",
         "filename": "ui/views/win/hwnd_message_handler.cc",
         "patchSetId": 38
@@ -237,6 +471,30 @@
       "writtenOn": "2018-01-31T00:30:58Z",
       "side": 1,
       "message": "Why do you use control down here?",
+      "range": {
+        "startLine": 1078,
+        "startChar": 62,
+        "endLine": 1078,
+        "endChar": 77
+      },
+      "revId": "21f577d1689f9b7ed0c46cfc8528a5342be04d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "205a19ba_66d080f0",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 1078,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-01-31T17:08:05Z",
+      "side": 1,
+      "message": "Same as below.",
+      "parentUuid": "d07b5e12_48c93a6f",
       "range": {
         "startLine": 1078,
         "startChar": 62,
@@ -263,6 +521,24 @@
       "revId": "21f577d1689f9b7ed0c46cfc8528a5342be04d21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d98400e_dedb5ae4",
+        "filename": "ui/views/win/hwnd_message_handler.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-01-31T17:08:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f417bf8b_ee1ff45b",
+      "revId": "21f577d1689f9b7ed0c46cfc8528a5342be04d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
