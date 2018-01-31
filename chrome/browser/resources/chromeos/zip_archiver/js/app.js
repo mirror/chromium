@@ -76,6 +76,12 @@ unpacker.app = {
   volumeLoadedPromises: {},
 
   /**
+   * A map to indicate whether a volume's metadata load is finished.
+   * @type {!Object<!unpacker.types.FileSystemId, boolean>}
+   */
+  volumeLoadFinished: {},
+
+  /**
    * A Promise used to postpone all calls to fileSystemProvider API after
    * the NaCl module loads.
    * @type {?Promise}
@@ -739,10 +745,24 @@ unpacker.app = {
                       opt_onSuccess(fileSystemId);
                   };
 
+                  if (unpacker.app.volumeLoadedPromises[fileSystemId] &&
+                      !unpacker.app.volumeLoadFinished[fileSystemId]) {
+                    onError({message: 'EXISTS'});
+                    chrome.notifications.create(
+                        fileSystemId, {
+                          type: 'basic',
+                          iconUrl: chrome.runtime.getManifest().icons[128],
+                          title: entry.name,
+                          message: stringData['ZIP_ARCHIVER_MOUNTING_MESSAGE'],
+                        },
+                        function() {});
+                    return;
+                  }
                   var loadPromise = unpacker.app.loadVolume_(
                       fileSystemId, entry, {}, null /* passphrase */);
                   loadPromise
                       .then(function() {
+                        unpacker.app.volumeLoadFinished[fileSystemId] = true;
                         chrome.fileSystemProvider.mount(
                             {
                               fileSystemId: fileSystemId,
@@ -764,6 +784,7 @@ unpacker.app = {
                       });
 
                   unpacker.app.volumeLoadedPromises[fileSystemId] = loadPromise;
+                  unpacker.app.volumeLoadFinished[fileSystemId] = false;
                 }.bind(null, item.entry));
           });
         })
