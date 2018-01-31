@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc0b4545_9c51b83f",
+        "filename": "cc/raster/gpu_raster_buffer_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-31T19:08:38Z",
+      "side": 1,
+      "message": "Both here and in OneCopy, I changed this to a DCHECK because the early out seems to be unneeded to me. OrderingBarrier() is called before scheduling any tasks.\n\nBut then this crashed cuz when a task is done raster and given to the ResourceProvider, we were zeroing out the mailbox. Which would have made this sync token become empty again, making IsResourceReadyToDraw give the wrong answer~! So I have stopped zeroing out the mailbox in ResourcePool.",
+      "revId": "07af5a747cea00ff2a6e8ed6c501b293bd813d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85a36d79_302dd5e4",
+        "filename": "cc/raster/one_copy_raster_buffer_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-31T19:08:38Z",
+      "side": 1,
+      "message": "We had to add a general |overlay_candidate| field to the GpuBacking, as its now determined based on context caps and settings.",
+      "revId": "07af5a747cea00ff2a6e8ed6c501b293bd813d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80107bae_fd2c953d",
+        "filename": "cc/raster/zero_copy_raster_buffer_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-31T19:08:38Z",
+      "side": 1,
+      "message": "zero copy is always overlay_candidate, as before.",
+      "revId": "07af5a747cea00ff2a6e8ed6c501b293bd813d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17d8657e_69f0baeb",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-31T19:08:38Z",
+      "side": 1,
+      "message": "Coming soon to a CL near you.",
+      "revId": "07af5a747cea00ff2a6e8ed6c501b293bd813d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5585b38f_2bc22b44",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-31T19:08:38Z",
+      "side": 1,
+      "message": "It probably doesn\u0027t make sense to refer to the provider anymore. I should say pool_%d instead and make an atomic ID here?",
+      "revId": "07af5a747cea00ff2a6e8ed6c501b293bd813d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51a37b69_d2007757",
+        "filename": "cc/resources/resource_pool.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-31T19:08:38Z",
+      "side": 1,
+      "message": "This signature difference is how the caller says that the pool should make gpu resources atm, but the hint is no longer used.",
+      "revId": "07af5a747cea00ff2a6e8ed6c501b293bd813d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

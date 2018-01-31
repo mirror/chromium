@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f1282cc_1bb97ce7",
+        "filename": "cc/resources/layer_tree_resource_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-31T19:08:38Z",
+      "side": 0,
+      "message": "This method moved to viz/common/ so that the TextureAllocation helper can use it.",
+      "revId": "81a3a39fcecdadd0918c0b6614e80953b7e74745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3cedd07_92cd7e97",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-31T19:08:38Z",
+      "side": 0,
+      "message": "No resources are owned in ResourceProvider anymore, so no parent nodes.",
+      "revId": "81a3a39fcecdadd0918c0b6614e80953b7e74745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
