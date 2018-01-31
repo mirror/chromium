@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Page Title</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="resources/test-helpers.sub.js?pipe=sub"></script>
+<body>
+<script>
+promise_test(t => {
+  const TAINTED = 'TAINTED';
+  const NOT_TAINTED = 'TAINTED';
+  const LOAD_ERROR = 'LOAD_ERROR';
+  let registration;
+  let frame;
+  const script = 'resources/range-request-to-different-origins-worker.js';
+  const scope = 'resources/blank.html';
+  const url = 'fetch-access-control.py?VIDEO&PartialContent';
+  return service_worker_unregister_and_register(t, script, scope)
+    .then(r => {
+        registration = r;
+        return wait_for_state(t, registration.installing, 'activated')
+      })
+    .then(() => {
+        return with_iframe(scope);
+      })
+    .then(f => {
+        frame = f;
+        frame_document = frame.contentWindow.document;
+        return new Promise(resolve => {
+            const video = frame_document.createElement('video');
+            video.autoplay = true;
+            video.onplay = function() {
+              try {
+                const canvas = frame_document.createElement('canvas');
+                canvas.width = 100;
+                canvas.height = 100;
+                const context = canvas.getContext('2d');
+                context.drawImage(video, 0, 0);
+                context.getImageData(0, 0, 100, 100);
+                resolve(NOT_TAINTED);
+              } catch (e) {
+                resolve(TAINTED);
+              }
+            };
+            video.onerror = function() {
+              resolve(LOAD_ERROR);
+            }
+            video.src = url;
+        });
+      })
+    .then(result => {
+        assert_equals(result, TAINTED);
+        frame.remove();
+        registration.unregister();
+      });
+  })
+</script>
+</body>

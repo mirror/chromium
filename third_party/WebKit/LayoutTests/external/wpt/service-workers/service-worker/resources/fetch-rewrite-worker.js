@@ -90,6 +90,7 @@ self.addEventListener('fetch', function(event) {
         var request = event.request;
         if (url) {
           request = new Request(url, init);
+          console.log('fetching: ' + request.url);
         }
         fetch(request).then(function(response) {
           var expectedType = params['expected_type'];

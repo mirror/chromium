@@ -34,8 +34,38 @@ def main(request, response):
         return headers, body
 
     if "VIDEO" in request.GET:
+        print '>>>>>>>>>>> ' + request.url
         headers.append(("Content-Type", "video/webm"))
         body = open(os.path.join(request.doc_root, "media", "movie_5.ogv"), "rb").read()
+        length = len(body)
+        if "PartialContent" in request.GET:
+          if length < 1:
+            return 500, headers, "file is too small for range requests"
+          start = 0
+          end = length - 1
+          if "Range" in request.headers:
+            range_header = request.headers["Range"]
+            prefix = "bytes="
+            split_header = range_header[len(prefix):].split("-")
+            # The first request might be "bytes=0-". We want to force a range
+            # request, so just return the first byte.
+            if split_header[0] == "0" and split_header[1] == "":
+              end = start
+            # Otherwise, it is a range request. Respect the values sent.
+            if split_header[0] != "":
+              start = int(split_header[0])
+            if split_header[1] != "":
+              end = int(split_header[1])
+          else:
+            # The request doesn't have a range. Force a range request by
+            # returning the first byte.
+            end = start
+
+          headers.append(("Accept-Ranges", "bytes"))
+          headers.append(("Content-Length", str(end -start + 1)))
+          headers.append(("Content-Range", "bytes %d-%d/%d" % (start, end, length)))
+          chunk = body[start:(end+1)]
+          return 206, headers, chunk
         return headers, body
 
     username = request.auth.username if request.auth.username else "undefined"

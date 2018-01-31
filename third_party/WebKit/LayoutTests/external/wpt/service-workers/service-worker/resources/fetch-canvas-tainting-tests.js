@@ -57,6 +57,7 @@ function do_canvas_tainting_tests(params) {
 
   // Reject tests. Add '&reject' so the service worker responds with a rejected promise.
   // A load error is expected.
+  /*
   canvas_taint_test(resource_url + '&reject', '', LOAD_ERROR);
   canvas_taint_test(resource_url + '&reject', 'anonymous', LOAD_ERROR);
   canvas_taint_test(resource_url + '&reject', 'use-credentials', LOAD_ERROR);
@@ -139,11 +140,13 @@ function do_canvas_tainting_tests(params) {
 
   // Opaque response tests. Set &url to the cross-origin URL, and &mode to
   // 'no-cors' so we expect an opaque response.
+  */
   canvas_taint_test(
       resource_url +
           '&mode=no-cors&url=' + encodeURIComponent(remote_resource_url),
       '',
       TAINTED);
+  /*
   canvas_taint_test(
       resource_url +
           '&mode=no-cors&url=' + encodeURIComponent(remote_resource_url),
@@ -238,4 +241,5 @@ function do_canvas_tainting_tests(params) {
               '&ACACredentials=true&ACAOrigin=' + host_info['HTTPS_ORIGIN']),
       'use-credentials',
       NOT_TAINTED);
+  */
 }
