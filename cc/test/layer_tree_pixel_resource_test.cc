@@ -66,7 +66,7 @@ void LayerTreeHostPixelResourceTest::CreateResourceAndRasterBufferProvider(
           resource_provider, shared_bitmap_manager);
       *resource_pool = std::make_unique<ResourcePool>(
           resource_provider, std::move(task_runner),
-          ResourcePool::kDefaultExpirationDelay, false);
+          ResourcePool::kDefaultExpirationDelay, false, false);
       break;
     case GPU:
       EXPECT_TRUE(compositor_context_provider);
@@ -79,8 +79,7 @@ void LayerTreeHostPixelResourceTest::CreateResourceAndRasterBufferProvider(
           viz::PlatformColor::BestTextureFormat(), false);
       *resource_pool = std::make_unique<ResourcePool>(
           resource_provider, std::move(task_runner),
-          viz::ResourceTextureHint::kFramebuffer,
-          ResourcePool::kDefaultExpirationDelay, false);
+          ResourcePool::kDefaultExpirationDelay, true, false);
       break;
     case ZERO_COPY:
       EXPECT_TRUE(compositor_context_provider);
@@ -92,8 +91,7 @@ void LayerTreeHostPixelResourceTest::CreateResourceAndRasterBufferProvider(
           compositor_context_provider, viz::PlatformColor::BestTextureFormat());
       *resource_pool = std::make_unique<ResourcePool>(
           resource_provider, std::move(task_runner),
-          gfx::BufferUsage::GPU_READ_CPU_READ_WRITE,
-          ResourcePool::kDefaultExpirationDelay, false);
+          ResourcePool::kDefaultExpirationDelay, true, false);
       break;
     case ONE_COPY:
       EXPECT_TRUE(compositor_context_provider);
@@ -107,8 +105,7 @@ void LayerTreeHostPixelResourceTest::CreateResourceAndRasterBufferProvider(
           viz::PlatformColor::BestTextureFormat());
       *resource_pool = std::make_unique<ResourcePool>(
           resource_provider, std::move(task_runner),
-          viz::ResourceTextureHint::kDefault,
-          ResourcePool::kDefaultExpirationDelay, false);
+          ResourcePool::kDefaultExpirationDelay, true, false);
       break;
   }
 }
