@@ -139,6 +139,8 @@ class DesktopMediaPickerControllerTest : public CocoaTest {
         DesktopMediaID(DesktopMediaID::TYPE_WEB_CONTENTS, id));
   }
 
+  void RemoveTab(int id) { tab_list_->RemoveSource(id); }
+
  protected:
   void OnResult(DesktopMediaID source) {
     EXPECT_FALSE(callback_called_);
@@ -233,6 +235,27 @@ TEST_F(DesktopMediaPickerControllerTest, ClickShareTab) {
   [[controller_ shareButton] performClick:nil];
   EXPECT_TRUE(WaitForCallback());
   EXPECT_EQ(tab_list_->GetSource(1).id, source_reported_);
+}
+
+TEST_F(DesktopMediaPickerControllerTest, ShareDisabledOnTabRemove) {
+  [controller_ showWindow:nil];
+  ChangeType(DesktopMediaID::TYPE_WEB_CONTENTS);
+  AddTab(0);
+  tab_list_->SetSourceThumbnail(0);
+  AddTab(1);
+  tab_list_->SetSourceThumbnail(1);
+
+  EXPECT_EQ(2U, [[controller_ tabItems] count]);
+  EXPECT_FALSE([[controller_ shareButton] isEnabled]);
+
+  constexpr int tab_to_remove = 0;
+  NSIndexSet* index_set = [NSIndexSet indexSetWithIndex:tab_to_remove];
+  [[controller_ tabBrowser] selectRowIndexes:index_set byExtendingSelection:NO];
+  EXPECT_TRUE([[controller_ shareButton] isEnabled]);
+
+  RemoveTab(tab_to_remove);
+
+  EXPECT_FALSE([[controller_ shareButton] isEnabled]);
 }
 
 TEST_F(DesktopMediaPickerControllerTest, ClickCancel) {
