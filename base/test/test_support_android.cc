@@ -138,7 +138,10 @@ bool GetTestProviderPath(int key, base::FilePath* result) {
   switch (key) {
     // TODO(agrieve): Stop overriding DIR_ANDROID_APP_DATA.
     // https://crbug.com/617734
+    // Instead DIR_ASSETS should be used to discover assets file location in
+    // tests.
     case base::DIR_ANDROID_APP_DATA:
+    case base::DIR_ASSETS:
     case base::DIR_SOURCE_ROOT:
       CHECK(g_test_data_dir != nullptr);
       *result = *g_test_data_dir;
