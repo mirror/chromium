@@ -66,6 +66,7 @@
 #include "content/browser/renderer_host/input/timeout_monitor.h"
 #include "content/browser/renderer_host/media/audio_input_delegate_impl.h"
 #include "content/browser/renderer_host/media/media_devices_dispatcher_host.h"
+#include "content/browser/renderer_host/media/media_stream_dispatcher_host.h"
 #include "content/browser/renderer_host/render_process_host_impl.h"
 #include "content/browser/renderer_host/render_view_host_delegate.h"
 #include "content/browser/renderer_host/render_view_host_delegate_view.h"
@@ -3217,6 +3218,12 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
         base::Bind(&MediaDevicesDispatcherHost::Create, GetProcess()->GetID(),
                    GetRoutingID(),
                    base::Unretained(media_stream_manager)),
+        BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
+
+    registry_->AddInterface(
+        base::BindRepeating(&MediaStreamDispatcherHost::Create,
+                            GetProcess()->GetID(), GetRoutingID(),
+                            base::Unretained(media_stream_manager)),
         BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
   }
 #endif
