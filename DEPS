@@ -298,7 +298,7 @@ deps = {
     Var('boringssl_git') + '/boringssl.git' + '@' +  Var('boringssl_revision'),
 
   'src/third_party/breakpad/breakpad':
-    Var('chromium_git') + '/breakpad/breakpad.git' + '@' + '4a02ec03038d9d6f870f42d5070591512f488db0',
+    Var('chromium_git') + '/breakpad/breakpad.git' + '@' + 'fd99ff473cc5ea247e24651abc91255cff388aa2',
 
   'src/third_party/catapult':
     Var('chromium_git') + '/catapult.git' + '@' + Var('catapult_revision'),
