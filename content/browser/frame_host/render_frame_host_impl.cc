@@ -575,6 +575,17 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
 
   ax_tree_id_ = ui::AXTreeIDRegistry::GetInstance()->GetOrCreateAXTreeID(
       GetProcess()->GetID(), routing_id_);
+
+  // Content-Security-Policy: The CSP source 'self' is usually the origin of the
+  // current document. Immediately after an new window or new frame is created,
+  // there are no current document. In this case, the origin used is the one of
+  // the opener (in case of a new window) or the parent (in case of a new
+  // iframe). It will be replaced by current document as soon as it is loaded.
+  FrameTreeNode* frame_opener = frame_tree_node_->opener()
+                                    ? frame_tree_node_->opener()
+                                    : frame_tree_node_->parent();
+  if (frame_opener)
+    CSPContext::SetSelf(frame_opener->current_origin());
 }
 
 RenderFrameHostImpl::~RenderFrameHostImpl() {
