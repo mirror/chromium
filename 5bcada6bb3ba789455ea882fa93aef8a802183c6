@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e943f980_4f2ab2a9",
+        "filename": "services/service_manager/public/cpp/service_context.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-31T22:25:15Z",
+      "side": 1,
+      "message": "Yeah maybe we should rename this to something else, possible something egregious like SetOnServiceManagerConnectionLostHandler(). It\u0027s not used often, mostly for supporting framework code.\n\nNo need to do anything in this CL though.",
+      "revId": "5bcada6bb3ba789455ea882fa93aef8a802183c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df3b554c_fd65d67e",
+        "filename": "services/service_manager/public/cpp/service_context.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-31T22:25:15Z",
+      "side": 1,
+      "message": "nit: Not sure this documentation is very useful, or that any documentation is really necessary here",
+      "revId": "5bcada6bb3ba789455ea882fa93aef8a802183c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
