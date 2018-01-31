@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59e4924d_ede2d640",
+        "filename": "chromeos/process_proxy/process_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-31T22:34:19Z",
+      "side": 1,
+      "message": "Can you instead add a userhash argument to LaunchProcess, and pass it from TerminalPrivateOpenTerminalProcessFunction::Run, where you can get the user hash from the profile, and which is called on UI thread.",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 239,
+        "endChar": 56
+      },
+      "revId": "1738d63104937bbd29fa97e02493e4263756c3ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
