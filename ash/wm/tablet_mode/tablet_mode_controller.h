@@ -150,8 +150,9 @@ class ASH_EXPORT TabletModeController
   void OnGetSwitchStates(
       base::Optional<chromeos::PowerManagerClient::SwitchStates> result);
 
-  // Returns true if the lid was recently opened.
-  bool WasLidOpenedRecently() const;
+  // Returns true if the lid was recently fully opened. See
+  // |last_lid_fully_opened_time_| for details.
+  bool WasLidFullyOpenedRecently() const;
 
   // Enables TabletModeWindowManager, and determines the current state of
   // rotation lock.
@@ -198,10 +199,13 @@ class ASH_EXPORT TabletModeController
   base::TimeDelta total_tabletmode_time_;
   base::TimeDelta total_non_tabletmode_time_;
 
-  // Tracks the last time we received a lid open event. This is used to suppress
-  // erroneous accelerometer readings as the lid is opened but the accelerometer
-  // reports readings that make the lid to appear near fully open.
-  base::TimeTicks last_lid_open_time_;
+  // Tracks the last time the accelerometer readings of the lid angle enter the
+  // fully opened range [340, 360]. This is used to prevent entering tablet mode
+  // triggered by the erroneous angle readings (e.g. 358.5 degrees) when closing
+  // or opening the lid. The lid is considered recently fully opened only if the
+  // angle readings continuously fall into the fully opened range for more than
+  // 2 seconds. Otherwise, the angle readings will be ignored.
+  base::TimeTicks last_lid_fully_opened_time_;
 
   // Source for the current time in base::TimeTicks.
   std::unique_ptr<base::TickClock> tick_clock_;
