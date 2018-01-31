@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "bd1c2faf_fcb4dea4",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 984,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-31T01:42:02Z",
+      "side": 1,
+      "message": "Just to be clear: *this* block of code runs in the compositor service, but the inputs to this are *only* controlled by the browser? It\u0027s hard for me to tell that\u0027s the case currently (or that it will remain so for the forseeable future).\n\nAlso, it\u0027s not clear to me the same reasoning about overflow is true for lines 987-999: the output of the multiplication is an int, and it\u0027s not clear to me that it couldn\u0027t overflow in some way.",
+      "parentUuid": "41a4909f_639f1779",
+      "revId": "d594b34e1ce45bce0a41a9c401584443e229e3db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "768e7723_c76b181c",
         "filename": "cc/trees/property_tree.cc",
         "patchSetId": 5
