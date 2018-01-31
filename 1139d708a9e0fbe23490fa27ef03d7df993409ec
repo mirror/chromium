@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "6909be99_671a6961",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T16:58:01Z",
+      "side": 1,
+      "message": "Thanks, that makes sense.\n\nMy confusion came from not understanding the current structure under PasswordManager.Android.PasswordCredentialEntry -- the \"Viewed\" is meant as opening the fragment, not as viewing the password value (which has its own sub-histogram).\n\nI don\u0027t see any concerns with the current approach.",
+      "parentUuid": "87747967_bfd446ad",
+      "range": {
+        "startLine": 11,
+        "startChar": 4,
+        "endLine": 11,
+        "endChar": 23
+      },
+      "revId": "1139d708a9e0fbe23490fa27ef03d7df993409ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf5ed8d7_5f33af21",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
         "patchSetId": 1
