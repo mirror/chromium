@@ -29,6 +29,10 @@ interface SVGElement : Element {
     // https://drafts.csswg.org/cssom/#the-elementcssinlinestyle-interface
     [SameObject, PutForwards=cssText] readonly attribute CSSStyleDeclaration style;
 
+    // Typed OM
+    // https://drafts.css-houdini.org/css-typed-om/#inline-stylepropertymap-objects
+    [RuntimeEnabled=CSSTypedOM, SameObject, MeasureAs=CSSTypedOMStylePropertyMap] readonly attribute StylePropertyMap attributeStyleMap;
+
     readonly attribute SVGSVGElement? ownerSVGElement;
     readonly attribute SVGElement? viewportElement;
     [CustomElementCallbacks] attribute long tabIndex;

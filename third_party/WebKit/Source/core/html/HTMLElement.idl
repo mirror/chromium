@@ -58,6 +58,10 @@ interface HTMLElement : Element {
     // https://drafts.csswg.org/cssom/#the-elementcssinlinestyle-interface
     [SameObject, PerWorldBindings, PutForwards=cssText] readonly attribute CSSStyleDeclaration style;
 
+    // Typed OM
+    // https://drafts.css-houdini.org/css-typed-om/#inline-stylepropertymap-objects
+    [RuntimeEnabled=CSSTypedOM, SameObject, MeasureAs=CSSTypedOMStylePropertyMap] readonly attribute StylePropertyMap attributeStyleMap;
+
     // Non-standard APIs
     [CEReactions, CustomElementCallbacks, RaisesException=Setter, MeasureAs=HTMLElementInnerText] attribute [TreatNullAs=NullString] DOMString innerText;
     [CEReactions, CustomElementCallbacks, RaisesException=Setter, MeasureAs=HTMLElementOuterText] attribute [TreatNullAs=NullString] DOMString outerText;
