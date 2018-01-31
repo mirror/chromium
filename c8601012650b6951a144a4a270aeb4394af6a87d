@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec985048_78b52f0c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1109,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-31T14:16:38Z",
+      "side": 1,
+      "message": "I\u0027m wondering whether we could move this into safeExtraCallback() as well... onBottomBarScrollStateChanged() doesn\u0027t actually check |callback| for null, but maybe it should (or maybe the whole null check isn\u0027t necessary in the first place?). Benoit, WDYT?",
+      "range": {
+        "startLine": 1108,
+        "startChar": 8,
+        "endLine": 1109,
+        "endChar": 43
+      },
+      "revId": "c8601012650b6951a144a4a270aeb4394af6a87d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de477c58_bab5cbe2",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/CustomTabActivityTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-31T14:16:38Z",
+      "side": 1,
+      "message": "Nit: Semaphore totally works from a technical standpoint, but a more idiomatic way is to use CallbackHelper in tests. (I\u0027m trying a bit to standardize the various ways that we have for thread synchronization and callbacks)",
+      "range": {
+        "startLine": 683,
+        "startChar": 8,
+        "endLine": 683,
+        "endChar": 17
+      },
+      "revId": "c8601012650b6951a144a4a270aeb4394af6a87d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63831bd2_9e3b7cf4",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/CustomTabActivityTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-01-31T14:16:38Z",
+      "side": 1,
+      "message": "Nit: Space before the opening brace.",
+      "range": {
+        "startLine": 684,
+        "startChar": 77,
+        "endLine": 684,
+        "endChar": 78
+      },
+      "revId": "c8601012650b6951a144a4a270aeb4394af6a87d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
