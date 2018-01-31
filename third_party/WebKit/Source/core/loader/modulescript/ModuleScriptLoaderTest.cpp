@@ -115,6 +115,10 @@ class ModuleScriptLoaderTestModulator final : public DummyModulator {
 
   ResourceFetcher* Fetcher() const { return fetcher_.Get(); }
 
+  void RunFetchContextTasksUntilIdle() {
+    static_cast<MockFetchContext&>(fetcher_->Context()).RunTasksUntilIdle();
+  }
+
   void Trace(blink::Visitor*) override;
 
  private:
@@ -209,8 +213,11 @@ TEST_F(ModuleScriptLoaderTest, FetchDataURL) {
   TestModuleScriptLoaderClient* client = new TestModuleScriptLoaderClient;
   TestFetchDataURL(client);
 
-  EXPECT_TRUE(client->WasNotifyFinished())
-      << "ModuleScriptLoader should finish synchronously.";
+  EXPECT_FALSE(client->WasNotifyFinished())
+      << "ModuleScriptLoader should finish asynchronously.";
+  GetModulator()->RunFetchContextTasksUntilIdle();
+
+  EXPECT_TRUE(client->WasNotifyFinished());
   ASSERT_TRUE(client->GetModuleScript());
   EXPECT_FALSE(client->GetModuleScript()->HasEmptyRecord());
   EXPECT_FALSE(client->GetModuleScript()->HasParseError());
@@ -223,6 +230,8 @@ TEST_F(ModuleScriptLoaderTest, FetchDataURL_OnWorklet) {
 
   EXPECT_FALSE(client1->WasNotifyFinished())
       << "ModuleScriptLoader should finish asynchronously.";
+  platform_->RunUntilIdle();
+  GetModulator()->RunFetchContextTasksUntilIdle();
   platform_->RunUntilIdle();
 
   EXPECT_TRUE(client1->WasNotifyFinished());
@@ -261,8 +270,11 @@ TEST_F(ModuleScriptLoaderTest, InvalidSpecifier) {
   TestModuleScriptLoaderClient* client = new TestModuleScriptLoaderClient;
   TestInvalidSpecifier(client);
 
-  EXPECT_TRUE(client->WasNotifyFinished())
-      << "ModuleScriptLoader should finish synchronously.";
+  EXPECT_FALSE(client->WasNotifyFinished())
+      << "ModuleScriptLoader should finish asynchronously.";
+  GetModulator()->RunFetchContextTasksUntilIdle();
+
+  EXPECT_TRUE(client->WasNotifyFinished());
   ASSERT_TRUE(client->GetModuleScript());
   EXPECT_TRUE(client->GetModuleScript()->HasEmptyRecord());
   EXPECT_TRUE(client->GetModuleScript()->HasParseError());
@@ -275,6 +287,8 @@ TEST_F(ModuleScriptLoaderTest, InvalidSpecifier_OnWorklet) {
 
   EXPECT_FALSE(client->WasNotifyFinished())
       << "ModuleScriptLoader should finish asynchronously.";
+  platform_->RunUntilIdle();
+  GetModulator()->RunFetchContextTasksUntilIdle();
   platform_->RunUntilIdle();
 
   EXPECT_TRUE(client->WasNotifyFinished());

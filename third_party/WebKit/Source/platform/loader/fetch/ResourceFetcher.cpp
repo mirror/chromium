@@ -661,6 +661,11 @@ ResourceRequestBlockedReason ResourceFetcher::PrepareRequest(
   return ResourceRequestBlockedReason::kNone;
 }
 
+static bool TypeNeedsHighPriorityCacheHit(Resource::Type type) {
+  // Scripts can block parsing. Getting that unblocked tends to be important.
+  return type == Resource::kScript;
+}
+
 Resource* ResourceFetcher::RequestResource(
     FetchParameters& params,
     const ResourceFactory& factory,
@@ -673,8 +678,21 @@ Resource* ResourceFetcher::RequestResource(
   Resource* resource =
       RequestResourceInternal(params, factory, substitute_data);
   DCHECK(resource);
-  if (client)
-    client->SetResource(resource, Context().GetLoadingTaskRunner().get());
+  if (client) {
+    // This puts high priority cache hits into a higher priority task queue.
+    // Historically, high priority cache hits were processed synchronously,
+    // which makes more intelligent prioritization impossible. The control task
+    // queue isn't intended for this use case, but using it gets the short term
+    // behavior right in allowing for certain cache hits to be high priority
+    // while still being async.
+    // TODO(japhet): Figure out a sane prioritization plan, instead of this
+    // hack. http://crbug.com/237366
+    scoped_refptr<WebTaskRunner> task_runner =
+        TypeNeedsHighPriorityCacheHit(factory.GetType())
+            ? Context().GetLoadingControlTaskRunner()
+            : Context().GetLoadingTaskRunner();
+    client->SetResource(resource, task_runner.get());
+  }
   return resource;
 }
 
