@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "084ff107_a1613625",
+        "filename": "ui/base/win/direct_manipulation.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-31T20:59:13Z",
+      "side": 1,
+      "message": "Sorry for not being clear. I mean that AFAICT a lot of this patch is a move, but gerrit isn\u0027t picking that up because too much changed. When uploading try different amounts of --similarity in hopes of having it pick up the move so that I can readily tell what is new.",
+      "parentUuid": "fe51be8c_b7d5512d",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 30
+      },
+      "revId": "21f577d1689f9b7ed0c46cfc8528a5342be04d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5967034_3bf4a2a7",
         "filename": "ui/base/win/direct_manipulation.h",
         "patchSetId": 38
@@ -401,6 +425,30 @@
       "side": 1,
       "message": "Currently we do not have pinch zoom support on Windows touchpad so we receive a ctrl+wheel event. This patch we fake a ctrl+wheel event here to keep this behavior. I have a separate patch to support pinch zoom then we will send gesture event here.",
       "parentUuid": "9e054c94_368233ed",
+      "range": {
+        "startLine": 1066,
+        "startChar": 32,
+        "endLine": 1066,
+        "endChar": 68
+      },
+      "revId": "21f577d1689f9b7ed0c46cfc8528a5342be04d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a355c551_617b054f",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-31T20:59:13Z",
+      "side": 1,
+      "message": "Ok, please add comments to that effect then.",
+      "parentUuid": "d47bbef9_4af6a9d6",
       "range": {
         "startLine": 1066,
         "startChar": 32,
