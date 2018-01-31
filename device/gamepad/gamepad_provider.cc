@@ -286,13 +286,15 @@ void GamepadProvider::DoPoll() {
     devices_changed_ = false;
   }
 
-  // Loop through each registered data fetcher and poll it's gamepad data.
+  for (unsigned i = 0; i < Gamepads::kItemsLengthCap; ++i)
+    pad_states_.get()[i].is_active = false;
+
+  // Loop through each registered data fetcher and poll its gamepad data.
   // It's expected that GetGamepadData will mark each gamepad as active (via
   // GetPadState). If a gamepad is not marked as active during the calls to
   // GetGamepadData then it's assumed to be disconnected.
-  for (const auto& it : data_fetchers_) {
+  for (const auto& it : data_fetchers_)
     it->GetGamepadData(changed);
-  }
 
   Gamepads* buffer = gamepad_shared_buffer_->buffer();
 
@@ -302,7 +304,8 @@ void GamepadProvider::DoPoll() {
     for (unsigned i = 0; i < Gamepads::kItemsLengthCap; ++i) {
       PadState& state = pad_states_.get()[i];
 
-      if (!state.active_state && state.source != GAMEPAD_SOURCE_NONE) {
+      if (!state.is_newly_active && !state.is_active &&
+          state.source != GAMEPAD_SOURCE_NONE) {
         auto pad = buffer->items[i];
         pad.connected = false;
         OnGamepadConnectionChange(false, i, pad);
@@ -329,25 +332,14 @@ void GamepadProvider::DoPoll() {
     for (unsigned i = 0; i < Gamepads::kItemsLengthCap; ++i) {
       PadState& state = pad_states_.get()[i];
 
-      if (state.active_state) {
-        if (state.active_state == GAMEPAD_NEWLY_ACTIVE &&
-            buffer->items[i].connected) {
-          OnGamepadConnectionChange(true, i, buffer->items[i]);
-        }
+      if (state.is_newly_active && buffer->items[i].connected) {
+        state.is_newly_active = false;
+        OnGamepadConnectionChange(true, i, buffer->items[i]);
       }
     }
   }
 
   CheckForUserGesture();
-
-  // Avoid double-notifying for connected gamepads when the initial user gesture
-  // is received. The call to CheckForUserGesture should notify any consumers
-  // that were waiting for a user gesture. If we don't clear active_state here,
-  // we'll notify again on the next poll.
-  if (ever_had_user_gesture_) {
-    for (unsigned i = 0; i < Gamepads::kItemsLengthCap; ++i)
-      pad_states_.get()[i].active_state = GAMEPAD_INACTIVE;
-  }
 
   // Schedule our next interval of polling.
   ScheduleDoPoll();
