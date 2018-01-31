@@ -390,13 +390,17 @@ PrefService* InitializeLocalState(
     if (!local_state_file_exists) {
       base::FilePath parent_profile =
           parsed_command_line.GetSwitchValuePath(switches::kParentProfile);
-      const auto registry = base::MakeRefCounted<PrefRegistrySimple>();
-      std::unique_ptr<PrefService> parent_local_state(
+      scoped_refptr<PrefRegistrySimple> registry =
+          base::MakeRefCounted<PrefRegistrySimple>();
+      // Take the raw pointer to use after |registry| has been moved.
+      PrefRegistrySimple* const registry_ptr = registry.get();
+      const std::unique_ptr<PrefService> parent_local_state =
           chrome_prefs::CreateLocalState(parent_profile,
                                          local_state_task_runner,
                                          g_browser_process->policy_service(),
-                                         registry.get(), false, nullptr));
-      registry->RegisterStringPref(prefs::kApplicationLocale, std::string());
+                                         std::move(registry), false, nullptr);
+      registry_ptr->RegisterStringPref(prefs::kApplicationLocale,
+                                       std::string());
       // Right now, we only inherit the locale setting from the parent profile.
       local_state->SetString(
           prefs::kApplicationLocale,
