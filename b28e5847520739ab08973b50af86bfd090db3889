@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b7c34d03_fc988b98",
+        "filename": "ui/app_list/views/search_result_container_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-31T18:52:00Z",
+      "side": 1,
+      "message": "No, SearchResultContainerView::GetFirstResultView() will use this, but the header file is included by the subclasses of SearchResultContainerView.",
+      "parentUuid": "028de7fb_c25d84be",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 54
+      },
+      "revId": "b28e5847520739ab08973b50af86bfd090db3889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "573ab256_9ce47aec",
         "filename": "ui/app_list/views/search_result_list_view.h",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "b28e5847520739ab08973b50af86bfd090db3889",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8385a50_b333a005",
+        "filename": "ui/app_list/views/search_result_list_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-31T18:52:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "573ab256_9ce47aec",
+      "range": {
+        "startLine": 35,
+        "startChar": 50,
+        "endLine": 35,
+        "endChar": 55
+      },
+      "revId": "b28e5847520739ab08973b50af86bfd090db3889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5139bd6f_5b398324",
+        "filename": "ui/app_list/views/search_result_page_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-31T18:52:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa1095cc_12311b34",
+      "range": {
+        "startLine": 283,
+        "startChar": 4,
+        "endLine": 284,
+        "endChar": 14
+      },
+      "revId": "b28e5847520739ab08973b50af86bfd090db3889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c96b44d_98dafc15",
         "filename": "ui/app_list/views/search_result_page_view.cc",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "4c3a4e9e_bc6a4181",
+        "filename": "ui/app_list/views/search_result_page_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-31T18:52:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c96b44d_98dafc15",
+      "range": {
+        "startLine": 288,
+        "startChar": 2,
+        "endLine": 288,
+        "endChar": 27
+      },
+      "revId": "b28e5847520739ab08973b50af86bfd090db3889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26ab75dd_54738666",
         "filename": "ui/app_list/views/search_result_page_view.cc",
         "patchSetId": 5
@@ -105,6 +201,30 @@
       "writtenOn": "2018-01-31T17:06:09Z",
       "side": 1,
       "message": "nit: Move this into SetBackgroundHighlighted() ?\nI think it is always needed to schedule paint if highlighted is changed.",
+      "range": {
+        "startLine": 294,
+        "startChar": 24,
+        "endLine": 294,
+        "endChar": 37
+      },
+      "revId": "b28e5847520739ab08973b50af86bfd090db3889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f390ec9_638df41f",
+        "filename": "ui/app_list/views/search_result_page_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-31T18:52:00Z",
+      "side": 1,
+      "message": "Yes, SchedulePaint is always required, but sometimes this will bring in duplicate calls of SchedulePaint(). e.g. SearchResultTileItemView::UpdateBackgroundColor has its own SchedulePaint() ans is always used with set_background_highlighted();",
+      "parentUuid": "26ab75dd_54738666",
       "range": {
         "startLine": 294,
         "startChar": 24,
