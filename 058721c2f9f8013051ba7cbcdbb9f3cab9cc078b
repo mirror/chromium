@@ -16,6 +16,24 @@
       "revId": "058721c2f9f8013051ba7cbcdbb9f3cab9cc078b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5d9cb52_8fcc1ae7",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/images/image-decode-local-expected.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-31T01:09:55Z",
+      "side": 1,
+      "message": "The test harness treats image-decode-local.html as a test and fails with no expectations without this.",
+      "parentUuid": "232bbbdc_80420d2e",
+      "revId": "058721c2f9f8013051ba7cbcdbb9f3cab9cc078b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
