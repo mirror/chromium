@@ -420,6 +420,8 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   // This order is taken into account by painting and targeting implementations.
   virtual View::Views GetChildrenInZOrder();
 
+  const View::Views& children() { return children_; }
+
   // Transformations -----------------------------------------------------------
 
   // Methods for setting transformations for a view (e.g. rotation, scaling).

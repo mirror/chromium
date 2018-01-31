@@ -10,6 +10,7 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "ui/gfx/geometry/insets.h"
+#include "ui/views/layout/layout_changes.h"
 #include "ui/views/layout/layout_manager.h"
 
 namespace gfx {
@@ -20,6 +21,7 @@ class Size;
 namespace views {
 
 class View;
+using Views = std::vector<View*>;
 
 // A Layout manager that arranges child views vertically or horizontally in a
 // side-by-side fashion with spacing around and between the child views. The
@@ -151,6 +153,10 @@ class VIEWS_EXPORT BoxLayout : public LayoutManager {
   gfx::Size GetPreferredSize(const View* host) const override;
   int GetPreferredHeightForWidth(const View* host, int width) const override;
 
+  LayoutChanges ComputeLayoutChanges(View* host,
+                                     const Views* children = nullptr) const;
+  void ApplyLayoutChanges(const LayoutChanges&) const;
+
  private:
   // This struct is used internally to "wrap" a child view in order to obviate
   // the need for the main layout logic to be fully aware of the per-view
@@ -175,7 +181,7 @@ class VIEWS_EXPORT BoxLayout : public LayoutManager {
     int GetHeightForWidth(int width) const;
     const gfx::Insets& margins() const { return margins_; }
     gfx::Size GetPreferredSize() const;
-    void SetBoundsRect(const gfx::Rect& bounds);
+    void SetMarginSpacing(gfx::Rect* bounds) const;
     View* view() const { return view_; }
     bool visible() const;
 
@@ -279,7 +285,7 @@ class VIEWS_EXPORT BoxLayout : public LayoutManager {
 
   // The next visible view at > index. If no other views are visible, return
   // nullptr.
-  View* NextVisibleView(int index) const;
+  View* NextVisibleView(const Views&, int index) const;
 
   // Return the first visible view in the host or nullptr if none are visible.
   View* FirstVisibleView() const;
