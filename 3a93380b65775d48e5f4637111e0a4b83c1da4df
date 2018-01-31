@@ -88,6 +88,24 @@
       "revId": "3a93380b65775d48e5f4637111e0a4b83c1da4df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d3570e5_cb481bbf",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-31T04:52:48Z",
+      "side": 1,
+      "message": "::slotted() never matches slot elements, even when slot elements are part of the flat tree. This is what I did a fix/test for in https://chromium-review.googlesource.com/c/chromium/src/+/887950",
+      "parentUuid": "e78ea6ab_4ccb8298",
+      "revId": "3a93380b65775d48e5f4637111e0a4b83c1da4df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
