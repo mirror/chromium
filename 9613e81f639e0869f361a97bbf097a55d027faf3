@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc9ab853_666fae85",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2018-01-31T01:14:18Z",
+      "side": 1,
+      "message": "Nit: Can you please somewhere in this CL description describe what \"ITR\" stands for? And maybe also J4?\n\nIt\u0027s of course fine to put that in the body of the commit message, and not necessarily in the first line :-)",
+      "range": {
+        "startLine": 7,
+        "startChar": 16,
+        "endLine": 7,
+        "endChar": 19
+      },
+      "revId": "9613e81f639e0869f361a97bbf097a55d027faf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
