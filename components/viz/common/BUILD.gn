@@ -64,6 +64,8 @@ viz_component("common") {
     "gpu/in_process_context_provider.h",
     "gpu/raster_context_provider.cc",
     "gpu/raster_context_provider.h",
+    "gpu/texture_allocation.cc",
+    "gpu/texture_allocation.h",
     "gpu/vulkan_context_provider.h",
     "gpu/vulkan_in_process_context_provider.cc",
     "gpu/vulkan_in_process_context_provider.h",

@@ -4,6 +4,8 @@
 
 #include "cc/test/fake_raster_buffer_provider.h"
 
+#include "cc/resources/resource_pool.h"
+
 namespace cc {
 
 FakeRasterBufferProviderImpl::FakeRasterBufferProviderImpl() = default;
@@ -15,6 +17,9 @@ FakeRasterBufferProviderImpl::AcquireBufferForRaster(
     const ResourcePool::InUsePoolResource& resource,
     uint64_t resource_content_id,
     uint64_t previous_content_id) {
+  auto backing = std::make_unique<ResourcePool::GpuBacking>();
+  backing->mailbox = gpu::Mailbox::Generate();
+  resource.set_gpu_backing(std::move(backing));
   return nullptr;
 }
 
