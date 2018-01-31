@@ -16,6 +16,24 @@
       "revId": "475b37066b161acfbc401d6a61bff3ba275bb4ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eca3d961_6829eb01",
+        "filename": "third_party/WebKit/Source/core/dom/Node.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2689,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2018-01-31T09:19:57Z",
+      "side": 1,
+      "message": "Sice we check IsInV1ShadowTree() in L2688, a slot in this code always supports assignment.\nSo that doesn\u0027t happen.\n\nAnyway, let me update this code because the current one is confusing. Readers might think that there is a case where a slot doesn\u0027t suport assignment if we use  ToHTMLSlotElementIfSupportsAssignmentOrNull here.",
+      "parentUuid": "5c322c32_34e12f96",
+      "revId": "475b37066b161acfbc401d6a61bff3ba275bb4ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
