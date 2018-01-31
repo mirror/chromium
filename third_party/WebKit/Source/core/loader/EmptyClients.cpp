@@ -36,6 +36,7 @@
 #include "core/html/forms/FileChooser.h"
 #include "core/html/forms/HTMLFormElement.h"
 #include "core/loader/DocumentLoader.h"
+#include "platform/scheduler/child/worker_scheduler_handle.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebApplicationCacheHost.h"
@@ -92,6 +93,10 @@ class EmptyFrameScheduler : public WebFrameScheduler {
     return nullptr;
   }
   bool IsExemptFromBudgetBasedThrottling() const override { return false; }
+  std::unique_ptr<scheduler::WorkerSchedulerHandle>
+  CreateWorkerSchedulerHandle() override {
+    return nullptr;
+  }
 };
 
 PopupMenu* EmptyChromeClient::OpenPopupMenu(LocalFrame&, HTMLSelectElement&) {

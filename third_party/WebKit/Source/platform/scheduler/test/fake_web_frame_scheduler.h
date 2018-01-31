@@ -8,6 +8,7 @@
 #include <deque>
 
 #include "platform/WebFrameScheduler.h"
+#include "platform/scheduler/child/worker_scheduler_handle.h"
 #include "platform/scheduler/renderer/main_thread_task_queue.h"
 
 namespace blink {
@@ -132,6 +133,9 @@ class FakeWebFrameScheduler : public WebFrameScheduler {
   }
   bool IsExemptFromBudgetBasedThrottling() const override {
     return is_exempt_from_throttling_;
+  }
+  std::unique_ptr<WorkerSchedulerHandle> CreateWorkerSchedulerHandle() {
+    return nullptr;
   }
 
  private:

@@ -14,6 +14,7 @@
 #include "platform/Histogram.h"
 #include "platform/scheduler/base/task_queue.h"
 #include "platform/scheduler/base/task_queue_manager.h"
+#include "platform/scheduler/child/default_params.h"
 #include "platform/scheduler/child/worker_scheduler_helper.h"
 
 namespace blink {
@@ -44,7 +45,8 @@ base::TimeTicks MonotonicTimeInSecondsToTimeTicks(
 }  // namespace
 
 WorkerSchedulerImpl::WorkerSchedulerImpl(
-    std::unique_ptr<TaskQueueManager> task_queue_manager)
+    std::unique_ptr<TaskQueueManager> task_queue_manager,
+    scoped_refptr<internal::WorkerSchedulerState> proxy)
     : WorkerScheduler(
           std::make_unique<WorkerSchedulerHelper>(std::move(task_queue_manager),
                                                   this)),
@@ -57,11 +59,18 @@ WorkerSchedulerImpl::WorkerSchedulerImpl(
                                           idle_helper_.IdleTaskRunner()),
       load_tracker_(helper_->NowTicks(),
                     base::Bind(&ReportWorkerTaskLoad),
-                    kUnspecifiedWorkerThreadLoadTrackerReportingInterval) {
-  initialized_ = false;
+                    kUnspecifiedWorkerThreadLoadTrackerReportingInterval),
+      proxy_(std::move(proxy)),
+      page_visibility_(proxy_ ? proxy_->initial_page_visibility()
+                              : kDefaultPageVisibility),
+      weak_factory_(this) {
   thread_start_time_ = helper_->NowTicks();
   load_tracker_.Resume(thread_start_time_);
   helper_->AddTaskTimeObserver(this);
+
+  if (proxy_)
+    proxy_->OnWorkerSchedulerCreated(this);
+
   TRACE_EVENT_OBJECT_CREATED_WITH_ID(
       TRACE_DISABLED_BY_DEFAULT("worker.scheduler"), "WorkerScheduler", this);
 }
@@ -69,7 +78,10 @@ WorkerSchedulerImpl::WorkerSchedulerImpl(
 WorkerSchedulerImpl::~WorkerSchedulerImpl() {
   TRACE_EVENT_OBJECT_DELETED_WITH_ID(
       TRACE_DISABLED_BY_DEFAULT("worker.scheduler"), "WorkerScheduler", this);
+
   helper_->RemoveTaskTimeObserver(this);
+  if (proxy_)
+    proxy_->OnWorkerSchedulerDestroyed();
 }
 
 scoped_refptr<base::SingleThreadTaskRunner>
@@ -116,6 +128,10 @@ void WorkerSchedulerImpl::Shutdown() {
   load_tracker_.RecordIdle(helper_->NowTicks());
   base::TimeTicks end_time = helper_->NowTicks();
   base::TimeDelta delta = end_time - thread_start_time_;
+
+  if (proxy_)
+    proxy_->OnWorkerSchedulerDestroyed();
+  proxy_ = nullptr;
 
   // The lifetime could be radically different for different workers,
   // some workers could be short-lived (but last at least 1 sec in
@@ -177,6 +193,19 @@ void WorkerSchedulerImpl::DidProcessTask(double start_time, double end_time) {
 void WorkerSchedulerImpl::SetThreadType(ThreadType thread_type) {
   DCHECK_NE(thread_type, ThreadType::kMainThread);
   worker_metrics_helper_.SetThreadType(thread_type);
+}
+
+void WorkerSchedulerImpl::OnPageVisibilityStateChanged(
+    PageVisibilityState visibility) {
+  page_visibility_ = visibility;
+}
+
+scoped_refptr<WorkerTaskQueue> WorkerSchedulerImpl::ControlTaskQueue() {
+  return helper_->ControlWorkerTaskQueue();
+}
+
+base::WeakPtr<WorkerSchedulerImpl> WorkerSchedulerImpl::GetWeakPtr() {
+  return weak_factory_.GetWeakPtr();
 }
 
 }  // namespace scheduler
