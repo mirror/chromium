@@ -1369,6 +1369,15 @@ WebMediaPlayer::LoadType HTMLMediaElement::GetLoadType() const {
   return WebMediaPlayer::kLoadTypeURL;
 }
 
+void HTMLMediaElement::ForceStaleStateForMediaElementForTesting() {
+  if (web_media_player_)
+    web_media_player_->ForceStaleStateForTesting();
+}
+
+bool HTMLMediaElement::IsMediaElementSuspendedForTesting() {
+  return web_media_player_ ? web_media_player_->IsSuspendedForTesting() : false;
+}
+
 bool HTMLMediaElement::TextTracksAreReady() const {
   // 4.8.12.11.1 Text track model
   // ...
