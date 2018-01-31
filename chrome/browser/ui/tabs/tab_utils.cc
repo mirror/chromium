@@ -117,12 +117,20 @@ bool ShouldTabShowFavicon(int capacity,
   if (!has_favicon)
     return false;
   int required_capacity = 1;
-  if (ShouldTabShowCloseButton(capacity, is_pinned_tab, is_active_tab))
+  const bool show_close_button =
+      ShouldTabShowCloseButton(capacity, is_pinned_tab, is_active_tab);
+  const bool show_alert_indicator =
+      ShouldTabShowAlertIndicator(capacity, is_pinned_tab, is_active_tab,
+                                  has_favicon, alert_state);
+  // If evry icons is invisible, we alywas show favicon even if |capacity| is 0.
+  if (!show_close_button && !show_alert_indicator)
+    return true;
+
+  if (show_close_button)
     ++required_capacity;
-  if (ShouldTabShowAlertIndicator(capacity, is_pinned_tab, is_active_tab,
-                                  has_favicon, alert_state)) {
+  if (show_alert_indicator)
     ++required_capacity;
-  }
+
   return capacity >= required_capacity;
 }
 
