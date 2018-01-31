@@ -71,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "afabbbcf_fae8c344",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-31T19:42:15Z",
+      "side": 1,
+      "message": "Discussion happened offline. There is no real policy at the moment but site isolation does not support pixel output from layout tests. We should prioritize that before encouraging folks to write site isolation layout tests I feel.",
+      "parentUuid": "1cacbeae_91d3f89e",
+      "revId": "67acbf53ebf13f59805512dfdfa5ba71fb69e0d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c247a8fc_3dc87a85",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 12
@@ -85,6 +103,24 @@
       "revId": "67acbf53ebf13f59805512dfdfa5ba71fb69e0d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d2575a4_d3daed30",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-31T19:42:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c247a8fc_3dc87a85",
+      "revId": "67acbf53ebf13f59805512dfdfa5ba71fb69e0d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
