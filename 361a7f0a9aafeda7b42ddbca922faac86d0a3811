@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f74f1bee_3b78da85",
+        "filename": "content/browser/renderer_host/dwrite_font_proxy_message_filter_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-31T07:10:41Z",
+      "side": 1,
+      "message": "Probably, but I have no idea what the code ~500 lines away that eventually uses this result should do when this fails.",
+      "parentUuid": "f8a89034_d411d94c",
+      "range": {
+        "startLine": 99,
+        "startChar": 2,
+        "endLine": 99,
+        "endChar": 17
+      },
+      "revId": "361a7f0a9aafeda7b42ddbca922faac86d0a3811",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b96020dd_396ca37e",
         "filename": "content/browser/renderer_host/dwrite_font_proxy_message_filter_win.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4e9a2c96_23540648",
+        "filename": "content/browser/renderer_host/dwrite_font_proxy_message_filter_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-31T07:10:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b96020dd_396ca37e",
+      "range": {
+        "startLine": 231,
+        "startChar": 0,
+        "endLine": 233,
+        "endChar": 11
+      },
+      "revId": "361a7f0a9aafeda7b42ddbca922faac86d0a3811",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29dfd5c1_093a207b",
         "filename": "content/browser/renderer_host/dwrite_font_proxy_message_filter_win.cc",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "361a7f0a9aafeda7b42ddbca922faac86d0a3811",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c686a30_4b5fd566",
+        "filename": "content/browser/renderer_host/dwrite_font_proxy_message_filter_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-31T07:10:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29dfd5c1_093a207b",
+      "range": {
+        "startLine": 294,
+        "startChar": 0,
+        "endLine": 297,
+        "endChar": 0
+      },
+      "revId": "361a7f0a9aafeda7b42ddbca922faac86d0a3811",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
