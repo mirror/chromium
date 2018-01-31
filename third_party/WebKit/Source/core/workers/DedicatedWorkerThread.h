@@ -34,6 +34,9 @@
 #include <memory>
 
 namespace blink {
+namespace scheduler {
+class WorkerSchedulerHandle;
+}
 
 class DedicatedWorkerObjectProxy;
 struct GlobalScopeCreationParams;
@@ -42,7 +45,8 @@ class CORE_EXPORT DedicatedWorkerThread : public WorkerThread {
  public:
   static std::unique_ptr<DedicatedWorkerThread> Create(
       ThreadableLoadingContext*,
-      DedicatedWorkerObjectProxy&);
+      DedicatedWorkerObjectProxy&,
+      scheduler::WorkerSchedulerHandle*);
   ~DedicatedWorkerThread() override;
 
   WorkerBackingThread& GetWorkerBackingThread() override {
@@ -56,7 +60,9 @@ class CORE_EXPORT DedicatedWorkerThread : public WorkerThread {
  private:
   friend class DedicatedWorkerThreadForTest;
 
-  DedicatedWorkerThread(ThreadableLoadingContext*, DedicatedWorkerObjectProxy&);
+  DedicatedWorkerThread(ThreadableLoadingContext*,
+                        DedicatedWorkerObjectProxy&,
+                        scheduler::WorkerSchedulerHandle*);
   WorkerOrWorkletGlobalScope* CreateWorkerGlobalScope(
       std::unique_ptr<GlobalScopeCreationParams>) override;
 

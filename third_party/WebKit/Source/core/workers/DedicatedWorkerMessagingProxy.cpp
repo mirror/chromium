@@ -18,7 +18,9 @@
 #include "core/workers/WorkerInspectorProxy.h"
 #include "core/workers/WorkerOptions.h"
 #include "platform/CrossThreadFunctional.h"
+#include "platform/WebFrameScheduler.h"
 #include "platform/WebTaskRunner.h"
+#include "platform/scheduler/child/worker_scheduler_handle.h"
 #include "platform/wtf/WTF.h"
 #include "public/platform/TaskType.h"
 #include "services/network/public/interfaces/fetch_api.mojom-shared.h"
@@ -190,8 +192,16 @@ DedicatedWorkerMessagingProxy::CreateBackingThreadStartupData(
 
 std::unique_ptr<WorkerThread>
 DedicatedWorkerMessagingProxy::CreateWorkerThread() {
+  if (GetExecutionContext() && GetExecutionContext()->IsDocument()) {
+    Document* document = ToDocument(GetExecutionContext());
+    if (document && document->GetFrame()) {
+      worker_scheduler_handle_ =
+          document->GetFrame()->FrameScheduler()->CreateWorkerSchedulerHandle();
+    }
+  }
   return DedicatedWorkerThread::Create(CreateThreadableLoadingContext(),
-                                       WorkerObjectProxy());
+                                       WorkerObjectProxy(),
+                                       worker_scheduler_handle_.get());
 }
 
 }  // namespace blink

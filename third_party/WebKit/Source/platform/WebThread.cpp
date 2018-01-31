@@ -19,6 +19,12 @@ namespace blink {
 WebThreadCreationParams::WebThreadCreationParams(const char* name)
     : name(name) {}
 
+WebThreadCreationParams& WebThreadCreationParams::SetWorkerSchedulerHandle(
+    scheduler::WorkerSchedulerHandle* handle) {
+  worker_scheduler_handle = handle;
+  return *this;
+}
+
 #if defined(OS_WIN)
 static_assert(sizeof(blink::PlatformThreadId) >= sizeof(DWORD),
               "size of platform thread id is too small");

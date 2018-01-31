@@ -22,6 +22,9 @@ struct V8StackTraceId;
 }
 
 namespace blink {
+namespace scheduler {
+class WorkerSchedulerHandle;
+}
 
 class DedicatedWorker;
 class DedicatedWorkerObjectProxy;
@@ -73,6 +76,8 @@ class CORE_EXPORT DedicatedWorkerMessagingProxy
   std::unique_ptr<WorkerThread> CreateWorkerThread() override;
 
   std::unique_ptr<DedicatedWorkerObjectProxy> worker_object_proxy_;
+
+  std::unique_ptr<scheduler::WorkerSchedulerHandle> worker_scheduler_handle_;
 
   // This must be weak. The base class (i.e., ThreadedMessagingProxyBase) has a
   // strong persistent reference to itself via SelfKeepAlive (see class-level

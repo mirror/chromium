@@ -38,6 +38,7 @@ class SingleThreadTaskRunner;
 namespace blink {
 namespace scheduler {
 class TaskTimeObserver;
+class WorkerSchedulerHandle;
 }
 
 class WebScheduler;
@@ -48,7 +49,11 @@ typedef uintptr_t PlatformThreadId;
 struct BLINK_PLATFORM_EXPORT WebThreadCreationParams {
   explicit WebThreadCreationParams(const char* name);
 
+  WebThreadCreationParams& SetWorkerSchedulerHandle(
+      scheduler::WorkerSchedulerHandle*);
+
   const char* name;
+  scheduler::WorkerSchedulerHandle* worker_scheduler_handle = nullptr;
 };
 
 // Provides an interface to an embedder-defined thread implementation.
