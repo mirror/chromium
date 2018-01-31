@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8f44526_fb162da1",
+        "filename": "content/browser/browser_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-31T15:10:15Z",
+      "side": 1,
+      "message": "I\u0027m not sure if functionality like this one is allowed to be added to BrowserContext. Maybe this should be a KeyedService?[1]\nPerhaps mmenke@ can help with the architecture here.\n\n[1] https://cs.chromium.org/chromium/src/components/keyed_service/core/keyed_service.h?l\u003d16\u0026gsn\u003dKeyedService",
+      "range": {
+        "startLine": 577,
+        "startChar": 5,
+        "endLine": 577,
+        "endChar": 9
+      },
+      "revId": "e243b3c5d86df7ae2de136f7cd8749ff0e9b5556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a1e624a_80ed16cd",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-31T15:10:15Z",
+      "side": 1,
+      "message": "protected inheritance is rare in Chromium.\nMultiple protected inheritance even more so, to the point that this would be the only case in content/\nThis probably needs a rewrite. \nCheck https://google.github.io/styleguide/cppguide.html#Inheritance\nand https://google.github.io/styleguide/cppguide.html#Multiple_Inheritance",
+      "range": {
+        "startLine": 34,
+        "startChar": 6,
+        "endLine": 34,
+        "endChar": 15
+      },
+      "revId": "e243b3c5d86df7ae2de136f7cd8749ff0e9b5556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1769e42_d5a4d484",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-31T15:10:15Z",
+      "side": 1,
+      "message": "\"a file local/remote-bound log file\" -\u003e \"a local/remote-bound log file\"",
+      "range": {
+        "startLine": 137,
+        "startChar": 7,
+        "endLine": 137,
+        "endChar": 11
+      },
+      "revId": "e243b3c5d86df7ae2de136f7cd8749ff0e9b5556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e998c517_051eae89",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_common.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-31T15:10:15Z",
+      "side": 1,
+      "message": "consider renaming |output| to something like \"payload\" or similar.\nI didn\u0027t realize it was the thing to be written to the file until I read the code.",
+      "range": {
+        "startLine": 12,
+        "startChar": 54,
+        "endLine": 12,
+        "endChar": 60
+      },
+      "revId": "e243b3c5d86df7ae2de136f7cd8749ff0e9b5556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9db37ab_f79f5903",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_common.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-31T15:10:15Z",
+      "side": 1,
+      "message": "Is the first part of this condition correct?\nI read it as \noutput.length() \u003c 0, which is always false.",
+      "range": {
+        "startLine": 22,
+        "startChar": 8,
+        "endLine": 22,
+        "endChar": 77
+      },
+      "revId": "e243b3c5d86df7ae2de136f7cd8749ff0e9b5556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51ba7d7a_f2e8ce8d",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_common.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-31T15:10:15Z",
+      "side": 1,
+      "message": "The first part of the condition looks redundant.\nif written is \u003c 0 it will also be different from output_len, which is casted from an unsigned value.",
+      "range": {
+        "startLine": 30,
+        "startChar": 21,
+        "endLine": 30,
+        "endChar": 28
+      },
+      "revId": "e243b3c5d86df7ae2de136f7cd8749ff0e9b5556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3f96a56_e17957d6",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_common.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-31T15:10:15Z",
+      "side": 1,
+      "message": "This comment suggests that output was truncated at this point.\nThat does not seem to be the case.",
+      "range": {
+        "startLine": 45,
+        "startChar": 5,
+        "endLine": 45,
+        "endChar": 14
+      },
+      "revId": "e243b3c5d86df7ae2de136f7cd8749ff0e9b5556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5396673f_6bd50fb8",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_common.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-31T15:10:15Z",
+      "side": 1,
+      "message": ":: -\u003e :",
+      "range": {
+        "startLine": 89,
+        "startChar": 63,
+        "endLine": 89,
+        "endChar": 64
+      },
+      "revId": "e243b3c5d86df7ae2de136f7cd8749ff0e9b5556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afb1d737_41802a4c",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_common.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-31T15:10:15Z",
+      "side": 1,
+      "message": "prefer using to typedef.",
+      "range": {
+        "startLine": 124,
+        "startChar": 2,
+        "endLine": 124,
+        "endChar": 9
+      },
+      "revId": "e243b3c5d86df7ae2de136f7cd8749ff0e9b5556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80c35bd3_dc9bb0d8",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_common.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-31T15:10:15Z",
+      "side": 1,
+      "message": "Document these methods.",
+      "range": {
+        "startLine": 126,
+        "startChar": 7,
+        "endLine": 126,
+        "endChar": 21
+      },
+      "revId": "e243b3c5d86df7ae2de136f7cd8749ff0e9b5556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3887922a_2a8b1842",
+        "filename": "content/browser/webrtc/webrtc_event_log_uploader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-31T15:10:15Z",
+      "side": 1,
+      "message": "Destructors in pure interfaces are normally put in the protected section to force subclasses to override it publicly.",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 9
+      },
+      "revId": "e243b3c5d86df7ae2de136f7cd8749ff0e9b5556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c35759e_d3df961d",
+        "filename": "content/browser/webrtc/webrtc_event_log_uploader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-31T15:10:15Z",
+      "side": 1,
+      "message": "make destructor protected.",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 9
+      },
+      "revId": "e243b3c5d86df7ae2de136f7cd8749ff0e9b5556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41fde4a5_179fdef0",
+        "filename": "content/browser/webrtc/webrtc_local_event_log_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-31T15:10:15Z",
+      "side": 1,
+      "message": "Why private inheritance instead of having a private LogFileWriter field?\nThis construct is very rare in high-level code like this one in the codebase.\nProbably needs to be rewritten with a couple of private classes using public inheritance.\nCheck https://google.github.io/styleguide/cppguide.html#Inheritance",
+      "range": {
+        "startLine": 19,
+        "startChar": 41,
+        "endLine": 19,
+        "endChar": 48
+      },
+      "revId": "e243b3c5d86df7ae2de136f7cd8749ff0e9b5556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25e3382c_df1bc094",
+        "filename": "content/browser/webrtc/webrtc_remote_event_log_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2018-01-31T15:10:15Z",
+      "side": 1,
+      "message": "Why not do this on this CL?",
+      "range": {
+        "startLine": 20,
+        "startChar": 16,
+        "endLine": 20,
+        "endChar": 17
+      },
+      "revId": "e243b3c5d86df7ae2de136f7cd8749ff0e9b5556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
