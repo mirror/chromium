@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "ec0635ca_d4c0ea31",
+        "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-31T01:17:43Z",
+      "side": 1,
+      "message": "This seems weird to me - that we\u0027d override an URLLoader, but not implement any methods.  Maybe worth a comment why this is the right thing to do?",
+      "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0fe8e4b_81e67c37",
+        "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-31T01:17:43Z",
+      "side": 1,
+      "message": "No need for this prefix",
+      "range": {
+        "startLine": 164,
+        "startChar": 24,
+        "endLine": 164,
+        "endChar": 36
+      },
+      "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c095ef46_728cb24d",
         "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
         "patchSetId": 16
@@ -13,6 +53,29 @@
       "writtenOn": "2018-01-27T02:01:38Z",
       "side": 1,
       "message": "no need to use weak ptrs with mojo binding callbacks. invocation is already bounded by the lifetime of the thing to which they\u0027re attached.",
+      "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec934f17_3449400d",
+        "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-31T01:17:43Z",
+      "side": 1,
+      "message": "If this is doing file work, this may need to run on the dedicated extension file task runner (see GetExtensionFileTaskRunner())",
+      "range": {
+        "startLine": 186,
+        "startChar": 0,
+        "endLine": 192,
+        "endChar": 53
+      },
       "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +133,166 @@
     },
     {
       "key": {
+        "uuid": "88143fb6_bf66e50e",
+        "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-31T01:17:43Z",
+      "side": 1,
+      "message": "This is a bit confusing to me - why do we need both a resource and a file path?  What\u0027s the distinction between them?",
+      "range": {
+        "startLine": 353,
+        "startChar": 0,
+        "endLine": 355,
+        "endChar": 24
+      },
+      "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "062f9c6b_a58fa5c4",
+        "filename": "chrome/browser/extensions/chrome_url_request_util.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-31T01:17:43Z",
+      "side": 1,
+      "message": "That\u0027s pretty subtle - any way to get around it?  Passing ownership?",
+      "range": {
+        "startLine": 61,
+        "startChar": 9,
+        "endLine": 62,
+        "endChar": 26
+      },
+      "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc5addd5_53bc27a5",
+        "filename": "chrome/browser/extensions/extension_protocols_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-31T01:17:43Z",
+      "side": 1,
+      "message": "function comments",
+      "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d61a8f58_ef090409",
+        "filename": "chrome/browser/extensions/extension_protocols_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-31T01:17:43Z",
+      "side": 1,
+      "message": "no need for get()",
+      "range": {
+        "startLine": 218,
+        "startChar": 39,
+        "endLine": 218,
+        "endChar": 45
+      },
+      "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1be1c8ea_6f9f1a8b",
+        "filename": "chrome/browser/extensions/extension_protocols_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-31T01:17:43Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47183707_e58b9259",
+        "filename": "chrome/browser/extensions/extension_protocols_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-31T01:17:43Z",
+      "side": 1,
+      "message": "Does it make sense to have both an extension protocol handler and a url loader?  Or should these be exclusive?",
+      "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "859df61b_f31bca01",
+        "filename": "chrome/browser/extensions/extension_protocols_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-31T01:17:43Z",
+      "side": 1,
+      "message": "switch()?",
+      "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ab7720a_6dfde58a",
+        "filename": "chrome/browser/extensions/extension_protocols_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-31T01:17:43Z",
+      "side": 1,
+      "message": "Do all these need to be protected?  Or can some be private?",
+      "range": {
+        "startLine": 314,
+        "startChar": 0,
+        "endLine": 322,
+        "endChar": 51
+      },
+      "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5709a3c8_5df1bbd1",
         "filename": "extensions/browser/extension_protocols.cc",
         "patchSetId": 16
@@ -98,6 +321,24 @@
       "writtenOn": "2018-01-27T02:01:38Z",
       "side": 1,
       "message": "still unsafe - you can\u0027t pass \u0026enabled_extensions or the result of ProcessMap::Get to the IO thread, as they are both still UI thread objects. this will be racy and crashy\n\nI see AllowExtensionResourceLoad claims it\u0027s safe to call on the IO thread, which it\u0027s definitely NOT (because it takes a ProcessMap, which only ever live on the UI thread), and so there is probably already some totally wrong and unsafe code reading the ProcessMap from the IO thread. probably code I added. wheeee...\n\nMan, extensions code is a mess. I wonder if we can solve this without making things worse.\n\nDoes the AllowExtensionResourceLoad call really need to be on IO? If it can\u0027t get the info it needs from outside of the InfoMap, I assume it\u0027s because (based on my vague recollection of what you said before) there are tests which directly mangle InfoMap instances. Maybe we should fix the tests then. All this information is mirrored from the UI thread, and in fact it\u0027s probably all kinds of racy because of that. The more we can do on UI the better.",
+      "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58c1eac5_cd0aaaaf",
+        "filename": "extensions/browser/extension_protocols.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-31T01:17:43Z",
+      "side": 1,
+      "message": "A few quick notes:\n- ProcessMap is a thread-agnostic class, and we set up instances on both the UI (as a keyed service) and IO (as a member of the info map) threads.  This is bad, but it\u0027s what we have.  However, it\u0027s not entirely thread-unsafe.\n- With this, I think that AllowExtensionResourceLoad really can (as it documents) be called on either the IO or UI threads, but you need to be careful which constructs you pass in.\n- Any information on the IO thread in the InfoMap should be available on the UI thread.  There\u0027s no reason we should need a thread hop here to get extension info.",
+      "parentUuid": "ccc6d3e7_e313ec9e",
       "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
