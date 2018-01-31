@@ -44,7 +44,7 @@ class PLATFORM_EXPORT SamplingNativeHeapProfiler : public SamplingHeapProfiler {
 
   std::vector<Sample> GetSamples(uint32_t profile_id);
 
-  static inline void MaybeRecordAlloc(void* address, size_t);
+  static inline void MaybeRecordAlloc(void* address, size_t, uint32_t);
   static inline void MaybeRecordFree(void* address);
 
   static SamplingNativeHeapProfiler* GetInstance();
@@ -59,9 +59,9 @@ class PLATFORM_EXPORT SamplingNativeHeapProfiler : public SamplingHeapProfiler {
   void RecordAlloc(size_t total_allocated,
                    size_t allocation_size,
                    void* address,
-                   unsigned skip_frames);
+                   uint32_t skip_frames);
   void RecordFree(void* address);
-  void RecordStackTrace(Sample*, unsigned skip_frames);
+  void RecordStackTrace(Sample*, uint32_t skip_frames);
 
   base::ThreadLocalBoolean entered_;
   base::Lock mutex_;
