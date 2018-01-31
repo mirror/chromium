@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b260a0eb_5125b60a",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-31T07:24:39Z",
+      "side": 1,
+      "message": "GetNavigationUIData() returns the NavigationUIData provided by the embedder, in this case ChromeNavigationUIData. Because this class is part of the embedder I think it\u0027s OK to assume it will always be ChromeNavigationUIData().",
+      "parentUuid": "db2fd4bc_fdb2d7a0",
+      "range": {
+        "startLine": 273,
+        "startChar": 2,
+        "endLine": 275,
+        "endChar": 54
+      },
+      "revId": "6bca8b36e924380ddb778f05931a5afe705cdcfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f8e0ef6_eb67b6ef",
         "filename": "chrome/browser/ui/browser_navigator.cc",
         "patchSetId": 37
@@ -45,6 +69,30 @@
       "revId": "6bca8b36e924380ddb778f05931a5afe705cdcfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "963fa659_a3714061",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-01-31T07:24:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f8e0ef6_eb67b6ef",
+      "range": {
+        "startLine": 308,
+        "startChar": 6,
+        "endLine": 308,
+        "endChar": 38
+      },
+      "revId": "6bca8b36e924380ddb778f05931a5afe705cdcfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
