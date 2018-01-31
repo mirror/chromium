@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31cf6eb8_809cc0bb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableItemView.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-31T17:42:21Z",
+      "side": 1,
+      "message": "Thanks for adding this!\n\nnit: How about something like applyModernIconStyle()?",
+      "range": {
+        "startLine": 259,
+        "startChar": 23,
+        "endLine": 259,
+        "endChar": 38
+      },
+      "revId": "9e5e3c0c0618ce81ebf50c56cbb0517f563e3c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
