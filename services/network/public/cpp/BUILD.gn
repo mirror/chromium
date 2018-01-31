@@ -12,6 +12,8 @@ component("cpp") {
     "cors/cors.h",
     "cors/cors_url_loader.cc",
     "cors/cors_url_loader.h",
+    "cors/cors_url_loader_factory.cc",
+    "cors/cors_url_loader_factory.h",
     "features.cc",
     "features.h",
     "ignore_errors_cert_verifier.cc",

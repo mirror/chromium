@@ -97,6 +97,7 @@ source_set("tests") {
 
   sources = [
     "cookie_manager_unittest.cc",
+    "cors_url_loader_unittest.cc",
     "data_pipe_element_reader_unittest.cc",
     "network_change_manager_unittest.cc",
     "network_context_unittest.cc",
