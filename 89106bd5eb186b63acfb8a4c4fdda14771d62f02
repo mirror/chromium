@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "e5855f60_a1362dd0",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-31T19:01:19Z",
+      "side": 1,
+      "message": "Do we need the ul and li elements, given that we use  list-style-type: none; and they don\u0027t really leverage any of the default ul/li styling? Is it providing us with any a11y benefits? If not, maybe we can have the print-preview-destination-list-item as a direct child of the template?",
+      "range": {
+        "startLine": 115,
+        "startChar": 8,
+        "endLine": 115,
+        "endChar": 12
+      },
+      "revId": "89106bd5eb186b63acfb8a4c4fdda14771d62f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8baf2a2_c8874a71",
         "filename": "chrome/browser/resources/print_preview/new/destination_list_item.html",
         "patchSetId": 10
