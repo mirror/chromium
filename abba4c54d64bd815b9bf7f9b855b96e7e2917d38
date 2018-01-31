@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a40388d_b3f9e63f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 23913,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2018-01-31T21:12:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1172ff79_0d9bb8cb",
+      "revId": "abba4c54d64bd815b9bf7f9b855b96e7e2917d38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6e4fd60_bba6fcaa",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-31T20:52:43Z",
       "side": 1,
       "message": "you\u0027re still missing unit. possibly use \u0027extensions\u0027",
+      "revId": "abba4c54d64bd815b9bf7f9b855b96e7e2917d38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6d3bb48_0e11b5c1",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 23918,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2018-01-31T21:12:21Z",
+      "side": 1,
+      "message": "Can you clarify? I put \"The number of extensions\", that implies unit right?",
+      "parentUuid": "d6e4fd60_bba6fcaa",
       "revId": "abba4c54d64bd815b9bf7f9b855b96e7e2917d38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
