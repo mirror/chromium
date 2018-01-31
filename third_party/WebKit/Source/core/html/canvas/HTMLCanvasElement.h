@@ -313,7 +313,7 @@ class CORE_EXPORT HTMLCanvasElement final
   std::unique_ptr<Canvas2DLayerBridge> CreateAccelerated2dBuffer(
       int* msaa_sample_count);
   std::unique_ptr<Canvas2DLayerBridge> CreateUnaccelerated2dBuffer();
-  void CreateResourceProviderInternal(std::unique_ptr<Canvas2DLayerBridge>);
+  void CreateImageBufferInternal(std::unique_ptr<Canvas2DLayerBridge>);
 
   void SetSurfaceSize(const IntSize&);
 
