@@ -16,6 +16,24 @@
       "revId": "c505afaba8aa83d8c9e536f140b535e8df792ddd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80f4e52e_276b0d66",
+        "filename": "extensions/renderer/binding_generating_native_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-31T22:27:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c83d8c79_c5c83276",
+      "revId": "c505afaba8aa83d8c9e536f140b535e8df792ddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
