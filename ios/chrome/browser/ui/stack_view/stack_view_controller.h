@@ -28,7 +28,6 @@ class GURL;
 // Controller for the tab-switching UI displayed as a stack of tabs.
 @interface StackViewController : UIViewController<TabSwitcher>
 
-@property(nonatomic, weak) id<TabSwitcherDelegate> delegate;
 @property(nonatomic, weak) id<StackViewControllerTestDelegate> testDelegate;
 
 // Initializes with the given tab models, which must not be nil.
@@ -57,11 +56,6 @@ class GURL;
 // be called when the otr tab model will be deleted because the incognito
 // browser state is deleted.
 - (void)setOtrTabModel:(TabModel*)otrModel;
-
-// Performs an animation to zoom the selected tab from the full size of the
-// content area to its proper place in the stack. Should be called after the
-// view has been made visible.
-- (void)showWithSelectedTabAnimation;
 
 // Performs an animation to zoom the selected tab to the full size of the
 // content area. When the animation completes, calls

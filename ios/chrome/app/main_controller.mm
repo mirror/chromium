@@ -1938,7 +1938,7 @@ void MainControllerAuthenticationServiceDelegate::ClearBrowsingData(
 #pragma mark - TabSwitcherDelegate Implementation
 
 - (void)tabSwitcher:(id<TabSwitcher>)tabSwitcher
-    dismissTransitionWillStartWithActiveModel:(TabModel*)tabModel {
+    shouldFinishWithActiveModel:(TabModel*)tabModel {
   [self beginDismissingStackViewWithCurrentModel:tabModel];
 }
 
