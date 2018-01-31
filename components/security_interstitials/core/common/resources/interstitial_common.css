@@ -18,14 +18,15 @@ button {
 
 [dir='rtl'] button {
   float: left;
-}
 
+}
 .bad-clock button,
 .captive-portal button,
 .main-frame-blocked button,
 .neterror button,
 .offline button,
-.ssl button {
+.ssl button,
+.pdf button {
   background: rgb(66, 133, 244);
 }
 
