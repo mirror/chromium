@@ -60394,6 +60394,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="PasswordManager.Android.PasswordSearchTriggered"
+    enum="Boolean">
+  <owner>fhorschig@chromium.org</owner>
+  <summary>
+    Records whether a user triggered the search function while visiting the
+    password preferences page on Android.
+  </summary>
+</histogram>
+
 <histogram name="PasswordManager.AutocompletePopupSuppressedByGeneration"
     enum="BooleanSuppressed">
   <owner>gcasto@chromium.org</owner>
