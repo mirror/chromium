@@ -680,6 +680,10 @@
       "312745D9BF916161191143F6490085EEA0434997"   // Google Talk debug
     ]
   },
+  "safeBrowingPrivate": {
+    "channel": "dev",
+    "extension_types": ["extension"]
+  },
   "screenlockPrivate": {
     "channel": "stable",
     "extension_types": ["platform_app"],
