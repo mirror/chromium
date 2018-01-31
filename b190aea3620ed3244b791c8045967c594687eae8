@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8ccd50ae_bbde2d4e",
+        "filename": "media/capture/video/file_video_capture_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-31T00:10:29Z",
+      "side": 1,
+      "message": "Hmm, I see two options that seem both acceptable:\n1.) Create a new pair of files in media/capture/mojo named, e.g., \"image_capture_types.h/cc\" and place the factory methods there. Then add a new source_set to media/capture/mojo/BUILD.gn that includes these two files.\n2.) Create the same new pair of files in media/capture instead and add them to an appropriate existing target in media/capture/BUILD.gn.",
+      "parentUuid": "3ff4b55b_ae6d4f6f",
+      "revId": "b190aea3620ed3244b791c8045967c594687eae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2ebdcd2_e4d13abd",
         "filename": "media/capture/video/file_video_capture_device.cc",
         "patchSetId": 3
