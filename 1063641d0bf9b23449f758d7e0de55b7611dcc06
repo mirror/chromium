@@ -87,6 +87,24 @@
       "revId": "1063641d0bf9b23449f758d7e0de55b7611dcc06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "883bf9af_0d20232c",
+        "filename": "third_party/WebKit/Source/modules/geolocation/GeoNotifier.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-31T04:49:57Z",
+      "side": 1,
+      "message": "To be clear, I assume that, when one_shots_ are getting invoked (\u003d while they\u0027re swapped into one_shots_being_invoked_), we\u0027re in the middle of processing an event of the main event loop (the main event loop is busy and never process another event until we finish our event), i.e. GeoNotifier\u0027s timer_ never gets invoked during we\u0027re invoking one_shots_ or watchers_.  Thus, I thought we don\u0027t need to check them.",
+      "parentUuid": "6a0b0f93_dc512ac6",
+      "revId": "1063641d0bf9b23449f758d7e0de55b7611dcc06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
