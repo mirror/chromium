@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a09bdb5_e0fb9a42",
+        "filename": "chrome/test/data/webui/media_router/media_router_elements_browsertest.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-31T02:45:10Z",
+      "side": 0,
+      "message": "This won\u0027t be an issue in the long run since the old style a11y tests are being removed.",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 31
+      },
+      "revId": "58881f7e49ba146916ad3df75b74bcca7bd07801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

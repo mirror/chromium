@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fb062c6_826af275",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-page-selector/viewer-page-selector.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-31T02:45:10Z",
+      "side": 1,
+      "message": "This will be ignored until the next patch lands, the test caught this bug.",
+      "range": {
+        "startLine": 57,
+        "startChar": 59,
+        "endLine": 57,
+        "endChar": 71
+      },
+      "revId": "3d92d0d2bb15f8e9a9a2e7586fa5177ed6086542",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33859f4e_92373a5b",
+        "filename": "chrome/test/data/webui/settings/a11y/manage_profile_a11y_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-31T02:45:10Z",
+      "side": 1,
+      "message": "Adding this TODO because I don\u0027t like the failure since this is what the audit is testing for. I\u0027ll debug this in spare time.",
+      "range": {
+        "startLine": 44,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 64
+      },
+      "revId": "3d92d0d2bb15f8e9a9a2e7586fa5177ed6086542",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
