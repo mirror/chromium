@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ec2fff9f_a8e0366e",
+        "filename": "media/gpu/vaapi/vaapi_wrapper.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1140,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2018-01-31T00:26:53Z",
+      "side": 1,
+      "message": "libva-drm is used on both ozone and x11.",
+      "parentUuid": "13f188f1_48c0436c",
+      "revId": "a57aa298ed3c3b76056d6e24fb09db05dca2f465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "050c00f5_2933add3",
         "filename": "media/gpu/vaapi/vaapi_wrapper.cc",
         "patchSetId": 10
@@ -65,6 +83,24 @@
       "writtenOn": "2018-01-30T23:37:27Z",
       "side": 1,
       "message": "libva.so and other libva-* files are dlopened at the time of InitializeStubs() I believe? Please update the comment if so.",
+      "revId": "a57aa298ed3c3b76056d6e24fb09db05dca2f465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e5459a8_b2be4193",
+        "filename": "media/gpu/vaapi/vaapi_wrapper.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1158,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2018-01-31T00:26:53Z",
+      "side": 1,
+      "message": "yeah, I\u0027ll update.",
+      "parentUuid": "abdb1a05_08c27692",
       "revId": "a57aa298ed3c3b76056d6e24fb09db05dca2f465",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
