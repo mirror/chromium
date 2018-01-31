@@ -701,7 +701,6 @@ std::vector<Dispatcher::JsResourceInfo> Dispatcher::GetJsResources() {
       {"contextMenus", IDR_CONTEXT_MENUS_CUSTOM_BINDINGS_JS},
       {"contextMenusHandlers", IDR_CONTEXT_MENUS_HANDLERS_JS},
       {"extension", IDR_EXTENSION_CUSTOM_BINDINGS_JS},
-      {"i18n", IDR_I18N_CUSTOM_BINDINGS_JS},
       {"mimeHandlerPrivate", IDR_MIME_HANDLER_PRIVATE_CUSTOM_BINDINGS_JS},
       {"extensions/common/api/mime_handler.mojom", IDR_MIME_HANDLER_MOJOM_JS},
       {"mojoPrivate", IDR_MOJO_PRIVATE_CUSTOM_BINDINGS_JS},
@@ -719,6 +718,8 @@ std::vector<Dispatcher::JsResourceInfo> Dispatcher::GetJsResources() {
     resources.push_back({kEventBindings, IDR_EVENT_BINDINGS_JS});
     resources.push_back({"lastError", IDR_LAST_ERROR_JS});
     resources.push_back({"sendRequest", IDR_SEND_REQUEST_JS});
+
+    resources.push_back({"i18n", IDR_I18N_CUSTOM_BINDINGS_JS});
 
     // Custom types sources.
     resources.push_back({"StorageArea", IDR_STORAGE_AREA_JS});
