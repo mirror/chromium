@@ -74,7 +74,7 @@
         "cdm": [ "media:cdm" ],
         "content_gpu": [ "browser" ],
         "content_plugin": [ "browser" ],
-        "content_renderer": [ "browser" ],
+        "content_renderer": [ "browser", "safe_browsing::mojom::ThreatDOMDetails" ],
         "content_utility": [ "browser" ],
         "data_decoder": [ "image_decoder", "json_parser", "xml_parser" ],
         "device": [

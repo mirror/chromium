@@ -13,7 +13,10 @@
 
 #include "base/compiler_specific.h"
 #include "base/feature_list.h"
+#include "components/safe_browsing/common/safe_browsing.mojom.h"
 #include "content/public/renderer/render_frame_observer.h"
+#include "mojo/public/cpp/bindings/binding_set.h"
+#include "services/service_manager/public/cpp/binder_registry.h"
 
 struct SafeBrowsingHostMsg_ThreatDOMDetails_Node;
 
@@ -37,7 +40,8 @@ class TagAndAttributesItem {
 };
 
 // There is one ThreatDOMDetails per RenderFrame.
-class ThreatDOMDetails : public content::RenderFrameObserver {
+class ThreatDOMDetails : public content::RenderFrameObserver,
+                         public mojom::ThreatDOMDetails {
  public:
   // An upper limit on the number of nodes we collect. Not const for the test.
   static uint32_t kMaxNodes;
@@ -65,10 +69,12 @@ class ThreatDOMDetails : public content::RenderFrameObserver {
   explicit ThreatDOMDetails(content::RenderFrame* render_frame);
 
   // RenderFrameObserver implementation.
-  bool OnMessageReceived(const IPC::Message& message) override;
   void OnDestruct() override;
 
-  void OnGetThreatDOMDetails();
+  void OnThreatDOMDetailsRequest(mojom::ThreatDOMDetailsRequest);
+  void GetThreatDOMDetails() override;
+
+  mojo::BindingSet<mojom::ThreatDOMDetails> bindings_;
 
   // A list of tag names and associates attributes, used to determine which
   // elements need to be collected.

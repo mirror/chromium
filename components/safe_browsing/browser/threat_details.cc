@@ -19,6 +19,7 @@
 #include "components/safe_browsing/base_ui_manager.h"
 #include "components/safe_browsing/browser/threat_details_cache.h"
 #include "components/safe_browsing/browser/threat_details_history.h"
+#include "components/safe_browsing/common/safe_browsing.mojom.h"
 #include "components/safe_browsing/common/safebrowsing_messages.h"
 #include "components/safe_browsing/db/hit_report.h"
 #include "components/safe_browsing/features.h"
@@ -30,6 +31,7 @@
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents.h"
 #include "net/url_request/url_request_context_getter.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 using content::BrowserThread;
 using content::NavigationEntry;
@@ -169,6 +171,7 @@ void TrimElements(const std::set<int> target_ids,
     resources->clear();
     return;
   }
+#include "services/service_manager/public/cpp/interface_provider.h"
 
   // First, scan over the elements and create a list ordered by element ID as
   // well as a reverse mapping from element ID to its parent ID.
@@ -510,6 +513,12 @@ void ThreatDetails::AddDomElement(
   }
 }
 
+void RequestThreatDOMDetails(content::RenderFrameHost* frame) {
+  safe_browsing::mojom::ThreatDOMDetailsPtr threat_DOM_details;
+  frame->GetRemoteInterfaces()->GetInterface(&threat_DOM_details);
+  threat_DOM_details->GetThreatDOMDetails();
+}
+
 void ThreatDetails::StartCollection() {
   DVLOG(1) << "Starting to compute threat details.";
   report_.reset(new ClientSafeBrowsingReportRequest());
@@ -568,8 +577,7 @@ void ThreatDetails::StartCollection() {
     // OnReceivedThreatDOMDetails will be called when the renderer replies.
     // TODO(mattm): In theory, if the user proceeds through the warning DOM
     // detail collection could be started once the page loads.
-    web_contents()->SendToAllFrames(
-        new SafeBrowsingMsg_GetThreatDOMDetails(MSG_ROUTING_NONE));
+    web_contents()->ForEachFrame(base::BindRepeating(&RequestThreatDOMDetails));
   }
 }
 

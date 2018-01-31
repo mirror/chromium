@@ -63,3 +63,9 @@ interface SafeBrowsingUrlChecker {
 interface UrlCheckNotifier {
   OnCompleteCheck(bool proceed, bool showed_interstitial);
 };
+
+interface ThreatDOMDetails {
+  // A client-side detection message from the browser to the renderer
+  // to request a DOM tree when a safe browsing interstitial is shown.
+  GetThreatDOMDetails();
+};
