@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e4502479_20da1571",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-31T05:24:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae21dbb4_f5e6a2a6",
+      "revId": "ac448c239945162cf02786ce2155d0623e1d3c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd225a87_97707fbb",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/custom-elements/Document-createElement-svg.svg",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ace79481_36069fb1",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/custom-elements/Document-createElement-svg.svg",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-31T05:24:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd225a87_97707fbb",
+      "revId": "ac448c239945162cf02786ce2155d0623e1d3c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1459dd60_075b7a09",
         "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-31T05:03:23Z",
       "side": 1,
       "message": "This might have perf implications for Polymer; IIRC we pushed QualifiedName creation out of this code path for (micro)benchmarks.",
+      "revId": "ac448c239945162cf02786ce2155d0623e1d3c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d7c6295_d123f1dc",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 956,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-31T05:24:11Z",
+      "side": 1,
+      "message": "Do you remember what benchmarks were affected?",
+      "parentUuid": "1459dd60_075b7a09",
       "revId": "ac448c239945162cf02786ce2155d0623e1d3c25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
