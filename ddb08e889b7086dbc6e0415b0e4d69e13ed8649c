@@ -46,6 +46,30 @@
       "revId": "ddb08e889b7086dbc6e0415b0e4d69e13ed8649c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea6bbc94_44a20590",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-31T20:16:34Z",
+      "side": 1,
+      "message": "OK. Maybe leave a comment? It\u0027s just confusing that they are both resource_{something} in the dump. Other than that lgtm.",
+      "parentUuid": "b846a6a6_c5d1bd86",
+      "range": {
+        "startLine": 672,
+        "startChar": 60,
+        "endLine": 672,
+        "endChar": 72
+      },
+      "revId": "ddb08e889b7086dbc6e0415b0e4d69e13ed8649c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
