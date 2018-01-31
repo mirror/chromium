@@ -1,0 +1,22 @@
+// Copyright 2018 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+// ChromeOS authentication-related APIs.
+[platforms=("chromeos"),
+ implemented_in="chrome/browser/chromeos/extensions/auth_private/auth_private_api.h"]
+namespace authPrivate {
+
+  dictionary LoginStatusDict {
+    // Are we logged in?
+    boolean isLoggedIn;
+    // Is the screen locked?
+    boolean isScreenLocked;
+  };
+  callback LoginStatusCallback = void (LoginStatusDict status);
+
+  interface Functions {
+    // Get login status.
+    static void getLoginStatus(LoginStatusCallback callback);
+  };
+};
