@@ -1,13 +1,14 @@
-// Copyright 2016 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
 #include <stddef.h>
 #include <stdint.h>
+
 #include <algorithm>
 #include <vector>
-#include "net/base/io_buffer.h"
-#include "u2f_message.h"
+
+#include "device/ctap/ctap_hid_message.h"
 
 extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
   size_t packet_size = 64;
@@ -16,8 +17,7 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
 
   std::vector<uint8_t> buf(start,
                            start + std::min(packet_size, remaining_buffer));
-  std::unique_ptr<device::U2fMessage> msg =
-      device::U2fMessage::CreateFromSerializedData(buf);
+  auto msg = device::CTAPHidMessage::CreateFromSerializedData(buf);
 
   remaining_buffer -= std::min(remaining_buffer, packet_size);
   start += packet_size;

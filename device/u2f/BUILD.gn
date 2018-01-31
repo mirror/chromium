@@ -48,10 +48,6 @@ source_set("u2f") {
     "u2f_device.h",
     "u2f_discovery.cc",
     "u2f_discovery.h",
-    "u2f_message.cc",
-    "u2f_message.h",
-    "u2f_packet.cc",
-    "u2f_packet.h",
     "u2f_parsing_utils.cc",
     "u2f_parsing_utils.h",
     "u2f_register.cc",
@@ -69,6 +65,7 @@ source_set("u2f") {
     "//crypto",
     "//device/base",
     "//device/bluetooth",
+    "//device/ctap",
     "//net",
     "//services/device/public/interfaces",
     "//services/service_manager/public/cpp",
@@ -120,17 +117,6 @@ fuzzer_test("u2f_apdu_fuzzer") {
     "//net",
   ]
   libfuzzer_options = [ "max_len=65537" ]
-}
-
-fuzzer_test("u2f_message_fuzzer") {
-  sources = [
-    "u2f_message_fuzzer.cc",
-  ]
-  deps = [
-    ":u2f",
-    "//net",
-  ]
-  libfuzzer_options = [ "max_len=2048" ]
 }
 
 fuzzer_test("u2f_ble_frames_fuzzer") {
