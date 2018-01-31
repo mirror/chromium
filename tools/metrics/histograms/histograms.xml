@@ -44717,6 +44717,24 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Net.KeepaliveStatisticsRecorder.PeakInflightRequests"
+    units="requests">
+  <owner>yhirano@chromium.org</owner>
+  <summary>
+    The peak number of concurrent outstanding requests with keepalive specified.
+  </summary>
+</histogram>
+
+<histogram
+    name="Net.KeepaliveStatisticsRecorder.PeakInflightRequestsPerProcess"
+    units="requests">
+  <owner>yhirano@chromium.org</owner>
+  <summary>
+    The peak number of concurrent outstanding requests with keepalive specified
+    per render process.
+  </summary>
+</histogram>
+
 <histogram name="Net.LoadPrefetch.Pattern" enum="PrefetchStatus">
   <owner>droger@chromium.org</owner>
   <owner>mattcary@chromium.org</owner>
