@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ceb777e_79d6637a",
+        "filename": "testing/iossim/iossim.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2018-01-31T23:11:31Z",
+      "side": 1,
+      "message": "Nit: maybe list this first, since -u takes precedence over -d and -s.",
+      "revId": "09488d76e86bd9c7bb0d67c667ec086f47ef8409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a13eea07_83bb2add",
+        "filename": "testing/iossim/iossim.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2018-01-31T23:11:31Z",
+      "side": 1,
+      "message": "What happens if you pass -u but with an invalid udid?  What error will iossim give?  Is there an easy way to validate a udid before proceeding?\n\nInvalid udids are much more likely to happen now than before.",
+      "revId": "09488d76e86bd9c7bb0d67c667ec086f47ef8409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
