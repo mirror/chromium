@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "b8998a96_de2f72d5",
+        "filename": "media/filters/source_buffer_stream.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1602,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2018-01-31T02:38:10Z",
+      "side": 1,
+      "message": "Can you instead change this line to \n\n// Only adjust |seek_dts| if there exist earlier buffers in the range. |seek_dts| may be \u003c RangeGetStartTime\n// if fudge room allows.\nif (config.codec() \u003d\u003d kCodecOpus \u0026\u0026 seek_dts \u003e RangeGetStartTime(itr-\u003eget())) {\n\nIn the case you\u0027re patching (where seek_dts is actually \u003c\u003d RangeGetStartTime) we don\u0027t need to bother with the code that follows (like checking the configs match etc). There isn\u0027t an opportunity to do any real preroll in this case... our only option is to use the first buffer in the range.",
+      "range": {
+        "startLine": 1602,
+        "startChar": 0,
+        "endLine": 1602,
+        "endChar": 39
+      },
+      "revId": "3a4184bf0fe54bf9f766fc51cbacf47270e1b50e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db58065a_c4a3f1b1",
         "filename": "media/filters/source_buffer_stream_unittest.cc",
         "patchSetId": 4
