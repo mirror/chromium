@@ -1,0 +1,14 @@
+diff --git a/BUILD.gn b/BUILD.gn
+index bcb0e7ef3..aabed464e 100644
+--- a/BUILD.gn
++++ b/BUILD.gn
+@@ -71,6 +71,9 @@ config("pdfium_common_config") {
+     # Assume UTF-8 by default to avoid code page dependencies.
+     cflags += [ "/utf-8" ]
+   }
++  if (is_clang) {
++    cflags += [ "-Wno-implicit-fallthrough" ]
++  }
+ }
+ 
+ config("pdfium_core_config") {

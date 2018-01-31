@@ -1,0 +1,25 @@
+diff --git a/src/BUILD.gn b/src/BUILD.gn
+index cf2a75c..cb7299c 100644
+--- a/src/BUILD.gn
++++ b/src/BUILD.gn
+@@ -24,6 +24,12 @@ proto_library("protos") {
+   proto_out_dir = "cld_3/protos"
+ }
+ 
++config("cld_3_internal_config") {
++  if (is_clang) {
++    cflags = [ "-Wno-implicit-fallthrough" ]
++  }
++}
++
+ static_library("cld_3") {
+   sources = [
+     "base.cc",
+@@ -92,6 +98,7 @@ static_library("cld_3") {
+   deps = [
+     ":protos",
+   ]
++  configs += [ ":cld_3_internal_config" ]
+ }
+ 
+ # The executables below are functional. Uncomment to use.

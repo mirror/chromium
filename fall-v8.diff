@@ -1,0 +1,13 @@
+diff --git a/BUILD.gn b/BUILD.gn
+index f5f4e693b2..7c5afc3d98 100644
+--- a/BUILD.gn
++++ b/BUILD.gn
+@@ -518,6 +518,8 @@ config("toolchain") {
+ 
+       # TODO(hans): Remove once http://crbug.com/428099 is resolved.
+       "-Winconsistent-missing-override",
++
++      "-Wno-implicit-fallthrough",
+     ]
+ 
+     if (v8_current_cpu != "mips" && v8_current_cpu != "mipsel") {
