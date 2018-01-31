@@ -1415,7 +1415,6 @@ void CompositeEditCommand::MoveParagraphs(
   int start_index = -1;
   int end_index = -1;
   int destination_index = -1;
-  bool original_is_directional = EndingSelection().IsDirectional();
   if (should_preserve_selection == kPreserveSelection &&
       !EndingSelection().IsNone()) {
     VisiblePosition visible_start = EndingVisibleSelection().VisibleStart();
@@ -1554,7 +1553,6 @@ void CompositeEditCommand::MoveParagraphs(
   const VisibleSelection& destination_selection =
       CreateVisibleSelection(SelectionInDOMTree::Builder()
                                  .Collapse(destination.ToPositionWithAffinity())
-                                 .SetIsDirectional(original_is_directional)
                                  .Build());
   if (EndingSelection().IsNone()) {
     // We abort executing command since |destination| becomes invisible.
@@ -1615,7 +1613,6 @@ void CompositeEditCommand::MoveParagraphs(
       CreateVisibleSelection(SelectionInDOMTree::Builder()
                                  .Collapse(start_range.StartPosition())
                                  .Extend(end_range.StartPosition())
-                                 .SetIsDirectional(original_is_directional)
                                  .Build());
   SetEndingSelection(
       SelectionForUndoStep::From(visible_selection.AsSelection()));
@@ -1723,7 +1720,6 @@ bool CompositeEditCommand::BreakOutOfEmptyListItem(
   SetEndingSelection(SelectionForUndoStep::From(
       SelectionInDOMTree::Builder()
           .Collapse(Position::FirstPositionInNode(*new_block))
-          .SetIsDirectional(EndingSelection().IsDirectional())
           .Build()));
 
   style->PrepareToApplyAt(EndingSelection().Start());
@@ -1786,7 +1782,6 @@ bool CompositeEditCommand::BreakOutOfEmptyMailBlockquotedParagraph(
   SetEndingSelection(SelectionForUndoStep::From(
       SelectionInDOMTree::Builder()
           .Collapse(at_br.ToPositionWithAffinity())
-          .SetIsDirectional(EndingSelection().IsDirectional())
           .Build()));
 
   // If this is an empty paragraph there must be a line break here.
