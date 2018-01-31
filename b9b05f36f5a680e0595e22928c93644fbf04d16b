@@ -345,6 +345,30 @@
     },
     {
       "key": {
+        "uuid": "84910acf_58c17331",
+        "filename": "base/threading/thread_local_storage.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-31T16:49:28Z",
+      "side": 1,
+      "message": "Why do you suggest LazyInstance here, instead of a function with a NoDestructor\n\n// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! DEPRECATED !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n// Please don\u0027t introduce new instances of LazyInstance\u003cT\u003e. Use a function-local\n// static of type base::NoDestructor\u003cT\u003e instead:\n//\n// Factory\u0026 Factory::GetInstance() {\n//   static base::NoDestructor\u003cFactory\u003e instance;\n//   return *instance;\n// }\n// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n//",
+      "parentUuid": "80d68347_27a931df",
+      "range": {
+        "startLine": 133,
+        "startChar": 39,
+        "endLine": 133,
+        "endChar": 40
+      },
+      "revId": "b9b05f36f5a680e0595e22928c93644fbf04d16b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a26bd57_32856554",
         "filename": "base/threading/thread_local_storage.h",
         "patchSetId": 1
