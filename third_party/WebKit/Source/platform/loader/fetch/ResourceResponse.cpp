@@ -514,6 +514,28 @@ void ResourceResponse::SetResourceLoadInfo(
   resource_load_info_ = std::move(load_info);
 }
 
+void ResourceResponse::SetCTPolicyCompliance(
+    net::ct::CTPolicyCompliance compliance) {
+  switch (compliance) {
+    case net::ct::CTPolicyCompliance::
+        CT_POLICY_COMPLIANCE_DETAILS_NOT_AVAILABLE:
+    case net::ct::CTPolicyCompliance::CT_POLICY_BUILD_NOT_TIMELY:
+      ct_policy_compliance_ = kCTPolicyComplianceDetailsNotAvailable;
+      break;
+    case net::ct::CTPolicyCompliance::CT_POLICY_NOT_ENOUGH_SCTS:
+    case net::ct::CTPolicyCompliance::CT_POLICY_NOT_DIVERSE_SCTS:
+      ct_policy_compliance_ = kCTPolicyDoesNotComply;
+      break;
+    case net::ct::CTPolicyCompliance::CT_POLICY_COMPLIES_VIA_SCTS:
+      ct_policy_compliance_ = kCTPolicyComplies;
+      break;
+    case net::ct::CTPolicyCompliance::CT_POLICY_MAX:
+      NOTREACHED();
+      ct_policy_compliance_ = kCTPolicyComplianceDetailsNotAvailable;
+      break;
+  };
+}
+
 KURL ResourceResponse::OriginalURLViaServiceWorker() const {
   if (url_list_via_service_worker_.IsEmpty())
     return KURL();
