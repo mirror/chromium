@@ -11,6 +11,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "components/autofill/content/renderer/autofill_agent.h"
 #include "components/autofill/content/renderer/password_autofill_agent.h"
+#include "content/public/common/use_zoom_for_dsf_policy.h"
 #include "content/public/renderer/document_state.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/render_view.h"
@@ -247,9 +248,22 @@ void AwRenderFrameExt::OnDoHitTest(const gfx::PointF& touch_center,
   if (!webview)
     return;
 
+  float touch_center_x = touch_center.x();
+  float touch_center_y = touch_center.y();
+  float touch_area_width = touch_area.width();
+  float touch_area_height = touch_area.height();
+  if (content::IsUseZoomForDSFEnabled() && render_frame() &&
+      render_frame()->GetRenderView()) {
+    float device_scale =
+        render_frame()->GetRenderView()->GetDeviceScaleFactor();
+    touch_center_x *= device_scale;
+    touch_center_y *= device_scale;
+    touch_area_width *= device_scale;
+    touch_area_height *= device_scale;
+  }
   const blink::WebHitTestResult result = webview->HitTestResultForTap(
-      blink::WebPoint(touch_center.x(), touch_center.y()),
-      blink::WebSize(touch_area.width(), touch_area.height()));
+      blink::WebPoint(touch_center_x, touch_center_y),
+      blink::WebSize(touch_area_width, touch_area_height));
   AwHitTestData data;
 
   GURL absolute_image_url = result.AbsoluteImageURL();
