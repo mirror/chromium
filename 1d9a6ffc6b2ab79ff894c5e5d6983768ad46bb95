@@ -70,6 +70,30 @@
       "revId": "1d9a6ffc6b2ab79ff894c5e5d6983768ad46bb95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fa8f6b2_eb39c3b7",
+        "filename": "ui/message_center/views/notification_view_md.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2018-01-31T02:10:51Z",
+      "side": 1,
+      "message": "It seems we still don\u0027t have to store |controller_| here as a private member. I mean, passing the argument directly in the constructor should be sufficient, like:\n\n   set_controller(controller);",
+      "parentUuid": "44369951_8b507332",
+      "range": {
+        "startLine": 158,
+        "startChar": 2,
+        "endLine": 158,
+        "endChar": 48
+      },
+      "revId": "1d9a6ffc6b2ab79ff894c5e5d6983768ad46bb95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
