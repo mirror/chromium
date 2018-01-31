@@ -144,7 +144,6 @@ void HTMLEmbedElement::UpdatePluginInternal() {
   DCHECK(!GetLayoutEmbeddedObject()->ShowsUnavailablePluginIndicator());
   DCHECK(NeedsPluginUpdate());
   SetNeedsPluginUpdate(false);
-
   if (url_.IsEmpty() && service_type_.IsEmpty())
     return;
 

@@ -12189,7 +12189,7 @@ TEST_P(ParameterizedWebFrameTest, FallbackForNonexistentProvisionalNavigation) {
 
   // Overwrite the client-handled child frame navigation with about:blank.
   WebLocalFrame* child = main_frame->FirstChild()->ToWebLocalFrame();
-  child->LoadRequest(WebURLRequest(BlankURL()));
+  // child->LoadRequest(WebURLRequest(BlankURL()));
 
   // Failing the original child frame navigation and trying to render fallback
   // content shouldn't crash. It should return NoLoadInProgress. This is so the

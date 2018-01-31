@@ -55,6 +55,7 @@
 #include "core/frame/VisualViewport.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/html/HTMLFrameOwnerElement.h"
+#include "core/html/HTMLPlugInElement.h"
 #include "core/html/forms/HTMLFormElement.h"
 #include "core/html_names.h"
 #include "core/input/EventHandler.h"
@@ -1541,6 +1542,17 @@ void FrameLoader::StartLoad(FrameLoadRequest& frame_load_request,
     return;
   DCHECK(navigation_policy == kNavigationPolicyCurrentTab ||
          navigation_policy == kNavigationPolicyHandledByClient);
+
+  if (resource_request.Url().IsPluginNoneURL()) {
+    // 'plugin:none' does not need a document and there is no real loading
+    // involved. At this point we can consider the loading completed and the
+    // HTMLPlugInElement should be notified that the current ContentFrame() can
+    // be safely detached and loading of the new plugin should continue.
+    progress_tracker_->ProgressCompleted();
+    frame_->GetNavigationScheduler().Cancel();
+    return ToHTMLPlugInElement(frame_->DeprecatedLocalOwner())
+        ->ReadyToLoadPlugin();
+  }
 
   provisional_document_loader_ = CreateDocumentLoader(
       resource_request, frame_load_request, type, navigation_type);
