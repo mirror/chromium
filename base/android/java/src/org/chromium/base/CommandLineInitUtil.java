@@ -29,7 +29,7 @@ public final class CommandLineInitUtil {
      * 1) The "debug app" is set to the application calling this.
      * and
      * 2) ADB is enabled.
-     *
+     * 3) Force enabled by the embedder.
      */
     private static final String COMMAND_LINE_FILE_PATH_DEBUG_APP = "/data/local/tmp";
 
@@ -39,6 +39,8 @@ public final class CommandLineInitUtil {
     /**
      * Initializes the CommandLine class, pulling command line arguments from {@code fileName}.
      * @param fileName The name of the command line file to pull arguments from.
+     * @param alternativeFromFlagCallable {@link Callable} used to check whether the alternative
+     *                                    command line file is enabled by embedder.
      */
     public static void initCommandLine(String fileName) {
         initCommandLine(fileName, null);
@@ -66,7 +68,8 @@ public final class CommandLineInitUtil {
     /**
      * Use an alternative path if:
      * - The current build is "eng" or "userdebug", OR
-     * - adb is enabled and this is the debug app.
+     * - adb is enabled and this is the debug app, OR
+     * - Force enabled by the embedder.
      */
     private static boolean shouldUseDebugCommandLine() {
         // TODO(crbug/784947): Allow /data/local/tmp if enabled in chrome://settings.
@@ -74,7 +77,6 @@ public final class CommandLineInitUtil {
         String debugApp = Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1
                 ? getDebugAppPreJBMR1(context)
                 : getDebugAppJBMR1(context);
-
         // Check isDebugAndroid() last to get full code coverage when using userdebug devices.
         return context.getPackageName().equals(debugApp) || BuildInfo.isDebugAndroid();
     }
