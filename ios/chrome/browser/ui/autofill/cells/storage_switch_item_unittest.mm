@@ -38,7 +38,7 @@ TEST_F(StorageSwitchItemTest, PrepareForReuseClearsActions) {
   StorageSwitchCell* cell = [[StorageSwitchCell alloc] init];
   UIButton* tooltipButton = cell.tooltipButton;
   UISwitch* switchView = cell.switchView;
-  NSArray* target = [NSArray array];
+  NSArray* target = @[];
 
   EXPECT_EQ(0U, [[tooltipButton allTargets] count]);
   EXPECT_EQ(0U, [[switchView allTargets] count]);

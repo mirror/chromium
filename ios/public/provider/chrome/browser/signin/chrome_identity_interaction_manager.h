@@ -15,9 +15,9 @@
 // Error domain for Chrome identity errors.
 extern NSString* kChromeIdentityErrorDomain;
 
-typedef enum {
+typedef NS_ENUM(int, ChromeIdentityErrorCode) {
   CHROME_IDENTITY_OPERATION_ONGOING = -200,
-} ChromeIdentityErrorCode;
+};
 
 // Callback for the signin operation methods.
 // * |identity| is the identity that was added/reauthenticated.

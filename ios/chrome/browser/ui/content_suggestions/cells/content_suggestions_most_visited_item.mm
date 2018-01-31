@@ -71,8 +71,7 @@
           selector:@selector(removeMostVisited)];
 
   NSArray* customActions =
-      [NSArray arrayWithObjects:openInNewTab, openInNewIncognitoTab,
-                                removeMostVisited, nil];
+      @[ openInNewTab, openInNewIncognitoTab, removeMostVisited ];
 
   return customActions;
 }

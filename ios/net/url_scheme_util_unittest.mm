@@ -30,8 +30,7 @@ using URLSchemeUtilTest = PlatformTest;
 TEST_F(URLSchemeUtilTest, NSURLHasDataScheme) {
   for (unsigned int i = 0; i < arraysize(kSchemeTestData); ++i) {
     const char* url = kSchemeTestData[i];
-    bool nsurl_result = UrlHasDataScheme(
-        [NSURL URLWithString:[NSString stringWithUTF8String:url]]);
+    bool nsurl_result = UrlHasDataScheme([NSURL URLWithString:@(url)]);
     bool gurl_result = GURL(url).SchemeIs(url::kDataScheme);
     EXPECT_EQ(gurl_result, nsurl_result) << "Scheme check failed for " << url;
   }

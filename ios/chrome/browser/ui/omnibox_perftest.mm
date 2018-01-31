@@ -268,8 +268,7 @@ TEST_F(OmniboxPerfTest, DISABLED_TestTypingInTextField) {
   OmniboxTextFieldIOS* textField = (OmniboxTextFieldIOS*)FindViewByClass(
       coordinator_.viewController.view, [OmniboxTextFieldIOS class]);
   // The characters to type into the omnibox text field.
-  NSArray* inputCharacters =
-      [NSArray arrayWithObjects:@"g", @"o", @"o", @"g", @"l", @"e", nil];
+  NSArray* inputCharacters = @[ @"g", @"o", @"o", @"g", @"l", @"e" ];
   RepeatTimedRuns(
       "Typing",
       ^base::TimeDelta(int index) {

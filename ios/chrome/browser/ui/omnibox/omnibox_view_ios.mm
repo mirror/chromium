@@ -601,7 +601,7 @@ bool OmniboxViewIOS::OnCopy() {
   if (write_url)
     [item setObject:net::NSURLWithGURL(url) forKey:(NSString*)kUTTypeURL];
 
-  board.items = [NSArray arrayWithObject:item];
+  board.items = @[ item ];
   return true;
 }
 
@@ -678,10 +678,9 @@ void OmniboxViewIOS::UpdateSchemeStyle(const gfx::Range& range) {
     }
 
     // Add a strikethrough through the scheme.
-    [attributing_display_string_
-        addAttribute:NSStrikethroughStyleAttributeName
-               value:[NSNumber numberWithInteger:NSUnderlineStyleSingle]
-               range:strikethroughRange];
+    [attributing_display_string_ addAttribute:NSStrikethroughStyleAttributeName
+                                        value:@(NSUnderlineStyleSingle)
+                                        range:strikethroughRange];
   }
 
   UIColor* color = GetSecureTextColor(security_level, [field_ incognito]);

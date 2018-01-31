@@ -25,8 +25,7 @@ base::FilePath DoodleDirectory() {
                                                        NSUserDomainMask, YES);
   NSString* path = [paths objectAtIndex:0];
   NSArray* path_components =
-      [NSArray arrayWithObjects:path, kDoodleCacheDirectory[0],
-                                kDoodleCacheDirectory[1], nil];
+      @[ path, kDoodleCacheDirectory[0], kDoodleCacheDirectory[1] ];
   return base::FilePath(
       base::SysNSStringToUTF8([NSString pathWithComponents:path_components]));
 }

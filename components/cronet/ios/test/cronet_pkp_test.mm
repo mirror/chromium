@@ -29,14 +29,10 @@ class PkpTest : public CronetTestBase {
  protected:
   void SetUp() override {
     CronetTestBase::SetUp();
-    server_host_ = [NSString stringWithCString:grpc_support::kTestServerHost
-                                      encoding:NSUTF8StringEncoding];
-    server_domain_ = [NSString stringWithCString:grpc_support::kTestServerDomain
-                                        encoding:NSUTF8StringEncoding];
+    server_host_ = @(grpc_support::kTestServerHost);
+    server_domain_ = @(grpc_support::kTestServerDomain);
 
-    NSString* request_url_str =
-        [NSString stringWithCString:grpc_support::kTestServerSimpleUrl
-                           encoding:NSUTF8StringEncoding];
+    NSString* request_url_str = @(grpc_support::kTestServerSimpleUrl);
     request_url_ = [NSURL URLWithString:request_url_str];
 
     // Create a Cronet enabled NSURLSession.

@@ -693,8 +693,7 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
       [self createControllerWithRootFolder:node];
   // Only scroll to the last viewing position for the leaf node.
   if (mutablePath.count == 1 && scrollPosition) {
-    [controller
-        setCachedContentPosition:[NSNumber numberWithDouble:scrollPosition]];
+    [controller setCachedContentPosition:@(scrollPosition)];
   }
   controller.isReconstructingFromCache = YES;
   [self.navigationController pushViewController:controller animated:NO];

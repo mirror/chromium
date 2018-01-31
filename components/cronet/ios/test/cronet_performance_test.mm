@@ -120,8 +120,7 @@ class PerfTest : public CronetTestBase,
     [Cronet setHttp2Enabled:GetParam().http2];
     [Cronet setAcceptLanguages:@"en-US,en"];
     if (kUseExternalUrl) {
-      NSString* external_host = [[NSURL
-          URLWithString:[NSString stringWithUTF8String:kExternalUrl]] host];
+      NSString* external_host = [[NSURL URLWithString:@(kExternalUrl)] host];
       [Cronet addQuicHint:external_host port:443 altPort:443];
     } else {
       [Cronet addQuicHint:@"test.example.com" port:443 altPort:443];

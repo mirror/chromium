@@ -20,7 +20,7 @@ CWV_EXPORT
 @interface CWVWebViewConfiguration : NSObject
 
 // Configuration with persistent data store which stores all data on disk.
-+ (instancetype)defaultConfiguration;
++ (CWVWebViewConfiguration*)defaultConfiguration;
 
 // Configuration with ephemeral data store that neven stores data on disk.
 + (instancetype)incognitoConfiguration;

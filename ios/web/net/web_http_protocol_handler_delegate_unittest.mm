@@ -72,8 +72,7 @@ TEST_F(WebHTTPProtocolHandlerDelegateTest, IsRequestSupported) {
   NSMutableURLRequest* request;
 
   for (unsigned int i = 0; i < arraysize(kSupportedURLs); ++i) {
-    NSString* url_string =
-        [[NSString alloc] initWithUTF8String:kSupportedURLs[i]];
+    NSString* url_string = @(kSupportedURLs[i]);
     request = [[NSMutableURLRequest alloc]
         initWithURL:[NSURL URLWithString:url_string]];
     EXPECT_TRUE(delegate_->IsRequestSupported(request))
@@ -81,8 +80,7 @@ TEST_F(WebHTTPProtocolHandlerDelegateTest, IsRequestSupported) {
   }
 
   for (unsigned int i = 0; i < arraysize(kUnsupportedURLs); ++i) {
-    NSString* url_string =
-        [[NSString alloc] initWithUTF8String:kUnsupportedURLs[i]];
+    NSString* url_string = @(kUnsupportedURLs[i]);
     request = [[NSMutableURLRequest alloc]
         initWithURL:[NSURL URLWithString:url_string]];
     EXPECT_FALSE(delegate_->IsRequestSupported(request))

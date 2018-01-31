@@ -11,10 +11,10 @@
 #import "ios/chrome/browser/ui/omnibox/omnibox_text_field_delegate.h"
 
 // Enum type specifying the direction of fade animations.
-typedef enum {
+typedef NS_ENUM(unsigned int, OmniboxTextFieldFadeStyle) {
   OMNIBOX_TEXT_FIELD_FADE_STYLE_IN,
   OMNIBOX_TEXT_FIELD_FADE_STYLE_OUT
-} OmniboxTextFieldFadeStyle;
+};
 
 // UITextField subclass to allow for adjusting borders.
 @interface OmniboxTextFieldIOS : ClippingTextField

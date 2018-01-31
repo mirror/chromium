@@ -8,10 +8,10 @@
 #import <UIKit/UIKit.h>
 
 // External services to use in |newExternalWebView:|.
-typedef enum {
+typedef NS_ENUM(unsigned int, IOSWebViewFactoryExternalService) {
   SSO_AUTHENTICATION,
   NUM_SHARING_SERVICES
-} IOSWebViewFactoryExternalService;
+};
 
 @protocol IOSWebViewFactory
 

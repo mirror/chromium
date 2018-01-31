@@ -484,7 +484,7 @@ enum CellType {
       [defaults dictionaryForKey:kCollapsedSectionsKey];
   NSMutableDictionary* newCollapsedSessions =
       [NSMutableDictionary dictionaryWithDictionary:collapsedSections];
-  NSNumber* value = [NSNumber numberWithBool:collapsed];
+  NSNumber* value = @(collapsed);
   [newCollapsedSessions setValue:value forKey:sectionKey];
   [defaults setObject:newCollapsedSessions forKey:kCollapsedSectionsKey];
 }

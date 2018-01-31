@@ -161,8 +161,7 @@ NSError* NetErrorFromError(NSError* error) {
 
 NSError* NetErrorFromError(NSError* error, int net_error_code) {
   DCHECK(error);
-  NSString* net_error_domain =
-      [NSString stringWithUTF8String:net::kErrorDomain];
+  NSString* net_error_domain = @(net::kErrorDomain);
   NSError* net_error =
       [NSError errorWithDomain:net_error_domain
                           code:static_cast<NSInteger>(net_error_code)

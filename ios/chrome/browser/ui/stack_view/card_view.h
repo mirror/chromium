@@ -32,11 +32,11 @@ extern const UIEdgeInsets kCardShadowLayoutOutsets;
 // Enum class describing on which side to draw the close button.
 enum class CardCloseButtonSide : short { LEADING = 0, TRAILING };
 
-typedef enum {
+typedef NS_ENUM(unsigned int, CardTabAnimationStyle) {
   CARD_TAB_ANIMATION_STYLE_NONE = 0,
   CARD_TAB_ANIMATION_STYLE_FADE_IN,
   CARD_TAB_ANIMATION_STYLE_FADE_OUT
-} CardTabAnimationStyle;
+};
 
 @class CardSnapshotView;
 @class CardTabView;

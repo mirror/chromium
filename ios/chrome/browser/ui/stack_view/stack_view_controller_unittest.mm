@@ -85,7 +85,7 @@ const CGFloat kViewportDimension = 200;
   // TODO(stuartmorgan): Return an actual set of cards to allow for more
   // interesting tests. For now this is just to satisfy the toolbar updating
   // code that shows the card count.
-  return [NSArray array];
+  return @[];
 }
 
 - (CGFloat)maximumStackLength {

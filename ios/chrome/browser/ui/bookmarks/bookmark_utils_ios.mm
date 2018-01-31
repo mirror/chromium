@@ -647,7 +647,7 @@ std::vector<NodeVector::size_type> MissingNodesIndices(
 NSArray* CreateBookmarkPath(bookmarks::BookmarkModel* model, int64_t folderId) {
   // Create an array with root node id, if folderId == root node.
   if (model->root_node()->id() == folderId) {
-    return @[ [NSNumber numberWithLongLong:model->root_node()->id()] ];
+    return @[ @(model->root_node()->id()) ];
   }
 
   const BookmarkNode* bookmark = FindFolderById(model, folderId);
@@ -655,11 +655,11 @@ NSArray* CreateBookmarkPath(bookmarks::BookmarkModel* model, int64_t folderId) {
     return nil;
 
   NSMutableArray* bookmarkPath = [NSMutableArray array];
-  [bookmarkPath addObject:[NSNumber numberWithLongLong:folderId]];
+  [bookmarkPath addObject:@(folderId)];
   while (model->root_node()->id() != bookmark->id()) {
     bookmark = bookmark->parent();
     DCHECK(bookmark);
-    [bookmarkPath addObject:[NSNumber numberWithLongLong:bookmark->id()]];
+    [bookmarkPath addObject:@(bookmark->id())];
   }
   return [[bookmarkPath reverseObjectEnumerator] allObjects];
 }

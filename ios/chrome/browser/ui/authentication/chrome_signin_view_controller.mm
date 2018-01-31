@@ -691,9 +691,10 @@ enum AuthenticationState {
   _gradientView = [[UIView alloc] initWithFrame:CGRectZero];
   _gradientLayer = [CAGradientLayer layer];
   [_gradientView setUserInteractionEnabled:NO];
-  _gradientLayer.colors = [NSArray
-      arrayWithObjects:(id)[[UIColor colorWithWhite:1 alpha:0] CGColor],
-                       (id)[self.backgroundColor CGColor], nil];
+  _gradientLayer.colors = @[
+    (id)[[UIColor colorWithWhite:1 alpha:0] CGColor],
+    (id)[self.backgroundColor CGColor]
+  ];
   [[_gradientView layer] insertSublayer:_gradientLayer atIndex:0];
   [self.view addSubview:_gradientView];
 }

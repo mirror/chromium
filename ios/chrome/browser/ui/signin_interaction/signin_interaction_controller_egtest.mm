@@ -39,7 +39,7 @@ namespace {
 // Changes the EarlGrey synchronization status to |enabled|.
 void SetEarlGreySynchronizationEnabled(BOOL enabled) {
   [[GREYConfiguration sharedInstance]
-          setValue:[NSNumber numberWithBool:enabled]
+          setValue:@(enabled)
       forConfigKey:kGREYConfigKeySynchronizationEnabled];
 }
 

@@ -95,8 +95,7 @@ NSString* kPosition = @"position";
               forKey:kFallbackIsDefaultColorKey];
   [aCoder encodeObject:self.fallbackMonogram forKey:kFallbackMonogram];
   [aCoder encodeBool:self.faviconFetched forKey:kFaviconFetched];
-  [aCoder encodeObject:[NSNumber numberWithUnsignedInteger:self.position]
-                forKey:kPosition];
+  [aCoder encodeObject:@(self.position) forKey:kPosition];
 }
 
 @end

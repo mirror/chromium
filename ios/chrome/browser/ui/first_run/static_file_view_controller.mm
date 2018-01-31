@@ -45,7 +45,7 @@
                                  URL:(NSURL*)URL {
   DCHECK(browserState);
   DCHECK(URL);
-  self = [super init];
+  self = [super initWithNibName:nil bundle:nil];
   if (self) {
     _appBar = [[MDCAppBar alloc] init];
     [self addChildViewController:[_appBar headerViewController]];

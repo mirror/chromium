@@ -416,7 +416,7 @@ void AnimateOutWithCompletion(UIView* view,
 
   CABasicAnimation* fadeAnimation =
       [CABasicAnimation animationWithKeyPath:@"opacity"];
-  [fadeAnimation setFromValue:[NSNumber numberWithFloat:[layer opacity]]];
+  [fadeAnimation setFromValue:@([layer opacity])];
   [fadeAnimation setToValue:@0];
 
   [layer addAnimation:AnimationGroupMake(@[ scaleAnimation, fadeAnimation ])

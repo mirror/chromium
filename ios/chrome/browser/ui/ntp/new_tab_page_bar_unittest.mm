@@ -48,14 +48,13 @@ TEST_F(NewTabPageBarTest, SetItems) {
                       identifier:ntp_home::RECENT_TABS_PANEL
                            image:[UIImage imageNamed:@"ntp_bookmarks"]];
 
-  [bar_ setItems:[NSArray arrayWithObject:firstItem]];
+  [bar_ setItems:@[ firstItem ]];
   EXPECT_EQ(bar_.buttons.count, 1U);
-  [bar_ setItems:[NSArray arrayWithObjects:firstItem, secondItem, nil]];
+  [bar_ setItems:@[ firstItem, secondItem ]];
   EXPECT_EQ(bar_.buttons.count, 2U);
-  [bar_ setItems:[NSArray
-                     arrayWithObjects:firstItem, secondItem, thirdItem, nil]];
+  [bar_ setItems:@[ firstItem, secondItem, thirdItem ]];
   EXPECT_EQ(bar_.buttons.count, 3U);
-  [bar_ setItems:[NSArray arrayWithObject:firstItem]];
+  [bar_ setItems:@[ firstItem ]];
   EXPECT_EQ(bar_.buttons.count, 1U);
 }
 

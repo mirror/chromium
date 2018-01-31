@@ -334,8 +334,7 @@ initWithLargeIconService:(favicon::LargeIconService*)largeIconService
                forKey:@(spotlight::kSpotlightLastIndexingDateKey)];
 
         [[NSUserDefaults standardUserDefaults]
-            setObject:[NSNumber numberWithInteger:
-                                    spotlight::kCurrentSpotlightIndexVersion]
+            setObject:@(spotlight::kCurrentSpotlightIndexVersion)
                forKey:@(spotlight::kSpotlightLastIndexingVersionKey)];
         [_delegate bookmarkUpdated];
       });

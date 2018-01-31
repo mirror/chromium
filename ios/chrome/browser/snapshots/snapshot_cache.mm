@@ -193,8 +193,7 @@ void WriteImageToDisk(UIImage* image, const base::FilePath& file_path) {
   // Encrypt the snapshot file (mostly for Incognito, but can't hurt to
   // always do it).
   NSDictionary* attribute_dict =
-      [NSDictionary dictionaryWithObject:NSFileProtectionComplete
-                                  forKey:NSFileProtectionKey];
+      @{NSFileProtectionKey : NSFileProtectionComplete};
   NSError* error = nil;
   BOOL success = [[NSFileManager defaultManager] setAttributes:attribute_dict
                                                   ofItemAtPath:path
@@ -468,11 +467,11 @@ void ConvertAndSaveGreyImage(NSString* session_id,
   for (NSString* sessionID in pinnedIDs_) {
     UIImage* image = [lruCache_ objectForKey:sessionID];
     if (image)
-      [dictionary setObject:image forKey:sessionID];
+      dictionary[sessionID] = image;
   }
   [lruCache_ removeAllObjects];
   for (NSString* sessionID in pinnedIDs_)
-    [lruCache_ setObject:[dictionary objectForKey:sessionID] forKey:sessionID];
+    [lruCache_ setObject:dictionary[sessionID] forKey:sessionID];
 }
 
 - (void)handleEnterBackground {
@@ -491,7 +490,7 @@ void ConvertAndSaveGreyImage(NSString* session_id,
 - (void)saveGreyImage:(UIImage*)greyImage forKey:(NSString*)sessionID {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequenceChecker_);
   if (greyImage)
-    [greyImageDictionary_ setObject:greyImage forKey:sessionID];
+    greyImageDictionary_[sessionID] = greyImage;
   if ([sessionID isEqualToString:mostRecentGreySessionId_]) {
     mostRecentGreyBlock_(greyImage);
     [self clearGreySessionInfo];
@@ -558,7 +557,7 @@ void ConvertAndSaveGreyImage(NSString* session_id,
   DCHECK(sessionID);
   DCHECK(callback);
 
-  if (UIImage* image = [greyImageDictionary_ objectForKey:sessionID]) {
+  if (UIImage* image = greyImageDictionary_[sessionID]) {
     callback(image);
     [self clearGreySessionInfo];
   } else {
@@ -574,7 +573,7 @@ void ConvertAndSaveGreyImage(NSString* session_id,
   DCHECK(callback);
 
   if (greyImageDictionary_) {
-    if (UIImage* image = [greyImageDictionary_ objectForKey:sessionID]) {
+    if (UIImage* image = greyImageDictionary_[sessionID]) {
       callback(image);
       return;
     }
@@ -660,7 +659,7 @@ void ConvertAndSaveGreyImage(NSString* session_id,
 }
 
 - (BOOL)hasGreyImageInMemory:(NSString*)sessionID {
-  return [greyImageDictionary_ objectForKey:sessionID] != nil;
+  return greyImageDictionary_[sessionID] != nil;
 }
 
 - (NSUInteger)lruCacheMaxSize {

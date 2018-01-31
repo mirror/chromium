@@ -134,8 +134,7 @@ TEST_F(WebViewJsUtilsTest, ValueResultFromDictionaryWithDepthCheckWKResult) {
   NSMutableDictionary* test_dictionary_2 =
       [NSMutableDictionary dictionaryWithCapacity:1];
   const char* key = "key";
-  NSString* obj_c_key =
-      [NSString stringWithCString:key encoding:NSASCIIStringEncoding];
+  NSString* obj_c_key = @(key);
   test_dictionary[obj_c_key] = test_dictionary_2;
   test_dictionary_2[obj_c_key] = test_dictionary;
 

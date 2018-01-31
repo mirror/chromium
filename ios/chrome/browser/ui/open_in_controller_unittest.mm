@@ -62,7 +62,7 @@ TEST_F(OpenInControllerTest, DISABLED_TestDisplayOpenInMenu) {
       [OCMockObject niceMockForClass:[UIDocumentInteractionController class]];
   [open_in_controller_ setDocumentInteractionController:documentController];
   [open_in_controller_ startDownload];
-  [[[documentController expect] andReturnValue:[NSNumber numberWithBool:YES]]
+  [[[documentController expect] andReturnValue:@YES]
       presentOpenInMenuFromRect:CGRectMake(0, 0, 0, 0)
                          inView:OCMOCK_ANY
                        animated:YES];

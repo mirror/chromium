@@ -20,7 +20,7 @@ enum class ContentType {
 }  // namespace new_tab_page_bar_button
 
 // Represents a button in the new tab page bar.
-@interface NewTabPageBarButton : UIButton
+@interface NewTabPageBarButton : UIButton<UIPreviewActionItem>
 
 // Returns an autoreleased button based on |item|'s |title| and |image|. By
 // defaults, the button shows the title instead of the image, and with a non
