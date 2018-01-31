@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8401a765_5dd123cf",
+        "filename": "extensions/browser/content_hash_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-31T22:24:21Z",
+      "side": 1,
+      "message": "FilePath::Append returns a new path, so let\u0027s not have this be a const \u0026.",
+      "range": {
+        "startLine": 54,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 35
+      },
+      "revId": "a385b4c6826a146d9cc5e68001b28fce8c216f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
