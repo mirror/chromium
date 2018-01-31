@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c32fdcb4_a1462549",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers_browser_proxy.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-31T19:30:51Z",
+      "side": 1,
+      "message": "Can you also revert this change, since the rest of the changes in this file were reverted? The rename is not necessary anymore.",
+      "range": {
+        "startLine": 117,
+        "startChar": 21,
+        "endLine": 117,
+        "endChar": 25
+      },
+      "revId": "d66968f8d1a213a5b83586fa334f444356589505",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
