@@ -22,6 +22,30 @@
       "revId": "4b2939bc9605cd3863d88df97790e1c0672ba2d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35c113d5_5c6496b9",
+        "filename": "ui/keyboard/keyboard_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2018-01-31T03:04:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3a4c79d_bfb51e27",
+      "range": {
+        "startLine": 248,
+        "startChar": 27,
+        "endLine": 248,
+        "endChar": 30
+      },
+      "revId": "4b2939bc9605cd3863d88df97790e1c0672ba2d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
