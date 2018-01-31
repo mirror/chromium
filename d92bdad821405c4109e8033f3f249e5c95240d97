@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3ba70713_9fe9855c",
+        "filename": "media/audio/BUILD.gn",
+        "patchSetId": 20
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-31T17:17:26Z",
+      "side": 1,
+      "message": "Thanks, it\u0027s curios that I didn\u0027t get any error about this, looks like we don\u0027t need to place the headers in this target.",
+      "parentUuid": "206af263_66005d87",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66acfdbe_28772313",
         "filename": "media/audio/audio_debug_recording_helper_unittest.cc",
         "patchSetId": 20
@@ -33,6 +51,24 @@
       "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5016417_6b79c6e2",
+        "filename": "media/audio/audio_debug_recording_helper_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-31T17:17:26Z",
+      "side": 1,
+      "message": "Needed for numeric_limits used on line 221, I added it after running git cl lint.",
+      "parentUuid": "66acfdbe_28772313",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "67f0b220_c41262a9",
+        "filename": "media/audio/audio_debug_recording_helper_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-31T17:17:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b0fa6fc_73fd7921",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7f06efd_05b6bef4",
         "filename": "media/audio/audio_debug_recording_helper_unittest.cc",
         "patchSetId": 20
@@ -64,6 +118,24 @@
       "writtenOn": "2018-01-31T11:30:41Z",
       "side": 1,
       "message": "Could you rearrange the tests to make sure Create() is called with the expected file name?",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eacf188f_ecc2fcb0",
+        "filename": "media/audio/audio_debug_recording_helper_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-31T17:17:26Z",
+      "side": 1,
+      "message": "I don\u0027t think that would be relevant here - I would set an expectation on a function that I wrote for testing. I did test in audio_debug_recording_session_impl_unittest.cc that the expected files are created, using the real file creation callback defined in AudioDebugRecordingSessionImpl.cc.\n\nFor the helper test scenarios we just need a valid file, I only composed the filename as it\u0027s done in the real CreateFileCallback (AudioDebugRecordingSessionImpl.cc:CreateFile) for documentation purposes, so that we don\u0027t pass a random filename when a suffix is expected in the real CreateFileCallback. Is that more confusing than helpful?",
+      "parentUuid": "d7f06efd_05b6bef4",
       "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "95c1505d_c4c35214",
+        "filename": "media/audio/audio_debug_recording_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-31T17:17:26Z",
+      "side": 1,
+      "message": "Rephrased.",
+      "parentUuid": "a8e478f8_0aedb884",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "891ff9a3_77f3602e",
         "filename": "media/audio/audio_debug_recording_manager.cc",
         "patchSetId": 20
@@ -101,6 +191,24 @@
       "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26f35401_e592c6b4",
+        "filename": "media/audio/audio_debug_recording_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-31T17:17:26Z",
+      "side": 1,
+      "message": "|file_name_extension| is either \"output\" or \"input\" depending on the recording source direction. I renamed |file_name_extension| to |direction| to reflect that, and updated comment in header file about the possible values of |direction|.\n\nI think it would make sense to use an enum for |direction| type and translate it here into FILE_PATH_LITERAL, I\u0027ll do that in a separate CL.",
+      "parentUuid": "891ff9a3_77f3602e",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "a75c247c_5d7511f6",
+        "filename": "media/audio/audio_debug_recording_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-31T17:17:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eca6af94_871b6d9d",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e606739d_fef1966a",
         "filename": "media/audio/audio_debug_recording_manager.cc",
         "patchSetId": 20
@@ -135,6 +261,24 @@
       "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b4534bd_533ba578",
+        "filename": "media/audio/audio_debug_recording_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-31T17:17:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e606739d_fef1966a",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "39659cd1_82efa363",
+        "filename": "media/audio/audio_debug_recording_manager.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-31T17:17:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e80a58f1_2e2f2c05",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38ed9f95_0ddb1e40",
         "filename": "media/audio/audio_debug_recording_session_impl.cc",
         "patchSetId": 20
@@ -169,6 +331,24 @@
       "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a553211b_c4fa8f4c",
+        "filename": "media/audio/audio_debug_recording_session_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-31T17:17:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38ed9f95_0ddb1e40",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "ba78f05f_ce2562e2",
+        "filename": "media/audio/audio_debug_recording_session_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-31T17:17:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01abad72_c9fc52df",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19dda9aa_3c16f768",
         "filename": "media/audio/audio_debug_recording_session_impl_unittest.cc",
         "patchSetId": 20
@@ -203,6 +401,24 @@
       "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fb72365_dcf2dd11",
+        "filename": "media/audio/audio_debug_recording_session_impl_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-31T17:17:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19dda9aa_3c16f768",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "85c4c8a2_ee00fa79",
+        "filename": "media/audio/audio_debug_recording_session_impl_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-31T17:17:26Z",
+      "side": 1,
+      "message": "I can\u0027t because ASSERT/FAIL cannot be used in functions that do not return void.",
+      "parentUuid": "02c147b0_596b997a",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c27ed06a_d7de749e",
         "filename": "media/audio/audio_debug_recording_session_impl_unittest.cc",
         "patchSetId": 20
@@ -237,6 +471,24 @@
       "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42648676_4abdf8b4",
+        "filename": "media/audio/audio_debug_recording_session_impl_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-31T17:17:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c27ed06a_d7de749e",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "685f7204_06c1ea44",
+        "filename": "media/audio/audio_manager.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-31T17:17:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f64fb74_978cc9e2",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef9df7cf_9f36b3ef",
         "filename": "media/audio/audio_manager.h",
         "patchSetId": 20
@@ -271,6 +541,24 @@
       "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9dc44d6_2000717a",
+        "filename": "media/audio/audio_manager.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-31T17:17:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef9df7cf_9f36b3ef",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -291,6 +579,24 @@
     },
     {
       "key": {
+        "uuid": "ca09423c_1892436f",
+        "filename": "media/audio/audio_manager.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-31T17:17:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9375628f_6698899a",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca7258d5_4a789d8f",
         "filename": "media/audio/mock_audio_manager.cc",
         "patchSetId": 20
@@ -308,6 +614,24 @@
     },
     {
       "key": {
+        "uuid": "19e21a40_50473e18",
+        "filename": "media/audio/mock_audio_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-31T17:17:26Z",
+      "side": 1,
+      "message": "Makes sense, done.",
+      "parentUuid": "ca7258d5_4a789d8f",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42b74593_0bc67ea2",
         "filename": "media/audio/mock_audio_manager.h",
         "patchSetId": 20
@@ -322,6 +646,24 @@
       "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a05e31e1_9a159483",
+        "filename": "media/audio/mock_audio_manager.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-31T17:17:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42b74593_0bc67ea2",
+      "revId": "d92bdad821405c4109e8033f3f249e5c95240d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

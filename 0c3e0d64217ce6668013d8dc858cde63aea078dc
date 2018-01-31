@@ -262,6 +262,24 @@
       "revId": "0c3e0d64217ce6668013d8dc858cde63aea078dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a5fccd7_5d37a2ea",
+        "filename": "media/audio/audio_manager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-31T17:17:26Z",
+      "side": 1,
+      "message": "You\u0027re right, I fixed the threading as discussed offline.",
+      "parentUuid": "5ca93fdf_998e4559",
+      "revId": "0c3e0d64217ce6668013d8dc858cde63aea078dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
