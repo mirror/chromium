@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55263459_849a8377",
+        "filename": "chrome/browser/vr/elements/procedural_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-31T22:11:38Z",
+      "side": 1,
+      "message": "nit: perhaps you could mention that each line represents time fraction and opacity rather than these numbers?",
+      "revId": "013bea69c09769135ada756a3c77bd519e451efe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7be4b6d5_5f259f97",
+        "filename": "chrome/browser/vr/elements/procedural_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-31T22:11:38Z",
+      "side": 1,
+      "message": "Please move this up to the constants definition section above.",
+      "revId": "013bea69c09769135ada756a3c77bd519e451efe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
