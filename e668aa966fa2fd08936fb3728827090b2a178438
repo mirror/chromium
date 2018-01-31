@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b256f97d_1db517cc",
+        "filename": "ios/chrome/browser/web/forms_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-01-31T20:06:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b532fca_7deacc12",
+      "range": {
+        "startLine": 137,
+        "startChar": 16,
+        "endLine": 137,
+        "endChar": 22
+      },
+      "revId": "e668aa966fa2fd08936fb3728827090b2a178438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fb3e591_c7d13781",
         "filename": "ios/chrome/browser/web/forms_egtest.mm",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "99a3b2e1_7aecb15f",
+        "filename": "ios/chrome/browser/web/forms_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-01-31T20:06:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fb3e591_c7d13781",
+      "range": {
+        "startLine": 144,
+        "startChar": 25,
+        "endLine": 144,
+        "endChar": 29
+      },
+      "revId": "e668aa966fa2fd08936fb3728827090b2a178438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb98c984_ed13f22b",
         "filename": "ios/chrome/browser/web/forms_egtest.mm",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "e668aa966fa2fd08936fb3728827090b2a178438",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e76c62cd_3ffc860a",
+        "filename": "ios/chrome/browser/web/forms_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-01-31T20:06:45Z",
+      "side": 1,
+      "message": "The technique used in context_menu_egtest does not seem applicable here. It matches a button with a specific label in the popover / action sheet. The issue is that there is no \"cancel\" button in the form repost confirmation popover on iPad. Tapping anywhere outside the popover is treated as cancel, which is what\u0027s simulated here...\n\nI changed this helper to only return the matcher so logging can still be useful.",
+      "parentUuid": "bb98c984_ed13f22b",
+      "range": {
+        "startLine": 157,
+        "startChar": 5,
+        "endLine": 157,
+        "endChar": 29
+      },
+      "revId": "e668aa966fa2fd08936fb3728827090b2a178438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "f14938f2_76e37539",
+        "filename": "ios/chrome/browser/web/forms_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-01-31T20:06:45Z",
+      "side": 1,
+      "message": "From what I can tell, there is some kind of cache that affects whether a back/forward navigation would be considered a form repost. In Safari, if I navigate sufficiently far away from the form post page, and then navigate back, that navigation sometimes triggers the repost warning. This is clear in WebKit code: https://github.com/WebKit/webkit/blob/2c6fda85fe8008030de50d87e32cdb6af748fe3e/Source/WebCore/loader/FrameLoader.cpp#L3481\n\nThe Blink code is less clear:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/loader/FrameLoader.cpp?sq\u003dpackage:chromium\u0026dr\u0026l\u003d800\nPerhaps the cache behavior happens at a layer below content so any load visible to content should be considered repost?\n\nBtw, Firefox behaves the same as Safari and Blink.\n\nSo there is some risk that this test may become flakey if [ChromeEarlGrey goBack] results in a cache miss for whatever reason. I haven\u0027t seen it in testing so far... I\u0027m not sure how to mitigate this issue. I\u0027m tempted to update the test and see if it becomes a problem.\n\nEugene, what do you think?",
+      "parentUuid": "0df0ed49_4891ed0e",
+      "range": {
+        "startLine": 268,
+        "startChar": 31,
+        "endLine": 268,
+        "endChar": 37
+      },
+      "revId": "e668aa966fa2fd08936fb3728827090b2a178438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c2e5257_5592d7d6",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 2
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "77ecd704_2a7d1f21",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1950,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-01-31T20:06:45Z",
+      "side": 1,
+      "message": "No... WebKit sends \"Cache-Control: no-cache\" on reload instead of \"Cache-Control: max-age\u003d0\", which Chrome and Firefox sends. AFAICT, these are semantically identical, though it does seem a compat issue. I\u0027ll follow up separately to see if there\u0027s a reason why one should be used versus another. Do you know any off the top of your head?",
+      "parentUuid": "2c2e5257_5592d7d6",
+      "range": {
+        "startLine": 1950,
+        "startChar": 18,
+        "endLine": 1950,
+        "endChar": 24
+      },
+      "revId": "e668aa966fa2fd08936fb3728827090b2a178438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8329f3c6_9b3d5b25",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 2
@@ -152,6 +272,30 @@
       "writtenOn": "2018-01-31T03:15:30Z",
       "side": 1,
       "message": "It may sound surprising, but calling this callback asynchronously can break certain things (\nlike loadHTML API):\nhttps://chromium-review.googlesource.com/782744\n\nThis may not be a problem for form reposts navigations, but you still you be aware about our unsuccessful attempt to call this asynchronously.",
+      "range": {
+        "startLine": 4216,
+        "startChar": 14,
+        "endLine": 4216,
+        "endChar": 29
+      },
+      "revId": "e668aa966fa2fd08936fb3728827090b2a178438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "176104db_8eaadc4b",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 4216,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-01-31T20:06:45Z",
+      "side": 1,
+      "message": "Thanks for calling it out! It might be related to https://bugs.webkit.org/show_bug.cgi?id\u003d53785, and I\u0027m helping the Apple fix https://bugs.webkit.org/show_bug.cgi?id\u003d180568 to make decidePolicy async again.\n\nIs there a way for us to block until we get a callback from the dialog?",
+      "parentUuid": "8329f3c6_9b3d5b25",
       "range": {
         "startLine": 4216,
         "startChar": 14,
