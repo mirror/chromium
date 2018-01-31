@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49b45728_1269febd",
+        "filename": "components/viz/service/display/surface_aggregator_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2379,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-01-31T18:02:59Z",
+      "side": 1,
+      "message": "The damage rect here is only stretching because of the device scale difference? Is there any stretching of rects going on here, or am I misreading this?\n\nMostly I\u0027m just asking for some more comments here about how this value came to be so this test is easier to read for other folks in the future.",
+      "revId": "e7e1154152d7b4412180e3afe578c097e695c21f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
