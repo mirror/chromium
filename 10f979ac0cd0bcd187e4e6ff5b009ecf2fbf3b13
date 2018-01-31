@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a317fe5b_56d6c845",
+        "filename": "content/browser/media/media_suspend_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-31T16:51:23Z",
+      "side": 1,
+      "message": "perhaps sufficiently reusable to be constant-worthy.",
+      "range": {
+        "startLine": 38,
+        "startChar": 55,
+        "endLine": 38,
+        "endChar": 61
+      },
+      "revId": "10f979ac0cd0bcd187e4e6ff5b009ecf2fbf3b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98e1cfaf_bba8c378",
+        "filename": "content/browser/media/media_suspend_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-31T16:51:23Z",
+      "side": 1,
+      "message": "what i don\u0027t get is how this can tell that suspend happened.  as in, if one just turns off suspend / resume, won\u0027t this still work?",
+      "revId": "10f979ac0cd0bcd187e4e6ff5b009ecf2fbf3b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
