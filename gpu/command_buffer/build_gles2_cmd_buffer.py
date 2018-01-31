@@ -4521,9 +4521,12 @@ _FUNCTION_INFO = {
     'extension': True,
   },
   'BeginRasterCHROMIUM': {
-    'decoder_func': 'DoBeginRasterCHROMIUM',
-    'impl_func': True,
+    'type': 'Custom',
+    'impl_func': False,
     'unit_test': False,
+    'cmd_args': 'GLuint texture_id, GLuint sk_color, GLuint msaa_sample_count,'
+		'GLboolean can_use_lcd_text, GLboolean use_distance_field_text, '
+                'GLint pixel_config, GLuint shm_id, GLuint shm_offset, GLsizei color_space_size',
     'extension': 'CHROMIUM_raster_transport',
     'extension_flag': 'chromium_raster_transport',
   },
