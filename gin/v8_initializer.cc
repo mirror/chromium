@@ -74,19 +74,21 @@ base::LazyInstance<OpenedFileMap>::Leaky g_opened_files =
     LAZY_INSTANCE_INITIALIZER;
 
 const char kNativesFileName[] = "natives_blob.bin";
-const char kV8ContextSnapshotFileName[] = "v8_context_snapshot.bin";
 
 #if defined(OS_ANDROID)
-const char kSnapshotFileName64[] = "snapshot_blob_64.bin";
-const char kSnapshotFileName32[] = "snapshot_blob_32.bin";
+const char kV8ContextSnapshotFileName64[] = "v8_context_snapshot_64.bin";
+const char kV8ContextSnapshotFileName32[] = "v8_context_snapshot_32.bin";
 
 #if defined(__LP64__)
-#define kSnapshotFileName kSnapshotFileName64
+#define kV8ContextSnapshotFileName kV8ContextSnapshotFileName64
+const char kSnapshotFileName[] = "snapshot_blob_64.bin";
 #else
-#define kSnapshotFileName kSnapshotFileName32
+#define kV8ContextSnapshotFileName kV8ContextSnapshotFileName32
+const char kSnapshotFileName[] = "snapshot_blob_32.bin";
 #endif
 
 #else  // defined(OS_ANDROID)
+const char kV8ContextSnapshotFileName[] = "v8_context_snapshot.bin";
 const char kSnapshotFileName[] = "snapshot_blob.bin";
 #endif  // defined(OS_ANDROID)
 
@@ -392,7 +394,9 @@ base::FilePath V8Initializer::GetNativesFilePath() {
 // static
 base::FilePath V8Initializer::GetSnapshotFilePath(bool abi_32_bit) {
   base::FilePath path;
-  GetV8FilePath(abi_32_bit ? kSnapshotFileName32 : kSnapshotFileName64, &path);
+  GetV8FilePath(
+      abi_32_bit ? kV8ContextSnapshotFileName32 : kV8ContextSnapshotFileName64,
+      &path);
   return path;
 }
 #endif  // defined(OS_ANDROID)
