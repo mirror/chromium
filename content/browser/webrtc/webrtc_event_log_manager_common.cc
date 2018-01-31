@@ -19,10 +19,14 @@ bool LogFileWriter::WriteToLogFile(LogFilesMap::iterator it,
   LogFile& log_file = it->second;
   if (log_file.max_file_size_bytes != kWebRtcEventLogManagerUnlimitedFileSize) {
     DCHECK_LT(log_file.file_size_bytes, log_file.max_file_size_bytes);
-    if (log_file.file_size_bytes + output.length() < log_file.file_size_bytes ||
+    const bool size_will_wrap_around =
+        log_file.file_size_bytes + output.length() < log_file.file_size_bytes;
+    const bool size_limit_will_be_exceeded =
         log_file.file_size_bytes + output.length() >
-            log_file.max_file_size_bytes) {
-      output_len = log_file.max_file_size_bytes - log_file.file_size_bytes;
+        log_file.max_file_size_bytes;
+    if (size_will_wrap_around || size_limit_will_be_exceeded) {
+      CloseLogFile(it);
+      return false;
     }
   }
 
@@ -42,9 +46,6 @@ bool LogFileWriter::WriteToLogFile(LogFilesMap::iterator it,
     }
   }
 
-  // Truncated output due to exceeding the maximum is reported as an error - the
-  // caller is interested to know that not all of its output was written,
-  // regardless of the reason.
   return (static_cast<size_t>(written) == output.length());
 }
 
