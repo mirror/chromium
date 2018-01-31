@@ -32,6 +32,10 @@ class MockClient : public Client {
   MOCK_METHOD2(OnDownloadSucceeded,
                void(const std::string&, const CompletionInfo&));
   MOCK_METHOD2(CanServiceRemoveDownloadedFile, bool(const std::string&, bool));
+  // TODO(shaktisahu): See if we can create a mock method in presence of
+  // OnceCallback.
+  void GetUploadData(const std::string& guid,
+                     GetUploadDataCallback callback) override;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockClient);

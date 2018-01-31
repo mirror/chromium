@@ -125,6 +125,12 @@ enum class FileCleanupReason {
   COUNT = 4,
 };
 
+enum class UploadAbortReason {
+  ENTRY_NOT_EXIST = 0,
+  ENTRY_NOT_ACTIVE = 1,
+  CRITERIA_NOT_MET = 2,
+};
+
 // Enum used by UMA metrics to log a type of download event that occurred in the
 // Controller.
 enum class DownloadEvent {
@@ -223,6 +229,12 @@ void LogEntryResumptionCount(uint32_t resume_count);
 
 // At the time of a retry, logs which retry attempt count this is.
 void LogEntryRetryCount(uint32_t retry_count);
+
+// Logs statistics about when a pending upload was aborted.
+void LogUploadAborted(UploadAbortReason reason);
+
+// Logs statistics about a blob to be uploaded.
+void LogUploadData(const std::string& method, uint64_t blob_size);
 
 }  // namespace stats
 }  // namespace download

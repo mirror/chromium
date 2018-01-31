@@ -4,6 +4,8 @@
 
 #include "components/download/internal/background_service/debugging_client.h"
 
+#include "storage/browser/blob/blob_data_handle.h"
+
 namespace download {
 
 void DebuggingClient::OnServiceInitialized(
@@ -35,6 +37,12 @@ void DebuggingClient::OnDownloadSucceeded(
 bool DebuggingClient::CanServiceRemoveDownloadedFile(const std::string& guid,
                                                      bool force_delete) {
   return true;
+}
+
+void DebuggingClient::GetUploadData(const std::string& guid,
+                                    GetUploadDataCallback callback) {
+  std::unique_ptr<storage::BlobDataHandle> handle;
+  std::move(callback).Run(std::move(handle));
 }
 
 }  // namespace download

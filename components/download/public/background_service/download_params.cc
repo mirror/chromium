@@ -24,7 +24,8 @@ RequestParams::RequestParams() : method("GET"), fetch_error_body(false) {}
 
 RequestParams::RequestParams(const RequestParams& other) = default;
 
-DownloadParams::DownloadParams() : client(DownloadClient::INVALID) {}
+DownloadParams::DownloadParams()
+    : client(DownloadClient::INVALID), has_upload_data(false) {}
 
 DownloadParams::DownloadParams(const DownloadParams& other) = default;
 

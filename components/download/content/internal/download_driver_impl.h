@@ -42,6 +42,7 @@ class DownloadDriverImpl : public DownloadDriver,
       const RequestParams& request_params,
       const std::string& guid,
       const base::FilePath& file_path,
+      std::unique_ptr<storage::BlobDataHandle> blob_handle,
       const net::NetworkTrafficAnnotationTag& traffic_annotation) override;
   void Remove(const std::string& guid) override;
   void Pause(const std::string& guid) override;
@@ -77,6 +78,11 @@ class DownloadDriverImpl : public DownloadDriver,
 
   // Pending guid set of downloads that will be removed soon.
   std::set<std::string> guid_to_remove_;
+
+  // Holds the blob data handles for currently progressing uploads. The handles
+  // are kept alive until the upload is completed/failed/interrupted.
+  std::map<std::string, std::unique_ptr<storage::BlobDataHandle>>
+      upload_blob_handles_;
 
   // Only used to post tasks on the same thread.
   base::WeakPtrFactory<DownloadDriverImpl> weak_ptr_factory_;

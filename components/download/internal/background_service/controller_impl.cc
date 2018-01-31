@@ -29,6 +29,7 @@
 #include "components/download/public/background_service/download_metadata.h"
 #include "components/download/public/background_service/navigation_monitor.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
+#include "storage/browser/blob/blob_data_handle.h"
 
 namespace download {
 namespace {
@@ -917,8 +918,11 @@ void ControllerImpl::UpdateDriverState(Entry* entry) {
                                     blocked_by_downloads);
     }
 
-    if (driver_entry.has_value())
+    if (driver_entry.has_value()) {
       driver_->Pause(entry->guid);
+      if (entry->has_upload_data)
+        driver_->Remove(entry->guid);
+    }
   } else {
     if (!active) {
       // If we aren't active, resuming is going to cost something.  Track
@@ -956,13 +960,79 @@ void ControllerImpl::UpdateDriverState(Entry* entry) {
       driver_->Resume(entry->guid);
     } else {
       stats::LogEntryEvent(stats::DownloadEvent::START);
-      driver_->Start(
-          entry->request_params, entry->guid, entry->target_file_path,
-          net::NetworkTrafficAnnotationTag(entry->traffic_annotation));
+      PrepareToStartDownload(entry);
     }
   }
 
   log_sink_->OnServiceDownloadChanged(entry->guid);
+}
+
+void ControllerImpl::PrepareToStartDownload(Entry* entry) {
+  if (pending_uploads_.find(entry->guid) != pending_uploads_.end())
+    return;
+
+  pending_uploads_.insert(entry->guid);
+  auto* client = clients_->GetClient(entry->client);
+  DCHECK(client);
+  client->GetUploadData(
+      entry->guid, base::BindOnce(&ControllerImpl::OnDownloadReadyToStart,
+                                  weak_ptr_factory_.GetWeakPtr(), entry->guid));
+
+  upload_timeout_callbacks_[entry->guid].Reset(
+      base::BindRepeating(&ControllerImpl::KillUploadIfTimedOut,
+                          weak_ptr_factory_.GetWeakPtr(), entry->guid));
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE, upload_timeout_callbacks_[entry->guid].callback(),
+      base::TimeDelta::FromSeconds(300));
+}
+
+void ControllerImpl::OnDownloadReadyToStart(
+    const std::string& guid,
+    std::unique_ptr<storage::BlobDataHandle> handle) {
+  pending_uploads_.erase(guid);
+  upload_timeout_callbacks_[guid].Cancel();
+
+  auto* entry = model_->Get(guid);
+  if (!entry || entry->state != Entry::State::ACTIVE) {
+    stats::LogUploadAborted(stats::UploadAbortReason::ENTRY_NOT_EXIST);
+    return;
+  }
+
+  if (entry->state != Entry::State::ACTIVE) {
+    stats::LogUploadAborted(stats::UploadAbortReason::ENTRY_NOT_ACTIVE);
+    return;
+  }
+
+  bool blocked_by_criteria =
+      !device_status_listener_->CurrentDeviceStatus()
+           .MeetsCondition(entry->scheduling_params,
+                           config_->download_battery_percentage)
+           .MeetsRequirements();
+
+  if (blocked_by_criteria) {
+    stats::LogUploadAborted(stats::UploadAbortReason::CRITERIA_NOT_MET);
+    return;
+  }
+
+  if (handle)
+    stats::LogUploadData(entry->request_params.method, handle->size());
+
+  driver_->Start(entry->request_params, entry->guid, entry->target_file_path,
+                 std::move(handle),
+                 net::NetworkTrafficAnnotationTag(entry->traffic_annotation));
+}
+
+void ControllerImpl::KillUploadIfTimedOut(const std::string& guid) {
+  upload_timeout_callbacks_.erase(guid);
+  if (pending_uploads_.find(guid) == pending_uploads_.end())
+    return;
+
+  pending_uploads_.erase(guid);
+
+  Entry* entry = model_->Get(guid);
+  DCHECK(entry && entry->state != Entry::State::COMPLETE);
+
+  HandleCompleteDownload(CompletionType::UPLOAD_TIMEOUT, entry->guid);
 }
 
 void ControllerImpl::NotifyClientsOfStartup(bool state_lost) {

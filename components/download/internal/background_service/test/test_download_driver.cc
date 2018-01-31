@@ -71,6 +71,7 @@ void TestDownloadDriver::Start(
     const RequestParams& params,
     const std::string& guid,
     const base::FilePath& file_path,
+    std::unique_ptr<storage::BlobDataHandle> blob_handle,
     const net::NetworkTrafficAnnotationTag& traffic_annotation) {
   DriverEntry entry;
   entry.guid = guid;

@@ -16,6 +16,7 @@
 #include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/format_macros.h"
+#include "base/guid.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/message_loop/message_loop.h"
@@ -31,6 +32,7 @@
 #include "base/threading/thread_restrictions.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
+#include "content/browser/blob_storage/chrome_blob_storage_context.h"
 #include "content/browser/byte_stream.h"
 #include "content/browser/download/download_file_factory.h"
 #include "content/browser/download/download_file_impl.h"
@@ -65,6 +67,8 @@
 #include "net/test/embedded_test_server/http_response.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "ppapi/features/features.h"
+#include "storage/browser/blob/blob_data_builder.h"
+#include "storage/browser/blob/blob_storage_context.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
@@ -652,6 +656,16 @@ net::EmbeddedTestServer::HandleRequestCallback CreateEchoCookieHandler(
   return base::BindRepeating(&HandleRequestAndEchoCookies, relative_url);
 }
 
+// A request handler that takes the content of the request and sends it back on
+// the response.
+std::unique_ptr<net::test_server::HttpResponse> HandleUploadRequest(
+    const net::test_server::HttpRequest& request) {
+  std::unique_ptr<net::test_server::BasicHttpResponse> response(
+      (new net::test_server::BasicHttpResponse()));
+  response->set_content(request.content);
+  return std::move(response);
+}
+
 // Helper class to "flatten" handling of
 // TestDownloadHttpResponse::OnPauseHandler.
 class TestRequestPauseHandler {
@@ -692,6 +706,48 @@ class TestRequestPauseHandler {
 };
 
 class DownloadContentTest : public ContentBrowserTest {
+ public:
+  void CreateBlob(ChromeBlobStorageContext* blob_storage_context,
+                  const std::string& uuid,
+                  const std::string& blob_data) {
+    auto builder = std::make_unique<storage::BlobDataBuilder>(uuid);
+    builder->AppendData(blob_data);
+    auto handle =
+        blob_storage_context->context()->AddFinishedBlob(std::move(builder));
+    upload_blob_handle_ = std::move(handle);
+  }
+
+  void StartUploadAndVerify(GURL url,
+                            const std::string& uuid,
+                            const std::string& expected_data) {
+    std::unique_ptr<DownloadUrlParameters> download_parameters(
+        DownloadUrlParameters::CreateForWebContentsMainFrame(
+            shell()->web_contents(), url, TRAFFIC_ANNOTATION_FOR_TESTS));
+
+    scoped_refptr<network::ResourceRequestBody> request_body =
+        new network::ResourceRequestBody;
+    request_body->AppendBlob(uuid);
+    download_parameters->set_post_body(request_body);
+
+    DownloadManager* download_manager = DownloadManagerForShell(shell());
+    std::unique_ptr<DownloadTestObserver> observer(CreateWaiter(shell(), 1));
+    download_manager->DownloadUrl(std::move(download_parameters));
+    observer->WaitForFinished();
+    std::vector<DownloadItem*> items;
+    download_manager->GetAllDownloads(&items);
+    EXPECT_EQ(1u, items.size());
+
+    // Verify the response body in the file. It should match the request
+    // content.
+    {
+      base::ScopedAllowBlockingForTesting allow_blocking;
+      std::string file_content;
+      ASSERT_TRUE(
+          base::ReadFileToString(items[0]->GetTargetFilePath(), &file_content));
+      EXPECT_EQ(expected_data, file_content);
+    }
+  }
+
  protected:
   void SetUpOnMainThread() override {
     ASSERT_TRUE(downloads_directory_.CreateUniqueTempDir());
@@ -884,6 +940,7 @@ class DownloadContentTest : public ContentBrowserTest {
   std::unique_ptr<TestShellDownloadManagerDelegate> test_delegate_;
   TestDownloadResponseHandler test_response_handler_;
   TestDownloadHttpResponse::InjectErrorCallback inject_error_callback_;
+  std::unique_ptr<storage::BlobDataHandle> upload_blob_handle_;
 };
 
 // Test fixture for parallel downloading.
@@ -3063,6 +3120,68 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, FetchErrorResponseBody) {
         base::ReadFileToString(items[0]->GetTargetFilePath(), &file_content));
     EXPECT_EQ(kNotFoundResponseBody, file_content);
   }
+}
+
+// Verify that the upload body of a request is received correctly by the server.
+IN_PROC_BROWSER_TEST_F(DownloadContentTest, UploadBytes) {
+  net::EmbeddedTestServer server;
+  const std::string kUploadURL = "/upload";
+  std::string kUploadString = "Test upload body";
+
+  server.RegisterRequestHandler(base::BindRepeating(&HandleUploadRequest));
+  ASSERT_TRUE(server.Start());
+  GURL url = server.GetURL(kUploadURL);
+
+  std::unique_ptr<DownloadUrlParameters> download_parameters(
+      DownloadUrlParameters::CreateForWebContentsMainFrame(
+          shell()->web_contents(), url, TRAFFIC_ANNOTATION_FOR_TESTS));
+
+  download_parameters->set_post_body(
+      network::ResourceRequestBody::CreateFromBytes(kUploadString.data(),
+                                                    kUploadString.size()));
+
+  DownloadManager* download_manager = DownloadManagerForShell(shell());
+  std::unique_ptr<DownloadTestObserver> observer(CreateWaiter(shell(), 1));
+  download_manager->DownloadUrl(std::move(download_parameters));
+  observer->WaitForFinished();
+  std::vector<DownloadItem*> items;
+  download_manager->GetAllDownloads(&items);
+  EXPECT_EQ(1u, items.size());
+
+  // Verify the response body in the file. It should match the request content.
+  {
+    base::ScopedAllowBlockingForTesting allow_blocking;
+    std::string file_content;
+    ASSERT_TRUE(
+        base::ReadFileToString(items[0]->GetTargetFilePath(), &file_content));
+    EXPECT_EQ(kUploadString, file_content);
+  }
+}
+
+// Verify that a blob uploaded by the downloads system is received correctly.
+IN_PROC_BROWSER_TEST_F(DownloadContentTest, UploadBlob) {
+  net::EmbeddedTestServer server;
+  const std::string kUploadURL = "/upload";
+  const std::string kTestData = "This is the data inside blob";
+  const std::string uuid = base::GenerateGUID();
+
+  server.RegisterRequestHandler(base::BindRepeating(&HandleUploadRequest));
+  ASSERT_TRUE(server.Start());
+  GURL url = server.GetURL(kUploadURL);
+
+  ChromeBlobStorageContext* blob_storage_context(
+      ChromeBlobStorageContext::GetFor(
+          shell()->web_contents()->GetBrowserContext()));
+  // Wait for ChromeBlobStorageContext to finish initializing.
+  base::RunLoop().RunUntilIdle();
+
+  BrowserThread::PostTaskAndReply(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&DownloadContentTest::CreateBlob, base::Unretained(this),
+                     base::Unretained(blob_storage_context), uuid, kTestData),
+      base::BindOnce(&DownloadContentTest::StartUploadAndVerify,
+                     base::Unretained(this), url, uuid, kTestData));
+  base::RunLoop().RunUntilIdle();
 }
 
 // Verify the case that the first response is HTTP 200, and then interrupted,

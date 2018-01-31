@@ -13,6 +13,7 @@
 #include "components/download/public/background_service/download_service.h"
 #include "content/public/browser/background_fetch_response.h"
 #include "content/public/browser/browser_context.h"
+#include "storage/browser/blob/blob_data_handle.h"
 #include "url/origin.h"
 
 BackgroundFetchDownloadClient::BackgroundFetchDownloadClient(
@@ -83,4 +84,11 @@ bool BackgroundFetchDownloadClient::CanServiceRemoveDownloadedFile(
     bool force_delete) {
   // TODO(delphick): Return false if the background fetch hasn't finished yet
   return true;
+}
+
+void BackgroundFetchDownloadClient::GetUploadData(
+    const std::string& guid,
+    download::GetUploadDataCallback callback) {
+  std::unique_ptr<storage::BlobDataHandle> handle;
+  std::move(callback).Run(std::move(handle));
 }

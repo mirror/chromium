@@ -25,10 +25,15 @@ namespace network {
 struct ResourceRequest;
 }
 
+namespace storage {
+class BlobStorageContext;
+}
+
 namespace content {
 
 class BrowserContext;
 class DownloadUrlParameters;
+class ResourceContext;
 struct DownloadCreateInfo;
 struct DownloadSaveInfo;
 
@@ -71,6 +76,9 @@ CONTENT_EXPORT content::DownloadSource ToDownloadSource(
 CONTENT_EXPORT base::Optional<download::DownloadEntry> GetInProgressEntry(
     const std::string& guid,
     BrowserContext* browser_context);
+
+storage::BlobStorageContext* BlobStorageContextGetter(
+    ResourceContext* resource_context);
 
 }  // namespace content
 

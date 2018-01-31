@@ -162,6 +162,9 @@ struct DownloadParams {
   // The parameters that define the actual download request to make.
   RequestParams request_params;
 
+  // Whether this download has also some data to be uploaded.
+  bool has_upload_data;
+
   // Traffic annotation for the network request.
   net::MutableNetworkTrafficAnnotationTag traffic_annotation;
 };
