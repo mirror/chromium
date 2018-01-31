@@ -33,9 +33,11 @@
 #include "core/dom/AXObjectCache.h"
 #include "core/events/WebInputEventConversion.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/input/EventHandler.h"
 #include "core/layout/LayoutView.h"
+#include "core/loader/InteractiveDetector.h"
 #include "core/page/AutoscrollController.h"
 #include "core/page/Page.h"
 #include "core/paint/TransformRecorder.h"
@@ -129,6 +131,8 @@ WebInputEventResult PageWidgetDelegate::HandleInputEvent(
     const WebCoalescedInputEvent& coalesced_event,
     LocalFrame* root) {
   const WebInputEvent& event = coalesced_event.Event();
+  ReportFirstInputDelay(event, root);
+
   if (event.GetModifiers() & WebInputEvent::kIsTouchAccessibility &&
       WebInputEvent::IsMouseEventType(event.GetType())) {
     WebMouseEvent mouse_event = TransformWebMouseEvent(
@@ -239,6 +243,54 @@ WebInputEventResult PageWidgetDelegate::HandleInputEvent(
     default:
       return WebInputEventResult::kNotHandled;
   }
+}
+
+// This is called early enough in the pipeline that we don't need to worry about
+// javascript dispatching untrusted input events.
+void PageWidgetDelegate::ReportFirstInputDelay(const WebInputEvent& event,
+                                               LocalFrame* root) {
+  static TimeDelta pending_pointerdown_delay;
+
+  DCHECK(event.GetType() != WebInputEvent::kTouchStart);
+
+  // We can't report a pointerDown until the pointerUp, in case it turns into a
+  // scroll.
+  if (event.GetType() == WebInputEvent::kPointerDown) {
+    pending_pointerdown_delay = TimeDelta::FromSecondsD(
+        CurrentTimeTicksInSeconds() - event.TimeStampSeconds());
+    return;
+  }
+
+  bool event_is_meaningful =
+      event.GetType() == WebInputEvent::kMouseDown ||
+      event.GetType() == WebInputEvent::kKeyDown ||
+      event.GetType() == WebInputEvent::kRawKeyDown ||
+      // We need to explicitly include tap, as if there are no listeners, we
+      // won't receive the pointer events.
+      event.GetType() == WebInputEvent::kGestureTap ||
+      event.GetType() == WebInputEvent::kPointerUp;
+
+  if (!event_is_meaningful)
+    return;
+
+  Document* document = root->GetDocument();
+  if (!document)
+    return;
+
+  InteractiveDetector* interactive_detector(
+      InteractiveDetector::From(*document));
+
+  if (!interactive_detector)
+    return;
+
+  const TimeDelta delay =
+      event.GetType() == WebInputEvent::kPointerUp
+          ? pending_pointerdown_delay
+          : TimeDelta::FromSecondsD(CurrentTimeTicksInSeconds() -
+                                    event.TimeStampSeconds());
+  pending_pointerdown_delay = base::TimeDelta();
+
+  interactive_detector->OnFirstInputDelay(delay);
 }
 
 // ----------------------------------------------------------------
