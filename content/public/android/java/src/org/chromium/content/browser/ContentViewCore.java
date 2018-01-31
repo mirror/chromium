@@ -4,15 +4,22 @@
 
 package org.chromium.content.browser;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.os.Build;
+import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStructure;
+import android.view.accessibility.AccessibilityNodeProvider;
 
 import org.chromium.base.VisibleForTesting;
+import org.chromium.content.browser.accessibility.WebContentsAccessibility;
 import org.chromium.content.browser.input.SelectPopup;
+import org.chromium.content.browser.input.TextSuggestionHost;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.base.ViewAndroidDelegate;
 import org.chromium.ui.base.WindowAndroid;
@@ -357,6 +364,73 @@ public interface ContentViewCore {
     void preserveSelectionOnNextLossOfFocus();
 
     /**
+     * Determines whether or not this ContentViewCore can handle this accessibility action.
+     * @param action The action to perform.
+     * @return Whether or not this action is supported.
+     */
+    boolean supportsAccessibilityAction(int action);
+
+    /**
+     * Attempts to perform an accessibility action on the web content.  If the accessibility action
+     * cannot be processed, it returns {@code null}, allowing the caller to know to call the
+     * super {@link View#performAccessibilityAction(int, Bundle)} method and use that return value.
+     * Otherwise the return value from this method should be used.
+     * @param action The action to perform.
+     * @param arguments Optional action arguments.
+     * @return Whether the action was performed or {@code null} if the call should be delegated to
+     *         the super {@link View} class.
+     */
+    boolean performAccessibilityAction(int action, Bundle arguments);
+
+    /**
+     * Get the WebContentsAccessibility, used for native accessibility
+     * (not script injection). This will return null when system accessibility
+     * is not enabled.
+     * @return This view's WebContentsAccessibility.
+     */
+    WebContentsAccessibility getWebContentsAccessibility();
+
+    /**
+     * If native accessibility is enabled and no other views are temporarily
+     * obscuring this one, returns an AccessibilityNodeProvider that
+     * implements native accessibility for this view. Returns null otherwise.
+     * Lazily initializes native accessibility here if it's allowed.
+     * @return The AccessibilityNodeProvider, if available, or null otherwise.
+     */
+    AccessibilityNodeProvider getAccessibilityNodeProvider();
+
+    @TargetApi(Build.VERSION_CODES.M)
+    void onProvideVirtualStructure(ViewStructure structure, boolean ignoreScrollOffset);
+
+    /**
+     * Set whether or not the web contents are obscured by another view.
+     * If true, we won't return an accessibility node provider or respond
+     * to touch exploration events.
+     */
+    void setObscuredByAnotherView(boolean isObscured);
+
+    /**
+     * Returns true if accessibility is on and touch exploration is enabled.
+     */
+    boolean isTouchExplorationEnabled();
+
+    /**
+     * Turns browser accessibility on or off.
+     * If |state| is |false|, this turns off both native and injected accessibility.
+     * Otherwise, if accessibility script injection is enabled, this will enable the injected
+     * accessibility scripts. Native accessibility is enabled on demand.
+     */
+    void setAccessibilityState(boolean state);
+
+    /**
+     * Sets whether or not we should set accessibility focus on page load.
+     * This only applies if an accessibility service like TalkBack is running.
+     * This is desirable behavior for a browser window, but not for an embedded
+     * WebView.
+     */
+    void setShouldSetAccessibilityFocusOnPageLoad(boolean on);
+
+    /**
      * @return Whether the current page seems to be mobile-optimized. This hint is based upon
      *         rendered frames and may return different values when called multiple times for the
      *         same page (particularly during page load).
@@ -376,6 +450,18 @@ public interface ContentViewCore {
     void setFullscreenRequiredForOrientationLock(boolean value);
 
     // Test-only methods
+
+    /**
+     * @return The TextSuggestionHost that handles displaying the text suggestion menu.
+     */
+    @VisibleForTesting
+    TextSuggestionHost getTextSuggestionHostForTesting();
+
+    @VisibleForTesting
+    void setTextSuggestionHostForTesting(TextSuggestionHost textSuggestionHost);
+
+    @VisibleForTesting
+    void setPopupZoomerForTest(PopupZoomer popupZoomer);
 
     /**
      * @return The amount of the top controls height if controls are in the state

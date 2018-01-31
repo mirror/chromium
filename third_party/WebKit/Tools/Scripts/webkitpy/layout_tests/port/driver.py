@@ -371,12 +371,9 @@ class Driver(object):
 
         self._current_cmd_line = None
 
-    def _base_cmd_line(self):
-        return [self._port._path_to_driver()]  # pylint: disable=protected-access
-
     def cmd_line(self, pixel_tests, per_test_args):
         cmd = self._command_wrapper(self._port.get_option('wrapper'))
-        cmd += self._base_cmd_line()
+        cmd.append(self._port._path_to_driver())
         if self._no_timeout:
             cmd.append('--no-timeout')
         primary_driver_flag = self._port.primary_driver_flag()

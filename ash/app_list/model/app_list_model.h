@@ -33,13 +33,18 @@ class AppListModelObserver;
 // the model needs to notify its observers when this occurs.
 class APP_LIST_MODEL_EXPORT AppListModel : public AppListItemListObserver {
  public:
+  enum Status {
+    STATUS_NORMAL,
+    STATUS_SYNCING,  // Syncing apps or installing synced apps.
+  };
+
   AppListModel();
   ~AppListModel() override;
 
   void AddObserver(AppListModelObserver* observer);
   void RemoveObserver(AppListModelObserver* observer);
 
-  void SetStatus(ash::AppListModelStatus status);
+  void SetStatus(Status status);
 
   void SetState(ash::AppListState state);
   ash::AppListState state() const { return state_; }
@@ -117,7 +122,7 @@ class APP_LIST_MODEL_EXPORT AppListModel : public AppListItemListObserver {
 
   AppListItemList* top_level_item_list() { return top_level_item_list_.get(); }
 
-  ash::AppListModelStatus status() const { return status_; }
+  Status status() const { return status_; }
 
  private:
   // AppListItemListObserver
@@ -154,7 +159,7 @@ class APP_LIST_MODEL_EXPORT AppListModel : public AppListItemListObserver {
 
   std::unique_ptr<AppListItemList> top_level_item_list_;
 
-  ash::AppListModelStatus status_ = ash::AppListModelStatus::kStatusNormal;
+  Status status_ = STATUS_NORMAL;
   ash::AppListState state_ = ash::AppListState::kInvalidState;
   // The AppListView state. Controlled by the AppListView.
   AppListViewState state_fullscreen_ = AppListViewState::CLOSED;

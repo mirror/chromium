@@ -168,6 +168,10 @@ const base::Feature kMediaDevicesSystemMonitorCache {
 const base::Feature kMemoryCoordinator{"MemoryCoordinator",
                                        base::FEATURE_DISABLED_BY_DEFAULT};
 
+// Enables the network service.
+const base::Feature kNetworkService{"NetworkService",
+                                    base::FEATURE_DISABLED_BY_DEFAULT};
+
 // If the network service is enabled, runs it in process.
 const base::Feature kNetworkServiceInProcess{"NetworkServiceInProcess",
                                              base::FEATURE_DISABLED_BY_DEFAULT};
@@ -218,6 +222,10 @@ const base::Feature kOriginManifest{"OriginManifest",
 const base::Feature kOriginTrials{"OriginTrials",
                                   base::FEATURE_ENABLED_BY_DEFAULT};
 
+// Out of Blink CORS
+const base::Feature kOutOfBlinkCORS{"OutOfBlinkCORS",
+                                    base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Whether a download can be handled by parallel jobs.
 const base::Feature kParallelDownloading {
   "ParallelDownloading",
@@ -265,6 +273,10 @@ const base::Feature kPepper3DImageChromium {
 // Generate V8 full code cache for PWAs.
 const base::Feature kPWAFullCodeCache{"PWAFullCodeCache",
                                       base::FEATURE_DISABLED_BY_DEFAULT};
+
+// Port some content::ResourceScheduler functionalities to renderer.
+const base::Feature kRendererSideResourceScheduler{
+    "RendererSideResourceScheduler", base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Throttle Blink's rendering pipeline based on frame visibility.
 const base::Feature kRenderingPipelineThrottling{
@@ -380,11 +392,6 @@ const base::Feature kTouchpadAndWheelScrollLatching{
 const base::Feature kTurnOff2DAndOpacityCompositorAnimations{
     "TurnOff2DAndOpacityCompositorAnimations",
     base::FEATURE_DISABLED_BY_DEFAULT};
-
-// Enables unified touch adjustment which adjusts touch events target to a best
-// nearby node.
-const base::Feature kUnifiedTouchAdjustment{"UnifiedTouchAdjustment",
-                                            base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Use Feature Policy to gate the use of permission features like midi,
 // geolocation, camera, microphone, etc.
@@ -568,9 +575,5 @@ bool IsVideoCaptureServiceEnabledForBrowserProcess() {
              features::kRunVideoCaptureServiceInBrowserProcess);
 #endif
 }
-
-// Enables code caching after executing the script.
-const base::Feature kCodeCacheAfterExecute{"CodeCacheAfterExecute",
-                                           base::FEATURE_DISABLED_BY_DEFAULT};
 
 }  // namespace features

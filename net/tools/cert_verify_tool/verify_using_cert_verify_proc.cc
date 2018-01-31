@@ -114,7 +114,6 @@ bool VerifyUsingCertVerifyProc(
     const std::string& hostname,
     const std::vector<CertInput>& intermediate_der_certs,
     const std::vector<CertInput>& root_der_certs,
-    net::CRLSet* crl_set,
     const base::FilePath& dump_prefix_path) {
   std::cout
       << "NOTE: CertVerifyProc always uses OS trust settings (--roots are in "
@@ -159,10 +158,11 @@ bool VerifyUsingCertVerifyProc(
                  "platform.\n";
   }
   net::CertVerifyResult result;
-  int rv =
-      cert_verify_proc->Verify(x509_target_and_intermediates.get(), hostname,
-                               std::string() /* ocsp_response */, flags,
-                               crl_set, x509_additional_trust_anchors, &result);
+  // TODO(mattm): add CRLSet handling.
+  int rv = cert_verify_proc->Verify(x509_target_and_intermediates.get(),
+                                    hostname, std::string() /* ocsp_response */,
+                                    flags, nullptr /* crl_set */,
+                                    x509_additional_trust_anchors, &result);
 
   std::cout << "CertVerifyProc result: " << net::ErrorToShortString(rv) << "\n";
   PrintCertVerifyResult(result);

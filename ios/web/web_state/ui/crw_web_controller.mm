@@ -43,7 +43,6 @@
 #import "ios/web/navigation/navigation_manager_impl.h"
 #include "ios/web/navigation/navigation_manager_util.h"
 #include "ios/web/navigation/placeholder_navigation_util.h"
-#include "ios/web/navigation/wk_based_restore_session_util.h"
 #include "ios/web/net/cert_host_pair.h"
 #import "ios/web/net/crw_cert_verification_controller.h"
 #import "ios/web/net/crw_ssl_status_updater.h"
@@ -1186,15 +1185,13 @@ GURL URLEscapedForHistory(const GURL& url) {
 - (GURL)currentURLWithTrustLevel:(web::URLVerificationTrustLevel*)trustLevel {
   DCHECK(trustLevel) << "Verification of the trustLevel state is mandatory";
 
-  // The web view URL is the current URL only if it is neither a placeholder URL
-  // (used to hold WKBackForwardListItem for WebUI and Native Content views) nor
-  // a restore_session.html (used to replay session history in WKWebView).
+  // The web view URL is the current URL only if it is not a placeholder URL.
+  // In case of a placeholder navigation, the visible URL is the app-specific
+  // one in the native controller.
   // TODO(crbug.com/738020): Investigate if this method is still needed and if
   // it can be implemented using NavigationManager API after removal of legacy
   // navigation stack.
-  GURL webViewURL = net::GURLWithNSURL(_webView.URL);
-  if (_webView && !IsPlaceholderUrl(webViewURL) &&
-      !web::IsRestoreSessionUrl(webViewURL)) {
+  if (_webView && !IsPlaceholderUrl(net::GURLWithNSURL(_webView.URL))) {
     return [self webURLWithTrustLevel:trustLevel];
   }
   // Any non-web URL source is trusted.
@@ -1635,7 +1632,8 @@ registerLoadRequestForURL:(const GURL&)requestURL
 
 - (NSMutableURLRequest*)requestForCurrentNavigationItem {
   web::NavigationItem* item = self.currentNavItem;
-  const GURL currentNavigationURL = item ? item->GetURL() : GURL::EmptyGURL();
+  const GURL currentNavigationURL =
+      item ? item->GetVirtualURL() : GURL::EmptyGURL();
   NSMutableURLRequest* request = [NSMutableURLRequest
       requestWithURL:net::NSURLWithGURL(currentNavigationURL)];
   const web::Referrer referrer(self.currentNavItemReferrer);
@@ -2461,8 +2459,6 @@ registerLoadRequestForURL:(const GURL&)requestURL
       if (originGURL.is_valid() && originGURL.SchemeIsHTTPOrHTTPS()) {
         GURL::Replacements replacements;
         replacements.SetPathStr("/favicon.ico");
-        replacements.ClearQuery();
-        replacements.ClearRef();
         urls.push_back(web::FaviconURL(
             originGURL.ReplaceComponents(replacements),
             web::FaviconURL::IconType::kFavicon, std::vector<gfx::Size>()));
@@ -4650,17 +4646,10 @@ registerLoadRequestForURL:(const GURL&)requestURL
     web::ErrorRetryState errorRetryState = item->GetErrorRetryState();
 
     if (IsPlaceholderUrl(webViewURL)) {
-      GURL originalURL = ExtractUrlFromPlaceholderUrl(webViewURL);
-      if (item->GetURL() == webViewURL) {
-        // Current navigation item is restored from a placeholder URL as part
-        // of session restoration. It is now safe to update the navigation
-        // item URL to the original app-specific URL.
-        item->SetURL(originalURL);
-      } else if (item->GetURL() != originalURL) {
-        // The |didFinishNavigation| callback can arrive after another
-        // navigation has started. Abort in this case.
+      // The |didFinishNavigation| callback can arrive after another
+      // navigation has started. Abort in this case.
+      if (CreatePlaceholderUrlForUrl(item->GetVirtualURL()) != webViewURL)
         return;
-      }
 
       const bool isWebUIURL =
           web::GetWebClient()->IsAppSpecificURL(item->GetURL()) &&

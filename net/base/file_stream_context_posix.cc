@@ -39,16 +39,17 @@ FileStream::Context::~Context() = default;
 
 int FileStream::Context::Read(IOBuffer* in_buf,
                               int buf_len,
-                              CompletionOnceCallback callback) {
+                              const CompletionCallback& callback) {
   CheckNoAsyncInProgress();
 
   scoped_refptr<IOBuffer> buf = in_buf;
   const bool posted = base::PostTaskAndReplyWithResult(
-      task_runner_.get(), FROM_HERE,
-      base::BindOnce(&Context::ReadFileImpl, base::Unretained(this), buf,
-                     buf_len),
-      base::BindOnce(&Context::OnAsyncCompleted, base::Unretained(this),
-                     IntToInt64(std::move(callback))));
+      task_runner_.get(),
+      FROM_HERE,
+      base::Bind(&Context::ReadFileImpl, base::Unretained(this), buf, buf_len),
+      base::Bind(&Context::OnAsyncCompleted,
+                 base::Unretained(this),
+                 IntToInt64(callback)));
   DCHECK(posted);
 
   async_in_progress_ = true;
@@ -58,16 +59,17 @@ int FileStream::Context::Read(IOBuffer* in_buf,
 
 int FileStream::Context::Write(IOBuffer* in_buf,
                                int buf_len,
-                               CompletionOnceCallback callback) {
+                               const CompletionCallback& callback) {
   CheckNoAsyncInProgress();
 
   scoped_refptr<IOBuffer> buf = in_buf;
   const bool posted = base::PostTaskAndReplyWithResult(
-      task_runner_.get(), FROM_HERE,
-      base::BindOnce(&Context::WriteFileImpl, base::Unretained(this), buf,
-                     buf_len),
-      base::BindOnce(&Context::OnAsyncCompleted, base::Unretained(this),
-                     IntToInt64(std::move(callback))));
+      task_runner_.get(),
+      FROM_HERE,
+      base::Bind(&Context::WriteFileImpl, base::Unretained(this), buf, buf_len),
+      base::Bind(&Context::OnAsyncCompleted,
+                 base::Unretained(this),
+                 IntToInt64(callback)));
   DCHECK(posted);
 
   async_in_progress_ = true;

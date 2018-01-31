@@ -69,9 +69,7 @@
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  // TODO(crbug.com/807330) Completely remove tabbar once
-  // IsUIRefreshPhase1Enabled is defaulted on.
-  self.tabBar.hidden = !self.tabBar.items.count || IsUIRefreshPhase1Enabled();
+  self.tabBar.hidden = !self.tabBar.items.count;
   if (self.tabBar.hidden) {
     self.contentView.frame = self.bounds;
   } else {

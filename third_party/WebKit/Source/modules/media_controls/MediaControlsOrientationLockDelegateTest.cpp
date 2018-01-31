@@ -17,13 +17,10 @@
 #include "core/html_names.h"
 #include "core/loader/EmptyClients.h"
 #include "core/testing/PageTestBase.h"
-#include "device/screen_orientation/public/interfaces/screen_orientation.mojom-blink.h"
 #include "modules/device_orientation/DeviceOrientationController.h"
 #include "modules/device_orientation/DeviceOrientationData.h"
 #include "modules/media_controls/MediaControlsImpl.h"
 #include "modules/screen_orientation/ScreenOrientationControllerImpl.h"
-#include "mojo/public/cpp/bindings/associated_binding.h"
-#include "mojo/public/cpp/bindings/associated_interface_ptr.h"
 #include "platform/LayoutTestSupport.h"
 #include "platform/geometry/IntRect.h"
 #include "platform/testing/EmptyWebMediaPlayer.h"
@@ -31,6 +28,7 @@
 #include "platform/testing/UnitTestHelpers.h"
 #include "public/platform/WebSize.h"
 #include "public/platform/modules/screen_orientation/WebLockOrientationCallback.h"
+#include "public/platform/modules/screen_orientation/WebScreenOrientationClient.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -58,32 +56,16 @@ class MockWebMediaPlayerForOrientationLockDelegate final
   MOCK_CONST_METHOD0(NaturalSize, WebSize());
 };
 
-class MockScreenOrientation final
-    : public device::mojom::blink::ScreenOrientation {
+class MockWebScreenOrientationClient final : public WebScreenOrientationClient {
  public:
-  MockScreenOrientation() : binding_(this) {}
-
-  // device::mojom::blink::ScreenOrientation overrides:
+  // WebScreenOrientationClient overrides:
   void LockOrientation(WebScreenOrientationLockType type,
-                       LockOrientationCallback callback) override {
-    std::move(callback).Run(device::mojom::ScreenOrientationLockResult::
-                                SCREEN_ORIENTATION_LOCK_RESULT_SUCCESS);
+                       std::unique_ptr<WebLockOrientationCallback>) override {
     LockOrientation(type);
   }
-
-  void BindRequest(
-      device::mojom::blink::ScreenOrientationAssociatedRequest request) {
-    binding_.Bind(std::move(request));
-  }
-
-  void Close() { binding_.Close(); }
-
   MOCK_METHOD0(UnlockOrientation, void());
 
   MOCK_METHOD1(LockOrientation, void(WebScreenOrientationLockType));
-
- private:
-  mojo::AssociatedBinding<device::mojom::blink::ScreenOrientation> binding_;
 };
 
 void DidEnterFullscreen(Document* document) {
@@ -104,13 +86,8 @@ class MockChromeClientForOrientationLockDelegate final
   // ChromeClient overrides:
   void InstallSupplements(LocalFrame& frame) override {
     EmptyChromeClient::InstallSupplements(frame);
-    ScreenOrientationControllerImpl::ProvideTo(frame);
-    device::mojom::blink::ScreenOrientationAssociatedPtr screen_orientation;
-    ScreenOrientationClient().BindRequest(
-        mojo::MakeRequestAssociatedWithDedicatedPipe(&screen_orientation));
-    ScreenOrientationControllerImpl::From(frame)
-        ->SetScreenOrientationAssociatedPtrForTests(
-            std::move(screen_orientation));
+    ScreenOrientationControllerImpl::ProvideTo(frame,
+                                               &web_screen_orientation_client_);
   }
   // The real ChromeClient::EnterFullscreen/ExitFullscreen implementation is
   // async due to IPC, emulate that by posting tasks:
@@ -127,12 +104,12 @@ class MockChromeClientForOrientationLockDelegate final
 
   MOCK_CONST_METHOD0(GetScreenInfo, WebScreenInfo());
 
-  MockScreenOrientation& ScreenOrientationClient() {
-    return mock_screen_orientation_;
+  MockWebScreenOrientationClient& WebScreenOrientationClient() {
+    return web_screen_orientation_client_;
   }
 
  private:
-  MockScreenOrientation mock_screen_orientation_;
+  MockWebScreenOrientationClient web_screen_orientation_client_;
 };
 
 class StubLocalFrameClientForOrientationLockDelegate final
@@ -192,7 +169,6 @@ class MediaControlsOrientationLockDelegateTest
 
   void TearDown() override {
     ::testing::Mock::VerifyAndClear(&ScreenOrientationClient());
-    ScreenOrientationClient().Close();
   }
 
   static bool HasDelegate(const MediaControls& media_controls) {
@@ -267,8 +243,8 @@ class MediaControlsOrientationLockDelegateTest
   }
 
   HTMLVideoElement& Video() const { return *video_; }
-  MockScreenOrientation& ScreenOrientationClient() const {
-    return ChromeClient().ScreenOrientationClient();
+  MockWebScreenOrientationClient& ScreenOrientationClient() const {
+    return ChromeClient().WebScreenOrientationClient();
   }
   MockWebMediaPlayerForOrientationLockDelegate& MockWebMediaPlayer() const {
     return *static_cast<MockWebMediaPlayerForOrientationLockDelegate*>(
@@ -497,7 +473,6 @@ TEST_F(MediaControlsOrientationLockDelegateTest, LeaveFullscreenWithMetadata) {
 TEST_F(MediaControlsOrientationLockDelegateTest, EnterFullscreenAfterPageLock) {
   SimulateVideoReadyState(HTMLMediaElement::kHaveMetadata);
   SimulateOrientationLock();
-  testing::RunPendingTasks();
 
   EXPECT_FALSE(DelegateWillUnlockFullscreen());
   EXPECT_CALL(ScreenOrientationClient(), LockOrientation(_)).Times(0);
@@ -511,7 +486,6 @@ TEST_F(MediaControlsOrientationLockDelegateTest, EnterFullscreenAfterPageLock) {
 TEST_F(MediaControlsOrientationLockDelegateTest, LeaveFullscreenAfterPageLock) {
   SimulateVideoReadyState(HTMLMediaElement::kHaveMetadata);
   SimulateOrientationLock();
-  testing::RunPendingTasks();
 
   EXPECT_CALL(ScreenOrientationClient(), LockOrientation(_)).Times(0);
   EXPECT_CALL(ScreenOrientationClient(), UnlockOrientation()).Times(0);

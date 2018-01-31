@@ -53,27 +53,32 @@ bool AshmemRegion::CheckFileDescriptorIsReadOnly(int fd) {
   // First, check that trying to map a page of the region with PROT_WRITE
   // fails with EPERM.
   if (map.Allocate(NULL, map_size, MemoryMapping::CAN_WRITE, fd)) {
-    LOG("Region could be mapped writable. Should not happen.");
+    LOG("%s: Region could be mapped writable. Should not happen.\n",
+        __FUNCTION__);
     errno = EPERM;
     return false;
   }
   if (errno != EPERM) {
-    LOG_ERRNO("Region failed writable mapping with unexpected error");
+    LOG_ERRNO("%s: Region failed writable mapping with unexpected error",
+              __FUNCTION__);
     return false;
   }
 
   // Second, check that it can be mapped PROT_READ, but cannot be remapped
   // with PROT_READ | PROT_WRITE through mprotect().
   if (!map.Allocate(NULL, map_size, MemoryMapping::CAN_READ, fd)) {
-    LOG_ERRNO("Failed to map region read-only");
+    LOG_ERRNO("%s: Failed to map region read-only", __FUNCTION__);
     return false;
   }
   if (map.SetProtection(MemoryMapping::CAN_READ_WRITE)) {
-    LOG_ERRNO("Region could be remapped read-write. Should not happen.");
+    LOG_ERRNO("%s: Region could be remapped read-write. Should not happen.\n",
+              __FUNCTION__);
     return false;
   }
   if (errno != EACCES) {
-    LOG_ERRNO("Region failed to be remapped read-write with unexpected error");
+    LOG_ERRNO(
+        "%s: Region failed to be remapped read-write with unexpected error",
+        __FUNCTION__);
     return false;
   }
 

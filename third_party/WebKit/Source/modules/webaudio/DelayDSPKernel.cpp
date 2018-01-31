@@ -30,6 +30,8 @@
 
 namespace blink {
 
+const float kSmoothingTimeConstant = 0.020f;  // 20ms
+
 DelayDSPKernel::DelayDSPKernel(DelayProcessor* processor)
     : AudioDelayDSPKernel(processor, AudioUtilities::kRenderQuantumFrames) {
   DCHECK(processor);
@@ -46,6 +48,9 @@ DelayDSPKernel::DelayDSPKernel(DelayProcessor* processor)
   buffer_.Allocate(
       BufferLengthForDelay(max_delay_time_, processor->SampleRate()));
   buffer_.Zero();
+
+  smoothing_rate_ = AudioUtilities::DiscreteTimeConstantForSampleRate(
+      kSmoothingTimeConstant, processor->SampleRate());
 }
 
 bool DelayDSPKernel::HasSampleAccurateValues() {

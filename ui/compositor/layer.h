@@ -306,8 +306,7 @@ class COMPOSITOR_EXPORT Layer : public LayerAnimationDelegate,
   // Begins showing content from a surface with a particular ID.
   void SetShowPrimarySurface(const viz::SurfaceId& surface_id,
                              const gfx::Size& frame_size_in_dip,
-                             SkColor default_background_color,
-                             const cc::DeadlinePolicy& deadline_policy);
+                             SkColor default_background_color);
 
   // In the event that the primary surface is not yet available in the
   // display compositor, the fallback surface will be used.

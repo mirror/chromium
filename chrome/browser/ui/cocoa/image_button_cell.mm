@@ -167,13 +167,6 @@ NSRect CenterImageInFrame(NSImage* image, NSRect frame) {
                hints:nil];
 }
 
-- (void)setIsHoverDisabled:(BOOL)disable {
-  if (disable)
-    [self setIsMouseInside:NO];
-
-  isHoverDisabled_ = disable;
-}
-
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView*)controlView {
   [self drawImageWithFrame:cellFrame inView:controlView];
 }
@@ -242,9 +235,6 @@ NSRect CenterImageInFrame(NSImage* image, NSRect frame) {
 }
 
 - (void)setIsMouseInside:(BOOL)isMouseInside {
-  if (isHoverDisabled_)
-    return;
-
   if (isMouseInside_ != isMouseInside) {
     oldState_ = [self currentButtonState];
     isMouseInside_ = isMouseInside;

@@ -57,8 +57,7 @@ class DataConsumerHandleTestUtil {
       kWithExecutionContext,
     };
 
-    Thread(const WebThreadCreationParams&,
-           InitializationPolicy = kGarbageCollection);
+    Thread(const char* name, InitializationPolicy = kGarbageCollection);
     ~Thread();
 
     WebThreadSupportingGC* GetThread() { return thread_.get(); }
@@ -165,12 +164,8 @@ class DataConsumerHandleTestUtil {
      public:
       ThreadHolder(ThreadingTestBase* test)
           : context_(test->context_),
-            reading_thread_(std::make_unique<Thread>(
-                WebThreadCreationParams(WebThreadType::kTestThread)
-                    .SetThreadName("reading thread"))),
-            updating_thread_(std::make_unique<Thread>(
-                WebThreadCreationParams(WebThreadType::kTestThread)
-                    .SetThreadName("updating thread"))) {
+            reading_thread_(std::make_unique<Thread>("reading thread")),
+            updating_thread_(std::make_unique<Thread>("updating thread")) {
         context_->RegisterThreadHolder(this);
       }
       ~ThreadHolder() { context_->UnregisterThreadHolder(); }

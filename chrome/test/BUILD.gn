@@ -627,7 +627,6 @@ test("browser_tests") {
       "../browser/policy/cloud/test_request_interceptor.cc",
       "../browser/policy/cloud/test_request_interceptor.h",
       "../browser/policy/policy_browsertest.cc",
-      "../browser/policy/policy_initialization_browsertest.cc",
       "../browser/policy/policy_network_browsertest.cc",
       "../browser/policy/policy_prefs_browsertest.cc",
       "../browser/policy/policy_startup_browsertest.cc",
@@ -1941,7 +1940,7 @@ test("browser_tests") {
     if (enable_library_cdms) {
       # Runtime dependencies.
       data_deps += [
-        "//media/cdm/library_cdm:clearkeycdmadapter",
+        "//media/cdm/ppapi:clearkeycdmadapter",
         "//third_party/widevine/cdm:widevinecdmadapter",
       ]
     }
@@ -2076,28 +2075,12 @@ group("telemetry_perf_tests") {
   ]
 }
 
-# Temporary target for running benchmarks without building Chrome
-# Will be removed as a part of crbug.com/758632
-group("telemetry_perf_tests_experimental") {
-  testonly = true
-  deps = [
-    "//tools/perf/:perf_experimental",
-  ]
-
-  data = [
-    # Needed for isolate script to execute.
-    "//testing/scripts/common.py",
-    "//testing/xvfb.py",
-    "//testing/scripts/run_telemetry_benchmark_as_googletest.py",
-  ]
-}
-
 # New target that will replace telemetry_perf_tests when testing
 # is done.
 group("performance_test_suite") {
   testonly = true
   deps = [
-    "//chrome/test:telemetry_perf_tests_experimental",
+    "//chrome/test:telemetry_perf_tests",
   ]
 
   data = [
@@ -2840,7 +2823,6 @@ test("unit_tests") {
       "../browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
       "../browser/resource_coordinator/tab_manager_unittest.cc",
       "../browser/resource_coordinator/tab_manager_web_contents_data_unittest.cc",
-      "../browser/resource_coordinator/tab_metrics_logger_impl_unittest.cc",
 
       # Android does not use the Message Center notification system.
       "../browser/net/firefox_proxy_settings_unittest.cc",
@@ -2923,6 +2905,7 @@ test("unit_tests") {
       "../browser/ui/tabs/pinned_tab_test_utils.cc",
       "../browser/ui/tabs/pinned_tab_test_utils.h",
       "../browser/ui/tabs/tab_menu_model_unittest.cc",
+      "../browser/ui/tabs/tab_metrics_logger_impl_unittest.cc",
       "../browser/ui/tabs/tab_strip_model_stats_recorder_unittest.cc",
       "../browser/ui/tabs/tab_strip_model_unittest.cc",
       "../browser/ui/tabs/tab_ukm_test_helper.cc",
@@ -2990,11 +2973,8 @@ test("unit_tests") {
       "../utility/importer/safari_importer_unittest.mm",
     ]
     deps += [
-      "//chrome/browser/resource_coordinator:tab_metrics_event_proto",
       "//components/favicon/core/test:test_support",
       "//components/signin/core/browser:signin_features",
-      "//components/ukm:test_support",
-      "//services/metrics/public/cpp:ukm_builders",
       "//third_party/libaddressinput",
     ]
     if (is_mac) {
@@ -5372,7 +5352,7 @@ if (!is_android && !is_fuchsia) {
     if (enable_library_cdms) {
       deps += [ "//media/cdm:cdm_paths" ]
       data_deps = [
-        "//media/cdm/library_cdm:clearkeycdmadapter",
+        "//media/cdm/ppapi:clearkeycdmadapter",
         "//third_party/widevine/cdm:widevinecdmadapter",
       ]
     }

@@ -9,6 +9,7 @@
     {
       "name": "LayoutBlockFlow DIV id='masked'",
       "bounds": [400, 200],
+      "contentsOpaque": true,
       "backgroundColor": "#000000",
       "maskLayer": [
         {

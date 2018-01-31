@@ -128,21 +128,28 @@ void HTMLObjectElement::ParseAttribute(
   }
 }
 
-static void MapDataParamToSrc(PluginParameters& plugin_params) {
+static void MapDataParamToSrc(Vector<String>* param_names,
+                              Vector<String>* param_values) {
   // Some plugins don't understand the "data" attribute of the OBJECT tag (i.e.
   // Real and WMP require "src" attribute).
-  int src_index = plugin_params.FindStringInNames("src");
-  int data_index = plugin_params.FindStringInNames("data");
+  int src_index = -1, data_index = -1;
+  for (unsigned i = 0; i < param_names->size(); ++i) {
+    if (DeprecatedEqualIgnoringCase((*param_names)[i], "src"))
+      src_index = i;
+    else if (DeprecatedEqualIgnoringCase((*param_names)[i], "data"))
+      data_index = i;
+  }
 
   if (src_index == -1 && data_index != -1) {
-    plugin_params.AppendNameWithValue("src",
-                                      plugin_params.Values()[data_index]);
+    param_names->push_back("src");
+    param_values->push_back((*param_values)[data_index]);
   }
 }
 
 // TODO(schenney): crbug.com/572908 This function should not deal with url or
 // serviceType!
-void HTMLObjectElement::ParametersForPlugin(PluginParameters& plugin_params) {
+void HTMLObjectElement::ParametersForPlugin(Vector<String>& param_names,
+                                            Vector<String>& param_values) {
   HashSet<StringImpl*, CaseFoldingHash> unique_param_names;
 
   // Scan the PARAM children and store their name/value pairs.
@@ -154,7 +161,8 @@ void HTMLObjectElement::ParametersForPlugin(PluginParameters& plugin_params) {
       continue;
 
     unique_param_names.insert(name.Impl());
-    plugin_params.AppendNameWithValue(p->GetName(), p->Value());
+    param_names.push_back(p->GetName());
+    param_values.push_back(p->Value());
 
     // TODO(schenney): crbug.com/572908 url adjustment does not belong in this
     // function.
@@ -181,11 +189,13 @@ void HTMLObjectElement::ParametersForPlugin(PluginParameters& plugin_params) {
   AttributeCollection attributes = Attributes();
   for (const Attribute& attribute : attributes) {
     const AtomicString& name = attribute.GetName().LocalName();
-    if (!unique_param_names.Contains(name.Impl()))
-      plugin_params.AppendAttribute(attribute);
+    if (!unique_param_names.Contains(name.Impl())) {
+      param_names.push_back(name.GetString());
+      param_values.push_back(attribute.Value().GetString());
+    }
   }
 
-  MapDataParamToSrc(plugin_params);
+  MapDataParamToSrc(&param_names, &param_values);
 }
 
 bool HTMLObjectElement::HasFallbackContent() const {
@@ -258,8 +268,11 @@ void HTMLObjectElement::UpdatePluginInternal() {
     return;
   }
 
-  PluginParameters plugin_params;
-  ParametersForPlugin(plugin_params);
+  // TODO(schenney): crbug.com/572908 These should be joined into a
+  // PluginParameters class.
+  Vector<String> param_names;
+  Vector<String> param_values;
+  ParametersForPlugin(param_names, param_values);
 
   // Note: url is modified above by parametersForPlugin.
   if (!AllowedToLoadFrameURL(url_)) {
@@ -281,7 +294,7 @@ void HTMLObjectElement::UpdatePluginInternal() {
     service_type_ = "text/html";
   }
 
-  if (!HasValidClassId() || !RequestObject(plugin_params)) {
+  if (!HasValidClassId() || !RequestObject(param_names, param_values)) {
     if (!url_.IsEmpty())
       DispatchErrorEvent();
     if (HasFallbackContent())

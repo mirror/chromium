@@ -100,11 +100,10 @@ CompositingReasonFinder::PotentialCompositingReasonsFromStyle(
   // If the implementation of createsGroup changes, we need to be aware of that
   // in this part of code.
   DCHECK((layout_object.IsTransparent() || layout_object.HasMask() ||
-          layout_object.HasClipPath() ||
           layout_object.HasFilterInducingProperty() || style.HasBlendMode()) ==
          layout_object.CreatesGroup());
 
-  if (style.HasMask() || style.ClipPath())
+  if (style.HasMask())
     reasons |= CompositingReason::kMaskWithCompositedDescendants;
 
   if (style.HasFilterInducingProperty())

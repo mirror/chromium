@@ -71,8 +71,7 @@ void SurfaceLayerBridge::OnFirstSurfaceActivation(
     }
 
     scoped_refptr<cc::SurfaceLayer> surface_layer = cc::SurfaceLayer::Create();
-    surface_layer->SetPrimarySurfaceId(
-        surface_info.id(), cc::DeadlinePolicy::UseDefaultDeadline());
+    surface_layer->SetPrimarySurfaceId(surface_info.id(), base::nullopt);
     surface_layer->SetFallbackSurfaceId(surface_info.id());
     surface_layer->SetStretchContentToFillBounds(true);
     surface_layer->SetIsDrawable(true);
@@ -89,8 +88,7 @@ void SurfaceLayerBridge::OnFirstSurfaceActivation(
     current_surface_id_ = surface_info.id();
     cc::SurfaceLayer* surface_layer =
         static_cast<cc::SurfaceLayer*>(cc_layer_.get());
-    surface_layer->SetPrimarySurfaceId(
-        surface_info.id(), cc::DeadlinePolicy::UseDefaultDeadline());
+    surface_layer->SetPrimarySurfaceId(surface_info.id(), base::nullopt);
     surface_layer->SetFallbackSurfaceId(surface_info.id());
   }
 

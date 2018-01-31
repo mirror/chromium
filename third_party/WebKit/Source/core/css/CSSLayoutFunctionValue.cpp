@@ -8,7 +8,6 @@
 #include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
-namespace cssvalue {
 
 CSSLayoutFunctionValue::CSSLayoutFunctionValue(CSSCustomIdentValue* name,
                                                bool is_inline)
@@ -39,5 +38,4 @@ void CSSLayoutFunctionValue::TraceAfterDispatch(blink::Visitor* visitor) {
   CSSValue::TraceAfterDispatch(visitor);
 }
 
-}  // namespace cssvalue
 }  // namespace blink

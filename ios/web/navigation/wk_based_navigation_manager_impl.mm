@@ -430,8 +430,8 @@ void WKBasedNavigationManagerImpl::Restore(
   params.transition_type = ui::PAGE_TRANSITION_RELOAD;
   LoadURLWithParams(params);
 
-  // This pending item will become the first item in the restored history.
-  GetPendingItemImpl()->SetVirtualURL(items[0]->GetVirtualURL());
+  GetPendingItemImpl()->SetVirtualURL(
+      items[last_committed_item_index]->GetVirtualURL());
 }
 
 NavigationItemImpl* WKBasedNavigationManagerImpl::GetNavigationItemImplAtIndex(

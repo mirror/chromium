@@ -382,9 +382,6 @@ void LayoutFlexibleBox::UpdateBlockLayout(bool relayout_children) {
 
     LayoutFlexItems(relayout_children, layout_scope);
     if (PaintLayerScrollableArea::PreventRelayoutScope::RelayoutNeeded()) {
-      // Recompute the logical width, because children may have added or removed
-      // scrollbars.
-      UpdateLogicalWidthAndColumnWidth();
       PaintLayerScrollableArea::FreezeScrollbarsScope freeze_scrollbars_scope;
       PrepareOrderIteratorAndMargins();
       LayoutFlexItems(true, layout_scope);

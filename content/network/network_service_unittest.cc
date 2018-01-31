@@ -9,22 +9,20 @@
 #include "base/test/scoped_task_environment.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
+#include "content/network/network_context.h"
+#include "content/network/network_service_impl.h"
 #include "content/public/common/service_names.mojom.h"
+#include "content/public/test/test_url_loader_client.h"
 #include "net/base/mock_network_change_notifier.h"
 #include "net/proxy_resolution/proxy_config.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
-#include "services/network/network_context.h"
-#include "services/network/network_service_impl.h"
 #include "services/network/public/interfaces/network_change_manager.mojom.h"
 #include "services/network/public/interfaces/network_service.mojom.h"
-#include "services/network/test/test_url_loader_client.h"
 #include "services/service_manager/public/cpp/service_context.h"
 #include "services/service_manager/public/cpp/service_test.h"
 #include "services/service_manager/public/interfaces/service_factory.mojom.h"
 #include "testing/gtest/include/gtest/gtest.h"
-
-using network::NetworkService;
 
 namespace content {
 
@@ -44,7 +42,7 @@ class NetworkServiceTest : public testing::Test {
   NetworkServiceTest()
       : scoped_task_environment_(
             base::test::ScopedTaskEnvironment::MainThreadType::IO),
-        service_(network::NetworkServiceImpl::CreateForTesting()) {}
+        service_(NetworkServiceImpl::CreateForTesting()) {}
   ~NetworkServiceTest() override {}
 
   NetworkService* service() const { return service_.get(); }
@@ -108,7 +106,7 @@ class ServiceTestClient : public service_manager::test::ServiceTestClient,
       service_manager::mojom::PIDReceiverPtr pid_receiver) override {
     if (name == mojom::kNetworkServiceName) {
       service_context_.reset(new service_manager::ServiceContext(
-          network::NetworkServiceImpl::CreateForTesting(), std::move(request)));
+          NetworkServiceImpl::CreateForTesting(), std::move(request)));
     }
   }
 
@@ -146,7 +144,7 @@ class NetworkServiceTestWithService
 
   void StartLoadingURL(const network::ResourceRequest& request,
                        uint32_t process_id) {
-    client_.reset(new network::TestURLLoaderClient());
+    client_.reset(new TestURLLoaderClient());
     network::mojom::URLLoaderFactoryPtr loader_factory;
     network_context_->CreateURLLoaderFactory(mojo::MakeRequest(&loader_factory),
                                              process_id);
@@ -158,7 +156,7 @@ class NetworkServiceTestWithService
   }
 
   net::EmbeddedTestServer* test_server() { return &test_server_; }
-  network::TestURLLoaderClient* client() { return client_.get(); }
+  TestURLLoaderClient* client() { return client_.get(); }
   network::mojom::URLLoader* loader() { return loader_.get(); }
   network::mojom::NetworkService* service() { return network_service_.get(); }
   network::mojom::NetworkContext* context() { return network_context_.get(); }
@@ -181,7 +179,7 @@ class NetworkServiceTestWithService
   }
 
   net::EmbeddedTestServer test_server_;
-  std::unique_ptr<network::TestURLLoaderClient> client_;
+  std::unique_ptr<TestURLLoaderClient> client_;
   network::mojom::NetworkServicePtr network_service_;
   network::mojom::NetworkContextPtr network_context_;
   network::mojom::URLLoaderPtr loader_;
@@ -376,7 +374,7 @@ class NetworkChangeTest : public testing::Test {
   NetworkChangeTest()
       : scoped_task_environment_(
             base::test::ScopedTaskEnvironment::MainThreadType::IO) {
-    service_ = network::NetworkServiceImpl::CreateForTesting();
+    service_ = NetworkServiceImpl::CreateForTesting();
   }
 
   ~NetworkChangeTest() override {}
@@ -436,8 +434,7 @@ class NetworkServiceNetworkChangeTest
         service_manager::mojom::PIDReceiverPtr pid_receiver) override {
       if (name == mojom::kNetworkServiceName) {
         service_context_.reset(new service_manager::ServiceContext(
-            network::NetworkServiceImpl::CreateForTesting(),
-            std::move(request)));
+            NetworkServiceImpl::CreateForTesting(), std::move(request)));
         // Send a broadcast after NetworkService is actually created.
         // Otherwise, this NotifyObservers is a no-op.
         net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(

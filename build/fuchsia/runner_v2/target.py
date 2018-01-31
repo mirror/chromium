@@ -15,11 +15,6 @@ _ATTACH_MAX_RETRIES = 10
 _ATTACH_RETRY_INTERVAL = 1
 
 
-class FuchsiaTargetException(Exception):
-  def __init__(self, message):
-    super(FuchsiaTargetException, self).__init__(message)
-
-
 class Target(object):
   """Base class representing a Fuchsia deployment target."""
 
@@ -102,18 +97,10 @@ class Target(object):
     """Returns a (host, port) tuple for the SSH connection to the target."""
     raise NotImplementedError
 
-  def _GetTargetSdkArch(self):
-    """Returns the Fuchsia SDK architecture name for the target CPU."""
-    if self._target_cpu == 'arm64':
-      return 'aarch64'
-    elif self._target_cpu == 'x64':
-      return 'x86_64'
-    raise FuchsiaTargetException('Unknown target_cpu:' + self._target_cpu)
-
   def _AssertIsStarted(self):
     assert self.IsStarted()
 
-  def _WaitUntilReady(self, retries=_ATTACH_MAX_RETRIES):
+  def _Connect(self, retries=_ATTACH_MAX_RETRIES):
     logging.debug('Connecting to Fuchsia using SSH.')
     for _ in xrange(retries+1):
       host, port = self._GetEndpoint()
@@ -123,8 +110,7 @@ class Target(object):
         self._started = True
         return True
       time.sleep(_ATTACH_RETRY_INTERVAL)
-    sys.stderr.write(' timeout limit reached.\n')
-    raise FuchsiaTargetException('Couldn\'t connect to QEMU using SSH.')
+    return False
 
   def _GetSshConfigPath(self, path):
     raise NotImplementedError

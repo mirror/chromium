@@ -49,24 +49,25 @@ class CONTENT_EXPORT ServiceWorkerURLLoaderJob
   //    URLJobWrapper by ServiceWorkerControlleeRequestHandler, which
   //    determines how the request should be served (e.g. should fallback
   //    to network or should be sent to the SW). If it decides to fallback
-  //    to the network this will call |loader_callback| with a null
-  //    RequestHandler, which will be then handled by
-  //    NavigationURLLoaderNetworkService.
+  //    to the network this will call |loader_callback| with null
+  //    StartLoaderCallback (which will be then handled by
+  //    NavigationURLLoaderNetworkService).
   // 2. If it is decided that the request should be sent to the SW,
   //    this job dispatches a FetchEvent in StartRequest.
   // 3. In DidDispatchFetchEvent() this job determines the request's
   //    final destination, and may still call |loader_callback| with null
-  //    RequestHandler if it turns out that we need to fallback to the network.
+  //    StartLoaderCallback if it turns out that we need to fallback to
+  //    the network.
   // 4. Otherwise if the SW returned a stream or blob as a response
-  //    this job calls |loader_callback| with a RequestHandler bound from
+  //    this job calls |loader_callback| with a bound method for
   //    StartResponse().
-  // 5. Then StartResponse() will be called with a
-  //    network::mojom::URLLoaderClientPtr that is connected to
-  //    NavigationURLLoaderNetworkService (for resource loading for navigation).
-  //    This forwards the blob/stream data pipe to the NavigationURLLoader if
-  //    the response body was sent as a blob/stream.
+  // 5. Then StartResponse() will be called with
+  // network::mojom::URLLoaderClientPtr
+  //    that is connected to NavigationURLLoaderNetworkService (for resource
+  //    loading for navigation). This forwards the blob/stream data pipe to the
+  //    NavigationURLLoader if the response body was sent as a blob/stream.
   ServiceWorkerURLLoaderJob(
-      URLLoaderRequestHandler::LoaderCallback loader_callback,
+      LoaderCallback loader_callback,
       Delegate* delegate,
       const network::ResourceRequest& resource_request,
       scoped_refptr<URLLoaderFactoryGetter> url_loader_factory_getter);
@@ -79,6 +80,8 @@ class CONTENT_EXPORT ServiceWorkerURLLoaderJob
   void ForwardToServiceWorker();
   bool ShouldFallbackToNetwork();
   void FailDueToLostController();
+  ui::PageTransition GetPageTransition();
+  size_t GetURLChainSize() const;
   void Cancel();
   bool WasCanceled() const;
 
@@ -103,10 +106,10 @@ class CONTENT_EXPORT ServiceWorkerURLLoaderJob
       blink::mojom::BlobPtr body_as_blob,
       scoped_refptr<ServiceWorkerVersion> version);
 
-  // Used as the RequestHandler passed to |loader_callback_| when the service
-  // worker chooses to handle a resource request. Returns the response to
-  // |client|. |body_as_blob| is kept around until BlobDataHandle is created
-  // from blob_uuid just to make sure the blob is kept alive.
+  // Used as the StartLoaderCallback passed to |loader_callback_| when the
+  // service worker provided a response. Returns the response to |client|.
+  // |body_as_blob| is kept around until BlobDataHandle is created from
+  // blob_uuid just to make sure the blob is kept alive.
   void StartResponse(const ServiceWorkerResponse& response,
                      scoped_refptr<ServiceWorkerVersion> version,
                      blink::mojom::ServiceWorkerStreamHandlePtr body_as_stream,
@@ -114,8 +117,8 @@ class CONTENT_EXPORT ServiceWorkerURLLoaderJob
                      network::mojom::URLLoaderRequest request,
                      network::mojom::URLLoaderClientPtr client);
 
-  // Used as the RequestHandler passed to |loader_callback_| on error. Returns a
-  // network error to |client|.
+  // Used as the StartLoaderCallback passed to |loader_callback_| on error.
+  // Returns a network error to |client|.
   void StartErrorResponse(network::mojom::URLLoaderRequest request,
                           network::mojom::URLLoaderClientPtr client);
 
@@ -142,7 +145,7 @@ class CONTENT_EXPORT ServiceWorkerURLLoaderJob
   void DeleteIfNeeded();
 
   ResponseType response_type_ = ResponseType::NOT_DETERMINED;
-  URLLoaderRequestHandler::LoaderCallback loader_callback_;
+  LoaderCallback loader_callback_;
 
   Delegate* delegate_;
   network::ResourceRequest resource_request_;

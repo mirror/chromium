@@ -9,9 +9,15 @@
 #include <sys/wait.h>
 
 #include "base/mac/os_crash_dumps.h"
-#include "base/test/histogram_tester.h"
+#include "base/metrics/histogram_macros.h"
+#include "base/metrics/histogram_samples.h"
+#include "base/metrics/statistics_recorder.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
+
+using base::HistogramBase;
+using base::HistogramSamples;
+using base::StatisticsRecorder;
 
 namespace chrome {
 
@@ -42,7 +48,8 @@ TEST(ExceptionProcessorTest, ExceptionBinning) {
 }
 
 TEST(ExceptionProcessorTest, RecordException) {
-  base::HistogramTester tester;
+  EXPECT_THAT(StatisticsRecorder::GetSnapshot("OSX.NSException"),
+              testing::IsEmpty());
 
   // Record some known exceptions.
   RecordExceptionWithUma(ExceptionNamed(NSGenericException));
@@ -63,14 +70,22 @@ TEST(ExceptionProcessorTest, RecordException) {
   RecordExceptionWithUma(nil);
 
   // We should have exactly the right number of exceptions.
-  const char kHistogramName[] = "OSX.NSException";
-  tester.ExpectBucketCount(kHistogramName, 0, 4);
-  tester.ExpectBucketCount(kHistogramName, 1, 1);
-  tester.ExpectBucketCount(kHistogramName, 2, 3);
-  tester.ExpectBucketCount(kHistogramName, 3, 2);
+  const StatisticsRecorder::Histograms histograms =
+      StatisticsRecorder::GetSnapshot("OSX.NSException");
+  ASSERT_THAT(histograms, testing::SizeIs(1));
+  EXPECT_EQ(HistogramBase::kUmaTargetedHistogramFlag, histograms[0]->flags());
+
+  std::unique_ptr<HistogramSamples> samples(histograms[0]->SnapshotSamples());
+  EXPECT_EQ(4, samples->GetCount(0));
+  EXPECT_EQ(1, samples->GetCount(1));
+  EXPECT_EQ(3, samples->GetCount(2));
+  EXPECT_EQ(2, samples->GetCount(3));
 
   // The unknown exceptions should end up in the overflow bucket.
-  tester.ExpectBucketCount(kHistogramName, kUnknownNSException, 4);
+  EXPECT_TRUE(histograms[0]->HasConstructionArguments(1,
+                                                      kUnknownNSException,
+                                                      kUnknownNSException + 1));
+  EXPECT_EQ(4, samples->GetCount(kUnknownNSException));
 }
 
 void RaiseExceptionInRunLoop() {

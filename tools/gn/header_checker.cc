@@ -155,7 +155,6 @@ void HeaderChecker::RunCheckOverFiles(const FileMap& files, bool force_check) {
 
     for (const auto& vect_i : file.second) {
       if (vect_i.target->check_includes()) {
-        task_count_.Increment();
         base::PostTaskWithTraits(FROM_HERE, {base::MayBlock()},
                                  base::BindOnce(&HeaderChecker::DoWork, this,
                                                 vect_i.target, file.first));
@@ -582,3 +581,4 @@ Err HeaderChecker::MakeUnreachableError(
   return Err(CreatePersistentRange(source_file, range),
              "Include not allowed.", msg);
 }
+

@@ -136,6 +136,7 @@
 #include "content/renderer/renderer_webapplicationcachehost_impl.h"
 #include "content/renderer/resource_timing_info_conversions.h"
 #include "content/renderer/savable_resources.h"
+#include "content/renderer/screen_orientation/screen_orientation_dispatcher.h"
 #include "content/renderer/service_worker/service_worker_network_provider.h"
 #include "content/renderer/service_worker/service_worker_provider_context.h"
 #include "content/renderer/service_worker/web_service_worker_provider_impl.h"
@@ -156,7 +157,6 @@
 #include "net/http/http_request_headers.h"
 #include "net/http/http_util.h"
 #include "ppapi/features/features.h"
-#include "services/network/public/cpp/features.h"
 #include "services/network/public/interfaces/request_context_frame_type.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
@@ -1256,6 +1256,7 @@ RenderFrameImpl::RenderFrameImpl(CreateParams params)
       web_user_media_client_(nullptr),
       presentation_dispatcher_(nullptr),
       push_messaging_client_(nullptr),
+      screen_orientation_dispatcher_(nullptr),
       render_accessibility_(nullptr),
       previews_state_(PREVIEWS_UNSPECIFIED),
       effective_connection_type_(
@@ -1765,8 +1766,6 @@ bool RenderFrameImpl::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(FrameMsg_MixedContentFound, OnMixedContentFound)
     IPC_MESSAGE_HANDLER(FrameMsg_SetOverlayRoutingToken,
                         OnSetOverlayRoutingToken)
-    IPC_MESSAGE_HANDLER(FrameMsg_SetHasReceivedUserGesture,
-                        OnSetHasReceivedUserGesture)
 #if defined(OS_ANDROID)
     IPC_MESSAGE_HANDLER(FrameMsg_ActivateNearestFindResult,
                         OnActivateNearestFindResult)
@@ -3118,7 +3117,7 @@ void RenderFrameImpl::CommitNavigation(
   // cross-document navigations with the Network Service enabled.
   DCHECK(is_same_document ||
          common_params.url.SchemeIs(url::kJavaScriptScheme) ||
-         !base::FeatureList::IsEnabled(network::features::kNetworkService) ||
+         !base::FeatureList::IsEnabled(features::kNetworkService) ||
          subresource_loader_factories);
 
   SetupLoaderFactoryBundle(std::move(subresource_loader_factories));
@@ -4021,8 +4020,15 @@ void RenderFrameImpl::DidCreateDocumentLoader(
     document_loader->SetSourceLocation(source_location);
   }
 
-  if (navigation_state->request_params().was_activated)
+  // Mark the loader as user activated if started from a context menu and the
+  // URLs are matching the user activation persistence rules.
+  if (navigation_state->common_params().started_from_context_menu &&
+      WebDocumentLoader::ShouldPersistUserActivation(
+          url::Origin::Create(navigation_state->common_params().url),
+          url::Origin::Create(
+              navigation_state->common_params().referrer.url))) {
     document_loader->SetUserActivated();
+  }
 
   // Create the serviceworker's per-document network observing object if it
   // does not exist (When navigation happens within a page, the provider already
@@ -5141,6 +5147,13 @@ bool RenderFrameImpl::AllowContentInitiatedDataUrlNavigations(
     const blink::WebURL& url) {
   // Error pages can navigate to data URLs.
   return url.GetString() == kUnreachableWebDataURL;
+}
+
+blink::WebScreenOrientationClient*
+RenderFrameImpl::GetWebScreenOrientationClient() {
+  if (!screen_orientation_dispatcher_)
+    screen_orientation_dispatcher_ = new ScreenOrientationDispatcher(this);
+  return screen_orientation_dispatcher_;
 }
 
 void RenderFrameImpl::PostAccessibilityEvent(const blink::WebAXObject& obj,
@@ -6283,10 +6296,6 @@ void RenderFrameImpl::OnSetOverlayRoutingToken(
   for (const auto& cb : pending_routing_token_callbacks_)
     cb.Run(overlay_routing_token_.value());
   pending_routing_token_callbacks_.clear();
-}
-
-void RenderFrameImpl::OnSetHasReceivedUserGesture() {
-  frame_->SetHasReceivedUserGesture();
 }
 
 void RenderFrameImpl::RequestOverlayRoutingToken(

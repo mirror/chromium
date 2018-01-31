@@ -96,6 +96,10 @@ class WifiHotspotConnectorTest : public NetworkStateTest {
     }
 
     // NetworkConnect:
+    bool MaybeShowConfigureUI(const std::string& network_id,
+                              const std::string& connect_error) override {
+      return false;
+    }
     void SetTechnologyEnabled(const chromeos::NetworkTypePattern& technology,
                               bool enabled_state) override {}
     void ShowMobileSetup(const std::string& network_id) override {}

@@ -13,6 +13,8 @@
 
 namespace metrics {
 
+extern const base::Feature kUploadSchedulerFeature;
+
 // Scheduler task to drive a ReportingService object's uploading.
 class MetricsUploadScheduler : public MetricsScheduler {
  public:

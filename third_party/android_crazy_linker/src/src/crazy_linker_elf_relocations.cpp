@@ -330,7 +330,7 @@ bool ElfRelocations::Init(const ElfView* view, Error* error) {
 bool ElfRelocations::ApplyAll(const ElfSymbols* symbols,
                               SymbolResolver* resolver,
                               Error* error) {
-  LOG("Enter");
+  LOG("%s: Enter\n", __FUNCTION__);
 
   if (has_text_relocations_) {
     if (phdr_table_unprotect_segments(phdr_, phdr_count_, load_bias_) < 0) {
@@ -362,7 +362,7 @@ bool ElfRelocations::ApplyAll(const ElfSymbols* symbols,
     }
   }
 
-  LOG("Done");
+  LOG("%s: Done\n", __FUNCTION__);
   return true;
 }
 
@@ -405,18 +405,20 @@ bool ElfRelocations::ForEachAndroidRelocationHelper(
   while (rel_iterator.has_next()) {
     const auto rel = rel_iterator.next();
     if (rel == nullptr) {
-      LOG("failed to parse relocation %d", relocations_handled);
+      LOG("%s: failed to parse relocation %d\n", __FUNCTION__,
+          relocations_handled);
       return false;
     }
     // Pass the relocation to the supplied handler function. If the handler
     // returns false we view this as failure and return false to our caller.
     if (!handler(this, rel, opaque)) {
-      LOG("failed handling relocation %d", relocations_handled);
+      LOG("%s: failed handling relocation %d\n", __FUNCTION__,
+          relocations_handled);
       return false;
     }
     relocations_handled++;
   }
-  LOG("relocations_handled=%d", relocations_handled);
+  LOG("%s: relocations_handled=%d\n", __FUNCTION__, relocations_handled);
   return true;
 }
 
@@ -704,7 +706,7 @@ bool ElfRelocations::ResolveSymbol(ELF::Word rel_type,
 
   if (address) {
     // The symbol was found, so compute its address.
-    RLOG("symbol %s resolved to %p", sym_name, address);
+    RLOG("%s: symbol %s resolved to %p\n", __FUNCTION__, sym_name, address);
     *sym_addr = reinterpret_cast<ELF::Addr>(address);
     return true;
   }
@@ -716,7 +718,7 @@ bool ElfRelocations::ResolveSymbol(ELF::Word rel_type,
     return false;
   }
 
-  RLOG("weak reference to unresolved symbol %s", sym_name);
+  RLOG("%s: weak reference to unresolved symbol %s\n", __FUNCTION__, sym_name);
 
   // IHI0044C AAELF 4.5.1.1:
   // Libraries are not searched to resolve weak references.
@@ -785,7 +787,7 @@ bool ElfRelocations::ApplyRelocs(const rel_t* rel,
                                  const ElfSymbols* symbols,
                                  SymbolResolver* resolver,
                                  Error* error) {
-  RLOG("rel=%p rel_count=%d", rel, rel_count);
+  RLOG("%s: rel=%p rel_count=%d\n", __FUNCTION__, rel, rel_count);
 
   if (!rel)
     return true;

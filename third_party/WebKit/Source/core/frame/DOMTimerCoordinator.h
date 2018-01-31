@@ -8,7 +8,6 @@
 #include <memory>
 
 #include "base/macros.h"
-#include "platform/WebTaskRunner.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Time.h"
 
@@ -17,6 +16,7 @@ namespace blink {
 class DOMTimer;
 class ExecutionContext;
 class ScheduledAction;
+class WebTaskRunner;
 
 // Maintains a set of DOMTimers for a given page or
 // worker. DOMTimerCoordinator assigns IDs to timers; these IDs are

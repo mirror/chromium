@@ -98,15 +98,22 @@ bool ElfView::InitUnmapped(ELF::Addr load_address,
   phdr_ = phdr0;
   phdr_count_ = phdr_count;
 
-  LOG("New ELF view [load_address:%p, load_size:%p, load_bias:%p, phdr:%p, "
-      "phdr_count:%d, dynamic:%p, dynamic_count:%d, dynamic_flags:%d",
-      load_address_, load_size_, load_bias_, phdr_, phdr_count_, dynamic_,
-      dynamic_count_, dynamic_flags_);
+  LOG("%s: New ELF view [load_address:%p, load_size:%p, load_bias:%p, phdr:%p, "
+      "phdr_count:%d, dynamic:%p, dynamic_count:%d, dynamic_flags:%d\n",
+      __FUNCTION__,
+      load_address_,
+      load_size_,
+      load_bias_,
+      phdr_,
+      phdr_count_,
+      dynamic_,
+      dynamic_count_,
+      dynamic_flags_);
   return true;
 }
 
 bool ElfView::ProtectRelroSection(Error* error) {
-  LOG("Enabling GNU RELRO protection");
+  LOG("%s: Enabling GNU RELRO protection\n", __FUNCTION__);
 
   if (phdr_table_protect_gnu_relro(phdr_, phdr_count_, load_bias_) < 0) {
     error->Format("Can't enable GNU RELRO protection: %s", strerror(errno));

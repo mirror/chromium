@@ -11,12 +11,8 @@
 namespace network {
 namespace features {
 
-NETWORK_FEATURES_EXPORT extern const base::Feature kNetworkErrorLogging;
-NETWORK_FEATURES_EXPORT extern const base::Feature kNetworkService;
-NETWORK_FEATURES_EXPORT extern const base::Feature kOutOfBlinkCORS;
-NETWORK_FEATURES_EXPORT extern const base::Feature
-    kRendererSideResourceScheduler;
 NETWORK_FEATURES_EXPORT extern const base::Feature kReporting;
+NETWORK_FEATURES_EXPORT extern const base::Feature kNetworkErrorLogging;
 
 }  // namespace features
 }  // namespace network

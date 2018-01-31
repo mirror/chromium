@@ -605,12 +605,12 @@ void MojoAsyncResourceHandler::ReportBadMessage(const std::string& error) {
   mojo::ReportBadMessage(error);
 }
 
-std::unique_ptr<network::UploadProgressTracker>
+std::unique_ptr<UploadProgressTracker>
 MojoAsyncResourceHandler::CreateUploadProgressTracker(
     const base::Location& from_here,
-    network::UploadProgressTracker::UploadProgressReportCallback callback) {
-  return std::make_unique<network::UploadProgressTracker>(
-      from_here, std::move(callback), request());
+    UploadProgressTracker::UploadProgressReportCallback callback) {
+  return std::make_unique<UploadProgressTracker>(from_here, std::move(callback),
+                                                 request());
 }
 
 void MojoAsyncResourceHandler::OnTransfer(

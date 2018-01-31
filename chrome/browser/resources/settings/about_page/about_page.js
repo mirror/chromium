@@ -417,7 +417,7 @@ Polymer({
 
   /** @private */
   onRelaunchAndPowerwashTap_: function() {
-    this.lifetimeBrowserProxy_.factoryReset(false);
+    this.lifetimeBrowserProxy_.factoryReset();
   },
 
   /**

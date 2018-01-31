@@ -285,15 +285,6 @@ class SelectCertificateBrowserClient : public TestContentBrowserClient {
     select_certificate_run_loop_.Quit();
   }
 
-  std::unique_ptr<net::ClientCertStore> CreateClientCertStore(
-      ResourceContext* resource_context) override {
-    return std::move(dummy_cert_store_);
-  }
-
-  void SetClientCertStore(std::unique_ptr<net::ClientCertStore> store) {
-    dummy_cert_store_ = std::move(store);
-  }
-
   int call_count() { return call_count_; }
   const net::ClientCertIdentityList& passed_identities() {
     return passed_identities_;
@@ -311,7 +302,6 @@ class SelectCertificateBrowserClient : public TestContentBrowserClient {
   net::ClientCertIdentityList passed_identities_;
   int call_count_;
   std::unique_ptr<ClientCertificateDelegate> delegate_;
-  std::unique_ptr<net::ClientCertStore> dummy_cert_store_;
 
   base::RunLoop select_certificate_run_loop_;
 
@@ -427,7 +417,7 @@ class ResourceLoaderTest : public testing::Test,
     loader_.reset(new ResourceLoader(
         std::move(request),
         WrapResourceHandler(std::move(resource_handler), raw_ptr_to_request_),
-        this, &resource_context_));
+        this));
   }
 
   void SetUpResourceLoaderForUrl(const GURL& test_url) {
@@ -460,6 +450,10 @@ class ResourceLoaderTest : public testing::Test,
     net::URLRequestFilter::GetInstance()->ClearHandlers();
 
     base::RunLoop().RunUntilIdle();
+  }
+
+  void SetClientCertStore(std::unique_ptr<net::ClientCertStore> store) {
+    dummy_cert_store_ = std::move(store);
   }
 
   // ResourceLoaderDelegate:
@@ -517,6 +511,10 @@ class ResourceLoaderTest : public testing::Test,
 
     ++did_finish_loading_;
   }
+  std::unique_ptr<net::ClientCertStore> CreateClientCertStore(
+      ResourceLoader* loader) override {
+    return std::move(dummy_cert_store_);
+  }
 
   TestBrowserThreadBundle thread_bundle_;
   RenderViewHostTestEnabler rvh_test_enabler_;
@@ -539,6 +537,7 @@ class ResourceLoaderTest : public testing::Test,
   MockResourceContext resource_context_;
   std::unique_ptr<TestBrowserContext> browser_context_;
   std::unique_ptr<TestWebContents> web_contents_;
+  std::unique_ptr<net::ClientCertStore> dummy_cert_store_;
 
   // The ResourceLoader owns the URLRequest and the ResourceHandler.
   TestResourceHandler* raw_ptr_resource_handler_;
@@ -616,10 +615,10 @@ TEST_F(ClientCertResourceLoaderTest, WithStoreLookup) {
   net::CertificateList dummy_certs(1, test_cert);
   std::unique_ptr<ClientCertStoreStub> test_store(new ClientCertStoreStub(
       dummy_certs, &store_request_count, &store_requested_authorities));
+  SetClientCertStore(std::move(test_store));
 
   // Plug in test content browser client.
   SelectCertificateBrowserClient test_client;
-  test_client.SetClientCertStore(std::move(test_store));
   ContentBrowserClient* old_client = SetBrowserClientForTesting(&test_client);
 
   // Start the request and wait for it to pause.
@@ -727,11 +726,7 @@ TEST_F(ClientCertResourceLoaderTest, StoreAsyncCancel) {
   LoaderDestroyingCertStore* test_store =
       new LoaderDestroyingCertStore(&loader_,
                                     loader_destroyed_run_loop.QuitClosure());
-
-  // Plug in test content browser client.
-  SelectCertificateBrowserClient test_client;
-  test_client.SetClientCertStore(base::WrapUnique(test_store));
-  ContentBrowserClient* old_client = SetBrowserClientForTesting(&test_client);
+  SetClientCertStore(base::WrapUnique(test_store));
 
   loader_->StartRequest();
   loader_destroyed_run_loop.Run();
@@ -739,9 +734,6 @@ TEST_F(ClientCertResourceLoaderTest, StoreAsyncCancel) {
 
   // Pump the event loop to ensure nothing asynchronous crashes either.
   base::RunLoop().RunUntilIdle();
-
-  // Restore the original content browser client.
-  SetBrowserClientForTesting(old_client);
 }
 
 // Tests that a RESOURCE_TYPE_PREFETCH request sets the LOAD_PREFETCH flag.

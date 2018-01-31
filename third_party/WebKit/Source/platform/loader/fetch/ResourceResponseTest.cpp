@@ -77,8 +77,7 @@ TEST(ResourceResponseTest, CrossThreadAtomicStrings) {
   ResourceResponse response(CreateTestResponse());
   RunHeaderRelatedTest(response);
   std::unique_ptr<WebThread> thread = Platform::Current()->CreateThread(
-      WebThreadCreationParams(WebThreadType::kTestThread)
-          .SetThreadName("WorkerThread"));
+      WebThreadCreationParams("WorkerThread"));
   PostCrossThreadTask(*thread->GetWebTaskRunner(), FROM_HERE,
                       CrossThreadBind(&RunInThread));
   thread.reset();

@@ -51,7 +51,7 @@ void ScriptStreamerThread::TaskDone() {
 WebThread& ScriptStreamerThread::PlatformThread() {
   if (!IsRunning()) {
     thread_ = Platform::Current()->CreateThread(
-        WebThreadCreationParams(WebThreadType::kScriptStreamerThread));
+        WebThreadCreationParams("ScriptStreamerThread"));
   }
   return *thread_;
 }

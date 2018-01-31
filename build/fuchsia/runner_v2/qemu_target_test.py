@@ -5,7 +5,6 @@
 
 import qemu_target
 import shutil
-import subprocess
 import tempfile
 import time
 import unittest
@@ -46,9 +45,7 @@ with qemu_target.QemuTarget(tmpdir, 'x64') as target:
       self.assertEqual(1, target.RunCommand(['false']))
 
     def testRunCommandPiped(self):
-      proc = target.RunCommandPiped(['cat'],
-                                    stdin=subprocess.PIPE,
-                                    stdout=subprocess.PIPE)
+      proc = target.RunCommandPiped(['cat'])
       proc.stdin.write(TEST_PAYLOAD)
       proc.stdin.flush()
       proc.stdin.close()

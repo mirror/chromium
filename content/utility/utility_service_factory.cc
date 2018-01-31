@@ -11,6 +11,7 @@
 #include "base/trace_event/trace_log.h"
 #include "build/build_config.h"
 #include "content/child/child_process.h"
+#include "content/network/network_service_impl.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
@@ -21,8 +22,6 @@
 #include "media/media_features.h"
 #include "services/data_decoder/data_decoder_service.h"
 #include "services/data_decoder/public/interfaces/constants.mojom.h"
-#include "services/network/network_service_impl.h"
-#include "services/network/public/cpp/features.h"
 #include "services/service_manager/public/interfaces/service.mojom.h"
 #include "services/shape_detection/public/interfaces/constants.mojom.h"
 #include "services/shape_detection/shape_detection_service.h"
@@ -150,7 +149,7 @@ void UtilityServiceFactory::RegisterServices(ServiceMap* services) {
   viz_info.factory = base::Bind(&CreateVizService);
   services->insert(std::make_pair(viz::mojom::kVizServiceName, viz_info));
 
-  if (base::FeatureList::IsEnabled(network::features::kNetworkService)) {
+  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
     GetContentClient()->utility()->RegisterNetworkBinders(
         network_registry_.get());
     service_manager::EmbeddedServiceInfo network_info;
@@ -175,8 +174,7 @@ void UtilityServiceFactory::OnLoadFailed() {
 
 std::unique_ptr<service_manager::Service>
 UtilityServiceFactory::CreateNetworkService() {
-  return std::make_unique<network::NetworkServiceImpl>(
-      std::move(network_registry_));
+  return std::make_unique<NetworkServiceImpl>(std::move(network_registry_));
 }
 
 }  // namespace content

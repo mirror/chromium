@@ -58,13 +58,12 @@ shared_library("chrome_elf") {
     ":hook_util",
     ":nt_registry",
     ":security",
-    ":third_party_dlls",
+    ":whitelist",
     "//build/config:exe_and_shlib_deps",
     "//chrome/install_static:install_static_util",
     "//chrome/install_static:primary_module",
     "//components/crash/content/app:crash_export_thunks",
   ]
-
   configs += [ "//build/config/win:windowed" ]
   configs -= [ "//build/config/win:console" ]
 
@@ -138,14 +137,10 @@ source_set("sha1") {
   ]
 }
 
-# This source_set defines third-party-related structures and APIs used from
-# outside chrome_elf.dll.  The APIs are exported from chrome_elf (add a
-# data_dep on //chrome_elf:chrome_elf), which will always be loaded before
-# chrome.dll.
-source_set("third_party_packed_list_format") {
+source_set("whitelist_packed_format") {
   sources = [
-    "third_party_dlls/packed_list_format.cc",
-    "third_party_dlls/packed_list_format.h",
+    "whitelist/whitelist_packed_format.cc",
+    "whitelist/whitelist_packed_format.h",
   ]
 }
 
@@ -237,22 +232,19 @@ static_library("nt_registry") {
   libs = [ "kernel32.lib" ]
 }
 
-static_library("third_party_dlls") {
-  visibility = [ ":*" ]  # Only targets in this file can depend on this.
+static_library("whitelist") {
   sources = [
-    "third_party_dlls/imes.cc",
-    "third_party_dlls/imes.h",
-    "third_party_dlls/logs.cc",
-    "third_party_dlls/logs.h",
-    "third_party_dlls/main.cc",
-    "third_party_dlls/main.h",
-    "third_party_dlls/packed_list_file.cc",
-    "third_party_dlls/packed_list_file.h",
+    "whitelist/whitelist.cc",
+    "whitelist/whitelist.h",
+    "whitelist/whitelist_file.cc",
+    "whitelist/whitelist_file.h",
+    "whitelist/whitelist_ime.cc",
+    "whitelist/whitelist_ime.h",
   ]
   deps = [
     ":nt_registry",
     ":sha1",
-    ":third_party_packed_list_format",
+    ":whitelist_packed_format",
     "//chrome/install_static:install_static_util",
   ]
 }
@@ -270,9 +262,8 @@ test("chrome_elf_unittests") {
     "nt_registry/nt_registry_unittest.cc",
     "run_all_unittests.cc",
     "sha1/sha1_unittest.cc",
-    "third_party_dlls/imes_unittest.cc",
-    "third_party_dlls/logs_unittest.cc",
-    "third_party_dlls/packed_list_file_unittest.cc",
+    "whitelist/whitelist_file_unittest.cc",
+    "whitelist/whitelist_ime_unittest.cc",
   ]
   include_dirs = [ "$target_gen_dir" ]
   deps = [
@@ -285,8 +276,8 @@ test("chrome_elf_unittests") {
     ":nt_registry",
     ":security",
     ":sha1",
-    ":third_party_dlls",
-    ":third_party_packed_list_format",
+    ":whitelist",
+    ":whitelist_packed_format",
     "//base",
     "//base/test:test_support",
     "//chrome/common:version_header",

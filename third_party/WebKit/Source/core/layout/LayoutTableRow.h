@@ -137,7 +137,7 @@ class CORE_EXPORT LayoutTableRow final : public LayoutTableBoxComponent {
   void UpdateLayout() override;
 
   PaintLayerType LayerTypeRequired() const override {
-    if (HasTransformRelatedProperty() || HasHiddenBackface() ||
+    if (HasTransformRelatedProperty() || HasHiddenBackface() || HasClipPath() ||
         CreatesGroup() || Style()->ShouldCompositeForCurrentAnimations() ||
         IsStickyPositioned())
       return kNormalPaintLayer;

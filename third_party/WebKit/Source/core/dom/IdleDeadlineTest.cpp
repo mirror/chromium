@@ -4,7 +4,6 @@
 
 #include "core/dom/IdleDeadline.h"
 
-#include "platform/WebTaskRunner.h"
 #include "platform/scheduler/child/web_scheduler.h"
 #include "platform/testing/TestingPlatformSupportWithMockScheduler.h"
 #include "platform/wtf/Time.h"

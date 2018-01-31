@@ -8,6 +8,8 @@
 #include <unordered_map>
 #include <vector>
 
+#include "base/allocator/allocator_shim.h"
+#include "base/atomicops.h"
 #include "base/macros.h"
 #include "base/synchronization/lock.h"
 #include "base/threading/thread_local.h"
@@ -32,9 +34,10 @@ class PLATFORM_EXPORT SamplingNativeHeapProfiler : public SamplingHeapProfiler {
    private:
     friend class SamplingNativeHeapProfiler;
 
-    Sample(size_t, size_t count, uint32_t ordinal);
+    Sample(size_t, size_t count, unsigned ordinal, unsigned offset);
 
     uint32_t ordinal;
+    uint32_t offset;
   };
 
   uint32_t Start() override;
@@ -43,9 +46,6 @@ class PLATFORM_EXPORT SamplingNativeHeapProfiler : public SamplingHeapProfiler {
   void SuppressRandomnessForTest();
 
   std::vector<Sample> GetSamples(uint32_t profile_id);
-
-  static inline void MaybeRecordAlloc(void* address, size_t);
-  static inline void MaybeRecordFree(void* address);
 
   static SamplingNativeHeapProfiler* GetInstance();
 
@@ -56,16 +56,58 @@ class PLATFORM_EXPORT SamplingNativeHeapProfiler : public SamplingHeapProfiler {
   static bool InstallAllocatorHooks();
   static size_t GetNextSampleInterval(size_t base_interval);
 
-  void RecordAlloc(size_t total_allocated,
-                   size_t allocation_size,
-                   void* address,
-                   unsigned skip_frames);
-  void RecordFree(void* address);
+  static inline bool ShouldRecordSample(size_t, size_t* accumulated);
+  void* RecordAlloc(size_t total_allocated,
+                    size_t allocation_size,
+                    void* address,
+                    uint32_t offset,
+                    unsigned skip_frames,
+                    bool preserve_data = false);
+  void* RecordFree(void* address);
   void RecordStackTrace(Sample*, unsigned skip_frames);
+
+  static void* AllocFn(const base::allocator::AllocatorDispatch* self,
+                       size_t,
+                       void* context);
+  static void* AllocZeroInitializedFn(
+      const base::allocator::AllocatorDispatch* self,
+      size_t n,
+      size_t,
+      void* context);
+  static void* AllocAlignedFn(const base::allocator::AllocatorDispatch* self,
+                              size_t alignment,
+                              size_t,
+                              void* context);
+  static void* ReallocFn(const base::allocator::AllocatorDispatch* self,
+                         void* address,
+                         size_t,
+                         void* context);
+  static void FreeFn(const base::allocator::AllocatorDispatch* self,
+                     void* address,
+                     void* context);
+  static size_t GetSizeEstimateFn(
+      const base::allocator::AllocatorDispatch* self,
+      void* address,
+      void* context);
+  static unsigned BatchMallocFn(const base::allocator::AllocatorDispatch* self,
+                                size_t,
+                                void** results,
+                                unsigned num_requested,
+                                void* context);
+  static void BatchFreeFn(const base::allocator::AllocatorDispatch* self,
+                          void** to_be_freed,
+                          unsigned num_to_be_freed,
+                          void* context);
+  static void FreeDefiniteSizeFn(const base::allocator::AllocatorDispatch* self,
+                                 void* ptr,
+                                 size_t,
+                                 void* context);
 
   base::ThreadLocalBoolean entered_;
   base::Lock mutex_;
   std::unordered_map<void*, Sample> samples_;
+
+  static base::allocator::AllocatorDispatch allocator_dispatch_;
 
   friend struct base::DefaultSingletonTraits<SamplingNativeHeapProfiler>;
 

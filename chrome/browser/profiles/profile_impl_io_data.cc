@@ -68,7 +68,9 @@
 #include "net/http/http_network_session.h"
 #include "net/http/http_server_properties.h"
 #include "net/http/http_server_properties_manager.h"
-#include "net/net_features.h"
+#include "net/network_error_logging/network_error_logging_service.h"
+#include "net/reporting/reporting_policy.h"
+#include "net/reporting/reporting_service.h"
 #include "net/ssl/channel_id_service.h"
 #include "net/url_request/url_request_context_builder.h"
 #include "net/url_request/url_request_intercepting_job_factory.h"
@@ -79,12 +81,6 @@
 #if BUILDFLAG(ENABLE_OFFLINE_PAGES)
 #include "chrome/browser/offline_pages/offline_page_request_interceptor.h"
 #endif
-
-#if BUILDFLAG(ENABLE_REPORTING)
-#include "net/network_error_logging/network_error_logging_service.h"
-#include "net/reporting/reporting_policy.h"
-#include "net/reporting/reporting_service.h"
-#endif  // BUILDFLAG(ENABLE_REPORTING)
 
 namespace {
 
@@ -617,7 +613,6 @@ net::URLRequestContext* ProfileImplIOData::InitializeAppRequestContext(
           context->host_resolver()));
   context->SetJobFactory(std::move(top_job_factory));
 
-#if BUILDFLAG(ENABLE_REPORTING)
   if (context->reporting_service()) {
     context->SetReportingService(net::ReportingService::Create(
         context->reporting_service()->GetPolicy(), context));
@@ -629,7 +624,6 @@ net::URLRequestContext* ProfileImplIOData::InitializeAppRequestContext(
     context->network_error_logging_delegate()->SetReportingService(
         context->reporting_service());
   }
-#endif  // BUILDFLAG(ENABLE_REPORTING)
 
   return context;
 }

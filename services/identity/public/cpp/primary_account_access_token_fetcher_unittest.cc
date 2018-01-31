@@ -16,6 +16,7 @@
 #include "components/signin/core/browser/account_tracker_service.h"
 #include "components/signin/core/browser/fake_profile_oauth2_token_service.h"
 #include "components/signin/core/browser/fake_signin_manager.h"
+#include "components/signin/core/browser/profile_management_switches.h"
 #include "components/signin/core/browser/test_signin_client.h"
 #include "components/sync_preferences/testing_pref_service_syncable.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -61,6 +62,7 @@ class PrimaryAccountAccessTokenFetcherTest
 
   PrimaryAccountAccessTokenFetcherTest() : signin_client_(&pref_service_) {
     AccountTrackerService::RegisterPrefs(pref_service_.registry());
+    signin::RegisterAccountConsistencyProfilePrefs(pref_service_.registry());
 #if defined(OS_CHROMEOS)
     SigninManagerBase::RegisterProfilePrefs(pref_service_.registry());
     SigninManagerBase::RegisterPrefs(pref_service_.registry());
@@ -68,6 +70,9 @@ class PrimaryAccountAccessTokenFetcherTest
     SigninManager::RegisterProfilePrefs(pref_service_.registry());
     SigninManager::RegisterPrefs(pref_service_.registry());
 #endif  // OS_CHROMEOS
+
+    signin::SetGaiaOriginIsolatedCallback(
+        base::BindRepeating([] { return true; }));
 
     account_tracker_ = base::MakeUnique<AccountTrackerService>();
     account_tracker_->Initialize(&signin_client_);

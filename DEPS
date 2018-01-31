@@ -83,11 +83,11 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling Skia
   # and whatever else without interference from each other.
-  'skia_revision': '51494f6615b8bd637caf0fd6d0d577ea19d50948',
+  'skia_revision': 'caaf211e8dd094db6b7408cecdf531ce7d91382c',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling V8
   # and whatever else without interference from each other.
-  'v8_revision': 'bde04194e4c22b971d711916e4ca2bfc20ccbc5d',
+  'v8_revision': '787ecbb389741d2b76131f9fa526374a0dbfcff6',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling swarming_client
   # and whatever else without interference from each other.
@@ -95,7 +95,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling ANGLE
   # and whatever else without interference from each other.
-  'angle_revision': 'bd6ae4aa145daea5869a2c86bb962d37a71bd264',
+  'angle_revision': 'e4741fd0f2bce711a90bdebe2ac8e83cf944b8e8',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling build tools
   # and whatever else without interference from each other.
@@ -107,7 +107,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling PDFium
   # and whatever else without interference from each other.
-  'pdfium_revision': '1917cdd8c90b977772cdee16cf496e56dce1a2ad',
+  'pdfium_revision': 'bc4869293d7869c06e3f8c18241447ec5b701b58',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling openmax_dl
   # and whatever else without interference from each other.
@@ -115,7 +115,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling BoringSSL
   # and whatever else without interference from each other.
-  'boringssl_revision': 'a62dbf88d8a3c04446db833a1eb80a620cb1514d',
+  'boringssl_revision': '94cd196a80252c98e329e979870f2a462cc4f402',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling google-toolbox-for-mac
   # and whatever else without interference from each other.
@@ -139,7 +139,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling catapult
   # and whatever else without interference from each other.
-  'catapult_revision': '3f8c43b794872533edb259de7bc03ab374721ca4',
+  'catapult_revision': '69f2184e9c4351f5216d1ebe52bfd4c37ea79081',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling libFuzzer
   # and whatever else without interference from each other.
@@ -342,7 +342,7 @@ deps = {
   },
 
   'src/third_party/depot_tools':
-    Var('chromium_git') + '/chromium/tools/depot_tools.git' + '@' + '6fe29419beee3479772c86cc8baa91e709931caa',
+    Var('chromium_git') + '/chromium/tools/depot_tools.git' + '@' + '7a4ced2773b2173c8ddc17c4895514706eb8df46',
 
   'src/third_party/devtools-node-modules':
     Var('chromium_git') + '/external/github.com/ChromeDevTools/devtools-node-modules' + '@' + Var('devtools_node_modules_revision'),
@@ -496,7 +496,7 @@ deps = {
     Var('chromium_git') + '/webm/libwebm.git' + '@' + 'b03c65468b06d097f27235d93d76bfc45f490ede',
 
   'src/third_party/libyuv':
-    Var('chromium_git') + '/libyuv/libyuv.git' + '@' + 'ffec313dbe58c6b97d4943387bda618dccbe4591',  # from r1694
+    Var('chromium_git') + '/libyuv/libyuv.git' + '@' + '92e22cf5b66173d5d5056751ca62bc2254e4ff86',  # from r1691
 
   'src/third_party/lighttpd': {
       'url': Var('chromium_git') + '/chromium/deps/lighttpd.git' + '@' + Var('lighttpd_revision'),
@@ -658,7 +658,7 @@ deps = {
     Var('chromium_git') + '/external/khronosgroup/webgl.git' + '@' + 'd458ada06171a85af00367251a4ed55db7fe2018',
 
   'src/third_party/webrtc':
-    Var('webrtc_git') + '/src.git' + '@' + '1a2f20748581f7f3a9012598fa9e729f0b10fae2', # commit position 21742
+    Var('webrtc_git') + '/src.git' + '@' + '22da89f502ab7ed618b7099f5010da021333bf71', # commit position 21742
 
   'src/third_party/xdg-utils': {
       'url': Var('chromium_git') + '/chromium/deps/xdg-utils.git' + '@' + 'd80274d5869b17b8c9067a1022e4416ee7ed5e0d',
@@ -681,7 +681,7 @@ deps = {
     Var('chromium_git') + '/v8/v8.git' + '@' +  Var('v8_revision'),
 
   'src-internal': {
-    'url': 'https://chrome-internal.googlesource.com/chrome/src-internal.git@fca13d4abbafa77c85bb529711d6fab8947df24e',
+    'url': 'https://chrome-internal.googlesource.com/chrome/src-internal.git@3594628af090fa24cfb5e804d58b5218e712bc87',
     'condition': 'checkout_src_internal',
   },
 }
@@ -1354,6 +1354,7 @@ hooks = [
     'action': [
       'python',
       'src/build/fuchsia/update_sdk.py',
+      '893404234442cf13abbc4e22ed996839ff5b1338',
     ],
   },
 

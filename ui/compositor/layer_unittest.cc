@@ -1842,7 +1842,6 @@ TEST_F(LayerWithDelegateTest, ExternalContent) {
   // The layer is already showing solid color content, so the cc layer won't
   // change.
   scoped_refptr<cc::Layer> before = child->cc_layer_for_testing();
-
   child->SetShowSolidColorContent();
   EXPECT_TRUE(child->cc_layer_for_testing());
   EXPECT_EQ(before.get(), child->cc_layer_for_testing());
@@ -1850,18 +1849,9 @@ TEST_F(LayerWithDelegateTest, ExternalContent) {
   // Showing surface content changes the underlying cc layer.
   before = child->cc_layer_for_testing();
   child->SetShowPrimarySurface(viz::SurfaceId(), gfx::Size(10, 10),
-                               SK_ColorWHITE,
-                               cc::DeadlinePolicy::UseDefaultDeadline());
-  scoped_refptr<cc::Layer> after = child->cc_layer_for_testing();
-  const auto* surface = static_cast<cc::SurfaceLayer*>(after.get());
-  EXPECT_TRUE(after.get());
-  EXPECT_NE(before.get(), after.get());
-  EXPECT_EQ(base::nullopt, surface->deadline_in_frames());
-
-  child->SetShowPrimarySurface(viz::SurfaceId(), gfx::Size(10, 10),
-                               SK_ColorWHITE,
-                               cc::DeadlinePolicy::UseSpecifiedDeadline(4u));
-  EXPECT_EQ(4u, surface->deadline_in_frames());
+                               SK_ColorWHITE);
+  EXPECT_TRUE(child->cc_layer_for_testing());
+  EXPECT_NE(before.get(), child->cc_layer_for_testing());
 
   // Changing to painted content should change the underlying cc layer.
   before = child->cc_layer_for_testing();
@@ -1876,8 +1866,7 @@ TEST_F(LayerWithDelegateTest, ExternalContentMirroring) {
   viz::SurfaceId surface_id(
       viz::FrameSinkId(0, 1),
       viz::LocalSurfaceId(2, base::UnguessableToken::Create()));
-  layer->SetShowPrimarySurface(surface_id, gfx::Size(10, 10), SK_ColorWHITE,
-                               cc::DeadlinePolicy::UseDefaultDeadline());
+  layer->SetShowPrimarySurface(surface_id, gfx::Size(10, 10), SK_ColorWHITE);
 
   const auto mirror = layer->Mirror();
   auto* const cc_layer = mirror->cc_layer_for_testing();
@@ -1889,13 +1878,11 @@ TEST_F(LayerWithDelegateTest, ExternalContentMirroring) {
   surface_id =
       viz::SurfaceId(viz::FrameSinkId(1, 2),
                      viz::LocalSurfaceId(3, base::UnguessableToken::Create()));
-  layer->SetShowPrimarySurface(surface_id, gfx::Size(20, 20), SK_ColorWHITE,
-                               cc::DeadlinePolicy::UseDefaultDeadline());
+  layer->SetShowPrimarySurface(surface_id, gfx::Size(20, 20), SK_ColorWHITE);
 
   // The mirror should continue to use the same cc_layer.
   EXPECT_EQ(cc_layer, mirror->cc_layer_for_testing());
-  layer->SetShowPrimarySurface(surface_id, gfx::Size(20, 20), SK_ColorWHITE,
-                               cc::DeadlinePolicy::UseDefaultDeadline());
+  layer->SetShowPrimarySurface(surface_id, gfx::Size(20, 20), SK_ColorWHITE);
 
   // Surface updates propagate to the mirror.
   EXPECT_EQ(surface_id, surface->primary_surface_id());
@@ -1916,8 +1903,7 @@ TEST_F(LayerWithDelegateTest, LayerFiltersSurvival) {
   // Showing surface content changes the underlying cc layer.
   scoped_refptr<cc::Layer> before = layer->cc_layer_for_testing();
   layer->SetShowPrimarySurface(viz::SurfaceId(), gfx::Size(10, 10),
-                               SK_ColorWHITE,
-                               cc::DeadlinePolicy::UseDefaultDeadline());
+                               SK_ColorWHITE);
   EXPECT_EQ(layer->layer_grayscale(), 0.5f);
   EXPECT_TRUE(layer->cc_layer_for_testing());
   EXPECT_NE(before.get(), layer->cc_layer_for_testing());

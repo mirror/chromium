@@ -46,9 +46,6 @@ enum ButtonState {
     base::scoped_nsobject<NSImage> image;
   } image_[image_button_cell::kButtonStateCount];
   BOOL isMouseInside_;
-
-  // Disables the hover effect if set to true.
-  BOOL isHoverDisabled_;
 }
 
 @property(assign, nonatomic) BOOL isMouseInside;
@@ -77,10 +74,6 @@ enum ButtonState {
 
 // Draws the cell's image within |cellFrame|.
 - (void)drawImageWithFrame:(NSRect)cellFrame inView:(NSView*)controlView;
-
-// Setter for |isHoverDisabled|. If |disable| is true, set |isMouseInside_| to
-// false.
-- (void)setIsHoverDisabled:(BOOL)disable;
 
 @end
 

@@ -30,6 +30,7 @@
 #include <memory>
 #include "bindings/core/v8/ActiveScriptWrappable.h"
 #include "bindings/core/v8/ExceptionState.h"
+#include "bindings/core/v8/Nullable.h"
 #include "bindings/core/v8/ScriptPromise.h"
 #include "core/CoreExport.h"
 #include "core/dom/ExceptionCode.h"
@@ -42,7 +43,6 @@
 #include "platform/audio/AudioSourceProvider.h"
 #include "platform/bindings/TraceWrapperMember.h"
 #include "platform/network/mime/MIMETypeRegistry.h"
-#include "platform/wtf/Optional.h"
 #include "public/platform/WebAudioSourceProviderClient.h"
 #include "public/platform/WebMediaPlayerClient.h"
 
@@ -187,7 +187,7 @@ class CORE_EXPORT HTMLMediaElement
   bool Loop() const;
   void SetLoop(bool);
   ScriptPromise playForBindings(ScriptState*);
-  Optional<ExceptionCode> Play();
+  Nullable<ExceptionCode> Play();
   void pause();
   void RequestRemotePlayback();
   void RequestRemotePlaybackControl();

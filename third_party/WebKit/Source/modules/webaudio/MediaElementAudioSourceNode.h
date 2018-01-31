@@ -28,7 +28,6 @@
 
 #include <memory>
 #include "base/memory/scoped_refptr.h"
-#include "base/single_thread_task_runner.h"
 #include "modules/webaudio/AudioNode.h"
 #include "platform/audio/AudioSourceProviderClient.h"
 #include "platform/audio/MultiChannelResampler.h"
@@ -109,7 +108,7 @@ class MediaElementAudioSourceHandler final : public AudioHandler {
   // onCurrentSrcChanged().  Protected by |m_processLock|.
   String current_src_string_;
 
-  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
+  scoped_refptr<WebTaskRunner> task_runner_;
 };
 
 class MediaElementAudioSourceNode final : public AudioNode,

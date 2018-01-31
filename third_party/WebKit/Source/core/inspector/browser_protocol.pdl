@@ -1019,8 +1019,7 @@ experimental domain CSS
   # Enables the selector recording.
   command startRuleUsageTracking
 
-  # Stop tracking rule usage and return the list of rules that were used since last call to 
-  # `takeCoverageDelta` (or since start of coverage instrumentation)
+  # The list of rules with an indication of whether these were used
   command stopRuleUsageTracking
     returns
       array of RuleUsage ruleUsage
@@ -4633,9 +4632,6 @@ domain Page
       optional string headerTemplate
       # HTML template for the print footer. Should use the same format as the `headerTemplate`.
       optional string footerTemplate
-      # Whether or not to prefer page size as defined by css. Defaults to false,
-      # in which case the content will be scaled to fit the paper size.
-      optional boolean preferCSSPageSize
     returns
       # Base64-encoded pdf data.
       string data

@@ -40,7 +40,7 @@ def AddCommonArgs(arg_parser):
                            help='Show more logging information.')
 
 
-def ConfigureLogging(args):
+def EnableLogging(args):
   """Configures the logging level based on command line |args|."""
 
   logging.basicConfig(level=(logging.DEBUG if args.verbose else logging.INFO))

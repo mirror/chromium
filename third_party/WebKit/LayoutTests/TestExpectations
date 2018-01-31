@@ -58,9 +58,17 @@ crbug.com/619427 [ Mac Linux ] virtual/spv2/fast/overflow/overflow-height-float-
 # Slimming paint V1.75
 crbug.com/771643 [ Mac Win Android ] virtual/spv175/ [ Skip ]
 
+crbug.com/769942 virtual/spv175/compositing/clip-path-with-composited-descendants.html [ Failure ]
+crbug.com/769942 virtual/spv175/compositing/images/direct-image-clip-path.html [ Failure ]
+crbug.com/769942 virtual/spv175/compositing/images/direct-image-dynamic-clip-path.html [ Failure ]
+crbug.com/769942 virtual/spv175/compositing/overflow/accelerated-scrolling-with-clip-path-text.html [ Failure ]
+crbug.com/769942 virtual/spv175/compositing/overflow/accelerated-scrolling-with-clip-path.html [ Failure ]
+crbug.com/769942 virtual/spv175/compositing/overflow/accelerated-scrolling-with-clip-reference.html [ Failure ]
 crbug.com/769942 virtual/spv175/fast/borders/border-image-fill-inline-no-border.html [ Failure ]
 crbug.com/769942 virtual/spv175/paint/clipath/clip-path-bigger-than-border-box-visual-rect.html [ Failure ]
 crbug.com/769942 virtual/spv175/paint/clipath/clip-path-bigger-than-visual-overflow.html [ Failure ]
+crbug.com/769942 virtual/spv175/paint/clipath/clip-path-with-background-and-box-behind.html [ Failure ]
+crbug.com/769942 virtual/spv175/paint/invalidation/clip/clip-path-constant-repaint.html [ Failure ]
 crbug.com/769942 virtual/spv175/paint/invalidation/clip/clip-path-resize.html [ Failure ]
 crbug.com/769942 virtual/spv175/paint/invalidation/svg/clip-path-child-changes.svg [ Failure ]
 crbug.com/769942 virtual/spv175/paint/invalidation/svg/clip-path-href-changes.svg [ Failure ]
@@ -72,18 +80,6 @@ crbug.com/769942 virtual/spv175/paint/invalidation/svg/js-late-clipPath-creation
 crbug.com/769942 virtual/spv175/paint/invalidation/svg/mask-clip-target-transform.svg [ Failure ]
 crbug.com/769942 virtual/spv175/paint/invalidation/svg/resource-invalidate-on-target-update.svg [ Failure ]
 
-# DCHECK failure in CompositingLayerPropertyUpdater::Update(), because we don't create mask nodes for clip-path yet.
-crbug.com/769942 virtual/spv175/compositing/clip-path-with-composited-descendants.html [ Skip ]
-crbug.com/769942 virtual/spv175/compositing/images/direct-image-clip-path.html [ Skip ]
-crbug.com/769942 virtual/spv175/compositing/images/direct-image-dynamic-clip-path.html [ Skip ]
-crbug.com/769942 virtual/spv175/compositing/overflow/accelerated-scrolling-with-clip-path-text.html [ Skip ]
-crbug.com/769942 virtual/spv175/compositing/overflow/accelerated-scrolling-with-clip-path.html [ Skip ]
-crbug.com/769942 virtual/spv175/compositing/overflow/accelerated-scrolling-with-clip-reference.html [ Skip ]
-crbug.com/769942 virtual/spv175/compositing/overflow/ancestor-with-clip-path.html [ Skip ]
-crbug.com/769942 virtual/spv175/compositing/overflow/descendant-with-clip-path.html [ Skip ]
-crbug.com/769942 virtual/spv175/paint/clipath/clip-path-with-background-and-box-behind.html [ Skip ]
-crbug.com/769942 virtual/spv175/paint/invalidation/clip/clip-path-constant-repaint.html [ Skip ]
-
 crbug.com/771643 virtual/spv175/compositing/overflow/nested-border-radius-clipping.html [ Failure ]
 crbug.com/771643 virtual/spv175/fast/multicol/border-radius-clipped-layer.html [ Failure ]
 crbug.com/771643 virtual/spv175/fast/multicol/mixed-opacity-test.html [ Failure ]
@@ -91,6 +87,7 @@ crbug.com/771643 virtual/spv175/fast/multicol/multicol-svg.html [ Failure ]
 crbug.com/771643 virtual/spv175/paint/invalidation/svg/absolute-sized-content-with-resources.xhtml [ Failure ]
 
 crbug.com/805049 [ Mac ] virtual/spv175/compositing/iframes/fixed-position-iframe.html [ Pass Crash ]
+crbug.com/805049 virtual/spv175/paint/invalidation/scroll/fixed-scroll-simple.html [ Failure ]
 
 # spv175+root-layer-scrolls failures. They also fail with root-layer-scrolls without enable-slimming-paint-v175.
 crbug.com/417782 virtual/spv175/compositing/overflow/border-radius-composited-subframe.html [ Failure ]
@@ -110,10 +107,9 @@ crbug.com/644433 virtual/gpu/fast/canvas/OffscreenCanvas-2d-pattern-in-worker.ht
 crbug.com/702006 paint/invalidation/compositing/scrolling-neg-z-index-descendants-should-cause-repaint.html [ Failure ]
 crbug.com/702006 virtual/spv175/paint/invalidation/compositing/scrolling-neg-z-index-descendants-should-cause-repaint.html [ Skip ]
 
-crbug.com/784909 [ Win7 ] fast/events/message-port-start-and-close-different-microtask.html [ Failure Pass ]
-crbug.com/784909 [ Win7 ] virtual/mouseevent_fractional/fast/events/message-port-start-and-close-different-microtask.html [ Failure Pass ]
-
-crbug.com/784956 fast/history/frameset-repeated-name.html [ Pass Failure ]
+# Sheriff failures 2017-11-14
+crbug.com/784909  fast/events/message-port-start-and-close-different-microtask.html [ Failure Pass ]
+crbug.com/784956  fast/history/frameset-repeated-name.html [ Pass Failure ]
 
 ########## Genuinely flaky ##########
 crbug.com/624233 virtual/gpu-rasterization/images/color-profile-background-clip-text.html [ Pass Failure ]
@@ -603,11 +599,12 @@ crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/position-re
 
 # ====== IncrementalShadowDOM-only failures from here ======
 
+crbug.com/776656 virtual/incremental-shadow-dom/external/wpt/shadow-dom/untriaged/elements-and-dom-objects/extensions-to-event-interface/event-path-001.html [ Failure ]
 crbug.com/776656 virtual/incremental-shadow-dom/external/wpt/shadow-dom/untriaged/styles/test-003.html [ Failure ]
+crbug.com/776656 virtual/incremental-shadow-dom/fast/dom/shadow/shadow-dom-event-dispatching-details-summary.html [ Failure ]
 
 # ====== IncrementalShadowDOM-only failures until here ======
 
-crbug.com/776656 fast/dom/shadow/shadow-dom-event-dispatching-details-summary.html [ Failure ]
 crbug.com/776656 shadow-dom/css-style-inherit.html [ Failure ]
 
 crbug.com/667560 [ Debug ] http/tests/devtools/elements/styles-3/styles-change-node-while-editing.js [ Pass Failure ]
@@ -649,7 +646,7 @@ crbug.com/538697 [ Win ] printing/webgl-oversized-printing.html [ Failure Crash 
 
 # Crashing tests in dictionary order.
 crbug.com/736308 virtual/outofblink-cors/external/wpt/service-workers/service-worker/fetch-cors-xhr.https.html [ Failure Crash ]
-crbug.com/736308 virtual/outofblink-cors/external/wpt/service-workers/service-worker/fetch-event.https.html [ Crash ]
+crbug.com/736308 virtual/outofblink-cors/external/wpt/service-workers/service-worker/fetch-event.https.html [ Crash Timeout ]
 crbug.com/736308 virtual/outofblink-cors/external/wpt/service-workers/service-worker/fetch-event-network-error.https.html [ Crash ]
 crbug.com/736308 virtual/outofblink-cors/external/wpt/service-workers/service-worker/fetch-request-fallback.https.html [ Crash Failure ]
 crbug.com/736308 virtual/outofblink-cors/external/wpt/service-workers/service-worker/fetch-request-redirect.https.html [ Crash ]
@@ -681,10 +678,8 @@ crbug.com/736308 virtual/outofblink-cors/external/wpt/service-workers/service-wo
 crbug.com/736308 virtual/outofblink-cors/external/wpt/service-workers/service-worker/sandboxed-iframe-fetch-event.https.html [ Timeout ]
 
 # Failing tests in dictionary order.
-crbug.com/736308 virtual/outofblink-cors/external/wpt/service-workers/service-worker/fetch-canvas-tainting-image-cache.https.html [ Failure ]
-crbug.com/736308 virtual/outofblink-cors/external/wpt/service-workers/service-worker/fetch-canvas-tainting-image.https.html [ Failure ]
-crbug.com/736308 virtual/outofblink-cors/external/wpt/service-workers/service-worker/fetch-canvas-tainting-video-cache.https.html [ Failure ]
-crbug.com/736308 virtual/outofblink-cors/external/wpt/service-workers/service-worker/fetch-canvas-tainting-video.https.html [ Failure ]
+crbug.com/736308 virtual/outofblink-cors/external/wpt/service-workers/service-worker/fetch-canvas-tainting-cache.https.html [ Failure ]
+crbug.com/736308 virtual/outofblink-cors/external/wpt/service-workers/service-worker/fetch-canvas-tainting.https.html [ Failure ]
 crbug.com/736308 virtual/outofblink-cors/external/wpt/service-workers/service-worker/fetch-event-referrer-policy.https.html [ Failure ]
 crbug.com/736308 virtual/outofblink-cors/external/wpt/service-workers/service-worker/fetch-request-html-imports.https.html [ Failure ]
 crbug.com/736308 virtual/outofblink-cors/external/wpt/service-workers/service-worker/fetch-request-xhr.https.html [ Failure ]
@@ -861,9 +856,6 @@ crbug.com/597221 fast/dom/Window/window-postmessage-clone-deep-array.html [ Fail
 crbug.com/778784 http/tests/devtools/tracing/decode-resize.js [ Failure Timeout Pass ]
 crbug.com/778784 virtual/threaded/http/tests/devtools/tracing/decode-resize.js [ Failure Timeout Pass ]
 
-crbug.com/807055 [ Win10 ] virtual/gpu-rasterization/images/color-profile-image-canvas.html [ Failure ]
-crbug.com/807055 [ Win10 ] virtual/gpu-rasterization/images/pixelated-canvas.html [ Failure ]
-
 crbug.com/498539 http/tests/devtools/tracing/timeline-misc/timeline-bound-function.js [ Pass Failure ]
 crbug.com/498539 virtual/threaded/http/tests/devtools/tracing/timeline-misc/timeline-bound-function.js [ Pass Failure ]
 
@@ -927,6 +919,7 @@ crbug.com/404597 fast/forms/long-text-in-input.html [ Skip ]
 
 # Web Components related tests (Shadow DOM, Custom Elements) failures.
 crbug.com/505364 external/wpt/shadow-dom/untriaged/styles/test-003.html [ Failure ]
+crbug.com/505364 external/wpt/shadow-dom/untriaged/elements-and-dom-objects/extensions-to-event-interface/event-path-001.html [ Failure ]
 crbug.com/505364 external/wpt/css/css-scoping/css-scoping-shadow-slot-display-override.html [ Failure ]
 crbug.com/505364 external/wpt/css/css-scoping/css-scoping-shadow-slot-style.html [ Failure ]
 crbug.com/505364 external/wpt/css/css-scoping/css-scoping-shadow-nested-slot-display-override.html [ Failure ]
@@ -1275,8 +1268,6 @@ crbug.com/700795 http/tests/devtools/animation/animation-transition-setTiming-cr
 crbug.com/645988 external/wpt/uievents/order-of-events/focus-events/focus-manual.html [ Failure ]
 
 crbug.com/662010 [ Win7 ] http/tests/csspaint/invalidation-background-image.html [ Skip ]
-
-crbug.com/807152 vr/VRDisplay_rAF_fires_with_window_rAF.html [ Pass Failure ]
 
 # These tests are skipped as there is no touch support on Mac.
 crbug.com/613672 [ Mac ] fast/events/touch/multi-touch-user-gesture.html [ Skip ]
@@ -1684,9 +1675,6 @@ crbug.com/711529 http/tests/workers/shared-worker-performance-timeline.html [ Ti
 # This test requires enabling the flag CustomUserTiming in a virtual test.
 crbug.com/758385 http/tests/performance-timing/custom-user-timing/po-customusertiming-mark.html [ Skip ]
 
-# This test requires enabling the flag LongTaskV2 in a virtual test suite.
-crbug.com/738493 http/tests/performance-timing/longtask-v2/longtask-v8compile.html [ Skip ]
-
 # Expected failures during incremental implementation of mojo notification.
 crbug.com/595685 virtual/mojo-notifications/http/tests/notifications/close-dedicated-worker.html [ Skip ]
 crbug.com/595685 virtual/mojo-notifications/http/tests/notifications/close-dispatch-asynchronous.html [ Skip ]
@@ -1815,6 +1803,9 @@ crbug.com/626703 external/wpt/css/css-color/t32-opacity-offscreen-with-alpha-c.x
 crbug.com/626703 [ Android ] external/wpt/FileAPI/reading-data-section/FileReader-event-handler-attributes.html [ Crash ]
 crbug.com/626703 [ Android ] external/wpt/dom/nodes/Document-contentType/contentType/createHTMLDocument.html [ Timeout ]
 crbug.com/626703 [ Linux Mac ] virtual/outofblink-cors/external/wpt/service-workers/service-worker/clients-get-cross-origin.https.html [ Timeout ]
+crbug.com/626703 [ Linux Mac ] virtual/service-worker-script-streaming/external/wpt/service-workers/service-worker/clients-get.https.html [ Timeout ]
+crbug.com/626703 [ Linux Mac ] virtual/service-worker-script-streaming/external/wpt/service-workers/service-worker/clients-get-client-types.https.html [ Timeout ]
+crbug.com/626703 [ Linux Mac ] virtual/service-worker-script-streaming/external/wpt/service-workers/service-worker/clients-get-cross-origin.https.html [ Timeout ]
 crbug.com/626703 [ Linux Mac ] virtual/mojo-blobs/external/wpt/service-workers/service-worker/clients-get.https.html [ Timeout ]
 crbug.com/626703 external/wpt/service-workers/service-worker/clients-get-cross-origin.https.html [ Timeout ]
 crbug.com/626703 external/wpt/service-workers/service-worker/clients-get.https.html [ Timeout ]
@@ -2208,6 +2199,7 @@ crbug.com/626703 virtual/mojo-blobs/external/wpt/service-workers/service-worker/
 crbug.com/626703 virtual/outofblink-cors/external/wpt/fetch/api/abort/general.html [ Timeout ]
 crbug.com/626703 virtual/outofblink-cors/external/wpt/http/basic-auth-cache-test.html [ Timeout ]
 crbug.com/626703 virtual/outofblink-cors/external/wpt/service-workers/service-worker/update-bytecheck.https.html [ Timeout ]
+crbug.com/626703 virtual/service-worker-script-streaming/external/wpt/service-workers/service-worker/update-bytecheck.https.html [ Timeout ]
 crbug.com/626703 [ Win10 ] external/wpt/preload/delaying-onload-link-preload-after-discovery.html [ Timeout ]
 crbug.com/626703 [ Win ] external/wpt/css/css-writing-modes/box-offsets-rel-pos-vlr-005.xht [ Failure ]
 crbug.com/626703 [ Win ] external/wpt/css/css-writing-modes/box-offsets-rel-pos-vrl-004.xht [ Failure ]
@@ -2413,13 +2405,16 @@ crbug.com/651778 external/wpt/workers/Worker_cross_origin_security_err.htm [ Tim
 
 # This test requires a special browser flag and seems not suitable for a wpt test, see bug.
 crbug.com/691944 external/wpt/service-workers/service-worker/update-after-oneday.https.html [ Skip ]
+crbug.com/691944 virtual/service-worker-script-streaming/external/wpt/service-workers/service-worker/update-after-oneday.https.html [ Skip ]
 crbug.com/691944 virtual/mojo-blobs/external/wpt/service-workers/service-worker/update-after-oneday.https.html [ Skip ]
 crbug.com/691944 virtual/outofblink-cors/external/wpt/service-workers/service-worker/update-after-oneday.https.html [ Skip ]
 
 # These tests (erroneously) see a platform-specific User-Agent header
 crbug.com/595993 external/wpt/service-workers/service-worker/fetch-header-visibility.https.html [ Failure ]
+crbug.com/595993 virtual/service-worker-script-streaming/external/wpt/service-workers/service-worker/fetch-header-visibility.https.html [ Failure ]
 crbug.com/595993 virtual/mojo-blobs/external/wpt/service-workers/service-worker/fetch-header-visibility.https.html [ Failure ]
 crbug.com/595993 external/wpt/service-workers/service-worker/request-end-to-end.https.html [ Failure ]
+crbug.com/595993 virtual/service-worker-script-streaming/external/wpt/service-workers/service-worker/request-end-to-end.https.html [ Failure ]
 crbug.com/595993 virtual/mojo-blobs/external/wpt/service-workers/service-worker/request-end-to-end.https.html [ Failure ]
 crbug.com/595993 virtual/outofblink-cors/external/wpt/service-workers/service-worker/request-end-to-end.https.html [ Failure ]
 crbug.com/595993 virtual/outofblink-cors/external/wpt/service-workers/service-worker/fetch-header-visibility.https.html [ Failure ]
@@ -2531,7 +2526,7 @@ crbug.com/709227 external/wpt/workers/nested_worker.worker.html [ Timeout ]
 # Crashes
 crbug.com/709227 external/wpt/offscreen-canvas/fill-and-stroke-styles/2d.pattern.basic.nocontext.worker.html [ Crash ]
 
-crbug.com/803943 [ Win Linux Mac ] external/wpt/html/syntax/parsing/html5lib_tests16.html?run_type=uri [ Pass Timeout ]
+crbug.com/803943 [ Win ] external/wpt/html/syntax/parsing/html5lib_tests16.html?run_type=uri [ Pass Timeout ]
 
 # ====== Tests from enabling .any.js/.worker.js tests end here ========
 
@@ -2698,6 +2693,7 @@ crbug.com/716320 virtual/sharedarraybuffer/external/wpt/html/infrastructure/safe
 
 # Flaky on trybots
 crbug.com/688486 external/wpt/service-workers/service-worker/fetch-request-resources.https.html [ Failure Pass ]
+crbug.com/688486 virtual/service-worker-script-streaming/external/wpt/service-workers/service-worker/fetch-request-resources.https.html [ Failure Pass ]
 crbug.com/688486 virtual/mojo-blobs/external/wpt/service-workers/service-worker/fetch-request-resources.https.html [ Failure Pass ]
 crbug.com/688486 virtual/outofblink-cors/external/wpt/service-workers/service-worker/fetch-request-resources.https.html [ Failure Pass ]
 
@@ -2744,6 +2740,8 @@ crbug.com/791529 external/wpt/css/css-variables/variable-transitions-from-no-val
 crbug.com/791529 external/wpt/css/css-variables/variable-transitions-to-no-value.html [ Skip ]
 crbug.com/791529 external/wpt/css/css-variables/variable-transitions-transition-property-variable-before-value.html [ Skip ]
 crbug.com/791529 external/wpt/css/css-variables/variable-transitions-value-before-transition-property-variable.html [ Skip ]
+
+crbug.com/739367 [ Win ] virtual/service-worker-script-streaming/external/wpt/service-workers/service-worker/fetch-event-redirect.https.html [ Timeout ]
 
 # Feature Policy changes fullscreen behaviour, tests need updating
 crbug.com/718155 fullscreen/full-screen-iframe-not-allowed.html [ Failure ]
@@ -3192,8 +3190,6 @@ crbug.com/781935 fast/mediastream/MediaStreamTrack.html [ Timeout ]
 crbug.com/770691 [ Win7 Linux Mac10.11 ] media/controls/lazy-loaded-style.html [ Failure Pass ]
 crbug.com/770691 [ Win7 Linux Mac10.11 ] virtual/new-remote-playback-pipeline/media/controls/lazy-loaded-style.html [ Failure Pass ]
 
-crbug.com/807191 fast/media/mq-color-gamut-picture.html [ Pass Failure Timeout ]
-
 # Text rendering on Win7 failing image diffs, flakily.
 crbug.com/773122 [ Win7 ] fast/text/international/unicode-bidi-plaintext-in-textarea.html [ Failure Pass ]
 crbug.com/773122 [ Win7 ] fast/text/whitespace/022.html [ Failure Pass ]
@@ -3206,6 +3202,8 @@ crbug.com/774437 virtual/spv175/paint/invalidation/selection/selection-partial-i
 crbug.com/774463 [ Win7 Debug ] fast/events/autoscroll-should-not-stop-on-keypress.html [ Failure Pass ]
 crbug.com/774463 [ Win7 Debug ] virtual/mouseevent_fractional/fast/events/autoscroll-should-not-stop-on-keypress.html [ Failure Pass ]
 crbug.com/774688 [ Mac ] fast/spatial-navigation/snav-container-white-space.html [ Pass Failure ]
+
+crbug.com/776201 [ Win7 Debug ] virtual/longtask-v2/http/tests/performance-timing/longtask-v2/longtask-v8compile.html [ Pass Failure ]
 
 # Sheriff failures 2017-10-23
 crbug.com/772411 http/tests/media/autoplay-crossorigin.html [ Timeout Failure Pass ]

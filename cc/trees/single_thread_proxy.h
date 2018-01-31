@@ -71,7 +71,7 @@ class CC_EXPORT SingleThreadProxy : public Proxy,
                                   bool animate) override {}
 
   // SchedulerClient implementation
-  bool WillBeginImplFrame(const viz::BeginFrameArgs& args) override;
+  void WillBeginImplFrame(const viz::BeginFrameArgs& args) override;
   void DidFinishImplFrame() override;
   void DidNotProduceFrame(const viz::BeginFrameAck& ack) override;
   void ScheduledActionSendBeginMainFrame(

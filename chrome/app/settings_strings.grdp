@@ -620,25 +620,6 @@
   <message name="IDS_SETTINGS_PASSWORDS_EXPORT" desc="A button in the dialog for exporting passwords from Chrome. A password list will be written to a destination, which the user will be asked to choose after initiating this action.">
     Export passwords...
   </message>
-  <message name="IDS_SETTINGS_PASSWORDS_EXPORT_TRY_AGAIN" desc="A button in the dialog for exporting passwords from Chrome. The action is to attempt to export the passwords again. A password list will be written to a destination, which the user will be asked to choose after initiating this action.">
-    Try again...
-  </message>
-  <message name="IDS_SETTINGS_PASSWORDS_EXPORTING_TITLE" desc="The title of a dialog for exporting passwords. This title is shown while Chrome is performing the export and the user should wait.">
-    Exporting passwords...
-  </message>
-  <message name="IDS_SETTINGS_PASSWORDS_EXPORTING_FAILURE_TITLE" desc="The title to a dialog, which is shown if exporting passwords to a folder has failed.">
-    Can't export passwords to "<ph name="FOLDER">$1<ex>Documents</ex></ph>"
-  </message>
-  <message name="IDS_SETTINGS_PASSWORDS_EXPORTING_FAILURE_TIPS" desc="Message that is shown when exporting passwords has failed. Below it is a list of things the user can try to resolve the problem.">
-    Try the following tips
-  </message>
-  <message name="IDS_SETTINGS_PASSWORDS_EXPORTING_FAILURE_TIP_ENOUGH_SPACE" desc="Message that is shown when exporting passwords has failed. This is part of a list of things the user can try to resolve the problem. This advice implies that there isn't enough space on the disk for the new file to be written.">
-    Make sure there is enough space on your device
-  </message>
-  <message name="IDS_SETTINGS_PASSWORDS_EXPORTING_FAILURE_TIP_ANOTHER_FOLDER" desc="Message that is shown when exporting passwords has failed. This is part of a list of things the user can try to resolve the problem. This advice implies that Chrome couldn't write into the specified folder.">
-    Export your passwords to another folder
-  </message>
-
 
   <!-- Default Browser Page -->
   <if expr="not chromeos">
@@ -3041,12 +3022,6 @@
   <if expr="not chromeos">
     <message name="IDS_SETTINGS_PEOPLE_DOMAIN_MANAGED_PROFILE" desc="Provides the domain information for domain-managed accounts.">
       Managed by <ph name="DOMAIN">$1<ex>example.com</ex></ph>
-    </message>
-    <message name="IDS_SETTINGS_PEOPLE_SIGN_IN_PROMPT" desc="The text displayed to prompt users to sign in to chrome.">
-      Web browsing with Google smarts
-    </message>
-    <message name="IDS_SETTINGS_PEOPLE_SIGN_IN_PROMPT_SECONDARY" desc="The secondary text displayed to prompt users to sign in to chrome.">
-      Sync for a personalized browsing experience, across your devices
     </message>
     <message name="IDS_SETTINGS_SYNC_DISCONNECT_MANAGED_PROFILE_EXPLANATION" desc="The text to display in the 'Sign out of Chrome' dialog to stop syncing for managed profiles.">
       Because this account is managed by <ph name="DOMAIN">$1<ex>example.com</ex></ph>, your bookmarks, history, passwords, and other settings will be cleared from this device. However, your data will remain stored in your Google Account and can be managed on <ph name="BEGIN_LINK">&lt;a href="$2" target=&quot;_blank&quot;&gt;<ex>&lt;a href="$2" target=&quot;_blank&quot;&gt;</ex></ph>Google Dashboard<ph name="END_LINK">&lt;/a&gt;<ex>&lt;/a&gt;</ex></ph>.

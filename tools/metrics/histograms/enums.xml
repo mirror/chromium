@@ -12488,7 +12488,6 @@ Called by update_net_error_codes.py.-->
   <int value="410" label="RestrictAccountsToPatterns"/>
   <int value="411" label="PasswordProtectionWarningTrigger"/>
   <int value="412" label="PasswordProtectionRiskTrigger"/>
-  <int value="413" label="EnableSymantecLegacyInfrastructure"/>
 </enum>
 
 <enum name="EnterprisePolicyInvalidations">
@@ -15069,7 +15068,6 @@ Called by update_net_error_codes.py.-->
   <int value="4" label="HOSTED_APP"/>
   <int value="5" label="LEGACY_PACKAGED_APP"/>
   <int value="6" label="PLATFORM_APP"/>
-  <int value="7" label="SHARED_MODULE"/>
 </enum>
 
 <enum name="ExtensionUninstallDialogAction">
@@ -15131,24 +15129,6 @@ Called by update_net_error_codes.py.-->
   <int value="33" label="CRX_HASH_VERIFICATION_FAILED"/>
   <int value="34" label="CRX_FILE_IS_DELTA_UPDATE"/>
   <int value="35" label="CRX_EXPECTED_HASH_INVALID"/>
-</enum>
-
-<enum name="ExtensionViewType">
-  <int value="0" label="INVALID"/>
-  <int value="1" label="APP_WINDOW"/>
-  <int value="2" label="BACKGROUND_CONTENTS"/>
-  <int value="3" label="COMPONENT"/>
-  <int value="4" label="EXTENSION_BACKGROUND_PAGE"/>
-  <int value="5" label="EXTENSION_DIALOG"/>
-  <int value="6" label="EXTENSION_GUEST"/>
-  <int value="7" label="EXTENSION_POPUP"/>
-  <int value="8" label="PANEL"/>
-  <int value="9" label="TAB_CONTENTS"/>
-</enum>
-
-<enum name="ExtensionViewTypeIsBackground">
-  <int value="0" label="Not background"/>
-  <int value="1" label="Background"/>
 </enum>
 
 <enum name="ExternalDeviceAction">
@@ -17600,7 +17580,8 @@ Called by update_net_error_codes.py.-->
   <int value="2228" label="DocumentPageShowRegistered"/>
   <int value="2229" label="DocumentPageShowFired"/>
   <int value="2230" label="ReplaceCharsetInXHR"/>
-  <int value="2231" label="RespondToSameOriginRequestWithCrossOriginResponse"/>
+  <int value="2231"
+      label="RespondToSameOriginRequestWithCrossOriginResponse (obsolete)"/>
   <int value="2232" label="LinkRelModulePreload"/>
   <int value="2233" label="PerformanceMeasurePassedInObject"/>
   <int value="2234" label="PerformanceMeasurePassedInNavigationTiming"/>
@@ -17723,8 +17704,6 @@ Called by update_net_error_codes.py.-->
   <int value="2349" label="V8HTMLElement_Autocapitalize_AttributeGetter"/>
   <int value="2350" label="V8HTMLElement_Autocapitalize_AttributeSetter"/>
   <int value="2351" label="CSSLegacyAlignment"/>
-  <int value="2352" label="SRISignatureCheck"/>
-  <int value="2353" label="SRISignatureSuccess"/>
 </enum>
 
 <enum name="FeedbackSource">
@@ -26109,7 +26088,6 @@ from previous Chrome versions.
   <int value="67639499" label="stop-loading-in-background:disabled"/>
   <int value="70878462" label="WebAssembly:disabled"/>
   <int value="73929836" label="VrBrowsingInCustomTab:enabled"/>
-  <int value="75237697" label="ash-enable-new-overview-ui"/>
   <int value="75747474" label="disable-webview-signin-flow"/>
   <int value="78998551" label="disable-hosted-app-shim-creation"/>
   <int value="79094339" label="VrLaunchIntents:enabled"/>
@@ -34105,11 +34083,6 @@ Called by update_net_trust_anchors.py.-->
   <int value="3" label="IPv6 BestConnection."/>
 </enum>
 
-<enum name="PeerConnectionKeyProtocol">
-  <int value="0" label="DTLS"/>
-  <int value="1" label="SDES"/>
-</enum>
-
 <enum name="PeerConnectionRtcpMux">
   <int value="0" label="Disabled"/>
   <int value="1" label="Enabled"/>
@@ -39434,7 +39407,6 @@ Called by update_net_trust_anchors.py.-->
     Signout including the primary account.
   </int>
   <int value="2" label="SignoutSecondary">Signout only secondary accounts.</int>
-  <int value="3" label="EnableSync">Enable Sync after signin.</int>
 </enum>
 
 <enum name="SigninDiceTokenFetchResult">

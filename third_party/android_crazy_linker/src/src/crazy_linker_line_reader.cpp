@@ -44,8 +44,11 @@ bool LineReader::GetNextLine() {
   line_len_ = 0;
 
   for (;;) {
-    LLOG("LOOP line_start=%d buff_size=%d buff_capacity=%d", line_start_,
-         buff_size_, buff_capacity_);
+    LLOG("%s: LOOP line_start=%d buff_size=%d buff_capacity=%d\n",
+         __FUNCTION__,
+         line_start_,
+         buff_size_,
+         buff_capacity_);
 
     // Find the end of the current line in the current buffer. The result
     // of memchr(_,_,0) is undefined, treated as not-found.
@@ -59,8 +62,12 @@ bool LineReader::GetNextLine() {
     if (line_end != NULL) {
       // Found one, return it directly.
       line_len_ = static_cast<size_t>(line_end + 1 - line);
-      LLOG("LINE line_start=%d line_len=%d '%.*s'\n", line_start_, line_len_,
-           line_len_, buff_ + line_start_);
+      LLOG("%s: LINE line_start=%d line_len=%d '%.*s'\n",
+           __FUNCTION__,
+           line_start_,
+           line_len_,
+           line_len_,
+           buff_ + line_start_);
       return true;
     }
 
@@ -69,7 +76,7 @@ bool LineReader::GetNextLine() {
       ::memmove(buff_, buff_ + line_start_, buff_size_ - line_start_);
       buff_size_ -= line_start_;
       line_start_ = 0;
-      LLOG("MOVE buff_size=%d", buff_size_);
+      LLOG("%s: MOVE buff_size=%d\n", __FUNCTION__, buff_size_);
     }
 
     // Handle end of input now.
@@ -80,11 +87,15 @@ bool LineReader::GetNextLine() {
       if (buff_size_ > 0 && buff_size_ < buff_capacity_) {
         buff_[buff_size_++] = '\n';
         line_len_ = buff_size_;
-        LLOG("EOF_LINE buff_size=%d '%.*s'\n", buff_size_, buff_size_, buff_);
+        LLOG("%s: EOF_LINE buff_size=%d '%.*s'\n",
+             __FUNCTION__,
+             buff_size_,
+             buff_size_,
+             buff_);
         return true;
       }
       // Otherwise, ignore the last line.
-      LLOG("EOF");
+      LLOG("%s: EOF\n", __FUNCTION__);
       return false;
     }
 
@@ -93,15 +104,23 @@ bool LineReader::GetNextLine() {
       buff_capacity_ *= 2;
       buff_ = static_cast<char*>(::realloc(buff_, buff_capacity_));
 
-      LLOG("GROW buff_size=%d buff_capacity=%d '%.*s'\n", buff_size_,
-           buff_capacity_, buff_size_, buff_);
+      LLOG("%s: GROW buff_size=%d buff_capacity=%d '%.*s'\n",
+           __FUNCTION__,
+           buff_size_,
+           buff_capacity_,
+           buff_size_,
+           buff_);
     }
 
     // Try to fill the rest of buffer after current content.
     size_t avail = buff_capacity_ - buff_size_;
     int ret = fd_.Read(buff_ + buff_size_, avail);
-    LLOG("READ buff_size=%d buff_capacity=%d avail=%d ret=%d\n", buff_size_,
-         buff_capacity_, avail, ret);
+    LLOG("%s: READ buff_size=%d buff_capacity=%d avail=%d ret=%d\n",
+         __FUNCTION__,
+         buff_size_,
+         buff_capacity_,
+         avail,
+         ret);
     if (ret <= 0) {
       eof_ = true;
       ret = 0;

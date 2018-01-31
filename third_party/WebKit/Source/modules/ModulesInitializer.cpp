@@ -82,7 +82,6 @@
 #include "modules/webdatabase/WebDatabaseImpl.h"
 #include "modules/webgl/WebGL2RenderingContext.h"
 #include "modules/webgl/WebGLRenderingContext.h"
-#include "modules/xr/XRPresentationContext.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/mojo/MojoHelper.h"
 #include "platform/wtf/Functional.h"
@@ -127,8 +126,6 @@ void ModulesInitializer::Initialize() {
       std::make_unique<WebGL2RenderingContext::Factory>());
   HTMLCanvasElement::RegisterRenderingContextFactory(
       std::make_unique<ImageBitmapRenderingContext::Factory>());
-  HTMLCanvasElement::RegisterRenderingContextFactory(
-      std::make_unique<XRPresentationContext::Factory>());
 
   // OffscreenCanvas context types must be registered with the OffscreenCanvas.
   OffscreenCanvas::RegisterRenderingContextFactory(
@@ -168,7 +165,8 @@ void ModulesInitializer::InstallSupplements(LocalFrame& frame) const {
       *frame.DomWindow()->navigator(),
       NavigatorContentUtilsClient::Create(web_frame));
 
-  ScreenOrientationControllerImpl::ProvideTo(frame);
+  ScreenOrientationControllerImpl::ProvideTo(
+      frame, client->GetWebScreenOrientationClient());
   if (RuntimeEnabledFeatures::PresentationEnabled())
     PresentationController::ProvideTo(frame, client->PresentationClient());
   if (RuntimeEnabledFeatures::AudioOutputDevicesEnabled()) {
@@ -222,7 +220,8 @@ void ModulesInitializer::OnClearWindowObjectInMainWorld(
   NavigatorGamepad::From(document);
   NavigatorServiceWorker::From(document);
   DOMWindowStorageController::From(document);
-  if (OriginTrials::webVREnabled(document.GetExecutionContext()))
+  if (RuntimeEnabledFeatures::WebVREnabled() ||
+      OriginTrials::webVREnabled(document.GetExecutionContext()))
     NavigatorVR::From(document);
   if (RuntimeEnabledFeatures::PresentationEnabled() &&
       settings.GetPresentationReceiver()) {

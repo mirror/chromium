@@ -81,7 +81,7 @@ class WorkerThreadForTest : public WorkerThread {
                       WorkerReportingProxy& mock_worker_reporting_proxy)
       : WorkerThread(loading_context, mock_worker_reporting_proxy),
         worker_backing_thread_(WorkerBackingThread::CreateForTest(
-            WebThreadCreationParams(WebThreadType::kTestThread))) {}
+            WebThreadCreationParams("Test thread"))) {}
 
   ~WorkerThreadForTest() override = default;
 
@@ -102,8 +102,7 @@ class WorkerThreadForTest : public WorkerThread {
 
     auto creation_params = std::make_unique<GlobalScopeCreationParams>(
         script_url, "fake user agent", headers.get(), kReferrerPolicyDefault,
-        security_origin, false /* starter_secure_context */, worker_clients,
-        mojom::IPAddressSpace::kLocal, nullptr,
+        security_origin, worker_clients, mojom::IPAddressSpace::kLocal, nullptr,
         std::make_unique<WorkerSettings>(Settings::Create().get()),
         kV8CacheOptionsDefault);
 
@@ -130,8 +129,8 @@ class WorkerThreadForTest : public WorkerThread {
   }
 
  private:
-  WebThreadType GetThreadType() const override {
-    return WebThreadType::kUnspecifiedWorkerThread;
+  scheduler::ThreadType GetThreadType() const override {
+    return scheduler::ThreadType::kUnspecifiedWorkerThread;
   }
 
   std::unique_ptr<WorkerBackingThread> worker_backing_thread_;

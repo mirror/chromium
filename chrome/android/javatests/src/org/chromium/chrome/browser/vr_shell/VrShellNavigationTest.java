@@ -22,6 +22,7 @@ import org.junit.runner.RunWith;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CommandLineFlags;
+import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Restriction;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.UrlConstants;
@@ -104,7 +105,7 @@ public class VrShellNavigationTest {
 
     private void enterFullscreenOrFail(ContentViewCore cvc)
             throws InterruptedException, TimeoutException {
-        DOMUtils.clickNode(cvc, "fullscreen", false /* goThroughRootAndroidView */);
+        DOMUtils.clickNode(cvc, "fullscreen");
         VrTestFramework.waitOnJavaScriptStep(cvc.getWebContents());
         Assert.assertTrue(DOMUtils.isFullscreen(cvc.getWebContents()));
     }
@@ -178,6 +179,7 @@ public class VrShellNavigationTest {
      * Tests navigation from a fullscreened 2D to a WebVR page.
      */
     @Test
+    @DisabledTest(message = "crbug.com/804808")
     @MediumTest
     public void test2dFullscreenToWebVr()
             throws IllegalArgumentException, InterruptedException, TimeoutException {

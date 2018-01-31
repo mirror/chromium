@@ -555,9 +555,8 @@ const char kPrivacyNoticeUrl[] = "internal://privacy-notice";
 }
 
 - (void)configureOKButton {
-  UIFont* font = [[MDCTypography fontLoader]
+  self.OKButton.titleLabel.font = [[MDCTypography fontLoader]
       mediumFontOfSize:kOKButtonTitleLabelFontSize[self.cr_widthSizeClass]];
-  [self.OKButton setTitleFont:font forState:UIControlStateNormal];
   CGSize size = [self.OKButton
       sizeThatFits:CGSizeMake(CGFLOAT_MAX,
                               kOKButtonHeight[self.cr_widthSizeClass])];

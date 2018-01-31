@@ -184,8 +184,10 @@ bool OscillatorHandler::CalculateSampleAccuratePhaseIncrements(
     frequency_->CalculateSampleAccurateValues(phase_increments,
                                               frames_to_process);
   } else {
-    // Handle ordinary parameter changes if there are no scheduled changes.
-    float frequency = frequency_->Value();
+    // Handle ordinary parameter smoothing/de-zippering if there are no
+    // scheduled changes.
+    frequency_->Smooth();
+    float frequency = frequency_->SmoothedValue();
     final_scale *= frequency;
   }
 
@@ -210,9 +212,10 @@ bool OscillatorHandler::CalculateSampleAccuratePhaseIncrements(
            frames_to_process);
     }
   } else {
-    // Handle ordinary parameter changes if there are no scheduled
-    // changes.
-    float detune = detune_->Value();
+    // Handle ordinary parameter smoothing/de-zippering if there are no
+    // scheduled changes.
+    detune_->Smooth();
+    float detune = detune_->SmoothedValue();
     float detune_scale = powf(2, detune / 1200);
     final_scale *= detune_scale;
   }
@@ -390,8 +393,8 @@ void OscillatorHandler::Process(size_t frames_to_process) {
   float table_interpolation_factor = 0;
 
   if (!has_sample_accurate_values) {
-    frequency = frequency_->Value();
-    float detune = detune_->Value();
+    frequency = frequency_->SmoothedValue();
+    float detune = detune_->SmoothedValue();
     float detune_scale = powf(2, detune / 1200);
     frequency *= detune_scale;
     periodic_wave_->WaveDataForFundamentalFrequency(frequency, lower_wave_data,

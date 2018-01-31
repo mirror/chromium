@@ -174,25 +174,21 @@ void URLRequestContentJobTest::RunRequest(const Range* range) {
   EXPECT_EQ(expected_length, delegate_.bytes_received());
 }
 
-// Disabled: http://crbug.com/807045.
-TEST_F(URLRequestContentJobTest, DISABLED_ContentURIWithoutRange) {
+TEST_F(URLRequestContentJobTest, ContentURIWithoutRange) {
   RunRequest(NULL);
 }
 
-// Disabled: http://crbug.com/807045.
-TEST_F(URLRequestContentJobTest, DISABLED_ContentURIWithSmallRange) {
+TEST_F(URLRequestContentJobTest, ContentURIWithSmallRange) {
   Range range(1, 10);
   RunRequest(&range);
 }
 
-// Disabled: http://crbug.com/807045.
-TEST_F(URLRequestContentJobTest, DISABLED_ContentURIWithLargeRange) {
+TEST_F(URLRequestContentJobTest, ContentURIWithLargeRange) {
   Range range(1, 100000);
   RunRequest(&range);
 }
 
-// Disabled: http://crbug.com/807045.
-TEST_F(URLRequestContentJobTest, DISABLED_ContentURIWithZeroRange) {
+TEST_F(URLRequestContentJobTest, ContentURIWithZeroRange) {
   Range range(0, 0);
   RunRequest(&range);
 }

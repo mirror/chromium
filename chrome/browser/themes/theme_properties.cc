@@ -218,7 +218,6 @@ color_utils::HSL ThemeProperties::GetDefaultTint(int id, bool incognito) {
       NOTREACHED() << "These values should be queried via their respective "
                       "non-incognito equivalents and an appropriate "
                       "|incognito| value.";
-      FALLTHROUGH;
     default:
       return {-1, -1, -1};
   }

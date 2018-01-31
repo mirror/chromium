@@ -86,7 +86,6 @@ struct BindSourceInfo;
 namespace net {
 class ClientCertIdentity;
 using ClientCertIdentityList = std::vector<std::unique_ptr<ClientCertIdentity>>;
-class ClientCertStore;
 class CookieOptions;
 class HttpRequestHeaders;
 class NetLog;
@@ -1047,10 +1046,6 @@ class CONTENT_EXPORT ContentBrowserClient {
   virtual bool ShouldPermitIndividualAttestationForWebauthnRPID(
       content::BrowserContext* browser_context,
       const std::string& rp_id);
-
-  // Get platform ClientCertStore. May return nullptr.
-  virtual std::unique_ptr<net::ClientCertStore> CreateClientCertStore(
-      ResourceContext* resource_context);
 };
 
 }  // namespace content

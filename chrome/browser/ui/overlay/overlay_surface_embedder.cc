@@ -22,7 +22,6 @@ OverlaySurfaceEmbedder::~OverlaySurfaceEmbedder() = default;
 void OverlaySurfaceEmbedder::SetPrimarySurfaceId(
     const viz::SurfaceId& surface_id) {
   // SurfaceInfo has information about the embedded surface.
-  surface_layer_->SetShowPrimarySurface(
-      surface_id, window_->GetBounds().size(), SK_ColorBLACK,
-      cc::DeadlinePolicy::UseDefaultDeadline());
+  surface_layer_->SetShowPrimarySurface(surface_id, window_->GetBounds().size(),
+                                        SK_ColorBLACK);
 }

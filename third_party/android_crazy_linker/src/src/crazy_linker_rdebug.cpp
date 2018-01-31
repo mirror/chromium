@@ -30,12 +30,12 @@ bool FindExecutablePath(String* exe_path) {
   ssize_t ret = TEMP_FAILURE_RETRY(
       readlink("/proc/self/exe", exe_path->ptr(), exe_path->size()));
   if (ret < 0) {
-    LOG_ERRNO("Could not get /proc/self/exe link");
+    LOG_ERRNO("%s: Could not get /proc/self/exe link", __FUNCTION__);
     return false;
   }
 
   exe_path->Resize(static_cast<size_t>(ret));
-  LOG("Current executable: %s", exe_path->c_str());
+  LOG("%s: Current executable: %s\n", __FUNCTION__, exe_path->c_str());
   return true;
 }
 
@@ -55,7 +55,7 @@ bool FindElfDynamicSection(const char* path,
   crazy::FileDescriptor fd;
   if (!fd.OpenReadOnly(path) ||
       fd.Read(header, sizeof(header)) != static_cast<int>(sizeof(header))) {
-    LOG_ERRNO("Could not load ELF binary header");
+    LOG_ERRNO("%s: Could not load ELF binary header", __FUNCTION__);
     return false;
   }
 
@@ -63,18 +63,21 @@ bool FindElfDynamicSection(const char* path,
   if (header->e_ident[0] != 127 || header->e_ident[1] != 'E' ||
       header->e_ident[2] != 'L' || header->e_ident[3] != 'F' ||
       header->e_ident[4] != ELF::kElfClass) {
-    LOG("Not a %d-bit ELF binary: %s", ELF::kElfBits, path);
+    LOG("%s: Not a %d-bit ELF binary: %s\n",
+        __FUNCTION__,
+        ELF::kElfBits,
+        path);
     return false;
   }
 
   if (header->e_phoff == 0 || header->e_phentsize != sizeof(ELF::Phdr)) {
-    LOG("Invalid program header values: %s", path);
+    LOG("%s: Invalid program header values: %s\n", __FUNCTION__, path);
     return false;
   }
 
   // Scan the program header table.
   if (fd.SeekTo(header->e_phoff) < 0) {
-    LOG_ERRNO("Could not find ELF program header table");
+    LOG_ERRNO("%s: Could not find ELF program header table", __FUNCTION__);
     return false;
   }
 
@@ -86,7 +89,7 @@ bool FindElfDynamicSection(const char* path,
   for (size_t n = 0; n < header->e_phnum; ++n) {
     ELF::Phdr phdr;
     if (fd.Read(&phdr, sizeof(phdr)) != sizeof(phdr)) {
-      LOG_ERRNO("Could not read program header entry");
+      LOG_ERRNO("%s: Could not read program header entry", __FUNCTION__);
       return false;
     }
 
@@ -100,19 +103,23 @@ bool FindElfDynamicSection(const char* path,
   }
 
   if (!found_load0) {
-    LOG("Could not find loadable segment!?");
+    LOG("%s: Could not find loadable segment!?\n", __FUNCTION__);
     return false;
   }
   if (!found_dyn) {
-    LOG("Could not find dynamic segment!?");
+    LOG("%s: Could not find dynamic segment!?\n", __FUNCTION__);
     return false;
   }
 
-  LOG("Found first loadable segment [offset=%p vaddr=%p]",
-      (void*)phdr_load0.p_offset, (void*)phdr_load0.p_vaddr);
+  LOG("%s: Found first loadable segment [offset=%p vaddr=%p]\n",
+      __FUNCTION__,
+      (void*)phdr_load0.p_offset,
+      (void*)phdr_load0.p_vaddr);
 
-  LOG("Found dynamic segment [offset=%p vaddr=%p size=%p]",
-      (void*)phdr_dyn.p_offset, (void*)phdr_dyn.p_vaddr,
+  LOG("%s: Found dynamic segment [offset=%p vaddr=%p size=%p]\n",
+      __FUNCTION__,
+      (void*)phdr_dyn.p_offset,
+      (void*)phdr_dyn.p_vaddr,
       (void*)phdr_dyn.p_memsz);
 
   // Parse /proc/self/maps to find the load address of the first
@@ -125,20 +132,25 @@ bool FindElfDynamicSection(const char* path,
         memcmp(entry.path, path, path_len) != 0)
       continue;
 
-    LOG("Found executable segment mapped [%p-%p offset=%p]",
-        (void*)entry.vma_start, (void*)entry.vma_end, (void*)entry.load_offset);
+    LOG("%s: Found executable segment mapped [%p-%p offset=%p]\n",
+        __FUNCTION__,
+        (void*)entry.vma_start,
+        (void*)entry.vma_end,
+        (void*)entry.load_offset);
 
     size_t load_bias = entry.vma_start - phdr_load0.p_vaddr;
-    LOG("Load bias is %p", (void*)load_bias);
+    LOG("%s: Load bias is %p\n", __FUNCTION__, (void*)load_bias);
 
     *dynamic_address = load_bias + phdr_dyn.p_vaddr;
     *dynamic_size = phdr_dyn.p_memsz;
-    LOG("Dynamic section addr=%p size=%p", (void*)*dynamic_address,
+    LOG("%s: Dynamic section addr=%p size=%p\n",
+        __FUNCTION__,
+        (void*)*dynamic_address,
         (void*)*dynamic_size);
     return true;
   }
 
-  LOG("Executable is not mapped in current process.");
+  LOG("%s: Executable is not mapped in current process.\n", __FUNCTION__);
   return false;
 }
 
@@ -223,16 +235,24 @@ bool RDebug::Init() {
   while (dynamic_size >= sizeof(*dyn_section)) {
     if (dyn_section->d_tag == DT_DEBUG) {
       // Found it!
-      LOG("Found DT_DEBUG entry inside %s at %p, pointing to %p", path.c_str(),
-          dyn_section, dyn_section->d_un.d_ptr);
+      LOG("%s: Found DT_DEBUG entry inside %s at %p, pointing to %p\n",
+          __FUNCTION__,
+          path.c_str(),
+          dyn_section,
+          dyn_section->d_un.d_ptr);
       if (dyn_section->d_un.d_ptr) {
         r_debug_ = reinterpret_cast<r_debug*>(dyn_section->d_un.d_ptr);
-        LOG("r_debug [r_version=%d r_map=%p r_brk=%p r_ldbase=%p]",
-            r_debug_->r_version, r_debug_->r_map, r_debug_->r_brk,
+        LOG("%s: r_debug [r_version=%d r_map=%p r_brk=%p r_ldbase=%p]\n",
+            __FUNCTION__,
+            r_debug_->r_version,
+            r_debug_->r_map,
+            r_debug_->r_brk,
             r_debug_->r_ldbase);
         // Only version 1 of the struct is supported.
         if (r_debug_->r_version != 1) {
-          LOG("r_debug.r_version is %d, 1 expected.", r_debug_->r_version);
+          LOG("%s: r_debug.r_version is %d, 1 expected.\n",
+              __FUNCTION__,
+              r_debug_->r_version);
           r_debug_ = NULL;
         }
 
@@ -243,7 +263,8 @@ bool RDebug::Init() {
         int prot = self_maps.GetProtectionFlagsForAddress(r_debug_->r_map);
         readonly_entries_ = (prot & PROT_WRITE) == 0;
 
-        LOG("r_debug.readonly_entries=%s",
+        LOG("%s: r_debug.readonly_entries=%s\n",
+            __FUNCTION__,
             readonly_entries_ ? "true" : "false");
         return true;
       }
@@ -252,7 +273,7 @@ bool RDebug::Init() {
     dynamic_size -= sizeof(*dyn_section);
   }
 
-  LOG("There is no non-0 DT_DEBUG entry in this process");
+  LOG("%s: There is no non-0 DT_DEBUG entry in this process\n", __FUNCTION__);
   return false;
 }
 
@@ -311,7 +332,7 @@ class RDebugRunnable {
 void RDebugRunnable::Run(void* opaque) {
   RDebugRunnable* runnable = static_cast<RDebugRunnable*>(opaque);
 
-  LOG("Callback received, runnable=%p", runnable);
+  LOG("%s: Callback received, runnable=%p\n", __FUNCTION__, runnable);
   (*runnable->handler_)(runnable->rdebug_, runnable->entry_);
 
   if (!runnable->is_blocking_) {
@@ -319,7 +340,7 @@ void RDebugRunnable::Run(void* opaque) {
     return;
   }
 
-  LOG("Signalling callback, runnable=%p", runnable);
+  LOG("%s: Signalling callback, runnable=%p\n", __FUNCTION__, runnable);
   {
     ScopedMutexLock m(&runnable->mutex_);
     runnable->has_run_ = true;
@@ -332,11 +353,11 @@ void RDebugRunnable::WaitForCallback(void* opaque) {
   RDebugRunnable* runnable = static_cast<RDebugRunnable*>(opaque);
 
   if (!runnable->is_blocking_) {
-    LOG("Non-blocking, not waiting, runnable=%p", runnable);
+    LOG("%s: Non-blocking, not waiting, runnable=%p\n", __FUNCTION__, runnable);
     return;
   }
 
-  LOG("Waiting for signal, runnable=%p", runnable);
+  LOG("%s: Waiting for signal, runnable=%p\n", __FUNCTION__, runnable);
   {
     ScopedMutexLock m(&runnable->mutex_);
     while (!runnable->has_run_)
@@ -356,7 +377,7 @@ bool RDebug::PostCallback(rdebug_callback_handler_t handler,
                           link_map_t* entry,
                           bool is_blocking) {
   if (!post_for_later_execution_) {
-    LOG("Deferred execution disabled");
+    LOG("%s: Deferred execution disabled\n", __FUNCTION__);
     return false;
   }
 
@@ -365,16 +386,16 @@ bool RDebug::PostCallback(rdebug_callback_handler_t handler,
   void* context = post_for_later_execution_context_;
 
   if (!(*post_for_later_execution_)(context, &RDebugRunnable::Run, runnable)) {
-    LOG("Deferred execution enabled, but posting failed");
+    LOG("%s: Deferred execution enabled, but posting failed\n", __FUNCTION__);
     delete runnable;
     return false;
   }
 
-  LOG("Posted for later execution, runnable=%p", runnable);
+  LOG("%s: Posted for later execution, runnable=%p\n", __FUNCTION__, runnable);
 
   if (is_blocking) {
     RDebugRunnable::WaitForCallback(runnable);
-    LOG("Completed execution, runnable=%p", runnable);
+    LOG("%s: Completed execution, runnable=%p\n", __FUNCTION__, runnable);
   }
 
   return true;
@@ -387,7 +408,7 @@ bool RDebug::PostCallback(rdebug_callback_handler_t handler,
 // assignment.
 void RDebug::WriteLinkMapField(link_map_t** link_pointer, link_map_t* entry) {
   ScopedPageReadWriteRemapper mapper(link_pointer);
-  LOG("Remapped page for %p for read/write", link_pointer);
+  LOG("%s: Remapped page for %p for read/write\n", __FUNCTION__, link_pointer);
 
   *link_pointer = entry;
 
@@ -407,17 +428,17 @@ void RDebug::WriteLinkMapField(link_map_t** link_pointer, link_map_t* entry) {
   // https://code.google.com/p/chromium/issues/detail?id=450659
   // https://code.google.com/p/chromium/issues/detail?id=458346
   mapper.Release();
-  LOG("Released mapper, leaving page read/write");
+  LOG("%s: Released mapper, leaving page read/write\n", __FUNCTION__);
 }
 
 void RDebug::AddEntryImpl(link_map_t* entry) {
-  ScopedLockedGlobals globals;  // TODO(digit): Remove this lock.
-  LOG("Adding: %s", entry->l_name);
+  ScopedGlobalLock lock;
+  LOG("%s: Adding: %s\n", __FUNCTION__, entry->l_name);
   if (!init_)
     Init();
 
   if (!r_debug_) {
-    LOG("Nothing to do");
+    LOG("%s: Nothing to do\n", __FUNCTION__);
     return;
   }
 
@@ -442,7 +463,7 @@ void RDebug::AddEntryImpl(link_map_t* entry) {
   if (!r_debug_->r_map || !r_debug_->r_map->l_next ||
       !r_debug_->r_map->l_next->l_next) {
     // Sanity check: Must have at least two items in the list.
-    LOG("Malformed r_debug.r_map list");
+    LOG("%s: Malformed r_debug.r_map list\n", __FUNCTION__);
     r_debug_ = NULL;
     return;
   }
@@ -469,8 +490,8 @@ void RDebug::AddEntryImpl(link_map_t* entry) {
 }
 
 void RDebug::DelEntryImpl(link_map_t* entry) {
-  ScopedLockedGlobals globals;  // TODO(digit): Remove this lock.
-  LOG("Deleting: %s", entry->l_name);
+  ScopedGlobalLock lock;
+  LOG("%s: Deleting: %s\n", __FUNCTION__, entry->l_name);
   if (!r_debug_)
     return;
 

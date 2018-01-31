@@ -14,6 +14,7 @@ CONSOLE MESSAGE: line 147:     setter value
 CONSOLE MESSAGE: line 147: interface CSSMathInvert : CSSMathValue
 CONSOLE MESSAGE: line 147:     getter value
 CONSOLE MESSAGE: line 147:     method constructor
+CONSOLE MESSAGE: line 147:     setter value
 CONSOLE MESSAGE: line 147: interface CSSMathMax : CSSMathValue
 CONSOLE MESSAGE: line 147:     getter values
 CONSOLE MESSAGE: line 147:     method constructor
@@ -23,6 +24,7 @@ CONSOLE MESSAGE: line 147:     method constructor
 CONSOLE MESSAGE: line 147: interface CSSMathNegate : CSSMathValue
 CONSOLE MESSAGE: line 147:     getter value
 CONSOLE MESSAGE: line 147:     method constructor
+CONSOLE MESSAGE: line 147:     setter value
 CONSOLE MESSAGE: line 147: interface CSSMathProduct : CSSMathValue
 CONSOLE MESSAGE: line 147:     getter values
 CONSOLE MESSAGE: line 147:     method constructor
@@ -64,7 +66,7 @@ CONSOLE MESSAGE: line 147:     setter y
 CONSOLE MESSAGE: line 147: interface CSSResourceValue : CSSStyleValue
 CONSOLE MESSAGE: line 147:     getter state
 CONSOLE MESSAGE: line 147:     method constructor
-CONSOLE MESSAGE: line 147: interface CSSRotate : CSSTransformComponent
+CONSOLE MESSAGE: line 147: interface CSSRotation : CSSTransformComponent
 CONSOLE MESSAGE: line 147:     getter angle
 CONSOLE MESSAGE: line 147:     getter x
 CONSOLE MESSAGE: line 147:     getter y
@@ -105,7 +107,7 @@ CONSOLE MESSAGE: line 147:     method forEach
 CONSOLE MESSAGE: line 147:     method keys
 CONSOLE MESSAGE: line 147:     method toMatrix
 CONSOLE MESSAGE: line 147:     method values
-CONSOLE MESSAGE: line 147: interface CSSTranslate : CSSTransformComponent
+CONSOLE MESSAGE: line 147: interface CSSTranslation : CSSTransformComponent
 CONSOLE MESSAGE: line 147:     getter x
 CONSOLE MESSAGE: line 147:     getter y
 CONSOLE MESSAGE: line 147:     getter z
@@ -298,6 +300,7 @@ CONSOLE MESSAGE: line 147:     setter value
 CONSOLE MESSAGE: line 147: interface CSSMathInvert : CSSMathValue
 CONSOLE MESSAGE: line 147:     getter value
 CONSOLE MESSAGE: line 147:     method constructor
+CONSOLE MESSAGE: line 147:     setter value
 CONSOLE MESSAGE: line 147: interface CSSMathMax : CSSMathValue
 CONSOLE MESSAGE: line 147:     getter values
 CONSOLE MESSAGE: line 147:     method constructor
@@ -307,6 +310,7 @@ CONSOLE MESSAGE: line 147:     method constructor
 CONSOLE MESSAGE: line 147: interface CSSMathNegate : CSSMathValue
 CONSOLE MESSAGE: line 147:     getter value
 CONSOLE MESSAGE: line 147:     method constructor
+CONSOLE MESSAGE: line 147:     setter value
 CONSOLE MESSAGE: line 147: interface CSSMathProduct : CSSMathValue
 CONSOLE MESSAGE: line 147:     getter values
 CONSOLE MESSAGE: line 147:     method constructor
@@ -348,7 +352,7 @@ CONSOLE MESSAGE: line 147:     setter y
 CONSOLE MESSAGE: line 147: interface CSSResourceValue : CSSStyleValue
 CONSOLE MESSAGE: line 147:     getter state
 CONSOLE MESSAGE: line 147:     method constructor
-CONSOLE MESSAGE: line 147: interface CSSRotate : CSSTransformComponent
+CONSOLE MESSAGE: line 147: interface CSSRotation : CSSTransformComponent
 CONSOLE MESSAGE: line 147:     getter angle
 CONSOLE MESSAGE: line 147:     getter x
 CONSOLE MESSAGE: line 147:     getter y
@@ -389,7 +393,7 @@ CONSOLE MESSAGE: line 147:     method forEach
 CONSOLE MESSAGE: line 147:     method keys
 CONSOLE MESSAGE: line 147:     method toMatrix
 CONSOLE MESSAGE: line 147:     method values
-CONSOLE MESSAGE: line 147: interface CSSTranslate : CSSTransformComponent
+CONSOLE MESSAGE: line 147: interface CSSTranslation : CSSTransformComponent
 CONSOLE MESSAGE: line 147:     getter x
 CONSOLE MESSAGE: line 147:     getter y
 CONSOLE MESSAGE: line 147:     getter z

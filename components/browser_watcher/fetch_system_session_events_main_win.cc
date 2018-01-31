@@ -9,11 +9,11 @@
 #include "base/logging.h"
 #include "base/strings/stringprintf.h"
 #include "base/time/time.h"
-#include "components/metrics/system_session_analyzer_win.h"
+#include "components/browser_watcher/system_session_analyzer_win.h"
 
 namespace {
 
-using metrics::SystemSessionAnalyzer;
+using browser_watcher::SystemSessionAnalyzer;
 
 class SystemSessionEventFetcher : public SystemSessionAnalyzer {
  public:

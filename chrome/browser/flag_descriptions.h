@@ -1684,9 +1684,8 @@ extern const char kUiDevToolsDescription[];
 
 extern const char kUseMusName[];
 extern const char kUseMusDescription[];
-
-extern const char kUseMashName[];
-extern const char kUseMashDescription[];
+extern const char kEnableMashDescription[];
+extern const char kEnableMusDescription[];
 
 extern const char kUseMonitorColorSpaceName[];
 extern const char kUseMonitorColorSpaceDescription[];
@@ -1808,9 +1807,6 @@ extern const char kAshEnableKeyboardShortcutViewerDescription[];
 
 extern const char kAshEnableMirroredScreenName[];
 extern const char kAshEnableMirroredScreenDescription[];
-
-extern const char kAshEnableNewOverviewUiName[];
-extern const char kAshEnableNewOverviewUiDescription[];
 
 extern const char kAshEnablePersistentWindowBoundsName[];
 extern const char kAshEnablePersistentWindowBoundsDescription[];

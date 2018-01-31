@@ -201,10 +201,12 @@ bool MediaEngagementScore::UpdateScoreDict() {
 }
 
 void MediaEngagementScore::Recalculate() {
-  // Use the minimum visits to compute the score to allow websites that would
-  // surely have a high MEI to pass the bar early.
-  double effective_visits = std::max(visits(), GetScoreMinVisits());
-  actual_score_ = static_cast<double>(media_playbacks()) / effective_visits;
+  // Update the engagement score.
+  actual_score_ = 0;
+  if (visits() >= GetScoreMinVisits()) {
+    actual_score_ =
+        static_cast<double>(media_playbacks()) / static_cast<double>(visits());
+  }
 
   // Recalculate whether the engagement score is considered high.
   if (is_high_) {

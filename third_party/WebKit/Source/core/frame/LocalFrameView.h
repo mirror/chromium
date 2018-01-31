@@ -581,10 +581,6 @@ class CORE_EXPORT LocalFrameView final
   IntSize VisibleContentSize(
       IncludeScrollbarsInRect = kExcludeScrollbars) const;
 
-  // The visible scroll snapport rect is contracted from the visible content
-  // rect, by the amount of the document's scroll-padding.
-  LayoutRect VisibleScrollSnapportRect() const override;
-
   // Clips the provided rect to the visible content area. For this purpose, we
   // also query the chrome client for any active overrides to the visible area
   // (e.g. DevTool's viewport override).
@@ -967,6 +963,11 @@ class CORE_EXPORT LocalFrameView final
   // Should be called whenever this LocalFrameView adds or removes a
   // scrollable area, or gains/loses a composited layer.
   void ScrollableAreasDidChange();
+
+  // Records a UKM metric for the current URL. metric_name is a metric
+  // that must be defined in ukm.xml; metric_value is in usec.
+  void RecordUkmPerformanceMetric(const char* metric_name,
+                                  int64_t metric_value);
 
  protected:
   // Scroll the content via the compositor.

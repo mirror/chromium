@@ -210,14 +210,11 @@ void NetworkingPrivateLinux::GetState(
       new base::DictionaryValue);
 
   // Runs GetCachedNetworkProperties on |dbus_thread|.
-  std::string* error_ptr = error.get();
-  base::DictionaryValue* network_prop_ptr = network_properties.get();
   dbus_thread_.task_runner()->PostTaskAndReply(
-      FROM_HERE,
-      base::Bind(&NetworkingPrivateLinux::GetCachedNetworkProperties,
-                 base::Unretained(this), guid,
-                 base::Unretained(network_prop_ptr),
-                 base::Unretained(error_ptr)),
+      FROM_HERE, base::Bind(&NetworkingPrivateLinux::GetCachedNetworkProperties,
+                            base::Unretained(this), guid,
+                            base::Unretained(network_properties.get()),
+                            base::Unretained(error.get())),
       base::Bind(&GetCachedNetworkPropertiesCallback, base::Passed(&error),
                  base::Passed(&network_properties), success_callback,
                  failure_callback));
@@ -300,12 +297,11 @@ void NetworkingPrivateLinux::GetNetworks(
 
   // Runs GetAllWiFiAccessPoints on the dbus_thread and returns the
   // results back to OnAccessPointsFound where the callback is fired.
-  NetworkMap* network_map_ptr = network_map.get();
   dbus_thread_.task_runner()->PostTaskAndReply(
       FROM_HERE,
       base::Bind(&NetworkingPrivateLinux::GetAllWiFiAccessPoints,
                  base::Unretained(this), configured_only, visible_only, limit,
-                 base::Unretained(network_map_ptr)),
+                 base::Unretained(network_map.get())),
       base::Bind(&NetworkingPrivateLinux::OnAccessPointsFound,
                  base::Unretained(this), base::Passed(&network_map),
                  success_callback, failure_callback));
@@ -321,13 +317,11 @@ bool NetworkingPrivateLinux::GetNetworksForScanRequest() {
   // Runs GetAllWiFiAccessPoints on the dbus_thread and returns the
   // results back to SendNetworkListChangedEvent to fire the event. No
   // callbacks are used in this case.
-  NetworkMap* network_map_ptr = network_map.get();
   dbus_thread_.task_runner()->PostTaskAndReply(
-      FROM_HERE,
-      base::Bind(&NetworkingPrivateLinux::GetAllWiFiAccessPoints,
-                 base::Unretained(this), false /* configured_only */,
-                 false /* visible_only */, 0 /* limit */,
-                 base::Unretained(network_map_ptr)),
+      FROM_HERE, base::Bind(&NetworkingPrivateLinux::GetAllWiFiAccessPoints,
+                            base::Unretained(this), false /* configured_only */,
+                            false /* visible_only */, 0 /* limit */,
+                            base::Unretained(network_map.get())),
       base::Bind(&NetworkingPrivateLinux::OnAccessPointsFoundViaScan,
                  base::Unretained(this), base::Passed(&network_map)));
 
@@ -509,11 +503,10 @@ void NetworkingPrivateLinux::StartConnect(
   std::unique_ptr<std::string> error(new std::string);
 
   // Runs ConnectToNetwork on |dbus_thread|.
-  std::string* error_ptr = error.get();
   dbus_thread_.task_runner()->PostTaskAndReply(
       FROM_HERE,
       base::Bind(&NetworkingPrivateLinux::ConnectToNetwork,
-                 base::Unretained(this), guid, base::Unretained(error_ptr)),
+                 base::Unretained(this), guid, base::Unretained(error.get())),
       base::Bind(&OnNetworkConnectOperationCompleted, base::Passed(&error),
                  success_callback, failure_callback));
 }
@@ -528,11 +521,10 @@ void NetworkingPrivateLinux::StartDisconnect(
   std::unique_ptr<std::string> error(new std::string);
 
   // Runs DisconnectFromNetwork on |dbus_thread|.
-  std::string* error_ptr = error.get();
   dbus_thread_.task_runner()->PostTaskAndReply(
       FROM_HERE,
       base::Bind(&NetworkingPrivateLinux::DisconnectFromNetwork,
-                 base::Unretained(this), guid, base::Unretained(error_ptr)),
+                 base::Unretained(this), guid, base::Unretained(error.get())),
       base::Bind(&OnNetworkConnectOperationCompleted, base::Passed(&error),
                  success_callback, failure_callback));
 }

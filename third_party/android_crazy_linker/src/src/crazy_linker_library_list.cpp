@@ -63,10 +63,7 @@ struct SymbolLookupState {
 }  // namespace
 
 LibraryList::LibraryList() : head_(0), has_error_(false) {
-  // NOTE: This constructor is called from the Globals::Globals() constructor,
-  // hence it is important that Globals::sdk_build_version is a static member
-  // that can be set before Globals::Get() is called for the first time.
-  const int sdk_build_version = Globals::sdk_build_version;
+  const int sdk_build_version = *Globals::GetSDKBuildVersion();
 
   // If SDK version is Lollipop or earlier, we need to load anything
   // listed in LD_PRELOAD explicitly, because dlsym() on the main executable
@@ -108,7 +105,7 @@ void LibraryList::LoadPreloads() {
   SearchPathList search_path_list;
   search_path_list.ResetFromEnv("LD_LIBRARY_PATH");
 
-  LOG("Preloads list is: %s", ld_preload);
+  LOG("%s: Preloads list is: %s\n", __FUNCTION__, ld_preload);
   const char* current = ld_preload;
   const char* end = ld_preload + strlen(ld_preload);
 
@@ -124,10 +121,10 @@ void LibraryList::LoadPreloads() {
     current = item + item_length + 1;
 
     String lib_name(item, item_length);
-    LOG("Attempting to preload %s", lib_name.c_str());
+    LOG("%s: Attempting to preload %s\n", __FUNCTION__, lib_name.c_str());
 
     if (FindKnownLibrary(lib_name.c_str())) {
-      LOG("already loaded %s: ignoring", lib_name.c_str());
+      LOG("%s: already loaded %s: ignoring\n", __FUNCTION__, lib_name.c_str());
       continue;
     }
 
@@ -148,7 +145,7 @@ void LibraryList::LoadPreloads() {
   }
 
   if (CRAZY_DEBUG) {
-    LOG("Preloads loaded");
+    LOG("%s: Preloads loaded\n", __FUNCTION__);
     for (size_t n = 0; n < preloaded_libraries_.GetCount(); ++n)
       LOG("  ... %p %s\n",
           preloaded_libraries_[n], preloaded_libraries_[n]->GetName());
@@ -266,7 +263,10 @@ int LibraryList::IteratePhdr(PhdrIterationCallback callback, void* data) {
 
 void LibraryList::UnloadLibrary(LibraryView* wrap) {
   // Sanity check.
-  LOG("for %s (ref_count=%d)", wrap->GetName(), wrap->ref_count());
+  LOG("%s: for %s (ref_count=%d)\n",
+      __FUNCTION__,
+      wrap->GetName(),
+      wrap->ref_count());
 
   if (!wrap->IsSystem() && !wrap->IsCrazy())
     return;
@@ -318,7 +318,7 @@ LibraryView* LibraryList::LoadLibrary(const char* lib_name,
                                       Error* error) {
   const char* base_name = GetBaseNamePtr(lib_name);
 
-  LOG("lib_name='%s'", lib_name);
+  LOG("%s: lib_name='%s'\n", __FUNCTION__, lib_name);
 
   // First check whether a library with the same base name was
   // already loaded.
@@ -348,7 +348,7 @@ LibraryView* LibraryList::LoadLibrary(const char* lib_name,
   // normally with dlopen() and do not proceed to try and load the library
   // crazily.
   if (is_dependency_or_preload) {
-    LOG("Loading system library '%s'", lib_name);
+    LOG("%s: Loading system library '%s'\n", __FUNCTION__, lib_name);
     ::dlerror();
     void* system_lib = dlopen(lib_name, dlopen_mode);
     if (!system_lib) {
@@ -360,7 +360,7 @@ LibraryView* LibraryList::LoadLibrary(const char* lib_name,
     wrap->SetSystem(system_lib, lib_name);
     known_libraries_.PushBack(wrap);
 
-    LOG("System library %s loaded at %p", lib_name, wrap);
+    LOG("%s: System library %s loaded at %p\n", __FUNCTION__, lib_name, wrap);
     LOG("  name=%s\n", wrap->GetName());
     return wrap;
   }
@@ -371,7 +371,7 @@ LibraryView* LibraryList::LoadLibrary(const char* lib_name,
   String full_path;
 
   if (!strchr(lib_name, '/')) {
-    LOG("Looking through the search path list");
+    LOG("%s: Looking through the search path list\n", __FUNCTION__);
     const char* path = search_path_list->FindFile(lib_name);
     if (!path) {
       error->Format("Can't find library file %s", lib_name);
@@ -389,7 +389,7 @@ LibraryView* LibraryList::LoadLibrary(const char* lib_name,
       // Absolute path. Easy.
       full_path = lib_name;
     }
-    LOG("Full library path: %s", full_path.c_str());
+    LOG("%s: Full library path: %s\n", __FUNCTION__, full_path.c_str());
     if (!PathIsFile(full_path.c_str())) {
       error->Format("Library file doesn't exist: %s", full_path.c_str());
       return NULL;
@@ -401,7 +401,7 @@ LibraryView* LibraryList::LoadLibrary(const char* lib_name,
     return NULL;
 
   // Load all dependendent libraries.
-  LOG("Loading dependencies of %s", base_name);
+  LOG("%s: Loading dependencies of %s\n", __FUNCTION__, base_name);
   SharedLibrary::DependencyIterator iter(lib.Get());
   Vector<LibraryView*> dependencies;
   while (iter.GetNext()) {
@@ -420,14 +420,14 @@ LibraryView* LibraryList::LoadLibrary(const char* lib_name,
     dependencies.PushBack(dependency);
   }
   if (CRAZY_DEBUG) {
-    LOG("Dependencies loaded for %s", base_name);
+    LOG("%s: Dependencies loaded for %s\n", __FUNCTION__, base_name);
     for (size_t n = 0; n < dependencies.GetCount(); ++n)
       LOG("  ... %p %s\n", dependencies[n], dependencies[n]->GetName());
     LOG("    dependencies @%p\n", &dependencies);
   }
 
   // Relocate the library.
-  LOG("Relocating %s", base_name);
+  LOG("%s: Relocating %s\n", __FUNCTION__, base_name);
   if (!lib->Relocate(this, &preloaded_libraries_, &dependencies, error))
     return NULL;
 
@@ -451,12 +451,12 @@ LibraryView* LibraryList::LoadLibrary(const char* lib_name,
   wrap->SetCrazy(lib.Get(), lib_name);
   known_libraries_.PushBack(wrap);
 
-  LOG("Running constructors for %s", base_name);
+  LOG("%s: Running constructors for %s\n", __FUNCTION__, base_name);
 
   // Now run the constructors.
   lib->CallConstructors();
 
-  LOG("Done loading %s", base_name);
+  LOG("%s: Done loading %s\n", __FUNCTION__, base_name);
   lib.Release();
 
   return wrap;

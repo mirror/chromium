@@ -107,7 +107,6 @@
 #include "ppapi/features/features.h"
 #include "printing/features/features.h"
 #include "services/device/public/cpp/device_features.h"
-#include "services/network/public/cpp/features.h"
 #include "services/network/public/cpp/network_switches.h"
 #include "services/service_manager/sandbox/switches.h"
 #include "third_party/libaom/av1_features.h"
@@ -511,6 +510,12 @@ const FeatureEntry::Choice kDataSaverPromptChoices[] = {
     {flag_descriptions::kDatasaverPromptDemoMode,
      chromeos::switches::kEnableDataSaverPrompt,
      chromeos::switches::kDataSaverPromptDemoMode},
+};
+
+const FeatureEntry::Choice kUseMusChoices[] = {
+    {flags_ui::kGenericExperimentChoiceDefault, "", ""},
+    {flag_descriptions::kEnableMusDescription, switches::kMus, ""},
+    {flag_descriptions::kEnableMashDescription, switches::kMash, ""},
 };
 
 const FeatureEntry::Choice kUiShowCompositedLayerBordersChoices[] = {
@@ -1518,10 +1523,7 @@ const FeatureEntry kFeatureEntries[] = {
      FEATURE_VALUE_TYPE(features::kMultidevice)},
     {"mus", flag_descriptions::kUseMusName,
      flag_descriptions::kUseMusDescription, kOsCrOS,
-     SINGLE_VALUE_TYPE(switches::kMus)},
-    {"mash", flag_descriptions::kUseMashName,
-     flag_descriptions::kUseMashDescription, kOsCrOS,
-     SINGLE_VALUE_TYPE(switches::kMash)},
+     MULTI_VALUE_TYPE(kUseMusChoices)},
     {"show-taps", flag_descriptions::kShowTapsName,
      flag_descriptions::kShowTapsDescription, kOsCrOS,
      SINGLE_VALUE_TYPE(ash::switches::kShowTaps)},
@@ -3085,7 +3087,7 @@ const FeatureEntry kFeatureEntries[] = {
     {"enable-renderer-side-resource-scheduler",
      flag_descriptions::kRendererSideResourceSchedulerName,
      flag_descriptions::kRendererSideResourceSchedulerDescription, kOsAll,
-     FEATURE_VALUE_TYPE(network::features::kRendererSideResourceScheduler)},
+     FEATURE_VALUE_TYPE(features::kRendererSideResourceScheduler)},
 
 #if defined(OS_CHROMEOS)
     {"force-tablet-mode", flag_descriptions::kUiModeName,
@@ -3333,7 +3335,7 @@ const FeatureEntry kFeatureEntries[] = {
 
     {"network-service", flag_descriptions::kEnableNetworkServiceName,
      flag_descriptions::kEnableNetworkServiceDescription, kOsAll,
-     FEATURE_VALUE_TYPE(network::features::kNetworkService)},
+     FEATURE_VALUE_TYPE(features::kNetworkService)},
 
     {"network-service-in-process",
      flag_descriptions::kEnableNetworkServiceInProcessName,
@@ -3342,7 +3344,7 @@ const FeatureEntry kFeatureEntries[] = {
 
     {"out-of-blink-cors", flag_descriptions::kEnableOutOfBlinkCORSName,
      flag_descriptions::kEnableOutOfBlinkCORSDescription, kOsAll,
-     FEATURE_VALUE_TYPE(network::features::kOutOfBlinkCORS)},
+     FEATURE_VALUE_TYPE(features::kOutOfBlinkCORS)},
 
     {"keep-alive-renderer-for-keepalive-requests",
      flag_descriptions::kKeepAliveRendererForKeepaliveRequestsName,
@@ -3685,11 +3687,6 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableDisplayZoomSettingName,
      flag_descriptions::kEnableDisplayZoomSettingDescription, kOsCrOS,
      SINGLE_VALUE_TYPE(chromeos::switches::kEnableDisplayZoomSetting)},
-
-    {"ash-enable-new-overview-ui",
-     flag_descriptions::kAshEnableNewOverviewUiName,
-     flag_descriptions::kAshEnableNewOverviewUiDescription, kOsCrOS,
-     SINGLE_VALUE_TYPE(ash::switches::kAshEnableNewOverviewUi)},
 #endif  // defined(OS_CHROMEOS)
 
     // NOTE: Adding a new flag requires adding a corresponding entry to enum
@@ -3721,9 +3718,11 @@ class FlagsStateSingleton {
 bool SkipConditionalFeatureEntry(const FeatureEntry& entry) {
   version_info::Channel channel = chrome::GetChannel();
 #if defined(OS_CHROMEOS)
-  // Don't expose --mash on stable channel.
-  if (!strcmp("mash", entry.internal_name) &&
-      channel == version_info::Channel::STABLE) {
+  // Only expose --mash/--mus on unstable channels and developer builds.
+  if (!strcmp("mus", entry.internal_name) &&
+      channel != version_info::Channel::DEV &&
+      channel != version_info::Channel::CANARY &&
+      channel != version_info::Channel::UNKNOWN) {
     return true;
   }
 

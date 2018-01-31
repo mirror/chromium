@@ -27,6 +27,11 @@
 @synthesize hasUndoManagerChanged = _hasUndoManagerChanged;
 @synthesize undoManager = _undoManager;
 
+- (id)init {
+  NOTREACHED();
+  return nil;
+}
+
 - (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState {
   self = [super init];
   if (self) {

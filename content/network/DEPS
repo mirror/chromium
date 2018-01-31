@@ -1,8 +1,16 @@
 # Tight rules since this will move to services/network. See README.
 include_rules = [
+  "+components/cookie_config",
+  "+components/network_session_configurator",
+  # Prefs are used to create an independent file with a persisted key:value
+  # store for networking-related data (Like which servers support QUIC), rather
+  # than to store user preferences.
+  "+components/prefs",
   "-content",
   "+content/common/content_export.h",
   "+content/network",
+  # TODO(yhirano): Remove this dependency.
+  "+content/public/common/content_features.h",
   "+content/public/common/origin_util.h",
   "+content/public/common/request_context_type.h",
   "+content/public/common/resource_type.h",
@@ -10,11 +18,14 @@ include_rules = [
   "+content/public/network",
   "+services/network",
   "+services/service_manager/public",
+  "+services/service_manager/sandbox",
 ]
 
 specific_include_rules = {
   '.*_[a-z]*test.*': [
     "+content/public/common/content_paths.h",
     "+content/public/common/service_names.mojom.h",
+    "+content/public/test/controllable_http_response.h",
+    "+content/public/test/test_url_loader_client.h",
   ],
 }

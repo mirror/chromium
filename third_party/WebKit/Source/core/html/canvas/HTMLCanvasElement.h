@@ -71,8 +71,8 @@ class ImageBitmapOptions;
 class IntSize;
 
 class
-    CanvasRenderingContext2DOrWebGLRenderingContextOrWebGL2RenderingContextOrImageBitmapRenderingContextOrXRPresentationContext;
-typedef CanvasRenderingContext2DOrWebGLRenderingContextOrWebGL2RenderingContextOrImageBitmapRenderingContextOrXRPresentationContext
+    CanvasRenderingContext2DOrWebGLRenderingContextOrWebGL2RenderingContextOrImageBitmapRenderingContext;
+typedef CanvasRenderingContext2DOrWebGLRenderingContextOrWebGL2RenderingContextOrImageBitmapRenderingContext
     RenderingContext;
 
 class CORE_EXPORT HTMLCanvasElement final
@@ -205,8 +205,7 @@ class CORE_EXPORT HTMLCanvasElement final
   void SetNeedsCompositingUpdate() override;
   void UpdateMemoryUsage() override;
 
-  void DisableAcceleration(std::unique_ptr<Canvas2DLayerBridge>
-                               unaccelerated_bridge_used_for_testing = nullptr);
+  void DisableAcceleration();
 
   // ImageBitmapSource implementation
   IntSize BitmapSourceSize() const override;
@@ -326,10 +325,6 @@ class CORE_EXPORT HTMLCanvasElement final
   String ToDataURLInternal(const String& mime_type,
                            const double& quality,
                            SourceDrawingBuffer) const;
-
-  // Returns true if the canvas' context type is inherited from
-  // ImageBitmapRenderingContextBase.
-  bool HasImageBitmapContext() const;
 
   HeapHashSet<WeakMember<CanvasDrawListener>> listeners_;
 

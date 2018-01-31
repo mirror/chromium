@@ -63,7 +63,6 @@ class CORE_EXPORT RootFrameViewport final
                             const WebScrollIntoViewParams& params) override;
   IntRect VisibleContentRect(
       IncludeScrollbarsInRect = kExcludeScrollbars) const override;
-  LayoutRect VisibleScrollSnapportRect() const override;
   bool ShouldUseIntegerScrollOffset() const override;
   bool IsActive() const override;
   int ScrollSize(ScrollbarOrientation) const override;

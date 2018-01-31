@@ -5,7 +5,6 @@
 #include "core/frame/Frame.h"
 
 #include "core/dom/UserGestureIndicator.h"
-#include "core/loader/DocumentLoader.h"
 #include "core/testing/PageTestBase.h"
 #include "platform/testing/UnitTestHelpers.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -16,38 +15,27 @@ class FrameTest : public PageTestBase {
  public:
   void SetUp() override {
     PageTestBase::SetUp();
-    Navigate("https://example.com/", false);
+    Navigate("https://example.com/");
 
     ASSERT_FALSE(GetDocument().GetFrame()->HasBeenActivated());
     ASSERT_FALSE(
         GetDocument().GetFrame()->HasReceivedUserGestureBeforeNavigation());
   }
 
-  void Navigate(const String& destinationUrl, bool user_activated) {
+  void Navigate(const String& destinationUrl) {
     const KURL& url = KURL(NullURL(), destinationUrl);
     FrameLoadRequest request(nullptr, ResourceRequest(url),
                              SubstituteData(SharedBuffer::Create()));
     GetDocument().GetFrame()->Loader().Load(request);
-    if (user_activated) {
-      GetDocument()
-          .GetFrame()
-          ->Loader()
-          .GetProvisionalDocumentLoader()
-          ->SetUserActivated();
-    }
     blink::testing::RunPendingTasks();
     ASSERT_EQ(url.GetString(), GetDocument().Url().GetString());
   }
 
   void NavigateSameDomain(const String& page) {
-    NavigateSameDomain(page, true);
+    Navigate("https://test.example.com/" + page);
   }
 
-  void NavigateSameDomain(const String& page, bool user_activated) {
-    Navigate("https://test.example.com/" + page, user_activated);
-  }
-
-  void NavigateDifferentDomain() { Navigate("https://example.org/", false); }
+  void NavigateDifferentDomain() { Navigate("https://example.org/"); }
 };
 
 TEST_F(FrameTest, NoGesture) {
@@ -157,7 +145,7 @@ TEST_F(FrameTest, NavigateSameDomainNoGesture) {
   EXPECT_FALSE(
       GetDocument().GetFrame()->HasReceivedUserGestureBeforeNavigation());
 
-  NavigateSameDomain("page1", false);
+  NavigateSameDomain("page1");
   EXPECT_FALSE(GetDocument().GetFrame()->HasBeenActivated());
   EXPECT_FALSE(
       GetDocument().GetFrame()->HasReceivedUserGestureBeforeNavigation());

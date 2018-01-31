@@ -19,7 +19,6 @@
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
-#include "base/optional.h"
 #include "base/strings/string16.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
@@ -375,7 +374,7 @@ struct SSLSocketDataProvider {
   SSLCertRequestInfo* cert_request_info;
 
   ChannelIDService* channel_id_service;
-  base::Optional<NextProtoVector> next_protos_expected_in_ssl_config;
+  NextProtoVector next_protos_expected_in_ssl_config;
 };
 
 // Uses the sequence_number field in the mock reads and writes to

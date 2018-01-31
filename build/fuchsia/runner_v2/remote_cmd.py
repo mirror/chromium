@@ -78,7 +78,7 @@ def RunScp(config_path, host, port, source, dest, direction):
 
   Function will raise an assertion if a failure occurred."""
 
-  scp_command = _SCP[:]
+  scp_command = _SCP
   if ':' in host:
     scp_command.append('-6')
     host = '[' + host + ']'

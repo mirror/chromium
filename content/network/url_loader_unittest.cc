@@ -20,7 +20,11 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
+#include "content/network/network_context.h"
+#include "content/network/url_loader.h"
 #include "content/public/common/content_paths.h"
+#include "content/public/test/controllable_http_response.h"
+#include "content/public/test/test_url_loader_client.h"
 #include "mojo/common/data_pipe_utils.h"
 #include "mojo/public/c/system/data_pipe.h"
 #include "mojo/public/cpp/system/wait.h"
@@ -29,7 +33,6 @@
 #include "net/base/mime_sniffer.h"
 #include "net/base/net_errors.h"
 #include "net/test/cert_test_util.h"
-#include "net/test/embedded_test_server/controllable_http_response.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/test/embedded_test_server/http_response.h"
 #include "net/test/test_data_directory.h"
@@ -41,17 +44,11 @@
 #include "net/url_request/url_request_job.h"
 #include "net/url_request/url_request_status.h"
 #include "net/url_request/url_request_test_job.h"
-#include "services/network/network_context.h"
 #include "services/network/public/cpp/resource_request.h"
 #include "services/network/test/test_data_pipe_getter.h"
-#include "services/network/test/test_url_loader_client.h"
-#include "services/network/url_loader.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/base/page_transition_types.h"
 #include "url/gurl.h"
-
-using network::NetworkContext;
-using network::URLLoader;
 
 namespace content {
 
@@ -185,7 +182,7 @@ class URLLoaderTest : public testing::Test {
   URLLoaderTest()
       : scoped_task_environment_(
             base::test::ScopedTaskEnvironment::MainThreadType::IO),
-        context_(network::NetworkContext::CreateForTesting()) {
+        context_(NetworkContext::CreateForTesting()) {
     net::URLRequestFailedJob::AddUrlHandler();
   }
   ~URLLoaderTest() override {
@@ -322,7 +319,7 @@ class URLLoaderTest : public testing::Test {
 
   net::EmbeddedTestServer* test_server() { return &test_server_; }
   NetworkContext* context() { return context_.get(); }
-  network::TestURLLoaderClient* client() { return &client_; }
+  TestURLLoaderClient* client() { return &client_; }
   void DestroyContext() { context_.reset(); }
 
   // Returns the path of the requested file in the test data directory.
@@ -460,7 +457,7 @@ class URLLoaderTest : public testing::Test {
   // made, since the test fixture is meant to be used only once.
   bool ran_ = false;
   net::test_server::HttpRequest sent_request_;
-  network::TestURLLoaderClient client_;
+  TestURLLoaderClient client_;
 };
 
 TEST_F(URLLoaderTest, Basic) {
@@ -759,8 +756,7 @@ TEST_F(URLLoaderTest, PauseReadingBodyFromNetBeforeRespnoseHeaders) {
   const char* const kBodyContents = "This is the data as you requested.";
 
   net::EmbeddedTestServer server;
-  net::test_server::ControllableHttpResponse response_controller(&server,
-                                                                 kPath);
+  ControllableHttpResponse response_controller(&server, kPath);
   ASSERT_TRUE(server.Start());
 
   network::ResourceRequest request =
@@ -817,8 +813,7 @@ TEST_F(URLLoaderTest, PauseReadingBodyFromNetWhenReadIsPending) {
   const char* const kBodyContentsSecondHalf = "This is the second half.";
 
   net::EmbeddedTestServer server;
-  net::test_server::ControllableHttpResponse response_controller(&server,
-                                                                 kPath);
+  ControllableHttpResponse response_controller(&server, kPath);
   ASSERT_TRUE(server.Start());
 
   network::ResourceRequest request =
@@ -864,8 +859,7 @@ TEST_F(URLLoaderTest, ResumeReadingBodyFromNetAfterClosingConsumer) {
   const char* const kBodyContentsFirstHalf = "This is the first half.";
 
   net::EmbeddedTestServer server;
-  net::test_server::ControllableHttpResponse response_controller(&server,
-                                                                 kPath);
+  ControllableHttpResponse response_controller(&server, kPath);
   ASSERT_TRUE(server.Start());
 
   network::ResourceRequest request =
@@ -905,8 +899,7 @@ TEST_F(URLLoaderTest, MultiplePauseResumeReadingBodyFromNet) {
   const char* const kBodyContentsSecondHalf = "This is the second half.";
 
   net::EmbeddedTestServer server;
-  net::test_server::ControllableHttpResponse response_controller(&server,
-                                                                 kPath);
+  ControllableHttpResponse response_controller(&server, kPath);
   ASSERT_TRUE(server.Start());
 
   network::ResourceRequest request =

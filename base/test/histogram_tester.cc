@@ -124,7 +124,7 @@ HistogramTester::CountsMap HistogramTester::GetTotalCountsForPrefix(
   CountsMap result;
 
   // Find candidate matches by using the logic built into GetSnapshot().
-  for (const HistogramBase* histogram : StatisticsRecorder::GetHistograms()) {
+  for (HistogramBase* histogram : StatisticsRecorder::GetSnapshot(prefix)) {
     if (!StartsWith(histogram->histogram_name(), prefix,
                     CompareCase::SENSITIVE)) {
       continue;

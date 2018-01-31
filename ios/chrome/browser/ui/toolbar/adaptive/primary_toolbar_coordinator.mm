@@ -57,7 +57,9 @@
   self.viewController.buttonFactory = [self buttonFactoryWithType:PRIMARY];
 
   [self setUpLocationBar];
-  self.viewController.locationBarView = self.locationBarCoordinator.view;
+  self.viewController.locationBarView =
+      self.locationBarCoordinator.locationBarView;
+
   [super start];
 
   _fullscreenObserver =
@@ -70,11 +72,13 @@
 #pragma mark - PrimaryToolbarCoordinator
 
 - (id<VoiceSearchControllerDelegate>)voiceSearchDelegate {
-  return self.locationBarCoordinator;
+  // TODO(crbug.com/799446): This code should be moved to the location bar.
+  return nil;
 }
 
 - (id<QRScannerResultLoading>)QRScannerResultLoader {
-  return self.locationBarCoordinator;
+  // TODO(crbug.com/799446): This code should be moved to the location bar.
+  return nil;
 }
 
 - (id<TabHistoryUIUpdater>)tabHistoryUIUpdater {
@@ -94,7 +98,8 @@
 }
 
 - (BOOL)isOmniboxFirstResponder {
-  return [self.locationBarCoordinator isOmniboxFirstResponder];
+  return
+      [self.locationBarCoordinator.locationBarView.textField isFirstResponder];
 }
 
 - (BOOL)showingOmniboxPopup {
@@ -151,16 +156,16 @@
 
   // Don't do anything for a live non-ntp tab.
   if (webState == self.webStateList->GetActiveWebState() && !isNTP) {
-    [self.locationBarCoordinator.view setHidden:NO];
+    [self.locationBarCoordinator.locationBarView setHidden:NO];
   } else {
     self.viewController.view.hidden = NO;
-    [self.locationBarCoordinator.view setHidden:YES];
+    [self.locationBarCoordinator.locationBarView setHidden:YES];
   }
 }
 
 - (void)resetToolbarAfterSideSwipeSnapshot {
   [super resetToolbarAfterSideSwipeSnapshot];
-  [self.locationBarCoordinator.view setHidden:NO];
+  [self.locationBarCoordinator.locationBarView setHidden:NO];
 }
 
 #pragma mark - Private

@@ -2748,15 +2748,12 @@ const char kUiDevToolsDescription[] =
     "Enables inspection of native UI elements. For local inspection use "
     "chrome://inspect#other";
 
-const char kUseMusName[] = "Mojo UI service (mus)";
-const char kUseMusDescription[] =
-    "Handles input events, display configuration, and windowing in a mojo "
-    "service on a thread in the browser process.";
-
-const char kUseMashName[] = "Out-of-process system UI (mash)";
-const char kUseMashDescription[] =
-    "Runs the mojo UI service (mus) and the ash window manager and system UI "
-    "in a separate process.";
+const char kUseMusName[] = "Mus";
+const char kUseMusDescription[] = "Enable the Mojo UI service.";
+const char kEnableMashDescription[] =
+    "Mash (UI, Chrome and ash in separate services)";
+const char kEnableMusDescription[] =
+    "Mus (UI in separate service, Chrome and ash in same service)";
 
 // TODO(mcasas): remove after https://crbug.com/771345.
 const char kUseMonitorColorSpaceName[] = "Use monitor color space";
@@ -2932,10 +2929,6 @@ const char kAshEnableMirroredScreenName[] = "Enable mirrored screen mode.";
 const char kAshEnableMirroredScreenDescription[] =
     "Enable the mirrored screen mode. This mode flips the screen image "
     "horizontally.";
-
-const char kAshEnableNewOverviewUiName[] = "Enable new overview UI.";
-const char kAshEnableNewOverviewUiDescription[] =
-    "Enables the new overview mode UI.";
 
 const char kAshEnablePersistentWindowBoundsName[] =
     "Enable persistent window bounds in multi-displays scenario.";

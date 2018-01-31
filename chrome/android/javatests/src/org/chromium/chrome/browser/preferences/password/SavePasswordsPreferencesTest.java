@@ -384,7 +384,7 @@ public class SavePasswordsPreferencesTest {
         // Ensure there are no saved passwords reported to settings.
         setPasswordSource(null);
 
-        ReauthenticationManager.setApiOverride(ReauthenticationManager.OVERRIDE_STATE_AVAILABLE);
+        ReauthenticationManager.setApiOverride(ReauthenticationManager.OverrideState.AVAILABLE);
 
         final Preferences preferences =
                 PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
@@ -409,7 +409,7 @@ public class SavePasswordsPreferencesTest {
     public void testExportMenuEnabled() throws Exception {
         setPasswordSource(new SavedPasswordEntry("https://example.com", "test user", "password"));
 
-        ReauthenticationManager.setApiOverride(ReauthenticationManager.OVERRIDE_STATE_AVAILABLE);
+        ReauthenticationManager.setApiOverride(ReauthenticationManager.OverrideState.AVAILABLE);
 
         final Preferences preferences =
                 PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
@@ -434,7 +434,7 @@ public class SavePasswordsPreferencesTest {
     @SmallTest
     @Feature({"Preferences"})
     public void testExportMenuMissing() throws Exception {
-        ReauthenticationManager.setApiOverride(ReauthenticationManager.OVERRIDE_STATE_AVAILABLE);
+        ReauthenticationManager.setApiOverride(ReauthenticationManager.OverrideState.AVAILABLE);
 
         final Preferences preferences =
                 PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
@@ -459,9 +459,9 @@ public class SavePasswordsPreferencesTest {
     public void testExportTriggersSerialization() throws Exception {
         setPasswordSource(new SavedPasswordEntry("https://example.com", "test user", "password"));
 
-        ReauthenticationManager.setApiOverride(ReauthenticationManager.OVERRIDE_STATE_AVAILABLE);
+        ReauthenticationManager.setApiOverride(ReauthenticationManager.OverrideState.AVAILABLE);
         ReauthenticationManager.setScreenLockSetUpOverride(
-                ReauthenticationManager.OVERRIDE_STATE_AVAILABLE);
+                ReauthenticationManager.OverrideState.AVAILABLE);
 
         final Preferences preferences =
                 PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
@@ -490,9 +490,9 @@ public class SavePasswordsPreferencesTest {
     public void testExportMenuItem() throws Exception {
         setPasswordSource(new SavedPasswordEntry("https://example.com", "test user", "password"));
 
-        ReauthenticationManager.setApiOverride(ReauthenticationManager.OVERRIDE_STATE_AVAILABLE);
+        ReauthenticationManager.setApiOverride(ReauthenticationManager.OverrideState.AVAILABLE);
         ReauthenticationManager.setScreenLockSetUpOverride(
-                ReauthenticationManager.OVERRIDE_STATE_AVAILABLE);
+                ReauthenticationManager.OverrideState.AVAILABLE);
 
         final Preferences preferences =
                 PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
@@ -521,9 +521,9 @@ public class SavePasswordsPreferencesTest {
     public void testExportMenuItemNoLock() throws Exception {
         setPasswordSource(new SavedPasswordEntry("https://example.com", "test user", "password"));
 
-        ReauthenticationManager.setApiOverride(ReauthenticationManager.OVERRIDE_STATE_AVAILABLE);
+        ReauthenticationManager.setApiOverride(ReauthenticationManager.OverrideState.AVAILABLE);
         ReauthenticationManager.setScreenLockSetUpOverride(
-                ReauthenticationManager.OVERRIDE_STATE_UNAVAILABLE);
+                ReauthenticationManager.OverrideState.UNAVAILABLE);
 
         final Preferences preferences =
                 PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
@@ -550,9 +550,9 @@ public class SavePasswordsPreferencesTest {
     public void testExportMenuItemReenabledNoLock() throws Exception {
         setPasswordSource(new SavedPasswordEntry("https://example.com", "test user", "password"));
 
-        ReauthenticationManager.setApiOverride(ReauthenticationManager.OVERRIDE_STATE_AVAILABLE);
+        ReauthenticationManager.setApiOverride(ReauthenticationManager.OverrideState.AVAILABLE);
         ReauthenticationManager.setScreenLockSetUpOverride(
-                ReauthenticationManager.OVERRIDE_STATE_UNAVAILABLE);
+                ReauthenticationManager.OverrideState.UNAVAILABLE);
 
         final Preferences preferences =
                 PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
@@ -582,7 +582,7 @@ public class SavePasswordsPreferencesTest {
     public void testExportMenuItemReenabledReauthFailure() throws Exception {
         setPasswordSource(new SavedPasswordEntry("https://example.com", "test user", "password"));
 
-        ReauthenticationManager.setApiOverride(ReauthenticationManager.OVERRIDE_STATE_AVAILABLE);
+        ReauthenticationManager.setApiOverride(ReauthenticationManager.OverrideState.AVAILABLE);
         ReauthenticationManager.setSkipSystemReauth(true);
 
         final Preferences preferences =
@@ -621,9 +621,9 @@ public class SavePasswordsPreferencesTest {
     public void testExportIntent() throws Exception {
         setPasswordSource(new SavedPasswordEntry("https://example.com", "test user", "password"));
 
-        ReauthenticationManager.setApiOverride(ReauthenticationManager.OVERRIDE_STATE_AVAILABLE);
+        ReauthenticationManager.setApiOverride(ReauthenticationManager.OverrideState.AVAILABLE);
         ReauthenticationManager.setScreenLockSetUpOverride(
-                ReauthenticationManager.OVERRIDE_STATE_AVAILABLE);
+                ReauthenticationManager.OverrideState.AVAILABLE);
 
         final Preferences preferences =
                 PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
@@ -665,9 +665,9 @@ public class SavePasswordsPreferencesTest {
     public void testViewPasswordNoLock() throws Exception {
         setPasswordSource(new SavedPasswordEntry("https://example.com", "test user", "password"));
 
-        ReauthenticationManager.setApiOverride(ReauthenticationManager.OVERRIDE_STATE_AVAILABLE);
+        ReauthenticationManager.setApiOverride(ReauthenticationManager.OverrideState.AVAILABLE);
         ReauthenticationManager.setScreenLockSetUpOverride(
-                ReauthenticationManager.OVERRIDE_STATE_UNAVAILABLE);
+                ReauthenticationManager.OverrideState.UNAVAILABLE);
 
         final Preferences preferences =
                 PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
@@ -692,9 +692,9 @@ public class SavePasswordsPreferencesTest {
         setPasswordSource(
                 new SavedPasswordEntry("https://example.com", "test user", "test password"));
 
-        ReauthenticationManager.setApiOverride(ReauthenticationManager.OVERRIDE_STATE_AVAILABLE);
+        ReauthenticationManager.setApiOverride(ReauthenticationManager.OverrideState.AVAILABLE);
         ReauthenticationManager.setScreenLockSetUpOverride(
-                ReauthenticationManager.OVERRIDE_STATE_AVAILABLE);
+                ReauthenticationManager.OverrideState.AVAILABLE);
 
         final Preferences preferences =
                 PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
@@ -973,9 +973,9 @@ public class SavePasswordsPreferencesTest {
     public void testSearchResultsPersistAfterEntryInspection() throws Exception {
         setPasswordSourceWithMultipleEntries(GREEK_GODS);
         setPasswordExceptions(new String[] {"http://exclu.de", "http://not-inclu.de"});
-        ReauthenticationManager.setApiOverride(ReauthenticationManager.OVERRIDE_STATE_AVAILABLE);
+        ReauthenticationManager.setApiOverride(ReauthenticationManager.OverrideState.AVAILABLE);
         ReauthenticationManager.setScreenLockSetUpOverride(
-                ReauthenticationManager.OVERRIDE_STATE_AVAILABLE);
+                ReauthenticationManager.OverrideState.AVAILABLE);
         PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
                 SavePasswordsPreferences.class.getName());
 
@@ -1006,10 +1006,5 @@ public class SavePasswordsPreferencesTest {
         Espresso.onView(withText(ZEUS_ON_EARTH.getUserName())).check(matches(isDisplayed()));
         Espresso.onView(withText(PHOBOS_AT_OLYMP.getUserName())).check(doesNotExist());
         Espresso.onView(withText(HADES_AT_UNDERWORLD.getUrl())).check(doesNotExist());
-        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
-
-        // The search bar should still be open and still display the search query.
-        Espresso.onView(withId(R.id.search_src_text)).check(matches(isDisplayed()));
-        Espresso.onView(withId(R.id.search_src_text)).check(matches(withText("Zeu")));
     }
 }

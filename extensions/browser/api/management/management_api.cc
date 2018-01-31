@@ -214,7 +214,6 @@ management::ExtensionInfo CreateExtensionInfo(
       break;
     case Manifest::NUM_LOCATIONS:
       NOTREACHED();
-      FALLTHROUGH;
     case Manifest::INVALID_LOCATION:
     case Manifest::COMPONENT:
     case Manifest::EXTERNAL_COMPONENT:

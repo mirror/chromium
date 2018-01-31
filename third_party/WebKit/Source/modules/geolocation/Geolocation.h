@@ -49,11 +49,9 @@ class Document;
 class LocalFrame;
 class ExecutionContext;
 
-class MODULES_EXPORT Geolocation final
-    : public ScriptWrappable,
-      public ActiveScriptWrappable<Geolocation>,
-      public ContextLifecycleObserver,
-      public PageVisibilityObserver {
+class MODULES_EXPORT Geolocation final : public ScriptWrappable,
+                                         public ContextLifecycleObserver,
+                                         public PageVisibilityObserver {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(Geolocation);
 
@@ -99,15 +97,8 @@ class MODULES_EXPORT Geolocation final
   // Discards the notifier if it is a oneshot because it timed it.
   void RequestTimedOut(GeoNotifier*);
 
-  // Returns true if this geolocation still owns the given notifier.
-  bool DoesOwnNotifier(GeoNotifier*) const;
-
   // Inherited from PageVisibilityObserver.
   void PageVisibilityChanged() override;
-
-  // TODO(yukishiino): This is a short-term speculative fix for
-  // crbug.com/792604. Remove this once the bug is fixed.
-  bool HasPendingActivity() const final;
 
  private:
   explicit Geolocation(ExecutionContext*);
@@ -193,8 +184,8 @@ class MODULES_EXPORT Geolocation final
   GeolocationWatchers watchers_being_invoked_;
   Member<Geoposition> last_position_;
 
-  device::mojom::blink::WeakGeolocationPtr geolocation_;
-  mojom::blink::WeakGeolocationServicePtr geolocation_service_;
+  device::mojom::blink::GeolocationPtr geolocation_;
+  mojom::blink::GeolocationServicePtr geolocation_service_;
   bool enable_high_accuracy_ = false;
 
   // Whether a GeoNotifier is waiting for a position update.

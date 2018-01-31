@@ -340,8 +340,7 @@ void BrowserCompositorMac::OnNSViewWasResized() {
       delegated_frame_host_scale_factor_, delegated_frame_host_size_dip_);
   delegated_frame_host_scale_factor_ = scale_factor;
 
-  GetDelegatedFrameHost()->WasResized(
-      cc::DeadlinePolicy::UseExistingDeadline());
+  GetDelegatedFrameHost()->WasResized();
 }
 
 bool BrowserCompositorMac::HasFrameOfSize(const gfx::Size& desired_size) {

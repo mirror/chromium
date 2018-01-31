@@ -46,6 +46,7 @@ const CSSValue* FontVariationSettings::ParseSingleValue(
     CSSParserTokenRange& range,
     const CSSParserContext& context,
     const CSSParserLocalContext&) const {
+  DCHECK(RuntimeEnabledFeatures::CSSVariableFontsEnabled());
   if (range.Peek().Id() == CSSValueNormal)
     return CSSPropertyParserHelpers::ConsumeIdent(range);
   CSSValueList* variation_settings = CSSValueList::CreateCommaSeparated();
@@ -65,6 +66,7 @@ const CSSValue* FontVariationSettings::CSSValueFromComputedStyleInternal(
     const LayoutObject*,
     Node* styled_node,
     bool allow_visited_style) const {
+  DCHECK(RuntimeEnabledFeatures::CSSVariableFontsEnabled());
   const blink::FontVariationSettings* variation_settings =
       style.GetFontDescription().VariationSettings();
   if (!variation_settings || !variation_settings->size())

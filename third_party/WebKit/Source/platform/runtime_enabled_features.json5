@@ -169,9 +169,6 @@
       name: "ClientPlaceholdersForServerLoFi",
     },
     {
-      name: "CodeCacheAfterExecute"
-    },
-    {
       name: "CompositedSelectionUpdate",
     },
     {
@@ -303,6 +300,10 @@
       status: "experimental",
     },
     {
+      name: "CSSVariableFonts",
+      status: "stable",
+    },
+    {
       name: "CSSVariables2",
       status: "experimental",
     },
@@ -396,21 +397,18 @@
     },
     {
       name: "FeaturePolicyAutoplayFeature",
-      status: "stable",
-      depends_on: ["FeaturePolicy"]
+      status: "stable"
     },
     {
       name: "FeaturePolicyExperimentalFeatures",
     },
     {
       name: "FeaturePolicyForPermissions",
-      status: "stable",
-      depends_on: ["FeaturePolicy"]
+      status: "stable"
     },
     {
       name: "FeaturePolicyJavaScriptInterface",
-      status: "experimental",
-      depends_on: ["FeaturePolicy"]
+      status: "experimental"
     },
     {
       name: "FetchRequestCache",

@@ -14,7 +14,8 @@ template("generate_runner_script") {
       "$root_out_dir/gen.runtime/" +
       get_label_info(invoker.root_target_name, "dir") + "/" +
       get_label_info(invoker.root_target_name, "name") + ".runtime_deps"
-  _pkg_dir = "$root_out_dir/gen/" + get_label_info(invoker.package_name, "dir")
+  _pkg_dir =
+      "$root_out_dir/gen/" + get_label_info(invoker.target_name, "dir") + "/.."
   _manifest_path = "$_pkg_dir/${invoker.package_name}.archive_manifest"
   _package_path = "$_pkg_dir/${invoker.package_name}.far"
   _runner_target = "${target_name}_runner"
@@ -183,7 +184,7 @@ template("fuchsia_executable_runner") {
   _gen_runner_target = "${target_name}_runner"
   _archive_target = "${target_name}_archive"
   _exe_name = get_label_info(exe_target, "name")
-  _exe_path = "${root_out_dir}/${_exe_name}"
+  _exe_path = "${root_out_dir}/exe.unstripped/${_exe_name}"
 
   package(_pkg_target) {
     forward_variables_from(invoker, [ "testonly" ])
@@ -215,8 +216,6 @@ template("fuchsia_executable_runner") {
     ]
   }
 
-  # This target is superceded by the packaging system.
-  # TODO(kmarshall): remove this target and remove dependencies from bots.
   generate_runner_script(_archive_target) {
     forward_variables_from(invoker, [ "testonly" ])
     runner_script = "archive_builder.py"

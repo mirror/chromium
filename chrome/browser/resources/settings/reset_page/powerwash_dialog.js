@@ -12,10 +12,7 @@ Polymer({
 
   properties: {
     /** @public */
-    requestTpmFirmwareUpdate: {
-      type: Boolean,
-      value: false,
-    }
+    requestTpmFirmwareUpdate: Boolean,
   },
 
   /** @override */

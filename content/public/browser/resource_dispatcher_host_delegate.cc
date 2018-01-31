@@ -7,6 +7,7 @@
 #include "content/public/browser/navigation_data.h"
 #include "content/public/browser/resource_request_info.h"
 #include "content/public/browser/stream_info.h"
+#include "net/ssl/client_cert_store.h"
 
 namespace content {
 
@@ -88,6 +89,12 @@ PreviewsState ResourceDispatcherHostDelegate::DetermineEnabledPreviews(
 NavigationData* ResourceDispatcherHostDelegate::GetNavigationData(
     net::URLRequest* request) const {
   return nullptr;
+}
+
+std::unique_ptr<net::ClientCertStore>
+ResourceDispatcherHostDelegate::CreateClientCertStore(
+    ResourceContext* resource_context) {
+  return std::unique_ptr<net::ClientCertStore>();
 }
 
 ResourceDispatcherHostDelegate::~ResourceDispatcherHostDelegate() {

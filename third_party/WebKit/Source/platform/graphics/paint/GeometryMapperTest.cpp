@@ -663,7 +663,7 @@ TEST_P(GeometryMapperTest, ReflectionWithPaintOffset) {
       ClipPaintPropertyNode::Root(), kColorFilterNone, filters, 1.0,
       SkBlendMode::kSrcOver, CompositingReason::kNone, CompositorElementId(),
       FloatPoint(100, 100));
-  local_state.SetEffect(effect.get());
+  local_state.SetEffect(effect);
 
   input_rect = FloatRect(100, 100, 50, 50);
   expected_transformed_rect = input_rect;

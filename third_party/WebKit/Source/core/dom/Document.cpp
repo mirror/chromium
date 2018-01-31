@@ -1080,7 +1080,7 @@ Element* Document::createElementNS(const AtomicString& namespace_uri,
   // 2.
   const AtomicString& is =
       AtomicString(GetTypeExtension(this, string_or_options, exception_state));
-  const AtomicString& name = should_create_builtin ? is : q_name.LocalName();
+  const AtomicString& name = should_create_builtin ? is : qualified_name;
 
   if (!IsValidElementName(this, qualified_name)) {
     exception_state.ThrowDOMException(
@@ -1091,9 +1091,11 @@ Element* Document::createElementNS(const AtomicString& namespace_uri,
 
   // 3. Let definition be result of lookup up custom element definition
   CustomElementDefinition* definition = nullptr;
-  if (is_v1 && namespace_uri == HTMLNames::xhtmlNamespaceURI) {
+  if (is_v1) {
     const CustomElementDescriptor desc =
-        CustomElementDescriptor(name, q_name.LocalName());
+        RuntimeEnabledFeatures::CustomElementsBuiltinEnabled()
+            ? CustomElementDescriptor(name, qualified_name)
+            : CustomElementDescriptor(qualified_name, qualified_name);
     if (CustomElementRegistry* registry = CustomElement::Registry(*this))
       definition = registry->DefinitionFor(desc);
 
@@ -1108,7 +1110,7 @@ Element* Document::createElementNS(const AtomicString& namespace_uri,
   // 5. Let element be the result of creating an element
   Element* element;
 
-  if (definition) {
+  if (CustomElement::ShouldCreateCustomElement(q_name) || create_v1_builtin) {
     element = CustomElement::CreateCustomElementSync(*this, q_name, definition);
   } else if (V0CustomElement::IsValidName(q_name.LocalName()) &&
              RegistrationContext()) {
@@ -2096,11 +2098,6 @@ void Document::PropagateStyleToViewport(StyleRecalcChange change) {
             static_cast<OverscrollBehaviorType>(overscroll_behavior_y)));
   }
 
-  Length scroll_padding_top = overflow_style->ScrollPaddingTop();
-  Length scroll_padding_right = overflow_style->ScrollPaddingRight();
-  Length scroll_padding_bottom = overflow_style->ScrollPaddingBottom();
-  Length scroll_padding_left = overflow_style->ScrollPaddingLeft();
-
   scoped_refptr<ComputedStyle> viewport_style;
   if (change == kForce || !GetLayoutView()->Style()) {
     viewport_style = StyleResolver::StyleForViewport(*this);
@@ -2119,11 +2116,7 @@ void Document::PropagateStyleToViewport(StyleRecalcChange change) {
         old_style.GetScrollSnapType() == snap_type &&
         old_style.GetScrollBehavior() == scroll_behavior &&
         old_style.OverscrollBehaviorX() == overscroll_behavior_x &&
-        old_style.OverscrollBehaviorY() == overscroll_behavior_y &&
-        old_style.ScrollPaddingTop() == scroll_padding_top &&
-        old_style.ScrollPaddingRight() == scroll_padding_right &&
-        old_style.ScrollPaddingBottom() == scroll_padding_bottom &&
-        old_style.ScrollPaddingLeft() == scroll_padding_left) {
+        old_style.OverscrollBehaviorY() == overscroll_behavior_y) {
       return;
     }
     viewport_style = ComputedStyle::Clone(old_style);
@@ -2141,10 +2134,6 @@ void Document::PropagateStyleToViewport(StyleRecalcChange change) {
   viewport_style->SetScrollBehavior(scroll_behavior);
   viewport_style->SetOverscrollBehaviorX(overscroll_behavior_x);
   viewport_style->SetOverscrollBehaviorY(overscroll_behavior_y);
-  viewport_style->SetScrollPaddingTop(scroll_padding_top);
-  viewport_style->SetScrollPaddingRight(scroll_padding_right);
-  viewport_style->SetScrollPaddingBottom(scroll_padding_bottom);
-  viewport_style->SetScrollPaddingLeft(scroll_padding_left);
   GetLayoutView()->SetStyle(viewport_style);
   SetupFontBuilder(*viewport_style);
 }

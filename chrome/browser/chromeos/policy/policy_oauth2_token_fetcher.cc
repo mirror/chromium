@@ -248,8 +248,7 @@ void PolicyOAuth2TokenFetcherImpl::RetryOnError(
         base::TimeDelta::FromMilliseconds(kRequestRestartDelay));
     return;
   }
-  LOG(ERROR) << "Unrecoverable error or retry count max reached: "
-             << error.state();
+  LOG(ERROR) << "Unrecoverable error or retry count max reached.";
   failed_ = true;
   // Invoking the |callback_| signals to the owner of this object that it has
   // completed, and the owner may delete this object on the callback method.

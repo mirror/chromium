@@ -51,8 +51,11 @@ void ExtractCertificatesFromData(const std::string& data_string,
 bool ReadCertificatesFromFile(const base::FilePath& file_path,
                               std::vector<CertInput>* certs) {
   std::string file_data;
-  if (!ReadFromFile(file_path, &file_data))
+  if (!base::ReadFileToString(file_path, &file_data)) {
+    std::cerr << "ERROR: ReadFileToString " << file_path.value() << ": "
+              << strerror(errno) << "\n";
     return false;
+  }
   ExtractCertificatesFromData(file_data, file_path, certs);
   return true;
 }
@@ -71,15 +74,6 @@ bool ReadChainFromFile(const base::FilePath& file_path,
 
   intermediates->insert(intermediates->end(), ++tmp_certs.begin(),
                         tmp_certs.end());
-  return true;
-}
-
-bool ReadFromFile(const base::FilePath& file_path, std::string* file_data) {
-  if (!base::ReadFileToString(file_path, file_data)) {
-    std::cerr << "ERROR: ReadFileToString " << file_path.value() << ": "
-              << strerror(errno) << "\n";
-    return false;
-  }
   return true;
 }
 

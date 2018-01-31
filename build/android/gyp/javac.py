@@ -104,7 +104,6 @@ ERRORPRONE_WARNINGS_TO_TURN_OFF = [
 
 ERRORPRONE_WARNINGS_TO_ERROR = [
   # Add warnings to this after fixing/suppressing all instances in our codebase.
-  'ParameterName',
 ]
 
 
@@ -326,7 +325,10 @@ def _OnStaleMd5(changes, options, javac_cmd, java_files, classpath_inputs,
       # Pass classpath and source paths as response files to avoid extremely
       # long command lines that are tedius to debug.
       if classpath:
-        cmd += ['-classpath', ':'.join(classpath)]
+        classpath_rsp_path = os.path.join(temp_dir, 'classpath.txt')
+        with open(classpath_rsp_path, 'w') as f:
+          f.write(':'.join(classpath))
+        cmd += ['-classpath', '@' + classpath_rsp_path]
 
       java_files_rsp_path = os.path.join(temp_dir, 'files_list.txt')
       with open(java_files_rsp_path, 'w') as f:

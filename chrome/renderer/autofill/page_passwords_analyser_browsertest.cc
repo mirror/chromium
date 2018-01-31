@@ -99,13 +99,6 @@ const char kInferredUsernameAutocompleteAttributes[] =
     "   <input type='password' autocomplete='new-password'>"
     "</form>";
 
-const char kPasswordFieldsWithAndWithoutAutocomplete[] =
-    "<form>"
-    "   <input type='password'>"
-    "   <input type='text'>"
-    "   <input type='password' autocomplete='current-password'>"
-    "</form>";
-
 const std::string AutocompleteSuggestionString(const std::string& suggestion) {
   return "Input elements should have autocomplete "
          "attributes (suggested: \"" +
@@ -258,16 +251,6 @@ TEST_F(PagePasswordsAnalyserTest, InferredUsernameAutocompleteAttributes) {
   element_index++;  // Skip already annotated password field.
   element_index++;  // Skip already annotated password field.
 
-  RunTestCase();
-}
-
-TEST_F(PagePasswordsAnalyserTest, PasswordFieldWithAndWithoutAutocomplete) {
-  LoadTestCase(kPasswordFieldsWithAndWithoutAutocomplete);
-  Expect(
-      "Multiple forms should be contained in their own "
-      "form elements; break up complex forms into ones that represent a "
-      "single action:",
-      PageFormAnalyserLogger::kVerbose, {0});
   RunTestCase();
 }
 

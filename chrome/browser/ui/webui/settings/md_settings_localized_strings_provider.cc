@@ -1304,17 +1304,7 @@ void AddPasswordsAndFormsStrings(content::WebUIDataSource* html_source) {
       {"passwordDeleted", IDS_SETTINGS_PASSWORD_DELETED_PASSWORD},
       {"exportPasswordsTitle", IDS_SETTINGS_PASSWORDS_EXPORT_TITLE},
       {"exportPasswordsDescription", IDS_SETTINGS_PASSWORDS_EXPORT_DESCRIPTION},
-      {"exportPasswords", IDS_SETTINGS_PASSWORDS_EXPORT},
-      {"exportingPasswordsTitle", IDS_SETTINGS_PASSWORDS_EXPORTING_TITLE},
-      {"exportPasswordsTryAgain", IDS_SETTINGS_PASSWORDS_EXPORT_TRY_AGAIN},
-      {"exportPasswordsFailTitle",
-       IDS_SETTINGS_PASSWORDS_EXPORTING_FAILURE_TITLE},
-      {"exportPasswordsFailTips",
-       IDS_SETTINGS_PASSWORDS_EXPORTING_FAILURE_TIPS},
-      {"exportPasswordsFailTipsEnoughSpace",
-       IDS_SETTINGS_PASSWORDS_EXPORTING_FAILURE_TIP_ENOUGH_SPACE},
-      {"exportPasswordsFailTipsAnotherFolder",
-       IDS_SETTINGS_PASSWORDS_EXPORTING_FAILURE_TIP_ANOTHER_FOLDER}};
+      {"exportPasswords", IDS_SETTINGS_PASSWORDS_EXPORT}};
 
   html_source->AddString(
       "managePasswordsLabel",
@@ -1433,9 +1423,6 @@ void AddPeopleStrings(content::WebUIDataSource* html_source) {
     {"videoModeAccessibleText", IDS_SETTINGS_VIDEO_MODE_ACCESSIBLE_TEXT},
 #else   // !defined(OS_CHROMEOS)
     {"domainManagedProfile", IDS_SETTINGS_PEOPLE_DOMAIN_MANAGED_PROFILE},
-    {"peopleSignInPrompt", IDS_SETTINGS_PEOPLE_SIGN_IN_PROMPT},
-    {"peopleSignInPromptSecondary",
-     IDS_SETTINGS_PEOPLE_SIGN_IN_PROMPT_SECONDARY},
     {"editPerson", IDS_SETTINGS_EDIT_PERSON},
     {"profileNameAndPicture", IDS_SETTINGS_PROFILE_NAME_AND_PICTURE},
     {"showShortcutLabel", IDS_SETTINGS_PROFILE_SHORTCUT_TOGGLE_LABEL},

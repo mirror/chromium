@@ -1595,7 +1595,7 @@ void RenderWidgetHostViewAura::OnDeviceScaleFactorChanged(
 
   host_->WasResized();
   if (delegated_frame_host_)
-    delegated_frame_host_->WasResized(cc::DeadlinePolicy::UseDefaultDeadline());
+    delegated_frame_host_->WasResized();
   if (host_->auto_resize_enabled()) {
     host_->DidAllocateLocalSurfaceIdForAutoResize(
         host_->last_auto_resize_request_number());
@@ -2046,11 +2046,10 @@ void RenderWidgetHostViewAura::UpdateCursorIfOverSelf() {
   }
 }
 
-void RenderWidgetHostViewAura::WasResized(
-    const cc::DeadlinePolicy& deadline_policy) {
+void RenderWidgetHostViewAura::WasResized() {
   window_->AllocateLocalSurfaceId();
   if (delegated_frame_host_)
-    delegated_frame_host_->WasResized(deadline_policy);
+    delegated_frame_host_->WasResized();
   if (host_->auto_resize_enabled()) {
     host_->DidAllocateLocalSurfaceIdForAutoResize(
         host_->last_auto_resize_request_number());
@@ -2193,7 +2192,7 @@ void RenderWidgetHostViewAura::InternalSetBounds(const gfx::Rect& rect) {
     window_->SetBounds(rect);
   host_->WasResized();
   if (delegated_frame_host_)
-    delegated_frame_host_->WasResized(cc::DeadlinePolicy::UseDefaultDeadline());
+    delegated_frame_host_->WasResized();
   if (host_->auto_resize_enabled()) {
     host_->DidAllocateLocalSurfaceIdForAutoResize(
         host_->last_auto_resize_request_number());
@@ -2487,16 +2486,16 @@ void RenderWidgetHostViewAura::ScrollFocusedEditableNodeIntoRect(
 }
 
 void RenderWidgetHostViewAura::OnSynchronizedDisplayPropertiesChanged() {
-  WasResized(cc::DeadlinePolicy::UseDefaultDeadline());
+  WasResized();
 }
 
 void RenderWidgetHostViewAura::ResizeDueToAutoResize(const gfx::Size& new_size,
                                                      uint64_t sequence_number) {
-  WasResized(cc::DeadlinePolicy::UseDefaultDeadline());
+  WasResized();
 }
 
 void RenderWidgetHostViewAura::DidNavigate() {
-  WasResized(cc::DeadlinePolicy::UseExistingDeadline());
+  WasResized();
   if (delegated_frame_host_)
     delegated_frame_host_->DidNavigate();
 }

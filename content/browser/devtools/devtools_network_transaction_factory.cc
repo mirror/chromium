@@ -4,14 +4,13 @@
 
 #include "content/public/browser/devtools_network_transaction_factory.h"
 
-#include "services/network/throttling/throttling_network_transaction_factory.h"
+#include "content/network/throttling/throttling_network_transaction_factory.h"
 
 namespace content {
 
 std::unique_ptr<net::HttpTransactionFactory>
 CreateDevToolsNetworkTransactionFactory(net::HttpNetworkSession* session) {
-  return std::make_unique<network::ThrottlingNetworkTransactionFactory>(
-      session);
+  return std::make_unique<ThrottlingNetworkTransactionFactory>(session);
 }
 
 }  // namespace content

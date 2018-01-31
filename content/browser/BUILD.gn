@@ -10,7 +10,6 @@ import("//build/config/ui.gni")
 import("//content/public/common/zygote_features.gni")
 import("//gpu/vulkan/features.gni")
 import("//media/media_options.gni")
-import("//net/features.gni")
 import("//ppapi/features/features.gni")
 import("//printing/features/features.gni")
 import("//third_party/WebKit/public/public_features.gni")
@@ -129,7 +128,6 @@ jumbo_source_set("browser") {
     "//services/file/public/interfaces",
     "//services/metrics",
     "//services/metrics/public/cpp:metrics_cpp",
-    "//services/network:network_service",
     "//services/network/public/cpp",
     "//services/network/public/interfaces",
     "//services/resource_coordinator:lib",
@@ -1152,6 +1150,8 @@ jumbo_source_set("browser") {
     "net/network_quality_observer_impl.h",
     "net/quota_policy_cookie_store.cc",
     "net/quota_policy_cookie_store.h",
+    "net/reporting_service_proxy.cc",
+    "net/reporting_service_proxy.h",
     "net/view_blob_internals_job_factory.cc",
     "net/view_blob_internals_job_factory.h",
     "net/view_http_cache_job_factory.cc",
@@ -1588,8 +1588,6 @@ jumbo_source_set("browser") {
     "ssl/ssl_error_handler.h",
     "ssl/ssl_manager.cc",
     "ssl/ssl_manager.h",
-    "ssl_private_key_impl.cc",
-    "ssl_private_key_impl.h",
     "startup_task_runner.cc",
     "startup_task_runner.h",
     "storage_partition_impl.cc",
@@ -2066,6 +2064,8 @@ jumbo_source_set("browser") {
       "android/nfc_host.h",
       "android/overscroll_controller_android.cc",
       "android/overscroll_controller_android.h",
+      "android/popup_zoomer.cc",
+      "android/popup_zoomer.h",
       "android/render_widget_host_connector.cc",
       "android/render_widget_host_connector.h",
       "android/selection_popup_controller.cc",
@@ -2076,8 +2076,6 @@ jumbo_source_set("browser") {
       "android/synchronous_compositor_browser_filter.h",
       "android/synchronous_compositor_host.cc",
       "android/synchronous_compositor_host.h",
-      "android/tap_disambiguator.cc",
-      "android/tap_disambiguator.h",
       "android/tracing_controller_android.cc",
       "android/tracing_controller_android.h",
       "android/web_contents_observer_proxy.cc",
@@ -2321,13 +2319,6 @@ jumbo_source_set("browser") {
 
   if (use_zygote_handle) {
     sources += [ "zygote_host/zygote_handle_linux.cc" ]
-  }
-
-  if (enable_reporting) {
-    sources += [
-      "net/reporting_service_proxy.cc",
-      "net/reporting_service_proxy.h",
-    ]
   }
 }
 

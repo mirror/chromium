@@ -20,6 +20,10 @@
 #include "ui/display/screen.h"
 #include "ui/gfx/geometry/insets.h"
 #include "ui/views/widget/widget.h"
+#include "ui/wm/core/shadow.h"
+#include "ui/wm/core/shadow_controller.h"
+#include "ui/wm/core/shadow_types.h"
+#include "ui/wm/public/activation_client.h"
 
 namespace ash {
 

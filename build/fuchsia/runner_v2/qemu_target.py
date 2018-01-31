@@ -32,14 +32,13 @@ def _GetAvailableTcpPort():
 
 
 class QemuTarget(target.Target):
-  def __init__(self, output_dir, target_cpu, ram_size_mb=2048):
+  def __init__(self, output_dir, target_cpu):
     """output_dir: The directory which will contain the files that are
                    generated to support the QEMU deployment.
     target_cpu: The emulated target CPU architecture.
                 Can be 'x64' or 'arm64'."""
     super(QemuTarget, self).__init__(output_dir, target_cpu)
     self._qemu_process = None
-    self._ram_size_mb = ram_size_mb
 
   def __enter__(self):
     return self
@@ -59,7 +58,7 @@ class QemuTarget(target.Target):
     kernel_args = boot_data.GetKernelArgs(self._output_dir)
 
     qemu_command = [qemu_path,
-        '-m', str(self._ram_size_mb),
+        '-m', '2048',
         '-nographic',
         '-kernel', boot_data.GetKernelPath(self._GetTargetSdkArch()),
         '-initrd', boot_data_path,
@@ -118,14 +117,11 @@ class QemuTarget(target.Target):
         qemu_command, stdout=open(os.devnull), stdin=open(os.devnull),
         stderr=open(os.devnull))
 
-    self._WaitUntilReady();
+    self._Connect();
 
   def Shutdown(self):
     logging.info('Shutting down QEMU.')
     self._qemu_process.kill()
-
-  def GetQemuStdout(self):
-    return self._qemu_process.stdout
 
   def _GetEndpoint(self):
     return ('localhost', self._host_ssh_port)

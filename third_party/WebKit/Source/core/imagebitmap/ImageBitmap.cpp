@@ -595,10 +595,7 @@ ImageBitmap::ImageBitmap(const void* pixel_data,
                                                       : kUnpremul_SkAlphaType,
                         color_params.GetSkColorSpaceForSkSurfaces());
   SkPixmap pixmap(info, pixel_data, info.bytesPerPixel() * width);
-  sk_sp<SkImage> raster_copy = SkImage::MakeRasterCopy(pixmap);
-  if (!raster_copy)
-    return;
-  image_ = StaticBitmapImage::Create(std::move(raster_copy));
+  image_ = StaticBitmapImage::Create(SkImage::MakeRasterCopy(pixmap));
   if (!image_)
     return;
   image_->SetOriginClean(is_image_bitmap_origin_clean);

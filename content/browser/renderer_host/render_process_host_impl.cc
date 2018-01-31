@@ -101,6 +101,7 @@
 #include "content/browser/memory/memory_coordinator_impl.h"
 #include "content/browser/mime_registry_impl.h"
 #include "content/browser/mus_util.h"
+#include "content/browser/net/reporting_service_proxy.h"
 #include "content/browser/notifications/notification_message_filter.h"
 #include "content/browser/payments/payment_manager.h"
 #include "content/browser/permissions/permission_service_context.h"
@@ -193,7 +194,6 @@
 #include "ppapi/features/features.h"
 #include "services/device/public/interfaces/battery_monitor.mojom.h"
 #include "services/device/public/interfaces/constants.mojom.h"
-#include "services/network/public/cpp/features.h"
 #include "services/network/public/cpp/network_switches.h"
 #include "services/network/public/interfaces/network_service.mojom.h"
 #include "services/resource_coordinator/public/cpp/process_resource_coordinator.h"
@@ -272,10 +272,6 @@
 #else
 #define IntToStringType base::IntToString
 #endif
-
-#if BUILDFLAG(ENABLE_REPORTING)
-#include "content/browser/net/reporting_service_proxy.h"
-#endif  // BUILDFLAG(ENABLE_REPORTING)
 
 namespace content {
 namespace {
@@ -1928,10 +1924,8 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
   registry->AddInterface(
       base::Bind(&metrics::CreateSingleSampleMetricsProvider));
 
-#if BUILDFLAG(ENABLE_REPORTING)
   registry->AddInterface(
       base::Bind(&CreateReportingServiceProxy, storage_partition_impl_));
-#endif  // BUILDFLAG(ENABLE_REPORTING)
 
   registry->AddInterface(base::BindRepeating(
       &AppCacheDispatcherHost::Create,
@@ -1950,7 +1944,7 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
   associated_registry->AddInterface(base::Bind(
       &RenderProcessHostImpl::CreateRendererHost, base::Unretained(this)));
 
-  if (base::FeatureList::IsEnabled(network::features::kNetworkService)) {
+  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
     AddUIThreadInterface(
         registry.get(),
         base::Bind(&RenderProcessHostImpl::CreateURLLoaderFactory,
@@ -2002,7 +1996,7 @@ void RenderProcessHostImpl::GetAssociatedInterface(
 
 void RenderProcessHostImpl::GetBlobURLLoaderFactory(
     network::mojom::URLLoaderFactoryRequest request) {
-  if (!base::FeatureList::IsEnabled(network::features::kNetworkService)) {
+  if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
     NOTREACHED();
     return;
   }
@@ -2058,7 +2052,7 @@ void RenderProcessHostImpl::CreateRendererHost(
 
 void RenderProcessHostImpl::CreateURLLoaderFactory(
     network::mojom::URLLoaderFactoryRequest request) {
-  if (!base::FeatureList::IsEnabled(network::features::kNetworkService)) {
+  if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
     NOTREACHED();
     return;
   }
@@ -2638,7 +2632,6 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     switches::kVModule,
     // Please keep these in alphabetical order. Compositor switches here should
     // also be added to chrome/browser/chromeos/login/chrome_restart_request.cc.
-    cc::switches::kCheckDamageEarly,
     cc::switches::kDisableCompositedAntialiasing,
     cc::switches::kDisableThreadedAnimation,
     cc::switches::kEnableGpuBenchmarking,

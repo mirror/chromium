@@ -80,11 +80,10 @@ class DataReductionProxyDelegate
   // NetworkChangeNotifier::IPAddressObserver:
   void OnIPAddressChanged() override;
 
-  // Checks if the first proxy server in |result| supports QUIC and if so
-  // adds an alternative proxy configuration to |result|.
-  void GetAlternativeProxy(const GURL& url,
+  bool GetAlternativeProxy(const GURL& url,
+                           const net::ProxyServer& resolved_proxy_server,
                            const net::ProxyRetryInfoMap& proxy_retry_info,
-                           net::ProxyInfo* result) const;
+                           net::ProxyServer* alternative_proxy_server) const;
 
   const DataReductionProxyConfig* config_;
   const DataReductionProxyConfigurator* configurator_;

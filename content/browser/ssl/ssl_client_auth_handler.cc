@@ -120,10 +120,10 @@ class SSLClientAuthHandler::Core : public base::RefCountedThreadSafe<Core> {
 
 SSLClientAuthHandler::SSLClientAuthHandler(
     std::unique_ptr<net::ClientCertStore> client_cert_store,
-    ResourceRequestInfo::WebContentsGetter web_contents_getter,
+    net::URLRequest* request,
     net::SSLCertRequestInfo* cert_request_info,
-    Delegate* delegate)
-    : web_contents_getter_(web_contents_getter),
+    SSLClientAuthHandler::Delegate* delegate)
+    : request_(request),
       cert_request_info_(cert_request_info),
       delegate_(delegate),
       weak_factory_(this) {
@@ -184,7 +184,9 @@ void SSLClientAuthHandler::DidGetClientCerts(
 
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&SelectCertificateOnUIThread, web_contents_getter_,
+      base::BindOnce(&SelectCertificateOnUIThread,
+                     ResourceRequestInfo::ForRequest(request_)
+                         ->GetWebContentsGetterForRequest(),
                      base::RetainedRef(cert_request_info_),
                      std::move(client_certs), weak_factory_.GetWeakPtr()));
 }

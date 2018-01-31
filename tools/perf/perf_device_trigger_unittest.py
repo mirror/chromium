@@ -13,7 +13,8 @@ import perf_device_trigger
 
 
 class FakeArgs(object):
-  def __init__(self, bot_id, dump_json):
+  def __init__(self, shards, bot_id, dump_json):
+    self.shards = shards
     self.bot_id = bot_id
     self.dump_json = dump_json
 
@@ -31,7 +32,7 @@ class PerfDeviceTriggerUnittest(unittest.TestCase):
               prefix='perf_device_trigger_unittest')
           try:
             perf_device_trigger.trigger_tasks(
-                FakeArgs(['build1'], json_temp),
+                FakeArgs(1, ['build1'], json_temp),
                 ['trigger', '--some', '--test', '--', 'args'])
 
             call_mock.assert_called_once()
@@ -50,14 +51,12 @@ class PerfDeviceTriggerUnittest(unittest.TestCase):
             # just '/').
             self.assertTrue(
                 len(os.path.commonprefix([temp_json_path, json_temp])) > 1)
+
             self.assertEqual(
               python_args, [
               '/path/to/swarming.py', 'trigger',
               '--some', '--test',
-              '--dimension', 'id', 'build1',
-              '--env', 'GTEST_SHARD_INDEX 0',
-              '--env', 'GTEST_SHARD_SHARDS 1',
-              '--',
+              '--dimension', 'id', 'build1', '--',
               'args', '--bot', 'build1'])
           finally:
             os.close(temp_fd)

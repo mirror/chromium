@@ -649,26 +649,6 @@
             ]
         }
     ],
-    "BlinkSchedulerHighPriorityInput": [
-        {
-            "platforms": [
-                "android",
-                "chromeos",
-                "ios",
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "BlinkSchedulerHighPriorityInput",
-                    "enable_features": [
-                        "BlinkSchedulerHighPriorityInput"
-                    ]
-                }
-            ]
-        }
-    ],
     "BookmarkInProductHelp": [
         {
             "platforms": [
@@ -2827,21 +2807,6 @@
             ]
         }
     ],
-    "ReaderForAccessibility": [
-        {
-            "platforms": [
-                "android"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "ReaderForAccessibility"
-                    ]
-                }
-            ]
-        }
-    ],
     "ReaderModeUI": [
         {
             "platforms": [
@@ -4252,6 +4217,24 @@
                     "enable_features": [
                         "V8BackgroundCompile",
                         "WorkStealingInScriptRunner"
+                    ]
+                }
+            ]
+        }
+    ],
+    "YieldBetweenContentScriptRuns": [
+        {
+            "platforms": [
+                "chromeos",
+                "linux",
+                "mac",
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "Enabled",
+                    "enable_features": [
+                        "YieldBetweenContentScriptRuns"
                     ]
                 }
             ]

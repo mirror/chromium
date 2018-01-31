@@ -66,14 +66,12 @@ const ScrollAlignment ScrollAlignment::kAlignRightAlways = {
 
 #define MIN_INTERSECT_FOR_REVEAL 32
 
-ScrollOffset ScrollAlignment::GetScrollOffsetToExpose(
-    const LayoutRect& scroll_snapport_rect,
-    const LayoutRect& expose_rect,
-    const ScrollAlignment& align_x,
-    const ScrollAlignment& align_y,
-    const ScrollOffset& current_scroll_offset) {
+LayoutRect ScrollAlignment::GetRectToExpose(const LayoutRect& visible_rect,
+                                            const LayoutRect& expose_rect,
+                                            const ScrollAlignment& align_x,
+                                            const ScrollAlignment& align_y) {
   // Prevent degenerate cases by giving the visible rect a minimum non-0 size.
-  LayoutRect non_zero_visible_rect(scroll_snapport_rect);
+  LayoutRect non_zero_visible_rect(visible_rect);
   LayoutUnit minimum_layout_unit;
   minimum_layout_unit.SetRawValue(1);
   if (non_zero_visible_rect.Width() == LayoutUnit())
@@ -119,6 +117,19 @@ ScrollOffset ScrollAlignment::GetScrollOffsetToExpose(
     }
   }
 
+  // Given the X behavior, compute the X coordinate.
+  LayoutUnit x;
+  if (scroll_x == kScrollAlignmentNoScroll) {
+    x = non_zero_visible_rect.X();
+  } else if (scroll_x == kScrollAlignmentRight) {
+    x = expose_rect.MaxX() - non_zero_visible_rect.Width();
+  } else if (scroll_x == kScrollAlignmentCenter) {
+    x = expose_rect.X() +
+        (expose_rect.Width() - non_zero_visible_rect.Width()) / 2;
+  } else {
+    x = expose_rect.X();
+  }
+
   // Determine the appropriate Y behavior.
   ScrollAlignmentBehavior scroll_y;
   LayoutRect expose_rect_y(non_zero_visible_rect.X(), expose_rect.Y(),
@@ -153,41 +164,20 @@ ScrollOffset ScrollAlignment::GetScrollOffsetToExpose(
     }
   }
 
-  // We would like calculate the ScrollPosition to move |expose_rect| inside
-  // the scroll_snapport, which is based on the scroll_origin of the scroller.
-  non_zero_visible_rect.Move(LayoutSize(-current_scroll_offset));
-
-  // Given the X behavior, compute the X coordinate.
-  float x;
-  if (scroll_x == kScrollAlignmentNoScroll) {
-    x = current_scroll_offset.Width();
-  } else if (scroll_x == kScrollAlignmentRight) {
-    x = (expose_rect.MaxX() - non_zero_visible_rect.MaxX()).ToFloat();
-  } else if (scroll_x == kScrollAlignmentCenter) {
-    x = ((expose_rect.X() + expose_rect.MaxX() -
-          (non_zero_visible_rect.X() + non_zero_visible_rect.MaxX())) /
-         2)
-            .ToFloat();
-  } else {
-    x = (expose_rect.X() - non_zero_visible_rect.X()).ToFloat();
-  }
-
   // Given the Y behavior, compute the Y coordinate.
-  float y;
+  LayoutUnit y;
   if (scroll_y == kScrollAlignmentNoScroll) {
-    y = current_scroll_offset.Height();
+    y = non_zero_visible_rect.Y();
   } else if (scroll_y == kScrollAlignmentBottom) {
-    y = (expose_rect.MaxY() - non_zero_visible_rect.MaxY()).ToFloat();
+    y = expose_rect.MaxY() - non_zero_visible_rect.Height();
   } else if (scroll_y == kScrollAlignmentCenter) {
-    y = ((expose_rect.Y() + expose_rect.MaxY() -
-          (non_zero_visible_rect.Y() + non_zero_visible_rect.MaxY())) /
-         2)
-            .ToFloat();
+    y = expose_rect.Y() +
+        (expose_rect.Height() - non_zero_visible_rect.Height()) / 2;
   } else {
-    y = (expose_rect.Y() - non_zero_visible_rect.Y()).ToFloat();
+    y = expose_rect.Y();
   }
 
-  return ScrollOffset(x, y);
+  return LayoutRect(LayoutPoint(x, y), non_zero_visible_rect.Size());
 }
 
 }  // namespace blink

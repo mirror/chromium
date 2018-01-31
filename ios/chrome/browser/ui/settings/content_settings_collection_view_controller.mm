@@ -121,6 +121,11 @@ typedef NS_ENUM(NSInteger, ItemType) {
   [_disablePopupsSetting setObserver:nil];
 }
 
+- (instancetype)init {
+  NOTREACHED();
+  return nil;
+}
+
 - (void)loadModel {
   [super loadModel];
 

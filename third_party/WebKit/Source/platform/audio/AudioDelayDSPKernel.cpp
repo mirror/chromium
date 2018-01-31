@@ -31,17 +31,21 @@
 
 namespace blink {
 
+const float kSmoothingTimeConstant = 0.020f;  // 20ms
+
 AudioDelayDSPKernel::AudioDelayDSPKernel(AudioDSPKernelProcessor* processor,
                                          size_t processing_size_in_frames)
     : AudioDSPKernel(processor),
       write_index_(0),
+      first_time_(true),
       delay_times_(processing_size_in_frames) {}
 
 AudioDelayDSPKernel::AudioDelayDSPKernel(double max_delay_time,
                                          float sample_rate)
     : AudioDSPKernel(sample_rate),
       max_delay_time_(max_delay_time),
-      write_index_(0) {
+      write_index_(0),
+      first_time_(true) {
   DCHECK_GT(max_delay_time, 0.0);
   DCHECK(!std::isnan(max_delay_time));
   if (max_delay_time <= 0.0 || std::isnan(max_delay_time))
@@ -54,6 +58,9 @@ AudioDelayDSPKernel::AudioDelayDSPKernel(double max_delay_time,
 
   buffer_.Allocate(buffer_length);
   buffer_.Zero();
+
+  smoothing_rate_ = AudioUtilities::DiscreteTimeConstantForSampleRate(
+      kSmoothingTimeConstant, sample_rate);
 }
 
 size_t AudioDelayDSPKernel::BufferLengthForDelay(double max_delay_time,
@@ -105,6 +112,11 @@ void AudioDelayDSPKernel::Process(const float* source,
 
     // Make sure the delay time is in a valid range.
     delay_time = clampTo(delay_time, 0.0, max_time);
+
+    if (first_time_) {
+      current_delay_time_ = delay_time;
+      first_time_ = false;
+    }
   }
 
   for (unsigned i = 0; i < frames_to_process; ++i) {
@@ -114,9 +126,14 @@ void AudioDelayDSPKernel::Process(const float* source,
         delay_time = max_time;
       else
         delay_time = clampTo(delay_time, 0.0, max_time);
+      current_delay_time_ = delay_time;
+    } else {
+      // Approach desired delay time.
+      current_delay_time_ +=
+          (delay_time - current_delay_time_) * smoothing_rate_;
     }
 
-    double desired_delay_frames = delay_time * sample_rate;
+    double desired_delay_frames = current_delay_time_ * sample_rate;
 
     double read_position = write_index_ + buffer_length - desired_delay_frames;
     if (read_position >= buffer_length)
@@ -142,6 +159,7 @@ void AudioDelayDSPKernel::Process(const float* source,
 }
 
 void AudioDelayDSPKernel::Reset() {
+  first_time_ = true;
   buffer_.Zero();
 }
 

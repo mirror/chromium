@@ -22,12 +22,6 @@ enum class ASH_PUBLIC_EXPORT AppListState {
   kStateLast = kInvalidState,  // Don't use over IPC
 };
 
-// The status of the app list model.
-enum class ASH_PUBLIC_EXPORT AppListModelStatus {
-  kStatusNormal,
-  kStatusSyncing,  // Syncing apps or installing synced apps.
-};
-
 }  // namespace ash
 
 #endif  // ASH_PUBLIC_CPP_APP_LIST_APP_LIST_TYPES_H_

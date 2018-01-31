@@ -3391,9 +3391,8 @@ error::Error GLES2DecoderPassthroughImpl::DoResizeCHROMIUM(GLuint width,
                                                            GLfloat scale_factor,
                                                            GLenum color_space,
                                                            GLboolean alpha) {
-  gfx::Size safe_size(std::max(1U, width), std::max(1U, height));
   if (offscreen_) {
-    if (!ResizeOffscreenFramebuffer(safe_size)) {
+    if (!ResizeOffscreenFramebuffer(gfx::Size(width, height))) {
       LOG(ERROR) << "GLES2DecoderPassthroughImpl: Context lost because "
                  << "ResizeOffscreenFramebuffer failed.";
       return error::kLostContext;
@@ -3419,8 +3418,8 @@ error::Error GLES2DecoderPassthroughImpl::DoResizeCHROMIUM(GLuint width,
                       "specified color space was invalid.";
         return error::kLostContext;
     }
-    if (!surface_->Resize(safe_size, scale_factor, surface_color_space,
-                          !!alpha)) {
+    if (!surface_->Resize(gfx::Size(width, height), scale_factor,
+                          surface_color_space, !!alpha)) {
       LOG(ERROR)
           << "GLES2DecoderPassthroughImpl: Context lost because resize failed.";
       return error::kLostContext;

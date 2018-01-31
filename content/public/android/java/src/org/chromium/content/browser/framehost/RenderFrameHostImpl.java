@@ -91,11 +91,6 @@ public class RenderFrameHostImpl implements RenderFrameHost {
         return mIncognito;
     }
 
-    @Override
-    public void setHasReceivedUserGesture() {
-        nativeSetHasReceivedUserGesture(mNativeRenderFrameHostAndroid);
-    }
-
     /**
      * Return the AndroidOverlay routing token for this RenderFrameHostImpl.
      */
@@ -109,5 +104,4 @@ public class RenderFrameHostImpl implements RenderFrameHost {
             long nativeRenderFrameHostAndroid, Callback<String> callback);
     private native UnguessableToken nativeGetAndroidOverlayRoutingToken(
             long nativeRenderFrameHostAndroid);
-    private native void nativeSetHasReceivedUserGesture(long nativeRenderFrameHostAndroid);
 }

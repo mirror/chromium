@@ -205,7 +205,7 @@ void ServiceWorkerControlleeRequestHandler::MaybeCreateLoader(
 
   if (!context_ || !provider_host_) {
     // We can't do anything other than to fall back to network.
-    std::move(callback).Run({});
+    std::move(callback).Run(StartLoaderCallback());
     return;
   }
 
@@ -217,7 +217,7 @@ void ServiceWorkerControlleeRequestHandler::MaybeCreateLoader(
   // Fall back for the subsequent offline page interceptor to load the offline
   // snapshot of the page if required.
   if (ShouldFallbackToLoadOfflinePage(resource_request.headers)) {
-    std::move(callback).Run({});
+    std::move(callback).Run(StartLoaderCallback());
     return;
   }
 #endif  // BUILDFLAG(ENABLE_OFFLINE_PAGES)
@@ -400,7 +400,8 @@ void ServiceWorkerControlleeRequestHandler::
   DCHECK_NE(active_version->fetch_handler_existence(),
             ServiceWorkerVersion::FetchHandlerExistence::UNKNOWN);
   ServiceWorkerMetrics::CountControlledPageLoad(
-      active_version->site_for_uma(), stripped_url_, is_main_frame_load_);
+      active_version->site_for_uma(), stripped_url_, is_main_frame_load_,
+      url_job_->GetPageTransition(), url_job_->GetURLChainSize());
 
   bool is_forwarded =
       MaybeForwardToServiceWorker(url_job_.get(), active_version.get());
@@ -432,7 +433,8 @@ void ServiceWorkerControlleeRequestHandler::OnVersionStatusChanged(
   DCHECK_NE(version->fetch_handler_existence(),
             ServiceWorkerVersion::FetchHandlerExistence::UNKNOWN);
   ServiceWorkerMetrics::CountControlledPageLoad(
-      version->site_for_uma(), stripped_url_, is_main_frame_load_);
+      version->site_for_uma(), stripped_url_, is_main_frame_load_,
+      url_job_->GetPageTransition(), url_job_->GetURLChainSize());
 
   provider_host_->AssociateRegistration(registration,
                                         false /* notify_controllerchange */);

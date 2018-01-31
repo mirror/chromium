@@ -8,7 +8,6 @@
 #include <memory>
 #include "core/CoreExport.h"
 #include "core/loader/BaseFetchContext.h"
-#include "platform/WebTaskRunner.h"
 #include "platform/wtf/Forward.h"
 #include "services/network/public/interfaces/request_context_frame_type.mojom-blink.h"
 
@@ -16,6 +15,7 @@ namespace blink {
 
 class ResourceFetcher;
 class SubresourceFilter;
+class WebTaskRunner;
 class WebURLLoader;
 class WebURLLoaderFactory;
 class WebWorkerFetchContext;

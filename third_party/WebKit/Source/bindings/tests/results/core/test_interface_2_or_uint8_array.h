@@ -14,6 +14,7 @@
 #include "bindings/core/v8/Dictionary.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/NativeValueTraits.h"
+#include "bindings/core/v8/Nullable.h"
 #include "bindings/core/v8/V8ArrayBufferView.h"
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "bindings/core/v8/V8Uint8Array.h"
@@ -21,7 +22,6 @@
 #include "core/typed_arrays/ArrayBufferViewHelpers.h"
 #include "core/typed_arrays/FlexibleArrayBufferView.h"
 #include "platform/heap/Handle.h"
-#include "platform/wtf/Optional.h"
 
 namespace blink {
 

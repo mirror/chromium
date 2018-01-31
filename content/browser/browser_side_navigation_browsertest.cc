@@ -23,6 +23,7 @@
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/content_browser_test.h"
 #include "content/public/test/content_browser_test_utils.h"
+#include "content/public/test/controllable_http_response.h"
 #include "content/public/test/navigation_handle_observer.h"
 #include "content/public/test/test_navigation_observer.h"
 #include "content/shell/browser/shell.h"
@@ -32,10 +33,8 @@
 #include "net/base/filename_util.h"
 #include "net/base/load_flags.h"
 #include "net/dns/mock_host_resolver.h"
-#include "net/test/embedded_test_server/controllable_http_response.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/test/url_request/url_request_failed_job.h"
-#include "services/network/public/cpp/features.h"
 #include "url/gurl.h"
 
 namespace content {
@@ -530,11 +529,10 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBaseBrowserTest,
   // NetworkService, it is not used so the request is not canceled.
   // TODO(arthursonzogni): Find a way to cancel a request from the browser
   // with the NetworkService.
-  if (base::FeatureList::IsEnabled(network::features::kNetworkService))
+  if (base::FeatureList::IsEnabled(features::kNetworkService))
     return;
 
-  net::test_server::ControllableHttpResponse response(embedded_test_server(),
-                                                      "/main_document");
+  ControllableHttpResponse response(embedded_test_server(), "/main_document");
   ASSERT_TRUE(embedded_test_server()->Start());
 
   // 1) Load a new document. Commit the navigation but do not send the full

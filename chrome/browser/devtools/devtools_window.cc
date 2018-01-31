@@ -1001,7 +1001,7 @@ GURL DevToolsWindow::GetDevToolsURL(Profile* profile,
       break;
     case kFrontendNode:
       url_string += "&nodeFrontend=true";
-      FALLTHROUGH;
+    // Fall through
     case kFrontendV8:
       url_string += "&v8only=true";
       break;

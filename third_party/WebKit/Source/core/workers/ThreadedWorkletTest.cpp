@@ -69,8 +69,7 @@ class ThreadedWorkletThreadForTest : public WorkerThread {
   static void EnsureSharedBackingThread() {
     DCHECK(IsMainThread());
     WorkletThreadHolder<ThreadedWorkletThreadForTest>::CreateForTest(
-        WebThreadCreationParams(WebThreadType::kTestThread)
-            .SetThreadName("ThreadedWorkletThreadForTest"));
+        WebThreadCreationParams("ThreadedWorkletThreadForTest"));
   }
 
   static void ClearSharedBackingThread() {
@@ -156,8 +155,8 @@ class ThreadedWorkletThreadForTest : public WorkerThread {
 
   bool IsOwningBackingThread() const final { return false; }
 
-  WebThreadType GetThreadType() const override {
-    return WebThreadType::kUnspecifiedWorkerThread;
+  scheduler::ThreadType GetThreadType() const override {
+    return scheduler::ThreadType::kUnspecifiedWorkerThread;
   }
 };
 
@@ -183,8 +182,7 @@ class ThreadedWorkletMessagingProxyForTest
             document->Url(), document->UserAgent(),
             document->GetContentSecurityPolicy()->Headers().get(),
             document->GetReferrerPolicy(), document->GetSecurityOrigin(),
-            document->IsSecureContext(), worker_clients,
-            document->AddressSpace(),
+            worker_clients, document->AddressSpace(),
             OriginTrialContext::GetTokens(document).get(),
             std::move(worker_settings), kV8CacheOptionsDefault),
         WTF::nullopt);

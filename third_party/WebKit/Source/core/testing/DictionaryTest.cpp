@@ -81,38 +81,33 @@ void DictionaryTest::set(const InternalDictionary& testing_dictionary) {
 
 void DictionaryTest::get(InternalDictionary& result) {
   if (long_member_)
-    result.setLongMember(long_member_.value());
+    result.setLongMember(long_member_.Get());
   if (long_member_with_clamp_)
-    result.setLongMemberWithClamp(long_member_with_clamp_.value());
-  if (long_member_with_enforce_range_) {
-    result.setLongMemberWithEnforceRange(
-        long_member_with_enforce_range_.value());
-  }
+    result.setLongMemberWithClamp(long_member_with_clamp_.Get());
+  if (long_member_with_enforce_range_)
+    result.setLongMemberWithEnforceRange(long_member_with_enforce_range_.Get());
   result.setLongMemberWithDefault(long_member_with_default_);
   if (long_or_null_member_)
-    result.setLongOrNullMember(long_or_null_member_.value());
-  if (long_or_null_member_with_default_) {
+    result.setLongOrNullMember(long_or_null_member_.Get());
+  if (long_or_null_member_with_default_)
     result.setLongOrNullMemberWithDefault(
-        long_or_null_member_with_default_.value());
-  }
+        long_or_null_member_with_default_.Get());
   if (boolean_member_)
-    result.setBooleanMember(boolean_member_.value());
+    result.setBooleanMember(boolean_member_.Get());
   if (double_member_)
-    result.setDoubleMember(double_member_.value());
+    result.setDoubleMember(double_member_.Get());
   if (unrestricted_double_member_)
-    result.setUnrestrictedDoubleMember(unrestricted_double_member_.value());
+    result.setUnrestrictedDoubleMember(unrestricted_double_member_.Get());
   result.setStringMember(string_member_);
   result.setStringMemberWithDefault(string_member_with_default_);
   result.setByteStringMember(byte_string_member_);
   result.setUsvStringMember(usv_string_member_);
   if (string_sequence_member_)
-    result.setStringSequenceMember(string_sequence_member_.value());
+    result.setStringSequenceMember(string_sequence_member_.Get());
   result.setStringSequenceMemberWithDefault(
       string_sequence_member_with_default_);
-  if (string_sequence_or_null_member_) {
-    result.setStringSequenceOrNullMember(
-        string_sequence_or_null_member_.value());
-  }
+  if (string_sequence_or_null_member_)
+    result.setStringSequenceOrNullMember(string_sequence_or_null_member_.Get());
   result.setEnumMember(enum_member_);
   result.setEnumMemberWithDefault(enum_member_with_default_);
   result.setEnumOrNullMember(enum_or_null_member_);
@@ -124,10 +119,9 @@ void DictionaryTest::get(InternalDictionary& result) {
   result.setObjectOrNullMemberWithDefault(object_or_null_member_with_default_);
   if (!double_or_string_member_.IsNull())
     result.setDoubleOrStringMember(double_or_string_member_);
-  if (double_or_string_sequence_member_) {
+  if (!double_or_string_sequence_member_.IsNull())
     result.setDoubleOrStringSequenceMember(
-        double_or_string_sequence_member_.value());
-  }
+        double_or_string_sequence_member_.Get());
   result.setEventTargetOrNullMember(event_target_or_null_member_);
   result.setInternalEnumOrInternalEnumSequenceMember(
       internal_enum_or_internal_enum_sequence_);
@@ -138,7 +132,7 @@ ScriptValue DictionaryTest::getDictionaryMemberProperties(
   if (!dictionary_member_properties_)
     return ScriptValue();
   V8ObjectBuilder builder(script_state);
-  HashMap<String, String> properties = dictionary_member_properties_.value();
+  HashMap<String, String> properties = dictionary_member_properties_.Get();
   for (HashMap<String, String>::iterator it = properties.begin();
        it != properties.end(); ++it)
     builder.AddString(it->key, it->value);
@@ -204,20 +198,20 @@ String DictionaryTest::stringFromIterable(
 }
 
 void DictionaryTest::Reset() {
-  long_member_ = WTF::nullopt;
-  long_member_with_clamp_ = WTF::nullopt;
-  long_member_with_enforce_range_ = WTF::nullopt;
+  long_member_ = nullptr;
+  long_member_with_clamp_ = nullptr;
+  long_member_with_enforce_range_ = nullptr;
   long_member_with_default_ = -1;  // This value should not be returned.
-  long_or_null_member_ = WTF::nullopt;
-  long_or_null_member_with_default_ = WTF::nullopt;
-  boolean_member_ = WTF::nullopt;
-  double_member_ = WTF::nullopt;
-  unrestricted_double_member_ = WTF::nullopt;
+  long_or_null_member_ = nullptr;
+  long_or_null_member_with_default_ = nullptr;
+  boolean_member_ = nullptr;
+  double_member_ = nullptr;
+  unrestricted_double_member_ = nullptr;
   string_member_ = String();
   string_member_with_default_ = String("Should not be returned");
-  string_sequence_member_ = WTF::nullopt;
+  string_sequence_member_ = nullptr;
   string_sequence_member_with_default_.Fill("Should not be returned", 1);
-  string_sequence_or_null_member_ = WTF::nullopt;
+  string_sequence_or_null_member_ = nullptr;
   enum_member_ = String();
   enum_member_with_default_ = String();
   enum_or_null_member_ = String();
@@ -230,7 +224,7 @@ void DictionaryTest::Reset() {
   derived_string_member_ = String();
   derived_string_member_with_default_ = String();
   required_boolean_member_ = false;
-  dictionary_member_properties_ = WTF::nullopt;
+  dictionary_member_properties_ = nullptr;
   internal_enum_or_internal_enum_sequence_ =
       InternalEnumOrInternalEnumSequence();
 }

@@ -363,9 +363,7 @@ cr.define('settings_people_page', function() {
         Polymer.dom.flush();
       });
 
-      teardown(function() {
-        peoplePage.remove();
-      });
+      teardown(function() { peoplePage.remove(); });
 
       test('ManageProfileRow', function() {
         assertTrue(!!peoplePage.$$('#edit-profile'));

@@ -11,9 +11,9 @@
 #include "chrome/browser/engagement/site_engagement_service.h"
 #include "chrome/browser/resource_coordinator/tab_activity_watcher.h"
 #include "chrome/browser/resource_coordinator/tab_manager.h"
-#include "chrome/browser/resource_coordinator/tab_metrics_event.pb.h"
-#include "chrome/browser/resource_coordinator/tab_metrics_logger_impl.h"
 #include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/tabs/tab_metrics_event.pb.h"
+#include "chrome/browser/ui/tabs/tab_metrics_logger_impl.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/tabs/tab_ukm_test_helper.h"
 #include "chrome/test/base/test_browser_window.h"
@@ -72,6 +72,7 @@ blink::WebMouseEvent CreateMouseEvent(WebInputEvent::Type event_type) {
 class TabActivityWatcherTest : public TabActivityTestBase {
  protected:
   TabActivityWatcherTest() {
+    TabActivityWatcher::GetInstance()->DisableLogTimeoutForTesting();
     TabActivityWatcher::GetInstance()->ResetForTesting();
   }
 

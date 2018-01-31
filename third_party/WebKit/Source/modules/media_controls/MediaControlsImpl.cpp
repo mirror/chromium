@@ -610,27 +610,23 @@ void MediaControlsImpl::UpdateCSSClassFromState() {
 }
 
 MediaControlsImpl::ControlsState MediaControlsImpl::State() const {
-  HTMLMediaElement::NetworkState network_state =
-      MediaElement().getNetworkState();
-  HTMLMediaElement::ReadyState ready_state = MediaElement().getReadyState();
-
-  if (is_scrubbing_ && ready_state != HTMLMediaElement::kHaveNothing)
+  if (is_scrubbing_)
     return ControlsState::kScrubbing;
 
-  switch (network_state) {
+  switch (MediaElement().getNetworkState()) {
     case HTMLMediaElement::kNetworkEmpty:
     case HTMLMediaElement::kNetworkNoSource:
       return ControlsState::kNoSource;
     case HTMLMediaElement::kNetworkLoading:
-      if (ready_state == HTMLMediaElement::kHaveNothing)
+      if (MediaElement().getReadyState() == HTMLMediaElement::kHaveNothing)
         return ControlsState::kLoadingMetadata;
       if (!MediaElement().paused() &&
-          ready_state != HTMLMediaElement::kHaveEnoughData) {
+          MediaElement().getReadyState() != HTMLMediaElement::kHaveEnoughData) {
         return ControlsState::kBuffering;
       }
       break;
     case HTMLMediaElement::kNetworkIdle:
-      if (ready_state == HTMLMediaElement::kHaveNothing)
+      if (MediaElement().getReadyState() == HTMLMediaElement::kHaveNothing)
         return ControlsState::kNotLoaded;
       break;
   }
@@ -980,8 +976,9 @@ void MediaControlsImpl::UpdateOverflowMenuWanted() const {
       std::make_pair(toggle_closed_captions_button_.Get(), false),
   };
 
-  // Current size of the media controls.
-  WebSize controls_size = size_;
+  // Get the size of the media controls.
+  WebSize controls_size =
+      MediaControlElementsHelper::GetSizeOrDefault(*this, WebSize(0, 0));
 
   // The video controls are more than one row so we need to allocate vertical
   // room and hide the overlay play button if there is not enough room.

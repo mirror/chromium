@@ -2023,8 +2023,10 @@ void LayerTreeImpl::RegisterSelection(const LayerSelection& selection) {
   selection_ = selection;
 }
 
-void LayerTreeImpl::ResetHandleVisibilityChanged() {
+bool LayerTreeImpl::GetAndResetHandleVisibilityChanged() {
+  bool curr_handle_visibility_changed = handle_visibility_changed_;
   handle_visibility_changed_ = false;
+  return curr_handle_visibility_changed;
 }
 
 static gfx::SelectionBound ComputeViewportSelectionBound(

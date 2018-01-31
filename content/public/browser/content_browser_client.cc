@@ -17,6 +17,7 @@
 #include "content/public/browser/network_service_instance.h"
 #include "content/public/browser/page_navigator.h"
 #include "content/public/browser/vpn_service_proxy.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/url_loader_throttle.h"
 #include "device/geolocation/public/cpp/location_provider.h"
 #include "media/audio/audio_manager.h"
@@ -24,9 +25,7 @@
 #include "media/media_features.h"
 #include "mojo/public/cpp/bindings/associated_interface_ptr.h"
 #include "net/ssl/client_cert_identity.h"
-#include "net/ssl/client_cert_store.h"
 #include "net/url_request/url_request_context_getter.h"
-#include "services/network/public/cpp/features.h"
 #include "services/service_manager/sandbox/sandbox_type.h"
 #include "storage/browser/quota/quota_manager.h"
 #include "ui/gfx/image/image_skia.h"
@@ -584,7 +583,7 @@ network::mojom::NetworkContextPtr ContentBrowserClient::CreateNetworkContext(
     BrowserContext* context,
     bool in_memory,
     const base::FilePath& relative_partition_path) {
-  if (!base::FeatureList::IsEnabled(network::features::kNetworkService))
+  if (!base::FeatureList::IsEnabled(features::kNetworkService))
     return nullptr;
 
   network::mojom::NetworkContextPtr network_context;
@@ -646,11 +645,6 @@ bool ContentBrowserClient::ShouldPermitIndividualAttestationForWebauthnRPID(
     content::BrowserContext* browser_context,
     const std::string& rp_id) {
   return false;
-}
-
-std::unique_ptr<net::ClientCertStore>
-ContentBrowserClient::CreateClientCertStore(ResourceContext* resource_context) {
-  return nullptr;
 }
 
 }  // namespace content

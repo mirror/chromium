@@ -422,9 +422,8 @@ class SpuriousMouseMoveEventObserver
 // these should all be marked as synthesized and get dropped while the
 // overscroll gesture is in progress.
 // See crbug.com/731914
-// Disabled due to flakiness: https://crbug.com/807107.
 IN_PROC_BROWSER_TEST_F(WebContentsViewAuraTest,
-                       DISABLED_OverscrollNotInterruptedBySpuriousMouseEvents) {
+                       OverscrollNotInterruptedBySpuriousMouseEvents) {
   ASSERT_NO_FATAL_FAILURE(StartTestWithPage("/overscroll_navigation.html"));
   WebContentsImpl* web_contents =
       static_cast<WebContentsImpl*>(shell()->web_contents());
@@ -917,9 +916,7 @@ IN_PROC_BROWSER_TEST_F(WebContentsViewAuraTest, HideContentOnParenHide) {
 
 // Ensure that SnapToPhysicalPixelBoundary() is called on WebContentsView parent
 // change. This is a regression test for http://crbug.com/388908.
-// Disabled due to flakiness: https://crbug.com/807107.
-IN_PROC_BROWSER_TEST_F(WebContentsViewAuraTest,
-                       DISABLED_WebContentsViewReparent) {
+IN_PROC_BROWSER_TEST_F(WebContentsViewAuraTest, WebContentsViewReparent) {
   ASSERT_NO_FATAL_FAILURE(StartTestWithPage("/overscroll_navigation.html"));
 
   std::unique_ptr<aura::Window> window(new aura::Window(nullptr));

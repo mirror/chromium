@@ -265,8 +265,7 @@ PaintArtifactCompositor::PendingLayer::PendingLayer(
       rect_known_to_be_opaque(
           first_paint_chunk.known_to_be_opaque ? bounds : FloatRect()),
       backface_hidden(first_paint_chunk.properties.backface_hidden),
-      property_tree_state(first_paint_chunk.properties.property_tree_state
-                              .GetPropertyTreeState()),
+      property_tree_state(first_paint_chunk.properties.property_tree_state),
       requires_own_layer(chunk_requires_own_layer) {
   paint_chunks.push_back(&first_paint_chunk);
 }
@@ -570,35 +569,18 @@ class SynthesizedClip : private cc::ContentLayerClient {
     layer_->SetIsDrawable(true);
   }
 
-  void Update(const FloatRoundedRect& rrect,
-              scoped_refptr<const RefCountedPath> path) {
+  void Update(const FloatRoundedRect& rrect) {
     IntRect layer_bounds = EnclosingIntRect(rrect.Rect());
-    gfx::Vector2dF new_layer_origin(layer_bounds.X(), layer_bounds.Y());
-
-    SkRRect new_local_rrect = rrect;
-    new_local_rrect.offset(-new_layer_origin.x(), -new_layer_origin.y());
-
-    bool path_in_layer_changed = false;
-    if (path_ == path) {
-      path_in_layer_changed = path && layer_origin_ != new_layer_origin;
-    } else if (!path_ || !path) {
-      path_in_layer_changed = true;
-    } else {
-      SkPath new_path = path->GetSkPath();
-      new_path.offset(layer_origin_.x() - new_layer_origin.x(),
-                      layer_origin_.y() - new_layer_origin.y());
-      path_in_layer_changed = path_->GetSkPath() != new_path;
-    }
-
-    if (local_rrect_ != new_local_rrect || path_in_layer_changed) {
-      layer_->SetNeedsDisplay();
-    }
-    layer_->set_offset_to_transform_parent(new_layer_origin);
+    layer_->set_offset_to_transform_parent(
+        gfx::Vector2dF(layer_bounds.X(), layer_bounds.Y()));
     layer_->SetBounds(gfx::Size(layer_bounds.Width(), layer_bounds.Height()));
 
-    layer_origin_ = new_layer_origin;
-    local_rrect_ = new_local_rrect;
-    path_ = std::move(path);
+    SkRRect new_rrect(rrect);
+    new_rrect.offset(-layer_bounds.X(), -layer_bounds.Y());
+    if (rrect_ == new_rrect)
+      return;
+    rrect_ = new_rrect;
+    layer_->SetNeedsDisplay();
   }
 
   cc::Layer* GetLayer() const { return layer_.get(); }
@@ -615,21 +597,10 @@ class SynthesizedClip : private cc::ContentLayerClient {
       PaintingControlSetting) final {
     auto cc_list = base::MakeRefCounted<cc::DisplayItemList>(
         cc::DisplayItemList::kTopLevelDisplayItemList);
+    cc_list->StartPaint();
     cc::PaintFlags flags;
     flags.setAntiAlias(true);
-    cc_list->StartPaint();
-    if (!path_) {
-      cc_list->push<cc::DrawRRectOp>(local_rrect_, flags);
-    } else {
-      cc_list->push<cc::SaveOp>();
-      cc_list->push<cc::TranslateOp>(-layer_origin_.x(), -layer_origin_.x());
-      cc_list->push<cc::ClipPathOp>(path_->GetSkPath(), SkClipOp::kIntersect,
-                                    true);
-      SkRRect rrect = local_rrect_;
-      rrect.offset(layer_origin_.x(), layer_origin_.y());
-      cc_list->push<cc::DrawRRectOp>(rrect, flags);
-      cc_list->push<cc::RestoreOp>();
-    }
+    cc_list->push<cc::DrawRRectOp>(rrect_, flags);
     cc_list->EndPaintOfUnpaired(gfx::Rect(layer_->bounds()));
     cc_list->Finalize();
     return cc_list;
@@ -637,9 +608,7 @@ class SynthesizedClip : private cc::ContentLayerClient {
 
  private:
   scoped_refptr<cc::PictureLayer> layer_;
-  gfx::Vector2dF layer_origin_;
-  SkRRect local_rrect_ = SkRRect::MakeEmpty();
-  scoped_refptr<const RefCountedPath> path_;
+  SkRRect rrect_ = SkRRect::MakeEmpty();
   CompositorElementId mask_isolation_id_;
   CompositorElementId mask_effect_id_;
 };
@@ -659,7 +628,7 @@ cc::Layer* PaintArtifactCompositor::CreateOrReuseSynthesizedClipLayer(
 
   entry->in_use = true;
   SynthesizedClip& synthesized_clip = *entry->synthesized_clip;
-  synthesized_clip.Update(node->ClipRect(), node->ClipPath());
+  synthesized_clip.Update(node->ClipRect());
   mask_isolation_id = synthesized_clip.GetMaskIsolationId();
   mask_effect_id = synthesized_clip.GetMaskEffectId();
   return synthesized_clip.GetLayer();

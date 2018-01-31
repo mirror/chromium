@@ -352,9 +352,7 @@ namespace blink {
 class TestGCScope {
  public:
   explicit TestGCScope(BlinkGC::StackState state)
-      : state_(ThreadState::Current()),
-        safe_point_scope_(state),
-        persistent_lock_(ProcessHeap::CrossThreadPersistentMutex()) {
+      : state_(ThreadState::Current()), safe_point_scope_(state) {
     DCHECK(state_->CheckThread());
     state_->MarkPhasePrologue(state, BlinkGC::kGCWithSweep,
                               BlinkGC::kPreciseGC);
@@ -368,7 +366,6 @@ class TestGCScope {
  private:
   ThreadState* state_;
   SafePointScope safe_point_scope_;
-  MutexLocker persistent_lock_;
 };
 
 class SimpleObject : public GarbageCollected<SimpleObject> {
@@ -484,8 +481,7 @@ class ThreadedTesterBase {
     Vector<std::unique_ptr<WebThread>, kNumberOfThreads> threads;
     for (int i = 0; i < kNumberOfThreads; i++) {
       threads.push_back(Platform::Current()->CreateThread(
-          WebThreadCreationParams(WebThreadType::kTestThread)
-              .SetThreadName("blink gc testing thread")));
+          WebThreadCreationParams("blink gc testing thread")));
       PostCrossThreadTask(
           *threads.back()->GetWebTaskRunner(), FROM_HERE,
           CrossThreadBind(ThreadFunc, CrossThreadUnretained(tester)));
@@ -5473,8 +5469,7 @@ class ThreadedStrongificationTester {
     MutexLocker locker(MainThreadMutex());
     std::unique_ptr<WebThread> worker_thread =
         Platform::Current()->CreateThread(
-            WebThreadCreationParams(WebThreadType::kTestThread)
-                .SetThreadName("Test Worker Thread"));
+            WebThreadCreationParams("Test Worker Thread"));
     PostCrossThreadTask(*worker_thread->GetWebTaskRunner(), FROM_HERE,
                         CrossThreadBind(WorkerThreadMain));
 
@@ -5574,8 +5569,7 @@ class MemberSameThreadCheckTester {
     MutexLocker locker(MainThreadMutex());
     std::unique_ptr<WebThread> worker_thread =
         Platform::Current()->CreateThread(
-            WebThreadCreationParams(WebThreadType::kTestThread)
-                .SetThreadName("Test Worker Thread"));
+            WebThreadCreationParams("Test Worker Thread"));
     PostCrossThreadTask(
         *worker_thread->GetWebTaskRunner(), FROM_HERE,
         CrossThreadBind(&MemberSameThreadCheckTester::WorkerThreadMain,
@@ -5619,8 +5613,7 @@ class PersistentSameThreadCheckTester {
     MutexLocker locker(MainThreadMutex());
     std::unique_ptr<WebThread> worker_thread =
         Platform::Current()->CreateThread(
-            WebThreadCreationParams(WebThreadType::kTestThread)
-                .SetThreadName("Test Worker Thread"));
+            WebThreadCreationParams("Test Worker Thread"));
     PostCrossThreadTask(
         *worker_thread->GetWebTaskRunner(), FROM_HERE,
         CrossThreadBind(&PersistentSameThreadCheckTester::WorkerThreadMain,
@@ -5664,8 +5657,7 @@ class MarkingSameThreadCheckTester {
     MutexLocker locker(MainThreadMutex());
     std::unique_ptr<WebThread> worker_thread =
         Platform::Current()->CreateThread(
-            WebThreadCreationParams(WebThreadType::kTestThread)
-                .SetThreadName("Test Worker Thread"));
+            WebThreadCreationParams("Test Worker Thread"));
     Persistent<MainThreadObject> main_thread_object = new MainThreadObject();
     PostCrossThreadTask(
         *worker_thread->GetWebTaskRunner(), FROM_HERE,
@@ -6464,8 +6456,7 @@ TEST(HeapTest, CrossThreadWeakPersistent) {
   // the worker thread.
   MutexLocker main_thread_mutex_locker(MainThreadMutex());
   std::unique_ptr<WebThread> worker_thread = Platform::Current()->CreateThread(
-      WebThreadCreationParams(WebThreadType::kTestThread)
-          .SetThreadName("Test Worker Thread"));
+      WebThreadCreationParams("Test Worker Thread"));
   DestructorLockingObject* object = nullptr;
   PostCrossThreadTask(
       *worker_thread->GetWebTaskRunner(), FROM_HERE,

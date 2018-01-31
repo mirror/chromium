@@ -286,9 +286,6 @@ void NetworkConfigurationHandler::SetShillProperties(
 
   LogConfigProperties("SetProperty", service_path, *properties_to_set);
 
-  // Clear error state when setting Shill properties.
-  network_state_handler_->ClearLastErrorForNetwork(service_path);
-
   std::unique_ptr<base::DictionaryValue> properties_copy(
       properties_to_set->DeepCopy());
   DBusThreadManager::Get()->GetShillServiceClient()->SetProperties(

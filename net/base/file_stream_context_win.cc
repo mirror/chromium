@@ -68,7 +68,7 @@ FileStream::Context::~Context() {
 
 int FileStream::Context::Read(IOBuffer* buf,
                               int buf_len,
-                              CompletionOnceCallback callback) {
+                              const CompletionCallback& callback) {
   CheckNoAsyncInProgress();
 
   DCHECK(!async_read_initiated_);
@@ -76,7 +76,7 @@ int FileStream::Context::Read(IOBuffer* buf,
   DCHECK(!io_complete_for_read_received_);
 
   last_operation_ = READ;
-  IOCompletionIsPending(std::move(callback), buf);
+  IOCompletionIsPending(callback, buf);
 
   async_read_initiated_ = true;
   result_ = 0;
@@ -91,7 +91,7 @@ int FileStream::Context::Read(IOBuffer* buf,
 
 int FileStream::Context::Write(IOBuffer* buf,
                                int buf_len,
-                               CompletionOnceCallback callback) {
+                               const CompletionCallback& callback) {
   CheckNoAsyncInProgress();
 
   last_operation_ = WRITE;
@@ -101,15 +101,14 @@ int FileStream::Context::Write(IOBuffer* buf,
   if (!WriteFile(file_.GetPlatformFile(), buf->data(), buf_len,
                  &bytes_written, &io_context_.overlapped)) {
     IOResult error = IOResult::FromOSError(GetLastError());
-    if (error.os_error == ERROR_IO_PENDING) {
-      IOCompletionIsPending(std::move(callback), buf);
-    } else {
+    if (error.os_error == ERROR_IO_PENDING)
+      IOCompletionIsPending(callback, buf);
+    else
       LOG(WARNING) << "WriteFile failed: " << error.os_error;
-    }
     return static_cast<int>(error.result);
   }
 
-  IOCompletionIsPending(std::move(callback), buf);
+  IOCompletionIsPending(callback, buf);
   return ERR_IO_PENDING;
 }
 
@@ -126,10 +125,11 @@ void FileStream::Context::OnFileOpened() {
                                                        this);
 }
 
-void FileStream::Context::IOCompletionIsPending(CompletionOnceCallback callback,
-                                                IOBuffer* buf) {
+void FileStream::Context::IOCompletionIsPending(
+    const CompletionCallback& callback,
+    IOBuffer* buf) {
   DCHECK(callback_.is_null());
-  callback_ = std::move(callback);
+  callback_ = callback;
   in_flight_buf_ = buf;  // Hold until the async operation ends.
   async_in_progress_ = true;
 }
@@ -188,9 +188,11 @@ void FileStream::Context::InvokeUserCallback() {
     last_operation_ = NONE;
     async_in_progress_ = false;
   }
+  CompletionCallback temp_callback = callback_;
+  callback_.Reset();
   scoped_refptr<IOBuffer> temp_buf = in_flight_buf_;
   in_flight_buf_ = NULL;
-  std::move(callback_).Run(result_);
+  temp_callback.Run(result_);
 }
 
 void FileStream::Context::DeleteOrphanedContext() {

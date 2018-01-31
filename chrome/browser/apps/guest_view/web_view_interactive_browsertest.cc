@@ -1245,14 +1245,7 @@ IN_PROC_BROWSER_TEST_F(WebViewContextMenuInteractiveTest,
 
 // https://crbug.com/754890: The embedder could become out of sync and think
 // that the guest is not focused when the guest actually was.
-// TODO(crbug.com/807116): Flaky on the Linux MSAN bot.
-#if defined(OS_LINUX)
-#define MAYBE_EnsureFocusSynced DISABLED_EnsureFocusSynced
-#else
-#define MAYBE_EnsureFocusSynced EnsureFocusSynced
-#endif
-IN_PROC_BROWSER_TEST_F(WebViewBrowserPluginInteractiveTest,
-                       MAYBE_EnsureFocusSynced) {
+IN_PROC_BROWSER_TEST_F(WebViewBrowserPluginInteractiveTest, EnsureFocusSynced) {
   LoadAndLaunchPlatformApp("web_view/focus_sync", "WebViewTest.LAUNCHED");
 
   content::WebContents* embedder_web_contents = GetFirstAppWindowWebContents();
@@ -1316,8 +1309,7 @@ IN_PROC_BROWSER_TEST_F(WebViewPopupInteractiveTest, PopupPositioningBasic) {
 }
 
 // Flaky on ChromeOS and Linux: http://crbug.com/526886
-// TODO(crbug.com/807446): Flaky on Mac.
-#if defined(OS_CHROMEOS) || defined(OS_LINUX) || defined(OS_MACOSX)
+#if defined(OS_CHROMEOS) || defined(OS_LINUX)
 #define MAYBE_PopupPositioningMoved DISABLED_PopupPositioningMoved
 #else
 #define MAYBE_PopupPositioningMoved PopupPositioningMoved

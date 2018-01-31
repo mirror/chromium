@@ -116,7 +116,6 @@ import org.chromium.content_public.browser.ImeEventObserver;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.content_public.browser.SelectionPopupController;
 import org.chromium.content_public.browser.WebContents;
-import org.chromium.content_public.browser.WebContentsAccessibility;
 import org.chromium.content_public.common.BrowserControlsState;
 import org.chromium.content_public.common.Referrer;
 import org.chromium.content_public.common.ResourceRequestBody;
@@ -634,8 +633,8 @@ public class Tab
     }
 
     private int calculateDefaultThemeColor() {
-        boolean useModernDesign = getActivity() != null && getActivity().supportsModernDesign()
-                && FeatureUtilities.isChromeModernDesignEnabled();
+        boolean useModernDesign = FeatureUtilities.isChromeModernDesignEnabled()
+                && getActivity().supportsModernDesign();
         Resources resources = mThemedApplicationContext.getResources();
         return ColorUtils.getDefaultThemeColor(resources, useModernDesign, mIncognito);
     }
@@ -1824,10 +1823,9 @@ public class Tab
             mNativePage = null;
             destroyNativePageInternal(previousNativePage);
 
-            WebContents oldWebContents = getWebContents();
-            if (oldWebContents != null) {
-                oldWebContents.setImportance(ChildProcessImportance.NORMAL);
-                getWebContentsAccessibility(oldWebContents).setObscuredByAnotherView(false);
+            if (mContentViewCore != null) {
+                mContentViewCore.setObscuredByAnotherView(false);
+                mContentViewCore.getWebContents().setImportance(ChildProcessImportance.NORMAL);
             }
 
             mContentViewCore = cvc;
@@ -1873,7 +1871,7 @@ public class Tab
             // For browser tabs, we want to set accessibility focus to the page
             // when it loads. This is not the default behavior for embedded
             // web views.
-            getWebContentsAccessibility(getWebContents()).setShouldFocusOnPageLoad(true);
+            mContentViewCore.setShouldSetAccessibilityFocusOnPageLoad(true);
 
             ImeAdapter.fromWebContents(mContentViewCore.getWebContents())
                     .addEventObserver(new ImeEventObserver() {
@@ -1912,10 +1910,6 @@ public class Tab
             mGestureStateListener = createGestureStateListener();
         }
         GestureListenerManager.fromWebContents(webContents).addListener(mGestureStateListener);
-    }
-
-    private static WebContentsAccessibility getWebContentsAccessibility(WebContents webContents) {
-        return webContents != null ? WebContentsAccessibility.fromWebContents(webContents) : null;
     }
 
     /**
@@ -3174,11 +3168,11 @@ public class Tab
             }
         }
 
-        WebContentsAccessibility wcax = getWebContentsAccessibility(getWebContents());
-        if (wcax != null) {
+        ContentViewCore cvc = getContentViewCore();
+        if (cvc != null) {
             boolean isWebContentObscured = isObscuredByAnotherViewForAccessibility()
                     || isShowingSadTab();
-            wcax.setObscuredByAnotherView(isWebContentObscured);
+            cvc.setObscuredByAnotherView(isWebContentObscured);
         }
     }
 
@@ -3420,8 +3414,7 @@ public class Tab
             });
         }
 
-        mDownloadIPHBubble.setPreferredVerticalOrientation(
-                AnchoredPopupWindow.VERTICAL_ORIENTATION_BELOW);
+        mDownloadIPHBubble.setPreferredOrientation(AnchoredPopupWindow.Orientation.BELOW);
         mDownloadIPHBubble.show();
         createPulse(rect);
     }

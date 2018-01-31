@@ -672,8 +672,7 @@ HRESULT CoreAudioUtil::GetSharedModeMixFormat(
     return hr;
 
   size_t bytes = sizeof(WAVEFORMATEX) + format_pcmex->Format.cbSize;
-  DCHECK_EQ(bytes, sizeof(WAVEFORMATPCMEX))
-      << "Format tag: 0x" << std::hex << format_pcmex->Format.wFormatTag;
+  DCHECK_EQ(bytes, sizeof(WAVEFORMATPCMEX));
 
   memcpy(format, format_pcmex, bytes);
   DVLOG(2) << *format;

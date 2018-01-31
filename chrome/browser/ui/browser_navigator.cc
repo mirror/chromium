@@ -161,7 +161,7 @@ std::pair<Browser*, int> GetBrowserAndTabForDisposition(
 #if defined(OS_ANDROID)
       }
 #endif
-      FALLTHROUGH;
+    // fall through
     case WindowOpenDisposition::CURRENT_TAB:
       if (params.browser)
         return {params.browser, -1};
@@ -260,7 +260,7 @@ void NormalizeDisposition(NavigateParams* params) {
       // automatically.
       if (params->window_action == NavigateParams::NO_ACTION)
         params->window_action = NavigateParams::SHOW_WINDOW;
-      FALLTHROUGH;
+      // Fall-through.
     }
     case WindowOpenDisposition::NEW_FOREGROUND_TAB:
     case WindowOpenDisposition::SINGLETON_TAB:
@@ -307,7 +307,6 @@ void LoadURLInContents(WebContents* target_contents,
   load_url_params.is_renderer_initiated = params->is_renderer_initiated;
   load_url_params.started_from_context_menu = params->started_from_context_menu;
   load_url_params.suggested_filename = params->suggested_filename;
-  load_url_params.has_user_gesture = params->user_gesture;
 
   if (params->uses_post) {
     load_url_params.load_type = NavigationController::LOAD_TYPE_HTTP_POST;

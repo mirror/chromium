@@ -38,9 +38,9 @@ class WaitingHandle final : public WebDataConsumerHandle {
 }  // namespace
 
 DataConsumerHandleTestUtil::Thread::Thread(
-    const WebThreadCreationParams& params,
+    const char* name,
     InitializationPolicy initialization_policy)
-    : thread_(WebThreadSupportingGC::Create(params)),
+    : thread_(WebThreadSupportingGC::Create(WebThreadCreationParams(name))),
       initialization_policy_(initialization_policy),
       waitable_event_(std::make_unique<WaitableEvent>()) {
   thread_->PostTask(FROM_HERE, CrossThreadBind(&Thread::Initialize,

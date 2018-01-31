@@ -646,6 +646,7 @@ interface CSSMathInvert : CSSMathValue
     attribute @@toStringTag
     getter value
     method constructor
+    setter value
 interface CSSMathMax : CSSMathValue
     attribute @@toStringTag
     getter values
@@ -658,6 +659,7 @@ interface CSSMathNegate : CSSMathValue
     attribute @@toStringTag
     getter value
     method constructor
+    setter value
 interface CSSMathProduct : CSSMathValue
     attribute @@toStringTag
     getter values
@@ -724,7 +726,7 @@ interface CSSResourceValue : CSSStyleValue
     attribute @@toStringTag
     getter state
     method constructor
-interface CSSRotate : CSSTransformComponent
+interface CSSRotation : CSSTransformComponent
     attribute @@toStringTag
     getter angle
     getter x
@@ -793,9 +795,9 @@ interface CSSStyleDeclaration
     setter cssText
 interface CSSStyleRule : CSSRule
     attribute @@toStringTag
+    getter attributeStyleMap
     getter selectorText
     getter style
-    getter styleMap
     method constructor
     setter selectorText
     setter style
@@ -835,7 +837,7 @@ interface CSSTransformValue : CSSStyleValue
     method keys
     method toMatrix
     method values
-interface CSSTranslate : CSSTransformComponent
+interface CSSTranslation : CSSTransformComponent
     attribute @@toStringTag
     getter x
     getter y
@@ -8931,10 +8933,6 @@ interface XRFrameOfReference : XRCoordinateSystem
     method constructor
 interface XRLayer
     attribute @@toStringTag
-    method constructor
-interface XRPresentationContext
-    attribute @@toStringTag
-    getter canvas
     method constructor
 interface XRPresentationFrame
     attribute @@toStringTag

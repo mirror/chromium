@@ -43,6 +43,11 @@
   return self;
 }
 
+- (instancetype)init {
+  NOTREACHED();
+  return nil;
+}
+
 - (void)releaseView {
   if (self.viewIsLive)
     _view = nil;

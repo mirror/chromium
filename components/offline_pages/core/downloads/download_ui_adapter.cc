@@ -8,7 +8,6 @@
 #include "base/guid.h"
 #include "base/logging.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "base/trace_event/trace_event.h"
 #include "components/offline_pages/core/background/request_coordinator.h"
 #include "components/offline_pages/core/background/save_page_request.h"
 #include "components/offline_pages/core/client_namespace_constants.h"
@@ -387,8 +386,6 @@ void DownloadUIAdapter::ClearCache() {
   }
   items_.clear();
   state_ = State::NOT_LOADED;
-  TRACE_EVENT_ASYNC_END0("offline_pages", "DownloadUIAdapter: items cached",
-                         this);
 }
 
 void DownloadUIAdapter::OnOfflinePagesLoaded(
@@ -440,8 +437,6 @@ void DownloadUIAdapter::OnRequestsLoaded(
   request_coordinator_->AddObserver(this);
 
   state_ = State::LOADED;
-  TRACE_EVENT_ASYNC_BEGIN1("offline_pages", "DownloadUIAdapter: items cached",
-                           this, "initial count", items_.size());
   for (auto& observer : observers_)
     observer.OnItemsAvailable(this);
 

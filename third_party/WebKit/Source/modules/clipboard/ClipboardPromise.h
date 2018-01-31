@@ -36,7 +36,7 @@ class ClipboardPromise final
  private:
   ClipboardPromise(ScriptState*);
 
-  scoped_refptr<base::SingleThreadTaskRunner> GetTaskRunner();
+  scoped_refptr<WebTaskRunner> GetTaskRunner();
   mojom::blink::PermissionService* GetPermissionService();
 
   bool IsFocusedDocument(ExecutionContext*);

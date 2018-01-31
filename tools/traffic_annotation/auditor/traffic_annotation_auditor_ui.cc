@@ -197,8 +197,9 @@ bool WriteAnnotationsFile(const base::FilePath& filepath,
   std::vector<std::string> lines;
   std::string title =
       "Unique ID\tLast Update\tSender\tDescription\tTrigger\tData\t"
-      "Destination\tCookies Allowed\tCookies Store\tSetting\tChrome Policy\t"
-      "Comments\tSource File\tID Hash Code\tContent Hash Code";
+      "Destination\tEmpty Policy Justification\tCookies Allowed\t"
+      "Cookies Store\tSetting\tChrome Policy\tComments\tSource File\t"
+      "ID Hash Code\tContent Hash Code";
 
   for (auto& instance : annotations) {
     if (instance.type != AnnotationInstance::Type::ANNOTATION_COMPLETE)
@@ -249,6 +250,8 @@ bool WriteAnnotationsFile(const base::FilePath& filepath,
 
     // Policy.
     const auto policy = instance.proto.policy();
+    line +=
+        base::StringPrintf("\t%s", policy.empty_policy_justification().c_str());
     line +=
         policy.cookies_allowed() ==
                 traffic_annotation::

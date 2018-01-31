@@ -131,6 +131,7 @@ class WebSpeechSynthesizerClient;
 class WebStorageNamespace;
 class WebSyncProvider;
 struct WebFloatPoint;
+class WebTaskRunner;
 class WebThemeEngine;
 class WebThread;
 struct WebThreadCreationParams;
@@ -468,7 +469,7 @@ class BLINK_PLATFORM_EXPORT Platform {
   virtual WebThread* CompositorThread() const { return 0; }
 
   // Returns an interface to the file task runner.
-  base::SingleThreadTaskRunner* FileTaskRunner() const;
+  WebTaskRunner* FileTaskRunner() const;
   scoped_refptr<base::SingleThreadTaskRunner> BaseFileTaskRunner() const;
 
   // Returns an interface to the IO task runner.

@@ -4,39 +4,22 @@
 
 #include "crazy_linker_globals.h"
 
-#include <new>
-
 #include <pthread.h>
+
+#include "crazy_linker_system.h"
 
 namespace crazy {
 
 namespace {
 
-// Implement lazy-initialized static variable without a C++ constructor.
-// Note that this is leaky, i.e. the instance is never destroyed, but
-// this was also the case with the previous heap-based implementation.
-pthread_once_t s_once = PTHREAD_ONCE_INIT;
+Globals* g_globals = NULL;
+pthread_once_t g_globals_once = PTHREAD_ONCE_INIT;
 
-union Storage {
-  char dummy;
-  Globals globals;
-
-  Storage() {}
-  ~Storage() {}
-};
-
-Storage s_storage;
-
-void InitGlobals() {
-  new (&s_storage.globals) Globals();
-}
+void CreateGlobalsInstance() { g_globals = new Globals(); }
 
 }  // namespace
 
-Globals::Globals() {
-  // TODO(digit): Remove the need for a recursive mutex (which is often the
-  // symptom of something wrong in threaded code). This needs refactoring
-  // the deferred task management though.
+Globals::Globals() : search_paths_(), rdebug_() {
   pthread_mutexattr_t attr;
   pthread_mutexattr_init(&attr);
   pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
@@ -44,25 +27,14 @@ Globals::Globals() {
   search_paths_.ResetFromEnv("LD_LIBRARY_PATH");
 }
 
-Globals::~Globals() {
-  pthread_mutex_destroy(&lock_);
-}
+Globals::~Globals() { pthread_mutex_destroy(&lock_); }
 
-void Globals::Lock() {
-  pthread_mutex_lock(&lock_);
-}
-
-void Globals::Unlock() {
-  pthread_mutex_unlock(&lock_);
-}
-
-// static
 Globals* Globals::Get() {
-  pthread_once(&s_once, InitGlobals);
-  return &s_storage.globals;
+  pthread_once(&g_globals_once, CreateGlobalsInstance);
+  return g_globals;
 }
 
 // static
-int Globals::sdk_build_version = 0;
+int Globals::sdk_build_version_ = 0;
 
 }  // namespace crazy

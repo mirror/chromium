@@ -35,7 +35,6 @@ class CC_EXPORT LayerTreeSettings {
   viz::ResourceSettings resource_settings;
   bool single_thread_proxy_scheduler = true;
   bool main_frame_before_activation_enabled = false;
-  bool check_damage_early = false;
   bool using_synchronous_renderer_compositor = false;
   bool enable_latency_recovery = true;
   bool can_use_lcd_text = true;

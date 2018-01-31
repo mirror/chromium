@@ -21928,17 +21928,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Event.Touch.TouchAdjustment.AdjustToSameNode" enum="Boolean">
-  <owner>eirage@chromium.org</owner>
-  <summary>
-    Records if doing touch adjustment on touchstart have same hit test node as
-    doing touch adjustment on GestureTap. True for same node, false for
-    different node. This only records GestureTap events.
-
-    Team: input-dev@chromium.org.
-  </summary>
-</histogram>
-
 <histogram name="Event.Touch.TouchDispositionsAfterPageLoad"
     enum="TouchEventDispatchResultType">
   <obsolete>
@@ -23102,60 +23091,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     The number of times Bookmark Apps are launched, grouped by
     extensions::AppLaunchSource. The equivalent histogram on Android is called
     Launch.HomeScreenSource.
-  </summary>
-</histogram>
-
-<histogram name="Extensions.BrowsingInstanceViolation.ExtensionType"
-    enum="ExtensionType">
-  <owner>lukasza@chromium.org</owner>
-  <summary>
-    When an extension violates browsing instance boundaries, this metric records
-    the extension type.
-
-    This is a temporary metric - probably okay to remove it in M66, after we've
-    gathered sufficient UMA data in M65.  See also http://crbug.com/718489.
-  </summary>
-</histogram>
-
-<histogram
-    name="Extensions.BrowsingInstanceViolation.IsBackgroundSourceOrTarget"
-    enum="ExtensionViewTypeIsBackground">
-  <owner>lukasza@chromium.org</owner>
-  <summary>
-    When an extension violates browsing instance boundaries, this metric records
-    whether either the source or the target frame was of the extension view type
-    of VIEW_TYPE_BACKGROUND_CONTENTS.
-
-    This is a temporary metric - probably okay to remove it in M66, after we've
-    gathered sufficient UMA data in M65.  See also http://crbug.com/718489.
-  </summary>
-</histogram>
-
-<histogram name="Extensions.BrowsingInstanceViolation.SourceExtensionViewType"
-    enum="ExtensionViewType">
-  <owner>lukasza@chromium.org</owner>
-  <summary>
-    When an extension violates browsing instance boundaries, this metric records
-    the extension view type of the source frame.
-
-    This is a temporary metric - probably okay to remove it in M66, after we've
-    gathered sufficient UMA data in M65.  See also http://crbug.com/718489.
-  </summary>
-</histogram>
-
-<histogram name="Extensions.BrowsingInstanceViolation.TargetExtensionViewType"
-    enum="ExtensionViewType">
-  <owner>lukasza@chromium.org</owner>
-  <summary>
-    When an extension violates browsing instance boundaries, this metric records
-    the extension view type of the found frame.
-
-    This metric should help confirm or deny the theory that violating browsing
-    instance boundaries is only needed for looking up background contents /
-    pages (of VIEW_TYPE_BACKGROUND_CONTENTS type).
-
-    This is a temporary metric - probably okay to remove it in M66, after we've
-    gathered sufficient UMA data in M65.  See also http://crbug.com/718489.
   </summary>
 </histogram>
 
@@ -58460,15 +58395,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="PageLoad.Clients.ServiceWorker.PageTransition"
-    enum="CorePageTransition">
-  <owner>falken@chromium.org</owner>
-  <summary>
-    The core transition type for main frame page loads controlled by a service
-    worker.
-  </summary>
-</histogram>
-
 <histogram name="PageLoad.Clients.SubresourceFilter.ActivationDecision"
     enum="SubresourceFilterActivationDecision">
   <owner>bmcquade@chromium.org</owner>
@@ -79630,10 +79556,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="ServiceWorker.MainFramePageLoad.CoreTransition"
     enum="CorePageTransition">
-  <obsolete>
-    Deprecated 2018-01 in favor of
-    PageLoad.Clients.ServiceWorker.PageTransition.
-  </obsolete>
   <owner>horo@chromium.org</owner>
   <summary>
     The transition type for main frame page loads controlled by a service
@@ -79643,9 +79565,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="ServiceWorker.MainFramePageLoad.RedirectChainLength"
     units="urls">
-  <obsolete>
-    Deprecated 2018-01.
-  </obsolete>
   <owner>horo@chromium.org</owner>
   <summary>
     Total length of the server redirects during main frame page loads controlled
@@ -99457,15 +99376,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     Number of IPv6 local Candidates gathered in a PeerConnection Session once
     the ICE address gathering process reaches the Completed status. To avoid
     miscounting, this only includes the first m line's first component.
-  </summary>
-</histogram>
-
-<histogram name="WebRTC.PeerConnection.KeyProtocol"
-    enum="PeerConnectionKeyProtocol">
-  <owner>hta@chromium.org</owner>
-  <summary>
-    What key exchange protocol (DTLS or SDES) is used to establish the crypto
-    keys for a PeerConnection's RTP transport.
   </summary>
 </histogram>
 

@@ -40,6 +40,7 @@
 #include "modules/quota/DOMError.h"
 #include "modules/quota/QuotaUtils.h"
 #include "mojo/public/cpp/bindings/callback_helpers.h"
+#include "platform/WebTaskRunner.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/SecurityOrigin.h"

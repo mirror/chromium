@@ -47,6 +47,7 @@
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/content_browser_test.h"
 #include "content/public/test/content_browser_test_utils.h"
+#include "content/public/test/controllable_http_response.h"
 #include "content/public/test/test_navigation_observer.h"
 #include "content/public/test/test_utils.h"
 #include "content/shell/browser/shell.h"
@@ -54,7 +55,6 @@
 #include "content/test/content_browser_test_utils_internal.h"
 #include "content/test/did_commit_provisional_load_interceptor.h"
 #include "net/dns/mock_host_resolver.h"
-#include "net/test/embedded_test_server/controllable_http_response.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/test/embedded_test_server/http_request.h"
 #include "net/test/url_request/url_request_failed_job.h"
@@ -7861,10 +7861,9 @@ IN_PROC_BROWSER_TEST_F(
 // See https://crbug.com/769645.
 // See https://crbug.com/773683.
 IN_PROC_BROWSER_TEST_F(ContentBrowserTest, HistoryBackInUnloadCancelsReload) {
-  net::test_server::ControllableHttpResponse response_1(embedded_test_server(),
-                                                        "/main_document");
-  net::test_server::ControllableHttpResponse response_2(
-      embedded_test_server(), "/main_document?attribute=1");
+  ControllableHttpResponse response_1(embedded_test_server(), "/main_document");
+  ControllableHttpResponse response_2(embedded_test_server(),
+                                      "/main_document?attribute=1");
 
   EXPECT_TRUE(embedded_test_server()->Start());
 

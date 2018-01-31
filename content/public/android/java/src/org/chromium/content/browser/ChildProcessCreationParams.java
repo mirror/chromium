@@ -6,7 +6,6 @@ package org.chromium.content.browser;
 
 import android.os.Bundle;
 
-import org.chromium.base.ContextUtils;
 import org.chromium.base.library_loader.LibraryProcessType;
 
 /**
@@ -32,7 +31,7 @@ public class ChildProcessCreationParams {
     }
 
     // Members should all be immutable to avoid worrying about thread safety.
-    private final String mPackageNameForService;
+    private final String mPackageNameForSandboxedService;
     private final boolean mIsSandboxedServiceExternal;
     private final int mLibraryProcessType;
     private final boolean mBindToCallerCheck;
@@ -40,39 +39,34 @@ public class ChildProcessCreationParams {
     // signals in content.
     private final boolean mIgnoreVisibilityForImportance;
 
-    public ChildProcessCreationParams(String packageNameForService,
+    public ChildProcessCreationParams(String packageNameForSandboxedService,
             boolean isExternalSandboxedService, int libraryProcessType, boolean bindToCallerCheck,
             boolean ignoreVisibilityForImportance) {
-        mPackageNameForService = packageNameForService;
+        mPackageNameForSandboxedService = packageNameForSandboxedService;
         mIsSandboxedServiceExternal = isExternalSandboxedService;
         mLibraryProcessType = libraryProcessType;
         mBindToCallerCheck = bindToCallerCheck;
         mIgnoreVisibilityForImportance = ignoreVisibilityForImportance;
     }
 
+    public String getPackageNameForSandboxedService() {
+        return mPackageNameForSandboxedService;
+    }
+
+    public boolean getIsSandboxedServiceExternal() {
+        return mIsSandboxedServiceExternal;
+    }
+
+    public boolean getBindToCallerCheck() {
+        return mBindToCallerCheck;
+    }
+
+    public boolean getIgnoreVisibilityForImportance() {
+        return mIgnoreVisibilityForImportance;
+    }
+
     public void addIntentExtras(Bundle extras) {
         extras.putInt(EXTRA_LIBRARY_PROCESS_TYPE, mLibraryProcessType);
-    }
-
-    public static String getPackageNameForService() {
-        ChildProcessCreationParams params = ChildProcessCreationParams.getDefault();
-        return params != null ? params.mPackageNameForService
-                              : ContextUtils.getApplicationContext().getPackageName();
-    }
-
-    public static boolean getIsSandboxedServiceExternal() {
-        ChildProcessCreationParams params = ChildProcessCreationParams.getDefault();
-        return params != null && params.mIsSandboxedServiceExternal;
-    }
-
-    public static boolean getBindToCallerCheck() {
-        ChildProcessCreationParams params = ChildProcessCreationParams.getDefault();
-        return params != null && params.mBindToCallerCheck;
-    }
-
-    public static boolean getIgnoreVisibilityForImportance() {
-        ChildProcessCreationParams params = ChildProcessCreationParams.getDefault();
-        return params != null && params.mIgnoreVisibilityForImportance;
     }
 
     public static int getLibraryProcessType(Bundle extras) {

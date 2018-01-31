@@ -41,7 +41,6 @@
 #include "core/imagebitmap/ImageBitmapOptions.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "platform/Supplementable.h"
-#include "platform/WebTaskRunner.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/geometry/IntRect.h"
 #include "third_party/skia/include/core/SkRefCnt.h"
@@ -55,6 +54,7 @@ class EventTarget;
 class ExecutionContext;
 class ImageBitmapSource;
 class ImageBitmapOptions;
+class WebTaskRunner;
 
 typedef HTMLImageElementOrSVGImageElementOrHTMLVideoElementOrHTMLCanvasElementOrBlobOrImageDataOrImageBitmapOrOffscreenCanvas
     ImageBitmapSourceUnion;

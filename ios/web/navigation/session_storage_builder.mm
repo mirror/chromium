@@ -43,6 +43,7 @@ CRWSessionStorage* SessionStorageBuilder::BuildStorage(
        ++index) {
     web::NavigationItemImpl* item =
         navigation_manager->GetNavigationItemImplAtIndex(index);
+    ;
     [item_storages addObject:item_storage_builder.BuildStorage(item)];
   }
   session_storage.itemStorages = item_storages;

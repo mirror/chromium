@@ -49,19 +49,16 @@ Polymer({
 
     /**
      * The currently selected profile icon URL. May be a data URL.
-     * @private
      */
     profileIconUrl_: String,
 
     /**
      * The current profile name.
-     * @private
      */
     profileName_: String,
 
     /**
      * True if the current profile manages supervised users.
-     * @private
      */
     profileManagesSupervisedUsers_: Boolean,
 
@@ -69,19 +66,16 @@ Polymer({
      * The profile deletion warning. The message indicates the number of
      * profile stats that will be deleted if a non-zero count for the profile
      * stats is returned from the browser.
-     * @private
      */
     deleteProfileWarning_: String,
 
     /**
      * True if the profile deletion warning is visible.
-     * @private
      */
     deleteProfileWarningVisible_: Boolean,
 
     /**
      * True if the checkbox to delete the profile has been checked.
-     * @private
      */
     deleteProfile_: Boolean,
 
@@ -273,7 +267,7 @@ Polymer({
   },
 
   /** @private */
-  onProfileTap_: function() {
+  onPictureTap_: function() {
     // <if expr="chromeos">
     settings.navigateTo(settings.routes.CHANGE_PICTURE);
     // </if>
@@ -281,6 +275,13 @@ Polymer({
     settings.navigateTo(settings.routes.MANAGE_PROFILE);
     // </if>
   },
+
+  // <if expr="not chromeos">
+  /** @private */
+  onProfileTap_: function() {
+    settings.navigateTo(settings.routes.MANAGE_PROFILE);
+  },
+  // </if>
 
   /** @private */
   onSigninTap_: function() {
@@ -290,16 +291,7 @@ Polymer({
   /** @private */
   onDisconnectClosed_: function() {
     this.showDisconnectDialog_ = false;
-    // <if expr="not chromeos">
-    if (!this.diceEnabled_) {
-      // If DICE-enabled, this button won't exist here.
-      cr.ui.focusWithoutInk(assert(this.$$('#disconnectButton')));
-    }
-    // </if>
-
-    // <if expr="chromeos">
     cr.ui.focusWithoutInk(assert(this.$$('#disconnectButton')));
-    // </if>
 
     if (settings.getCurrentRoute() == settings.routes.SIGN_OUT)
       settings.navigateToPreviousRoute();

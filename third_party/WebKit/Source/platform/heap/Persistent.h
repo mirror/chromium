@@ -165,7 +165,6 @@ class PersistentBase {
   // clean LSan leak reports or to register a thread-local persistent
   // needing to be cleared out before the thread is terminated.
   PersistentBase* RegisterAsStaticReference() {
-    CHECK_EQ(weaknessConfiguration, kNonWeakPersistentConfiguration);
     if (persistent_node_) {
       DCHECK(ThreadState::Current());
       ThreadState::Current()->RegisterStaticPersistentNode(persistent_node_,
@@ -186,7 +185,8 @@ class PersistentBase {
   NO_SANITIZE_ADDRESS
   void Assign(T* ptr) {
     if (crossThreadnessConfiguration == kCrossThreadPersistentConfiguration) {
-      MutexLocker persistent_lock(ProcessHeap::CrossThreadPersistentMutex());
+      CrossThreadPersistentRegion::LockScope persistent_lock(
+          ProcessHeap::GetCrossThreadPersistentRegion());
       raw_ = ptr;
     } else {
       raw_ = ptr;
@@ -208,7 +208,7 @@ class PersistentBase {
     if (weaknessConfiguration == kWeakPersistentConfiguration) {
       visitor->RegisterWeakCallback(this, HandleWeakPersistent);
     } else {
-      visitor->Trace(raw_);
+      visitor->Mark(raw_);
     }
   }
 
@@ -222,21 +222,15 @@ class PersistentBase {
         TraceMethodDelegate<PersistentBase,
                             &PersistentBase::TracePersistent>::Trampoline;
     if (crossThreadnessConfiguration == kCrossThreadPersistentConfiguration) {
-      CrossThreadPersistentRegion& region =
-          weaknessConfiguration == kWeakPersistentConfiguration
-              ? ProcessHeap::GetCrossThreadWeakPersistentRegion()
-              : ProcessHeap::GetCrossThreadPersistentRegion();
-      region.AllocatePersistentNode(persistent_node_, this, trace_callback);
+      ProcessHeap::GetCrossThreadPersistentRegion().AllocatePersistentNode(
+          persistent_node_, this, trace_callback);
       return;
     }
     ThreadState* state =
         ThreadStateFor<ThreadingTrait<T>::kAffinity>::GetState();
     DCHECK(state->CheckThread());
-    PersistentRegion* region =
-        weaknessConfiguration == kWeakPersistentConfiguration
-            ? state->GetWeakPersistentRegion()
-            : state->GetPersistentRegion();
-    persistent_node_ = region->AllocatePersistentNode(this, trace_callback);
+    persistent_node_ = state->GetPersistentRegion()->AllocatePersistentNode(
+        this, trace_callback);
 #if DCHECK_IS_ON()
     state_ = state;
 #endif
@@ -244,13 +238,9 @@ class PersistentBase {
 
   void Uninitialize() {
     if (crossThreadnessConfiguration == kCrossThreadPersistentConfiguration) {
-      if (AcquireLoad(reinterpret_cast<void* volatile*>(&persistent_node_))) {
-        CrossThreadPersistentRegion& region =
-            weaknessConfiguration == kWeakPersistentConfiguration
-                ? ProcessHeap::GetCrossThreadWeakPersistentRegion()
-                : ProcessHeap::GetCrossThreadPersistentRegion();
-        region.FreePersistentNode(persistent_node_);
-      }
+      if (AcquireLoad(reinterpret_cast<void* volatile*>(&persistent_node_)))
+        ProcessHeap::GetCrossThreadPersistentRegion().FreePersistentNode(
+            persistent_node_);
       return;
     }
 
@@ -263,11 +253,7 @@ class PersistentBase {
 #if DCHECK_IS_ON()
     DCHECK_EQ(state_, state);
 #endif
-    PersistentRegion* region =
-        weaknessConfiguration == kWeakPersistentConfiguration
-            ? state->GetWeakPersistentRegion()
-            : state->GetPersistentRegion();
-    state->FreePersistentNode(region, persistent_node_);
+    state->FreePersistentNode(persistent_node_);
     persistent_node_ = nullptr;
   }
 
@@ -632,7 +618,7 @@ class PersistentHeapCollectionBase : public Collection {
 #if DCHECK_IS_ON()
     DCHECK_EQ(state_, state);
 #endif
-    state->FreePersistentNode(state->GetPersistentRegion(), persistent_node_);
+    state->FreePersistentNode(persistent_node_);
     persistent_node_ = nullptr;
   }
 
@@ -833,8 +819,8 @@ template <typename T>
 struct BindUnwrapTraits<blink::CrossThreadWeakPersistent<T>> {
   static blink::CrossThreadPersistent<T> Unwrap(
       const blink::CrossThreadWeakPersistent<T>& wrapped) {
-    WTF::MutexLocker persistent_lock(
-        blink::ProcessHeap::CrossThreadPersistentMutex());
+    blink::CrossThreadPersistentRegion::LockScope persistentLock(
+        blink::ProcessHeap::GetCrossThreadPersistentRegion());
     return blink::CrossThreadPersistent<T>(wrapped.Get());
   }
 };

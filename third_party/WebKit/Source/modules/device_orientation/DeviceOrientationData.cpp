@@ -35,18 +35,18 @@ DeviceOrientationData* DeviceOrientationData::Create() {
 }
 
 DeviceOrientationData* DeviceOrientationData::Create(
-    const Optional<double>& alpha,
-    const Optional<double>& beta,
-    const Optional<double>& gamma,
+    const Nullable<double>& alpha,
+    const Nullable<double>& beta,
+    const Nullable<double>& gamma,
     bool absolute) {
   return new DeviceOrientationData(alpha, beta, gamma, absolute);
 }
 
 DeviceOrientationData* DeviceOrientationData::Create(
     const DeviceOrientationEventInit& init) {
-  Optional<double> alpha;
-  Optional<double> beta;
-  Optional<double> gamma;
+  Nullable<double> alpha;
+  Nullable<double> beta;
+  Nullable<double> gamma;
   if (init.hasAlpha())
     alpha = init.alpha();
   if (init.hasBeta())
@@ -58,9 +58,9 @@ DeviceOrientationData* DeviceOrientationData::Create(
 
 DeviceOrientationData* DeviceOrientationData::Create(
     const device::OrientationData& data) {
-  Optional<double> alpha;
-  Optional<double> beta;
-  Optional<double> gamma;
+  Nullable<double> alpha;
+  Nullable<double> beta;
+  Nullable<double> gamma;
   if (data.has_alpha)
     alpha = data.alpha;
   if (data.has_beta)
@@ -72,22 +72,22 @@ DeviceOrientationData* DeviceOrientationData::Create(
 
 DeviceOrientationData::DeviceOrientationData() : absolute_(false) {}
 
-DeviceOrientationData::DeviceOrientationData(const Optional<double>& alpha,
-                                             const Optional<double>& beta,
-                                             const Optional<double>& gamma,
+DeviceOrientationData::DeviceOrientationData(const Nullable<double>& alpha,
+                                             const Nullable<double>& beta,
+                                             const Nullable<double>& gamma,
                                              bool absolute)
     : alpha_(alpha), beta_(beta), gamma_(gamma), absolute_(absolute) {}
 
 double DeviceOrientationData::Alpha() const {
-  return alpha_.value();
+  return alpha_.Get();
 }
 
 double DeviceOrientationData::Beta() const {
-  return beta_.value();
+  return beta_.Get();
 }
 
 double DeviceOrientationData::Gamma() const {
-  return gamma_.value();
+  return gamma_.Get();
 }
 
 bool DeviceOrientationData::Absolute() const {
@@ -95,15 +95,15 @@ bool DeviceOrientationData::Absolute() const {
 }
 
 bool DeviceOrientationData::CanProvideAlpha() const {
-  return alpha_.has_value();
+  return !alpha_.IsNull();
 }
 
 bool DeviceOrientationData::CanProvideBeta() const {
-  return beta_.has_value();
+  return !beta_.IsNull();
 }
 
 bool DeviceOrientationData::CanProvideGamma() const {
-  return gamma_.has_value();
+  return !gamma_.IsNull();
 }
 
 bool DeviceOrientationData::CanProvideEventData() const {

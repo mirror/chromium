@@ -6,7 +6,6 @@
 #define WebFrameScheduler_h
 
 #include "base/memory/scoped_refptr.h"
-#include "base/single_thread_task_runner.h"
 #include "public/platform/TaskType.h"
 #include "public/platform/WebScopedVirtualTimePauser.h"
 
@@ -14,6 +13,7 @@
 
 namespace blink {
 
+class WebTaskRunner;
 class WebViewScheduler;
 
 class WebFrameScheduler {
@@ -116,9 +116,8 @@ class WebFrameScheduler {
   // Note: old-style timer task runner corresponds to throttleable task runner
   // and unthrottled task runner corresponds to pausable task runner.
 
-  // Returns a task runner that is suitable with the given task type.
-  virtual scoped_refptr<base::SingleThreadTaskRunner> GetTaskRunner(
-      TaskType) = 0;
+  // Returns a WebTaskRunner that is suitable with the given task type.
+  virtual scoped_refptr<WebTaskRunner> GetTaskRunner(TaskType) = 0;
 
   // Returns the parent WebViewScheduler.
   virtual WebViewScheduler* GetWebViewScheduler() const = 0;

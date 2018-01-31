@@ -14,7 +14,6 @@
 #include "base/files/file_enumerator.h"
 #include "base/files/file_util.h"
 #include "base/metrics/histogram_macros.h"
-#include "base/trace_event/trace_event.h"
 #include "components/offline_pages/core/client_policy_controller.h"
 #include "components/offline_pages/core/offline_page_metadata_store_sql.h"
 #include "components/offline_pages/core/offline_page_types.h"
@@ -172,8 +171,6 @@ TemporaryPagesConsistencyCheckTask::TemporaryPagesConsistencyCheckTask(
 TemporaryPagesConsistencyCheckTask::~TemporaryPagesConsistencyCheckTask() {}
 
 void TemporaryPagesConsistencyCheckTask::Run() {
-  TRACE_EVENT_ASYNC_BEGIN0("offline_pages",
-                           "TemporaryPagesConsistencyCheckTask running", this);
   std::vector<std::string> temp_namespaces =
       policy_controller_->GetNamespacesRemovedOnCacheReset();
   store_->Execute(
@@ -188,9 +185,6 @@ void TemporaryPagesConsistencyCheckTask::OnCheckConsistencyDone(
   UMA_HISTOGRAM_ENUMERATION("OfflinePages.ConsistencyCheck.Temporary.Result",
                             result, SyncOperationResult::RESULT_COUNT);
   TaskComplete();
-  TRACE_EVENT_ASYNC_END1("offline_pages",
-                         "TemporaryPagesConsistencyCheckTask running", this,
-                         "result", static_cast<int>(result));
 }
 
 }  // namespace offline_pages

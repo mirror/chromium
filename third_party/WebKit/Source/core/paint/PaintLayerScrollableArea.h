@@ -281,7 +281,6 @@ class CORE_EXPORT PaintLayerScrollableArea final
   IntSize MaximumScrollOffsetInt() const override;
   IntRect VisibleContentRect(
       IncludeScrollbarsInRect = kExcludeScrollbars) const override;
-  LayoutRect VisibleScrollSnapportRect() const override;
   IntSize ContentsSize() const override;
   void ContentsResized() override;
   bool IsScrollable() const override;

@@ -178,8 +178,6 @@ public class TextBubble implements AnchoredPopupWindow.LayoutObserver {
                 context, rootView, mDrawable, mContentView, anchorRectProvider);
         mPopupWindow.setMargin(
                 context.getResources().getDimensionPixelSize(R.dimen.text_bubble_margin));
-        mPopupWindow.setPreferredHorizontalOrientation(
-                AnchoredPopupWindow.HORIZONTAL_ORIENTATION_CENTER);
         mPopupWindow.setLayoutObserver(this);
 
         mHandler = new Handler();
@@ -280,13 +278,12 @@ public class TextBubble implements AnchoredPopupWindow.LayoutObserver {
     }
 
     /**
-     * Sets the preferred vertical orientation of the bubble with respect to the anchor view such as
-     * above or below the anchor.
-     * @param orientation The vertical orientation preferred.
+     * Sets the preferred orientation of the bubble with respect to the anchor view such as above or
+     * below the anchor.
+     * @param orientation The orientation preferred.
      */
-    public void setPreferredVerticalOrientation(
-            @AnchoredPopupWindow.VerticalOrientation int orientation) {
-        mPopupWindow.setPreferredVerticalOrientation(orientation);
+    public void setPreferredOrientation(AnchoredPopupWindow.Orientation orientation) {
+        mPopupWindow.setPreferredOrientation(orientation);
     }
 
     @Override

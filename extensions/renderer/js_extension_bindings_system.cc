@@ -186,7 +186,7 @@ void JsExtensionBindingsSystem::UpdateBindingsForContext(
     case Feature::SERVICE_WORKER_CONTEXT:
       DCHECK(ExtensionsClient::Get()
                  ->ExtensionAPIEnabledInExtensionServiceWorkers());
-      FALLTHROUGH;
+    // Intentional fallthrough.
     case Feature::BLESSED_EXTENSION_CONTEXT:
     case Feature::UNBLESSED_EXTENSION_CONTEXT:
     case Feature::CONTENT_SCRIPT_CONTEXT:

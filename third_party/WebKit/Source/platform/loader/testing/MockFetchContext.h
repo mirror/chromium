@@ -22,6 +22,7 @@ namespace blink {
 
 class KURL;
 class ResourceRequest;
+class WebTaskRunner;
 struct ResourceLoaderOptions;
 
 // Mocked FetchContext for testing.

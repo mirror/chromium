@@ -227,12 +227,10 @@
 #include "net/base/mime_util.h"
 #include "net/cookies/canonical_cookie.h"
 #include "net/cookies/cookie_options.h"
-#include "net/ssl/client_cert_store.h"
 #include "net/ssl/ssl_cert_request_info.h"
 #include "ppapi/features/features.h"
 #include "ppapi/host/ppapi_host.h"
 #include "printing/features/features.h"
-#include "services/network/public/cpp/features.h"
 #include "services/preferences/public/cpp/in_process_service_factory.h"
 #include "services/preferences/public/interfaces/preferences.mojom.h"
 #include "services/proxy_resolver/public/interfaces/proxy_resolver.mojom.h"
@@ -3701,7 +3699,7 @@ ChromeContentBrowserClient::CreateURLLoaderThrottles(
     const base::Callback<content::WebContents*()>& wc_getter,
     content::NavigationUIData* navigation_ui_data) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  DCHECK(base::FeatureList::IsEnabled(network::features::kNetworkService));
+  DCHECK(base::FeatureList::IsEnabled(features::kNetworkService));
 
   std::vector<std::unique_ptr<content::URLLoaderThrottle>> result;
 
@@ -3825,15 +3823,6 @@ void ChromeContentBrowserClient::CreateUsbChooserService(
   UsbTabHelper* tab_helper =
       UsbTabHelper::GetOrCreateForWebContents(web_contents);
   tab_helper->CreateChooserService(render_frame_host, std::move(request));
-}
-
-std::unique_ptr<net::ClientCertStore>
-ChromeContentBrowserClient::CreateClientCertStore(
-    content::ResourceContext* resource_context) {
-  if (!resource_context)
-    return nullptr;
-  return ProfileIOData::FromResourceContext(resource_context)
-      ->CreateClientCertStore();
 }
 
 // Static; handles rewriting Web UI URLs.

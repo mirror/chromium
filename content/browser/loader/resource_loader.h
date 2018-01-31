@@ -42,8 +42,7 @@ class CONTENT_EXPORT ResourceLoader : public net::URLRequest::Delegate,
  public:
   ResourceLoader(std::unique_ptr<net::URLRequest> request,
                  std::unique_ptr<ResourceHandler> handler,
-                 ResourceLoaderDelegate* delegate,
-                 ResourceContext* resource_context);
+                 ResourceLoaderDelegate* delegate);
   ~ResourceLoader() override;
 
   void StartRequest();
@@ -185,8 +184,6 @@ class CONTENT_EXPORT ResourceLoader : public net::URLRequest::Delegate,
 
   net::HttpRawRequestHeaders raw_request_headers_;
   scoped_refptr<const net::HttpResponseHeaders> raw_response_headers_;
-
-  ResourceContext* resource_context_;
 
   base::ThreadChecker thread_checker_;
 

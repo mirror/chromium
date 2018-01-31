@@ -81,7 +81,10 @@
 #include "content/public/test/test_utils.h"
 #include "net/cookies/cookie_store.h"
 #include "net/http/http_transaction_factory.h"
-#include "net/net_features.h"
+#include "net/reporting/reporting_browsing_data_remover.h"
+#include "net/reporting/reporting_policy.h"
+#include "net/reporting/reporting_service.h"
+#include "net/url_request/network_error_logging_delegate.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "third_party/skia/include/core/SkBitmap.h"
@@ -90,9 +93,9 @@
 #if defined(OS_ANDROID)
 #include "chrome/browser/android/search_permissions/search_permissions_service.h"
 #include "chrome/browser/android/webapps/webapp_registry.h"
-#else  // !defined(OS_ANDROID)
+#else
 #include "content/public/browser/host_zoom_map.h"
-#endif  // !defined(OS_ANDROID)
+#endif
 
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/chromeos/login/users/mock_user_manager.h"
@@ -100,22 +103,15 @@
 #include "chromeos/dbus/fake_cryptohome_client.h"
 #include "components/signin/core/account_id/account_id.h"
 #include "components/user_manager/scoped_user_manager.h"
-#endif  // defined(OS_CHROMEOS)
+#endif
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
 #include "chrome/browser/extensions/mock_extension_special_storage_policy.h"
-#endif  // BUILDFLAG(ENABLE_EXTENSIONS)
+#endif
 
 #if BUILDFLAG(ENABLE_PLUGINS)
 #include "chrome/browser/browsing_data/mock_browsing_data_flash_lso_helper.h"
-#endif  // BUILDFLAG(ENABLE_PLUGINS)
-
-#if BUILDFLAG(ENABLE_REPORTING)
-#include "net/reporting/reporting_browsing_data_remover.h"
-#include "net/reporting/reporting_policy.h"
-#include "net/reporting/reporting_service.h"
-#include "net/url_request/network_error_logging_delegate.h"
-#endif  // BUILDFLAG(ENABLE_REPORTING)
+#endif
 
 using content::BrowsingDataFilterBuilder;
 using domain_reliability::CLEAR_BEACONS;
@@ -922,7 +918,6 @@ class RemoveAutofillTester : public autofill::PersonalDataManagerObserver {
   DISALLOW_COPY_AND_ASSIGN(RemoveAutofillTester);
 };
 
-#if BUILDFLAG(ENABLE_REPORTING)
 class MockReportingService : public net::ReportingService {
  public:
   MockReportingService() = default;
@@ -1084,7 +1079,6 @@ class ClearNetworkErrorLoggingTester {
 
   DISALLOW_COPY_AND_ASSIGN(ClearNetworkErrorLoggingTester);
 };
-#endif  // BUILDFLAG(ENABLE_REPORTING)
 
 // Implementation of the TestingProfile that provides an SSLHostStateDelegate
 // which is required for the tests.
@@ -2587,7 +2581,6 @@ TEST_F(ChromeBrowsingDataRemoverDelegateTest, OriginTypeMasksNoPolicy) {
 #endif
 }
 
-#if BUILDFLAG(ENABLE_REPORTING)
 TEST_F(ChromeBrowsingDataRemoverDelegateTest, ReportingCache_NoService) {
   ClearReportingCacheTester tester(GetProfile(), false);
 
@@ -2790,7 +2783,6 @@ TEST_F(ChromeBrowsingDataRemoverDelegateTest, NetworkErrorLogging_History) {
   EXPECT_TRUE(ProbablySameFilters(BrowsingDataFilterBuilder::BuildNoopFilter(),
                                   origin_filter));
 }
-#endif  // BUILDFLAG(ENABLE_REPORTING)
 
 // Test that all WebsiteSettings are getting deleted by creating a
 // value for each of them and removing data.

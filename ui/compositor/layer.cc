@@ -187,13 +187,9 @@ std::unique_ptr<Layer> Layer::Clone() const {
   // cc::Layer state.
   if (surface_layer_) {
     if (surface_layer_->primary_surface_id().is_valid()) {
-      clone->SetShowPrimarySurface(
-          surface_layer_->primary_surface_id(), frame_size_in_dip_,
-          surface_layer_->background_color(),
-          surface_layer_->deadline_in_frames()
-              ? cc::DeadlinePolicy::UseSpecifiedDeadline(
-                    *surface_layer_->deadline_in_frames())
-              : cc::DeadlinePolicy::UseDefaultDeadline());
+      clone->SetShowPrimarySurface(surface_layer_->primary_surface_id(),
+                                   frame_size_in_dip_,
+                                   surface_layer_->background_color());
     }
     if (surface_layer_->fallback_surface_id().is_valid())
       clone->SetFallbackSurfaceId(surface_layer_->fallback_surface_id());
@@ -751,8 +747,7 @@ bool Layer::TextureFlipped() const {
 
 void Layer::SetShowPrimarySurface(const viz::SurfaceId& surface_id,
                                   const gfx::Size& frame_size_in_dip,
-                                  SkColor default_background_color,
-                                  const cc::DeadlinePolicy& deadline_policy) {
+                                  SkColor default_background_color) {
   DCHECK(type_ == LAYER_TEXTURED || type_ == LAYER_SOLID_COLOR);
 
   if (!surface_layer_) {
@@ -761,7 +756,7 @@ void Layer::SetShowPrimarySurface(const viz::SurfaceId& surface_id,
     surface_layer_ = new_layer;
   }
 
-  surface_layer_->SetPrimarySurfaceId(surface_id, deadline_policy);
+  surface_layer_->SetPrimarySurfaceId(surface_id, base::nullopt);
   surface_layer_->SetBackgroundColor(default_background_color);
 
   frame_size_in_dip_ = frame_size_in_dip;
@@ -769,8 +764,7 @@ void Layer::SetShowPrimarySurface(const viz::SurfaceId& surface_id,
 
   for (const auto& mirror : mirrors_) {
     mirror->dest()->SetShowPrimarySurface(surface_id, frame_size_in_dip,
-                                          default_background_color,
-                                          deadline_policy);
+                                          default_background_color);
   }
 }
 

@@ -14,6 +14,7 @@ import android.os.Build;
 import android.text.SpannableString;
 import android.text.style.LocaleSpan;
 import android.util.SparseArray;
+import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.accessibility.AccessibilityNodeInfo.AccessibilityAction;
@@ -34,8 +35,9 @@ public class LollipopWebContentsAccessibility extends KitKatWebContentsAccessibi
     private String mSystemLanguageTag;
     private BroadcastReceiver mBroadcastReceiver;
 
-    LollipopWebContentsAccessibility(WebContents webContents) {
-        super(webContents);
+    LollipopWebContentsAccessibility(Context context, ViewGroup containerView,
+            WebContents webContents, String productVersion) {
+        super(context, containerView, webContents, productVersion);
     }
 
     @Override
