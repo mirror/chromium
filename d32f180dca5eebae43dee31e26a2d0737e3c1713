@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb21e781_a4a73452",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 955,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-31T19:25:28Z",
+      "side": 1,
+      "message": "Another way is to change the above PaintingLayer() to EnclosingLayer(), which seems safe to me. Do you see any risk of it?",
+      "revId": "d32f180dca5eebae43dee31e26a2d0737e3c1713",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
