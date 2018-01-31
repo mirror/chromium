@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c329373_b128acad",
+        "filename": "third_party/WebKit/Source/build/scripts/make_element_type_helpers.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-01-31T09:00:24Z",
+      "side": 1,
+      "message": "It seems this change drops some IsHTML*Element()s.\nI think they are still useful, and we should keep them.\n\nSo, how about:\n - Add \u0027idl_interface\u0027 property to tag like:\n   tag[\u0027interface\u0027] \u003d self._interface(tag)\n   if not tag[\u0027JSInterfaceName\u0027]:\n     tag[\u0027JSInterfaceName\u0027] \u003d tag[\u0027interface\u0027]\n - Change k{{tag.interface}} in CreatHTMLTypeMap()to k{{tag.JSInterfaceName}}\n - Change |elements.add(tag[\u0027interface\u0027])| to |elements.add(tag[\u0027JSInterfaceName\u0027])|\n?",
+      "revId": "9a6d6c04a0a1c00709a06c4adae2bfde24f5a306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
