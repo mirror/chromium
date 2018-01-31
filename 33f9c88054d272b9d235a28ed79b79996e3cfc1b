@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e64335c6_1fdfc18f",
+        "filename": "chrome/android/java/AndroidManifest.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-31T23:04:25Z",
+      "side": 1,
+      "message": "OEMs are supposed to read this meta data, but they might actually be using a hard coded value.",
+      "range": {
+        "startLine": 1132,
+        "startChar": 40,
+        "endLine": 1132,
+        "endChar": 54
+      },
+      "revId": "33f9c88054d272b9d235a28ed79b79996e3cfc1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
