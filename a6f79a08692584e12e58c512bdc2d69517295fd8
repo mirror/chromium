@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efb6a039_1398c3d3",
+        "filename": "third_party/WebKit/Source/core/loader/SubresourceFilter.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2018-01-31T00:07:27Z",
+      "side": 1,
+      "message": "I\u0027m a bit concerned with the dependency between IsAdResource() and AllowLoad()/CanRequest(). (This kind of ordering constraint can be fragile and might be broken in the future)\n\nHow about placing the single-entry cache in GetLoadPolicy() (in GetLoadPolicy() if the key doesn\u0027t match then recalculate the result rather than simply returning false) and calling just GetLoadPolicy() here?\nBy doing so, the correctness is not affected by the calling order (the performance is still affected though).",
+      "revId": "a6f79a08692584e12e58c512bdc2d69517295fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1769048d_b916893d",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 1778,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2018-01-31T00:07:27Z",
+      "side": 1,
+      "message": "FYI EmulateLoadStartedForInspector() is only for a workaround for DevTools, and if the IsAdResource flag is not related to DevTools and the IsAdResource() call doesn\u0027t have side effect, then this code block is not necessary.\n\n(Actually, |resource_request| is modified at Line 1779 but |resource_request| is not used later that and thus Line 1779 is no-op)",
+      "revId": "a6f79a08692584e12e58c512bdc2d69517295fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
