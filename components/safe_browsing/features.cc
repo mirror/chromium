@@ -35,6 +35,20 @@ const base::Feature kGoogleBrandedPhishingWarning{
     "PasswordProtectionGoogleBrandedPhishingWarning",
     base::FEATURE_DISABLED_BY_DEFAULT};
 
+// If enabled in pre-network-service world, SafeBrowsing URL checks are done by
+// applying SafeBrowsing's URLLoaderThrottle subclasses to ThrottlingURLLoader.
+// It affects:
+//   - subresource loading from renderers;
+//   - frame resource loading from the browser, if
+//     content::IsNavigationMojoResponseEnabled() is true.
+//
+// This flag has no effect if network service is enabled. With network service,
+// SafeBrowsing URL checks are always done by SafeBrowsing's URLLoaderThrottle
+// subclasses.
+const base::Feature kCheckByURLLoaderThrottle{
+    "S13nSafeBrowsingCheckByURLLoaderThrottle",
+    base::FEATURE_DISABLED_BY_DEFAULT};
+
 const base::Feature kThreatDomDetailsTagAndAttributeFeature{
     "ThreatDomDetailsTagAttributes", base::FEATURE_DISABLED_BY_DEFAULT};
 
@@ -62,6 +76,7 @@ constexpr struct {
     {&kAppendRecentNavigationEvents, true},
     {&kGaiaPasswordReuseReporting, true},
     {&kGoogleBrandedPhishingWarning, true},
+    {&kCheckByURLLoaderThrottle, true},
     {&kThreatDomDetailsTagAndAttributeFeature, false},
     {&kTriggerThrottlerDailyQuotaFeature, false},
     {&kDispatchSafetyNetCheckOffThread, false},
