@@ -199,6 +199,68 @@ TEST_F(FormAutofillUtilsTest, InferLabelForElementTest) {
         target.ToConst<WebFormControlElement>();
     ASSERT_FALSE(form_target.IsNull());
 
+    FormFieldData.LabelSource label_source;
+    EXPECT_EQ(base::UTF8ToUTF16(test_case.expected_label),
+              autofill::form_util::InferLabelForElementForTesting(
+                  form_target, stop_words & label_source));
+  }
+}
+
+const char kLabelSourceExample1[] =
+    "<div>"
+    "<div>label</div><div><input id='target'/></div>"
+    "</div>";
+FormFieldData.LabelSource kLabelSourceExample1Expected =
+    FormFieldData.LabelSource.DIV_TABLE;
+
+const char kLabelSourceExample2[] = "<label>label<input id='target'/></label>";
+FormFieldData.LabelSource kLabelSourceExample2Expected =
+    FormFieldData.LabelSource.LABEL_TAG;
+
+const char kLabelSourceExample3[] =
+    "<b>l</b><strong>a</strong>bel<input id='target'/>";
+FormFieldData.LabelSource kLabelSourceExample3Expected =
+    FormFieldData.LabelSource.COMBINED;
+
+const char kLabelSourceExample4[] =
+    "<p><b>l</b><strong>a</strong>bel</p><input id='target'/>";
+FormFieldData.LabelSource kLabelSourceExample4Expected =
+    FormFieldData.LabelSource.P_TAG;
+
+const char kLabelSourceExample5[] = "<input id='target' placeholder='label'/>";
+FormFieldData.LabelSource kLabelSourceExample5Expected =
+    FormFieldData.LabelSource.PLACE_HOLDER;
+
+const char kLabelSourceExample6[] = "<input id='target' value='label'/>";
+FormFieldData.LabelSource kLabelSourceExample6Expected =
+    FormFieldData.LabelSource.PLACE_HOLDER;
+
+const char kLabelSourceExample7[] = "<li>label<input id='target'/></li>";
+FormFieldData.LabelSource kLabelSourceExample7Expected =
+    FormFieldData.LabelSource.LI_TAG;
+
+TEST_F(FormAutofillUtilsTest, InferLabelSourceTest) {
+  std::vector<base::char16> stop_words;
+  stop_words.push_back(static_cast<base::char16>('-'));
+  static const AutofillFieldUtilCase test_cases[] = {
+      {"DIV table test 1", kDivTableExample1, kDivTableExample1Expected},
+      {"DIV table test 2", kDivTableExample2, kDivTableExample2Expected},
+      {"DIV table test 3", kDivTableExample3, kDivTableExample3Expected},
+      {"DIV table test 4", kDivTableExample4, kDivTableExample4Expected},
+      {"DIV table test 5", kDivTableExample5, kDivTableExample5Expected},
+      {"DIV table test 6", kDivTableExample6, kDivTableExample6Expected},
+  };
+  for (auto test_case : test_cases) {
+    SCOPED_TRACE(test_case.description);
+    LoadHTML(test_case.html);
+    WebLocalFrame* web_frame = GetMainFrame();
+    ASSERT_NE(nullptr, web_frame);
+    WebElement target = web_frame->GetDocument().GetElementById("target");
+    ASSERT_FALSE(target.IsNull());
+    const WebFormControlElement form_target =
+        target.ToConst<WebFormControlElement>();
+    ASSERT_FALSE(form_target.IsNull());
+
     EXPECT_EQ(base::UTF8ToUTF16(test_case.expected_label),
               autofill::form_util::InferLabelForElementForTesting(form_target,
                                                                   stop_words));
