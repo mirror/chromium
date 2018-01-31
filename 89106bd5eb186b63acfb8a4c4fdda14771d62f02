@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8baf2a2_c8874a71",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list_item.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-31T03:32:51Z",
+      "side": 1,
+      "message": "Now that we have a private CSS scope, can we remove the destination-list-item prefix from various CSS classes? It is not needed for disambiguation anymore.",
+      "range": {
+        "startLine": 12,
+        "startChar": 13,
+        "endLine": 12,
+        "endChar": 33
+      },
+      "revId": "89106bd5eb186b63acfb8a4c4fdda14771d62f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79667496_44b5cc05",
+        "filename": "chrome/browser/resources/print_preview/new/destination_list_item.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-31T03:32:51Z",
+      "side": 1,
+      "message": "Where do we make use of the event?",
+      "range": {
+        "startLine": 101,
+        "startChar": 47,
+        "endLine": 101,
+        "endChar": 64
+      },
+      "revId": "89106bd5eb186b63acfb8a4c4fdda14771d62f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
