@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49d76f47_67a9835d",
+        "filename": "chrome/android/java/res/layout/location_bar_base.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2018-01-31T19:59:11Z",
+      "side": 1,
+      "message": "Changing from framelayout to linearlayout will have implications for time to inflate this UI on startup. We try to avoid linear layout whenever possible. Any chance we can do this without a linear layout?",
+      "range": {
+        "startLine": 58,
+        "startChar": 5,
+        "endLine": 58,
+        "endChar": 17
+      },
+      "revId": "785484bc1a3a83ab2d9d78cb8b8f5b95ccf6c88f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23417a18_2d3335e9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1551,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2018-01-31T19:59:11Z",
+      "side": 1,
+      "message": "rm -rf :)",
+      "range": {
+        "startLine": 1551,
+        "startChar": 40,
+        "endLine": 1551,
+        "endChar": 46
+      },
+      "revId": "785484bc1a3a83ab2d9d78cb8b8f5b95ccf6c88f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
