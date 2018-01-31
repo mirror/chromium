@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7230de7d_166cee7f",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T15:44:50Z",
+      "side": 1,
+      "message": "This is not used, and so we should not have it. If we need to add more error cases in the future, we can append them at the end instead.",
+      "range": {
+        "startLine": 279,
+        "startChar": 2,
+        "endLine": 279,
+        "endChar": 9
+      },
+      "revId": "f3b36e27ca472fa7fd8b11df95d8afdd9e11c9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b81f680a_cc2aaa45",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 60527,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2018-01-31T15:44:50Z",
+      "side": 1,
+      "message": "Actually, we can remove xunlu@, who has left Chrome team almost 2 years ago [1].\n\n[1] https://chromium.googlesource.com/chromium/src/+log/master?author\u003dxunlu",
+      "range": {
+        "startLine": 60527,
+        "startChar": 9,
+        "endLine": 60527,
+        "endChar": 14
+      },
+      "revId": "f3b36e27ca472fa7fd8b11df95d8afdd9e11c9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
