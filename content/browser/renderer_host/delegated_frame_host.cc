@@ -104,6 +104,9 @@ bool DelegatedFrameHost::HasSavedFrame() {
 
 void DelegatedFrameHost::WasHidden() {
   frame_evictor_->SetVisible(false);
+  if (enable_surface_synchronization_ &&
+      client_->GetLocalSurfaceId() != local_surface_id_)
+    EvictDelegatedFrame();
   released_front_lock_ = nullptr;
 }
 
@@ -619,6 +622,12 @@ void DelegatedFrameHost::OnFirstSurfaceActivation(
 
   frame_evictor_->SwappedFrame(client_->DelegatedFrameHostIsVisible());
   // Note: the frame may have been evicted immediately.
+
+  if (enable_surface_synchronization_ &&
+      !client_->DelegatedFrameHostIsVisible() &&
+      local_surface_id_ != client_->GetLocalSurfaceId()) {
+    EvictDelegatedFrame();
+  }
 }
 
 void DelegatedFrameHost::OnFrameTokenChanged(uint32_t frame_token) {
