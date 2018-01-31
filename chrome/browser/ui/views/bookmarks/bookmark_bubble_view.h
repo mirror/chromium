@@ -159,7 +159,7 @@ class BookmarkBubbleView : public LocationBarBubbleDelegateView,
 
   // The regular bookmark bubble contents, with all the edit fields and dialog
   // buttons. TODO(tapted): Move the buttons to the DialogClientView.
-  views::View* bookmark_contents_view_ = nullptr;
+  views::View* bookmark_contents_view_;
 
   // iOS promotion view.
   DesktopIOSPromotionBubbleView* ios_promo_view_ = nullptr;
