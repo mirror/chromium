@@ -98,6 +98,24 @@
       "revId": "08200b4e3ccd284ee734129b70dfdaad6aea639c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e92ca4fa_3ba96ca3",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2018-01-31T21:00:05Z",
+      "side": 1,
+      "message": "Sounds good.",
+      "parentUuid": "35ede388_ccb60670",
+      "revId": "08200b4e3ccd284ee734129b70dfdaad6aea639c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
