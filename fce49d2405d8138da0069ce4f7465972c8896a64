@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e13adcc_363f01f8",
+        "filename": "services/identity/public/cpp/identity_test_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-31T15:00:53Z",
+      "side": 1,
+      "message": "I am wondering how many of the callers actually care to pass a refresh_token to this method. Could we imaging avoiding to pass a refresh token and a gaia id.\nSomething like:\nAccountInfo MakePrimaryAccountAvailable(ProfileOAuth2TokenService* token_service,\n                                        ProfileOAuth2TokenService* token_service,\n                                        IdentityManager* identity_manager,\n                                        const std::string email);\nWe would make up the following:\n- gaia_id would just be the first part before the \"@\" in the email followed by \"_gaia\"\n- refresh token would be the first part before the \"@\" in the email followed by \"_rt\"\n\nI think that would simplify the test setup further.",
+      "range": {
+        "startLine": 67,
+        "startChar": 5,
+        "endLine": 67,
+        "endChar": 32
+      },
+      "revId": "fce49d2405d8138da0069ce4f7465972c8896a64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5b3128a_f44dc515",
+        "filename": "services/identity/public/cpp/identity_test_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-31T15:00:53Z",
+      "side": 1,
+      "message": "s/username/email",
+      "range": {
+        "startLine": 72,
+        "startChar": 52,
+        "endLine": 72,
+        "endChar": 60
+      },
+      "revId": "fce49d2405d8138da0069ce4f7465972c8896a64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c515949_f6ed4704",
+        "filename": "services/identity/public/cpp/identity_test_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-31T15:00:53Z",
+      "side": 1,
+      "message": "Nit: Remove blank line.",
+      "revId": "fce49d2405d8138da0069ce4f7465972c8896a64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
