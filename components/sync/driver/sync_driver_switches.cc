@@ -69,4 +69,9 @@ const base::Feature kSyncUSSBookmarks{"SyncUSSBookmarks",
 const base::Feature kSyncUSSTypedURL{"SyncUSSTypedURL",
                                      base::FEATURE_DISABLED_BY_DEFAULT};
 
+bool IsAutosyncEnabled() {
+  // TODO: add feature
+  return true;
+}
+
 }  // namespace switches
