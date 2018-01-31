@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26eadd70_040527dc",
+        "filename": "extensions/browser/content_hash_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-31T03:11:11Z",
+      "side": 1,
+      "message": "maybe update this to include directories (which aren\u0027t non-existent, per se)",
+      "range": {
+        "startLine": 54,
+        "startChar": 29,
+        "endLine": 54,
+        "endChar": 50
+      },
+      "revId": "575d4590b2a7722c2dd5dc54f5844ae2e753d701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b01c0d8_5c9daca8",
+        "filename": "extensions/browser/content_hash_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-01-31T03:11:11Z",
+      "side": 1,
+      "message": "nit: may as well cache this result to avoid the double calculation",
+      "range": {
+        "startLine": 60,
+        "startChar": 26,
+        "endLine": 60,
+        "endChar": 64
+      },
+      "revId": "575d4590b2a7722c2dd5dc54f5844ae2e753d701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
