@@ -92,7 +92,7 @@ class NudgeTrackerTest : public ::testing::Test {
 };
 
 // Exercise an empty NudgeTracker.
-// Use with valgrind to detect uninitialized members.
+// Use with MSan to detect uninitialized members.
 TEST_F(NudgeTrackerTest, EmptyNudgeTracker) {
   // Now we're at the normal, "idle" state.
   EXPECT_FALSE(nudge_tracker_.IsSyncRequired());

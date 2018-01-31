@@ -156,8 +156,8 @@ class AudioRendererMixerTest
       for (size_t i = 0; i < fake_callbacks_.size(); ++i)
         fake_callbacks_[i]->set_half_fill(true);
       expected_callback_->set_half_fill(true);
-      // Initialize the AudioBus completely or we'll run into Valgrind problems
-      // during the verification step below.
+      // Initialize the AudioBus completely or we'll run into ASAN/TSAN
+      // problems during the verification step below.
       expected_audio_bus_->Zero();
     }
 
@@ -173,7 +173,7 @@ class AudioRendererMixerTest
 
     if (half_fill_) {
       // In this case, just verify that every frame was initialized, this will
-      // only fail under tooling such as valgrind.
+      // only fail under tooling such as ASAN.
       return ValidateAudioData(
           0, frames, 0, std::numeric_limits<double>::max());
     } else {
@@ -475,7 +475,7 @@ TEST_P(AudioRendererMixerBehavioralTest, OnRenderErrorPausedInput) {
 // inputs playing.  The test will hang if the behavior is incorrect.
 TEST_P(AudioRendererMixerBehavioralTest, MixerPausesStream) {
   const base::TimeDelta kPauseTime = base::TimeDelta::FromMilliseconds(500);
-  // This value can't be too low or valgrind, tsan will timeout on the bots.
+  // This value can't be too low or tsan etc will timeout on the bots.
   const base::TimeDelta kTestTimeout = 10 * kPauseTime;
   mixer_->set_pause_delay_for_testing(kPauseTime);
 

@@ -43,7 +43,6 @@ TEST_F(FocusTrackerTest, SaveRestore) {
 }
 
 TEST_F(FocusTrackerTest, SaveRestoreWithTextView) {
-  // Valgrind will complain if the text field has zero size.
   NSRect frame = NSMakeRect(0, 0, 100, 20);
   NSWindow* window = test_window();
   base::scoped_nsobject<NSTextField> text(

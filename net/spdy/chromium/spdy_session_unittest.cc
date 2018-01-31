@@ -2019,7 +2019,7 @@ TEST_F(SpdySessionTest, CancelPendingCreateStream) {
   ASSERT_TRUE(spdy_stream1);
 
   // Use unique_ptr to let us invalidate the memory when we want to, to trigger
-  // a valgrind error if the callback is invoked when it's not supposed to be.
+  // an ASAN error if the callback is invoked when it's not supposed to be.
   auto callback = std::make_unique<TestCompletionCallback>();
 
   SpdyStreamRequest request;

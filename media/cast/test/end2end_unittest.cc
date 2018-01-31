@@ -1093,8 +1093,8 @@ TEST_F(End2EndTest, BasicFakeSoftwareVideo) {
 }
 
 // The following tests run many many iterations to make sure that buffers don't
-// fill, timers don't go askew etc. However, these high-level tests are too
-// expensive when running under Valgrind or other sanitizer, or in non-optimized
+// fill, timers don't go askew etc. However, these high-level tests may be too
+// expensive when running under TSAN or other sanitizers, or in non-optimized
 // debug builds. In these cases, we reduce the number of iterations.
 #if (defined(OS_WIN) && !defined(NVALGRIND)) || defined(ADDRESS_SANITIZER) || \
     defined(LEAK_SANITIZER) || defined(MEMORY_SANITIZER) ||                   \

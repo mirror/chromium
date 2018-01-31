@@ -267,8 +267,7 @@ bool UtilityProcessHostImpl::StartProcess() {
       // When running under gdb, forking /proc/self/exe ends up forking the gdb
       // executable instead of Chromium. It is almost safe to assume that no
       // updates will happen while a developer is running with
-      // |switches::kUtilityCmdPrefix|. See ChildProcessHost::GetChildPath() for
-      // a similar case with Valgrind.
+      // |switches::kUtilityCmdPrefix|.
       if (has_cmd_prefix)
         child_flags = ChildProcessHost::CHILD_NORMAL;
 

@@ -332,7 +332,7 @@ void BrowserProcessImpl::StartTearDown() {
   media_file_system_registry_.reset();
   // Remove the global instance of the Storage Monitor now. Otherwise the
   // FILE thread would be gone when we try to release it in the dtor and
-  // Valgrind would report a leak on almost every single browser_test.
+  // tools like LSAN would report a leak on almost every single browser_test.
   // TODO(gbillock): Make this unnecessary.
   storage_monitor::StorageMonitor::Destroy();
 #endif

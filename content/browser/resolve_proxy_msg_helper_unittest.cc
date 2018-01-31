@@ -258,7 +258,7 @@ TEST_F(ResolveProxyMsgHelperTest, CancelPendingRequests) {
   EXPECT_TRUE(pending_result() == nullptr);
 
   // It should also be the case that msg1, msg2, msg3 were deleted by the
-  // cancellation. (Else will show up as a leak in Valgrind).
+  // cancellation. (Else might show up as a leak in LSAN).
 }
 
 }  // namespace content

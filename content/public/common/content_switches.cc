@@ -714,7 +714,7 @@ const char kRemoteDebuggingPort[]           = "remote-debugging-port";
 const char kRendererClientId[] = "renderer-client-id";
 
 // The contents of this flag are prepended to the renderer command line.
-// Useful values might be "valgrind" or "xterm -e gdb --args".
+// For example: "xterm -e gdb --args".
 const char kRendererCmdPrefix[]             = "renderer-cmd-prefix";
 
 // Causes the process to run as renderer instead of as browser.
@@ -826,7 +826,7 @@ const char kUseMockCertVerifierForTesting[] =
     "use-mock-cert-verifier-for-testing";
 
 // The contents of this flag are prepended to the utility process command line.
-// Useful values might be "valgrind" or "xterm -e gdb --args".
+// For example: "xterm -e gdb --args".
 const char kUtilityCmdPrefix[]              = "utility-cmd-prefix";
 
 // Causes the process to run as a utility subprocess.

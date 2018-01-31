@@ -251,7 +251,7 @@ class IPC_MESSAGE_SUPPORT_EXPORT Message : public base::Pickle {
     uint32_t flags;   // specifies control flags for the message
 #if defined(OS_POSIX)
     uint16_t num_fds; // the number of descriptors included with this message
-    uint16_t pad;     // explicitly initialize this to appease valgrind
+    uint16_t pad;     // explicitly initialize this to appease MSan/etc
 #endif
   };
 #pragma pack(pop)

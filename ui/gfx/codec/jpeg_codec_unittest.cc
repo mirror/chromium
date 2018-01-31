@@ -167,7 +167,7 @@ TEST(JPEGCodec, DecodeCorrupted) {
                                  &outh));
 }
 
-// Test that we can decode JPEG images without invalid-read errors on valgrind.
+// Test that we can decode JPEG images without invalid-read errors on ASAN.
 // This test decodes a 1x1 JPEG image and writes the decoded RGB (or RGBA) pixel
 // to the output buffer without OOB reads.
 TEST(JPEGCodec, InvalidRead) {

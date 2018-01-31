@@ -11,7 +11,7 @@ namespace device {
 MotionData::MotionData() {
   // Make sure to zero out the memory so that there are no uninitialized bits.
   // This object is used in the shared memory buffer and is memory copied by
-  // two processes. Valgrind will complain if we copy around memory that is
+  // two processes. MSan might complain if we copy around memory that is
   // only partially initialized.
   memset(this, 0, sizeof(*this));
 }

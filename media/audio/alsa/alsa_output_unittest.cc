@@ -841,9 +841,8 @@ TEST_F(AlsaPcmOutputStreamTest, ScheduleNextWrite) {
   // TODO(sergeyu): Figure out how to check that the task has been added to the
   // message loop.
 
-  // Cleanup the message queue. Currently ~MessageQueue() doesn't free pending
-  // tasks unless running on valgrind. The code below is needed to keep
-  // heapcheck happy.
+  // Cleanup the message queue, since ~MessageQueue() doesn't free pending
+  // tasks. The code below is needed to keep leak checking tools happy.
 
   test_stream->stop_stream_ = true;
   DVLOG(1) << test_stream->state();

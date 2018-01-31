@@ -362,11 +362,6 @@ willPositionSheet:(NSWindow*)sheet
   [sourceWindow setDelegate:nil];
   [destWindow setDelegate:[self nsWindowController]];
 
-  // With this call, valgrind complains that a "Conditional jump or move depends
-  // on uninitialised value(s)".  The error happens in -[NSThemeFrame
-  // drawOverlayRect:].  I'm pretty convinced this is an Apple bug, but there is
-  // no visual impact.  I have been unable to tickle it away with other window
-  // or view manipulation Cocoa calls.  Stack added to suppressions_mac.txt.
   [self.chromeContentView setAutoresizesSubviews:YES];
   [[destWindow contentView] addSubview:self.chromeContentView
                             positioned:NSWindowBelow

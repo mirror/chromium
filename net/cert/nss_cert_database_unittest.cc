@@ -130,7 +130,7 @@ class CertDatabaseNSSTest : public testing::Test {
 };
 
 TEST_F(CertDatabaseNSSTest, ListCertsSync) {
-  // This test isn't terribly useful, though it will at least let valgrind test
+  // This test isn't terribly useful, though it will at least let LSAN test
   // for leaks.
   ScopedCERTCertificateList certs = cert_db_->ListCertsSync();
   // The test DB is empty, but let's assume there will always be something in
@@ -139,7 +139,7 @@ TEST_F(CertDatabaseNSSTest, ListCertsSync) {
 }
 
 TEST_F(CertDatabaseNSSTest, ListCerts) {
-  // This test isn't terribly useful, though it will at least let valgrind test
+  // This test isn't terribly useful, though it will at least let LSAN test
   // for leaks.
   ScopedCERTCertificateList certs;
   cert_db_->ListCerts(base::Bind(&SwapCertList, base::Unretained(&certs)));

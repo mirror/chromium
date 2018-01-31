@@ -180,9 +180,12 @@ void CocoaTest::TearDown() {
   // to get everything cleaned up correctly.  It normally only takes
   // one to two spins through the event loop to see a change.
 
-  // NOTE(shess): Under valgrind, -nextEventMatchingMask:* in one test
+  // NOTE(shess): Under slow memory checking tools like valgrind,
   // needed to run twice, once taking .2 seconds, the next time .6
+  // -nextEventMatchingMask:* in one test needed to run twice, once
   // seconds.  The loop exit condition attempts to be scalable.
+  // taking .2 seconds, the next time .6 seconds.  The loop exit
+  // condition attempts to be scalable.
 
   // Get the set of windows which weren't present when the test
   // started.

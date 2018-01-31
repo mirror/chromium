@@ -73,7 +73,7 @@ TEST(DecoderBufferTest, PaddingAlignment) {
 
   // If the data is padded correctly we should be able to read and write past
   // the end of the data by DecoderBuffer::kPaddingSize bytes without crashing
-  // or Valgrind/ASAN throwing errors.
+  // or ASAN throwing errors.
   const uint8_t kFillChar = 0xFF;
   memset(
       buffer2->writable_data() + kDataSize, kFillChar,

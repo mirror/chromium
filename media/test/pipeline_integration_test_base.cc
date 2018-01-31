@@ -508,7 +508,7 @@ std::unique_ptr<Renderer> PipelineIntegrationTestBase::CreateRenderer(
                        std::move(audio_renderer), std::move(video_renderer)));
 
   // Prevent non-deterministic buffering state callbacks from firing (e.g., slow
-  // machine, valgrind).
+  // machine, ASAN etc).
   renderer_impl->DisableUnderflowForTesting();
 
   if (clockless_playback_)

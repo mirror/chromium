@@ -161,7 +161,7 @@ class WebViewUnitTest : public views::test::WidgetTest {
 
     browser_context_.reset(NULL);
     // Flush the message loop to execute pending relase tasks as this would
-    // upset ASAN and Valgrind.
+    // upset ASAN.
     RunPendingMessages();
     WidgetTest::TearDown();
   }

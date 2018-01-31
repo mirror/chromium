@@ -512,9 +512,6 @@ void ShelfButton::Layout() {
   icon_view_bounds.AdjustToFit(gfx::Rect(size()));
   icon_view_->SetBoundsRect(icon_view_bounds);
 
-  // Icon size has been incorrect when running
-  // PanelLayoutManagerTest.PanelAlignmentSecondDisplay on valgrind bot, see
-  // http://crbug.com/234854.
   DCHECK_LE(icon_width, kIconSize);
   DCHECK_LE(icon_height, kIconSize);
 

@@ -2020,7 +2020,7 @@ TEST_F(SpdyNetworkTransactionTest, StartTransactionOnReadCallback) {
 }
 
 // Verify that the client can correctly deal with the user callback deleting the
-// transaction. Failures will usually be valgrind errors. See
+// transaction. Failures will usually be TSAN/ASAN errors. See
 // http://crbug.com/46925
 TEST_F(SpdyNetworkTransactionTest, DeleteSessionOnReadCallback) {
   SpdySerializedFrame req(
