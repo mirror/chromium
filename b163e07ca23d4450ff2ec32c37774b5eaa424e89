@@ -34,6 +34,24 @@
       "revId": "b163e07ca23d4450ff2ec32c37774b5eaa424e89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67df8b2a_298ce3ec",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1016,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2018-01-31T02:43:56Z",
+      "side": 1,
+      "message": "Added check for the child surface size. PTAL",
+      "parentUuid": "2e610b9d_62bd6eb9",
+      "revId": "b163e07ca23d4450ff2ec32c37774b5eaa424e89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
