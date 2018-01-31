@@ -295,9 +295,6 @@ executable("zlib_bench") {
     configs += [ "//build/config/compiler:optimize_speed" ]
   }
 
-  configs -= [ "//build/config/compiler:chromium_code" ]
-  configs += [ "//build/config/compiler:no_chromium_code" ]
-
   deps = [
     "//build/config:exe_and_shlib_deps",
     ":zlib",
